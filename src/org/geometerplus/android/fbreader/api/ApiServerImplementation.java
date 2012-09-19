@@ -198,6 +198,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				case SET_STORED_POSITION:
 					storeTextPosition(((ApiObject.String)parameters[0]).Value, (TextPosition)parameters[1]);
 					return ApiObject.Void.Instance;
+				case GET_BOOK_ID:
+					return ApiObject.envelope(getBookId(((ApiObject.String)parameters[0]).Value));
+
 				default:
 					return unsupportedMethodError(method);
 			}
@@ -506,5 +509,13 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		}
 		ZLTextPosition res = new ZLTextFixedPosition(pos.ParagraphIndex, pos.ElementIndex, pos.CharIndex);
 		Book.getByFile(ZLFile.createFileByPath(file)).storePosition(res);
+	}
+	
+	public long getBookId(String file) {
+		Log.d("api", "get book id of " + file);
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(myContext, "API");
+		}
+		return Book.getByFile(ZLFile.createFileByPath(file)).getId();
 	}
 }

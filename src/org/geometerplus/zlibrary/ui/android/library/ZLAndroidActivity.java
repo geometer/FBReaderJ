@@ -114,7 +114,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			});
 		}
 
-		public void openFile(ZLFile f, String appData, String bookmark) {
+		public void openFile(ZLFile f, String appData, String bookmark, long bookId) {
 			if (f == null) {
 				showErrorDialog("unzipFailed");
 				return;
@@ -123,7 +123,8 @@ public abstract class ZLAndroidActivity extends Activity {
 			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
 			LaunchIntent.setPackage(appData);
 			LaunchIntent.setData(uri);
-			LaunchIntent.putExtra("page", bookmark);
+			LaunchIntent.putExtra("BOOKMARK", bookmark);
+			LaunchIntent.putExtra("BOOKID", bookId);
 			FileType ft = FileTypeCollection.Instance.typeForFile(f);
 			for (MimeType type : ft.mimeTypes()) {
 				LaunchIntent.setDataAndType(uri, type.Name);

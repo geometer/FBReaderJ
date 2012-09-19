@@ -99,7 +99,12 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		final Activity activity = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		if (activity != null) {
-			UIUtil.runWithMessage(activity, key, action, postAction, false);
+			try {
+				UIUtil.runWithMessage(activity, key, action, postAction, false);
+			} catch (Exception e) {//FIXME:
+				e.printStackTrace();
+				action.run();
+			}
 		} else {
 			action.run();
 		}

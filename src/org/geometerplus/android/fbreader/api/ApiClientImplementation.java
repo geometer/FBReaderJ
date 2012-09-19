@@ -142,6 +142,14 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		}
 		return ((ApiObject.Integer)object).Value;
 	}
+	
+	private long requestLong(int method, ApiObject[] params) throws ApiException {
+		final ApiObject object = request(method, params);
+		if (!(object instanceof ApiObject.Long)) {
+			throw new ApiException("Cannot cast return type of method " + method + " to int");
+		}
+		return ((ApiObject.Integer)object).Value;
+	}
 
 	private boolean requestBoolean(int method, ApiObject[] params) throws ApiException {
 		final ApiObject object = request(method, params);
@@ -407,6 +415,12 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		request(SET_STORED_POSITION, new ApiObject[] {
 			ApiObject.envelope(file),
 			pos
+		});
+	}
+	
+	public long getBookId(String file) throws ApiException {
+		return requestLong(GET_BOOK_ID, new ApiObject[] {
+			ApiObject.envelope(file)
 		});
 	}
 }

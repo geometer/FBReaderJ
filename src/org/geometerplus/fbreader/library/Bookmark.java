@@ -249,8 +249,13 @@ mainLoop:
 	
 	public String writeToString() {//TODO: 
 		String base = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Bookmark bookid=\"%%BOOKID%%\" booktitle=\"%%BOOKTITLE%%\" modelid=\"%%MODELID%%\" pindex=\"%%PINDEX%%\" eindex=\"%%EINDEX%%\" cindex=\"%%CINDEX%%\" text=\"%%TEXT%%\"/>";
-		String res = base.replace("%%BOOKID%%", Long.toString(myBookId)).replace("%%BOOKTITLE%%", myBookTitle).replace("%%MODELID%%", ModelId != null ? ModelId : "null").replace("%%TEXT%%", myText);
-		res = res.replace("%%PINDEX%%", Integer.toString(ParagraphIndex)).replace("%%EINDEX%%", Integer.toString(ElementIndex)).replace("%%CINDEX%%", Integer.toString(CharIndex));
+		String res = base.replace("%%BOOKID%%", Long.toString(myBookId))
+				.replace("%%BOOKTITLE%%", myBookTitle)
+				.replace("%%MODELID%%", ModelId != null ? ModelId : "null")
+				.replace("%%TEXT%%", myText)
+				.replace("%%PINDEX%%", Integer.toString(ParagraphIndex))
+				.replace("%%EINDEX%%", Integer.toString(ElementIndex))
+				.replace("%%CINDEX%%", Integer.toString(CharIndex));
 		System.out.println(res);
 		return res;
 	}

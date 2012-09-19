@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
+import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.android.util.UIUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
@@ -79,15 +80,23 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(this, "BOOKMARKS");
+		}
 		AllBooksBookmarks = Library.Instance().allBookmarks();
 		Collections.sort(AllBooksBookmarks, new Bookmark.ByTimeComparator());
+		
+		if (FBReaderApp.Instance() == null) {
+			new FBReaderApp();
+		}
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 
-		if (fbreader.Model != null) {
-			final long bookId = fbreader.Model.Book.getId();
-			for (Bookmark bookmark : AllBooksBookmarks) {
-				if (bookmark.getBookId() == bookId) {
-					myThisBookBookmarks.add(bookmark);
+		final Bookmark bookmark = Bookmark.fromString(getIntent().getStringExtra("BOOKMARK"));
+		if (bookmark != null) {
+			final long bookId = bookmark.getBookId();
+			for (Bookmark bm : AllBooksBookmarks) {
+				if (bm.getBookId() == bookId) {
+					myThisBookBookmarks.add(bm);
 				}
 			}
 
@@ -223,17 +232,12 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		bookmark.onOpen();
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final long bookId = bookmark.getBookId();
-		if ((fbreader.Model == null) || (fbreader.Model.Book.getId() != bookId)) {
-			final Book book = Book.getById(bookId);
-			if (book != null) {
-				finish();
-				fbreader.openBook(book, bookmark, null);
-			} else {
-				UIUtil.showErrorMessage(this, "cannotOpenBook");
-			}
-		} else {
+		final Book book = Book.getById(bookId);
+		if (book != null) {
 			finish();
-			fbreader.gotoBookmark(bookmark);
+			fbreader.openBook(book, bookmark, null);
+		} else {
+			UIUtil.showErrorMessage(this, "cannotOpenBook");
 		}
 	}
 

@@ -158,19 +158,21 @@ public final class FBReaderApp extends ZLApplication {
 				return;
 			}
 		}
-		final Book bookToOpen = book;
-		if (book == null) {
-			runWithMessage("loadingBook", new Runnable() {
-				public void run() {
-					openBookInternal(bookToOpen, bookmark);
-				}
-			}, postAction);
-			return;
+		Book tempBook = book;
+		if (tempBook == null) {
+			tempBook = Library.Instance().getRecentBook();
+			if (tempBook == null || !tempBook.File.exists()) {
+				tempBook = Book.getByFile(Library.getHelpFile());
+			}
+			if (tempBook == null) {
+				return;
+			}
 		}
-		final FormatPlugin p = PluginCollection.Instance().getPlugin(book.File);
+		final Book bookToOpen = tempBook;
+		final FormatPlugin p = PluginCollection.Instance().getPlugin(bookToOpen.File);
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
-			Library.Instance().addBookToRecentList(book);
+			Library.Instance().addBookToRecentList(bookToOpen);
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
@@ -181,11 +183,15 @@ public final class FBReaderApp extends ZLApplication {
 			return;
 		}
 		if (p.type() == FormatPlugin.Type.PLUGIN) {
-			Library.Instance().addBookToRecentList(book);
+			Library.Instance().addBookToRecentList(bookToOpen);
+			BookTextView.setModel(null);
+			FootnoteView.setModel(null);
+			clearTextCaches();
+			Model = null;
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
-					myPluginFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue(), bookmark == null ? "" : bookmark.writeToString());
+					myPluginFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue(), bookmark == null ? "" : bookmark.writeToString(), bookToOpen.getId());
 					closeWindow();
 				}
 			}, postAction);
@@ -266,17 +272,12 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	synchronized void openBookInternal(Book book, Bookmark bookmark) {
-		if (book == null) {
-			book = Library.Instance().getRecentBook();
-			if (book == null || !book.File.exists()) {
-				book = Book.getByFile(Library.getHelpFile());
-			}
-			if (book == null) {
+		if (Model != null) {
+			if (bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
 			}
-		}
-		if (Model != null) {
-			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
+			if (bookmark != null && book.File.getPath().equals(Model.Book.File.getPath())) {
+				gotoBookmark(bookmark);
 				return;
 			}
 		}
