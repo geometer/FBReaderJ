@@ -24,6 +24,8 @@ import java.io.*;
 
 import android.app.*;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -44,7 +46,7 @@ import org.geometerplus.zlibrary.core.filetypes.*;
 
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication();
-
+	
 	private static class ExtFileOpener implements ZLApplication.ExternalFileOpener {
 		private final Activity myActivity;
 
@@ -137,7 +139,13 @@ public abstract class ZLAndroidActivity extends Activity {
 			showErrorDialog("externalNotFound");
 			return;
 		}
+
+		@Override
+		public String readMetaInfo(ZLFile f, String appData) {
+				return null;
+		}
 	}
+	
 
 	
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
@@ -215,8 +223,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
 			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
 		}
+		
 	}
-
+	
 	protected abstract Runnable getPostponedInitAction();
 
 	private PowerManager.WakeLock myWakeLock;

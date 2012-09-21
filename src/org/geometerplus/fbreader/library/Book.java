@@ -22,13 +22,18 @@ package org.geometerplus.fbreader.library;
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.*;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -177,6 +182,22 @@ public class Book {
 		readMetaInfo(getPlugin());
 	}
 
+	private static class Reader extends ZLXMLReaderAdapter {
+		public Book book = null;
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			try {
+				if ("MetaInfo".equals(tag)) {
+					book.setTitle(attributes.getValue("title"));
+					book.addAuthor(attributes.getValue("author"));
+					book.addTag(attributes.getValue("subject"));
+				}
+			} catch (Throwable e) {
+			}
+			return false;
+		}
+	}
+	
 	private void readMetaInfo(FormatPlugin plugin) throws BookReadingException {
 		myEncoding = null;
 		myLanguage = null;
@@ -187,7 +208,23 @@ public class Book {
 
 		myIsSaved = false;
 
-		plugin.readMetaInfo(this);
+		if (plugin.type() == FormatPlugin.Type.PLUGIN) {
+			try {
+				String meta = ZLApplication.Instance().getPluginFileOpener().readMetaInfo(File, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(File).Id).getValue());
+				Reader r = new Reader();
+				r.book = this;
+				try {
+					r.read(new ByteArrayInputStream(meta.getBytes("UTF-8")));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+		} else {
+			plugin.readMetaInfo(this);
+		}
+
 
 		if (myTitle == null || myTitle.length() == 0) {
 			final String fileName = File.getShortName();
