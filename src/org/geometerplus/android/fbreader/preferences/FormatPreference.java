@@ -113,9 +113,6 @@ class FormatPreference extends ListPreference {
 		String extension = FileTypeCollection.Instance.typeById(myFormat).extension(FileTypeCollection.Instance.typeById(myFormat).mimeTypes().get(0));
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse("file:///sdcard/fgsfds." + extension));
-		for (String path : Formats.getExternalPlugins()) {
-			myPaths.add(path);
-		}
 		if (myIsJava) {
 			values.add(Formats.JAVA_OPTION);
 			names.add(myResource.getResource("java").getValue());
