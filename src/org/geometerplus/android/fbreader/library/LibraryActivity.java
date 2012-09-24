@@ -19,13 +19,20 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.util.HashMap;
+
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Base64;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -36,12 +43,15 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.formats.Formats;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -62,16 +72,9 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	private Book mySelectedBook;
 	
 	
-	private MetaInfoReader myService=null;
-	private ServiceConnection myServConn=new ServiceConnection() {
-		public void onServiceConnected(ComponentName className, IBinder binder) {
-			myService=MetaInfoReader.Stub.asInterface(binder);
-		}
-
-		public void onServiceDisconnected(ComponentName className) {
-			myService=null;
-		}
-	};
+	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
+	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
+	
 	private static class PluginFileOpener implements ZLApplication.PluginFileOpener {
 		private final Activity myActivity;
 
@@ -85,12 +88,34 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 
 		@Override
 		public String readMetaInfo(ZLFile f, String appData) {
-			if (((LibraryActivity)myActivity).myService == null) {
+			if (((LibraryActivity)myActivity).myServices.get(appData) == null) {
 				return null;
 			}
 			try {
-				return ((LibraryActivity)myActivity).myService.readMetaInfo(f.getPath());
+				return ((LibraryActivity)myActivity).myServices.get(appData).readMetaInfo(f.getPath());
 			} catch (RemoteException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+
+		@TargetApi(8)
+		@Override
+		public ZLImage readImage(ZLFile f, String appData) {
+			if (((LibraryActivity)myActivity).myServices.get(appData) == null) {
+				return null;
+			}
+			try {
+				String s = ((LibraryActivity)myActivity).myServices.get(appData).readBitmap(f.getPath());
+				try{
+			         byte [] encodeByte=Base64.decode(s,Base64.DEFAULT);
+			         Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+			         return new ZLBitmapImage(bitmap);
+			       }catch(Exception e){
+			         e.getMessage();
+			         return null;
+			       }
+			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
 			}
@@ -134,8 +159,19 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
 		}
 		
-		Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
-		bindService(i, myServConn, Context.BIND_AUTO_CREATE);
+		for (final String pack : Formats.getExternalPlugins()) {
+			ServiceConnection servConn=new ServiceConnection() {
+				public void onServiceConnected(ComponentName className, IBinder binder) {
+					myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
+				}
+
+				public void onServiceDisconnected(ComponentName className) {
+					myServices.remove(pack);
+				}
+			};
+			Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
+			bindService(i, servConn, Context.BIND_AUTO_CREATE);
+		}
 	}
 
 	@Override
@@ -154,7 +190,9 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		myLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
-		unbindService(myServConn);
+		for (ServiceConnection sc : myServConns.values()) {
+			unbindService(sc);
+		}
 	}
 
 	@Override

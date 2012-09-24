@@ -151,6 +151,7 @@ public class Book {
 	public void reloadInfoFromFile() {
 		try {
 			readMetaInfo();
+
 			save();
 		} catch (BookReadingException e) {
 			// ignore
@@ -590,8 +591,17 @@ public class Book {
 			}
 		}
 		ZLImage image = null;
+		
 		try {
-			image = getPlugin().readCover(File);
+			if (getPlugin().type() == FormatPlugin.Type.PLUGIN) {
+				try {
+					image = ZLApplication.Instance().getPluginFileOpener().readImage(File, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(File).Id).getValue());
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
+			} else {
+				image = getPlugin().readCover(File);
+			}
 		} catch (BookReadingException e) {
 			// ignore
 		}

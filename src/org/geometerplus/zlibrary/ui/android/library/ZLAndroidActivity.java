@@ -43,6 +43,7 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.zlibrary.core.filetypes.*;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication();
@@ -143,6 +144,12 @@ public abstract class ZLAndroidActivity extends Activity {
 		@Override
 		public String readMetaInfo(ZLFile f, String appData) {
 				return null;
+		}
+
+		@Override
+		public ZLImage readImage(ZLFile f, String appData) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 	

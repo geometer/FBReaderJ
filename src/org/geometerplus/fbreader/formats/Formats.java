@@ -48,6 +48,10 @@ public abstract class Formats {
 	public static ArrayList<String> getPredefinedFormats() {
 		return listFromString(PREDEFINED_FILETYPES.toLowerCase());
 	}
+	
+	public static ArrayList<String> getExternalPlugins() {
+		return listFromString(EXTERNAL_PLUGINS.toLowerCase());
+	}
 
 	public static ArrayList<String> getAllFormats() {
 		ArrayList<String> l = listFromString(PREDEFINED_FILETYPES.toLowerCase());
@@ -155,11 +159,14 @@ public abstract class Formats {
 		if ("fb2.zip".equals(filetype)) {
 			return getStatus("fb2");
 		}
+		if (filetypeOption(filetype) == null) {
+			return FormatPlugin.Type.NONE;
+		}
 		String pkg = filetypeOption(filetype).getValue();
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
 		if (pkg.equals("")) return FormatPlugin.Type.NONE;
-		for (String s : listFromString(EXTERNAL_PLUGINS)) {
+		for (String s : getExternalPlugins()) {
 			if (s.equalsIgnoreCase(pkg)) {
 				return FormatPlugin.Type.PLUGIN;
 			}

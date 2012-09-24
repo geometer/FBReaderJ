@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
@@ -38,6 +39,7 @@ public abstract class ZLApplication {
 	public interface PluginFileOpener {
 		public void openFile(ZLFile f, String appData, String bookmark, long bookId);
 		public String readMetaInfo(ZLFile f, String appData);
+		public ZLImage readImage(ZLFile f, String appData);
 	}
 
 	protected ExternalFileOpener myExternalFileOpener;
