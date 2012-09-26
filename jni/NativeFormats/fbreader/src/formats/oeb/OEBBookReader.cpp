@@ -74,10 +74,17 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 			break;
 		case READ_MANIFEST:
 			if (isOPFTag(ITEM, tagString)) {
-				const char *id = attributeValue(xmlattributes, "id");
 				const char *href = attributeValue(xmlattributes, "href");
-				if (id != 0 && href != 0) {
-					myIdToHref[id] = MiscUtil::decodeHtmlURL(href);
+				if (href != 0) {
+					const std::string sHref = MiscUtil::decodeHtmlURL(href);
+					const char *id = attributeValue(xmlattributes, "id");
+					const char *mediaType = attributeValue(xmlattributes, "media-type");
+					if (id != 0) {
+						myIdToHref[id] = sHref;
+					}
+					if (mediaType != 0) {
+						myHrefToMediatype[sHref] = mediaType;
+					}
 				}
 			}
 			break;
@@ -106,9 +113,18 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 						if (COVER == type) {
 							ZLFile imageFile(myFilePrefix + reference);
 							myCoverFileName = imageFile.path();
-							const std::string imageName = imageFile.name(false);
-							shared_ptr<const ZLImage> image = XHTMLImageFinder().readImage(imageFile);
+							const std::map<std::string,std::string>::const_iterator it =
+								myHrefToMediatype.find(reference);
+							const std::string mimeType =
+								it != myHrefToMediatype.end() ? it->second : std::string();
+							shared_ptr<const ZLImage> image;
+							if (ZLStringUtil::stringStartsWith(mimeType, "image/")) {
+								image = new ZLFileImage(imageFile, "", 0);
+							} else {
+								image = XHTMLImageFinder().readImage(imageFile);
+							}
 							if (!image.isNull()) {
+								const std::string imageName = imageFile.name(false);
 								myModelReader.setMainTextModel();
 								myModelReader.addImageReference(imageName, (short)0, true);
 								myModelReader.addImage(imageName, image);
