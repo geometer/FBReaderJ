@@ -27,7 +27,6 @@ import java.util.Arrays;
 public abstract class Formats {
 
 	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;doc;PDF;DjVu";
-	private static String EXTERNAL_PLUGINS = "org.geometerplus.android.fbreaderpdf";
 	
 	public static String JAVA_OPTION = "fbreader_java";
 	public static String NATIVE_OPTION = "fbreader_native";
@@ -49,10 +48,6 @@ public abstract class Formats {
 		return listFromString(PREDEFINED_FILETYPES.toLowerCase());
 	}
 	
-	public static ArrayList<String> getExternalPlugins() {
-		return listFromString(EXTERNAL_PLUGINS.toLowerCase());
-	}
-
 	public static ArrayList<String> getAllFormats() {
 		ArrayList<String> l = listFromString(PREDEFINED_FILETYPES.toLowerCase());
 		l.add("fb2.zip");
@@ -166,7 +161,7 @@ public abstract class Formats {
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
 		if (pkg.equals("")) return FormatPlugin.Type.NONE;
-		for (String s : getExternalPlugins()) {
+		for (String s : PluginCollection.Instance().getPluginPackages()) {
 			if (s.equalsIgnoreCase(pkg)) {
 				return FormatPlugin.Type.PLUGIN;
 			}

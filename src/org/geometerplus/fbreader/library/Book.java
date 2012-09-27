@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
@@ -209,9 +210,12 @@ public class Book {
 
 		myIsSaved = false;
 
-		if (plugin.type() == FormatPlugin.Type.PLUGIN) {
+
+		final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
+		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+		if (fplugin != null) {
 			try {
-				String meta = ZLApplication.Instance().getPluginFileOpener().readMetaInfo(File, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(File).Id).getValue());
+				String meta = ZLApplication.Instance().getPluginFileOpener().readMetaInfo(File, ((PluginFormatPlugin)fplugin).getPackage());
 				Reader r = new Reader();
 				r.book = this;
 				try {
@@ -593,9 +597,11 @@ public class Book {
 		ZLImage image = null;
 		
 		try {
-			if (getPlugin().type() == FormatPlugin.Type.PLUGIN) {
+			final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
+			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+			if (plugin != null) {
 				try {
-					image = ZLApplication.Instance().getPluginFileOpener().readImage(File, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(File).Id).getValue());
+					image = ZLApplication.Instance().getPluginFileOpener().readImage(File, ((PluginFormatPlugin)plugin).getPackage());
 				} catch (NullPointerException e) {
 					e.printStackTrace();
 				}

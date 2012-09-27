@@ -76,6 +76,14 @@ public class PluginCollection {
 		list.add(plugin);
 	}
 
+	public List<String> getPluginPackages() {
+		ArrayList<String> list = new ArrayList<String>();
+		for (FormatPlugin p : myPlugins.get(FormatPlugin.Type.PLUGIN)) {
+			list.add(((PluginFormatPlugin)p).getPackage());
+		}
+		return list;
+	}
+	
 	public FormatPlugin getPlugin(ZLFile file) {
 		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
 		if (fileType == null) {
@@ -86,7 +94,7 @@ public class PluginCollection {
 		}
 		return getPlugin(fileType, Formats.getStatus(fileType.Id));
 	}
-
+	
 	private FormatPlugin getOrCreateExternalPlugin(FileType fileType) {
 		boolean exists = true;
 		final List<FormatPlugin> list = myPlugins.get(FormatPlugin.Type.EXTERNAL);
