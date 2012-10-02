@@ -21,7 +21,11 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.application.*;
+import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
@@ -62,6 +66,8 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final ZLColorOption ImageViewBackgroundOption =
 		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
+	public final ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption =
+		new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
 	public static enum ImageTappingAction {
 		doNothing, selectImage, openImageView
 	}
@@ -153,6 +159,13 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
+		if (book != null || Model == null) {
+			runWithMessage("loadingBook", new Runnable() {
+				public void run() {
+					openBookInternal(book, bookmark);
+				}
+			}, postAction);
+		}
 		if (Model != null) {
 			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;

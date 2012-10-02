@@ -20,9 +20,7 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.ResolveInfo;
+import android.content.pm.*;
 import android.content.Intent;
 import android.preference.*;
 
@@ -30,16 +28,14 @@ import android.net.Uri;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.filetypes.FileType;
+import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.zlibrary.core.filetypes.*;
+import org.geometerplus.fbreader.filetype.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
-
-import android.app.AlertDialog;
-
-import android.util.Log;
 
 class FormatPreference extends ListPreference {
 	private final ZLStringOption myOption;
@@ -113,6 +109,7 @@ class FormatPreference extends ListPreference {
 		String extension = FileTypeCollection.Instance.typeById(myFormat).extension(FileTypeCollection.Instance.typeById(myFormat).mimeTypes().get(0));
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse("file:///sdcard/fgsfds." + extension));
+		myPaths.add("org.geometerplus.zlibrary.ui.android");
 		if (myIsJava) {
 			values.add(Formats.JAVA_OPTION);
 			names.add(myResource.getResource("java").getValue());
@@ -121,7 +118,7 @@ class FormatPreference extends ListPreference {
 			values.add(Formats.NATIVE_OPTION);
 			names.add(myResource.getResource("native").getValue());
 		}
-		FileType ft = FileTypeCollection.Instance.typeById(myFormat);
+		final FileType ft = FileTypeCollection.Instance.typeById(myFormat);
 		for (MimeType type : ft.mimeTypes()) {
 			intent.setDataAndType(Uri.parse("file:///sdcard/fgsfds." + extension), type.Name);
 			for (ResolveInfo packageInfo : pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)) {

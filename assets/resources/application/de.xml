@@ -269,6 +269,9 @@
 	<node name="Preferences">
 		<node name="directories" value="Verzeichnisse">
 			<node name="summary" value="Verzeichnisse in denen Dateien gesucht werden."/>
+			<node name="bookPath" value="Bücher"/>
+			<node name="fontPath" value="Schriftarten"/>
+			<node name="wallpaperPath" value="Hintergründe"/>
 			<node name="books" value="Bücher"/>
 			<node name="fonts" value="Schriftarten"/>
 			<node name="wallpapers" value="Hintergründe"/>
@@ -627,6 +630,11 @@
 				<node name="doNothing" value="Langes Antippen bewirkt nichts."/>
 				<node name="selectImage" value="Langes Antippen selektiert das Bild."/>
 				<node name="openImageView" value="Langes Antippen öffnet die Bildanzeige."/>
+			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Zurück-Menü">

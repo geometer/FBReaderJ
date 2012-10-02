@@ -48,8 +48,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
 	private final List<Bookmark> mySearchResults = new LinkedList<Bookmark>();
 	
-	private Bookmark current;
-
 	private ListView myThisBookView;
 	private ListView myAllBooksView;
 	private ListView mySearchResultsView;
@@ -89,8 +87,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (FBReaderApp.Instance() == null) {
 			new FBReaderApp();
 		}
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-
 		final Bookmark bookmark = Bookmark.fromString(getIntent().getStringExtra("BOOKMARK"));
 		if (bookmark != null) {
 			final long bookId = bookmark.getBookId();

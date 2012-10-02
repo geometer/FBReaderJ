@@ -134,6 +134,30 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return sortKey;
 	}
 
+	private static int compareStringsIgnoreCase(String s0, String s1) {
+	  	final int len = Math.min(s0.length(), s1.length());
+		for (int i = 0; i < len; ++i) {
+		  	char c0 = s0.charAt(i);
+		  	char c1 = s1.charAt(i);
+			if (c0 == c1) {
+			  	continue;
+			}
+			c0 = Character.toLowerCase(c0);
+			c1 = Character.toLowerCase(c1);
+			if (c0 == c1) {
+			  	continue;
+			}
+			return c0 - c1;
+		}
+		if (s0.length() > len) {
+		  	return 1;
+		}
+		if (s0.length() > len) {
+		  	return -1;
+		}
+		return 0;
+	}
+
 	public int compareTo(FBTree tree) {
 		final String key0 = getSortKey();
 		final String key1 = tree.getSortKey();
@@ -143,7 +167,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		if (key1 == null) {
 			return 1;
 		}
-		return key0.toLowerCase().compareTo(key1.toLowerCase());
+		return compareStringsIgnoreCase(key0, key1);
 	}
 
 	public String getSummary() {

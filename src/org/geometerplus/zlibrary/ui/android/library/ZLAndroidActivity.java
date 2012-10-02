@@ -76,6 +76,7 @@ public abstract class ZLAndroidActivity extends Activity {
 				showErrorDialog("unzipFailed");
 				return;
 			}
+			String extension = f.getExtension();
 			Uri uri = Uri.parse("file://" + f.getPath());
 			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
 			LaunchIntent.setPackage(appData);
@@ -232,7 +233,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 		
 	}
-	
+
 	protected abstract Runnable getPostponedInitAction();
 
 	private PowerManager.WakeLock myWakeLock;

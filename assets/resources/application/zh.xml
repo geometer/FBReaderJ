@@ -619,6 +619,11 @@
 				<node name="selectImage" value="长按选择图像"/>
 				<node name="openImageView" value="长按打开图像"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="取消菜单设定">
 			<node name="summary" value="设定回退按键动作"/>
@@ -664,7 +669,7 @@
 				<node name="url" value="http://www.fbreader.org/"/>
 			</node>
 			<node name="email" value="给我们发送邮件">
-				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
 			<node name="twitter" value="关注我们的twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>

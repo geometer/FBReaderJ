@@ -24,10 +24,14 @@ import org.geometerplus.zlibrary.core.filetypes.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.filetypes.FileType;
+import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
+
 public abstract class Formats {
 
 	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;doc;PDF;DjVu";
-	
+
 	public static String JAVA_OPTION = "fbreader_java";
 	public static String NATIVE_OPTION = "fbreader_native";
 
@@ -47,7 +51,7 @@ public abstract class Formats {
 	public static ArrayList<String> getPredefinedFormats() {
 		return listFromString(PREDEFINED_FILETYPES.toLowerCase());
 	}
-	
+
 	public static ArrayList<String> getAllFormats() {
 		ArrayList<String> l = listFromString(PREDEFINED_FILETYPES.toLowerCase());
 		l.add("fb2.zip");

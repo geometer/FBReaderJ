@@ -59,6 +59,7 @@ private:
 
 	std::string myFilePrefix;
 	std::map<std::string,std::string> myIdToHref;
+	std::map<std::string,std::string> myHrefToMediatype;
 	std::vector<std::string> myHtmlFileNames;
 	std::string myNCXTOCFileName;
 	std::string myCoverFileName;

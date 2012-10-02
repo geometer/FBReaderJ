@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Về FBReaderJ</book-title> <lang>en</lang></title-info></description>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Về FBReaderJ</book-title> <lang>vi</lang></title-info></description>
 <body>
 <title><p>Về phiên bản FBReaderJ &FBReaderVersion;</p></title>
 <p><code>(Dịch sang Tiếng Việt bởi Phạm Văn Hùng_Firestork (Có thể không chính xác 100% do trình độ người dịch có hạn. Nếu muốn hiểu kĩ, vui lòng đọc bản tiếng Anh))</code> </p>
