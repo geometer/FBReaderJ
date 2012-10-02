@@ -32,7 +32,6 @@ import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.filetype.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
