@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.ui.android.library;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -31,23 +33,23 @@ import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filetypes.FileType;
-import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
-
 import org.geometerplus.android.util.UIUtil;
+
+import org.geometerplus.zlibrary.core.filetypes.*;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication();
-
-	private static class FileOpener implements ZLApplication.ExternalFileOpener {
+	
+	private static class ExtFileOpener implements ZLApplication.ExternalFileOpener {
 		private final Activity myActivity;
 
-		public FileOpener(Activity activity) {
+		public ExtFileOpener(Activity activity) {
 			myActivity = activity;
 		}
 
@@ -91,6 +93,67 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
+	private static class PluginFileOpener implements ZLApplication.PluginFileOpener {
+		private final Activity myActivity;
+
+		public PluginFileOpener(Activity activity) {
+			myActivity = activity;
+		}
+
+		private void showErrorDialog(final String errName) {
+			myActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
+					new AlertDialog.Builder(myActivity)
+						.setTitle(title)
+						.setIcon(0)
+						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						})
+						.create().show();
+					}
+			});
+		}
+
+		public void openFile(ZLFile f, String appData, String bookmark, long bookId) {
+			if (f == null) {
+				showErrorDialog("unzipFailed");
+				return;
+			}
+			Uri uri = Uri.parse("file://" + f.getPath());
+			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
+			LaunchIntent.setPackage(appData);
+			LaunchIntent.setData(uri);
+			LaunchIntent.putExtra("BOOKMARK", bookmark);
+			LaunchIntent.putExtra("BOOKID", bookId);
+			FileType ft = FileTypeCollection.Instance.typeForFile(f);
+			for (MimeType type : ft.mimeTypes()) {
+				LaunchIntent.setDataAndType(uri, type.Name);
+				try {
+					myActivity.startActivity(LaunchIntent);
+					return;
+				} catch (ActivityNotFoundException e) {
+				}
+			}
+			showErrorDialog("externalNotFound");
+			return;
+		}
+
+		@Override
+		public String readMetaInfo(ZLFile f, String appData) {
+				return null;
+		}
+
+		@Override
+		public ZLImage readImage(ZLFile f, String appData) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	}
+	
+
+	
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
 
@@ -159,9 +222,13 @@ public abstract class ZLAndroidActivity extends Activity {
 		}.start();
 
 		ZLApplication.Instance().getViewWidget().repaint();
-		if (!ZLApplication.Instance().fileOpenerIsSet()) {
-			ZLApplication.Instance().setFileOpener(new FileOpener(this));
+		if (!ZLApplication.Instance().externalFileOpenerIsSet()) {
+			ZLApplication.Instance().setExternalFileOpener(new ExtFileOpener(this));
 		}
+		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
+			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
+		}
+		
 	}
 
 	protected abstract Runnable getPostponedInitAction();

@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.filetypes.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -156,10 +158,18 @@ public abstract class Formats {
 		if ("fb2.zip".equals(filetype)) {
 			return getStatus("fb2");
 		}
+		if (filetypeOption(filetype) == null) {
+			return FormatPlugin.Type.NONE;
+		}
 		String pkg = filetypeOption(filetype).getValue();
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
 		if (pkg.equals("")) return FormatPlugin.Type.NONE;
+		for (String s : PluginCollection.Instance().getPluginPackages()) {
+			if (s.equalsIgnoreCase(pkg)) {
+				return FormatPlugin.Type.PLUGIN;
+			}
+		}
 		return FormatPlugin.Type.EXTERNAL;
 	}
 }

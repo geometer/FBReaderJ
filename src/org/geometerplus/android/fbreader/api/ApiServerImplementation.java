@@ -21,15 +21,20 @@ package org.geometerplus.android.fbreader.api;
 
 import java.util.*;
 
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.util.Log;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.*;
 
+import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.library.Book;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
@@ -37,6 +42,12 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			new Intent(ApiClientImplementation.ACTION_API_CALLBACK)
 				.putExtra(ApiClientImplementation.EVENT_TYPE, eventType)
 		);
+	}
+
+	private Context myContext;
+	
+	public ApiServerImplementation(Context c) {
+		myContext = c;
 	}
 
 	private final FBReaderApp myReader = (FBReaderApp)FBReaderApp.Instance();
@@ -182,10 +193,19 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				case DELETE_ZONEMAP:
 					deleteZoneMap(((ApiObject.String)parameters[0]).Value);
 					return ApiObject.Void.Instance;
+				case GET_STORED_POSITION:
+					return getStoredPosition(((ApiObject.String)parameters[0]).Value);
+				case SET_STORED_POSITION:
+					storeTextPosition(((ApiObject.String)parameters[0]).Value, (TextPosition)parameters[1]);
+					return ApiObject.Void.Instance;
+				case GET_BOOK_ID:
+					return ApiObject.envelope(getBookId(((ApiObject.String)parameters[0]).Value));
+
 				default:
 					return unsupportedMethodError(method);
 			}
 		} catch (Throwable e) {
+			e.printStackTrace();
 			return new ApiObject.Error("Exception in method " + method + ": " + e);
 		}
 	}
@@ -462,5 +482,40 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
 		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
+	}
+	
+	public TextPosition getStoredPosition(String file) {
+		Log.d("api", "get position of " + file);
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(myContext, "API");
+		}
+		ZLTextPosition pos = Book.getByFile(ZLFile.createFileByPath(file)).getStoredPosition();
+		if (pos == null) {
+			Log.d("api", "position is null, returning zeros");
+			TextPosition res = new TextPosition(0,0,0);
+			return res;
+		} else {
+			TextPosition res = new TextPosition(pos.getParagraphIndex(), pos.getElementIndex(), pos.getCharIndex());
+			Log.d("api", "returning: " + Integer.toString(pos.getParagraphIndex()));
+			return res;
+		}
+	}
+	
+	public void storeTextPosition(String file, TextPosition pos) {
+		Log.d("api", "set position of " + file);
+		Log.d("api", "setting: " + Integer.toString(pos.ParagraphIndex));
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(myContext, "API");
+		}
+		ZLTextPosition res = new ZLTextFixedPosition(pos.ParagraphIndex, pos.ElementIndex, pos.CharIndex);
+		Book.getByFile(ZLFile.createFileByPath(file)).storePosition(res);
+	}
+	
+	public long getBookId(String file) {
+		Log.d("api", "get book id of " + file);
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(myContext, "API");
+		}
+		return Book.getByFile(ZLFile.createFileByPath(file)).getId();
 	}
 }

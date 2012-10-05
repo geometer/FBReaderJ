@@ -23,10 +23,10 @@ import java.io.File;
 
 import android.net.Uri;
 
-import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.zlibrary.core.filetypes.*;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
@@ -60,6 +60,9 @@ public class BookUrlInfo extends UrlInfo {
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
 	public static String makeBookFileName(String url, FileType fileType, MimeType mimeType, Type resolvedReferenceType) {
+		return makeBookFileName(url, fileType.extension(mimeType), resolvedReferenceType);
+	}
+	public static String makeBookFileName(String url, String extension, Type resolvedReferenceType) {
 		final Uri uri = Uri.parse(url);
 
 		String host = uri.getHost();
@@ -101,7 +104,7 @@ public class BookUrlInfo extends UrlInfo {
 		}
 
 		String ext = null;
-		ext = "." + fileType.extension(mimeType);
+		ext = "." + extension;
 
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`

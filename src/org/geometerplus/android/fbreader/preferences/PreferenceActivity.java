@@ -83,6 +83,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
 
+		if (FBReaderApp.Instance() == null) {
+			new FBReaderApp();
+		}
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		final ColorProfile profile = fbReader.getColorProfile();

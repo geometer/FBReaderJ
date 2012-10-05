@@ -19,24 +19,21 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.*;
-
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.*;
 import android.content.Intent;
-import android.net.Uri;
 import android.preference.*;
-import android.util.Log;
+
+import android.net.Uri;
+
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
-
-import org.geometerplus.fbreader.formats.*;
-
 import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
 
 class FormatPreference extends ListPreference {
@@ -54,7 +51,7 @@ class FormatPreference extends ListPreference {
 
 		myOption = Formats.filetypeOption(formatName);
 		myFormat = formatName;
-		final FileType ft = FileTypeCollection.Instance.typeById(myFormat);
+		FileType ft = FileTypeCollection.Instance.typeById(myFormat);
 		setTitle(ft.Id);
 		myScreen = scr;
 		myIsJava = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.JAVA) != null;
@@ -107,7 +104,8 @@ class FormatPreference extends ListPreference {
 		final PackageManager pm = getContext().getPackageManager();
 		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<String> values = new ArrayList<String>();
-		String extension = FileTypeCollection.Instance.typeById(myFormat).extension();
+		//FIXME: is it right way to obtain extension?
+		String extension = FileTypeCollection.Instance.typeById(myFormat).extension(FileTypeCollection.Instance.typeById(myFormat).mimeTypes().get(0));
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse("file:///sdcard/fgsfds." + extension));
 		myPaths.add("org.geometerplus.zlibrary.ui.android");

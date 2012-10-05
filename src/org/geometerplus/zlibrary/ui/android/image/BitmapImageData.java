@@ -17,23 +17,19 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.zlibrary.ui.android.image;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.library.Bookmark;
 
-import android.content.Intent;
+import android.graphics.*;
 
-class ShowBookmarksAction extends RunActivityAction {
-	ShowBookmarksAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader, BookmarksActivity.class);
+final class BitmapImageData extends ZLAndroidImageData {
+	private final Bitmap myBitmap;
+
+	BitmapImageData(ZLBitmapImage image) {
+		myBitmap = image.getBitmap();
 	}
-	
-	@Override
-	protected void run(Object ... params) {
-		Intent i = new Intent(BaseActivity.getApplicationContext(), myActivityClass);
-		String s = ((FBReaderApp)FBReaderApp.Instance()).addBookmark(20, true).writeToString();
-		i.putExtra("BOOKMARK", s);
-		BaseActivity.startActivity(i);
+
+	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
+		return myBitmap;
 	}
 }

@@ -64,4 +64,9 @@ interface ApiMethods {
 
 	int GET_TAPZONE_ACTION = 931;
 	int SET_TAPZONE_ACTION = 932;
+	
+	// for pdf plugin
+	int GET_STORED_POSITION = 1001;
+	int SET_STORED_POSITION = 1002;
+	int GET_BOOK_ID = 1003;
 }

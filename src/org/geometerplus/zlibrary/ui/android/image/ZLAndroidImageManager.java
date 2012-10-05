@@ -31,6 +31,9 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 				return null;
 			}
 			return new InputStreamImageData(singleImage);
+		} else if (image instanceof ZLBitmapImage) {
+			final ZLBitmapImage bitmapImage = (ZLBitmapImage)image;
+			return new BitmapImageData(bitmapImage);
 		} else {
 			//TODO
 			return null;

@@ -17,23 +17,42 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.library.Bookmark;
+import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
-import android.content.Intent;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.library.Book;
 
-class ShowBookmarksAction extends RunActivityAction {
-	ShowBookmarksAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader, BookmarksActivity.class);
-	}
+public class PdfPluginFormatPlugin extends PluginFormatPlugin {
+
+	private final String PACKAGE = "org.geometerplus.android.fbreaderpdf";//also in formats
 	
-	@Override
-	protected void run(Object ... params) {
-		Intent i = new Intent(BaseActivity.getApplicationContext(), myActivityClass);
-		String s = ((FBReaderApp)FBReaderApp.Instance()).addBookmark(20, true).writeToString();
-		i.putExtra("BOOKMARK", s);
-		BaseActivity.startActivity(i);
+	public PdfPluginFormatPlugin() {
+		super("PDF");
 	}
+
+	@Override
+	public String getPackage() {
+		return PACKAGE;
+	}
+
+	@Override
+	public void readMetaInfo(Book book) throws BookReadingException {
+		//TODO
+	}
+
+	@Override
+	public ZLImage readCover(ZLFile file) {
+		//TODO
+		return null;
+	}
+
+	@Override
+	public String readAnnotation(ZLFile file) {
+		//TODO
+		return null;
+	}
+
 }

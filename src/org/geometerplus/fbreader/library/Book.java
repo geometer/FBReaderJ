@@ -22,13 +22,19 @@ package org.geometerplus.fbreader.library;
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.*;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.filetypes.FileType;
+import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -70,12 +76,15 @@ public class Book {
 	}
 
 	public static Book getByFile(ZLFile bookFile) {
+		System.err.println("getByFile");
 		if (bookFile == null) {
+			System.err.println("bookFile == null");
 			return null;
 		}
 
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
 		if (physicalFile != null && !physicalFile.exists()) {
+			System.err.println("!physicalFile.exists()");
 			return null;
 		}
 
@@ -87,6 +96,7 @@ public class Book {
 		}
 
 		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
+			System.err.println("return book (1)");
 			return book;
 		}
 		fileInfos.save();
@@ -98,10 +108,12 @@ public class Book {
 				book.readMetaInfo();
 			}
 		} catch (BookReadingException e) {
+			e.printStackTrace();
 			return null;
 		}
 
 		book.save();
+		System.err.println("return book (2)");
 		return book;
 	}
 
@@ -140,6 +152,7 @@ public class Book {
 	public void reloadInfoFromFile() {
 		try {
 			readMetaInfo();
+
 			save();
 		} catch (BookReadingException e) {
 			// ignore
@@ -171,6 +184,22 @@ public class Book {
 		readMetaInfo(getPlugin());
 	}
 
+	private static class Reader extends ZLXMLReaderAdapter {
+		public Book book = null;
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			try {
+				if ("MetaInfo".equals(tag)) {
+					book.setTitle(attributes.getValue("title"));
+					book.addAuthor(attributes.getValue("author"));
+					book.addTag(attributes.getValue("subject"));
+				}
+			} catch (Throwable e) {
+			}
+			return false;
+		}
+	}
+	
 	private void readMetaInfo(FormatPlugin plugin) throws BookReadingException {
 		myEncoding = null;
 		myLanguage = null;
@@ -181,7 +210,26 @@ public class Book {
 
 		myIsSaved = false;
 
-		plugin.readMetaInfo(this);
+
+		final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
+		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+		if (fplugin != null) {
+			try {
+				String meta = ZLApplication.Instance().getPluginFileOpener().readMetaInfo(File, ((PluginFormatPlugin)fplugin).getPackage());
+				Reader r = new Reader();
+				r.book = this;
+				try {
+					r.read(new ByteArrayInputStream(meta.getBytes("UTF-8")));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+		} else {
+			plugin.readMetaInfo(this);
+		}
+
 
 		if (myTitle == null || myTitle.length() == 0) {
 			final String fileName = File.getShortName();
@@ -547,8 +595,19 @@ public class Book {
 			}
 		}
 		ZLImage image = null;
+		
 		try {
-			image = getPlugin().readCover(File);
+			final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
+			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+			if (plugin != null) {
+				try {
+					image = ZLApplication.Instance().getPluginFileOpener().readImage(File, ((PluginFormatPlugin)plugin).getPackage());
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
+			} else {
+				image = getPlugin().readCover(File);
+			}
 		} catch (BookReadingException e) {
 			// ignore
 		}

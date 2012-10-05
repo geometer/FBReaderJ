@@ -19,8 +19,13 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.text.view.*;
 
 public final class Bookmark extends ZLTextFixedPosition {
@@ -71,11 +76,15 @@ public final class Bookmark extends ZLTextFixedPosition {
 	}
 
 	public Bookmark(Book book, String modelId, ZLTextPosition position, String text, boolean isVisible) {
+		this(book.getId(), book.getTitle(), modelId, position, text, isVisible);
+	}
+	
+	public Bookmark(Long bookId, String bookTitle, String modelId, ZLTextPosition position, String text, boolean isVisible) {
 		super(position);
 
 		myId = -1;
-		myBookId = book.getId();
-		myBookTitle = book.getTitle();
+		myBookId = bookId;
+		myBookTitle = bookTitle;
 		myText = text;
 		myCreationDate = new Date();
 		ModelId = modelId;
@@ -237,4 +246,55 @@ mainLoop:
 		}
 		return builder.toString();
 	}
+	
+	public String writeToString() {//TODO: 
+		String base = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Bookmark bookid=\"%%BOOKID%%\" booktitle=\"%%BOOKTITLE%%\" modelid=\"%%MODELID%%\" pindex=\"%%PINDEX%%\" eindex=\"%%EINDEX%%\" cindex=\"%%CINDEX%%\" text=\"%%TEXT%%\"/>";
+		String res = base.replace("%%BOOKID%%", Long.toString(myBookId))
+				.replace("%%BOOKTITLE%%", myBookTitle)
+				.replace("%%MODELID%%", ModelId != null ? ModelId : "null")
+				.replace("%%TEXT%%", myText)
+				.replace("%%PINDEX%%", Integer.toString(ParagraphIndex))
+				.replace("%%EINDEX%%", Integer.toString(ElementIndex))
+				.replace("%%CINDEX%%", Integer.toString(CharIndex));
+		System.out.println(res);
+		return res;
+	}
+	
+	private static class Reader extends ZLXMLReaderAdapter {
+		public Bookmark result = null;
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			try {
+				if ("Bookmark".equals(tag)) {
+					final ZLTextFixedPosition pos = new ZLTextFixedPosition(
+                        Integer.parseInt(attributes.getValue("pindex")),
+                        Integer.parseInt(attributes.getValue("eindex")),
+					    Integer.parseInt(attributes.getValue("cindex"))
+                    );
+					result = new Bookmark(
+							Long.parseLong(attributes.getValue("bookid")),
+							attributes.getValue("booktitle"),
+							attributes.getValue("modelid").equals("null") ? null : attributes.getValue("modelid"),
+							pos,
+							attributes.getValue("text"),
+							true
+						);
+				}
+			} catch (Throwable e) {
+			}
+			return false;
+		}
+	}
+	
+	public static Bookmark fromString(String s) {
+		Reader r = new Reader();
+		try {
+			r.read(new ByteArrayInputStream(s.getBytes("UTF-8")));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return r.result;
+	}
+	
 }

@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
+import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.android.util.UIUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
@@ -46,7 +47,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	List<Bookmark> AllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
 	private final List<Bookmark> mySearchResults = new LinkedList<Bookmark>();
-
+	
 	private ListView myThisBookView;
 	private ListView myAllBooksView;
 	private ListView mySearchResultsView;
@@ -80,15 +81,21 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(this, "BOOKMARKS");
+		}
 		AllBooksBookmarks = Library.Instance().allBookmarks();
 		Collections.sort(AllBooksBookmarks, new Bookmark.ByTimeComparator());
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-
-		if (fbreader.Model != null) {
-			final long bookId = fbreader.Model.Book.getId();
-			for (Bookmark bookmark : AllBooksBookmarks) {
-				if (bookmark.getBookId() == bookId) {
-					myThisBookBookmarks.add(bookmark);
+		
+		if (FBReaderApp.Instance() == null) {
+			new FBReaderApp();
+		}
+		final Bookmark bookmark = Bookmark.fromString(getIntent().getStringExtra("BOOKMARK"));
+		if (bookmark != null) {
+			final long bookId = bookmark.getBookId();
+			for (Bookmark bm : AllBooksBookmarks) {
+				if (bm.getBookId() == bookId) {
+					myThisBookBookmarks.add(bm);
 				}
 			}
 
@@ -109,6 +116,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			return;
 		}
+		setIntent(intent);
 		String pattern = intent.getStringExtra(SearchManager.QUERY);
 		myBookmarkSearchPatternOption.setValue(pattern);
 
@@ -211,8 +219,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private void addBookmark() {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		final Bookmark bookmark = fbreader.addBookmark(20, true);
+		final Bookmark bookmark = Bookmark.fromString(getIntent().getStringExtra("BOOKMARK"));
 		if (bookmark != null) {
 			myThisBookBookmarks.add(0, bookmark);
 			AllBooksBookmarks.add(0, bookmark);

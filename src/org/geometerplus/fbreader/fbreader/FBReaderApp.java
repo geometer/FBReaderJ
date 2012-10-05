@@ -27,6 +27,9 @@ import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.application.*;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
@@ -37,6 +40,9 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.zlibrary.core.filetypes.*;
+
+import android.util.Log;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -161,19 +167,45 @@ public final class FBReaderApp extends ZLApplication {
 			}, postAction);
 		}
 		if (Model != null) {
-			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
+			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
 			}
 		}
-		final Book bookToOpen = book;
-		final FormatPlugin p = PluginCollection.Instance().getPlugin(book.File);
+		Book tempBook = book;
+		if (tempBook == null) {
+			tempBook = Library.Instance().getRecentBook();
+			if (tempBook == null || !tempBook.File.exists()) {
+				tempBook = Book.getByFile(Library.getHelpFile());
+			}
+			if (tempBook == null) {
+				return;
+			}
+		}
+		final Book bookToOpen = tempBook;
+		final FormatPlugin p = PluginCollection.Instance().getPlugin(bookToOpen.File);
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
-			Library.Instance().addBookToRecentList(book);
+			Library.Instance().addBookToRecentList(bookToOpen);
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
-					myFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue());
+					myExternalFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue());
+					closeWindow();
+				}
+			}, postAction);
+			return;
+		}
+		if (p.type() == FormatPlugin.Type.PLUGIN) {
+			Library.Instance().addBookToRecentList(bookToOpen);
+			BookTextView.setModel(null);
+			FootnoteView.setModel(null);
+			clearTextCaches();
+			Model = null;
+			runWithMessage("extract", new Runnable() {
+				public void run() {
+					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
+					myPluginFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue(), bookmark == null ? "" : bookmark.writeToString(), bookToOpen.getId());
+					closeWindow();
 				}
 			}, postAction);
 			return;
@@ -253,17 +285,12 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	synchronized void openBookInternal(Book book, Bookmark bookmark) {
-		if (book == null) {
-			book = Library.Instance().getRecentBook();
-			if (book == null || !book.File.exists()) {
-				book = Book.getByFile(Library.getHelpFile());
-			}
-			if (book == null) {
+		if (Model != null) {
+			if (bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
 			}
-		}
-		if (Model != null) {
-			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
+			if (bookmark != null && book.File.getPath().equals(Model.Book.File.getPath())) {
+				gotoBookmark(bookmark);
 				return;
 			}
 		}
