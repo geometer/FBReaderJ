@@ -8,6 +8,7 @@
 * Fixed library duplicates issue
 * Library speed optimization
 * Images fitting option
+* Fixed crash on some ePubs from Project Gutenberg
 * Can add custom catalogs even if opensearch links are not fully correct
 * Fixed curl page turning animation on devices with Android 4.0.3/4.0.4
 * More API methods
