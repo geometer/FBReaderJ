@@ -17,8 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <iostream>
-
 #include <ZLFile.h>
 #include <ZLInputStream.h>
 #include <ZLLogger.h>
@@ -41,7 +39,7 @@ bool DocPlugin::providesMetaInfo() const {
 }
 
 const std::string DocPlugin::supportedFileType() const {
-	return "doc";
+	return "MS Word document";
 }
 
 bool DocPlugin::acceptsFile(const ZLFile &file) const {
