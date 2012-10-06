@@ -55,4 +55,9 @@ class SimpleFileType extends FileType {
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? myMimeTypes.get(0) : MimeType.NULL;
 	}
+
+	@Override
+	public String toString() {
+		return "SimpleFileType [" + Id + "]";
+	}
 }
