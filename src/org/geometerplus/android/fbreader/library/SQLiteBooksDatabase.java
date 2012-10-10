@@ -75,11 +75,11 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		if (version >= currentVersion) {
 			return;
 		}
-		UIUtil.wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
+		UIUtil.wait(version == 0 ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
 			public void run() {
 				myDatabase.beginTransaction();
 
-				switch (version) {
+				switch (myDatabase.getVersion()) {
 					case 0:
 						createTables();
 					case 1:
@@ -120,10 +120,10 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables18();
 				}
 				myDatabase.setTransactionSuccessful();
+				myDatabase.setVersion(currentVersion);
 				myDatabase.endTransaction();
 
 				myDatabase.execSQL("VACUUM");
-				myDatabase.setVersion(currentVersion);
 			}
 		}, context);
 	}
