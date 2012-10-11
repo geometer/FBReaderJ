@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.text.model.ZLTextStyleEntry;
 
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
-public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTextStyleEntry.Feature, ZLTextStyleEntry.FontModifier {
+public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyleEntry.Feature, ZLTextStyleEntry.FontModifier {
 	private final ZLTextStyleEntry myEntry;
 
 	public ZLTextExplicitlyDecoratedStyle(ZLTextStyle base, ZLTextStyleEntry entry) {
@@ -34,13 +34,15 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 		myEntry = entry;
 	}
 
-	public String getFontFamily() {
+	@Override
+	protected String getFontFamilyInternal() {
 		if (myEntry.isFeatureSupported(FONT_FAMILY)) {
 			// TODO: implement
 		}
 		return Base.getFontFamily();
 	}
-	public int getFontSize(ZLTextMetrics metrics) {
+	@Override
+	protected int getFontSizeInternal(ZLTextMetrics metrics) {
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
 				return Base.Base.getFontSize(metrics);
@@ -58,7 +60,8 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 		return Base.getFontSize(metrics);
 	}
 
-	public boolean isBold() {
+	@Override
+	protected boolean isBoldInternal() {
 		switch (myEntry.getFontModifier(FONT_MODIFIER_BOLD)) {
 			case B3_TRUE:
 				return true;
@@ -68,7 +71,8 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 				return Base.isBold();
 		}
 	}
-	public boolean isItalic() {
+	@Override
+	protected boolean isItalicInternal() {
 		switch (myEntry.getFontModifier(FONT_MODIFIER_ITALIC)) {
 			case B3_TRUE:
 				return true;
@@ -78,7 +82,8 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 				return Base.isItalic();
 		}
 	}
-	public boolean isUnderline() {
+	@Override
+	protected boolean isUnderlineInternal() {
 		switch (myEntry.getFontModifier(FONT_MODIFIER_UNDERLINED)) {
 			case B3_TRUE:
 				return true;
@@ -88,7 +93,8 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 				return Base.isUnderline();
 		}
 	}
-	public boolean isStrikeThrough() {
+	@Override
+	protected boolean isStrikeThroughInternal() {
 		switch (myEntry.getFontModifier(FONT_MODIFIER_STRIKEDTHROUGH)) {
 			case B3_TRUE:
 				return true;
@@ -115,7 +121,8 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 		// TODO: implement
 		return Base.getLineSpacePercent();
 	}
-	public int getVerticalShift() {
+	@Override
+	protected int getVerticalShiftInternal() {
 		// TODO: implement
 		return Base.getVerticalShift();
 	}
