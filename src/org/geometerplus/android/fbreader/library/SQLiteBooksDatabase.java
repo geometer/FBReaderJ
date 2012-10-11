@@ -75,11 +75,11 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		if (version >= currentVersion) {
 			return;
 		}
-		UIUtil.wait((version == 0) ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
+		UIUtil.wait(version == 0 ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
 			public void run() {
 				myDatabase.beginTransaction();
 
-				switch (version) {
+				switch (myDatabase.getVersion()) {
 					case 0:
 						createTables();
 					case 1:
@@ -120,10 +120,10 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables18();
 				}
 				myDatabase.setTransactionSuccessful();
+				myDatabase.setVersion(currentVersion);
 				myDatabase.endTransaction();
 
 				myDatabase.execSQL("VACUUM");
-				myDatabase.setVersion(currentVersion);
 			}
 		}, context);
 	}
@@ -294,7 +294,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void updateBookInfo(long bookId, long fileId, String encoding, String language, String title) {
 		if (myUpdateBookInfoStatement == null) {
 			myUpdateBookInfoStatement = myDatabase.compileStatement(
-				"UPDATE Books SET file_id = ?, encoding = ?, language = ?, title = ? WHERE book_id = ?"
+				"UPDATE OR IGNORE Books SET file_id = ?, encoding = ?, language = ?, title = ? WHERE book_id = ?"
 			);
 		}
 		myUpdateBookInfoStatement.bindLong(1, fileId);
@@ -1145,7 +1145,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,file_name FROM Books", null
 		);
 		final SQLiteStatement deleteStatement = myDatabase.compileStatement("DELETE FROM Books WHERE book_id = ?");
-		final SQLiteStatement updateStatement = myDatabase.compileStatement("UPDATE Books SET file_id = ? WHERE book_id = ?");
+		final SQLiteStatement updateStatement = myDatabase.compileStatement("UPDATE OR IGNORE Books SET file_id = ? WHERE book_id = ?");
 		while (cursor.moveToNext()) {
 			final long bookId = cursor.getLong(0);
 			final long fileId = infoSet.getId(ZLFile.createFileByPath(cursor.getString(1)));

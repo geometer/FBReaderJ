@@ -1,13 +1,15 @@
-===== 2.0 beta 7 (Sep ??, 2012) =====
+===== 2.0 beta 7 (Oct ??, 2012) =====
 * All changes from 1.6
 * 'Open book in external program' feature
 * Multiple directories for user's fonts and wallpapers
 
-===== 1.6.0 (Sep ??, 2012) =====
+===== 1.6.0/1.6.1 (Oct 06, 2012) =====
 * MS Word (.doc) format support
 * Fixed library duplicates issue
 * Library speed optimization
 * Images fitting option
+* Fixed crash on some ePubs from Project Gutenberg
+* Fixed possible crash on book description displaying
 * Can add custom catalogs even if opensearch links are not fully correct
 * Fixed curl page turning animation on devices with Android 4.0.3/4.0.4
 * More API methods
@@ -15,6 +17,7 @@
 * Norwegian localization by Haakon Meland Eriksen
 * Turkish localization by SonySinger
 * Updated Chinese localization by Chris Yu
+* Updated French localization by Mathias Monnerville
 * Updated German localization by Ingolf Kübler
 * Updated Ukrainian localization by Nazariy Makarenko
 

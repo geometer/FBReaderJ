@@ -114,4 +114,9 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public EncodingCollection supportedEncodings() {
 		return JavaEncodingCollection.Instance();
 	}
+
+	@Override
+	public String toString() {
+		return "NativeFormatPlugin [" + supportedFileType() + "]";
+	}
 }
