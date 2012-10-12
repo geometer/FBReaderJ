@@ -189,6 +189,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		);
 
 		canvas.drawPath(myEdgePath, myEdgePaint);
+		/*
 		canvas.save();
 		/*
 		canvas.clipPath(myEdgePath);
