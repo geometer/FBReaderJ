@@ -56,7 +56,6 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setFocusableInTouchMode(true);
 		setDrawingCacheEnabled(false);
 		setOnLongClickListener(this);
-	  	setLayerType(LAYER_TYPE_SOFTWARE, null);
 	}
 
 	@Override
@@ -93,16 +92,22 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private AnimationProvider myAnimationProvider;
 	private ZLView.Animation myAnimationType;
+	private int myStoredLayerType = -1;
 	private AnimationProvider getAnimationProvider() {
 		final ZLView.Animation type = ZLApplication.Instance().getCurrentView().getAnimationType();
 		if (myAnimationProvider == null || myAnimationType != type) {
 			myAnimationType = type;
+			if (myStoredLayerType != -1) {
+	  			setLayerType(myStoredLayerType, null);
+			}
 			switch (type) {
 				case none:
 					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
 					break;
 				case curl:
+					myStoredLayerType = getLayerType();
 					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
+	  				setLayerType(LAYER_TYPE_SOFTWARE, null);
 					break;
 				case slide:
 					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
