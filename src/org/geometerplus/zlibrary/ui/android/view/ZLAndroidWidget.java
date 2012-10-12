@@ -249,10 +249,23 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - footer.getHeight(), myPaint);
 	}
 
-	private void onDrawStatic(Canvas canvas) {
+	private void onDrawStatic(final Canvas canvas) {
 		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 		drawFooter(canvas);
+		new Thread() {
+			@Override
+			public void run() {
+				final ZLView view = ZLApplication.Instance().getCurrentView();
+				final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+					canvas,
+					getWidth(),
+					getMainAreaHeight(),
+					view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+				);
+				view.preparePage(context, ZLView.PageIndex.next);
+			}
+		}.start();
 	}
 
 	@Override
