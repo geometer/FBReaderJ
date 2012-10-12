@@ -191,7 +191,6 @@ class CurlAnimationProvider extends AnimationProvider {
 		canvas.drawPath(myEdgePath, myEdgePaint);
 		/*
 		canvas.save();
-		/*
 		canvas.clipPath(myEdgePath);
 		final Matrix m = new Matrix();
 		m.postScale(1, -1);
