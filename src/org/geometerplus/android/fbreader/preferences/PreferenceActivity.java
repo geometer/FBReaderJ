@@ -22,6 +22,8 @@ package org.geometerplus.android.fbreader.preferences;
 import java.util.*;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.view.KeyEvent;
 import android.os.Build;
 
@@ -39,6 +41,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.fbreader.formats.Formats;
+import org.geometerplus.fbreader.formats.PdfPluginFormatPlugin;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
@@ -457,6 +460,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		volumeKeysPreferences.setEnabled(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
 
 		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
+		final PackageManager pm = getPackageManager();
+		try {
+			pm.getPackageInfo(new PdfPluginFormatPlugin().getPackage(), 0);
+			scrollingScreen.addOption(scrollingPreferences.PDFScrollOption, "pdfscroll");
+		} catch (PackageManager.NameNotFoundException e) {
+		}
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
 			this,
 			scrollingScreen.Resource,
@@ -466,6 +475,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
+		if (DictionaryUtil.needIniting()) {
+			DictionaryUtil.forceInit(this);
+		}
 		dictionaryScreen.addPreference(new DictionaryPreference(
 			this,
 			dictionaryScreen.Resource,

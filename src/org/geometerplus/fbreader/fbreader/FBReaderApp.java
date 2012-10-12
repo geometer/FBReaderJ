@@ -159,13 +159,6 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-		if (book != null || Model == null) {
-			runWithMessage("loadingBook", new Runnable() {
-				public void run() {
-					openBookInternal(book, bookmark);
-				}
-			}, postAction);
-		}
 		if (Model != null) {
 			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;

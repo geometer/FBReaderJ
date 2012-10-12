@@ -32,11 +32,22 @@ public class ScrollingPreferences {
 	public static enum FingerScrolling {
 		byTap, byFlick, byTapAndFlick
 	}
+	
+	public static enum PDFPluginScroll {
+	    vert,
+	    horiz,
+	    scroll,
+	    single,
+	    singleEx;
+	    //reflow; -- not working without license
+	}
+	
 	public final ZLEnumOption<FingerScrolling> FingerScrollingOption =
 		new ZLEnumOption<FingerScrolling>("Scrolling", "Finger", FingerScrolling.byTapAndFlick);
-
 	public final ZLEnumOption<ZLView.Animation> AnimationOption =
 		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
+	public final ZLEnumOption<PDFPluginScroll> PDFScrollOption =
+			new ZLEnumOption<PDFPluginScroll>("Scrolling", "PDF", PDFPluginScroll.single);
 	public final ZLIntegerRangeOption AnimationSpeedOption =
 		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, 8);
 

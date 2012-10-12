@@ -144,6 +144,15 @@ public abstract class DictionaryUtil {
 			initThread.start();
 		}
 	}
+	
+	public static boolean needIniting() {
+		return ourInfos.isEmpty();
+	}
+	
+	public static void forceInit(final Context context) {
+		new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
+		new ParagonInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/paragon.xml"));
+	}
 
 	public static List<PackageInfo> dictionaryInfos(Context context, boolean dictionaryNotTranslator) {
 		final LinkedList<PackageInfo> list = new LinkedList<PackageInfo>();
