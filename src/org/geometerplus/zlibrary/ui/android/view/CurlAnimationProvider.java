@@ -189,6 +189,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		);
 
 		canvas.drawPath(myEdgePath, myEdgePaint);
+		/*
 		canvas.save();
 		canvas.clipPath(myEdgePath);
 		final Matrix m = new Matrix();
@@ -203,6 +204,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		m.postRotate(angle, x, y);
 		canvas.drawBitmap(fgBitmap, m, myBackPaint);
 		canvas.restore();
+		*/
 	}
 
 	@Override
