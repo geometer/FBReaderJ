@@ -131,7 +131,12 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				case CLEAR_HIGHLIGHTING:
 					clearHighlighting();
 					return ApiObject.Void.Instance;
-				case GET_KEY_ACTION:
+                case GET_BOTTOM_MARGIN:
+                    return ApiObject.envelope(getBottomMargin());
+                case SET_BOTTOM_MARGIN:
+                    setBottomMargin(((ApiObject.Integer)parameters[0]).Value);
+                    return ApiObject.Void.Instance;
+                case GET_KEY_ACTION:
 					return ApiObject.envelope(getKeyAction(
 						((ApiObject.Integer)parameters[0]).Value,
 						((ApiObject.Boolean)parameters[1]).Value
@@ -213,7 +218,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				}
 				case LIST_ZONEMAPS:
 					return ApiObject.envelope(listZoneMaps());
-				default:
+                case GET_PARAGRAPH_WORDS:
+                    return ApiObject.envelope(getParagraphWords(
+                            ((ApiObject.Integer)parameters[0]).Value
+                    ));
+                case GET_PARAGRAPH_INDICES:
+                    return ApiObject.envelope(getParagraphIndices(
+                            ((ApiObject.Integer)parameters[0]).Value
+                    ));
+                default:
 					return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 			}
 		} catch (Throwable e) {
@@ -376,7 +389,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		myReader.getTextView().clearHighlighting();
 	}
 
-	public int getParagraphsNumber() {
+    public int getBottomMargin() {
+        return myReader.BottomMarginOption.getValue();
+    }
+
+    public void setBottomMargin(int value) {
+        myReader.BottomMarginOption.setValue(value);
+    }
+
+    public int getParagraphsNumber() {
 		return myReader.Model.getTextModel().getParagraphsNumber();
 	}
 
@@ -402,7 +423,37 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return sb.toString();
 	}
 
-	// action control
+    public List<String> getParagraphWords(int paragraphIndex) {
+        final ArrayList<String> words = new ArrayList<String>();
+        final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+        cursor.moveToParagraph(paragraphIndex);
+        cursor.moveToParagraphStart();
+        while (!cursor.isEndOfParagraph()) {
+            ZLTextElement element = cursor.getElement();
+            if (element instanceof ZLTextWord) {
+                words.add(element.toString());
+            }
+            cursor.nextWord();
+        }
+        return words;
+    }
+
+    public ArrayList<Integer> getParagraphIndices(int paragraphIndex) {
+        final ArrayList<Integer> indices = new ArrayList<Integer>();
+        final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+        cursor.moveToParagraph(paragraphIndex);
+        cursor.moveToParagraphStart();
+        while (!cursor.isEndOfParagraph()) {
+            ZLTextElement element = cursor.getElement();
+            if (element instanceof ZLTextWord) {
+                indices.add(cursor.getElementIndex());
+            }
+            cursor.nextWord();
+        }
+        return indices;
+    }
+
+    // action control
 	public List<String> listActions() {
 		// TODO: implement
 		return Collections.emptyList();

@@ -100,5 +100,38 @@
 		<echo message="DONE (Deleting native libraries)" />
 	</target>
 
-  <import file="${sdk.dir}/tools/ant/build.xml" />
+    <!-- Builds debug output package -->
+    <target name="debug" depends="-set-debug-files, -do-debug, -post-build"
+            description="Builds the application and signs it with a debug key.">
+    </target>
+
+    <!-- This runs -package-release and -release-nosign first and then runs
+         only if release-sign is true (set in -release-check,
+         called by -release-no-sign)-->
+    <target name="release"
+            depends="-set-release-mode, -release-obfuscation-check, -package, -post-package, -release-prompt-for-password, -release-nosign, -release-sign, -post-build"
+            description="Builds the application in release mode.">
+    </target>
+
+    <!-- Packages the application. -->
+    <target name="-package" depends="-dex, -package-resources">
+        <!-- only package apk if *not* a library project -->
+        <do-only-if-not-library elseText="Library project: do not package apk..." >
+            <if condition="${build.is.instrumented}">
+                <then>
+                    <package-helper>
+                        <extra-jars>
+                            <!-- Injected from external file -->
+                            <jarfile path="${emma.dir}/emma_device.jar" />
+                        </extra-jars>
+                    </package-helper>
+                </then>
+                <else>
+                    <package-helper />
+                </else>
+            </if>
+        </do-only-if-not-library>
+    </target>
+
+    <import file="${sdk.dir}/tools/ant/build.xml" />
 </project>

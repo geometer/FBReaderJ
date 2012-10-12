@@ -9,6 +9,7 @@ scripts/resources/*.diff
 obj/
 epubs/
 mappings/
+classes/
 READY/
 .classpath
 .settings
