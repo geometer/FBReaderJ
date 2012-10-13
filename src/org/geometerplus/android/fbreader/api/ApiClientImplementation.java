@@ -363,23 +363,23 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public List<String> listActions() throws ApiException {
-	  	return requestStringList(LIST_ACTIONS, EMPTY_PARAMETERS);
+		return requestStringList(LIST_ACTIONS, EMPTY_PARAMETERS);
 	}
 
 	public List<String> listActionNames(List<String> actions) throws ApiException {
-	  	return requestStringList(LIST_ACTION_NAMES, envelope(actions));
+		return requestStringList(LIST_ACTION_NAMES, envelope(actions));
 	}
 
 	public List<String> listZoneMaps() throws ApiException {
-	  	return requestStringList(LIST_ZONEMAPS, EMPTY_PARAMETERS);
+		return requestStringList(LIST_ZONEMAPS, EMPTY_PARAMETERS);
 	}
 
 	public String getZoneMap() throws ApiException {
-	  	return requestString(GET_ZONEMAP, EMPTY_PARAMETERS);
+		return requestString(GET_ZONEMAP, EMPTY_PARAMETERS);
 	}
 
 	public void setZoneMap(String name) throws ApiException {
-	  	request(SET_ZONEMAP, envelope(name));
+		request(SET_ZONEMAP, envelope(name));
 	}
 
 	public int getZoneMapHeight(String name) throws ApiException {
