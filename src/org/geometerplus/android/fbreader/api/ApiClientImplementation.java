@@ -171,7 +171,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return stringList;
 	}
 
-	private ArrayList<Integer> requestIntegerList(int method, ApiObject[] params) throws ApiException {
+	private List<Integer> requestIntegerList(int method, ApiObject[] params) throws ApiException {
 		final List<ApiObject> list = requestList(method, params);
 		final ArrayList<Integer> intList = new ArrayList<Integer>(list.size());
 		for (ApiObject object : list) {
