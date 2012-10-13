@@ -346,6 +346,30 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		request(SET_BOTTOM_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
 	}
 
+	public int getTopMargin() throws ApiException {
+		return requestInt(GET_TOP_MARGIN, EMPTY_PARAMETERS);
+	}
+
+	public void setTopMargin(int value) throws ApiException {
+		request(SET_TOP_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
+	}
+
+	public int getLeftMargin() throws ApiException {
+		return requestInt(GET_LEFT_MARGIN, EMPTY_PARAMETERS);
+	}
+
+	public void setLeftMargin(int value) throws ApiException {
+		request(SET_LEFT_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
+	}
+
+	public int getRightMargin() throws ApiException {
+		return requestInt(GET_RIGHT_MARGIN, EMPTY_PARAMETERS);
+	}
+
+	public void setRightMargin(int value) throws ApiException {
+		request(SET_RIGHT_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
+	}
+
 	// action control
 	public String getKeyAction(int key, boolean longPress) throws ApiException {
 		return requestString(GET_KEY_ACTION, new ApiObject[] {
