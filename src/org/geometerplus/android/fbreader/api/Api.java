@@ -44,8 +44,8 @@ public interface Api {
 	int getParagraphsNumber() throws ApiException;
 	int getParagraphElementsCount(int paragraphIndex) throws ApiException;
 	String getParagraphText(int paragraphIndex) throws ApiException;
-	int getParagraphWordsCount(int paragraphIndex) throws ApiException;
-	String getParagraphWordIndices(int paragraphIndex) throws ApiException;
+	List<String> getParagraphWords(int paragraphIndex) throws ApiException;
+	List<Integer> getParagraphWordIndices(int paragraphIndex) throws ApiException;
 
 	// page information
 	TextPosition getPageStart() throws ApiException;

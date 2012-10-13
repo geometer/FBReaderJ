@@ -214,31 +214,31 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		try {
 			switch (method) {
 				case LIST_OPTION_GROUPS:
-					return ApiObject.envelope(getOptionGroups());
+					return ApiObject.envelopeStringList(getOptionGroups());
 				case LIST_OPTION_NAMES:
-					return ApiObject.envelope(getOptionNames(
+					return ApiObject.envelopeStringList(getOptionNames(
 						((ApiObject.String)parameters[0]).Value
 					));
 				case LIST_BOOK_TAGS:
-					return ApiObject.envelope(getBookTags());
+					return ApiObject.envelopeStringList(getBookTags());
 				case LIST_ACTIONS:
-					return ApiObject.envelope(listActions());
+					return ApiObject.envelopeStringList(listActions());
 				case LIST_ACTION_NAMES:
 				{
 					final ArrayList<String> actions = new ArrayList<String>(parameters.length);
 					for (ApiObject o : parameters) {
 						actions.add(((ApiObject.String)o).Value);
 					}
-					return ApiObject.envelope(listActionNames(actions));
+					return ApiObject.envelopeStringList(listActionNames(actions));
 				}
 				case LIST_ZONEMAPS:
-					return ApiObject.envelope(listZoneMaps());
-				case GET_PARAGRAPH_WORDS_COUNT:
-					return ApiObject.envelope(getParagraphWordsCount(
+					return ApiObject.envelopeStringList(listZoneMaps());
+				case GET_PARAGRAPH_WORDS:
+					return ApiObject.envelopeStringList(getParagraphWords(
 						((ApiObject.Integer)parameters[0]).Value
 					));
 				case GET_PARAGRAPH_WORD_INDICES:
-					return ApiObject.envelope(getParagraphWordIndices(
+					return ApiObject.envelopeIntegerList(getParagraphWordIndices(
 						((ApiObject.Integer)parameters[0]).Value
 					));
 				default:
@@ -462,7 +462,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return sb.toString();
 	}
 
-	public List<String> getParagraphWordsCount(int paragraphIndex) {
+	public List<String> getParagraphWords(int paragraphIndex) {
 		final ArrayList<String> words = new ArrayList<String>();
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
