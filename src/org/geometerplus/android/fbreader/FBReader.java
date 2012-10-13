@@ -73,7 +73,7 @@ public final class FBReader extends ZLAndroidActivity {
 	private boolean myShowStatusBarFlag;
 	private boolean myShowActionBarFlag;
 	private boolean myActionBarIsVisible;
-    private AudioManager myAudioManager;
+	private AudioManager myAudioManager;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -91,21 +91,21 @@ public final class FBReader extends ZLAndroidActivity {
 					}
 					myPluginActions.addAll(actions);
 					index = 0;
-                    for (PluginApi.ActionInfo info : myPluginActions) {
-                        String actionId = PLUGIN_ACTION_PREFIX + index++;
-                        fbReader.addAction(
-                                actionId,
-                                new RunPluginAction(FBReader.this, fbReader, info.getId())
-                        );
-                        if (info.getId().toString().equals("http://hyperionics.com/plugin/tts_plus/speak")) {
-                            if (myAudioManager == null) {
-                                myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                            }
-                            RegainBluetoothFocus();
-                            MediaButtonIntentReceiver.setTtsActionId(actionId);
-                        }
-                    }
-                    if (!myPluginActions.isEmpty()) {
+					for (PluginApi.ActionInfo info : myPluginActions) {
+						String actionId = PLUGIN_ACTION_PREFIX + index++;
+						fbReader.addAction(
+							actionId,
+							new RunPluginAction(FBReader.this, fbReader, info.getId())
+						);
+						if (info.getId().toString().equals("http://hyperionics.com/plugin/tts_plus/speak")) {
+							if (myAudioManager == null) {
+								myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+							}
+							RegainBluetoothFocus();
+							MediaButtonIntentReceiver.setTtsActionId(actionId);
+						}
+					}
+					if (!myPluginActions.isEmpty()) {
 						invalidateOptionsMenu();
 					}
 				}
@@ -113,13 +113,13 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	};
 
-    public void RegainBluetoothFocus() {
-        if (myAudioManager != null)
-            myAudioManager.registerMediaButtonEventReceiver(new ComponentName(getPackageName(),
-                    MediaButtonIntentReceiver.class.getName()));
-    }
+	public void RegainBluetoothFocus() {
+		if (myAudioManager != null)
+			myAudioManager.registerMediaButtonEventReceiver(new ComponentName(getPackageName(),
+					MediaButtonIntentReceiver.class.getName()));
+	}
 
-    @Override
+	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
 		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
 		if (filePath == null) {
@@ -343,11 +343,11 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(FBReaderApp.Instance(), this);
-        if (myAudioManager != null) {
-            myAudioManager.unregisterMediaButtonEventReceiver(new ComponentName(getPackageName(),
-                    MediaButtonIntentReceiver.class.getName()));
-        }
-        super.onStop();
+		if (myAudioManager != null) {
+			myAudioManager.unregisterMediaButtonEventReceiver(new ComponentName(getPackageName(),
+					MediaButtonIntentReceiver.class.getName()));
+		}
+		super.onStop();
 	}
 
 	@Override
