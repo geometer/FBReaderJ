@@ -49,6 +49,12 @@ interface ApiMethods {
 	int CLEAR_HIGHLIGHTING = 803;
 	int GET_BOTTOM_MARGIN = 804;
 	int SET_BOTTOM_MARGIN = 805;
+	int GET_TOP_MARGIN = 806;
+	int SET_TOP_MARGIN = 807;
+	int GET_LEFT_MARGIN = 808;
+	int SET_LEFT_MARGIN = 809;
+	int GET_RIGHT_MARGIN = 810;
+	int SET_RIGHT_MARGIN = 811;
 
 	// action control
 	int LIST_ACTIONS = 901;
