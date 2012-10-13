@@ -136,6 +136,21 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				case SET_BOTTOM_MARGIN:
 					setBottomMargin(((ApiObject.Integer)parameters[0]).Value);
 					return ApiObject.Void.Instance;
+				case GET_TOP_MARGIN:
+					return ApiObject.envelope(getTopMargin());
+				case SET_TOP_MARGIN:
+					setTopMargin(((ApiObject.Integer)parameters[0]).Value);
+					return ApiObject.Void.Instance;
+				case GET_LEFT_MARGIN:
+					return ApiObject.envelope(getLeftMargin());
+				case SET_LEFT_MARGIN:
+					setLeftMargin(((ApiObject.Integer)parameters[0]).Value);
+					return ApiObject.Void.Instance;
+				case GET_RIGHT_MARGIN:
+					return ApiObject.envelope(getRightMargin());
+				case SET_RIGHT_MARGIN:
+					setRightMargin(((ApiObject.Integer)parameters[0]).Value);
+					return ApiObject.Void.Instance;
 				case GET_KEY_ACTION:
 					return ApiObject.envelope(getKeyAction(
 						((ApiObject.Integer)parameters[0]).Value,
@@ -395,6 +410,30 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public void setBottomMargin(int value) {
 		myReader.BottomMarginOption.setValue(value);
+	}
+
+	public int getTopMargin() {
+		return myReader.TopMarginOption.getValue();
+	}
+
+	public void setTopMargin(int value) {
+		myReader.TopMarginOption.setValue(value);
+	}
+
+	public int getLeftMargin() {
+		return myReader.LeftMarginOption.getValue();
+	}
+
+	public void setLeftMargin(int value) {
+		myReader.LeftMarginOption.setValue(value);
+	}
+
+	public int getRightMargin() {
+		return myReader.RightMarginOption.getValue();
+	}
+
+	public void setRightMargin(int value) {
+		myReader.RightMarginOption.setValue(value);
 	}
 
 	public int getParagraphsNumber() {
