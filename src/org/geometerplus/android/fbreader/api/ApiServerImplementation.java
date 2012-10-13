@@ -104,8 +104,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					}
 				case GET_PARAGRAPHS_NUMBER:
 					return ApiObject.envelope(getParagraphsNumber());
-				case GET_ELEMENTS_NUMBER:
-					return ApiObject.envelope(getElementsNumber(
+				case GET_PARAGRAPH_ELEMENTS_COUNT:
+					return ApiObject.envelope(getParagraphElementsCount(
 						((ApiObject.Integer)parameters[0]).Value
 					));
 				case GET_PARAGRAPH_TEXT:
@@ -440,7 +440,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return myReader.Model.getTextModel().getParagraphsNumber();
 	}
 
-	public int getElementsNumber(int paragraphIndex) {
+	public int getParagraphElementsCount(int paragraphIndex) {
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
 		cursor.moveToParagraphEnd();

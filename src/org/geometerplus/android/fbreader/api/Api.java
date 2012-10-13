@@ -42,9 +42,9 @@ public interface Api {
 
 	// text information
 	int getParagraphsNumber() throws ApiException;
-	int getElementsNumber(int paragraphIndex) throws ApiException;
+	int getParagraphElementsCount(int paragraphIndex) throws ApiException;
 	String getParagraphText(int paragraphIndex) throws ApiException;
-	String getParagraphWordsCount(int paragraphIndex) throws ApiException;
+	int getParagraphWordsCount(int paragraphIndex) throws ApiException;
 	String getParagraphWordIndices(int paragraphIndex) throws ApiException;
 
 	// page information
