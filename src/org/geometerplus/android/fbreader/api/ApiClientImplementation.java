@@ -314,16 +314,16 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestString(GET_PARAGRAPH_TEXT, envelope(paragraphIndex));
 	}
 
-	public List<String> getParagraphWords(int paragraphIndex) throws ApiException {
+	public int getParagraphElementsCount(int paragraphIndex) throws ApiException {
+		return requestInt(GET_PARAGRAPH_ELEMENTS_COUNT, envelope(paragraphIndex));
+	}
+
+	public List<String> getParagraphWordsCount(int paragraphIndex) throws ApiException {
 		return requestStringList(GET_PARAGRAPH_WORDS_COUNT, envelope(paragraphIndex));
 	}
 
-	public ArrayList<Integer> getParagraphIndices(int paragraphIndex) throws ApiException {
+	public ArrayList<Integer> getParagraphWordIndices(int paragraphIndex) throws ApiException {
 		return requestIntegerList(GET_PARAGRAPH_WORD_INDICES, envelope(paragraphIndex));
-	}
-
-	public int getParagraphElementsCount(int paragraphIndex) throws ApiException {
-		return requestInt(GET_PARAGRAPH_ELEMENTS_COUNT, envelope(paragraphIndex));
 	}
 
 	public void setPageStart(TextPosition position) throws ApiException {
