@@ -32,8 +32,10 @@ interface ApiMethods {
 
 	// text information
 	int GET_PARAGRAPHS_NUMBER = 601;
-	int GET_ELEMENTS_NUMBER = 602;
+	int GET_PARAGRAPH_ELEMENTS_COUNT = 602;
 	int GET_PARAGRAPH_TEXT = 603;
+	int GET_PARAGRAPH_WORDS = 604;
+	int GET_PARAGRAPH_WORD_INDICES = 605;
 
 	// page information
 	int GET_PAGE_START = 701;
@@ -45,6 +47,14 @@ interface ApiMethods {
 	int SET_PAGE_START = 801;
 	int HIGHLIGHT_AREA = 802;
 	int CLEAR_HIGHLIGHTING = 803;
+	int GET_BOTTOM_MARGIN = 804;
+	int SET_BOTTOM_MARGIN = 805;
+	int GET_TOP_MARGIN = 806;
+	int SET_TOP_MARGIN = 807;
+	int GET_LEFT_MARGIN = 808;
+	int SET_LEFT_MARGIN = 809;
+	int GET_RIGHT_MARGIN = 810;
+	int SET_RIGHT_MARGIN = 811;
 
 	// action control
 	int LIST_ACTIONS = 901;
