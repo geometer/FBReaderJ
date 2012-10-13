@@ -42,8 +42,10 @@ public interface Api {
 
 	// text information
 	int getParagraphsNumber() throws ApiException;
-	int getElementsNumber(int paragraphIndex) throws ApiException;
+	int getParagraphElementsCount(int paragraphIndex) throws ApiException;
 	String getParagraphText(int paragraphIndex) throws ApiException;
+	List<String> getParagraphWords(int paragraphIndex) throws ApiException;
+	List<Integer> getParagraphWordIndices(int paragraphIndex) throws ApiException;
 
 	// page information
 	TextPosition getPageStart() throws ApiException;
@@ -55,6 +57,14 @@ public interface Api {
 	void setPageStart(TextPosition position) throws ApiException;
 	void highlightArea(TextPosition start, TextPosition end) throws ApiException;
 	void clearHighlighting() throws ApiException;
+	int getBottomMargin() throws ApiException;
+	void setBottomMargin(int value) throws ApiException;
+	int getTopMargin() throws ApiException;
+	void setTopMargin(int value) throws ApiException;
+	int getLeftMargin() throws ApiException;
+	void setLeftMargin(int value) throws ApiException;
+	int getRightMargin() throws ApiException;
+	void setRightMargin(int value) throws ApiException;
 
 	// action control
 	List<String> listActions() throws ApiException;

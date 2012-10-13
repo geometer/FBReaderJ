@@ -3,10 +3,10 @@
 * 'Open book in external program' feature
 * Multiple directories for user's fonts and wallpapers
 
-===== 1.6.2 (Oct ??, 2012) =====
+===== 1.6.2 (Oct 13, 2012) =====
 * Optimized animation speed
 * Fixes in database code
-* API changes useful for TTS+ FBReader Plugin (by Greg Kochaniak)
+* API changes for compatibility with TTS+ FBReader Plugin (by Greg Kochaniak)
 
 ===== 1.6.0/1.6.1 (Oct 06, 2012) =====
 * MS Word (.doc) format support
