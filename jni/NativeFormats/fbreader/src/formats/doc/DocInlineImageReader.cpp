@@ -93,12 +93,13 @@ ZLFileImage::Blocks DocInlineImageReader::getImagePieceInfo(unsigned int dataPos
 				myDataStream->seek(recordLen, false);
 				curOffset += recordLen;
 				break;
-			case OleMainStream::EMF: //EMF
-			case OleMainStream::WMF: //WMF
-			case OleMainStream::PICT: //PICT
+			case OleMainStream::IMAGE_EMF:
+			case OleMainStream::IMAGE_WMF:
+			case OleMainStream::IMAGE_PICT:
 				//TODO implement
 				return ZLFileImage::Blocks();
-			case OleMainStream::JPEG: case OleMainStream::JPEG2: //JPEG
+			case OleMainStream::IMAGE_JPEG:
+			case OleMainStream::IMAGE_JPEG2:
 				myDataStream->seek(17, false);
 				curOffset += 17;
 				if (recordInstance == 0x46B || recordInstance == 0x6E3) {
@@ -107,7 +108,7 @@ ZLFileImage::Blocks DocInlineImageReader::getImagePieceInfo(unsigned int dataPos
 				}
 				found = true;
 				break;
-			case OleMainStream::PNG: //PNG
+			case OleMainStream::IMAGE_PNG:
 				myDataStream->seek(17, false);
 				curOffset += 17;
 				if (recordInstance == 0x6E1) {
@@ -116,7 +117,7 @@ ZLFileImage::Blocks DocInlineImageReader::getImagePieceInfo(unsigned int dataPos
 				}
 				found = true;
 				break;
-			case OleMainStream::DIB: //DIB (BMP without 14-bytes header)
+			case OleMainStream::IMAGE_DIB: // DIB = BMP without 14-bytes header
 				myDataStream->seek(17, false);
 				curOffset += 17;
 				if (recordInstance == 0x7A9) {
@@ -125,7 +126,7 @@ ZLFileImage::Blocks DocInlineImageReader::getImagePieceInfo(unsigned int dataPos
 				}
 				found = true;
 				break;
-			case OleMainStream::TIFF: //TIFF
+			case OleMainStream::IMAGE_TIFF:
 				myDataStream->seek(17, false);
 				curOffset += 17;
 				if (recordInstance == 0x6E5) {

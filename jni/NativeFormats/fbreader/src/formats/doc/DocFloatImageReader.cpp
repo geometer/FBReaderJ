@@ -53,11 +53,11 @@ void DocFloatImageReader::readAll() {
 	}
 }
 
-ZLFileImage::Blocks DocFloatImageReader::getBlocksForShapeID(unsigned int shapeID) const {
+ZLFileImage::Blocks DocFloatImageReader::getBlocksForShapeId(unsigned int shapeId) const {
 	FSPContainer container;
 	bool found = false;
 	for (size_t i = 0; !found && i < myItem.FSPs.size(); ++i) {
-		if (myItem.FSPs.at(i).fsp.shapeID == shapeID) {
+		if (myItem.FSPs.at(i).fsp.shapeId == shapeId) {
 			found = true;
 			container = myItem.FSPs.at(i);
 		}
@@ -69,7 +69,7 @@ ZLFileImage::Blocks DocFloatImageReader::getBlocksForShapeID(unsigned int shapeI
 
 	for (size_t i = 0; i < container.fopte.size(); ++i) {
 		const FOPTE &fopte = container.fopte.at(i);
-		if (fopte.pID == 0x0104 && !fopte.isComplex) { //0x0104 specifies the BLIP, see p.420 [MS-ODRAW]
+		if (fopte.pId == 0x0104 && !fopte.isComplex) { //0x0104 specifies the BLIP, see p.420 [MS-ODRAW]
 			if (fopte.value <= myItem.blips.size() && fopte.value > 0) {
 				Blip blip = myItem.blips.at(fopte.value - 1);
 				return blip.blocks;
@@ -150,15 +150,16 @@ unsigned int DocFloatImageReader::readBStoreContainerFileBlock(Blip &blip, share
 	RecordHeader header;
 	unsigned int count2 = readRecordHeader(header, mainStream);
 	switch (header.type) {
-		case OleMainStream::WMF:
-		case OleMainStream::EMF:
-		case OleMainStream::PICT:
+		case OleMainStream::IMAGE_WMF:
+		case OleMainStream::IMAGE_EMF:
+		case OleMainStream::IMAGE_PICT:
 			count2 += skipRecord(header, mainStream);
 			break;
-		case OleMainStream::JPEG: case OleMainStream::JPEG2:
-		case OleMainStream::PNG:
-		case OleMainStream::DIB:
-		case OleMainStream::TIFF:
+		case OleMainStream::IMAGE_JPEG:
+		case OleMainStream::IMAGE_JPEG2:
+		case OleMainStream::IMAGE_PNG:
+		case OleMainStream::IMAGE_DIB:
+		case OleMainStream::IMAGE_TIFF:
 			count2 += readBlip(blip, header, mainStream);
 			break;
 	}
@@ -173,21 +174,22 @@ unsigned int DocFloatImageReader::readBlip(Blip &blip, const RecordHeader &heade
 
 	bool addField = false;
 	switch (header.type) {
-		case OleMainStream::PNG:
+		case OleMainStream::IMAGE_PNG:
 			if (header.instance == 0x6E1) {
 				addField = true;
 			}
 			break;
-		case OleMainStream::JPEG: case OleMainStream::JPEG2:
+		case OleMainStream::IMAGE_JPEG:
+		case OleMainStream::IMAGE_JPEG2:
 			if (header.instance == 0x46B || header.instance == 0x6E3) {
 				addField = true;
 			}
 			break;
-		case OleMainStream::DIB:
+		case OleMainStream::IMAGE_DIB:
 			if (header.instance == 0x7A9) {
 				addField = true;
 			}
-		case OleMainStream::TIFF:
+		case OleMainStream::IMAGE_TIFF:
 			if (header.instance == 0x6E5) {
 				addField = true;
 			}
@@ -315,7 +317,7 @@ unsigned int DocFloatImageReader::readSpContainter(FSPContainer &item, unsigned 
 
 unsigned int DocFloatImageReader::readFSP(FSP &fsp, shared_ptr<OleStream> stream) {
 	//OfficeArtFSP structure is described at p.76 [MS-ODRAW]
-	fsp.shapeID = read4Bytes(stream);
+	fsp.shapeId = read4Bytes(stream);
 	stream->seek(4, false);
 	return 8;
 }
@@ -341,8 +343,8 @@ unsigned int DocFloatImageReader::readFOPTE(FOPTE &fopte, shared_ptr<OleStream> 
 	//OfficeArtFOPTE structure is described at p.32 [MS-ODRAW]
 	unsigned int dtemp;
 	dtemp = read2Bytes (stream);
-	fopte.pID = (dtemp & 0x3fff);
-	fopte.isBlipID = ((dtemp & 0x4000) >> 14) == 0x1;
+	fopte.pId = (dtemp & 0x3fff);
+	fopte.isBlipId = ((dtemp & 0x4000) >> 14) == 0x1;
 	fopte.isComplex = ((dtemp & 0x8000) >> 15) == 0x1;
 	fopte.value = read4Bytes (stream);
 	return 6;
