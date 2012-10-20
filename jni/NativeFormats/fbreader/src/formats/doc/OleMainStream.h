@@ -30,37 +30,36 @@ class OleMainStream : public OleStream {
 public:
 	struct Piece {
 		enum PieceType {
-			TEXT,
-			FOOTNOTE,
-			OTHER
+			PIECE_TEXT,
+			PIECE_FOOTNOTE,
+			PIECE_OTHER
 		};
 
-		int offset; //maybe make it unsigned int
-		int length; //maybe make it unsigned int
-		bool isANSI;
-		PieceType type;
+		int Offset; // TODO: maybe make it unsigned int
+		int Length; // TODO: maybe make it unsigned int
+		bool IsANSI;
+		PieceType Type;
 		unsigned int startCP;
 	};
 	typedef std::vector<Piece> Pieces;
 
 	struct CharInfo {
-
 		enum Font {
-			REGULAR = 0x0000,
-			BOLD = 0x0001,
-			ITALIC = 0x0002,
-			UNDERLINE = 0x0004,
-			CAPITALS = 0x0008,
-			SMALL_CAPITALS = 0x0010,
-			STRIKE = 0x0020,
-			HIDDEN = 0x0040,
-			MARKDEL = 0x0080,
-			SUPERSCRIPT = 0x0100,
-			SUBSCRIPT = 0x0200
+			FONT_REGULAR        = 0,
+			FONT_BOLD           = 1 << 0,
+			FONT_ITALIC         = 1 << 1,
+			FONT_UNDERLINE      = 1 << 2,
+			FONT_CAPITALS       = 1 << 3,
+			FONT_SMALL_CAPS     = 1 << 4,
+			FONT_STRIKE         = 1 << 5,
+			FONT_HIDDEN         = 1 << 6,
+			FONT_MARKDEL        = 1 << 7,
+			FONT_SUPERSCRIPT    = 1 << 8,
+			FONT_SUBSCRIPT      = 1 << 9
 		};
 
-		unsigned int fontStyle;
-		unsigned int fontSize;
+		unsigned int FontStyle;
+		unsigned int FontSize;
 
 		CharInfo();
 	};
@@ -68,76 +67,82 @@ public:
 	typedef std::vector<CharPosToCharInfo > CharInfoList;
 
 	struct Style {
-
-		enum Alignment {
-			LEFT = 0x00,
-			CENTER = 0x01,
-			RIGHT = 0x02,
-			JUSTIFY = 0x03
+		enum AlignmentType {
+			ALIGNMENT_LEFT     = 0x00,
+			ALIGNMENT_CENTER   = 0x01,
+			ALIGNMENT_RIGHT    = 0x02,
+			ALIGNMENT_JUSTIFY  = 0x03,
+			ALIGNMENT_DEFAULT // for case if alignment is not setted by word
 		};
 
-		unsigned int istd; //Current style
-		unsigned int istdNext; //Next style unless overruled
-		bool hasPageBreakBefore;
-		unsigned int beforeIndent; //Vertical indent before paragraph
-		unsigned int afterIndent; //Vertical indent after paragraph
-		int	leftIndent; //Left indent
-		int	firstLineIndent; //First line left indent
-		int	rightIndent; //Right indent
-		unsigned int alignment;
+		// style Ids:
+		// (this is not full list of possible style ids, enum is used for using in switch-case)
+		enum StyleID {
+			STYLE_H1       = 0x1,
+			STYLE_H2       = 0x2,
+			STYLE_H3       = 0x3,
+			STYLE_USER     = 0xFFE,
+			STYLE_NIL      = 0xFFF,
+			STYLE_INVALID  = 0xFFFF
+		};
 
-		CharInfo charInfo;
+		unsigned int StyleIdCurrent;
+		unsigned int StyleIdNext;        // Next style unless overruled
+
+		bool HasPageBreakBefore;
+		unsigned int BeforeParagraphIndent;  // Vertical indent before paragraph, pixels
+		unsigned int AfterParagraphIndent;   // Vertical indent after paragraph, pixels
+		int	LeftIndent;
+		int	FirstLineIndent;
+		int	RightIndent;
+		AlignmentType Alignment;
+		CharInfo CurrentCharInfo;
+
 		Style();
 	};
+
 	typedef std::pair<unsigned int, Style> CharPosToStyle;
 	typedef std::vector<CharPosToStyle> StyleInfoList;
 	typedef std::vector<Style> StyleSheet;
 
-	enum StyleID {
-		H1 = 0x1,
-		H2 = 0x2,
-		H3 = 0x3,
-		STI_USER = 0xFFE,
-		STI_NIL = 0xFFF,
-		ISTD_INVALID = 0xFFFF
-	};
-
 	struct SectionInfo {
-		unsigned int charPos;
-		bool newPage;
+		unsigned int CharPosition;
+		bool IsNewPage;
+
 		SectionInfo();
 	};
 	typedef std::vector<SectionInfo> SectionInfoList;
 
 	struct Bookmark {
-		unsigned int charPos;
-		std::string name;
+		unsigned int CharPosition;
+		std::string Name;
 	};
-	typedef std::vector<Bookmark> Bookmarks;
+	typedef std::vector<Bookmark> BookmarksList;
 
 	struct InlineImageInfo {
-			unsigned int dataPos;
+			unsigned int DataPosition;
+
 			InlineImageInfo();
 	};
 	typedef std::pair<unsigned int, InlineImageInfo> CharPosToInlineImageInfo;
 	typedef std::vector<CharPosToInlineImageInfo> InlineImageInfoList;
 
 	struct FloatImageInfo {
-			unsigned int shapeID;
+			unsigned int ShapeId;
 			FloatImageInfo();
 	};
 	typedef std::pair<unsigned int, FloatImageInfo> CharPosToFloatImageInfo;
 	typedef std::vector<CharPosToFloatImageInfo> FloatImageInfoList;
 
 	enum ImageType { //see p. 60 [MS-ODRAW]
-		EMF = 0xF01A,
-		WMF = 0xF01B,
-		PICT  = 0xF01C,
-		JPEG  = 0xF01D,
-		PNG  = 0xF01E,
-		DIB  = 0xF01F,
-		TIFF = 0xF029,
-		JPEG2 = 0xF02A
+		IMAGE_EMF   = 0xF01A,
+		IMAGE_WMF   = 0xF01B,
+		IMAGE_PICT  = 0xF01C,
+		IMAGE_JPEG  = 0xF01D,
+		IMAGE_PNG   = 0xF01E,
+		IMAGE_DIB   = 0xF01F,
+		IMAGE_TIFF  = 0xF029,
+		IMAGE_JPEG2 = 0xF02A
 	};
 
 public:
@@ -148,11 +153,11 @@ public:
 	const Pieces &getPieces() const;
 	const CharInfoList &getCharInfoList() const;
 	const StyleInfoList &getStyleInfoList() const;
-	const Bookmarks &getBookmarks() const;
+	const BookmarksList &getBookmarks() const;
 	const InlineImageInfoList &getInlineImageInfoList() const;
 	const FloatImageInfoList &getFloatImageInfoList() const;
 
-	ZLFileImage::Blocks getFloatImage(unsigned int shapeID) const;
+	ZLFileImage::Blocks getFloatImage(unsigned int shapeId) const;
 	ZLFileImage::Blocks getInlineImage(unsigned int dataPos) const;
 
 private:
@@ -171,14 +176,14 @@ private: //readPieceTable helpers methods
 
 private: //formatting reader helpers methods
 	static unsigned int getPrlLength(const char *grpprlBuffer, unsigned int byteNumber);
-	static void getCharInfo(unsigned int chpxOffset, unsigned int istd, const char *grpprlBuffer, unsigned int bytes, CharInfo &charInfo);
+	static void getCharInfo(unsigned int chpxOffset, unsigned int styleId, const char *grpprlBuffer, unsigned int bytes, CharInfo &charInfo);
 	static void getStyleInfo(unsigned int papxOffset, const char *grpprlBuffer, unsigned int bytes, Style &styleInfo);
 	static void getSectionInfo(const char *grpprlBuffer, size_t bytes, SectionInfo &sectionInfo);
 	static bool getInlineImageInfo(unsigned int chpxOffset, const char *grpprlBuffer, unsigned int bytes, InlineImageInfo &pictureInfo);
 
-	static Style getStyleFromStylesheet(unsigned int istd, const StyleSheet &stylesheet);
-	static int getStyleIndex(unsigned int istd, const std::vector<bool> &isFilled, const StyleSheet &stylesheet);
-	static unsigned int getIstdByCharPos(unsigned int offset, const StyleInfoList &styleInfoList);
+	static Style getStyleFromStylesheet(unsigned int styleId, const StyleSheet &stylesheet);
+	static int getStyleIndex(unsigned int styleId, const std::vector<bool> &isFilled, const StyleSheet &stylesheet);
+	static unsigned int getStyleIdByCharPos(unsigned int offset, const StyleInfoList &styleInfoList);
 
 	static bool offsetToCharPos(unsigned int offset, unsigned int &charPos, const Pieces &pieces);
 	static bool readToBuffer(std::string &result, unsigned int offset, size_t length, OleStream &stream);
@@ -207,7 +212,7 @@ private:
 	InlineImageInfoList myInlineImageInfoList;
 	FloatImageInfoList myFloatImageInfoList;
 
-	Bookmarks myBookmarks;
+	BookmarksList myBookmarks;
 
 	shared_ptr<OleStream> myDataStream;
 

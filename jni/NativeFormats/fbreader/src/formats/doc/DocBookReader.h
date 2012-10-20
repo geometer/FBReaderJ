@@ -39,7 +39,7 @@ public:
 	bool readBook();
 
 private:
-	bool readDocument(shared_ptr<ZLInputStream> stream, size_t streamSize);
+	bool readDocument(shared_ptr<ZLInputStream> stream);
 
 	void handleChar(ZLUnicodeUtil::Ucs2Char ucs2char);
 	void handleHardLinebreak();
@@ -87,8 +87,8 @@ private:
 
 	//formatting
 	std::vector<FBTextKind> myKindStack;
-	shared_ptr<ZLTextStyleEntry> myCurStyleEntry;
-	OleMainStream::Style myCurStyleInfo;
+	shared_ptr<ZLTextStyleEntry> myCurrentStyleEntry;
+	OleMainStream::Style myCurrentStyleInfo;
 	unsigned int myPictureCounter;
 };
 
