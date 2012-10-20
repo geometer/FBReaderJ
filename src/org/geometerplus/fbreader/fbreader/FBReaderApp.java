@@ -291,9 +291,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (book != null) {
 			onViewChanged();
 
-			if (Model != null) {
-				Model.Book.storePosition(BookTextView.getStartCursor());
-			}
+			storePosition();
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
@@ -408,6 +406,10 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void onWindowClosing() {
+		storePosition();
+	}
+
+	public void storePosition() {
 		if (Model != null && BookTextView != null) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
 		}

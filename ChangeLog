@@ -1,7 +1,10 @@
 ===== 2.0 beta 7 (Oct ??, 2012) =====
-* All changes from 1.6
 * 'Open book in external program' feature
 * Multiple directories for user's fonts and wallpapers
+
+===== 1.6.3 (Oct ??, 2012) =====
+* FBReader stores text position after setPageStart API method (useful for TTS plugin, code by Greg Kochaniak)
+* MSWord doc plugin synchronized with the main branch
 
 ===== 1.6.2 (Oct 13, 2012) =====
 * Optimized animation speed
