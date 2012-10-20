@@ -17,7 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <cstring> //for memset
 #include <string>
 
 #include <ZLLogger.h>
@@ -30,35 +29,31 @@
 
 #include "OleMainStream.h"
 
-OleMainStream::Style::Style() {
-	(void)memset(this, 0, sizeof(*this));
-	istd = ISTD_INVALID;
-	istdNext = ISTD_INVALID;
-	hasPageBreakBefore = false;
-	charInfo.fontSize = 20;
+OleMainStream::Style::Style() :
+	StyleIdCurrent(STYLE_INVALID),
+	StyleIdNext(STYLE_INVALID),
+	HasPageBreakBefore(false),
+	BeforeParagraphIndent(0),
+	AfterParagraphIndent(0),
+	LeftIndent(0),
+	FirstLineIndent(0),
+	RightIndent(0),
+	Alignment(ALIGNMENT_DEFAULT) {
 }
 
-OleMainStream::CharInfo::CharInfo():
-	fontStyle(0),
-	fontSize(20) {
+OleMainStream::CharInfo::CharInfo() : FontStyle(FONT_REGULAR), FontSize(20) {
 }
 
-
-OleMainStream::SectionInfo::SectionInfo() :
-	charPos(0),
-	newPage(true) {
+OleMainStream::SectionInfo::SectionInfo() : CharPosition(0), IsNewPage(true) {
 }
 
-OleMainStream::InlineImageInfo::InlineImageInfo() :
-	dataPos(0) {
+OleMainStream::InlineImageInfo::InlineImageInfo() : DataPosition(0) {
 }
 
-OleMainStream::FloatImageInfo::FloatImageInfo() :
-	shapeID(0) {
+OleMainStream::FloatImageInfo::FloatImageInfo() : ShapeId(0) {
 }
 
-OleMainStream::OleMainStream(shared_ptr<OleStorage> storage, OleEntry oleEntry, shared_ptr<ZLInputStream> stream) :
-	OleStream(storage, oleEntry, stream) {
+OleMainStream::OleMainStream(shared_ptr<OleStorage> storage, OleEntry oleEntry, shared_ptr<ZLInputStream> stream) : OleStream(storage, oleEntry, stream) {
 }
 
 bool OleMainStream::open() {
@@ -79,7 +74,7 @@ bool OleMainStream::open() {
 		return false;
 	}
 
-	//determining table stream number
+	// determining table stream number
 	unsigned int tableNumber = (OleUtil::getU2Bytes(headerBuffer, 0xA) & 0x0200) ? 1 : 0;
 	std::string tableName = tableNumber == 0 ? "0" : "1";
 	tableName += "Table";
@@ -87,8 +82,9 @@ bool OleMainStream::open() {
 	result = myStorage->getEntryByName(tableName, tableEntry);
 
 	if (!result) {
-		//cant't find table stream (that can be only in case if file format is below Word 7/8), so building simple table stream
-		Piece piece = {myStartOfText, myEndOfText - myStartOfText, true, Piece::TEXT, 0}; //CHECK may be not all old documents have ANSI
+		// cant't find table stream (that can be only in case if file format is below Word 7/8), so building simple table stream
+    // TODO: CHECK may be not all old documents have ANSI
+		Piece piece = {myStartOfText, myEndOfText - myStartOfText, true, Piece::PIECE_TEXT, 0};
 		myPieces.push_back(piece);
 		return true;
 	}
@@ -128,7 +124,7 @@ const OleMainStream::StyleInfoList &OleMainStream::getStyleInfoList() const {
 	return myStyleInfoList;
 }
 
-const OleMainStream::Bookmarks &OleMainStream::getBookmarks() const {
+const OleMainStream::BookmarksList &OleMainStream::getBookmarks() const {
 	return myBookmarks;
 }
 
@@ -140,19 +136,19 @@ const OleMainStream::FloatImageInfoList &OleMainStream::getFloatImageInfoList() 
 	return myFloatImageInfoList;
 }
 
-ZLFileImage::Blocks OleMainStream::getFloatImage(unsigned int shapeID) const {
+ZLFileImage::Blocks OleMainStream::getFloatImage(unsigned int shapeId) const {
 	if (myFLoatImageReader.isNull()) {
 		return ZLFileImage::Blocks();
 	}
-	return myFLoatImageReader->getBlocksForShapeID(shapeID);
+	return myFLoatImageReader->getBlocksForShapeId(shapeId);
 }
 
-ZLFileImage::Blocks OleMainStream::getInlineImage(unsigned int dataPos) const {
+ZLFileImage::Blocks OleMainStream::getInlineImage(unsigned int dataPosition) const {
 	if (myDataStream.isNull()) {
 		return ZLFileImage::Blocks();
 	}
 	DocInlineImageReader imageReader(myDataStream);
-	return imageReader.getImagePieceInfo(dataPos);
+	return imageReader.getImagePieceInfo(dataPosition);
 }
 
 bool OleMainStream::readFIB(const char *headerBuffer) {
@@ -196,32 +192,32 @@ void OleMainStream::splitPieces(const Pieces &s, Pieces &dest1, Pieces &dest2, P
 	size_t i = 0;
 	for (i = 0; i < source.size(); ++i) {
 		Piece piece = source.at(i);
-		if (piece.length + sumLength >= boundary) {
+		if (piece.Length + sumLength >= boundary) {
 			Piece piece2 = piece;
 
-			piece.length = boundary - sumLength;
-			piece.type = type1;
+			piece.Length = boundary - sumLength;
+			piece.Type = type1;
 
-			piece2.type = type2;
-			piece2.offset += piece.length * 2;
-			piece2.length -= piece.length;
+			piece2.Type = type2;
+			piece2.Offset += piece.Length * 2;
+			piece2.Length -= piece.Length;
 
-			if (piece.length > 0) {
+			if (piece.Length > 0) {
 				dest1.push_back(piece);
 			}
-			if (piece2.length > 0) {
+			if (piece2.Length > 0) {
 				dest2.push_back(piece2);
 			}
 			++i;
 			break;
 		}
-		sumLength += piece.length;
-		piece.type = type1;
+		sumLength += piece.Length;
+		piece.Type = type1;
 		dest1.push_back(piece);
 	}
 	for (; i < source.size(); ++i) {
 		Piece piece = source.at(i);
-		piece.type = type2;
+		piece.Type = type2;
 		dest2.push_back(piece);
 	}
 
@@ -298,16 +294,16 @@ bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tab
 		//4byte integer with offset and ANSI flag
 		int fcValue = OleUtil::get4Bytes(descriptors.at(i).c_str(), 0x2); //offset for piece structure
 		Piece piece;
-		piece.isANSI = (fcValue & 0x40000000) == 0x40000000; //ansi flag
-		piece.offset = fcValue & 0x3FFFFFFF; //gettting offset for current piece
-		piece.length = cp.at(i + 1) - cp.at(i);
+		piece.IsANSI = (fcValue & 0x40000000) == 0x40000000; //ansi flag
+		piece.Offset = fcValue & 0x3FFFFFFF; //gettting offset for current piece
+		piece.Length = cp.at(i + 1) - cp.at(i);
 		myPieces.push_back(piece);
 	}
 
 	//split pieces into different types
 	Pieces piecesText, piecesFootnote, piecesOther;
-	splitPieces(myPieces, piecesText, piecesFootnote, Piece::TEXT, Piece::FOOTNOTE, ccpText);
-	splitPieces(piecesFootnote, piecesFootnote, piecesOther, Piece::FOOTNOTE, Piece::OTHER, ccpFtn);
+	splitPieces(myPieces, piecesText, piecesFootnote, Piece::PIECE_TEXT, Piece::PIECE_FOOTNOTE, ccpText);
+	splitPieces(piecesFootnote, piecesFootnote, piecesOther, Piece::PIECE_FOOTNOTE, Piece::PIECE_OTHER, ccpFtn);
 
 	myPieces.clear();
 	for (size_t i = 0; i < piecesText.size(); ++i) {
@@ -323,10 +319,10 @@ bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tab
 	//converting length and offset depending on isANSI
 	for (size_t i = 0; i < myPieces.size(); ++i) {
 		Piece &piece = myPieces.at(i);
-		if (!piece.isANSI) {
-			piece.length *= 2;
+		if (!piece.IsANSI) {
+			piece.Length *= 2;
 		} else {
-			piece.offset /= 2;
+			piece.Offset /= 2;
 		}
 	}
 
@@ -335,10 +331,10 @@ bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tab
 	for (size_t i = 0; i < myPieces.size(); ++i) {
 		Piece &piece = myPieces.at(i);
 		piece.startCP = curStartCP;
-		if (piece.isANSI) {
-			curStartCP += piece.length;
+		if (piece.IsANSI) {
+			curStartCP += piece.Length;
 		} else {
-			curStartCP += piece.length / 2;
+			curStartCP += piece.Length / 2;
 		}
 	}
 	return true;
@@ -402,8 +398,8 @@ bool OleMainStream::readBookmarks(const char *headerBuffer, const OleEntry &tabl
 			break; //for the case if something in these structures goes wrong, to not to lose all bookmarks
 		}
 		Bookmark bookmark;
-		bookmark.charPos = charPage.at(i);
-		bookmark.name = names.at(i);
+		bookmark.CharPosition = charPage.at(i);
+		bookmark.Name = names.at(i);
 		myBookmarks.push_back(bookmark);
 	}
 
@@ -447,25 +443,25 @@ bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tab
 
 			Style styleInfo = myStyleSheet.at(index);
 
-			unsigned int styleAndBaseType = OleUtil::getU2Bytes(buffer, offset + 4);
-			unsigned int styleType = styleAndBaseType % 16;
-			unsigned int baseStyle = styleAndBaseType / 16;
-			if (baseStyle == STI_NIL || baseStyle == STI_USER) {
-				//if based on nil or user style, left defaukt
+			const unsigned int styleAndBaseType = OleUtil::getU2Bytes(buffer, offset + 4);
+			const unsigned int styleType = styleAndBaseType % 16;
+			const unsigned int baseStyleId = styleAndBaseType / 16;
+			if (baseStyleId == Style::STYLE_NIL || baseStyleId == Style::STYLE_USER) {
+				//if based on nil or user style, left default
 			} else {
-				int baseStyleIndex = getStyleIndex(baseStyle, isFilled, myStyleSheet);
+				int baseStyleIndex = getStyleIndex(baseStyleId, isFilled, myStyleSheet);
 				if (baseStyleIndex < 0) {
-					//this base style is not filled yet, sp pass it at some time
+					//this base style is not filled yet, so pass it at some time
 					continue;
 				}
 				styleInfo = myStyleSheet.at(baseStyleIndex);
-				styleInfo.istd = ISTD_INVALID;
+				styleInfo.StyleIdCurrent = Style::STYLE_INVALID;
 			}
 
 			// parse STD structure
 			unsigned int tmp = OleUtil::getU2Bytes(buffer, offset + 6);
 			unsigned int upxCount = tmp % 16;
-			styleInfo.istdNext = tmp / 16;
+			styleInfo.StyleIdNext = tmp / 16;
 
 			//adding current style
 			myStyleSheet[index] = styleInfo;
@@ -490,7 +486,7 @@ bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tab
 			//for style info styleType must be equal 1
 			if (styleType == 1 && upxCount >= 1) {
 				if (upxLen >= 2) {
-					styleInfo.istd = OleUtil::getU2Bytes(buffer, offset + pos + 2);
+					styleInfo.StyleIdCurrent = OleUtil::getU2Bytes(buffer, offset + pos + 2);
 					getStyleInfo(0, buffer + offset + pos + 4, upxLen - 2, styleInfo);
 					myStyleSheet[index] = styleInfo;
 				}
@@ -507,8 +503,8 @@ bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tab
 			//for char info styleType can be equal 1 or 2
 			if ((styleType == 1 && upxCount >= 2) || (styleType == 2 && upxCount >= 1)) {
 				CharInfo charInfo;
-				getCharInfo(0, ISTD_INVALID, buffer + offset + pos + 2, upxLen, charInfo);
-				styleInfo.charInfo = charInfo;
+				getCharInfo(0, Style::STYLE_INVALID, buffer + offset + pos + 2, upxLen, charInfo);
+				styleInfo.CurrentCharInfo = charInfo;
 				myStyleSheet[index] = styleInfo;
 			}
 		}
@@ -553,11 +549,11 @@ bool OleMainStream::readCharInfoTable(const char *headerBuffer, const OleEntry &
 			if (!offsetToCharPos(offset, charPos, myPieces)) {
 				continue;
 			}
-			unsigned int istd = getIstdByCharPos(charPos, myStyleInfoList);
+			unsigned int styleId = getStyleIdByCharPos(charPos, myStyleInfoList);
 
-			CharInfo charInfo = getStyleFromStylesheet(istd, myStyleSheet).charInfo;
+			CharInfo charInfo = getStyleFromStylesheet(styleId, myStyleSheet).CurrentCharInfo;
 			if (chpxOffset != 0) {
-				getCharInfo(chpxOffset, istd, formatPageBuffer + 1, len - 1, charInfo);
+				getCharInfo(chpxOffset, styleId, formatPageBuffer + 1, len - 1, charInfo);
 			}
 			myCharInfoList.push_back(CharPosToCharInfo(charPos, charInfo));
 
@@ -604,7 +600,7 @@ bool OleMainStream::readFloatingImages(const char *headerBuffer, const OleEntry 
 		unsigned int spid = OleUtil::getU4Bytes(buffer.c_str(), tOffset);
 		FloatImageInfo info;
 		unsigned int charPos = picturesBlocks.at(index);
-		info.shapeID = spid;
+		info.ShapeId = spid;
 		myFloatImageInfoList.push_back(CharPosToFloatImageInfo(charPos, info));
 	}
 
@@ -655,9 +651,9 @@ bool OleMainStream::readParagraphStyleTable(const char *headerBuffer, const OleE
 		if (read(formatPageBuffer, OleStorage::BBD_BLOCK_SIZE) != OleStorage::BBD_BLOCK_SIZE) {
 			return false;
 		}
-		unsigned int paragraphsCount = OleUtil::getU1Byte(formatPageBuffer, 0x1ff); //offset with 'cpara' value (count of paragraphs)
+		const unsigned int paragraphsCount = OleUtil::getU1Byte(formatPageBuffer, 0x1ff); //offset with 'cpara' value (count of paragraphs)
 		for (unsigned int index2 = 0; index2 < paragraphsCount; ++index2) {
-			unsigned int offset = OleUtil::getU4Bytes(formatPageBuffer, index2 * 4);
+			const unsigned int offset = OleUtil::getU4Bytes(formatPageBuffer, index2 * 4);
 			unsigned int papxOffset = OleUtil::getU1Byte(formatPageBuffer, (paragraphsCount + 1) * 4 + index2 * 13) * 2;
 			if (papxOffset <= 0) {
 				continue;
@@ -668,8 +664,8 @@ bool OleMainStream::readParagraphStyleTable(const char *headerBuffer, const OleE
 				len = OleUtil::getU1Byte(formatPageBuffer, papxOffset) * 2;
 			}
 
-			unsigned int istd = OleUtil::getU2Bytes(formatPageBuffer, papxOffset + 1);
-			Style styleInfo = getStyleFromStylesheet(istd, myStyleSheet);
+			const unsigned int styleId = OleUtil::getU2Bytes(formatPageBuffer, papxOffset + 1);
+			Style styleInfo = getStyleFromStylesheet(styleId, myStyleSheet);
 
 			if (len >= 3) {
 				getStyleInfo(papxOffset, formatPageBuffer + 3, len - 3, styleInfo);
@@ -723,7 +719,7 @@ bool OleMainStream::readSectionsInfoTable(const char *headerBuffer, const OleEnt
 	for (size_t index = 0; index < sectPage.size(); ++index) {
 		if (sectPage.at(index) == 0xffffffffUL) { //check for invalid record, to make default section info
 			SectionInfo sectionInfo;
-			sectionInfo.charPos = charPos.at(index);
+			sectionInfo.CharPosition = charPos.at(index);
 			mySectionInfoList.push_back(sectionInfo);
 			continue;
 		}
@@ -745,7 +741,7 @@ bool OleMainStream::readSectionsInfoTable(const char *headerBuffer, const OleEnt
 			continue;
 		}
 		SectionInfo sectionInfo;
-		sectionInfo.charPos = charPos.at(index);
+		sectionInfo.CharPosition = charPos.at(index);
 		getSectionInfo(formatPageBuffer + 2, bytes - 2, sectionInfo);
 		mySectionInfoList.push_back(sectionInfo);
 		delete[] formatPageBuffer;
@@ -760,12 +756,12 @@ void OleMainStream::getStyleInfo(unsigned int papxOffset, const char *grpprlBuff
 		unsigned int curPrlLength = 0;
 		switch (OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset)) {
 			case 0x2403:
-				styleInfo.alignment = OleUtil::getU1Byte(grpprlBuffer, papxOffset + offset + 2);
+				styleInfo.Alignment = (Style::AlignmentType)OleUtil::getU1Byte(grpprlBuffer, papxOffset + offset + 2);
 				break;
 			case 0x4610:
-				styleInfo.leftIndent += OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
-				if (styleInfo.leftIndent < 0) {
-					styleInfo.leftIndent = 0;
+				styleInfo.LeftIndent += OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
+				if (styleInfo.LeftIndent < 0) {
+					styleInfo.LeftIndent = 0;
 				}
 				break;
 			case 0xc60d: // ChgTabsPapx
@@ -787,22 +783,22 @@ void OleMainStream::getStyleInfo(unsigned int papxOffset, const char *grpprlBuff
 				}
 				break;
 			case 0x840e:
-				styleInfo.rightIndent = (int)OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
+				styleInfo.RightIndent = (int)OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
 				break;
 			case 0x840f:
-				styleInfo.leftIndent = (int)OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
+				styleInfo.LeftIndent = (int)OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
 				break;
 			case 0x8411:
-				styleInfo.firstLineIndent = (int)OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
+				styleInfo.FirstLineIndent = (int)OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
 				break;
 			case 0xa413:
-				styleInfo.beforeIndent = OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
+				styleInfo.BeforeParagraphIndent = OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
 				break;
 			case 0xa414:
-				styleInfo.afterIndent = OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
+				styleInfo.AfterParagraphIndent = OleUtil::getU2Bytes(grpprlBuffer, papxOffset + offset + 2);
 				break;
 			case 0x2407:
-				styleInfo.hasPageBreakBefore = OleUtil::getU1Byte(grpprlBuffer, papxOffset + offset + 2) == 0x01;
+				styleInfo.HasPageBreakBefore = OleUtil::getU1Byte(grpprlBuffer, papxOffset + offset + 2) == 0x01;
 				break;
 			default:
 				break;
@@ -815,7 +811,7 @@ void OleMainStream::getStyleInfo(unsigned int papxOffset, const char *grpprlBuff
 
 }
 
-void OleMainStream::getCharInfo(unsigned int chpxOffset, unsigned int /*istd*/, const char *grpprlBuffer, unsigned int bytes, CharInfo &charInfo) {
+void OleMainStream::getCharInfo(unsigned int chpxOffset, unsigned int /*styleId*/, const char *grpprlBuffer, unsigned int bytes, CharInfo &charInfo) {
 	unsigned int sprm = 0; //single propery modifier
 	unsigned int offset = 0;
 	while (bytes >= offset + 2) {
@@ -824,15 +820,15 @@ void OleMainStream::getCharInfo(unsigned int chpxOffset, unsigned int /*istd*/, 
 				sprm = OleUtil::getU1Byte(grpprlBuffer, chpxOffset + offset + 2);
 				switch (sprm) {
 					case UNSET:
-						charInfo.fontStyle &= ~CharInfo::BOLD;
+						charInfo.FontStyle &= ~CharInfo::FONT_BOLD;
 						break;
 					case SET:
-						charInfo.fontStyle |= CharInfo::BOLD;
+						charInfo.FontStyle |= CharInfo::FONT_BOLD;
 						break;
 					case UNCHANGED:
 						break;
 					case NEGATION:
-						charInfo.fontStyle ^= CharInfo::BOLD;
+						charInfo.FontStyle ^= CharInfo::FONT_BOLD;
 						break;
 					default:
 						break;
@@ -842,22 +838,22 @@ void OleMainStream::getCharInfo(unsigned int chpxOffset, unsigned int /*istd*/, 
 				sprm = OleUtil::getU1Byte(grpprlBuffer, chpxOffset + offset + 2);
 				switch (sprm) {
 					case UNSET:
-						charInfo.fontStyle &= ~CharInfo::ITALIC;
+						charInfo.FontStyle &= ~CharInfo::FONT_ITALIC;
 						break;
 					case SET:
-						charInfo.fontStyle |= CharInfo::ITALIC;
+						charInfo.FontStyle |= CharInfo::FONT_ITALIC;
 						break;
 					case UNCHANGED:
 						break;
 					case NEGATION:
-						charInfo.fontStyle ^= CharInfo::ITALIC;
+						charInfo.FontStyle ^= CharInfo::FONT_ITALIC;
 						break;
 					default:
 						break;
 					}
 				break;
 			case 0x4a43: //size of font
-				charInfo.fontSize = OleUtil::getU2Bytes(grpprlBuffer, chpxOffset + offset + 2);
+				charInfo.FontSize = OleUtil::getU2Bytes(grpprlBuffer, chpxOffset + offset + 2);
 			break;
 			default:
 				break;
@@ -874,7 +870,7 @@ void OleMainStream::getSectionInfo(const char *grpprlBuffer, size_t bytes, Secti
 		switch (OleUtil::getU2Bytes(grpprlBuffer, offset)) {
 			case 0x3009: //new page
 				tmp = OleUtil::getU1Byte(grpprlBuffer, offset + 2);
-				sectionInfo.newPage = (tmp != 0 && tmp != 1);
+				sectionInfo.IsNewPage = (tmp != 0 && tmp != 1);
 				break;
 			default:
 				break;
@@ -905,7 +901,7 @@ bool OleMainStream::getInlineImageInfo(unsigned int chpxOffset, const char *grpp
 //				}
 //				break;
 			case 0x6a03: // location p.105 [MS-DOC]
-				pictureInfo.dataPos = OleUtil::getU4Bytes(grpprlBuffer, chpxOffset + offset + 2);
+				pictureInfo.DataPosition = OleUtil::getU4Bytes(grpprlBuffer, chpxOffset + offset + 2);
 				isFound = true;
 				break;
 			default:
@@ -916,61 +912,61 @@ bool OleMainStream::getInlineImageInfo(unsigned int chpxOffset, const char *grpp
 	return isFound;
 }
 
-OleMainStream::Style OleMainStream::getStyleFromStylesheet(unsigned int istd, const StyleSheet &stylesheet) {
-	//TODO optimize it: StyleSheet can be map structure with istd key
+OleMainStream::Style OleMainStream::getStyleFromStylesheet(unsigned int styleId, const StyleSheet &stylesheet) {
+	//TODO optimize it: StyleSheet can be map structure with styleId key
 	Style style;
-	if (istd != ISTD_INVALID && istd != STI_NIL && istd != STI_USER) {
+	if (styleId != Style::STYLE_INVALID && styleId != Style::STYLE_NIL && styleId != Style::STYLE_USER) {
 		for (size_t index = 0; index < stylesheet.size(); ++index) {
-			if (stylesheet.at(index).istd == istd) {
+			if (stylesheet.at(index).StyleIdCurrent == styleId) {
 				return stylesheet.at(index);
 			}
 		}
 	}
-	style.istd = istd;
+	style.StyleIdCurrent = styleId;
 	return style;
 }
 
-int OleMainStream::getStyleIndex(unsigned int istd, const std::vector<bool> &isFilled, const StyleSheet &stylesheet) {
-	//TODO optimize it: StyleSheet can be map structure with istd key
+int OleMainStream::getStyleIndex(unsigned int styleId, const std::vector<bool> &isFilled, const StyleSheet &stylesheet) {
+	//TODO optimize it: StyleSheet can be map structure with styleId key
 	//in that case, this method will be excess
-	if (istd == ISTD_INVALID) {
+	if (styleId == Style::STYLE_INVALID) {
 		return -1;
 	}
 	for (int index = 0; index < (int)stylesheet.size(); ++index) {
-		if (isFilled.at(index) && stylesheet.at(index).istd == istd) {
+		if (isFilled.at(index) && stylesheet.at(index).StyleIdCurrent == styleId) {
 			return index;
 		}
 	}
 	return -1;
 }
 
-unsigned int OleMainStream::getIstdByCharPos(unsigned int charPos, const StyleInfoList &styleInfoList) {
-	unsigned int istd = ISTD_INVALID;
+unsigned int OleMainStream::getStyleIdByCharPos(unsigned int charPos, const StyleInfoList &styleInfoList) {
+	unsigned int styleId = Style::STYLE_INVALID;
 	for (size_t i = 0; i < styleInfoList.size(); ++i) {
 		const Style &info = styleInfoList.at(i).second;
 		if (i == styleInfoList.size() - 1) { //if last
-			istd = info.istd;
+			styleId = info.StyleIdCurrent;
 			break;
 		}
 		unsigned int curOffset = styleInfoList.at(i).first;
 		unsigned int nextOffset = styleInfoList.at(i + 1).first;
 		if (charPos >= curOffset && charPos < nextOffset) {
-			istd = info.istd;
+			styleId = info.StyleIdCurrent;
 			break;
 		}
 	}
-	return istd;
+	return styleId;
 }
 
 bool OleMainStream::offsetToCharPos(unsigned int offset, unsigned int &charPos, const Pieces &pieces) {
 	if (pieces.empty()) {
 		return false;
 	}
-	if ((unsigned int)pieces.front().offset > offset) {
+	if ((unsigned int)pieces.front().Offset > offset) {
 		charPos = 0;
 		return true;
 	}
-	if ((unsigned int)(pieces.back().offset + pieces.back().length) <= offset) {
+	if ((unsigned int)(pieces.back().Offset + pieces.back().Length) <= offset) {
 		return false;
 	}
 
@@ -980,8 +976,8 @@ bool OleMainStream::offsetToCharPos(unsigned int offset, unsigned int &charPos, 
 			pieceNumber = i;
 			break;
 		}
-		unsigned int curOffset = pieces.at(i).offset;
-		unsigned int nextOffset = pieces.at(i + 1).offset;
+		unsigned int curOffset = pieces.at(i).Offset;
+		unsigned int nextOffset = pieces.at(i + 1).Offset;
 		if (offset >= curOffset && offset < nextOffset) {
 			pieceNumber = i;
 			break;
@@ -989,8 +985,8 @@ bool OleMainStream::offsetToCharPos(unsigned int offset, unsigned int &charPos, 
 	}
 
 	const Piece &piece = pieces.at(pieceNumber);
-	unsigned int diffOffset = offset - piece.offset;
-	if (!piece.isANSI) {
+	unsigned int diffOffset = offset - piece.Offset;
+	if (!piece.IsANSI) {
 		diffOffset /= 2;
 	}
 	charPos = piece.startCP + diffOffset;
