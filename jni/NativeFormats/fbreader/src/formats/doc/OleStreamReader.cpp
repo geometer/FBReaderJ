@@ -178,7 +178,7 @@ void OleStreamReader::processInlineImage(OleMainStream &stream) {
 	}
 	while (myNextInlineImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextInlineImageInfoIndex).first == myCurCharPos) {
 		OleMainStream::InlineImageInfo info = imageInfoList.at(myNextInlineImageInfoIndex).second;
-		ZLFileImage::Blocks list = stream.getInlineImage(info.dataPos);
+		ZLFileImage::Blocks list = stream.getInlineImage(info.DataPosition);
 		if (!list.empty()) {
 			handleImage(list);
 		}
@@ -197,7 +197,7 @@ void OleStreamReader::processFloatImage(OleMainStream &stream) {
 	}
 	while (myNextFloatImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextFloatImageInfoIndex).first == myCurCharPos) {
 		OleMainStream::FloatImageInfo info = imageInfoList.at(myNextFloatImageInfoIndex).second;
-		ZLFileImage::Blocks list = stream.getFloatImage(info.shapeID);
+		ZLFileImage::Blocks list = stream.getFloatImage(info.ShapeId);
 		if (!list.empty()) {
 			handleImage(list);
 		}
@@ -219,16 +219,16 @@ void OleStreamReader::processStyles(OleMainStream &stream) {
 	if (!charInfoList.empty()) {
 		while (myNextCharInfoIndex < charInfoList.size() && charInfoList.at(myNextCharInfoIndex).first == myCurCharPos) {
 			OleMainStream::CharInfo info = charInfoList.at(myNextCharInfoIndex).second;
-			handleFontStyle(info.fontStyle);
+			handleFontStyle(info.FontStyle);
 			++myNextCharInfoIndex;
 		}
 	}
 
-	const OleMainStream::Bookmarks &bookmarksList = stream.getBookmarks();
+	const OleMainStream::BookmarksList &bookmarksList = stream.getBookmarks();
 	if (!bookmarksList.empty()) {
-		while (myNextBookmarkIndex < bookmarksList.size() && bookmarksList.at(myNextBookmarkIndex).charPos == myCurCharPos) {
+		while (myNextBookmarkIndex < bookmarksList.size() && bookmarksList.at(myNextBookmarkIndex).CharPosition == myCurCharPos) {
 			OleMainStream::Bookmark bookmark = bookmarksList.at(myNextBookmarkIndex);
-			handleBookmark(bookmark.name);
+			handleBookmark(bookmark.Name);
 			++myNextBookmarkIndex;
 		}
 	}
@@ -241,24 +241,24 @@ bool OleStreamReader::fillBuffer(OleMainStream &stream) {
 	}
 	const OleMainStream::Piece &piece = pieces.at(myNextPieceNumber);
 
-	if (piece.type == OleMainStream::Piece::FOOTNOTE) {
+	if (piece.Type == OleMainStream::Piece::PIECE_FOOTNOTE) {
 		handlePageBreak();
-	} else if (piece.type == OleMainStream::Piece::OTHER) {
+	} else if (piece.Type == OleMainStream::Piece::PIECE_OTHER) {
 		return false;
 	}
 
-	if (!stream.seek(piece.offset, true)) {
+	if (!stream.seek(piece.Offset, true)) {
 		//TODO maybe in that case we should take next piece?
 		return false;
 	}
-	char *textBuffer = new char[piece.length];
-	size_t readedBytes = stream.read(textBuffer, piece.length);
-	if (readedBytes != (unsigned int)piece.length) {
+	char *textBuffer = new char[piece.Length];
+	size_t readedBytes = stream.read(textBuffer, piece.Length);
+	if (readedBytes != (unsigned int)piece.Length) {
 		ZLLogger::Instance().println("OleStreamReader", "not all bytes has been readed from piece");
 	}
 
 	myBuffer.clear();
-	if (!piece.isANSI) {
+	if (!piece.IsANSI) {
 		for (unsigned int i = 0; i < readedBytes; i += 2) {
 			ZLUnicodeUtil::Ucs2Char ch = OleUtil::getU2Bytes(textBuffer, i);
 			myBuffer.push_back(ch);
