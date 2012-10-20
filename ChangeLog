@@ -1,3 +1,6 @@
+===== 1.6.3 (Oct ??, 2012) =====
+* FBReader stores text position after setPageStart API method (useful for TTS plugin, code by Greg Kochaniak)
+
 ===== 1.6.2 (Oct 13, 2012) =====
 * Optimized animation speed
 * Fixes in database code
