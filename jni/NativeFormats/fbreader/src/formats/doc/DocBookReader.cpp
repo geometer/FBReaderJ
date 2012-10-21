@@ -274,7 +274,7 @@ void DocBookReader::handleParagraphStyle(const OleMainStream::Style &styleInfo) 
 	if (styleInfo.HasPageBreakBefore) {
 		handlePageBreak();
 	}
-	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry();
+	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
 
 	switch (styleInfo.Alignment) {
 		default: // in that case, use default alignment type

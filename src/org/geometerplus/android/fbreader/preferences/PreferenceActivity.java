@@ -316,6 +316,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
 		final ZLPreferenceSet bgPreferences = new ZLPreferenceSet();
 
+		final Screen cssScreen = createPreferenceScreen("css");
+		cssScreen.addOption(collection.UseCSSFontSizeOption, "fontSize");
+		cssScreen.addOption(collection.UseCSSTextAlignmentOption, "textAlignment");
+
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
 		final WallpaperPreference wp = new WallpaperPreference(this, profile, colorsScreen.Resource, "background") {

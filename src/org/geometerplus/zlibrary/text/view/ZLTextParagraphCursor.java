@@ -100,7 +100,8 @@ public final class ZLTextParagraphCursor {
 							}
 						}
 						break;
-					case ZLTextParagraph.Entry.STYLE:
+					case ZLTextParagraph.Entry.STYLE_CSS:
+					case ZLTextParagraph.Entry.STYLE_OTHER:
 						elements.add(new ZLTextStyleElement(it.getStyleEntry()));
 						break;
 					case ZLTextParagraph.Entry.STYLE_CLOSE:
