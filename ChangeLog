@@ -1,7 +1,8 @@
-===== 1.6.3 (Oct ??, 2012) =====
+===== 1.6.3 (Oct 22, 2012) =====
 * FBReader stores text position after setPageStart API method (useful for TTS plugin, code by Greg Kochaniak)
 * MSWord doc plugin synchronized with the main branch
 * New options: apply/ignore values defined in CSS
+* Fixed crash in settings on devices with German, Thai, Traditional Chinese and Vietnamese locales
 
 ===== 1.6.2 (Oct 13, 2012) =====
 * Optimized animation speed
