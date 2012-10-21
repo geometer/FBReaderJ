@@ -598,7 +598,7 @@ void XHTMLReader::beginParagraph() {
 	}
 
 	if (doBlockSpaceBefore) {
-		ZLTextStyleEntry blockingEntry;
+		ZLTextStyleEntry blockingEntry(ZLTextStyleEntry::STYLE_CSS_ENTRY);
 		blockingEntry.setLength(
 			ZLTextStyleEntry::LENGTH_SPACE_BEFORE,
 			0,
@@ -616,7 +616,7 @@ void XHTMLReader::endParagraph() {
 			(*it)->isFeatureSupported(ZLTextStyleEntry::LENGTH_SPACE_AFTER);
 	}
 	if (doBlockSpaceAfter) {
-		ZLTextStyleEntry blockingEntry;
+		ZLTextStyleEntry blockingEntry(ZLTextStyleEntry::STYLE_CSS_ENTRY);
 		blockingEntry.setLength(
 			ZLTextStyleEntry::LENGTH_SPACE_AFTER,
 			0,
