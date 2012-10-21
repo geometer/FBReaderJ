@@ -312,8 +312,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="Ausschalten des Bildschirms verhindern">
 				<node name="0" value="Immer"/>
-				<node name="25" value="Falls Akkuladung &gt; 25%"/>
-				<node name="50" value="Falls Akkuladung &gt; 50%"/>
+				<node name="25" value="Falls Akkuladung &gt; 25%%"/>
+				<node name="50" value="Falls Akkuladung &gt; 50%%"/>
 				<node name="100" value="Nie"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Ausschalten des Bildschirms beim Laden verhindern">

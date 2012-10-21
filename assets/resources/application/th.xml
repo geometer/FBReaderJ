@@ -308,8 +308,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="การป้องกันการพักหน้าจอ">
 				<node name="0" value="ตลอดเวลา"/>
-				<node name="25" value="ขณะที่ระดับแบตเตอรี่มากกว่า 25% "/>
-				<node name="50" value="ขณะที่ระดับแบตเตอรี่มากกว่า 50% "/>
+				<node name="25" value="ขณะที่ระดับแบตเตอรี่มากกว่า 25%%"/>
+				<node name="50" value="ขณะที่ระดับแบตเตอรี่มากกว่า 50%%"/>
 				<node name="100" value="ไม่มีการพักหน้าจอ"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="ป้องกันการพักหน้าจอระหว่างการชาร์ต">
