@@ -270,7 +270,7 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry) {
 	myLastEntryStart = myAllocator->allocate(len);
 	char *address = myLastEntryStart;
 
-	*address++ = ZLTextParagraphEntry::STYLE_ENTRY;
+	*address++ = entry.entryKind();
 	*address++ = 0;
 	address = ZLCachedMemoryAllocator::writeUInt16(address, entry.myFeatureMask);
 
