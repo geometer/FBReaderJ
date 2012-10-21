@@ -49,12 +49,12 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeOption;
-	
+
 	public ZLTextBaseStyle(String fontFamily, int fontSize) {
 		super(null, ZLTextHyperlink.NO_LINK);
 		FontFamilyOption = new ZLStringOption(GROUP, "Base:fontFamily", fontFamily);
 		fontSize = fontSize * ZLibrary.Instance().getDisplayDPI() / 320 * 2;
-		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 5, 72, fontSize);
+		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 5, Math.max(72, fontSize * 2), fontSize);
 	}
 	
 	@Override

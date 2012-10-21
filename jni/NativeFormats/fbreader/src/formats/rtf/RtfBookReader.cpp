@@ -224,7 +224,7 @@ void RtfBookReader::setEncoding(int) {
 }
 
 void RtfBookReader::setAlignment() {
-	ZLTextStyleEntry entry;
+	ZLTextStyleEntry entry(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
 	entry.setAlignmentType(myState.Alignment);
 	myBookReader.addStyleEntry(entry);
 	// TODO: call addStyleCloseEntry somewhere (?)

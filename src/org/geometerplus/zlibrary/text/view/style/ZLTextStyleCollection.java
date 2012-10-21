@@ -19,22 +19,15 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 public class ZLTextStyleCollection {
 	private static ZLTextStyleCollection ourInstance = null;
-
-	private int myDefaultFontSize;
-	private ZLTextBaseStyle myBaseStyle;
-	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
-
-	private ZLTextStyleCollection() {
-		new TextStyleReader(this).readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
-	}
 
 	public static ZLTextStyleCollection Instance() {
 		if (ourInstance == null) {
@@ -45,6 +38,19 @@ public class ZLTextStyleCollection {
 
 	public static void deleteInstance() {
 		ourInstance = null;
+	}
+
+	private int myDefaultFontSize;
+	private ZLTextBaseStyle myBaseStyle;
+	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
+
+	public final ZLBooleanOption UseCSSTextAlignmentOption =
+		new ZLBooleanOption("Style", "css:textAlignment", true);
+	public final ZLBooleanOption UseCSSFontSizeOption =
+		new ZLBooleanOption("Style", "css:fontSize", true);
+
+	private ZLTextStyleCollection() {
+		new TextStyleReader(this).readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
 	}
 
 	public int getDefaultFontSize() {
