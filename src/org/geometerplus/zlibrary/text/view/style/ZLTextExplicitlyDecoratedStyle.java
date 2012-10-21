@@ -21,9 +21,7 @@ package org.geometerplus.zlibrary.text.view.style;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
-import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
-import org.geometerplus.zlibrary.text.model.ZLTextStyleEntry;
-
+import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
 public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyleEntry.Feature, ZLTextStyleEntry.FontModifier {
@@ -43,6 +41,10 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	}
 	@Override
 	protected int getFontSizeInternal(ZLTextMetrics metrics) {
+		if (myEntry instanceof ZLTextCSSStyleEntry &&
+			!ZLTextStyleCollection.Instance().UseCSSFontSizeOption.getValue()) {
+			return Base.getFontSize(metrics);
+		}
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
 				return Base.Base.getFontSize(metrics);
@@ -135,6 +137,10 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		return Base.getSpaceAfter();
 	}
 	public byte getAlignment() {
+		if (myEntry instanceof ZLTextCSSStyleEntry &&
+			!ZLTextStyleCollection.Instance().UseCSSTextAlignmentOption.getValue()) {
+			return Base.getAlignment();
+		}
 		return
 			myEntry.isFeatureSupported(ALIGNMENT_TYPE)
 				? myEntry.getAlignmentType()
