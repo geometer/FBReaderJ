@@ -22,9 +22,10 @@ def processNodes(base, custom):
 					newNode.setAttribute('value', value)
 					newNode.setAttribute('toBeTranslated', 'true')
 				customChild = custom.insertBefore(newNode, customChild)
-		processNodes(baseChild, customChild)
+		if customChild is not None:
+			processNodes(baseChild, customChild)
+			customChild = getFirstElementFrom(customChild.nextSibling)
 		baseChild = getFirstElementFrom(baseChild.nextSibling)
-		customChild = getFirstElementFrom(customChild.nextSibling)
 
 if len(sys.argv) != 3:
 	print 'Usage: %s <en.xml> <custom.xml>' % sys.argv[0]
