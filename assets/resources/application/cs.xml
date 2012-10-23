@@ -159,12 +159,12 @@
 		<node name="noDescription" value="Není dostupný žádný popis."/>
 		<node name="annotation" value="Anotace"/>
 		<node name="title" value="Název:"/>
-		<node name="authors" value="Autoři:"/>
+		<node name="authors" value="Autoři:">
 			<node condition="value 1" value="Autor:"/>
 		</node>
 		<node name="series" value="Série:"/>
 		<node name="indexInSeries" value="Díl v sérii:"/>
-		<node name="tags" value="Štítky:"/>
+		<node name="tags" value="Štítky:">
 			<node condition="value 1" value="Štítek:"/>
 		</node>
 		<node name="language" value="Jazyk:"/>
@@ -507,6 +507,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>
+			<node name="fontSize" value="Velikost písma">
+				<node name="summaryOn" value="Použít velikost písma definovanou v CSS"/>
+				<node name="summaryOff" value="Ignorovat velikost písma definovanou v CSS"/>
+			</node>
+			<node name="textAlignment" value="Zarovnání textu">
+				<node name="summaryOn" value="Použít zarovnání textu definované v CSS"/>
+				<node name="summaryOff" value="Ignorovat zarovnání textu definované v CSS"/>
+			</node>
+		</node>
 		<node name="colors" value="Barvy a pozadí">
 			<node name="summary" value="Nastavení barev"/>
 			<node name="background" value="Pozadí">
@@ -625,6 +636,11 @@
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
 				<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
+			</node>
+			<node name="fitImagesToScreen" value="Přizpůsobit obrázky obrazovce">
+				<node name="none" value="Žádné"/>
+				<node name="covers" value="Pouze obálky"/>
+				<node name="all" value="Všechny"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">
