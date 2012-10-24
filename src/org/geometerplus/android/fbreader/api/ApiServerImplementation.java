@@ -115,8 +115,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					}
 				case GET_PARAGRAPHS_NUMBER:
 					return ApiObject.envelope(getParagraphsNumber());
-				case GET_ELEMENTS_NUMBER:
-					return ApiObject.envelope(getElementsNumber(
+				case GET_PARAGRAPH_ELEMENTS_COUNT:
+					return ApiObject.envelope(getParagraphElementsCount(
 						((ApiObject.Integer)parameters[0]).Value
 					));
 				case GET_PARAGRAPH_TEXT:
@@ -142,6 +142,26 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				case CLEAR_HIGHLIGHTING:
 					clearHighlighting();
 					return ApiObject.Void.Instance;
+				case GET_BOTTOM_MARGIN:
+					return ApiObject.envelope(getBottomMargin());
+				case SET_BOTTOM_MARGIN:
+					setBottomMargin(((ApiObject.Integer)parameters[0]).Value);
+					return ApiObject.Void.Instance;
+				case GET_TOP_MARGIN:
+					return ApiObject.envelope(getTopMargin());
+				case SET_TOP_MARGIN:
+					setTopMargin(((ApiObject.Integer)parameters[0]).Value);
+					return ApiObject.Void.Instance;
+				case GET_LEFT_MARGIN:
+					return ApiObject.envelope(getLeftMargin());
+				case SET_LEFT_MARGIN:
+					setLeftMargin(((ApiObject.Integer)parameters[0]).Value);
+					return ApiObject.Void.Instance;
+				case GET_RIGHT_MARGIN:
+					return ApiObject.envelope(getRightMargin());
+				case SET_RIGHT_MARGIN:
+					setRightMargin(((ApiObject.Integer)parameters[0]).Value);
+					return ApiObject.Void.Instance;
 				case GET_KEY_ACTION:
 					return ApiObject.envelope(getKeyAction(
 						((ApiObject.Integer)parameters[0]).Value,
@@ -155,9 +175,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					);
 					return ApiObject.Void.Instance;
 				case GET_ZONEMAP:
-				    return ApiObject.envelope(getZoneMap());
+					return ApiObject.envelope(getZoneMap());
 				case SET_ZONEMAP:
-				    setZoneMap(((ApiObject.String)parameters[0]).Value);
+					setZoneMap(((ApiObject.String)parameters[0]).Value);
 					return ApiObject.Void.Instance;
 				case GET_ZONEMAP_HEIGHT:
 					return ApiObject.envelope(getZoneMapHeight(((ApiObject.String)parameters[0]).Value));
@@ -214,25 +234,33 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		try {
 			switch (method) {
 				case LIST_OPTION_GROUPS:
-					return ApiObject.envelope(getOptionGroups());
+					return ApiObject.envelopeStringList(getOptionGroups());
 				case LIST_OPTION_NAMES:
-					return ApiObject.envelope(getOptionNames(
+					return ApiObject.envelopeStringList(getOptionNames(
 						((ApiObject.String)parameters[0]).Value
 					));
 				case LIST_BOOK_TAGS:
-					return ApiObject.envelope(getBookTags());
+					return ApiObject.envelopeStringList(getBookTags());
 				case LIST_ACTIONS:
-					return ApiObject.envelope(listActions());
+					return ApiObject.envelopeStringList(listActions());
 				case LIST_ACTION_NAMES:
 				{
 					final ArrayList<String> actions = new ArrayList<String>(parameters.length);
 					for (ApiObject o : parameters) {
-					  	actions.add(((ApiObject.String)o).Value);
+						actions.add(((ApiObject.String)o).Value);
 					}
-					return ApiObject.envelope(listActionNames(actions));
+					return ApiObject.envelopeStringList(listActionNames(actions));
 				}
 				case LIST_ZONEMAPS:
-					return ApiObject.envelope(listZoneMaps());
+					return ApiObject.envelopeStringList(listZoneMaps());
+				case GET_PARAGRAPH_WORDS:
+					return ApiObject.envelopeStringList(getParagraphWords(
+						((ApiObject.Integer)parameters[0]).Value
+					));
+				case GET_PARAGRAPH_WORD_INDICES:
+					return ApiObject.envelopeIntegerList(getParagraphWordIndices(
+						((ApiObject.Integer)parameters[0]).Value
+					));
 				default:
 					return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 			}
@@ -383,6 +411,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	public void setPageStart(TextPosition position) {
 		myReader.getTextView().gotoPosition(position.ParagraphIndex, position.ElementIndex, position.CharIndex);
 		myReader.getViewWidget().repaint();
+		myReader.storePosition();
 	}
 
 	public void highlightArea(TextPosition start, TextPosition end) {
@@ -396,11 +425,43 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		myReader.getTextView().clearHighlighting();
 	}
 
+	public int getBottomMargin() {
+		return myReader.BottomMarginOption.getValue();
+	}
+
+	public void setBottomMargin(int value) {
+		myReader.BottomMarginOption.setValue(value);
+	}
+
+	public int getTopMargin() {
+		return myReader.TopMarginOption.getValue();
+	}
+
+	public void setTopMargin(int value) {
+		myReader.TopMarginOption.setValue(value);
+	}
+
+	public int getLeftMargin() {
+		return myReader.LeftMarginOption.getValue();
+	}
+
+	public void setLeftMargin(int value) {
+		myReader.LeftMarginOption.setValue(value);
+	}
+
+	public int getRightMargin() {
+		return myReader.RightMarginOption.getValue();
+	}
+
+	public void setRightMargin(int value) {
+		myReader.RightMarginOption.setValue(value);
+	}
+
 	public int getParagraphsNumber() {
 		return myReader.Model.getTextModel().getParagraphsNumber();
 	}
 
-	public int getElementsNumber(int paragraphIndex) {
+	public int getParagraphElementsCount(int paragraphIndex) {
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
 		cursor.moveToParagraphEnd();
@@ -420,6 +481,36 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			cursor.nextWord();
 		}
 		return sb.toString();
+	}
+
+	public List<String> getParagraphWords(int paragraphIndex) {
+		final ArrayList<String> words = new ArrayList<String>();
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+		cursor.moveToParagraph(paragraphIndex);
+		cursor.moveToParagraphStart();
+		while (!cursor.isEndOfParagraph()) {
+			ZLTextElement element = cursor.getElement();
+			if (element instanceof ZLTextWord) {
+				words.add(element.toString());
+			}
+			cursor.nextWord();
+		}
+		return words;
+	}
+
+	public ArrayList<Integer> getParagraphWordIndices(int paragraphIndex) {
+		final ArrayList<Integer> indices = new ArrayList<Integer>();
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+		cursor.moveToParagraph(paragraphIndex);
+		cursor.moveToParagraphStart();
+		while (!cursor.isEndOfParagraph()) {
+			ZLTextElement element = cursor.getElement();
+			if (element instanceof ZLTextWord) {
+				indices.add(cursor.getElementIndex());
+			}
+			cursor.nextWord();
+		}
+		return indices;
 	}
 
 	// action control
@@ -447,11 +538,11 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getZoneMap() {
-	  	return ScrollingPreferences.Instance().TapZoneMapOption.getValue();
+		return ScrollingPreferences.Instance().TapZoneMapOption.getValue();
 	}
 
 	public void setZoneMap(String name) {
-	  	ScrollingPreferences.Instance().TapZoneMapOption.setValue(name);
+		ScrollingPreferences.Instance().TapZoneMapOption.setValue(name);
 	}
 
 	public int getZoneMapHeight(String name) {

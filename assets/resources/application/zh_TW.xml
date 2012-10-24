@@ -308,13 +308,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="防止進入待機狀態">
 				<node name="0" value="必然"/>
-				<!-- Percent sign (%) could not be used in resource strings
-								because there is a bug in Cyanogen Mod firmware that
-								crashes the program with such resources
-					<node name="25" value= "當電量大於25%"/>
-					<node name="50" value= "當電量大於50%"/>-->
-				<node name="25" value="While battery level is greater than 25 percent"/>
-				<node name="50" value="While battery level is greater than 50 percent"/>
+				<node name="25" value= "當電量大於25%%"/>
+				<node name="50" value= "當電量大於50%%"/>
 				<node name="100" value="永不"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="充電時防止關閉屏幕">
@@ -503,6 +498,17 @@
 				<node name="External Hyperlink" value="外部超連結">
 					<node name="summary" value=""/>
 				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="顏色及壁紙">

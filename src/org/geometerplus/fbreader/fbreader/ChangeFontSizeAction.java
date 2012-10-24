@@ -32,7 +32,7 @@ class ChangeFontSizeAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
-		ZLIntegerRangeOption option =
+		final ZLIntegerRangeOption option =
 			ZLTextStyleCollection.Instance().getBaseStyle().FontSizeOption;
 		option.setValue(option.getValue() + myDelta);
 		Reader.clearTextCaches();
