@@ -454,12 +454,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		volumeKeysPreferences.setEnabled(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
 
 		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
-		final PackageManager pm = getPackageManager();
-		try {
-			pm.getPackageInfo(new PdfPluginFormatPlugin().getPackage(), 0);
-			scrollingScreen.addOption(scrollingPreferences.PDFScrollOption, "pdfscroll");
-		} catch (PackageManager.NameNotFoundException e) {
-		}
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
 			this,
 			scrollingScreen.Resource,
