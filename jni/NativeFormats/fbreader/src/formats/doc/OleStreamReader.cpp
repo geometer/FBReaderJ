@@ -83,8 +83,7 @@ bool OleStreamReader::readDocument(shared_ptr<ZLInputStream> inputStream) {
 	}
 
 	OleEntry wordDocumentEntry;
-	bool result = storage->getEntryByName(WORD_DOCUMENT, wordDocumentEntry);
-	if (!result) {
+	if (!storage->getEntryByName(WORD_DOCUMENT, wordDocumentEntry)) {
 		return false;
 	}
 
@@ -95,8 +94,7 @@ bool OleStreamReader::readDocument(shared_ptr<ZLInputStream> inputStream) {
 bool OleStreamReader::readStream(OleMainStream &oleMainStream) {
 	clear();
 
-	bool res = oleMainStream.open();
-	if (!res) {
+	if (!oleMainStream.open()) {
 		ZLLogger::Instance().println("OleStreamReader", "doesn't open correct");
 		return false;
 	}
@@ -169,10 +167,8 @@ bool OleStreamReader::readStream(OleMainStream &oleMainStream) {
 }
 
 bool OleStreamReader::getUcs2Char(OleMainStream &stream, ZLUnicodeUtil::Ucs2Char &ucs2char) {
-	if (myCurBufferPosition >= myBuffer.size()) {
-		if (!fillBuffer(stream)) {
-			return false;
-		}
+	if (myCurBufferPosition >= myBuffer.size() && !fillBuffer(stream)) {
+		return false;
 	}
 	ucs2char = myBuffer.at(myCurBufferPosition++);
 	processStyles(stream);
