@@ -25,13 +25,14 @@
 #include <shared_ptr.h>
 #include <ZLFile.h>
 #include <ZLTextStyleEntry.h>
+#include <ZLEncodingConverter.h>
 
 #include "../../bookmodel/BookReader.h"
 
 #include "OleMainStream.h"
-#include "OleStreamReader.h"
+#include "OleStreamParser.h"
 
-class DocBookReader : public OleStreamReader {
+class DocBookReader : public OleStreamParser {
 
 public:
 	DocBookReader(BookModel &model, const std::string &encoding);
@@ -39,6 +40,10 @@ public:
 	bool readBook();
 
 private:
+	void dataHandler(const char *buffer, size_t len);
+	void ansiSymbolHandler(ZLUnicodeUtil::Ucs2Char symbol);
+	void footnoteHandler();
+
 	void handleChar(ZLUnicodeUtil::Ucs2Char ucs2char);
 	void handleHardLinebreak();
 	void handleParagraphEnd();
@@ -88,6 +93,9 @@ private:
 	shared_ptr<ZLTextStyleEntry> myCurrentStyleEntry;
 	OleMainStream::Style myCurrentStyleInfo;
 	unsigned int myPictureCounter;
+
+	const std::string myEncoding;
+	shared_ptr<ZLEncodingConverter> myConverter;
 };
 
 inline DocBookReader::~DocBookReader() {}
