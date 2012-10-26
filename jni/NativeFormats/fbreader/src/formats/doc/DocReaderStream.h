@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,34 @@
  * 02110-1301, USA.
  */
 
+#ifndef __DOCREADERSTREAM_H__
+#define __DOCREADERSTREAM_H__
+
+#include <string>
+
+#include <ZLFile.h>
 #include <ZLInputStream.h>
 
-#include "../../library/Book.h"
+class DocReaderStream : public ZLInputStream {
 
-#include "DocMetaInfoReader.h"
+public:
+	DocReaderStream(const ZLFile& file, size_t maxSize);
+	~DocReaderStream();
 
-DocMetaInfoReader::DocMetaInfoReader(Book &book) : myBook(book) {
-	myBook.removeAllAuthors();
-	myBook.setTitle(std::string());
-	myBook.setLanguage(std::string());
-	myBook.removeAllTags();
-}
+private:
+	bool open();
+	size_t read(char *buffer, size_t maxSize);
+	void close();
 
-bool DocMetaInfoReader::readMetaInfo() {
-	myBook.removeAllAuthors();
-	myBook.setTitle(myBook.file().name(true));
-	myBook.removeAllTags();
-	return true;
-}
+	void seek(int offset, bool absoluteOffset);
+	size_t offset() const;
+	size_t sizeOfOpened();
+
+private:
+	const ZLFile myFile;
+	char *myBuffer;
+	size_t mySize;
+	size_t myOffset;
+};
+
+#endif /* __DOCREADERSTREAM_H__ */
