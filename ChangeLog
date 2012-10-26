@@ -2,6 +2,9 @@
 * 'Open book in external program' feature
 * Multiple directories for user's fonts and wallpapers
 
+===== 1.6.4 (Nov ??, 2012) =====
+* Supported encoding & language detection for *.doc (ms-word) files
+
 ===== 1.6.3 (Oct 22, 2012) =====
 * FBReader stores text position after setPageStart API method (useful for TTS plugin, code by Greg Kochaniak)
 * MSWord doc plugin synchronized with the main branch
