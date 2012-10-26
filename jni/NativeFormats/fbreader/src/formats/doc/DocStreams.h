@@ -17,19 +17,19 @@
  * 02110-1301, USA.
  */
 
-#ifndef __DOCREADERSTREAM_H__
-#define __DOCREADERSTREAM_H__
-
-#include <string>
+#ifndef __DOCSTREAMS_H__
+#define __DOCSTREAMS_H__
 
 #include <ZLFile.h>
 #include <ZLInputStream.h>
 
-class DocReaderStream : public ZLInputStream {
+class DocReader;
+
+class DocStream : public ZLInputStream {
 
 public:
-	DocReaderStream(const ZLFile& file, size_t maxSize);
-	~DocReaderStream();
+	DocStream(const ZLFile& file, size_t maxSize);
+	~DocStream();
 
 private:
 	bool open();
@@ -40,6 +40,9 @@ private:
 	size_t offset() const;
 	size_t sizeOfOpened();
 
+protected:
+	virtual shared_ptr<DocReader> createReader(char *buffer, size_t maxSize) = 0;
+
 private:
 	const ZLFile myFile;
 	char *myBuffer;
@@ -47,4 +50,24 @@ private:
 	size_t myOffset;
 };
 
-#endif /* __DOCREADERSTREAM_H__ */
+class DocCharStream : public DocStream {
+
+public:
+	DocCharStream(const ZLFile& file, size_t maxSize);
+	~DocCharStream();
+
+private:
+	shared_ptr<DocReader> createReader(char *buffer, size_t maxSize);
+};
+
+class DocAnsiStream : public DocStream {
+
+public:
+	DocAnsiStream(const ZLFile& file, size_t maxSize);
+	~DocAnsiStream();
+
+private:
+	shared_ptr<DocReader> createReader(char *buffer, size_t maxSize);
+};
+
+#endif /* __DOCSTREAMS_H__ */

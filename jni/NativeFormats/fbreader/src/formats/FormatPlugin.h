@@ -63,8 +63,8 @@ public:
 	virtual shared_ptr<const ZLImage> coverImage(const ZLFile &file) const;
 
 protected:
-	static void detectEncodingAndLanguage(Book &book, ZLInputStream &stream);
-	static void detectLanguage(Book &book, ZLInputStream &stream);
+	static bool detectEncodingAndLanguage(Book &book, ZLInputStream &stream, bool force = false);
+	static bool detectLanguage(Book &book, ZLInputStream &stream, const std::string &encoding, bool force = false);
 };
 
 class PluginCollection {
