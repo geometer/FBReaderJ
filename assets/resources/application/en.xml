@@ -599,14 +599,6 @@
 				<node name="slide" value="Slide animation"/>
 				<node name="shift" value="Shift animation"/>
 			</node>
-			<node name="pdfscroll" value="PDF plugin scrolling">
-	    		<node name="vert" value="Vertical"/>
-	    		<node name="horiz" value="Horizontal"/>
-	    		<node name="scroll" value="Scroll"/>
-	   			<node name="single" value="Single"/>
-	    		<node name="singleEx" value="SingleEx"/>
-	    		<node name="reflow" value="Reflow"/>
-			</node>
 			<node name="animationSpeed" value="Animation speed">
 				<node name="fast" value="fast"/>
 				<node name="slow" value="slow"/>
