@@ -17,7 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <iostream>
 #include <vector>
 #include <string>
 
@@ -44,39 +43,14 @@ DocBookReader::DocBookReader(BookModel &model, const std::string &encoding) :
 bool DocBookReader::readBook() {
 	const ZLFile &file = myModelReader.model().book()->file();
 	shared_ptr<ZLInputStream> stream = file.inputStream();
-	if (stream.isNull()) {
-		return false;
-	}
-	return readDocument(stream);
-}
-
-bool DocBookReader::readDocument(shared_ptr<ZLInputStream> inputStream) {
-	static const std::string WORD_DOCUMENT = "WordDocument";
-
-	if (inputStream.isNull() || !inputStream->open()) {
+	if (stream.isNull() || !stream->open()) {
 		return false;
 	}
 	myModelReader.setMainTextModel();
 	myModelReader.pushKind(REGULAR);
 	myModelReader.beginParagraph();
 
-	shared_ptr<OleStorage> storage = new OleStorage;
-
-	if (!storage->init(inputStream, inputStream->sizeOfOpened())) {
-		ZLLogger::Instance().println("DocBookReader", "Broken OLE file!");
-		return false;
-	}
-
-
-	OleEntry wordDocumentEntry;
-	bool result = storage->getEntryByName(WORD_DOCUMENT, wordDocumentEntry);
-	if (!result) {
-		return false;
-	}
-
-	OleMainStream oleStream(storage, wordDocumentEntry, inputStream);
-	result = readStream(oleStream);
-	if (!result) {
+	if (!readDocument(stream)) {
 		return false;
 	}
 
@@ -239,8 +213,8 @@ void DocBookReader::handleImage(const ZLFileImage::Blocks &blocks) {
 }
 
 void DocBookReader::handleOtherControlChar(ZLUnicodeUtil::Ucs2Char ucs2char) {
-	if (ucs2char == WORD_SHORT_DEFIS) {
-		handleChar(SHORT_DEFIS);
+	if (ucs2char == WORD_MINUS) {
+		handleChar(MINUS);
 	} else if (ucs2char == WORD_SOFT_HYPHEN) {
 		//skip
 	} else if (ucs2char == WORD_HORIZONTAL_TAB) {
@@ -381,4 +355,3 @@ std::string DocBookReader::parseLink(ZLUnicodeUtil::Ucs2String s, bool urlencode
 	ZLUnicodeUtil::ucs2ToUtf8(utf8String, link);
 	return utf8String;
 }
-

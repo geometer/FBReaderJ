@@ -143,7 +143,8 @@ const shared_ptr<ZLTextParagraphEntry> ZLTextParagraph::Iterator::entry() const 
 			case ZLTextParagraphEntry::IMAGE_ENTRY:
 				myEntry = new ImageEntry(myPointer + 2);
 				break;
-			case ZLTextParagraphEntry::STYLE_ENTRY:
+			case ZLTextParagraphEntry::STYLE_CSS_ENTRY:
+			case ZLTextParagraphEntry::STYLE_OTHER_ENTRY:
 				myEntry = new ZLTextStyleEntry(myPointer + 2);
 				break;
 			case ZLTextParagraphEntry::FIXED_HSPACE_ENTRY:
