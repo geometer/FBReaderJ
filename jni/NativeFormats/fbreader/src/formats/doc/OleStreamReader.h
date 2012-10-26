@@ -35,7 +35,7 @@ public:
 	static const ZLUnicodeUtil::Ucs2Char WORD_HARD_LINEBREAK;
 	static const ZLUnicodeUtil::Ucs2Char WORD_PAGE_BREAK;
 	static const ZLUnicodeUtil::Ucs2Char WORD_END_OF_PARAGRAPH;
-	static const ZLUnicodeUtil::Ucs2Char WORD_SHORT_DEFIS;
+	static const ZLUnicodeUtil::Ucs2Char WORD_MINUS;
 	static const ZLUnicodeUtil::Ucs2Char WORD_SOFT_HYPHEN;
 	static const ZLUnicodeUtil::Ucs2Char WORD_START_FIELD;
 	static const ZLUnicodeUtil::Ucs2Char WORD_SEPARATOR_FIELD;
@@ -50,16 +50,20 @@ public:
 	static const ZLUnicodeUtil::Ucs2Char LINE_FEED;
 	static const ZLUnicodeUtil::Ucs2Char SOFT_HYPHEN;
 	static const ZLUnicodeUtil::Ucs2Char SPACE;
-	static const ZLUnicodeUtil::Ucs2Char SHORT_DEFIS;
+	static const ZLUnicodeUtil::Ucs2Char MINUS;
 	static const ZLUnicodeUtil::Ucs2Char VERTICAL_LINE;
 
 public:
 	OleStreamReader(const std::string &encoding);
-
-	bool readStream(OleMainStream &stream);
+	bool readDocument(shared_ptr<ZLInputStream> stream);
 	void clear();
 
+private:
+	bool readStream(OleMainStream &stream);
+
 protected:
+	virtual void dataHandler(const char *buffer, size_t len);
+
 	//virtual void parapgraphHandler(std::string paragraph) = 0;
 	virtual void handleChar(ZLUnicodeUtil::Ucs2Char ucs2char) = 0;
 	virtual void handleHardLinebreak() = 0;
