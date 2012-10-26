@@ -78,7 +78,7 @@ private:
 
 public:
 	ZLTextStyleEntry(unsigned char entryKind);
-	//ZLTextStyleEntry(char *address);
+	//ZLTextStyleEntry(unsigned char entryKind, char *address);
 	~ZLTextStyleEntry();
 
 	unsigned char entryKind() const;
@@ -99,7 +99,7 @@ public:
 	void setFontFamily(const std::string &fontFamily);
 
 private:
-	unsigned char myEntryKind;
+	const unsigned char myEntryKind;
 	unsigned short myFeatureMask;
 
 	LengthType myLengths[NUMBER_OF_LENGTHS];

@@ -27,6 +27,7 @@
 #include "DocFloatImageReader.h"
 
 class OleMainStream : public OleStream {
+
 public:
 	struct Piece {
 		enum PieceType {

@@ -17,7 +17,6 @@
  * 02110-1301, USA.
  */
 
-
 #include <cctype>
 #include <cstring>
 
@@ -37,7 +36,7 @@ const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_HORIZONTAL_TAB = 0x0009;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_HARD_LINEBREAK = 0x000b;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_PAGE_BREAK = 0x000c;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_END_OF_PARAGRAPH = 0x000d;
-const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_SHORT_DEFIS = 0x001e;
+const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_MINUS = 0x001e;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_SOFT_HYPHEN = 0x001f;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_START_FIELD = 0x0013;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_SEPARATOR_FIELD = 0x0014;
@@ -52,7 +51,7 @@ const ZLUnicodeUtil::Ucs2Char OleStreamReader::FILE_SEPARATOR = 0x1c;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::LINE_FEED = 0x000a;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::SOFT_HYPHEN = 0xad;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::SPACE = 0x20;
-const ZLUnicodeUtil::Ucs2Char OleStreamReader::SHORT_DEFIS = 0x2D;
+const ZLUnicodeUtil::Ucs2Char OleStreamReader::MINUS = 0x2D;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::VERTICAL_LINE = 0x7C;
 
 OleStreamReader::OleStreamReader(const std::string &encoding) :
@@ -71,6 +70,26 @@ void OleStreamReader::clear() {
 	myNextBookmarkIndex = 0;
 	myNextInlineImageInfoIndex = 0;
 	myNextFloatImageInfoIndex = 0;
+}
+
+bool OleStreamReader::readDocument(shared_ptr<ZLInputStream> inputStream) {
+	static const std::string WORD_DOCUMENT = "WordDocument";
+
+	shared_ptr<OleStorage> storage = new OleStorage;
+
+	if (!storage->init(inputStream, inputStream->sizeOfOpened())) {
+		ZLLogger::Instance().println("DocBookReader", "Broken OLE file!");
+		return false;
+	}
+
+	OleEntry wordDocumentEntry;
+	bool result = storage->getEntryByName(WORD_DOCUMENT, wordDocumentEntry);
+	if (!result) {
+		return false;
+	}
+
+	OleMainStream oleStream(storage, wordDocumentEntry, inputStream);
+	return readStream(oleStream);
 }
 
 bool OleStreamReader::readStream(OleMainStream &oleMainStream) {
@@ -252,33 +271,37 @@ bool OleStreamReader::fillBuffer(OleMainStream &stream) {
 		return false;
 	}
 	char *textBuffer = new char[piece.Length];
-	size_t readedBytes = stream.read(textBuffer, piece.Length);
-	if (readedBytes != (unsigned int)piece.Length) {
-		ZLLogger::Instance().println("OleStreamReader", "not all bytes has been readed from piece");
+	size_t readBytes = stream.read(textBuffer, piece.Length);
+	if (readBytes != (size_t)piece.Length) {
+		ZLLogger::Instance().println("OleStreamReader", "not all bytes have been read from piece");
 	}
 
 	myBuffer.clear();
 	if (!piece.IsANSI) {
-		for (unsigned int i = 0; i < readedBytes; i += 2) {
+		for (size_t i = 0; i < readBytes; i += 2) {
 			ZLUnicodeUtil::Ucs2Char ch = OleUtil::getU2Bytes(textBuffer, i);
 			myBuffer.push_back(ch);
 		}
 	} else {
-		if (myConverter.isNull()) {
-			//lazy convertor loading, because documents can be in Unicode only and don't need to be converted
-			ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
-			myConverter = collection.converter(myEncoding);
-			if (myConverter.isNull()) {
-				myConverter = collection.defaultConverter();
-			}
-		}
-		std::string utf8String;
-		myConverter->convert(utf8String, std::string(textBuffer, readedBytes));
-		ZLUnicodeUtil::utf8ToUcs2(myBuffer, utf8String);
+		dataHandler(textBuffer, readBytes);
 	}
 	myCurBufferPosition = 0;
 	++myNextPieceNumber;
 	delete[] textBuffer;
 
 	return true;
+}
+
+void OleStreamReader::dataHandler(const char *buffer, size_t len) {
+	if (myConverter.isNull()) {
+		// lazy converter initialization
+		const ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
+		myConverter = collection.converter(myEncoding);
+		if (myConverter.isNull()) {
+			myConverter = collection.defaultConverter();
+		}
+	}
+	std::string utf8String;
+	myConverter->convert(utf8String, buffer, buffer + len);
+	ZLUnicodeUtil::utf8ToUcs2(myBuffer, utf8String);
 }

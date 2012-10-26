@@ -172,4 +172,3 @@ size_t RtfReaderStream::offset() const {
 size_t RtfReaderStream::sizeOfOpened() {
 	return mySize;
 }
-

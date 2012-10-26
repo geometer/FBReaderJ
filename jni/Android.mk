@@ -128,6 +128,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/doc/DocBookReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocMetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocPlugin.cpp \
+	NativeFormats/fbreader/src/formats/doc/DocReaderStream.cpp \
 	NativeFormats/fbreader/src/formats/doc/OleMainStream.cpp \
 	NativeFormats/fbreader/src/formats/doc/OleStorage.cpp \
 	NativeFormats/fbreader/src/formats/doc/OleStream.cpp \
