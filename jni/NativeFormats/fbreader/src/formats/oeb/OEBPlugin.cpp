@@ -135,7 +135,7 @@ shared_ptr<const ZLImage> OEBPlugin::coverImage(const ZLFile &file) const {
 bool OEBPlugin::readLanguageAndEncoding(Book &book) const {
 	if (book.language().empty()) {
 		shared_ptr<ZLInputStream> oebStream = new OEBTextStream(opfFile(book.file()));
-		detectLanguage(book, *oebStream);
+		detectLanguage(book, *oebStream, book.encoding());
 	}
 	return true;
 }

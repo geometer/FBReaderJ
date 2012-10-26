@@ -46,7 +46,7 @@ bool RtfPlugin::readMetaInfo(Book &book) const {
 	} else if (book.language().empty()) {
 		shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
 		if (!stream.isNull()) {
-			detectLanguage(book, *stream);
+			detectLanguage(book, *stream, book.encoding());
 		}
 	}
 

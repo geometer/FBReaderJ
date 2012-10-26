@@ -21,11 +21,12 @@
 #include <ZLInputStream.h>
 #include <ZLLogger.h>
 #include <ZLImage.h>
+#include <ZLEncodingConverter.h>
 
 #include "DocPlugin.h"
 #include "DocMetaInfoReader.h"
 #include "DocBookReader.h"
-#include "DocReaderStream.h"
+#include "DocStreams.h"
 #include "../../bookmodel/BookModel.h"
 #include "../../library/Book.h"
 
@@ -52,9 +53,10 @@ bool DocPlugin::readMetaInfo(Book &book) const {
 		return false;
 	}
 
-	shared_ptr<ZLInputStream> stream = new DocReaderStream(book.file(), 50000);
-	if (!stream.isNull()) {
-		detectEncodingAndLanguage(book, *stream);
+	shared_ptr<ZLInputStream> stream = new DocCharStream(book.file(), 50000);
+	if (!detectEncodingAndLanguage(book, *stream)) {
+		stream = new DocAnsiStream(book.file(), 50000);
+		detectLanguage(book, *stream, ZLEncodingConverter::UTF8, true);
 	}
 
 	return true;
