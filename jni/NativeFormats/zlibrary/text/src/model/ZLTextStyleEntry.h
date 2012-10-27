@@ -77,9 +77,11 @@ private:
 	};
 
 public:
-	ZLTextStyleEntry();
-	//ZLTextStyleEntry(char *address);
+	ZLTextStyleEntry(unsigned char entryKind);
+	//ZLTextStyleEntry(unsigned char entryKind, char *address);
 	~ZLTextStyleEntry();
+
+	unsigned char entryKind() const;
 
 	bool isEmpty() const;
 	bool isFeatureSupported(Feature featureId) const;
@@ -97,6 +99,7 @@ public:
 	void setFontFamily(const std::string &fontFamily);
 
 private:
+	const unsigned char myEntryKind;
 	unsigned short myFeatureMask;
 
 	LengthType myLengths[NUMBER_OF_LENGTHS];
@@ -108,8 +111,10 @@ private:
 	friend class ZLTextModel;
 };
 
-inline ZLTextStyleEntry::ZLTextStyleEntry() : myFeatureMask(0), myAlignmentType(ALIGN_UNDEFINED), mySupportedFontModifier(0), myFontModifier(0) {}
+inline ZLTextStyleEntry::ZLTextStyleEntry(unsigned char entryKind) : myEntryKind(entryKind), myFeatureMask(0), myAlignmentType(ALIGN_UNDEFINED), mySupportedFontModifier(0), myFontModifier(0) {}
 inline ZLTextStyleEntry::~ZLTextStyleEntry() {}
+
+inline unsigned char ZLTextStyleEntry::entryKind() const { return myEntryKind; }
 
 inline ZLTextStyleEntry::Metrics::Metrics(int fontSize, int fontXHeight, int fullWidth, int fullHeight) : FontSize(fontSize), FontXHeight(fontXHeight), FullWidth(fullWidth), FullHeight(fullHeight) {}
 

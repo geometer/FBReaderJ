@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.text.model;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
-public final class ZLTextStyleEntry {
+public abstract class ZLTextStyleEntry {
 	public interface Feature {
 		int LENGTH_LEFT_INDENT                = 0;
 		int LENGTH_RIGHT_INDENT               = 1;
@@ -76,14 +76,14 @@ public final class ZLTextStyleEntry {
 		return (mask & (1 << featureId)) != 0;
 	}
 
-	public boolean isFeatureSupported(int featureId) {
+	protected ZLTextStyleEntry() {
+	}
+
+	public final boolean isFeatureSupported(int featureId) {
 		return isFeatureSupported(myFeatureMask, featureId);
 	}
 
-	public ZLTextStyleEntry() {
-	}
-
-	void setLength(int featureId, short size, byte unit) {
+	final void setLength(int featureId, short size, byte unit) {
 		myFeatureMask |= 1 << featureId;
 		myLengths[featureId] = new Length(size, unit);
 	}
@@ -103,7 +103,7 @@ public final class ZLTextStyleEntry {
 		}
 	}
 
-	public int getLength(int featureId, ZLTextMetrics metrics) {
+	public final int getLength(int featureId, ZLTextMetrics metrics) {
 		switch (myLengths[featureId].Unit) {
 			default:
 			case SizeUnit.PIXEL:
@@ -122,31 +122,31 @@ public final class ZLTextStyleEntry {
 		}
 	}
 
-	void setAlignmentType(byte alignmentType) {
+	final void setAlignmentType(byte alignmentType) {
 		myFeatureMask |= 1 << Feature.ALIGNMENT_TYPE;
 		myAlignmentType = alignmentType;
 	}
 	
-	public byte getAlignmentType() {
+	public final byte getAlignmentType() {
 		return myAlignmentType;
 	}
 
-	void setFontFamily(String fontFamily) {
+	final void setFontFamily(String fontFamily) {
 		myFeatureMask |= 1 << Feature.FONT_FAMILY;
 		myFontFamily = fontFamily;
 	}
 
-	public String getFontFamily() {
+	public final String getFontFamily() {
 		return myFontFamily;
 	}
 
-	void setFontModifiers(byte supported, byte values) {
+	final void setFontModifiers(byte supported, byte values) {
 		myFeatureMask |= 1 << Feature.FONT_STYLE_MODIFIER;
 		mySupportedFontModifiers = supported;
 		myFontModifiers = values;
 	}
 
-	void setFontModifier(byte modifier, boolean on) {
+	final void setFontModifier(byte modifier, boolean on) {
 		myFeatureMask |= 1 << Feature.FONT_STYLE_MODIFIER;
 		mySupportedFontModifiers |= modifier;
 		if (on) {
@@ -156,7 +156,7 @@ public final class ZLTextStyleEntry {
 		}
 	}
 
-	public ZLBoolean3 getFontModifier(byte modifier) {
+	public final ZLBoolean3 getFontModifier(byte modifier) {
 		if ((mySupportedFontModifiers & modifier) == 0) {
 			return ZLBoolean3.B3_UNDEFINED;
 		}

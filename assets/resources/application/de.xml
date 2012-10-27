@@ -309,8 +309,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="Ausschalten des Bildschirms verhindern">
 				<node name="0" value="Immer"/>
-				<node name="25" value="Falls Akkuladung &gt; 25%"/>
-				<node name="50" value="Falls Akkuladung &gt; 50%"/>
+				<node name="25" value="Falls Akkuladung &gt; 25%%"/>
+				<node name="50" value="Falls Akkuladung &gt; 50%%"/>
 				<node name="100" value="Nie"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Ausschalten des Bildschirms beim Laden verhindern">
@@ -499,6 +499,17 @@
 				<node name="External Hyperlink" value="Externer Hyperlink">
 					<node name="summary" value=""/>
 				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Farben &amp; Hintergründe">

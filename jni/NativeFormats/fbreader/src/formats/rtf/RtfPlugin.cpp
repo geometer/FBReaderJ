@@ -19,6 +19,7 @@
 
 #include <ZLFile.h>
 #include <ZLInputStream.h>
+#include <ZLEncodingConverter.h>
 
 #include "RtfPlugin.h"
 #include "RtfDescriptionReader.h"
@@ -42,11 +43,11 @@ bool RtfPlugin::readMetaInfo(Book &book) const {
 	}
 
 	if (book.encoding().empty()) {
-		book.setEncoding("utf-8");
+		book.setEncoding(ZLEncodingConverter::UTF8);
 	} else if (book.language().empty()) {
 		shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
 		if (!stream.isNull()) {
-			detectLanguage(book, *stream);
+			detectLanguage(book, *stream, book.encoding());
 		}
 	}
 

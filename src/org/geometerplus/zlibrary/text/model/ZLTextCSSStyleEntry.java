@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,9 @@
  * 02110-1301, USA.
  */
 
-#include "ZLEncodingConverter.h"
-#include "ZLEncodingConverterProvider.h"
+package org.geometerplus.zlibrary.text.model;
 
-const std::string ZLEncodingConverter::ASCII = "us-ascii";
-const std::string ZLEncodingConverter::UTF8 = "utf-8";
-const std::string ZLEncodingConverter::UTF16 = "utf-16";
-const std::string ZLEncodingConverter::UTF16BE = "utf-16be";
-
-ZLEncodingConverterProvider::ZLEncodingConverterProvider() {
-}
-
-ZLEncodingConverterProvider::~ZLEncodingConverterProvider() {
-}
-
-ZLEncodingConverter::ZLEncodingConverter() {
-}
-
-ZLEncodingConverter::~ZLEncodingConverter() {
-}
-
-void ZLEncodingConverter::convert(std::string &dst, const std::string &src) {
-	convert(dst, src.data(), src.data() + src.length());
+public final class ZLTextCSSStyleEntry extends ZLTextStyleEntry {
+	public ZLTextCSSStyleEntry() {
+	}
 }

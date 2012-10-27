@@ -17,7 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <iostream>
 #include <vector>
 #include <string>
 
@@ -35,48 +34,23 @@
 #include "OleMainStream.h"
 
 DocBookReader::DocBookReader(BookModel &model, const std::string &encoding) :
-	OleStreamReader(encoding),
 	myModelReader(model),
-	myPictureCounter(0) {
+	myPictureCounter(0),
+	myEncoding(encoding) {
 	myReadState = READ_TEXT;
 }
 
 bool DocBookReader::readBook() {
 	const ZLFile &file = myModelReader.model().book()->file();
 	shared_ptr<ZLInputStream> stream = file.inputStream();
-	if (stream.isNull()) {
-		return false;
-	}
-	return readDocument(stream);
-}
-
-bool DocBookReader::readDocument(shared_ptr<ZLInputStream> inputStream) {
-	static const std::string WORD_DOCUMENT = "WordDocument";
-
-	if (inputStream.isNull() || !inputStream->open()) {
+	if (stream.isNull() || !stream->open()) {
 		return false;
 	}
 	myModelReader.setMainTextModel();
 	myModelReader.pushKind(REGULAR);
 	myModelReader.beginParagraph();
 
-	shared_ptr<OleStorage> storage = new OleStorage;
-
-	if (!storage->init(inputStream, inputStream->sizeOfOpened())) {
-		ZLLogger::Instance().println("DocBookReader", "Broken OLE file!");
-		return false;
-	}
-
-
-	OleEntry wordDocumentEntry;
-	bool result = storage->getEntryByName(WORD_DOCUMENT, wordDocumentEntry);
-	if (!result) {
-		return false;
-	}
-
-	OleMainStream oleStream(storage, wordDocumentEntry, inputStream);
-	result = readStream(oleStream);
-	if (!result) {
+	if (!readDocument(stream)) {
 		return false;
 	}
 
@@ -239,8 +213,8 @@ void DocBookReader::handleImage(const ZLFileImage::Blocks &blocks) {
 }
 
 void DocBookReader::handleOtherControlChar(ZLUnicodeUtil::Ucs2Char ucs2char) {
-	if (ucs2char == WORD_SHORT_DEFIS) {
-		handleChar(SHORT_DEFIS);
+	if (ucs2char == WORD_MINUS) {
+		handleChar(MINUS);
 	} else if (ucs2char == WORD_SOFT_HYPHEN) {
 		//skip
 	} else if (ucs2char == WORD_HORIZONTAL_TAB) {
@@ -274,7 +248,7 @@ void DocBookReader::handleParagraphStyle(const OleMainStream::Style &styleInfo) 
 	if (styleInfo.HasPageBreakBefore) {
 		handlePageBreak();
 	}
-	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry();
+	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
 
 	switch (styleInfo.Alignment) {
 		default: // in that case, use default alignment type
@@ -382,3 +356,24 @@ std::string DocBookReader::parseLink(ZLUnicodeUtil::Ucs2String s, bool urlencode
 	return utf8String;
 }
 
+void DocBookReader::footnoteHandler() {
+	handlePageBreak();
+}
+
+void DocBookReader::dataHandler(const char *buffer, size_t len) {
+	if (myConverter.isNull()) {
+		// lazy converter initialization
+		const ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
+		myConverter = collection.converter(myEncoding);
+		if (myConverter.isNull()) {
+			myConverter = collection.defaultConverter();
+		}
+	}
+	std::string utf8String;
+	myConverter->convert(utf8String, buffer, buffer + len);
+	ZLUnicodeUtil::utf8ToUcs2(myBuffer, utf8String);
+}
+
+void DocBookReader::ansiSymbolHandler(ZLUnicodeUtil::Ucs2Char symbol) {
+	myBuffer.push_back(symbol);
+}
