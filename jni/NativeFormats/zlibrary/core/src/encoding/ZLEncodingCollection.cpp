@@ -70,5 +70,5 @@ shared_ptr<ZLEncodingConverter> ZLEncodingCollection::converter(int code) const 
 }
 
 shared_ptr<ZLEncodingConverter> ZLEncodingCollection::defaultConverter() const {
-	return DummyEncodingConverterProvider().createConverter("utf-8");
+	return DummyEncodingConverterProvider().createConverter(ZLEncodingConverter::UTF8);
 }
