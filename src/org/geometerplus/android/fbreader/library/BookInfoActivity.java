@@ -342,6 +342,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				if (book != null) {
 					book.reloadInfoFromFile();
 					setupBookInfo(book);
+					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
+					setResult(myResult);
 				}
 				return true;
 			}
