@@ -99,14 +99,16 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, new OptionHolder(Paths.BookPathOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "bookPath"
 		));
-		directoriesScreen.addPreference(new ZLActivityPreference(
+		final ZLActivityPreference fontDirPreference = new ZLActivityPreference(
 			this, new OptionHolder(Paths.FontPathOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "fontPath"
-		));
-		directoriesScreen.addPreference(new ZLActivityPreference(
+		);
+		directoriesScreen.addPreference(fontDirPreference);
+		final ZLActivityPreference wallpaperDirPreference = new ZLActivityPreference(
 			this, new OptionHolder(Paths.WallpaperPathOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "wallpaperPath"
-		));
+		);
+		directoriesScreen.addPreference(wallpaperDirPreference);
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
@@ -166,7 +168,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			baseStyle.FontFamilyOption, false);
 
 		textScreen.addPreference(fontOption);
-		fontPref.setBoundPref(fontOption);
+		fontDirPreference.setBoundPref(fontOption);
 
 		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
@@ -326,7 +328,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			};
 
 		colorsScreen.addPreference(wp);
-		wallPref.setBoundPref(wp);
+		wallpaperDirPreference.setBoundPref(wp);
 
 		bgPreferences.add(
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
