@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.ui.android.view;
 import java.util.*;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 import android.graphics.Typeface;
 
@@ -30,11 +32,41 @@ import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.fbreader.Paths;
 
 public final class AndroidFontUtil {
+	private static Method ourFontCreationMethod;
+	static {
+		try {
+			ourFontCreationMethod = Typeface.class.getMethod("createFromFile", File.class);
+		} catch (NoSuchMethodException e) {
+			ourFontCreationMethod = null;
+		}
+	}
+
+	public static boolean areExternalFontsSupported() {
+		return ourFontCreationMethod != null;
+	}
+
+	private static Typeface createFontFromFile(File file) {
+		if (ourFontCreationMethod == null) {
+			return null;
+		}
+		try {
+			return (Typeface)ourFontCreationMethod.invoke(null, file);
+		} catch (IllegalAccessException e) {
+			return null;
+		} catch (InvocationTargetException e) {
+			return null;
+		}
+	}
+
 	private static Map<String,File[]> ourFontMap;
 	private static Set<File> ourFileSet;
 	private static long ourTimeStamp;
 
 	private static Map<String,File[]> getFontMap(boolean forceReload) {
+		if (ourFontCreationMethod == null) {
+			return Collections.emptyMap();
+		}
+
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < ourTimeStamp + 1000) {
 			forceReload = false;
@@ -105,12 +137,12 @@ public final class AndroidFontUtil {
 			if (files != null) {
 				try {
 					if (files[style] != null) {
-						tf = Typeface.createFromFile(files[style]);
+						tf = createFontFromFile(files[style]);
 					} else {
 						for (int i = 0; i < 4; ++i) {
 							if (files[i] != null) {
 								tf = (typefaces[i] != null) ?
-									typefaces[i] : Typeface.createFromFile(files[i]);
+									typefaces[i] : createFontFromFile(files[i]);
 								typefaces[i] = tf;
 								break;
 							}
