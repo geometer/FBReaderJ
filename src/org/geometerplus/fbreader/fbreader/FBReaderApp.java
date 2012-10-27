@@ -154,7 +154,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (book != null || Model == null) {
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
-					openBookInternal(book, bookmark);
+					openBookInternal(book, bookmark, false);
 				}
 			}, postAction);
 		}
@@ -165,7 +165,7 @@ public final class FBReaderApp extends ZLApplication {
 			Model.Book.reloadInfoFromDatabase();
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
-					openBookInternal(Model.Book, null);
+					openBookInternal(Model.Book, null, true);
 				}
 			}, null);
 		}
@@ -226,7 +226,7 @@ public final class FBReaderApp extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 
-	synchronized void openBookInternal(Book book, Bookmark bookmark) {
+	synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
 		if (book == null) {
 			book = Library.Instance().getRecentBook();
 			if (book == null || !book.File.exists()) {
@@ -236,10 +236,9 @@ public final class FBReaderApp extends ZLApplication {
 				return;
 			}
 		}
-		if (Model != null) {
-			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
-				return;
-			}
+		if (!force && Model != null && bookmark == null
+			&& book.File.getPath().equals(Model.Book.File.getPath())) {
+			return;
 		}
 
 		if (book != null) {
