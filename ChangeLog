@@ -2,7 +2,7 @@
 * 'Open book in external program' feature
 * Multiple directories for user's fonts and wallpapers
 
-===== 1.6.4 (Nov ??, 2012) =====
+===== 1.6.4 (Oct 30, 2012) =====
 * Supported encoding & language detection for *.doc (ms-word) files
 * Fixed crash in book info dialogs on some epubs (on Jelly Bean devices), code taken from https://gist.github.com/3424004
 * Fixed some problems in interaction with TTS+ plugin (by Greg Kochaniak)

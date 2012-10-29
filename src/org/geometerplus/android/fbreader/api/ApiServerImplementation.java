@@ -50,7 +50,13 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		myContext = c;
 	}
 
-	private final FBReaderApp myReader = (FBReaderApp)FBReaderApp.Instance();
+	private volatile FBReaderApp myReader;
+	private synchronized FBReaderApp getReader() {
+		if (myReader == null) {
+			myReader = (FBReaderApp)FBReaderApp.Instance();
+		}
+		return myReader;
+	}
 
 	private ApiObject.Error unsupportedMethodError(int method) {
 		return new ApiObject.Error("Unsupported method code: " + method);
@@ -307,11 +313,11 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookLanguage() {
-		return myReader.Model.Book.getLanguage();
+		return getReader().Model.Book.getLanguage();
 	}
 
 	public String getBookTitle() {
-		return myReader.Model.Book.getTitle();
+		return getReader().Model.Book.getTitle();
 	}
 
 	public List<String> getBookTags() {
@@ -320,11 +326,11 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookFilePath() {
-		return myReader.Model.Book.File.getPath();
+		return getReader().Model.Book.File.getPath();
 	}
 
 	public String getBookHash() {
-		return myReader.Model.Book.getContentHashCode();
+		return getReader().Model.Book.getContentHashCode();
 	}
 
 	public String getBookUniqueId() {
@@ -374,20 +380,20 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	// page information
 	public TextPosition getPageStart() {
-		return getTextPosition(myReader.getTextView().getStartCursor());
+		return getTextPosition(getReader().getTextView().getStartCursor());
 	}
 
 	public TextPosition getPageEnd() {
-		return getTextPosition(myReader.getTextView().getEndCursor());
+		return getTextPosition(getReader().getTextView().getEndCursor());
 	}
 
 	public boolean isPageEndOfSection() {
-		final ZLTextWordCursor cursor = myReader.getTextView().getEndCursor();
+		final ZLTextWordCursor cursor = getReader().getTextView().getEndCursor();
 		return cursor.isEndOfParagraph() && cursor.getParagraphCursor().isEndOfSection();
 	}
 
 	public boolean isPageEndOfText() {
-		final ZLTextWordCursor cursor = myReader.getTextView().getEndCursor();
+		final ZLTextWordCursor cursor = getReader().getTextView().getEndCursor();
 		return cursor.isEndOfParagraph() && cursor.getParagraphCursor().isLast();
 	}
 
@@ -409,60 +415,60 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	// manage view
 	public void setPageStart(TextPosition position) {
-		myReader.getTextView().gotoPosition(position.ParagraphIndex, position.ElementIndex, position.CharIndex);
-		myReader.getViewWidget().repaint();
-		myReader.storePosition();
+		getReader().getTextView().gotoPosition(position.ParagraphIndex, position.ElementIndex, position.CharIndex);
+		getReader().getViewWidget().repaint();
+		getReader().storePosition();
 	}
 
 	public void highlightArea(TextPosition start, TextPosition end) {
-		myReader.getTextView().highlight(
+		getReader().getTextView().highlight(
 			getZLTextPosition(start),
 			getZLTextPosition(end)
 		);
 	}
 
 	public void clearHighlighting() {
-		myReader.getTextView().clearHighlighting();
+		getReader().getTextView().clearHighlighting();
 	}
 
 	public int getBottomMargin() {
-		return myReader.BottomMarginOption.getValue();
+		return getReader().BottomMarginOption.getValue();
 	}
 
 	public void setBottomMargin(int value) {
-		myReader.BottomMarginOption.setValue(value);
+		getReader().BottomMarginOption.setValue(value);
 	}
 
 	public int getTopMargin() {
-		return myReader.TopMarginOption.getValue();
+		return getReader().TopMarginOption.getValue();
 	}
 
 	public void setTopMargin(int value) {
-		myReader.TopMarginOption.setValue(value);
+		getReader().TopMarginOption.setValue(value);
 	}
 
 	public int getLeftMargin() {
-		return myReader.LeftMarginOption.getValue();
+		return getReader().LeftMarginOption.getValue();
 	}
 
 	public void setLeftMargin(int value) {
-		myReader.LeftMarginOption.setValue(value);
+		getReader().LeftMarginOption.setValue(value);
 	}
 
 	public int getRightMargin() {
-		return myReader.RightMarginOption.getValue();
+		return getReader().RightMarginOption.getValue();
 	}
 
 	public void setRightMargin(int value) {
-		myReader.RightMarginOption.setValue(value);
+		getReader().RightMarginOption.setValue(value);
 	}
 
 	public int getParagraphsNumber() {
-		return myReader.Model.getTextModel().getParagraphsNumber();
+		return getReader().Model.getTextModel().getParagraphsNumber();
 	}
 
 	public int getParagraphElementsCount(int paragraphIndex) {
-		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(getReader().getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
 		cursor.moveToParagraphEnd();
 		return cursor.getElementIndex();
@@ -470,7 +476,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public String getParagraphText(int paragraphIndex) {
 		final StringBuffer sb = new StringBuffer();
-		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(getReader().getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
 		cursor.moveToParagraphStart();
 		while (!cursor.isEndOfParagraph()) {
@@ -485,7 +491,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public List<String> getParagraphWords(int paragraphIndex) {
 		final ArrayList<String> words = new ArrayList<String>();
-		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(getReader().getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
 		cursor.moveToParagraphStart();
 		while (!cursor.isEndOfParagraph()) {
@@ -500,7 +506,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public ArrayList<Integer> getParagraphWordIndices(int paragraphIndex) {
 		final ArrayList<Integer> indices = new ArrayList<Integer>();
-		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(getReader().getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
 		cursor.moveToParagraphStart();
 		while (!cursor.isEndOfParagraph()) {
