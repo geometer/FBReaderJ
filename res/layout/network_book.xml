@@ -40,7 +40,7 @@
 			android:id="@+id/network_book_description_title"
 			style="?android:attr/listSeparatorTextViewStyle"
 		/>
-		<TextView
+		<android.patches.JellyBeanSpanFixTextView
 			android:id="@+id/network_book_description"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
