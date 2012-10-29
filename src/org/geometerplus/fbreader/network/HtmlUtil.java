@@ -19,39 +19,11 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.text.*;
 import android.text.style.URLSpan;
 
 public abstract class HtmlUtil {
-	private static final HashMap<String,Pattern> ourTagPatterns = new HashMap<String,Pattern>();
-
-	private static String removeNestedTags(String text, String tag) {
-		Pattern pattern = ourTagPatterns.get(tag);
-		if (pattern == null) {
-			pattern = Pattern.compile("(<" + tag + ">.*)</*" + tag + ">(.*</" + tag + ">)");
-		}
-		final Matcher matcher = pattern.matcher(text);
-		while (matcher.find()) {
-			text = matcher.replaceAll("$1 $2");
-			matcher.reset(text);
-		}
-		return text;
-	}
-
-	private static String removeNestedTags(String text, String[] tags) {
-		for (String t : tags) {
-			text = removeNestedTags(text, t);
-		}
-		return text;
-	}
-
 	public static CharSequence getHtmlText(String text) {
-		// fixes an android bug (?): text layout fails on text with nested style tags
-		text = removeNestedTags(text, new String[] { "i", "b", "strong" });
 		final Spanned htmlText = Html.fromHtml(text);
 		if (htmlText.getSpans(0, htmlText.length(), URLSpan.class).length == 0) {
 			return htmlText;
