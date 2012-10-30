@@ -510,15 +510,15 @@
 				</node>
 			</node>
 		</node>
-		<node name="css" value="CSS" toBeTranslated="true">
-			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
-			<node name="fontSize" value="Font size" toBeTranslated="true">
-				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+		<node name="css" value="CSS">
+			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>
+			<node name="fontSize" value="Velikost písma">
+				<node name="summaryOn" value="Použít velikost písma definovanou v CSS"/>
+				<node name="summaryOff" value="Ignorovat velikost písma definovanou v CSS"/>
 			</node>
-			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
-				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			<node name="textAlignment" value="Zarovnání textu">
+				<node name="summaryOn" value="Použít zarovnání textu definované v CSS"/>
+				<node name="summaryOff" value="Ignorovat zarovnání textu definované v CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Barvy a pozadí">
@@ -640,10 +640,10 @@
 				<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
 				<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
 			</node>
-			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
-				<node name="none" value="None" toBeTranslated="true"/>
-				<node name="covers" value="Covers only" toBeTranslated="true"/>
-				<node name="all" value="All" toBeTranslated="true"/>
+			<node name="fitImagesToScreen" value="Přizpůsobit obrázky obrazovce">
+				<node name="none" value="Žádné"/>
+				<node name="covers" value="Pouze obálky"/>
+				<node name="all" value="Všechny"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">
