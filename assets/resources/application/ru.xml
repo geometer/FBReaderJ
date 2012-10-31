@@ -515,15 +515,15 @@
 				</node>
 			</node>
 		</node>
-		<node name="css" value="CSS" toBeTranslated="true">
-			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
-			<node name="fontSize" value="Font size" toBeTranslated="true">
-				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+		<node name="css" value="CSS">
+			<node name="summary" value="Использовать ли форматирование CSS"/>
+			<node name="fontSize" value="Размер шрифта">
+				<node name="summaryOn" value="Использовать размер шрифта, заданный в CSS"/>
+				<node name="summaryOff" value="Игнорировать размер шрифта, заданный в CSS"/>
 			</node>
-			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
-				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			<node name="textAlignment" value="Выравнивание текста">
+				<node name="summaryOn" value="Выравнивать текст, как указано в CSS"/>
+				<node name="summaryOff" value="Игнорировать выравнивание текста, заданное в CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Цвета и обои">
