@@ -1,5 +1,6 @@
 ===== 1.6.5 (Nov ??, 2012) =====
 * Updated Czech localization (by Marek Pavelka)
+* Added Belarusian localization (by Uievaład Čorny)
 
 ===== 1.6.4 (Oct 30, 2012) =====
 * Supported encoding & language detection for *.doc (ms-word) files
