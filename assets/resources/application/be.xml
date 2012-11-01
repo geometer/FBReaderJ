@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf8"?>
-<!-- Belarusian FBReaderJ resources by Usievaład Čorny -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Belarusian FBReaderJ resources by Usievaїad їorny -->
 <resources>
 	<node name="library" value="Бібліятэка FBReader">
 		<node name="unknownAuthor" value="Невядомы аўтар"/>
@@ -507,15 +507,15 @@
 				</node>
 			</node>
 		</node>
-		<node name="css" value="CSS" toBeTranslated="true">
-			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
-			<node name="fontSize" value="Font size" toBeTranslated="true">
-				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+		<node name="css" value="CSS">
+			<node name="summary" value="Ужыць ці праіґнараваць значэньні з CSS"/>
+			<node name="fontSize" value="Памер шрыфту">
+				<node name="summaryOn" value="Ужыць памер шрыфту з CSS"/>
+				<node name="summaryOff" value="Праіґнараваць памер шрыфту з CSS"/>
 			</node>
-			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
-				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			<node name="textAlignment" value="Раўнаваньне тэксту">
+				<node name="summaryOn" value="Ужыць раўнаваньне тэксту з CSS"/>
+				<node name="summaryOff" value="Праіґнараваць раўнаваньне тэксту з CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Колеры й шпалеры">
@@ -690,7 +690,11 @@
 				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
 			<node name="twitter" value="Чытайце нас у Twitter">
+<<<<<<< HEAD
 				<node name="url" value="http://twitter.com/fbreader"/>
+=======
+				<node name="url" value="http://twitter.com/fbreader_ru"/>
+>>>>>>> master
 			</node>
 		</node>
 	</node>
