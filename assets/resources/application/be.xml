@@ -690,7 +690,11 @@
 				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
 			<node name="twitter" value="Чытайце нас у Twitter">
+<<<<<<< HEAD
 				<node name="url" value="http://twitter.com/fbreader_ru"/>
+=======
+				<node name="url" value="http://twitter.com/fbreader"/>
+>>>>>>> 60eb31d6e0c0b7926b4823ffa4ee9c149cb62d10
 			</node>
 		</node>
 	</node>
