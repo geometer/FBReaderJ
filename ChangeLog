@@ -1,4 +1,5 @@
-===== 1.6.5 (Nov ??, 2012) =====
+===== 1.6.5 (Nov 04, 2012) =====
+* Fixed footnotes processing in rtf's
 * Updated Czech localization (by Marek Pavelka)
 * Added Belarusian localization (by Uievaład Čorny)
 
