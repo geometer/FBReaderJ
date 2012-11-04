@@ -1,8 +1,9 @@
-===== 2.0 beta 7 (Oct ??, 2012) =====
+===== 2.0 beta 7 (Nov ??, 2012) =====
 * 'Open book in external program' feature
 * Multiple directories for user's fonts and wallpapers
 
-===== 1.6.5 (Nov ??, 2012) =====
+===== 1.6.5 (Nov 04, 2012) =====
+* Fixed footnotes processing in rtf's
 * Updated Czech localization (by Marek Pavelka)
 * Added Belarusian localization (by Uievaład Čorny)
 

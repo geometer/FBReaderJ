@@ -97,6 +97,7 @@ void RtfBookReader::switchDestination(DestinationType destination, bool on) {
 				myBookReader.addControl(FOOTNOTE, false);
 
 				myBookReader.setFootnoteTextModel(id);
+				myBookReader.addHyperlinkLabel(id);
 				myBookReader.pushKind(REGULAR);
 				myBookReader.beginParagraph();
 			} else {
