@@ -1,3 +1,6 @@
+===== 1.6.6 (Nov ??, 2012) =====
+* Fixed 'extra paragraph break after each footnote mark' issue for RTFs (and may be some other formats)
+
 ===== 1.6.5 (Nov 04, 2012) =====
 * Fixed footnotes processing in rtf's
 * Updated Czech localization (by Marek Pavelka)
