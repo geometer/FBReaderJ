@@ -25,6 +25,7 @@ import android.app.SearchManager;
 import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
 
@@ -40,6 +41,8 @@ import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.tips.TipsManager;
@@ -199,6 +202,8 @@ public final class FBReader extends ZLAndroidActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	private boolean myNeedToExit = false;
+	
 	@Override
 	protected void onNewIntent(Intent intent) {
 		final Uri data = intent.getData();
@@ -232,6 +237,8 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 			};
 			UIUtil.wait("search", runnable, this);
+		} else if ("android.fbreader.action.CLOSE".equals(intent.getAction())) {
+			myNeedToExit = true;
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -312,6 +319,18 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		if (myNeedToExit) {
+			fbReader.closeWindow();
+			return;
+		} else {
+			if (fbReader.Model != null && fbReader.Model.Book != null ) {
+				final FormatPlugin p = PluginCollection.Instance().getPlugin(fbReader.Model.Book.File);
+				if (p.type() == FormatPlugin.Type.PLUGIN) {
+					fbReader.openBook(fbReader.Model.Book, null, null);
+				}
+			}
+		}
 		try {
 			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
 		} catch (Throwable t) {
