@@ -198,7 +198,6 @@ public final class FBReaderApp extends ZLApplication {
 				public void run() {
 					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
 					myPluginFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue(), bookmark == null ? "" : bookmark.writeToString(), bookToOpen.getId());
-					closeWindow();
 				}
 			}, postAction);
 			return;
@@ -222,22 +221,17 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private ColorProfile myColorProfile;
 
 	public ColorProfile getColorProfile() {
-		if (myColorProfile == null) {
-			myColorProfile = ColorProfile.get(getColorProfileName());
-		}
-		return myColorProfile;
+		return ColorProfile.get(getColorProfileName());
 	}
 
 	public String getColorProfileName() {
-		return ColorProfileOption.getValue();
+		return new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
 	}
 
 	public void setColorProfileName(String name) {
-		ColorProfileOption.setValue(name);
-		myColorProfile = null;
+		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).setValue(name);
 	}
 
 	public ZLKeyBindings keyBindings() {
