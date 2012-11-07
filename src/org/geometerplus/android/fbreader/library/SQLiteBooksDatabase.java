@@ -935,42 +935,42 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void createTables() {
 		myDatabase.execSQL(
-			"CREATE TABLE Books(" +
+			"CREATE TABLE IF NOT EXISTS Books(" +
 				"book_id INTEGER PRIMARY KEY," +
 				"encoding TEXT," +
 				"language TEXT," +
 				"title TEXT NOT NULL," +
 				"file_name TEXT UNIQUE NOT NULL)");
 		myDatabase.execSQL(
-			"CREATE TABLE Authors(" +
+			"CREATE TABLE IF NOT EXISTS Authors(" +
 				"author_id INTEGER PRIMARY KEY," +
 				"name TEXT NOT NULL," +
 				"sort_key TEXT NOT NULL," +
 				"CONSTRAINT Authors_Unique UNIQUE (name, sort_key))");
 		myDatabase.execSQL(
-			"CREATE TABLE BookAuthor(" +
+			"CREATE TABLE IF NOT EXISTS BookAuthor(" +
 				"author_id INTEGER NOT NULL REFERENCES Authors(author_id)," +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"author_index INTEGER NOT NULL," +
 				"CONSTRAINT BookAuthor_Unique0 UNIQUE (author_id, book_id)," +
 				"CONSTRAINT BookAuthor_Unique1 UNIQUE (book_id, author_index))");
 		myDatabase.execSQL(
-			"CREATE TABLE Series(" +
+			"CREATE TABLE IF NOT EXISTS Series(" +
 				"series_id INTEGER PRIMARY KEY," +
 				"name TEXT UNIQUE NOT NULL)");
 		myDatabase.execSQL(
-			"CREATE TABLE BookSeries(" +
+			"CREATE TABLE IF NOT EXISTS BookSeries(" +
 				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
 				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
 				"book_index INTEGER)");
 		myDatabase.execSQL(
-			"CREATE TABLE Tags(" +
+			"CREATE TABLE IF NOT EXISTS Tags(" +
 				"tag_id INTEGER PRIMARY KEY," +
 				"name TEXT NOT NULL," +
 				"parent INTEGER REFERENCES Tags(tag_id)," +
 				"CONSTRAINT Tags_Unique UNIQUE (name, parent))");
 		myDatabase.execSQL(
-			"CREATE TABLE BookTag(" +
+			"CREATE TABLE IF NOT EXISTS BookTag(" +
 				"tag_id INTEGER REFERENCES Tags(tag_id)," +
 				"book_id INTEGER REFERENCES Books(book_id)," +
 				"CONSTRAINT BookTag_Unique UNIQUE (tag_id, book_id))");
@@ -979,7 +979,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	private void updateTables1() {
 		myDatabase.execSQL("ALTER TABLE Tags RENAME TO Tags_Obsolete");
 		myDatabase.execSQL(
-			"CREATE TABLE Tags(" +
+			"CREATE TABLE IF NOT EXISTS Tags(" +
 				"tag_id INTEGER PRIMARY KEY," +
 				"name TEXT NOT NULL," +
 				"parent_id INTEGER REFERENCES Tags(tag_id)," +
@@ -989,7 +989,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 		myDatabase.execSQL("ALTER TABLE BookTag RENAME TO BookTag_Obsolete");
 		myDatabase.execSQL(
-			"CREATE TABLE BookTag(" +
+			"CREATE TABLE IF NOT EXISTS BookTag(" +
 				"tag_id INTEGER NOT NULL REFERENCES Tags(tag_id)," +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"CONSTRAINT BookTag_Unique UNIQUE (tag_id, book_id))");
@@ -1005,7 +1005,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables3() {
 		myDatabase.execSQL(
-			"CREATE TABLE Files(" +
+			"CREATE TABLE IF NOT EXISTS Files(" +
 				"file_id INTEGER PRIMARY KEY," +
 				"name TEXT NOT NULL," +
 				"parent_id INTEGER REFERENCES Files(file_id)," +
@@ -1025,7 +1025,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		fileInfos.save();
 
 		myDatabase.execSQL(
-			"CREATE TABLE RecentBooks(" +
+			"CREATE TABLE IF NOT EXISTS RecentBooks(" +
 				"book_index INTEGER PRIMARY KEY," +
 				"book_id INTEGER REFERENCES Books(book_id))");
 		final ArrayList<Long> ids = new ArrayList<Long>();
@@ -1052,7 +1052,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables5() {
 		myDatabase.execSQL(
-			"CREATE TABLE Bookmarks(" +
+			"CREATE TABLE IF NOT EXISTS Bookmarks(" +
 				"bookmark_id INTEGER PRIMARY KEY," +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"bookmark_text TEXT NOT NULL," +
@@ -1065,7 +1065,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				"char INTEGER NOT NULL)");
 
 		myDatabase.execSQL(
-			"CREATE TABLE BookState(" +
+			"CREATE TABLE IF NOT EXISTS BookState(" +
 				"book_id INTEGER UNIQUE NOT NULL REFERENCES Books(book_id)," +
 				"paragraph INTEGER NOT NULL," +
 				"word INTEGER NOT NULL," +
@@ -1135,7 +1135,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 		myDatabase.execSQL("ALTER TABLE Books RENAME TO Books_Obsolete");
 		myDatabase.execSQL(
-			"CREATE TABLE Books(" +
+			"CREATE TABLE IF NOT EXISTS Books(" +
 				"book_id INTEGER PRIMARY KEY," +
 				"encoding TEXT," +
 				"language TEXT," +
@@ -1213,7 +1213,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	private void updateTables14() {
 		myDatabase.execSQL("ALTER TABLE BookSeries RENAME TO BookSeries_Obsolete");
 		myDatabase.execSQL(
-			"CREATE TABLE BookSeries(" +
+			"CREATE TABLE IF NOT EXISTS BookSeries(" +
 				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
 				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
 				"book_index REAL)");
@@ -1247,7 +1247,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	private void updateTables18() {
 		myDatabase.execSQL("ALTER TABLE BookSeries RENAME TO BookSeries_Obsolete");
 		myDatabase.execSQL(
-			"CREATE TABLE BookSeries(" +
+			"CREATE TABLE IF NOT EXISTS BookSeries(" +
 				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
 				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
 				"book_index TEXT)");
