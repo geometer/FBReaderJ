@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -309,6 +310,10 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public void setOptionValue(String group, String name, String value) {
+		//sorry, but i need this now:
+		if ("Options".equals(group) && "ColorProfile".equals(name)) {
+			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).setValue(value);
+		}
 		// TODO: implement
 	}
 

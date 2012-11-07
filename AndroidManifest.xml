@@ -61,6 +61,7 @@
 				<data android:pathPattern=".*\\.prc"/>
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
+				<data android:pathPattern=".*\\.pdf"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -73,6 +74,7 @@
 				<data android:pathPattern=".*\\.prc"/>
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
+				<data android:pathPattern=".*\\.pdf"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -91,6 +93,7 @@
 				<data android:mimeType="application/x-fictionbook+xml"/>
 				<data android:mimeType="application/x-fictionbook"/>
 				<data android:mimeType="text/plain"/>
+				<data android:mimeType="application/pdf"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH"/>
