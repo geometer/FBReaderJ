@@ -44,6 +44,7 @@ class FormatPreference extends ListPreference {
 	private final boolean myIsJava;
 	private final boolean myIsNative;
 	private final boolean myIsPredefined;
+	private final boolean myIsPlugin;
 	private final ZLResource myResource;
 
 	FormatPreference(Context context, String formatName, Screen scr, ZLResource resource, String resourceKey) {
@@ -56,11 +57,12 @@ class FormatPreference extends ListPreference {
 		myScreen = scr;
 		myIsJava = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.JAVA) != null;
 		myIsNative = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.NATIVE) != null;
+		myIsPlugin = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.PLUGIN) != null;
 		myIsPredefined = Formats.getPredefinedFormats().contains(formatName);
 		myResource = resource.getResource(resourceKey);
 		final String emptySummary = myResource.getResource("appNotSet").getValue();
 
-		if (!myOption.getValue().equals("") && (!myOption.getValue().equals(Formats.JAVA_OPTION)) && (!myOption.getValue().equals(Formats.NATIVE_OPTION))) {
+		if (!myOption.getValue().equals("") && (!myOption.getValue().equals(Formats.JAVA_OPTION)) && (!myOption.getValue().equals(Formats.PLUGIN_OPTION)) && (!myOption.getValue().equals(Formats.NATIVE_OPTION))) {
 			final PackageManager pm = getContext().getPackageManager();
 			try {
 				ApplicationInfo info = pm.getApplicationInfo(myOption.getValue(), 0);
@@ -72,6 +74,9 @@ class FormatPreference extends ListPreference {
 				} else if (myIsNative) {
 					myOption.setValue(Formats.NATIVE_OPTION);
 					setSummary(myResource.getResource("native").getValue());
+				} else if (myIsPlugin) {
+					myOption.setValue(Formats.PLUGIN_OPTION);
+					setSummary(myResource.getResource("plugin").getValue().replace("%s", myFormat));
 				} else {
 					myOption.setValue("");
 					setSummary(emptySummary);
@@ -81,6 +86,8 @@ class FormatPreference extends ListPreference {
 			setSummary(myResource.getResource("java").getValue());
 		} else if (myOption.getValue().equals(Formats.NATIVE_OPTION)) {
 			setSummary(myResource.getResource("native").getValue());
+		} else if (myOption.getValue().equals(Formats.PLUGIN_OPTION)) {
+			setSummary(myResource.getResource("plugin").getValue().replace("%s", myFormat));
 		} else {
 			setSummary(emptySummary);
 		}
@@ -116,6 +123,10 @@ class FormatPreference extends ListPreference {
 		if (myIsNative) {
 			values.add(Formats.NATIVE_OPTION);
 			names.add(myResource.getResource("native").getValue());
+		}
+		if (myIsPlugin) {
+			values.add(Formats.PLUGIN_OPTION);
+			names.add(myResource.getResource("plugin").getValue().replace("%s", myFormat));
 		}
 		final FileType ft = FileTypeCollection.Instance.typeById(myFormat);
 		for (MimeType type : ft.mimeTypes()) {

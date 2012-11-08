@@ -124,7 +124,7 @@ public abstract class ZLAndroidActivity extends Activity {
 				return;
 			}
 			Uri uri = Uri.parse("file://" + f.getPath());
-			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
+			Intent LaunchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
 			LaunchIntent.setPackage(appData);
 			LaunchIntent.setData(uri);
 			LaunchIntent.putExtra("BOOKMARK", bookmark);
