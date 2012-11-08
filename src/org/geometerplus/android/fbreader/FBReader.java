@@ -123,6 +123,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		Log.d("fbreader", "oncreate");
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
@@ -319,6 +320,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("fbreader", "onresume");
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if (myNeedToExit) {
 			fbReader.closeWindow();

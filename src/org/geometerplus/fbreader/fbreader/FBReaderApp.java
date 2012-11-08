@@ -200,7 +200,7 @@ public final class FBReaderApp extends ZLApplication {
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
-			Model = BookModel.createPluginModel(book);
+			Model = BookModel.createPluginModel(bookToOpen);
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
