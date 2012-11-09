@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.library.Book;
 
 public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 
-	private final String PACKAGE = "org.geometerplus.android.fbreaderpdf";//also in formats
+	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
 	
 	public PdfPluginFormatPlugin() {
 		super("PDF");

@@ -207,6 +207,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	private boolean myNeedToExit = false;
+	private boolean myNeedToSkipPlugin = false;
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
@@ -326,13 +327,18 @@ public final class FBReader extends ZLAndroidActivity {
 		Log.d("fbreader", "onresume");
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if (myNeedToExit) {
-			fbReader.closeWindow();
+			myNeedToExit = false;
+			fbReader.runAction(ActionCode.SHOW_CANCEL_MENU);
 			return;
 		} else {
-			if (fbReader.Model != null && fbReader.Model.Book != null ) {
+			if (fbReader.Model != null && fbReader.Model.Book != null) {
 				final FormatPlugin p = PluginCollection.Instance().getPlugin(fbReader.Model.Book.File);
 				if (p.type() == FormatPlugin.Type.PLUGIN) {
-					fbReader.openBook(fbReader.Model.Book, null, null);
+					if (!myNeedToSkipPlugin) {
+						fbReader.openBook(fbReader.Model.Book, null, null);
+					} else {
+						myNeedToSkipPlugin = false;
+					}
 				}
 			}
 		}
@@ -427,6 +433,9 @@ public final class FBReader extends ZLAndroidActivity {
 				onPreferencesUpdate(resultCode);
 				break;
 			case REQUEST_CANCEL_MENU:
+				if (resultCode != RESULT_CANCELED) {
+					myNeedToSkipPlugin = true;
+				}
 				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);
 				break;
 		}

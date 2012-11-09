@@ -201,7 +201,7 @@ public final class FBReaderApp extends ZLApplication {
 			FootnoteView.setModel(null);
 			clearTextCaches();
 			Model = BookModel.createPluginModel(bookToOpen);
-			runWithMessage("extract", new Runnable() {
+			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
 					myPluginFileOpener.openFile(f, ((PluginFormatPlugin)p).getPackage(), bookmark == null ? "" : bookmark.writeToString(), bookToOpen.getId());

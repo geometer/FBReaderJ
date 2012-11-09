@@ -602,6 +602,10 @@ public class Book {
 			if (plugin != null) {
 				try {
 					image = ZLApplication.Instance().getPluginFileOpener().readImage(File, ((PluginFormatPlugin)plugin).getPackage());
+					if (image != null) {
+						myCover = new WeakReference<ZLImage>(image);
+					}
+					return image;
 				} catch (NullPointerException e) {
 					e.printStackTrace();
 				}

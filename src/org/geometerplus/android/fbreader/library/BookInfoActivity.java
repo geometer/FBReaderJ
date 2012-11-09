@@ -24,16 +24,21 @@ import java.text.DateFormat;
 import java.util.*;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -45,10 +50,14 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.library.LibraryActivity.PluginFileOpener;
+import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity {
@@ -61,6 +70,9 @@ public class BookInfoActivity extends Activity {
 	private ZLFile myFile;
 	private int myResult;
 	private boolean myDontReloadBook;
+	
+	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
+	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -82,6 +94,28 @@ public class BookInfoActivity extends Activity {
 
 		myResult = FBReader.RESULT_DO_NOTHING;
 		setResult(myResult, getIntent());
+		if (ZLApplication.Instance() == null) {
+			new FBReaderApp();
+		}
+		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
+			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(myServices));
+			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
+				ServiceConnection servConn=new ServiceConnection() {
+					public void onServiceConnected(ComponentName className, IBinder binder) {
+						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
+						setupCover(Book.getByFile(myFile));
+					}
+
+					public void onServiceDisconnected(ComponentName className) {
+						myServices.remove(pack);
+					}
+				};
+				myServConns.put(pack, servConn);
+				Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
+				i.setPackage(pack);
+				bindService(i, servConn, Context.BIND_AUTO_CREATE);
+			}
+		}
 	}
 
 	@Override
@@ -128,6 +162,7 @@ public class BookInfoActivity extends Activity {
 				if (book != null) {
 					book.reloadInfoFromFile();
 					setupBookInfo(book);
+					setupCover(book);
 					myDontReloadBook = false;
 					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
 					setResult(myResult);
@@ -314,6 +349,17 @@ public class BookInfoActivity extends Activity {
 			value = String.valueOf(size / kilo);
 		}
 		return myResource.getResource("sizeInKiloBytes").getValue().replaceAll("%s", value);
+	}
+
+	@Override
+	protected void onDestroy() {
+		for (String pack : myServConns.keySet()) {
+			if (myServConns.get(pack) != null) {
+				unbindService(myServConns.get(pack));
+				myServConns.remove(pack);
+			}
+		}
+		super.onDestroy();
 	}
 
 	private String formatDate(long date) {
