@@ -29,6 +29,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.tips.TipsManager;
@@ -132,6 +135,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		Log.d("fbreader", "oncreate");
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
@@ -195,8 +199,14 @@ public final class FBReader extends ZLAndroidActivity {
 			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_PORTRAIT));
 			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
+		if ("android.fbreader.action.CLOSE".equals(getIntent().getAction())) {
+			myNeedToExit = true;
+		}
 	}
 
+	private boolean myNeedToExit = false;
+	private boolean myNeedToSkipPlugin = false;
+	
 	@Override
 	protected void onNewIntent(Intent intent) {
 		final Uri data = intent.getData();
@@ -231,6 +241,8 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 			};
 			UIUtil.wait("search", runnable, this);
+		} else if ("android.fbreader.action.CLOSE".equals(intent.getAction())) {
+			myNeedToExit = true;
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -312,6 +324,24 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("fbreader", "onresume");
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		if (myNeedToExit) {
+			myNeedToExit = false;
+			fbReader.runAction(ActionCode.SHOW_CANCEL_MENU);
+			return;
+		} else {
+			if (fbReader.Model != null && fbReader.Model.Book != null) {
+				final FormatPlugin p = PluginCollection.Instance().getPlugin(fbReader.Model.Book.File);
+				if (p.type() == FormatPlugin.Type.PLUGIN) {
+					if (!myNeedToSkipPlugin) {
+						fbReader.openBook(fbReader.Model.Book, null, null);
+					} else {
+						myNeedToSkipPlugin = false;
+					}
+				}
+			}
+		}
 		try {
 			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
 		} catch (Throwable t) {
@@ -407,6 +437,9 @@ public final class FBReader extends ZLAndroidActivity {
 				onPreferencesUpdate(resultCode);
 				break;
 			case REQUEST_CANCEL_MENU:
+				if (resultCode != RESULT_CANCELED) {
+					myNeedToSkipPlugin = true;
+				}
 				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);
 				break;
 		}

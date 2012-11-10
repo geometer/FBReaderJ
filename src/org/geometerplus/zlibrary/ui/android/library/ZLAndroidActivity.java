@@ -115,6 +115,29 @@ public abstract class ZLAndroidActivity extends Activity {
 					}
 			});
 		}
+		
+		private void showErrorDialog(final String errName, final String appData) {
+			myActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
+					new AlertDialog.Builder(myActivity)
+						.setTitle(title)
+						.setIcon(0)
+						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								   Intent i = new Intent(Intent.ACTION_VIEW);
+								   i.setData(Uri.parse("market://search?q=" + appData));
+								   myActivity.startActivity(i);
+							}
+						})
+						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						})
+						.create().show();
+					}
+			});
+		}
 
 		public void openFile(ZLFile f, String appData, String bookmark, long bookId) {
 			if (f == null) {
@@ -122,7 +145,7 @@ public abstract class ZLAndroidActivity extends Activity {
 				return;
 			}
 			Uri uri = Uri.parse("file://" + f.getPath());
-			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
+			Intent LaunchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
 			LaunchIntent.setPackage(appData);
 			LaunchIntent.setData(uri);
 			LaunchIntent.putExtra("BOOKMARK", bookmark);
@@ -136,7 +159,7 @@ public abstract class ZLAndroidActivity extends Activity {
 				} catch (ActivityNotFoundException e) {
 				}
 			}
-			showErrorDialog("externalNotFound");
+			showErrorDialog("noPlugin", appData);
 			return;
 		}
 

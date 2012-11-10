@@ -47,6 +47,11 @@ public abstract class BookModel {
 		plugin.readModel(model);
 		return model;
 	}
+	
+	public static BookModel createPluginModel(Book book) {
+		final BookModel model = new PluginBookModel(book);
+		return model;
+	}
 
 	public final Book Book;
 	public final TOCTree TOCTree = new TOCTree();
@@ -90,5 +95,9 @@ public abstract class BookModel {
 			}
 		}
 		return label;
+	}
+	
+	public boolean isValid() {
+		return true;
 	}
 }

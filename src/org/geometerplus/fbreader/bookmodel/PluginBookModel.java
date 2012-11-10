@@ -17,42 +17,31 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.bookmodel;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.text.model.*;
 
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
 
-public class PdfPluginFormatPlugin extends PluginFormatPlugin {
+public class PluginBookModel extends BookModelImpl {
 
-	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
+	PluginBookModel(Book book) {
+		super(book);
+	}
+
+	@Override
+	public ZLTextModel getTextModel() {
+		return null;
+	}
+
+	@Override
+	public ZLTextModel getFootnoteModel(String id) {
+		return null;
+	}
 	
-	public PdfPluginFormatPlugin() {
-		super("PDF");
-	}
-
 	@Override
-	public String getPackage() {
-		return PACKAGE;
-	}
-
-	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
-		//TODO
-	}
-
-	@Override
-	public ZLImage readCover(ZLFile file) {
-		//TODO
-		return null;
-	}
-
-	@Override
-	public String readAnnotation(ZLFile file) {
-		//TODO
-		return null;
+	public boolean isValid() {
+		return false;
 	}
 
 }

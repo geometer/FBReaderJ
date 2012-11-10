@@ -130,13 +130,15 @@ public class PluginCollection {
 		if (formatType == FormatPlugin.Type.NONE) {
 			return null;
 		}
-		
 		if (formatType == FormatPlugin.Type.EXTERNAL) {
 			return getOrCreateExternalPlugin(fileType);
 		} else if (formatType == FormatPlugin.Type.ANY) {
 			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 			if (p == null) {
 				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
+			}
+			if (p == null) {
+				p = getPlugin(fileType, FormatPlugin.Type.PLUGIN);
 			}
 			return p;
 		} else {

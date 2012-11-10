@@ -159,13 +159,17 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-		if (Model != null) {
+		System.err.println("openbook");
+		if (Model != null  && Model.isValid()) {
+			System.err.println("1");
 			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
 			}
 		}
+		System.err.println("2");
 		Book tempBook = book;
 		if (tempBook == null) {
+			System.err.println("3");
 			tempBook = Library.Instance().getRecentBook();
 			if (tempBook == null || !tempBook.File.exists()) {
 				tempBook = Book.getByFile(Library.getHelpFile());
@@ -174,10 +178,12 @@ public final class FBReaderApp extends ZLApplication {
 				return;
 			}
 		}
+		System.err.println("4");
 		final Book bookToOpen = tempBook;
 		final FormatPlugin p = PluginCollection.Instance().getPlugin(bookToOpen.File);
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
+			System.err.println("5");
 			Library.Instance().addBookToRecentList(bookToOpen);
 			runWithMessage("extract", new Runnable() {
 				public void run() {
@@ -189,20 +195,23 @@ public final class FBReaderApp extends ZLApplication {
 			return;
 		}
 		if (p.type() == FormatPlugin.Type.PLUGIN) {
+			System.err.println("6");
 			Library.Instance().addBookToRecentList(bookToOpen);
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
-			Model = null;
-			runWithMessage("extract", new Runnable() {
+			Model = BookModel.createPluginModel(bookToOpen);
+			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
-					myPluginFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue(), bookmark == null ? "" : bookmark.writeToString(), bookToOpen.getId());
+					myPluginFileOpener.openFile(f, ((PluginFormatPlugin)p).getPackage(), bookmark == null ? "" : bookmark.writeToString(), bookToOpen.getId());
 				}
 			}, postAction);
 			return;
 		}
-
+		if (Model != null && !Model.isValid()) {
+			Model = null;
+		}
 		runWithMessage("loadingBook", new Runnable() {
 			public void run() {
 				openBookInternal(bookToOpen, bookmark, false);
@@ -403,7 +412,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void storePosition() {
-		if (Model != null && BookTextView != null) {
+		if (Model != null && Model.isValid() && BookTextView != null) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
 		}
 	}

@@ -72,15 +72,15 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 
 	private Book mySelectedBook;
 	
-	
 	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
 	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
 	
-	private static class PluginFileOpener implements ZLApplication.PluginFileOpener {
-		private final Activity myActivity;
+	public static class PluginFileOpener implements ZLApplication.PluginFileOpener {
+		
+		private HashMap<String, MetaInfoReader> myServices;
 
-		public PluginFileOpener(Activity activity) {
-			myActivity = activity;
+		public PluginFileOpener(HashMap<String, MetaInfoReader> services) {
+			myServices = services;
 		}
 
 		public void openFile(ZLFile f, String appData, String bookmark, long bookId) {
@@ -89,11 +89,11 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 
 		@Override
 		public String readMetaInfo(ZLFile f, String appData) {
-			if (((LibraryActivity)myActivity).myServices.get(appData) == null) {
+			if (myServices.get(appData) == null) {
 				return null;
 			}
 			try {
-				return ((LibraryActivity)myActivity).myServices.get(appData).readMetaInfo(f.getPath());
+				return myServices.get(appData).readMetaInfo(f.getPath());
 			} catch (RemoteException e) {
 				e.printStackTrace();
 				return null;
@@ -103,11 +103,11 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		@TargetApi(8)
 		@Override
 		public ZLImage readImage(ZLFile f, String appData) {
-			if (((LibraryActivity)myActivity).myServices.get(appData) == null) {
+			if (myServices.get(appData) == null) {
 				return null;
 			}
 			try {
-				String s = ((LibraryActivity)myActivity).myServices.get(appData).readBitmap(f.getPath());
+				String s = myServices.get(appData).readBitmap(f.getPath());
 				try{
 			         byte [] encodeByte=Base64.decode(s,Base64.DEFAULT);
 			         Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
@@ -157,22 +157,22 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 			new FBReaderApp();
 		}
 		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
-			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
-		}
-		
-		for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-			ServiceConnection servConn=new ServiceConnection() {
-				public void onServiceConnected(ComponentName className, IBinder binder) {
-					myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
-				}
+			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(myServices));
+			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
+				ServiceConnection servConn=new ServiceConnection() {
+					public void onServiceConnected(ComponentName className, IBinder binder) {
+						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
+					}
 
-				public void onServiceDisconnected(ComponentName className) {
-					myServices.remove(pack);
-				}
-			};
-			myServConns.put(pack, servConn);
-			Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
-			bindService(i, servConn, Context.BIND_AUTO_CREATE);
+					public void onServiceDisconnected(ComponentName className) {
+						myServices.remove(pack);
+					}
+				};
+				myServConns.put(pack, servConn);
+				Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
+				i.setPackage(pack);
+				bindService(i, servConn, Context.BIND_AUTO_CREATE);
+			}
 		}
 	}
 

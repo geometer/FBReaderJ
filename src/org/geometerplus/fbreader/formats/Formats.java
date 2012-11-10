@@ -34,6 +34,7 @@ public abstract class Formats {
 
 	public static String JAVA_OPTION = "fbreader_java";
 	public static String NATIVE_OPTION = "fbreader_native";
+	public static String PLUGIN_OPTION = "fbreader_plugin";
 
 	public static String filetypeToOption(String filetype) {
 		filetype = filetype.toLowerCase();
@@ -145,6 +146,9 @@ public abstract class Formats {
 			if (p instanceof NativeFormatPlugin) {
 				return new ZLStringOption("Formats", filetypeToOption(filetype), NATIVE_OPTION);
 			}
+			if (p instanceof PluginFormatPlugin) {
+				return new ZLStringOption("Formats", filetypeToOption(filetype), PLUGIN_OPTION);
+			}
 			return new ZLStringOption("Formats", filetypeToOption(filetype), "");
 		} else if (getCustomFormats().contains(filetype)) {
 			return new ZLStringOption("Formats", filetypeToOption(filetype), "");
@@ -164,12 +168,8 @@ public abstract class Formats {
 		String pkg = filetypeOption(filetype).getValue();
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
+		if (pkg.equals(PLUGIN_OPTION)) return FormatPlugin.Type.PLUGIN;
 		if (pkg.equals("")) return FormatPlugin.Type.NONE;
-		for (String s : PluginCollection.Instance().getPluginPackages()) {
-			if (s.equalsIgnoreCase(pkg)) {
-				return FormatPlugin.Type.PLUGIN;
-			}
-		}
 		return FormatPlugin.Type.EXTERNAL;
 	}
 }
