@@ -29,9 +29,9 @@
 RtfBookReader::RtfBookReader(BookModel &model, const std::string &encoding) : RtfReader(encoding), myBookReader(model) {
 }
 
-static const size_t maxBufferSize = 1024;
+static const std::size_t maxBufferSize = 1024;
 
-void RtfBookReader::addCharData(const char *data, size_t len, bool convert) {
+void RtfBookReader::addCharData(const char *data, std::size_t len, bool convert) {
 	if (myCurrentState.ReadText) {
 		if (convert || myConverter.isNull()) {
 			myOutputBuffer.append(data, len);
@@ -119,7 +119,7 @@ void RtfBookReader::switchDestination(DestinationType destination, bool on) {
 	}
 }
 
-void RtfBookReader::insertImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t size) {
+void RtfBookReader::insertImage(const std::string &mimeType, const std::string &fileName, std::size_t startOffset, std::size_t size) {
 	std::string id;
 	ZLStringUtil::appendNumber(id, myImageIndex++);
 	myBookReader.addImageReference(id, 0, false);

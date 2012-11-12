@@ -26,13 +26,13 @@ class ZLCharSequence {
 
 public:
 	ZLCharSequence(); 
-	ZLCharSequence(const char *ptr, size_t size); 
+	ZLCharSequence(const char *ptr, std::size_t size); 
 	ZLCharSequence(const std::string &hexSequence);
 	ZLCharSequence(const ZLCharSequence &other);
 	~ZLCharSequence();		
  
-	size_t getSize() const;
-	const char &operator [] (size_t index) const;
+	std::size_t getSize() const;
+	const char &operator [] (std::size_t index) const;
 	ZLCharSequence &operator = (const ZLCharSequence& other);
 		
 	std::string toHexSequence() const; 
@@ -44,13 +44,13 @@ public:
 	int compareTo(const ZLCharSequence &other) const;
 
 private: 
-	size_t mySize;
+	std::size_t mySize;
 	char *myHead;
 };
 
 inline ZLCharSequence::ZLCharSequence() : mySize(0), myHead(0) {}
 
-inline const char& ZLCharSequence::operator [] (size_t index) const {
+inline const char& ZLCharSequence::operator [] (std::size_t index) const {
 	return myHead[index];
 }
 
@@ -64,7 +64,7 @@ inline ZLCharSequence::~ZLCharSequence() {
 	}
 }
 
-inline size_t ZLCharSequence::getSize() const {
+inline std::size_t ZLCharSequence::getSize() const {
 	return mySize;
 }
 

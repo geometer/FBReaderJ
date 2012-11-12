@@ -40,9 +40,9 @@ public:
 	bool readBook();
 
 private:
-	void dataHandler(const char *buffer, size_t len);
-	void ansiSymbolHandler(ZLUnicodeUtil::Ucs2Char symbol);
-	void footnoteHandler();
+	void ansiDataHandler(const char *buffer, std::size_t len);
+	void ucs2SymbolHandler(ZLUnicodeUtil::Ucs2Char symbol);
+	void footnotesStartHandler();
 
 	void handleChar(ZLUnicodeUtil::Ucs2Char ucs2char);
 	void handleHardLinebreak();

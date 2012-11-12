@@ -30,20 +30,20 @@ public:
 	JavaInputStream(const std::string &name);
 	~JavaInputStream();
 	bool open();
-	size_t read(char *buffer, size_t maxSize);
+	std::size_t read(char *buffer, std::size_t maxSize);
 	void close();
 
 	void seek(int offset, bool absoluteOffset);
-	size_t offset() const;
-	size_t sizeOfOpened();
+	std::size_t offset() const;
+	std::size_t sizeOfOpened();
 
 private:
 	void initStream(JNIEnv *env);
 	void closeStream(JNIEnv *env);
 	void rewind(JNIEnv *env);
-	void ensureBufferCapacity(JNIEnv *env, size_t maxSize);
-	size_t readToBuffer(JNIEnv *env, char *buffer, size_t maxSize);
-	size_t skip(JNIEnv *env, size_t offset);
+	void ensureBufferCapacity(JNIEnv *env, std::size_t maxSize);
+	std::size_t readToBuffer(JNIEnv *env, char *buffer, std::size_t maxSize);
+	std::size_t skip(JNIEnv *env, std::size_t offset);
 
 private:
 	std::string myName;
@@ -52,10 +52,10 @@ private:
 	jobject myJavaFile;
 
 	jobject myJavaInputStream;
-	size_t myOffset;
+	std::size_t myOffset;
 
 	jbyteArray myJavaBuffer;
-	size_t myJavaBufferSize;
+	std::size_t myJavaBufferSize;
 };
 
 #endif /* __JAVAINPUTSTREAM_H__ */

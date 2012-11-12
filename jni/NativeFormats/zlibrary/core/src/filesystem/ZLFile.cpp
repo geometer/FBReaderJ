@@ -38,7 +38,7 @@ ZLFile::ZLFile() : myMimeTypeIsUpToDate(true), myInfoIsFilled(true) {
 ZLFile::ZLFile(const std::string &path, const std::string &mimeType) : myPath(path), myMimeType(mimeType), myMimeTypeIsUpToDate(!mimeType.empty()), myInfoIsFilled(false) {
 	ZLFSManager::Instance().normalize(myPath);
 	{
-		size_t index = ZLFSManager::Instance().findLastFileNameDelimiter(myPath);
+		std::size_t index = ZLFSManager::Instance().findLastFileNameDelimiter(myPath);
 		if (index < myPath.length() - 1) {
 			myNameWithExtension = myPath.substr(index + 1);
 		} else {
@@ -224,7 +224,7 @@ bool ZLFile::exists() const {
 	return myInfo.Exists;
 }
 
-size_t ZLFile::size() const {
+std::size_t ZLFile::size() const {
 	if (!myInfoIsFilled) {
 		fillInfo();
 	}
@@ -252,9 +252,9 @@ bool ZLFile::canRemove() const {
 
 std::string ZLFile::replaceIllegalCharacters(const std::string &fileName, char replaceWith) {
 	static const char charsToReplace[] = ":;<|>+\\/\"*?";
-	const size_t len = fileName.length();
+	const std::size_t len = fileName.length();
 	char *data = new char[len];
-	memcpy(data, fileName.data(), len);
+	std::memcpy(data, fileName.data(), len);
 	char *end = data + len;
 	for (char *ptr = data; ptr != end; ++ptr) {
 		if (strchr(charsToReplace, *ptr) != 0) {

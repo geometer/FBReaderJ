@@ -83,7 +83,7 @@ ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
 	myAlignmentType = (ZLTextAlignmentType)*address++;
 	myFontSizeMagnification = *address++;
 	if (isFeatureSupported(FONT_FAMILY)) {
-		const size_t len = ZLCachedMemoryAllocator::readUInt16(address);
+		const std::size_t len = ZLCachedMemoryAllocator::readUInt16(address);
 		ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 2);
 		ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 		ZLUnicodeUtil::ucs2ToUtf8(myFontFamily, ucs2str);
@@ -106,14 +106,14 @@ shared_ptr<ZLTextParagraphEntry> ZLTextControlEntryPool::controlEntry(ZLTextKind
 
 /*
 ZLTextHyperlinkControlEntry::ZLTextHyperlinkControlEntry(const char *address) : ZLTextControlEntry((ZLTextKind)*address, true), myHyperlinkType((ZLHyperlinkType)*(address + 1)) {
-	const size_t len = ZLCachedMemoryAllocator::readUInt16(address + 2);
+	const std::size_t len = ZLCachedMemoryAllocator::readUInt16(address + 2);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myLabel, ucs2str);
 }
 
 ZLTextEntry::ZLTextEntry(const char *address) {
-	const size_t len = ZLCachedMemoryAllocator::readUInt32(address);
+	const std::size_t len = ZLCachedMemoryAllocator::readUInt32(address);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myText, ucs2str);
@@ -121,7 +121,7 @@ ZLTextEntry::ZLTextEntry(const char *address) {
 
 ImageEntry::ImageEntry(const char *address) {
 	myVOffset = ZLCachedMemoryAllocator::readUInt16(address);
-	const size_t len = ZLCachedMemoryAllocator::readUInt16(address + 2);
+	const std::size_t len = ZLCachedMemoryAllocator::readUInt16(address + 2);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myId, ucs2str);
@@ -165,7 +165,7 @@ void ZLTextParagraph::Iterator::next() {
 		switch (*myPointer) {
 			case ZLTextParagraphEntry::TEXT_ENTRY:
 			{
-				const size_t len = ZLCachedMemoryAllocator::readUInt32(myPointer + 2);
+				const std::size_t len = ZLCachedMemoryAllocator::readUInt32(myPointer + 2);
 				myPointer += len * 2 + 6;
 				break;
 			}
@@ -174,13 +174,13 @@ void ZLTextParagraph::Iterator::next() {
 				break;
 			case ZLTextParagraphEntry::HYPERLINK_CONTROL_ENTRY:
 			{
-				const size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer + 4);
+				const std::size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer + 4);
 				myPointer += len * 2 + 6;
 				break;
 			}
 			case ZLTextParagraphEntry::IMAGE_ENTRY:
 			{
-				const size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer + 4);
+				const std::size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer + 4);
 				myPointer += len * 2 + 6;
 				break;
 			}
@@ -192,7 +192,7 @@ void ZLTextParagraph::Iterator::next() {
 				myPointer += 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
 						(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);
 				if (withFontFamily) {
-					const size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer);
+					const std::size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer);
 					myPointer += 2 + 2 * len;
 				}
 				break;
@@ -205,13 +205,13 @@ void ZLTextParagraph::Iterator::next() {
 				break;
 		}
 		if (*myPointer == 0) {
-			memcpy(&myPointer, myPointer + 1, sizeof(char*));
+			std::memcpy(&myPointer, myPointer + 1, sizeof(char*));
 		}
 	}
 }
 
-size_t ZLTextParagraph::textDataLength() const {
-	size_t len = 0;
+std::size_t ZLTextParagraph::textDataLength() const {
+	std::size_t len = 0;
 	for (Iterator it = *this; !it.isEnd(); it.next()) {
 		if (it.entryKind() == ZLTextParagraphEntry::TEXT_ENTRY) {
 			len += ((ZLTextEntry&)*it.entry()).dataLength();
@@ -220,8 +220,8 @@ size_t ZLTextParagraph::textDataLength() const {
 	return len;
 }
 
-size_t ZLTextParagraph::characterNumber() const {
-	size_t len = 0;
+std::size_t ZLTextParagraph::characterNumber() const {
+	std::size_t len = 0;
 	for (Iterator it = *this; !it.isEnd(); it.next()) {
 		switch (it.entryKind()) {
 			case ZLTextParagraphEntry::TEXT_ENTRY:

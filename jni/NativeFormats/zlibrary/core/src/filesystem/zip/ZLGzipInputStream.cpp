@@ -85,8 +85,8 @@ bool ZLGzipInputStream::open() {
 	return true;
 }
 
-size_t ZLGzipInputStream::read(char *buffer, size_t maxSize) {
-	size_t realSize = myDecompressor->decompress(*myBaseStream, buffer, maxSize);
+std::size_t ZLGzipInputStream::read(char *buffer, std::size_t maxSize) {
+	std::size_t realSize = myDecompressor->decompress(*myBaseStream, buffer, maxSize);
 	myOffset += realSize;
 	return realSize;
 }
@@ -111,11 +111,11 @@ void ZLGzipInputStream::seek(int offset, bool absoluteOffset) {
 	}
 }
 
-size_t ZLGzipInputStream::offset() const {
+std::size_t ZLGzipInputStream::offset() const {
 	return myOffset;
 }
 
-size_t ZLGzipInputStream::sizeOfOpened() {
+std::size_t ZLGzipInputStream::sizeOfOpened() {
 	// TODO: implement
 	return 0;
 }
