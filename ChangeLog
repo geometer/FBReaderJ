@@ -1,7 +1,8 @@
-===== 1.6.6 (Nov ??, 2012) =====
+===== 1.6.6 (Nov 13, 2012) =====
 * Fixed 'extra paragraph break after each footnote mark' issue for RTFs (and may be some other formats)
 * Fixed <pre>formatted text rendering
 * Fixed utf-8 *.txt files processing
+* Fixed library crash on some *.doc files
 * Updated Spanish localization (by Francisco Alvarado)
 
 ===== 1.6.5 (Nov 04, 2012) =====

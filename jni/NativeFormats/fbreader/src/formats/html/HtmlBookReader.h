@@ -50,11 +50,11 @@ protected:
 	void startDocumentHandler();
 	void endDocumentHandler();
 	bool tagHandler(const HtmlTag &tag);
-	bool characterDataHandler(const char *text, size_t len, bool convert);
+	bool characterDataHandler(const char *text, std::size_t len, bool convert);
 
 private:
-	void preformattedCharacterDataHandler(const char *text, size_t len, bool convert);
-	void addConvertedDataToBuffer(const char *text, size_t len, bool convert);
+	void preformattedCharacterDataHandler(const char *text, std::size_t len, bool convert);
+	void addConvertedDataToBuffer(const char *text, std::size_t len, bool convert);
 
 protected:
 	BookReader myBookReader;

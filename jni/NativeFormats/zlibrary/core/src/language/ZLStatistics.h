@@ -32,13 +32,13 @@ class ZLStatistics {
 
 public:
 	ZLStatistics();
-	ZLStatistics(size_t charSequenceSize);
-	ZLStatistics(size_t charSequenceSize, size_t volume, unsigned long long squaresVolume);
+	ZLStatistics(std::size_t charSequenceSize);
+	ZLStatistics(std::size_t charSequenceSize, std::size_t volume, unsigned long long squaresVolume);
 	virtual ~ZLStatistics();
 
-	size_t getVolume() const;
+	std::size_t getVolume() const;
 	unsigned long long getSquaresVolume() const;
-	size_t getCharSequenceSize() const;
+	std::size_t getCharSequenceSize() const;
 	
 public:
 	virtual shared_ptr<ZLStatisticsItem> begin() const = 0;
@@ -51,26 +51,26 @@ public:
 	static int correlation(const ZLStatistics &candidate, const ZLStatistics &pattern);
 
 protected:
-	size_t myCharSequenceSize;
+	std::size_t myCharSequenceSize;
 	mutable bool myVolumesAreUpToDate;
-	mutable size_t myVolume;
+	mutable std::size_t myVolume;
 	mutable unsigned long long mySquaresVolume;
 };
 
 class ZLMapBasedStatistics : public ZLStatistics {
 
 private:
-	typedef std::vector<std::pair<ZLCharSequence, size_t> > Vector; 
-	typedef std::map<ZLCharSequence, size_t>                Dictionary;
+	typedef std::vector<std::pair<ZLCharSequence, std::size_t> > Vector; 
+	typedef std::map<ZLCharSequence, std::size_t>                Dictionary;
 
 public:
 	ZLMapBasedStatistics();
 	ZLMapBasedStatistics(const Dictionary &dictionary);
 	~ZLMapBasedStatistics(); 
 	
-	size_t getSize() const;
+	std::size_t getSize() const;
 	
-	ZLMapBasedStatistics top(size_t amount) const;
+	ZLMapBasedStatistics top(std::size_t amount) const;
 	
 	void scaleToShort();
 	void retain(const ZLMapBasedStatistics &other); 
@@ -85,7 +85,7 @@ protected:
 
 private:
 	struct LessFrequency {
-		bool operator() (const std::pair<ZLCharSequence, size_t> a, const std::pair<ZLCharSequence, size_t> b) {
+		bool operator() (const std::pair<ZLCharSequence, std::size_t> a, const std::pair<ZLCharSequence, std::size_t> b) {
 			return (a.second < b.second);
 		}
 	};
@@ -97,11 +97,11 @@ private:
 class ZLArrayBasedStatistics : public ZLStatistics {
 public:
 	ZLArrayBasedStatistics();
-	ZLArrayBasedStatistics(size_t charSequenceSize, size_t size, size_t volume, unsigned long long squaresVolume);	
+	ZLArrayBasedStatistics(std::size_t charSequenceSize, std::size_t size, std::size_t volume, unsigned long long squaresVolume);	
 	~ZLArrayBasedStatistics();
 
 	ZLArrayBasedStatistics &operator = (const ZLArrayBasedStatistics &other);
-	void insert(const ZLCharSequence &charSequence, size_t frequency);
+	void insert(const ZLCharSequence &charSequence, std::size_t frequency);
 	
 	bool empty() const;
 
@@ -112,17 +112,17 @@ protected:
 	void calculateVolumes() const;
 
 private:
-	size_t myCapacity;
-	size_t myBack;	
+	std::size_t myCapacity;
+	std::size_t myBack;	
 	char* mySequences;
 	unsigned short* myFrequencies;
 };
 
-inline size_t ZLStatistics::getCharSequenceSize() const {
+inline std::size_t ZLStatistics::getCharSequenceSize() const {
 	return myCharSequenceSize;
 }
 
-inline size_t ZLMapBasedStatistics::getSize() const {
+inline std::size_t ZLMapBasedStatistics::getSize() const {
 	return myDictionary.size();
 }
 

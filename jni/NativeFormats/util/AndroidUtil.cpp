@@ -215,7 +215,7 @@ jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
 
 	std::vector<jint> offsets, sizes;
 	const ZLFileImage::Blocks &blocks = image.blocks();
-	for (size_t i = 0; i < blocks.size(); ++i) {
+	for (std::size_t i = 0; i < blocks.size(); ++i) {
 		offsets.push_back((jint)blocks.at(i).offset);
 		sizes.push_back((jint)blocks.at(i).size);
 	}
@@ -274,14 +274,14 @@ std::string AndroidUtil::convertNonUtfString(const std::string &str) {
 }
 
 jintArray AndroidUtil::createJavaIntArray(JNIEnv *env, const std::vector<jint> &data) {
-	size_t size = data.size();
+	std::size_t size = data.size();
 	jintArray array = env->NewIntArray(size);
 	env->SetIntArrayRegion(array, 0, size, &data.front());
 	return array;
 }
 
 jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data) {
-	size_t size = data.size();
+	std::size_t size = data.size();
 	jbyteArray array = env->NewByteArray(size);
 	env->SetByteArrayRegion(array, 0, size, &data.front());
 	return array;

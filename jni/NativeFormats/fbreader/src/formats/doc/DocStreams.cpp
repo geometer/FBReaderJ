@@ -27,49 +27,54 @@
 class DocReader : public OleStreamReader {
 
 public:
-	DocReader(char *buffer, size_t maxSize);
+	DocReader(char *buffer, std::size_t maxSize);
 	~DocReader();
-	size_t readSize() const;
+	std::size_t readSize() const;
 
 private:
 	bool readStream(OleMainStream &stream);
-	void dataHandler(const char *buffer, size_t len);
-	void ansiSymbolHandler(ZLUnicodeUtil::Ucs2Char symbol);
-	void footnoteHandler();
+	void ansiDataHandler(const char *buffer, std::size_t len);
+	void ucs2SymbolHandler(ZLUnicodeUtil::Ucs2Char symbol);
+	void footnotesStartHandler();
 
 protected:
 	char *myBuffer;
-	const size_t myMaxSize;
-	size_t myActualSize;
-};
-
-class DocCharReader : public DocReader {
-
-public:
-	DocCharReader(char *buffer, size_t maxSize);
-	~DocCharReader();
-
-private:
-	void dataHandler(const char *buffer, size_t len);
+	const std::size_t myMaxSize;
+	std::size_t myActualSize;
 };
 
 class DocAnsiReader : public DocReader {
 
 public:
-	DocAnsiReader(char *buffer, size_t maxSize);
+	DocAnsiReader(char *buffer, std::size_t maxSize);
 	~DocAnsiReader();
 
 private:
-	void ansiSymbolHandler(ZLUnicodeUtil::Ucs2Char symbol);
+	void ansiDataHandler(const char *buffer, std::size_t len);
 };
 
-DocReader::DocReader(char *buffer, size_t maxSize) : myBuffer(buffer), myMaxSize(maxSize), myActualSize(0) {
+class DocUcs2Reader : public DocReader {
+
+public:
+	DocUcs2Reader(char *buffer, std::size_t maxSize);
+	~DocUcs2Reader();
+
+private:
+	void ucs2SymbolHandler(ZLUnicodeUtil::Ucs2Char symbol);
+};
+
+DocReader::DocReader(char *buffer, std::size_t maxSize) : myBuffer(buffer), myMaxSize(maxSize), myActualSize(0) {
 }
 
 DocReader::~DocReader() {
 }
 
 bool DocReader::readStream(OleMainStream &stream) {
+	// TODO make 2 optmizations:
+	//	1) If another piece is too big, reading of next piece can be stopped if some size parameter will be specified
+	//		(it can be transfered as a parameter (with default 0 value, that means no need to use it) to readNextPiece method)
+	//	2) We can specify as a parameter for readNextPiece, what kind of piece should be read next (ANSI or not ANSI).
+	//		As type of piece is known already, there's no necessary to read other pieces.
 	while (myActualSize < myMaxSize) {
 		if (!readNextPiece(stream)) {
 			break;
@@ -78,50 +83,50 @@ bool DocReader::readStream(OleMainStream &stream) {
 	return true;
 }
 
-void DocReader::dataHandler(const char*, size_t) {
+void DocReader::ansiDataHandler(const char*, std::size_t) {
 }
 
-void DocReader::ansiSymbolHandler(ZLUnicodeUtil::Ucs2Char) {
+void DocReader::ucs2SymbolHandler(ZLUnicodeUtil::Ucs2Char) {
 }
 
-void DocReader::footnoteHandler() {
+void DocReader::footnotesStartHandler() {
 }
 
-size_t DocReader::readSize() const {
+std::size_t DocReader::readSize() const {
 	return myActualSize;
 }
 
-DocCharReader::DocCharReader(char *buffer, size_t maxSize) : DocReader(buffer, maxSize) {
-}
-
-DocCharReader::~DocCharReader() {
-}
-
-void DocCharReader::dataHandler(const char *buffer, size_t dataLength) {
-	if (myActualSize < myMaxSize) {
-		const size_t len = std::min(dataLength, myMaxSize - myActualSize);
-		strncpy(myBuffer + myActualSize, buffer, len);
-		myActualSize += len;
-	}
-}
-
-DocAnsiReader::DocAnsiReader(char *buffer, size_t maxSize) : DocReader(buffer, maxSize) {
+DocAnsiReader::DocAnsiReader(char *buffer, std::size_t maxSize) : DocReader(buffer, maxSize) {
 }
 
 DocAnsiReader::~DocAnsiReader() {
 }
 
-void DocAnsiReader::ansiSymbolHandler(ZLUnicodeUtil::Ucs2Char symbol) {
+void DocAnsiReader::ansiDataHandler(const char *buffer, std::size_t dataLength) {
 	if (myActualSize < myMaxSize) {
-		char buffer[4];
-		const size_t dataLength = ZLUnicodeUtil::ucs2ToUtf8(buffer, symbol);
-		const size_t len = std::min(dataLength, myMaxSize - myActualSize);
-		strncpy(myBuffer + myActualSize, buffer, len);
+		const std::size_t len = std::min(dataLength, myMaxSize - myActualSize);
+		std::strncpy(myBuffer + myActualSize, buffer, len);
 		myActualSize += len;
 	}
 }
 
-DocStream::DocStream(const ZLFile& file, size_t maxSize) : myFile(file), myBuffer(0), mySize(maxSize) {
+DocUcs2Reader::DocUcs2Reader(char *buffer, std::size_t maxSize) : DocReader(buffer, maxSize) {
+}
+
+DocUcs2Reader::~DocUcs2Reader() {
+}
+
+void DocUcs2Reader::ucs2SymbolHandler(ZLUnicodeUtil::Ucs2Char symbol) {
+	if (myActualSize < myMaxSize) {
+		char buffer[4];
+		const std::size_t dataLength = ZLUnicodeUtil::ucs2ToUtf8(buffer, symbol);
+		const std::size_t len = std::min(dataLength, myMaxSize - myActualSize);
+		std::strncpy(myBuffer + myActualSize, buffer, len);
+		myActualSize += len;
+	}
+}
+
+DocStream::DocStream(const ZLFile& file, std::size_t maxSize) : myFile(file), myBuffer(0), mySize(maxSize) {
 }
 
 DocStream::~DocStream() {
@@ -137,7 +142,7 @@ bool DocStream::open() {
 	if (stream.isNull() || !stream->open()) {
 		return false;
 	}
-	if (!reader->readDocument(stream)) {
+	if (!reader->readDocument(stream, false)) {
 		return false;
 	}
 	mySize = reader->readSize();
@@ -145,10 +150,10 @@ bool DocStream::open() {
 	return true;
 }
 
-size_t DocStream::read(char *buffer, size_t maxSize) {
+std::size_t DocStream::read(char *buffer, std::size_t maxSize) {
 	maxSize = std::min(maxSize, mySize - myOffset);
-	if ((buffer != 0) && (myBuffer !=0)) {
-		memcpy(buffer, myBuffer + myOffset, maxSize);
+	if (buffer != 0 && myBuffer != 0) {
+		std::memcpy(buffer, myBuffer + myOffset, maxSize);
 	}
 	myOffset += maxSize;
 	return maxSize;
@@ -165,33 +170,33 @@ void DocStream::seek(int offset, bool absoluteOffset) {
 	if (!absoluteOffset) {
 		offset += myOffset;
 	}
-	myOffset = std::min(mySize, (size_t)std::max(0, offset));
+	myOffset = std::min(mySize, (std::size_t)std::max(0, offset));
 }
 
-size_t DocStream::offset() const {
+std::size_t DocStream::offset() const {
 	return myOffset;
 }
 
-size_t DocStream::sizeOfOpened() {
+std::size_t DocStream::sizeOfOpened() {
 	return mySize;
 }
 
-DocCharStream::DocCharStream(const ZLFile& file, size_t maxSize) : DocStream(file, maxSize) {
-}
-
-DocCharStream::~DocCharStream() {
-}
-
-shared_ptr<DocReader> DocCharStream::createReader(char *buffer, size_t maxSize) {
-	return new DocCharReader(buffer, maxSize);
-}
-
-DocAnsiStream::DocAnsiStream(const ZLFile& file, size_t maxSize) : DocStream(file, maxSize) {
+DocAnsiStream::DocAnsiStream(const ZLFile& file, std::size_t maxSize) : DocStream(file, maxSize) {
 }
 
 DocAnsiStream::~DocAnsiStream() {
 }
 
-shared_ptr<DocReader> DocAnsiStream::createReader(char *buffer, size_t maxSize) {
+shared_ptr<DocReader> DocAnsiStream::createReader(char *buffer, std::size_t maxSize) {
 	return new DocAnsiReader(buffer, maxSize);
+}
+
+DocUcs2Stream::DocUcs2Stream(const ZLFile& file, std::size_t maxSize) : DocStream(file, maxSize) {
+}
+
+DocUcs2Stream::~DocUcs2Stream() {
+}
+
+shared_ptr<DocReader> DocUcs2Stream::createReader(char *buffer, std::size_t maxSize) {
+	return new DocUcs2Reader(buffer, maxSize);
 }

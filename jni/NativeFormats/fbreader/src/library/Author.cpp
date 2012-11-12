@@ -34,7 +34,7 @@ shared_ptr<Author> Author::getAuthor(const std::string &name, const std::string 
 	ZLStringUtil::stripWhiteSpaces(strippedKey);
 
 	if (strippedKey.empty()) {
-		const size_t index = strippedName.find(',');
+		const std::size_t index = strippedName.find(',');
 		if (index != std::string::npos) {
 			strippedKey = strippedName.substr(0, index);
 			ZLStringUtil::stripWhiteSpaces(strippedKey);
@@ -42,12 +42,12 @@ shared_ptr<Author> Author::getAuthor(const std::string &name, const std::string 
 	}
 
 	if (strippedKey.empty()) {
-		size_t index = strippedName.rfind(' ');
+		std::size_t index = strippedName.rfind(' ');
 		if (index == std::string::npos) {
 			strippedKey = strippedName;
 		} else {
 			strippedKey = strippedName.substr(index + 1);
-			const size_t size = strippedName.size();
+			const std::size_t size = strippedName.size();
 			while (index < size && strippedName[index] == ' ') {
 				--index;
 			}

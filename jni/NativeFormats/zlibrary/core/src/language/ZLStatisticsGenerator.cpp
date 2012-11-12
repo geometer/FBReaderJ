@@ -28,7 +28,7 @@
 #include "ZLStatistics.h"
 #include "ZLStatisticsGenerator.h"
 
-size_t ZLStatisticsGenerator::ourBufferSize = 102400;
+std::size_t ZLStatisticsGenerator::ourBufferSize = 102400;
 
 ZLStatisticsGenerator::ZLStatisticsGenerator(const std::string &breakSymbols) {
 	myBreakSymbolsTable = new char[256];
@@ -56,21 +56,21 @@ int ZLStatisticsGenerator::read(const std::string &inputFileName) {
 	return 0;
 }
 
-void ZLStatisticsGenerator::generate(const std::string &inputFileName, size_t charSequenceSize, ZLMapBasedStatistics &statistics) {
+void ZLStatisticsGenerator::generate(const std::string &inputFileName, std::size_t charSequenceSize, ZLMapBasedStatistics &statistics) {
 	if (read(inputFileName) == 1) {
 		return;
 	}
-	if ((size_t)(myEnd - myStart) < (charSequenceSize-1)) {
+	if ((std::size_t)(myEnd - myStart) < (charSequenceSize-1)) {
 		return;
 	}
 	generate(myStart, myEnd - myStart, charSequenceSize, statistics);
 }
 
-void ZLStatisticsGenerator::generate(const char* buffer, size_t length, size_t charSequenceSize, ZLMapBasedStatistics &statistics) {
+void ZLStatisticsGenerator::generate(const char* buffer, std::size_t length, std::size_t charSequenceSize, ZLMapBasedStatistics &statistics) {
 	const char *start = buffer;
 	const char *end = buffer + length;
-	std::map<ZLCharSequence, size_t> dictionary;
-	size_t locker = charSequenceSize;
+	std::map<ZLCharSequence, std::size_t> dictionary;
+	std::size_t locker = charSequenceSize;
 	for (const char *ptr = start; ptr < end;) {
 		if (myBreakSymbolsTable[(unsigned char)*(ptr)] == 1) {
 			locker = charSequenceSize;

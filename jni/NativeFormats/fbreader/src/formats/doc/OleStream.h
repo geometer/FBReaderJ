@@ -31,17 +31,17 @@ public:
 
 public:
 	bool open();
-	size_t read(char *buffer, size_t maxSize);
+	std::size_t read(char *buffer, std::size_t maxSize);
 	void close();
 
 public:
 	bool seek(unsigned int offset, bool absoluteOffset);
-	size_t offset();
+	std::size_t offset();
 
 public:
 	ZLFileImage::Blocks getBlockPieceInfoList(unsigned int offset, unsigned int size) const;
 	static ZLFileImage::Blocks concatBlocks(const ZLFileImage::Blocks &blocks);
-	size_t fileOffset();
+	std::size_t fileOffset();
 
 public:
 	bool eof() const;

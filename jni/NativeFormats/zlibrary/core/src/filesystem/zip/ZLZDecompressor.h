@@ -29,14 +29,14 @@ class ZLInputStream;
 class ZLZDecompressor {
 
 public:
-	ZLZDecompressor(size_t size);
+	ZLZDecompressor(std::size_t size);
 	~ZLZDecompressor();
 
-	size_t decompress(ZLInputStream &stream, char *buffer, size_t maxSize);
+	std::size_t decompress(ZLInputStream &stream, char *buffer, std::size_t maxSize);
 
 private:
 	z_stream *myZStream;
-	size_t myAvailableSize;
+	std::size_t myAvailableSize;
 	char *myInBuffer;
 	char *myOutBuffer;
 	std::string myBuffer;

@@ -150,7 +150,7 @@ public:
 	OleMainStream(shared_ptr<OleStorage> storage, OleEntry oleEntry, shared_ptr<ZLInputStream> stream);
 
 public:
-	bool open();
+	bool open(bool doReadFormattingData);
 	const Pieces &getPieces() const;
 	const CharInfoList &getCharInfoList() const;
 	const StyleInfoList &getStyleInfoList() const;
@@ -179,7 +179,7 @@ private: //formatting reader helpers methods
 	static unsigned int getPrlLength(const char *grpprlBuffer, unsigned int byteNumber);
 	static void getCharInfo(unsigned int chpxOffset, unsigned int styleId, const char *grpprlBuffer, unsigned int bytes, CharInfo &charInfo);
 	static void getStyleInfo(unsigned int papxOffset, const char *grpprlBuffer, unsigned int bytes, Style &styleInfo);
-	static void getSectionInfo(const char *grpprlBuffer, size_t bytes, SectionInfo &sectionInfo);
+	static void getSectionInfo(const char *grpprlBuffer, std::size_t bytes, SectionInfo &sectionInfo);
 	static bool getInlineImageInfo(unsigned int chpxOffset, const char *grpprlBuffer, unsigned int bytes, InlineImageInfo &pictureInfo);
 
 	static Style getStyleFromStylesheet(unsigned int styleId, const StyleSheet &stylesheet);
@@ -187,7 +187,7 @@ private: //formatting reader helpers methods
 	static unsigned int getStyleIdByCharPos(unsigned int offset, const StyleInfoList &styleInfoList);
 
 	static bool offsetToCharPos(unsigned int offset, unsigned int &charPos, const Pieces &pieces);
-	static bool readToBuffer(std::string &result, unsigned int offset, size_t length, OleStream &stream);
+	static bool readToBuffer(std::string &result, unsigned int offset, std::size_t length, OleStream &stream);
 
 	static unsigned int calcCountOfPLC(unsigned int totalSize, unsigned int elementSize);
 

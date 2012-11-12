@@ -83,19 +83,19 @@ public:
 private:
 	void initialize(const char *encoding = 0);
 	void shutdown();
-	bool readFromBuffer(const char *data, size_t len);
+	bool readFromBuffer(const char *data, std::size_t len);
 
 protected:
 	virtual void startElementHandler(const char *tag, const char **attributes);
 	virtual void endElementHandler(const char *tag);
-	virtual void characterDataHandler(const char *text, size_t len);
+	virtual void characterDataHandler(const char *text, std::size_t len);
 	virtual bool processNamespaces() const;
 	virtual const std::vector<std::string> &externalDTDs() const;
 	virtual void collectExternalEntities(std::map<std::string,std::string> &entityMap);
 
 	bool testTag(const std::string &ns, const std::string &name, const std::string &tag) const;
 	bool isInterrupted() const;
-	size_t getCurrentPosition() const;
+	std::size_t getCurrentPosition() const;
 
 protected:
 	void interrupt();

@@ -19,7 +19,7 @@
 
 #include "ZLStatisticsItem.h"
 
-ZLMapBasedStatisticsItem::ZLMapBasedStatisticsItem(const std::map<ZLCharSequence, size_t>::const_iterator it, size_t index) : 	ZLStatisticsItem(index), 
+ZLMapBasedStatisticsItem::ZLMapBasedStatisticsItem(const std::map<ZLCharSequence, std::size_t>::const_iterator it, std::size_t index) : 	ZLStatisticsItem(index), 
 																																myIterator(it) {
 }
 
@@ -27,7 +27,7 @@ ZLCharSequence ZLMapBasedStatisticsItem::sequence() const {
 	return myIterator->first;
 }
 
-size_t ZLMapBasedStatisticsItem::frequency() const {
+std::size_t ZLMapBasedStatisticsItem::frequency() const {
 	return myIterator->second;
 }
 
@@ -36,7 +36,7 @@ void ZLMapBasedStatisticsItem::next() {
 	++myIterator;
 }
 
-ZLArrayBasedStatisticsItem::ZLArrayBasedStatisticsItem(size_t sequenceLength, char* sequencePtr, unsigned short* frequencyPtr, size_t index) :
+ZLArrayBasedStatisticsItem::ZLArrayBasedStatisticsItem(std::size_t sequenceLength, char* sequencePtr, unsigned short* frequencyPtr, std::size_t index) :
 	ZLStatisticsItem(index),
 	mySequencePtr(sequencePtr),
 	myFrequencyPtr(frequencyPtr),
@@ -47,8 +47,8 @@ ZLCharSequence ZLArrayBasedStatisticsItem::sequence() const {
 	return ZLCharSequence(mySequencePtr, mySequenceLength);
 }
 
-size_t ZLArrayBasedStatisticsItem::frequency() const {
-	return (size_t) *myFrequencyPtr;
+std::size_t ZLArrayBasedStatisticsItem::frequency() const {
+	return (std::size_t) *myFrequencyPtr;
 }
 
 void ZLArrayBasedStatisticsItem::next() {

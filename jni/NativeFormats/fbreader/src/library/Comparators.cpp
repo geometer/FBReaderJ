@@ -79,8 +79,8 @@ bool TagComparator::operator() (
 		return false;
 	}
 
-	size_t level0 = tag0->level();
-	size_t level1 = tag1->level();
+	std::size_t level0 = tag0->level();
+	std::size_t level1 = tag1->level();
 	if (level0 > level1) {
 		for (; level0 > level1; --level0) {
 			tag0 = tag0->parent();
