@@ -35,7 +35,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.Paths;
 
 public class EditableStringListActivity extends BaseStringListActivity {
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -43,7 +42,6 @@ public class EditableStringListActivity extends BaseStringListActivity {
 	}
 
 	private static class MyAdapter extends ItemAdapter {
-
 		public MyAdapter(BaseStringListActivity a) {
 			super(a);
 		}
