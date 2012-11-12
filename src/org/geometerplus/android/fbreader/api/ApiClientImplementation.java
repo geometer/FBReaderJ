@@ -475,4 +475,8 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			ApiObject.envelope(file)
 		});
 	}
+	
+	public String getResourceValue(String res) throws ApiException {
+		return requestString(GET_RESOURCE_VALUE, envelope(res));
+	}
 }
