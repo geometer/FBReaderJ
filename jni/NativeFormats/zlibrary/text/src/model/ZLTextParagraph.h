@@ -122,7 +122,7 @@ public:
 	//ZLTextEntry(const char *address);
 	~ZLTextEntry();
 
-	size_t dataLength() const;
+	std::size_t dataLength() const;
 	const char *data() const;
 
 private:
@@ -168,8 +168,8 @@ public:
 
 	private:
 		char *myPointer;
-		size_t myIndex;
-		size_t myEndIndex;
+		std::size_t myIndex;
+		std::size_t myEndIndex;
 		mutable shared_ptr<ZLTextParagraphEntry> myEntry;
 	};
 */
@@ -191,17 +191,17 @@ public:
 	virtual ~ZLTextParagraph();
 	virtual Kind kind() const;
 
-	size_t entryNumber() const;
+	std::size_t entryNumber() const;
 
-	//size_t textDataLength() const;
-	//size_t characterNumber() const;
+	//std::size_t textDataLength() const;
+	//std::size_t characterNumber() const;
 
 private:
 	void addEntry(char *address);
 
 private:
 	char *myFirstEntryAddress;
-	size_t myEntryNumber;
+	std::size_t myEntryNumber;
 
 friend class Iterator;
 friend class ZLTextModel;
@@ -245,7 +245,7 @@ inline bool ZLTextHyperlinkControlEntry::isHyperlink() const { return true; }
 
 inline ZLTextEntry::~ZLTextEntry() {}
 inline const char *ZLTextEntry::data() const { return myText.data(); }
-inline size_t ZLTextEntry::dataLength() const { return myText.length(); }
+inline std::size_t ZLTextEntry::dataLength() const { return myText.length(); }
 
 inline ImageEntry::~ImageEntry() {}
 inline const std::string &ImageEntry::id() const { return myId; }
@@ -256,7 +256,7 @@ inline ResetBidiEntry::ResetBidiEntry() {}
 inline ZLTextParagraph::ZLTextParagraph() : myEntryNumber(0) {}
 inline ZLTextParagraph::~ZLTextParagraph() {}
 inline ZLTextParagraph::Kind ZLTextParagraph::kind() const { return TEXT_PARAGRAPH; }
-inline size_t ZLTextParagraph::entryNumber() const { return myEntryNumber; }
+inline std::size_t ZLTextParagraph::entryNumber() const { return myEntryNumber; }
 inline void ZLTextParagraph::addEntry(char *address) { if (myEntryNumber == 0) myFirstEntryAddress = address; ++myEntryNumber; }
 
 //inline ZLTextParagraph::Iterator::Iterator(const ZLTextParagraph &paragraph) : myPointer(paragraph.myFirstEntryAddress), myIndex(0), myEndIndex(paragraph.entryNumber()) {}

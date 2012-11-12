@@ -37,7 +37,7 @@ class ZLTextStyleEntry;
 class ZLTextModel {
 
 protected:
-	ZLTextModel(const std::string &id, const std::string &language, const size_t rowSize,
+	ZLTextModel(const std::string &id, const std::string &language, const std::size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension);
 	ZLTextModel(const std::string &id, const std::string &language,
 		shared_ptr<ZLCachedMemoryAllocator> allocator);
@@ -49,14 +49,14 @@ public:
 	const std::string &language() const;
 	//bool isRtl() const;
 
-	size_t paragraphsNumber() const;
-	ZLTextParagraph *operator [] (size_t index);
-	const ZLTextParagraph *operator [] (size_t index) const;
+	std::size_t paragraphsNumber() const;
+	ZLTextParagraph *operator [] (std::size_t index);
+	const ZLTextParagraph *operator [] (std::size_t index) const;
 /*
 	const std::vector<ZLTextMark> &marks() const;
 
-	virtual void search(const std::string &text, size_t startIndex, size_t endIndex, bool ignoreCase) const;
-	virtual void selectParagraph(size_t index) const;
+	virtual void search(const std::string &text, std::size_t startIndex, std::size_t endIndex, bool ignoreCase) const;
+	virtual void selectParagraph(std::size_t index) const;
 	void removeAllMarks();
 
 	ZLTextMark firstMark() const;
@@ -110,7 +110,7 @@ private:
 class ZLTextPlainModel : public ZLTextModel {
 
 public:
-	ZLTextPlainModel(const std::string &id, const std::string &language, const size_t rowSize,
+	ZLTextPlainModel(const std::string &id, const std::string &language, const std::size_t rowSize,
 			const std::string &directoryName, const std::string &fileExtension);
 	ZLTextPlainModel(const std::string &id, const std::string &language,
 		shared_ptr<ZLCachedMemoryAllocator> allocator);
@@ -119,7 +119,7 @@ public:
 
 inline const std::string &ZLTextModel::id() const { return myId; }
 inline const std::string &ZLTextModel::language() const { return myLanguage; }
-inline size_t ZLTextModel::paragraphsNumber() const { return myParagraphs.size(); }
+inline std::size_t ZLTextModel::paragraphsNumber() const { return myParagraphs.size(); }
 //inline const std::vector<ZLTextMark> &ZLTextModel::marks() const { return myMarks; }
 //inline void ZLTextModel::removeAllMarks() { myMarks.clear(); }
 inline const ZLCachedMemoryAllocator &ZLTextModel::allocator() const { return *myAllocator; }
@@ -129,11 +129,11 @@ inline const std::vector<jint> &ZLTextModel::paragraphLengths() const { return m
 inline const std::vector<jint> &ZLTextModel::textSizes() const { return myTextSizes; };
 inline const std::vector<jbyte> &ZLTextModel::paragraphKinds() const { return myParagraphKinds; };
 
-inline ZLTextParagraph *ZLTextModel::operator [] (size_t index) {
+inline ZLTextParagraph *ZLTextModel::operator [] (std::size_t index) {
 	return myParagraphs[std::min(myParagraphs.size() - 1, index)];
 }
 
-inline const ZLTextParagraph *ZLTextModel::operator [] (size_t index) const {
+inline const ZLTextParagraph *ZLTextModel::operator [] (std::size_t index) const {
 	return myParagraphs[std::min(myParagraphs.size() - 1, index)];
 }
 

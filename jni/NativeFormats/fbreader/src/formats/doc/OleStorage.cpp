@@ -24,7 +24,7 @@
 
 #include <cstring>
 
-const size_t OleStorage::BBD_BLOCK_SIZE = 512;
+const std::size_t OleStorage::BBD_BLOCK_SIZE = 512;
 
 OleStorage::OleStorage() {
 	clear();
@@ -46,7 +46,7 @@ void OleStorage::clear() {
 
 
 
-bool OleStorage::init(shared_ptr<ZLInputStream> stream, size_t streamSize) {
+bool OleStorage::init(shared_ptr<ZLInputStream> stream, std::size_t streamSize) {
 	clear();
 
 	myInputStream = stream;
@@ -54,13 +54,13 @@ bool OleStorage::init(shared_ptr<ZLInputStream> stream, size_t streamSize) {
 	myInputStream->seek(0, true);
 
 	char oleBuf[BBD_BLOCK_SIZE];
-	size_t ret = myInputStream->read(oleBuf, BBD_BLOCK_SIZE);
+	std::size_t ret = myInputStream->read(oleBuf, BBD_BLOCK_SIZE);
 	if (ret != BBD_BLOCK_SIZE) {
 		clear();
 		return false;
 	}
 	static const char OLE_SIGN[] = {0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1, 0};
-	if (strncmp(oleBuf, OLE_SIGN, 8) != 0) {
+	if (std::strncmp(oleBuf, OLE_SIGN, 8) != 0) {
 		clear();
 		return false;
 	}
@@ -85,11 +85,11 @@ bool OleStorage::readDIFAT(char *oleBuf) {
 
 	//for files > 6.78 mb we need read additional DIFAT fields
 	for (int i = 0; difatBlock > 0 && i < difatSectorNumbers; ++i) {
-		ZLLogger::Instance().println("OleStorage", "Read additional data for DIFAT");
+		ZLLogger::Instance().println("DocPlugin", "Read additional data for DIFAT");
 		char buffer[mySectorSize];
 		myInputStream->seek(BBD_BLOCK_SIZE + difatBlock * mySectorSize, true);
 		if (myInputStream->read(buffer, mySectorSize) != mySectorSize) {
-			ZLLogger::Instance().println("OleStorage", "Error read DIFAT!");
+			ZLLogger::Instance().println("DocPlugin", "Error read DIFAT!");
 			return false;
 		}
 		for (unsigned int j = 0; j < (mySectorSize - 4); j += 4) {
@@ -112,19 +112,19 @@ bool OleStorage::readBBD(char *oleBuf) {
 
 	if (myDIFAT.size() < bbdNumberBlocks) {
 		//TODO maybe add check on myDIFAT == bbdNumberBlocks
-		ZLLogger::Instance().println("OleStorage", "Wrong number of FAT blocks value");
+		ZLLogger::Instance().println("DocPlugin", "Wrong number of FAT blocks value");
 		return false;
 	}
 
 	for (unsigned int i = 0; i < bbdNumberBlocks; ++i) {
 		int bbdSector = myDIFAT.at(i);
 		if (bbdSector >= (int)(myStreamSize / mySectorSize) || bbdSector < 0) {
-			ZLLogger::Instance().println("OleStorage", "Bad BBD entry!");
+			ZLLogger::Instance().println("DocPlugin", "Bad BBD entry!");
 			return false;
 		}
 		myInputStream->seek(BBD_BLOCK_SIZE + bbdSector * mySectorSize, true);
 		if (myInputStream->read(buffer, mySectorSize) != mySectorSize) {
-			ZLLogger::Instance().println("OleStorage", "Error during reading BBD!");
+			ZLLogger::Instance().println("DocPlugin", "Error during reading BBD!");
 			return false;
 		}
 		for (unsigned int j = 0; j < mySectorSize; j += 4) {
@@ -139,7 +139,7 @@ bool OleStorage::readSBD(char *oleBuf) {
 	int sbdCount = OleUtil::get4Bytes(oleBuf, 0x40); //count of small sectors
 
 	if (sbdCur <= 0) {
-		ZLLogger::Instance().println("OleStorage", "There's no SBD, don't read it");
+		ZLLogger::Instance().println("DocPlugin", "There's no SBD, don't read it");
 		return true;
 	}
 
@@ -147,7 +147,7 @@ bool OleStorage::readSBD(char *oleBuf) {
 	for (int i = 0; i < sbdCount; ++i) {
 		if (i != 0) {
 			if (sbdCur < 0 || (unsigned int)sbdCur >= myBBD.size()) {
-				ZLLogger::Instance().println("OleStorage", "error during parsing SBD");
+				ZLLogger::Instance().println("DocPlugin", "error during parsing SBD");
 				return false;
 			}
 			sbdCur = myBBD.at(sbdCur);
@@ -157,7 +157,7 @@ bool OleStorage::readSBD(char *oleBuf) {
 		}
 		myInputStream->seek(BBD_BLOCK_SIZE + sbdCur * mySectorSize, true);
 		if (myInputStream->read(buffer, mySectorSize) != mySectorSize) {
-			ZLLogger::Instance().println("OleStorage", "reading error during parsing SBD");
+			ZLLogger::Instance().println("DocPlugin", "reading error during parsing SBD");
 			return false;
 		}
 		for (unsigned int j = 0; j < mySectorSize; j += 4) {
@@ -171,7 +171,7 @@ bool OleStorage::readSBD(char *oleBuf) {
 bool OleStorage::readProperties(char *oleBuf) {
 	int propCur = OleUtil::get4Bytes(oleBuf, 0x30); //offset for address of sector with first property
 	if (propCur < 0) {
-		ZLLogger::Instance().println("OleStorage", "Wrong first directory sector location");
+		ZLLogger::Instance().println("DocPlugin", "Wrong first directory sector location");
 		return false;
 	}
 
@@ -179,13 +179,13 @@ bool OleStorage::readProperties(char *oleBuf) {
 	do {
 		myInputStream->seek(BBD_BLOCK_SIZE + propCur * mySectorSize, true);
 		if (myInputStream->read(buffer, mySectorSize) != mySectorSize) {
-			ZLLogger::Instance().println("OleStorage", "Error during reading properties");
+			ZLLogger::Instance().println("DocPlugin", "Error during reading properties");
 			return false;
 		}
 		for (unsigned int j = 0; j < mySectorSize; j += 128) {
 			myProperties.push_back(std::string(buffer + j, 128));
 		}
-		if (propCur < 0 || (size_t)propCur >= myBBD.size()) {
+		if (propCur < 0 || (std::size_t)propCur >= myBBD.size()) {
 			break;
 		}
 		propCur = myBBD.at(propCur);
@@ -219,7 +219,7 @@ bool OleStorage::readOleEntry(int propNumber, OleEntry &e) {
 
 	char oleType = property.at(0x42); //offset for Ole Type
 	if (oleType != 1 && oleType != 2 && oleType != 3 && oleType != 5) {
-		ZLLogger::Instance().println("OleStorage", "entry -- not right ole type");
+		ZLLogger::Instance().println("DocPlugin", "entry -- not right ole type");
 		return false;
 	}
 
@@ -243,14 +243,18 @@ bool OleStorage::readOleEntry(int propNumber, OleEntry &e) {
 	e.isBigBlock = e.length >= 0x1000 || e.name == ROOT_ENTRY;
 
 	// Read sector chain
+	if (property.size() < 0x74 + 4) {
+		ZLLogger::Instance().println("DocPlugin", "problems with reading ole entry");
+		return false;
+	}
 	int chainCur = OleUtil::get4Bytes(property.c_str(), 0x74); //offset for start block of entry
 	if (chainCur >= 0 && (chainCur <= (int)(myStreamSize / (e.isBigBlock ? mySectorSize : myShortSectorSize)))) {
 		//filling blocks with chains
 		do {
 			e.blocks.push_back((unsigned int)chainCur);
-			if (e.isBigBlock && (size_t)chainCur < myBBD.size()) {
+			if (e.isBigBlock && (std::size_t)chainCur < myBBD.size()) {
 				chainCur = myBBD.at(chainCur);
-			} else if (!mySBD.empty() && (size_t)chainCur < mySBD.size()) {
+			} else if (!mySBD.empty() && (std::size_t)chainCur < mySBD.size()) {
 				chainCur = mySBD.at(chainCur);
 			} else {
 				chainCur = -1;
@@ -263,26 +267,38 @@ bool OleStorage::readOleEntry(int propNumber, OleEntry &e) {
 	return true;
 }
 
-unsigned int OleStorage::getFileOffsetOfBlock(const OleEntry &e, unsigned int blockNumber) const {
-	unsigned int res;
+bool OleStorage::countFileOffsetOfBlock(const OleEntry &e, unsigned int blockNumber, unsigned int &result) const {
+	//TODO maybe better syntax can be used?
+	if (e.blocks.size() <= (std::size_t)blockNumber) {
+		ZLLogger::Instance().println("DocPlugin", "countFileOffsetOfBlock can't be done, blockNumber is invalid");
+		return false;
+	}
 	if (e.isBigBlock) {
-		res = BBD_BLOCK_SIZE + e.blocks.at(blockNumber) * mySectorSize;
+		result = BBD_BLOCK_SIZE + e.blocks.at(blockNumber) * mySectorSize;
 	} else {
 		unsigned int sbdPerSector = mySectorSize / myShortSectorSize;
 		unsigned int sbdSectorNumber = e.blocks.at(blockNumber) / sbdPerSector;
 		unsigned int sbdSectorMod = e.blocks.at(blockNumber) % sbdPerSector;
-		res = BBD_BLOCK_SIZE + myEntries.at(myRootEntryIndex).blocks.at(sbdSectorNumber) * mySectorSize + sbdSectorMod * myShortSectorSize;
+		if (myEntries.at(myRootEntryIndex).blocks.size() <= (std::size_t)sbdSectorNumber) {
+			ZLLogger::Instance().println("DocPlugin", "countFileOffsetOfBlock can't be done, invalid sbd data");
+			return false;
+		}
+		result = BBD_BLOCK_SIZE + myEntries.at(myRootEntryIndex).blocks.at(sbdSectorNumber) * mySectorSize + sbdSectorMod * myShortSectorSize;
 	}
-	return res;
+	return true;
 }
 
 bool OleStorage::getEntryByName(std::string name, OleEntry &returnEntry) const {
-	for (size_t i = 0; i < myEntries.size(); ++i) {
+	//TODO fix the workaround for duplicates streams: now it takes a stream with max length
+	unsigned int maxLength = 0;
+	for (std::size_t i = 0; i < myEntries.size(); ++i) {
 		const OleEntry &entry = myEntries.at(i);
-		if (entry.name == name) {
+		if (entry.name == name && entry.length >= maxLength) {
 			returnEntry = entry;
-			return true;
+			maxLength = entry.length;
 		}
 	}
-	return false;
+	return maxLength > 0;
 }
+
+

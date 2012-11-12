@@ -401,7 +401,7 @@ HtmlBookReader::HtmlBookReader(const std::string &baseDirectoryPath, BookModel &
 HtmlBookReader::~HtmlBookReader() {
 }
 
-void HtmlBookReader::addConvertedDataToBuffer(const char *text, size_t len, bool convert) {
+void HtmlBookReader::addConvertedDataToBuffer(const char *text, std::size_t len, bool convert) {
 	if (len > 0) {
 		if (myDontBreakParagraph) {
 			while ((len > 0) && isspace(*text)) {
@@ -445,7 +445,7 @@ bool HtmlBookReader::tagHandler(const HtmlTag &tag) {
 	return true;
 }
 
-void HtmlBookReader::preformattedCharacterDataHandler(const char *text, size_t len, bool convert) {
+void HtmlBookReader::preformattedCharacterDataHandler(const char *text, std::size_t len, bool convert) {
 	const char *start = text;
 	const char *end = text + len;
 
@@ -517,7 +517,7 @@ void HtmlBookReader::preformattedCharacterDataHandler(const char *text, size_t l
 	}
 }
 
-bool HtmlBookReader::characterDataHandler(const char *text, size_t len, bool convert) {
+bool HtmlBookReader::characterDataHandler(const char *text, std::size_t len, bool convert) {
 	if (!myStyleSheetParser.isNull()) {
 		myStyleSheetParser->parse(text, len);
 		return true;

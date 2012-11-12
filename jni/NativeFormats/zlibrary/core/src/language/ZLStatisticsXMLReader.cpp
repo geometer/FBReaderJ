@@ -33,7 +33,7 @@ const std::string ZLStatisticsXMLReader::STATISTICS_TAG = "statistics";
 
 void ZLStatisticsXMLReader::startElementHandler(const char *tag, const char **attributes) {
 	if (STATISTICS_TAG == tag) {
-		size_t volume = atoi(attributeValue(attributes, "volume"));
+		std::size_t volume = atoi(attributeValue(attributes, "volume"));
 		unsigned long long squaresVolume = atoll(attributeValue(attributes, "squaresVolume"));
 		//std::cerr << "XMLReader: frequencies sum & ^2: " << volume << ":" << squaresVolume << "\n";
 		myStatisticsPtr = new ZLArrayBasedStatistics( atoi(attributeValue(attributes, "charSequenceSize")), atoi(attributeValue(attributes, "size")), volume, squaresVolume);

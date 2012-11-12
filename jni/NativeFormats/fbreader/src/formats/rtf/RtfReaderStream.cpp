@@ -27,13 +27,13 @@
 class RtfTextOnlyReader : public RtfReader {
 
 public:
-	RtfTextOnlyReader(char *buffer, size_t maxSize);
+	RtfTextOnlyReader(char *buffer, std::size_t maxSize);
 	~RtfTextOnlyReader();
-	size_t readSize() const;
+	std::size_t readSize() const;
 
 protected:
-	void addCharData(const char *data, size_t len, bool convert);
-	void insertImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t size);
+	void addCharData(const char *data, std::size_t len, bool convert);
+	void insertImage(const std::string &mimeType, const std::string &fileName, std::size_t startOffset, std::size_t size);
 	void setEncoding(int code);
 	void switchDestination(DestinationType destination, bool on);
 	void setAlignment();
@@ -51,25 +51,25 @@ private:
 
 private:
 	char* myBuffer;
-	const size_t myMaxSize;
-	size_t myFilledSize;
+	const std::size_t myMaxSize;
+	std::size_t myFilledSize;
 };
 
-RtfTextOnlyReader::RtfTextOnlyReader(char *buffer, size_t maxSize) : RtfReader(std::string()), myBuffer(buffer), myMaxSize(maxSize), myFilledSize(0) {
+RtfTextOnlyReader::RtfTextOnlyReader(char *buffer, std::size_t maxSize) : RtfReader(std::string()), myBuffer(buffer), myMaxSize(maxSize), myFilledSize(0) {
 	myCurrentState.ReadText = true;
 }
 
 RtfTextOnlyReader::~RtfTextOnlyReader() {
 }
 
-void RtfTextOnlyReader::addCharData(const char *data, size_t len, bool) {
+void RtfTextOnlyReader::addCharData(const char *data, std::size_t len, bool) {
 	if (myBuffer == 0) {
 		return;
 	}
 	if (myCurrentState.ReadText) {
 		if (myFilledSize < myMaxSize) {
-			len = std::min((size_t)len, myMaxSize - myFilledSize);
-			memcpy(myBuffer + myFilledSize, data, len);
+			len = std::min((std::size_t)len, myMaxSize - myFilledSize);
+			std::memcpy(myBuffer + myFilledSize, data, len);
 			myFilledSize += len;
 		}
 		if (myFilledSize < myMaxSize) {
@@ -80,11 +80,11 @@ void RtfTextOnlyReader::addCharData(const char *data, size_t len, bool) {
 	}
 }
 
-size_t RtfTextOnlyReader::readSize() const {
+std::size_t RtfTextOnlyReader::readSize() const {
 	return myFilledSize;
 }
 
-void RtfTextOnlyReader::insertImage(const std::string&, const std::string&, size_t, size_t) {
+void RtfTextOnlyReader::insertImage(const std::string&, const std::string&, std::size_t, std::size_t) {
 }
 
 void RtfTextOnlyReader::setEncoding(int) {
@@ -124,7 +124,7 @@ void RtfTextOnlyReader::newParagraph() {
 void RtfTextOnlyReader::interrupt() {
 }
 
-RtfReaderStream::RtfReaderStream(const ZLFile& file, size_t maxSize) : myFile(file), myBuffer(0), mySize(maxSize) {
+RtfReaderStream::RtfReaderStream(const ZLFile& file, std::size_t maxSize) : myFile(file), myBuffer(0), mySize(maxSize) {
 }
 
 RtfReaderStream::~RtfReaderStream() {
@@ -142,10 +142,10 @@ bool RtfReaderStream::open() {
 	return true;
 }
 
-size_t RtfReaderStream::read(char *buffer, size_t maxSize) {
+std::size_t RtfReaderStream::read(char *buffer, std::size_t maxSize) {
 	maxSize = std::min(maxSize, mySize - myOffset);
 	if ((buffer != 0) && (myBuffer !=0)) {
-		memcpy(buffer, myBuffer + myOffset, maxSize);
+		std::memcpy(buffer, myBuffer + myOffset, maxSize);
 	}
 	myOffset += maxSize;
 	return maxSize;
@@ -162,13 +162,13 @@ void RtfReaderStream::seek(int offset, bool absoluteOffset) {
 	if (!absoluteOffset) {
 		offset += myOffset;
 	}
-	myOffset = std::min(mySize, (size_t)std::max(0, offset));
+	myOffset = std::min(mySize, (std::size_t)std::max(0, offset));
 }
 
-size_t RtfReaderStream::offset() const {
+std::size_t RtfReaderStream::offset() const {
 	return myOffset;
 }
 
-size_t RtfReaderStream::sizeOfOpened() {
+std::size_t RtfReaderStream::sizeOfOpened() {
 	return mySize;
 }

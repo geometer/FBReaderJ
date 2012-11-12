@@ -70,7 +70,7 @@ void JavaFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlin
 		std::string path = AndroidUtil::Method_ZLFile_getPath->callForCppString(file);
 		env->DeleteLocalRef(file);
 
-		size_t index = path.rfind('/');
+		std::size_t index = path.rfind('/');
 		if (index != std::string::npos) {
 			path = path.substr(index + 1);
 		}

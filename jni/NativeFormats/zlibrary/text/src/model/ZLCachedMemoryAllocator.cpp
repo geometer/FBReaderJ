@@ -30,7 +30,7 @@
 
 #include "ZLCachedMemoryAllocator.h"
 
-ZLCachedMemoryAllocator::ZLCachedMemoryAllocator(const size_t rowSize,
+ZLCachedMemoryAllocator::ZLCachedMemoryAllocator(const std::size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension) :
 	myRowSize(rowSize),
 	myCurrentRowSize(0),
@@ -60,18 +60,18 @@ void ZLCachedMemoryAllocator::flush() {
 	myHasChanges = false;
 }
 
-std::string ZLCachedMemoryAllocator::makeFileName(size_t index) {
+std::string ZLCachedMemoryAllocator::makeFileName(std::size_t index) {
 	std::string name(myDirectoryName);
 	name.append("/");
 	ZLStringUtil::appendNumber(name, index);
 	return name.append(".").append(myFileExtension);
 }
 
-void ZLCachedMemoryAllocator::writeCache(size_t blockLength) {
+void ZLCachedMemoryAllocator::writeCache(std::size_t blockLength) {
 	if (myFailed || myPool.size() == 0) {
 		return;
 	}
-	const size_t index = myPool.size() - 1;
+	const std::size_t index = myPool.size() - 1;
 	const std::string fileName = makeFileName(index);
 	ZLFile file(fileName);
 	shared_ptr<ZLOutputStream> stream = file.outputStream();
@@ -83,7 +83,7 @@ void ZLCachedMemoryAllocator::writeCache(size_t blockLength) {
 	stream->close();
 }
 
-char *ZLCachedMemoryAllocator::allocate(size_t size) {
+char *ZLCachedMemoryAllocator::allocate(std::size_t size) {
 	myHasChanges = true;
 	if (myPool.empty()) {
 		myCurrentRowSize = std::max(myRowSize, size + 2 + sizeof(char*));
@@ -95,7 +95,7 @@ char *ZLCachedMemoryAllocator::allocate(size_t size) {
 		char *ptr = myPool.back() + myOffset;
 		*ptr++ = 0;
 		*ptr++ = 0;
-		memcpy(ptr, &row, sizeof(char*));
+		std::memcpy(ptr, &row, sizeof(char*));
 		writeCache(myOffset + 2);
 
 		myPool.push_back(row);
@@ -106,20 +106,20 @@ char *ZLCachedMemoryAllocator::allocate(size_t size) {
 	return ptr;
 }
 
-char *ZLCachedMemoryAllocator::reallocateLast(char *ptr, size_t newSize) {
+char *ZLCachedMemoryAllocator::reallocateLast(char *ptr, std::size_t newSize) {
 	myHasChanges = true;
-	const size_t oldOffset = ptr - myPool.back();
+	const std::size_t oldOffset = ptr - myPool.back();
 	if (oldOffset + newSize + 2 + sizeof(char*) <= myCurrentRowSize) {
 		myOffset = oldOffset + newSize;
 		return ptr;
 	} else {
 		myCurrentRowSize = std::max(myRowSize, newSize + 2 + sizeof(char*));
 		char *row = new char[myCurrentRowSize];
-		memcpy(row, ptr, myOffset - oldOffset);
+		std::memcpy(row, ptr, myOffset - oldOffset);
 
 		*ptr++ = 0;
 		*ptr++ = 0;
-		memcpy(ptr, &row, sizeof(char*));
+		std::memcpy(ptr, &row, sizeof(char*));
 		writeCache(oldOffset + 2);
 
 		myPool.push_back(row);

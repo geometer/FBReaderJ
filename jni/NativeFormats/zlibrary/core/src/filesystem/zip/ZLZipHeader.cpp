@@ -29,7 +29,7 @@ const int ZLZipHeader::SignatureEndOfCentralDirectory = 0x06054B50;
 const int ZLZipHeader::SignatureData = 0x08074B50;
 
 bool ZLZipHeader::readFrom(ZLInputStream &stream) {
-	size_t startOffset = stream.offset();
+	std::size_t startOffset = stream.offset();
 	Signature = readLong(stream);
 	switch (Signature) {
 		default:
@@ -95,8 +95,8 @@ void ZLZipHeader::skipEntry(ZLInputStream &stream, ZLZipHeader &header) {
 		case SignatureLocalFile:
 			if ((header.Flags & 0x08) == 0x08 && header.CompressionMethod != 0) {
 				stream.seek(header.ExtraLength, false);
-				ZLZDecompressor decompressor((size_t)-1);
-				size_t size;
+				ZLZDecompressor decompressor((std::size_t)-1);
+				std::size_t size;
 				do {
 					size = decompressor.decompress(stream, 0, 2048);
 					header.UncompressedSize += size;

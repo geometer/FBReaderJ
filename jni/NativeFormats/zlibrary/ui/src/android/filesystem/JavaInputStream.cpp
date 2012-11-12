@@ -80,7 +80,7 @@ void JavaInputStream::rewind(JNIEnv *env) {
 }
 
 
-void JavaInputStream::ensureBufferCapacity(JNIEnv *env, size_t maxSize) {
+void JavaInputStream::ensureBufferCapacity(JNIEnv *env, std::size_t maxSize) {
 	if (myJavaBuffer != 0 && myJavaBufferSize >= maxSize) {
 		return;
 	}
@@ -91,7 +91,7 @@ void JavaInputStream::ensureBufferCapacity(JNIEnv *env, size_t maxSize) {
 	myJavaBufferSize = maxSize;
 }
 
-size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, size_t maxSize) {
+std::size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, std::size_t maxSize) {
 	ensureBufferCapacity(env, maxSize);
 
 	jint result =
@@ -101,11 +101,11 @@ size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, size_t maxSize) 
 		return 0;
 	}
 	if (result > 0) {
-		size_t bytesRead = (size_t)result;
+		std::size_t bytesRead = (std::size_t)result;
 		myOffset += bytesRead;
 
 		jbyte *data = env->GetByteArrayElements(myJavaBuffer, 0);
-		memcpy(buffer, data, bytesRead);
+		std::memcpy(buffer, data, bytesRead);
 		env->ReleaseByteArrayElements(myJavaBuffer, data, JNI_ABORT);
 
 		return bytesRead;
@@ -113,9 +113,9 @@ size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, size_t maxSize) 
 	return 0;
 }
 
-size_t JavaInputStream::skip(JNIEnv *env, size_t offset) {
-	size_t result =
-		(size_t)AndroidUtil::Method_java_io_InputStream_skip->call(myJavaInputStream, (jlong)offset);
+std::size_t JavaInputStream::skip(JNIEnv *env, std::size_t offset) {
+	std::size_t result =
+		(std::size_t)AndroidUtil::Method_java_io_InputStream_skip->call(myJavaInputStream, (jlong)offset);
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
 		return 0;
@@ -135,7 +135,7 @@ bool JavaInputStream::open() {
 	return myJavaInputStream != 0;
 }
 
-size_t JavaInputStream::read(char *buffer, size_t maxSize) {
+std::size_t JavaInputStream::read(char *buffer, std::size_t maxSize) {
 	JNIEnv *env = AndroidUtil::getEnv();
 	if (myNeedRepositionToStart) {
 		rewind(env);
@@ -151,11 +151,11 @@ size_t JavaInputStream::read(char *buffer, size_t maxSize) {
 void JavaInputStream::close() {
 }
 
-size_t JavaInputStream::sizeOfOpened() {
+std::size_t JavaInputStream::sizeOfOpened() {
 	if (myJavaInputStream == 0 || myJavaFile == 0) {
 		return 0;
 	}
-	return (size_t)AndroidUtil::Method_ZLFile_size->call(myJavaFile);
+	return (std::size_t)AndroidUtil::Method_ZLFile_size->call(myJavaFile);
 }
 
 void JavaInputStream::seek(int offset, bool absoluteOffset) {
@@ -172,6 +172,6 @@ void JavaInputStream::seek(int offset, bool absoluteOffset) {
 	}
 }
 
-size_t JavaInputStream::offset() const {
+std::size_t JavaInputStream::offset() const {
 	return myNeedRepositionToStart ? 0 : myOffset;
 }

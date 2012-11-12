@@ -43,7 +43,7 @@ public:
 
 	struct HtmlTag {
 		std::string Name;
-		size_t Offset;
+		std::size_t Offset;
 		bool Start;
 		std::vector<HtmlAttribute> Attributes;
 
@@ -74,7 +74,7 @@ protected:
 	// returns false iff processing must be stopped
 	virtual bool tagHandler(const HtmlTag &tag) = 0;
 	// returns false iff processing must be stopped
-	virtual bool characterDataHandler(const char *text, size_t len, bool convert) = 0;
+	virtual bool characterDataHandler(const char *text, std::size_t len, bool convert) = 0;
 
 private:
 	void appendString(std::string &to, std::string &from);

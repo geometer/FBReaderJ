@@ -50,7 +50,7 @@ bool DocBookReader::readBook() {
 	myModelReader.pushKind(REGULAR);
 	myModelReader.beginParagraph();
 
-	if (!readDocument(stream)) {
+	if (!readDocument(stream, true)) {
 		return false;
 	}
 
@@ -89,7 +89,7 @@ void DocBookReader::handleHardLinebreak() {
 	if (!myCurrentStyleEntry.isNull()) {
 		myModelReader.addStyleEntry(*myCurrentStyleEntry);
 	}
-	for (size_t i = 0; i < myKindStack.size(); ++i) {
+	for (std::size_t i = 0; i < myKindStack.size(); ++i) {
 		myModelReader.addControl(myKindStack.at(i), true);
 	}
 }
@@ -156,7 +156,7 @@ void DocBookReader::handleSeparatorField() {
 	std::vector<std::string> result = ZLStringUtil::split(utf8String, SPACE_DELIMETER);
 	//TODO split function can returns empty string, maybe fix it
 	std::vector<std::string> splitted;
-	for (size_t i = 0; i < result.size(); ++i) {
+	for (std::size_t i = 0; i < result.size(); ++i) {
 		if (!result.at(i).empty()) {
 			splitted.push_back(result.at(i));
 		}
@@ -239,7 +239,7 @@ void DocBookReader::handleFontStyle(unsigned int fontStyle) {
 	if (fontStyle & OleMainStream::CharInfo::FONT_ITALIC) {
 		myKindStack.push_back(ITALIC);
 	}
-	for (size_t i = 0; i < myKindStack.size(); ++i) {
+	for (std::size_t i = 0; i < myKindStack.size(); ++i) {
 		myModelReader.addControl(myKindStack.at(i), true);
 	}
 }
@@ -289,7 +289,7 @@ void DocBookReader::handleParagraphStyle(const OleMainStream::Style &styleInfo) 
 	// if it has the same StyleIdCurrent
 	if (myCurrentStyleInfo.StyleIdCurrent != OleMainStream::Style::STYLE_INVALID &&
 		  myCurrentStyleInfo.StyleIdCurrent == styleInfo.StyleIdCurrent) {
-		for (size_t i = 0; i < myKindStack.size(); ++i) {
+		for (std::size_t i = 0; i < myKindStack.size(); ++i) {
 			myModelReader.addControl(myKindStack.at(i), true);
 		}
 	} else {
@@ -312,7 +312,7 @@ std::string DocBookReader::parseLink(ZLUnicodeUtil::Ucs2String s, bool urlencode
 	// [0x13] HYPERLINK "http://yandex.ru/yandsearch?text='some text' и "some text2"" [0x14] link text [0x15]
 
 	static const ZLUnicodeUtil::Ucs2Char QUOTE = 0x22;
-	size_t i, first = 0;
+	std::size_t i, first = 0;
 	//TODO maybe functions findFirstOf and findLastOf should be in ZLUnicodeUtil class
 	for (i = 0; i < s.size(); ++i) {
 		if (s.at(i) == QUOTE) {
@@ -323,7 +323,7 @@ std::string DocBookReader::parseLink(ZLUnicodeUtil::Ucs2String s, bool urlencode
 	if (i == s.size()) {
 		return std::string();
 	}
-	size_t j, last = 0;
+	std::size_t j, last = 0;
 	for (j = s.size(); j > 0 ; --j) {
 		if (s.at(j - 1) == QUOTE) {
 			last = j - 1;
@@ -335,7 +335,7 @@ std::string DocBookReader::parseLink(ZLUnicodeUtil::Ucs2String s, bool urlencode
 	}
 
 	ZLUnicodeUtil::Ucs2String link;
-	for (size_t k = first + 1; k < last; ++k) {
+	for (std::size_t k = first + 1; k < last; ++k) {
 		ZLUnicodeUtil::Ucs2Char ch = s.at(k);
 		if (urlencode && ZLUnicodeUtil::isSpace(ch)) {
 			//TODO maybe implement function for encoding all signs in url, not only spaces and quotes
@@ -356,11 +356,11 @@ std::string DocBookReader::parseLink(ZLUnicodeUtil::Ucs2String s, bool urlencode
 	return utf8String;
 }
 
-void DocBookReader::footnoteHandler() {
+void DocBookReader::footnotesStartHandler() {
 	handlePageBreak();
 }
 
-void DocBookReader::dataHandler(const char *buffer, size_t len) {
+void DocBookReader::ansiDataHandler(const char *buffer, std::size_t len) {
 	if (myConverter.isNull()) {
 		// lazy converter initialization
 		const ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
@@ -374,6 +374,6 @@ void DocBookReader::dataHandler(const char *buffer, size_t len) {
 	ZLUnicodeUtil::utf8ToUcs2(myBuffer, utf8String);
 }
 
-void DocBookReader::ansiSymbolHandler(ZLUnicodeUtil::Ucs2Char symbol) {
+void DocBookReader::ucs2SymbolHandler(ZLUnicodeUtil::Ucs2Char symbol) {
 	myBuffer.push_back(symbol);
 }

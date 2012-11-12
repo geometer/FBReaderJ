@@ -56,12 +56,12 @@ OleMainStream::FloatImageInfo::FloatImageInfo() : ShapeId(0) {
 OleMainStream::OleMainStream(shared_ptr<OleStorage> storage, OleEntry oleEntry, shared_ptr<ZLInputStream> stream) : OleStream(storage, oleEntry, stream) {
 }
 
-bool OleMainStream::open() {
+bool OleMainStream::open(bool doReadFormattingData) {
 	if (OleStream::open() == false) {
 		return false;
 	}
 
-	static const size_t HEADER_SIZE = 768; //size of data in header of main stream
+	static const std::size_t HEADER_SIZE = 768; //size of data in header of main stream
 	char headerBuffer[HEADER_SIZE];
 	seek(0, true);
 
@@ -83,7 +83,8 @@ bool OleMainStream::open() {
 
 	if (!result) {
 		// cant't find table stream (that can be only in case if file format is below Word 7/8), so building simple table stream
-    // TODO: CHECK may be not all old documents have ANSI
+		// TODO: CHECK may be not all old documents have ANSI
+		ZLLogger::Instance().println("DocPlugin", "cant't find table stream, building own simple piece table, that includes all charachters");
 		Piece piece = {myStartOfText, myEndOfText - myStartOfText, true, Piece::PIECE_TEXT, 0};
 		myPieces.push_back(piece);
 		return true;
@@ -92,8 +93,12 @@ bool OleMainStream::open() {
 	result = readPieceTable(headerBuffer, tableEntry);
 
 	if (!result) {
-		ZLLogger::Instance().println("OleMainStream", "error during reading piece table");
+		ZLLogger::Instance().println("DocPlugin", "error during reading piece table");
 		return false;
+	}
+
+	if (!doReadFormattingData) {
+		return true;
 	}
 
 	OleEntry dataEntry;
@@ -155,27 +160,27 @@ bool OleMainStream::readFIB(const char *headerBuffer) {
 	int flags = OleUtil::getU2Bytes(headerBuffer, 0xA); //offset for flags
 
 	if (flags & 0x0004) { //flag for complex format
-		ZLLogger::Instance().println("OleMainStream", "This was fast-saved. Some information is lost");
+		ZLLogger::Instance().println("DocPlugin", "This was fast-saved. Some information is lost");
 		//lostInfo = (flags & 0xF0) >> 4);
 	}
 
 	if (flags & 0x1000) { //flag for using extending charset
-		ZLLogger::Instance().println("OleMainStream", "File uses extended character set (get_word8_char)");
+		ZLLogger::Instance().println("DocPlugin", "File uses extended character set (get_word8_char)");
 	} else {
-		ZLLogger::Instance().println("OleMainStream", "File uses get_8bit_char character set");
+		ZLLogger::Instance().println("DocPlugin", "File uses get_8bit_char character set");
 	}
 
 	if (flags & 0x100) { //flag for encrypted files
-		ZLLogger::Instance().println("OleMainStream", "File is encrypted");
+		ZLLogger::Instance().println("DocPlugin", "File is encrypted");
 		// Encryption key = %08lx ; NumUtil::get4Bytes(header, 14)
 		return false;
 	}
 
 	unsigned int charset = OleUtil::getU2Bytes(headerBuffer, 0x14); //offset for charset number
 	if (charset && charset != 0x100) { //0x100 = default charset
-		ZLLogger::Instance().println("OleMainStream", "Using not default character set %d");
+		ZLLogger::Instance().println("DocPlugin", "Using not default character set %d");
 	} else {
-		ZLLogger::Instance().println("OleMainStream", "Using default character set");
+		ZLLogger::Instance().println("DocPlugin", "Using default character set");
 	}
 
 	myStartOfText = OleUtil::get4Bytes(headerBuffer, 0x18); //offset for start of text value
@@ -189,7 +194,7 @@ void OleMainStream::splitPieces(const Pieces &s, Pieces &dest1, Pieces &dest2, P
 	dest2.clear();
 
 	int sumLength = 0;
-	size_t i = 0;
+	std::size_t i = 0;
 	for (i = 0; i < source.size(); ++i) {
 		Piece piece = source.at(i);
 		if (piece.Length + sumLength >= boundary) {
@@ -229,17 +234,27 @@ std::string OleMainStream::getPiecesTableBuffer(const char *headerBuffer, OleStr
 
 	//1 step : loading CLX table from table stream
 	char *clxBuffer = new char[clxLength];
-	tableStream.seek(clxOffset, true);
-	tableStream.read(clxBuffer, clxLength);
+	if (!tableStream.seek(clxOffset, true)) {
+		ZLLogger::Instance().println("DocPlugin", "getPiecesTableBuffer -- error for seeking to CLX structure");
+		return std::string();
+	}
+	if (tableStream.read(clxBuffer, clxLength) != clxLength) {
+		ZLLogger::Instance().println("DocPlugin", "getPiecesTableBuffer -- CLX structure length is invalid");
+		return std::string();
+	}
 	std::string clx(clxBuffer, clxLength);
 	delete[] clxBuffer;
 
 	//2 step: searching for pieces table buffer at CLX
 	//(determines it by 0x02 as start symbol)
-	size_t from = 0;
-	size_t i;
+	std::size_t from = 0;
+	std::size_t i;
 	std::string pieceTableBuffer;
 	while ((i = clx.find_first_of(0x02, from)) != std::string::npos) {
+		if (clx.size() < i + 1 + 4) {
+			ZLLogger::Instance().println("DocPlugin", "getPiecesTableBuffer -- CLX structure has invalid format");
+			return std::string();
+		}
 		unsigned int pieceTableLength = OleUtil::getU4Bytes(clx.c_str(), i + 1);
 		pieceTableBuffer = std::string(clx, i + 1 + 4);
 		if (pieceTableBuffer.length() != pieceTableLength) {
@@ -255,6 +270,10 @@ std::string OleMainStream::getPiecesTableBuffer(const char *headerBuffer, OleStr
 bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tableEntry) {
 	OleStream tableStream(myStorage, tableEntry, myBaseStream);
 	std::string piecesTableBuffer = getPiecesTableBuffer(headerBuffer, tableStream);
+
+	if (piecesTableBuffer.empty()) {
+		return false;
+	}
 
 	//getting count of Character Positions for different types of subdocuments in Main Stream
 	int ccpText = OleUtil::get4Bytes(headerBuffer, 0x004C); //text
@@ -275,6 +294,10 @@ bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tab
 	std::vector<int> cp; //array of character positions for pieces
 	unsigned int j = 0;
 	for (j = 0; ; j += 4) {
+		if (piecesTableBuffer.size() < j + 4) {
+			ZLLogger::Instance().println("DocPlugin", "invalid piece table, cp ends not with a lastcp");
+			break;
+		}
 		int curCP = OleUtil::get4Bytes(piecesTableBuffer.c_str(), j);
 		cp.push_back(curCP);
 		if (curCP == lastCP) {
@@ -282,15 +305,31 @@ bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tab
 		}
 	}
 
+	if (cp.size() < 2) {
+		ZLLogger::Instance().println("DocPlugin", "invalid piece table, < 2 pieces");
+		return false;
+	}
+
 	std::vector<std::string> descriptors;
-	for (size_t k = 0; k < cp.size() - 1; ++k) {
+	for (std::size_t k = 0; k < cp.size() - 1; ++k) {
 		//j + 4, because it should be taken after CP in PiecesTable Buffer
 		//k * 8, because it should be taken 8 byte for each descriptor
-		descriptors.push_back(piecesTableBuffer.substr(j + 4 + k * 8, 8));
+		std::size_t substrFrom = j + 4 + k * 8;
+		if (piecesTableBuffer.size() < substrFrom + 8) {
+			ZLLogger::Instance().println("DocPlugin", "invalid piece table, problems with descriptors reading");
+			break;
+		}
+		descriptors.push_back(piecesTableBuffer.substr(substrFrom, 8));
 	}
 
 	//filling the Pieces vector
-	for (size_t i = 0; i < descriptors.size(); ++i) {
+	std::size_t minValidSize = std::min(cp.size() - 1, descriptors.size());
+	if (minValidSize == 0) {
+		ZLLogger::Instance().println("DocPlugin", "invalid piece table, there are no pieces");
+		return false;
+	}
+
+	for (std::size_t i = 0; i < minValidSize; ++i) {
 		//4byte integer with offset and ANSI flag
 		int fcValue = OleUtil::get4Bytes(descriptors.at(i).c_str(), 0x2); //offset for piece structure
 		Piece piece;
@@ -306,18 +345,18 @@ bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tab
 	splitPieces(piecesFootnote, piecesFootnote, piecesOther, Piece::PIECE_FOOTNOTE, Piece::PIECE_OTHER, ccpFtn);
 
 	myPieces.clear();
-	for (size_t i = 0; i < piecesText.size(); ++i) {
+	for (std::size_t i = 0; i < piecesText.size(); ++i) {
 		myPieces.push_back(piecesText.at(i));
 	}
-	for (size_t i = 0; i < piecesFootnote.size(); ++i) {
+	for (std::size_t i = 0; i < piecesFootnote.size(); ++i) {
 		myPieces.push_back(piecesFootnote.at(i));
 	}
-	for (size_t i = 0; i < piecesOther.size(); ++i) {
+	for (std::size_t i = 0; i < piecesOther.size(); ++i) {
 		myPieces.push_back(piecesOther.at(i));
 	}
 
 	//converting length and offset depending on isANSI
-	for (size_t i = 0; i < myPieces.size(); ++i) {
+	for (std::size_t i = 0; i < myPieces.size(); ++i) {
 		Piece &piece = myPieces.at(i);
 		if (!piece.IsANSI) {
 			piece.Length *= 2;
@@ -328,7 +367,7 @@ bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tab
 
 	//filling startCP field
 	unsigned int curStartCP = 0;
-	for (size_t i = 0; i < myPieces.size(); ++i) {
+	for (std::size_t i = 0; i < myPieces.size(); ++i) {
 		Piece &piece = myPieces.at(i);
 		piece.startCP = curStartCP;
 		if (piece.IsANSI) {
@@ -343,7 +382,7 @@ bool OleMainStream::readPieceTable(const char *headerBuffer, const OleEntry &tab
 bool OleMainStream::readBookmarks(const char *headerBuffer, const OleEntry &tableEntry) {
 	//SttbfBkmk structure is a table of bookmark name strings
 	unsigned int beginNamesInfo = OleUtil::getU4Bytes(headerBuffer, 0x142); // address of SttbfBkmk structure
-	size_t namesInfoLength = (size_t)OleUtil::getU4Bytes(headerBuffer, 0x146); // length of SttbfBkmk structure
+	std::size_t namesInfoLength = (std::size_t)OleUtil::getU4Bytes(headerBuffer, 0x146); // length of SttbfBkmk structure
 
 	if (namesInfoLength == 0) {
 		return true; //there's no bookmarks
@@ -360,7 +399,11 @@ bool OleMainStream::readBookmarks(const char *headerBuffer, const OleEntry &tabl
 	std::vector<std::string> names;
 	unsigned int offset = 0x6; //initial offset
 	for (unsigned int i = 0; i < recordsNumber; ++i) {
-		unsigned int length = OleUtil::getU2Bytes(buffer.c_str(), offset) * 2; //legnth of string in bytes
+		if (buffer.size() < offset + 2) {
+			ZLLogger::Instance().println("DocPlugin", "problmes with reading bookmarks names");
+			break;
+		}
+		unsigned int length = OleUtil::getU2Bytes(buffer.c_str(), offset) * 2; //length of string in bytes
 		ZLUnicodeUtil::Ucs2String name;
 		for (unsigned int j = 0; j < length; j+=2) {
 			char ch1 = buffer.at(offset + 2 + j);
@@ -376,7 +419,7 @@ bool OleMainStream::readBookmarks(const char *headerBuffer, const OleEntry &tabl
 
 	//plcfBkmkf structure is table recording beginning CPs of bookmarks
 	unsigned int beginCharPosInfo = OleUtil::getU4Bytes(headerBuffer, 0x14A); // address of plcfBkmkf structure
-	size_t charPosInfoLen = (size_t)OleUtil::getU4Bytes(headerBuffer, 0x14E); // length of plcfBkmkf structure
+	std::size_t charPosInfoLen = (std::size_t)OleUtil::getU4Bytes(headerBuffer, 0x14E); // length of plcfBkmkf structure
 
 	if (charPosInfoLen == 0) {
 		return true; //there's no bookmarks
@@ -387,13 +430,13 @@ bool OleMainStream::readBookmarks(const char *headerBuffer, const OleEntry &tabl
 	}
 
 	static const unsigned int BKF_SIZE = 4;
-	size_t size = calcCountOfPLC(charPosInfoLen, BKF_SIZE);
+	std::size_t size = calcCountOfPLC(charPosInfoLen, BKF_SIZE);
 	std::vector<unsigned int> charPage;
-	for (size_t index = 0, offset = 0; index < size; ++index, offset += 4) {
+	for (std::size_t index = 0, offset = 0; index < size; ++index, offset += 4) {
 		charPage.push_back(OleUtil::getU4Bytes(buffer.c_str(), offset));
 	}
 
-	for (size_t i = 0; i < names.size(); ++i) {
+	for (std::size_t i = 0; i < names.size(); ++i) {
 		if (i >= charPage.size()) {
 			break; //for the case if something in these structures goes wrong, to not to lose all bookmarks
 		}
@@ -409,28 +452,32 @@ bool OleMainStream::readBookmarks(const char *headerBuffer, const OleEntry &tabl
 bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tableEntry) {
 	//STSH structure is a stylesheet
 	unsigned int beginStshInfo = OleUtil::getU4Bytes(headerBuffer, 0xa2); // address of STSH structure
-	size_t stshInfoLength = (size_t)OleUtil::getU4Bytes(headerBuffer, 0xa6); // length of STSH structure
+	std::size_t stshInfoLength = (std::size_t)OleUtil::getU4Bytes(headerBuffer, 0xa6); // length of STSH structure
 
 	OleStream tableStream(myStorage, tableEntry, myBaseStream);
 	char *buffer = new char[stshInfoLength];
-	tableStream.seek(beginStshInfo, true);
+	if (!tableStream.seek(beginStshInfo, true)) {
+		ZLLogger::Instance().println("DocPlugin", "problems with reading STSH structure");
+		return false;
+	}
 	if (tableStream.read(buffer, stshInfoLength) != stshInfoLength) {
+		ZLLogger::Instance().println("DocPlugin", "problems with reading STSH structure, invalid length");
 		return false;
 	}
 
-	size_t stdCount = (size_t)OleUtil::getU2Bytes(buffer, 2);
-	size_t stdBaseInFile = (size_t)OleUtil::getU2Bytes(buffer, 4);
+	std::size_t stdCount = (std::size_t)OleUtil::getU2Bytes(buffer, 2);
+	std::size_t stdBaseInFile = (std::size_t)OleUtil::getU2Bytes(buffer, 4);
 	myStyleSheet.resize(stdCount);
 
 	std::vector<bool> isFilled;
 	isFilled.resize(stdCount, false);
 
-	size_t stdLen = 0;
+	std::size_t stdLen = 0;
 	bool styleSheetWasChanged = false;
 	do { //make it in while loop, because some base style can be after their successors
 		styleSheetWasChanged = false;
-		for (size_t index = 0, offset = 2 + (size_t)OleUtil::getU2Bytes(buffer, 0); index < stdCount; index++, offset += 2 + stdLen) {
-			stdLen = (size_t)OleUtil::getU2Bytes(buffer, offset);
+		for (std::size_t index = 0, offset = 2 + (std::size_t)OleUtil::getU2Bytes(buffer, 0); index < stdCount; index++, offset += 2 + stdLen) {
+			stdLen = (std::size_t)OleUtil::getU2Bytes(buffer, offset);
 			if (isFilled.at(index)) {
 				continue;
 			}
@@ -468,8 +515,8 @@ bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tab
 			isFilled[index] = true;
 			styleSheetWasChanged = true;
 
-			size_t pos = 2 + stdBaseInFile;
-			size_t nameLen = (size_t)OleUtil::getU2Bytes(buffer, offset + pos);
+			std::size_t pos = 2 + stdBaseInFile;
+			std::size_t nameLen = (std::size_t)OleUtil::getU2Bytes(buffer, offset + pos);
 			nameLen = nameLen * 2 + 2; //from Unicode characters to bytes + Unicode null charachter length
 			pos += 2 + nameLen;
 			if (pos % 2 != 0) {
@@ -478,7 +525,7 @@ bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tab
 			if (pos >= stdLen) {
 				continue;
 			}
-			size_t upxLen = (size_t)OleUtil::getU2Bytes(buffer, offset + pos);
+			std::size_t upxLen = (std::size_t)OleUtil::getU2Bytes(buffer, offset + pos);
 			if (pos + upxLen > stdLen) {
 				//UPX length too large
 				continue;
@@ -494,7 +541,7 @@ bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tab
 				if (pos % 2 != 0) {
 					++pos;
 				}
-				upxLen = (size_t)OleUtil::getU2Bytes(buffer, offset + pos);
+				upxLen = (std::size_t)OleUtil::getU2Bytes(buffer, offset + pos);
 			}
 			if (upxLen == 0 || pos + upxLen > stdLen) {
 				//too small/too large
@@ -516,7 +563,7 @@ bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tab
 bool OleMainStream::readCharInfoTable(const char *headerBuffer, const OleEntry &tableEntry) {
 	//PlcfbteChpx structure is table with formatting for particular run of text
 	unsigned int beginCharInfo = OleUtil::getU4Bytes(headerBuffer, 0xfa); // address of PlcfbteChpx structure
-	size_t charInfoLength = (size_t)OleUtil::getU4Bytes(headerBuffer, 0xfe); // length of PlcfbteChpx structure
+	std::size_t charInfoLength = (std::size_t)OleUtil::getU4Bytes(headerBuffer, 0xfe); // length of PlcfbteChpx structure
 	if (charInfoLength < 4) {
 		return false;
 	}
@@ -528,14 +575,14 @@ bool OleMainStream::readCharInfoTable(const char *headerBuffer, const OleEntry &
 	}
 
 	static const unsigned int CHPX_SIZE = 4;
-	size_t size = calcCountOfPLC(charInfoLength, CHPX_SIZE);
+	std::size_t size = calcCountOfPLC(charInfoLength, CHPX_SIZE);
 	std::vector<unsigned int> charBlocks;
-	for (size_t index = 0, offset = (size + 1) * 4; index < size; ++index, offset += CHPX_SIZE) {
+	for (std::size_t index = 0, offset = (size + 1) * 4; index < size; ++index, offset += CHPX_SIZE) {
 		charBlocks.push_back(OleUtil::getU4Bytes(buffer.c_str(), offset));
 	}
 
 	char *formatPageBuffer = new char[OleStorage::BBD_BLOCK_SIZE];
-	for (size_t index = 0; index < charBlocks.size(); ++index) {
+	for (std::size_t index = 0; index < charBlocks.size(); ++index) {
 		seek(charBlocks.at(index) * OleStorage::BBD_BLOCK_SIZE, true);
 		if (read(formatPageBuffer, OleStorage::BBD_BLOCK_SIZE) != OleStorage::BBD_BLOCK_SIZE) {
 			return false;
@@ -587,16 +634,15 @@ bool OleMainStream::readFloatingImages(const char *headerBuffer, const OleEntry 
 		return false;
 	}
 
-
 	static const unsigned int SPA_SIZE = 26;
-	size_t size = calcCountOfPLC(picturesInfoLength, SPA_SIZE);
+	std::size_t size = calcCountOfPLC(picturesInfoLength, SPA_SIZE);
 
 	std::vector<unsigned int> picturesBlocks;
-	for (size_t index = 0, tOffset = 0; index < size; ++index, tOffset += 4) {
+	for (std::size_t index = 0, tOffset = 0; index < size; ++index, tOffset += 4) {
 		picturesBlocks.push_back(OleUtil::getU4Bytes(buffer.c_str(), tOffset));
 	}
 
-	for (size_t index = 0, tOffset = (size + 1) * 4; index < size; ++index, tOffset += SPA_SIZE) {
+	for (std::size_t index = 0, tOffset = (size + 1) * 4; index < size; ++index, tOffset += SPA_SIZE) {
 		unsigned int spid = OleUtil::getU4Bytes(buffer.c_str(), tOffset);
 		FloatImageInfo info;
 		unsigned int charPos = picturesBlocks.at(index);
@@ -626,7 +672,7 @@ bool OleMainStream::readFloatingImages(const char *headerBuffer, const OleEntry 
 bool OleMainStream::readParagraphStyleTable(const char *headerBuffer, const OleEntry &tableEntry) {
 	//PlcBtePapx structure is table with formatting for all paragraphs
 	unsigned int beginParagraphInfo = OleUtil::getU4Bytes(headerBuffer, 0x102); // address of PlcBtePapx structure
-	size_t paragraphInfoLength = (size_t)OleUtil::getU4Bytes(headerBuffer, 0x106); // length of PlcBtePapx structure
+	std::size_t paragraphInfoLength = (std::size_t)OleUtil::getU4Bytes(headerBuffer, 0x106); // length of PlcBtePapx structure
 	if (paragraphInfoLength < 4) {
 		return false;
 	}
@@ -638,15 +684,15 @@ bool OleMainStream::readParagraphStyleTable(const char *headerBuffer, const OleE
 	}
 
 	static const unsigned int PAPX_SIZE = 4;
-	size_t size = calcCountOfPLC(paragraphInfoLength, PAPX_SIZE);
+	std::size_t size = calcCountOfPLC(paragraphInfoLength, PAPX_SIZE);
 
 	std::vector<unsigned int> paragraphBlocks;
-	for (size_t index = 0, tOffset = (size + 1) * 4; index < size; ++index, tOffset += PAPX_SIZE) {
+	for (std::size_t index = 0, tOffset = (size + 1) * 4; index < size; ++index, tOffset += PAPX_SIZE) {
 		paragraphBlocks.push_back(OleUtil::getU4Bytes(buffer.c_str(), tOffset));
 	}
 
 	char *formatPageBuffer = new char[OleStorage::BBD_BLOCK_SIZE];
-	for (size_t index = 0; index < paragraphBlocks.size(); ++index) {
+	for (std::size_t index = 0; index < paragraphBlocks.size(); ++index) {
 		seek(paragraphBlocks.at(index) * OleStorage::BBD_BLOCK_SIZE, true);
 		if (read(formatPageBuffer, OleStorage::BBD_BLOCK_SIZE) != OleStorage::BBD_BLOCK_SIZE) {
 			return false;
@@ -687,7 +733,7 @@ bool OleMainStream::readSectionsInfoTable(const char *headerBuffer, const OleEnt
 	unsigned int beginOfText = OleUtil::getU4Bytes(headerBuffer, 0x18); //address of text's begin in main stream
 	unsigned int beginSectInfo = OleUtil::getU4Bytes(headerBuffer, 0xca); //address if PlcfSed structure
 
-	size_t sectInfoLen = (size_t)OleUtil::getU4Bytes(headerBuffer, 0xce); //length of PlcfSed structure
+	std::size_t sectInfoLen = (std::size_t)OleUtil::getU4Bytes(headerBuffer, 0xce); //length of PlcfSed structure
 	if (sectInfoLen < 4) {
 		return false;
 	}
@@ -699,24 +745,24 @@ bool OleMainStream::readSectionsInfoTable(const char *headerBuffer, const OleEnt
 	}
 
 	static const unsigned int SED_SIZE = 12;
-	size_t decriptorsCount = calcCountOfPLC(sectInfoLen, SED_SIZE);
+	std::size_t decriptorsCount = calcCountOfPLC(sectInfoLen, SED_SIZE);
 
 	//saving the section offsets (in character positions)
 	std::vector<unsigned int> charPos;
-	for (size_t index = 0, tOffset = 0; index < decriptorsCount; ++index, tOffset += 4) {
+	for (std::size_t index = 0, tOffset = 0; index < decriptorsCount; ++index, tOffset += 4) {
 		unsigned int ulTextOffset = OleUtil::getU4Bytes(buffer.c_str(), tOffset);
 		charPos.push_back(beginOfText + ulTextOffset);
 	}
 
 	//saving sepx offsets
 	std::vector<unsigned int> sectPage;
-	for (size_t index = 0, tOffset = (decriptorsCount + 1) * 4; index < decriptorsCount; ++index, tOffset += SED_SIZE) {
+	for (std::size_t index = 0, tOffset = (decriptorsCount + 1) * 4; index < decriptorsCount; ++index, tOffset += SED_SIZE) {
 		sectPage.push_back(OleUtil::getU4Bytes(buffer.c_str(), tOffset + 2));
 	}
 
 	//reading the section properties
 	char tmpBuffer[2];
-	for (size_t index = 0; index < sectPage.size(); ++index) {
+	for (std::size_t index = 0; index < sectPage.size(); ++index) {
 		if (sectPage.at(index) == 0xffffffffUL) { //check for invalid record, to make default section info
 			SectionInfo sectionInfo;
 			sectionInfo.CharPosition = charPos.at(index);
@@ -730,7 +776,7 @@ bool OleMainStream::readSectionsInfoTable(const char *headerBuffer, const OleEnt
 		if (read(tmpBuffer, 2) != 2) {
 			continue;
 		}
-		size_t bytes = 2 + (size_t)OleUtil::getU2Bytes(tmpBuffer, 0);
+		std::size_t bytes = 2 + (std::size_t)OleUtil::getU2Bytes(tmpBuffer, 0);
 
 		if (!seek(sectPage.at(index), true)) {
 			continue;
@@ -863,9 +909,9 @@ void OleMainStream::getCharInfo(unsigned int chpxOffset, unsigned int /*styleId*
 
 }
 
-void OleMainStream::getSectionInfo(const char *grpprlBuffer, size_t bytes, SectionInfo &sectionInfo) {
+void OleMainStream::getSectionInfo(const char *grpprlBuffer, std::size_t bytes, SectionInfo &sectionInfo) {
 	unsigned int tmp;
-	size_t offset = 0;
+	std::size_t offset = 0;
 	while (bytes >= offset + 2) {
 		switch (OleUtil::getU2Bytes(grpprlBuffer, offset)) {
 			case 0x3009: //new page
@@ -916,7 +962,7 @@ OleMainStream::Style OleMainStream::getStyleFromStylesheet(unsigned int styleId,
 	//TODO optimize it: StyleSheet can be map structure with styleId key
 	Style style;
 	if (styleId != Style::STYLE_INVALID && styleId != Style::STYLE_NIL && styleId != Style::STYLE_USER) {
-		for (size_t index = 0; index < stylesheet.size(); ++index) {
+		for (std::size_t index = 0; index < stylesheet.size(); ++index) {
 			if (stylesheet.at(index).StyleIdCurrent == styleId) {
 				return stylesheet.at(index);
 			}
@@ -942,7 +988,7 @@ int OleMainStream::getStyleIndex(unsigned int styleId, const std::vector<bool> &
 
 unsigned int OleMainStream::getStyleIdByCharPos(unsigned int charPos, const StyleInfoList &styleInfoList) {
 	unsigned int styleId = Style::STYLE_INVALID;
-	for (size_t i = 0; i < styleInfoList.size(); ++i) {
+	for (std::size_t i = 0; i < styleInfoList.size(); ++i) {
 		const Style &info = styleInfoList.at(i).second;
 		if (i == styleInfoList.size() - 1) { //if last
 			styleId = info.StyleIdCurrent;
@@ -970,8 +1016,8 @@ bool OleMainStream::offsetToCharPos(unsigned int offset, unsigned int &charPos, 
 		return false;
 	}
 
-	size_t pieceNumber = 0;
-	for (size_t i = 0; i < pieces.size(); ++i) {
+	std::size_t pieceNumber = 0;
+	for (std::size_t i = 0; i < pieces.size(); ++i) {
 		if (i == pieces.size() - 1) { //if last
 			pieceNumber = i;
 			break;
@@ -993,7 +1039,7 @@ bool OleMainStream::offsetToCharPos(unsigned int offset, unsigned int &charPos, 
 	return true;
 }
 
-bool OleMainStream::readToBuffer(std::string &result, unsigned int offset, size_t length, OleStream &stream) {
+bool OleMainStream::readToBuffer(std::string &result, unsigned int offset, std::size_t length, OleStream &stream) {
 	char *buffer = new char[length];
 	stream.seek(offset, true);
 	if (stream.read(buffer, length) != length) {
