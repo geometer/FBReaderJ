@@ -19,12 +19,15 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.List;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
 
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class CancelActivity extends ListActivity {
@@ -36,7 +39,17 @@ public class CancelActivity extends ListActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		final ActionListAdapter adapter = new ActionListAdapter(getIntent());
+		Intent i = getIntent();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final List<FBReaderApp.CancelActionDescription> descriptionList = fbReader.getCancelActionsList();
+		i.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
+		int index = 0;
+		for (FBReaderApp.CancelActionDescription description : descriptionList) {
+			i.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
+			i.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
+			++index;
+		}
+		final ActionListAdapter adapter = new ActionListAdapter(i);
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(adapter);
 		setResult(-1);

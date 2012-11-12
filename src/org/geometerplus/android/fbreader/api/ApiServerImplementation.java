@@ -28,6 +28,7 @@ import android.util.Log;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -227,6 +228,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.Void.Instance;
 				case GET_BOOK_ID:
 					return ApiObject.envelope(getBookId(((ApiObject.String)parameters[0]).Value));
+				case GET_RESOURCE_VALUE:
+					return ApiObject.envelope(getResourceValue(((ApiObject.String)parameters[0]).Value));
 
 				default:
 					return unsupportedMethodError(method);
@@ -620,4 +623,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		}
 		return Book.getByFile(ZLFile.createFileByPath(file)).getId();
 	}
+	
+	public String getResourceValue(String s) {
+		String[] l = s.split("/");
+		ZLResource r = ZLResource.resource(l[0]);
+		for (int i = 1; i < l.length; ++i) {
+			r = r.getResource(l[i]);
+		}
+		return r.getValue();
+	}
+	
+	
 }
