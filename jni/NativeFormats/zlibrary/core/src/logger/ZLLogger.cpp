@@ -41,7 +41,7 @@ void ZLLogger::registerClass(const std::string &className) {
 
 void ZLLogger::print(const std::string &className, const std::string &message) const {
 	std::string m = message;
-	for (size_t index = m.find('%'); index != std::string::npos; index = m.find('%', index + 2)) {
+	for (std::size_t index = m.find('%'); index != std::string::npos; index = m.find('%', index + 2)) {
 		m.replace(index, 1, "%%");
 	}
 	if (className == DEFAULT_CLASS) {

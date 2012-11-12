@@ -67,7 +67,7 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	}
 
 	const AuthorList &authors = book.authors();
-	for (size_t i = 0; i < authors.size(); ++i) {
+	for (std::size_t i = 0; i < authors.size(); ++i) {
 		const Author &author = *authors[i];
 		javaString = env->NewStringUTF(author.name().c_str());
 		jstring key = env->NewStringUTF(author.sortKey().c_str());
@@ -77,7 +77,7 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	}
 
 	const TagList &tags = book.tags();
-	for (size_t i = 0; i < tags.size(); ++i) {
+	for (std::size_t i = 0; i < tags.size(); ++i) {
 		const Tag &tag = *tags[i];
 		AndroidUtil::Method_Book_addTag->call(javaBook, tag.javaTag(env));
 	}
@@ -149,17 +149,17 @@ static bool initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &mo
 		}
 		ZLUnicodeUtil::utf8ToUcs2(ucs2id, id);
 		ZLUnicodeUtil::utf8ToUcs2(ucs2modelId, label.Model->id());
-		const size_t idLen = ucs2id.size() * 2;
-		const size_t modelIdLen = ucs2modelId.size() * 2;
+		const std::size_t idLen = ucs2id.size() * 2;
+		const std::size_t modelIdLen = ucs2modelId.size() * 2;
 
 		char *ptr = allocator.allocate(idLen + modelIdLen + 8);
 		ZLCachedMemoryAllocator::writeUInt16(ptr, ucs2id.size());
 		ptr += 2;
-		memcpy(ptr, &ucs2id.front(), idLen);
+		std::memcpy(ptr, &ucs2id.front(), idLen);
 		ptr += idLen;
 		ZLCachedMemoryAllocator::writeUInt16(ptr, ucs2modelId.size());
 		ptr += 2;
-		memcpy(ptr, &ucs2modelId.front(), modelIdLen);
+		std::memcpy(ptr, &ucs2modelId.front(), modelIdLen);
 		ptr += modelIdLen;
 		ZLCachedMemoryAllocator::writeUInt32(ptr, label.ParagraphNumber);
 	}
@@ -181,7 +181,7 @@ static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &mode
 	jstring language = AndroidUtil::createJavaString(env, model.language());
 	jint paragraphsNumber = model.paragraphsNumber();
 
-	const size_t arraysSize = model.startEntryIndices().size();
+	const std::size_t arraysSize = model.startEntryIndices().size();
 	jintArray entryIndices = env->NewIntArray(arraysSize);
 	jintArray entryOffsets = env->NewIntArray(arraysSize);
 	jintArray paragraphLenghts = env->NewIntArray(arraysSize);

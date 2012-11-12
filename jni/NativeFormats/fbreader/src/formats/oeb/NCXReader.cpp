@@ -34,7 +34,7 @@ static const std::string TAG_TEXT = "text";
 
 void NCXReader::startElementHandler(const char *fullTag, const char **attributes) {
 	std::string tag = fullTag;
-	const size_t index = tag.rfind(':');
+	const std::size_t index = tag.rfind(':');
 	if (index != std::string::npos) {
 		tag = tag.substr(index + 1);
 	}
@@ -76,7 +76,7 @@ void NCXReader::startElementHandler(const char *fullTag, const char **attributes
 
 void NCXReader::endElementHandler(const char *fullTag) {
 	std::string tag = fullTag;
-	const size_t index = tag.rfind(':');
+	const std::size_t index = tag.rfind(':');
 	if (index != std::string::npos) {
 		tag = tag.substr(index + 1);
 	}
@@ -110,7 +110,7 @@ void NCXReader::endElementHandler(const char *fullTag) {
 	}
 }
 
-void NCXReader::characterDataHandler(const char *text, size_t len) {
+void NCXReader::characterDataHandler(const char *text, std::size_t len) {
 	if (myReadState == READ_TEXT) {
 		myPointStack.back().Text.append(text, len);
 	}
@@ -127,5 +127,5 @@ const std::map<int,NCXReader::NavPoint> &NCXReader::navigationMap() const {
 NCXReader::NavPoint::NavPoint() {
 }
 
-NCXReader::NavPoint::NavPoint(int order, size_t level) : Order(order), Level(level) {
+NCXReader::NavPoint::NavPoint(int order, std::size_t level) : Order(order), Level(level) {
 }

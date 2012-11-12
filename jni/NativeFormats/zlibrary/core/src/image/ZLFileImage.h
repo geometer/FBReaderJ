@@ -38,7 +38,7 @@ public:
 	typedef std::vector<Block> Blocks;
 
 public:
-	ZLFileImage(const ZLFile &file, const std::string &encoding, size_t offset, size_t size = 0);
+	ZLFileImage(const ZLFile &file, const std::string &encoding, std::size_t offset, std::size_t size = 0);
 	ZLFileImage(const ZLFile &file, const std::string &encoding, const Blocks &blocks);
 
 	//Kind kind() const;
@@ -57,7 +57,7 @@ private:
 
 inline ZLFileImage::Block::Block(unsigned int off, unsigned int s) : offset(off), size(s) {}
 
-inline ZLFileImage::ZLFileImage(const ZLFile &file, const std::string &encoding, size_t offset, size_t size) : ZLSingleImage(file.mimeType()), myFile(file), myEncoding(encoding) {
+inline ZLFileImage::ZLFileImage(const ZLFile &file, const std::string &encoding, std::size_t offset, std::size_t size) : ZLSingleImage(file.mimeType()), myFile(file), myEncoding(encoding) {
 	myBlocks.push_back(Block(offset, size));
 }
 

@@ -71,7 +71,7 @@ public:
 	void beginContentsParagraph(int referenceNumber = -1);
 	void endContentsParagraph();
 	bool contentsParagraphIsOpen() const;
-	//void setReference(size_t contentsParagraphNumber, int referenceNumber);
+	//void setReference(std::size_t contentsParagraphNumber, int referenceNumber);
 
 	void addData(const std::string &data);
 	void addContentsData(const std::string &data);

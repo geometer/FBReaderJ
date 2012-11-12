@@ -27,11 +27,11 @@
 class ZLCachedMemoryAllocator {
 
 public:
-	ZLCachedMemoryAllocator(const size_t rowSize, const std::string &directoryName, const std::string &fileExtension);
+	ZLCachedMemoryAllocator(const std::size_t rowSize, const std::string &directoryName, const std::string &fileExtension);
 	~ZLCachedMemoryAllocator();
 
-	char *allocate(size_t size);
-	char *reallocateLast(char *ptr, size_t newSize);
+	char *allocate(std::size_t size);
+	char *reallocateLast(char *ptr, std::size_t newSize);
 
 	void flush();
 
@@ -44,19 +44,19 @@ public:
 public:
 	const std::string &directoryName() const;
 	const std::string &fileExtension() const;
-	size_t blocksNumber() const;
-	size_t currentBytesOffset() const;
+	std::size_t blocksNumber() const;
+	std::size_t currentBytesOffset() const;
 	bool failed() const;
 
 private:
-	std::string makeFileName(size_t index);
-	void writeCache(size_t blockLength);
+	std::string makeFileName(std::size_t index);
+	void writeCache(std::size_t blockLength);
 
 private:
-	const size_t myRowSize;
-	size_t myCurrentRowSize;
+	const std::size_t myRowSize;
+	std::size_t myCurrentRowSize;
 	std::vector<char*> myPool;
-	size_t myOffset;
+	std::size_t myOffset;
 
 	bool myHasChanges;
 	bool myFailed;
@@ -71,8 +71,8 @@ private: // disable copying
 
 inline const std::string &ZLCachedMemoryAllocator::directoryName() const { return myDirectoryName; }
 inline const std::string &ZLCachedMemoryAllocator::fileExtension() const { return myFileExtension; }
-inline size_t ZLCachedMemoryAllocator::blocksNumber() const { return myPool.size(); }
-inline size_t ZLCachedMemoryAllocator::currentBytesOffset() const { return myOffset; }
+inline std::size_t ZLCachedMemoryAllocator::blocksNumber() const { return myPool.size(); }
+inline std::size_t ZLCachedMemoryAllocator::currentBytesOffset() const { return myOffset; }
 inline bool ZLCachedMemoryAllocator::failed() const { return myFailed; }
 
 inline char *ZLCachedMemoryAllocator::writeUInt16(char *ptr, uint16_t value) {
@@ -91,7 +91,7 @@ inline char *ZLCachedMemoryAllocator::writeUInt32(char *ptr, uint32_t value) {
 	return ptr;
 }
 inline char *ZLCachedMemoryAllocator::writeString(char *ptr, const ZLUnicodeUtil::Ucs2String &str) {
-	const size_t size = str.size();
+	const std::size_t size = str.size();
 	writeUInt16(ptr, size);
 	memcpy(ptr + 2, &str.front(), size * 2);
 	return ptr + size * 2 + 2;

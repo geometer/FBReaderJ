@@ -32,7 +32,7 @@
 
 FB2BookReader::FB2BookReader(BookModel &model) : myModelReader(model) {
 	myInsideCoverpage = false;
-	myParagraphsBeforeBodyNumber = (size_t)-1;
+	myParagraphsBeforeBodyNumber = (std::size_t)-1;
 	myInsidePoem = false;
 	mySectionDepth = 0;
 	myBodyCounter = 0;
@@ -42,7 +42,7 @@ FB2BookReader::FB2BookReader(BookModel &model) : myModelReader(model) {
 	myInsideTitle = false;
 }
 
-void FB2BookReader::characterDataHandler(const char *text, size_t len) {
+void FB2BookReader::characterDataHandler(const char *text, std::size_t len) {
 	if ((len > 0) && (!myCurrentImageId.empty() || myModelReader.paragraphIsOpen())) {
 		std::string str(text, len);
 		if (!myCurrentImageId.empty()) {

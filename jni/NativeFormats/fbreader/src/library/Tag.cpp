@@ -53,7 +53,7 @@ shared_ptr<Tag> Tag::getTag(const std::string &name, shared_ptr<Tag> parent, int
 shared_ptr<Tag> Tag::getTagByFullName(const std::string &fullName) {
 	std::string tag = fullName;
 	ZLStringUtil::stripWhiteSpaces(tag);
-	size_t index = tag.rfind(DELIMITER);
+	std::size_t index = tag.rfind(DELIMITER);
 	if (index == std::string::npos) {
 		return getTag(tag);
 	} else {

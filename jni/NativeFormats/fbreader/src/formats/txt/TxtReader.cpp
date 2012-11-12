@@ -94,10 +94,10 @@ TxtReaderCoreUtf16::TxtReaderCoreUtf16(TxtReader &reader) : TxtReaderCore(reader
 }
 
 void TxtReaderCore::readDocument(ZLInputStream &stream) {
-	const size_t BUFSIZE = 2048;
+	const std::size_t BUFSIZE = 2048;
 	char *buffer = new char[BUFSIZE];
 	std::string str;
-	size_t length;
+	std::size_t length;
 	do {
 		length = stream.read(buffer, BUFSIZE);
 		char *start = buffer;
@@ -136,10 +136,10 @@ void TxtReaderCore::readDocument(ZLInputStream &stream) {
 }
 
 void TxtReaderCoreUtf16::readDocument(ZLInputStream &stream) {
-	const size_t BUFSIZE = 2048;
+	const std::size_t BUFSIZE = 2048;
 	char *buffer = new char[BUFSIZE];
 	std::string str;
-	size_t length;
+	std::size_t length;
 	do {
 		length = stream.read(buffer, BUFSIZE);
 		char *start = buffer;

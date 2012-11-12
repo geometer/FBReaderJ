@@ -229,7 +229,7 @@ void OEBBookReader::generateTOC(const XHTMLReader &xhtmlReader) {
 		if (ncxReader.readDocument(ZLFile(myFilePrefix + myNCXTOCFileName))) {
 			const std::map<int,NCXReader::NavPoint> navigationMap = ncxReader.navigationMap();
 			if (!navigationMap.empty()) {
-				size_t level = 0;
+				std::size_t level = 0;
 				for (std::map<int,NCXReader::NavPoint>::const_iterator it = navigationMap.begin(); it != navigationMap.end(); ++it) {
 					const NCXReader::NavPoint &point = it->second;
 					int index = myModelReader.model().label(xhtmlReader.normalizedReference(point.ContentHRef)).ParagraphNumber;
