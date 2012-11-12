@@ -24,7 +24,7 @@
 class DummyEncodingConverter : public ZLEncodingConverter {
 
 private:
-	DummyEncodingConverter(const std::string &name);
+	DummyEncodingConverter();
 
 public:
 	~DummyEncodingConverter();
@@ -33,9 +33,6 @@ public:
 	void reset();
 	bool fillTable(int *map);
 
-private:
-	const std::string myName;
-
 friend class DummyEncodingConverterProvider;
 };
 
@@ -43,18 +40,18 @@ bool DummyEncodingConverterProvider::providesConverter(const std::string &encodi
 	return ZLUnicodeUtil::toLower(encoding) == ZLEncodingConverter::ASCII;
 }
 
-shared_ptr<ZLEncodingConverter> DummyEncodingConverterProvider::createConverter(const std::string &name) {
-	return new DummyEncodingConverter(name);
+shared_ptr<ZLEncodingConverter> DummyEncodingConverterProvider::createConverter(const std::string&) {
+	return new DummyEncodingConverter();
 }
 
-DummyEncodingConverter::DummyEncodingConverter(const std::string &name) : myName(name) {
+DummyEncodingConverter::DummyEncodingConverter() {
 }
 
 DummyEncodingConverter::~DummyEncodingConverter() {
 }
 
 std::string DummyEncodingConverter::name() const {
-	return myName;
+	return ZLEncodingConverter::ASCII;
 }
 
 void DummyEncodingConverter::convert(std::string &dst, const char *srcStart, const char *srcEnd) {

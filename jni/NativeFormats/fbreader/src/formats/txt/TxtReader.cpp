@@ -119,7 +119,7 @@ void TxtReaderCore::readDocument(ZLInputStream &stream) {
 				}
 				start = ptr + 1;
 				myReader.newLineHandler();
-			} else if (isspace((unsigned char)*ptr)) {
+			} else if (((*ptr) & 0x80) == 0 && std::isspace((unsigned char)*ptr)) {
 				if (*ptr != '\t') {
 					*ptr = ' ';
 				}
@@ -162,7 +162,7 @@ void TxtReaderCoreUtf16::readDocument(ZLInputStream &stream) {
 				}
 				start = ptr + 2;
 				myReader.newLineHandler();
-			} else if (chr != 0 && isspace(chr)) {
+			} else if (chr != 0 && ((*ptr) & 0x80) == 0 && std::isspace(chr)) {
 				if (chr != '\t') {
 					setAscii(ptr, ' ');
 				}
