@@ -175,7 +175,7 @@ public final class FBReader extends ZLAndroidActivity {
 			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
 		if ("android.fbreader.action.CLOSE".equals(getIntent().getAction())) {
-			myNeedToExit = true;
+			myCancelCalled = true;
 		}
 	}
 
@@ -206,8 +206,10 @@ public final class FBReader extends ZLAndroidActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private boolean myNeedToExit = false;
+	private boolean myCancelCalled = false;
 	private boolean myNeedToSkipPlugin = false;
+
+	private int myCancelAction = -1;
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
@@ -243,7 +245,8 @@ public final class FBReader extends ZLAndroidActivity {
 			};
 			UIUtil.wait("search", runnable, this);
 		} else if ("android.fbreader.action.CLOSE".equals(intent.getAction())) {
-			myNeedToExit = true;
+			myCancelCalled = true;
+			myCancelAction = intent.getIntExtra("value", -1);
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -326,9 +329,13 @@ public final class FBReader extends ZLAndroidActivity {
 		super.onResume();
 		Log.d("fbreader", "onresume");
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		if (myNeedToExit) {
-			myNeedToExit = false;
-			fbReader.runAction(ActionCode.SHOW_CANCEL_MENU);
+		if (myCancelCalled) {
+			myCancelCalled = false;
+			if (myCancelAction != -1) {
+				fbReader.runCancelAction(myCancelAction - 1);
+			} else {
+				finish();
+			}
 			return;
 		} else {
 			if (fbReader.Model != null && fbReader.Model.Book != null) {
@@ -433,8 +440,9 @@ public final class FBReader extends ZLAndroidActivity {
 				onPreferencesUpdate(resultCode);
 				break;
 			case REQUEST_CANCEL_MENU:
-				if (resultCode != RESULT_CANCELED) {
+				if (resultCode != RESULT_CANCELED && resultCode != -1) {
 					myNeedToSkipPlugin = true;
+				} else {
 				}
 				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);
 				break;
