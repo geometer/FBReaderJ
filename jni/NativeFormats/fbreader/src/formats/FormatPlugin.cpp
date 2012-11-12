@@ -44,7 +44,7 @@ bool FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream, 
 	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
-		const size_t size = stream.read(buffer, BUFSIZE);
+		const std::size_t size = stream.read(buffer, BUFSIZE);
 		stream.close();
 		shared_ptr<ZLLanguageDetector::LanguageInfo> info = ZLLanguageDetector().findInfo(buffer, size);
 		delete[] buffer;
@@ -77,7 +77,7 @@ bool FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream, const std::
 	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
-		const size_t size = stream.read(buffer, BUFSIZE);
+		const std::size_t size = stream.read(buffer, BUFSIZE);
 		stream.close();
 		shared_ptr<ZLLanguageDetector::LanguageInfo> info =
 			ZLLanguageDetector().findInfoForEncoding(encoding, buffer, size, -20000);

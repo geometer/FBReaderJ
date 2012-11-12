@@ -61,11 +61,11 @@ std::string Utf8EncodingConverter::name() const {
 
 void Utf8EncodingConverter::convert(std::string &dst, const char *srcStart, const char *srcEnd) {
 	if (myBuffer.size() > 0) {
-		const size_t len = ZLUnicodeUtil::length(myBuffer, 1);
+		const std::size_t len = ZLUnicodeUtil::length(myBuffer, 1);
 		if (len < myBuffer.size()) {
 			return;
 		}
-		const size_t diff = std::min(len - myBuffer.size(), (size_t)(srcEnd - srcStart));
+		const std::size_t diff = std::min(len - myBuffer.size(), (std::size_t)(srcEnd - srcStart));
 		myBuffer.append(srcStart, diff);
 		srcStart += diff;
 		if (myBuffer.size() == len) {

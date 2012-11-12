@@ -39,7 +39,7 @@ public:
 
 	void initialize(const char *encoding);
 	void shutdown();
-	bool handleBuffer(const char *data, size_t len);
+	bool handleBuffer(const char *data, std::size_t len);
 
 private:
 	ZLXMLReader &myReader;
@@ -56,11 +56,11 @@ void ZLXMLReaderHandler::shutdown() {
 	myReader.shutdown();
 }
 
-bool ZLXMLReaderHandler::handleBuffer(const char *data, size_t len) {
+bool ZLXMLReaderHandler::handleBuffer(const char *data, std::size_t len) {
 	return myReader.readFromBuffer(data, len);
 }
 
-static const size_t BUFFER_SIZE = 2048;
+static const std::size_t BUFFER_SIZE = 2048;
 
 void ZLXMLReader::startElementHandler(const char*, const char**) {
 }
@@ -68,7 +68,7 @@ void ZLXMLReader::startElementHandler(const char*, const char**) {
 void ZLXMLReader::endElementHandler(const char*) {
 }
 
-void ZLXMLReader::characterDataHandler(const char*, size_t) {
+void ZLXMLReader::characterDataHandler(const char*, std::size_t) {
 }
 
 const ZLXMLReader::nsMap &ZLXMLReader::namespaces() const {
@@ -108,7 +108,7 @@ bool ZLXMLReader::readDocument(shared_ptr<ZLInputStream> stream) {
 	}
 	initialize(useWindows1252 ? "windows-1252" : 0);
 
-	size_t length;
+	std::size_t length;
 	do {
 		length = stream->read(myParserBuffer, BUFFER_SIZE);
 		if (!readFromBuffer(myParserBuffer, length)) {
@@ -133,7 +133,7 @@ void ZLXMLReader::shutdown() {
 	myNamespaces.clear();
 }
 
-bool ZLXMLReader::readFromBuffer(const char *data, size_t len) {
+bool ZLXMLReader::readFromBuffer(const char *data, std::size_t len) {
 	return myInternalReader->parseBuffer(data, len);
 }
 
@@ -179,7 +179,7 @@ ZLXMLReader::NamespaceAttributeNamePredicate::NamespaceAttributeNamePredicate(co
 
 bool ZLXMLReader::NamespaceAttributeNamePredicate::accepts(const ZLXMLReader &reader, const char *name) const {
 	const std::string full(name);
-	const size_t index = full.find(':');
+	const std::size_t index = full.find(':');
 	const std::string namespaceId =
 		index == std::string::npos ? std::string() : full.substr(0, index);
 
@@ -239,6 +239,6 @@ void ZLXMLReader::setErrorMessage(const std::string &message) {
 	interrupt();
 }
 
-size_t ZLXMLReader::getCurrentPosition() const {
-	return myInternalReader != 0 ? myInternalReader->getCurrentPosition() : (size_t)-1;
+std::size_t ZLXMLReader::getCurrentPosition() const {
+	return myInternalReader != 0 ? myInternalReader->getCurrentPosition() : (std::size_t)-1;
 }

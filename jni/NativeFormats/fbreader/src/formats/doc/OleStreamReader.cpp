@@ -26,13 +26,13 @@
 OleStreamReader::OleStreamReader() : myNextPieceNumber(0) {
 }
 
-bool OleStreamReader::readDocument(shared_ptr<ZLInputStream> inputStream) {
+bool OleStreamReader::readDocument(shared_ptr<ZLInputStream> inputStream, bool doReadFormattingData) {
 	static const std::string WORD_DOCUMENT = "WordDocument";
 
 	shared_ptr<OleStorage> storage = new OleStorage;
 
 	if (!storage->init(inputStream, inputStream->sizeOfOpened())) {
-		ZLLogger::Instance().println("OleStreamReader", "Broken OLE file");
+		ZLLogger::Instance().println("DocPlugin", "Broken OLE file");
 		return false;
 	}
 
@@ -42,8 +42,8 @@ bool OleStreamReader::readDocument(shared_ptr<ZLInputStream> inputStream) {
 	}
 
 	OleMainStream oleStream(storage, wordDocumentEntry, inputStream);
-	if (!oleStream.open()) {
-		ZLLogger::Instance().println("OleStreamReader", "Cannot open OleMainStream");
+	if (!oleStream.open(doReadFormattingData)) {
+		ZLLogger::Instance().println("DocPlugin", "Cannot open OleMainStream");
 		return false;
 	}
 	return readStream(oleStream);
@@ -57,7 +57,7 @@ bool OleStreamReader::readNextPiece(OleMainStream &stream) {
 	const OleMainStream::Piece &piece = pieces.at(myNextPieceNumber);
 
 	if (piece.Type == OleMainStream::Piece::PIECE_FOOTNOTE) {
-		footnoteHandler();
+		footnotesStartHandler();
 	} else if (piece.Type == OleMainStream::Piece::PIECE_OTHER) {
 		return false;
 	}
@@ -67,17 +67,17 @@ bool OleStreamReader::readNextPiece(OleMainStream &stream) {
 		return false;
 	}
 	char *textBuffer = new char[piece.Length];
-	size_t readBytes = stream.read(textBuffer, piece.Length);
-	if (readBytes != (size_t)piece.Length) {
-		ZLLogger::Instance().println("OleStreamReader", "not all bytes have been read from piece");
+	std::size_t readBytes = stream.read(textBuffer, piece.Length);
+	if (readBytes != (std::size_t)piece.Length) {
+		ZLLogger::Instance().println("DocPlugin", "not all bytes have been read from piece");
 	}
 
 	if (!piece.IsANSI) {
-		for (size_t i = 0; i < readBytes; i += 2) {
-			ansiSymbolHandler(OleUtil::getU2Bytes(textBuffer, i));
+		for (std::size_t i = 0; i < readBytes; i += 2) {
+			ucs2SymbolHandler(OleUtil::getU2Bytes(textBuffer, i));
 		}
 	} else {
-		dataHandler(textBuffer, readBytes);
+		ansiDataHandler(textBuffer, readBytes);
 	}
 	++myNextPieceNumber;
 	delete[] textBuffer;

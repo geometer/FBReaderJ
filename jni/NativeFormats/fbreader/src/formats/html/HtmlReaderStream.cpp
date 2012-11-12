@@ -27,27 +27,27 @@
 class HtmlTextOnlyReader : public HtmlReader {
 
 public:
-	HtmlTextOnlyReader(char *buffer, size_t maxSize);
-	size_t size() const;
+	HtmlTextOnlyReader(char *buffer, std::size_t maxSize);
+	std::size_t size() const;
 
 private:
 	void startDocumentHandler();
 	void endDocumentHandler();
 
 	bool tagHandler(const HtmlTag &tag);
-	bool characterDataHandler(const char *text, size_t len, bool convert);
+	bool characterDataHandler(const char *text, std::size_t len, bool convert);
 
 private:
 	char *myBuffer;
-	size_t myMaxSize;
-	size_t myFilledSize;
+	std::size_t myMaxSize;
+	std::size_t myFilledSize;
 	bool myIgnoreText;
 };
 
-HtmlTextOnlyReader::HtmlTextOnlyReader(char *buffer, size_t maxSize) : HtmlReader(std::string()), myBuffer(buffer), myMaxSize(maxSize), myFilledSize(0), myIgnoreText(false) {
+HtmlTextOnlyReader::HtmlTextOnlyReader(char *buffer, std::size_t maxSize) : HtmlReader(std::string()), myBuffer(buffer), myMaxSize(maxSize), myFilledSize(0), myIgnoreText(false) {
 }
 
-size_t HtmlTextOnlyReader::size() const {
+std::size_t HtmlTextOnlyReader::size() const {
 	return myFilledSize;
 }
 
@@ -67,16 +67,16 @@ bool HtmlTextOnlyReader::tagHandler(const HtmlTag &tag) {
 	return myFilledSize < myMaxSize;
 }
 
-bool HtmlTextOnlyReader::characterDataHandler(const char *text, size_t len, bool) {
+bool HtmlTextOnlyReader::characterDataHandler(const char *text, std::size_t len, bool) {
 	if (!myIgnoreText) {
-		len = std::min((size_t)len, myMaxSize - myFilledSize);
-		memcpy(myBuffer + myFilledSize, text, len);
+		len = std::min((std::size_t)len, myMaxSize - myFilledSize);
+		std::memcpy(myBuffer + myFilledSize, text, len);
 		myFilledSize += len;
 	}
 	return myFilledSize < myMaxSize;
 }
 
-HtmlReaderStream::HtmlReaderStream(shared_ptr<ZLInputStream> base, size_t maxSize) : myBase(base), myBuffer(0), mySize(maxSize) {
+HtmlReaderStream::HtmlReaderStream(shared_ptr<ZLInputStream> base, std::size_t maxSize) : myBase(base), myBuffer(0), mySize(maxSize) {
 }
 
 HtmlReaderStream::~HtmlReaderStream() {
@@ -96,10 +96,10 @@ bool HtmlReaderStream::open() {
 	return true;
 }
 
-size_t HtmlReaderStream::read(char *buffer, size_t maxSize) {
+std::size_t HtmlReaderStream::read(char *buffer, std::size_t maxSize) {
 	maxSize = std::min(maxSize, mySize - myOffset);
 	if (buffer != 0) {
-		memcpy(buffer, myBuffer, maxSize);
+		std::memcpy(buffer, myBuffer, maxSize);
 	}
 	myOffset += maxSize;
 	return maxSize;
@@ -116,13 +116,13 @@ void HtmlReaderStream::seek(int offset, bool absoluteOffset) {
 	if (!absoluteOffset) {
 		offset += myOffset;
 	}
-	myOffset = std::min(mySize, (size_t)std::max(0, offset));
+	myOffset = std::min(mySize, (std::size_t)std::max(0, offset));
 }
 
-size_t HtmlReaderStream::offset() const {
+std::size_t HtmlReaderStream::offset() const {
 	return myOffset;
 }
 
-size_t HtmlReaderStream::sizeOfOpened() {
+std::size_t HtmlReaderStream::sizeOfOpened() {
 	return mySize;
 }

@@ -424,7 +424,7 @@ void RtfReader::processKeyword(const std::string &keyword, int *parameter) {
 	it->second->run(*this, parameter);
 }
 
-void RtfReader::processCharData(const char *data, size_t len, bool convert) {
+void RtfReader::processCharData(const char *data, std::size_t len, bool convert) {
 	if (myState.Destination != RtfReader::DESTINATION_SKIP) {
 		addCharData(data, len, convert);
 	}

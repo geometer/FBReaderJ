@@ -33,7 +33,7 @@ public:
 
 private:
 	void startElementHandler(const char *tag, const char **attributes);
-	void characterDataHandler(const char *text, size_t len);
+	void characterDataHandler(const char *text, std::size_t len);
 
 private:
 	const std::string myStartTag;
@@ -50,7 +50,7 @@ void XMLTextReader::startElementHandler(const char *tag, const char**) {
 	}
 }
 
-void XMLTextReader::characterDataHandler(const char *text, size_t len) {
+void XMLTextReader::characterDataHandler(const char *text, std::size_t len) {
 	if (myStarted) {
 		myBuffer.append(text, len);
 	}
@@ -73,9 +73,9 @@ bool XMLTextStream::open() {
 	return true;
 }
 
-size_t XMLTextStream::read(char *buffer, size_t maxSize) {
+std::size_t XMLTextStream::read(char *buffer, std::size_t maxSize) {
 	while (myDataBuffer.size() < maxSize) {
-		size_t len = myBase->read((char*)myStreamBuffer.data(), 2048);
+		std::size_t len = myBase->read((char*)myStreamBuffer.data(), 2048);
 		/*if ((len == 0) || !myReader->readFromBuffer(myStreamBuffer.data(), len)) {
 			break;
 		}*/
@@ -87,9 +87,9 @@ size_t XMLTextStream::read(char *buffer, size_t maxSize) {
 			break;
 		}
 	}
-	size_t realSize = std::min(myDataBuffer.size(), maxSize);
+	std::size_t realSize = std::min(myDataBuffer.size(), maxSize);
 	if (buffer != 0) {
-		memcpy(buffer, myDataBuffer.data(), realSize);
+		std::memcpy(buffer, myDataBuffer.data(), realSize);
 	}
 	myDataBuffer.erase(0, realSize);
 	myOffset += realSize;
@@ -114,11 +114,11 @@ void XMLTextStream::seek(int offset, bool absoluteOffset) {
 	read(0, offset);
 }
 
-size_t XMLTextStream::offset() const {
+std::size_t XMLTextStream::offset() const {
 	return myOffset;
 }
 
-size_t XMLTextStream::sizeOfOpened() {
+std::size_t XMLTextStream::sizeOfOpened() {
 	// couldn't be implemented
 	return 0;
 }
