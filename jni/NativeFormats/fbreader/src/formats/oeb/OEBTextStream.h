@@ -37,7 +37,7 @@ private:
 private:
 	std::string myFilePrefix;
 	std::vector<std::string> myXHTMLFileNames;
-	size_t myIndex;
+	std::size_t myIndex;
 };
 
 #endif /* __OEBTEXTSTREAM_H__ */

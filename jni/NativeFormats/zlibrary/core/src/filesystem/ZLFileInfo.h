@@ -23,7 +23,7 @@
 struct ZLFileInfo {
 	bool Exists;
 	bool IsDirectory;
-	size_t Size;
+	std::size_t Size;
 
 	ZLFileInfo();
 };

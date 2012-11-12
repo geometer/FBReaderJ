@@ -38,7 +38,7 @@ bool ZLUnixFileInputStream::open() {
 	return myFile != 0;
 }
 
-size_t ZLUnixFileInputStream::read(char *buffer, size_t maxSize) {
+std::size_t ZLUnixFileInputStream::read(char *buffer, std::size_t maxSize) {
 	if (buffer != 0) {
 		if (myNeedRepositionToStart) {
 			fseek(myFile, 0, SEEK_SET);
@@ -65,7 +65,7 @@ void ZLUnixFileInputStream::close() {
 	}
 }
 
-size_t ZLUnixFileInputStream::sizeOfOpened() {
+std::size_t ZLUnixFileInputStream::sizeOfOpened() {
 	if (myFile == 0) {
 		return 0;
 	}
@@ -84,6 +84,6 @@ void ZLUnixFileInputStream::seek(int offset, bool absoluteOffset) {
 	fseek(myFile, offset, absoluteOffset ? SEEK_SET : SEEK_CUR);
 }
 
-size_t ZLUnixFileInputStream::offset() const {
+std::size_t ZLUnixFileInputStream::offset() const {
 	return myNeedRepositionToStart ? 0 : ftell(myFile);
 }

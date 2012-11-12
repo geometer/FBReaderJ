@@ -28,12 +28,12 @@ ZLStatistics::ZLStatistics() : myCharSequenceSize(0), myVolumesAreUpToDate(true)
 		myVolume(0), mySquaresVolume(0) {
 }
 
-ZLStatistics::ZLStatistics(size_t charSequenceSize) :
+ZLStatistics::ZLStatistics(std::size_t charSequenceSize) :
 		myCharSequenceSize(charSequenceSize), myVolumesAreUpToDate(true),
 		myVolume(0), mySquaresVolume(0) {
 }
 
-ZLStatistics::ZLStatistics(size_t charSequenceSize, size_t volume, unsigned long long squaresVolume) :
+ZLStatistics::ZLStatistics(std::size_t charSequenceSize, std::size_t volume, unsigned long long squaresVolume) :
 		myCharSequenceSize(charSequenceSize), myVolumesAreUpToDate(true),
 		myVolume(volume), mySquaresVolume(squaresVolume) {
 }
@@ -41,7 +41,7 @@ ZLStatistics::ZLStatistics(size_t charSequenceSize, size_t volume, unsigned long
 ZLStatistics::~ZLStatistics() {
 }
 
-size_t ZLStatistics::getVolume() const {
+std::size_t ZLStatistics::getVolume() const {
 	if (!myVolumesAreUpToDate) {
 		calculateVolumes();
 	}
@@ -86,7 +86,7 @@ int ZLStatistics::correlation(const ZLStatistics& candidate, const ZLStatistics&
 	const shared_ptr<ZLStatisticsItem> endA = candidate.end();
 	const shared_ptr<ZLStatisticsItem> endB = pattern.end();
 	
-	size_t count = 0;
+	std::size_t count = 0;
 	long long correlationSum = 0;
 	while ((*ptrA != *endA) && (*ptrB != *endB)) {				
 		++count;
@@ -172,14 +172,14 @@ void ZLMapBasedStatistics::calculateVolumes() const {
 	myVolume = 0;
 	mySquaresVolume = 0;
 	for (Dictionary::const_iterator it = myDictionary.begin(); it != myDictionary.end(); ++it) {
-		const size_t frequency = it->second;
+		const std::size_t frequency = it->second;
 		myVolume += frequency;
 		mySquaresVolume += frequency * frequency;
 	}
 	myVolumesAreUpToDate = true;
 }
 
-ZLMapBasedStatistics ZLMapBasedStatistics::top(size_t amount) const {
+ZLMapBasedStatistics ZLMapBasedStatistics::top(std::size_t amount) const {
 	if (myDictionary.empty()) {
 		return ZLMapBasedStatistics();
 	}
@@ -237,10 +237,10 @@ void ZLMapBasedStatistics::retain(const ZLMapBasedStatistics &other) {
 }
 
 void ZLMapBasedStatistics::scaleToShort() {
-	const size_t maxFrequency = std::max_element(myDictionary.begin(), myDictionary.end(), LessFrequency())->second;
-	const size_t maxShort = 65535;
+	const std::size_t maxFrequency = std::max_element(myDictionary.begin(), myDictionary.end(), LessFrequency())->second;
+	const std::size_t maxShort = 65535;
 	if (maxFrequency > maxShort) {
-		const size_t devider = maxFrequency / maxShort + 1;
+		const std::size_t devider = maxFrequency / maxShort + 1;
 		Dictionary::iterator it = myDictionary.begin(); 
 		const Dictionary::iterator end = myDictionary.end();
 		while (it != end) {
@@ -266,7 +266,7 @@ ZLArrayBasedStatistics::ZLArrayBasedStatistics() : ZLStatistics(),
 		myCapacity(0), myBack(0), mySequences(0), myFrequencies(0) {
 }
 
-ZLArrayBasedStatistics::ZLArrayBasedStatistics(size_t charSequenceSize, size_t size, size_t volume, unsigned long long squaresVolume) :
+ZLArrayBasedStatistics::ZLArrayBasedStatistics(std::size_t charSequenceSize, std::size_t size, std::size_t volume, unsigned long long squaresVolume) :
 		ZLStatistics(charSequenceSize, volume, squaresVolume), myCapacity(size) {
 	myBack = 0;
 	mySequences = new char[myCharSequenceSize * size];
@@ -280,11 +280,11 @@ ZLArrayBasedStatistics::~ZLArrayBasedStatistics() {
 	}
 }
 
-void ZLArrayBasedStatistics::insert(const ZLCharSequence &charSequence, size_t frequency) {
+void ZLArrayBasedStatistics::insert(const ZLCharSequence &charSequence, std::size_t frequency) {
 	if (myBack == myCapacity) {
 		return;
 	}
-	for (size_t i = 0; i < myCharSequenceSize; ++i) {
+	for (std::size_t i = 0; i < myCharSequenceSize; ++i) {
 		mySequences[myBack * myCharSequenceSize + i] = charSequence[i]; 
 	}
 	myFrequencies[myBack] = (unsigned short) frequency;
@@ -295,8 +295,8 @@ void ZLArrayBasedStatistics::insert(const ZLCharSequence &charSequence, size_t f
 void ZLArrayBasedStatistics::calculateVolumes() const {
 	myVolume = 0;
 	mySquaresVolume = 0;
-	for (size_t i = 0; i != myBack; ++i) {
-		const size_t frequency = myFrequencies[i];
+	for (std::size_t i = 0; i != myBack; ++i) {
+		const std::size_t frequency = myFrequencies[i];
 		myVolume += frequency;
 		mySquaresVolume += frequency * frequency;
 	}

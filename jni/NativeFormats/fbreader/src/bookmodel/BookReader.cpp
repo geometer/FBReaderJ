@@ -232,8 +232,8 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 
 void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {
 	if ((myCurrentTextModel != 0) && mySectionContainsRegularContents) {
-		size_t size = myCurrentTextModel->paragraphsNumber();
-		if ((size > 0) && (((*myCurrentTextModel)[(size_t)-1])->kind() != kind)) {
+		std::size_t size = myCurrentTextModel->paragraphsNumber();
+		if ((size > 0) && (((*myCurrentTextModel)[(std::size_t)-1])->kind() != kind)) {
 			((ZLTextPlainModel&)*myCurrentTextModel).createParagraph(kind);
 			mySectionContainsRegularContents = false;
 		}
@@ -293,7 +293,7 @@ void BookReader::endContentsParagraph() {
 }
 
 /*
-void BookReader::setReference(size_t contentsParagraphNumber, int referenceNumber) {
+void BookReader::setReference(std::size_t contentsParagraphNumber, int referenceNumber) {
 	ContentsModel &contentsModel = (ContentsModel&)*myModel.myContentsModel;
 	if (contentsParagraphNumber >= contentsModel.paragraphsNumber()) {
 		return;

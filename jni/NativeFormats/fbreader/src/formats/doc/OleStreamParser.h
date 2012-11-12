@@ -87,15 +87,15 @@ private:
 protected:
 	ZLUnicodeUtil::Ucs2String myBuffer;
 private:
-	size_t myCurBufferPosition;
+	std::size_t myCurBufferPosition;
 
 	unsigned int myCurCharPos;
 
-	size_t myNextStyleInfoIndex;
-	size_t myNextCharInfoIndex;
-	size_t myNextBookmarkIndex;
-	size_t myNextInlineImageInfoIndex;
-	size_t myNextFloatImageInfoIndex;
+	std::size_t myNextStyleInfoIndex;
+	std::size_t myNextCharInfoIndex;
+	std::size_t myNextBookmarkIndex;
+	std::size_t myNextInlineImageInfoIndex;
+	std::size_t myNextFloatImageInfoIndex;
 };
 
 #endif /* __OLESTREAMPARSER_H__ */

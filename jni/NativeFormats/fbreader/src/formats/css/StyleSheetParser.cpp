@@ -48,7 +48,7 @@ void StyleSheetTableParser::storeData(const std::string &selector, const StyleSh
 		std::string id = *it;
 		ZLStringUtil::stripWhiteSpaces(id);
 		if (!id.empty()) {
-			const size_t index = id.find('.');
+			const std::size_t index = id.find('.');
 			if (index == std::string::npos) {
 				myTable.addMap(id, std::string(), map);
 			} else {
@@ -231,7 +231,7 @@ void StyleSheetParser::processWordWithoutComments(const std::string &word) {
 			break;
 		case ATTRIBUTE_VALUE:
 		{
-			const size_t l = word.length();
+			const std::size_t l = word.length();
 			if (l >= 2 && (word[0] == '"' || word[0] == '\'') && word[0] == word[l - 1]) {
 				myMap[myAttributeName].push_back(word.substr(1, l - 2));
 			} else {

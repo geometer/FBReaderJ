@@ -28,9 +28,9 @@ bool ZLInputStreamDecorator::open() {
 	return result;
 }
 
-size_t ZLInputStreamDecorator::read(char *buffer, size_t maxSize) {
+std::size_t ZLInputStreamDecorator::read(char *buffer, std::size_t maxSize) {
 	myBaseStream->seek(myBaseOffset, true);
-	size_t result = myBaseStream->read(buffer, maxSize);
+	std::size_t result = myBaseStream->read(buffer, maxSize);
 	myBaseOffset = myBaseStream->offset();
 	return result;
 }
@@ -48,10 +48,10 @@ void ZLInputStreamDecorator::seek(int offset, bool absoluteOffset) {
 	myBaseOffset = myBaseStream->offset();
 }
 
-size_t ZLInputStreamDecorator::offset() const {
+std::size_t ZLInputStreamDecorator::offset() const {
 	return myBaseOffset;
 }
 
-size_t ZLInputStreamDecorator::sizeOfOpened() {
+std::size_t ZLInputStreamDecorator::sizeOfOpened() {
 	return myBaseStream->sizeOfOpened();
 }

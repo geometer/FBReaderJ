@@ -50,8 +50,8 @@ void HtmlReader::setTag(HtmlTag &tag, const std::string &name) {
 		tag.Name = name.substr(1);
 	}
 
-	const size_t len = tag.Name.length();
-	for (size_t i = 0; i < len; ++i) {
+	const std::size_t len = tag.Name.length();
+	for (std::size_t i = 0; i < len; ++i) {
 		tag.Name[i] = toupper(tag.Name[i]);
 	}
 }
@@ -124,10 +124,10 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 	HtmlTag currentTag;
 	char endOfComment[2] = "\0";
 	
-	const size_t BUFSIZE = 2048;
+	const std::size_t BUFSIZE = 2048;
 	char *buffer = new char[BUFSIZE];
-	size_t length;
-	size_t offset = 0;
+	std::size_t length;
+	std::size_t offset = 0;
 	do {
 		length = stream.read(buffer, BUFSIZE);
 		char *start = buffer;

@@ -64,7 +64,7 @@ void ZLStringUtil::appendNumber(std::string &str, unsigned int n) {
 }
 
 void ZLStringUtil::append(std::string &str, const std::vector<std::string> &text) {
-	size_t len = str.length();
+	std::size_t len = str.length();
 	for (std::vector<std::string>::const_iterator it = text.begin(); it != text.end(); ++it) {
 		len += it->length();
 	}
@@ -75,15 +75,15 @@ void ZLStringUtil::append(std::string &str, const std::vector<std::string> &text
 }
 
 void ZLStringUtil::stripWhiteSpaces(std::string &str) {
-	size_t counter = 0;
-	size_t length = str.length();
+	std::size_t counter = 0;
+	std::size_t length = str.length();
 	while ((counter < length) && isspace((unsigned char)str[counter])) {
 		counter++;
 	}
 	str.erase(0, counter);
 	length -= counter;
 
-	size_t r_counter = length;
+	std::size_t r_counter = length;
 	while ((r_counter > 0) && isspace((unsigned char)str[r_counter - 1])) {
 		r_counter--;
 	}
@@ -92,8 +92,8 @@ void ZLStringUtil::stripWhiteSpaces(std::string &str) {
 
 std::vector<std::string> ZLStringUtil::split(const std::string &str, const std::string &delimiter) {
 	std::vector<std::string> result;
-	size_t start = 0;
-	size_t index = str.find(delimiter);
+	std::size_t start = 0;
+	std::size_t index = str.find(delimiter);
 	while (index != std::string::npos) {
 		result.push_back(str.substr(start, index - start));
 		start = index + delimiter.length();
@@ -135,7 +135,7 @@ int ZLStringUtil::stringToInteger(const std::string &str, int defaultValue) {
 		return defaultValue;
 	}
 
-	for (size_t i = 1; i < str.length(); ++i) {
+	for (std::size_t i = 1; i < str.length(); ++i) {
 		if (!isdigit(str[i])) {
 			return defaultValue;
 		}
