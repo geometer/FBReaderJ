@@ -21,8 +21,8 @@ package org.geometerplus.android.fbreader.preferences.activityprefs;
 
 import java.util.*;
 
-import android.content.*;
 import android.app.Activity;
+import android.content.*;
 import android.preference.Preference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -31,10 +31,9 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.android.fbreader.preferences.ZLReloadable;
 
 public class ZLActivityPreference extends Preference {
-	private ZLReloadable MyBoundPref = null;
+	private ZLReloadable myBoundPref = null;
 
 	public static interface ListHolder {
-
 		public List<String> getValue();
 		public void setValue(List<String> l);
 	}
@@ -48,7 +47,7 @@ public class ZLActivityPreference extends Preference {
 		myHolder = holder;
 		myRequestCode = map.size();
 		map.put(myRequestCode, this);
-		mySuggestions = (suggestions != null) ? suggestions : new ArrayList<String>();
+		mySuggestions = suggestions != null ? suggestions : new ArrayList<String>();
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
@@ -56,7 +55,7 @@ public class ZLActivityPreference extends Preference {
 	}
 
 	public void setBoundPref(ZLReloadable boundPref) {
-		MyBoundPref = boundPref;
+		myBoundPref = boundPref;
 	}
 
 	protected Intent prepareIntent(Intent intent) {
@@ -84,8 +83,8 @@ public class ZLActivityPreference extends Preference {
 		final List<String> value = data.getStringArrayListExtra(EditableStringListActivity.LIST);
 		myHolder.setValue(value);
 		updateSummary();
-		if (MyBoundPref != null) {
-			MyBoundPref.reload();
+		if (myBoundPref != null) {
+			myBoundPref.reload();
 		}
 	}
 

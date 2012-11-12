@@ -162,7 +162,6 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	}
 
 	private class AuthorsHolder implements ZLActivityPreference.ListHolder {
-
 		public List<String> getValue() {
 			return myBook.getAuthors();
 		}
@@ -253,7 +252,6 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		addPreference(myTagPref);
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
 		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
-
 	}
 
 	@Override

@@ -19,7 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences.activityprefs;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import android.content.*;
 import android.preference.Preference;
@@ -27,7 +28,6 @@ import android.preference.Preference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class ZLSpinnerActivityPreference extends ZLActivityPreference {
-
 	public ZLSpinnerActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
 		super(context, holder, map, suggestions, rootResource, resourceKey);
 	}
