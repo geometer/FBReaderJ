@@ -34,7 +34,7 @@ FB2MetaInfoReader::FB2MetaInfoReader(Book &book) : myBook(book) {
 	myBook.removeAllTags();
 }
 
-void FB2MetaInfoReader::characterDataHandler(const char *text, size_t len) {
+void FB2MetaInfoReader::characterDataHandler(const char *text, std::size_t len) {
 	switch (myReadState) {
 		case READ_TITLE:
 			myBuffer.append(text, len);

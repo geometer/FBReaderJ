@@ -30,8 +30,8 @@ public:
 	ZLStatisticsGenerator(const std::string &breakSymbols);
 	~ZLStatisticsGenerator();
 
-	void generate(const std::string &inputFileName, size_t charSequenceSizpe, ZLMapBasedStatistics &statistics);
-	void generate(const char* buffer, size_t length, size_t charSequenceSize, ZLMapBasedStatistics &statistics);
+	void generate(const std::string &inputFileName, std::size_t charSequenceSizpe, ZLMapBasedStatistics &statistics);
+	void generate(const char* buffer, std::size_t length, std::size_t charSequenceSize, ZLMapBasedStatistics &statistics);
 
 private:
 	int read(const std::string &inputFileName);
@@ -42,7 +42,7 @@ private:
 	char *myStart;
 	char *myEnd;
 
-	static size_t ourBufferSize;
+	static std::size_t ourBufferSize;
 };
 
 #endif //__ZLSTATISTICSGENERATOR_H__

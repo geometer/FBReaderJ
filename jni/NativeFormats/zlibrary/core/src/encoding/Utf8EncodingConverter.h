@@ -17,32 +17,17 @@
  * 02110-1301, USA.
  */
 
-#ifndef __HTMLDESCRIPTIONREADER_H__
-#define __HTMLDESCRIPTIONREADER_H__
+#ifndef __UTF8ENCODINGCONVERTER_H__
+#define __UTF8ENCODINGCONVERTER_H__
 
-#include "HtmlReader.h"
+#include "ZLEncodingConverter.h"
+#include "ZLEncodingConverterProvider.h"
 
-class Book;
-
-class HtmlDescriptionReader : public HtmlReader {
+class Utf8EncodingConverterProvider : public ZLEncodingConverterProvider {
 
 public:
-	HtmlDescriptionReader(Book &book);
-	~HtmlDescriptionReader();
-
-protected:
-	void startDocumentHandler();
-	void endDocumentHandler();
-
-	bool tagHandler(const HtmlTag &tag);
-	bool characterDataHandler(const char *text, std::size_t len, bool convert);
-
-private:
-	bool myReadTitle;
-	std::string myBuffer;
-	Book &myBook;
+	bool providesConverter(const std::string &encoding);
+	shared_ptr<ZLEncodingConverter> createConverter(const std::string &encoding);
 };
 
-inline HtmlDescriptionReader::~HtmlDescriptionReader() {}
-
-#endif /* __HTMLDESCRIPTIONREADER_H__ */
+#endif /* __UTF8ENCODINGCONVERTER_H__ */

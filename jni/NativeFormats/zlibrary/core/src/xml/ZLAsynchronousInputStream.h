@@ -32,7 +32,7 @@ public:
 		virtual ~Handler();
 		virtual void initialize(const char *encoding) = 0;
 		virtual void shutdown() = 0;
-		virtual bool handleBuffer(const char *data, size_t len) = 0;
+		virtual bool handleBuffer(const char *data, std::size_t len) = 0;
 	};
 
 public:
@@ -40,7 +40,7 @@ public:
 	virtual ~ZLAsynchronousInputStream();
 
 	void setEof();
-	void setBuffer(const char *data, size_t len);
+	void setBuffer(const char *data, std::size_t len);
 	bool eof() const;
 	bool initialized() const;
 
@@ -51,7 +51,7 @@ protected:
 
 protected:
 	const char *myData;
-	size_t myDataLen;
+	std::size_t myDataLen;
 
 private:
 	std::string myEncoding;
@@ -65,7 +65,7 @@ private:
 };
 
 inline void ZLAsynchronousInputStream::setEof() { myEof = true; myData = 0; myDataLen = 0; }
-inline void ZLAsynchronousInputStream::setBuffer(const char *data, size_t len) { myData = data; myDataLen = len; }
+inline void ZLAsynchronousInputStream::setBuffer(const char *data, std::size_t len) { myData = data; myDataLen = len; }
 inline bool ZLAsynchronousInputStream::eof() const { return myEof; }
 inline bool ZLAsynchronousInputStream::initialized() const { return myInitialized; }
 

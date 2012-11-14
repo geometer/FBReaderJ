@@ -32,12 +32,12 @@ protected:
 public:
 	virtual ~ZLInputStream();
 	virtual bool open() = 0;
-	virtual size_t read(char *buffer, size_t maxSize) = 0;
+	virtual std::size_t read(char *buffer, std::size_t maxSize) = 0;
 	virtual void close() = 0;
 
 	virtual void seek(int offset, bool absoluteOffset) = 0;
-	virtual size_t offset() const = 0;
-	virtual size_t sizeOfOpened() = 0;
+	virtual std::size_t offset() const = 0;
+	virtual std::size_t sizeOfOpened() = 0;
 
 private:
 	// disable copying
@@ -52,16 +52,16 @@ public:
 
 private:
 	bool open();
-	size_t read(char *buffer, size_t maxSize);
+	std::size_t read(char *buffer, std::size_t maxSize);
 	void close();
 
 	void seek(int offset, bool absoluteOffset);
-	size_t offset() const;
-	size_t sizeOfOpened();
+	std::size_t offset() const;
+	std::size_t sizeOfOpened();
 
 private:
 	shared_ptr<ZLInputStream> myBaseStream;
-	size_t myBaseOffset;
+	std::size_t myBaseOffset;
 };
 
 inline ZLInputStream::ZLInputStream() {}

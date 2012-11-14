@@ -36,9 +36,9 @@ public:
 	static shared_ptr<ZLZipEntryCache> cache(const std::string &containerName, ZLInputStream &containerStream);
 
 private:
-	static const size_t ourStorageSize;
+	static const std::size_t ourStorageSize;
 	static shared_ptr<ZLZipEntryCache> *ourStoredCaches;
-	static size_t ourIndex;
+	static std::size_t ourIndex;
 
 public:
 	struct Info {
@@ -70,12 +70,12 @@ private:
 public:
 	~ZLZipInputStream();
 	bool open();
-	size_t read(char *buffer, size_t maxSize);
+	std::size_t read(char *buffer, std::size_t maxSize);
 	void close();
 
 	void seek(int offset, bool absoluteOffset);
-	size_t offset() const;
-	size_t sizeOfOpened();
+	std::size_t offset() const;
+	std::size_t sizeOfOpened();
 
 private:
 	shared_ptr<ZLInputStream> myBaseStream;
@@ -83,9 +83,9 @@ private:
 	std::string myEntryName;
 	bool myIsDeflated;
 
-	size_t myUncompressedSize;
-	size_t myAvailableSize;
-	size_t myOffset;
+	std::size_t myUncompressedSize;
+	std::size_t myAvailableSize;
+	std::size_t myOffset;
 
 	shared_ptr<ZLZDecompressor> myDecompressor;
 
@@ -100,18 +100,18 @@ private:
 public:
 	~ZLGzipInputStream();
 	bool open();
-	size_t read(char *buffer, size_t maxSize);
+	std::size_t read(char *buffer, std::size_t maxSize);
 	void close();
 
 	void seek(int offset, bool absoluteOffset);
-	size_t offset() const;
-	size_t sizeOfOpened();
+	std::size_t offset() const;
+	std::size_t sizeOfOpened();
 
 private:
 	shared_ptr<ZLInputStream> myBaseStream;
-	size_t myFileSize;
+	std::size_t myFileSize;
 
-	size_t myOffset;
+	std::size_t myOffset;
 
 	shared_ptr<ZLZDecompressor> myDecompressor;
 

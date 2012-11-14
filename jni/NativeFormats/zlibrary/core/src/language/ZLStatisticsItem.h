@@ -28,53 +28,53 @@
 struct ZLStatisticsItem {
 
 public:
-	ZLStatisticsItem(size_t index);
+	ZLStatisticsItem(std::size_t index);
 	virtual ~ZLStatisticsItem();
 
 	virtual ZLCharSequence sequence() const = 0;
-	virtual size_t frequency() const = 0;
+	virtual std::size_t frequency() const = 0;
 	virtual void next() = 0;
 
 	bool operator == (const ZLStatisticsItem &otherItem) const;
 	bool operator != (const ZLStatisticsItem &otherItem) const;
 
-	size_t index() const;
+	std::size_t index() const;
 
 protected:
-	size_t myIndex;
+	std::size_t myIndex;
 };
 
 struct ZLMapBasedStatisticsItem : public ZLStatisticsItem {
-	ZLMapBasedStatisticsItem(const std::map<ZLCharSequence, size_t>::const_iterator it, size_t index);
+	ZLMapBasedStatisticsItem(const std::map<ZLCharSequence, std::size_t>::const_iterator it, std::size_t index);
 
 	ZLCharSequence sequence() const;
-	size_t frequency() const;
+	std::size_t frequency() const;
 	void next();
 
 private:
-	std::map<ZLCharSequence, size_t>::const_iterator myIterator;
+	std::map<ZLCharSequence, std::size_t>::const_iterator myIterator;
 };
 
 struct ZLArrayBasedStatisticsItem : public ZLStatisticsItem {
-	ZLArrayBasedStatisticsItem(size_t sequenceLength, char* sequencePtr, unsigned short* frequencyPtr, size_t index);
+	ZLArrayBasedStatisticsItem(std::size_t sequenceLength, char* sequencePtr, unsigned short* frequencyPtr, std::size_t index);
 
 	ZLCharSequence sequence() const;
-	size_t frequency() const;
+	std::size_t frequency() const;
 	void next();
 
 private:
 	char const *mySequencePtr;
 	unsigned short const *myFrequencyPtr;
-	const size_t mySequenceLength;
+	const std::size_t mySequenceLength;
 };
 
-inline ZLStatisticsItem::ZLStatisticsItem(size_t index) : myIndex(index) {
+inline ZLStatisticsItem::ZLStatisticsItem(std::size_t index) : myIndex(index) {
 }
 
 inline ZLStatisticsItem::~ZLStatisticsItem() {
 }
 
-inline size_t ZLStatisticsItem::index() const {
+inline std::size_t ZLStatisticsItem::index() const {
 	return myIndex;
 }
 

@@ -30,7 +30,7 @@ protected:
 public:
 	virtual ~ZLOutputStream();
 	virtual bool open() = 0;
-	virtual void write(const char *data, size_t len) = 0;
+	virtual void write(const char *data, std::size_t len) = 0;
 	virtual void write(const std::string &str) = 0;
 	virtual void close() = 0;
 
