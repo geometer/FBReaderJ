@@ -40,7 +40,10 @@ public class CancelActivity extends ListActivity {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Intent i = getIntent();
-		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		if (fbReader == null) {
+			fbReader = new FBReaderApp();
+		}
 		final List<FBReaderApp.CancelActionDescription> descriptionList = fbReader.getCancelActionsList();
 		i.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
 		int index = 0;
