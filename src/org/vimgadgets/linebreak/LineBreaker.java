@@ -26,6 +26,6 @@ public final class LineBreaker {
 	}
 
 	public void setLineBreaks(String data, byte[] breaks) {
-		setLineBreaksForString(data, myLanguage, breaks);
+		setLineBreaksForString(data, myLanguage, breaks); 
 	}
 }
