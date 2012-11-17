@@ -114,7 +114,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
 			this, appearanceScreen.Resource, "screenOrientation",
-			androidLibrary.OrientationOption, androidLibrary.allOrientations()
+			androidLibrary.getOrientationOption(), androidLibrary.allOrientations()
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,

@@ -316,7 +316,10 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		//sorry, but i need this now:
 		if ("Options".equals(group) && "ColorProfile".equals(name)) {
 			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).setValue(value);
+		} else 	if ("LookNFeel".equals(group) && "Orientation".equals(name)) {
+			new ZLStringOption("LookNFeel", "Orientation", "system").setValue(value);
 		}
+		
 		// TODO: implement
 	}
 

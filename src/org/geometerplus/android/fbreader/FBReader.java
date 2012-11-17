@@ -265,7 +265,7 @@ public final class FBReader extends ZLAndroidActivity {
 			startActivity(new Intent(this, getClass()));
 		}
 
-		SetScreenOrientationAction.setOrientation(this, zlibrary.OrientationOption.getValue());
+		SetScreenOrientationAction.setOrientation(this, zlibrary.getOrientationOption().getValue());
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
@@ -327,6 +327,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		SetScreenOrientationAction.setOrientation(this, ZLibrary.Instance().getOrientationOption().getValue());
 		Log.d("fbreader", "onresume");
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if (myCancelCalled) {

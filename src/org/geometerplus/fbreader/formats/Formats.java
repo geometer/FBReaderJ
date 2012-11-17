@@ -30,7 +30,7 @@ import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 
 public abstract class Formats {
 
-	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;doc;PDF;DjVu";
+	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;MS Word document;PDF;DjVu";
 
 	public static String JAVA_OPTION = "fbreader_java";
 	public static String NATIVE_OPTION = "fbreader_native";

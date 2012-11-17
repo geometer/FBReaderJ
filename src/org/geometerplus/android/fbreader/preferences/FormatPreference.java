@@ -146,7 +146,7 @@ class FormatPreference extends ListPreference {
 			values.add("DELETE");
 			names.add(deleteItem);
 		}
-		if (myIsPredefined && !myIsJava && !myIsNative) {
+		if (myIsPredefined && !myIsJava && !myIsNative && !myIsPlugin) {
 			values.add("");
 			names.add(myResource.getResource("appNotSet").getValue());
 		}
