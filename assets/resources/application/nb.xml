@@ -507,15 +507,15 @@
 				</node>
 			</node>
 		</node>
-		<node name="css" value="CSS" toBeTranslated="true">
-			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
-			<node name="fontSize" value="Font size" toBeTranslated="true">
+		<node name="css" value="CSS">
+			<node name="summary" value="Bruk/ignorer verdier definert i CSS-stilark"/>
+			<node name="fontSize" value="Skriftstørrelse">
 				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignorer skriftstørrelse definert i CSS"/>
 			</node>
-			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+			<node name="textAlignment" value="Tekstjustering">
 				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignorer tekstjustering definert i CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Farger og bakgrunnsbilder">
@@ -625,8 +625,8 @@
 				<node name="openDictionary" value="Langvarig trykk velger enkeltord, slipp trykk for å åpne ordbok"/>
 			</node>
 			<node name="navigateOverAllWords" value="Naviger over alle ord">
-				<node name="summaryOn" value="Key navigation visits all words"/>
-				<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
+				<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+				<node name="summaryOff" value="Tastenavigasjon besøker bare hyperlenker"/>
 			</node>
 		</node>
 		<node name="images" value="Bilder">
@@ -637,10 +637,10 @@
 				<node name="selectImage" value="Langvarig trykk velger bildet"/>
 				<node name="openImageView" value="Langvarig trykk åpner bildevisning"/>
 			</node>
-			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
-				<node name="none" value="None" toBeTranslated="true"/>
-				<node name="covers" value="Covers only" toBeTranslated="true"/>
-				<node name="all" value="All" toBeTranslated="true"/>
+			<node name="fitImagesToScreen" value="Tilpass bilder til skjerm">
+				<node name="none" value="Ingen"/>
+				<node name="covers" value="Bare forsider"/>
+				<node name="all" value="Alle"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Avbryt meny">
