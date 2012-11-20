@@ -68,7 +68,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	private ZLAndroidActivity myActivity;
 	private final Application myApplication;
-	private ZLAndroidWidget myWidget;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
@@ -76,11 +75,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	void setActivity(ZLAndroidActivity activity) {
 		myActivity = activity;
-		myWidget = null;
 	}
 
 	public void finish() {
-		if ((myActivity != null) && !myActivity.isFinishing()) {
+		if (myActivity != null && !myActivity.isFinishing()) {
 			myActivity.finish();
 		}
 	}
@@ -90,10 +88,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public ZLAndroidWidget getWidget() {
-		if (myWidget == null) {
-			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
-		}
-		return myWidget;
+		return (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
 	}
 
 	@Override
