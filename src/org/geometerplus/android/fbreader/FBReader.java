@@ -42,6 +42,7 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -481,6 +482,21 @@ public final class FBReader extends ZLAndroidActivity {
 		return myNavigationPopup != null;
 	}
 
+	private void setStatusBarVisibility(boolean visible) {
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
+			final ZLAndroidWidget main = (ZLAndroidWidget)findViewById(R.id.main_view);
+			main.setPreserveSize(visible);
+			if (visible) {
+				getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			} else {
+				getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+			}
+		}
+	}
+
 	void hideBars() {
 		if (myNavigationPopup != null) {
 			myNavigationPopup.stopNavigation();
@@ -497,9 +513,13 @@ public final class FBReader extends ZLAndroidActivity {
 		if (zlibrary.DisableButtonLightsOption.getValue()) {
 			findViewById(R.id.root_view).setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
 		}
+
+		setStatusBarVisibility(false);
 	}
 
 	void showBars() {
+		setStatusBarVisibility(true);
+
 		getActionBar().show();
 		myActionBarIsVisible = true;
 		invalidateOptionsMenu();
