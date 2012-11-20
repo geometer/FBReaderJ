@@ -58,9 +58,24 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setOnLongClickListener(this);
 	}
 
+	private volatile int myHDiff = 0;
+	private volatile boolean myUseHDiff = false;
+
+	public void setPreserveSize(boolean preserve) {
+		myUseHDiff = preserve;
+		if (!preserve) {
+			myHDiff = 0;
+		}
+	}
+
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
+		if (myUseHDiff && oldw == w) {
+			myHDiff += h - oldh;
+		} else {
+			myHDiff = 0;
+		}
 		getAnimationProvider().terminate();
 		if (myScreenIsTouched) {
 			final ZLView view = ZLApplication.Instance().getCurrentView();
@@ -79,8 +94,12 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		super.onDraw(canvas);
 
-//		final int w = getWidth();
-//		final int h = getMainAreaHeight();
+		if (myHDiff != 0) {
+			//final Matrix m = new Matrix();
+			//m.preTranslate(0, myHDiff);
+			//canvas.setMatrix(m);
+			canvas.translate(0, myHDiff);
+		}
 
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
@@ -491,6 +510,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private int getMainAreaHeight() {
 		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
-		return footer != null ? getHeight() - footer.getHeight() : getHeight();
+		final int height = footer != null ? getHeight() - footer.getHeight() : getHeight();
+		return height - myHDiff;
 	}
 }
