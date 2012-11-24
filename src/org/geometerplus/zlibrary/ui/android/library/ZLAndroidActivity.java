@@ -241,14 +241,9 @@ public abstract class ZLAndroidActivity extends Activity {
 			application.initWindow();
 		}
 
-		if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
-			Log.d("zlandroidactivity", "from history");
-		}
-		
 			new Thread() {
 				public void run() {
-					ZLApplication.Instance().openFile(fileFromIntent(getIntent()), getPostponedInitAction());
-					ZLApplication.Instance().getViewWidget().repaint();
+					getPostponedInitAction().run();
 				}
 			}.start();
 
@@ -347,16 +342,6 @@ public abstract class ZLAndroidActivity extends Activity {
 	public void onLowMemory() {
 		ZLApplication.Instance().onWindowClosing();
 		super.onLowMemory();
-	}
-
-	@Override
-	protected void onNewIntent(Intent intent) {
-		Log.d("zlandroidactivity", "onnewintent");
-		super.onNewIntent(intent);
-		final String action = intent.getAction();
-		if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
-			ZLApplication.Instance().openFile(fileFromIntent(intent), null);
-		}
 	}
 
 	private static ZLAndroidLibrary getLibrary() {

@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
@@ -67,6 +68,9 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	private int myFullScreenFlag;
+	
+	private boolean myNeedToOpenFile = false;
+	private ZLFile myFileToOpen = null;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -129,7 +133,11 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Log.d("fbreader", "oncreate");
-
+		
+		myNeedToOpenFile = true;
+		myFileToOpen = fileFromIntent(getIntent());
+		myNeedToSkipPlugin = true;
+		
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myFullScreenFlag =
@@ -272,6 +280,12 @@ public final class FBReader extends ZLAndroidActivity {
 			fbReader.openBook(Library.Instance().getRecentBook(), null, null);
 		} else {
 			super.onNewIntent(intent);
+			final String action = intent.getAction();
+			if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
+				myNeedToOpenFile = true;
+				myFileToOpen = fileFromIntent(intent);
+				myNeedToSkipPlugin = true;
+			}
 		}
 	}
 
@@ -379,6 +393,11 @@ public final class FBReader extends ZLAndroidActivity {
 		try {
 			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
 		} catch (Throwable t) {
+		}
+		if (myNeedToOpenFile) {
+			ZLApplication.Instance().openFile(myFileToOpen, null);
+			myNeedToOpenFile = false;
+			myFileToOpen = null;
 		}
 		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
