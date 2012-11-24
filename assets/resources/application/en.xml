@@ -38,6 +38,9 @@
 		<node name="fileTreeLibrary" value="FBReader library">
 			<node name="summary" value="FBReader books directory"/>
 		</node>
+		<node name="fileTreeAddLibrary" value="FBReader additional library">
+			<node name="summary" value="FBReader books directory"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Search"/>
 		</node>

@@ -43,8 +43,6 @@ public abstract class BaseStringListActivity extends ListActivity {
 	private Button myOkButton;
 	public List<String> Suggestions;
 
-	private ItemAdapter myAdapter;
-
 	public void enableButtons() {
 		if (myAddButton != null) {
 			myAddButton.setEnabled(getListAdapter().isSaveable());
@@ -179,6 +177,15 @@ public abstract class BaseStringListActivity extends ListActivity {
 					return;
 				}
 			}
+		}
+		
+		StringItem getStringItem(int id) {
+			for (int i = 0; i < myItems.size(); i++) {
+				if (myItems.get(i).getId() == id) {
+					return myItems.get(i);
+				}
+			}
+			return null;
 		}
 
 	}

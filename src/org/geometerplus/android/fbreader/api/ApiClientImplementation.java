@@ -479,4 +479,10 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	public String getResourceValue(String res) throws ApiException {
 		return requestString(GET_RESOURCE_VALUE, envelope(res));
 	}
+	
+	public void saveBookmark(String s) throws ApiException {
+		request(SAVE_BOOKMARK, new ApiObject[] {
+			ApiObject.envelope(s)
+		});
+	}
 }

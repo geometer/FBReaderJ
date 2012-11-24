@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.Bookmark;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
@@ -230,6 +231,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelope(getBookId(((ApiObject.String)parameters[0]).Value));
 				case GET_RESOURCE_VALUE:
 					return ApiObject.envelope(getResourceValue(((ApiObject.String)parameters[0]).Value));
+				case SAVE_BOOKMARK:
+					saveBookmark(((ApiObject.String)parameters[0]).Value);
+					return ApiObject.Void.Instance;
 
 				default:
 					return unsupportedMethodError(method);
@@ -636,5 +640,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return r.getValue();
 	}
 	
+	public void saveBookmark(String s) {
+		Bookmark.fromString(s).save();
+	}
 	
 }

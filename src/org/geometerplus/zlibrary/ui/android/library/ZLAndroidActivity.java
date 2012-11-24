@@ -29,6 +29,7 @@ import android.os.RemoteException;
 import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.*;
 import android.os.PowerManager;
 import android.net.Uri;
@@ -240,12 +241,16 @@ public abstract class ZLAndroidActivity extends Activity {
 			application.initWindow();
 		}
 
-		new Thread() {
-			public void run() {
-				ZLApplication.Instance().openFile(fileFromIntent(getIntent()), getPostponedInitAction());
-				ZLApplication.Instance().getViewWidget().repaint();
-			}
-		}.start();
+		if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
+			Log.d("zlandroidactivity", "from history");
+		}
+		
+			new Thread() {
+				public void run() {
+					ZLApplication.Instance().openFile(fileFromIntent(getIntent()), getPostponedInitAction());
+					ZLApplication.Instance().getViewWidget().repaint();
+				}
+			}.start();
 
 		ZLApplication.Instance().getViewWidget().repaint();
 		if (!ZLApplication.Instance().externalFileOpenerIsSet()) {
@@ -255,6 +260,12 @@ public abstract class ZLAndroidActivity extends Activity {
 			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
 		}
 		
+	}
+
+	@Override
+	protected void onDestroy() {
+		Log.d("zlandroidactivity", "ondestroy");
+		super.onDestroy();
 	}
 
 	protected abstract Runnable getPostponedInitAction();
@@ -340,6 +351,7 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
+		Log.d("zlandroidactivity", "onnewintent");
 		super.onNewIntent(intent);
 		final String action = intent.getAction();
 		if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
