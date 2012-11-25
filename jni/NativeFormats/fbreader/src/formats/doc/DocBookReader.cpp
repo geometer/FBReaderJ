@@ -149,7 +149,7 @@ void DocBookReader::handleSeparatorField() {
 	myFieldInfoBuffer.clear();
 	std::string utf8String;
 	ZLUnicodeUtil::ucs2ToUtf8(utf8String, buffer);
-	ZLStringUtil::stripWhiteSpaces(utf8String);
+	ZLUnicodeUtil::utf8Trim(utf8String);
 	if (utf8String.empty()) {
 		return;
 	}

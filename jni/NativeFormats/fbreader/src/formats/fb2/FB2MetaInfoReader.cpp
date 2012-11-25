@@ -20,7 +20,7 @@
 #include <cstdlib>
 
 #include <ZLInputStream.h>
-#include <ZLStringUtil.h>
+#include <ZLUnicodeUtil.h>
 
 #include "FB2MetaInfoReader.h"
 #include "FB2TagManager.h"
@@ -108,7 +108,7 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 				const char *name = attributeValue(attributes, "name");
 				if (name != 0) {
 					std::string seriesTitle = name;
-					ZLStringUtil::stripWhiteSpaces(seriesTitle);
+					ZLUnicodeUtil::utf8Trim(seriesTitle);
 					const char *number = attributeValue(attributes, "number");
 					myBook.setSeries(seriesTitle, number != 0 ? std::string(number) : std::string());
 				}
@@ -133,7 +133,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 			break;
 		case _GENRE:
 			if (myReadState == READ_GENRE) {
-				ZLStringUtil::stripWhiteSpaces(myBuffer);
+				ZLUnicodeUtil::utf8Trim(myBuffer);
 				if (!myBuffer.empty()) {
 					const std::vector<std::string> &tags =
 						FB2TagManager::Instance().humanReadableTags(myBuffer);
@@ -151,9 +151,9 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 			break;
 		case _AUTHOR:
 			if (myReadState == READ_AUTHOR) {
-				ZLStringUtil::stripWhiteSpaces(myAuthorNames[0]);
-				ZLStringUtil::stripWhiteSpaces(myAuthorNames[1]);
-				ZLStringUtil::stripWhiteSpaces(myAuthorNames[2]);
+				ZLUnicodeUtil::utf8Trim(myAuthorNames[0]);
+				ZLUnicodeUtil::utf8Trim(myAuthorNames[1]);
+				ZLUnicodeUtil::utf8Trim(myAuthorNames[2]);
 				std::string fullName = myAuthorNames[0];
 				if (!fullName.empty() && !myAuthorNames[1].empty()) {
 					fullName += ' ';
