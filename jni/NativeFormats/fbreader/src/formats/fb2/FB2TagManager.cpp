@@ -22,7 +22,7 @@
 #include <ZLFile.h>
 #include <ZLXMLReader.h>
 #include <ZLibrary.h>
-#include <ZLStringUtil.h>
+#include <ZLUnicodeUtil.h>
 
 #include "FB2TagManager.h"
 
@@ -68,7 +68,7 @@ void FB2TagInfoReader::startElementHandler(const char *tag, const char **attribu
 			const char *name = attributeValue(attributes, "genre-title");
 			if (name != 0) {
 				myCategoryName = name;
-				ZLStringUtil::stripWhiteSpaces(myCategoryName);
+				ZLUnicodeUtil::utf8Trim(myCategoryName);
 			}
 		}
 	} else if (SUBCATEGORY_NAME_TAG == tag) {
@@ -77,7 +77,7 @@ void FB2TagInfoReader::startElementHandler(const char *tag, const char **attribu
 			const char *name = attributeValue(attributes, "title");
 			if (name != 0) {
 				mySubCategoryName = name;
-				ZLStringUtil::stripWhiteSpaces(mySubCategoryName);
+				ZLUnicodeUtil::utf8Trim(mySubCategoryName);
 			}
 		}
 	}
