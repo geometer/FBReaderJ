@@ -117,7 +117,7 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 
 void OEBMetaInfoReader::endElementHandler(const char *tag) {
 	const std::string tagString = ZLUnicodeUtil::toLower(tag);
-	ZLStringUtil::stripWhiteSpaces(myBuffer);
+	ZLUnicodeUtil::utf8Trim(myBuffer);
 	switch (myReadState) {
 		case READ_NONE:
 			break;

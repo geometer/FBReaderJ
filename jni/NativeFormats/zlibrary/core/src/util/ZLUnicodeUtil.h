@@ -52,8 +52,10 @@ public:
 	static void utf8ToUcs4(Ucs4String &to, const std::string &from, int toLength = -1);
 	static void utf8ToUcs2(Ucs2String &to, const char *from, int length, int toLength = -1);
 	static void utf8ToUcs2(Ucs2String &to, const std::string &from, int toLength = -1);
-	static int firstChar(Ucs4Char &ch, const char *utf8String);
-	static int firstChar(Ucs4Char &ch, const std::string &utf8String);
+	static std::size_t firstChar(Ucs4Char &ch, const char *utf8String);
+	static std::size_t firstChar(Ucs4Char &ch, const std::string &utf8String);
+	static std::size_t lastChar(Ucs4Char &ch, const char *utf8String);
+	static std::size_t lastChar(Ucs4Char &ch, const std::string &utf8String);
 	static void ucs4ToUtf8(std::string &to, const Ucs4String &from, int toLength = -1);
 	static int ucs4ToUtf8(char *to, Ucs4Char ch);
 	static void ucs2ToUtf8(std::string &to, const Ucs2String &from, int toLength = -1);
@@ -70,6 +72,8 @@ public:
 	//static Ucs4Char toUpper(Ucs4Char ch);
 	//static void toUpper(Ucs4String &str);
 	static std::string toUpper(const std::string &utf8String);
+
+	static void utf8Trim(std::string &utf8String);
 };
 
 inline bool ZLUnicodeUtil::isNBSpace(Ucs4Char ch) {
