@@ -73,9 +73,9 @@ void ZLUnicodeTableReader::startElementHandler(const char *tag, const char **att
 			type = ZLUnicodeData::LETTER_OTHER;
 		}
 		const char *lowerS = attributeValue(attributes, "lower");
-		const ZLUnicodeUtil::Ucs4Char lower = (lowerS != 0) ? strtol(lowerS, 0, 16) : code;
+		const ZLUnicodeUtil::Ucs4Char lower = lowerS != 0 ? std::strtol(lowerS, 0, 16) : code;
 		const char *upperS = attributeValue(attributes, "upper");
-		const ZLUnicodeUtil::Ucs4Char upper = (upperS != 0) ? strtol(upperS, 0, 16) : code;
+		const ZLUnicodeUtil::Ucs4Char upper = upperS != 0 ? std::strtol(upperS, 0, 16) : code;
 		UNICODE_TABLE.insert(std::make_pair(code, ZLUnicodeData(type, lower, upper)));
 	}
 }
@@ -278,11 +278,11 @@ void ZLUnicodeUtil::utf8ToUcs2(Ucs2String &to, const std::string &from, int toLe
 	utf8ToUcs2(to, from.data(), from.length(), toLength);
 }
 
-int ZLUnicodeUtil::firstChar(Ucs4Char &ch, const std::string &utf8String) {
+std::size_t ZLUnicodeUtil::firstChar(Ucs4Char &ch, const std::string &utf8String) {
 	return firstChar(ch, utf8String.c_str());
 }
 
-int ZLUnicodeUtil::firstChar(Ucs4Char &ch, const char *utf8String) {
+std::size_t ZLUnicodeUtil::firstChar(Ucs4Char &ch, const char *utf8String) {
 	if ((*utf8String & 0x80) == 0) {
 		ch = *utf8String;
 		return 1;
@@ -299,6 +299,18 @@ int ZLUnicodeUtil::firstChar(Ucs4Char &ch, const char *utf8String) {
 		ch += *(utf8String + 2) & 0x3f;
 		return 3;
 	}
+}
+
+std::size_t ZLUnicodeUtil::lastChar(Ucs4Char &ch, const std::string &utf8String) {
+	return lastChar(ch, utf8String.data() + utf8String.length());
+}
+
+std::size_t ZLUnicodeUtil::lastChar(Ucs4Char &ch, const char *utf8String) {
+	const char *ptr = utf8String - 1;
+	while ((*ptr & 0xC0) == 0x80) {
+		--ptr;
+	}
+	return utf8String - ptr;
 }
 
 int ZLUnicodeUtil::ucs4ToUtf8(char *to, Ucs4Char ch) {
@@ -529,4 +541,31 @@ std::string ZLUnicodeUtil::toUpper(const std::string &utf8String) {
 		env->DeleteLocalRef(javaString);
 		return result;
 	}
+}
+
+void ZLUnicodeUtil::utf8Trim(std::string &utf8String) {
+	std::size_t counter = 0;
+	std::size_t length = utf8String.length();
+	Ucs4Char chr;
+	while (counter < length) {
+		const std::size_t l = firstChar(chr, utf8String.data() + counter);
+		if (isSpace(chr)) {
+			counter += l;
+		} else {
+			break;
+		}
+	}
+	utf8String.erase(0, counter);
+	length -= counter;
+
+	std::size_t r_counter = length;
+	while (r_counter > 0) {
+		const std::size_t l = lastChar(chr, utf8String.data() + r_counter);
+		if (isSpace(chr)) {
+			r_counter -= l;
+		} else {
+			break;
+		}
+	}
+	utf8String.erase(r_counter, length - r_counter);
 }

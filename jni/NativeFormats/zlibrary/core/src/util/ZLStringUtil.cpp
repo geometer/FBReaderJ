@@ -54,7 +54,7 @@ void ZLStringUtil::appendNumber(std::string &str, unsigned int n) {
 	} else {
 		len = 1;
 	}
-	
+
 	str.append(len, '\0');
 	char *ptr = (char*)str.data() + str.length() - 1;
 	for (int i = 0; i < len; ++i) {
@@ -77,14 +77,14 @@ void ZLStringUtil::append(std::string &str, const std::vector<std::string> &text
 void ZLStringUtil::stripWhiteSpaces(std::string &str) {
 	std::size_t counter = 0;
 	std::size_t length = str.length();
-	while ((counter < length) && isspace((unsigned char)str[counter])) {
+	while (counter < length && std::isspace((unsigned char)str[counter])) {
 		counter++;
 	}
 	str.erase(0, counter);
 	length -= counter;
 
 	std::size_t r_counter = length;
-	while ((r_counter > 0) && isspace((unsigned char)str[r_counter - 1])) {
+	while (r_counter > 0 && std::isspace((unsigned char)str[r_counter - 1])) {
 		r_counter--;
 	}
 	str.erase(r_counter, length - r_counter);
@@ -114,14 +114,14 @@ std::string ZLStringUtil::printf(const std::string &format, const std::string &a
 std::string ZLStringUtil::doubleToString(double value) {
 	char buf[100];
 	setlocale(LC_NUMERIC, "C");
-	sprintf(buf, "%f", value);
+	std::sprintf(buf, "%f", value);
 	return buf;
 }
 
 double ZLStringUtil::stringToDouble(const std::string &str, double defaultValue) {
 	if (!str.empty()) {
 		setlocale(LC_NUMERIC, "C");
-		return atof(str.c_str());
+		return std::atof(str.c_str());
 	} else {
 		return defaultValue;
 	}
@@ -131,15 +131,15 @@ int ZLStringUtil::stringToInteger(const std::string &str, int defaultValue) {
 	if (str.empty()) {
 		return defaultValue;
 	}
-	if (!isdigit(str[0]) && (str.length() == 1 || str[0] != '-' || !isdigit(str[1]))) {
+	if (!std::isdigit(str[0]) && (str.length() == 1 || str[0] != '-' || !std::isdigit(str[1]))) {
 		return defaultValue;
 	}
 
 	for (std::size_t i = 1; i < str.length(); ++i) {
-		if (!isdigit(str[i])) {
+		if (!std::isdigit(str[i])) {
 			return defaultValue;
 		}
 	}
 
-	return atoi(str.c_str());
+	return std::atoi(str.c_str());
 }
