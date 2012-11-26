@@ -384,11 +384,11 @@ public final class FBReader extends ZLAndroidActivity {
 						Log.d("fbj", "opening book from onresume");
 						fbReader.openBook(fbReader.Model.Book, null, null);
 					} else {
-						myNeedToSkipPlugin = false;
 						Log.d("fbj", "skipping");
 					}
 				}
 			}
+			myNeedToSkipPlugin = false;
 		}
 		try {
 			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
