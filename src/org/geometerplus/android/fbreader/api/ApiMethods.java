@@ -80,4 +80,5 @@ interface ApiMethods {
 	int SET_STORED_POSITION = 1002;
 	int GET_BOOK_ID = 1003;
 	int GET_RESOURCE_VALUE = 1004;
+	int SAVE_BOOKMARK = 1005;
 }

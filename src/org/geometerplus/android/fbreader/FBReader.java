@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
@@ -45,6 +46,7 @@ import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
@@ -66,6 +68,9 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	private int myFullScreenFlag;
+	
+	private boolean myNeedToOpenFile = false;
+	private ZLFile myFileToOpen = null;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -103,6 +108,10 @@ public final class FBReader extends ZLAndroidActivity {
 				filePath = data.getPath();
 			}
 		}
+		Log.d("fbreader", "filePath");
+		if (filePath != null) {
+			Log.d("fbreader", filePath);
+		}
 		return filePath != null ? ZLFile.createFileByPath(filePath) : null;
 	}
 
@@ -124,7 +133,11 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Log.d("fbreader", "oncreate");
-
+		
+		myNeedToOpenFile = true;
+		myFileToOpen = fileFromIntent(getIntent());
+		myNeedToSkipPlugin = true;
+		
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myFullScreenFlag =
@@ -176,6 +189,13 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 		if ("android.fbreader.action.CLOSE".equals(getIntent().getAction())) {
 			myCancelCalled = true;
+		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(getIntent().getAction())) {
+			Log.d("fbj", "crash in oncreate");
+			long bookid = getIntent().getLongExtra("BOOKID", -1);
+			Library.Instance().removeBookFromRecentList(Book.getById(bookid));
+			myNeedToSkipPlugin = true;
+			fbReader.Model = null;
+			fbReader.openBook(Library.Instance().getRecentBook(), null, null);
 		}
 	}
 
@@ -213,8 +233,12 @@ public final class FBReader extends ZLAndroidActivity {
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
+		Log.d("fbreader", "onnewintent");
 		final Uri data = intent.getData();
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			myNeedToSkipPlugin = true;
+		}
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())
@@ -247,8 +271,21 @@ public final class FBReader extends ZLAndroidActivity {
 		} else if ("android.fbreader.action.CLOSE".equals(intent.getAction())) {
 			myCancelCalled = true;
 			myCancelAction = intent.getIntExtra("value", -1);
+		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(intent.getAction())) {
+			Log.d("fbj", "crash");
+			long bookid = intent.getLongExtra("BOOKID", -1);
+			Library.Instance().removeBookFromRecentList(Book.getById(bookid));
+			myNeedToSkipPlugin = true;
+			fbReader.Model = null;
+			fbReader.openBook(Library.Instance().getRecentBook(), null, null);
 		} else {
 			super.onNewIntent(intent);
+			final String action = intent.getAction();
+			if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
+				myNeedToOpenFile = true;
+				myFileToOpen = fileFromIntent(intent);
+				myNeedToSkipPlugin = true;
+			}
 		}
 	}
 
@@ -341,18 +378,26 @@ public final class FBReader extends ZLAndroidActivity {
 		} else {
 			if (fbReader.Model != null && fbReader.Model.Book != null) {
 				final FormatPlugin p = PluginCollection.Instance().getPlugin(fbReader.Model.Book.File);
+				Log.d("fbj", "onresume: current book is: " + fbReader.Model.Book.File.getPath());
 				if (p.type() == FormatPlugin.Type.PLUGIN) {
 					if (!myNeedToSkipPlugin) {
+						Log.d("fbj", "opening book from onresume");
 						fbReader.openBook(fbReader.Model.Book, null, null);
 					} else {
-						myNeedToSkipPlugin = false;
+						Log.d("fbj", "skipping");
 					}
 				}
 			}
+			myNeedToSkipPlugin = false;
 		}
 		try {
 			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
 		} catch (Throwable t) {
+		}
+		if (myNeedToOpenFile) {
+			ZLApplication.Instance().openFile(myFileToOpen, null);
+			myNeedToOpenFile = false;
+			myFileToOpen = null;
 		}
 		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);

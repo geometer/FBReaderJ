@@ -611,6 +611,13 @@ public final class Library extends AbstractLibrary {
 		return true;
 	}
 
+	public void removeBookFromRecentList(Book book) {
+		getFirstLevelTree(ROOT_RECENT).removeBook(book, false);
+		final List<Long> ids = myDatabase.loadRecentBookIds();
+		ids.remove(book.getId());
+		myDatabase.saveRecentBookIds(ids);
+	}
+	
 	@Override
 	public void removeBook(Book book, int removeMode) {
 		if (removeMode == REMOVE_DONT_REMOVE) {
