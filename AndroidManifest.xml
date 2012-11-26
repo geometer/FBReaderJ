@@ -103,6 +103,10 @@
 				<action android:name="android.fbreader.action.CLOSE"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
+			<intent-filter>
+				<action android:name="android.fbreader.action.PLUGIN_CRASH"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>

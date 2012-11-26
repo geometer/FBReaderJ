@@ -252,7 +252,11 @@ mainLoop:
 		String res = base.replace("%%BOOKID%%", Long.toString(myBookId))
 				.replace("%%BOOKTITLE%%", myBookTitle)
 				.replace("%%MODELID%%", ModelId != null ? ModelId : "null")
-				.replace("%%TEXT%%", myText)
+				.replace("%%TEXT%%", myText
+						.replace("&", "&amp;")
+						.replace("\"", "&quot;")
+						.replace("<", "&lt;")
+						.replace(">", "&gt;"))
 				.replace("%%PINDEX%%", Integer.toString(ParagraphIndex))
 				.replace("%%EINDEX%%", Integer.toString(ElementIndex))
 				.replace("%%CINDEX%%", Integer.toString(CharIndex));
