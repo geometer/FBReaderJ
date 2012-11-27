@@ -258,7 +258,7 @@ public class NetworkLibrary {
 	private volatile boolean myUpdateInProgress;
 	private Object myUpdateLock = new Object();
 
-	public void runBackgroundUpdate(final boolean clearCache) {
+	public void runBackgroundUpdate(final boolean force) {
 		if (!isInitialized()) {
 			return;
 		}
@@ -268,7 +268,7 @@ public class NetworkLibrary {
 				try {
 					myUpdateInProgress = true;
 					fireModelChangedEvent(ChangeListener.Code.SomeCode);
-					runBackgroundUpdateInternal(clearCache);
+					runBackgroundUpdateInternal(force);
 				} catch (ZLNetworkException e) {
 					fireModelChangedEvent(ChangeListener.Code.NetworkError, e.getMessage());
 				} finally {
@@ -281,10 +281,10 @@ public class NetworkLibrary {
 		thread.start();
 	}
 
-	private void runBackgroundUpdateInternal(boolean clearCache) throws ZLNetworkException {
+	private void runBackgroundUpdateInternal(boolean force) throws ZLNetworkException {
 		synchronized (myUpdateLock) {
 			final OPDSLinkReader.CacheMode mode =
-				clearCache ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
+				force ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
 			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(mode);
 			if (!loadedLinks.isEmpty()) {
 				removeAllLoadedLinks();
@@ -297,7 +297,7 @@ public class NetworkLibrary {
 			for (INetworkLink link : linksCopy) {
 				if (link.getType() == INetworkLink.Type.Custom) {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
-					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
+					if (force || customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
 						try {
 							customLink.reloadInfo(true, true);
 							NetworkDatabase.Instance().saveLink(customLink);
