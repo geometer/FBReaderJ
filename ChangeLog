@@ -5,6 +5,7 @@
 ===== 1.6.7 (Nov ??, 2012) =====
 * Android 4.*: show status bar if action bar is shown
 * Bulgarian hyphenation patterns, converted by Kaloyan Raev
+* OPDS: fixed opensearch description support
 
 ===== 1.6.6 (Nov 13, 2012) =====
 * Fixed 'extra paragraph break after each footnote mark' issue for RTFs (and may be some other formats)
