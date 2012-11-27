@@ -57,8 +57,8 @@ class OpenSearchXMLReader extends ZLXMLReaderAdapter {
 	private static final int START = 0;
 	private static final int DESCRIPTION = 1;
 
-	private static final String TAG_DESCRIPTION = "OpenSearchDescription";
-	private static final String TAG_URL = "Url";
+	private static final String TAG_DESCRIPTION = "opensearchdescription";
+	private static final String TAG_URL = "url";
 
 	private int myState = START;
 
