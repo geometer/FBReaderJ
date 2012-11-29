@@ -77,6 +77,7 @@ public final class MimeType {
 	public static final MimeType APP_FB2_ZIP = get("application/fb2+zip");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_ATOM_XML = get("application/atom+xml");
+	public static final MimeType APP_ATOM_XML_ENTRY = get("application/atom+xml;type=entry");
 	// ???
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
     // unofficial, used in data.fbreader.org LitRes catalog
@@ -159,5 +160,21 @@ public final class MimeType {
 	@Override
 	public int hashCode() {
 		return ZLMiscUtil.hashCode(Name);
+	}
+
+	@Override
+	public String toString() {
+		if (myParameters == null) {
+			return Name;
+		}
+
+		final StringBuilder buffer = new StringBuilder(Name);
+		for (Map.Entry<String,String> entry : myParameters.entrySet()) {
+			buffer.append(';');
+			buffer.append(entry.getKey());
+			buffer.append('=');
+			buffer.append(entry.getValue());
+		}
+		return buffer.toString();
 	}
 }

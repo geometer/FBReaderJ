@@ -25,6 +25,8 @@ import android.net.Uri;
 
 import org.geometerplus.fbreader.Paths;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
+
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
 public class BookUrlInfo extends UrlInfo {
@@ -40,8 +42,8 @@ public class BookUrlInfo extends UrlInfo {
 
 	public final int BookFormat;
 
-	public BookUrlInfo(Type type, int format, String url) {
-		super(type, url);
+	public BookUrlInfo(Type type, int format, String url, MimeType mime) {
+		super(type, url, mime);
 		BookFormat = format;
 	}
 

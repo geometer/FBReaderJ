@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 import org.geometerplus.fbreader.network.urlInfo.*;
@@ -62,4 +63,7 @@ public abstract class SearchItem extends NetworkCatalogItem {
 	public String getStringId() {
 		return "@Search";
 	}
+
+	public abstract MimeType getMimeType();
+	public abstract String getUrl(String pattern);
 }

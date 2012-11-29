@@ -25,11 +25,9 @@ public class RelatedUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788098L;
 
 	public final String Title;
-	public final MimeType Mime;
 
-	public RelatedUrlInfo(Type type, String title, MimeType mime, String url) {
-		super(type, url);
+	public RelatedUrlInfo(Type type, String title, String url, MimeType mime) {
+		super(type, url, mime);
 		Title = title;
-		Mime = mime;
 	}
 }
