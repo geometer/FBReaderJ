@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -29,7 +30,7 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void setSummary(String summary);
 
 	UrlInfoCollection<UrlInfoWithDate> urlInfoMap();
-	void setUrl(UrlInfo.Type type, String url);
+	void setUrl(UrlInfo.Type type, String url, MimeType mime);
 	void removeUrl(UrlInfo.Type type);
 
 	boolean isObsolete(long milliSeconds);
