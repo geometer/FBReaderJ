@@ -22,21 +22,25 @@ package org.geometerplus.fbreader.network.opds;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
+
 class OpenSearchDescription {
-	public static OpenSearchDescription createDefault(String template) {
-		return new OpenSearchDescription(template, -1, -1);
+	public static OpenSearchDescription createDefault(String tmpl, MimeType mime) {
+		return new OpenSearchDescription(tmpl, -1, -1, mime);
 	}
 
 	public final String Template;
 	public final int IndexOffset;
 	public final int PageOffset;
+	public final MimeType Mime;
 
 	public final int ItemsPerPage = 20;
 
-	OpenSearchDescription(String template, int indexOffset, int pageOffset) {
-		Template = template;
+	OpenSearchDescription(String tmpl, int indexOffset, int pageOffset, MimeType mime) {
+		Template = tmpl;
 		IndexOffset = indexOffset;
 		PageOffset = pageOffset;
+		Mime = mime;
 	}
 
 	public boolean isValid() {

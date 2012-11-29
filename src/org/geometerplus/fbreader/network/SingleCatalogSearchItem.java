@@ -19,11 +19,11 @@
 
 package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class SingleCatalogSearchItem extends SearchItem {
 	public SingleCatalogSearchItem(INetworkLink link) {
@@ -37,13 +37,25 @@ public class SingleCatalogSearchItem extends SearchItem {
 	public void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
 		final NetworkOperationData data = Link.createOperationData(loader);
 		ZLNetworkRequest request = Link.simpleSearchRequest(pattern, data);
-
-		while (request != null) {
+		// TODO: possible infinite loop, use "continue link" instead
+		while (request != null && MimeType.APP_ATOM_XML.weakEquals(request.Mime)) {
 			ZLNetworkManager.Instance().perform(request);
 			if (loader.confirmInterruption()) {
 				return;
 			}
 			request = data.resume();
 		}
+	}
+
+	@Override
+	public MimeType getMimeType() {
+		final UrlInfo info = Link.getUrlInfo(UrlInfo.Type.Search);
+		return info != null ? info.Mime : MimeType.NULL;
+	}
+
+	@Override
+	public String getUrl(String pattern) {
+		final UrlInfo info = Link.getUrlInfo(UrlInfo.Type.Search);
+		return info != null && info.Url != null ? info.Url.replace("%s", pattern) : null;
 	}
 }

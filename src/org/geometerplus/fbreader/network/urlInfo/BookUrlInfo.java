@@ -28,6 +28,8 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
+
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
 public class BookUrlInfo extends UrlInfo {
@@ -52,8 +54,8 @@ public class BookUrlInfo extends UrlInfo {
 
 	public final String BookFormat;
 
-	public BookUrlInfo(Type type, String format, String url) {
-		super(type, url);
+	public BookUrlInfo(Type type, String format, String url, MimeType mime) {
+		super(type, url, mime);
 		BookFormat = format;
 	}
 

@@ -21,9 +21,8 @@ package org.geometerplus.fbreader.network;
 
 import java.util.LinkedList;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
@@ -43,7 +42,7 @@ public class AllCatalogsSearchItem extends SearchItem {
 		for (INetworkLink link : NetworkLibrary.Instance().activeLinks()) {
 			final NetworkOperationData data = link.createOperationData(loader);
 			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
-			if (request != null) {
+			if (request != null && MimeType.APP_ATOM_XML.weakEquals(request.Mime)) {
 				dataList.add(data);
 				requestList.add(request);
 			}
@@ -64,5 +63,15 @@ public class AllCatalogsSearchItem extends SearchItem {
 				}
 			}
 		}
+	}
+
+	@Override
+	public MimeType getMimeType() {
+		return MimeType.APP_ATOM_XML;
+	}
+
+	@Override
+	public String getUrl(String pattern) {
+		return null;
 	}
 }

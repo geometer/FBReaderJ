@@ -34,7 +34,7 @@ public class LitResNetworkRequest extends ZLNetworkRequest {
 	}
 
 	public LitResNetworkRequest(String url, LitResAuthenticationXMLReader reader) {
-		super(clean(url), null, null);
+		super(clean(url));
 		final int index = url.indexOf('?');
 		if (index != -1) {
 			for (String param : url.substring(index + 1).split("&")) {
