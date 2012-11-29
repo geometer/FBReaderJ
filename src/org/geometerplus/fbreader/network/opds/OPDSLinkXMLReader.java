@@ -84,40 +84,40 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				new UrlInfoCollection<UrlInfoWithDate>();
 			for (ATOMLink link: entry.Links) {
 				final String href = link.getHref();
-				final MimeType type = MimeType.get(link.getType());
+				final MimeType mime = MimeType.get(link.getType());
 				final String rel = link.getRel();
 				if (rel == REL_IMAGE_THUMBNAIL || rel == REL_THUMBNAIL) {
-					if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
-						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Thumbnail, href));
+					if (MimeType.IMAGE_PNG.equals(mime) || MimeType.IMAGE_JPEG.equals(mime)) {
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Thumbnail, href, mime));
 					}
 				} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || rel == REL_COVER) {
-					if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
-						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Image, href));
+					if (MimeType.IMAGE_PNG.equals(mime) || MimeType.IMAGE_JPEG.equals(mime)) {
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Image, href, mime));
 					}
 				} else if (rel == null) {
-					if (MimeType.APP_ATOM_XML.weakEquals(type)) {
-						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href));
+					if (MimeType.APP_ATOM_XML.weakEquals(mime)) {
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href, mime));
 					}
 				} else if (rel == "search") {
-					if (MimeType.APP_ATOM_XML.weakEquals(type)) {
-						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href);
+					if (MimeType.APP_ATOM_XML.weakEquals(mime) || MimeType.TEXT_HTML.weakEquals(mime)) {
+						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href, mime);
 						if (descr.isValid()) {
-							// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
-							infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Search, descr.makeQuery("%s")));
+							// TODO: Why do we use '%s'? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
+							infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Search, descr.makeQuery("%s"), mime));
 						}
 					}
 				} else if (rel == "listbooks") {
-					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.ListBooks, href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.ListBooks, href, mime));
 				} else if (rel == REL_LINK_SIGN_IN) {
-					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignIn, href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignIn, href, mime));
 				} else if (rel == REL_LINK_SIGN_OUT) {
-					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignOut, href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignOut, href, mime));
 				} else if (rel == REL_LINK_SIGN_UP) {
-					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignUp, href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignUp, href, mime));
 				} else if (rel == REL_LINK_TOPUP) {
-					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.TopUp, href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.TopUp, href, mime));
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
-					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.RecoverPassword, href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.RecoverPassword, href, mime));
 				}
 			}
 

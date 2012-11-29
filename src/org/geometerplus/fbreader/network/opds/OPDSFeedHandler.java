@@ -81,9 +81,9 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		} else {
 			final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 			for (ATOMLink link : feed.Links) {
-				final MimeType type = MimeType.get(link.getType());
-				final String rel = opdsLink.relation(link.getRel(), type);
-				if (MimeType.APP_ATOM_XML.weakEquals(type) && "next".equals(rel)) {
+				final MimeType mime = MimeType.get(link.getType());
+				final String rel = opdsLink.relation(link.getRel(), mime);
+				if (MimeType.APP_ATOM_XML.weakEquals(mime) && "next".equals(rel)) {
 					myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				}
 			}
@@ -118,16 +118,16 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link : entry.Links) {
-			final MimeType type = MimeType.get(link.getType());
-			final String rel = opdsLink.relation(link.getRel(), type);
+			final MimeType mime = MimeType.get(link.getType());
+			final String rel = opdsLink.relation(link.getRel(), mime);
 
-			if (rel == null && MimeType.APP_ATOM_XML.weakEquals(type)) {
+			if (rel == null && MimeType.APP_ATOM_XML.weakEquals(mime)) {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 			int relType = BookUrlInfo.Format.NONE;
 			if (rel == null || rel.startsWith(REL_ACQUISITION_PREFIX)
 					|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX)) {
-				relType = OPDSBookItem.formatByMimeType(type);
+				relType = OPDSBookItem.formatByMimeType(mime);
 			}
 			if (relType != BookUrlInfo.Format.NONE
 					&& (id == null || idType < relType
@@ -168,10 +168,10 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
-			final MimeType type = MimeType.get(link.getType());
-			final String rel = opdsLink.relation(link.getRel(), type);
+			final MimeType mime = MimeType.get(link.getType());
+			final String rel = opdsLink.relation(link.getRel(), mime);
 			if (rel == null
-					? (OPDSBookItem.formatByMimeType(type) != BookUrlInfo.Format.NONE)
+					? (OPDSBookItem.formatByMimeType(mime) != BookUrlInfo.Format.NONE)
 					: (rel.startsWith(REL_ACQUISITION_PREFIX)
 							|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX))) {
 				hasBookLink = true;
@@ -199,35 +199,35 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		String litresRel = null;
 		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
-			final MimeType type = MimeType.get(link.getType());
-			final String rel = opdsLink.relation(link.getRel(), type);
-			if (MimeType.IMAGE_PNG.weakEquals(type) || MimeType.IMAGE_JPEG.weakEquals(type)) {
+			final MimeType mime = MimeType.get(link.getType());
+			final String rel = opdsLink.relation(link.getRel(), mime);
+			if (MimeType.IMAGE_PNG.weakEquals(mime) || MimeType.IMAGE_JPEG.weakEquals(mime)) {
 				if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
-					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href));
+					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href, mime));
 				} else if (REL_COVER.equals(rel) || (rel != null && rel.startsWith(REL_IMAGE_PREFIX))) {
-					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
+					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, href, mime));
 				}
-			} else if (MimeType.APP_ATOM_XML.weakEquals(type)) {
+			} else if (MimeType.APP_ATOM_XML.weakEquals(mime)) {
 				final boolean hasCatalogUrl =
 					urlMap.getInfo(UrlInfo.Type.Catalog) != null;
 				if (REL_ALTERNATE.equals(rel)) {
 					if (!hasCatalogUrl) {
-						urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
+						urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href, mime));
 						urlIsAlternate = true;
 					}
 				} else if (!hasCatalogUrl || rel == null || REL_SUBSECTION.equals(rel)) {
-					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
+					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href, mime));
 					urlIsAlternate = false;
 				}
-			} else if (MimeType.TEXT_HTML.weakEquals(type)) {
+			} else if (MimeType.TEXT_HTML.weakEquals(mime)) {
 				if (REL_ACQUISITION.equals(rel) ||
 					REL_ACQUISITION_OPEN.equals(rel) ||
 					REL_ALTERNATE.equals(rel) ||
 					rel == null) {
-					urlMap.addInfo(new UrlInfo(UrlInfo.Type.HtmlPage, href));
+					urlMap.addInfo(new UrlInfo(UrlInfo.Type.HtmlPage, href, mime));
 				}
-			} else if (MimeType.APP_LITRES.weakEquals(type)) {
-				urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
+			} else if (MimeType.APP_LITRES.weakEquals(mime)) {
+				urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href, mime));
 				litresRel = rel;
 			}
 		}
