@@ -83,7 +83,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		NotChecked
 	*/
 
-	ZLNetworkRequest createNetworkData(String url, final OPDSCatalogItem.State result) {
+	ZLNetworkRequest createNetworkData(String url, MimeType mime, final OPDSCatalogItem.State result) {
 		if (url == null) {
 			return null;
 		}
@@ -91,7 +91,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
 		library.startLoading(catalogItem);
 		url = rewriteUrl(url, false);
-		return new ZLNetworkRequest(url) {
+		return new ZLNetworkRequest(url, mime, null, false) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				if (result.Loader.confirmInterruption()) {
@@ -123,19 +123,19 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
-		final String url = getUrl(UrlInfo.Type.Search);
-		if (url == null) {
+		final UrlInfo info = getUrlInfo(UrlInfo.Type.Search);
+		if (info == null || info.Url == null) {
 			return null;
 		}
 		try {
 			pattern = URLEncoder.encode(pattern, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 		}
-		return createNetworkData(url.replace("%s", pattern), (OPDSCatalogItem.State)data);
+		return createNetworkData(info.Url.replace("%s", pattern), info.Mime, (OPDSCatalogItem.State)data);
 	}
 
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		return createNetworkData(data.ResumeURI, (OPDSCatalogItem.State)data);
+		return createNetworkData(data.ResumeURI, MimeType.APP_ATOM_XML, (OPDSCatalogItem.State)data);
 	}
 
 	public NetworkCatalogItem libraryItem() {

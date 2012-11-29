@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.NetworkBookItem;
@@ -109,13 +110,14 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				if (TAG_BOOK == tag) {
 					myBookId = attributes.getValue("hub_id");
 					myUrls.addInfo(new UrlInfo(
-						UrlInfo.Type.Image, attributes.getValue("cover_preview")
+						UrlInfo.Type.Image, attributes.getValue("cover_preview"), MimeType.IMAGE_AUTO
 					));
         
 					myUrls.addInfo(new BookUrlInfo(
 						UrlInfo.Type.BookConditional,
 						BookUrlInfo.Format.FB2_ZIP,
-						"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId
+						"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
+						MimeType.APP_FB2_ZIP
 					));
 					myState = BOOK;
 				}
@@ -197,7 +199,8 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				if (TAG_BOOK == tag) {
 					myUrls.addInfo(new UrlInfo(	
 						UrlInfo.Type.SingleEntry,
-						"http://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId
+						"http://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId,
+						MimeType.APP_ATOM_XML_ENTRY
 					));
 					Books.add(new OPDSBookItem(
 						Link,

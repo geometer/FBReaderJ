@@ -21,22 +21,23 @@ package org.geometerplus.fbreader.network.urlInfo;
 
 import java.util.Date;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 public final class UrlInfoWithDate extends UrlInfo {
 	private static final long serialVersionUID = -896768978957787222L;
 
-	public static final UrlInfoWithDate NULL = new UrlInfoWithDate(null, null);
+	public static final UrlInfoWithDate NULL = new UrlInfoWithDate(null, null, MimeType.NULL);
 
 	public final Date Updated;
 
-	public UrlInfoWithDate(Type type, String url, Date updated) {
-		super(type, url);
+	public UrlInfoWithDate(Type type, String url, MimeType mime, Date updated) {
+		super(type, url, mime);
 		Updated = updated;
 	}
 
-	public UrlInfoWithDate(Type type, String url) {
-		this(type, url, new Date());
+	public UrlInfoWithDate(Type type, String url, MimeType mime) {
+		this(type, url, mime, new Date());
 	}
 
 	@Override
@@ -52,11 +53,12 @@ public final class UrlInfoWithDate extends UrlInfo {
 		return
 			InfoType == info.InfoType &&
 			ZLMiscUtil.equals(Url, info.Url) &&
+			ZLMiscUtil.equals(Mime, info.Mime) &&
 			ZLMiscUtil.equals(Updated, info.Updated);
 	}
 
 	@Override
 	public int hashCode() {
-		return InfoType.hashCode() + ZLMiscUtil.hashCode(Url) + ZLMiscUtil.hashCode(Updated);
+		return InfoType.hashCode() + ZLMiscUtil.hashCode(Url) + ZLMiscUtil.hashCode(Mime) + ZLMiscUtil.hashCode(Updated);
 	}
 }
