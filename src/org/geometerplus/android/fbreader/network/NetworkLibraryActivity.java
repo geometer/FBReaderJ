@@ -361,6 +361,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 						break;
 					case NotFound:
 						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyNetworkSearchResults");
+						getListView().invalidateViews();
 						break;
 					case EmptyCatalog:
 						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyCatalog");

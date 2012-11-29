@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
+
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.SearchItem;
 
@@ -71,6 +73,14 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 			return NetworkLibrary.resource().getResource("search").getResource("summaryInProgress").getValue();
 		}
 		return super.getSummary();
+	}
+
+	public MimeType getMimeType() {
+		return ((SearchItem)Item).getMimeType();
+	}
+
+	public String getUrl(String pattern) {
+		return ((SearchItem)Item).getUrl(pattern);
 	}
 
 	public void startItemsLoader(String pattern) {

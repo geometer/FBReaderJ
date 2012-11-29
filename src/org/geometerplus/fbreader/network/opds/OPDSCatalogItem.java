@@ -23,6 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
@@ -55,7 +56,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 
 	private static UrlInfoCollection<UrlInfo> createSimpleCollection(String url) {
 		final UrlInfoCollection<UrlInfo> collection = new UrlInfoCollection<UrlInfo>();
-		collection.addInfo(new UrlInfo(UrlInfo.Type.Catalog, url));
+		collection.addInfo(new UrlInfo(UrlInfo.Type.Catalog, url, MimeType.APP_ATOM_XML));
 		return collection;
 	}
 
@@ -80,7 +81,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		myLoadingState = opdsLink.createOperationData(loader);
 
 		doLoadChildren(
-			opdsLink.createNetworkData(getCatalogUrl(), myLoadingState)
+			opdsLink.createNetworkData(getCatalogUrl(), MimeType.APP_ATOM_XML, myLoadingState)
 		);
 	}
 

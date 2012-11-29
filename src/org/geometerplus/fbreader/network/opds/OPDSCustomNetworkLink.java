@@ -23,9 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
@@ -75,9 +74,9 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 		myTitle = title;
 	}
 
-	public final void setUrl(UrlInfo.Type type, String url) {
+	public final void setUrl(UrlInfo.Type type, String url, MimeType mime) {
 		myInfos.removeAllInfos(type);
-		myInfos.addInfo(new UrlInfoWithDate(type, url));
+		myInfos.addInfo(new UrlInfoWithDate(type, url, mime));
 		myHasChanges = true;
 	}
 
@@ -120,7 +119,7 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 					if (info.Title == null) {
 						throw new ZLNetworkException(NetworkException.ERROR_NO_REQUIRED_INFORMATION);
 					}
-					setUrl(UrlInfo.Type.Image, info.Icon);
+					setUrl(UrlInfo.Type.Image, info.Icon, MimeType.IMAGE_AUTO);
 					if (info.DirectOpenSearchDescription != null) {
 						descriptions.add(info.DirectOpenSearchDescription);
 					}
@@ -154,9 +153,10 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 
 		if (!descriptions.isEmpty()) {
 			// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
-			setUrl(UrlInfo.Type.Search, descriptions.get(0).makeQuery("%s"));
+			final OpenSearchDescription d = descriptions.get(0);
+			setUrl(UrlInfo.Type.Search, d.makeQuery("%s"), d.Mime);
 		} else {
-			setUrl(UrlInfo.Type.Search, null);
+			setUrl(UrlInfo.Type.Search, null, null);
 		}
 		if (error != null) {
 			throw error;

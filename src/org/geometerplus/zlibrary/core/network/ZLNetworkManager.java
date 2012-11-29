@@ -425,15 +425,11 @@ public class ZLNetworkManager {
 	}
 
 	public final void downloadToFile(String url, final File outFile) throws ZLNetworkException {
-		downloadToFile(url, null, outFile, 8192);
+		downloadToFile(url, outFile, 8192);
 	}
 
-	public final void downloadToFile(String url, String sslCertificate, final File outFile) throws ZLNetworkException {
-		downloadToFile(url, sslCertificate, outFile, 8192);
-	}
-
-	public final void downloadToFile(String url, String sslCertificate, final File outFile, final int bufferSize) throws ZLNetworkException {
-		perform(new ZLNetworkRequest(url, sslCertificate, null) {
+	public final void downloadToFile(String url, final File outFile, final int bufferSize) throws ZLNetworkException {
+		perform(new ZLNetworkRequest(url) {
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				OutputStream outStream = new FileOutputStream(outFile);
 				try {
