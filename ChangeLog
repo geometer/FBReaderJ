@@ -1,3 +1,6 @@
+===== 1.6.8 (Nov 30, 2012) =====
+* Fixed NPE during adding a custom catalog with no search link
+
 ===== 1.6.7 (Nov 29, 2012) =====
 * Android 4.*: show status bar if action bar is shown
 * Bulgarian hyphenation patterns, converted by Kaloyan Raev
