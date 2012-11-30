@@ -1,6 +1,9 @@
-===== 2.0 beta 7 (Nov ??, 2012) =====
+===== 2.0 beta 7 (??? ??, 2012) =====
 * 'Open book in external program' feature
 * Multiple directories for user's fonts and wallpapers
+
+===== 1.6.8 (Nov 30, 2012) =====
+* Fixed NPE during adding a custom catalog with no search link
 
 ===== 1.6.7 (Nov 29, 2012) =====
 * Android 4.*: show status bar if action bar is shown
