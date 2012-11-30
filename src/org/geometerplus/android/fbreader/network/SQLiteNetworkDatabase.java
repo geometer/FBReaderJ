@@ -212,7 +212,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 						continue;
 					}
 					SQLiteUtil.bindString(urlStatement, 1, info.Url);
-					SQLiteUtil.bindString(urlStatement, 2, info.Mime.toString());
+					SQLiteUtil.bindString(urlStatement, 2, info.Mime != null ? info.Mime.toString() : "");
 					SQLiteUtil.bindDate(urlStatement, 3, info.Updated);
 					urlStatement.bindLong(4, id);
 					urlStatement.bindString(5, key.toString());
