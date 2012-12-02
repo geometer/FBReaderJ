@@ -97,8 +97,12 @@
 		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
 		<node name="basket" value="Mandje"/>
 		<node name="basketSummaryEmpty" value="Geen boeken"/>
-		<node name="basketSummaryCountOnly" value="%0 boek(en)"/>
-		<node name="basketSummary" value="%0 boek(en) (%1)"/>
+		<node name="basketSummaryCountOnly" value="%0 boeken">
+			<node condition="value 1" value="%0 boek"/>
+		</node>
+		<node name="basketSummary" value="%0 boeken (%1)">
+			<node condition="value 1" value="%0 boek (%1)"/>
+		</node>
 		<node name="alreadyDownloading" value="Boek wordt gedownload"/>
 		<node name="alreadyDownloadingDemo" value="Voorbeeld wordt gedownload"/>
 		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true"/>
@@ -155,16 +159,22 @@
 		<node name="noDescription" value="Geen beschrijving beschikbaar"/>
 		<node name="annotation" value="Annotatie"/>
 		<node name="title" value="Titel:"/>
-		<node name="authors" value="Auteurs:"/>
+		<node name="authors" value="Auteurs:">
+			<node condition="value 1" value="Auteur:"/>
+		</node>
 		<node name="series" value="Serie:"/>
 		<node name="indexInSeries" value="Nummer in serie:"/>
-		<node name="tags" value="Trefwoorden:"/>
+		<node name="tags" value="Trefwoorden:">
+			<node condition="value 1" value="Trefwoord:"/>
+		</node>
 		<node name="language" value="Taal:"/>
 		<node name="name" value="Naam:"/>
 		<node name="type" value="Type:"/>
 		<node name="size" value="Grootte:"/>
 		<node name="time" value="Laatst gewijzigd:"/>
-		<node name="sizeInBytes" value="%s byte(s)"/>
+		<node name="sizeInBytes" value="%s bytes">
+			<node condition="value 1" value="%s byte"/>
+		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Catalogus:"/>
 		<node name="extraLinks" value="Gerelateerde links"/>
