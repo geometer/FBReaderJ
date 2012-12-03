@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
@@ -322,6 +323,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).setValue(value);
 		} else 	if ("LookNFeel".equals(group) && "Orientation".equals(name)) {
 			new ZLStringOption("LookNFeel", "Orientation", "system").setValue(value);
+		} else 	if ("LookNFeel".equals(group) && "ScreenBrightnessLevel".equals(name)) {
+			new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0).setValue(Integer.parseInt(value));
 		}
 		
 		// TODO: implement

@@ -198,7 +198,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
 		attrs.screenBrightness = percent / 100.0f;
 		getWindow().setAttributes(attrs);
-		getLibrary().ScreenBrightnessLevelOption.setValue(percent);
+		getLibrary().ScreenBrightnessLevelOption().setValue(percent);
 	}
 
 	final int getScreenBrightness() {
@@ -313,7 +313,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		);
 		myStartTimer = true;
 		final int brightnessLevel =
-			getLibrary().ScreenBrightnessLevelOption.getValue();
+			getLibrary().ScreenBrightnessLevelOption().getValue();
 		if (brightnessLevel != 0) {
 			setScreenBrightness(brightnessLevel);
 		} else {
