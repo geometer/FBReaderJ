@@ -98,10 +98,14 @@
 		<node name="basket" value="Кошык"/>
 		<node name="basketSummaryEmpty" value="Няма кніг"/>
 		<node name="basketSummaryCountOnly" value="%0 кніг">
-			<node condition="value 1" value="%0 кніга"/>
+			<node condition="mod 1 10" value="%0 кніга"/>
+			<node condition="modrange 11 19 100" value="%0 кніг"/>
+			<node condition="modrange 2 4 10" value="%0 кнігі"/>
 		</node>
 		<node name="basketSummary" value="%0 кніг (%1)">
-			<node condition="value 1" value="%0 кніга (%1)"/>
+			<node condition="mod 1 10" value="%0 кніга (%1)"/>
+			<node condition="modrange 11 19 100" value="%0 кніг (%1)"/>
+			<node condition="modrange 2 4 10" value="%0 кнігі (%1)"/>
 		</node>
 		<node name="alreadyDownloading" value="Кніга зладоўваецца"/>
 		<node name="alreadyDownloadingDemo" value="Узор зладоўваецца"/>
