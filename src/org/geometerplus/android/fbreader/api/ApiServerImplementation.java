@@ -200,6 +200,13 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 						((ApiObject.Integer)parameters[2]).Value,
 						((ApiObject.Boolean)parameters[3]).Value
 					));
+				case GET_TAPZONE_ACTION_RELATIVE:
+					return ApiObject.envelope(getTapZoneRelativeAction(
+						((ApiObject.String)parameters[0]).Value,
+						((ApiObject.Float)parameters[1]).Value,
+						((ApiObject.Float)parameters[2]).Value,
+						((ApiObject.Boolean)parameters[3]).Value
+					));
 				case SET_TAPZONE_ACTION:
 					setTapZoneAction(
 						((ApiObject.String)parameters[0]).Value,
@@ -325,6 +332,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			new ZLStringOption("LookNFeel", "Orientation", "system").setValue(value);
 		} else 	if ("LookNFeel".equals(group) && "ScreenBrightnessLevel".equals(name)) {
 			new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0).setValue(Integer.parseInt(value));
+		} else 	if ("LookNFeel".equals(group) && "BatteryLevelToTurnScreenOff".equals(name)) {
+			new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50).setValue(Integer.parseInt(value));
 		}
 		
 		// TODO: implement
@@ -592,6 +601,12 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	public String getTapZoneAction(String name, int h, int v, boolean singleTap) {
 		return TapZoneMap.zoneMap(name).getActionByZone(
 			h, v, singleTap ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.doubleTap
+		);
+	}
+	
+	public String getTapZoneRelativeAction(String name, float h, float v, boolean singleTap) {
+		return TapZoneMap.zoneMap(name).getActionByRelativeZone(
+			h, v, singleTap ? TapZoneMap.Tap.singleTap : TapZoneMap.Tap.doubleTap
 		);
 	}
 
