@@ -13,7 +13,7 @@
 		android:layout_height="fill_parent"
 		android:layout_marginLeft="20dp"
 		android:layout_marginRight="20dp"
-		android:src="@drawable/ic_input_add"
+		android:src="@+drawable/ic_input_add"
 	/>
 	<include layout="@layout/ok_cancel_buttons" android:id="@+id/editable_stringlist_buttons" />
 </LinearLayout>

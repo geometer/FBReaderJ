@@ -117,7 +117,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			});
 		}
 		
-		private void showErrorDialog(final String errName, final String appData) {
+		private void showErrorDialog(final String errName, final String appData, final long bookId) {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
 					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
@@ -133,6 +133,13 @@ public abstract class ZLAndroidActivity extends Activity {
 						})
 						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
+								((ZLAndroidActivity)myActivity).onPluginAbsent(bookId);
+							}
+						})
+						.setOnCancelListener(new DialogInterface.OnCancelListener() {
+							@Override
+							public void onCancel(DialogInterface dialog) {
+								((ZLAndroidActivity)myActivity).onPluginAbsent(bookId);
 							}
 						})
 						.create().show();
@@ -160,7 +167,7 @@ public abstract class ZLAndroidActivity extends Activity {
 				} catch (ActivityNotFoundException e) {
 				}
 			}
-			showErrorDialog("noPlugin", appData);
+			showErrorDialog("noPlugin", appData, bookId);
 			return;
 		}
 
@@ -176,7 +183,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 	
-
+	protected abstract void onPluginAbsent(long bookId);
 	
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
