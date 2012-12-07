@@ -50,6 +50,7 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.formats.PluginFormatPlugin;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
@@ -285,6 +286,23 @@ public final class FBReader extends ZLAndroidActivity {
 				myNeedToOpenFile = true;
 				myFileToOpen = fileFromIntent(intent);
 				myNeedToSkipPlugin = true;
+				if (intent.getBooleanExtra("KILL_PLUGIN", false)) {
+					Log.d("fbreader", "killing plugin");
+					if (fbReader.Model != null && fbReader.Model.Book != null) {
+						final FormatPlugin p = PluginCollection.Instance().getPlugin(fbReader.Model.Book.File);
+						if (p.type() == FormatPlugin.Type.PLUGIN) {
+							String pack = ((PluginFormatPlugin)p).getPackage();
+							final Intent i = new Intent("android.fbreader.action.KILL_PLUGIN");
+							i.setPackage(pack);
+							Log.d("fbreader", pack);
+							try {
+								startActivity(i);
+							} catch (ActivityNotFoundException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
 			}
 		}
 	}
