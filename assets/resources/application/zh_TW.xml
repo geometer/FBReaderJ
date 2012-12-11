@@ -308,8 +308,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="防止進入待機狀態">
 				<node name="0" value="必然"/>
-				<node name="25" value= "當電量大於25%%"/>
-				<node name="50" value= "當電量大於50%%"/>
+				<node name="25" value="當電量大於25%%"/>
+				<node name="50" value="當電量大於50%%"/>
 				<node name="100" value="永不"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="充電時防止關閉屏幕">

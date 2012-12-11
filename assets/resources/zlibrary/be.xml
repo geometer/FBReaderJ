@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Belarusian zlibrary resources by Usievaład Čorny -->
 <resources>
 	<node name="dialog">
@@ -33,6 +33,7 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Арабская мова"/>
+		<node name="bg" value="Балгарская мова"/>
 		<node name="cs" value="Чэская мова"/>
 		<node name="de" value="Нямецкая мова"/>
 		<node name="de-traditional" value="Нямецкая мова (традыцыйная артаґрафія)"/>

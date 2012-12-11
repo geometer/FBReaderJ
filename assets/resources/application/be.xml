@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Belarusian FBReaderJ resources by Usievaїad їorny -->
 <resources>
 	<node name="library" value="Бібліятэка FBReader">
@@ -98,13 +98,13 @@
 		<node name="basket" value="Кошык"/>
 		<node name="basketSummaryEmpty" value="Няма кніг"/>
 		<node name="basketSummaryCountOnly" value="%0 кніг">
-			<node condition="mod 1 10" value="%0 кніга"/>
 			<node condition="modrange 11 19 100" value="%0 кніг"/>
+			<node condition="mod 1 10" value="%0 кніга"/>
 			<node condition="modrange 2 4 10" value="%0 кнігі"/>
 		</node>
 		<node name="basketSummary" value="%0 кніг (%1)">
-			<node condition="mod 1 10" value="%0 кніга (%1)"/>
 			<node condition="modrange 11 19 100" value="%0 кніг (%1)"/>
+			<node condition="mod 1 10" value="%0 кніга (%1)"/>
 			<node condition="modrange 2 4 10" value="%0 кнігі (%1)"/>
 		</node>
 		<node name="alreadyDownloading" value="Кніга зладоўваецца"/>
@@ -177,7 +177,9 @@
 		<node name="size" value="Памер:"/>
 		<node name="time" value="Апошняе зьмяненьне:"/>
 		<node name="sizeInBytes" value="%s байтаў">
-			<node condition="value 1" value="%s байт"/>
+			<node condition="modrange 11 19 100" value="%s байтаў"/>
+			<node condition="mod 1 10" value="%s байт"/>
+			<node condition="modrange 2 4 10" value="%s байты"/>
 		</node>
 		<node name="sizeInKiloBytes" value="%s кБ"/>
 		<node name="catalog" value="Каталёґ:"/>
