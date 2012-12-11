@@ -33,6 +33,7 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="อารบิค"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
 		<node name="cs" value="เชค"/>
 		<node name="de" value="เยอรมัน"/>
 		<node name="de-traditional" value="เยอรมัน (เทรดิชัน ออโทกราฟี)"/>
