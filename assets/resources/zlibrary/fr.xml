@@ -37,6 +37,7 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabe"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
 		<node name="cs" value="Tchèque"/>
 		<node name="de" value="Allemand"/>
 		<node name="de-traditional" value="Allemand (orthographe traditionnelle)"/>
