@@ -33,6 +33,7 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Tiếng Ả Rập"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
 		<node name="cs" value="Tiếng Séc"/>
 		<node name="de" value="Tiếng Đức"/>
 		<node name="de-traditional" value="Tiếng Đức (truyền thống)"/>
