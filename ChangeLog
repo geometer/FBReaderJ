@@ -1,5 +1,7 @@
 ===== 1.6.9 (Dec ??, 2012) =====
+* Added Bulgarian translation (by Ники Арсов)
 * Updated Dutch translation (by Frank Fesevur)
+* Plural forms in Belarusian and Czech translations
 
 ===== 1.6.8 (Nov 30, 2012) =====
 * Fixed NPE during adding a custom catalog with no search link
