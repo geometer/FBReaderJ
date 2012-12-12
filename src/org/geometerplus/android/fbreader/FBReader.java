@@ -188,15 +188,18 @@ public final class FBReader extends ZLAndroidActivity {
 			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_PORTRAIT));
 			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
-		if ("android.fbreader.action.CLOSE".equals(getIntent().getAction())) {
-			myCancelCalled = true;
-		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(getIntent().getAction())) {
-			Log.d("fbj", "crash in oncreate");
-			long bookid = getIntent().getLongExtra("BOOKID", -1);
-			Library.Instance().removeBookFromRecentList(Book.getById(bookid));
-			myNeedToSkipPlugin = true;
-			fbReader.Model = null;
-			fbReader.openBook(Library.Instance().getRecentBook(), null, null);
+		if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
+		} else {
+			if ("android.fbreader.action.CLOSE".equals(getIntent().getAction()) ) {
+				myCancelCalled = true;
+			} else if ("android.fbreader.action.PLUGIN_CRASH".equals(getIntent().getAction())) {
+				Log.d("fbj", "crash in oncreate");
+				long bookid = getIntent().getLongExtra("BOOKID", -1);
+				Library.Instance().removeBookFromRecentList(Book.getById(bookid));
+				myNeedToSkipPlugin = true;
+				fbReader.Model = null;
+				fbReader.openBook(Library.Instance().getRecentBook(), null, null);
+			}
 		}
 	}
 
@@ -579,5 +582,13 @@ public final class FBReader extends ZLAndroidActivity {
 		application.myMainWindow.refresh();
 
 		return true;
+	}
+
+	@Override
+	protected void onPluginAbsent(long bookId) {
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		Library.Instance().removeBookFromRecentList(Book.getById(bookId));
+		fbReader.Model = null;
+		fbReader.openBook(Library.Instance().getRecentBook(), null, null);
 	}
 }
