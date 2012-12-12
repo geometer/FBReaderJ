@@ -233,7 +233,11 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		for (Author a : BooksDatabase.Instance().loadAuthors()) {
 			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
 		}
-		for (Tag t : BooksDatabase.Instance().loadTags()) {
+		List<Tag> tags = BooksDatabase.Instance().loadTags();
+		if (tags == null) {
+			tags = Collections.<Tag>emptyList();
+		}
+		for (Tag t : tags) {
 			if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
 		}
 
