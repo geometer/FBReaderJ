@@ -277,12 +277,12 @@ public abstract class ZLAndroidActivity extends Activity {
 			}.start();
 
 		ZLApplication.Instance().getViewWidget().repaint();
-		if (!ZLApplication.Instance().externalFileOpenerIsSet()) {
+//		if (!ZLApplication.Instance().externalFileOpenerIsSet()) {
 			ZLApplication.Instance().setExternalFileOpener(new ExtFileOpener(this));
-		}
-		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
+//		}
+//		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
 			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
-		}
+//		}
 		
 	}
 
