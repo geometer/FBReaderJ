@@ -60,14 +60,23 @@ public abstract class ZLAndroidActivity extends Activity {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
 					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
-					new AlertDialog.Builder(myActivity)
+					final AlertDialog dialog = new AlertDialog.Builder(myActivity)
 						.setTitle(title)
 						.setIcon(0)
 						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 							}
 						})
-						.create().show();
+						.create();
+						if (((ZLAndroidActivity)myActivity).myIsPaused) {
+							((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
+						} else {
+							myActivity.runOnUiThread(new Runnable() {
+								public void run() {
+									dialog.show();
+								}
+							});
+						}
 					}
 			});
 		}
@@ -116,7 +125,6 @@ public abstract class ZLAndroidActivity extends Activity {
 				((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
 			} else {
 				myActivity.runOnUiThread(new Runnable() {
-	
 					public void run() {
 						dialog.show();
 					}
@@ -128,7 +136,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
 					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
-					new AlertDialog.Builder(myActivity)
+					final AlertDialog dialog = new AlertDialog.Builder(myActivity)
 						.setTitle(title)
 						.setIcon(0)
 						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -149,7 +157,16 @@ public abstract class ZLAndroidActivity extends Activity {
 								((ZLAndroidActivity)myActivity).onPluginAbsent(bookId);
 							}
 						})
-						.create().show();
+						.create();
+						if (((ZLAndroidActivity)myActivity).myIsPaused) {
+							((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
+						} else {
+							myActivity.runOnUiThread(new Runnable() {
+								public void run() {
+									dialog.show();
+								}
+							});
+						}
 					}
 			});
 		}
