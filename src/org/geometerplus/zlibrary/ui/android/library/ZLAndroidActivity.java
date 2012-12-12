@@ -58,14 +58,23 @@ public abstract class ZLAndroidActivity extends Activity {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
 					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
-					new AlertDialog.Builder(myActivity)
+					final AlertDialog dialog = new AlertDialog.Builder(myActivity)
 						.setTitle(title)
 						.setIcon(0)
 						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 							}
 						})
-						.create().show();
+						.create();
+						if (((ZLAndroidActivity)myActivity).myIsPaused) {
+							((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
+						} else {
+							myActivity.runOnUiThread(new Runnable() {
+								public void run() {
+									dialog.show();
+								}
+							});
+						}
 					}
 			});
 		}
@@ -102,26 +111,30 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 
 		private void showErrorDialog(final String errName) {
-			myActivity.runOnUiThread(new Runnable() {
-				public void run() {
-					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
-					new AlertDialog.Builder(myActivity)
-						.setTitle(title)
-						.setIcon(0)
-						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						})
-						.create().show();
+			final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
+			final AlertDialog dialog = new AlertDialog.Builder(myActivity)
+				.setTitle(title)
+				.setIcon(0)
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
 					}
-			});
+				}).create();
+			if (((ZLAndroidActivity)myActivity).myIsPaused) {
+				((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
+			} else {
+				myActivity.runOnUiThread(new Runnable() {
+					public void run() {
+						dialog.show();
+					}
+				});
+			}
 		}
 		
-		private void showErrorDialog(final String errName, final String appData) {
+		private void showErrorDialog(final String errName, final String appData, final long bookId) {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
 					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
-					new AlertDialog.Builder(myActivity)
+					final AlertDialog dialog = new AlertDialog.Builder(myActivity)
 						.setTitle(title)
 						.setIcon(0)
 						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -133,9 +146,25 @@ public abstract class ZLAndroidActivity extends Activity {
 						})
 						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
+								((ZLAndroidActivity)myActivity).onPluginAbsent(bookId);
 							}
 						})
-						.create().show();
+						.setOnCancelListener(new DialogInterface.OnCancelListener() {
+							@Override
+							public void onCancel(DialogInterface dialog) {
+								((ZLAndroidActivity)myActivity).onPluginAbsent(bookId);
+							}
+						})
+						.create();
+						if (((ZLAndroidActivity)myActivity).myIsPaused) {
+							((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
+						} else {
+							myActivity.runOnUiThread(new Runnable() {
+								public void run() {
+									dialog.show();
+								}
+							});
+						}
 					}
 			});
 		}
@@ -160,7 +189,7 @@ public abstract class ZLAndroidActivity extends Activity {
 				} catch (ActivityNotFoundException e) {
 				}
 			}
-			showErrorDialog("noPlugin", appData);
+			showErrorDialog("noPlugin", appData, bookId);
 			return;
 		}
 
@@ -176,7 +205,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 	
-
+	protected abstract void onPluginAbsent(long bookId);
 	
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
@@ -245,12 +274,12 @@ public abstract class ZLAndroidActivity extends Activity {
 			}.start();
 
 		ZLApplication.Instance().getViewWidget().repaint();
-		if (!ZLApplication.Instance().externalFileOpenerIsSet()) {
+//		if (!ZLApplication.Instance().externalFileOpenerIsSet()) {
 			ZLApplication.Instance().setExternalFileOpener(new ExtFileOpener(this));
-		}
-		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
+//		}
+//		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
 			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
-		}
+//		}
 		
 	}
 
@@ -301,6 +330,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 	}
 
+	protected boolean myIsPaused = false;
+	protected AlertDialog myDialogToShow = null;
+	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -321,10 +353,16 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+		myIsPaused = false;
+		if (myDialogToShow != null) {
+			myDialogToShow.show();
+			myDialogToShow = null;
+		}
 	}
 
 	@Override
 	public void onPause() {
+		myIsPaused = true;
 		unregisterReceiver(myBatteryInfoReceiver);
 		ZLApplication.Instance().stopTimer();
 		switchWakeLock(false);
