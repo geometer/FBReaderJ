@@ -180,6 +180,9 @@
 		<node name="time" value="Naposledy změněno:"/>
 		<node name="sizeInBytes" value="%s bajtů">
 			<node condition="value 1" value="%s bajt"/>
+			<node condition="value 2" value="%s bajty"/>
+			<node condition="value 3" value="%s bajty"/>
+			<node condition="value 4" value="%s bajty"/>
 		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Katalog:"/>
