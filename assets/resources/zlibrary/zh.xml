@@ -33,6 +33,7 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="阿拉伯语"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
 		<node name="cs" value="捷克语"/>
 		<node name="de" value="德语"/>
 		<node name="de-traditional" value="德语 (传统正字法)"/>

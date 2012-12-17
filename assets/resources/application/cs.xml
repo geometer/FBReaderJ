@@ -99,9 +99,15 @@
 		<node name="basketSummaryEmpty" value="Žádné knihy"/>
 		<node name="basketSummaryCountOnly" value="%0 knih">
 			<node condition="value 1" value="%0 kniha"/>
+			<node condition="value 2" value="%0 knihy"/>
+			<node condition="value 3" value="%0 knihy"/>
+			<node condition="value 4" value="%0 knihy"/>
 		</node>
 		<node name="basketSummary" value="%0 knih (%1)">
 			<node condition="value 1" value="%0 kniha (%1)"/>
+			<node condition="value 2" value="%0 knihy (%1)"/>
+			<node condition="value 3" value="%0 knihy (%1)"/>
+			<node condition="value 4" value="%0 knihy (%1)"/>
 		</node>
 		<node name="alreadyDownloading" value="Kniha se stahuje"/>
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje"/>
@@ -174,6 +180,9 @@
 		<node name="time" value="Naposledy změněno:"/>
 		<node name="sizeInBytes" value="%s bajtů">
 			<node condition="value 1" value="%s bajt"/>
+			<node condition="value 2" value="%s bajty"/>
+			<node condition="value 3" value="%s bajty"/>
+			<node condition="value 4" value="%s bajty"/>
 		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Katalog:"/>
