@@ -33,6 +33,7 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabsky"/>
+		<node name="bg" value="Bălgarski"/>
 		<node name="cs" value="Česky"/>
 		<node name="de" value="Německy"/>
 		<node name="de-traditional" value="Německy (tradiční pravopis)"/>

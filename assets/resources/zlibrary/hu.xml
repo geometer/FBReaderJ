@@ -33,6 +33,7 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arab"/>
+		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
 		<node name="cs" value="Cseh"/>
 		<node name="de" value="Német"/>
 		<node name="de-traditional" value="Német (hagyományos)"/>
