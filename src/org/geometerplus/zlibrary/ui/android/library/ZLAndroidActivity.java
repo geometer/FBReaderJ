@@ -40,6 +40,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -180,6 +181,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			LaunchIntent.setData(uri);
 			LaunchIntent.putExtra("BOOKMARK", bookmark);
 			LaunchIntent.putExtra("BOOKID", bookId);
+			LaunchIntent.putExtra("TITLE", Book.getById(bookId).getTitle() != null ? Book.getById(bookId).getTitle() : "");	
 			FileType ft = FileTypeCollection.Instance.typeForFile(f);
 			for (MimeType type : ft.mimeTypes()) {
 				LaunchIntent.setDataAndType(uri, type.Name);
