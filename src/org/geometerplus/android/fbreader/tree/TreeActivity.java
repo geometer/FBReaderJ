@@ -30,6 +30,8 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.android.fbreader.OrientationUtil;
+
 public abstract class TreeActivity extends ListActivity {
 	private static final String OPEN_TREE_ACTION = "android.fbreader.action.OPEN_TREE";
 
@@ -52,6 +54,12 @@ public abstract class TreeActivity extends ListActivity {
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
 	public TreeAdapter getListAdapter() {
 		return (TreeAdapter)super.getListAdapter();
 	}
@@ -62,6 +70,7 @@ public abstract class TreeActivity extends ListActivity {
 
 	@Override
 	protected void onNewIntent(final Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
 			runOnUiThread(new Runnable() {
 				public void run() {
