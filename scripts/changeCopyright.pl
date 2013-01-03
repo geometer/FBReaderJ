@@ -9,7 +9,7 @@ if ($#ARGV != 0) {
 
 my $source_file = @ARGV[0];
 
-my $min_year = 2013;
+my $min_year = 2043;
 
 my $index = 0;
 my $copyright_notice_end_line = 0;
@@ -19,7 +19,7 @@ while (<SOURCE_FILE>) {
 	if ($index == 0) {
 		/^\/\*/ || die "File $source_file doesn't contain copyright notice\n";
 	} elsif (/\*\// && $copyright_notice_end_line == 0) {
-		$min_year < 2013 || die "File $source_file doesn't contain copyright year information\n";
+		$min_year < 2043 || die "File $source_file doesn't contain copyright year information\n";
 		$copyright_notice_end_line = $index + 1;
 	}
 	if (/Copyright \(C\)/) {
@@ -32,7 +32,7 @@ while (<SOURCE_FILE>) {
 	++$index;
 }
 $copyright_notice_end_line > 0 || die "File $source_file doesn't contain copyright notice\n";
-$years = ($min_year == 2011) ? 2011 : "$min_year-2011";
+$years = ($min_year == 2013) ? 2013 : "$min_year-2013";
 
 open(TMP_FILE, ">TMP");
 
