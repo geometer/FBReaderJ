@@ -19,14 +19,30 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import android.app.Activity;
+import android.content.Intent;
 
-class ShowTOCAction extends RunActivityAction {
-	ShowTOCAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader, TOCActivity.class);
+public abstract class OrientationUtil {
+	private static final String KEY = "fbreader.orientation";
+
+	public static void startActivity(Activity current, Intent intent) {
+		current.startActivity(intent.putExtra(KEY, current.getRequestedOrientation()));
 	}
 
-	public boolean isVisible() {
-		return Reader.Model != null && Reader.Model.TOCTree.hasChildren();
+	public static void startActivityForResult(Activity current, Intent intent, int requestCode) {
+		current.startActivityForResult(intent.putExtra(KEY, current.getRequestedOrientation()), requestCode);
+	}
+
+	public static void setOrientation(Activity activity, Intent intent) {
+		if (intent == null) {
+			return;
+		}
+		final int orientation = intent.getIntExtra(KEY, Integer.MIN_VALUE);
+		if (orientation != Integer.MIN_VALUE) {
+			activity.setRequestedOrientation(orientation);
+		}
+	}
+
+	private OrientationUtil() {
 	}
 }

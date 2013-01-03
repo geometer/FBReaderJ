@@ -79,7 +79,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 						ImageViewActivity.BACKGROUND_COLOR_KEY,
 						Reader.ImageViewBackgroundOption.getValue().getIntValue()
 					);
-					BaseActivity.startActivity(intent);
+					OrientationUtil.startActivity(BaseActivity, intent);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -111,7 +111,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 				BaseActivity.runOnUiThread(new Runnable() {
 					public void run() {
 						try {
-							BaseActivity.startActivity(intent);
+							OrientationUtil.startActivity(BaseActivity, intent);
 						} catch (ActivityNotFoundException e) {
 							e.printStackTrace();
 						}
