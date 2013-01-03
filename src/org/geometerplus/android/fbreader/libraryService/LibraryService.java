@@ -29,19 +29,15 @@ import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 
 public class LibraryService extends Service implements Library.ChangeListener {
 	public final class LibraryImplementation extends LibraryInterface.Stub {
-		private final AbstractLibrary myBaseLibrary;
-
 		LibraryImplementation() {
 			BooksDatabase database = SQLiteBooksDatabase.Instance();
 			if (database == null) {
 				database = new SQLiteBooksDatabase(LibraryService.this, "LIBRARY SERVICE");
 			}
-			myBaseLibrary = new Library(database);
-			((Library)myBaseLibrary).startBuild();
 		}
 
 		public boolean isUpToDate() {
-			return myBaseLibrary.isUpToDate();
+			return true;
 		}
 	}
 
@@ -70,13 +66,13 @@ public class LibraryService extends Service implements Library.ChangeListener {
 		System.err.println("LibraryService.onCreate()");
 		super.onCreate();
 		myLibrary = new LibraryImplementation();
-		myLibrary.myBaseLibrary.addChangeListener(this);
+		//myLibrary.myBaseLibrary.addChangeListener(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		System.err.println("LibraryService.onDestroy()");
-		myLibrary.myBaseLibrary.removeChangeListener(this);
+		//myLibrary.myBaseLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
 	}
