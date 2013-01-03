@@ -36,6 +36,8 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
+import org.geometerplus.android.fbreader.OrientationUtil;
+
 public class ImageViewActivity extends Activity {
 	public static final String BACKGROUND_COLOR_KEY = "bgColor";
 
@@ -84,6 +86,17 @@ public class ImageViewActivity extends Activity {
 			// TODO: error message (?)
 			finish();
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 	}
 
 	@Override

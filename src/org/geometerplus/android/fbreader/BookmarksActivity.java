@@ -105,7 +105,15 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
 	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
+
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			return;
 		}

@@ -37,6 +37,6 @@ class ShowPreferencesAction extends FBAndroidAction {
 		if (params.length == 1 && params[0] instanceof String) {
 			intent.putExtra(PreferenceActivity.SCREEN_KEY, (String)params[0]);
 		}
-		BaseActivity.startActivityForResult(intent, FBReader.REQUEST_PREFERENCES);
+		OrientationUtil.startActivityForResult(BaseActivity, intent, FBReader.REQUEST_PREFERENCES);
 	}
 }

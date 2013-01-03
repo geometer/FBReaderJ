@@ -49,8 +49,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.FBUtil;
+import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener {
@@ -94,6 +93,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	protected void onStart() {
 		super.onStart();
 
+		OrientationUtil.setOrientation(this, getIntent());
+
 		final Book book = Book.getByFile(myFile);
 
 		if (book != null) {
@@ -109,6 +110,11 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 	}
 
 	@Override
@@ -327,7 +333,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				}
 				return true;
 			case EDIT_INFO:
-				startActivityForResult(
+				OrientationUtil.startActivityForResult(
+					this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
 						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
 					1
