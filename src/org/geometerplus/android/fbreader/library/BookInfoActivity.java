@@ -373,7 +373,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				}
 				return true;
 			case EDIT_INFO:
-				startActivityForResult(
+				OrientationUtil.startActivityForResult(
+					this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
 						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
 					1
