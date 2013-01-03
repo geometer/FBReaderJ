@@ -673,14 +673,14 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 					myModelReader.addControl(PREFORMATTED, true);
 				}
 				std::size_t spaceCounter = 0;
-				while (spaceCounter < len && isspace((unsigned char)*(text + spaceCounter))) {
+				while (spaceCounter < len && std::isspace((unsigned char)*(text + spaceCounter))) {
 					++spaceCounter;
 				}
 				myModelReader.addFixedHSpace(spaceCounter);
 				text += spaceCounter;
 				len -= spaceCounter;
 			} else if (myNewParagraphInProgress || !myModelReader.paragraphIsOpen()) {
-				while (isspace((unsigned char)*text)) {
+				while (std::isspace((unsigned char)*text)) {
 					++text;
 					if (--len == 0) {
 						break;
