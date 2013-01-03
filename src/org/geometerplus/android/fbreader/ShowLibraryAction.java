@@ -38,6 +38,6 @@ class ShowLibraryAction extends FBAndroidAction {
 		if (model != null && model.Book != null) {
 			intent.putExtra(LibraryActivity.SELECTED_BOOK_PATH_KEY, model.Book.File.getPath());
 		}
-		BaseActivity.startActivity(intent);
+		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }

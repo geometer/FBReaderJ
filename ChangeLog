@@ -9,6 +9,7 @@
 * Fixed issue with rendering during backward page turning with no amimation
 * xlarge screens support declared in AndroidManifest.xml
 * ePub: fixed svg namespace processing
+* main activity orientation is used in all dependent activities
 
 ===== 1.6.8 (Nov 30, 2012) =====
 * Fixed NPE during adding a custom catalog with no search link
