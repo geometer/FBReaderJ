@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
@@ -69,6 +70,17 @@ public class TOCActivity extends ListActivity {
 		TOCTree treeToSelect = fbreader.getCurrentTOCElement();
 		myAdapter.selectItem(treeToSelect);
 		mySelectedItem = treeToSelect;
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 	}
 
 	private static final int PROCESS_TREE_ITEM_ID = 0;

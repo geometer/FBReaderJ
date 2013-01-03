@@ -31,6 +31,8 @@ import org.geometerplus.android.fbreader.network.NetworkBookInfoActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
+import org.geometerplus.android.fbreader.OrientationUtil;
+
 public class ShowBookInfoAction extends BookAction {
 	public ShowBookInfoAction(Activity activity) {
 		super(activity, ActionCode.SHOW_BOOK_ACTIVITY, "bookInfo", false);
@@ -59,7 +61,8 @@ public class ShowBookInfoAction extends BookAction {
 	}
 
 	private void showBookInfo(NetworkTree tree) {
-		myActivity.startActivity(
+		OrientationUtil.startActivity(
+			myActivity,
 			new Intent(myActivity, NetworkBookInfoActivity.class)
 				.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
 		);

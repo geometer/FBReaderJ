@@ -33,6 +33,8 @@ abstract class RunActivityAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		BaseActivity.startActivity(new Intent(BaseActivity.getApplicationContext(), myActivityClass));
+		OrientationUtil.startActivity(
+			BaseActivity, new Intent(BaseActivity.getApplicationContext(), myActivityClass)
+		);
 	}
 }

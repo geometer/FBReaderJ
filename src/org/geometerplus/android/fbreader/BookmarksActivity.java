@@ -112,7 +112,15 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
 	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
+
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			return;
 		}
@@ -204,7 +212,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				return true;
 			case EDIT_ITEM_ID:
 				final Intent intent = new Intent(this, BookmarkEditActivity.class);
-				startActivityForResult(intent, 1);
+				OrientationUtil.startActivityForResult(this, intent, 1);
 				// TODO: implement
 				return true;
 			case DELETE_ITEM_ID:
