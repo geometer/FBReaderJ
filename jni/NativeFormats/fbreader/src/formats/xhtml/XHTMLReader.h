@@ -53,10 +53,12 @@ class XHTMLReader : public ZLXMLReader {
 
 public:
 	static XHTMLTagAction *addAction(const std::string &tag, XHTMLTagAction *action);
+	static XHTMLTagAction *addAction(const std::string &ns, const std::string &name, XHTMLTagAction *action);
 	static void fillTagTable();
 
 private:
 	static std::map<std::string,XHTMLTagAction*> ourTagActions;
+	static std::map<shared_ptr<FullNamePredicate>,XHTMLTagAction*> ourNsTagActions;
 
 public:
 	XHTMLReader(BookReader &modelReader);
@@ -65,6 +67,8 @@ public:
 	const std::string normalizedReference(const std::string &reference) const;
 
 private:
+	XHTMLTagAction *getAction(const std::string &tag);
+
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
 	void characterDataHandler(const char *text, std::size_t len);
