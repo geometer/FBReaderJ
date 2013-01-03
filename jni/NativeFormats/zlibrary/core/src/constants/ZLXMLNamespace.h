@@ -38,6 +38,7 @@ public:
 	static const std::string CalibreMetadata;
 	static const std::string Opds;
 	static const std::string DaisyNCX;
+	static const std::string Svg;
 };
 
 #endif /* __ZLXMLNAMESPACE_H__ */
