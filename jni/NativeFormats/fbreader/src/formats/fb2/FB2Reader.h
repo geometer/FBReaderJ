@@ -86,7 +86,7 @@ protected:
 	~FB2Reader();
 
 protected:
-	const NamespaceAttributeNamePredicate myHrefPredicate;
+	const FullNamePredicate myHrefPredicate;
 };
 
 inline FB2Reader::~FB2Reader() {}

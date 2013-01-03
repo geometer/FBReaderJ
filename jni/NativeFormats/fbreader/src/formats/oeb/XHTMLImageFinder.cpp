@@ -44,7 +44,7 @@ void XHTMLImageFinder::startElementHandler(const char *tag, const char **attribu
 		reference = attributeValue(attributes, "src");
 	} else if (TAG_IMAGE == tag) {
 		reference = attributeValue(
-			attributes, NamespaceAttributeNamePredicate(ZLXMLNamespace::XLink, "href")
+			attributes, FullNamePredicate(ZLXMLNamespace::XLink, "href")
 		);
 	}
 	if (reference != 0) {
