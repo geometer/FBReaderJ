@@ -135,6 +135,10 @@ public abstract class ZLFile {
 	public abstract ZLPhysicalFile getPhysicalFile();
 	public abstract InputStream getInputStream() throws IOException;
 
+	public String getUrl() {
+		return "file://" + getPath();
+	}
+
 	public boolean isReadable() {
 		return true;
 	}
