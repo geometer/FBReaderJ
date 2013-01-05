@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,8 @@ abstract class RunActivityAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		BaseActivity.startActivity(new Intent(BaseActivity.getApplicationContext(), myActivityClass));
+		OrientationUtil.startActivity(
+			BaseActivity, new Intent(BaseActivity.getApplicationContext(), myActivityClass)
+		);
 	}
 }

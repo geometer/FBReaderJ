@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ public:
 	static const std::string CalibreMetadata;
 	static const std::string Opds;
 	static const std::string DaisyNCX;
+	static const std::string Svg;
 };
 
 #endif /* __ZLXMLNAMESPACE_H__ */

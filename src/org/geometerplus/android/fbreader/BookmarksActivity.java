@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,7 +102,15 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
 	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
+
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			return;
 		}
@@ -193,7 +201,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				return true;
 			case EDIT_ITEM_ID:
 				final Intent intent = new Intent(this, BookmarkEditActivity.class);
-				startActivityForResult(intent, 1);
+				OrientationUtil.startActivityForResult(this, intent, 1);
 				// TODO: implement
 				return true;
 			case DELETE_ITEM_ID:

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,9 +149,9 @@ const std::vector<std::string> &ZLXMLReader::externalDTDs() const {
 void ZLXMLReader::collectExternalEntities(std::map<std::string,std::string> &entityMap) {
 }
 
-const char *ZLXMLReader::attributeValue(const char **xmlattributes, const char *name) {
+const char *ZLXMLReader::attributeValue(const char **xmlattributes, const char *name) const {
 	while (*xmlattributes != 0) {
-		bool useNext = strcmp(*xmlattributes, name) == 0;
+		bool useNext = std::strcmp(*xmlattributes, name) == 0;
 		++xmlattributes;
 		if (*xmlattributes == 0) {
 			return 0;
@@ -164,34 +164,41 @@ const char *ZLXMLReader::attributeValue(const char **xmlattributes, const char *
 	return 0;
 }
 
-ZLXMLReader::AttributeNamePredicate::~AttributeNamePredicate() {
+ZLXMLReader::NamePredicate::~NamePredicate() {
 }
 
-ZLXMLReader::FixedAttributeNamePredicate::FixedAttributeNamePredicate(const std::string &attributeName) : myAttributeName(attributeName) {
+ZLXMLReader::SimpleNamePredicate::SimpleNamePredicate(const std::string &name) : myName(name) {
 }
 
-bool ZLXMLReader::FixedAttributeNamePredicate::accepts(const ZLXMLReader&, const char *name) const {
-	return myAttributeName == name;
+bool ZLXMLReader::SimpleNamePredicate::accepts(const ZLXMLReader&, const char *name) const {
+	return myName == name;
 }
 
-ZLXMLReader::NamespaceAttributeNamePredicate::NamespaceAttributeNamePredicate(const std::string &ns, const std::string &name) : myNamespaceName(ns), myAttributeName(name) {
+bool ZLXMLReader::SimpleNamePredicate::accepts(const ZLXMLReader&, const std::string &name) const {
+	return myName == name;
 }
 
-bool ZLXMLReader::NamespaceAttributeNamePredicate::accepts(const ZLXMLReader &reader, const char *name) const {
-	const std::string full(name);
-	const std::size_t index = full.find(':');
+ZLXMLReader::FullNamePredicate::FullNamePredicate(const std::string &ns, const std::string &name) : myNamespaceName(ns), myName(name) {
+}
+
+bool ZLXMLReader::FullNamePredicate::accepts(const ZLXMLReader &reader, const char *name) const {
+	return accepts(reader, std::string(name));
+}
+
+bool ZLXMLReader::FullNamePredicate::accepts(const ZLXMLReader &reader, const std::string &name) const {
+	const std::size_t index = name.find(':');
 	const std::string namespaceId =
-		index == std::string::npos ? std::string() : full.substr(0, index);
+		index == std::string::npos ? std::string() : name.substr(0, index);
 
 	const nsMap &namespaces = reader.namespaces();
 	nsMap::const_iterator it = namespaces.find(namespaceId);
 	return
 		it != namespaces.end() &&
 		it->second == myNamespaceName &&
-		full.substr(index + 1) == myAttributeName;
+		name.substr(index + 1) == myName;
 }
 
-const char *ZLXMLReader::attributeValue(const char **xmlattributes, const AttributeNamePredicate &predicate) {
+const char *ZLXMLReader::attributeValue(const char **xmlattributes, const NamePredicate &predicate) const {
 	while (*xmlattributes != 0) {
 		bool useNext = predicate.accepts(*this, *xmlattributes);
 		++xmlattributes;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,8 @@ import org.geometerplus.android.fbreader.network.NetworkBookInfoActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
+import org.geometerplus.android.fbreader.OrientationUtil;
+
 public class ShowBookInfoAction extends BookAction {
 	public ShowBookInfoAction(Activity activity) {
 		super(activity, ActionCode.SHOW_BOOK_ACTIVITY, "bookInfo");
@@ -59,7 +61,8 @@ public class ShowBookInfoAction extends BookAction {
 	}
 
 	private void showBookInfo(NetworkTree tree) {
-		myActivity.startActivity(
+		OrientationUtil.startActivity(
+			myActivity,
 			new Intent(myActivity, NetworkBookInfoActivity.class)
 				.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
 		);

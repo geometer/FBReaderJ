@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,6 @@ class ShowLibraryAction extends FBAndroidAction {
 		if (model != null && model.Book != null) {
 			intent.putExtra(LibraryActivity.SELECTED_BOOK_PATH_KEY, model.Book.File.getPath());
 		}
-		BaseActivity.startActivity(intent);
+		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }
