@@ -103,6 +103,7 @@ private:
 		READ_STYLE,
 		READ_BODY
 	} myReadState;
+	int myBodyCounter;
 
 	friend class XHTMLTagAction;
 	friend class XHTMLTagStyleAction;
