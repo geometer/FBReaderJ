@@ -244,12 +244,18 @@ void XHTMLTagParagraphAction::doAtEnd(XHTMLReader &reader) {
 }
 
 void XHTMLTagBodyAction::doAtStart(XHTMLReader &reader, const char**) {
-	reader.myReadState = XHTMLReader::READ_BODY;
+	++reader.myBodyCounter;
+	if (reader.myBodyCounter > 0) {
+		reader.myReadState = XHTMLReader::READ_BODY;
+	}
 }
 
 void XHTMLTagBodyAction::doAtEnd(XHTMLReader &reader) {
 	endParagraph(reader);
-	reader.myReadState = XHTMLReader::READ_NOTHING;
+	--reader.myBodyCounter;
+	if (reader.myBodyCounter <= 0) {
+		reader.myReadState = XHTMLReader::READ_NOTHING;
+	}
 }
 
 void XHTMLTagRestartParagraphAction::doAtStart(XHTMLReader &reader, const char**) {
@@ -525,6 +531,7 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	myPreformatted = false;
 	myNewParagraphInProgress = false;
 	myReadState = READ_NOTHING;
+	myBodyCounter = 0;
 	myCurrentParagraphIsEmpty = true;
 
 	myStyleSheetTable.clear();
