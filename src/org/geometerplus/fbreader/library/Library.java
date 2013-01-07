@@ -237,6 +237,10 @@ public final class Library {
 		if (myBooks.containsKey(book.File)) {
 			return;
 		}
+
+		final String xml = BookSerializerUtil.serialize(book);
+		BookSerializerUtil.deserialize(xml);
+
 		myBooks.put(book.File, book);
 
 		List<Author> authors = book.authors();

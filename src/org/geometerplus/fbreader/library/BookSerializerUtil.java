@@ -19,17 +19,28 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.util.ArrayList;
+
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
 public abstract class BookSerializerUtil {
 	private BookSerializerUtil() {
 	}
 
 	public static String serialize(Book book) {
 		final StringBuilder buffer = new StringBuilder();
-		buffer.append("<entry>\n");
+		appendTagWithAttributes(
+			buffer, "entry", false,
+			"xmlns:dc", XMLNamespaces.DublinCore
+		);
 
 		appendTagWithContent(buffer, "id", String.valueOf(book.getId()));
 		appendTagWithContent(buffer, "title", book.getTitle());
 		appendTagWithContent(buffer, "dc:language", book.getLanguage());
+		appendTagWithContent(buffer, "dc:encoding", book.getEncodingNoDetection());
 
 		for (Author author : book.authors()) {
 			buffer.append("<author>\n");
@@ -40,14 +51,18 @@ public abstract class BookSerializerUtil {
 
 		for (Tag tag : book.tags()) {
 			appendTagWithAttributes(
-				buffer, "category",
+				buffer, "category", true,
 				"term", tag.toString("/"),
 				"label", tag.Name
 			);
 		}
 
+		// TODO: serialize series info
+		// TODO: serialize description (?)
+		// TODO: serialize cover (?)
+
 		appendTagWithAttributes(
-			buffer, "link",
+			buffer, "link", true,
 			"href", book.File.getUrl(),
 			// TODO: real book mimetype
 			"type", "application/epub+zip",
@@ -59,22 +74,221 @@ public abstract class BookSerializerUtil {
 	}
 
 	public static Book deserialize(String xml) {
-		// TODO: implement
-		return null;
+		final Deserializer deserializer = new Deserializer();
+		deserializer.readQuietly(xml);
+		return deserializer.getBook();
 	}
 
 	private static void appendTagWithContent(StringBuilder buffer, String tag, String content) {
-		buffer
-			.append('<').append(tag).append('>')
-			.append(content)
-			.append("</").append(tag).append(">\n");
+		if (content != null) {
+			buffer
+				.append('<').append(tag).append('>')
+				.append(escapeForXml(content))
+				.append("</").append(tag).append(">\n");
+		}
 	}
 
-	private static void appendTagWithAttributes(StringBuilder buffer, String tag, String ... attrs) {
+	private static void appendTagWithAttributes(StringBuilder buffer, String tag, boolean close, String ... attrs) {
 		buffer.append('<').append(tag);
 		for (int i = 0; i < attrs.length - 1; i += 2) {
-			buffer.append(' ').append(attrs[i]).append("=\"").append(attrs[i + 1]).append('"');
+			buffer.append(' ')
+				.append(escapeForXml(attrs[i])).append("=\"")
+				.append(escapeForXml(attrs[i + 1])).append('"');
 		}
-		buffer.append("/>\n");
+		if (close) {
+			buffer.append('/');
+		}
+		buffer.append(">\n");
+	}
+
+	private static String escapeForXml(String data) {
+		if (data.indexOf('&') != -1) {
+			data = data.replaceAll("&", "&amp;");
+		}
+		if (data.indexOf('<') != -1) {
+			data = data.replaceAll("&", "&lt;");
+		}
+		if (data.indexOf('>') != -1) {
+			data = data.replaceAll("&", "&gt;");
+		}
+		if (data.indexOf('\'') != -1) {
+			data = data.replaceAll("&", "&apos;");
+		}
+		if (data.indexOf('"') != -1) {
+			data = data.replaceAll("&", "&quot;");
+		}
+		return data;
+	}
+
+	private static final class Deserializer extends ZLXMLReaderAdapter {
+		private static enum State {
+			READ_NOTHING,
+			READ_ENTRY,
+			READ_ID,
+			READ_TITLE,
+			READ_LANGUAGE,
+			READ_ENCODING,
+			READ_AUTHOR,
+			READ_AUTHOR_URI,
+			READ_AUTHOR_NAME,
+		}
+
+		private State myState = State.READ_NOTHING;
+		
+		private long myId = -1;
+		private String myUrl;
+		private StringBuilder myTitle = new StringBuilder();
+		private StringBuilder myLanguage = new StringBuilder();
+		private StringBuilder myEncoding = new StringBuilder();
+		private ArrayList<Author> myAuthors = new ArrayList<Author>();
+		private StringBuilder myAuthorSortKey = new StringBuilder();
+		private StringBuilder myAuthorName = new StringBuilder();
+
+		private Book myBook;
+
+		public Book getBook() {
+			return myState == State.READ_NOTHING ? myBook : null;
+		}
+
+		private static void clear(StringBuilder buffer) {
+			buffer.delete(0, buffer.length());
+		}
+
+		private static String string(StringBuilder buffer) {
+			return buffer.length() != 0 ? buffer.toString() : null;
+		}
+
+		@Override
+		public void startDocumentHandler() {
+			myBook = null;
+
+			myId = -1;
+			myUrl = null;
+			clear(myTitle);
+			clear(myLanguage);
+			clear(myEncoding);
+			myAuthors.clear();
+
+			myState = State.READ_NOTHING;
+		}
+
+		@Override
+		public void endDocumentHandler() {
+			if (myId == -1) {
+				return;
+			}
+			myBook = new Book(
+				myId,
+				ZLFile.createFileByUrl(myUrl),
+				string(myTitle),
+				string(myEncoding),
+				string(myLanguage)
+			);
+			for (Author author : myAuthors) {
+				myBook.addAuthorWithNoCheck(author);
+			}
+			// TODO: add tags
+			// TODO: add series info
+		}
+
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			switch (myState) {
+				case READ_NOTHING:
+					if (!"entry".equals(tag)) {
+						return true;
+					}
+					myState = State.READ_ENTRY;
+					break;
+				case READ_ENTRY:
+					if ("id".equals(tag)) {
+						myState = State.READ_ID;
+					} else if ("title".equals(tag)) {
+						myState = State.READ_TITLE;
+					} else if ("dc:language".equals(tag)) {
+						myState = State.READ_LANGUAGE;
+					} else if ("dc:encoding".equals(tag)) {
+						myState = State.READ_ENCODING;
+					} else if ("author".equals(tag)) {
+						myState = State.READ_AUTHOR;
+						clear(myAuthorName);
+						clear(myAuthorSortKey);
+					} else if ("category".equals(tag)) {
+						// TODO: implement
+					} else if ("link".equals(tag)) {
+						// TODO: use "rel" attribute
+						myUrl = attributes.getValue("href");
+					} else {
+						return true;
+					}
+					break;
+				case READ_AUTHOR:
+					if ("uri".equals(tag)) {
+						myState = State.READ_AUTHOR_URI;
+					} else if ("name".equals(tag)) {
+						myState = State.READ_AUTHOR_NAME;
+					} else {
+						return true;
+					}
+					break;
+			}
+			return false;
+		}
+		
+		@Override
+		public boolean endElementHandler(String tag) {
+			switch (myState) {
+				case READ_NOTHING:
+					return true;
+				case READ_ENTRY:
+					if ("entry".equals(tag)) {
+						myState = State.READ_NOTHING;
+					}	
+					break;
+				case READ_AUTHOR_URI:
+				case READ_AUTHOR_NAME:
+					myState = State.READ_AUTHOR;
+					break;
+				case READ_AUTHOR:
+					if (myAuthorSortKey.length() > 0 && myAuthorName.length() > 0) {
+						myAuthors.add(
+							new Author(myAuthorName.toString(), myAuthorSortKey.toString())
+						);
+					}
+					myState = State.READ_ENTRY;
+					break;
+				default:
+					myState = State.READ_ENTRY;
+					break;
+			}
+			return false;
+		}
+		
+		@Override
+		public void characterDataHandler(char[] ch, int start, int length) {
+			switch (myState) {
+				case READ_ID:
+					try {
+						myId = Long.parseLong(new String(ch, start, length));
+					} catch (NumberFormatException e) {
+					}
+					break;
+				case READ_TITLE:
+					myTitle.append(ch, start, length);
+					break;
+				case READ_LANGUAGE:
+					myLanguage.append(ch, start, length);
+					break;
+				case READ_ENCODING:
+					myEncoding.append(ch, start, length);
+					break;
+				case READ_AUTHOR_URI:
+					myAuthorSortKey.append(ch, start, length);
+					break;
+				case READ_AUTHOR_NAME:
+					myAuthorName.append(ch, start, length);
+					break;
+			}
+		}
 	}
 }

@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
+import org.geometerplus.fbreader.library.Book;
 
 public class FB2NativePlugin extends NativeFormatPlugin {
 	public FB2NativePlugin() {
@@ -44,5 +45,10 @@ public class FB2NativePlugin extends NativeFormatPlugin {
 	@Override
 	public EncodingCollection supportedEncodings() {
 		return new AutoEncodingCollection();
+	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) {
+		book.setEncoding("auto");
 	}
 }
