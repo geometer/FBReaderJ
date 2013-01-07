@@ -23,26 +23,13 @@ public abstract class BookSerializerUtil {
 	private BookSerializerUtil() {
 	}
 
-	private static void appendTagWithContent(StringBuilder buffer, String tag, String content) {
-		buffer
-			.append('<').append(tag).append('>')
-			.append(content)
-			.append("</").append(tag).append(">\n");
-	}
-
 	public static String serialize(Book book) {
-		// TODO: implement
 		final StringBuilder buffer = new StringBuilder();
 		buffer.append("<entry>\n");
-		/*
-		// TODO: write book id
-		appendTagWithContent(buffer, "id", id);
-		*/
 
+		appendTagWithContent(buffer, "id", String.valueOf(book.getId()));
 		appendTagWithContent(buffer, "title", book.getTitle());
-
-		// TODO: write language (if defined)
-		//appendTagWithContent(buffer, "dc:language", "2-letter-code");
+		appendTagWithContent(buffer, "dc:language", book.getLanguage());
 
 		for (Author author : book.authors()) {
 			buffer.append("<author>\n");
@@ -51,23 +38,21 @@ public abstract class BookSerializerUtil {
 			buffer.append("</author>\n");
 		}
 
-		/*
-		const std::vector<shared_ptr<Tag> > &tags = book.tags();
-		for (std::vector<shared_ptr<Tag> >::const_iterator it = tags.begin(); it != tags.end(); ++it) {
-			const std::string category = (*it)->fullName();
-			writer.addTag("category", true);
-			writer.addAttribute("term", category);
-			writer.addAttribute("label", category);
+		for (Tag tag : book.tags()) {
+			appendTagWithAttributes(
+				buffer, "category",
+				"term", tag.toString("/"),
+				"label", tag.Name
+			);
 		}
-		*/
 
-		buffer
-			.append("<link")
-			.append(" href='").append(book.File.getUrl()).append("'")
+		appendTagWithAttributes(
+			buffer, "link",
+			"href", book.File.getUrl(),
 			// TODO: real book mimetype
-			.append(" type='").append("application/epub+zip").append("'")
-			.append(" rel='").append("http://opds-spec.org/acquisition").append("'")
-			.append("/>\n");
+			"type", "application/epub+zip",
+			"rel", "http://opds-spec.org/acquisition"
+		);
 
 		buffer.append("</entry>\n");
 		return buffer.toString();
@@ -76,5 +61,20 @@ public abstract class BookSerializerUtil {
 	public static Book deserialize(String xml) {
 		// TODO: implement
 		return null;
+	}
+
+	private static void appendTagWithContent(StringBuilder buffer, String tag, String content) {
+		buffer
+			.append('<').append(tag).append('>')
+			.append(content)
+			.append("</").append(tag).append(">\n");
+	}
+
+	private static void appendTagWithAttributes(StringBuilder buffer, String tag, String ... attrs) {
+		buffer.append('<').append(tag);
+		for (int i = 0; i < attrs.length - 1; i += 2) {
+			buffer.append(' ').append(attrs[i]).append("=\"").append(attrs[i + 1]).append('"');
+		}
+		buffer.append("/>\n");
 	}
 }
