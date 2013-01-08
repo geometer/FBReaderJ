@@ -238,10 +238,10 @@ public final class Library {
 			return;
 		}
 
-		final String xml = BookSerializerUtil.serialize(book);
-		BookSerializerUtil.deserialize(xml);
-
 		myBooks.put(book.File, book);
+
+		final String xml = BookSerializerUtil.serialize(book);
+		book = BookSerializerUtil.deserialize(xml);
 
 		List<Author> authors = book.authors();
 		if (authors.isEmpty()) {
@@ -253,7 +253,7 @@ public final class Library {
 			if (seriesInfo == null) {
 				authorTree.getBookSubTree(book, false);
 			} else {
-				authorTree.getSeriesSubTree(seriesInfo.Name).getBookInSeriesSubTree(book);
+				authorTree.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
 			}
 		}
 
@@ -266,7 +266,7 @@ public final class Library {
 					ROOT_BY_SERIES
 				);
 			}
-			seriesRoot.getSeriesSubTree(seriesInfo.Name).getBookInSeriesSubTree(book);
+			seriesRoot.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
 		}
 
 		if (myDoGroupTitlesByFirstLetter) {

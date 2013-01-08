@@ -34,7 +34,8 @@ public abstract class BookSerializerUtil {
 		final StringBuilder buffer = new StringBuilder();
 		appendTagWithAttributes(
 			buffer, "entry", false,
-			"xmlns:dc", XMLNamespaces.DublinCore
+			"xmlns:dc", XMLNamespaces.DublinCore,
+			"xmlns:calibre", XMLNamespaces.CalibreMetadata
 		);
 
 		appendTagWithContent(buffer, "id", String.valueOf(book.getId()));
@@ -57,7 +58,13 @@ public abstract class BookSerializerUtil {
 			);
 		}
 
-		// TODO: serialize series info
+		final SeriesInfo seriesInfo = book.getSeriesInfo();
+		if (seriesInfo != null) {
+			appendTagWithContent(buffer, "calibre:series", seriesInfo.Title);
+			if (seriesInfo.Index != null) {
+				appendTagWithContent(buffer, "calibre:series_index", String.valueOf(seriesInfo.Index));
+			}
+		}
 		// TODO: serialize description (?)
 		// TODO: serialize cover (?)
 
@@ -131,6 +138,8 @@ public abstract class BookSerializerUtil {
 			READ_AUTHOR,
 			READ_AUTHOR_URI,
 			READ_AUTHOR_NAME,
+			READ_SERIES_TITLE,
+			READ_SERIES_INDEX,
 		}
 
 		private State myState = State.READ_NOTHING;
@@ -141,8 +150,11 @@ public abstract class BookSerializerUtil {
 		private StringBuilder myLanguage = new StringBuilder();
 		private StringBuilder myEncoding = new StringBuilder();
 		private ArrayList<Author> myAuthors = new ArrayList<Author>();
+		private ArrayList<Tag> myTags = new ArrayList<Tag>();
 		private StringBuilder myAuthorSortKey = new StringBuilder();
 		private StringBuilder myAuthorName = new StringBuilder();
+		private StringBuilder mySeriesTitle = new StringBuilder();
+		private StringBuilder mySeriesIndex = new StringBuilder();
 
 		private Book myBook;
 
@@ -167,7 +179,10 @@ public abstract class BookSerializerUtil {
 			clear(myTitle);
 			clear(myLanguage);
 			clear(myEncoding);
+			clear(mySeriesTitle);
+			clear(mySeriesIndex);
 			myAuthors.clear();
+			myTags.clear();
 
 			myState = State.READ_NOTHING;
 		}
@@ -187,8 +202,10 @@ public abstract class BookSerializerUtil {
 			for (Author author : myAuthors) {
 				myBook.addAuthorWithNoCheck(author);
 			}
-			// TODO: add tags
-			// TODO: add series info
+			for (Tag tag : myTags) {
+				myBook.addTagWithNoCheck(tag);
+			}
+			myBook.setSeriesInfoWithNoCheck(string(mySeriesTitle), string(mySeriesIndex));
 		}
 
 		@Override
@@ -214,7 +231,14 @@ public abstract class BookSerializerUtil {
 						clear(myAuthorName);
 						clear(myAuthorSortKey);
 					} else if ("category".equals(tag)) {
-						// TODO: implement
+						final String term = attributes.getValue("term");
+						if (term != null) {
+							myTags.add(Tag.getTag(term.split("/")));
+						}
+					} else if ("calibre:series".equals(tag)) {
+						myState = State.READ_SERIES_TITLE;
+					} else if ("calibre:series_index".equals(tag)) {
+						myState = State.READ_SERIES_INDEX;
 					} else if ("link".equals(tag)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
@@ -287,6 +311,12 @@ public abstract class BookSerializerUtil {
 					break;
 				case READ_AUTHOR_NAME:
 					myAuthorName.append(ch, start, length);
+					break;
+				case READ_SERIES_TITLE:
+					mySeriesTitle.append(ch, start, length);
+					break;
+				case READ_SERIES_INDEX:
+					mySeriesIndex.append(ch, start, length);
 					break;
 			}
 		}

@@ -22,6 +22,13 @@ package org.geometerplus.fbreader.library;
 import java.math.BigDecimal;
 
 public final class SeriesInfo {
+	public static SeriesInfo createSeriesInfo(String title, String index) {
+		if (title == null) {
+			return null;
+		}
+		return new SeriesInfo(title, createIndex(index));
+	}
+
 	public static BigDecimal createIndex(String index) {
 		try {
 			return index != null ? new BigDecimal(index).stripTrailingZeros() : null;
@@ -30,11 +37,11 @@ public final class SeriesInfo {
 		}
 	}
 
-	public final String Name;
+	public final String Title;
 	public final BigDecimal Index;
 
-	public SeriesInfo(String name, BigDecimal index) {
-		Name = name;
+	public SeriesInfo(String title, BigDecimal index) {
+		Title = title;
 		Index = index;
 	}
 }
