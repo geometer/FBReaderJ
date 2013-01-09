@@ -379,4 +379,14 @@ public class BookCollection {
 			}
 		}
 	}
+
+	public List<Bookmark> allBookmarks() {
+		return myDatabase.loadAllVisibleBookmarks();
+	}
+
+	public List<Bookmark> invisibleBookmarks(Book book) {
+		final List<Bookmark> list = myDatabase.loadBookmarks(book.getId(), false);
+		Collections.sort(list, new Bookmark.ByTimeComparator());
+		return list;
+	}
 }

@@ -78,7 +78,6 @@ public final class Library {
 		return ourInstance;
 	}
 
-	private final BooksDatabase myDatabase;
 	private final BookCollection myCollection;
 
 	private final RootTree myRootTree = new RootTree();
@@ -99,7 +98,6 @@ public final class Library {
 	}
 
 	public Library(BooksDatabase db) {
-		myDatabase = db;
 		myCollection = new BookCollection(db);
 		myCollection.addListener(new BookCollection.Listener() {
 			public void onBookEvent(BookEvent event, Book book) {
@@ -398,12 +396,10 @@ public final class Library {
 	}
 
 	public List<Bookmark> allBookmarks() {
-		return myDatabase.loadAllVisibleBookmarks();
+		return myCollection.allBookmarks();
 	}
 
 	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = myDatabase.loadBookmarks(book.getId(), false);
-		Collections.sort(list, new Bookmark.ByTimeComparator());
-		return list;
+		return myCollection.invisibleBookmarks(book);
 	}
 }
