@@ -36,9 +36,10 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
+import org.geometerplus.android.fbreader.libraryService.LibraryService;
 import org.geometerplus.android.util.UIUtil;
 
-public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
+public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener, ServiceConnection {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
@@ -67,6 +68,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		super.onCreate(bundle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		bindService(new Intent(this, LibraryService.class), this, LibraryService.BIND_AUTO_CREATE);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -241,6 +244,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			finish();
 			fbreader.gotoBookmark(bookmark);
 		}
+	}
+
+	public void onServiceConnected(ComponentName name, IBinder service) {
+		// TODO: implement
+	}
+
+	public void onServiceDisconnected(ComponentName name) {
+		// TODO: implement
 	}
 
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
