@@ -87,12 +87,52 @@ public class BookCollection {
 		return myBooksByFile.size();
 	}
 
-	private void addBook(Book book) {
-		if (book == null || myBooksByFile.containsKey(book.File)) {
-			return;
+	public Book getBookById(long id) {
+		Book book = myBooksById.get(id);
+		if (book != null) {
+			return book;
 		}
-		myBooksByFile.put(book.File, book);
-		addBookById(book);
+
+		book = BooksDatabase.Instance().loadBook(id);
+		if (book == null) {
+			return null;
+		}
+		book.loadLists();
+
+		final ZLFile bookFile = book.File;
+		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
+		if (physicalFile == null) {
+			addBook(book);
+			return book;
+		}
+		if (!physicalFile.exists()) {
+			return null;
+		}
+
+		FileInfoSet fileInfos = new FileInfoSet(physicalFile);
+		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
+			addBook(book);
+			return book;
+		}
+		fileInfos.save();
+
+		try {
+			book.readMetaInfo();
+			addBook(book);
+			return book;
+		} catch (BookReadingException e) {
+			return null;
+		}
+	}
+
+	private void addBook(Book book) {
+		synchronized (myBooksByFile) {
+			if (book == null || myBooksByFile.containsKey(book.File)) {
+				return;
+			}
+			myBooksByFile.put(book.File, book);
+			addBookById(book);
+		}
 		fireBookEvent(Listener.BookEvent.Added, book);
 	}
 
@@ -104,14 +144,17 @@ public class BookCollection {
 	}
 
 	public void removeBook(Book book, boolean deleteFromDisk) {
-		myBooksByFile.remove(book.File);
-		final List<Long> ids = myDatabase.loadRecentBookIds();
-		if (ids.remove(book.getId())) {
-			myDatabase.saveRecentBookIds(ids);
-		}
-		myDatabase.deleteFromBookList(book.getId());
-		if (deleteFromDisk) {
-			book.File.getPhysicalFile().delete();
+		synchronized (myBooksByFile) {
+			myBooksByFile.remove(book.File);
+			myBooksById.remove(book.getId());
+			final List<Long> ids = myDatabase.loadRecentBookIds();
+			if (ids.remove(book.getId())) {
+				myDatabase.saveRecentBookIds(ids);
+			}
+			myDatabase.deleteFromBookList(book.getId());
+			if (deleteFromDisk) {
+				book.File.getPhysicalFile().delete();
+			}
 		}
 		fireBookEvent(Listener.BookEvent.Removed, book);
 	}
@@ -124,7 +167,7 @@ public class BookCollection {
 
 	public Book getRecentBook(int index) {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
-		return recentIds.size() > index ? Book.getById(recentIds.get(index)) : null;
+		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
 	}
 
 	public void addBookToRecentList(Book book) {
@@ -195,28 +238,24 @@ public class BookCollection {
 		//}
 
 		for (long id : myDatabase.loadRecentBookIds()) {
-			Book book = savedBooksByBookId.get(id);
-			if (book == null) {
-				book = Book.getById(id);
-				if (book != null && !book.File.exists()) {
-					book = null;
-				}
+			final Book book = savedBooksByBookId.get(id);
+			if (book != null) {
+				addBook(book);
+			} else {
+				getBookById(id);
 			}
-			addBook(book);
 			//if (book != null) {
 			//	new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
 			//}
 		}
 
 		for (long id : myDatabase.loadFavoritesIds()) {
-			Book book = savedBooksByBookId.get(id);
-			if (book == null) {
-				book = Book.getById(id);
-				if (book != null && !book.File.exists()) {
-					book = null;
-				}
+			final Book book = savedBooksByBookId.get(id);
+			if (book != null) {
+				addBook(book);
+			} else {
+				getBookById(id);
 			}
-			addBook(book);
 			//if (book != null) {
 			//	getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
 			//}

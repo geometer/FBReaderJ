@@ -229,8 +229,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		bookmark.onOpen();
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final long bookId = bookmark.getBookId();
-		if ((fbreader.Model == null) || (fbreader.Model.Book.getId() != bookId)) {
-			final Book book = Book.getById(bookId);
+		if (fbreader.Model == null || fbreader.Model.Book.getId() != bookId) {
+			final Book book = new BookCollection(BooksDatabase.Instance()).getBookById(bookId);
 			if (book != null) {
 				finish();
 				fbreader.openBook(book, bookmark, null);

@@ -39,36 +39,6 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.Paths;
 
 public class Book {
-	public static Book getById(long bookId) {
-		final Book book = BooksDatabase.Instance().loadBook(bookId);
-		if (book == null) {
-			return null;
-		}
-		book.loadLists();
-
-		final ZLFile bookFile = book.File;
-		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
-		if (physicalFile == null) {
-			return book;
-		}
-		if (!physicalFile.exists()) {
-			return null;
-		}
-
-		FileInfoSet fileInfos = new FileInfoSet(physicalFile);
-		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
-			return book;
-		}
-		fileInfos.save();
-
-		try {
-			book.readMetaInfo();
-			return book;
-		} catch (BookReadingException e) {
-			return null;
-		}
-	}
-
 	public static Book getByFile(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
@@ -196,7 +166,7 @@ public class Book {
 		}
 	}
 
-	private void loadLists() {
+	void loadLists() {
 		final BooksDatabase database = BooksDatabase.Instance();
 		myAuthors = database.loadAuthors(myId);
 		myTags = database.loadTags(myId);
