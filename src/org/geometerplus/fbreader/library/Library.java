@@ -82,8 +82,7 @@ public final class Library {
 	}
 
 	private final BooksDatabase myDatabase;
-
-	private final BookCollection myCollection = new BookCollection();
+	private final BookCollection myCollection;
 
 	private final RootTree myRootTree = new RootTree();
 	private boolean myDoGroupTitlesByFirstLetter;
@@ -104,6 +103,23 @@ public final class Library {
 
 	public Library(BooksDatabase db) {
 		myDatabase = db;
+		myCollection = new BookCollection(db);
+		myCollection.addChangeListener(new BookCollection.ChangeListener() {
+			public void onCollectionChanged(Code code, Book book) {
+				switch (code) {
+					case BookAdded:
+						//System.err.println("Added a book");
+						break;
+					case BuildStarted:
+						Library.this.fireModelChangedEvent(ChangeListener.Code.StatusChanged);
+						setStatus(myStatusMask | STATUS_LOADING);
+						break;
+					case BuildCompleted:
+						setStatus(myStatusMask & ~STATUS_LOADING);
+						break;
+				}
+			}
+		});
 
 		new FavoritesTree(myRootTree, ROOT_FAVORITES);
 		new FirstLevelTree(myRootTree, ROOT_RECENT);

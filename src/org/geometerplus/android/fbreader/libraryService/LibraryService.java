@@ -34,10 +34,24 @@ public class LibraryService extends Service {
 			if (database == null) {
 				database = new SQLiteBooksDatabase(LibraryService.this, "LIBRARY SERVICE");
 			}
-			final Library collection = Library.Instance();
-			collection.addChangeListener(new Library.ChangeListener() {
-				public void onLibraryChanged(final Code code) {
-					System.err.println("LibraryService.onLibraryChanged(" + code + ")");
+			final BookCollection collection = new BookCollection(database);
+			final long start = System.currentTimeMillis();
+			collection.addChangeListener(new BookCollection.ChangeListener() {
+				public void onCollectionChanged(Code code, Book book) {
+					switch (code) {
+						case BookAdded:
+							System.err.println("Added " + book.getTitle());
+							break;
+						case BuildStarted:
+							System.err.println("Build started");
+							break;
+						case BuildSucceeded:
+							System.err.println("Build succeeded");
+							break;
+						case BuildCompleted:
+							System.err.println("Build completed with " + collection.size() + " books in " + (System.currentTimeMillis() - start) + " milliseconds");
+							break;
+					}
 				}
 			});
 			collection.startBuild();
