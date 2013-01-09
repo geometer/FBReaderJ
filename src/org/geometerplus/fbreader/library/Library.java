@@ -19,14 +19,11 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.io.File;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public final class Library {
 	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
@@ -398,19 +395,10 @@ public final class Library {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
 		}
-		myCollection.removeBook(book);
-		if (getFirstLevelTree(ROOT_RECENT).removeBook(book, false)) {
-			final List<Long> ids = myDatabase.loadRecentBookIds();
-			ids.remove(book.getId());
-			myDatabase.saveRecentBookIds(ids);
-		}
+		myCollection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
+		getFirstLevelTree(ROOT_RECENT).removeBook(book, false);
 		getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false);
 		myRootTree.removeBook(book, true);
-
-		myDatabase.deleteFromBookList(book.getId());
-		if ((removeMode & REMOVE_FROM_DISK) != 0) {
-			book.File.getPhysicalFile().delete();
-		}
 	}
 
 	public List<Bookmark> allBookmarks() {

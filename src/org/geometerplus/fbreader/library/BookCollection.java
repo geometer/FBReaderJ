@@ -80,8 +80,17 @@ public class BookCollection {
 		fireModelChangedEvent(ChangeListener.Code.BookAdded, book);
 	}
 
-	public void removeBook(Book book) {
+	public void removeBook(Book book, boolean deleteFromDisk) {
 		myBooks.remove(book.File);
+		final List<Long> ids = myDatabase.loadRecentBookIds();
+		if (ids.remove(book.getId())) {
+			myDatabase.saveRecentBookIds(ids);
+		}
+		myDatabase.deleteFromBookList(book.getId());
+		if (deleteFromDisk) {
+			book.File.getPhysicalFile().delete();
+		}
+		fireModelChangedEvent(ChangeListener.Code.BookRemoved, book);
 	}
 
 	public List<Book> books() {
@@ -196,7 +205,6 @@ public class BookCollection {
 					}
 					if (doAdd) {
 						addBook(book);
-						//addBookToLibrary(book);
 					}
 				} else {
 					//myRootTree.removeBook(book, true);
@@ -233,7 +241,6 @@ public class BookCollection {
 			if (helpBook == null) {
 				helpBook = new Book(helpFile);
 			}
-			//addBookToLibrary(helpBook);
 			addBook(helpBook);
 		} catch (BookReadingException e) {
 			// that's impossible
@@ -293,7 +300,6 @@ public class BookCollection {
 				if (doReadMetaInfo) {
 					book.readMetaInfo();
 				}
-				//addBookToLibrary(book);
 				addBook(book);
 				newBooks.add(book);
 				return;
@@ -304,7 +310,6 @@ public class BookCollection {
 
 		try {
 			final Book book = new Book(file);
-			//addBookToLibrary(book);
 			addBook(book);
 			newBooks.add(book);
 			return;
