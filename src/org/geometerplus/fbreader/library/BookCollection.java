@@ -29,39 +29,54 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class BookCollection {
-	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
+	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
 
-	public interface ChangeListener {
-		public enum Code {
-			BookAdded,
-			BookRemoved,
-			BuildStarted,
-			BuildNotStarted,
-			BuildSucceeded,
-			BuildCompleted
+	public interface Listener {
+		public enum BookEvent {
+			Added,
+			Updated,
+			Removed
 		}
 
-		void onCollectionChanged(Code code, Book book);
+		public enum BuildEvent {
+			Started,
+			NotStarted,
+			Succeeded,
+			Failed,
+			Completed
+		}
+
+		void onBookEvent(BookEvent event, Book book);
+		void onBuildEvent(BuildEvent event);
 	}
 
-	public void addChangeListener(ChangeListener listener) {
+	public void addListener(Listener listener) {
 		myListeners.add(listener);
 	}
 
-	public void removeChangeListener(ChangeListener listener) {
+	public void removeListener(Listener listener) {
 		myListeners.remove(listener);
 	}
 
-	protected void fireModelChangedEvent(ChangeListener.Code code, Book book) {
+	protected void fireBookEvent(Listener.BookEvent event, Book book) {
 		synchronized (myListeners) {
-			for (ChangeListener l : myListeners) {
-				l.onCollectionChanged(code, book);
+			for (Listener l : myListeners) {
+				l.onBookEvent(event, book);
+			}
+		}
+	}
+	protected void fireBuildEvent(Listener.BuildEvent event) {
+		synchronized (myListeners) {
+			for (Listener l : myListeners) {
+				l.onBuildEvent(event);
 			}
 		}
 	}
 	private final BooksDatabase myDatabase;
-	private final Map<ZLFile,Book> myBooks =
-		Collections.synchronizedMap(new HashMap<ZLFile,Book>());
+	private final Map<ZLFile,Book> myBooksByFile =
+		Collections.synchronizedMap(new LinkedHashMap<ZLFile,Book>());
+	private final Map<Long,Book> myBooksById =
+		Collections.synchronizedMap(new HashMap<Long,Book>());
 	private volatile boolean myBuildStarted = false;
 
 	public BookCollection(BooksDatabase db) {
@@ -69,19 +84,27 @@ public class BookCollection {
 	}
 
 	public int size() {
-		return myBooks.size();
+		return myBooksByFile.size();
 	}
 
 	private void addBook(Book book) {
-		if (book == null || myBooks.containsKey(book.File)) {
+		if (book == null || myBooksByFile.containsKey(book.File)) {
 			return;
 		}
-		myBooks.put(book.File, book);
-		fireModelChangedEvent(ChangeListener.Code.BookAdded, book);
+		myBooksByFile.put(book.File, book);
+		addBookById(book);
+		fireBookEvent(Listener.BookEvent.Added, book);
+	}
+
+	private void addBookById(Book book) {
+		final long id = book.getId();
+		if (id != -1) {
+			myBooksById.put(id, book);
+		}
 	}
 
 	public void removeBook(Book book, boolean deleteFromDisk) {
-		myBooks.remove(book.File);
+		myBooksByFile.remove(book.File);
 		final List<Long> ids = myDatabase.loadRecentBookIds();
 		if (ids.remove(book.getId())) {
 			myDatabase.saveRecentBookIds(ids);
@@ -90,12 +113,12 @@ public class BookCollection {
 		if (deleteFromDisk) {
 			book.File.getPhysicalFile().delete();
 		}
-		fireModelChangedEvent(ChangeListener.Code.BookRemoved, book);
+		fireBookEvent(Listener.BookEvent.Removed, book);
 	}
 
 	public List<Book> books() {
-		synchronized (myBooks) {
-			return new ArrayList<Book>(myBooks.values());
+		synchronized (myBooksByFile) {
+			return new ArrayList<Book>(myBooksByFile.values());
 		}
 	}
 
@@ -104,9 +127,29 @@ public class BookCollection {
 		return recentIds.size() > index ? Book.getById(recentIds.get(index)) : null;
 	}
 
+	public void addBookToRecentList(Book book) {
+		final List<Long> ids = myDatabase.loadRecentBookIds();
+		final Long bookId = book.getId();
+		ids.remove(bookId);
+		ids.add(0, bookId);
+		if (ids.size() > 12) {
+			ids.remove(12);
+		}
+		myDatabase.saveRecentBookIds(ids);
+	}
+
+	public void setBookFavorite(Book book, boolean favorite) {
+		if (favorite) {
+			myDatabase.addToFavorites(book.getId());
+		} else {
+			myDatabase.removeFromFavorites(book.getId());
+		}
+		fireBookEvent(Listener.BookEvent.Updated, book);
+	}
+
 	public synchronized void startBuild() {
 		if (myBuildStarted) {
-			fireModelChangedEvent(ChangeListener.Code.BuildNotStarted, null);
+			fireBuildEvent(Listener.BuildEvent.NotStarted);
 			return;
 		}
 		myBuildStarted = true;
@@ -114,11 +157,13 @@ public class BookCollection {
 		final Thread builder = new Thread("Library.build") {
 			public void run() {
 				try {
-					fireModelChangedEvent(ChangeListener.Code.BuildStarted, null);
+					fireBuildEvent(Listener.BuildEvent.Started);
 					build();
-					fireModelChangedEvent(ChangeListener.Code.BuildSucceeded, null);
+					fireBuildEvent(Listener.BuildEvent.Succeeded);
+				} catch (Throwable t) {
+					fireBuildEvent(Listener.BuildEvent.Failed);
 				} finally {
-					fireModelChangedEvent(ChangeListener.Code.BuildCompleted, null);
+					fireBuildEvent(Listener.BuildEvent.Completed);
 					myBuildStarted = false;
 				}
 			}
@@ -213,7 +258,7 @@ public class BookCollection {
 					}
 				} else {
 					//myRootTree.removeBook(book, true);
-					//fireModelChangedEvent(ChangeListener.Code.BookRemoved);
+					//fireBookEvent(Listener.BookEvent.Removed);
 					orphanedBooks.add(book);
 				}
 			}
@@ -259,6 +304,7 @@ public class BookCollection {
 			public void run() {
 				for (Book book : newBooks) {
 					book.save();
+					addBookById(book);
 				}
 			}
 		});

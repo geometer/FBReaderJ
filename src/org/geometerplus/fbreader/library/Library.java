@@ -101,20 +101,25 @@ public final class Library {
 	public Library(BooksDatabase db) {
 		myDatabase = db;
 		myCollection = new BookCollection(db);
-		myCollection.addChangeListener(new BookCollection.ChangeListener() {
-			public void onCollectionChanged(Code code, Book book) {
-				switch (code) {
-					case BookAdded:
-						addBookToLibraryWithNoCheck(book);
+		myCollection.addListener(new BookCollection.Listener() {
+			public void onBookEvent(BookEvent event, Book book) {
+				switch (event) {
+					case Added:
+						addBookToLibrary(book);
 						if (myCollection.size() % 16 == 0) {
 							Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
 						}
 						break;
-					case BuildStarted:
+				}
+			}
+
+			public void onBuildEvent(BuildEvent event) {
+				switch (event) {
+					case Started:
 						Library.this.fireModelChangedEvent(ChangeListener.Code.StatusChanged);
 						setStatus(myStatusMask | STATUS_LOADING);
 						break;
-					case BuildCompleted:
+					case Completed:
 						Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
 						setStatus(myStatusMask & ~STATUS_LOADING);
 						break;
@@ -179,7 +184,7 @@ public final class Library {
 		}
 	}
 
-	private synchronized void addBookToLibraryWithNoCheck(Book book) {
+	private synchronized void addBookToLibrary(Book book) {
 		final String xml = BookSerializerUtil.serialize(book);
 		book = BookSerializerUtil.deserialize(xml);
 
@@ -265,7 +270,7 @@ public final class Library {
 		removeFromTree(ROOT_BY_SERIES, book);
 		removeFromTree(ROOT_BY_AUTHOR, book);
 		removeFromTree(ROOT_BY_TAG, book);
-		addBookToLibraryWithNoCheck(book);
+		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
@@ -336,14 +341,7 @@ public final class Library {
 	}
 
 	public void addBookToRecentList(Book book) {
-		final List<Long> ids = myDatabase.loadRecentBookIds();
-		final Long bookId = book.getId();
-		ids.remove(bookId);
-		ids.add(0, bookId);
-		if (ids.size() > 12) {
-			ids.remove(12);
-		}
-		myDatabase.saveRecentBookIds(ids);
+		myCollection.addBookToRecentList(book);
 	}
 
 	public boolean isBookInFavorites(Book book) {
@@ -365,12 +363,12 @@ public final class Library {
 		}
 		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
 		rootFavorites.getBookSubTree(book, true);
-		myDatabase.addToFavorites(book.getId());
+		myCollection.setBookFavorite(book, true);
 	}
 
 	public void removeBookFromFavorites(Book book) {
 		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
-			myDatabase.removeFromFavorites(book.getId());
+			myCollection.setBookFavorite(book, false);
 			fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 		}
 	}
@@ -400,11 +398,11 @@ public final class Library {
 	}
 
 	public List<Bookmark> allBookmarks() {
-		return BooksDatabase.Instance().loadAllVisibleBookmarks();
+		return myDatabase.loadAllVisibleBookmarks();
 	}
 
 	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = BooksDatabase.Instance().loadBookmarks(book.getId(), false);
+		final List<Bookmark> list = myDatabase.loadBookmarks(book.getId(), false);
 		Collections.sort(list, new Bookmark.ByTimeComparator());
 		return list;
 	}

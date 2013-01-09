@@ -36,19 +36,27 @@ public class LibraryService extends Service {
 			}
 			final BookCollection collection = new BookCollection(database);
 			final long start = System.currentTimeMillis();
-			collection.addChangeListener(new BookCollection.ChangeListener() {
-				public void onCollectionChanged(Code code, Book book) {
-					switch (code) {
-						case BookAdded:
+			collection.addListener(new BookCollection.Listener() {
+				public void onBookEvent(BookEvent event, Book book) {
+					switch (event) {
+						case Added:
 							System.err.println("Added " + book.getTitle());
 							break;
-						case BuildStarted:
+					}
+				}
+
+				public void onBuildEvent(BuildEvent event) {
+					switch (event) {
+						case Started:
 							System.err.println("Build started");
 							break;
-						case BuildSucceeded:
+						case Succeeded:
 							System.err.println("Build succeeded");
 							break;
-						case BuildCompleted:
+						case Failed:
+							System.err.println("Build failed");
+							break;
+						case Completed:
 							System.err.println("Build completed with " + collection.size() + " books in " + (System.currentTimeMillis() - start) + " milliseconds");
 							break;
 					}
