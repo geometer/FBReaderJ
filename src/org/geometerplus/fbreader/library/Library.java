@@ -83,8 +83,8 @@ public final class Library {
 
 	private final BooksDatabase myDatabase;
 
-	private final Map<ZLFile,Book> myBooks =
-		Collections.synchronizedMap(new HashMap<ZLFile,Book>());
+	private final BookCollection myCollection = new BookCollection();
+
 	private final RootTree myRootTree = new RootTree();
 	private boolean myDoGroupTitlesByFirstLetter;
 
@@ -234,12 +234,14 @@ public final class Library {
 	}
 
 	private synchronized void addBookToLibrary(Book book) {
-		if (myBooks.containsKey(book.File)) {
+		if (!myCollection.addBook(book)) {
 			return;
 		}
 
-		myBooks.put(book.File, book);
+		addBookToLibraryWithNoCheck(book);
+	}
 
+	private synchronized void addBookToLibraryWithNoCheck(Book book) {
 		final String xml = BookSerializerUtil.serialize(book);
 		book = BookSerializerUtil.deserialize(xml);
 
@@ -318,7 +320,6 @@ public final class Library {
 			return;
 		}
 
-		myBooks.remove(book.File);
 		refreshInTree(ROOT_FAVORITES, book);
 		refreshInTree(ROOT_RECENT, book);
 		removeFromTree(ROOT_FOUND, book);
@@ -326,7 +327,7 @@ public final class Library {
 		removeFromTree(ROOT_BY_SERIES, book);
 		removeFromTree(ROOT_BY_AUTHOR, book);
 		removeFromTree(ROOT_BY_TAG, book);
-		addBookToLibrary(book);
+		addBookToLibraryWithNoCheck(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
@@ -540,11 +541,7 @@ public final class Library {
 		}
 		
 		FirstLevelTree newSearchResults = null;
-		final List<Book> booksCopy;
-		synchronized (myBooks) {
-			booksCopy = new ArrayList<Book>(myBooks.values());
-		}
-		for (Book book : booksCopy) {
+		for (Book book : myCollection.books()) {
 			if (book.matches(pattern)) {
 				synchronized (this) {
 					if (newSearchResults == null) {
@@ -622,7 +619,7 @@ public final class Library {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
 		}
-		myBooks.remove(book.File);
+		myCollection.removeBook(book);
 		if (getFirstLevelTree(ROOT_RECENT).removeBook(book, false)) {
 			final List<Long> ids = myDatabase.loadRecentBookIds();
 			ids.remove(book.getId());
