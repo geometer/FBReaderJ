@@ -36,16 +36,15 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.fbreader.libraryService.LibraryInterface;
-import org.geometerplus.android.fbreader.libraryService.LibraryService;
+import org.geometerplus.android.fbreader.libraryService.*;
 import org.geometerplus.android.util.UIUtil;
 
-public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener, ServiceConnection {
+public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
 
-	LibraryInterface myLibraryInterface;
+	private final BookCollectionShadow myCollection = new BookCollectionShadow(this);
 
 	List<Bookmark> AllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
@@ -72,7 +71,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		bindService(new Intent(this, LibraryService.class), this, LibraryService.BIND_AUTO_CREATE);
+		myCollection.bindToService();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -236,13 +235,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final long bookId = bookmark.getBookId();
 		if (fbreader.Model == null || fbreader.Model.Book.getId() != bookId) {
-			Book book = null;
-			if (myLibraryInterface != null) {
-				try {
-					book = BookSerializerUtil.deserialize(myLibraryInterface.bookById(bookId));
-				} catch (RemoteException e) {
-				}
-			}
+			final Book book = myCollection.getBookById(bookId);
 			if (book != null) {
 				finish();
 				fbreader.openBook(book, bookmark, null);
@@ -253,18 +246,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			finish();
 			fbreader.gotoBookmark(bookmark);
 		}
-	}
-
-	// method from ServiceConnection interface
-	public void onServiceConnected(ComponentName name, IBinder service) {
-		myLibraryInterface = LibraryInterface.Stub.asInterface(service);
-		System.err.println("onServiceConnected " + name + " : " + myLibraryInterface);
-	}
-
-	// method from ServiceConnection interface
-	public void onServiceDisconnected(ComponentName name) {
-		myLibraryInterface = null;
-		System.err.println("onServiceDisconnected " + name);
 	}
 
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
