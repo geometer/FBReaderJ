@@ -72,13 +72,12 @@ public class BookCollection {
 		return myBooks.size();
 	}
 
-	public boolean addBook(Book book) {
+	private void addBook(Book book) {
 		if (book == null || myBooks.containsKey(book.File)) {
-			return false;
+			return;
 		}
 		myBooks.put(book.File, book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded, book);
-		return true;
 	}
 
 	public void removeBook(Book book) {

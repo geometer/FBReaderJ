@@ -1,0 +1,9 @@
+restore:
+* recent list
+* favorites list
+* group titles by first letter
+
+new:
+* no library killing
+* filesystem event listener
+* update book collection on path changing (from options dialog)
