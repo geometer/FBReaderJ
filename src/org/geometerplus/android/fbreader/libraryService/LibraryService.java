@@ -27,13 +27,20 @@ import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 
-public class LibraryService extends Service implements Library.ChangeListener {
+public class LibraryService extends Service {
 	public final class LibraryImplementation extends LibraryInterface.Stub {
 		LibraryImplementation() {
 			BooksDatabase database = SQLiteBooksDatabase.Instance();
 			if (database == null) {
 				database = new SQLiteBooksDatabase(LibraryService.this, "LIBRARY SERVICE");
 			}
+			final Library collection = Library.Instance();
+			collection.addChangeListener(new Library.ChangeListener() {
+				public void onLibraryChanged(final Code code) {
+					System.err.println("LibraryService.onLibraryChanged(" + code + ")");
+				}
+			});
+			collection.startBuild();
 		}
 
 		public boolean isUpToDate() {
@@ -66,19 +73,12 @@ public class LibraryService extends Service implements Library.ChangeListener {
 		System.err.println("LibraryService.onCreate()");
 		super.onCreate();
 		myLibrary = new LibraryImplementation();
-		//myLibrary.myBaseLibrary.addChangeListener(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		System.err.println("LibraryService.onDestroy()");
-		//myLibrary.myBaseLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
-	}
-
-	public void onLibraryChanged(final Code code) {
-		// TODO: implement signal sending
-		System.err.println("LibraryService.onLibraryChanged(" + code + "): " + myLibrary.isUpToDate());
 	}
 }
