@@ -99,6 +99,11 @@ public class BookCollection {
 		}
 	}
 
+	public Book getRecentBook(int index) {
+		List<Long> recentIds = myDatabase.loadRecentBookIds();
+		return recentIds.size() > index ? Book.getById(recentIds.get(index)) : null;
+	}
+
 	public synchronized void startBuild() {
 		if (myBuildStarted) {
 			fireModelChangedEvent(ChangeListener.Code.BuildNotStarted, null);

@@ -278,13 +278,11 @@ public final class Library {
 	}
 
 	public Book getRecentBook() {
-		List<Long> recentIds = myDatabase.loadRecentBookIds();
-		return recentIds.size() > 0 ? Book.getById(recentIds.get(0)) : null;
+		return myCollection.getRecentBook(0);
 	}
 
 	public Book getPreviousBook() {
-		List<Long> recentIds = myDatabase.loadRecentBookIds();
-		return recentIds.size() > 1 ? Book.getById(recentIds.get(1)) : null;
+		return myCollection.getRecentBook(1);
 	}
 
 	public void startBookSearch(final String pattern) {
