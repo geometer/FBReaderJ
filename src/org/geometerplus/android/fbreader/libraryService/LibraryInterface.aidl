@@ -5,5 +5,5 @@
 package org.geometerplus.android.fbreader.libraryService;
 
 interface LibraryInterface {
-	boolean isUpToDate();
+	String bookById(in long id);
 }

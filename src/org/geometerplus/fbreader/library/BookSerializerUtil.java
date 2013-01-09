@@ -31,6 +31,10 @@ public abstract class BookSerializerUtil {
 	}
 
 	public static String serialize(Book book) {
+		if (book == null) {
+			return null;
+		}
+
 		final StringBuilder buffer = new StringBuilder();
 		appendTagWithAttributes(
 			buffer, "entry", false,
@@ -81,6 +85,10 @@ public abstract class BookSerializerUtil {
 	}
 
 	public static Book deserialize(String xml) {
+		if (xml == null) {
+			return null;
+		}
+
 		final Deserializer deserializer = new Deserializer();
 		deserializer.readQuietly(xml);
 		return deserializer.getBook();

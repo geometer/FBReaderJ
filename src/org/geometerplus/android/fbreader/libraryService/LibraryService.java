@@ -29,14 +29,16 @@ import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 
 public class LibraryService extends Service {
 	public final class LibraryImplementation extends LibraryInterface.Stub {
+		private final BookCollection myCollection;
+
 		LibraryImplementation() {
 			BooksDatabase database = SQLiteBooksDatabase.Instance();
 			if (database == null) {
 				database = new SQLiteBooksDatabase(LibraryService.this, "LIBRARY SERVICE");
 			}
-			final BookCollection collection = new BookCollection(database);
+			myCollection = new BookCollection(database);
 			final long start = System.currentTimeMillis();
-			collection.addListener(new BookCollection.Listener() {
+			myCollection.addListener(new BookCollection.Listener() {
 				public void onBookEvent(BookEvent event, Book book) {
 					switch (event) {
 						case Added:
@@ -57,16 +59,16 @@ public class LibraryService extends Service {
 							System.err.println("Build failed");
 							break;
 						case Completed:
-							System.err.println("Build completed with " + collection.size() + " books in " + (System.currentTimeMillis() - start) + " milliseconds");
+							System.err.println("Build completed with " + myCollection.size() + " books in " + (System.currentTimeMillis() - start) + " milliseconds");
 							break;
 					}
 				}
 			});
-			collection.startBuild();
+			myCollection.startBuild();
 		}
 
-		public boolean isUpToDate() {
-			return true;
+		public String bookById(long id) {
+			return BookSerializerUtil.serialize(myCollection.getBookById(id));
 		}
 	}
 
