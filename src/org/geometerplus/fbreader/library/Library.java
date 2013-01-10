@@ -183,9 +183,6 @@ public final class Library {
 	}
 
 	private synchronized void addBookToLibrary(Book book) {
-		final String xml = BookSerializerUtil.serialize(book);
-		book = BookSerializerUtil.deserialize(xml);
-
 		List<Author> authors = book.authors();
 		if (authors.isEmpty()) {
 			authors = (List<Author>)myNullList;

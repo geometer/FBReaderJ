@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.util.List;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -68,7 +70,11 @@ public class LibraryService extends Service {
 		}
 
 		public String bookById(long id) {
-			return BookSerializerUtil.serialize(myCollection.getBookById(id));
+			return SerializerUtil.serialize(myCollection.getBookById(id));
+		}
+
+		public List<String> allBookmarks() {
+			return SerializerUtil.serialize(myCollection.allBookmarks());
 		}
 	}
 

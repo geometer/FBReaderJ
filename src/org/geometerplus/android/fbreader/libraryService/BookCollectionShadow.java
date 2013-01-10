@@ -19,6 +19,9 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.util.Collections;
+import java.util.List;
+
 import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -46,9 +49,20 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 			return null;
 		}
 		try {
-			return BookSerializerUtil.deserialize(myInterface.bookById(id));
+			return SerializerUtil.deserializeBook(myInterface.bookById(id));
 		} catch (RemoteException e) {
 			return null;
+		}
+	}
+
+	public synchronized List<Bookmark> allBookmarks() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookmarkList(myInterface.allBookmarks());
+		} catch (RemoteException e) {
+			return Collections.emptyList();
 		}
 	}
 

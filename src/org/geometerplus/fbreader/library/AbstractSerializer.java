@@ -19,9 +19,10 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.util.List;
+abstract class AbstractSerializer {
+	public abstract String serialize(Book book);
+	public abstract Book deserializeBook(String xml);
 
-public interface IBookCollection {
-	Book getBookById(long id);
-	List<Bookmark> allBookmarks();
+	public abstract String serialize(Bookmark bookmark);
+	public abstract Bookmark deserializeBookmark(String xml);
 }

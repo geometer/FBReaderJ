@@ -26,15 +26,9 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-public abstract class BookSerializerUtil {
-	private BookSerializerUtil() {
-	}
-
-	public static String serialize(Book book) {
-		if (book == null) {
-			return null;
-		}
-
+class XMLSerializer extends AbstractSerializer {
+	@Override
+	public String serialize(Book book) {
 		final StringBuilder buffer = new StringBuilder();
 		appendTagWithAttributes(
 			buffer, "entry", false,
@@ -84,14 +78,23 @@ public abstract class BookSerializerUtil {
 		return buffer.toString();
 	}
 
-	public static Book deserialize(String xml) {
-		if (xml == null) {
-			return null;
-		}
-
+	@Override
+	public Book deserializeBook(String xml) {
 		final Deserializer deserializer = new Deserializer();
 		deserializer.readQuietly(xml);
 		return deserializer.getBook();
+	}
+
+	@Override
+	public String serialize(Bookmark bookmark) {
+		// TODO: implement
+		return null;
+	}
+
+	@Override
+	public Bookmark deserializeBookmark(String xml) {
+		// TODO: implement
+		return null;
 	}
 
 	private static void appendTagWithContent(StringBuilder buffer, String tag, String content) {
