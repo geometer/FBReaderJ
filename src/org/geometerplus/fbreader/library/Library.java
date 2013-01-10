@@ -392,10 +392,6 @@ public final class Library {
 		myRootTree.removeBook(book, true);
 	}
 
-	public List<Bookmark> allBookmarks() {
-		return myCollection.allBookmarks();
-	}
-
 	public List<Bookmark> invisibleBookmarks(Book book) {
 		return myCollection.invisibleBookmarks(book);
 	}
