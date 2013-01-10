@@ -31,17 +31,23 @@ import org.geometerplus.fbreader.library.*;
 public class BookCollectionShadow implements IBookCollection, ServiceConnection {
 	private final Context myContext;
 	private volatile LibraryInterface myInterface;
+	private Runnable myOnBindAction;
 
 	public BookCollectionShadow(Context context) {
 		myContext = context;
 	}
 
-	public void bindToService() {
+	public void bindToService(Runnable onBindAction) {
+		myOnBindAction = onBindAction;
 		myContext.bindService(
 			new Intent(myContext, LibraryService.class),
 			this,
 			LibraryService.BIND_AUTO_CREATE
 		);
+	}
+
+	public void unbind() {
+		myContext.unbindService(this);
 	}
 
 	public synchronized Book getBookById(long id) {
@@ -69,6 +75,9 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = LibraryInterface.Stub.asInterface(service);
+		if (myOnBindAction != null) {
+			myOnBindAction.run();
+		}
 	}
 
 	// method from ServiceConnection interface

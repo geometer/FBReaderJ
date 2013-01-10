@@ -19,7 +19,9 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.text.DateFormat;
+import java.text.ParseException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -30,26 +32,26 @@ class XMLSerializer extends AbstractSerializer {
 	@Override
 	public String serialize(Book book) {
 		final StringBuilder buffer = new StringBuilder();
-		appendTagWithAttributes(
+		appendTag(
 			buffer, "entry", false,
 			"xmlns:dc", XMLNamespaces.DublinCore,
 			"xmlns:calibre", XMLNamespaces.CalibreMetadata
 		);
 
-		appendTagWithContent(buffer, "id", String.valueOf(book.getId()));
+		appendTagWithContent(buffer, "id", book.getId());
 		appendTagWithContent(buffer, "title", book.getTitle());
 		appendTagWithContent(buffer, "dc:language", book.getLanguage());
 		appendTagWithContent(buffer, "dc:encoding", book.getEncodingNoDetection());
 
 		for (Author author : book.authors()) {
-			buffer.append("<author>\n");
+			appendTag(buffer, "author", false);
 			appendTagWithContent(buffer, "uri", author.SortKey);
 			appendTagWithContent(buffer, "name", author.DisplayName);
-			buffer.append("</author>\n");
+			closeTag(buffer, "author");
 		}
 
 		for (Tag tag : book.tags()) {
-			appendTagWithAttributes(
+			appendTag(
 				buffer, "category", true,
 				"term", tag.toString("/"),
 				"label", tag.Name
@@ -60,13 +62,13 @@ class XMLSerializer extends AbstractSerializer {
 		if (seriesInfo != null) {
 			appendTagWithContent(buffer, "calibre:series", seriesInfo.Title);
 			if (seriesInfo.Index != null) {
-				appendTagWithContent(buffer, "calibre:series_index", String.valueOf(seriesInfo.Index));
+				appendTagWithContent(buffer, "calibre:series_index", seriesInfo.Index);
 			}
 		}
 		// TODO: serialize description (?)
 		// TODO: serialize cover (?)
 
-		appendTagWithAttributes(
+		appendTag(
 			buffer, "link", true,
 			"href", book.File.getUrl(),
 			// TODO: real book mimetype
@@ -74,27 +76,81 @@ class XMLSerializer extends AbstractSerializer {
 			"rel", "http://opds-spec.org/acquisition"
 		);
 
-		buffer.append("</entry>\n");
+		closeTag(buffer, "entry");
 		return buffer.toString();
 	}
 
 	@Override
 	public Book deserializeBook(String xml) {
-		final Deserializer deserializer = new Deserializer();
+		final BookDeserializer deserializer = new BookDeserializer();
 		deserializer.readQuietly(xml);
 		return deserializer.getBook();
 	}
 
 	@Override
 	public String serialize(Bookmark bookmark) {
-		// TODO: implement
-		return null;
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(
+			buffer, "bookmark", false,
+			"id", String.valueOf(bookmark.getId()),
+			"visible", String.valueOf(bookmark.IsVisible)
+		);
+		appendTag(
+			buffer, "book", true,
+			"id", String.valueOf(bookmark.getBookId()),
+			"title", bookmark.getBookTitle()
+		);
+		appendTagWithContent(buffer, "text", bookmark.getText());
+		appendTag(
+			buffer, "history", true,
+			"date-creation", formatDate(bookmark.getDate(Bookmark.DateType.Creation)),
+			"date-modification", formatDate(bookmark.getDate(Bookmark.DateType.Modification)),
+			"date-access", formatDate(bookmark.getDate(Bookmark.DateType.Access)),
+			"access-count", String.valueOf(bookmark.getAccessCount())
+		);
+		appendTag(
+			buffer, "position", true,
+			"model", bookmark.ModelId,
+			"paragraph", String.valueOf(bookmark.getParagraphIndex()),
+			"element", String.valueOf(bookmark.getElementIndex()),
+			"char", String.valueOf(bookmark.getCharIndex())
+		);
+		closeTag(buffer, "bookmark");
+		return buffer.toString();
 	}
 
 	@Override
 	public Bookmark deserializeBookmark(String xml) {
-		// TODO: implement
-		return null;
+		final BookmarkDeserializer deserializer = new BookmarkDeserializer();
+		deserializer.readQuietly(xml);
+		return deserializer.getBookmark();
+	}
+
+	private static DateFormat ourDateFormatter = DateFormat.getDateInstance(DateFormat.FULL, Locale.ENGLISH);
+	private static String formatDate(Date date) {
+		return date != null ? ourDateFormatter.format(date) : null;
+	}
+	private static Date parseDate(String str) throws ParseException {
+		return str != null ? ourDateFormatter.parse(str) : null;
+	}
+
+	private static void appendTag(StringBuilder buffer, String tag, boolean close, String ... attrs) {
+		buffer.append('<').append(tag);
+		for (int i = 0; i < attrs.length - 1; i += 2) {
+			if (attrs[i + 1] != null) {
+				buffer.append(' ')
+					.append(escapeForXml(attrs[i])).append("=\"")
+					.append(escapeForXml(attrs[i + 1])).append('"');
+			}
+		}
+		if (close) {
+			buffer.append('/');
+		}
+		buffer.append(">\n");
+	}
+
+	private static void closeTag(StringBuilder buffer, String tag) {
+		buffer.append("</").append(tag).append(">");
 	}
 
 	private static void appendTagWithContent(StringBuilder buffer, String tag, String content) {
@@ -106,17 +162,10 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
-	private static void appendTagWithAttributes(StringBuilder buffer, String tag, boolean close, String ... attrs) {
-		buffer.append('<').append(tag);
-		for (int i = 0; i < attrs.length - 1; i += 2) {
-			buffer.append(' ')
-				.append(escapeForXml(attrs[i])).append("=\"")
-				.append(escapeForXml(attrs[i + 1])).append('"');
+	private static void appendTagWithContent(StringBuilder buffer, String tag, Object content) {
+		if (content != null) {
+			appendTagWithContent(buffer, tag, String.valueOf(content));
 		}
-		if (close) {
-			buffer.append('/');
-		}
-		buffer.append(">\n");
 	}
 
 	private static String escapeForXml(String data) {
@@ -138,7 +187,15 @@ class XMLSerializer extends AbstractSerializer {
 		return data;
 	}
 
-	private static final class Deserializer extends ZLXMLReaderAdapter {
+	private static void clear(StringBuilder buffer) {
+		buffer.delete(0, buffer.length());
+	}
+
+	private static String string(StringBuilder buffer) {
+		return buffer.length() != 0 ? buffer.toString() : null;
+	}
+
+	private static final class BookDeserializer extends ZLXMLReaderAdapter {
 		private static enum State {
 			READ_NOTHING,
 			READ_ENTRY,
@@ -157,28 +214,20 @@ class XMLSerializer extends AbstractSerializer {
 		
 		private long myId = -1;
 		private String myUrl;
-		private StringBuilder myTitle = new StringBuilder();
-		private StringBuilder myLanguage = new StringBuilder();
-		private StringBuilder myEncoding = new StringBuilder();
-		private ArrayList<Author> myAuthors = new ArrayList<Author>();
-		private ArrayList<Tag> myTags = new ArrayList<Tag>();
-		private StringBuilder myAuthorSortKey = new StringBuilder();
-		private StringBuilder myAuthorName = new StringBuilder();
-		private StringBuilder mySeriesTitle = new StringBuilder();
-		private StringBuilder mySeriesIndex = new StringBuilder();
+		private final StringBuilder myTitle = new StringBuilder();
+		private final StringBuilder myLanguage = new StringBuilder();
+		private final StringBuilder myEncoding = new StringBuilder();
+		private final ArrayList<Author> myAuthors = new ArrayList<Author>();
+		private final ArrayList<Tag> myTags = new ArrayList<Tag>();
+		private final StringBuilder myAuthorSortKey = new StringBuilder();
+		private final StringBuilder myAuthorName = new StringBuilder();
+		private final StringBuilder mySeriesTitle = new StringBuilder();
+		private final StringBuilder mySeriesIndex = new StringBuilder();
 
 		private Book myBook;
 
 		public Book getBook() {
 			return myState == State.READ_NOTHING ? myBook : null;
-		}
-
-		private static void clear(StringBuilder buffer) {
-			buffer.delete(0, buffer.length());
-		}
-
-		private static String string(StringBuilder buffer) {
-			return buffer.length() != 0 ? buffer.toString() : null;
 		}
 
 		@Override
@@ -329,6 +378,145 @@ class XMLSerializer extends AbstractSerializer {
 				case READ_SERIES_INDEX:
 					mySeriesIndex.append(ch, start, length);
 					break;
+			}
+		}
+	}
+
+	private static final class BookmarkDeserializer extends ZLXMLReaderAdapter {
+		private static enum State {
+			READ_NOTHING,
+			READ_BOOKMARK,
+			READ_TEXT
+		}
+
+		private State myState = State.READ_NOTHING;
+		private Bookmark myBookmark;
+		
+		private long myId = -1;
+		private long myBookId;
+		private String myBookTitle;
+		private final StringBuilder myText = new StringBuilder();
+		private Date myCreationDate;
+		private Date myModificationDate;
+		private Date myAccessDate;
+		private int myAccessCount;
+		private String myModelId;
+		private int myParagraphIndex;
+		private int myElementIndex;
+		private int myCharIndex;
+		private boolean myIsVisible;
+
+		public Bookmark getBookmark() {
+			return myState == State.READ_NOTHING ? myBookmark : null;
+		}
+
+		@Override
+		public void startDocumentHandler() {
+			myBookmark = null;
+
+			myId = -1;
+			myBookId = -1;
+			myBookTitle = null;
+			clear(myText);
+			myCreationDate = null;
+			myModificationDate = null;
+			myAccessDate = null;
+			myAccessCount = 0;
+			myModelId = null;
+			myParagraphIndex = 0;
+			myElementIndex = 0;
+			myCharIndex = 0;
+			myIsVisible = false;
+
+			myState = State.READ_NOTHING;
+		}
+
+		@Override
+		public void endDocumentHandler() {
+			if (myId == -1 || myBookId == -1) {
+				return;
+			}
+			myBookmark = new Bookmark(
+				myId, myBookId, myBookTitle, myText.toString(),
+				myCreationDate, myModificationDate, myAccessDate, myAccessCount,
+				myModelId, myParagraphIndex, myElementIndex, myCharIndex, myIsVisible
+			);
+		}
+
+		//appendTagWithContent(buffer, "text", bookmark.getText());
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			switch (myState) {
+				case READ_NOTHING:
+					if (!"bookmark".equals(tag)) {
+						return true;
+					}
+					try {
+						myId = Long.parseLong(attributes.getValue("id"));
+						myIsVisible = Boolean.parseBoolean(attributes.getValue("visible"));
+						myState = State.READ_BOOKMARK;
+					} catch (Exception e) {
+						return true;
+					}
+					break;
+				case READ_BOOKMARK:
+					if ("book".equals(tag)) {
+						try {
+							myBookId = Long.parseLong(attributes.getValue("id"));
+							myBookTitle = attributes.getValue("title");
+						} catch (Exception e) {
+							return true;
+						}
+					} else if ("text".equals(tag)) {
+						myState = State.READ_TEXT;
+					} else if ("history".equals(tag)) {
+						try {
+							myCreationDate = parseDate(attributes.getValue("date-creation"));
+							myModificationDate = parseDate(attributes.getValue("date-modification"));
+							myAccessDate = parseDate(attributes.getValue("date-access"));
+							myAccessCount = Integer.parseInt(attributes.getValue("access-count"));
+						} catch (Exception e) {
+							return true;
+						}
+					} else if ("position".equals(tag)) {
+						try {
+							myModelId = attributes.getValue("model");
+							myParagraphIndex = Integer.parseInt(attributes.getValue("paragraph"));
+							myElementIndex = Integer.parseInt(attributes.getValue("element"));
+							myCharIndex = Integer.parseInt(attributes.getValue("char"));
+						} catch (Exception e) {
+							return true;
+						}
+					} else {
+						return true;
+					}
+					break;
+				case READ_TEXT:
+					return true;
+			}
+			return false;
+		}
+		
+		@Override
+		public boolean endElementHandler(String tag) {
+			switch (myState) {
+				case READ_NOTHING:
+					return true;
+				case READ_BOOKMARK:
+					if ("bookmark".equals(tag)) {
+						myState = State.READ_NOTHING;
+					}	
+					break;
+				case READ_TEXT:
+					myState = State.READ_BOOKMARK;
+			}
+			return false;
+		}
+		
+		@Override
+		public void characterDataHandler(char[] ch, int start, int length) {
+			if (myState == State.READ_TEXT) {
+				myText.append(ch, start, length);
 			}
 		}
 	}
