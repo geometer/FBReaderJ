@@ -126,7 +126,7 @@ class XMLSerializer extends AbstractSerializer {
 		return deserializer.getBookmark();
 	}
 
-	private static DateFormat ourDateFormatter = DateFormat.getDateInstance(DateFormat.FULL, Locale.ENGLISH);
+	private static DateFormat ourDateFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, Locale.ENGLISH);
 	private static String formatDate(Date date) {
 		return date != null ? ourDateFormatter.format(date) : null;
 	}
@@ -433,7 +433,7 @@ class XMLSerializer extends AbstractSerializer {
 
 		@Override
 		public void endDocumentHandler() {
-			if (myId == -1 || myBookId == -1) {
+			if (myBookId == -1) {
 				return;
 			}
 			myBookmark = new Bookmark(

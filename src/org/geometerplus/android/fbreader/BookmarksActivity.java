@@ -146,14 +146,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
-	public void onPause() {
-		for (Bookmark bookmark : myAllBooksBookmarks) {
-			bookmark.save();
-		}
-		super.onPause();
-	}
-
-	@Override
 	protected void onStop() {
 		myCollection.unbind();
 		super.onStop();
@@ -225,7 +217,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				// TODO: implement
 				return true;
 			case DELETE_ITEM_ID:
-				bookmark.delete();
+				myCollection.deleteBookmark(bookmark);
 				myThisBookBookmarks.remove(bookmark);
 				myAllBooksBookmarks.remove(bookmark);
 				mySearchResults.remove(bookmark);
@@ -239,6 +231,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final Bookmark bookmark = fbreader.addBookmark(20, true);
 		if (bookmark != null) {
+			myCollection.saveBookmark(bookmark);
 			myThisBookBookmarks.add(0, bookmark);
 			myAllBooksBookmarks.add(0, bookmark);
 			invalidateAllViews();
@@ -246,7 +239,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private void gotoBookmark(Bookmark bookmark) {
-		bookmark.onOpen();
+		bookmark.markAsAccessed();
+		myCollection.saveBookmark(bookmark);
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final long bookId = bookmark.getBookId();
 		if (fbreader.Model == null || fbreader.Model.Book.getId() != bookId) {

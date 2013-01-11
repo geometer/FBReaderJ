@@ -428,4 +428,16 @@ public class BookCollection implements IBookCollection {
 		Collections.sort(list, new Bookmark.ByTimeComparator());
 		return list;
 	}
+
+	public void saveBookmark(Bookmark bookmark) {
+		if (bookmark != null) {
+			bookmark.setId(BooksDatabase.Instance().saveBookmark(bookmark));
+		}
+	}
+
+	public void deleteBookmark(Bookmark bookmark) {
+		if (bookmark != null && bookmark.getId() != -1) {
+			BooksDatabase.Instance().deleteBookmark(bookmark);
+		}
+	}
 }

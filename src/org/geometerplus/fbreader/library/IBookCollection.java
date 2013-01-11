@@ -23,5 +23,8 @@ import java.util.List;
 
 public interface IBookCollection {
 	Book getBookById(long id);
+
 	List<Bookmark> allBookmarks();
+	void saveBookmark(Bookmark bookmark);
+	void deleteBookmark(Bookmark bookmark);
 }

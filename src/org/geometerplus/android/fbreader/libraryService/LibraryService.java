@@ -76,6 +76,16 @@ public class LibraryService extends Service {
 		public List<String> allBookmarks() {
 			return SerializerUtil.serialize(myCollection.allBookmarks());
 		}
+
+		public String saveBookmark(String serialized) {
+			final Bookmark bookmark = SerializerUtil.deserializeBookmark(serialized);
+			myCollection.saveBookmark(bookmark);
+			return SerializerUtil.serialize(bookmark);
+		}
+
+		public void deleteBookmark(String serialized) {
+			myCollection.deleteBookmark(SerializerUtil.deserializeBookmark(serialized));
+		}
 	}
 
 	private LibraryImplementation myLibrary;

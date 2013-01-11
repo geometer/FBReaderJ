@@ -44,8 +44,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 	public final String ModelId;
 	public final boolean IsVisible;
 
-	private boolean myIsChanged;
-
 	Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int elementIndex, int charIndex, boolean isVisible) {
 		super(paragraphIndex, elementIndex, charIndex);
 
@@ -65,7 +63,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myAccessCount = accessCount;
 		ModelId = modelId;
 		IsVisible = isVisible;
-		myIsChanged = false;
 	}
 
 	public Bookmark(Book book, String modelId, ZLTextWordCursor cursor, int maxLength, boolean isVisible) {
@@ -82,7 +79,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myCreationDate = new Date();
 		ModelId = modelId;
 		IsVisible = isVisible;
-		myIsChanged = true;
 	}
 
 	public long getId() {
@@ -124,28 +120,13 @@ public final class Bookmark extends ZLTextFixedPosition {
 			myText = text;
 			myModificationDate = new Date();
 			myLatestDate = myModificationDate;
-			myIsChanged = true;
 		}
 	}
 
-	public void onOpen() {
+	public void markAsAccessed() {
 		myAccessDate = new Date();
 		++myAccessCount;
 		myLatestDate = myAccessDate;
-		myIsChanged = true;
-	}
-
-	public void save() {
-		if (myIsChanged) {
-			myId = BooksDatabase.Instance().saveBookmark(this);
-			myIsChanged = false;
-		}
-	}
-
-	public void delete() {
-		if (myId != -1) {
-			BooksDatabase.Instance().deleteBookmark(this);
-		}
 	}
 
 	public static class ByTimeComparator implements Comparator<Bookmark> {
@@ -238,5 +219,26 @@ mainLoop:
 			builder.append(sentenceBuilder);
 		}
 		return builder.toString();
+	}
+
+	void setId(long id) {
+		myId = id;
+	}
+
+	public void update(Bookmark other) {
+		// TODO: copy other fields (?)
+		myId = other.myId;
+	}
+
+	// TODO: this method should be removed
+	public void save() {
+		myId = BooksDatabase.Instance().saveBookmark(this);
+	}
+
+	// TODO: this method should be removed
+	public void delete() {
+		if (myId != -1) {
+			BooksDatabase.Instance().deleteBookmark(this);
+		}
 	}
 }

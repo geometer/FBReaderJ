@@ -72,6 +72,26 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		}
 	}
 
+	public void saveBookmark(Bookmark bookmark) {
+		if (myInterface != null) {
+			try {
+				bookmark.update(SerializerUtil.deserializeBookmark(
+					myInterface.saveBookmark(SerializerUtil.serialize(bookmark))
+				));
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
+	public void deleteBookmark(Bookmark bookmark) {
+		if (myInterface != null) {
+			try {
+				myInterface.deleteBookmark(SerializerUtil.serialize(bookmark));
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = LibraryInterface.Stub.asInterface(service);
