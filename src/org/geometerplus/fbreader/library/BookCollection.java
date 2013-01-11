@@ -165,6 +165,25 @@ public class BookCollection implements IBookCollection {
 		}
 	}
 
+	public List<Book> recentBooks() {
+		return books(myDatabase.loadRecentBookIds());
+	}
+
+	public List<Book> favorites() {
+		return books(myDatabase.loadFavoriteIds());
+	}
+
+	private List<Book> books(List<Long> ids) {
+		final List<Book> bookList = new ArrayList<Book>(ids.size());
+		for (long id : ids) {
+			final Book book = getBookById(id);
+			if (book != null) {
+				bookList.add(book);
+			}
+		}
+		return bookList;
+	}
+
 	public Book getRecentBook(int index) {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
@@ -224,8 +243,7 @@ public class BookCollection implements IBookCollection {
 			savedBooksByBookId.put(b.getId(), b);
 		}
 
-		// Step 1: set myDoGroupTitlesByFirstLetter value,
-		// add "existing" books into recent and favorites lists
+		// Step 1: set myDoGroupTitlesByFirstLetter value
 		//if (savedBooksByFileId.size() > 10) {
 		//	final HashSet<String> letterSet = new HashSet<String>();
 		//	for (Book book : savedBooksByFileId.values()) {
@@ -236,30 +254,6 @@ public class BookCollection implements IBookCollection {
 		//	}
 		//	myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
 		//}
-
-		for (long id : myDatabase.loadRecentBookIds()) {
-			final Book book = savedBooksByBookId.get(id);
-			if (book != null) {
-				addBook(book);
-			} else {
-				getBookById(id);
-			}
-			//if (book != null) {
-			//	new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
-			//}
-		}
-
-		for (long id : myDatabase.loadFavoritesIds()) {
-			final Book book = savedBooksByBookId.get(id);
-			if (book != null) {
-				addBook(book);
-			} else {
-				getBookById(id);
-			}
-			//if (book != null) {
-			//	getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
-			//}
-		}
 
 		// Step 2: check if files corresponding to "existing" books really exists;
 		//         add books to library if yes (and reload book info if needed);

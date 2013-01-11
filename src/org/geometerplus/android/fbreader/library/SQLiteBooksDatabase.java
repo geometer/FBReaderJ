@@ -709,7 +709,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myRemoveFromFavoritesStatement.execute();
 	}
 
-	protected List<Long> loadFavoritesIds() {
+	protected List<Long> loadFavoriteIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM Favorites", null
 		);

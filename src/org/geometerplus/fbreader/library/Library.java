@@ -115,6 +115,12 @@ public final class Library {
 				switch (event) {
 					case Started:
 						Library.this.fireModelChangedEvent(ChangeListener.Code.StatusChanged);
+						for (Book book : myCollection.recentBooks()) {
+							new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
+						}
+						for (Book book : myCollection.favorites()) {
+							new BookTree(getFirstLevelTree(ROOT_FAVORITES), book, true);
+						}
 						setStatus(myStatusMask | STATUS_LOADING);
 						break;
 					case Completed:
