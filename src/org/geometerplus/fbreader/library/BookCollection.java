@@ -290,8 +290,6 @@ public class BookCollection implements IBookCollection {
 						addBook(book);
 					}
 				} else {
-					//myRootTree.removeBook(book, true);
-					//fireBookEvent(Listener.BookEvent.Removed);
 					orphanedBooks.add(book);
 				}
 			}
@@ -344,12 +342,18 @@ public class BookCollection implements IBookCollection {
 		myDatabase.setExistingFlag(newBooks, true);
 	}
 
+	public List<String> bookDirectories() {
+		return Collections.singletonList(Paths.BooksDirectoryOption().getValue());
+	}
+
 	private List<ZLPhysicalFile> collectPhysicalFiles() {
 		final Queue<ZLFile> dirQueue = new LinkedList<ZLFile>();
 		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
 		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
 
-		dirQueue.offer(new ZLPhysicalFile(new File(Paths.BooksDirectoryOption().getValue())));
+		for (String path : bookDirectories()) {
+			dirQueue.offer(new ZLPhysicalFile(new File(path)));
+		}
 
 		while (!dirQueue.isEmpty()) {
 			for (ZLFile file : dirQueue.poll().children()) {
