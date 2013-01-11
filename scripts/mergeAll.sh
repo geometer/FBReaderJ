@@ -16,14 +16,11 @@ git checkout beta-ics
 git merge beta
 git merge ice-cream-sandwich
 
-git checkout booksdb
+git checkout library-service
 git merge master
 
-git checkout booksdb-ics
-git merge ice-cream-sandwich
-git merge booksdb
-
 git checkout library-service-ics
-git merge booksdb-ics
+git merge ice-cream-sandwich
+git merge library-service
 
 git checkout master
