@@ -50,6 +50,28 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		myContext.unbindService(this);
 	}
 
+	public synchronized int size() {
+		if (myInterface == null) {
+			return 0;
+		}
+		try {
+			return myInterface.size();
+		} catch (RemoteException e) {
+			return 0;
+		}
+	}
+
+	public synchronized Book getRecentBook(int index) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return SerializerUtil.deserializeBook(myInterface.recentBook(index));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
 	public synchronized Book getBookById(long id) {
 		if (myInterface == null) {
 			return null;
@@ -72,7 +94,7 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		}
 	}
 
-	public void saveBookmark(Bookmark bookmark) {
+	public synchronized void saveBookmark(Bookmark bookmark) {
 		if (myInterface != null) {
 			try {
 				bookmark.update(SerializerUtil.deserializeBookmark(
@@ -83,7 +105,7 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		}
 	}
 
-	public void deleteBookmark(Bookmark bookmark) {
+	public synchronized void deleteBookmark(Bookmark bookmark) {
 		if (myInterface != null) {
 			try {
 				myInterface.deleteBookmark(SerializerUtil.serialize(bookmark));

@@ -69,6 +69,14 @@ public class LibraryService extends Service {
 			myCollection.startBuild();
 		}
 
+		public int size() {
+			return myCollection.size();
+		}
+
+		public String recentBook(int index) {
+			return SerializerUtil.serialize(myCollection.getRecentBook(index));
+		}
+
 		public String bookById(long id) {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
 		}

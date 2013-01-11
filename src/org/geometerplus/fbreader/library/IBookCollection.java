@@ -22,7 +22,9 @@ package org.geometerplus.fbreader.library;
 import java.util.List;
 
 public interface IBookCollection {
+	int size();
 	Book getBookById(long id);
+	Book getRecentBook(int index);
 
 	List<Bookmark> allBookmarks();
 	void saveBookmark(Bookmark bookmark);
