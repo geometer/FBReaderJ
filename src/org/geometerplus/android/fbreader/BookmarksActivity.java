@@ -40,6 +40,8 @@ import org.geometerplus.android.fbreader.libraryService.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
+	static final String CURRENT_BOOK_KEY = "fbreader.currentBook";
+
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
@@ -84,10 +86,10 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private void init() {
 		myAllBooksBookmarks = new ArrayList<Bookmark>(myCollection.allBookmarks());
 		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 
-		if (fbreader.Model != null) {
-			final long bookId = fbreader.Model.Book.getId();
+		final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(CURRENT_BOOK_KEY));
+		if (book != null) {
+			final long bookId = book.getId();
 			for (Bookmark bookmark : myAllBooksBookmarks) {
 				if (bookmark.getBookId() == bookId) {
 					myThisBookBookmarks.add(bookmark);
