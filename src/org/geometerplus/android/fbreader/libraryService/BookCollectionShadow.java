@@ -38,6 +38,9 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 	}
 
 	public void bindToService(Runnable onBindAction) {
+		if (myInterface != null) {
+			return;
+		}
 		myOnBindAction = onBindAction;
 		myContext.bindService(
 			new Intent(myContext, LibraryService.class),

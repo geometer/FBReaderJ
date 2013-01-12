@@ -44,9 +44,10 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tips.TipsManager;
 
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
-import org.geometerplus.android.fbreader.library.KillerCallback;
 import org.geometerplus.android.fbreader.api.*;
+import org.geometerplus.android.fbreader.library.KillerCallback;
+import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
@@ -63,6 +64,7 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	private int myFullScreenFlag;
+	private final BookCollectionShadow myCollection = new BookCollectionShadow(this);
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -119,6 +121,8 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public void onCreate(Bundle icicle) {
+		myCollection.bindToService(null);
+
 		super.onCreate(icicle);
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
@@ -324,16 +328,16 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(FBReaderApp.Instance(), this);
+		myCollection.unbind();
 		super.onStop();
 	}
 
 	@Override
 	protected FBReaderApp createApplication() {
-		BooksDatabase db = SQLiteBooksDatabase.Instance(); 
-		if (db == null) {
-			db = new SQLiteBooksDatabase(this, "READER");
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(this, "READER");
 		}
-		return new FBReaderApp(new BookCollection(db));
+		return new FBReaderApp(myCollection);
 	}
 
 	@Override
