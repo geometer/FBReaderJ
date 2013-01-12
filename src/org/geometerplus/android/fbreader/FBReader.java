@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
@@ -38,8 +39,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
-import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tips.TipsManager;
@@ -490,5 +490,26 @@ public final class FBReader extends ZLAndroidActivity {
 		application.myMainWindow.refresh();
 
 		return true;
+	}
+
+	void addSelectionBookmark() {
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final FBView fbView = fbReader.getTextView();
+		final String text = fbView.getSelectedText();
+
+		final Bookmark bookmark = new Bookmark(
+			fbReader.Model.Book,
+			fbView.getModel().getId(),
+			fbView.getSelectionStartPosition(),
+			text,
+			true
+		);
+		myCollection.saveBookmark(bookmark);
+		fbView.clearSelection();
+
+		UIUtil.showMessageText(
+			this,
+			ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
+		);
 	}
 }

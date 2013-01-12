@@ -229,9 +229,4 @@ mainLoop:
 		// TODO: copy other fields (?)
 		myId = other.myId;
 	}
-
-	// TODO: this method should be removed
-	public void save() {
-		myId = BooksDatabase.Instance().saveBookmark(this);
-	}
 }
