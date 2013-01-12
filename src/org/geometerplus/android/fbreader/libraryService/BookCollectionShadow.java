@@ -143,6 +143,19 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		}
 	}
 
+	public synchronized List<Bookmark> invisibleBookmarks(Book book) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookmarkList(
+				myInterface.invisibleBookmarks(SerializerUtil.serialize(book))
+			);
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
 	public synchronized List<Bookmark> allBookmarks() {
 		if (myInterface == null) {
 			return Collections.emptyList();

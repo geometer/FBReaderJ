@@ -18,6 +18,7 @@ interface LibraryInterface {
 	void addBookToRecentList(in String book);
 	void setBookFavorite(in String book, in boolean favorite);
 
+	List<String> invisibleBookmarks(in String book);
 	List<String> allBookmarks();
 	String saveBookmark(in String bookmark);
 	void deleteBookmark(in String bookmark);

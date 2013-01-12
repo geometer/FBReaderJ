@@ -34,6 +34,7 @@ public interface IBookCollection {
 	void setBookFavorite(Book book, boolean favorite);
 
 	List<Bookmark> allBookmarks();
+	List<Bookmark> invisibleBookmarks(Book book);
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);
 }

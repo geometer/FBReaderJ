@@ -234,11 +234,4 @@ mainLoop:
 	public void save() {
 		myId = BooksDatabase.Instance().saveBookmark(this);
 	}
-
-	// TODO: this method should be removed
-	public void delete() {
-		if (myId != -1) {
-			BooksDatabase.Instance().deleteBookmark(this);
-		}
-	}
 }

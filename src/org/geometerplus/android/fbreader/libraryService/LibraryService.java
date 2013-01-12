@@ -157,6 +157,12 @@ public class LibraryService extends Service {
 			myCollection.setBookFavorite(SerializerUtil.deserializeBook(book), favorite);
 		}
 
+		public List<String> invisibleBookmarks(String book) {
+			return SerializerUtil.serializeBookmarkList(
+				myCollection.invisibleBookmarks(SerializerUtil.deserializeBook(book))
+			);
+		}
+
 		public List<String> allBookmarks() {
 			return SerializerUtil.serializeBookmarkList(myCollection.allBookmarks());
 		}
