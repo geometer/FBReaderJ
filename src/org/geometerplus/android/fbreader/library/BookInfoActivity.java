@@ -130,7 +130,9 @@ public class BookInfoActivity extends Activity {
 					setupBookInfo(myBook);
 					myDontReloadBook = false;
 					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
-					setResult(myResult);
+					final Intent intent = new Intent();
+					intent.putExtra(CURRENT_BOOK_KEY, SerializerUtil.serialize(myBook));
+					setResult(myResult, intent);
 				}
 			}
 		});
@@ -147,13 +149,17 @@ public class BookInfoActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (myBook != null) {
-			setupBookInfo(myBook);
+		final Book book =
+			SerializerUtil.deserializeBook(data.getStringExtra(CURRENT_BOOK_KEY));
+		if (book != null) {
+			myBook = book;
+			setupBookInfo(book);
 			myDontReloadBook = false;
+			myBook.save(true);
 		}
 
 		myResult = Math.max(myResult, resultCode);
-		setResult(myResult);
+		setResult(myResult, data);
 	}
 
 	private Button findButton(int buttonId) {

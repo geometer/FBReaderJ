@@ -116,15 +116,6 @@ public class Book {
 		}
 	}
 
-	public void reloadInfoFromDatabase() {
-		final BooksDatabase database = BooksDatabase.Instance();
-		database.reloadBook(this);
-		myAuthors = database.loadAuthors(myId);
-		myTags = database.loadTags(myId);
-		mySeriesInfo = database.loadSeriesInfo(myId);
-		myIsSaved = true;
-	}
-
 	private FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
 		if (plugin == null) {
@@ -376,7 +367,11 @@ public class Book {
 	}
 
 	public boolean save() {
-		if (myIsSaved) {
+		return save(false);
+	}
+
+	public boolean save(boolean force) {
+		if (!force && myIsSaved) {
 			return false;
 		}
 		final BooksDatabase database = BooksDatabase.Instance();

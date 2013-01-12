@@ -45,6 +45,7 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
+import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.library.KillerCallback;
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -385,7 +386,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	private void onPreferencesUpdate(int resultCode) {
+	private void onPreferencesUpdate(int resultCode, Book book) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		switch (resultCode) {
 			case RESULT_DO_NOTHING:
@@ -394,11 +395,10 @@ public final class FBReader extends ZLAndroidActivity {
 			{
 				AndroidFontUtil.clearFontCache();
 				final BookModel model = fbReader.Model;
-				if (model != null) {
-					final Book book = model.Book;
-					if (book != null) {
-						book.reloadInfoFromDatabase();
-						ZLTextHyphenator.Instance().load(book.getLanguage());
+				if (model != null && book != null) {
+					if (model.Book != null) {
+						model.Book = book;
+						ZLTextHyphenator.Instance().load(model.Book.getLanguage());
 					}
 				}
 				fbReader.clearTextCaches();
@@ -406,7 +406,7 @@ public final class FBReader extends ZLAndroidActivity {
 				break;
 			}
 			case RESULT_RELOAD_BOOK:
-				fbReader.reloadBook();
+				fbReader.reloadBook(book);
 				break;
 		}
 	}
@@ -416,7 +416,9 @@ public final class FBReader extends ZLAndroidActivity {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 			case REQUEST_BOOK_INFO:
-				onPreferencesUpdate(resultCode);
+				onPreferencesUpdate(resultCode, SerializerUtil.deserializeBook(
+					data.getStringExtra(BookInfoActivity.CURRENT_BOOK_KEY)
+				));
 				break;
 			case REQUEST_CANCEL_MENU:
 				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);
