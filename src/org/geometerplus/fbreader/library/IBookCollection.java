@@ -22,6 +22,28 @@ package org.geometerplus.fbreader.library;
 import java.util.List;
 
 public interface IBookCollection {
+	public interface Listener {
+		public enum BookEvent {
+			Added,
+			Updated,
+			Removed
+		}
+
+		public enum BuildEvent {
+			Started,
+			NotStarted,
+			Succeeded,
+			Failed,
+			Completed
+		}
+
+		void onBookEvent(BookEvent event, Book book);
+		void onBuildEvent(BuildEvent event);
+	}
+
+	public void addListener(Listener listener);
+	public void removeListener(Listener listener);
+
 	int size();
 	List<Book> books(String pattern);
 	List<Book> recentBooks();

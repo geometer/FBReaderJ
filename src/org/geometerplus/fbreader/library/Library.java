@@ -70,7 +70,7 @@ public final class Library {
 	public static final int REMOVE_FROM_DISK = 0x02;
 	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
 
-	private final BookCollection myCollection;
+	private final IBookCollection myCollection;
 
 	private final RootTree myRootTree = new RootTree();
 	private boolean myDoGroupTitlesByFirstLetter;

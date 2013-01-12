@@ -56,6 +56,14 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		}
 	}
 
+	public void addListener(Listener listener) {
+		// TODO: implement
+	}
+
+	public void removeListener(Listener listener) {
+		// TODO: implement
+	}
+
 	public synchronized int size() {
 		if (myInterface == null) {
 			return 0;

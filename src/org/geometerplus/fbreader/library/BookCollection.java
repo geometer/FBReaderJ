@@ -31,25 +31,6 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 public class BookCollection implements IBookCollection {
 	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
 
-	public interface Listener {
-		public enum BookEvent {
-			Added,
-			Updated,
-			Removed
-		}
-
-		public enum BuildEvent {
-			Started,
-			NotStarted,
-			Succeeded,
-			Failed,
-			Completed
-		}
-
-		void onBookEvent(BookEvent event, Book book);
-		void onBuildEvent(BuildEvent event);
-	}
-
 	public void addListener(Listener listener) {
 		myListeners.add(listener);
 	}
