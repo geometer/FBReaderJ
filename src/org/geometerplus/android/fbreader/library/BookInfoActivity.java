@@ -54,11 +54,11 @@ import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 public class BookInfoActivity extends Activity {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
-	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
+	public static final String CURRENT_BOOK_KEY = "fbreader.current-book";
 	public static final String FROM_READING_MODE_KEY = "fromReadingMode";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
-	private ZLFile myFile;
+	private Book myBook;
 	private int myResult;
 	private boolean myDontReloadBook;
 
@@ -69,9 +69,8 @@ public class BookInfoActivity extends Activity {
 			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
 		);
 
-		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
 		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myFile = ZLFile.createFileByPath(path);
+		myBook = SerializerUtil.deserializeBook(getIntent().getStringExtra(CURRENT_BOOK_KEY));
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
@@ -90,16 +89,14 @@ public class BookInfoActivity extends Activity {
 
 		OrientationUtil.setOrientation(this, getIntent());
 
-		final Book book = Book.getByFile(myFile);
-
-		if (book != null) {
+		if (myBook != null) {
 			// we do force language & encoding detection
-			book.getEncoding();
+			myBook.getEncoding();
 
-			setupCover(book);
-			setupBookInfo(book);
-			setupAnnotation(book);
-			setupFileInfo(book);
+			setupCover(myBook);
+			setupBookInfo(myBook);
+			setupAnnotation(myBook);
+			setupFileInfo(myBook);
 		}
 
 		setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
@@ -110,7 +107,7 @@ public class BookInfoActivity extends Activity {
 					startActivity(
 						new Intent(getApplicationContext(), FBReader.class)
 							.setAction(Intent.ACTION_VIEW)
-							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
+							.putExtra(FBReader.BOOK_PATH_KEY, myBook.File.getPath())
 							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 					);
 				}
@@ -121,16 +118,16 @@ public class BookInfoActivity extends Activity {
 				OrientationUtil.startActivityForResult(
 					BookInfoActivity.this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
+						.putExtra(CURRENT_BOOK_KEY, SerializerUtil.serialize(myBook)),
 					1
 				);
 			}
 		});
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
 			public void onClick(View view) {
-				if (book != null) {
-					book.reloadInfoFromFile();
-					setupBookInfo(book);
+				if (myBook != null) {
+					myBook.reloadInfoFromFile();
+					setupBookInfo(myBook);
 					myDontReloadBook = false;
 					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
 					setResult(myResult);
@@ -150,9 +147,8 @@ public class BookInfoActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		final Book book = Book.getByFile(myFile);
-		if (book != null) {
-			setupBookInfo(book);
+		if (myBook != null) {
+			setupBookInfo(myBook);
 			myDontReloadBook = false;
 		}
 

@@ -45,7 +45,7 @@ import org.geometerplus.android.fbreader.tree.TreeActivity;
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	static volatile boolean ourToBeKilled = false;
 
-	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
+	public static final String SELECTED_BOOK_KEY = "fbreader.library.selected-book";
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
 	private BooksDatabase myDatabase;
@@ -68,14 +68,8 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 			collection.startBuild();
 		}
 
-		final String selectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
-		mySelectedBook = null;
-		if (selectedBookPath != null) {
-			final ZLFile file = ZLFile.createFileByPath(selectedBookPath);
-			if (file != null) {
-				mySelectedBook = Book.getByFile(file);
-			}
-		}
+		mySelectedBook =
+			SerializerUtil.deserializeBook(getIntent().getStringExtra(SELECTED_BOOK_KEY));
 
 		new LibraryTreeAdapter(this);
 
@@ -148,7 +142,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		OrientationUtil.startActivityForResult(
 			this,
 			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath()),
+				.putExtra(BookInfoActivity.CURRENT_BOOK_KEY, SerializerUtil.serialize(book)),
 			BOOK_INFO_REQUEST
 		);
 	}
@@ -156,8 +150,9 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == BOOK_INFO_REQUEST && intent != null) {
-			final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
-			final Book book = Book.getByFile(ZLFile.createFileByPath(path));
+			final Book book = SerializerUtil.deserializeBook(
+				intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_KEY)
+			);
 			myLibrary.refreshBookInfo(book);
 			getListView().invalidateViews();
 		} else {

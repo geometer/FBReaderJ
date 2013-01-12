@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.SerializerUtil;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
@@ -159,9 +160,9 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
-		final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
-		final ZLFile file = ZLFile.createFileByPath(path);
-		myBook = Book.getByFile(file);
+		myBook = SerializerUtil.deserializeBook(
+			intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_KEY)
+		);
 		setResult(FBReader.RESULT_REPAINT);
 
 		if (myBook == null) {
