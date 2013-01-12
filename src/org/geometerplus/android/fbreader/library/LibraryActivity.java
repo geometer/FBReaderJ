@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.library;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.*;
 import android.os.Bundle;
 import android.view.*;
@@ -45,6 +46,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	static volatile boolean ourToBeKilled = false;
 
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
+	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
 	private BooksDatabase myDatabase;
 	private Library myLibrary;
@@ -81,6 +83,19 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (START_SEARCH_ACTION.equals(intent.getAction())) {
+			final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			if (pattern != null && pattern.length() > 0) {
+				BookSearchPatternOption.setValue(pattern);
+				myLibrary.startBookSearch(pattern);
+			}
+		} else {
+			super.onNewIntent(intent);
+		}
 	}
 
 	@Override
@@ -153,7 +168,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	//
 	// Search
 	//
-	static final ZLStringOption BookSearchPatternOption =
+	private final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 
 	private void openSearchResults() {

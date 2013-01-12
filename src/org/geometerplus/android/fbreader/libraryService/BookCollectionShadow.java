@@ -50,7 +50,10 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 	}
 
 	public void unbind() {
-		myContext.unbindService(this);
+		if (myInterface != null) {
+			myContext.unbindService(this);
+			myInterface = null;
+		}
 	}
 
 	public synchronized int size() {
@@ -104,6 +107,7 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		try {
 			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index));
 		} catch (RemoteException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -200,6 +204,5 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 
 	// method from ServiceConnection interface
 	public synchronized void onServiceDisconnected(ComponentName name) {
-		myInterface = null;
 	}
 }

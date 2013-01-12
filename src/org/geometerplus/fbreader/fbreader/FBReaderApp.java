@@ -118,10 +118,10 @@ public final class FBReaderApp extends ZLApplication {
 	private ZLTextPosition myJumpEndPosition;
 	private Date myJumpTimeStamp;
 
-	private final IBookCollection myCollection;
+	private IBookCollection myCollection;
 
 	public FBReaderApp(IBookCollection collection) {
-		myCollection = collection;
+		setCollection(collection);
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
@@ -152,6 +152,10 @@ public final class FBReaderApp extends ZLApplication {
 		FootnoteView = new FBView(this);
 
 		setView(BookTextView);
+	}
+
+	public void setCollection(IBookCollection collection) {
+		myCollection = collection;
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {

@@ -242,7 +242,13 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onStart() {
+	protected void onRestart() {
+		super.onRestart();
+		myCollection.bindToService(null);
+	}
+
+	@Override
+	protected void onStart() {
 		super.onStart();
 
 		initPluginActions();
@@ -338,6 +344,11 @@ public final class FBReader extends ZLAndroidActivity {
 			new SQLiteBooksDatabase(this, "READER");
 		}
 		return new FBReaderApp(myCollection);
+	}
+
+	@Override
+	protected void updateApplication() {
+		((FBReaderApp)FBReaderApp.Instance()).setCollection(myCollection);
 	}
 
 	@Override

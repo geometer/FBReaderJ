@@ -70,15 +70,6 @@ public final class Library {
 	public static final int REMOVE_FROM_DISK = 0x02;
 	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
 
-	private static Library ourInstance;
-	public static Library Instance() {
-		if (ourInstance == null) {
-			final BookCollection collection = new BookCollection(BooksDatabase.Instance());
-			ourInstance = new Library(collection);
-		}
-		return ourInstance;
-	}
-
 	private final BookCollection myCollection;
 
 	private final RootTree myRootTree = new RootTree();
