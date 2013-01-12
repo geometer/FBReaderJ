@@ -43,7 +43,23 @@ public abstract class SerializerUtil {
 		return xml != null ? defaultSerializer.deserializeBookmark(xml) : null;
 	}
 
-	public static List<String> serialize(List<Bookmark> bookmarks) {
+	public static List<String> serializeBookList(List<Book> books) {
+		final List<String> serialized = new ArrayList<String>(books.size());
+		for (Book b : books) {
+			serialized.add(SerializerUtil.serialize(b));
+		}
+		return serialized;
+	}
+
+	public static List<Book> deserializeBookList(List<String> xmlList) {
+		final List<Book> books = new ArrayList<Book>(xmlList.size());
+		for (String xml : xmlList) {
+			books.add(defaultSerializer.deserializeBook(xml));
+		}
+		return books;
+	}
+
+	public static List<String> serializeBookmarkList(List<Bookmark> bookmarks) {
 		final List<String> serialized = new ArrayList<String>(bookmarks.size());
 		for (Bookmark b : bookmarks) {
 			serialized.add(SerializerUtil.serialize(b));

@@ -73,7 +73,8 @@ public final class Library {
 	private static Library ourInstance;
 	public static Library Instance() {
 		if (ourInstance == null) {
-			ourInstance = new Library(BooksDatabase.Instance());
+			final BookCollection collection = new BookCollection(BooksDatabase.Instance());
+			ourInstance = new Library(collection);
 		}
 		return ourInstance;
 	}
@@ -97,8 +98,8 @@ public final class Library {
 		}
 	}
 
-	public Library(BooksDatabase db) {
-		myCollection = new BookCollection(db);
+	public Library(BookCollection collection) {
+		myCollection = collection;
 		myCollection.addListener(new BookCollection.Listener() {
 			public void onBookEvent(BookEvent event, Book book) {
 				switch (event) {
@@ -234,10 +235,11 @@ public final class Library {
 			getTagTree(t).getBookSubTree(book, true);
 		}
 
-		final SearchResultsTree found =
-			(SearchResultsTree)getFirstLevelTree(ROOT_FOUND);
-		if (found != null && book.matches(found.getPattern())) {
-			found.getBookSubTree(book, true);
+		synchronized (this) {
+			final SearchResultsTree found = (SearchResultsTree)getFirstLevelTree(ROOT_FOUND);
+			if (found != null && book.matches(found.getPattern())) {
+				found.getBookSubTree(book, true);
+			}
 		}
 	}
 
@@ -273,10 +275,6 @@ public final class Library {
 		removeFromTree(ROOT_BY_TAG, book);
 		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
-	}
-
-	public synchronized void startBuild() {
-		myCollection.startBuild();
 	}
 
 	public boolean isUpToDate() {
@@ -321,19 +319,17 @@ public final class Library {
 		}
 		
 		FirstLevelTree newSearchResults = null;
-		for (Book book : myCollection.books()) {
-			if (book.matches(pattern)) {
-				synchronized (this) {
-					if (newSearchResults == null) {
-						if (oldSearchResults != null) {
-							oldSearchResults.removeSelf();
-						}
-						newSearchResults = new SearchResultsTree(myRootTree, ROOT_FOUND, pattern);
-						fireModelChangedEvent(ChangeListener.Code.Found);
+		synchronized (this) {
+			for (Book book : myCollection.books(pattern)) {
+				if (newSearchResults == null) {
+					if (oldSearchResults != null) {
+						oldSearchResults.removeSelf();
 					}
-					newSearchResults.getBookSubTree(book, true);
-					fireModelChangedEvent(ChangeListener.Code.BookAdded);
+					newSearchResults = new SearchResultsTree(myRootTree, ROOT_FOUND, pattern);
+					fireModelChangedEvent(ChangeListener.Code.Found);
 				}
+				newSearchResults.getBookSubTree(book, true);
+				fireModelChangedEvent(ChangeListener.Code.BookAdded);
 			}
 		}
 		if (newSearchResults == null) {

@@ -125,16 +125,40 @@ public class LibraryService extends Service {
 			return myCollection.size();
 		}
 
-		public String recentBook(int index) {
+		public List<String> books(String pattern) {
+			return SerializerUtil.serializeBookList(myCollection.books(pattern));
+		}
+
+		public List<String> recentBooks() {
+			return SerializerUtil.serializeBookList(myCollection.recentBooks());
+		}
+
+		public List<String> favorites() {
+			return SerializerUtil.serializeBookList(myCollection.favorites());
+		}
+
+		public String getRecentBook(int index) {
 			return SerializerUtil.serialize(myCollection.getRecentBook(index));
 		}
 
-		public String bookById(long id) {
+		public String getBookById(long id) {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
 		}
 
+		public void removeBook(String book, boolean deleteFromDisk) {
+			myCollection.removeBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
+		}
+
+		public void addBookToRecentList(String book) {
+			myCollection.addBookToRecentList(SerializerUtil.deserializeBook(book));
+		}
+
+		public void setBookFavorite(String book, boolean favorite) {
+			myCollection.setBookFavorite(SerializerUtil.deserializeBook(book), favorite);
+		}
+
 		public List<String> allBookmarks() {
-			return SerializerUtil.serialize(myCollection.allBookmarks());
+			return SerializerUtil.serializeBookmarkList(myCollection.allBookmarks());
 		}
 
 		public String saveBookmark(String serialized) {

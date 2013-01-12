@@ -61,12 +61,45 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		}
 	}
 
+	public synchronized List<Book> books(String pattern) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookList(myInterface.books(pattern));
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	public synchronized List<Book> recentBooks() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookList(myInterface.recentBooks());
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	public synchronized List<Book> favorites() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookList(myInterface.favorites());
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
 	public synchronized Book getRecentBook(int index) {
 		if (myInterface == null) {
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.recentBook(index));
+			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index));
 		} catch (RemoteException e) {
 			return null;
 		}
@@ -77,9 +110,36 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 			return null;
 		}
 		try {
-			return SerializerUtil.deserializeBook(myInterface.bookById(id));
+			return SerializerUtil.deserializeBook(myInterface.getBookById(id));
 		} catch (RemoteException e) {
 			return null;
+		}
+	}
+
+	public synchronized void removeBook(Book book, boolean deleteFromDisk) {
+		if (myInterface != null) {
+			try {
+				myInterface.removeBook(SerializerUtil.serialize(book), deleteFromDisk);
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
+	public synchronized void addBookToRecentList(Book book) {
+		if (myInterface != null) {
+			try {
+				myInterface.addBookToRecentList(SerializerUtil.serialize(book));
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
+	public synchronized void setBookFavorite(Book book, boolean favorite) {
+		if (myInterface != null) {
+			try {
+				myInterface.setBookFavorite(SerializerUtil.serialize(book), favorite);
+			} catch (RemoteException e) {
+			}
 		}
 	}
 

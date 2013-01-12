@@ -77,7 +77,12 @@ public class BookCollection implements IBookCollection {
 		Collections.synchronizedMap(new LinkedHashMap<ZLFile,Book>());
 	private final Map<Long,Book> myBooksById =
 		Collections.synchronizedMap(new HashMap<Long,Book>());
-	private volatile boolean myBuildStarted = false;
+	private static enum BuildStatus {
+		NotStarted,
+		Started,
+		Finished
+	};
+	private volatile BuildStatus myBuildStatus = BuildStatus.NotStarted;
 
 	public BookCollection(BooksDatabase db) {
 		myDatabase = db;
@@ -165,6 +170,20 @@ public class BookCollection implements IBookCollection {
 		}
 	}
 
+	public List<Book> books(String pattern) {
+		if (pattern == null || pattern.length() == 0) {
+			return Collections.emptyList();
+		}
+
+		final LinkedList<Book> filtered = new LinkedList<Book>();
+		for (Book b : books()) {
+			if (b.matches(pattern)) {
+				filtered.add(b);
+			}
+		}
+		return filtered;
+	}
+
 	public List<Book> recentBooks() {
 		return books(myDatabase.loadRecentBookIds());
 	}
@@ -210,11 +229,11 @@ public class BookCollection implements IBookCollection {
 	}
 
 	public synchronized void startBuild() {
-		if (myBuildStarted) {
+		if (myBuildStatus != BuildStatus.NotStarted) {
 			fireBuildEvent(Listener.BuildEvent.NotStarted);
 			return;
 		}
-		myBuildStarted = true;
+		myBuildStatus = BuildStatus.Started;
 
 		final Thread builder = new Thread("Library.build") {
 			public void run() {
@@ -226,7 +245,7 @@ public class BookCollection implements IBookCollection {
 					fireBuildEvent(Listener.BuildEvent.Failed);
 				} finally {
 					fireBuildEvent(Listener.BuildEvent.Completed);
-					myBuildStarted = false;
+					myBuildStatus = BuildStatus.Finished;
 				}
 			}
 		};

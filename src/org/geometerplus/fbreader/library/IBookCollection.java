@@ -23,8 +23,15 @@ import java.util.List;
 
 public interface IBookCollection {
 	int size();
+	List<Book> books(String pattern);
+	List<Book> recentBooks();
+	List<Book> favorites();
 	Book getBookById(long id);
 	Book getRecentBook(int index);
+
+	void removeBook(Book book, boolean deleteFromDisk);
+	void addBookToRecentList(Book book);
+	void setBookFavorite(Book book, boolean favorite);
 
 	List<Bookmark> allBookmarks();
 	void saveBookmark(Bookmark bookmark);
