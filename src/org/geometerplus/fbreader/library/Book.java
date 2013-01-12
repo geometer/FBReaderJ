@@ -282,9 +282,7 @@ public class Book {
 	public String getEncoding() {
 		if (myEncoding == null) {
 			try {
-				System.err.println("detect encoding for " + getId());
 				getPlugin().detectLanguageAndEncoding(this);
-				System.err.println("detected encoding for " + getId() + " = " + myEncoding);
 			} catch (BookReadingException e) {
 			}
 			if (myEncoding == null) {
