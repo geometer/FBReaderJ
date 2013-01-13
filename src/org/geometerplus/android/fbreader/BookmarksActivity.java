@@ -90,9 +90,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(CURRENT_BOOK_KEY));
 		if (book != null) {
 			final long bookId = book.getId();
-			for (Bookmark bookmark : myAllBooksBookmarks) {
-				if (bookmark.getBookId() == bookId) {
-					myThisBookBookmarks.add(bookmark);
+			for (Bookmark bm : myAllBooksBookmarks) {
+				if (bm.getBookId() == bookId) {
+					myThisBookBookmarks.add(bm);
 				}
 			}
 
