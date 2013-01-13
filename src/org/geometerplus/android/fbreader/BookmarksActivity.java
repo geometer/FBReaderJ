@@ -47,7 +47,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	List<Bookmark> AllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
 	private final List<Bookmark> mySearchResults = new LinkedList<Bookmark>();
-	
+
 	private ListView myThisBookView;
 	private ListView myAllBooksView;
 	private ListView mySearchResultsView;
@@ -86,7 +86,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		}
 		AllBooksBookmarks = Library.Instance().allBookmarks();
 		Collections.sort(AllBooksBookmarks, new Bookmark.ByTimeComparator());
-		
+
 		if (FBReaderApp.Instance() == null) {
 			new FBReaderApp();
 		}
