@@ -151,6 +151,10 @@ public class LibraryService extends Service {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
 		}
 
+		public boolean saveBook(String book, boolean force) {
+			return myCollection.saveBook(SerializerUtil.deserializeBook(book), force);
+		}
+
 		public void removeBook(String book, boolean deleteFromDisk) {
 			myCollection.removeBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
 		}

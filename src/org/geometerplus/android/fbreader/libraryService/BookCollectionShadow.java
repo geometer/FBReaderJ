@@ -149,6 +149,17 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		}
 	}
 
+	public synchronized boolean saveBook(Book book, boolean force) {
+		if (myInterface == null) {
+			return false;
+		}
+		try {
+			return myInterface.saveBook(SerializerUtil.serialize(book), force);
+		} catch (RemoteException e) {
+			return false;
+		}
+	}
+
 	public synchronized void removeBook(Book book, boolean deleteFromDisk) {
 		if (myInterface != null) {
 			try {

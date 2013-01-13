@@ -243,7 +243,7 @@ public final class Library {
 			return;
 		}
 
-		book.save(true);
+		myCollection.saveBook(book, true);
 		refreshInTree(ROOT_FAVORITES, book);
 		refreshInTree(ROOT_RECENT, book);
 		removeFromTree(ROOT_FOUND, book);

@@ -389,7 +389,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private void onPreferencesUpdate(int resultCode, Book book) {
 		if (book != null) {
-			book.save(true);
+			getCollection().saveBook(book, true);
 		}
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		switch (resultCode) {

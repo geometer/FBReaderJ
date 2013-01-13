@@ -258,6 +258,7 @@ public final class FBReaderApp extends ZLApplication {
 			System.gc();
 			try {
 				Model = BookModel.createModel(book);
+				Collection.saveBook(book, false);
 				ZLTextHyphenator.Instance().load(book.getLanguage());
 				BookTextView.setModel(Model.getTextModel());
 				BookTextView.gotoPosition(book.getStoredPosition());

@@ -328,15 +328,11 @@ public class Book {
 		return false;
 	}
 
-	public boolean save() {
-		return save(false);
-	}
-
-	public boolean save(boolean force) {
+	boolean save(final BooksDatabase database, boolean force) {
 		if (!force && myIsSaved) {
 			return false;
 		}
-		final BooksDatabase database = BooksDatabase.Instance();
+
 		database.executeAsATransaction(new Runnable() {
 			public void run() {
 				if (myId >= 0) {
@@ -344,7 +340,11 @@ public class Book {
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
-					storeAllVisitedHyperinks();
+					if (myId != -1 && myVisitedHyperlinks != null) {
+						for (String linkId : myVisitedHyperlinks) {
+							database.addVisitedHyperlink(myId, linkId);
+						}
+					}
 				}
 
 				long index = 0;
@@ -394,14 +394,6 @@ public class Book {
 		if (!myVisitedHyperlinks.contains(linkId)) {
 			myVisitedHyperlinks.add(linkId);
 			if (myId != -1) {
-				BooksDatabase.Instance().addVisitedHyperlink(myId, linkId);
-			}
-		}
-	}
-
-	private void storeAllVisitedHyperinks() {
-		if (myId != -1 && myVisitedHyperlinks != null) {
-			for (String linkId : myVisitedHyperlinks) {
 				BooksDatabase.Instance().addVisitedHyperlink(myId, linkId);
 			}
 		}

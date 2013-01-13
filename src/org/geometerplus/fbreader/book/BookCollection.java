@@ -89,7 +89,7 @@ public class BookCollection implements IBookCollection {
 
 		final FileInfoSet fileInfos = new FileInfoSet(bookFile);
 
-		book = BooksDatabase.Instance().loadBookByFile(fileInfos.getId(bookFile), bookFile);
+		book = myDatabase.loadBookByFile(fileInfos.getId(bookFile), bookFile);
 		if (book != null) {
 			book.loadLists();
 		}
@@ -110,7 +110,7 @@ public class BookCollection implements IBookCollection {
 			return null;
 		}
 
-		book.save();
+		saveBook(book, false);
 		addBook(book);
 		return book;
 	}
@@ -121,7 +121,7 @@ public class BookCollection implements IBookCollection {
 			return book;
 		}
 
-		book = BooksDatabase.Instance().loadBook(id);
+		book = myDatabase.loadBook(id);
 		if (book == null) {
 			return null;
 		}
@@ -169,6 +169,10 @@ public class BookCollection implements IBookCollection {
 		if (id != -1) {
 			myBooksById.put(id, book);
 		}
+	}
+
+	public boolean saveBook(Book book, boolean force) {
+		return book.save(myDatabase, force);
 	}
 
 	public void removeBook(Book book, boolean deleteFromDisk) {
@@ -320,7 +324,7 @@ public class BookCollection implements IBookCollection {
 					if (!fileInfos.check(file, true)) {
 						try {
 							book.readMetaInfo();
-							book.save();
+							saveBook(book, false);
 						} catch (BookReadingException e) {
 							doAdd = false;
 						}
@@ -374,7 +378,7 @@ public class BookCollection implements IBookCollection {
 		myDatabase.executeAsATransaction(new Runnable() {
 			public void run() {
 				for (Book book : newBooks) {
-					book.save();
+					saveBook(book, false);
 					addBookById(book);
 				}
 			}
@@ -469,13 +473,13 @@ public class BookCollection implements IBookCollection {
 
 	public void saveBookmark(Bookmark bookmark) {
 		if (bookmark != null) {
-			bookmark.setId(BooksDatabase.Instance().saveBookmark(bookmark));
+			bookmark.setId(myDatabase.saveBookmark(bookmark));
 		}
 	}
 
 	public void deleteBookmark(Bookmark bookmark) {
 		if (bookmark != null && bookmark.getId() != -1) {
-			BooksDatabase.Instance().deleteBookmark(bookmark);
+			myDatabase.deleteBookmark(bookmark);
 		}
 	}
 

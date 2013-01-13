@@ -54,6 +54,7 @@ public interface IBookCollection {
 	Book getBookById(long id);
 	Book getRecentBook(int index);
 
+	boolean saveBook(Book book, boolean force);
 	void removeBook(Book book, boolean deleteFromDisk);
 	void addBookToRecentList(Book book);
 	void setBookFavorite(Book book, boolean favorite);
