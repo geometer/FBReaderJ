@@ -6,3 +6,4 @@ new:
 * filesystem event listener
 * update book collection on path changing (from options dialog)
 * read book => go to library => go to book info => update book info => return to reading mode: book info is not updated
+* text search => found multiple occurencies => turn page right => right button is disabled
