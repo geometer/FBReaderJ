@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.library;
 
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 public interface IBookCollection {
 	public interface Listener {
 		public enum BookEvent {
@@ -48,6 +50,7 @@ public interface IBookCollection {
 	List<Book> books(String pattern);
 	List<Book> recentBooks();
 	List<Book> favorites();
+	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
 	Book getRecentBook(int index);
 

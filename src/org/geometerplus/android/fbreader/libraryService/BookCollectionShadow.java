@@ -26,6 +26,8 @@ import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 import org.geometerplus.fbreader.library.*;
 
 public class BookCollectionShadow implements IBookCollection, ServiceConnection {
@@ -37,16 +39,21 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		myContext = context;
 	}
 
-	public void bindToService(Runnable onBindAction) {
+	public synchronized void bindToService(Runnable onBindAction) {
 		if (myInterface != null) {
-			return;
+			if (onBindAction != null) {
+				onBindAction.run();
+			}
+		} else {
+			if (onBindAction != null) {
+				myOnBindAction = onBindAction;
+			}
+			myContext.bindService(
+				new Intent(myContext, LibraryService.class),
+				this,
+				LibraryService.BIND_AUTO_CREATE
+			);
 		}
-		myOnBindAction = onBindAction;
-		myContext.bindService(
-			new Intent(myContext, LibraryService.class),
-			this,
-			LibraryService.BIND_AUTO_CREATE
-		);
 	}
 
 	public void unbind() {
@@ -116,6 +123,17 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index));
 		} catch (RemoteException e) {
 			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public synchronized Book getBookByFile(ZLFile file) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return SerializerUtil.deserializeBook(myInterface.getBookByFile(file.getPath()));
+		} catch (RemoteException e) {
 			return null;
 		}
 	}
@@ -207,6 +225,7 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		myInterface = LibraryInterface.Stub.asInterface(service);
 		if (myOnBindAction != null) {
 			myOnBindAction.run();
+			myOnBindAction = null;
 		}
 	}
 

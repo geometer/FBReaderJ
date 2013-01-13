@@ -128,7 +128,7 @@ public final class Library {
 		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
-		new FileFirstLevelTree(myRootTree, ROOT_FILE_TREE);
+		new FileFirstLevelTree(collection, myRootTree, ROOT_FILE_TREE);
 	}
 
 	public LibraryTree getRootTree() {

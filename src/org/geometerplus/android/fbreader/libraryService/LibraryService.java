@@ -27,6 +27,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.FileObserver;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
 import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
@@ -139,6 +141,10 @@ public class LibraryService extends Service {
 
 		public String getRecentBook(int index) {
 			return SerializerUtil.serialize(myCollection.getRecentBook(index));
+		}
+
+		public String getBookByFile(String file) {
+			return SerializerUtil.serialize(myCollection.getBookByFile(ZLFile.createFileByPath(file)));
 		}
 
 		public String getBookById(long id) {

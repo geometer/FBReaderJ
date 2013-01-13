@@ -73,6 +73,49 @@ public class BookCollection implements IBookCollection {
 		return myBooksByFile.size();
 	}
 
+	public Book getBookByFile(ZLFile bookFile) {
+		if (bookFile == null) {
+			return null;
+		}
+
+		Book book = myBooksByFile.get(bookFile);
+		if (book != null) {
+			return book;
+		}
+
+		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
+		if (physicalFile != null && !physicalFile.exists()) {
+			return null;
+		}
+
+		final FileInfoSet fileInfos = new FileInfoSet(bookFile);
+
+		book = BooksDatabase.Instance().loadBookByFile(fileInfos.getId(bookFile), bookFile);
+		if (book != null) {
+			book.loadLists();
+		}
+
+		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
+			addBook(book);
+			return book;
+		}
+		fileInfos.save();
+
+		try {
+			if (book == null) {
+				book = new Book(bookFile);
+			} else {
+				book.readMetaInfo();
+			}
+		} catch (BookReadingException e) {
+			return null;
+		}
+
+		book.save();
+		addBook(book);
+		return book;
+	}
+
 	public Book getBookById(long id) {
 		Book book = myBooksById.get(id);
 		if (book != null) {

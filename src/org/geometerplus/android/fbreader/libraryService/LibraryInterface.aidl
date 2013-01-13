@@ -11,6 +11,7 @@ interface LibraryInterface {
 	List<String> books(String pattern);
 	List<String> recentBooks();
 	List<String> favorites();
+	String getBookByFile(in String file);
 	String getBookById(in long id);
 	String getRecentBook(in int index);
 

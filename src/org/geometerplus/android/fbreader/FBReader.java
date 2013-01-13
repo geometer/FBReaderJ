@@ -65,7 +65,6 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	private int myFullScreenFlag;
-	private final BookCollectionShadow myCollection = new BookCollectionShadow(this);
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -120,10 +119,17 @@ public final class FBReader extends ZLAndroidActivity {
 		};
 	}
 
+	private BookCollectionShadow getCollection() {
+		return (BookCollectionShadow)((FBReaderApp)FBReaderApp.Instance()).Collection;
+	}
+
+	@Override
+	protected void init(Runnable action) {
+		getCollection().bindToService(action);
+	}
+
 	@Override
 	public void onCreate(Bundle icicle) {
-		myCollection.bindToService(null);
-
 		super.onCreate(icicle);
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
@@ -245,7 +251,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		myCollection.bindToService(null);
+		getCollection().bindToService(null);
 	}
 
 	@Override
@@ -335,7 +341,7 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(FBReaderApp.Instance(), this);
-		myCollection.unbind();
+		getCollection().unbind();
 		super.onStop();
 	}
 
@@ -344,12 +350,7 @@ public final class FBReader extends ZLAndroidActivity {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "READER");
 		}
-		return new FBReaderApp(myCollection);
-	}
-
-	@Override
-	protected void updateApplication() {
-		((FBReaderApp)FBReaderApp.Instance()).setCollection(myCollection);
+		return new FBReaderApp(new BookCollectionShadow(this));
 	}
 
 	@Override
@@ -507,7 +508,7 @@ public final class FBReader extends ZLAndroidActivity {
 			text,
 			true
 		);
-		myCollection.saveBookmark(bookmark);
+		fbReader.Collection.saveBookmark(bookmark);
 		fbView.clearSelection();
 
 		UIUtil.showMessageText(
