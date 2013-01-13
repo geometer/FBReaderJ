@@ -58,6 +58,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	@Override
 	public void detectLanguageAndEncoding(Book book) {
 		detectLanguageAndEncodingNative(book);
+		book.save(false);
 	}
 
 	public native void detectLanguageAndEncodingNative(Book book);

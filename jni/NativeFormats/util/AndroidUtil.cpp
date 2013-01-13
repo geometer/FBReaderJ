@@ -78,8 +78,8 @@ shared_ptr<IntMethod> AndroidUtil::Method_EncodingConverter_convert;
 shared_ptr<VoidMethod> AndroidUtil::Method_EncodingConverter_reset;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_JavaEncodingCollection_Instance;
-shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding_int;
-shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding_String;
+//shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding_int;
+shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding;
 shared_ptr<BooleanMethod> AndroidUtil::Method_JavaEncodingCollection_providesConverterFor;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_ZLFile_createFileByPath;
@@ -104,7 +104,6 @@ shared_ptr<VoidMethod> AndroidUtil::Method_Book_setLanguage;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_setEncoding;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_addAuthor;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_addTag;
-shared_ptr<BooleanMethod> AndroidUtil::Method_Book_save;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Tag_getTag;
 
@@ -154,8 +153,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_EncodingConverter_reset = new VoidMethod(Class_EncodingConverter, "reset", "()");
 
 	StaticMethod_JavaEncodingCollection_Instance = new StaticObjectMethod(Class_JavaEncodingCollection, "Instance", Class_JavaEncodingCollection, "()");
-	Method_JavaEncodingCollection_getEncoding_String = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(Ljava/lang/String;)");
-	Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(I)");
+	Method_JavaEncodingCollection_getEncoding = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(Ljava/lang/String;)");
+	//Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(I)");
 	Method_JavaEncodingCollection_providesConverterFor = new BooleanMethod(Class_JavaEncodingCollection, "providesConverterFor", "(Ljava/lang/String;)");
 
 	StaticMethod_ZLFile_createFileByPath = new StaticObjectMethod(Class_ZLFile, "createFileByPath", Class_ZLFile, "(Ljava/lang/String;)");
@@ -180,7 +179,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Book_setEncoding = new VoidMethod(Class_Book, "setEncoding", "(Ljava/lang/String;)");
 	Method_Book_addAuthor = new VoidMethod(Class_Book, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
 	Method_Book_addTag = new VoidMethod(Class_Book, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)");
-	Method_Book_save = new BooleanMethod(Class_Book, "save", "()");
 
 	StaticMethod_Tag_getTag = new StaticObjectMethod(Class_Tag, "getTag", Class_Tag, "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)");
 

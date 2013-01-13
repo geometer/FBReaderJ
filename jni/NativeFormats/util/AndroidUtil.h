@@ -110,8 +110,8 @@ public:
 	static shared_ptr<VoidMethod> Method_EncodingConverter_reset;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_JavaEncodingCollection_Instance;
-	static shared_ptr<ObjectMethod> Method_JavaEncodingCollection_getEncoding_String;
-	static shared_ptr<ObjectMethod> Method_JavaEncodingCollection_getEncoding_int;
+	static shared_ptr<ObjectMethod> Method_JavaEncodingCollection_getEncoding;
+	//static shared_ptr<ObjectMethod> Method_JavaEncodingCollection_getEncoding_int;
 	static shared_ptr<BooleanMethod> Method_JavaEncodingCollection_providesConverterFor;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_Paths_cacheDirectory;
@@ -126,7 +126,6 @@ public:
 	static shared_ptr<VoidMethod> Method_Book_setEncoding;
 	static shared_ptr<VoidMethod> Method_Book_addAuthor;
 	static shared_ptr<VoidMethod> Method_Book_addTag;
-	static shared_ptr<BooleanMethod> Method_Book_save;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_Tag_getTag;
 
