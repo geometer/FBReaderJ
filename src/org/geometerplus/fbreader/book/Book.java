@@ -121,8 +121,7 @@ public class Book {
 		}
 	}
 
-	void loadLists() {
-		final BooksDatabase database = BooksDatabase.Instance();
+	void loadLists(BooksDatabase database) {
 		myAuthors = database.loadAuthors(myId);
 		myTags = database.loadTags(myId);
 		mySeriesInfo = database.loadSeriesInfo(myId);
@@ -336,7 +335,7 @@ public class Book {
 		database.executeAsATransaction(new Runnable() {
 			public void run() {
 				if (myId >= 0) {
-					final FileInfoSet fileInfos = new FileInfoSet(File);
+					final FileInfoSet fileInfos = new FileInfoSet(database, File);
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
@@ -364,37 +363,27 @@ public class Book {
 		return true;
 	}
 
-	public ZLTextPosition getStoredPosition() {
-		return BooksDatabase.Instance().getStoredPosition(myId);
-	}
-
-	public void storePosition(ZLTextPosition position) {
-		if (myId != -1) {
-			BooksDatabase.Instance().storePosition(myId, position);
-		}
-	}
-
 	private Set<String> myVisitedHyperlinks;
-	private void initHyperlinkSet() {
+	private void initHyperlinkSet(BooksDatabase database) {
 		if (myVisitedHyperlinks == null) {
 			myVisitedHyperlinks = new TreeSet<String>();
 			if (myId != -1) {
-				myVisitedHyperlinks.addAll(BooksDatabase.Instance().loadVisitedHyperlinks(myId));
+				myVisitedHyperlinks.addAll(database.loadVisitedHyperlinks(myId));
 			}
 		}
 	}
 
-	public boolean isHyperlinkVisited(String linkId) {
-		initHyperlinkSet();
+	boolean isHyperlinkVisited(BooksDatabase database, String linkId) {
+		initHyperlinkSet(database);
 		return myVisitedHyperlinks.contains(linkId);
 	}
 
-	public void markHyperlinkAsVisited(String linkId) {
-		initHyperlinkSet();
+	void markHyperlinkAsVisited(BooksDatabase database, String linkId) {
+		initHyperlinkSet(database);
 		if (!myVisitedHyperlinks.contains(linkId)) {
 			myVisitedHyperlinks.add(linkId);
 			if (myId != -1) {
-				BooksDatabase.Instance().addVisitedHyperlink(myId, linkId);
+				database.addVisitedHyperlink(myId, linkId);
 			}
 		}
 	}

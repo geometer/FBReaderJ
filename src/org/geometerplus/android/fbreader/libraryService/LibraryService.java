@@ -29,8 +29,12 @@ import android.os.FileObserver;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+
 import org.geometerplus.fbreader.book.*;
 
+import org.geometerplus.android.fbreader.api.TextPosition;
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 
 public class LibraryService extends Service {
@@ -165,6 +169,27 @@ public class LibraryService extends Service {
 
 		public void setBookFavorite(String book, boolean favorite) {
 			myCollection.setBookFavorite(SerializerUtil.deserializeBook(book), favorite);
+		}
+
+		public TextPosition getStoredPosition(long bookId) {
+			final ZLTextPosition position = myCollection.getStoredPosition(bookId);
+			return new TextPosition(
+				position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex()
+			);
+		}
+
+		public void storePosition(long bookId, TextPosition position) {
+			myCollection.storePosition(bookId, new ZLTextFixedPosition(
+				position.ParagraphIndex, position.ElementIndex, position.CharIndex
+			));
+		}
+
+		public boolean isHyperlinkVisited(String book, String linkId) {
+			return myCollection.isHyperlinkVisited(SerializerUtil.deserializeBook(book), linkId);
+		}
+
+		public void markHyperlinkAsVisited(String book, String linkId) {
+			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
 		}
 
 		public List<String> invisibleBookmarks(String book) {

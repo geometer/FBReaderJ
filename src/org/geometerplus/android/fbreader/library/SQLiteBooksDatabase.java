@@ -318,7 +318,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		SQLiteUtil.bindString(myInsertBookInfoStatement, 1, encoding);
 		SQLiteUtil.bindString(myInsertBookInfoStatement, 2, language);
 		myInsertBookInfoStatement.bindString(3, title);
-		final FileInfoSet infoSet = new FileInfoSet(file);
+		final FileInfoSet infoSet = new FileInfoSet(this, file);
 		myInsertBookInfoStatement.bindLong(4, infoSet.getId(file));
 		return myInsertBookInfoStatement.executeInsert();
 	}
@@ -980,7 +980,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables4() {
-		final FileInfoSet fileInfos = new FileInfoSet();
+		final FileInfoSet fileInfos = new FileInfoSet(this);
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT file_name FROM Books", null
 		);
@@ -1069,7 +1069,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		);
 
 		myDatabase.execSQL("DELETE FROM Files");
-		final FileInfoSet infoSet = new FileInfoSet();
+		final FileInfoSet infoSet = new FileInfoSet(this);
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT file_name FROM Books", null
 		);

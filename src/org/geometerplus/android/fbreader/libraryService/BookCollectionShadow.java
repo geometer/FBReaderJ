@@ -28,7 +28,12 @@ import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
 import org.geometerplus.fbreader.book.*;
+
+import org.geometerplus.android.fbreader.api.TextPosition;
 
 public class BookCollectionShadow implements IBookCollection, ServiceConnection {
 	private final Context myContext;
@@ -182,6 +187,53 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		if (myInterface != null) {
 			try {
 				myInterface.setBookFavorite(SerializerUtil.serialize(book), favorite);
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
+	public synchronized ZLTextPosition getStoredPosition(long bookId) {
+		if (myInterface == null) {
+			return null;
+		}
+
+		try {
+			final TextPosition position = myInterface.getStoredPosition(bookId);
+			return new ZLTextFixedPosition(
+				position.ParagraphIndex, position.ElementIndex, position.CharIndex
+			);
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
+	public synchronized void storePosition(long bookId, ZLTextPosition position) {
+		if (myInterface != null) {
+			try {
+				myInterface.storePosition(bookId, new TextPosition(
+					position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex()
+				));
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
+	public synchronized boolean isHyperlinkVisited(Book book, String linkId) {
+		if (myInterface == null) {
+			return false;
+		}
+
+		try {
+			return myInterface.isHyperlinkVisited(SerializerUtil.serialize(book), linkId);
+		} catch (RemoteException e) {
+			return false;
+		}
+	}
+
+	public synchronized void markHyperlinkAsVisited(Book book, String linkId) {
+		if (myInterface != null) {
+			try {
+				myInterface.markHyperlinkAsVisited(SerializerUtil.serialize(book), linkId);
 			} catch (RemoteException e) {
 			}
 		}

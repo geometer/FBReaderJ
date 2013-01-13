@@ -24,6 +24,8 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
@@ -87,11 +89,11 @@ public class BookCollection implements IBookCollection {
 			return null;
 		}
 
-		final FileInfoSet fileInfos = new FileInfoSet(bookFile);
+		final FileInfoSet fileInfos = new FileInfoSet(myDatabase, bookFile);
 
 		book = myDatabase.loadBookByFile(fileInfos.getId(bookFile), bookFile);
 		if (book != null) {
-			book.loadLists();
+			book.loadLists(myDatabase);
 		}
 
 		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
@@ -125,7 +127,7 @@ public class BookCollection implements IBookCollection {
 		if (book == null) {
 			return null;
 		}
-		book.loadLists();
+		book.loadLists(myDatabase);
 
 		final ZLFile bookFile = book.File;
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
@@ -137,7 +139,7 @@ public class BookCollection implements IBookCollection {
 			return null;
 		}
 
-		FileInfoSet fileInfos = new FileInfoSet(physicalFile);
+		FileInfoSet fileInfos = new FileInfoSet(myDatabase, physicalFile);
 		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
 			addBook(book);
 			return book;
@@ -281,7 +283,7 @@ public class BookCollection implements IBookCollection {
 
 	private void build() {
 		// Step 0: get database books marked as "existing"
-		final FileInfoSet fileInfos = new FileInfoSet();
+		final FileInfoSet fileInfos = new FileInfoSet(myDatabase);
 		final Map<Long,Book> savedBooksByFileId = myDatabase.loadBooks(fileInfos, true);
 		final Map<Long,Book> savedBooksByBookId = new HashMap<Long,Book>();
 		for (Book b : savedBooksByFileId.values()) {
@@ -501,5 +503,23 @@ public class BookCollection implements IBookCollection {
 		}
 
 		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
+	}
+
+	public ZLTextPosition getStoredPosition(long bookId) {
+		return myDatabase.getStoredPosition(bookId);
+	}
+
+	public void storePosition(long bookId, ZLTextPosition position) {
+		if (bookId != -1) {
+			myDatabase.storePosition(bookId, position);
+		}
+	}
+
+	public boolean isHyperlinkVisited(Book book, String linkId) {
+		return book.isHyperlinkVisited(myDatabase, linkId);
+	}
+
+	public void markHyperlinkAsVisited(Book book, String linkId) {
+		book.markHyperlinkAsVisited(myDatabase, linkId);
 	}
 }

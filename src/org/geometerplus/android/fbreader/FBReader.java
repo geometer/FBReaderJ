@@ -47,7 +47,6 @@ import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.library.KillerCallback;
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
@@ -347,9 +346,6 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected FBReaderApp createApplication() {
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "READER");
-		}
 		return new FBReaderApp(new BookCollectionShadow(this));
 	}
 
