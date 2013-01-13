@@ -86,9 +86,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		if (fbreader.Model != null) {
 			final long bookId = fbreader.Model.Book.getId();
-			for (Bookmark bookmark : AllBooksBookmarks) {
-				if (bookmark.getBookId() == bookId) {
-					myThisBookBookmarks.add(bookmark);
+			for (Bookmark bm : AllBooksBookmarks) {
+				if (bm.getBookId() == bookId) {
+					myThisBookBookmarks.add(bm);
 				}
 			}
 
