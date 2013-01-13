@@ -42,6 +42,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	static volatile boolean ourToBeKilled = false;
