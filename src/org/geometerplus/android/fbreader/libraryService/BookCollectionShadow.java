@@ -28,7 +28,7 @@ import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.book.*;
 
 public class BookCollectionShadow implements IBookCollection, ServiceConnection {
 	private final Context myContext;

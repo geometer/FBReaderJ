@@ -31,10 +31,8 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.bookmodel.TOCTree;
-import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.bookmodel.*;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -236,7 +234,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (book == null) {
 			book = Collection.getRecentBook(0);
 			if (book == null || !book.File.exists()) {
-				book = Collection.getBookByFile(Library.getHelpFile());
+				book = Collection.getBookByFile(BookCollection.getHelpFile());
 			}
 			if (book == null) {
 				return;

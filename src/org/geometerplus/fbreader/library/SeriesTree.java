@@ -21,6 +21,9 @@ package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
 
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.SeriesInfo;
+
 public final class SeriesTree extends LibraryTree {
 	public final String Series;
 

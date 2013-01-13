@@ -39,9 +39,9 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
-import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;

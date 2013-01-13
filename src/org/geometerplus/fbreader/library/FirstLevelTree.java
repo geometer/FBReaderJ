@@ -28,13 +28,13 @@ public class FirstLevelTree extends LibraryTree {
 	FirstLevelTree(RootTree root, int position, String id) {
 		super(root, position);
 		myId = id;
-		myResource = LibraryUtil.resource().getResource(myId);
+		myResource = Library.resource().getResource(myId);
 	}
 
 	FirstLevelTree(RootTree root, String id) {
 		super(root);
 		myId = id;
-		myResource = LibraryUtil.resource().getResource(myId);
+		myResource = Library.resource().getResource(myId);
 	}
 
 	@Override

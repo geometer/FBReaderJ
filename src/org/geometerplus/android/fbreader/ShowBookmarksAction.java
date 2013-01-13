@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader;
 import android.content.Intent;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.library.SerializerUtil;
+import org.geometerplus.fbreader.book.SerializerUtil;
 
 class ShowBookmarksAction extends FBAndroidAction {
 	ShowBookmarksAction(FBReader baseActivity, FBReaderApp fbreader) {

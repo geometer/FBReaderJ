@@ -22,10 +22,16 @@ package org.geometerplus.fbreader.library;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public final class Library {
+	public static ZLResource resource() {
+		return ZLResource.resource("library");
+	}
+
 	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
 
 	public interface ChangeListener {
@@ -148,26 +154,6 @@ public final class Library {
 		}
 		final LibraryTree parentTree = getLibraryTree(key.Parent);
 		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
-	}
-
-	public static ZLResourceFile getHelpFile() {
-		final Locale locale = Locale.getDefault();
-
-		ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + "_" + locale.getCountry() + ".fb2"
-		);
-		if (file.exists()) {
-			return file;
-		}
-
-		file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + ".fb2"
-		);
-		if (file.exists()) {
-			return file;
-		}
-
-		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
 	}
 
 	private final List<?> myNullList = Collections.singletonList(null);

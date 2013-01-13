@@ -19,6 +19,9 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.fbreader.book.Author;
+import org.geometerplus.fbreader.book.Book;
+
 public class AuthorTree extends LibraryTree {
 	public final Author Author;
 
@@ -36,7 +39,7 @@ public class AuthorTree extends LibraryTree {
 		return
 			Author != null ?
 				Author.DisplayName :
-				LibraryUtil.resource().getResource("unknownAuthor").getValue();
+				Library.resource().getResource("unknownAuthor").getValue();
 	}
 
 	@Override

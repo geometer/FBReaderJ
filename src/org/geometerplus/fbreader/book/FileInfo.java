@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,35 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.book;
 
-public final class Author {
-	public final String DisplayName;
-	public final String SortKey;
+import org.geometerplus.zlibrary.core.tree.ZLTree;
 
-	public Author(String displayName, String sortKey) {
-		DisplayName = displayName;
-		SortKey = sortKey;
-	}
-		
-	public static int hashCode(Author author) {
-		return author == null ? 0 : author.hashCode();
+public final class FileInfo extends ZLTree<FileInfo> {
+	public final String Name;
+	public long Id;
+	public long FileSize = -1;
+
+	FileInfo(String name, FileInfo parent) {
+		this(name, parent, -1);
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == this) {
-			return true;
-		}
-		if (!(o instanceof Author)) {
-			return false;
-		}
-		Author a = (Author)o;
-		return SortKey.equals(a.SortKey) && DisplayName.equals(a.DisplayName);
-	}
-
-	@Override
-	public int hashCode() {
-		return SortKey.hashCode() + DisplayName.hashCode();
+	FileInfo(String name, FileInfo parent, long id) {
+		super(parent);
+		Name = name;
+		Id = id;
 	}
 }

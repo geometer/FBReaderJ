@@ -33,8 +33,8 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.libraryService.*;
 import org.geometerplus.android.util.UIUtil;

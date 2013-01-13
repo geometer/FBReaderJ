@@ -17,12 +17,35 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.book;
 
-abstract class AbstractSerializer {
-	public abstract String serialize(Book book);
-	public abstract Book deserializeBook(String xml);
+public final class Author {
+	public final String DisplayName;
+	public final String SortKey;
 
-	public abstract String serialize(Bookmark bookmark);
-	public abstract Bookmark deserializeBookmark(String xml);
+	public Author(String displayName, String sortKey) {
+		DisplayName = displayName;
+		SortKey = sortKey;
+	}
+		
+	public static int hashCode(Author author) {
+		return author == null ? 0 : author.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof Author)) {
+			return false;
+		}
+		Author a = (Author)o;
+		return SortKey.equals(a.SortKey) && DisplayName.equals(a.DisplayName);
+	}
+
+	@Override
+	public int hashCode() {
+		return SortKey.hashCode() + DisplayName.hashCode();
+	}
 }

@@ -24,6 +24,9 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
+import org.geometerplus.fbreader.book.IBookCollection;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -88,7 +91,7 @@ public class FileTree extends LibraryTree {
 
 	@Override
 	public ZLImage createCover() {
-		return LibraryUtil.getCover(getBook());
+		return BookUtil.getCover(getBook());
 	}
 
 	public ZLFile getFile() {

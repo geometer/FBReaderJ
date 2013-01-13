@@ -29,7 +29,7 @@ import android.os.FileObserver;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 

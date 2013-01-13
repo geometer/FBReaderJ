@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.book;
 
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
@@ -33,8 +33,9 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.library.Library;
 
 import org.geometerplus.fbreader.Paths;
 
@@ -114,7 +115,7 @@ public class Book {
 		}
 		final String demoPathPrefix = Paths.mainBookDirectory() + "/Demos/";
 		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = LibraryUtil.resource().getResource("demo").getValue();
+			final String demoTag = Library.resource().getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");
 			addTag(demoTag);
 		}
@@ -300,7 +301,7 @@ public class Book {
 		addTag(Tag.getTag(null, tagName));
 	}
 
-	boolean matches(String pattern) {
+	public boolean matches(String pattern) {
 		if (myTitle != null && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
 			return true;
 		}
