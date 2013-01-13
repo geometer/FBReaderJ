@@ -35,10 +35,30 @@ import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
 
-public class BookCollectionShadow implements IBookCollection, ServiceConnection {
+public class BookCollectionShadow extends AbstractBookCollection implements ServiceConnection {
 	private final Context myContext;
 	private volatile LibraryInterface myInterface;
 	private Runnable myOnBindAction;
+
+	private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			if (!hasListeners()) {
+				return;
+			}
+
+			try {
+				final String type = intent.getStringExtra("type");
+				if (LibraryService.BOOK_EVENT_ACTION.equals(intent.getAction())) {
+					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"));
+					fireBookEvent(Listener.BookEvent.valueOf(type), book);
+				} else {
+					fireBuildEvent(Listener.BuildEvent.valueOf(type));
+				}
+			} catch (Exception e) {
+				// ignore
+			}
+		}
+	};
 
 	public BookCollectionShadow(Context context) {
 		myContext = context;
@@ -65,15 +85,8 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 		if (myInterface != null) {
 			myContext.unbindService(this);
 			myInterface = null;
+			myContext.unregisterReceiver(myReceiver);
 		}
-	}
-
-	public void addListener(Listener listener) {
-		// TODO: implement
-	}
-
-	public void removeListener(Listener listener) {
-		// TODO: implement
 	}
 
 	public synchronized int size() {
@@ -294,6 +307,8 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 			myOnBindAction.run();
 			myOnBindAction = null;
 		}
+		myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BOOK_EVENT_ACTION));
+		myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BUILD_EVENT_ACTION));
 	}
 
 	// method from ServiceConnection interface

@@ -37,6 +37,9 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 public class LibraryService extends Service {
+	static String BOOK_EVENT_ACTION = "fbreader.library-service.book-event";
+	static String BUILD_EVENT_ACTION = "fbreader.library-service.build-event";
+
 	private static final class Observer extends FileObserver {
 		private static final int MASK =
 			MOVE_SELF | MOVED_TO | MOVED_FROM | DELETE_SELF | DELETE | CLOSE_WRITE | ATTRIB;
@@ -90,31 +93,18 @@ public class LibraryService extends Service {
 				myFileObservers.add(observer);
 			}
 
-			final long start = System.currentTimeMillis();
 			myCollection.addListener(new BookCollection.Listener() {
 				public void onBookEvent(BookEvent event, Book book) {
-					switch (event) {
-						case Added:
-							System.err.println("Added " + book.getTitle());
-							break;
-					}
+					final Intent intent = new Intent(BOOK_EVENT_ACTION);
+					intent.putExtra("type", event.toString());
+					intent.putExtra("book", SerializerUtil.serialize(book));
+					sendBroadcast(intent);
 				}
 
 				public void onBuildEvent(BuildEvent event) {
-					switch (event) {
-						case Started:
-							System.err.println("Build started");
-							break;
-						case Succeeded:
-							System.err.println("Build succeeded");
-							break;
-						case Failed:
-							System.err.println("Build failed");
-							break;
-						case Completed:
-							System.err.println("Build completed with " + myCollection.size() + " books in " + (System.currentTimeMillis() - start) + " milliseconds");
-							break;
-					}
+					final Intent intent = new Intent(BUILD_EVENT_ACTION);
+					intent.putExtra("type", event.toString());
+					sendBroadcast(intent);
 				}
 			});
 			myCollection.startBuild();
@@ -228,27 +218,22 @@ public class LibraryService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		System.err.println("LibraryService started for intent " + intent);
-
 		return START_STICKY;
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		System.err.println("LibraryService binded for intent " + intent);
 		return myLibrary;
 	}
 
 	@Override
 	public void onCreate() {
-		System.err.println("LibraryService.onCreate()");
 		super.onCreate();
 		myLibrary = new LibraryImplementation();
 	}
 
 	@Override
 	public void onDestroy() {
-		System.err.println("LibraryService.onDestroy()");
 		if (myLibrary != null) {
 			myLibrary.deactivate();
 			myLibrary = null;

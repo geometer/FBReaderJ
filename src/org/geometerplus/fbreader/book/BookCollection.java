@@ -29,31 +29,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
-public class BookCollection implements IBookCollection {
-	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
-
-	public void addListener(Listener listener) {
-		myListeners.add(listener);
-	}
-
-	public void removeListener(Listener listener) {
-		myListeners.remove(listener);
-	}
-
-	protected void fireBookEvent(Listener.BookEvent event, Book book) {
-		synchronized (myListeners) {
-			for (Listener l : myListeners) {
-				l.onBookEvent(event, book);
-			}
-		}
-	}
-	protected void fireBuildEvent(Listener.BuildEvent event) {
-		synchronized (myListeners) {
-			for (Listener l : myListeners) {
-				l.onBuildEvent(event);
-			}
-		}
-	}
+public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
 	private final Map<ZLFile,Book> myBooksByFile =
 		Collections.synchronizedMap(new LinkedHashMap<ZLFile,Book>());
@@ -174,6 +150,17 @@ public class BookCollection implements IBookCollection {
 	}
 
 	public boolean saveBook(Book book, boolean force) {
+		if (book == null) {
+			return false;
+		}
+
+		synchronized (myBooksByFile) {
+			final boolean replace = myBooksByFile.remove(book.File) != null;
+			myBooksById.remove(book.getId());
+			myBooksByFile.put(book.File, book);
+			addBookById(book);
+			fireBookEvent(replace ? Listener.BookEvent.Updated : Listener.BookEvent.Added, book);
+		}
 		return book.save(myDatabase, force);
 	}
 
