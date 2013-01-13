@@ -104,7 +104,6 @@ public abstract class ZLFile {
 	}
 
 	public static ZLFile createFileByUrl(String url) {
-		System.err.println("url = " + url);
 		if (url == null || !url.startsWith("file://")) {
 			return null;
 		}
