@@ -172,12 +172,19 @@ public class LibraryService extends Service {
 
 		public TextPosition getStoredPosition(long bookId) {
 			final ZLTextPosition position = myCollection.getStoredPosition(bookId);
+			if (position == null) {
+				return null;
+			}
+
 			return new TextPosition(
 				position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex()
 			);
 		}
 
 		public void storePosition(long bookId, TextPosition position) {
+			if (position == null) {
+				return;
+			}
 			myCollection.storePosition(bookId, new ZLTextFixedPosition(
 				position.ParagraphIndex, position.ElementIndex, position.CharIndex
 			));

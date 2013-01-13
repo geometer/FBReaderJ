@@ -199,6 +199,10 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 
 		try {
 			final TextPosition position = myInterface.getStoredPosition(bookId);
+			if (position == null) {
+				return null;
+			}
+
 			return new ZLTextFixedPosition(
 				position.ParagraphIndex, position.ElementIndex, position.CharIndex
 			);
@@ -208,7 +212,7 @@ public class BookCollectionShadow implements IBookCollection, ServiceConnection 
 	}
 
 	public synchronized void storePosition(long bookId, ZLTextPosition position) {
-		if (myInterface != null) {
+		if (position != null && myInterface != null) {
 			try {
 				myInterface.storePosition(bookId, new TextPosition(
 					position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex()
