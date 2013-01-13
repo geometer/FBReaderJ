@@ -71,7 +71,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 19;
+		final int currentVersion = 20;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -118,6 +118,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables17();
 					case 18:
 						updateTables18();
+					case 19:
+						updateTables19();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.setVersion(currentVersion);
@@ -861,42 +863,6 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myStorePositionStatement.execute();
 	}
 
-	private SQLiteStatement myInsertIntoBookListStatement;
-	protected boolean insertIntoBookList(long bookId) {
-		if (myInsertIntoBookListStatement == null) {
-			myInsertIntoBookListStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO BookList(book_id) VALUES (?)"
-			);
-		}
-		myInsertIntoBookListStatement.bindLong(1, bookId);
-		myInsertIntoBookListStatement.execute();
-		return true;
-	}
-
-	private SQLiteStatement myDeleteFromBookListStatement;
-	protected boolean deleteFromBookList(long bookId) {
-		if (myDeleteFromBookListStatement == null) {
-			myDeleteFromBookListStatement = myDatabase.compileStatement(
-				"DELETE FROM BookList WHERE book_id = ?"
-			);
-		}
-		myDeleteFromBookListStatement.bindLong(1, bookId);
-		myDeleteFromBookListStatement.execute();
-		deleteVisitedHyperlinks(bookId);
-		return true;
-	}
-
-	private SQLiteStatement myCheckBookListStatement;
-	protected boolean checkBookList(long bookId) {
-		if (myCheckBookListStatement == null) {
-			myCheckBookListStatement = myDatabase.compileStatement(
-				"SELECT COUNT(*) FROM BookList WHERE book_id = ?"
-			);
-		}
-		myCheckBookListStatement.bindLong(1, bookId);
-		return myCheckBookListStatement.simpleQueryForLong() > 0;
-	}
-
 	private SQLiteStatement myDeleteVisitedHyperlinksStatement;
 	private void deleteVisitedHyperlinks(long bookId) {
 		if (myDeleteVisitedHyperlinksStatement == null) {
@@ -1275,5 +1241,9 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 		myDatabase.execSQL("DROP TABLE BookSeries_Obsolete");
+	}
+
+	private void updateTables19() {
+		myDatabase.execSQL("DROP TABLE BookList");
 	}
 }

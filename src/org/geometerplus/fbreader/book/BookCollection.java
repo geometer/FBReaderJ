@@ -179,7 +179,6 @@ public class BookCollection implements IBookCollection {
 			if (ids.remove(book.getId())) {
 				myDatabase.saveRecentBookIds(ids);
 			}
-			myDatabase.deleteFromBookList(book.getId());
 			if (deleteFromDisk) {
 				book.File.getPhysicalFile().delete();
 			}
@@ -311,7 +310,6 @@ public class BookCollection implements IBookCollection {
 					physicalFiles.add(file);
 				}
 				if (file != book.File && file != null && file.getPath().endsWith(".epub")) {
-					myDatabase.deleteFromBookList(book.getId());
 					continue;
 				}
 				if (book.File.exists()) {
