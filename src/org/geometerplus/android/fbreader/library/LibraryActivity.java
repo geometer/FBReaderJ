@@ -48,7 +48,6 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	public static final String SELECTED_BOOK_KEY = "fbreader.library.selected-book";
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
-	private BooksDatabase myDatabase;
 	private Library myLibrary;
 
 	private Book mySelectedBook;
@@ -57,12 +56,12 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		myDatabase = SQLiteBooksDatabase.Instance();
-		if (myDatabase == null) {
-			myDatabase = new SQLiteBooksDatabase(this, "LIBRARY");
-		}
 		if (myLibrary == null) {
-			final BookCollection collection = new BookCollection(myDatabase);
+			BooksDatabase db = SQLiteBooksDatabase.Instance();
+			if (db == null) {
+				db = new SQLiteBooksDatabase(this, "LIBRARY");
+			}
+			final BookCollection collection = new BookCollection(db);
 			myLibrary = new Library(collection);
 			myLibrary.addChangeListener(this);
 			collection.startBuild();
