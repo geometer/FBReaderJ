@@ -5,4 +5,4 @@ new:
 * no library killing
 * filesystem event listener
 * update book collection on path changing (from options dialog)
-* serialize bookmarks
+* read book => go to library => go to book info => update book info => return to reading mode: book info is not updated

@@ -257,6 +257,7 @@ public final class Library {
 			return;
 		}
 
+		book.save(true);
 		refreshInTree(ROOT_FAVORITES, book);
 		refreshInTree(ROOT_RECENT, book);
 		removeFromTree(ROOT_FOUND, book);

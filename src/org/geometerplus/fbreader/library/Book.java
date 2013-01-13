@@ -110,7 +110,6 @@ public class Book {
 	public void reloadInfoFromFile() {
 		try {
 			readMetaInfo();
-			save();
 		} catch (BookReadingException e) {
 			// ignore
 		}

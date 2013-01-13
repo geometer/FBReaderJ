@@ -387,6 +387,9 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	private void onPreferencesUpdate(int resultCode, Book book) {
+		if (book != null) {
+			book.save(true);
+		}
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		switch (resultCode) {
 			case RESULT_DO_NOTHING:
@@ -416,9 +419,7 @@ public final class FBReader extends ZLAndroidActivity {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 			case REQUEST_BOOK_INFO:
-				onPreferencesUpdate(resultCode, SerializerUtil.deserializeBook(
-					data.getStringExtra(BookInfoActivity.CURRENT_BOOK_KEY)
-				));
+				onPreferencesUpdate(resultCode, BookInfoActivity.bookByIntent(data));
 				break;
 			case REQUEST_CANCEL_MENU:
 				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);

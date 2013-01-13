@@ -149,10 +149,8 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
-		if (requestCode == BOOK_INFO_REQUEST && intent != null) {
-			final Book book = SerializerUtil.deserializeBook(
-				intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_KEY)
-			);
+		if (requestCode == BOOK_INFO_REQUEST) {
+			final Book book = BookInfoActivity.bookByIntent(intent);
 			myLibrary.refreshBookInfo(book);
 			getListView().invalidateViews();
 		} else {

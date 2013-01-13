@@ -70,11 +70,7 @@ public class BookInfoActivity extends Activity {
 		);
 
 		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = SerializerUtil.deserializeBook(getIntent().getStringExtra(CURRENT_BOOK_KEY));
-
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
+		myBook = bookByIntent(getIntent());
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
@@ -130,9 +126,7 @@ public class BookInfoActivity extends Activity {
 					setupBookInfo(myBook);
 					myDontReloadBook = false;
 					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
-					final Intent intent = new Intent();
-					intent.putExtra(CURRENT_BOOK_KEY, SerializerUtil.serialize(myBook));
-					setResult(myResult, intent);
+					setResult(myResult, intentByBook(myBook));
 				}
 			}
 		});
@@ -147,15 +141,22 @@ public class BookInfoActivity extends Activity {
 		OrientationUtil.setOrientation(this, intent);
 	}
 
+	public static Intent intentByBook(Book book) {
+		return new Intent().putExtra(CURRENT_BOOK_KEY, SerializerUtil.serialize(book));
+	}
+ 
+	public static Book bookByIntent(Intent intent) {
+		return intent != null ?
+			SerializerUtil.deserializeBook(intent.getStringExtra(CURRENT_BOOK_KEY)) : null;
+	}
+ 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		final Book book =
-			SerializerUtil.deserializeBook(data.getStringExtra(CURRENT_BOOK_KEY));
+		final Book book = bookByIntent(data);
 		if (book != null) {
 			myBook = book;
 			setupBookInfo(book);
 			myDontReloadBook = false;
-			myBook.save(true);
 		}
 
 		myResult = Math.max(myResult, resultCode);

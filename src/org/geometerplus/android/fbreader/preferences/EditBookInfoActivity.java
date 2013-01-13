@@ -159,20 +159,12 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 	void setBookStatus(int code) {
 		myStatus = Math.max(myStatus, code);
-		final Intent intent = new Intent();
-		intent.putExtra(BookInfoActivity.CURRENT_BOOK_KEY, SerializerUtil.serialize(myBook));
-		setResult(myStatus, intent);
+		setResult(myStatus, BookInfoActivity.intentByBook(myBook));
 	}
 
 	@Override
 	protected void init(Intent intent) {
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
-
-		myBook = SerializerUtil.deserializeBook(
-			intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_KEY)
-		);
+		myBook = BookInfoActivity.bookByIntent(intent);
 		myStatus = FBReader.RESULT_REPAINT;
 
 		if (myBook == null) {
