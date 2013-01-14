@@ -369,7 +369,7 @@ public final class Library {
 			}
 		}
 
-		for (long id : myDatabase.loadFavoritesIds()) {
+		for (long id : myDatabase.loadFavoriteIds()) {
 			Book book = savedBooksByBookId.get(id);
 			if (book == null) {
 				book = Book.getById(id);

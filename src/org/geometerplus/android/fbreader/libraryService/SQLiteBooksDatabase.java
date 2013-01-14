@@ -72,7 +72,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 19;
+		final int currentVersion = 20;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -119,6 +119,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables17();
 					case 18:
 						updateTables18();
+					case 19:
+						updateTables19();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.setVersion(currentVersion);
@@ -738,7 +740,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myRemoveFromFavoritesStatement.execute();
 	}
 
-	protected List<Long> loadFavoritesIds() {
+	protected List<Long> loadFavoriteIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM Favorites", null
 		);
@@ -1268,5 +1270,9 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 		myDatabase.execSQL("DROP TABLE BookSeries_Obsolete");
+	}
+
+	private void updateTables19() {
+		myDatabase.execSQL("DROP TABLE BookList");
 	}
 }
