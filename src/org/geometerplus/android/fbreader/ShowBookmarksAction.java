@@ -19,14 +19,28 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.Intent;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.Bookmark;
 
 import android.content.Intent;
 
-class ShowBookmarksAction extends RunActivityAction {
+class ShowBookmarksAction extends FBAndroidAction {
 	ShowBookmarksAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader, BookmarksActivity.class);
+		super(baseActivity, fbreader);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return Reader.Model != null;
+	}
+
+	@Override
+	protected void run(Object ... params) {
+		final Intent intent =
+			new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
+		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 	
 	@Override
