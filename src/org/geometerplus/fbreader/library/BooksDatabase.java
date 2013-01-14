@@ -39,7 +39,7 @@ public abstract class BooksDatabase {
 	}
 
 	protected Book createBook(long id, long fileId, String title, String encoding, String language) {
-		final FileInfoSet infos = new FileInfoSet(fileId);
+		final FileInfoSet infos = new FileInfoSet(this, fileId);
 		return createBook(id, infos.getFile(fileId), title, encoding, language);
 	}
 	protected Book createBook(long id, ZLFile file, String title, String encoding, String language) {
