@@ -70,13 +70,11 @@ public class LibraryService extends Service implements Library.ChangeListener {
 		System.err.println("LibraryService.onCreate()");
 		super.onCreate();
 		myLibrary = new LibraryImplementation();
-		myLibrary.myBaseLibrary.addChangeListener(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		System.err.println("LibraryService.onDestroy()");
-		myLibrary.myBaseLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
 	}

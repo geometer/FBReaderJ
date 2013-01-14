@@ -52,6 +52,36 @@ public final class Library extends AbstractLibrary {
 		return ourInstance;
 	}
 
+	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
+
+	public interface ChangeListener {
+		public enum Code {
+			BookAdded,
+			BookRemoved,
+			StatusChanged,
+			Found,
+			NotFound
+		}
+
+		void onLibraryChanged(Code code);
+	}
+
+	public void addChangeListener(ChangeListener listener) {
+		myListeners.add(listener);
+	}
+
+	public void removeChangeListener(ChangeListener listener) {
+		myListeners.remove(listener);
+	}
+
+	protected void fireModelChangedEvent(ChangeListener.Code code) {
+		synchronized (myListeners) {
+			for (ChangeListener l : myListeners) {
+				l.onLibraryChanged(code);
+			}
+		}
+	}
+
 	private final BooksDatabase myDatabase;
 
 	private final Map<ZLFile,Book> myBooks =
