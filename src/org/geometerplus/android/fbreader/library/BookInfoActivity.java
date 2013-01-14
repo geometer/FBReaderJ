@@ -54,6 +54,7 @@ import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.library.LibraryActivity.PluginFileOpener;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 

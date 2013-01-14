@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.util.UIUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {

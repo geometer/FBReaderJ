@@ -58,6 +58,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
