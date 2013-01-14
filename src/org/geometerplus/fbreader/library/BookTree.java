@@ -81,7 +81,7 @@ public class BookTree extends LibraryTree {
 
 	@Override
 	protected ZLImage createCover() {
-		return LibraryUtil.getCover(Book);
+		return BookUtil.getCover(Book);
 	}
 
 	@Override
