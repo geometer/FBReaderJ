@@ -24,10 +24,11 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 
-import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.tree.FBTree;
 
 public final class Library extends AbstractLibrary {
 	public static final String ROOT_FOUND = "found";

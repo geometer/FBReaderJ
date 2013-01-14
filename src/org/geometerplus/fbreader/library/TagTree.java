@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.fbreader.book.Tag;
+
 public final class TagTree extends LibraryTree {
 	public final Tag Tag;
 

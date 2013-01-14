@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
