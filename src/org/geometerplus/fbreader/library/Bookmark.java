@@ -29,10 +29,12 @@ import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.text.view.*;
 
 public final class Bookmark extends ZLTextFixedPosition {
-	public final static int CREATION = 0;
-	public final static int MODIFICATION = 1;
-	public final static int ACCESS = 2;
-	public final static int LATEST = 3;
+	public enum DateType {
+		Creation,
+		Modification,
+		Access,
+		Latest
+	}
 
 	private long myId;
 	private final long myBookId;
@@ -108,16 +110,16 @@ public final class Bookmark extends ZLTextFixedPosition {
 		return myBookTitle;
 	}
 
-	public Date getTime(int timeStamp) {
-		switch (timeStamp) {
-			default:
-			case CREATION:
+	public Date getDate(DateType type) {
+		switch (type) {
+			case Creation:
 				return myCreationDate;
-			case MODIFICATION:
+			case Modification:
 				return myModificationDate;
-			case ACCESS:
+			case Access:
 				return myAccessDate;
-			case LATEST:
+			default:
+			case Latest:
 				return myLatestDate;
 		}
 	}
@@ -157,7 +159,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 
 	public static class ByTimeComparator implements Comparator<Bookmark> {
 		public int compare(Bookmark bm0, Bookmark bm1) {
-			return bm1.getTime(LATEST).compareTo(bm0.getTime(LATEST));
+			return bm1.getDate(DateType.Latest).compareTo(bm0.getDate(DateType.Latest));
 		}
 	}
 
