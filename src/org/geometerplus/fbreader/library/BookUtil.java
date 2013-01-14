@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
-public abstract class LibraryUtil {
+public abstract class BookUtil {
 	public static ZLImage getCover(Book book) {
 		return book != null ? book.getCover() : null;
 	}
