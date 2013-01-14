@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.library;
+package org.geometerplus.android.fbreader.libraryService;
 
 import java.util.*;
 import java.math.BigDecimal;

@@ -25,8 +25,6 @@ import android.os.IBinder;
 
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
-
 public class LibraryService extends Service implements Library.ChangeListener {
 	public final class LibraryImplementation extends LibraryInterface.Stub {
 		private final Library myBaseLibrary;
