@@ -496,10 +496,10 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		} else {
 			long seriesId;
 			try {
-				myGetSeriesIdStatement.bindString(1, seriesInfo.Name);
+				myGetSeriesIdStatement.bindString(1, seriesInfo.Title);
 				seriesId = myGetSeriesIdStatement.simpleQueryForLong();
 			} catch (SQLException e) {
-				myInsertSeriesStatement.bindString(1, seriesInfo.Name);
+				myInsertSeriesStatement.bindString(1, seriesInfo.Title);
 				seriesId = myInsertSeriesStatement.executeInsert();
 			}
 			myInsertBookSeriesStatement.bindLong(1, bookId);

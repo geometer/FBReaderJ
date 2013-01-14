@@ -301,7 +301,7 @@ public class Book {
 		} else if (name == null) {
 			mySeriesInfo = null;
 			myIsSaved = false;
-		} else if (!name.equals(mySeriesInfo.Name) || mySeriesInfo.Index != index) {
+		} else if (!name.equals(mySeriesInfo.Title) || mySeriesInfo.Index != index) {
 			mySeriesInfo = new SeriesInfo(name, index);
 			myIsSaved = false;
 		}
@@ -380,7 +380,7 @@ public class Book {
 		if (myTitle != null && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
 			return true;
 		}
-		if (mySeriesInfo != null && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Name, pattern)) {
+		if (mySeriesInfo != null && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Title, pattern)) {
 			return true;
 		}
 		if (myAuthors != null) {
