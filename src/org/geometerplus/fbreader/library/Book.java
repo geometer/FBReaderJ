@@ -544,12 +544,6 @@ public class Book {
 		}
 	}
 
-	public void insertIntoBookList() {
-		if (myId != -1) {
-			BooksDatabase.Instance().insertIntoBookList(myId);
-		}
-	}
-
 	public String getContentHashCode() {
 		InputStream stream = null;
 

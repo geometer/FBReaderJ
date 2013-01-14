@@ -890,42 +890,6 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myStorePositionStatement.execute();
 	}
 
-	private SQLiteStatement myInsertIntoBookListStatement;
-	protected boolean insertIntoBookList(long bookId) {
-		if (myInsertIntoBookListStatement == null) {
-			myInsertIntoBookListStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO BookList(book_id) VALUES (?)"
-			);
-		}
-		myInsertIntoBookListStatement.bindLong(1, bookId);
-		myInsertIntoBookListStatement.execute();
-		return true;
-	}
-
-	private SQLiteStatement myDeleteFromBookListStatement;
-	protected boolean deleteFromBookList(long bookId) {
-		if (myDeleteFromBookListStatement == null) {
-			myDeleteFromBookListStatement = myDatabase.compileStatement(
-				"DELETE FROM BookList WHERE book_id = ?"
-			);
-		}
-		myDeleteFromBookListStatement.bindLong(1, bookId);
-		myDeleteFromBookListStatement.execute();
-		deleteVisitedHyperlinks(bookId);
-		return true;
-	}
-
-	private SQLiteStatement myCheckBookListStatement;
-	protected boolean checkBookList(long bookId) {
-		if (myCheckBookListStatement == null) {
-			myCheckBookListStatement = myDatabase.compileStatement(
-				"SELECT COUNT(*) FROM BookList WHERE book_id = ?"
-			);
-		}
-		myCheckBookListStatement.bindLong(1, bookId);
-		return myCheckBookListStatement.simpleQueryForLong() > 0;
-	}
-
 	private SQLiteStatement myDeleteVisitedHyperlinksStatement;
 	private void deleteVisitedHyperlinks(long bookId) {
 		if (myDeleteVisitedHyperlinksStatement == null) {
