@@ -19,9 +19,8 @@
 
 package org.geometerplus.zlibrary.core.xml;
 
+import java.io.*;
 import java.util.*;
-import java.io.InputStream;
-import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -30,7 +29,16 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 
  	public boolean readQuietly(ZLFile file) {
 		try {
-			ZLXMLProcessor.read(this, file);
+			read(file);
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+	
+ 	public boolean readQuietly(String string) {
+		try {
+			read(string);
 			return true;
 		} catch (IOException e) {
 			return false;
@@ -44,7 +52,15 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 	public void read(InputStream stream) throws IOException {
 		ZLXMLProcessor.read(this, stream, 65536);
 	}
-	
+
+	public void read(String string) throws IOException {
+		ZLXMLProcessor.read(this, new StringReader(string), 65536);
+	}
+
+	public void read(Reader reader) throws IOException {
+		ZLXMLProcessor.read(this, reader, 65536);
+	}
+
 	public boolean dontCacheAttributeValues() {
 		return false;
 	}
