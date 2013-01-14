@@ -154,7 +154,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_EncodingConverter_reset = new VoidMethod(Class_EncodingConverter, "reset", "()");
 
 	StaticMethod_JavaEncodingCollection_Instance = new StaticObjectMethod(Class_JavaEncodingCollection, "Instance", Class_JavaEncodingCollection, "()");
-	Method_JavaEncodingCollection_getEncoding= new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(Ljava/lang/String;)");
+	Method_JavaEncodingCollection_getEncoding = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(Ljava/lang/String;)");
 	//Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(I)");
 	Method_JavaEncodingCollection_providesConverterFor = new BooleanMethod(Class_JavaEncodingCollection, "providesConverterFor", "(Ljava/lang/String;)");
 
