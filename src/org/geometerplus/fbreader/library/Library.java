@@ -214,7 +214,7 @@ public final class Library extends AbstractLibrary {
 			if (seriesInfo == null) {
 				authorTree.getBookSubTree(book, false);
 			} else {
-				authorTree.getSeriesSubTree(seriesInfo.Name).getBookInSeriesSubTree(book);
+				authorTree.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
 			}
 		}
 
@@ -227,7 +227,7 @@ public final class Library extends AbstractLibrary {
 					ROOT_BY_SERIES
 				);
 			}
-			seriesRoot.getSeriesSubTree(seriesInfo.Name).getBookInSeriesSubTree(book);
+			seriesRoot.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
 		}
 
 		if (myDoGroupTitlesByFirstLetter) {
