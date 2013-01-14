@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 class BookTitlePreference extends ZLStringPreference {

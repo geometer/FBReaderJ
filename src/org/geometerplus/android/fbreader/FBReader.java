@@ -44,9 +44,9 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.tips.TipsManager;
 
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
-import org.geometerplus.android.fbreader.library.KillerCallback;
 import org.geometerplus.android.fbreader.api.*;
+import org.geometerplus.android.fbreader.library.KillerCallback;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
