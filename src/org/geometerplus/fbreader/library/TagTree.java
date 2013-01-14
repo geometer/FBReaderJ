@@ -36,7 +36,7 @@ public final class TagTree extends LibraryTree {
 	@Override
 	public String getName() {
 		return Tag != null
-			? Tag.Name : LibraryUtil.resource().getResource("booksWithNoTags").getValue();
+			? Tag.Name : Library.resource().getResource("booksWithNoTags").getValue();
 	}
 
 	@Override
