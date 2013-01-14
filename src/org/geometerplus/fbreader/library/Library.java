@@ -32,6 +32,20 @@ public final class Library {
 		return ZLResource.resource("library");
 	}
 
+	public static final String ROOT_FOUND = "found";
+	public static final String ROOT_FAVORITES = "favorites";
+	public static final String ROOT_RECENT = "recent";
+	public static final String ROOT_BY_AUTHOR = "byAuthor";
+	public static final String ROOT_BY_TITLE = "byTitle";
+	public static final String ROOT_BY_SERIES = "bySeries";
+	public static final String ROOT_BY_TAG = "byTag";
+	public static final String ROOT_FILE_TREE = "fileTree";
+
+	public static final int REMOVE_DONT_REMOVE = 0x00;
+	public static final int REMOVE_FROM_LIBRARY = 0x01;
+	public static final int REMOVE_FROM_DISK = 0x02;
+	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
+
 	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
 
 	public interface ChangeListener {
@@ -61,20 +75,6 @@ public final class Library {
 			}
 		}
 	}
-
-	public static final String ROOT_FOUND = "found";
-	public static final String ROOT_FAVORITES = "favorites";
-	public static final String ROOT_RECENT = "recent";
-	public static final String ROOT_BY_AUTHOR = "byAuthor";
-	public static final String ROOT_BY_TITLE = "byTitle";
-	public static final String ROOT_BY_SERIES = "bySeries";
-	public static final String ROOT_BY_TAG = "byTag";
-	public static final String ROOT_FILE_TREE = "fileTree";
-
-	public static final int REMOVE_DONT_REMOVE = 0x00;
-	public static final int REMOVE_FROM_LIBRARY = 0x01;
-	public static final int REMOVE_FROM_DISK = 0x02;
-	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
 
 	private final IBookCollection myCollection;
 
