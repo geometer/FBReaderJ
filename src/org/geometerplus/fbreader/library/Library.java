@@ -336,7 +336,7 @@ public final class Library {
 
 	private void build() {
 		// Step 0: get database books marked as "existing"
-		final FileInfoSet fileInfos = new FileInfoSet();
+		final FileInfoSet fileInfos = new FileInfoSet(myDatabase);
 		final Map<Long,Book> savedBooksByFileId = myDatabase.loadBooks(fileInfos, true);
 		final Map<Long,Book> savedBooksByBookId = new HashMap<Long,Book>();
 		for (Book b : savedBooksByFileId.values()) {
