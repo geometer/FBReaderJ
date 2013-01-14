@@ -25,6 +25,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import org.geometerplus.fbreader.book.*;
+
 public abstract class BooksDatabase {
 	private static BooksDatabase ourInstance;
 
