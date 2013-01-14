@@ -48,7 +48,7 @@ JavaClass AndroidUtil::Class_NativeFormatPlugin("org/geometerplus/fbreader/forma
 JavaClass AndroidUtil::Class_PluginCollection("org/geometerplus/fbreader/formats/PluginCollection");
 JavaClass AndroidUtil::Class_Paths("org/geometerplus/fbreader/Paths");
 JavaClass AndroidUtil::Class_Book("org/geometerplus/fbreader/library/Book");
-JavaClass AndroidUtil::Class_Tag("org/geometerplus/fbreader/library/Tag");
+JavaClass AndroidUtil::Class_Tag("org/geometerplus/fbreader/book/Tag");
 JavaClass AndroidUtil::Class_NativeBookModel("org/geometerplus/fbreader/bookmodel/NativeBookModel");
 
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toLowerCase;
@@ -179,10 +179,10 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Book_setLanguage = new VoidMethod(Class_Book, "setLanguage", "(Ljava/lang/String;)");
 	Method_Book_setEncoding = new VoidMethod(Class_Book, "setEncoding", "(Ljava/lang/String;)");
 	Method_Book_addAuthor = new VoidMethod(Class_Book, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
-	Method_Book_addTag = new VoidMethod(Class_Book, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)");
+	Method_Book_addTag = new VoidMethod(Class_Book, "addTag", "(Lorg/geometerplus/fbreader/book/Tag;)");
 	Method_Book_save = new BooleanMethod(Class_Book, "save", "()");
 
-	StaticMethod_Tag_getTag = new StaticObjectMethod(Class_Tag, "getTag", Class_Tag, "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)");
+	StaticMethod_Tag_getTag = new StaticObjectMethod(Class_Tag, "getTag", Class_Tag, "(Lorg/geometerplus/fbreader/book/Tag;Ljava/lang/String;)");
 
 	Field_NativeBookModel_Book = new ObjectField(Class_NativeBookModel, "Book", Class_Book);
 	Method_NativeBookModel_initInternalHyperlinks = new VoidMethod(Class_NativeBookModel, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)");
