@@ -396,7 +396,6 @@ public final class Library {
 					physicalFiles.add(file);
 				}
 				if (file != book.File && file != null && file.getPath().endsWith(".epub")) {
-					myDatabase.deleteFromBookList(book.getId());
 					continue;
 				}
 				if (book.File.exists()) {
@@ -633,7 +632,6 @@ public final class Library {
 		getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false);
 		myRootTree.removeBook(book, true);
 
-		myDatabase.deleteFromBookList(book.getId());
 		if ((removeMode & REMOVE_FROM_DISK) != 0) {
 			book.File.getPhysicalFile().delete();
 		}
