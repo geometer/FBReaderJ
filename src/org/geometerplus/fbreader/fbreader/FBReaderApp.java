@@ -337,14 +337,12 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		Book book = Book.getByFile(file);
 		if (book != null) {
-			book.insertIntoBookList();
 			return book;
 		}
 		if (file.isArchive()) {
 			for (ZLFile child : file.children()) {
 				book = Book.getByFile(child);
 				if (book != null) {
-					book.insertIntoBookList();
 					return book;
 				}
 			}
