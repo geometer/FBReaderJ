@@ -55,7 +55,7 @@ public class Book {
 			return null;
 		}
 
-		FileInfoSet fileInfos = new FileInfoSet(physicalFile);
+		FileInfoSet fileInfos = new FileInfoSet(BooksDatabase.Instance(), physicalFile);
 		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
 			return book;
 		}
@@ -79,7 +79,7 @@ public class Book {
 			return null;
 		}
 
-		final FileInfoSet fileInfos = new FileInfoSet(bookFile);
+		final FileInfoSet fileInfos = new FileInfoSet(BooksDatabase.Instance(), bookFile);
 
 		Book book = BooksDatabase.Instance().loadBookByFile(fileInfos.getId(bookFile), bookFile);
 		if (book != null) {
@@ -411,7 +411,7 @@ public class Book {
 		database.executeAsATransaction(new Runnable() {
 			public void run() {
 				if (myId >= 0) {
-					final FileInfoSet fileInfos = new FileInfoSet(File);
+					final FileInfoSet fileInfos = new FileInfoSet(database, File);
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
