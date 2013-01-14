@@ -21,16 +21,11 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class LibraryUtil {
-	public static ZLResource resource() {
-		return ZLResource.resource("library");
-	}
-
 	public static ZLImage getCover(Book book) {
 		return book != null ? book.getCover() : null;
 	}
