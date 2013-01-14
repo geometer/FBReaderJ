@@ -25,7 +25,7 @@ class RootTree extends LibraryTree {
 
 	@Override
 	public String getName() {
-		return LibraryUtil.resource().getValue();
+		return Library.resource().getValue();
 	}
 
 	@Override
