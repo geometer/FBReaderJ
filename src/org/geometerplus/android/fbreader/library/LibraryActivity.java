@@ -287,7 +287,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	}
 
 	private void createBookContextMenu(ContextMenu menu, Book book) {
-		final ZLResource resource = LibraryUtil.resource();
+		final ZLResource resource = Library.resource();
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
 		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
@@ -360,7 +360,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	}
 
 	private MenuItem addMenuItem(Menu menu, int index, String resourceKey) {
-		final String label = LibraryUtil.resource().getResource("menu").getResource(resourceKey).getValue();
+		final String label = Library.resource().getResource("menu").getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, index, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);

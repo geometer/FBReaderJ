@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
@@ -31,6 +32,10 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public final class Library extends AbstractLibrary {
+	public static ZLResource resource() {
+		return ZLResource.resource("library");
+	}
+
 	public static final String ROOT_FOUND = "found";
 	public static final String ROOT_FAVORITES = "favorites";
 	public static final String ROOT_RECENT = "recent";
