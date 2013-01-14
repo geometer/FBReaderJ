@@ -30,11 +30,11 @@ public final class SeriesInfo {
 		}
 	}
 
-	public final String Name;
+	public final String Title;
 	public final BigDecimal Index;
 
-	public SeriesInfo(String name, BigDecimal index) {
-		Name = name;
+	public SeriesInfo(String title, BigDecimal index) {
+		Title = title;
 		Index = index;
 	}
 }
