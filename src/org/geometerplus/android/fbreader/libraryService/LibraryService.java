@@ -29,7 +29,7 @@ import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 
 public class LibraryService extends Service implements Library.ChangeListener {
 	public final class LibraryImplementation extends LibraryInterface.Stub {
-		private final AbstractLibrary myBaseLibrary;
+		private final Library myBaseLibrary;
 
 		LibraryImplementation() {
 			BooksDatabase database = SQLiteBooksDatabase.Instance();
