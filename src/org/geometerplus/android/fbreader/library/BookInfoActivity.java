@@ -51,6 +51,7 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener {
