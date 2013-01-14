@@ -67,7 +67,7 @@ public final class ZLPhysicalFile extends ZLFile {
 		try {
 			return myFile.getCanonicalPath();
 		} catch (IOException e) {
-			// should bew never thrown
+			// should be never thrown
 		  	return myFile.getPath();
 		}
 	}

@@ -33,13 +33,27 @@ public abstract class ZLXMLProcessor {
 		}
 	}
 
-	public static void read(ZLXMLReader reader, InputStream stream, int bufferSize) throws IOException {
+	public static void read(ZLXMLReader xmlReader, InputStream stream, int bufferSize) throws IOException {
 		ZLXMLParser parser = null;
 		try {
-			parser = new ZLXMLParser(reader, stream, bufferSize);
-			reader.startDocumentHandler();
+			parser = new ZLXMLParser(xmlReader, stream, bufferSize);
+			xmlReader.startDocumentHandler();
 			parser.doIt();
-			reader.endDocumentHandler();
+			xmlReader.endDocumentHandler();
+		} finally {
+			if (parser != null) {
+				parser.finish();
+			}
+		}
+	}
+
+	public static void read(ZLXMLReader xmlReader, Reader reader, int bufferSize) throws IOException {
+		ZLXMLParser parser = null;
+		try {
+			parser = new ZLXMLParser(xmlReader, reader, bufferSize);
+			xmlReader.startDocumentHandler();
+			parser.doIt();
+			xmlReader.endDocumentHandler();
 		} finally {
 			if (parser != null) {
 				parser.finish();
