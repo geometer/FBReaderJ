@@ -190,7 +190,7 @@ public class Book {
 		}
 		final String demoPathPrefix = Paths.mainBookDirectory() + "/Demos/";
 		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = LibraryUtil.resource().getResource("demo").getValue();
+			final String demoTag = Library.resource().getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");
 			addTag(demoTag);
 		}
