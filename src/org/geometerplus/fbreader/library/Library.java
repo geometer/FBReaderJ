@@ -76,7 +76,7 @@ public final class Library {
 		}
 	}
 
-	private final IBookCollection myCollection;
+	public final IBookCollection Collection;
 
 	private final RootTree myRootTree = new RootTree();
 	private boolean myDoGroupTitlesByFirstLetter;
@@ -95,14 +95,14 @@ public final class Library {
 		}
 	}
 
-	public Library(BookCollection collection) {
-		myCollection = collection;
-		myCollection.addListener(new BookCollection.Listener() {
+	public Library(IBookCollection collection) {
+		Collection = collection;
+		Collection.addListener(new BookCollection.Listener() {
 			public void onBookEvent(BookEvent event, Book book) {
 				switch (event) {
 					case Added:
 						addBookToLibrary(book);
-						if (myCollection.size() % 16 == 0) {
+						if (Collection.size() % 16 == 0) {
 							Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
 						}
 						break;
@@ -113,10 +113,10 @@ public final class Library {
 				switch (event) {
 					case Started:
 						Library.this.fireModelChangedEvent(ChangeListener.Code.StatusChanged);
-						for (Book book : myCollection.recentBooks()) {
+						for (Book book : Collection.recentBooks()) {
 							new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
 						}
-						for (Book book : myCollection.favorites()) {
+						for (Book book : Collection.favorites()) {
 							new BookTree(getFirstLevelTree(ROOT_FAVORITES), book, true);
 						}
 						setStatus(myStatusMask | STATUS_LOADING);
@@ -243,7 +243,7 @@ public final class Library {
 			return;
 		}
 
-		myCollection.saveBook(book, true);
+		Collection.saveBook(book, true);
 		refreshInTree(ROOT_FAVORITES, book);
 		refreshInTree(ROOT_RECENT, book);
 		removeFromTree(ROOT_FOUND, book);
@@ -290,7 +290,7 @@ public final class Library {
 		
 		FirstLevelTree newSearchResults = null;
 		synchronized (this) {
-			for (Book book : myCollection.books(pattern)) {
+			for (Book book : Collection.books(pattern)) {
 				if (newSearchResults == null) {
 					if (oldSearchResults != null) {
 						oldSearchResults.removeSelf();
@@ -308,7 +308,7 @@ public final class Library {
 	}
 
 	public void addBookToRecentList(Book book) {
-		myCollection.addBookToRecentList(book);
+		Collection.addBookToRecentList(book);
 	}
 
 	public boolean isBookInFavorites(Book book) {
@@ -330,12 +330,12 @@ public final class Library {
 		}
 		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
 		rootFavorites.getBookSubTree(book, true);
-		myCollection.setBookFavorite(book, true);
+		Collection.setBookFavorite(book, true);
 	}
 
 	public void removeBookFromFavorites(Book book) {
 		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
-			myCollection.setBookFavorite(book, false);
+			Collection.setBookFavorite(book, false);
 			fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 		}
 	}
@@ -358,7 +358,7 @@ public final class Library {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
 		}
-		myCollection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
+		Collection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
 		getFirstLevelTree(ROOT_RECENT).removeBook(book, false);
 		getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false);
 		myRootTree.removeBook(book, true);
