@@ -38,7 +38,7 @@ public class AuthorTree extends LibraryTree {
 		return
 			Author != null ?
 				Author.DisplayName :
-				LibraryUtil.resource().getResource("unknownAuthor").getValue();
+				Library.resource().getResource("unknownAuthor").getValue();
 	}
 
 	@Override
