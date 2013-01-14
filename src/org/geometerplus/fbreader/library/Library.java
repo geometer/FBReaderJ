@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
-public final class Library extends AbstractLibrary {
+public final class Library {
 	public static ZLResource resource() {
 		return ZLResource.resource("library");
 	}
@@ -44,6 +44,11 @@ public final class Library extends AbstractLibrary {
 	public static final String ROOT_BY_SERIES = "bySeries";
 	public static final String ROOT_BY_TAG = "byTag";
 	public static final String ROOT_FILE_TREE = "fileTree";
+
+	public static final int REMOVE_DONT_REMOVE = 0x00;
+	public static final int REMOVE_FROM_LIBRARY = 0x01;
+	public static final int REMOVE_FROM_DISK = 0x02;
+	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
 
 	private static Library ourInstance;
 	public static Library Instance() {
@@ -496,12 +501,10 @@ public final class Library extends AbstractLibrary {
 		builder.start();
 	}
 
-	@Override
 	public boolean isUpToDate() {
 		return myStatusMask == 0;
 	}
 
-	@Override
 	public Book getRecentBook() {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		for (Long id : recentIds) {
@@ -515,7 +518,6 @@ public final class Library extends AbstractLibrary {
 		return null;
 	}
 
-	@Override
 	public Book getPreviousBook() {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		boolean firstSkipped = false;
@@ -533,7 +535,6 @@ public final class Library extends AbstractLibrary {
 		return null;
 	}
 
-	@Override
 	public void startBookSearch(final String pattern) {
 		setStatus(myStatusMask | STATUS_SEARCHING);
 		final Thread searcher = new Thread("Library.searchBooks") {
@@ -588,7 +589,6 @@ public final class Library extends AbstractLibrary {
 		}
 	}
 
-	@Override
 	public void addBookToRecentList(Book book) {
 		final List<Long> ids = myDatabase.loadRecentBookIds();
 		final Long bookId = book.getId();
@@ -600,7 +600,6 @@ public final class Library extends AbstractLibrary {
 		myDatabase.saveRecentBookIds(ids);
 	}
 
-	@Override
 	public boolean isBookInFavorites(Book book) {
 		if (book == null) {
 			return false;
@@ -614,7 +613,6 @@ public final class Library extends AbstractLibrary {
 		return false;
 	}
 
-	@Override
 	public void addBookToFavorites(Book book) {
 		if (isBookInFavorites(book)) {
 			return;
@@ -624,7 +622,6 @@ public final class Library extends AbstractLibrary {
 		myDatabase.addToFavorites(book.getId());
 	}
 
-	@Override
 	public void removeBookFromFavorites(Book book) {
 		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
 			myDatabase.removeFromFavorites(book.getId());
@@ -632,7 +629,6 @@ public final class Library extends AbstractLibrary {
 		}
 	}
 
-	@Override
 	public boolean canRemoveBookFile(Book book) {
 		ZLFile file = book.File;
 		if (file.getPhysicalFile() == null) {
@@ -654,7 +650,6 @@ public final class Library extends AbstractLibrary {
 		myDatabase.saveRecentBookIds(ids);
 	}
 	
-	@Override
 	public void removeBook(Book book, int removeMode) {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
@@ -674,12 +669,10 @@ public final class Library extends AbstractLibrary {
 		}
 	}
 
-	@Override
 	public List<Bookmark> allBookmarks() {
 		return BooksDatabase.Instance().loadAllVisibleBookmarks();
 	}
 
-	@Override
 	public List<Bookmark> invisibleBookmarks(Book book) {
 		final List<Bookmark> list = BooksDatabase.Instance().loadBookmarks(book.getId(), false);
 		Collections.sort(list, new Bookmark.ByTimeComparator());
