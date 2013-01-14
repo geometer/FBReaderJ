@@ -22,36 +22,6 @@ package org.geometerplus.fbreader.library;
 import java.util.*;
 
 public abstract class AbstractLibrary {
-	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
-
-	public interface ChangeListener {
-		public enum Code {
-			BookAdded,
-			BookRemoved,
-			StatusChanged,
-			Found,
-			NotFound
-		}
-
-		void onLibraryChanged(Code code);
-	}
-
-	public void addChangeListener(ChangeListener listener) {
-		myListeners.add(listener);
-	}
-
-	public void removeChangeListener(ChangeListener listener) {
-		myListeners.remove(listener);
-	}
-
-	protected void fireModelChangedEvent(ChangeListener.Code code) {
-		synchronized (myListeners) {
-			for (ChangeListener l : myListeners) {
-				l.onLibraryChanged(code);
-			}
-		}
-	}
-
 	public abstract boolean isUpToDate();
 
 	public static final int REMOVE_DONT_REMOVE = 0x00;
