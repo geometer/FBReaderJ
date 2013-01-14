@@ -40,14 +40,8 @@ class ShowBookmarksAction extends FBAndroidAction {
 	protected void run(Object ... params) {
 		final Intent intent =
 			new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
+		final String s = ((FBReaderApp)FBReaderApp.Instance()).addBookmark(20, true).writeToString();
+		intent.putExtra("BOOKMARK", s);
 		OrientationUtil.startActivity(BaseActivity, intent);
-	}
-	
-	@Override
-	protected void run(Object ... params) {
-		Intent i = new Intent(BaseActivity.getApplicationContext(), myActivityClass);
-		String s = ((FBReaderApp)FBReaderApp.Instance()).addBookmark(20, true).writeToString();
-		i.putExtra("BOOKMARK", s);
-		BaseActivity.startActivity(i);
 	}
 }
