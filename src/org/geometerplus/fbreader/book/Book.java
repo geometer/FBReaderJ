@@ -33,11 +33,10 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.library.Library;
-
-import org.geometerplus.fbreader.Paths;
 
 public class Book {
 	public final ZLFile File;
