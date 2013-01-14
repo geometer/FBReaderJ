@@ -162,7 +162,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final ZLImage image = LibraryUtil.getCover(book);
+		final ZLImage image = BookUtil.getCover(book);
 
 		if (image == null) {
 			return;
@@ -236,7 +236,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void setupAnnotation(Book book) {
 		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
 		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
-		final String annotation = LibraryUtil.getAnnotation(book);
+		final String annotation = BookUtil.getAnnotation(book);
 		if (annotation == null) {
 			titleView.setVisibility(View.GONE);
 			bodyView.setVisibility(View.GONE);
