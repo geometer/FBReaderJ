@@ -58,7 +58,13 @@ public final class Tag {
 	}
 
 	public String toString(String delimiter) {
-		return Parent == null ? Name : Parent.toString(delimiter) + delimiter + Name;
+		return toStringBuilder(delimiter).toString();
+	}
+
+	protected StringBuilder toStringBuilder(String delimiter) {
+		return Parent == null
+			? new StringBuilder(Name)
+			: Parent.toStringBuilder(delimiter).append(delimiter).append(Name);
 	}
 
 	@Override
