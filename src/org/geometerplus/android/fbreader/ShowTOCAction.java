@@ -19,14 +19,23 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.Intent;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-class ShowTOCAction extends RunActivityAction {
+class ShowTOCAction extends FBAndroidAction {
 	ShowTOCAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader, TOCActivity.class);
+		super(baseActivity, fbreader);
 	}
 
 	public boolean isVisible() {
 		return Reader.Model != null && Reader.Model.TOCTree.hasChildren();
+	}
+
+	@Override
+	protected void run(Object ... params) {
+		OrientationUtil.startActivity(
+			BaseActivity, new Intent(BaseActivity.getApplicationContext(), TOCActivity.class)
+		);
 	}
 }
