@@ -33,10 +33,10 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
-
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.*;
 
 public class Book {
 	public static Book getById(long bookId) {
