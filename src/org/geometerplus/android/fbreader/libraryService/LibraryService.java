@@ -116,7 +116,11 @@ public class LibraryService extends Service {
 			return myCollection.size();
 		}
 
-		public List<String> books(String pattern) {
+		public List<String> books() {
+			return SerializerUtil.serializeBookList(myCollection.books());
+		}
+
+		public List<String> booksForPattern(String pattern) {
 			return SerializerUtil.serializeBookList(myCollection.books(pattern));
 		}
 

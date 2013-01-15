@@ -49,6 +49,7 @@ public interface IBookCollection {
 	public void removeListener(Listener listener);
 
 	int size();
+	List<Book> books();
 	List<Book> books(String pattern);
 	List<Book> recentBooks();
 	List<Book> favorites();

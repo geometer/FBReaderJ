@@ -46,7 +46,7 @@ public abstract class SerializerUtil {
 	public static List<String> serializeBookList(List<Book> books) {
 		final List<String> serialized = new ArrayList<String>(books.size());
 		for (Book b : books) {
-			serialized.add(SerializerUtil.serialize(b));
+			serialized.add(defaultSerializer.serialize(b));
 		}
 		return serialized;
 	}
@@ -62,7 +62,7 @@ public abstract class SerializerUtil {
 	public static List<String> serializeBookmarkList(List<Bookmark> bookmarks) {
 		final List<String> serialized = new ArrayList<String>(bookmarks.size());
 		for (Bookmark b : bookmarks) {
-			serialized.add(SerializerUtil.serialize(b));
+			serialized.add(defaultSerializer.serialize(b));
 		}
 		return serialized;
 	}

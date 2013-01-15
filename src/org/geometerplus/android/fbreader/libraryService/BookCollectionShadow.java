@@ -100,12 +100,23 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<Book> books() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookList(myInterface.books());
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
 	public synchronized List<Book> books(String pattern) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
 		try {
-			return SerializerUtil.deserializeBookList(myInterface.books(pattern));
+			return SerializerUtil.deserializeBookList(myInterface.booksForPattern(pattern));
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}

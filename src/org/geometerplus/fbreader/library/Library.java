@@ -77,6 +77,7 @@ public final class Library {
 	}
 
 	public final IBookCollection Collection;
+	private final HashMap<Long,Book> myBooks = new HashMap<Long,Book>();
 
 	private final RootTree myRootTree = new RootTree();
 	private boolean myDoGroupTitlesByFirstLetter;
@@ -97,31 +98,6 @@ public final class Library {
 
 	public Library(IBookCollection collection) {
 		Collection = collection;
-		Collection.addListener(new BookCollection.Listener() {
-			public void onBookEvent(BookEvent event, Book book) {
-				switch (event) {
-					case Added:
-						addBookToLibrary(book);
-						if (Collection.size() % 16 == 0) {
-							Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
-						}
-						break;
-				}
-			}
-
-			public void onBuildEvent(BuildEvent event) {
-				switch (event) {
-					case Started:
-						Library.this.fireModelChangedEvent(ChangeListener.Code.StatusChanged);
-						setStatus(myStatusMask | STATUS_LOADING);
-						break;
-					case Completed:
-						Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
-						setStatus(myStatusMask & ~STATUS_LOADING);
-						break;
-				}
-			}
-		});
 
 		new FavoritesTree(myRootTree, ROOT_FAVORITES);
 		new FirstLevelTree(myRootTree, ROOT_RECENT);
@@ -132,12 +108,55 @@ public final class Library {
 	}
 
 	public void init() {
-		for (Book book : Collection.recentBooks()) {
-			new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
-		}
-		for (Book book : Collection.favorites()) {
-			new BookTree(getFirstLevelTree(ROOT_FAVORITES), book, true);
-		}
+		Collection.addListener(new BookCollection.Listener() {
+			public void onBookEvent(BookEvent event, Book book) {
+				switch (event) {
+					case Added:
+						/*
+						addBookToLibrary(book);
+						if (Collection.size() % 16 == 0) {
+							Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
+						}
+						*/
+						break;
+				}
+			}
+
+			public void onBuildEvent(BuildEvent event) {
+				switch (event) {
+					case Started:
+						//setStatus(myStatusMask | STATUS_LOADING);
+						break;
+					case Completed:
+						//setStatus(myStatusMask & ~STATUS_LOADING);
+						break;
+				}
+			}
+		});
+
+		final Thread initializer = new Thread() {
+			public void run() {
+				setStatus(myStatusMask | STATUS_LOADING);
+				getFirstLevelTree(ROOT_RECENT).clear();
+				for (Book book : Collection.recentBooks()) {
+					new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
+				}
+				getFirstLevelTree(ROOT_FAVORITES).clear();
+				for (Book book : Collection.favorites()) {
+					new BookTree(getFirstLevelTree(ROOT_FAVORITES), book, true);
+				}
+				for (Book book : Collection.books()) {
+					addBookToLibrary(book);
+					if (++count % 16 == 0) {
+						Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
+					}
+				}
+				Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
+				setStatus(myStatusMask & ~STATUS_LOADING);
+			}
+		};
+		initializer.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
+		initializer.start();
 	}
 
 	public LibraryTree getRootTree() {
@@ -170,6 +189,11 @@ public final class Library {
 	}
 
 	private synchronized void addBookToLibrary(Book book) {
+		if (myBooks.containsKey(book.getId())) {
+			return;
+		}
+		myBooks.put(book.getId(), book);
+
 		List<Author> authors = book.authors();
 		if (authors.isEmpty()) {
 			authors = (List<Author>)myNullList;
@@ -247,6 +271,7 @@ public final class Library {
 		}
 
 		Collection.saveBook(book, true);
+		myBooks.remove(book.getId());
 		refreshInTree(ROOT_FAVORITES, book);
 		refreshInTree(ROOT_RECENT, book);
 		removeFromTree(ROOT_FOUND, book);
