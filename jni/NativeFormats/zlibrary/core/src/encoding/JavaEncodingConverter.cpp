@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ JavaEncodingConverter::JavaEncodingConverter(const std::string &encoding) {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jobject collection = AndroidUtil::StaticMethod_JavaEncodingCollection_Instance->call();
 	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
-	jobject javaEncoding = AndroidUtil::Method_JavaEncodingCollection_getEncoding_String->call(collection, encodingName);
+	jobject javaEncoding = AndroidUtil::Method_JavaEncodingCollection_getEncoding->call(collection, encodingName);
 	myJavaConverter = AndroidUtil::Method_Encoding_createConverter->call(javaEncoding);
 	env->DeleteLocalRef(javaEncoding);
 	env->DeleteLocalRef(encodingName);

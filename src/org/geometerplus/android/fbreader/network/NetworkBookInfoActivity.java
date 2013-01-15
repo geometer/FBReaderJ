@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@ import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
+import org.geometerplus.android.fbreader.OrientationUtil;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -369,7 +370,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	@Override
 	protected void onStart() {
 		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
 		NetworkLibrary.Instance().addChangeListener(this);
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 	}
 
 	@Override

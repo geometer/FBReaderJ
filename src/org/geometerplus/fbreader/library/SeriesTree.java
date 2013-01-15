@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
+
+import org.geometerplus.fbreader.book.SeriesInfo;
 
 public final class SeriesTree extends LibraryTree {
 	public final String Series;
@@ -59,7 +61,7 @@ public final class SeriesTree extends LibraryTree {
 			return false;
 		}
 		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Name);
+		return info != null && Series.equals(info.Title);
 	}
 
 	@Override

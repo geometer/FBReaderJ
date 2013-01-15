@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,16 +67,12 @@ public abstract class ZLAndroidActivity extends Activity {
 							}
 						})
 						.create();
-						if (((ZLAndroidActivity)myActivity).myIsPaused) {
-							((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
-						} else {
-							myActivity.runOnUiThread(new Runnable() {
-								public void run() {
-									dialog.show();
-								}
-							});
-						}
+					if (((ZLAndroidActivity)myActivity).myIsPaused) {
+						((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
+					} else {
+						dialog.show();
 					}
+				}
 			});
 		}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,10 +39,10 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
-
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.*;
 
 public class Book {
 	public static Book getById(long bookId) {
@@ -61,7 +61,7 @@ public class Book {
 			return null;
 		}
 
-		FileInfoSet fileInfos = new FileInfoSet(physicalFile);
+		FileInfoSet fileInfos = new FileInfoSet(BooksDatabase.Instance(), physicalFile);
 		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
 			return book;
 		}
@@ -88,7 +88,7 @@ public class Book {
 			return null;
 		}
 
-		final FileInfoSet fileInfos = new FileInfoSet(bookFile);
+		final FileInfoSet fileInfos = new FileInfoSet(BooksDatabase.Instance(), bookFile);
 
 		Book book = BooksDatabase.Instance().loadBookByFile(fileInfos.getId(bookFile), bookFile);
 		if (book != null) {
@@ -238,7 +238,7 @@ public class Book {
 		}
 		final String demoPathPrefix = Paths.mainBookDirectory() + "/Demos/";
 		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = LibraryUtil.resource().getResource("demo").getValue();
+			final String demoTag = Library.resource().getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");
 			addTag(demoTag);
 		}
@@ -367,7 +367,7 @@ public class Book {
 		} else if (name == null) {
 			mySeriesInfo = null;
 			myIsSaved = false;
-		} else if (!name.equals(mySeriesInfo.Name) || mySeriesInfo.Index != index) {
+		} else if (!name.equals(mySeriesInfo.Title) || mySeriesInfo.Index != index) {
 			mySeriesInfo = new SeriesInfo(name, index);
 			myIsSaved = false;
 		}
@@ -446,7 +446,7 @@ public class Book {
 		if (myTitle != null && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
 			return true;
 		}
-		if (mySeriesInfo != null && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Name, pattern)) {
+		if (mySeriesInfo != null && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Title, pattern)) {
 			return true;
 		}
 		if (myAuthors != null) {
@@ -477,7 +477,7 @@ public class Book {
 		database.executeAsATransaction(new Runnable() {
 			public void run() {
 				if (myId >= 0) {
-					final FileInfoSet fileInfos = new FileInfoSet(File);
+					final FileInfoSet fileInfos = new FileInfoSet(database, File);
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
@@ -541,12 +541,6 @@ public class Book {
 			for (String linkId : myVisitedHyperlinks) {
 				BooksDatabase.Instance().addVisitedHyperlink(myId, linkId);
 			}
-		}
-	}
-
-	public void insertIntoBookList() {
-		if (myId != -1) {
-			BooksDatabase.Instance().insertIntoBookList(myId);
 		}
 	}
 

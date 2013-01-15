@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.book;
 
 import java.util.HashMap;
 
@@ -58,7 +58,13 @@ public final class Tag {
 	}
 
 	public String toString(String delimiter) {
-		return Parent == null ? Name : Parent.toString(delimiter) + delimiter + Name;
+		return toStringBuilder(delimiter).toString();
+	}
+
+	protected StringBuilder toStringBuilder(String delimiter) {
+		return Parent == null
+			? new StringBuilder(Name)
+			: Parent.toStringBuilder(delimiter).append(delimiter).append(Name);
 	}
 
 	@Override

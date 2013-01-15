@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import org.geometerplus.fbreader.book.*;
+
 public abstract class BooksDatabase {
 	private static BooksDatabase ourInstance;
 
@@ -37,7 +39,7 @@ public abstract class BooksDatabase {
 	}
 
 	protected Book createBook(long id, long fileId, String title, String encoding, String language) {
-		final FileInfoSet infos = new FileInfoSet(fileId);
+		final FileInfoSet infos = new FileInfoSet(this, fileId);
 		return createBook(id, infos.getFile(fileId), title, encoding, language);
 	}
 	protected Book createBook(long id, ZLFile file, String title, String encoding, String language) {
@@ -89,7 +91,7 @@ public abstract class BooksDatabase {
 	protected abstract List<Long> loadRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
-	protected abstract List<Long> loadFavoritesIds();
+	protected abstract List<Long> loadFavoriteIds();
 	protected abstract void addToFavorites(long bookId);
 	protected abstract void removeFromFavorites(long bookId);
 
@@ -104,10 +106,6 @@ public abstract class BooksDatabase {
 
 	protected abstract ZLTextPosition getStoredPosition(long bookId);
 	protected abstract void storePosition(long bookId, ZLTextPosition position);
-
-	protected abstract boolean insertIntoBookList(long bookId);
-	protected abstract boolean deleteFromBookList(long bookId);
-	protected abstract boolean checkBookList(long bookId);
 
 	protected abstract Collection<String> loadVisitedHyperlinks(long bookId);
 	protected abstract void addVisitedHyperlink(long bookId, String hyperlinkId);

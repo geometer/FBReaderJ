@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,8 +57,8 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.FBUtil;
+import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
@@ -228,8 +228,9 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	//
 	private static final int BOOK_INFO_REQUEST = 1;
 
-	protected void showBookInfo(Book book) {
-		startActivityForResult(
+	private void showBookInfo(Book book) {
+		OrientationUtil.startActivityForResult(
+			this,
 			new Intent(getApplicationContext(), BookInfoActivity.class)
 				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath()),
 			BOOK_INFO_REQUEST
@@ -287,7 +288,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	}
 
 	private void createBookContextMenu(ContextMenu menu, Book book) {
-		final ZLResource resource = LibraryUtil.resource();
+		final ZLResource resource = Library.resource();
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
 		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
@@ -360,7 +361,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	}
 
 	private MenuItem addMenuItem(Menu menu, int index, String resourceKey) {
-		final String label = LibraryUtil.resource().getResource("menu").getResource(resourceKey).getValue();
+		final String label = Library.resource().getResource("menu").getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, index, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);

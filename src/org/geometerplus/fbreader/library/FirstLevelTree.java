@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,13 +28,13 @@ public class FirstLevelTree extends LibraryTree {
 	FirstLevelTree(RootTree root, int position, String id) {
 		super(root, position);
 		myId = id;
-		myResource = LibraryUtil.resource().getResource(myId);
+		myResource = Library.resource().getResource(myId);
 	}
 
 	FirstLevelTree(RootTree root, String id) {
 		super(root);
 		myId = id;
-		myResource = LibraryUtil.resource().getResource(myId);
+		myResource = Library.resource().getResource(myId);
 	}
 
 	@Override

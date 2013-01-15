@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,16 +60,21 @@ public final class FileInfoSet {
 	private final LinkedHashSet<FileInfo> myInfosToSave = new LinkedHashSet<FileInfo>();
 	private final LinkedHashSet<FileInfo> myInfosToRemove = new LinkedHashSet<FileInfo>();
 
-	public FileInfoSet() {
-		load(BooksDatabase.Instance().loadFileInfos());
+	private final BooksDatabase myDatabase;
+
+	public FileInfoSet(BooksDatabase database) {
+		myDatabase = database;
+		load(database.loadFileInfos());
 	}
 
-	public FileInfoSet(ZLFile file) {
-		load(BooksDatabase.Instance().loadFileInfos(file));
+	public FileInfoSet(BooksDatabase database, ZLFile file) {
+		myDatabase = database;
+		load(database.loadFileInfos(file));
 	}
 
-	FileInfoSet(long fileId) {
-		load(BooksDatabase.Instance().loadFileInfos(fileId));
+	FileInfoSet(BooksDatabase database, long fileId) {
+		myDatabase = database;
+		load(database.loadFileInfos(fileId));
 	}
 
 	private void load(Collection<FileInfo> infos) {
@@ -80,16 +85,15 @@ public final class FileInfoSet {
 	}
 
 	public void save() {
-		final BooksDatabase database = BooksDatabase.Instance();
-		database.executeAsATransaction(new Runnable() {
+		myDatabase.executeAsATransaction(new Runnable() {
 			public void run() {
 				for (FileInfo info : myInfosToRemove) {
-					database.removeFileInfo(info.Id);
+					myDatabase.removeFileInfo(info.Id);
 					myInfosByPair.remove(new Pair(info.Name, info.Parent));
 				}
 				myInfosToRemove.clear();
 				for (FileInfo info : myInfosToSave) {
-					database.saveFileInfo(info);
+					myDatabase.saveFileInfo(info);
 				}
 				myInfosToSave.clear();
 			}

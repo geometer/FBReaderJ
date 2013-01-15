@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.library;
+package org.geometerplus.android.fbreader.libraryService;
 
 import java.util.*;
 import java.math.BigDecimal;
@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.util.UIUtil;
@@ -71,7 +72,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 19;
+		final int currentVersion = 20;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -118,6 +119,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables17();
 					case 18:
 						updateTables18();
+					case 19:
+						updateTables19();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.setVersion(currentVersion);
@@ -316,7 +319,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		SQLiteUtil.bindString(myInsertBookInfoStatement, 1, encoding);
 		SQLiteUtil.bindString(myInsertBookInfoStatement, 2, language);
 		myInsertBookInfoStatement.bindString(3, title);
-		final FileInfoSet infoSet = new FileInfoSet(file);
+		final FileInfoSet infoSet = new FileInfoSet(this, file);
 		myInsertBookInfoStatement.bindLong(4, infoSet.getId(file));
 		return myInsertBookInfoStatement.executeInsert();
 	}
@@ -524,10 +527,10 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		} else {
 			long seriesId;
 			try {
-				myGetSeriesIdStatement.bindString(1, seriesInfo.Name);
+				myGetSeriesIdStatement.bindString(1, seriesInfo.Title);
 				seriesId = myGetSeriesIdStatement.simpleQueryForLong();
 			} catch (SQLException e) {
-				myInsertSeriesStatement.bindString(1, seriesInfo.Name);
+				myInsertSeriesStatement.bindString(1, seriesInfo.Title);
 				seriesId = myInsertSeriesStatement.executeInsert();
 			}
 			myInsertBookSeriesStatement.bindLong(1, bookId);
@@ -737,7 +740,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myRemoveFromFavoritesStatement.execute();
 	}
 
-	protected List<Long> loadFavoritesIds() {
+	protected List<Long> loadFavoriteIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM Favorites", null
 		);
@@ -827,9 +830,9 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 		statement.bindLong(1, bookmark.getBookId());
 		statement.bindString(2, bookmark.getText());
-		SQLiteUtil.bindDate(statement, 3, bookmark.getTime(Bookmark.CREATION));
-		SQLiteUtil.bindDate(statement, 4, bookmark.getTime(Bookmark.MODIFICATION));
-		SQLiteUtil.bindDate(statement, 5, bookmark.getTime(Bookmark.ACCESS));
+		SQLiteUtil.bindDate(statement, 3, bookmark.getDate(Bookmark.DateType.Creation));
+		SQLiteUtil.bindDate(statement, 4, bookmark.getDate(Bookmark.DateType.Modification));
+		SQLiteUtil.bindDate(statement, 5, bookmark.getDate(Bookmark.DateType.Access));
 		statement.bindLong(6, bookmark.getAccessCount());
 		SQLiteUtil.bindString(statement, 7, bookmark.ModelId);
 		statement.bindLong(8, bookmark.ParagraphIndex);
@@ -887,42 +890,6 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myStorePositionStatement.bindLong(3, position.getElementIndex());
 		myStorePositionStatement.bindLong(4, position.getCharIndex());
 		myStorePositionStatement.execute();
-	}
-
-	private SQLiteStatement myInsertIntoBookListStatement;
-	protected boolean insertIntoBookList(long bookId) {
-		if (myInsertIntoBookListStatement == null) {
-			myInsertIntoBookListStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO BookList(book_id) VALUES (?)"
-			);
-		}
-		myInsertIntoBookListStatement.bindLong(1, bookId);
-		myInsertIntoBookListStatement.execute();
-		return true;
-	}
-
-	private SQLiteStatement myDeleteFromBookListStatement;
-	protected boolean deleteFromBookList(long bookId) {
-		if (myDeleteFromBookListStatement == null) {
-			myDeleteFromBookListStatement = myDatabase.compileStatement(
-				"DELETE FROM BookList WHERE book_id = ?"
-			);
-		}
-		myDeleteFromBookListStatement.bindLong(1, bookId);
-		myDeleteFromBookListStatement.execute();
-		deleteVisitedHyperlinks(bookId);
-		return true;
-	}
-
-	private SQLiteStatement myCheckBookListStatement;
-	protected boolean checkBookList(long bookId) {
-		if (myCheckBookListStatement == null) {
-			myCheckBookListStatement = myDatabase.compileStatement(
-				"SELECT COUNT(*) FROM BookList WHERE book_id = ?"
-			);
-		}
-		myCheckBookListStatement.bindLong(1, bookId);
-		return myCheckBookListStatement.simpleQueryForLong() > 0;
 	}
 
 	private SQLiteStatement myDeleteVisitedHyperlinksStatement;
@@ -1042,7 +1009,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables4() {
-		final FileInfoSet fileInfos = new FileInfoSet();
+		final FileInfoSet fileInfos = new FileInfoSet(this);
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT file_name FROM Books", null
 		);
@@ -1131,7 +1098,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		);
 
 		myDatabase.execSQL("DELETE FROM Files");
-		final FileInfoSet infoSet = new FileInfoSet();
+		final FileInfoSet infoSet = new FileInfoSet(this);
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT file_name FROM Books", null
 		);
@@ -1303,5 +1270,9 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 		myDatabase.execSQL("DROP TABLE BookSeries_Obsolete");
+	}
+
+	private void updateTables19() {
+		myDatabase.execSQL("DROP TABLE BookList");
 	}
 }

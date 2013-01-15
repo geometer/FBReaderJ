@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,9 @@ import android.os.IBinder;
 
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
-
 public class LibraryService extends Service implements Library.ChangeListener {
 	public final class LibraryImplementation extends LibraryInterface.Stub {
-		private final AbstractLibrary myBaseLibrary;
+		private final Library myBaseLibrary;
 
 		LibraryImplementation() {
 			BooksDatabase database = SQLiteBooksDatabase.Instance();
@@ -70,13 +68,11 @@ public class LibraryService extends Service implements Library.ChangeListener {
 		System.err.println("LibraryService.onCreate()");
 		super.onCreate();
 		myLibrary = new LibraryImplementation();
-		myLibrary.myBaseLibrary.addChangeListener(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		System.err.println("LibraryService.onDestroy()");
-		myLibrary.myBaseLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,14 +46,15 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.FBUtil;
+import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.library.LibraryActivity.PluginFileOpener;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
@@ -123,6 +124,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	protected void onStart() {
 		super.onStart();
 
+		OrientationUtil.setOrientation(this, getIntent());
+
 		final Book book = Book.getByFile(myFile);
 
 		if (book != null) {
@@ -138,6 +141,11 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 	}
 
 	@Override
@@ -183,7 +191,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final ZLImage image = LibraryUtil.getCover(book);
+		final ZLImage image = BookUtil.getCover(book);
 
 		if (image == null) {
 			return;
@@ -228,7 +236,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		setupInfoPair(R.id.book_authors, "authors", buffer, authors.size());
 
 		final SeriesInfo series = book.getSeriesInfo();
-		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Name);
+		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Title);
 		String seriesIndexString = null;
 		if (series != null && series.Index != null) {
 			seriesIndexString = series.Index.toString();
@@ -257,7 +265,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void setupAnnotation(Book book) {
 		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
 		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
-		final String annotation = LibraryUtil.getAnnotation(book);
+		final String annotation = BookUtil.getAnnotation(book);
 		if (annotation == null) {
 			titleView.setVisibility(View.GONE);
 			bodyView.setVisibility(View.GONE);
@@ -367,7 +375,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				}
 				return true;
 			case EDIT_INFO:
-				startActivityForResult(
+				OrientationUtil.startActivityForResult(
+					this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
 						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
 					1

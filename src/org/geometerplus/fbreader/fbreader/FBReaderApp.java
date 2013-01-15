@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,9 +35,8 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.bookmodel.TOCTree;
+import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.zlibrary.core.filetypes.*;
@@ -387,14 +386,12 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		Book book = Book.getByFile(file);
 		if (book != null) {
-			book.insertIntoBookList();
 			return book;
 		}
 //		if (file.isArchive()) {
 //			for (ZLFile child : file.children()) {
 //				book = Book.getByFile(child);
 //				if (book != null) {
-//					book.insertIntoBookList();
 //					return book;
 //				}
 //			}

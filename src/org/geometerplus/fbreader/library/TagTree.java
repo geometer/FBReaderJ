@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.fbreader.book.Tag;
+
 public final class TagTree extends LibraryTree {
 	public final Tag Tag;
 
@@ -34,7 +36,7 @@ public final class TagTree extends LibraryTree {
 	@Override
 	public String getName() {
 		return Tag != null
-			? Tag.Name : LibraryUtil.resource().getResource("booksWithNoTags").getValue();
+			? Tag.Name : Library.resource().getResource("booksWithNoTags").getValue();
 	}
 
 	@Override

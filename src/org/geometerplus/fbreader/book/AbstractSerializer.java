@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.fbreader.book;
 
-import android.content.Intent;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.Bookmark;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+abstract class AbstractSerializer {
+	public abstract String serialize(Book book);
+	public abstract Book deserializeBook(String xml);
 
-abstract class RunActivityAction extends FBAndroidAction {
-	protected final Class<?> myActivityClass;
-
-	RunActivityAction(FBReader baseActivity, FBReaderApp fbreader, Class<?> activityClass) {
-		super(baseActivity, fbreader);
-		myActivityClass = activityClass;
-	}
-
-	@Override
-	protected void run(Object ... params) {
-		BaseActivity.startActivity(new Intent(BaseActivity.getApplicationContext(), myActivityClass));
-	}
+	public abstract String serialize(Bookmark bookmark);
+	public abstract Bookmark deserializeBookmark(String xml);
 }

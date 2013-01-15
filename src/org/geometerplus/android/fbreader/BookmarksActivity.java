@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.util.UIUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
@@ -47,7 +47,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	List<Bookmark> AllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
 	private final List<Bookmark> mySearchResults = new LinkedList<Bookmark>();
-	
+
 	private ListView myThisBookView;
 	private ListView myAllBooksView;
 	private ListView mySearchResultsView;
@@ -86,7 +86,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		}
 		AllBooksBookmarks = Library.Instance().allBookmarks();
 		Collections.sort(AllBooksBookmarks, new Bookmark.ByTimeComparator());
-		
+
 		if (FBReaderApp.Instance() == null) {
 			new FBReaderApp();
 		}
@@ -112,7 +112,15 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
 	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
+
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			return;
 		}
@@ -204,7 +212,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				return true;
 			case EDIT_ITEM_ID:
 				final Intent intent = new Intent(this, BookmarkEditActivity.class);
-				startActivityForResult(intent, 1);
+				OrientationUtil.startActivityForResult(this, intent, 1);
 				// TODO: implement
 				return true;
 			case DELETE_ITEM_ID:

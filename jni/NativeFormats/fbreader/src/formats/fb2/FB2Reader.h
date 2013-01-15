@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ protected:
 	~FB2Reader();
 
 protected:
-	const NamespaceAttributeNamePredicate myHrefPredicate;
+	const FullNamePredicate myHrefPredicate;
 };
 
 inline FB2Reader::~FB2Reader() {}

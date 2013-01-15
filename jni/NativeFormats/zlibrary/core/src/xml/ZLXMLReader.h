@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,32 +34,35 @@ class ZLXMLReaderInternal;
 class ZLXMLReader {
 
 public:
-	class AttributeNamePredicate {
+	class NamePredicate {
 
 	public:
-		virtual ~AttributeNamePredicate();
+		virtual ~NamePredicate();
 		virtual bool accepts(const ZLXMLReader &reader, const char *name) const = 0;
+		virtual bool accepts(const ZLXMLReader &reader, const std::string &name) const = 0;
 	};
 
-	class FixedAttributeNamePredicate : public AttributeNamePredicate {
+	class SimpleNamePredicate : public NamePredicate {
 
 	public:
-		FixedAttributeNamePredicate(const std::string &attributeName);
+		SimpleNamePredicate(const std::string &name);
 		bool accepts(const ZLXMLReader &reader, const char *name) const;
+		bool accepts(const ZLXMLReader &reader, const std::string &name) const;
 
 	private:
-		const std::string myAttributeName;
+		const std::string myName;
 	};
 
-	class NamespaceAttributeNamePredicate : public AttributeNamePredicate {
+	class FullNamePredicate : public NamePredicate {
 
 	public:
-		NamespaceAttributeNamePredicate(const std::string &ns, const std::string &name);
+		FullNamePredicate(const std::string &ns, const std::string &name);
 		bool accepts(const ZLXMLReader &reader, const char *name) const;
+		bool accepts(const ZLXMLReader &reader, const std::string &name) const;
 
 	private:
 		const std::string myNamespaceName;
-		const std::string myAttributeName;
+		const std::string myName;
 	};
 
 protected:
@@ -77,8 +80,8 @@ public:
 	typedef std::map<std::string,std::string> nsMap;
 	const nsMap &namespaces() const;
 
-	const char *attributeValue(const char **xmlattributes, const char *name);
-	const char *attributeValue(const char **xmlattributes, const AttributeNamePredicate &predicate);
+	const char *attributeValue(const char **xmlattributes, const char *name) const;
+	const char *attributeValue(const char **xmlattributes, const NamePredicate &predicate) const;
 
 private:
 	void initialize(const char *encoding = 0);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.fbreader.book.Author;
+
 public class AuthorTree extends LibraryTree {
 	public final Author Author;
 
@@ -36,7 +38,7 @@ public class AuthorTree extends LibraryTree {
 		return
 			Author != null ?
 				Author.DisplayName :
-				LibraryUtil.resource().getResource("unknownAuthor").getValue();
+				Library.resource().getResource("unknownAuthor").getValue();
 	}
 
 	@Override

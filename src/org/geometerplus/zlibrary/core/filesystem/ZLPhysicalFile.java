@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ public final class ZLPhysicalFile extends ZLFile {
 		try {
 			return myFile.getCanonicalPath();
 		} catch (IOException e) {
-			// should bew never thrown
+			// should be never thrown
 		  	return myFile.getPath();
 		}
 	}
