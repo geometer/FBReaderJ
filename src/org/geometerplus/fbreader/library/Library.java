@@ -113,12 +113,6 @@ public final class Library {
 				switch (event) {
 					case Started:
 						Library.this.fireModelChangedEvent(ChangeListener.Code.StatusChanged);
-						for (Book book : Collection.recentBooks()) {
-							new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
-						}
-						for (Book book : Collection.favorites()) {
-							new BookTree(getFirstLevelTree(ROOT_FAVORITES), book, true);
-						}
 						setStatus(myStatusMask | STATUS_LOADING);
 						break;
 					case Completed:
@@ -135,6 +129,15 @@ public final class Library {
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
 		new FileFirstLevelTree(collection, myRootTree, ROOT_FILE_TREE);
+	}
+
+	public void init() {
+		for (Book book : Collection.recentBooks()) {
+			new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
+		}
+		for (Book book : Collection.favorites()) {
+			new BookTree(getFirstLevelTree(ROOT_FAVORITES), book, true);
+		}
 	}
 
 	public LibraryTree getRootTree() {

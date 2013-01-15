@@ -35,6 +35,7 @@ public class BookCollection extends AbstractBookCollection {
 		Collections.synchronizedMap(new LinkedHashMap<ZLFile,Book>());
 	private final Map<Long,Book> myBooksById =
 		Collections.synchronizedMap(new HashMap<Long,Book>());
+
 	private static enum BuildStatus {
 		NotStarted,
 		Started,
@@ -264,7 +265,7 @@ public class BookCollection extends AbstractBookCollection {
 				}
 			}
 		};
-		builder.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
+		builder.setPriority(Thread.MIN_PRIORITY);
 		builder.start();
 	}
 

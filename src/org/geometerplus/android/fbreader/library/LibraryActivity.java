@@ -41,7 +41,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.*;
-import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
@@ -57,14 +57,8 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		super.onCreate(icicle);
 
 		if (myLibrary == null) {
-			BooksDatabase db = SQLiteBooksDatabase.Instance();
-			if (db == null) {
-				db = new SQLiteBooksDatabase(this, "LIBRARY");
-			}
-			final BookCollection collection = new BookCollection(db);
-			myLibrary = new Library(collection);
+			myLibrary = new Library(new BookCollectionShadow(this));
 			myLibrary.addChangeListener(this);
-			collection.startBuild();
 		}
 
 		mySelectedBook =
@@ -76,6 +70,16 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		((BookCollectionShadow)myLibrary.Collection).bindToService(new Runnable() {
+			public void run() {
+				myLibrary.init();
+			}
+		});
 	}
 
 	@Override
@@ -100,6 +104,12 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	@Override
 	protected FBTree getTreeByKey(FBTree.Key key) {
 		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.getRootTree();
+	}
+
+	@Override
+	protected void onStop() {
+		((BookCollectionShadow)myLibrary.Collection).unbind();
+		super.onStop();
 	}
 
 	@Override
