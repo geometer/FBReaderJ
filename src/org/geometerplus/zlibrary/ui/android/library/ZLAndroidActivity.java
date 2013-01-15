@@ -69,16 +69,12 @@ public abstract class ZLAndroidActivity extends Activity {
 							}
 						})
 						.create();
-						if (((ZLAndroidActivity)myActivity).myIsPaused) {
-							((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
-						} else {
-							myActivity.runOnUiThread(new Runnable() {
-								public void run() {
-									dialog.show();
-								}
-							});
-						}
+					if (((ZLAndroidActivity)myActivity).myIsPaused) {
+						((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
+					} else {
+						dialog.show();
 					}
+				}
 			});
 		}
 
