@@ -45,8 +45,6 @@ import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
-	static volatile boolean ourToBeKilled = false;
-
 	public static final String SELECTED_BOOK_KEY = "fbreader.library.selected-book";
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
@@ -102,12 +100,6 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	@Override
 	protected FBTree getTreeByKey(FBTree.Key key) {
 		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.getRootTree();
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		ourToBeKilled = true;
 	}
 
 	@Override
