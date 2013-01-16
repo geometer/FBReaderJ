@@ -119,11 +119,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			if (((ZLAndroidActivity)myActivity).myIsPaused) {
 				((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
 			} else {
-				myActivity.runOnUiThread(new Runnable() {
-					public void run() {
-						dialog.show();
-					}
-				});
+				dialog.show();
 			}
 		}
 		
