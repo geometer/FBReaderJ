@@ -10,7 +10,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_marginLeft="10dp"
-	    android:layout_marginRight="0dp"
+	    android:layout_marginRight="-4dp"
 	    android:layout_weight="1"
 	    android:imeOptions="actionDone"
 	    android:singleLine="true" />
@@ -19,13 +19,13 @@
 		android:id="@+id/editable_spinner_button"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginLeft="0dp"
-		android:layout_marginRight="10dp"
+		android:layout_marginLeft="-4dp"
+		android:layout_marginRight="5dp"
 		android:paddingTop="0dp"
 		android:paddingBottom="0dp"
-		android:paddingRight="0dp"
-		android:paddingLeft="0dp"
-		android:src="@+drawable/dropdown"
+		android:paddingRight="10dp"
+		android:paddingLeft="10dp"
+		android:src="@android:drawable/arrow_down_float"
 	/>
 	<ImageButton
 		android:id="@+id/editable_stringlist_deletebutton"
