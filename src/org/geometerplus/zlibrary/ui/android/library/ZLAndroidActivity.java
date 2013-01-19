@@ -33,13 +33,4 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
 public abstract class ZLAndroidActivity extends Activity {
-	protected abstract ZLFile fileFromIntent(Intent intent);
-
-	protected abstract Runnable getPostponedInitAction();
-
-	protected static ZLAndroidLibrary getZLibrary() {
-		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-	}
-
-	public abstract void refresh();
 }

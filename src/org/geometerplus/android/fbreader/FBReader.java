@@ -73,6 +73,10 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
+	private static ZLAndroidLibrary getZLibrary() {
+		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+	}
+
 	private boolean myShowStatusBarFlag;
 	private boolean myShowActionBarFlag;
 	private boolean myActionBarIsVisible;
@@ -107,8 +111,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	};
 
-	@Override
-	protected ZLFile fileFromIntent(Intent intent) {
+	private ZLFile fileFromIntent(Intent intent) {
 		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
 		if (filePath == null) {
 			final Uri data = intent.getData();
@@ -119,8 +122,7 @@ public final class FBReader extends ZLAndroidActivity {
 		return filePath != null ? ZLFile.createFileByPath(filePath) : null;
 	}
 
-	@Override
-	protected Runnable getPostponedInitAction() {
+	private Runnable getPostponedInitAction() {
 		return new Runnable() {
 			public void run() {
 				runOnUiThread(new Runnable() {
@@ -134,7 +136,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
@@ -275,7 +277,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onStart() {
+	protected void onStart() {
 		super.onStart();
 
 		initPluginActions();
@@ -348,7 +350,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onResume() {
+	protected void onResume() {
 		super.onResume();
 		switchWakeLock(
 			getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() <
@@ -380,7 +382,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onPause() {
+	protected void onPause() {
 		unregisterReceiver(myBatteryInfoReceiver);
 		FBReaderApp.Instance().stopTimer();
 		switchWakeLock(false);
@@ -392,7 +394,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onStop() {
+	protected void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(FBReaderApp.Instance(), this);
 		super.onStop();
@@ -607,7 +609,6 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	@Override
 	public void refresh() {
 		if (myNavigationPopup != null) {
 			myNavigationPopup.update();
