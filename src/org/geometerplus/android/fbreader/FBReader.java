@@ -161,11 +161,12 @@ public final class FBReader extends Activity {
 
 		getZLibrary().setActivity(this);
 
-		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
 		myFBReaderApp = (FBReaderApp)FBReaderApp.Instance();
 		if (myFBReaderApp == null) {
 			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
 		}
+
+		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
 		if (androidApplication.myMainWindow == null) {
 			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(myFBReaderApp);
 			myFBReaderApp.initWindow();
