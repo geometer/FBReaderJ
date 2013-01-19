@@ -22,8 +22,7 @@ package org.geometerplus.android.fbreader;
 import java.lang.reflect.*;
 import java.util.*;
 
-import android.app.ActionBar;
-import android.app.SearchManager;
+import android.app.*;
 import android.content.*;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -60,7 +59,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
-public final class FBReader extends ZLAndroidActivity {
+public final class FBReader extends Activity {
 	static final int ACTION_BAR_COLOR = Color.DKGRAY;
 
 	public static final String BOOK_PATH_KEY = "BookPath";
