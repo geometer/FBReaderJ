@@ -69,7 +69,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
-public final class FBReader extends ZLAndroidActivity {
+public final class FBReader extends Activity {
 	private class ExtFileOpener implements FBReaderApp.ExternalFileOpener {
 		private void showErrorDialog(final String errName) {
 			runOnUiThread(new Runnable() {
