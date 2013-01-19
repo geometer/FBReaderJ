@@ -43,16 +43,4 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.library.Book;
 
 public abstract class ZLAndroidActivity extends Activity {
-	protected abstract void onPluginAbsent(long bookId);
-	
-	protected abstract ZLFile fileFromIntent(Intent intent);
-
-	protected abstract Runnable getPostponedInitAction();
-
-	protected boolean myIsPaused = false;
-	protected AlertDialog myDialogToShow = null;
-
-	protected static ZLAndroidLibrary getZLibrary() {
-		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-	}
 }
