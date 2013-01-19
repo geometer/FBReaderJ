@@ -328,7 +328,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				} else {
 					startActivity(
 						new Intent(getApplicationContext(), FBReader.class)
-							.setAction(Intent.ACTION_VIEW)
+							.setAction(FBReader.ACTION_OPEN_BOOK)
 							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
 							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 					);
