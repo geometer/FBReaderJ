@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
+import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
@@ -72,10 +72,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	protected void onDraw(final Canvas canvas) {
 		final Context context = getContext();
-		if (context instanceof ZLAndroidActivity) {
-			((ZLAndroidActivity)context).createWakeLock();
+		if (context instanceof FBReader) {
+			((FBReader)context).createWakeLock();
 		} else {
-			System.err.println("A surprise: view's context is not a ZLAndroidActivity");
+			System.err.println("A surprise: view's context is not an FBReader");
 		}
 		super.onDraw(canvas);
 
