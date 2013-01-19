@@ -43,6 +43,8 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
+import org.geometerplus.android.fbreader.FBReader;
+
 public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
@@ -73,14 +75,14 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return "GT-S5830".equals(Build.MODEL);
 	}
 
-	private ZLAndroidActivity myActivity;
+	private FBReader myActivity;
 	private final Application myApplication;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
 	}
 
-	public void setActivity(ZLAndroidActivity activity) {
+	public void setActivity(FBReader activity) {
 		myActivity = activity;
 	}
 
@@ -90,7 +92,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
-	public ZLAndroidActivity getActivity() {
+	public FBReader getActivity() {
 		return myActivity;
 	}
 
