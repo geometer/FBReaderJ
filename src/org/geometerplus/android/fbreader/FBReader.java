@@ -618,4 +618,16 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.Model = null;
 		fbReader.openBook(Library.Instance().getRecentBook(), null, null);
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		final View view = findViewById(R.id.main_view);
+		return (view != null && view.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		final View view = findViewById(R.id.main_view);
+		return (view != null && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
+	}
 }
