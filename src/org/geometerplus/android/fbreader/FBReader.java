@@ -22,8 +22,7 @@ package org.geometerplus.android.fbreader;
 import java.lang.reflect.*;
 import java.util.*;
 
-import android.app.AlertDialog;
-import android.app.SearchManager;
+import android.app.*;
 import android.util.Log;
 import android.content.*;
 import android.net.Uri;
@@ -65,7 +64,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
-public final class FBReader extends ZLAndroidActivity {
+public final class FBReader extends Activity {
 	private class ExtFileOpener implements FBReaderApp.ExternalFileOpener {
 		private void showErrorDialog(final String errName) {
 			runOnUiThread(new Runnable() {
