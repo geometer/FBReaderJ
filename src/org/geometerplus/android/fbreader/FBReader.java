@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader;
 import java.lang.reflect.*;
 import java.util.*;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.*;
 import android.net.Uri;
@@ -54,7 +55,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
-public final class FBReader extends ZLAndroidActivity {
+public final class FBReader extends Activity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
 	public static final int REQUEST_PREFERENCES = 1;
