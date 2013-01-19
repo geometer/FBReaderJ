@@ -41,7 +41,5 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.android.util.UIUtil;
 
-import org.geometerplus.fbreader.library.Book;
-
 public abstract class ZLAndroidActivity extends Activity {
 }

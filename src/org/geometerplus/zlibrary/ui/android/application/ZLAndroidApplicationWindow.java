@@ -37,10 +37,10 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 
 import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.fbreader.FBReader;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
@@ -68,7 +68,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		final MenuItem menuItem = menu.add(name);
 		if (iconId != null) {
 			menuItem.setIcon(iconId);
-			final ZLAndroidActivity activity = 
+			final FBReader activity = 
 				((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 			if (showInActionBar) {
 				menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -101,7 +101,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 					break;
 			}
 		}
-		final ZLAndroidActivity activity = 
+		final FBReader activity = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		activity.refresh();
 	}
