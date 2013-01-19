@@ -13,8 +13,8 @@ git checkout beta
 git merge multidirs
 
 git checkout beta-ics
-git merge beta
 git merge ice-cream-sandwich
+git merge beta
 
 git checkout library-service
 git merge master

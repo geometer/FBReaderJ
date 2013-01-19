@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
@@ -127,8 +128,36 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+	public void onCreate(Bundle state) {
+		super.onCreate(state);
+
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.main);
+		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
+		getZLibrary().setActivity(this);
+
+		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
+		if (androidApplication.myMainWindow == null) {
+			final FBReaderApp fbreader = createApplication();
+			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(fbreader);
+			fbreader.initWindow();
+		}
+
+		init(new Runnable() {
+			public void run() {
+				new Thread() {
+					public void run() {
+						FBReaderApp.Instance().openFile(fileFromIntent(getIntent()), getPostponedInitAction());
+						FBReaderApp.Instance().getViewWidget().repaint();
+					}
+				}.start();
+
+				FBReaderApp.Instance().getViewWidget().repaint();
+			}
+		});
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
@@ -339,8 +368,7 @@ public final class FBReader extends ZLAndroidActivity {
 		super.onStop();
 	}
 
-	@Override
-	protected FBReaderApp createApplication() {
+	private FBReaderApp createApplication() {
 		return new FBReaderApp(new BookCollectionShadow(this));
 	}
 
