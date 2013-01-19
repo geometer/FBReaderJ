@@ -73,7 +73,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		myApplication = application;
 	}
 
-	void setActivity(ZLAndroidActivity activity) {
+	public void setActivity(ZLAndroidActivity activity) {
 		myActivity = activity;
 	}
 
