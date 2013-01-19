@@ -70,7 +70,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FBReader extends ZLAndroidActivity {
-	protected class ExtFileOpener implements FBReaderApp.ExternalFileOpener {
+	private class ExtFileOpener implements FBReaderApp.ExternalFileOpener {
 		private void showErrorDialog(final String errName) {
 			runOnUiThread(new Runnable() {
 				public void run() {
@@ -116,7 +116,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	protected class PluginFileOpener implements FBReaderApp.PluginFileOpener {
+	private class PluginFileOpener implements FBReaderApp.PluginFileOpener {
 		private void showErrorDialog(final String errName) {
 			final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
 			final AlertDialog dialog = new AlertDialog.Builder(FBReader.this)
@@ -217,9 +217,16 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
+	private static ZLAndroidLibrary getZLibrary() {
+		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+	}
+
 	private boolean myShowStatusBarFlag;
 	private boolean myShowActionBarFlag;
 	private boolean myActionBarIsVisible;
+
+	private boolean myIsPaused = false;
+	private AlertDialog myDialogToShow = null;
 
 	private boolean myNeedToOpenFile = false;
 	private ZLFile myFileToOpen = null;
@@ -254,8 +261,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	};
 
-	@Override
-	protected ZLFile fileFromIntent(Intent intent) {
+	private ZLFile fileFromIntent(Intent intent) {
 		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
 		if (filePath == null) {
 			final Uri data = intent.getData();
@@ -270,8 +276,7 @@ public final class FBReader extends ZLAndroidActivity {
 		return filePath != null ? ZLFile.createFileByPath(filePath) : null;
 	}
 
-	@Override
-	protected Runnable getPostponedInitAction() {
+	private Runnable getPostponedInitAction() {
 		return new Runnable() {
 			public void run() {
 				runOnUiThread(new Runnable() {
@@ -285,7 +290,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
@@ -489,7 +494,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onStart() {
+	protected void onStart() {
 		super.onStart();
 
 		initPluginActions();
@@ -562,7 +567,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 	
 	@Override
-	public void onResume() {
+	protected void onResume() {
 		super.onResume();
 		switchWakeLock(
 			getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() <
@@ -631,7 +636,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onPause() {
+	protected void onPause() {
 		myIsPaused = true;
 		unregisterReceiver(myBatteryInfoReceiver);
 		FBReaderApp.Instance().stopTimer();
@@ -644,7 +649,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	public void onStop() {
+	protected void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(FBReaderApp.Instance(), this);
 		super.onStop();
@@ -863,7 +868,6 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	@Override
 	public void refresh() {
 		if (myNavigationPopup != null) {
 			myNavigationPopup.update();
@@ -880,7 +884,6 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	@Override
 	protected void onPluginAbsent(long bookId) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		Library.Instance().removeBookFromRecentList(Book.getById(bookId));
