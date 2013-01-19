@@ -145,6 +145,7 @@ public final class Library {
 				for (Book book : Collection.favorites()) {
 					new BookTree(getFirstLevelTree(ROOT_FAVORITES), book, true);
 				}
+				int count = 0;
 				for (Book book : Collection.books()) {
 					addBookToLibrary(book);
 					if (++count % 16 == 0) {
