@@ -36,9 +36,6 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication();
 
-	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
-	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
-
 	private void setScreenBrightnessAuto() {
 		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
 		attrs.screenBrightness = -1.0f;
