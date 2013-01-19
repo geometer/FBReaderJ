@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
@@ -69,7 +70,7 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	private int myFullScreenFlag;
-	
+
 	private boolean myNeedToOpenFile = false;
 	private ZLFile myFileToOpen = null;
 
@@ -133,16 +134,43 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Log.d("fbreader", "oncreate");
-		
+
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.main);
+		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
+		getZLibrary().setActivity(this);
+
+		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
+		if (androidApplication.myMainWindow == null) {
+			final ZLApplication application = createApplication();
+			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(application);
+			application.initWindow();
+		}
+
+		new Thread() {
+			public void run() {
+				getPostponedInitAction().run();
+			}
+		}.start();
+
+		ZLApplication.Instance().getViewWidget().repaint();
+//		if (!ZLApplication.Instance().externalFileOpenerIsSet()) {
+			ZLApplication.Instance().setExternalFileOpener(new ExtFileOpener(this));
+//		}
+//		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
+			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
+//		}
+
 		myNeedToOpenFile = true;
 		myFileToOpen = fileFromIntent(getIntent());
 		myNeedToSkipPlugin = true;
-		
+
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myFullScreenFlag =
-			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			getZLibrary().ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
@@ -163,7 +191,7 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_TOC, new ShowTOCAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_BOOKMARKS, new ShowBookmarksAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this, fbReader));
-		
+
 		fbReader.addAction(ActionCode.SHOW_MENU, new ShowMenuAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
@@ -234,7 +262,7 @@ public final class FBReader extends ZLAndroidActivity {
 	private boolean myNeedToSkipPlugin = false;
 
 	private int myCancelAction = -1;
-	
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		Log.d("fbreader", "onnewintent");
@@ -431,8 +459,7 @@ public final class FBReader extends ZLAndroidActivity {
 		super.onStop();
 	}
 
-	@Override
-	protected FBReaderApp createApplication() {
+	private FBReaderApp createApplication() {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "READER");
 		}
