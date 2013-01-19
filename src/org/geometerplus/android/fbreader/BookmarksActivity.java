@@ -46,7 +46,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
 
-	private final BookCollectionShadow myCollection = new BookCollectionShadow(this);
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
 	private List<Bookmark> myAllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
@@ -112,7 +112,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	protected void onStart() {
 		super.onStart();
 
-		myCollection.bindToService(new Runnable() {
+		myCollection.bindToService(this, new Runnable() {
 			public void run() {
 				if (myAllBooksBookmarks == null) {
 					init();

@@ -337,30 +337,6 @@ public final class FBReaderApp extends ZLApplication {
 		setView(BookTextView);
 	}
 
-	private Book createBookForFile(ZLFile file) {
-		if (file == null) {
-			return null;
-		}
-		Book book = Collection.getBookByFile(file);
-		if (book != null) {
-			return book;
-		}
-		if (file.isArchive()) {
-			for (ZLFile child : file.children()) {
-				book = Collection.getBookByFile(child);
-				if (book != null) {
-					return book;
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void openFile(ZLFile file, Runnable postAction) {
-		openBook(createBookForFile(file), null, postAction);
-	}
-
 	public void onWindowClosing() {
 		storePosition();
 	}

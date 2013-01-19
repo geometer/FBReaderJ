@@ -57,7 +57,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		super.onCreate(icicle);
 
 		if (myLibrary == null) {
-			myLibrary = new Library(new BookCollectionShadow(this));
+			myLibrary = new Library(new BookCollectionShadow());
 			myLibrary.addChangeListener(this);
 		}
 
@@ -75,7 +75,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	@Override
 	protected void onStart() {
 		super.onStart();
-		((BookCollectionShadow)myLibrary.Collection).bindToService(new Runnable() {
+		((BookCollectionShadow)myLibrary.Collection).bindToService(this, new Runnable() {
 			public void run() {
 				myLibrary.init();
 			}
@@ -255,8 +255,8 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	private void openBook(Book book) {
 		startActivity(
 			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(Intent.ACTION_VIEW)
-				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
+				.setAction(FBReader.ACTION_OPEN_BOOK)
+				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book))
 				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 		);
 	}

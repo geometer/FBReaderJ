@@ -102,8 +102,8 @@ public class BookInfoActivity extends Activity {
 				} else {
 					startActivity(
 						new Intent(getApplicationContext(), FBReader.class)
-							.setAction(Intent.ACTION_VIEW)
-							.putExtra(FBReader.BOOK_PATH_KEY, myBook.File.getPath())
+							.setAction(FBReader.ACTION_OPEN_BOOK)
+							.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
 							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 					);
 				}

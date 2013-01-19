@@ -36,7 +36,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 public class BookCollectionShadow extends AbstractBookCollection implements ServiceConnection {
-	private final Context myContext;
+	private Context myContext;
 	private volatile LibraryInterface myInterface;
 	private Runnable myOnBindAction;
 
@@ -60,12 +60,8 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	};
 
-	public BookCollectionShadow(Context context) {
-		myContext = context;
-	}
-
-	public synchronized void bindToService(Runnable onBindAction) {
-		if (myInterface != null) {
+	public synchronized void bindToService(Context context, Runnable onBindAction) {
+		if (myInterface != null && myContext == context) {
 			if (onBindAction != null) {
 				onBindAction.run();
 			}
@@ -73,19 +69,21 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			if (onBindAction != null) {
 				myOnBindAction = onBindAction;
 			}
-			myContext.bindService(
-				new Intent(myContext, LibraryService.class),
+			context.bindService(
+				new Intent(context, LibraryService.class),
 				this,
 				LibraryService.BIND_AUTO_CREATE
 			);
+			myContext = context;
 		}
 	}
 
 	public void unbind() {
-		if (myInterface != null) {
+		if (myContext != null && myInterface != null) {
+			myContext.unregisterReceiver(myReceiver);
 			myContext.unbindService(this);
 			myInterface = null;
-			myContext.unregisterReceiver(myReceiver);
+			myContext = null;	
 		}
 	}
 
@@ -318,8 +316,10 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			myOnBindAction.run();
 			myOnBindAction = null;
 		}
-		myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BOOK_EVENT_ACTION));
-		myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BUILD_EVENT_ACTION));
+		if (myContext != null) {
+			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BOOK_EVENT_ACTION));
+			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BUILD_EVENT_ACTION));
+		}
 	}
 
 	// method from ServiceConnection interface
