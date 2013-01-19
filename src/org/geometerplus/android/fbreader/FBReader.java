@@ -19,12 +19,14 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.lang.reflect.*;
 import java.util.*;
 
 import android.app.SearchManager;
 import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.*;
 import android.widget.RelativeLayout;
 
@@ -238,15 +240,24 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	protected void onNewIntent(Intent intent) {
+	protected void onNewIntent(final Intent intent) {
+		final String action = intent.getAction();
 		final Uri data = intent.getData();
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
-		} else if (Intent.ACTION_VIEW.equals(intent.getAction())
+		} else if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
+			FBReaderApp.Instance().openFile(fileFromIntent(intent), null);
+			init(new Runnable() {
+				public void run() {
+					FBReaderApp.Instance().openFile(fileFromIntent(intent), null);
+				}
+			});
+		} else if (Intent.ACTION_VIEW.equals(action)
 					&& data != null && "fbreader-action".equals(data.getScheme())) {
 			fbReader.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
-		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+		} else if (Intent.ACTION_SEARCH.equals(action)) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
 				public void run() {
@@ -356,8 +367,39 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+
+		switchWakeLock(
+			getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() <
+			FBReaderApp.Instance().getBatteryLevel()
+		);
+		myStartTimer = true;
+		final int brightnessLevel =
+			getZLibrary().ScreenBrightnessLevelOption.getValue();
+		if (brightnessLevel != 0) {
+			setScreenBrightness(brightnessLevel);
+		} else {
+			setScreenBrightnessAuto();
+		}
+		if (getZLibrary().DisableButtonLightsOption.getValue()) {
+			setButtonLight(false);
+		}
+
+		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
 		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
+	}
+
+	@Override
+	public void onPause() {
+		unregisterReceiver(myBatteryInfoReceiver);
+		FBReaderApp.Instance().stopTimer();
+		switchWakeLock(false);
+		if (getZLibrary().DisableButtonLightsOption.getValue()) {
+			setButtonLight(true);
+		}
+		FBReaderApp.Instance().onWindowClosing();
+		super.onPause();
 	}
 
 	@Override
@@ -366,6 +408,12 @@ public final class FBReader extends ZLAndroidActivity {
 		PopupPanel.removeAllWindows(FBReaderApp.Instance(), this);
 		getCollection().unbind();
 		super.onStop();
+	}
+
+	@Override
+	public void onLowMemory() {
+		FBReaderApp.Instance().onWindowClosing();
+		super.onLowMemory();
 	}
 
 	private FBReaderApp createApplication() {
@@ -515,7 +563,6 @@ public final class FBReader extends ZLAndroidActivity {
 		return true;
 	}
 
-<<<<<<< HEAD
 	void addSelectionBookmark() {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final FBView fbView = fbReader.getTextView();
@@ -547,5 +594,92 @@ public final class FBReader extends ZLAndroidActivity {
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		final View view = findViewById(R.id.main_view);
 		return (view != null && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
+	}
+
+	private void setButtonLight(boolean enabled) {
+		try {
+			final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+			final Class<?> cls = attrs.getClass();
+			final Field fld = cls.getField("buttonBrightness");
+			if (fld != null && "float".equals(fld.getType().toString())) {
+				fld.setFloat(attrs, enabled ? -1.0f : 0.0f);
+				getWindow().setAttributes(attrs);
+			}
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		}
+	}
+
+	private PowerManager.WakeLock myWakeLock;
+	private boolean myWakeLockToCreate;
+	private boolean myStartTimer;
+
+	public final void createWakeLock() {
+		if (myWakeLockToCreate) {
+			synchronized (this) {
+				if (myWakeLockToCreate) {
+					myWakeLockToCreate = false;
+					myWakeLock =
+						((PowerManager)getSystemService(POWER_SERVICE)).
+							newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
+					myWakeLock.acquire();
+				}
+			}
+		}
+		if (myStartTimer) {
+			FBReaderApp.Instance().startTimer();
+			myStartTimer = false;
+		}
+	}
+
+	private final void switchWakeLock(boolean on) {
+		if (on) {
+			if (myWakeLock == null) {
+				myWakeLockToCreate = true;
+			}
+		} else {
+			if (myWakeLock != null) {
+				synchronized (this) {
+					if (myWakeLock != null) {
+						myWakeLock.release();
+						myWakeLock = null;
+					}
+				}
+			}
+		}
+	}
+
+	private BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			final int level = intent.getIntExtra("level", 100);
+			final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+			application.myMainWindow.setBatteryLevel(level);
+			switchWakeLock(
+				getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() < level
+			);
+		}
+	};
+
+	private void setScreenBrightnessAuto() {
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.screenBrightness = -1.0f;
+		getWindow().setAttributes(attrs);
+	}
+
+	public void setScreenBrightness(int percent) {
+		if (percent < 1) {
+			percent = 1;
+		} else if (percent > 100) {
+			percent = 100;
+		}
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.screenBrightness = percent / 100.0f;
+		getWindow().setAttributes(attrs);
+		getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
+	}
+
+	public int getScreenBrightness() {
+		final int level = (int)(100 * getWindow().getAttributes().screenBrightness);
+		return (level >= 0) ? level : 50;
 	}
 }
