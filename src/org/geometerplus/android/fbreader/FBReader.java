@@ -80,7 +80,7 @@ public final class FBReader extends ZLAndroidActivity {
 	private boolean myShowStatusBarFlag;
 	private boolean myShowActionBarFlag;
 	private boolean myActionBarIsVisible;
-	
+
 	private boolean myNeedToOpenFile = false;
 	private ZLFile myFileToOpen = null;
 
@@ -170,11 +170,11 @@ public final class FBReader extends ZLAndroidActivity {
 			application.initWindow();
 		}
 
-			new Thread() {
-				public void run() {
-					getPostponedInitAction().run();
-				}
-			}.start();
+		new Thread() {
+			public void run() {
+				getPostponedInitAction().run();
+			}
+		}.start();
 
 		ZLApplication.Instance().getViewWidget().repaint();
 //		if (!ZLApplication.Instance().externalFileOpenerIsSet()) {
@@ -183,7 +183,7 @@ public final class FBReader extends ZLAndroidActivity {
 //		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
 			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(this));
 //		}
-		
+
 		myNeedToOpenFile = true;
 		myFileToOpen = fileFromIntent(getIntent());
 		myNeedToSkipPlugin = true;
@@ -225,7 +225,7 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_TOC, new ShowTOCAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_BOOKMARKS, new ShowBookmarksAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this, fbReader));
-		
+
 		fbReader.addAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHARE_BOOK, new ShareBookAction(this, fbReader));
@@ -268,7 +268,7 @@ public final class FBReader extends ZLAndroidActivity {
 	private boolean myNeedToSkipPlugin = false;
 
 	private int myCancelAction = -1;
-	
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		Log.d("fbreader", "onnewintent");
