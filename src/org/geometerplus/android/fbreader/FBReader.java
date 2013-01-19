@@ -56,6 +56,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FBReader extends Activity {
+	public static final String ACTION_OPEN_BOOK = "android.fbreader.action.VIEW";
 	public static final String BOOK_PATH_KEY = "BookPath";
 
 	public static final int REQUEST_PREFERENCES = 1;
@@ -237,7 +238,7 @@ public final class FBReader extends Activity {
 
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
-		} else if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
+		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
 			FBReaderApp.Instance().openFile(fileFromIntent(intent), null);
 		} else if (Intent.ACTION_VIEW.equals(action)
 					&& data != null && "fbreader-action".equals(data.getScheme())) {
