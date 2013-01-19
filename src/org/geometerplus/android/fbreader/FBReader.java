@@ -618,6 +618,7 @@ public final class FBReader extends ZLAndroidActivity {
 		return true;
 	}
 
+<<<<<<< HEAD
 	private NavigationPopup myNavigationPopup;
 
 	boolean barsAreShown() {
@@ -693,6 +694,7 @@ public final class FBReader extends ZLAndroidActivity {
 			view.postInvalidate();
 		}
 	}
+
 	@Override
 	protected void onPluginAbsent(long bookId) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
@@ -701,4 +703,15 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.openBook(Library.Instance().getRecentBook(), null, null);
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		final View view = findViewById(R.id.main_view);
+		return (view != null && view.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		final View view = findViewById(R.id.main_view);
+		return (view != null && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
+	}
 }
