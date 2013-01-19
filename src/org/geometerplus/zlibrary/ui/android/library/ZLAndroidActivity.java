@@ -76,10 +76,10 @@ public abstract class ZLAndroidActivity extends Activity {
 			});
 		}
 
-		public void openFile(ZLFile f, String appData) {
+		public boolean openFile(ZLFile f, String appData) {
 			if (f == null) {
 				showErrorDialog("unzipFailed");
-				return;
+				return false;
 			}
 			String extension = f.getExtension();
 			Uri uri = Uri.parse("file://" + f.getPath());
@@ -91,12 +91,12 @@ public abstract class ZLAndroidActivity extends Activity {
 				LaunchIntent.setDataAndType(uri, type.Name);
 				try {
 					myActivity.startActivity(LaunchIntent);
-					return;
+					return true;
 				} catch (ActivityNotFoundException e) {
 				}
 			}
 			showErrorDialog("externalNotFound");
-			return;
+			return false;
 		}
 	}
 
@@ -119,11 +119,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			if (((ZLAndroidActivity)myActivity).myIsPaused) {
 				((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
 			} else {
-				myActivity.runOnUiThread(new Runnable() {
-					public void run() {
-						dialog.show();
-					}
-				});
+				dialog.show();
 			}
 		}
 		
@@ -156,11 +152,7 @@ public abstract class ZLAndroidActivity extends Activity {
 						if (((ZLAndroidActivity)myActivity).myIsPaused) {
 							((ZLAndroidActivity)myActivity).myDialogToShow = dialog;
 						} else {
-							myActivity.runOnUiThread(new Runnable() {
-								public void run() {
-									dialog.show();
-								}
-							});
+								dialog.show();
 						}
 					}
 			});

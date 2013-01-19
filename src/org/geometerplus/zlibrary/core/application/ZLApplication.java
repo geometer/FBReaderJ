@@ -33,7 +33,7 @@ public abstract class ZLApplication {
 	}
 
 	public interface ExternalFileOpener {
-		public void openFile(ZLFile f, String appData);
+		public boolean openFile(ZLFile f, String appData);
 	}
 	
 	public interface PluginFileOpener {
