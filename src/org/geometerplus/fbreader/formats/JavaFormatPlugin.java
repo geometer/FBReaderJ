@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.book.Book;
 
 public abstract class JavaFormatPlugin extends FormatPlugin {
 	protected JavaFormatPlugin(String fileType) {

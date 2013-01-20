@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.book;
 
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
@@ -43,6 +43,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.library.Library;
 
 public class Book {
 	public static Book getById(long bookId) {
@@ -133,7 +134,7 @@ public class Book {
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
 	private WeakReference<ZLImage> myCover;
 
-	public Book(long id, ZLFile file, String title, String encoding, String language) {
+	Book(long id, ZLFile file, String title, String encoding, String language) {
 		myId = id;
 		File = file;
 		myTitle = title;
@@ -142,7 +143,7 @@ public class Book {
 		myIsSaved = true;
 	}
 
-	Book(ZLFile file) throws BookReadingException {
+	public Book(ZLFile file) throws BookReadingException {
 		myId = -1;
 		final FormatPlugin plugin = getPlugin(file);
 		File = plugin.realBookFile(file);
@@ -180,7 +181,7 @@ public class Book {
 		return getPlugin(File);
 	}
 
-	void readMetaInfo() throws BookReadingException {
+	public void readMetaInfo() throws BookReadingException {
 		readMetaInfo(getPlugin());
 	}
 
@@ -442,7 +443,7 @@ public class Book {
 		addTag(Tag.getTag(null, tagName));
 	}
 
-	boolean matches(String pattern) {
+	public boolean matches(String pattern) {
 		if (myTitle != null && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
 			return true;
 		}

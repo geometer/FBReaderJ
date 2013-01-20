@@ -25,9 +25,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Bookmark;
-
 public interface IBookCollection {
 	public interface Listener {
 		public enum BookEvent {
