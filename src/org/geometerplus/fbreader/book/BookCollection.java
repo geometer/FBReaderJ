@@ -19,6 +19,16 @@
 
 package org.geometerplus.fbreader.book;
 
-public class BookCollection {
+import java.io.File;
+import java.util.*;
+
+import org.geometerplus.zlibrary.core.filesystem.*;
+
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
+import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+
+public abstract class BookCollection extends AbstractBookCollection {
 
 }
