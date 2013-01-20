@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import org.geometerplus.zlibrary.text.model.*;
 
-import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.book.Book;
 
 public class NativeBookModel extends BookModelImpl {
 	private ZLTextModel myBookTextModel;

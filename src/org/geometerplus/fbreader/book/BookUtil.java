@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.book;
 
-import org.geometerplus.zlibrary.core.tree.ZLTree;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
-public final class FileInfo extends ZLTree<FileInfo> {
-	public final String Name;
-	public long Id;
-	public long FileSize = -1;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
-	FileInfo(String name, FileInfo parent) {
-		this(name, parent, -1);
+public abstract class BookUtil {
+	public static ZLImage getCover(Book book) {
+		return book != null ? book.getCover() : null;
 	}
 
-	FileInfo(String name, FileInfo parent, long id) {
-		super(parent);
-		Name = name;
-		Id = id;
+	public static String getAnnotation(Book book) {
+		try {
+			return book.getPlugin().readAnnotation(book.File);
+		} catch (BookReadingException e) {
+			return null;
+		}
 	}
 }

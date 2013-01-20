@@ -35,9 +35,9 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.*;
 
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.*;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Bookmark;
 
 import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 
@@ -662,5 +662,4 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	public void saveBookmark(String s) {
 		Bookmark.fromString(s).save();
 	}
-	
 }

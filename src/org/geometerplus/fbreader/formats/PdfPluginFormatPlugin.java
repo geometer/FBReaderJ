@@ -22,8 +22,8 @@ package org.geometerplus.fbreader.formats;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.library.Book;
 
 public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 

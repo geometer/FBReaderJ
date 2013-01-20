@@ -23,7 +23,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.library.Library;
 
 public class LibraryService extends Service implements Library.ChangeListener {
 	public final class LibraryImplementation extends LibraryInterface.Stub {

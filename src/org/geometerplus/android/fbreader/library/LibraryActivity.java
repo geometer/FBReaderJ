@@ -50,6 +50,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.Formats;
 import org.geometerplus.fbreader.formats.PluginCollection;

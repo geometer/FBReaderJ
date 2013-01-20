@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.bookmodel;
 
 import org.geometerplus.zlibrary.text.model.*;
 
-import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.book.Book;
 
 public class PluginBookModel extends BookModelImpl {
 

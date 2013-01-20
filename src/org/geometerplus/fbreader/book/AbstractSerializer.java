@@ -19,9 +19,6 @@
 
 package org.geometerplus.fbreader.book;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Bookmark;
-
 abstract class AbstractSerializer {
 	public abstract String serialize(Book book);
 	public abstract Book deserializeBook(String xml);
