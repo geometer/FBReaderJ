@@ -72,6 +72,7 @@ public final class FBReader extends Activity {
 	}
 
 	private FBReaderApp myFBReaderApp;
+	private volatile Book myBook;
 
 	private int myFullScreenFlag;
 
@@ -101,15 +102,38 @@ public final class FBReader extends Activity {
 		}
 	};
 
-	private ZLFile fileFromIntent(Intent intent) {
-		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
-		if (filePath == null) {
+	private synchronized void openBook(Intent intent, Runnable action, boolean force) {
+		if (!force && myBook != null) {
+			return;
+		}
+
+		myBook = createBookForFile(ZLFile.createFileByPath(intent.getStringExtra(BOOK_PATH_KEY)));
+		if (myBook == null) {
 			final Uri data = intent.getData();
 			if (data != null) {
-				filePath = data.getPath();
+				myBook = createBookForFile(ZLFile.createFileByPath(data.getPath()));
 			}
 		}
-		return filePath != null ? ZLFile.createFileByPath(filePath) : null;
+		myFBReaderApp.openBook(myBook, null, action);
+	}
+
+	private Book createBookForFile(ZLFile file) {
+		if (file == null) {
+			return null;
+		}
+		Book book = Book.getByFile(file);
+		if (book != null) {
+			return book;
+		}
+		if (file.isArchive()) {
+			for (ZLFile child : file.children()) {
+				book = Book.getByFile(child);
+				if (book != null) {
+					return book;
+				}
+			}
+		}
+		return null;
 	}
 
 	private Runnable getPostponedInitAction() {
@@ -153,7 +177,7 @@ public final class FBReader extends Activity {
 
 		new Thread() {
 			public void run() {
-				myFBReaderApp.openFile(fileFromIntent(getIntent()), getPostponedInitAction());
+				openBook(getIntent(), getPostponedInitAction(), false);
 				myFBReaderApp.getViewWidget().repaint();
 			}
 		}.start();
@@ -245,7 +269,7 @@ public final class FBReader extends Activity {
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
 		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
-			myFBReaderApp.openFile(fileFromIntent(intent), null);
+			openBook(intent, null, true);
 		} else if (Intent.ACTION_VIEW.equals(action)
 					&& data != null && "fbreader-action".equals(data.getScheme())) {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
