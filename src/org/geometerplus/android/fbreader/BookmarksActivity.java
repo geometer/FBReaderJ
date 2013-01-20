@@ -243,19 +243,11 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private void gotoBookmark(Bookmark bookmark) {
 		bookmark.markAsAccessed();
 		myCollection.saveBookmark(bookmark);
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		final long bookId = bookmark.getBookId();
-		if (fbreader.Model == null || fbreader.Model.Book.getId() != bookId) {
-			final Book book = myCollection.getBookById(bookId);
-			if (book != null) {
-				finish();
-				fbreader.openBook(book, bookmark, null);
-			} else {
-				UIUtil.showErrorMessage(this, "cannotOpenBook");
-			}
+		final Book book = myCollection.getBookById(bookmark.getBookId());
+		if (book != null) {
+			FBReader.openBookActivity(this, book, bookmark);
 		} else {
-			finish();
-			fbreader.gotoBookmark(bookmark);
+			UIUtil.showErrorMessage(this, "cannotOpenBook");
 		}
 	}
 

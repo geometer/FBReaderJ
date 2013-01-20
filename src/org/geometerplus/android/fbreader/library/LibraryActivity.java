@@ -230,7 +230,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	private boolean onContextItemSelected(int itemId, Book book) {
 		switch (itemId) {
 			case OPEN_BOOK_ITEM_ID:
-				openBook(book);
+				FBReader.openBookActivity(this, book, null);
 				return true;
 			case SHOW_BOOK_INFO_ITEM_ID:
 				showBookInfo(book);
@@ -250,15 +250,6 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 				return true;
 		}
 		return false;
-	}
-
-	private void openBook(Book book) {
-		startActivity(
-			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(FBReader.ACTION_OPEN_BOOK)
-				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book))
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-		);
 	}
 
 	//

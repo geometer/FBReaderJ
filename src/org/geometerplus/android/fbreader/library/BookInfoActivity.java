@@ -100,12 +100,7 @@ public class BookInfoActivity extends Activity {
 				if (myDontReloadBook) {
 					finish();
 				} else {
-					startActivity(
-						new Intent(getApplicationContext(), FBReader.class)
-							.setAction(FBReader.ACTION_OPEN_BOOK)
-							.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
-							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-					);
+					FBReader.openBookActivity(BookInfoActivity.this, myBook, null);
 				}
 			}
 		});
