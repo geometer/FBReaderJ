@@ -47,7 +47,7 @@ JavaClass AndroidUtil::Class_JavaEncodingCollection("org/geometerplus/zlibrary/c
 JavaClass AndroidUtil::Class_NativeFormatPlugin("org/geometerplus/fbreader/formats/NativeFormatPlugin");
 JavaClass AndroidUtil::Class_PluginCollection("org/geometerplus/fbreader/formats/PluginCollection");
 JavaClass AndroidUtil::Class_Paths("org/geometerplus/fbreader/Paths");
-JavaClass AndroidUtil::Class_Book("org/geometerplus/fbreader/library/Book");
+JavaClass AndroidUtil::Class_Book("org/geometerplus/fbreader/book/Book");
 JavaClass AndroidUtil::Class_Tag("org/geometerplus/fbreader/book/Tag");
 JavaClass AndroidUtil::Class_NativeBookModel("org/geometerplus/fbreader/bookmodel/NativeBookModel");
 
