@@ -47,11 +47,13 @@ import org.geometerplus.fbreader.library.Library;
 
 public class Book {
 	public static Book getById(long bookId) {
-		final Book book = BooksDatabase.Instance().loadBook(bookId);
+		final BooksDatabase database = BooksDatabase.Instance();
+
+		final Book book = database.loadBook(bookId);
 		if (book == null) {
 			return null;
 		}
-		book.loadLists();
+		book.loadLists(database);
 
 		final ZLFile bookFile = book.File;
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
@@ -62,7 +64,7 @@ public class Book {
 			return null;
 		}
 
-		FileInfoSet fileInfos = new FileInfoSet(BooksDatabase.Instance(), physicalFile);
+		FileInfoSet fileInfos = new FileInfoSet(database, physicalFile);
 		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
 			return book;
 		}
@@ -89,11 +91,12 @@ public class Book {
 			return null;
 		}
 
-		final FileInfoSet fileInfos = new FileInfoSet(BooksDatabase.Instance(), bookFile);
+		final BooksDatabase database = BooksDatabase.Instance();
+		final FileInfoSet fileInfos = new FileInfoSet(database, bookFile);
 
-		Book book = BooksDatabase.Instance().loadBookByFile(fileInfos.getId(bookFile), bookFile);
+		Book book = database.loadBookByFile(fileInfos.getId(bookFile), bookFile);
 		if (book != null) {
-			book.loadLists();
+			book.loadLists(database);
 		}
 
 		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
@@ -245,8 +248,7 @@ public class Book {
 		}
 	}
 
-	private void loadLists() {
-		final BooksDatabase database = BooksDatabase.Instance();
+	void loadLists(BooksDatabase database) {
 		myAuthors = database.loadAuthors(myId);
 		myTags = database.loadTags(myId);
 		mySeriesInfo = database.loadSeriesInfo(myId);
@@ -471,10 +473,14 @@ public class Book {
 	}
 
 	public boolean save() {
-		if (myIsSaved) {
+		return save(BooksDatabase.Instance(), false);
+	}
+
+	boolean save(final BooksDatabase database, boolean force) {
+		if (!force && myIsSaved) {
 			return false;
 		}
-		final BooksDatabase database = BooksDatabase.Instance();
+
 		database.executeAsATransaction(new Runnable() {
 			public void run() {
 				if (myId >= 0) {
@@ -482,7 +488,11 @@ public class Book {
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
-					storeAllVisitedHyperinks();
+					if (myId != -1 && myVisitedHyperlinks != null) {
+						for (String linkId : myVisitedHyperlinks) {
+							database.addVisitedHyperlink(myId, linkId);
+						}
+					}
 				}
 
 				long index = 0;
@@ -513,34 +523,34 @@ public class Book {
 	}
 
 	private Set<String> myVisitedHyperlinks;
-	private void initHyperlinkSet() {
+	private void initHyperlinkSet(BooksDatabase database) {
 		if (myVisitedHyperlinks == null) {
 			myVisitedHyperlinks = new TreeSet<String>();
 			if (myId != -1) {
-				myVisitedHyperlinks.addAll(BooksDatabase.Instance().loadVisitedHyperlinks(myId));
+				myVisitedHyperlinks.addAll(database.loadVisitedHyperlinks(myId));
 			}
 		}
 	}
 
 	public boolean isHyperlinkVisited(String linkId) {
-		initHyperlinkSet();
+		return isHyperlinkVisited(BooksDatabase.Instance(), linkId);
+	}
+
+	boolean isHyperlinkVisited(BooksDatabase database, String linkId) {
+		initHyperlinkSet(database);
 		return myVisitedHyperlinks.contains(linkId);
 	}
 
 	public void markHyperlinkAsVisited(String linkId) {
-		initHyperlinkSet();
+		markHyperlinkAsVisited(BooksDatabase.Instance(), linkId);
+	}
+
+	void markHyperlinkAsVisited(BooksDatabase database, String linkId) {
+		initHyperlinkSet(database);
 		if (!myVisitedHyperlinks.contains(linkId)) {
 			myVisitedHyperlinks.add(linkId);
 			if (myId != -1) {
-				BooksDatabase.Instance().addVisitedHyperlink(myId, linkId);
-			}
-		}
-	}
-
-	private void storeAllVisitedHyperinks() {
-		if (myId != -1 && myVisitedHyperlinks != null) {
-			for (String linkId : myVisitedHyperlinks) {
-				BooksDatabase.Instance().addVisitedHyperlink(myId, linkId);
+				database.addVisitedHyperlink(myId, linkId);
 			}
 		}
 	}
