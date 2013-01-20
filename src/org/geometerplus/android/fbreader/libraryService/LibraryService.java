@@ -19,32 +19,197 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.util.List;
+import java.util.LinkedList;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.FileObserver;
+
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.library.Library;
 
-public class LibraryService extends Service implements Library.ChangeListener {
-	public final class LibraryImplementation extends LibraryInterface.Stub {
-		private final Library myBaseLibrary;
+import org.geometerplus.android.fbreader.api.TextPosition;
 
-		LibraryImplementation() {
-			BooksDatabase database = SQLiteBooksDatabase.Instance();
-			if (database == null) {
-				database = new SQLiteBooksDatabase(LibraryService.this, "LIBRARY SERVICE");
-			}
-			myBaseLibrary = new Library(database);
-			((Library)myBaseLibrary).startBuild();
+public class LibraryService extends Service {
+	static String BOOK_EVENT_ACTION = "fbreader.library-service.book-event";
+	static String BUILD_EVENT_ACTION = "fbreader.library-service.build-event";
+
+	private static final class Observer extends FileObserver {
+		private static final int MASK =
+			MOVE_SELF | MOVED_TO | MOVED_FROM | DELETE_SELF | DELETE | CLOSE_WRITE | ATTRIB;
+
+		public Observer(String path) {
+			super(path, MASK);
 		}
 
-		public boolean isUpToDate() {
-			return myBaseLibrary.isUpToDate();
+		@Override
+		public void onEvent(int event, String path) {
+			event = event & ALL_EVENTS;
+			System.err.println("Event " + event + " on " + path);
+			switch (event) {
+				case MOVE_SELF:
+					// TODO: File(path) removed; stop watching (?)
+					break;
+				case MOVED_TO:
+					// TODO: File(path) removed; File(path) added
+					break;
+				case MOVED_FROM:
+				case DELETE:
+					// TODO: File(path) removed
+					break;
+				case DELETE_SELF:
+					// TODO: File(path) removed; watching is stopped automatically (?)
+					break;
+				case CLOSE_WRITE:
+				case ATTRIB:
+					// TODO: File(path) changed (added, removed?)
+					break;
+				default:
+					System.err.println("Unexpected event " + event + " on " + path);
+					break;
+			}
 		}
 	}
 
-	private LibraryImplementation myLibrary;
+	public final class LibraryImplementation extends LibraryInterface.Stub {
+		private final BookCollection myCollection;
+		private final List<FileObserver> myFileObservers = new LinkedList<FileObserver>();
+
+		LibraryImplementation() {
+			myCollection = null;//new BookCollection(SQLiteBooksDatabase.Instance(LibraryService.this));
+			//for (String path : myCollection.bookDirectories()) {
+			//	final Observer observer = new Observer(path);
+			//	observer.startWatching();
+			//	myFileObservers.add(observer);
+			//}
+
+			myCollection.addListener(new BookCollection.Listener() {
+				public void onBookEvent(BookEvent event, Book book) {
+					final Intent intent = new Intent(BOOK_EVENT_ACTION);
+					intent.putExtra("type", event.toString());
+					intent.putExtra("book", SerializerUtil.serialize(book));
+					sendBroadcast(intent);
+				}
+
+				public void onBuildEvent(BuildEvent event) {
+					final Intent intent = new Intent(BUILD_EVENT_ACTION);
+					intent.putExtra("type", event.toString());
+					sendBroadcast(intent);
+				}
+			});
+			//myCollection.startBuild();
+		}
+
+		public void deactivate() {
+			for (FileObserver observer : myFileObservers) {
+				observer.stopWatching();
+			}
+		}
+
+		public int size() {
+			return myCollection.size();
+		}
+
+		public List<String> books() {
+			return SerializerUtil.serializeBookList(myCollection.books());
+		}
+
+		public List<String> booksForPattern(String pattern) {
+			return SerializerUtil.serializeBookList(myCollection.books(pattern));
+		}
+
+		public List<String> recentBooks() {
+			return SerializerUtil.serializeBookList(myCollection.recentBooks());
+		}
+
+		public List<String> favorites() {
+			return SerializerUtil.serializeBookList(myCollection.favorites());
+		}
+
+		public String getRecentBook(int index) {
+			return SerializerUtil.serialize(myCollection.getRecentBook(index));
+		}
+
+		public String getBookByFile(String file) {
+			return SerializerUtil.serialize(myCollection.getBookByFile(ZLFile.createFileByPath(file)));
+		}
+
+		public String getBookById(long id) {
+			return SerializerUtil.serialize(myCollection.getBookById(id));
+		}
+
+		public boolean saveBook(String book, boolean force) {
+			return myCollection.saveBook(SerializerUtil.deserializeBook(book), force);
+		}
+
+		public void removeBook(String book, boolean deleteFromDisk) {
+			myCollection.removeBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
+		}
+
+		public void addBookToRecentList(String book) {
+			myCollection.addBookToRecentList(SerializerUtil.deserializeBook(book));
+		}
+
+		public void setBookFavorite(String book, boolean favorite) {
+			myCollection.setBookFavorite(SerializerUtil.deserializeBook(book), favorite);
+		}
+
+		public TextPosition getStoredPosition(long bookId) {
+			final ZLTextPosition position = myCollection.getStoredPosition(bookId);
+			if (position == null) {
+				return null;
+			}
+
+			return new TextPosition(
+				position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex()
+			);
+		}
+
+		public void storePosition(long bookId, TextPosition position) {
+			if (position == null) {
+				return;
+			}
+			myCollection.storePosition(bookId, new ZLTextFixedPosition(
+				position.ParagraphIndex, position.ElementIndex, position.CharIndex
+			));
+		}
+
+		public boolean isHyperlinkVisited(String book, String linkId) {
+			return myCollection.isHyperlinkVisited(SerializerUtil.deserializeBook(book), linkId);
+		}
+
+		public void markHyperlinkAsVisited(String book, String linkId) {
+			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
+		}
+
+		public List<String> invisibleBookmarks(String book) {
+			return SerializerUtil.serializeBookmarkList(
+				myCollection.invisibleBookmarks(SerializerUtil.deserializeBook(book))
+			);
+		}
+
+		public List<String> allBookmarks() {
+			return SerializerUtil.serializeBookmarkList(myCollection.allBookmarks());
+		}
+
+		public String saveBookmark(String serialized) {
+			final Bookmark bookmark = SerializerUtil.deserializeBookmark(serialized);
+			myCollection.saveBookmark(bookmark);
+			return SerializerUtil.serialize(bookmark);
+		}
+
+		public void deleteBookmark(String serialized) {
+			myCollection.deleteBookmark(SerializerUtil.deserializeBookmark(serialized));
+		}
+	}
+
+	private volatile LibraryImplementation myLibrary;
 
 	@Override
 	public void onStart(Intent intent, int startId) {
@@ -53,33 +218,26 @@ public class LibraryService extends Service implements Library.ChangeListener {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		System.err.println("LibraryService started for intent " + intent);
-
 		return START_STICKY;
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		System.err.println("LibraryService binded for intent " + intent);
 		return myLibrary;
 	}
 
 	@Override
 	public void onCreate() {
-		System.err.println("LibraryService.onCreate()");
 		super.onCreate();
 		myLibrary = new LibraryImplementation();
 	}
 
 	@Override
 	public void onDestroy() {
-		System.err.println("LibraryService.onDestroy()");
-		myLibrary = null;
+		if (myLibrary != null) {
+			myLibrary.deactivate();
+			myLibrary = null;
+		}
 		super.onDestroy();
-	}
-
-	public void onLibraryChanged(final Code code) {
-		// TODO: implement signal sending
-		System.err.println("LibraryService.onLibraryChanged(" + code + "): " + myLibrary.isUpToDate());
 	}
 }
