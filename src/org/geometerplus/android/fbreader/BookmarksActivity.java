@@ -246,12 +246,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	private void gotoBookmark(Bookmark bookmark) {
 		bookmark.onOpen();
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		final long bookId = bookmark.getBookId();
-		final Book book = Book.getById(bookId);
+		final Book book = Book.getById(bookmark.getBookId());
 		if (book != null) {
-			finish();
-			fbreader.openBook(book, bookmark, null);
+			FBReader.openBookActivity(this, book, bookmark);
 		} else {
 			UIUtil.showErrorMessage(this, "cannotOpenBook");
 		}
