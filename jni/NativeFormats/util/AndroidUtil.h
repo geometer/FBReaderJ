@@ -126,7 +126,6 @@ public:
 	static shared_ptr<VoidMethod> Method_Book_setEncoding;
 	static shared_ptr<VoidMethod> Method_Book_addAuthor;
 	static shared_ptr<VoidMethod> Method_Book_addTag;
-	static shared_ptr<BooleanMethod> Method_Book_save;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_Tag_getTag;
 
