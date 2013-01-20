@@ -46,8 +46,6 @@ import org.geometerplus.android.fbreader.tree.TreeActivity;
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	static volatile boolean ourToBeKilled = false;
 
-	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
-
 	private BooksDatabase myDatabase;
 	private Library myLibrary;
 
@@ -67,14 +65,8 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 			myLibrary.startBuild();
 		}
 
-		final String selectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
-		mySelectedBook = null;
-		if (selectedBookPath != null) {
-			final ZLFile file = ZLFile.createFileByPath(selectedBookPath);
-			if (file != null) {
-				mySelectedBook = Book.getByFile(file);
-			}
-		}
+		mySelectedBook =
+			SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
 
 		new LibraryTreeAdapter(this);
 
