@@ -23,7 +23,7 @@ import org.geometerplus.zlibrary.core.image.*;
 
 import org.geometerplus.zlibrary.text.model.*;
 
-import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.Paths;
 
 public class JavaBookModel extends BookModelImpl {

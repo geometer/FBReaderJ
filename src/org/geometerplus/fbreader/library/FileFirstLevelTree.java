@@ -52,7 +52,7 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	}
 
 	private void addChild(String path, String resourceKey) {
-		final ZLResource resource = LibraryUtil.resource().getResource(resourceKey);
+		final ZLResource resource = Library.resource().getResource(resourceKey);
 		addChild(path, resource.getValue(), resource.getResource("summary").getValue());
 	}
 
