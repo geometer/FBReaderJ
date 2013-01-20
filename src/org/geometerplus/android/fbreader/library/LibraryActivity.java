@@ -145,7 +145,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		OrientationUtil.startActivityForResult(
 			this,
 			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(BookInfoActivity.CURRENT_BOOK_KEY, SerializerUtil.serialize(book)),
+				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book)),
 			BOOK_INFO_REQUEST
 		);
 	}

@@ -54,8 +54,7 @@ import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 public class BookInfoActivity extends Activity {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
-	public static final String CURRENT_BOOK_KEY = "fbreader.current-book";
-	public static final String FROM_READING_MODE_KEY = "fromReadingMode";
+	public static final String FROM_READING_MODE_KEY = "fbreader.from.reading.mode";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private Book myBook;
@@ -109,7 +108,7 @@ public class BookInfoActivity extends Activity {
 				OrientationUtil.startActivityForResult(
 					BookInfoActivity.this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(CURRENT_BOOK_KEY, SerializerUtil.serialize(myBook)),
+						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook)),
 					1
 				);
 			}
@@ -137,12 +136,12 @@ public class BookInfoActivity extends Activity {
 	}
 
 	public static Intent intentByBook(Book book) {
-		return new Intent().putExtra(CURRENT_BOOK_KEY, SerializerUtil.serialize(book));
+		return new Intent().putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book));
 	}
  
 	public static Book bookByIntent(Intent intent) {
 		return intent != null ?
-			SerializerUtil.deserializeBook(intent.getStringExtra(CURRENT_BOOK_KEY)) : null;
+			SerializerUtil.deserializeBook(intent.getStringExtra(FBReader.BOOK_KEY)) : null;
 	}
  
 	@Override

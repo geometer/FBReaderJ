@@ -34,14 +34,11 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.libraryService.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
-	static final String CURRENT_BOOK_KEY = "fbreader.currentBook";
-
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
@@ -87,7 +84,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		myAllBooksBookmarks = new ArrayList<Bookmark>(myCollection.allBookmarks());
 		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
 
-		final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(CURRENT_BOOK_KEY));
+		final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
 		if (book != null) {
 			final long bookId = book.getId();
 			for (Bookmark bm : myAllBooksBookmarks) {
@@ -230,8 +227,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private void addBookmark() {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		final Bookmark bookmark = fbreader.addBookmark(20, true);
+		final Bookmark bookmark =
+			SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
 		if (bookmark != null) {
 			myCollection.saveBookmark(bookmark);
 			myThisBookBookmarks.add(0, bookmark);
