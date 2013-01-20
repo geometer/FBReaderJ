@@ -34,7 +34,6 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.Library;
 
 import org.geometerplus.android.util.UIUtil;
@@ -231,19 +230,11 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	private void gotoBookmark(Bookmark bookmark) {
 		bookmark.onOpen();
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		final long bookId = bookmark.getBookId();
-		if (fbreader.Model == null || fbreader.Model.Book.getId() != bookId) {
-			final Book book = Book.getById(bookId);
-			if (book != null) {
-				finish();
-				fbreader.openBook(book, bookmark, null);
-			} else {
-				UIUtil.showErrorMessage(this, "cannotOpenBook");
-			}
+		final Book book = Book.getById(bookmark.getBookId());
+		if (book != null) {
+			FBReader.openBookActivity(this, book, bookmark);
 		} else {
-			finish();
-			fbreader.gotoBookmark(bookmark);
+			UIUtil.showErrorMessage(this, "cannotOpenBook");
 		}
 	}
 
