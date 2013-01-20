@@ -51,7 +51,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		migrate(context);
 	}
 
-	protected void executeAsATransaction(Runnable actions) {
+	public /*protected*/ void executeAsATransaction(Runnable actions) {
 		boolean transactionStarted = false;
 		try {
 			myDatabase.beginTransaction();
@@ -132,7 +132,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Book loadBook(long bookId) {
+	public /*protected*/ Book loadBook(long bookId) {
 		Book book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT file_id,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
 		if (cursor.moveToNext()) {
@@ -145,7 +145,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected void reloadBook(Book book) {
+	public /*protected*/ void reloadBook(Book book) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT title,encoding,language FROM Books WHERE book_id = " + book.getId(), null);
 		if (cursor.moveToNext()) {
 			book.setTitle(cursor.getString(0));
@@ -155,7 +155,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 	}
 
-	protected Book loadBookByFile(long fileId, ZLFile file) {
+	public /*protected*/ Book loadBookByFile(long fileId, ZLFile file) {
 		if (fileId == -1) {
 			return null;
 		}
@@ -193,7 +193,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing) {
+	public /*protected*/ Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing) {
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id,file_id,title,encoding,language FROM Books WHERE `exists` = " + (existing ? 1 : 0), null
 		);
@@ -272,7 +272,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected void setExistingFlag(Collection<Book> books, boolean flag) {
+	public /*protected*/ void setExistingFlag(Collection<Book> books, boolean flag) {
 		if (books.isEmpty()) {
 			return;
 		}
@@ -294,7 +294,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private SQLiteStatement myUpdateBookInfoStatement;
 	@Override
-	protected void updateBookInfo(long bookId, long fileId, String encoding, String language, String title) {
+	public /*protected*/ void updateBookInfo(long bookId, long fileId, String encoding, String language, String title) {
 		if (myUpdateBookInfoStatement == null) {
 			myUpdateBookInfoStatement = myDatabase.compileStatement(
 				"UPDATE OR IGNORE Books SET file_id = ?, encoding = ?, language = ?, title = ? WHERE book_id = ?"
@@ -310,7 +310,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private SQLiteStatement myInsertBookInfoStatement;
 	@Override
-	protected long insertBookInfo(ZLFile file, String encoding, String language, String title) {
+	public /*protected*/ long insertBookInfo(ZLFile file, String encoding, String language, String title) {
 		if (myInsertBookInfoStatement == null) {
 			myInsertBookInfoStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO Books (encoding,language,title,file_id) VALUES (?,?,?,?)"
@@ -325,7 +325,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myDeleteBookAuthorsStatement;
-	protected void deleteAllBookAuthors(long bookId) {
+	public /*protected*/ void deleteAllBookAuthors(long bookId) {
 		if (myDeleteBookAuthorsStatement == null) {
 			myDeleteBookAuthorsStatement = myDatabase.compileStatement(
 				"DELETE FROM BookAuthor WHERE book_id = ?"
@@ -338,7 +338,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	private SQLiteStatement myGetAuthorIdStatement;
 	private SQLiteStatement myInsertAuthorStatement;
 	private SQLiteStatement myInsertBookAuthorStatement;
-	protected void saveBookAuthorInfo(long bookId, long index, Author author) {
+	public /*protected*/ void saveBookAuthorInfo(long bookId, long index, Author author) {
 		if (myGetAuthorIdStatement == null) {
 			myGetAuthorIdStatement = myDatabase.compileStatement(
 				"SELECT author_id FROM Authors WHERE name = ? AND sort_key = ?"
@@ -367,7 +367,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myInsertBookAuthorStatement.execute();
 	}
 
-	protected List<Author> loadAuthors(long bookId) {
+	public /*protected*/ List<Author> loadAuthors(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {
 			cursor.close();
@@ -422,7 +422,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myDeleteBookTagsStatement;
-	protected void deleteAllBookTags(long bookId) {
+	public /*protected*/ void deleteAllBookTags(long bookId) {
 		if (myDeleteBookTagsStatement == null) {
 			myDeleteBookTagsStatement = myDatabase.compileStatement(
 				"DELETE FROM BookTag WHERE book_id = ?"
@@ -433,7 +433,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myInsertBookTagStatement;
-	protected void saveBookTagInfo(long bookId, Tag tag) {
+	public /*protected*/ void saveBookTagInfo(long bookId, Tag tag) {
 		if (myInsertBookTagStatement == null) {
 			myInsertBookTagStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO BookTag (book_id,tag_id) VALUES (?,?)"
@@ -459,7 +459,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return tag;
 	}
 
-	protected List<Tag> loadTags(long bookId) {
+	public /*protected*/ List<Tag> loadTags(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Tags.tag_id FROM BookTag INNER JOIN Tags ON Tags.tag_id = BookTag.tag_id WHERE BookTag.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {
 			cursor.close();
@@ -477,7 +477,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	private SQLiteStatement myInsertSeriesStatement;
 	private SQLiteStatement myInsertBookSeriesStatement;
 	private SQLiteStatement myDeleteBookSeriesStatement;
-	protected void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo) {
+	public /*protected*/ void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo) {
 		if (myGetSeriesIdStatement == null) {
 			myGetSeriesIdStatement = myDatabase.compileStatement(
 				"SELECT series_id FROM Series WHERE name = ?"
@@ -515,7 +515,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	protected SeriesInfo loadSeriesInfo(long bookId) {
+	public /*protected*/ SeriesInfo loadSeriesInfo(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { "" + bookId });
 		SeriesInfo info = null;
 		if (cursor.moveToNext()) {
@@ -526,7 +526,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myRemoveFileInfoStatement;
-	protected void removeFileInfo(long fileId) {
+	public /*protected*/ void removeFileInfo(long fileId) {
 		if (fileId == -1) {
 			return;
 		}
@@ -541,7 +541,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private SQLiteStatement myInsertFileInfoStatement;
 	private SQLiteStatement myUpdateFileInfoStatement;
-	protected void saveFileInfo(FileInfo fileInfo) {
+	public /*protected*/ void saveFileInfo(FileInfo fileInfo) {
 		final long id = fileInfo.Id;
 		SQLiteStatement statement;
 		if (id == -1) {
@@ -580,7 +580,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	protected Collection<FileInfo> loadFileInfos() {
+	public /*protected*/ Collection<FileInfo> loadFileInfos() {
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT file_id,name,parent_id,size FROM Files", null
 		);
@@ -600,7 +600,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return infosById.values();
 	}
 
-	protected Collection<FileInfo> loadFileInfos(ZLFile file) {
+	public /*protected*/ Collection<FileInfo> loadFileInfos(ZLFile file) {
 		final LinkedList<ZLFile> fileStack = new LinkedList<ZLFile>();
 		for (; file != null; file = file.getParent()) {
 			fileStack.addFirst(file);
@@ -633,7 +633,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return infos;
 	}
 
-	protected Collection<FileInfo> loadFileInfos(long fileId) {
+	public /*protected*/ Collection<FileInfo> loadFileInfos(long fileId) {
 		final ArrayList<FileInfo> infos = new ArrayList<FileInfo>();
 		while (fileId != -1) {
 			final Cursor cursor = myDatabase.rawQuery(
@@ -661,7 +661,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement mySaveRecentBookStatement;
-	protected void saveRecentBookIds(final List<Long> ids) {
+	public /*protected*/ void saveRecentBookIds(final List<Long> ids) {
 		if (mySaveRecentBookStatement == null) {
 			mySaveRecentBookStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO RecentBooks (book_id) VALUES (?)"
@@ -678,7 +678,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		});
 	}
 
-	protected List<Long> loadRecentBookIds() {
+	public /*protected*/ List<Long> loadRecentBookIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM RecentBooks ORDER BY book_index", null
 		);
@@ -691,7 +691,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myAddToFavoritesStatement;
-	protected void addToFavorites(long bookId) {
+	public /*protected*/ void addToFavorites(long bookId) {
 		if (myAddToFavoritesStatement == null) {
 			myAddToFavoritesStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO Favorites(book_id) VALUES (?)"
@@ -702,7 +702,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myRemoveFromFavoritesStatement;
-	protected void removeFromFavorites(long bookId) {
+	public /*protected*/ void removeFromFavorites(long bookId) {
 		if (myRemoveFromFavoritesStatement == null) {
 			myRemoveFromFavoritesStatement = myDatabase.compileStatement(
 				"DELETE FROM Favorites WHERE book_id = ?"
@@ -712,7 +712,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myRemoveFromFavoritesStatement.execute();
 	}
 
-	protected List<Long> loadFavoriteIds() {
+	public /*protected*/ List<Long> loadFavoriteIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM Favorites", null
 		);
@@ -725,7 +725,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Bookmark> loadBookmarks(long bookId, boolean visible) {
+	public /*protected*/ List<Bookmark> loadBookmarks(long bookId, boolean visible) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE Bookmarks.book_id = ? AND Bookmarks.visible = ?", new String[] { "" + bookId, visible ? "1" : "0" }
@@ -752,7 +752,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Bookmark> loadAllVisibleBookmarks() {
+	public /*protected*/ List<Bookmark> loadAllVisibleBookmarks() {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id = -1");
 		Cursor cursor = myDatabase.rawQuery(
@@ -782,7 +782,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	private SQLiteStatement myInsertBookmarkStatement;
 	private SQLiteStatement myUpdateBookmarkStatement;
 	@Override
-	protected long saveBookmark(Bookmark bookmark) {
+	public /*protected*/ long saveBookmark(Bookmark bookmark) {
 		SQLiteStatement statement;
 		if (bookmark.getId() == -1) {
 			if (myInsertBookmarkStatement == null) {
@@ -824,7 +824,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private SQLiteStatement myDeleteBookmarkStatement;
 	@Override
-	protected void deleteBookmark(Bookmark bookmark) {
+	public /*protected*/ void deleteBookmark(Bookmark bookmark) {
 		if (myDeleteBookmarkStatement == null) {
 			myDeleteBookmarkStatement = myDatabase.compileStatement(
 				"DELETE FROM Bookmarks WHERE bookmark_id = ?"
@@ -834,7 +834,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myDeleteBookmarkStatement.execute();
 	}
 
-	protected ZLTextPosition getStoredPosition(long bookId) {
+	public /*protected*/ ZLTextPosition getStoredPosition(long bookId) {
 		ZLTextPosition position = null;
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT paragraph,word,char FROM BookState WHERE book_id = " + bookId, null
@@ -851,7 +851,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myStorePositionStatement;
-	protected void storePosition(long bookId, ZLTextPosition position) {
+	public /*protected*/ void storePosition(long bookId, ZLTextPosition position) {
 		if (myStorePositionStatement == null) {
 			myStorePositionStatement = myDatabase.compileStatement(
 				"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char) VALUES (?,?,?,?)"
@@ -877,7 +877,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myStoreVisitedHyperlinksStatement;
-	protected void addVisitedHyperlink(long bookId, String hyperlinkId) {
+	public /*protected*/ void addVisitedHyperlink(long bookId, String hyperlinkId) {
 		if (myStoreVisitedHyperlinksStatement == null) {
 			myStoreVisitedHyperlinksStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO VisitedHyperlinks(book_id,hyperlink_id) VALUES (?,?)"
@@ -889,7 +889,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myStoreVisitedHyperlinksStatement.execute();
 	}
 
-	protected Collection<String> loadVisitedHyperlinks(long bookId) {
+	public /*protected*/ Collection<String> loadVisitedHyperlinks(long bookId) {
 		final TreeSet<String> links = new TreeSet<String>();
 		final Cursor cursor = myDatabase.rawQuery("SELECT hyperlink_id FROM VisitedHyperlinks WHERE book_id = ?", new String[] { "" + bookId });
 		while (cursor.moveToNext()) {

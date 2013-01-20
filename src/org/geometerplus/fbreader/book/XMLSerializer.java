@@ -28,9 +28,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Bookmark;
-
 class XMLSerializer extends AbstractSerializer {
 	@Override
 	public String serialize(Book book) {
