@@ -373,7 +373,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<String> bookDirectories() {
-		return Collections.singletonList(Paths.BooksDirectoryOption().getValue());
+		return new ArrayList<String>(Paths.BookPathOption().getValue());
 	}
 
 	private List<ZLPhysicalFile> collectPhysicalFiles() {
