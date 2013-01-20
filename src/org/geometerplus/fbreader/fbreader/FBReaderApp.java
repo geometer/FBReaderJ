@@ -465,11 +465,11 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void addInvisibleBookmark() {
 		if (Model.Book != null && getTextView() == BookTextView) {
-			updateInvisibleBookmarksList(addBookmark(6, false));
+			updateInvisibleBookmarksList(createBookmark(6, false));
 		}
 	}
 
-	public Bookmark addBookmark(int maxLength, boolean visible) {
+	public Bookmark createBookmark(int maxLength, boolean visible) {
 		final FBView view = getTextView();
 		final ZLTextWordCursor cursor = view.getStartCursor();
 
