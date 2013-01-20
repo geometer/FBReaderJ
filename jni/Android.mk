@@ -29,7 +29,7 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE                  := NativeFormats-v2
+LOCAL_MODULE                  := NativeFormats-v3
 LOCAL_CFLAGS                  := -Wall
 LOCAL_LDLIBS                  := -lz -llog
 LOCAL_STATIC_LIBRARIES        := expat
