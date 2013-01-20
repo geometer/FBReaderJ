@@ -34,24 +34,24 @@ public abstract class BooksDatabase {
 		return ourInstance;
 	}
 
-	public /*protected*/ BooksDatabase() {
+	protected BooksDatabase() {
 		ourInstance = this;
 	}
 
-	public /*protected*/ Book createBook(long id, long fileId, String title, String encoding, String language) {
+	protected Book createBook(long id, long fileId, String title, String encoding, String language) {
 		final FileInfoSet infos = new FileInfoSet(this, fileId);
 		return createBook(id, infos.getFile(fileId), title, encoding, language);
 	}
-	public /*protected*/ Book createBook(long id, ZLFile file, String title, String encoding, String language) {
+	protected Book createBook(long id, ZLFile file, String title, String encoding, String language) {
 		return (file != null) ? new Book(id, file, title, encoding, language) : null;
 	}
-	public /*protected*/ void addAuthor(Book book, Author author) {
+	protected void addAuthor(Book book, Author author) {
 		book.addAuthorWithNoCheck(author);
 	}
-	public /*protected*/ void addTag(Book book, Tag tag) {
+	protected void addTag(Book book, Tag tag) {
 		book.addTagWithNoCheck(tag);
 	}
-	public /*protected*/ void setSeriesInfo(Book book, String series, String index) {
+	protected void setSeriesInfo(Book book, String series, String index) {
 		book.setSeriesInfoWithNoCheck(series, index);
 	}
 
@@ -77,7 +77,7 @@ public abstract class BooksDatabase {
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
 
-	public /*protected*/ FileInfo createFileInfo(long id, String name, FileInfo parent) {
+	protected FileInfo createFileInfo(long id, String name, FileInfo parent) {
 		return new FileInfo(name, parent, id);
 	}
 
@@ -94,7 +94,7 @@ public abstract class BooksDatabase {
 	public /*protected*/ abstract void addToFavorites(long bookId);
 	public /*protected*/ abstract void removeFromFavorites(long bookId);
 
-	public /*protected*/ Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex, boolean isVisible) {
+	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex, boolean isVisible) {
 		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex, isVisible);
 	}
 
