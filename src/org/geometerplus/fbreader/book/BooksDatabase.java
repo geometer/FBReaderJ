@@ -69,11 +69,11 @@ public abstract class BooksDatabase {
 	public /*protected*/ abstract SeriesInfo loadSeriesInfo(long bookId);
 	public /*protected*/ abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
 	public /*protected*/ abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
-	public /*protected*/ abstract void deleteAllBookAuthors(long bookId);
-	public /*protected*/ abstract void saveBookAuthorInfo(long bookId, long index, Author author);
-	public /*protected*/ abstract void deleteAllBookTags(long bookId);
-	public /*protected*/ abstract void saveBookTagInfo(long bookId, Tag tag);
-	public /*protected*/ abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
+	protected abstract void deleteAllBookAuthors(long bookId);
+	protected abstract void saveBookAuthorInfo(long bookId, long index, Author author);
+	protected abstract void deleteAllBookTags(long bookId);
+	protected abstract void saveBookTagInfo(long bookId, Tag tag);
+	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
 
 	public /*protected*/ FileInfo createFileInfo(long id, String name, FileInfo parent) {
 		return new FileInfo(name, parent, id);
