@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.fbreader.book.Book;
+
 public final class TitleTree extends LibraryTree {
 	static String firstTitleLetter(Book book) {
 		if (book == null) {

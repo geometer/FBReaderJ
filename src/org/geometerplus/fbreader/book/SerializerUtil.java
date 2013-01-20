@@ -21,9 +21,6 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Bookmark;
-
 public abstract class SerializerUtil {
 	private SerializerUtil() {
 	}

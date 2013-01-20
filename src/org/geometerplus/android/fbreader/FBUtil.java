@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.book.Book;
 
 public abstract class FBUtil {
 	public static void shareBook(Activity activity, Book book) {
