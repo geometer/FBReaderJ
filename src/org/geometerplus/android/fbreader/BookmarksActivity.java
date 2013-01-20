@@ -45,7 +45,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
 
-	List<Bookmark> myAllBooksBookmarks;
+	private List<Bookmark> myAllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
 	private final List<Bookmark> mySearchResults = new LinkedList<Bookmark>();
 
@@ -88,10 +88,19 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (FBReaderApp.Instance() == null) {
 			new FBReaderApp();
 		}
-		final Bookmark bookmark =
-			SerializerUtil.deserializeBookmark(getIntent().getStringExtra("BOOKMARK"));
-		if (bookmark != null) {
-			final long bookId = bookmark.getBookId();
+
+		long bookId = -1;
+		final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+		if (book != null) {
+			bookId = book.getId();
+		} else {
+			final Bookmark bookmark =
+				SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
+			if (bookmark != null) {
+				bookId = bookmark.getBookId();
+			}
+		}
+		if (bookId != -1) {
 			for (Bookmark bm : myAllBooksBookmarks) {
 				if (bm.getBookId() == bookId) {
 					myThisBookBookmarks.add(bm);
@@ -227,7 +236,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	private void addBookmark() {
 		final Bookmark bookmark =
-			SerializerUtil.deserializeBookmark(getIntent().getStringExtra("BOOKMARK"));
+			SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
 		if (bookmark != null) {
 			myThisBookBookmarks.add(0, bookmark);
 			myAllBooksBookmarks.add(0, bookmark);

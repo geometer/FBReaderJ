@@ -199,6 +199,8 @@ public final class FBReader extends Activity {
 
 	public static final String ACTION_OPEN_BOOK = "android.fbreader.action.VIEW";
 	public static final String BOOK_PATH_KEY = "BookPath";
+	public static final String BOOK_KEY = "fbreader.book";
+	public static final String BOOKMARK_KEY = "fbreader.bookmark";
 
 	public static final int REQUEST_PREFERENCES = 1;
 	public static final int REQUEST_BOOK_INFO = 2;
