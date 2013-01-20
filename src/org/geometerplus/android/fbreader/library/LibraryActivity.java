@@ -134,7 +134,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		OrientationUtil.startActivityForResult(
 			this,
 			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath()),
+				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book)),
 			BOOK_INFO_REQUEST
 		);
 	}
@@ -142,8 +142,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == BOOK_INFO_REQUEST && intent != null) {
-			final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
-			final Book book = Book.getByFile(ZLFile.createFileByPath(path));
+			final Book book = BookInfoActivity.bookByIntent(intent);
 			myLibrary.refreshBookInfo(book);
 			getListView().invalidateViews();
 		} else {
@@ -220,7 +219,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	private boolean onContextItemSelected(int itemId, Book book) {
 		switch (itemId) {
 			case OPEN_BOOK_ITEM_ID:
-				openBook(book);
+				FBReader.openBookActivity(this, book, null);
 				return true;
 			case SHOW_BOOK_INFO_ITEM_ID:
 				showBookInfo(book);
@@ -240,15 +239,6 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 				return true;
 		}
 		return false;
-	}
-
-	private void openBook(Book book) {
-		startActivity(
-			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(FBReader.ACTION_OPEN_BOOK)
-				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-		);
 	}
 
 	//
