@@ -207,7 +207,7 @@ public final class FBReaderApp extends ZLApplication {
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
-					myPluginFileOpener.openFile(f, ((PluginFormatPlugin)p).getPackage(), bookmark == null ? "" : bookmark.writeToString(), bookToOpen.getId());
+					myPluginFileOpener.openFile(f, ((PluginFormatPlugin)p).getPackage(), bookmark == null ? "" : SerializerUtil.serialize(bookmark), bookToOpen.getId());
 				}
 			}, postAction);
 			return;

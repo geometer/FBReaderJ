@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader;
 import android.content.Intent;
 
 import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class ShowBookmarksAction extends FBAndroidAction {
@@ -38,7 +39,7 @@ class ShowBookmarksAction extends FBAndroidAction {
 	protected void run(Object ... params) {
 		final Intent intent =
 			new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
-		final String s = ((FBReaderApp)FBReaderApp.Instance()).addBookmark(20, true).writeToString();
+		final String s = SerializerUtil.serialize(Reader.addBookmark(20, true));
 		intent.putExtra("BOOKMARK", s);
 		OrientationUtil.startActivity(BaseActivity, intent);
 	}

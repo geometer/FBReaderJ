@@ -45,7 +45,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
 
-	List<Bookmark> AllBooksBookmarks;
+	List<Bookmark> myAllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
 	private final List<Bookmark> mySearchResults = new LinkedList<Bookmark>();
 
@@ -85,16 +85,17 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "BOOKMARKS");
 		}
-		AllBooksBookmarks = Library.Instance().allBookmarks();
-		Collections.sort(AllBooksBookmarks, new Bookmark.ByTimeComparator());
+		myAllBooksBookmarks = Library.Instance().allBookmarks();
+		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
 
 		if (FBReaderApp.Instance() == null) {
 			new FBReaderApp();
 		}
-		final Bookmark bookmark = Bookmark.fromString(getIntent().getStringExtra("BOOKMARK"));
+		final Bookmark bookmark =
+			SerializerUtil.deserializeBookmark(getIntent().getStringExtra("BOOKMARK"));
 		if (bookmark != null) {
 			final long bookId = bookmark.getBookId();
-			for (Bookmark bm : AllBooksBookmarks) {
+			for (Bookmark bm : myAllBooksBookmarks) {
 				if (bm.getBookId() == bookId) {
 					myThisBookBookmarks.add(bm);
 				}
@@ -107,7 +108,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		}
 
 		myAllBooksView = createTab("allBooks", R.id.all_books);
-		new BookmarksAdapter(myAllBooksView, AllBooksBookmarks, false);
+		new BookmarksAdapter(myAllBooksView, myAllBooksBookmarks, false);
 
 		findViewById(R.id.search_results).setVisibility(View.GONE);
 	}
@@ -131,7 +132,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
 		pattern = pattern.toLowerCase();
-		for (Bookmark b : AllBooksBookmarks) {
+		for (Bookmark b : myAllBooksBookmarks) {
 			if (ZLMiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
 				bookmarks.add(b);
 			}
@@ -145,7 +146,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	@Override
 	public void onPause() {
-		for (Bookmark bookmark : AllBooksBookmarks) {
+		for (Bookmark bookmark : myAllBooksBookmarks) {
 			bookmark.save();
 		}
 		super.onPause();
@@ -219,7 +220,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			case DELETE_ITEM_ID:
 				bookmark.delete();
 				myThisBookBookmarks.remove(bookmark);
-				AllBooksBookmarks.remove(bookmark);
+				myAllBooksBookmarks.remove(bookmark);
 				mySearchResults.remove(bookmark);
 				invalidateAllViews();
 				return true;
@@ -228,10 +229,11 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private void addBookmark() {
-		final Bookmark bookmark = Bookmark.fromString(getIntent().getStringExtra("BOOKMARK"));
+		final Bookmark bookmark =
+			SerializerUtil.deserializeBookmark(getIntent().getStringExtra("BOOKMARK"));
 		if (bookmark != null) {
 			myThisBookBookmarks.add(0, bookmark);
-			AllBooksBookmarks.add(0, bookmark);
+			myAllBooksBookmarks.add(0, bookmark);
 			invalidateAllViews();
 		}
 	}
