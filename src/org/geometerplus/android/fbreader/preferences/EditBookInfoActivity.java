@@ -53,6 +53,7 @@ class BookTitlePreference extends ZLStringPreference {
 	protected void setValue(String value) {
 		super.setValue(value);
 		myBook.setTitle(value);
+		((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
 	}
 }
 
@@ -88,6 +89,7 @@ class LanguagePreference extends ZLStringListPreference {
 		if (result) {
 			final String value = getValue();
 			myBook.setLanguage(value.length() > 0 ? value : null);
+			((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
 		}
 	}
 }
@@ -141,13 +143,14 @@ class EncodingPreference extends ZLStringListPreference {
 			final String value = getValue();
 			if (!value.equalsIgnoreCase(myBook.getEncoding())) {
 				myBook.setEncoding(value);
-				((EditBookInfoActivity)getContext()).setResult(FBReader.RESULT_RELOAD_BOOK);
+				((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_RELOAD_BOOK);
 			}
 		}
 	}
 }
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
+	private int myStatus = FBReader.RESULT_REPAINT;
 	private Book myBook;
 	private final List<String> myAuthors = new ArrayList<String>();
 	private final List<String> myTags = new ArrayList<String>();
@@ -168,6 +171,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 		public void setValue(List<String> l) {
 			myBook.setAuthors(l);
+			//((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
 		}
 	}
 
@@ -191,6 +195,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				for (String t : tags) {
 					myBook.addTag(Tag.getTag(t.split("/")));
 				}
+				//((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
 			}
 		}
 	}
@@ -214,16 +219,19 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		myTagPref.setSuggestions(myTags);
 	}
 
+	void setBookStatus(int code) {
+		myStatus = Math.max(myStatus, code);
+		setResult(myStatus, BookInfoActivity.intentByBook(myBook));
+	}
+
 	@Override
 	protected void init(Intent intent) {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
-		final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
-		final ZLFile file = ZLFile.createFileByPath(path);
-		myBook = Book.getByFile(file);
-		setResult(FBReader.RESULT_REPAINT);
+		myBook = BookInfoActivity.bookByIntent(intent);
+		myStatus = FBReader.RESULT_REPAINT;
 
 		if (myBook == null) {
 			finish();

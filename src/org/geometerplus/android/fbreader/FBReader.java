@@ -198,7 +198,6 @@ public final class FBReader extends Activity {
 	}
 
 	public static final String ACTION_OPEN_BOOK = "android.fbreader.action.VIEW";
-	public static final String BOOK_PATH_KEY = "BookPath";
 	public static final String BOOK_KEY = "fbreader.book";
 	public static final String BOOKMARK_KEY = "fbreader.bookmark";
 
@@ -209,6 +208,16 @@ public final class FBReader extends Activity {
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
+
+	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
+		context.startActivity(
+			new Intent(context, FBReader.class)
+				.setAction(ACTION_OPEN_BOOK)
+				.putExtra(BOOK_KEY, SerializerUtil.serialize(book))
+				.putExtra(BOOKMARK_KEY, SerializerUtil.serialize(bookmark))
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+		);
+	}
 
 	private static ZLAndroidLibrary getZLibrary() {
 		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
@@ -256,7 +265,9 @@ public final class FBReader extends Activity {
 			return;
 		}
 
-		myBook = createBookForFile(ZLFile.createFileByPath(intent.getStringExtra(BOOK_PATH_KEY)));
+		myBook = SerializerUtil.deserializeBook(intent.getStringExtra(BOOK_KEY));
+		final Bookmark bookmark =
+			SerializerUtil.deserializeBookmark(intent.getStringExtra(BOOKMARK_KEY));
 		if (myBook == null) {
 			final Uri data = intent.getData();
 			if (data != null) {
@@ -267,7 +278,7 @@ public final class FBReader extends Activity {
 		if (myBook != null) {
 			Log.d("fbreader", myBook.File.getPath());
 		}
-		myFBReaderApp.openBook(myBook, null, action);
+		myFBReaderApp.openBook(myBook, bookmark, action);
 	}
 
 	private Book createBookForFile(ZLFile file) {
@@ -321,6 +332,7 @@ public final class FBReader extends Activity {
 			}
 			myFBReaderApp = new FBReaderApp();
 		}
+		myBook = null;
 
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
 		if (androidApplication.myMainWindow == null) {
