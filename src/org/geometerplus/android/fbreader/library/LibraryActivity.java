@@ -45,7 +45,6 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
-	public static final String SELECTED_BOOK_KEY = "fbreader.library.selected-book";
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
 	private Library myLibrary;
@@ -62,7 +61,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		}
 
 		mySelectedBook =
-			SerializerUtil.deserializeBook(getIntent().getStringExtra(SELECTED_BOOK_KEY));
+			SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
 
 		new LibraryTreeAdapter(this);
 
