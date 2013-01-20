@@ -371,31 +371,25 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				if (myDontReloadBook) {
 					finish();
 				} else {
-					startActivity(
-						new Intent(getApplicationContext(), FBReader.class)
-							.setAction(FBReader.ACTION_OPEN_BOOK)
-							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
-							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-					);
+					FBReader.openBookActivity(this, myBook, null);
 				}
 				return true;
 			case EDIT_INFO:
 				OrientationUtil.startActivityForResult(
 					this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
+						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook)),
 					1
 				);
 				return true;
 			case SHARE_BOOK:
-				FBUtil.shareBook(this, Book.getByFile(myFile));
+				FBUtil.shareBook(this, myBook);
 				return true;
 			case RELOAD_INFO:
 			{
-				final Book book = Book.getByFile(myFile);
-				if (book != null) {
-					book.reloadInfoFromFile();
-					setupBookInfo(book);
+				if (myBook != null) {
+					myBook.reloadInfoFromFile();
+					setupBookInfo(myBook);
 					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
 					setResult(myResult);
 				}
