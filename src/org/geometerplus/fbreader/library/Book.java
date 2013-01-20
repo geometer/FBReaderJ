@@ -121,7 +121,7 @@ public class Book {
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
 	private WeakReference<ZLImage> myCover;
 
-	Book(long id, ZLFile file, String title, String encoding, String language) {
+	public Book(long id, ZLFile file, String title, String encoding, String language) {
 		myId = id;
 		File = file;
 		myTitle = title;
@@ -208,7 +208,7 @@ public class Book {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
 	}
 
-	void addAuthorWithNoCheck(Author author) {
+	public void addAuthorWithNoCheck(Author author) {
 		if (myAuthors == null) {
 			myAuthors = new ArrayList<Author>();
 		}
@@ -284,8 +284,8 @@ public class Book {
 		return mySeriesInfo;
 	}
 
-	void setSeriesInfoWithNoCheck(String name, BigDecimal index) {
-		mySeriesInfo = new SeriesInfo(name, index);
+	public void setSeriesInfoWithNoCheck(String name, String index) {
+		mySeriesInfo = SeriesInfo.createSeriesInfo(name, index);
 	}
 
 	public void setSeriesInfo(String name, String index) {
@@ -346,7 +346,7 @@ public class Book {
 		return myTags != null ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
 	}
 
-	void addTagWithNoCheck(Tag tag) {
+	public void addTagWithNoCheck(Tag tag) {
 		if (myTags == null) {
 			myTags = new ArrayList<Tag>();
 		}

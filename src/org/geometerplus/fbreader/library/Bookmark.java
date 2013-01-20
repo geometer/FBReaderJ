@@ -46,7 +46,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 
 	private boolean myIsChanged;
 
-	Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int elementIndex, int charIndex, boolean isVisible) {
+	public Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int elementIndex, int charIndex, boolean isVisible) {
 		super(paragraphIndex, elementIndex, charIndex);
 
 		myId = id;
