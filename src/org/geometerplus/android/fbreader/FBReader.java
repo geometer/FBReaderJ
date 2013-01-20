@@ -72,7 +72,7 @@ public final class FBReader extends Activity {
 	}
 
 	private FBReaderApp myFBReaderApp;
-	private Book myBook;
+	private volatile Book myBook;
 
 	private int myFullScreenFlag;
 
