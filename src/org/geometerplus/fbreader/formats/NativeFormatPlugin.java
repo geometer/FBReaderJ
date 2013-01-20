@@ -59,7 +59,12 @@ public class NativeFormatPlugin extends FormatPlugin {
 	private native boolean readMetaInfoNative(Book book);
 
 	@Override
-	public native void detectLanguageAndEncoding(Book book);
+	public void detectLanguageAndEncoding(Book book) {
+		detectLanguageAndEncodingNative(book);
+		book.save();
+	}
+
+	public native void detectLanguageAndEncodingNative(Book book);
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
