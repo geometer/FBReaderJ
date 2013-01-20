@@ -52,7 +52,7 @@ public abstract class BooksDatabase {
 		book.addTagWithNoCheck(tag);
 	}
 	protected void setSeriesInfo(Book book, String series, String index) {
-		book.setSeriesInfoWithNoCheck(series, SeriesInfo.createIndex(index));
+		book.setSeriesInfoWithNoCheck(series, index);
 	}
 
 	protected abstract void executeAsATransaction(Runnable actions);
