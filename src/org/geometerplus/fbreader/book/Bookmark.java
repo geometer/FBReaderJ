@@ -239,4 +239,8 @@ mainLoop:
 		}
 		return builder.toString();
 	}
+
+	void setId(long id) {
+		myId = id;
+	}
 }
