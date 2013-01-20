@@ -88,7 +88,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (FBReaderApp.Instance() == null) {
 			new FBReaderApp();
 		}
-		final Bookmark bookmark = Bookmark.fromString(getIntent().getStringExtra("BOOKMARK"));
+		final Bookmark bookmark =
+			SerializerUtil.deserializeBookmark(getIntent().getStringExtra("BOOKMARK"));
 		if (bookmark != null) {
 			final long bookId = bookmark.getBookId();
 			for (Bookmark bm : myAllBooksBookmarks) {
@@ -225,7 +226,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private void addBookmark() {
-		final Bookmark bookmark = Bookmark.fromString(getIntent().getStringExtra("BOOKMARK"));
+		final Bookmark bookmark =
+			SerializerUtil.deserializeBookmark(getIntent().getStringExtra("BOOKMARK"));
 		if (bookmark != null) {
 			myThisBookBookmarks.add(0, bookmark);
 			myAllBooksBookmarks.add(0, bookmark);
