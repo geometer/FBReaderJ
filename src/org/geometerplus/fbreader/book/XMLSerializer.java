@@ -173,16 +173,16 @@ class XMLSerializer extends AbstractSerializer {
 			data = data.replaceAll("&", "&amp;");
 		}
 		if (data.indexOf('<') != -1) {
-			data = data.replaceAll("&", "&lt;");
+			data = data.replaceAll("<", "&lt;");
 		}
 		if (data.indexOf('>') != -1) {
-			data = data.replaceAll("&", "&gt;");
+			data = data.replaceAll(">", "&gt;");
 		}
 		if (data.indexOf('\'') != -1) {
-			data = data.replaceAll("&", "&apos;");
+			data = data.replaceAll("\'", "&apos;");
 		}
 		if (data.indexOf('"') != -1) {
-			data = data.replaceAll("&", "&quot;");
+			data = data.replaceAll("\"", "&quot;");
 		}
 		return data;
 	}
@@ -446,6 +446,7 @@ class XMLSerializer extends AbstractSerializer {
 		//appendTagWithContent(buffer, "text", bookmark.getText());
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+//			System.err.println("start: " + tag + " " + myState);
 			switch (myState) {
 				case READ_NOTHING:
 					if (!"bookmark".equals(tag)) {
@@ -472,11 +473,14 @@ class XMLSerializer extends AbstractSerializer {
 					} else if ("history".equals(tag)) {
 						try {
 							myCreationDate = parseDate(attributes.getValue("date-creation"));
+						} catch (Exception e) {
+							return true;
+						}
+						try {
 							myModificationDate = parseDate(attributes.getValue("date-modification"));
 							myAccessDate = parseDate(attributes.getValue("date-access"));
 							myAccessCount = Integer.parseInt(attributes.getValue("access-count"));
 						} catch (Exception e) {
-							return true;
 						}
 					} else if ("position".equals(tag)) {
 						try {
@@ -499,6 +503,7 @@ class XMLSerializer extends AbstractSerializer {
 		
 		@Override
 		public boolean endElementHandler(String tag) {
+//			System.err.println("end: " + tag + " " + myState);
 			switch (myState) {
 				case READ_NOTHING:
 					return true;

@@ -23,6 +23,7 @@ import java.util.*;
 
 import android.app.*;
 import android.os.*;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.content.*;
@@ -37,6 +38,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.Library;
 
+import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.util.UIUtil;
 
@@ -246,12 +248,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	private void gotoBookmark(Bookmark bookmark) {
 		bookmark.onOpen();
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
+//		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final long bookId = bookmark.getBookId();
 		final Book book = Book.getById(bookId);
 		if (book != null) {
 			finish();
-			fbreader.openBook(book, bookmark, null);
+			FBReader.openBookActivity(this, book, bookmark);
+//			fbreader.openBook(book, bookmark, null);
+			
 		} else {
 			UIUtil.showErrorMessage(this, "cannotOpenBook");
 		}
