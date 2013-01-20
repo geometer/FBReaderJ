@@ -87,6 +87,7 @@ public final class Library {
 		}
 	}
 
+	public final IBookCollection Collection;
 	private final BooksDatabase myDatabase;
 
 	private final Map<ZLFile,Book> myBooks =
@@ -109,6 +110,7 @@ public final class Library {
 	}
 
 	public Library(BooksDatabase db) {
+		Collection = null;
 		myDatabase = db;
 
 		new FavoritesTree(myRootTree, ROOT_FAVORITES);
@@ -116,7 +118,7 @@ public final class Library {
 		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
-		new FileFirstLevelTree(myRootTree, ROOT_FILE_TREE);
+		new FileFirstLevelTree(Collection, myRootTree, ROOT_FILE_TREE);
 	}
 
 	public LibraryTree getRootTree() {
