@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.library;
 
 import org.geometerplus.fbreader.book.Author;
+import org.geometerplus.fbreader.book.Book;
 
 public class AuthorTree extends LibraryTree {
 	public final Author Author;

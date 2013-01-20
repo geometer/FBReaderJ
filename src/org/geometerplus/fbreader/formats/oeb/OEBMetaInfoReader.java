@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
