@@ -325,7 +325,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myDeleteBookAuthorsStatement;
-	public /*protected*/ void deleteAllBookAuthors(long bookId) {
+	protected void deleteAllBookAuthors(long bookId) {
 		if (myDeleteBookAuthorsStatement == null) {
 			myDeleteBookAuthorsStatement = myDatabase.compileStatement(
 				"DELETE FROM BookAuthor WHERE book_id = ?"
@@ -338,7 +338,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	private SQLiteStatement myGetAuthorIdStatement;
 	private SQLiteStatement myInsertAuthorStatement;
 	private SQLiteStatement myInsertBookAuthorStatement;
-	public /*protected*/ void saveBookAuthorInfo(long bookId, long index, Author author) {
+	protected void saveBookAuthorInfo(long bookId, long index, Author author) {
 		if (myGetAuthorIdStatement == null) {
 			myGetAuthorIdStatement = myDatabase.compileStatement(
 				"SELECT author_id FROM Authors WHERE name = ? AND sort_key = ?"
@@ -422,7 +422,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myDeleteBookTagsStatement;
-	public /*protected*/ void deleteAllBookTags(long bookId) {
+	protected void deleteAllBookTags(long bookId) {
 		if (myDeleteBookTagsStatement == null) {
 			myDeleteBookTagsStatement = myDatabase.compileStatement(
 				"DELETE FROM BookTag WHERE book_id = ?"
@@ -433,7 +433,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myInsertBookTagStatement;
-	public /*protected*/ void saveBookTagInfo(long bookId, Tag tag) {
+	protected void saveBookTagInfo(long bookId, Tag tag) {
 		if (myInsertBookTagStatement == null) {
 			myInsertBookTagStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO BookTag (book_id,tag_id) VALUES (?,?)"
@@ -477,7 +477,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	private SQLiteStatement myInsertSeriesStatement;
 	private SQLiteStatement myInsertBookSeriesStatement;
 	private SQLiteStatement myDeleteBookSeriesStatement;
-	public /*protected*/ void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo) {
+	protected void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo) {
 		if (myGetSeriesIdStatement == null) {
 			myGetSeriesIdStatement = myDatabase.compileStatement(
 				"SELECT series_id FROM Series WHERE name = ?"
@@ -712,7 +712,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myRemoveFromFavoritesStatement.execute();
 	}
 
-	public /*protected*/ List<Long> loadFavoriteIds() {
+	protected List<Long> loadFavoriteIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM Favorites", null
 		);
