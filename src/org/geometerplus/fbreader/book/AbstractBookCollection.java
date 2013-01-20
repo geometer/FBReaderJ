@@ -21,8 +21,6 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
-import org.geometerplus.fbreader.book.Book;
-
 public abstract class AbstractBookCollection implements IBookCollection {
 	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
 
