@@ -320,7 +320,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	public void gotoBookmark(Bookmark bookmark) {
+	private void gotoBookmark(Bookmark bookmark) {
 		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			addInvisibleBookmark();
