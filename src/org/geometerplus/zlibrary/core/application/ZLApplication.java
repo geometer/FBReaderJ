@@ -189,8 +189,6 @@ public abstract class ZLApplication {
 	public void onWindowClosing() {
 	}
 
-	public abstract void openFile(ZLFile file, Runnable postAction);
-
 	//Action
 	static abstract public class ZLAction {
 		public boolean isVisible() {
