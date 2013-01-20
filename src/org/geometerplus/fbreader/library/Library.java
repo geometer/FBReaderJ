@@ -111,8 +111,8 @@ public final class Library {
 	}
 
 	public Library(BooksDatabase db) {
-		Collection = null;
 		myDatabase = db;
+		Collection = new BookCollection(db);
 
 		new FavoritesTree(myRootTree, ROOT_FAVORITES);
 		new FirstLevelTree(myRootTree, ROOT_RECENT);
@@ -359,30 +359,12 @@ public final class Library {
 			myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
 		}
 
-		for (long id : myDatabase.loadRecentBookIds()) {
-			Book book = savedBooksByBookId.get(id);
-			if (book == null) {
-				book = Book.getById(id);
-				if (book != null && !book.File.exists()) {
-					book = null;
-				}
-			}
-			if (book != null) {
-				new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
-			}
+		for (Book book : Collection.recentBooks()) {
+			new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
 		}
 
-		for (long id : myDatabase.loadFavoriteIds()) {
-			Book book = savedBooksByBookId.get(id);
-			if (book == null) {
-				book = Book.getById(id);
-				if (book != null && !book.File.exists()) {
-					book = null;
-				}
-			}
-			if (book != null) {
-				getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
-			}
+		for (Book book : Collection.favorites()) {
+			getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
 		}
 
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
@@ -591,14 +573,7 @@ public final class Library {
 	}
 
 	public void addBookToRecentList(Book book) {
-		final List<Long> ids = myDatabase.loadRecentBookIds();
-		final Long bookId = book.getId();
-		ids.remove(bookId);
-		ids.add(0, bookId);
-		if (ids.size() > 12) {
-			ids.remove(12);
-		}
-		myDatabase.saveRecentBookIds(ids);
+		Collection.addBookToRecentList(book);
 	}
 
 	public boolean isBookInFavorites(Book book) {
