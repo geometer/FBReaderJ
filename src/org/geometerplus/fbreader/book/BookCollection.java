@@ -35,6 +35,8 @@ public class BookCollection extends AbstractBookCollection {
 		Collections.synchronizedMap(new LinkedHashMap<ZLFile,Book>());
 	private final Map<Long,Book> myBooksById =
 		Collections.synchronizedMap(new HashMap<Long,Book>());
+	private final List<String> myFilesToRescan =
+		Collections.synchronizedList(new LinkedList<String>());
 
 	private static enum BuildStatus {
 		NotStarted,
@@ -257,12 +259,41 @@ public class BookCollection extends AbstractBookCollection {
 					fireBuildEvent(Listener.BuildEvent.Failed);
 				} finally {
 					fireBuildEvent(Listener.BuildEvent.Completed);
-					myBuildStatus = BuildStatus.Finished;
+					synchronized (myFilesToRescan) {
+						myBuildStatus = BuildStatus.Finished;
+						processFilesQueue();
+					}
 				}
 			}
 		};
 		builder.setPriority(Thread.MIN_PRIORITY);
 		builder.start();
+	}
+
+	public void rescan(String path) {
+		synchronized (myFilesToRescan) {
+			myFilesToRescan.add(path);
+			processFilesQueue();
+		}
+	}
+
+	private void processFilesQueue() {
+		synchronized (myFilesToRescan) {
+			if (myBuildStatus != BuildStatus.Finished) {
+				return;
+			}
+			for (ZLFile file : collectPhysicalFiles(myFilesToRescan)) {
+				// TODO:
+				// collect books from archives
+				// rescan files and check book id
+				final Book book = getBookByFile(file);
+				if (book != null) {
+					saveBook(book, false);
+					addBook(book, false);
+				}
+			}
+			myFilesToRescan.clear();
+		}
 	}
 
 	private void build() {
@@ -294,34 +325,32 @@ public class BookCollection extends AbstractBookCollection {
 		final Set<ZLPhysicalFile> physicalFiles = new HashSet<ZLPhysicalFile>();
 		int count = 0;
 		for (Book book : savedBooksByFileId.values()) {
-			synchronized (this) {
-				final ZLPhysicalFile file = book.File.getPhysicalFile();
-				if (file != null) {
-					physicalFiles.add(file);
-				}
-				if (file != book.File && file != null && file.getPath().endsWith(".epub")) {
+			final ZLPhysicalFile file = book.File.getPhysicalFile();
+			if (file != null) {
+				physicalFiles.add(file);
+			}
+			if (file != book.File && file != null && file.getPath().endsWith(".epub")) {
+				continue;
+			}
+			if (book.File.exists()) {
+				boolean doAdd = true;
+				if (file == null) {
 					continue;
 				}
-				if (book.File.exists()) {
-					boolean doAdd = true;
-					if (file == null) {
-						continue;
+				if (!fileInfos.check(file, true)) {
+					try {
+						book.readMetaInfo();
+						saveBook(book, false);
+					} catch (BookReadingException e) {
+						doAdd = false;
 					}
-					if (!fileInfos.check(file, true)) {
-						try {
-							book.readMetaInfo();
-							saveBook(book, false);
-						} catch (BookReadingException e) {
-							doAdd = false;
-						}
-						file.setCached(false);
-					}
-					if (doAdd) {
-						addBook(book, false);
-					}
-				} else {
-					orphanedBooks.add(book);
+					file.setCached(false);
 				}
+				if (doAdd) {
+					addBook(book, false);
+				}
+			} else {
+				orphanedBooks.add(book);
 			}
 		}
 		myDatabase.setExistingFlag(orphanedBooks, false);
@@ -331,7 +360,7 @@ public class BookCollection extends AbstractBookCollection {
 		final Map<Long,Book> orphanedBooksByFileId = myDatabase.loadBooks(fileInfos, false);
 		final Set<Book> newBooks = new HashSet<Book>();
 
-		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
+		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles(bookDirectories());
 		for (ZLPhysicalFile file : physicalFilesList) {
 			if (physicalFiles.contains(file)) {
 				continue;
@@ -376,28 +405,31 @@ public class BookCollection extends AbstractBookCollection {
 		return Collections.singletonList(Paths.BooksDirectoryOption().getValue());
 	}
 
-	private List<ZLPhysicalFile> collectPhysicalFiles() {
-		final Queue<ZLFile> dirQueue = new LinkedList<ZLFile>();
-		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
+	private List<ZLPhysicalFile> collectPhysicalFiles(List<String> directories) {
+		final Queue<ZLPhysicalFile> fileQueue = new LinkedList<ZLPhysicalFile>();
+		final HashSet<ZLPhysicalFile> dirSet = new HashSet<ZLPhysicalFile>();
 		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
 
-		for (String path : bookDirectories()) {
-			dirQueue.offer(new ZLPhysicalFile(new File(path)));
+		for (String path : directories) {
+			fileQueue.offer(new ZLPhysicalFile(new File(path)));
 		}
 
-		while (!dirQueue.isEmpty()) {
-			for (ZLFile file : dirQueue.poll().children()) {
-				if (file.isDirectory()) {
-					if (!dirSet.contains(file)) {
-						dirQueue.add(file);
-						dirSet.add(file);
-					}
-				} else {
-					file.setCached(true);
-					fileList.add((ZLPhysicalFile)file);
+		while (!fileQueue.isEmpty()) {
+			final ZLPhysicalFile entry = fileQueue.poll();
+			if (entry.isDirectory()) {
+				if (dirSet.contains(entry)) {
+					continue;
 				}
+				dirSet.add(entry);
+				for (ZLFile file : entry.children()) {
+					fileQueue.add((ZLPhysicalFile)file);
+				}
+			} else {
+				entry.setCached(true);
+				fileList.add(entry);
 			}
 		}
+					
 		return fileList;
 	}
 

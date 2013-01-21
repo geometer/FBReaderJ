@@ -77,7 +77,7 @@ public final class Library {
 	}
 
 	public final IBookCollection Collection;
-	private final HashMap<Long,Book> myBooks = Collections.synchronizedMap(new HashMap<Long,Book>());
+	private final Map<Long,Book> myBooks = Collections.synchronizedMap(new HashMap<Long,Book>());
 
 	private final RootTree myRootTree = new RootTree();
 	private boolean myDoGroupTitlesByFirstLetter;
@@ -113,8 +113,11 @@ public final class Library {
 				switch (event) {
 					case Added:
 						addBookToLibrary(book);
-						if (Collection.size() % 16 == 0) {
-							Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
+						synchronized (myStatusLock) {
+							if ((myStatusMask & STATUS_LOADING) == 0 ||
+								Collection.size() % 16 == 0) {
+								Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
+							}
 						}
 						break;
 				}
