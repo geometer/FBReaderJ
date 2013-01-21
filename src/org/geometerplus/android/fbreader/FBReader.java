@@ -278,8 +278,16 @@ public final class FBReader extends Activity {
 		}
 
 		myBook = SerializerUtil.deserializeBook(intent.getStringExtra(BOOK_KEY));
+		if (intent.getStringExtra(BOOKMARK_KEY) != null) {
+			Log.d("bookmark", intent.getStringExtra(BOOKMARK_KEY));
+		} else {
+			Log.d("bookmark", "null");
+		}
 		final Bookmark bookmark =
 			SerializerUtil.deserializeBookmark(intent.getStringExtra(BOOKMARK_KEY));
+		if (bookmark == null) {
+			Log.d("bookmark", "null!!!!1111");
+		}
 		if (myBook == null) {
 			final Uri data = intent.getData();
 			if (data != null) {
@@ -469,7 +477,9 @@ public final class FBReader extends Activity {
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
 		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
-			openBook(intent, null, true);
+			myNeedToOpenFile = true;
+			myIntentToOpen = intent;
+			myNeedToSkipPlugin = true;
 		} else if (Intent.ACTION_VIEW.equals(action)
 					&& data != null && "fbreader-action".equals(data.getScheme())) {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
@@ -663,7 +673,8 @@ public final class FBReader extends Activity {
 		} catch (Throwable t) {
 		}
 		if (myNeedToOpenFile) {
-			openBook(myIntentToOpen, null, false);
+			Log.d("fbj", "needtoopen");
+			openBook(myIntentToOpen, null, true);
 			myNeedToOpenFile = false;
 			myIntentToOpen = null;
 		}

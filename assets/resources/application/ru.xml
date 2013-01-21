@@ -38,6 +38,9 @@
 		<node name="fileTreeLibrary" value="Библиотека FBReader">
 			<node name="summary" value="Просмотр каталога с книгами"/>
 		</node>
+		<node name="fileTreeAddLibrary" value="Дополнительная библиотека">
+			<node name="summary" value="Просмотр каталога с книгами"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
 		</node>
@@ -282,6 +285,7 @@
 			<node name="summary" value="Где искать файлы"/>
 			<node name="bookPath" value="Каталоги с книгами"/>
 			<node name="fontPath" value="Каталоги со шрифтами"/>
+			<node name="temp" value="Каталог для временных файлов"/>
 			<node name="wallpaperPath" value="Каталоги с обоями"/>
 			<node name="books" value="Каталог с книгами"/>
 			<node name="fonts" value="Каталог со шрифтами"/>
@@ -799,6 +803,9 @@
 			<node name="dontShowAgain" value="Больше не показывать"/>
 			<node name="more" value="Ещё"/>
 		</node>
+	</node>
+	<node name="warningMessage">
+	    <node name="mainBookDirEditing" value="Редактирование основной директории приведёт к потере данных. Продолжить?"/>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Не удается запустить Android Market. Попробуйте установить %s вручную"/>
