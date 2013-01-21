@@ -85,14 +85,16 @@ public class BooksDirectoryActivity extends BaseStringListActivity {
 
 			if (position == 0) {
 				final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_unlockbutton);
+				final String message = ZLResource.resource("warningMessage").getResource("mainBookDirEditing").getValue();
+				final String yes =  ZLResource.resource("dialog").getResource("button").getResource("yes").getValue();
+				final String no =  ZLResource.resource("dialog").getResource("button").getResource("no").getValue();
 				button.setOnClickListener(
 					new View.OnClickListener() {
 						public void onClick(View v) {
 							if (!myUserWasWarned) {
 								new AlertDialog.Builder(myActivity)
-									.setTitle("Editing of main directory will lead to loss of data")
-									.setMessage("Continue?")
-									.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+									.setMessage(message)
+									.setPositiveButton(yes, new DialogInterface.OnClickListener() {
 										public void onClick(DialogInterface arg0, int arg1) {
 											text.setEnabled(true);
 											text.setFocusable(true);
@@ -103,7 +105,7 @@ public class BooksDirectoryActivity extends BaseStringListActivity {
 											button.setEnabled(false);
 										}
 									})
-									.setNegativeButton("No", new DialogInterface.OnClickListener() {
+									.setNegativeButton(no, new DialogInterface.OnClickListener() {
 										public void onClick(DialogInterface arg0, int arg1) {
 											view.requestFocus();
 											view.clearFocus();
