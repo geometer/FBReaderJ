@@ -222,7 +222,7 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		}, postAction);
 	}
- 
+
 	public void reloadBook() {
 		if (Model != null && Model.Book != null) {
 			Model.Book.reloadInfoFromDatabase();
@@ -294,43 +294,49 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		}
 
-		if (book != null) {
-			onViewChanged();
-
-			storePosition();
-			BookTextView.setModel(null);
-			FootnoteView.setModel(null);
-			clearTextCaches();
-
-			Model = null;
-			System.gc();
-			System.gc();
-			try {
-				Model = BookModel.createModel(book);
-				ZLTextHyphenator.Instance().load(book.getLanguage());
-				BookTextView.setModel(Model.getTextModel());
-				BookTextView.gotoPosition(book.getStoredPosition());
-				if (bookmark == null) {
-					setView(BookTextView);
-				} else {
-					gotoBookmark(bookmark);
-				}
-				Library.Instance().addBookToRecentList(book);
-				final StringBuilder title = new StringBuilder(book.getTitle());
-				if (!book.authors().isEmpty()) {
-					boolean first = true;
-					for (Author a : book.authors()) {
-						title.append(first ? " (" : ", ");
-						title.append(a.DisplayName);
-						first = false;
-					}
-					title.append(")");
-				}
-				setTitle(title.toString());
-			} catch (BookReadingException e) {
-				processException(e);
+		if (!force && Model != null && book.equals(Model.Book)) {
+			if (bookmark != null) {
+				gotoBookmark(bookmark);
 			}
+			return;
 		}
+
+		onViewChanged();
+
+		storePosition();
+		BookTextView.setModel(null);
+		FootnoteView.setModel(null);
+		clearTextCaches();
+
+		Model = null;
+		System.gc();
+		System.gc();
+		try {
+			Model = BookModel.createModel(book);
+			ZLTextHyphenator.Instance().load(book.getLanguage());
+			BookTextView.setModel(Model.getTextModel());
+			BookTextView.gotoPosition(book.getStoredPosition());
+			if (bookmark == null) {
+				setView(BookTextView);
+			} else {
+				gotoBookmark(bookmark);
+			}
+			Library.Instance().addBookToRecentList(book);
+			final StringBuilder title = new StringBuilder(book.getTitle());
+			if (!book.authors().isEmpty()) {
+				boolean first = true;
+				for (Author a : book.authors()) {
+					title.append(first ? " (" : ", ");
+					title.append(a.DisplayName);
+					first = false;
+				}
+				title.append(")");
+			}
+			setTitle(title.toString());
+		} catch (BookReadingException e) {
+			processException(e);
+		}
+
 		getViewWidget().reset();
 		getViewWidget().repaint();
 	}
@@ -367,7 +373,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	public void gotoBookmark(Bookmark bookmark) {
+	private void gotoBookmark(Bookmark bookmark) {
 		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			addInvisibleBookmark();
@@ -418,7 +424,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	private static class BookmarkDescription extends CancelActionDescription {
 		final Bookmark Bookmark;
-		
+
 		BookmarkDescription(Bookmark b) {
 			super(CancelActionType.returnTo, b.getText());
 			Bookmark = b;
@@ -546,7 +552,7 @@ public final class FBReaderApp extends ZLApplication {
 			return null;
 		}
 
-		int index = cursor.getParagraphIndex();	
+		int index = cursor.getParagraphIndex();
 		if (cursor.isEndOfParagraph()) {
 			++index;
 		}
