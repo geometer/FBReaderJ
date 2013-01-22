@@ -64,7 +64,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
 	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
 	
-	public static class PluginMetaInfoReaderImpl implements Book.PluginMetaInfoReader {
+	public static class PluginMetaInfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
 		
 		private HashMap<String, MetaInfoReader> myServices;
 
@@ -136,8 +136,8 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
 		
-		if (Book.PMIReader == null) {
-			Book.PMIReader = new PluginMetaInfoReaderImpl(myServices);
+		if (MetaInfoUtil.PMIReader == null) {
+			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
 				ServiceConnection servConn=new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {

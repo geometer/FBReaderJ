@@ -90,8 +90,8 @@ public class BookInfoActivity extends Activity {
 
 		myResult = FBReader.RESULT_DO_NOTHING;
 		setResult(myResult, getIntent());
-		if (Book.PMIReader == null) {
-			Book.PMIReader = new PluginMetaInfoReaderImpl(myServices);
+		if (MetaInfoUtil.PMIReader == null) {
+			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
 				ServiceConnection servConn=new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {
