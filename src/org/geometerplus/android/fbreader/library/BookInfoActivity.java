@@ -38,8 +38,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
@@ -51,12 +49,11 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
-import org.geometerplus.android.fbreader.library.LibraryActivity.PluginFileOpener;
+import org.geometerplus.android.fbreader.library.LibraryActivity.PluginMetaInfoReaderImpl;
 import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
@@ -93,11 +90,8 @@ public class BookInfoActivity extends Activity {
 
 		myResult = FBReader.RESULT_DO_NOTHING;
 		setResult(myResult, getIntent());
-		if (ZLApplication.Instance() == null) {
-			new FBReaderApp();
-		}
-		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
-			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(myServices));
+		if (Book.PMIReader == null) {
+			Book.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
 				ServiceConnection servConn=new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {

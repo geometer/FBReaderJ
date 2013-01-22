@@ -38,8 +38,6 @@ public abstract class ZLApplication {
 	
 	public interface PluginFileOpener {
 		public void openFile(ZLFile f, String appData, String bookmark, long bookId);
-		public String readMetaInfo(ZLFile f, String appData);
-		public ZLImage readImage(ZLFile f, String appData);
 	}
 
 	protected ExternalFileOpener myExternalFileOpener;
