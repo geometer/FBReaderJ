@@ -34,7 +34,6 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.Library;
 
 import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
@@ -87,10 +86,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		}
 		myAllBooksBookmarks = Library.Instance().allBookmarks();
 		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
-
-		if (FBReaderApp.Instance() == null) {
-			new FBReaderApp();
-		}
 
 		long bookId = -1;
 		final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
