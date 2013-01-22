@@ -22,37 +22,27 @@ package org.geometerplus.android.fbreader.library;
 import java.util.HashMap;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Base64;
-import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
-import org.geometerplus.zlibrary.core.filetypes.FileType;
-import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.formats.Formats;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
@@ -74,11 +64,11 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
 	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
 	
-	public static class PluginFileOpener implements ZLApplication.PluginFileOpener {
+	public static class PluginMetaInfoReaderImpl implements Book.PluginMetaInfoReader {
 		
 		private HashMap<String, MetaInfoReader> myServices;
 
-		public PluginFileOpener(HashMap<String, MetaInfoReader> services) {
+		public PluginMetaInfoReaderImpl(HashMap<String, MetaInfoReader> services) {
 			myServices = services;
 		}
 
@@ -146,11 +136,8 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
 		
-		if (ZLApplication.Instance() == null) {
-			new FBReaderApp();
-		}
-		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
-			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(myServices));
+		if (Book.PMIReader == null) {
+			Book.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
 				ServiceConnection servConn=new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {

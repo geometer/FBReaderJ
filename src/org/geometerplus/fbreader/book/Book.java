@@ -46,6 +46,14 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.library.Library;
 
 public class Book {
+	
+	public static interface PluginMetaInfoReader {
+		String readMetaInfo(ZLFile f, String appData);
+		public ZLImage readImage(ZLFile f, String appData);
+	}
+	
+	public static PluginMetaInfoReader PMIReader;
+	
 	public static Book getById(long bookId) {
 		final BooksDatabase database = BooksDatabase.Instance();
 
@@ -219,7 +227,7 @@ public class Book {
 		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
 		if (fplugin != null) {
 			try {
-				String meta = ZLApplication.Instance().getPluginFileOpener().readMetaInfo(File, ((PluginFormatPlugin)fplugin).getPackage());
+				String meta = Book.PMIReader.readMetaInfo(File, ((PluginFormatPlugin)fplugin).getPackage());
 				Reader r = new Reader();
 				r.book = this;
 				try {
@@ -606,7 +614,7 @@ public class Book {
 			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
 			if (plugin != null) {
 				try {
-					image = ZLApplication.Instance().getPluginFileOpener().readImage(File, ((PluginFormatPlugin)plugin).getPackage());
+					image = Book.PMIReader.readImage(File, ((PluginFormatPlugin)plugin).getPackage());
 					if (image != null) {
 						myCover = new WeakReference<ZLImage>(image);
 					}
