@@ -190,16 +190,6 @@ public final class FBReader extends Activity {
 			return;
 		}
 
-		@Override
-		public String readMetaInfo(ZLFile f, String appData) {
-			return null;
-		}
-
-		@Override
-		public ZLImage readImage(ZLFile f, String appData) {
-			// TODO Auto-generated method stub
-			return null;
-		}
 	}
 
 	public static final String ACTION_OPEN_BOOK = "android.fbreader.action.VIEW";

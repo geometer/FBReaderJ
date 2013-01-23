@@ -34,8 +34,6 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
@@ -47,12 +45,11 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
-import org.geometerplus.android.fbreader.library.LibraryActivity.PluginFileOpener;
+import org.geometerplus.android.fbreader.library.LibraryActivity.PluginMetaInfoReaderImpl;
 import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
@@ -77,9 +74,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
 		);
 
-		final Intent intent = getIntent();
-		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = bookByIntent(intent);
+		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
+		myBook = bookByIntent(getIntent());
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
@@ -92,12 +88,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		setContentView(R.layout.book_info);
 
 		myResult = FBReader.RESULT_DO_NOTHING;
-		setResult(myResult, intent);
-		if (ZLApplication.Instance() == null) {
-			new FBReaderApp();
-		}
-		if (!ZLApplication.Instance().pluginFileOpenerIsSet()) {
-			ZLApplication.Instance().setPluginFileOpener(new PluginFileOpener(myServices));
+		setResult(myResult, getIntent());
+		if (MetaInfoUtil.PMIReader == null) {
+			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
 				ServiceConnection servConn=new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {
