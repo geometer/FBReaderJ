@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.*;
 
 public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
@@ -55,6 +56,15 @@ public class BookCollection extends AbstractBookCollection {
 
 	public Book getBookByFile(ZLFile bookFile) {
 		if (bookFile == null) {
+			return null;
+		}
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(bookFile);
+		if (plugin == null) {
+			return null;
+		}
+		try {
+			bookFile = plugin.realBookFile(bookFile);
+		} catch (BookReadingException e) {
 			return null;
 		}
 
@@ -92,7 +102,6 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		saveBook(book, false);
-		addBook(book, false);
 		return book;
 	}
 
@@ -158,8 +167,9 @@ public class BookCollection extends AbstractBookCollection {
 			return false;
 		}
 
+		final boolean result = book.save(myDatabase, force);
 		addBook(book, true);
-		return book.save(myDatabase, force);
+		return result;
 	}
 
 	public void removeBook(Book book, boolean deleteFromDisk) {
@@ -289,7 +299,6 @@ public class BookCollection extends AbstractBookCollection {
 				final Book book = getBookByFile(file);
 				if (book != null) {
 					saveBook(book, false);
-					addBook(book, false);
 				}
 			}
 			myFilesToRescan.clear();
@@ -394,7 +403,6 @@ public class BookCollection extends AbstractBookCollection {
 			public void run() {
 				for (Book book : newBooks) {
 					saveBook(book, false);
-					addBook(book, false);
 				}
 			}
 		});
