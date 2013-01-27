@@ -173,7 +173,7 @@ public class Book {
 		myIsSaved = true;
 	}
 
-	private FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
+	private static FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
 		if (plugin == null) {
 			throw new BookReadingException("pluginNotFound", file);
