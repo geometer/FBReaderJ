@@ -466,6 +466,32 @@ public final class FBReaderApp extends ZLApplication {
 		));
 		return myCancelActionsList;
 	}
+	
+	public static List<CancelActionDescription> getStaticCancelActionsList() {
+		ArrayList<CancelActionDescription> cancelActionsList = new ArrayList<CancelActionDescription>();
+		if (new ZLBooleanOption("CancelMenu", "library", true).getValue()) {
+			cancelActionsList.add(new CancelActionDescription(
+				CancelActionType.library, null
+			));
+		}
+		if (new ZLBooleanOption("CancelMenu", "networkLibrary", true).getValue()) {
+			cancelActionsList.add(new CancelActionDescription(
+				CancelActionType.networkLibrary, null
+			));
+		}
+		if (new ZLBooleanOption("CancelMenu", "previousBook", false).getValue()) {
+			final Book previousBook = Library.Instance().getPreviousBook();
+			if (previousBook != null) {
+				cancelActionsList.add(new CancelActionDescription(
+					CancelActionType.previousBook, previousBook.getTitle()
+				));
+			}
+		}
+		cancelActionsList.add(new CancelActionDescription(
+			CancelActionType.close, null
+		));
+		return cancelActionsList;
+	}
 
 	public void runCancelAction(int index) {
 		if (index < 0 || index >= myCancelActionsList.size()) {
