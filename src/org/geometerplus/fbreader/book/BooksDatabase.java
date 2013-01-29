@@ -77,6 +77,8 @@ public abstract class BooksDatabase {
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
 	protected abstract List<Long> loadFavoriteIds();
+	protected abstract boolean hasFavorites();
+	protected abstract boolean isFavorite(long bookId);
 	protected abstract void addToFavorites(long bookId);
 	protected abstract void removeFromFavorites(long bookId);
 

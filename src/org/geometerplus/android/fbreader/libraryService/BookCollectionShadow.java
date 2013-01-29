@@ -204,6 +204,26 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized boolean hasFavorites() {
+		if (myInterface != null) {
+			try {
+				return myInterface.hasFavorites();
+			} catch (RemoteException e) {
+			}
+		}
+		return false;
+	}
+
+	public synchronized boolean isFavorite(Book book) {
+		if (myInterface != null) {
+			try {
+				return myInterface.isFavorite(SerializerUtil.serialize(book));
+			} catch (RemoteException e) {
+			}
+		}
+		return false;
+	}
+
 	public synchronized void setBookFavorite(Book book, boolean favorite) {
 		if (myInterface != null) {
 			try {

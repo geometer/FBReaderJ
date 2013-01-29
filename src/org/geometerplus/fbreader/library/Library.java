@@ -99,7 +99,7 @@ public final class Library {
 	public Library(IBookCollection collection) {
 		Collection = collection;
 
-		new FavoritesTree(myRootTree, ROOT_FAVORITES);
+		new FavoritesTree(collection, myRootTree, ROOT_FAVORITES);
 		new FirstLevelTree(myRootTree, ROOT_RECENT);
 		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
@@ -142,10 +142,6 @@ public final class Library {
 				getFirstLevelTree(ROOT_RECENT).clear();
 				for (Book book : Collection.recentBooks()) {
 					new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
-				}
-				getFirstLevelTree(ROOT_FAVORITES).clear();
-				for (Book book : Collection.favorites()) {
-					new BookTree(getFirstLevelTree(ROOT_FAVORITES), book, true);
 				}
 				int count = 0;
 				for (Book book : Collection.books()) {
@@ -337,39 +333,6 @@ public final class Library {
 		}
 		if (newSearchResults == null) {
 			fireModelChangedEvent(ChangeListener.Code.NotFound);
-		}
-	}
-
-	public void addBookToRecentList(Book book) {
-		Collection.addBookToRecentList(book);
-	}
-
-	public boolean isBookInFavorites(Book book) {
-		if (book == null) {
-			return false;
-		}
-		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
-		for (FBTree tree : rootFavorites.subTrees()) {
-			if (tree instanceof BookTree && book.equals(((BookTree)tree).Book)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void addBookToFavorites(Book book) {
-		if (isBookInFavorites(book)) {
-			return;
-		}
-		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
-		rootFavorites.getBookSubTree(book, true);
-		Collection.setBookFavorite(book, true);
-	}
-
-	public void removeBookFromFavorites(Book book) {
-		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
-			Collection.setBookFavorite(book, false);
-			fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 		}
 	}
 

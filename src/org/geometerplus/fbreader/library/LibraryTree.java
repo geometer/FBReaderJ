@@ -118,6 +118,11 @@ public abstract class LibraryTree extends FBTree {
 		return !toRemove.isEmpty();
 	}
 
+	// TODO: change to abstract (?)
+	public boolean onBookChanged(Book book) {
+		return false;
+	}
+
 	@Override
 	public int compareTo(FBTree tree) {
 		final int cmp = super.compareTo(tree);

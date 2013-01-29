@@ -691,6 +691,25 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
+	protected boolean hasFavorites() {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Favorites LIMIT 1", null
+		);
+		boolean result = cursor.moveToNext();
+		cursor.close();
+		return result;
+	}
+
+	protected boolean isFavorite(long bookId) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Favorites WHERE book_id = ? LIMIT 1",
+			new String[] { String.valueOf(bookId) }
+		);
+		boolean result = cursor.moveToNext();
+		cursor.close();
+		return result;
+	}
+
 	private SQLiteStatement myAddToFavoritesStatement;
 	protected void addToFavorites(long bookId) {
 		if (myAddToFavoritesStatement == null) {
