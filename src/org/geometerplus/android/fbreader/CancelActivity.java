@@ -41,10 +41,12 @@ public class CancelActivity extends ListActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Intent i = getIntent();
 		FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		if (fbReader == null) {
-			fbReader = new FBReaderApp();
+		List<FBReaderApp.CancelActionDescription> descriptionList;
+		if (fbReader != null) {
+			descriptionList = fbReader.getCancelActionsList();
+		} else {
+			descriptionList = FBReaderApp.getStaticCancelActionsList();
 		}
-		final List<FBReaderApp.CancelActionDescription> descriptionList = fbReader.getCancelActionsList();
 		i.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
 		int index = 0;
 		for (FBReaderApp.CancelActionDescription description : descriptionList) {
