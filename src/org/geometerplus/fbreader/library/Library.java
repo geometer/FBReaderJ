@@ -100,7 +100,7 @@ public final class Library {
 		Collection = collection;
 
 		new FavoritesTree(collection, myRootTree, ROOT_FAVORITES);
-		new FirstLevelTree(myRootTree, ROOT_RECENT);
+		new RecentBooksTree(collection, myRootTree, ROOT_RECENT);
 		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
@@ -139,10 +139,6 @@ public final class Library {
 		final Thread initializer = new Thread() {
 			public void run() {
 				setStatus(myStatusMask | STATUS_LOADING);
-				getFirstLevelTree(ROOT_RECENT).clear();
-				for (Book book : Collection.recentBooks()) {
-					new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
-				}
 				int count = 0;
 				for (Book book : Collection.books()) {
 					addBookToLibrary(book);
