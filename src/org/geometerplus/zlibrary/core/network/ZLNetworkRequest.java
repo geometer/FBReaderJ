@@ -67,7 +67,7 @@ public abstract class ZLNetworkRequest {
 
 	public void doBefore() throws ZLNetworkException {
 	}
-	
+
 	public abstract void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException;
 
 	public void doAfter(boolean success) throws ZLNetworkException {

@@ -56,9 +56,9 @@ public abstract class ZLArchiveEntryFile extends ZLFile {
 		}
 		entryName = normalizeEntryName(entryName);
 		switch (archive.myArchiveType & ArchiveType.ARCHIVE) {
-			case ArchiveType.ZIP: 
+			case ArchiveType.ZIP:
 				return new ZLZipEntryFile(archive, entryName);
-			case ArchiveType.TAR: 
+			case ArchiveType.TAR:
 				return new ZLTarEntryFile(archive, entryName);
 			default:
 				return null;
@@ -78,23 +78,23 @@ public abstract class ZLArchiveEntryFile extends ZLFile {
 
 	protected final ZLFile myParent;
 	protected final String myName;
-	
+
 	protected ZLArchiveEntryFile(ZLFile parent, String name) {
 		myParent = parent;
 		myName = name;
 		init();
 	}
-	
+
 	@Override
 	public boolean isDirectory() {
 		return false;
 	}
-	
+
 	@Override
 	public String getPath() {
 		return myParent.getPath() + ":" + myName;
 	}
-	
+
 	@Override
 	public String getLongName() {
 		return myName;

@@ -33,7 +33,7 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	 * @param summary       description of this library item. Can be <code>null</code>.
 	 * @param urls          collection of item-related URLs. Can be <code>null</code>.
 	 * @param accessibility value defines when this library item will be accessible
-	 *                      in the network library view. 
+	 *                      in the network library view.
 	 * @param flags         value defines how to show book items in this catalog.
 	 */
 	protected NetworkURLCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Accessibility accessibility, int flags) {

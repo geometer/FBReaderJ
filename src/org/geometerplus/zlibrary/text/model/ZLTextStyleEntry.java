@@ -126,7 +126,7 @@ public abstract class ZLTextStyleEntry {
 		myFeatureMask |= 1 << Feature.ALIGNMENT_TYPE;
 		myAlignmentType = alignmentType;
 	}
-	
+
 	public final byte getAlignmentType() {
 		return myAlignmentType;
 	}
