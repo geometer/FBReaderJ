@@ -44,7 +44,7 @@ import org.geometerplus.android.fbreader.network.action.*;
 
 import org.geometerplus.android.util.UIUtil;
 
-public abstract class NetworkLibraryActivity extends TreeActivity implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
+public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
 	BookDownloaderServiceConnection Connection;
@@ -151,7 +151,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 
 	@Override
 	public boolean onSearchRequested() {
-		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree tree = getCurrentTree();
 		final RunSearchAction action = new RunSearchAction(this, false);
 		if (action.isVisible(tree) && action.isEnabled(tree)) {
 			action.run(tree);
@@ -175,7 +175,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			final NetworkItemsLoader loader =
-				NetworkLibrary.Instance().getStoredLoader((NetworkTree)getCurrentTree());
+				NetworkLibrary.Instance().getStoredLoader(getCurrentTree());
 			if (loader != null) {
 				loader.interrupt();
 			}
@@ -284,7 +284,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 			fillOptionsMenuList();
 		}
 
-//		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
 			if (a.IconId != -1) {
@@ -298,7 +297,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 
-		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree tree = getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			final MenuItem item = menu.findItem(a.Code);
 			if (a.isVisible(tree)) {
@@ -314,7 +313,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree tree = getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			if (a.Code == item.getItemId()) {
 				checkAndRun(a, tree);
@@ -326,7 +325,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 
 	private void updateLoadingProgress() {
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree tree = getCurrentTree();
 		final NetworkTree lTree = getLoadableNetworkTree(tree);
 		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
 		setProgressBarIndeterminateVisibility(
@@ -447,7 +446,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 
 	public void onScroll(AbsListView view, int firstVisible, int visibleCount, int totalCount) {
 		if (firstVisible + visibleCount + 1 >= totalCount) {
-			final FBTree tree = getCurrentTree();
+			final NetworkTree tree = getCurrentTree();
 			if (tree instanceof NetworkCatalogTree) {
 				((NetworkCatalogTree)tree).loadMoreChildren(totalCount);
 			}
