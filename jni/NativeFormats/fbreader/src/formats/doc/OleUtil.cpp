@@ -53,6 +53,3 @@ int OleUtil::get1Byte(const char *buffer, unsigned int offset) {
 	const unsigned char *buf = (const unsigned char*)buffer;
 	return (int)buf[offset];
 }
-
-
-
