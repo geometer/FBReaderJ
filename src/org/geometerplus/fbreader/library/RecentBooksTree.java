@@ -22,26 +22,24 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.IBookCollection;
 
-public class FavoritesTree extends FirstLevelTree {
+public class RecentBooksTree extends FirstLevelTree {
 	private final IBookCollection myCollection;
 
-	FavoritesTree(IBookCollection collection, RootTree root, String id) {
+	RecentBooksTree(IBookCollection collection, RootTree root, String id) {
 		super(root, id);
 		myCollection = collection;
 	}
 
 	@Override
 	public Status getOpeningStatus() {
-		final Status status = super.getOpeningStatus();
-		if (status == Status.READY_TO_OPEN && !hasChildren()) {
-			return Status.CANNOT_OPEN;
-		}
-		return status;
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
 	}
 
 	@Override
-	public String getOpeningStatusMessage() {
-		return getOpeningStatus() == Status.CANNOT_OPEN
-			? "noFavorites" : super.getOpeningStatusMessage();
+	public void waitForOpening() {
+		clear();
+		for (Book book : myCollection.recentBooks()) {
+			new BookTree(this, book, true);
+		}
 	}
 }
