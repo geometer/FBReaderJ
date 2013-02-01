@@ -168,7 +168,7 @@ public final class FileInfoSet {
 			save();
 		}
 		return info.Id;
-	}	
+	}
 
 	private ZLFile getFile(FileInfo info) {
 		if (info == null) {

@@ -27,9 +27,9 @@ import android.widget.TextView;
  * but it should only happen once per text change.
  * <p>
  * See http://code.google.com/p/android/issues/detail?id=35466
- * 
+ *
  * @author "Pierre-Yves Ricau" <py.ricau@gmail.com>
- * 
+ *
  */
 public class JellyBeanSpanFixTextView extends TextView {
 

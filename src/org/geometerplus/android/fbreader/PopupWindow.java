@@ -42,7 +42,7 @@ public class PopupWindow extends LinearLayout {
 		myActivity = activity;
 
 		setFocusable(false);
-		
+
 		final LayoutInflater inflater =
 			(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final RelativeLayout.LayoutParams p;
@@ -139,6 +139,7 @@ public class PopupWindow extends LinearLayout {
 			}
 		});
 	}
+
 	private void hideInternal() {
 		if (myAnimated) {
 			if (myShowHideAnimator != null) {
@@ -157,7 +158,7 @@ public class PopupWindow extends LinearLayout {
 			setVisibility(View.GONE);
 		}
 	}
-	
+
 	public void addView(View view) {
 		((LinearLayout)findViewById(R.id.tools_plate)).addView(view);
 	}

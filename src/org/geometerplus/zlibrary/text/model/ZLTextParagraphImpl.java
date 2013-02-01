@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.text.model;
 class ZLTextParagraphImpl implements ZLTextParagraph {
 	private final ZLTextPlainModel myModel;
 	private final int myIndex;
-	
+
 	ZLTextParagraphImpl(ZLTextPlainModel model, int index) {
 		myModel = model;
 		myIndex = index;

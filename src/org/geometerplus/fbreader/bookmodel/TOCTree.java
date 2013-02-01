@@ -46,11 +46,11 @@ public class TOCTree extends ZLTree<TOCTree> {
 			myText = null;
 		}
 	}
-	
+
 	public Reference getReference() {
 		return myReference;
 	}
-	
+
 	public void setReference(ZLTextModel model, int reference) {
 		myReference = new Reference(reference, model);
 	}
@@ -58,7 +58,7 @@ public class TOCTree extends ZLTree<TOCTree> {
 	public static class Reference {
 		public final int ParagraphIndex;
 		public final ZLTextModel Model;
-		
+
 		public Reference(final int paragraphIndex, final ZLTextModel model) {
 			ParagraphIndex = paragraphIndex;
 			Model = model;

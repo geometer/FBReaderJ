@@ -25,14 +25,14 @@ import java.io.InputStream;
 public class SliceInputStream extends ZLInputStreamWithOffset {
 	private final int myStart;
 	private final int myLength;
-	
+
 	public SliceInputStream(InputStream base, int start, int length) throws IOException {
 		super(base);
 		super.skip(start);
 		myStart = start;
 		myLength = length;
 	}
-	
+
 	@Override
 	public int read() throws IOException {
 		if (myLength >= offset()) {

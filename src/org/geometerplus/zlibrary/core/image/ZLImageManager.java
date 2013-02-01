@@ -32,7 +32,7 @@ public abstract class ZLImageManager {
 
 	public abstract ZLImageData getImageData(ZLImage image);
 	protected abstract void startImageLoading(ZLLoadableImage image, Runnable postLoadingRunnable);
-	
+
 	protected final static class PalmImageHeader {
 		public final int Width;
 		public final int Height;
@@ -40,7 +40,7 @@ public abstract class ZLImageManager {
 		public final int Flags;
 		public final byte BitsPerPixel;
 		public final byte CompressionType;
-		
+
 		public PalmImageHeader(byte [] byteData) {
 			Width = uShort(byteData, 0);
 			Height = uShort(byteData, 2);
@@ -50,12 +50,12 @@ public abstract class ZLImageManager {
 			CompressionType = (byte) (((Flags & 0x8000) != 0) ? byteData[13] : 0xFF);
 		}
 	}
-	
+
 	protected static int PalmImage8bitColormap[][] = {
-		{255, 255, 255 }, { 255, 204, 255 }, { 255, 153, 255 }, { 255, 102, 255 }, 
-		{ 255,  51, 255 }, { 255,   0, 255 }, { 255, 255, 204 }, { 255, 204, 204 }, 
-		{ 255, 153, 204 }, { 255, 102, 204 }, { 255,  51, 204 }, { 255,   0, 204 }, 
-		{ 255, 255, 153 }, { 255, 204, 153 }, { 255, 153, 153 }, { 255, 102, 153 }, 
+		{255, 255, 255 }, { 255, 204, 255 }, { 255, 153, 255 }, { 255, 102, 255 },
+		{ 255,  51, 255 }, { 255,   0, 255 }, { 255, 255, 204 }, { 255, 204, 204 },
+		{ 255, 153, 204 }, { 255, 102, 204 }, { 255,  51, 204 }, { 255,   0, 204 },
+		{ 255, 255, 153 }, { 255, 204, 153 }, { 255, 153, 153 }, { 255, 102, 153 },
 		{ 255,  51, 153 }, { 255,   0, 153 }, { 204, 255, 255 }, { 204, 204, 255 },
 		{ 204, 153, 255 }, { 204, 102, 255 }, { 204,  51, 255 }, { 204,   0, 255 },
 		{ 204, 255, 204 }, { 204, 204, 204 }, { 204, 153, 204 }, { 204, 102, 204 },
@@ -117,8 +117,8 @@ public abstract class ZLImageManager {
 		{   0,   0,   0 }, {   0,   0,   0 }, {   0,   0,   0 }, {   0,   0,   0 },
 		{   0,   0,   0 }, {   0,   0,   0 }, {   0,   0,   0 }, {   0,   0,   0 }
 	};
-	
+
 	private static int uShort(byte [] byteData, int offset) {
 		return ((byteData[offset] & 0xFF) << 8) + (byteData[offset + 1] & 0xFF);
-	}	
+	}
 }

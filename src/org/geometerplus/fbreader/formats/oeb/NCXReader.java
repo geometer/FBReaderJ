@@ -131,7 +131,7 @@ class NCXReader extends ZLXMLReaderAdapter {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean endElementHandler(String tag) {
 		tag = tag.toLowerCase().intern();
@@ -166,7 +166,7 @@ class NCXReader extends ZLXMLReaderAdapter {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (myReadState == READ_TEXT) {

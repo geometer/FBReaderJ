@@ -32,7 +32,7 @@ public abstract class ZLLanguageUtil {
 
 	private ZLLanguageUtil() {
 	}
-	
+
 	public static class CodeComparator implements Comparator<String> {
 		public int compare(String code0, String code1) {
 			if (code0 == null) {
@@ -85,7 +85,7 @@ public abstract class ZLLanguageUtil {
 
 		return Collections.unmodifiableList(ourLanguageCodes);
 	}
-	
+
 	public static String languageName(String code) {
 		return ZLResource.resource("language").getResource(code).getValue();
 	}

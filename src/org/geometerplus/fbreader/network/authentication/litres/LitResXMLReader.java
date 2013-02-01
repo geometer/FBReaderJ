@@ -112,7 +112,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 					myUrls.addInfo(new UrlInfo(
 						UrlInfo.Type.Image, attributes.getValue("cover_preview"), MimeType.IMAGE_AUTO
 					));
-        
+
 					myUrls.addInfo(new BookUrlInfo(
 						UrlInfo.Type.BookConditional,
 						BookUrlInfo.Format.FB2_ZIP,
@@ -197,7 +197,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				break;
 			case BOOK:
 				if (TAG_BOOK == tag) {
-					myUrls.addInfo(new UrlInfo(	
+					myUrls.addInfo(new UrlInfo(
 						UrlInfo.Type.SingleEntry,
 						"http://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId,
 						MimeType.APP_ATOM_XML_ENTRY
@@ -216,7 +216,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 						myIndexInSeries,
 						myUrls
 					));
-        
+
 					myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = null;
 					mySummary = null;
 					myIndexInSeries = 0;
@@ -285,7 +285,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 							LitResGenreMap::Instance().genresMap();
 						const std::map<shared_ptr<LitResGenre>,std::string> &genresTitles =
 							LitResGenreMap::Instance().genresTitles();
-        
+
 						std::map<std::string, shared_ptr<LitResGenre> >::const_iterator it = genresMap.find(myBuffer);
 						if (it != genresMap.end()) {
 							std::map<shared_ptr<LitResGenre>, std::string>::const_iterator jt = genresTitles.find(it->second);

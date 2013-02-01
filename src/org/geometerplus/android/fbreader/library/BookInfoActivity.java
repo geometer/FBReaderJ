@@ -117,12 +117,12 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	public static Intent intentByBook(Book book) {
 		return new Intent().putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book));
 	}
- 
+
 	public static Book bookByIntent(Intent intent) {
 		return intent != null ?
 			SerializerUtil.deserializeBook(intent.getStringExtra(FBReader.BOOK_KEY)) : null;
 	}
- 
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		final Book book = bookByIntent(data);

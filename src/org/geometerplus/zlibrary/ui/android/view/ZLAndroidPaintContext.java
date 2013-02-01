@@ -111,7 +111,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 						final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
 						final Canvas wallpaperCanvas = new Canvas(wallpaper);
 						final Paint wallpaperPaint = new Paint();
-                    
+
 						Matrix m = new Matrix();
 						wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
 						m.preScale(-1, 1);
@@ -246,7 +246,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public int getHeight() {
 		return myHeight;
 	}
-	
+
 	@Override
 	public int getStringWidth(char[] string, int offset, int length) {
 		boolean containsSoftHyphen = false;
