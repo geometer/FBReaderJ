@@ -37,7 +37,7 @@ public class PdbHeader {
 		Flags = PdbUtil.readShort(stream);
 
 		PdbUtil.skip(stream, 26);
-		
+
 		if (stream.read(buffer, 0, 8) != 8) {
 			throw new IOException("PdbHeader: cannot reader palm id");
 		}

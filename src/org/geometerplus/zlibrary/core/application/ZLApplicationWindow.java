@@ -38,7 +38,7 @@ abstract public class ZLApplicationWindow {
 	abstract protected void processException(Exception e);
 
 	abstract protected void refresh();
-	
+
 	abstract protected ZLViewWidget getViewWidget();
 
 	abstract protected void close();

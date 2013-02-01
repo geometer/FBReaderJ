@@ -39,7 +39,7 @@ public class PopupWindow extends LinearLayout {
 		myActivity = activity;
 
 		setFocusable(false);
-		
+
 		final LayoutInflater inflater =
 			(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(
@@ -84,7 +84,7 @@ public class PopupWindow extends LinearLayout {
 			}
 		});
 	}
-	
+
 	public void addView(View view) {
 		((LinearLayout)findViewById(R.id.tools_plate)).addView(view);
 	}

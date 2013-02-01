@@ -301,7 +301,7 @@ public final class Library {
 			fireModelChangedEvent(ChangeListener.Code.Found);
 			return;
 		}
-		
+
 		FirstLevelTree newSearchResults = null;
 		synchronized (this) {
 			for (Book book : Collection.books(pattern)) {

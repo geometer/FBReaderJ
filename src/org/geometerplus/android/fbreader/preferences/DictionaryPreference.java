@@ -35,7 +35,7 @@ class DictionaryPreference extends ZLStringListPreference {
 		super(context, resource, resourceKey);
 
 		myOption = dictionaryOption;
-		
+
 		final String[] values = new String[infos.size()];
 		final String[] texts = new String[infos.size()];
 		int index = 0;

@@ -271,7 +271,7 @@ public class AddCustomCatalogActivity extends Activity {
 				});
 				setErrorText(myError);
 			}
-		}; 
+		};
 		UIUtil.wait("loadingCatalogInfo", loadInfoRunnable, this);
 	}
 }

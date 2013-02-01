@@ -220,7 +220,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 	@Override
 	public void characterDataHandler(char[] data, int start, int len) {
 		if (myPreformatted) {
-			final char first = data[start]; 
+			final char first = data[start];
 			if ((first == '\r') || (first == '\n')) {
 				myModelReader.addControl(FBTextKind.CODE, false);
 				myModelReader.endParagraph();

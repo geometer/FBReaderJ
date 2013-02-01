@@ -26,14 +26,14 @@ import org.geometerplus.fbreader.network.atom.*;
 public abstract class AbstractATOMFeedHandler implements ATOMFeedHandler {
 	public void processFeedStart() {
 	}
-	
+
 	public void processFeedEnd() {
 	}
 
 	public boolean processFeedMetadata(ATOMFeedMetadata feed, boolean beforeEntries) {
 		return false;
 	}
-	
+
 	public boolean processFeedEntry(ATOMEntry entry) {
 		return false;
 	}

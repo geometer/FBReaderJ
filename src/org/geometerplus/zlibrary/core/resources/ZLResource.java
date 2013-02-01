@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.resources;
 
 abstract public class ZLResource {
 	public final String Name;
-	
+
 	public static ZLResource resource(String key) {
 		ZLTreeResource.buildTree();
 		if (ZLTreeResource.ourRoot == null) {

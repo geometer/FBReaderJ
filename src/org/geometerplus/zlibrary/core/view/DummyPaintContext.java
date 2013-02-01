@@ -69,7 +69,7 @@ final class DummyPaintContext extends ZLPaintContext {
 	public int getHeight() {
 		return 1;
 	}
-	
+
 	@Override
 	public int getStringWidth(char[] string, int offset, int length) {
 		return 1;

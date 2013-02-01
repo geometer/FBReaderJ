@@ -48,7 +48,7 @@ public final class HtmlTag {
 	public static final byte DIV = 23;
 	public static final byte TR = 24;
 	public static final byte STYLE = 25;
-	
+
 	public static final byte S = 26;
 	public static final byte SUB = 27;
 	public static final byte SUP = 28;
@@ -59,13 +59,13 @@ public final class HtmlTag {
 	public static final byte CITE = 33;
 
 	public static final byte HR = 34;
-	
+
 	// mobipocket specific tags
 	public static final byte REFERENCE = 35;
 	public static final byte GUIDE = 36;
 
 	public static final byte TAG_NUMBER = 37;
-	
+
 	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(256, 0.2f);
 	private static final Byte ourUnknownTag;
 

@@ -71,5 +71,5 @@ public abstract class ZLSearchUtil {
 			}
 		}
 		return -1;
-	}	
+	}
 }

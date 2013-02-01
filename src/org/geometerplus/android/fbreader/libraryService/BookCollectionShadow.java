@@ -96,7 +96,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			myContext.unregisterReceiver(myReceiver);
 			myContext.unbindService(this);
 			myInterface = null;
-			myContext = null;	
+			myContext = null;
 		}
 	}
 
