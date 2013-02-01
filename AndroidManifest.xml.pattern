@@ -6,7 +6,7 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_bw" android:label="FBReader">
-		<activity android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":error">
+		<activity android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":error">
 			<intent-filter>
 				<action android:name="android.fbreader.action.ERROR"/>
 				<category android:name="android.intent.category.DEFAULT"/>
@@ -14,14 +14,14 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".error.BugReportActivity" android:label="FBReader crash" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":crash"/>
-		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":crash">
+		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":crash">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CRASH"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 				<data android:scheme="CachedCharStorageException"/>
 			</intent-filter>
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.crash.MissingNativeLibraryActivity" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":crash">
+		<activity android:name="org.geometerplus.android.fbreader.crash.MissingNativeLibraryActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":crash">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CRASH"/>
 				<category android:name="android.intent.category.DEFAULT"/>
@@ -108,7 +108,7 @@
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
+		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CANCEL_MENU"/>
 				<category android:name="android.intent.category.DEFAULT"/>
@@ -147,7 +147,7 @@
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>		
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.BookmarkEditActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="org.geometerplus.android.fbreader.BookmarkEditActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.OPEN_PREFERENCES"/>
@@ -222,10 +222,10 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkLibrarySecondaryActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<activity android:name="org.geometerplus.android.fbreader.network.AuthenticationActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.Holo.Dialog"/>
-		<activity android:name="org.geometerplus.android.fbreader.network.BuyBooksActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.Holo.Dialog"/>
-		<activity android:name="org.geometerplus.android.fbreader.network.AddCatalogMenuActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.Holo.Dialog"/>
-		<activity android:name="org.geometerplus.android.fbreader.network.AddCustomCatalogActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.Holo.Dialog">
+		<activity android:name="org.geometerplus.android.fbreader.network.AuthenticationActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@style/FBReader.Dialog"/>
+		<activity android:name="org.geometerplus.android.fbreader.network.BuyBooksActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@style/FBReader.Dialog"/>
+		<activity android:name="org.geometerplus.android.fbreader.network.AddCatalogMenuActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@style/FBReader.Dialog"/>
+		<activity android:name="org.geometerplus.android.fbreader.network.AddCustomCatalogActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@style/FBReader.Dialog">
 			<intent-filter>
 				<action android:name="android.fbreader.action.ADD_OPDS_CATALOG"/>
 				<category android:name="android.intent.category.DEFAULT"/>
@@ -248,8 +248,8 @@
 				<data android:host="*" android:scheme="https"/>
 			</intent-filter>
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.network.AuthorizationMenuActivity" android:process=":networkLibrary" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<activity android:name="org.geometerplus.android.fbreader.network.TopupMenuActivity" android:process=":networkLibrary" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="org.geometerplus.android.fbreader.network.AuthorizationMenuActivity" android:process=":networkLibrary" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="org.geometerplus.android.fbreader.network.TopupMenuActivity" android:process=":networkLibrary" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkBookInfoActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -263,9 +263,9 @@
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</receiver>
-		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.Holo.Dialog"/>
-		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.EditableStringListActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Holo.Dialog" android:windowSoftInputMode="adjustPan" />
-		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.BooksDirectoryActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Holo.Dialog" android:windowSoftInputMode="adjustPan" />
-		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.EditableSpinnerActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Holo.Dialog" android:windowSoftInputMode="adjustPan" />
+		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@style/FBReader.Dialog"/>
+		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.EditableStringListActivity" android:configChanges="orientation|keyboardHidden" android:theme="@style/FBReader.Dialog" android:windowSoftInputMode="adjustPan" />
+		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.BooksDirectoryActivity" android:configChanges="orientation|keyboardHidden" android:theme="@style/FBReader.Dialog" android:windowSoftInputMode="adjustPan" />
+		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.EditableSpinnerActivity" android:configChanges="orientation|keyboardHidden" android:theme="@style/FBReader.Dialog" android:windowSoftInputMode="adjustPan" />
 	</application>
 </manifest>
