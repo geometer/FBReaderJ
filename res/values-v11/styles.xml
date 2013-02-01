@@ -1,3 +1,8 @@
 <resources>
-  <style name="FBReader.Dialog" parent="android:Theme.Holo.Dialog"/>
+  <style name="FBReader.Activity" parent="android:Theme.Holo">
+		<item name="android:configChanges">orientation|keyboardHidden|screenSize</item>
+	</style>
+  <style name="FBReader.Dialog" parent="android:Theme.Holo.Dialog">
+		<item name="android:configChanges">orientation|keyboardHidden|screenSize</item>
+	</style>
 </resources>
