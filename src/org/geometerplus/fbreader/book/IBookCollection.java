@@ -59,7 +59,11 @@ public interface IBookCollection {
 
 	boolean saveBook(Book book, boolean force);
 	void removeBook(Book book, boolean deleteFromDisk);
+
 	void addBookToRecentList(Book book);
+
+	boolean hasFavorites();
+	boolean isFavorite(Book book);
 	void setBookFavorite(Book book, boolean favorite);
 
 	ZLTextPosition getStoredPosition(long bookId);
