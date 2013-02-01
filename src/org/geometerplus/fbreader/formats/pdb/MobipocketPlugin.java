@@ -88,7 +88,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 								if (index != -1) {
 									author = author.substring(index + 1).trim() +
 											 ' ' +
-											 author.substring(0, index).trim(); 
+											 author.substring(0, index).trim();
 								} else {
 									author = author.trim();
 								}
@@ -228,7 +228,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 					return new ZLFileImage(MimeType.IMAGE_AUTO, file, ZLFileImage.ENCODING_NONE, start, len);
 				}
 			}
-			return null; 
+			return null;
 		} catch (IOException e) {
 			return null;
 		} finally {

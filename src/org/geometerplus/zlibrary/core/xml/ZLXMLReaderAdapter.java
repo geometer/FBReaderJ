@@ -35,7 +35,7 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 			return false;
 		}
 	}
-	
+
  	public boolean readQuietly(String string) {
 		try {
 			read(string);
@@ -44,11 +44,11 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 			return false;
 		}
 	}
-	
+
  	public void read(ZLFile file) throws IOException {
 		ZLXMLProcessor.read(this, file);
 	}
-	
+
 	public void read(InputStream stream) throws IOException {
 		ZLXMLProcessor.read(this, stream, 65536);
 	}
@@ -68,21 +68,21 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		return false;
 	}
-	
+
 	public boolean endElementHandler(String tag) {
 		return false;
 	}
-	
+
 	public void characterDataHandler(char[] ch, int start, int length) {
 	}
 
 	public void characterDataHandlerFinal(char[] ch, int start, int length) {
-		characterDataHandler(ch, start, length);	
+		characterDataHandler(ch, start, length);
 	}
 
 	public void startDocumentHandler() {
 	}
-	
+
 	public void endDocumentHandler() {
 	}
 

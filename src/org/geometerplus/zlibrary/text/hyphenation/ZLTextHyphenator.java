@@ -22,11 +22,11 @@ package org.geometerplus.zlibrary.text.hyphenation;
 import java.util.List;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.text.view.ZLTextWord; 
+import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
 public abstract class ZLTextHyphenator {
 	private static ZLTextHyphenator ourInstance;
-	
+
 	public static ZLTextHyphenator Instance() {
 		if (ourInstance == null) {
 			ourInstance = new ZLTextTeXHyphenator();
@@ -78,16 +78,16 @@ public abstract class ZLTextHyphenator {
 						break;
 					case '-':
 						mask[i] = (i >= 3)
-							&& isLetter[i - 3] 
-							&& isLetter[i - 2] 
-							&& isLetter[i] 
+							&& isLetter[i - 3]
+							&& isLetter[i - 2]
+							&& isLetter[i]
 							&& isLetter[i + 1];
 						break;
 					default:
-						mask[i] = mask[i] 
-							&& isLetter[i - 2] 
-							&& isLetter[i - 1] 
-							&& isLetter[i] 
+						mask[i] = mask[i]
+							&& isLetter[i - 2]
+							&& isLetter[i - 1]
+							&& isLetter[i]
 							&& isLetter[i + 1];
 						break;
 				}

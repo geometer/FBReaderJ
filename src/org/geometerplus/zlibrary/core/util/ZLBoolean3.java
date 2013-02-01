@@ -23,7 +23,7 @@ public enum ZLBoolean3 {
 	B3_FALSE("false"),
 	B3_TRUE("true"),
 	B3_UNDEFINED("undefined");
-	
+
 	public final String Name;
 
 	private ZLBoolean3(String name) {

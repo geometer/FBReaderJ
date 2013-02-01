@@ -307,7 +307,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 				return length;
 			} catch (IOException e) {
 				return sizeSlow();
-			} 
+			}
 		}
 
 		private long sizeSlow() {

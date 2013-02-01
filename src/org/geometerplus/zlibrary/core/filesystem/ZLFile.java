@@ -34,7 +34,7 @@ public abstract class ZLFile {
 		int	TAR = 0x0200;
 		int	ARCHIVE = 0xff00;
 	};
-	
+
 	private String myExtension;
 	private String myShortName;
 	protected int myArchiveType;
@@ -72,7 +72,7 @@ public abstract class ZLFile {
 		}
 		myArchiveType = archiveType;
 	}
-	
+
 	public static ZLFile createFile(ZLFile parent, String name) {
 		ZLFile file = null;
 		if (parent == null) {
@@ -151,9 +151,9 @@ public abstract class ZLFile {
 	}
 
 	public final boolean isCompressed() {
-		return (0 != (myArchiveType & ArchiveType.COMPRESSED)); 
+		return (0 != (myArchiveType & ArchiveType.COMPRESSED));
 	}
-	
+
 	public final boolean isArchive() {
 		return (0 != (myArchiveType & ArchiveType.ARCHIVE));
 	}

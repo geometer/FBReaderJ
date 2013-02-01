@@ -33,11 +33,11 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 
 	public FB2AnnotationReader() {
 	}
-	
+
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
-	
+
 	public String readAnnotation(ZLFile file) {
 		myReadState = READ_NOTHING;
 		myBuffer.delete(0, myBuffer.length());
@@ -69,7 +69,7 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 		}
 		return false;
 	}
-	
+
 	public boolean endElementHandler(String tag) {
 		if (myReadState != READ_ANNOTATION) {
 			return false;
@@ -87,7 +87,7 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 		}
 		return false;
 	}
-	
+
 	public void characterDataHandler(char[] data, int start, int length) {
 		if (myReadState == READ_ANNOTATION) {
 			myBuffer.append(new String(data, start, length).trim());
