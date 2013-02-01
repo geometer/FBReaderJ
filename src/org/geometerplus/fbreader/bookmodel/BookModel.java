@@ -48,7 +48,7 @@ public abstract class BookModel {
 		return model;
 	}
 
-	public Book Book;
+	public final Book Book;
 	public final TOCTree TOCTree = new TOCTree();
 
 	public static final class Label {

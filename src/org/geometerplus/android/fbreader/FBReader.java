@@ -62,11 +62,11 @@ public final class FBReader extends Activity {
 
 	public static final int REQUEST_PREFERENCES = 1;
 	public static final int REQUEST_BOOK_INFO = 2;
-	public static final int REQUEST_CANCEL_MENU = 3;
+	public static final int REQUEST_LIBRARY = 3;
+	public static final int REQUEST_CANCEL_MENU = 4;
 
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
-	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
 		context.startActivity(
@@ -308,7 +308,7 @@ public final class FBReader extends Activity {
 	protected void onStart() {
 		super.onStart();
 
-		((BookCollectionShadow)myFBReaderApp.Collection).bindToService(this, new Runnable() {
+		getCollection().bindToService(this, new Runnable() {
 			public void run() {
 				new Thread() {
 					public void run() {
@@ -428,7 +428,7 @@ public final class FBReader extends Activity {
 	protected void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(myFBReaderApp, this);
-		((BookCollectionShadow)myFBReaderApp.Collection).unbind();
+		getCollection().unbind();
 		super.onStop();
 	}
 
@@ -469,30 +469,24 @@ public final class FBReader extends Activity {
 		}
 	}
 
-	private void onPreferencesUpdate(int resultCode, Book book) {
-		if (book != null) {
-			myFBReaderApp.Collection.saveBook(book, true);
+	private void onPreferencesUpdate(Book book) {
+		final BookModel model = myFBReaderApp.Model;
+		if (book == null || model == null || model.Book == null) {
+			return;
 		}
-		switch (resultCode) {
-			case RESULT_DO_NOTHING:
-				break;
-			case RESULT_REPAINT:
-			{
-				AndroidFontUtil.clearFontCache();
-				final BookModel model = myFBReaderApp.Model;
-				if (model != null && book != null) {
-					if (model.Book != null) {
-						model.Book = book;
-						ZLTextHyphenator.Instance().load(model.Book.getLanguage());
-					}
-				}
-				myFBReaderApp.clearTextCaches();
-				myFBReaderApp.getViewWidget().repaint();
-				break;
-			}
-			case RESULT_RELOAD_BOOK:
-				myFBReaderApp.reloadBook(book);
-				break;
+
+		final String newEncoding = book.getEncodingNoDetection();
+		final String oldEncoding = model.Book.getEncodingNoDetection();
+
+		model.Book.updateFrom(book);
+
+		if (newEncoding != null && !newEncoding.equals(oldEncoding)) {
+			myFBReaderApp.reloadBook();
+		} else {
+			AndroidFontUtil.clearFontCache();
+			ZLTextHyphenator.Instance().load(model.Book.getLanguage());
+			myFBReaderApp.clearTextCaches();
+			myFBReaderApp.getViewWidget().repaint();
 		}
 	}
 
@@ -501,8 +495,26 @@ public final class FBReader extends Activity {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 			case REQUEST_BOOK_INFO:
-				onPreferencesUpdate(resultCode, BookInfoActivity.bookByIntent(data));
+				if (resultCode != RESULT_DO_NOTHING) {
+					final Book book = BookInfoActivity.bookByIntent(data);
+					if (book != null) {
+						myFBReaderApp.Collection.saveBook(book, true);
+						onPreferencesUpdate(BookInfoActivity.bookByIntent(data));
+					}
+				}
 				break;
+			case REQUEST_LIBRARY:
+			{
+				getCollection().bindToService(this, new Runnable() {
+					public void run() {
+						final BookModel model = myFBReaderApp.Model;
+						if (model != null && model.Book != null) {
+							onPreferencesUpdate(myFBReaderApp.Collection.getBookById(model.Book.getId()));
+						}
+					}
+				});
+				break;
+			}
 			case REQUEST_CANCEL_MENU:
 				myFBReaderApp.runCancelAction(resultCode - 1);
 				break;
@@ -694,5 +706,9 @@ public final class FBReader extends Activity {
 	public int getScreenBrightness() {
 		final int level = (int)(100 * getWindow().getAttributes().screenBrightness);
 		return (level >= 0) ? level : 50;
+	}
+
+	private BookCollectionShadow getCollection() {
+		return (BookCollectionShadow)myFBReaderApp.Collection;
 	}
 }

@@ -185,7 +185,9 @@ public final class Library {
 
 	private synchronized void addBookToLibrary(Book book) {
 		synchronized (myBooks) {
-			if (myBooks.containsKey(book.getId())) {
+			final Book existing = myBooks.get(book.getId());
+			if (existing != null) {
+				existing.updateFrom(book);
 				return;
 			}
 			myBooks.put(book.getId(), book);
@@ -251,17 +253,6 @@ public final class Library {
 		}
 	}
 
-	private void refreshInTree(String rootId, Book book) {
-		final FirstLevelTree tree = getFirstLevelTree(rootId);
-		if (tree != null) {
-			int index = tree.indexOf(new BookTree(book, true));
-			if (index >= 0) {
-				tree.removeBook(book, false);
-				new BookTree(tree, book, true, index);
-			}
-		}
-	}
-
 	public synchronized void refreshBookInfo(Book book) {
 		if (book == null) {
 			return;
@@ -269,8 +260,6 @@ public final class Library {
 
 		Collection.saveBook(book, true);
 		myBooks.remove(book.getId());
-		refreshInTree(ROOT_FAVORITES, book);
-		refreshInTree(ROOT_RECENT, book);
 		removeFromTree(ROOT_FOUND, book);
 		removeFromTree(ROOT_BY_TITLE, book);
 		removeFromTree(ROOT_BY_SERIES, book);

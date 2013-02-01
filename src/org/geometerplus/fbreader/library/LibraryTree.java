@@ -118,9 +118,18 @@ public abstract class LibraryTree extends FBTree {
 		return !toRemove.isEmpty();
 	}
 
-	// TODO: change to abstract (?)
 	public boolean onBookChanged(Book book) {
-		return false;
+		boolean updated = false;
+		for (FBTree tree : this) {
+			if (tree instanceof BookTree) {
+				final Book b = ((BookTree)tree).Book;
+				if (b.equals(book)) {
+					b.updateFrom(book);
+					updated = true;
+				}
+			}
+		}
+		return updated;
 	}
 
 	@Override

@@ -42,8 +42,4 @@ public class RecentBooksTree extends FirstLevelTree {
 			new BookTree(this, book, true);
 		}
 	}
-
-	public boolean onBookChanged(Book book) {
-		return false;
-	}
 }

@@ -149,16 +149,16 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		synchronized (myBooksByFile) {
-			Listener.BookEvent event = Listener.BookEvent.Added;
-			if (myBooksByFile.containsKey(book.File)) {
-				if (!force) {
-					return;
-				}
-				event = Listener.BookEvent.Updated;
+			final Book existing = myBooksByFile.get(book.File);
+			if (existing == null) {
+				myBooksByFile.put(book.File, book);
+				myBooksById.put(book.getId(), book);
+				fireBookEvent(Listener.BookEvent.Added, book);
+			} else if (force) {
+				existing.updateFrom(book);
+				fireBookEvent(Listener.BookEvent.Updated, existing);
+				getBookById(book.getId());
 			}
-			myBooksByFile.put(book.File, book);
-			myBooksById.put(book.getId(), book);
-			fireBookEvent(event, book);
 		}
 	}
 

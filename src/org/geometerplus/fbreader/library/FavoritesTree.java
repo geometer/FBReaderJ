@@ -53,6 +53,10 @@ public class FavoritesTree extends FirstLevelTree {
 	}
 
 	public boolean onBookChanged(Book book) {
-		return !myCollection.isFavorite(book) && removeBook(book, false);
+		if (myCollection.isFavorite(book)) {
+			return super.onBookChanged(book);
+		} else {
+			return removeBook(book, false);
+		}
 	}
 }

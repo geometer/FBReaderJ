@@ -119,7 +119,7 @@ public class BookInfoActivity extends Activity {
 					myBook.reloadInfoFromFile();
 					setupBookInfo(myBook);
 					myDontReloadBook = false;
-					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
+					myResult = FBReader.RESULT_REPAINT;
 					setResult(myResult, intentByBook(myBook));
 				}
 			}
@@ -153,7 +153,7 @@ public class BookInfoActivity extends Activity {
 			myDontReloadBook = false;
 		}
 
-		myResult = Math.max(myResult, resultCode);
+		myResult = FBReader.RESULT_REPAINT;
 		setResult(myResult, data);
 	}
 

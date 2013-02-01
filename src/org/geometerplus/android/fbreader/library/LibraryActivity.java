@@ -153,8 +153,14 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == BOOK_INFO_REQUEST) {
 			final Book book = BookInfoActivity.bookByIntent(intent);
-			myLibrary.refreshBookInfo(book);
-			getListView().invalidateViews();
+			((BookCollectionShadow)myLibrary.Collection).bindToService(this, new Runnable() {
+				public void run() {
+					myLibrary.refreshBookInfo(book);
+					if (((LibraryTree)getCurrentTree()).onBookChanged(book)) {
+						getListView().invalidateViews();
+					}
+				}
+			});
 		} else {
 			super.onActivityResult(requestCode, returnCode, intent);
 		}

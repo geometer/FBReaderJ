@@ -60,15 +60,28 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	};
 
+	private static Runnable combined(final Runnable action0, final Runnable action1) {
+		if (action0 == null) {
+			return action1;
+		}
+		if (action1 == null) {
+			return action0;
+		}
+		return new Runnable() {
+			public void run() {
+				action0.run();
+				action1.run();
+			}
+		};
+	}
+
 	public synchronized void bindToService(Context context, Runnable onBindAction) {
 		if (myInterface != null && myContext == context) {
 			if (onBindAction != null) {
 				onBindAction.run();
 			}
 		} else {
-			if (onBindAction != null) {
-				myOnBindAction = onBindAction;
-			}
+			myOnBindAction = combined(myOnBindAction, onBindAction);
 			context.bindService(
 				new Intent(context, LibraryService.class),
 				this,
