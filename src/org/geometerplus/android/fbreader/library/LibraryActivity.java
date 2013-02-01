@@ -53,7 +53,7 @@ import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
+public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	static volatile boolean ourToBeKilled = false;
 
 	private BooksDatabase myDatabase;
@@ -163,7 +163,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	}
 
 	@Override
-	protected FBTree getTreeByKey(FBTree.Key key) {
+	protected LibraryTree getTreeByKey(FBTree.Key key) {
 		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.getRootTree();
 	}
 
