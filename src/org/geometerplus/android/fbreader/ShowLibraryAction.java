@@ -37,6 +37,6 @@ class ShowLibraryAction extends FBAndroidAction {
 		if (Reader.Model != null) {
 			intent.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(Reader.Model.Book));
 		}
-		OrientationUtil.startActivityForResult(BaseActivity, intent, FBReader.REQUEST_LIBRARY);
+		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }
