@@ -243,6 +243,17 @@ public class BookCollection extends AbstractBookCollection {
 		myDatabase.saveRecentBookIds(ids);
 	}
 
+	public boolean hasFavorites() {
+		return myDatabase.hasFavorites();
+	}
+
+	public boolean isFavorite(Book book) {
+		if (book == null) {
+			return false;
+		}
+		return myDatabase.isFavorite(book.getId());
+	}
+
 	public void setBookFavorite(Book book, boolean favorite) {
 		if (favorite) {
 			myDatabase.addToFavorites(book.getId());

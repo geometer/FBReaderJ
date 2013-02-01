@@ -572,12 +572,12 @@ public final class Library {
 		}
 		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
 		rootFavorites.getBookSubTree(book, true);
-		myDatabase.addToFavorites(book.getId());
+		Collection.setBookFavorite(book, true);
 	}
 
 	public void removeBookFromFavorites(Book book) {
 		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
-			myDatabase.removeFromFavorites(book.getId());
+			Collection.setBookFavorite(book, false);
 			fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 		}
 	}

@@ -156,6 +156,14 @@ public class LibraryService extends Service {
 			myCollection.addBookToRecentList(SerializerUtil.deserializeBook(book));
 		}
 
+		public boolean hasFavorites() {
+			return myCollection.hasFavorites();
+		}
+
+		public boolean isFavorite(String book) {
+			return myCollection.isFavorite(SerializerUtil.deserializeBook(book));
+		}
+
 		public void setBookFavorite(String book, boolean favorite) {
 			myCollection.setBookFavorite(SerializerUtil.deserializeBook(book), favorite);
 		}
