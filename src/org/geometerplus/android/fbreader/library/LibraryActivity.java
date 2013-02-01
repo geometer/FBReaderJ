@@ -44,7 +44,7 @@ import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
+public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
 	private Library myLibrary;
@@ -156,7 +156,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 			((BookCollectionShadow)myLibrary.Collection).bindToService(this, new Runnable() {
 				public void run() {
 					myLibrary.refreshBookInfo(book);
-					if (((LibraryTree)getCurrentTree()).onBookChanged(book)) {
+					if (getCurrentTree().onBookChanged(book)) {
 						getListView().invalidateViews();
 					}
 				}
@@ -248,7 +248,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
 				myLibrary.Collection.setBookFavorite(book, false);
-				if (((LibraryTree)getCurrentTree()).onBookChanged(book)) {
+				if (getCurrentTree().onBookChanged(book)) {
 					getListAdapter().replaceAll(getCurrentTree().subTrees());
 					getListView().invalidateViews();
 				}
