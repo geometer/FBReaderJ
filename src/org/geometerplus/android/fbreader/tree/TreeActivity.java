@@ -81,7 +81,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		}
 	}
 
-	protected abstract FBTree getTreeByKey(FBTree.Key key);
+	protected abstract T getTreeByKey(FBTree.Key key);
 	public abstract boolean isTreeSelected(FBTree tree);
 
 	protected boolean isTreeInvisible(FBTree tree) {
