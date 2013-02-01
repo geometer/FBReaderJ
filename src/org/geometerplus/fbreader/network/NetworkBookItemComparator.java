@@ -42,7 +42,7 @@ public final class NetworkBookItemComparator implements Comparator<NetworkItem> 
 
 		final LinkedList<NetworkBookItem.AuthorData> authors0 = book0.Authors;
 		final LinkedList<NetworkBookItem.AuthorData> authors1 = book1.Authors;
-		
+
 		final boolean authors0empty = authors0.size() == 0;
 		final boolean authors1empty = authors1.size() == 0;
 

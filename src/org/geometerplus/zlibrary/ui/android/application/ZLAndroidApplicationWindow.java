@@ -93,10 +93,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			}
 		}
 	}
-	
+
 	@Override
 	public void runWithMessage(String key, Runnable action, Runnable postAction) {
-		final Activity activity = 
+		final Activity activity =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		if (activity != null) {
 			UIUtil.runWithMessage(activity, key, action, postAction, false);
@@ -109,7 +109,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	protected void processException(Exception exception) {
 		exception.printStackTrace();
 
-		final Activity activity = 
+		final Activity activity =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		final Intent intent = new Intent(
 			"android.fbreader.action.ERROR",
@@ -137,7 +137,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	@Override
 	public void setTitle(final String title) {
-		final Activity activity = 
+		final Activity activity =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		if (activity != null) {
 			activity.runOnUiThread(new Runnable() {

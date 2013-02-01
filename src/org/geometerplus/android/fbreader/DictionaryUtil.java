@@ -90,7 +90,7 @@ public abstract class DictionaryUtil {
 		ParagonInfoReader(Context context) {
 			myContext = context;
 		}
-	
+
 		@Override
 		public boolean dontCacheAttributeValues() {
 			return true;
@@ -238,7 +238,7 @@ public abstract class DictionaryUtil {
 			return intent.putExtra(dictionaryInfo.IntentKey, text);
 		} else {
 			return intent.setData(Uri.parse(text));
-		}			
+		}
 	}
 
 	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
@@ -277,7 +277,7 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) { 
+	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) {
 		openTextInDictionary(
 			activity, word.toString(), true, region.getTop(), region.getBottom()
 		);

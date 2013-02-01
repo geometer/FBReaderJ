@@ -50,7 +50,7 @@ public class ZLTextStyleDecoration {
 		VerticalShiftOption = new ZLIntegerOption(STYLE, name + ":vShift", verticalShift);
 		AllowHyphenationsOption = new ZLBoolean3Option(STYLE, name + ":allowHyphenations", allowHyphenations);
 	}
-	
+
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base) {
 		return createDecoratedStyle(base, null);
 	}
@@ -58,7 +58,7 @@ public class ZLTextStyleDecoration {
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
 		return new ZLTextPartiallyDecoratedStyle(base, this, hyperlink);
 	}
-	
+
 	public String getName() {
 		return myName;
 	}

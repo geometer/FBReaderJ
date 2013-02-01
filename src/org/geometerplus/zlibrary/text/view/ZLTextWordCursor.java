@@ -26,7 +26,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 	private ZLTextParagraphCursor myParagraphCursor;
 	private int myElementIndex;
 	private int myCharIndex;
-	
+
 //	private int myModelIndex;
 
 	public ZLTextWordCursor() {
@@ -112,7 +112,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 		}
 		return new ZLTextMark(paragraph.Index + 1, 0, 0);
 	}
-	
+
 	public void nextWord() {
 		myElementIndex++;
 		myCharIndex = 0;
@@ -165,7 +165,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 			paragraphIndex = Math.max(0, Math.min(paragraphIndex, model.getParagraphsNumber() - 1));
 			myParagraphCursor = ZLTextParagraphCursor.cursor(model, paragraphIndex);
 			moveToParagraphStart();
-		}		
+		}
 	}
 
 	public void moveTo(int wordIndex, int charIndex) {
@@ -198,7 +198,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 				}
 			}
 		}
-	}	
+	}
 
 	public void reset() {
 		myParagraphCursor = null;

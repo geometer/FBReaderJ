@@ -72,7 +72,7 @@ public abstract class NetworkBookActions {
 		@Override
 		public boolean isEnabled(NetworkTree tree) {
 			return myId >= 0;
-		} 
+		}
 
 		@Override
 		public String getContextLabel(NetworkTree tree) {

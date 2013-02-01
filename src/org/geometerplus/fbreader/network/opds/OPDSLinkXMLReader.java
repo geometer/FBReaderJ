@@ -39,7 +39,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		private String myAuthenticationType;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 		private final HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
-		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>(); 
+		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>();
 		List<INetworkLink> links() {
 			return myLinks;
 		}
@@ -124,7 +124,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			if (siteName != null && title != null && infos.getInfo(UrlInfo.Type.Catalog) != null) {
 				myLinks.add(link(id, siteName, title, summary, language, infos));
 			}
-			return false; 
+			return false;
 		}
 
 		private INetworkLink link(
