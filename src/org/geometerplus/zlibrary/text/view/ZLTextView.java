@@ -293,7 +293,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return mySelection.getCursorInMovementPoint();
 		}
 
-		if (cursor == ZLTextSelectionCursor.Left) {	
+		if (cursor == ZLTextSelectionCursor.Left) {
 			if (mySelection.hasAPartBeforePage(page)) {
 				return null;
 			}

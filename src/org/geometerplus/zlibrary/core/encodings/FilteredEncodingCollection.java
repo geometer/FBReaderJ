@@ -34,7 +34,7 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 			ZLResourceFile.createResourceFile("encodings/Encodings.xml")
 		);
 	}
-	
+
 	public abstract boolean isEncodingSupported(String name);
 
 	@Override

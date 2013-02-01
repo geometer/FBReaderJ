@@ -25,11 +25,11 @@ import java.io.InputStream;
 public class ZLInputStreamWithOffset extends InputStream {
 	private final InputStream myDecoratedStream;
 	private int myOffset = 0;
-	
+
 	public ZLInputStreamWithOffset(InputStream stream) {
 		myDecoratedStream = stream;
 	}
-	
+
 	@Override
 	public int available() throws IOException {
 		return myDecoratedStream.available();

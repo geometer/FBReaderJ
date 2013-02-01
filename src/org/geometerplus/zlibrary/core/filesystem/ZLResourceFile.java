@@ -31,17 +31,17 @@ public abstract class ZLResourceFile extends ZLFile {
 	}
 
 	private final String myPath;
-	
+
 	protected ZLResourceFile(String path) {
 		myPath = path;
 		init();
 	}
-	
+
 	@Override
 	public String getPath() {
 		return myPath;
 	}
-	
+
 	@Override
 	public String getLongName() {
 		return myPath.substring(myPath.lastIndexOf('/') + 1);

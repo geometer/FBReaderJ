@@ -46,7 +46,7 @@ final class ZLHtmlParser {
 	private static final byte D_ATTRIBUTE_VALUE = 18;
 	private static final byte SCRIPT = 19;
 	private static final byte ENTITY_REF = 20;
-	
+
 	private static ZLByteBuffer unique(HashMap<ZLByteBuffer,ZLByteBuffer> strings, ZLByteBuffer container) {
 		ZLByteBuffer s = strings.get(container);
 		if (s == null) {
@@ -79,7 +79,7 @@ final class ZLHtmlParser {
 		//boolean html = false;
 		int bufferOffset = 0;
 		int offset = 0;
-		
+
 		byte state = START_DOCUMENT;
 		while (true) {
 			final int count = stream.read(buffer);
@@ -92,7 +92,7 @@ final class ZLHtmlParser {
 			int startPosition = 0;
 			try {
 				for (int i = -1;;) {
-mainSwitchLabel:	
+mainSwitchLabel:
 					switch (state) {
 						case START_DOCUMENT:
 							while (buffer[++i] != '<') {}
@@ -156,7 +156,7 @@ mainSwitchLabel:
 									break mainSwitchLabel;
 							}
 						}
-						
+
 						case COMMENT :
 							while (true) {
 								switch (buffer[++i]) {
@@ -269,7 +269,7 @@ mainSwitchLabel:
 									break;
 							}
 							break;
-							
+
 						case WS_AFTER_END_TAG_NAME:
 							switch (buffer[++i]) {
 								case '>':
@@ -289,7 +289,7 @@ mainSwitchLabel:
 									break;
 							}
 							break;
-							
+
 						case ATTRIBUTE_NAME:
 							while (true) {
 								switch (buffer[++i]) {
@@ -324,7 +324,7 @@ mainSwitchLabel:
 										break;
 									case '\t' :
 										break;
-									case '\n' : 
+									case '\n' :
 										break;
 									case '\'':
 										state = S_ATTRIBUTE_VALUE;
@@ -343,7 +343,7 @@ mainSwitchLabel:
 						case DEFAULT_ATTRIBUTE_VALUE:
 							while (true) {
 								i++;
-								if ((buffer[i] == ' ') || (buffer[i] == '\'') 
+								if ((buffer[i] == ' ') || (buffer[i] == '\'')
 									|| (buffer[i] == '"') || (buffer[i] == '>')) {
 									attributeValue.append(buffer, startPosition, i - startPosition);
 									attributes.put(unique(strings, attributeName), new ZLByteBuffer(attributeValue));
@@ -360,7 +360,7 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 									case '>':
 										ZLByteBuffer stringTagName = unique(strings, tagName);
-										
+
 										processStartTag(htmlReader, stringTagName, offset, attributes);
 										if (stringTagName.equalsToLCString("script")) {
 											scriptOpened = true;
@@ -371,7 +371,7 @@ mainSwitchLabel:
 										startPosition = i + 1;
 										break mainSwitchLabel;
 								}
-							}	
+							}
 						case D_ATTRIBUTE_VALUE:
 							while (true) {
 								switch (buffer[++i]) {
@@ -383,7 +383,7 @@ mainSwitchLabel:
 										break mainSwitchLabel;
 								}
 							}
-							
+
 						case S_ATTRIBUTE_VALUE:
 							while (true) {
 								switch (buffer[++i]) {

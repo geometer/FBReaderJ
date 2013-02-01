@@ -206,7 +206,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private static final int READ_SPINE = 2;
 	private static final int READ_GUIDE = 3;
 	private static final int READ_TOUR = 4;
-	
+
 	private int myState;
 
 	@Override

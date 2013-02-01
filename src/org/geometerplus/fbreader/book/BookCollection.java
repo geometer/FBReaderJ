@@ -382,7 +382,7 @@ public class BookCollection extends AbstractBookCollection {
 			);
 			file.setCached(false);
 		}
-		
+
 		// Step 4: add help file
 		try {
 			final ZLFile helpFile = getHelpFile();
@@ -437,7 +437,7 @@ public class BookCollection extends AbstractBookCollection {
 				fileList.add(entry);
 			}
 		}
-					
+
 		return fileList;
 	}
 

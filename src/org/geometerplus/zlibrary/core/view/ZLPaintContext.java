@@ -94,7 +94,7 @@ abstract public class ZLPaintContext {
 
 	abstract public int getWidth();
 	abstract public int getHeight();
-	
+
 	public final int getStringWidth(String string) {
 		return getStringWidth(string.toCharArray(), 0, string.length());
 	}

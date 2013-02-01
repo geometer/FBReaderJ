@@ -41,7 +41,7 @@ abstract class AnimationProvider {
 		}
 	}
 	private Mode myMode = Mode.NoScrolling;
-	
+
 	private final BitmapManager myBitmapManager;
 	protected int myStartX;
 	protected int myStartY;

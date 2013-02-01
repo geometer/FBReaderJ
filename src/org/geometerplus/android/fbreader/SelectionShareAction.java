@@ -38,7 +38,7 @@ public class SelectionShareAction extends FBAndroidAction {
 
 		final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 
+		intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
 			ZLResource.resource("selection").getResource("quoteFrom").getValue().replace("%s", title)
 		);
 		intent.putExtra(android.content.Intent.EXTRA_TEXT, text);

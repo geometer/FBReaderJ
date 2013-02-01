@@ -211,7 +211,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 
 		private State myState = State.READ_NOTHING;
-		
+
 		private long myId = -1;
 		private String myUrl;
 		private final StringBuilder myTitle = new StringBuilder();
@@ -318,7 +318,7 @@ class XMLSerializer extends AbstractSerializer {
 			}
 			return false;
 		}
-		
+
 		@Override
 		public boolean endElementHandler(String tag) {
 			switch (myState) {
@@ -327,7 +327,7 @@ class XMLSerializer extends AbstractSerializer {
 				case READ_ENTRY:
 					if ("entry".equals(tag)) {
 						myState = State.READ_NOTHING;
-					}	
+					}
 					break;
 				case READ_AUTHOR_URI:
 				case READ_AUTHOR_NAME:
@@ -347,7 +347,7 @@ class XMLSerializer extends AbstractSerializer {
 			}
 			return false;
 		}
-		
+
 		@Override
 		public void characterDataHandler(char[] ch, int start, int length) {
 			switch (myState) {
@@ -391,7 +391,7 @@ class XMLSerializer extends AbstractSerializer {
 
 		private State myState = State.READ_NOTHING;
 		private Bookmark myBookmark;
-		
+
 		private long myId = -1;
 		private long myBookId;
 		private String myBookTitle;
@@ -500,7 +500,7 @@ class XMLSerializer extends AbstractSerializer {
 			}
 			return false;
 		}
-		
+
 		@Override
 		public boolean endElementHandler(String tag) {
 //			System.err.println("end: " + tag + " " + myState);
@@ -510,14 +510,14 @@ class XMLSerializer extends AbstractSerializer {
 				case READ_BOOKMARK:
 					if ("bookmark".equals(tag)) {
 						myState = State.READ_NOTHING;
-					}	
+					}
 					break;
 				case READ_TEXT:
 					myState = State.READ_BOOKMARK;
 			}
 			return false;
 		}
-		
+
 		@Override
 		public void characterDataHandler(char[] ch, int start, int length) {
 			if (myState == State.READ_TEXT) {

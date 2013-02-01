@@ -172,8 +172,8 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	protected final ZLPaintContext.ScalingType getScalingType(ZLTextImageElement imageElement) {
-	  	switch (getImageFitting()) {
-		  	default:
+		switch (getImageFitting()) {
+			default:
 			case none:
 				return ZLPaintContext.ScalingType.IntegerCoefficient;
 			case covers:

@@ -27,7 +27,7 @@ public final class Author {
 		DisplayName = displayName;
 		SortKey = sortKey;
 	}
-		
+
 	public static int hashCode(Author author) {
 		return author == null ? 0 : author.hashCode();
 	}
