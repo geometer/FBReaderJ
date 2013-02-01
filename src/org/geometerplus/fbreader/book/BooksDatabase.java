@@ -25,8 +25,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.fbreader.book.*;
-
 public abstract class BooksDatabase {
 	private static BooksDatabase ourInstance;
 
@@ -89,8 +87,10 @@ public abstract class BooksDatabase {
 	public /*protected*/ abstract void saveRecentBookIds(final List<Long> ids);
 
 	protected abstract List<Long> loadFavoriteIds();
-	public /*protected*/ abstract void addToFavorites(long bookId);
-	public /*protected*/ abstract void removeFromFavorites(long bookId);
+	protected abstract boolean hasFavorites();
+	protected abstract boolean isFavorite(long bookId);
+	protected abstract void addToFavorites(long bookId);
+	protected abstract void removeFromFavorites(long bookId);
 
 	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex, boolean isVisible) {
 		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex, isVisible);

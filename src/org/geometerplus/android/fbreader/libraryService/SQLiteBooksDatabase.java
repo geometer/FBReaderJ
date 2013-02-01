@@ -690,8 +690,27 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
+	protected boolean hasFavorites() {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Favorites LIMIT 1", null
+		);
+		boolean result = cursor.moveToNext();
+		cursor.close();
+		return result;
+	}
+
+	protected boolean isFavorite(long bookId) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Favorites WHERE book_id = ? LIMIT 1",
+			new String[] { String.valueOf(bookId) }
+		);
+		boolean result = cursor.moveToNext();
+		cursor.close();
+		return result;
+	}
+
 	private SQLiteStatement myAddToFavoritesStatement;
-	public /*protected*/ void addToFavorites(long bookId) {
+	protected void addToFavorites(long bookId) {
 		if (myAddToFavoritesStatement == null) {
 			myAddToFavoritesStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO Favorites(book_id) VALUES (?)"
@@ -702,7 +721,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myRemoveFromFavoritesStatement;
-	public /*protected*/ void removeFromFavorites(long bookId) {
+	protected void removeFromFavorites(long bookId) {
 		if (myRemoveFromFavoritesStatement == null) {
 			myRemoveFromFavoritesStatement = myDatabase.compileStatement(
 				"DELETE FROM Favorites WHERE book_id = ?"
