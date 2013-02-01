@@ -113,8 +113,8 @@ public final class Library {
 		myDatabase = db;
 		Collection = new BookCollection(db);
 
-		new FavoritesTree(myRootTree, ROOT_FAVORITES);
-		new FirstLevelTree(myRootTree, ROOT_RECENT);
+		new FavoritesTree(Collection, myRootTree, ROOT_FAVORITES);
+		new RecentBooksTree(Collection, myRootTree, ROOT_RECENT);
 		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
@@ -356,10 +356,6 @@ public final class Library {
 				}
 			}
 			myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
-		}
-
-		for (Book book : Collection.recentBooks()) {
-			new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
 		}
 
 		for (Book book : Collection.favorites()) {
