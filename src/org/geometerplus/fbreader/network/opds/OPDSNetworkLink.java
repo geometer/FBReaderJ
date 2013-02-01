@@ -103,7 +103,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 				).read(inputStream);
 
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
-					// reset state to load current page from the beginning 
+					// reset state to load current page from the beginning
 					result.LastLoadedId = null;
 				} else {
 					result.Loader.getTree().confirmAllItems();

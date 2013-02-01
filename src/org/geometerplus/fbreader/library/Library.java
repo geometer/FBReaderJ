@@ -432,7 +432,7 @@ public final class Library {
 			);
 			file.setCached(false);
 		}
-		
+
 		// Step 4: add help file
 		try {
 			final ZLFile helpFile = getHelpFile();
@@ -523,7 +523,7 @@ public final class Library {
 			fireModelChangedEvent(ChangeListener.Code.Found);
 			return;
 		}
-		
+
 		FirstLevelTree newSearchResults = null;
 		final List<Book> booksCopy;
 		synchronized (myBooks) {

@@ -173,7 +173,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					id = link.getId();
 					statement.bindLong(5, id);
 					statement.execute();
-					
+
 					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,mime,update_time FROM LinkUrls WHERE link_id = " + link.getId(), null);
 					while (linksCursor.moveToNext()) {
 						try {
@@ -273,7 +273,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			}
 		});
 	}
-	
+
 	private void createTables() {
 		myDatabase.execSQL(
 			"CREATE TABLE CustomLinks(" +

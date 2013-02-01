@@ -28,7 +28,7 @@ public abstract class ZLibrary {
 	public static ZLibrary Instance() {
 		return ourImplementation;
 	}
-		
+
 	private static ZLibrary ourImplementation;
 
 	public static final String SCREEN_ORIENTATION_SYSTEM = "system";

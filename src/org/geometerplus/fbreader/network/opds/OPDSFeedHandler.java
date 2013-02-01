@@ -45,7 +45,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	 * Creates new OPDSFeedHandler instance that can be used to get NetworkItem objects from OPDS feeds.
 	 *
 	 * @param baseURL    string that contains URL of the OPDS feed, that will be read using this instance of the reader
-	 * @param result     network results buffer. Must be created using OPDSNetworkLink corresponding to the OPDS feed, 
+	 * @param result     network results buffer. Must be created using OPDSNetworkLink corresponding to the OPDS feed,
 	 *                   that will be read using this instance of the reader.
 	 */
 	OPDSFeedHandler(String baseURL, OPDSCatalogItem.State result) {

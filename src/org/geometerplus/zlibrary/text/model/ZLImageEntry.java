@@ -35,7 +35,7 @@ public final class ZLImageEntry {
 		VOffset = vOffset;
 		IsCover = isCover;
 	}
-	
+
 	public ZLImage getImage() {
 		return myImageMap.get(Id);
 	}

@@ -28,11 +28,11 @@ public class HexInputStream extends InputStream {
 	private final byte[] myBuffer = new byte[32768];
 	private int myBufferOffset;
 	private int myBufferLength;
-	
+
 	public HexInputStream(InputStream stream) {
 		myBaseStream = stream;
 	}
-	
+
 	@Override
 	public int available() throws IOException {
 		// TODO: real value might be less than returned one

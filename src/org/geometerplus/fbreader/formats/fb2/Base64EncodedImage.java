@@ -37,7 +37,7 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 	private final int myFileNumber;
 	private final String myNamePostfix;
 	private OutputStreamWriter myStreamWriter;
-	
+
 	public Base64EncodedImage(MimeType mimeType, String namePostfix) {
 		// TODO: use contentType
 		super(mimeType);

@@ -172,7 +172,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 		final LitResAuthenticationManager mgr =
 			(LitResAuthenticationManager)Link.authenticationManager();
 
-		// TODO: Maybe it's better to call isAuthorised(true) directly 
+		// TODO: Maybe it's better to call isAuthorised(true) directly
 		// and let exception fly through???
 		if (!mgr.mayBeAuthorised(true)) {
 			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);

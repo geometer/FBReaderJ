@@ -27,25 +27,25 @@ public final class ZLColor {
 	public final short Red;
 	public final short Green;
 	public final short Blue;
-	
+
 	public ZLColor(int r, int g, int b) {
 		Red = (short)(r & 0xFF);
 		Green = (short)(g & 0xFF);
 		Blue = (short)(b & 0xFF);
 	}
-	
+
 	public ZLColor(int intValue) {
 		Red = (short)((intValue >> 16) & 0xFF);
 		Green = (short)((intValue >> 8) & 0xFF);
 		Blue = (short)(intValue & 0xFF);
 	}
-	
+
 	public int getIntValue() {
 		return (Red << 16) + (Green << 8) + Blue;
 	}
 
 	public boolean equals(Object o) {
-		if (o == this) { 
+		if (o == this) {
 			return true;
 		}
 
