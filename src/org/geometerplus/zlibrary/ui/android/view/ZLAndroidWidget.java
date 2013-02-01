@@ -117,7 +117,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		if (myAnimationProvider == null || myAnimationType != type) {
 			myAnimationType = type;
 			if (myStoredLayerType != -1) {
-	  			setLayerType(myStoredLayerType, null);
+				setLayerType(myStoredLayerType, null);
 			}
 			switch (type) {
 				case none:
@@ -126,7 +126,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 				case curl:
 					myStoredLayerType = getLayerType();
 					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
-	  				setLayerType(LAYER_TYPE_SOFTWARE, null);
+					setLayerType(LAYER_TYPE_SOFTWARE, null);
 					break;
 				case slide:
 					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
