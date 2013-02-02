@@ -62,9 +62,10 @@ public abstract class BooksDatabase {
 	public /*protected*/ abstract void reloadBook(Book book);
 	public /*protected*/ abstract Book loadBookByFile(long fileId, ZLFile file);
 
-	protected abstract List<Author> loadAuthors(long bookId);
-	protected abstract List<Tag> loadTags(long bookId);
-	protected abstract SeriesInfo loadSeriesInfo(long bookId);
+	protected abstract List<Author> listAuthors();
+	protected abstract List<Author> listAuthors(long bookId);
+	protected abstract List<Tag> listTags(long bookId);
+	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	public /*protected*/ abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
 	public /*protected*/ abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
 	protected abstract void deleteAllBookAuthors(long bookId);
