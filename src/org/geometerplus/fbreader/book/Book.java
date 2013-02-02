@@ -134,9 +134,9 @@ public class Book {
 	}
 
 	void loadLists(BooksDatabase database) {
-		myAuthors = database.loadAuthors(myId);
-		myTags = database.loadTags(myId);
-		mySeriesInfo = database.loadSeriesInfo(myId);
+		myAuthors = database.listAuthors(myId);
+		myTags = database.listTags(myId);
+		mySeriesInfo = database.getSeriesInfo(myId);
 		myIsSaved = true;
 	}
 

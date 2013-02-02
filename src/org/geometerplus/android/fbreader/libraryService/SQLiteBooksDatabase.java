@@ -357,7 +357,21 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myInsertBookAuthorStatement.execute();
 	}
 
-	protected List<Author> loadAuthors(long bookId) {
+	protected List<Author> listAuthors() {
+		final Cursor cursor = myDatabase.rawQuery("SELECT name,sort_key FROM Authors", null);
+		if (!cursor.moveToNext()) {
+			cursor.close();
+			return null;
+		}
+		final ArrayList<Author> list = new ArrayList<Author>();
+		do {
+			list.add(new Author(cursor.getString(0), cursor.getString(1)));
+		} while (cursor.moveToNext());
+		cursor.close();
+		return list;
+	}
+
+	protected List<Author> listAuthors(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {
 			cursor.close();
@@ -449,7 +463,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return tag;
 	}
 
-	protected List<Tag> loadTags(long bookId) {
+	protected List<Tag> listTags(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Tags.tag_id FROM BookTag INNER JOIN Tags ON Tags.tag_id = BookTag.tag_id WHERE BookTag.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {
 			cursor.close();
@@ -505,7 +519,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	protected SeriesInfo loadSeriesInfo(long bookId) {
+	protected SeriesInfo getSeriesInfo(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { "" + bookId });
 		SeriesInfo info = null;
 		if (cursor.moveToNext()) {
