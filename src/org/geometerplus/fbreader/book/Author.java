@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.book;
 
-public final class Author {
+public final class Author implements Comparable<Author> {
 	public final String DisplayName;
 	public final String SortKey;
 
@@ -47,5 +47,11 @@ public final class Author {
 	@Override
 	public int hashCode() {
 		return SortKey.hashCode() + DisplayName.hashCode();
+	}
+
+	@Override
+	public int compareTo(Author other) {
+		final int byKeys = SortKey.compareTo(other.SortKey);
+		return byKeys != 0 ? byKeys : DisplayName.compareTo(other.DisplayName);
 	}
 }
