@@ -188,6 +188,42 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<Author> authors() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		//try {
+			// TODO: implement
+			return Collections.emptyList();
+		//} catch (RemoteException e) {
+		//	return Collections.emptyList();
+		//}
+	}
+
+	public synchronized List<Tag> tags() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		//try {
+			// TODO: implement
+			return Collections.emptyList();
+		//} catch (RemoteException e) {
+		//	return Collections.emptyList();
+		//}
+	}
+
+	public synchronized List<String> series() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		//try {
+			// TODO: implement
+			return Collections.emptyList();
+		//} catch (RemoteException e) {
+		//	return Collections.emptyList();
+		//}
+	}
+
 	public synchronized boolean saveBook(Book book, boolean force) {
 		if (myInterface == null) {
 			return false;

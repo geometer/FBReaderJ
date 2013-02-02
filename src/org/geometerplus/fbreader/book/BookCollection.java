@@ -227,6 +227,39 @@ public class BookCollection extends AbstractBookCollection {
 		return bookList;
 	}
 
+	public List<Author> authors() {
+		final Set<Author> authors = new TreeSet<Author>();
+		synchronized (myBooksByFile) {
+			for (Book book : myBooksByFile.values()) {
+				authors.addAll(book.authors());
+			}
+		}
+		return new ArrayList<Author>(authors);
+	}
+
+	public List<Tag> tags() {
+		final Set<Tag> tags = new TreeSet<Tag>();
+		synchronized (myBooksByFile) {
+			for (Book book : myBooksByFile.values()) {
+				tags.addAll(book.tags());
+			}
+		}
+		return new ArrayList<Tag>(tags);
+	}
+
+	public List<String> series() {
+		final Set<String> series = new TreeSet<String>();
+		synchronized (myBooksByFile) {
+			for (Book book : myBooksByFile.values()) {
+				final SeriesInfo info = book.getSeriesInfo();
+				if (info != null) {
+					series.add(info.Title);
+				}
+			}
+		}
+		return new ArrayList<String>(series);
+	}
+
 	public Book getRecentBook(int index) {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
