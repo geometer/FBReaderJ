@@ -209,11 +209,11 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		myBook.save();
 		myAuthors.clear();
 		myTags.clear();
-		for (Author a : BooksDatabase.Instance().loadAuthors()) {
+		for (Author a : BooksDatabase.Instance().listAuthors()) {
 			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
 		}
 		myAuthorPref.setSuggestions(myAuthors);
-		for (Tag t : BooksDatabase.Instance().loadTags()) {
+		for (Tag t : BooksDatabase.Instance().listTags()) {
 			if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
 		}
 		myTagPref.setSuggestions(myTags);
@@ -238,10 +238,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			return;
 		}
 
-		for (Author a : BooksDatabase.Instance().loadAuthors()) {
+		for (Author a : BooksDatabase.Instance().listAuthors()) {
 			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
 		}
-		List<Tag> tags = BooksDatabase.Instance().loadTags();
+		List<Tag> tags = BooksDatabase.Instance().listTags();
 		if (tags == null) {
 			tags = Collections.<Tag>emptyList();
 		}
