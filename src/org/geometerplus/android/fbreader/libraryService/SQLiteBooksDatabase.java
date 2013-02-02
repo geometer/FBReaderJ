@@ -382,7 +382,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	public List<Author> loadAuthors() {
-		final Cursor cursor = myDatabase.rawQuery("SELECT name, sort_key FROM Authors", null);
+		final Cursor cursor = myDatabase.rawQuery("SELECT name,sort_key FROM Authors", null);
 		if (!cursor.moveToNext()) {
 			cursor.close();
 			return null;
