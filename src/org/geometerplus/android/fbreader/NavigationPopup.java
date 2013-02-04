@@ -105,8 +105,8 @@ final class NavigationPopup {
 				if (fromUser) {
 					final int page = progress + 1;
 					final int pagesNumber = seekBar.getMax() + 1;
-					text.setText(makeProgressText(page, pagesNumber));
 					gotoPage(page);
+					text.setText(makeProgressText(page, pagesNumber));
 				}
 			}
 		});
