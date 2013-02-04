@@ -27,12 +27,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 public interface IBookCollection {
 	public interface Listener {
-		public enum BookEvent {
-			Added,
-			Updated,
-			Removed
-		}
-
 		public enum BuildEvent {
 			Started,
 			NotStarted,

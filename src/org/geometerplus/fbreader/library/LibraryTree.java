@@ -118,18 +118,28 @@ public abstract class LibraryTree extends FBTree {
 		return !toRemove.isEmpty();
 	}
 
-	public boolean onBookChanged(Book book) {
-		boolean updated = false;
-		for (FBTree tree : this) {
-			if (tree instanceof BookTree) {
-				final Book b = ((BookTree)tree).Book;
-				if (b.equals(book)) {
-					b.updateFrom(book);
-					updated = true;
+	public boolean onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			default:
+			case Added:
+				return false;
+			case Removed:
+				return removeBook(book, true);
+			case Updated:
+			{
+				boolean changed = false;
+				for (FBTree tree : this) {
+					if (tree instanceof BookTree) {
+						final Book b = ((BookTree)tree).Book;
+						if (b.equals(book)) {
+							b.updateFrom(book);
+							changed = true;
+						}
+					}
 				}
+				return changed;
 			}
 		}
-		return updated;
 	}
 
 	@Override

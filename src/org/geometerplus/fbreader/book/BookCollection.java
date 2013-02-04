@@ -153,10 +153,10 @@ public class BookCollection extends AbstractBookCollection {
 			if (existing == null) {
 				myBooksByFile.put(book.File, book);
 				myBooksById.put(book.getId(), book);
-				fireBookEvent(Listener.BookEvent.Added, book);
+				fireBookEvent(BookEvent.Added, book);
 			} else if (force) {
 				existing.updateFrom(book);
-				fireBookEvent(Listener.BookEvent.Updated, existing);
+				fireBookEvent(BookEvent.Updated, existing);
 				getBookById(book.getId());
 			}
 		}
@@ -185,7 +185,7 @@ public class BookCollection extends AbstractBookCollection {
 				book.File.getPhysicalFile().delete();
 			}
 		}
-		fireBookEvent(Listener.BookEvent.Removed, book);
+		fireBookEvent(BookEvent.Removed, book);
 	}
 
 	public List<Book> books() {
@@ -293,7 +293,7 @@ public class BookCollection extends AbstractBookCollection {
 		} else {
 			myDatabase.removeFromFavorites(book.getId());
 		}
-		fireBookEvent(Listener.BookEvent.Updated, book);
+		fireBookEvent(BookEvent.Updated, book);
 	}
 
 	public synchronized void startBuild() {

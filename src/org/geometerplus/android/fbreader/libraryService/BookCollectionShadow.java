@@ -50,7 +50,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 				final String type = intent.getStringExtra("type");
 				if (LibraryService.BOOK_EVENT_ACTION.equals(intent.getAction())) {
 					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"));
-					fireBookEvent(Listener.BookEvent.valueOf(type), book);
+					fireBookEvent(BookEvent.valueOf(type), book);
 				} else {
 					fireBuildEvent(Listener.BuildEvent.valueOf(type));
 				}

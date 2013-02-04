@@ -36,7 +36,7 @@ public abstract class AbstractBookCollection implements IBookCollection {
 		return !myListeners.isEmpty();
 	}
 
-	protected void fireBookEvent(Listener.BookEvent event, Book book) {
+	protected void fireBookEvent(BookEvent event, Book book) {
 		synchronized (myListeners) {
 			for (Listener l : myListeners) {
 				l.onBookEvent(event, book);

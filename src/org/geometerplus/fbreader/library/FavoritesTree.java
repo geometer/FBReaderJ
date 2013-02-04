@@ -19,14 +19,13 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.book.*;
 
 public class FavoritesTree extends FirstLevelTree {
 	private final IBookCollection myCollection;
 
-	FavoritesTree(IBookCollection collection, RootTree root, String id) {
-		super(root, id);
+	FavoritesTree(IBookCollection collection, RootTree root) {
+		super(root, Library.ROOT_FAVORITES);
 		myCollection = collection;
 	}
 
@@ -52,11 +51,14 @@ public class FavoritesTree extends FirstLevelTree {
 		}
 	}
 
-	public boolean onBookChanged(Book book) {
-		if (myCollection.isFavorite(book)) {
-			return super.onBookChanged(book);
-		} else {
+	public boolean onBookEvent(BookEvent event, Book book) {
+		if (event == BookEvent.Added && myCollection.isFavorite(book)) {
+			new BookTree(this, book, true);
+			return true;
+		} if (event == BookEvent.Updated && !myCollection.isFavorite(book)) {
 			return removeBook(book, false);
+		} else {
+			return super.onBookEvent(event, book);
 		}
 	}
 }

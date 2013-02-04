@@ -25,8 +25,8 @@ import org.geometerplus.fbreader.book.IBookCollection;
 public class RecentBooksTree extends FirstLevelTree {
 	private final IBookCollection myCollection;
 
-	RecentBooksTree(IBookCollection collection, RootTree root, String id) {
-		super(root, id);
+	RecentBooksTree(IBookCollection collection, RootTree root) {
+		super(root, Library.ROOT_RECENT);
 		myCollection = collection;
 	}
 

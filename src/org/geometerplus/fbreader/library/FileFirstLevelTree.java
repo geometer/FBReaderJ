@@ -28,8 +28,8 @@ import org.geometerplus.fbreader.book.IBookCollection;
 public class FileFirstLevelTree extends FirstLevelTree {
 	private final IBookCollection myCollection;
 
-	FileFirstLevelTree(IBookCollection collection, RootTree root, String id) {
-		super(root, id);
+	FileFirstLevelTree(IBookCollection collection, RootTree root) {
+		super(root, Library.ROOT_FILE_TREE);
 		myCollection = collection;
 		addChild(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 		addChild("/", "fileTreeRoot");

@@ -156,7 +156,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			((BookCollectionShadow)myLibrary.Collection).bindToService(this, new Runnable() {
 				public void run() {
 					myLibrary.refreshBookInfo(book);
-					if (getCurrentTree().onBookChanged(book)) {
+					if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
 						getListView().invalidateViews();
 					}
 				}
@@ -248,7 +248,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
 				myLibrary.Collection.setBookFavorite(book, false);
-				if (getCurrentTree().onBookChanged(book)) {
+				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
 					getListAdapter().replaceAll(getCurrentTree().subTrees());
 					getListView().invalidateViews();
 				}
@@ -319,14 +319,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	private void deleteBook(Book book, int mode) {
-		myLibrary.removeBook(book, mode);
-
 		if (getCurrentTree() instanceof FileTree) {
 			getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), book.File));
-		} else {
+			getListView().invalidateViews();
+		} else if (getCurrentTree().onBookEvent(BookEvent.Removed, book)) {
 			getListAdapter().replaceAll(getCurrentTree().subTrees());
+			getListView().invalidateViews();
 		}
-		getListView().invalidateViews();
+		myLibrary.removeBook(book, mode);
 	}
 
 	public void onLibraryChanged(final Code code) {

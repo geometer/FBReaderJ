@@ -99,12 +99,12 @@ public final class Library {
 	public Library(IBookCollection collection) {
 		Collection = collection;
 
-		new FavoritesTree(collection, myRootTree, ROOT_FAVORITES);
-		new RecentBooksTree(collection, myRootTree, ROOT_RECENT);
+		new FavoritesTree(collection, myRootTree);
+		new RecentBooksTree(collection, myRootTree);
 		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
-		new FileFirstLevelTree(collection, myRootTree, ROOT_FILE_TREE);
+		new FileFirstLevelTree(collection, myRootTree);
 	}
 
 	public void init() {
@@ -340,8 +340,6 @@ public final class Library {
 			return;
 		}
 		Collection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
-		getFirstLevelTree(ROOT_RECENT).removeBook(book, false);
-		getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false);
 		myRootTree.removeBook(book, true);
 	}
 }
