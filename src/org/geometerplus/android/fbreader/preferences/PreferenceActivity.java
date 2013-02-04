@@ -22,9 +22,6 @@ package org.geometerplus.android.fbreader.preferences;
 import java.util.*;
 
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
@@ -33,7 +30,6 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.text.view.style.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
-import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
 import org.geometerplus.fbreader.fbreader.*;
@@ -41,7 +37,6 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.fbreader.formats.Formats;
-import org.geometerplus.fbreader.formats.PdfPluginFormatPlugin;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
@@ -85,13 +80,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
-
-		if (FBReaderApp.Instance() == null) {
-			new FBReaderApp();
-		}
-		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-		final ColorProfile profile = fbReader.getColorProfile();
+		final ColorProfile profile = FBReaderApp.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addOption(Paths.TempDirectoryOption(), "temp");
@@ -117,7 +107,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
-			fbReader.AllowScreenBrightnessAdjustmentOption,
+			FBReaderApp.AllowScreenBrightnessAdjustmentOption,
 			appearanceScreen.Resource,
 			"allowScreenBrightnessAdjustment"
 		) {
@@ -342,19 +332,19 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen marginsScreen = createPreferenceScreen("margins");
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("left"),
-			fbReader.LeftMarginOption
+			FBReaderApp.LeftMarginOption
 		));
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("right"),
-			fbReader.RightMarginOption
+			FBReaderApp.RightMarginOption
 		));
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("top"),
-			fbReader.TopMarginOption
+			FBReaderApp.TopMarginOption
 		));
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("bottom"),
-			fbReader.BottomMarginOption
+			FBReaderApp.BottomMarginOption
 		));
 
 		final Screen statusLineScreen = createPreferenceScreen("scrollBar");
@@ -362,7 +352,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
 		statusLineScreen.addPreference(new ZLChoicePreference(
 			this, statusLineScreen.Resource, "scrollbarType",
-			fbReader.ScrollbarTypeOption, scrollBarTypes
+			FBReaderApp.ScrollbarTypeOption, scrollBarTypes
 		) {
 			@Override
 			protected void onDialogClosed(boolean result) {
@@ -375,20 +365,20 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		footerPreferences.add(statusLineScreen.addPreference(new ZLIntegerRangePreference(
 			this, statusLineScreen.Resource.getResource("footerHeight"),
-			fbReader.FooterHeightOption
+			FBReaderApp.FooterHeightOption
 		)));
 		footerPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerColor"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowTOCMarksOption, "tocMarks"));
+		footerPreferences.add(statusLineScreen.addOption(FBReaderApp.FooterShowTOCMarksOption, "tocMarks"));
 
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowClockOption, "showClock"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowBatteryOption, "showBattery"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowProgressOption, "showProgress"));
+		footerPreferences.add(statusLineScreen.addOption(FBReaderApp.FooterShowClockOption, "showClock"));
+		footerPreferences.add(statusLineScreen.addOption(FBReaderApp.FooterShowBatteryOption, "showBattery"));
+		footerPreferences.add(statusLineScreen.addOption(FBReaderApp.FooterShowProgressOption, "showProgress"));
 		footerPreferences.add(statusLineScreen.addPreference(new FontOption(
 			this, statusLineScreen.Resource, "font",
-			fbReader.FooterFontOption, false
+			FBReaderApp.FooterFontOption, false
 		)));
 		footerPreferences.setEnabled(
-			fbReader.ScrollbarTypeOption.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER
+				FBReaderApp.ScrollbarTypeOption.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER
 		);
 
 		/*
@@ -404,18 +394,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
 
-		final ZLKeyBindings keyBindings = fbReader.keyBindings();
+		final ZLKeyBindings keyBindings = FBReaderApp.keyBindingsStatic();
 
 		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		scrollingScreen.addOption(scrollingPreferences.FingerScrollingOption, "fingerScrolling");
-		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
+		scrollingScreen.addOption(FBReaderApp.EnableDoubleTapOption, "enableDoubleTapDetection");
 
 		final ZLPreferenceSet volumeKeysPreferences = new ZLPreferenceSet();
 		scrollingScreen.addPreference(new ZLCheckBoxPreference(
 			this, scrollingScreen.Resource, "volumeKeys"
 		) {
 			{
-				setChecked(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
+				setChecked(FBReaderApp.hasActionForKeyStatic(KeyEvent.KEYCODE_VOLUME_UP, false));
 			}
 
 			@Override
@@ -452,7 +442,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 		}));
-		volumeKeysPreferences.setEnabled(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
+		volumeKeysPreferences.setEnabled(FBReaderApp.hasActionForKeyStatic(KeyEvent.KEYCODE_VOLUME_UP, false));
 
 		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
@@ -483,22 +473,22 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
 			this,
-			fbReader.NavigateAllWordsOption,
+			FBReaderApp.NavigateAllWordsOption,
 			dictionaryScreen.Resource,
 			"navigateOverAllWords"
 		));
-		dictionaryScreen.addOption(fbReader.WordTappingActionOption, "tappingAction");
+		dictionaryScreen.addOption(FBReaderApp.WordTappingActionOption, "tappingAction");
 
 		final Screen imagesScreen = createPreferenceScreen("images");
-		imagesScreen.addOption(fbReader.ImageTappingActionOption, "tappingAction");
-		imagesScreen.addOption(fbReader.FitImagesToScreenOption, "fitImagesToScreen");
-		imagesScreen.addOption(fbReader.ImageViewBackgroundOption, "backgroundColor");
+		imagesScreen.addOption(FBReaderApp.ImageTappingActionOption, "tappingAction");
+		imagesScreen.addOption(FBReaderApp.FitImagesToScreenOption, "fitImagesToScreen");
+		imagesScreen.addOption(FBReaderApp.ImageViewBackgroundOption, "backgroundColor");
 
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
-		cancelMenuScreen.addOption(fbReader.ShowLibraryInCancelMenuOption, "library");
-		cancelMenuScreen.addOption(fbReader.ShowNetworkLibraryInCancelMenuOption, "networkLibrary");
-		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");
-		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");
+		cancelMenuScreen.addOption(FBReaderApp.ShowLibraryInCancelMenuOption, "library");
+		cancelMenuScreen.addOption(FBReaderApp.ShowNetworkLibraryInCancelMenuOption, "networkLibrary");
+		cancelMenuScreen.addOption(FBReaderApp.ShowPreviousBookInCancelMenuOption, "previousBook");
+		cancelMenuScreen.addOption(FBReaderApp.ShowPositionsInCancelMenuOption, "positions");
 		final String[] backKeyActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
