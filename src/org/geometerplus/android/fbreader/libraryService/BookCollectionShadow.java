@@ -192,12 +192,19 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
-		//try {
-			// TODO: implement
+		try {
+			final List<String> strings = myInterface.authors();
+			final List<Author> authors = new ArrayList<Author>(strings.size());
+			for (String s : strings) {
+				final String[] splited = s.split("\000");
+				if (splited.length == 2) {
+					authors.add(new Author(splited[0], splited[1]));
+				}
+			}
+			return authors;
+		} catch (RemoteException e) {
 			return Collections.emptyList();
-		//} catch (RemoteException e) {
-		//	return Collections.emptyList();
-		//}
+		}
 	}
 
 	public synchronized List<Tag> tags() {
