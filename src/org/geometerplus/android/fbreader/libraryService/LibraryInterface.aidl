@@ -17,6 +17,8 @@ interface LibraryInterface {
 	String getBookById(in long id);
 	String getRecentBook(in int index);
 
+	List<String> authors();
+
 	boolean saveBook(in String book, in boolean force);
 	void removeBook(in String book, in boolean deleteFromDisk);
 	void addBookToRecentList(in String book);
