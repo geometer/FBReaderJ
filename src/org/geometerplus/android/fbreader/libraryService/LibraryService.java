@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
 import android.app.Service;
 import android.content.Intent;
@@ -142,6 +141,20 @@ public class LibraryService extends Service {
 
 		public String getBookById(long id) {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
+		}
+
+		public List<String> authors() {
+			final List<Author> authors = myCollection.authors();
+			final List<String> strings = new ArrayList<String>(authors.size());
+			for (Author a : authors) {
+				strings.add(
+					new StringBuilder(a.DisplayName)
+						.append('\000')
+						.append(a.SortKey)
+						.toString()
+				);
+			}
+			return strings;
 		}
 
 		public boolean saveBook(String book, boolean force) {
