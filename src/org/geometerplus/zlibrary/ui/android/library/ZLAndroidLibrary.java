@@ -90,7 +90,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public ZLAndroidWidget getWidget() {
-		return (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
+		return myActivity.getMainView();
 	}
 
 	@Override
