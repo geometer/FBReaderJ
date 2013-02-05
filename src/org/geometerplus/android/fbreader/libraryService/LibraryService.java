@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
 import android.app.Service;
 import android.content.Intent;
@@ -155,6 +154,7 @@ public class LibraryService extends Service {
 						.toString()
 				);
 			}
+			return strings;
 		}
 
 		public boolean saveBook(String book, boolean force) {
