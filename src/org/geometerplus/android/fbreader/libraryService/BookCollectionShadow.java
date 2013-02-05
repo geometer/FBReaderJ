@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import android.content.*;
 import android.os.IBinder;
