@@ -149,6 +149,19 @@ public class LibraryService extends Service {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
 		}
 
+		public List<String> authors() {
+			final List<Author> authors = myCollection.authors();
+			final List<String> strings = new ArrayList<String>(authors.size());
+			for (Author a : authors) {
+				strings.add(
+					new StringBuilder(a.DisplayName)
+						.append('\000')
+						.append(a.SortKey)
+						.toString()
+				);
+			}
+		}
+
 		public boolean saveBook(String book, boolean force) {
 			return myCollection.saveBook(SerializerUtil.deserializeBook(book), force);
 		}
