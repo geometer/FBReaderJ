@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.util.List;
+
 import org.geometerplus.fbreader.book.*;
 
 public class AuthorTree extends LibraryTree {
@@ -37,7 +39,7 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public String getName() {
 		return
-			Author != null && Author != Author.NULL ?
+			Author != Author.NULL ?
 				Author.DisplayName :
 				Library.resource().getResource("unknownAuthor").getValue();
 	}
@@ -62,7 +64,11 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	public boolean containsBook(Book book) {
-		return book != null && book.authors().contains(Author);
+		if (book == null) {
+			return false;
+		}
+		final List<Author> bookAuthors = book.authors();
+		return Author.equals(Author.NULL) ? bookAuthors.isEmpty() : bookAuthors.contains(Author);
 	}
 
 	@Override
@@ -76,7 +82,7 @@ public class AuthorTree extends LibraryTree {
 		for (Book book : Collection.books(Author)) {
 			final SeriesInfo seriesInfo = book.getSeriesInfo();
 			if (seriesInfo == null) {
-				getBookSubTree(book, false);
+				getBookSubTree(book);
 			} else {
 				getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
 			}

@@ -44,13 +44,13 @@ public class FavoritesTree extends FirstLevelTree {
 	public void waitForOpening() {
 		clear();
 		for (Book book : Collection.favorites()) {
-			new BookTree(this, book, true);
+			new BookWithAuthorsTree(this, book);
 		}
 	}
 
 	public boolean onBookEvent(BookEvent event, Book book) {
 		if (event == BookEvent.Added && Collection.isFavorite(book)) {
-			new BookTree(this, book, true);
+			new BookWithAuthorsTree(this, book);
 			return true;
 		} if (event == BookEvent.Updated && !Collection.isFavorite(book)) {
 			return removeBook(book, false);
