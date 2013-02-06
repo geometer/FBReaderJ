@@ -101,14 +101,14 @@ public final class Library {
 
 		new FavoritesTree(collection, myRootTree);
 		new RecentBooksTree(collection, myRootTree);
-		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
+		new AuthorListTree(collection, myRootTree);
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
 		new FileFirstLevelTree(collection, myRootTree);
 	}
 
 	public void init() {
-		Collection.addListener(new BookCollection.Listener() {
+		Collection.addListener(new IBookCollection.Listener() {
 			public void onBookEvent(BookEvent event, Book book) {
 				switch (event) {
 					case Added:
@@ -193,19 +193,7 @@ public final class Library {
 			myBooks.put(book.getId(), book);
 		}
 
-		List<Author> authors = book.authors();
-		if (authors.isEmpty()) {
-			authors = (List<Author>)myNullList;
-		}
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
-		for (Author a : authors) {
-			final AuthorTree authorTree = getFirstLevelTree(ROOT_BY_AUTHOR).getAuthorSubTree(a);
-			if (seriesInfo == null) {
-				authorTree.getBookSubTree(book, false);
-			} else {
-				authorTree.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
-			}
-		}
 
 		if (seriesInfo != null) {
 			FirstLevelTree seriesRoot = getFirstLevelTree(ROOT_BY_SERIES);
@@ -263,7 +251,6 @@ public final class Library {
 		removeFromTree(ROOT_FOUND, book);
 		removeFromTree(ROOT_BY_TITLE, book);
 		removeFromTree(ROOT_BY_SERIES, book);
-		removeFromTree(ROOT_BY_AUTHOR, book);
 		removeFromTree(ROOT_BY_TAG, book);
 		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);

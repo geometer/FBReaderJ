@@ -44,7 +44,7 @@ import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
+public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener, IBookCollection.Listener {
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
 	private Library myLibrary;
@@ -58,6 +58,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (myLibrary == null) {
 			myLibrary = new Library(new BookCollectionShadow());
 			myLibrary.addChangeListener(this);
+			myLibrary.Collection.addListener(this);
 		}
 
 		mySelectedBook =
@@ -113,6 +114,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	protected void onDestroy() {
+		myLibrary.Collection.removeListener(this);
 		myLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
@@ -348,5 +350,12 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				}
 			}
 		});
+	}
+
+	public void onBookEvent(BookEvent event, Book book) {
+		getCurrentTree().onBookEvent(event, book);
+	}
+
+	public void onBuildEvent(BuildEvent event) {
 	}
 }

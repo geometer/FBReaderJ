@@ -19,53 +19,17 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.geometerplus.fbreader.book.*;
 
-public class AuthorTree extends LibraryTree {
+public class AuthorListTree extends FirstLevelTree {
 	private final IBookCollection myCollection;
 
-	public final Author Author;
-
-	AuthorTree(IBookCollection collection, Author author) {
+	AuthorListTree(IBookCollection collection, RootTree root) {
+		super(root, Library.ROOT_BY_AUTHOR);
 		myCollection = collection;
-		Author = author;
-	}
-
-	AuthorTree(IBookCollection collection, AuthorListTree parent, Author author, int position) {
-		super(parent, position);
-		myCollection = collection;
-		Author = author;
-	}
-
-	@Override
-	public String getName() {
-		return
-			Author != null && Author != Author.NULL ?
-				Author.DisplayName :
-				Library.resource().getResource("unknownAuthor").getValue();
-	}
-
-	@Override
-	protected String getStringId() {
-		return "@AuthorTree" + getSortKey();
-	}
-
-	@Override
-	protected String getSortKey() {
-		if (Author == null) {
-			return null;
-		}
-		return new StringBuilder()
-			.append(" Author:")
-			.append(Author.SortKey)
-			.append(":")
-			.append(Author.DisplayName)
-			.toString();
-	}
-
-	@Override
-	public boolean containsBook(Book book) {
-		return book != null && book.authors().contains(Author);
 	}
 
 	@Override
@@ -76,13 +40,8 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : myCollection.books(Author)) {
-			final SeriesInfo seriesInfo = book.getSeriesInfo();
-			if (seriesInfo == null) {
-				getBookSubTree(book, false);
-			} else {
-				getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
-			}
+		for (Author a : myCollection.authors()) {
+			createAuthorSubTree(a);
 		}
 	}
 
@@ -91,14 +50,33 @@ public class AuthorTree extends LibraryTree {
 		switch (event) {
 			default:
 			case Added:
-				// TODO: implement
-				return false;
+			{
+				final List<Author> bookAuthors = book.authors();
+				boolean changed = false;
+				if (bookAuthors.isEmpty()) {
+					changed &= createAuthorSubTree(Author.NULL);
+				} else for (Author a : myCollection.authors()) {
+					changed &= createAuthorSubTree(a);
+				}
+				return changed;
+			}
 			case Removed:
 				// TODO: implement
 				return false;
 			case Updated:
 				// TODO: implement
 				return false;
+		}
+	}
+
+	private boolean createAuthorSubTree(Author author) {
+		final AuthorTree temp = new AuthorTree(myCollection, author);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return false;
+		} else {
+			new AuthorTree(myCollection, this, author, - position - 1);
+			return true;
 		}
 	}
 }

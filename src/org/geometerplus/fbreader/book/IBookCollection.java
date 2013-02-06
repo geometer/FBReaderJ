@@ -44,6 +44,7 @@ public interface IBookCollection {
 
 	int size();
 	List<Book> books();
+	List<Book> books(Author author);
 	List<Book> books(String pattern);
 	List<Book> recentBooks();
 	List<Book> favorites();

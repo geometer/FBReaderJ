@@ -124,6 +124,10 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.books());
 		}
 
+		public List<String> booksForAuthor(String author) {
+			return SerializerUtil.serializeBookList(myCollection.books(Util.stringToAuthor(author)));
+		}
+
 		public List<String> booksForPattern(String pattern) {
 			return SerializerUtil.serializeBookList(myCollection.books(pattern));
 		}
@@ -152,12 +156,7 @@ public class LibraryService extends Service {
 			final List<Author> authors = myCollection.authors();
 			final List<String> strings = new ArrayList<String>(authors.size());
 			for (Author a : authors) {
-				strings.add(
-					new StringBuilder(a.DisplayName)
-						.append('\000')
-						.append(a.SortKey)
-						.toString()
-				);
+				strings.add(Util.authorToString(a));
 			}
 			return strings;
 		}

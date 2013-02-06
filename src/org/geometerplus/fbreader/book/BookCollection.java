@@ -194,6 +194,18 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	public List<Book> books(Author author) {
+		final boolean isNull = Author.NULL.equals(author);
+		final LinkedList<Book> filtered = new LinkedList<Book>();
+		for (Book b : books()) {
+			final List<Author> bookAuthors = b.authors();
+			if (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author)) {
+				filtered.add(b);
+			}
+		}
+		return filtered;
+	}
+
 	public List<Book> books(String pattern) {
 		if (pattern == null || pattern.length() == 0) {
 			return Collections.emptyList();
@@ -231,7 +243,12 @@ public class BookCollection extends AbstractBookCollection {
 		final Set<Author> authors = new TreeSet<Author>();
 		synchronized (myBooksByFile) {
 			for (Book book : myBooksByFile.values()) {
-				authors.addAll(book.authors());
+				final List<Author> bookAuthors = book.authors();
+				if (bookAuthors.isEmpty()) {
+					authors.add(Author.NULL);
+				} else {
+					authors.addAll(bookAuthors);
+				}
 			}
 		}
 		return new ArrayList<Author>(authors);
