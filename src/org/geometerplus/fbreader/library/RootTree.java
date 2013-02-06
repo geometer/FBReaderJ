@@ -19,8 +19,11 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.fbreader.book.IBookCollection;
+
 class RootTree extends LibraryTree {
-	RootTree() {
+	RootTree(IBookCollection collection) {
+		super(collection);
 	}
 
 	@Override

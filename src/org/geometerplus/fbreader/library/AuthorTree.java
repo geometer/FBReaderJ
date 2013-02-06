@@ -22,18 +22,15 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.fbreader.book.*;
 
 public class AuthorTree extends LibraryTree {
-	private final IBookCollection myCollection;
-
 	public final Author Author;
 
 	AuthorTree(IBookCollection collection, Author author) {
-		myCollection = collection;
+		super(collection);
 		Author = author;
 	}
 
-	AuthorTree(IBookCollection collection, AuthorListTree parent, Author author, int position) {
+	AuthorTree(AuthorListTree parent, Author author, int position) {
 		super(parent, position);
-		myCollection = collection;
 		Author = author;
 	}
 
@@ -76,7 +73,7 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : myCollection.books(Author)) {
+		for (Book book : Collection.books(Author)) {
 			final SeriesInfo seriesInfo = book.getSeriesInfo();
 			if (seriesInfo == null) {
 				getBookSubTree(book, false);

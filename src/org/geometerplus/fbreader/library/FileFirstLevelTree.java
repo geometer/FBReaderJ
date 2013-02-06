@@ -23,14 +23,10 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.book.IBookCollection;
 
 public class FileFirstLevelTree extends FirstLevelTree {
-	private final IBookCollection myCollection;
-
-	FileFirstLevelTree(IBookCollection collection, RootTree root) {
+	FileFirstLevelTree(RootTree root) {
 		super(root, Library.ROOT_FILE_TREE);
-		myCollection = collection;
 		addChild(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 		addChild("/", "fileTreeRoot");
 		addChild(Paths.cardDirectory(), "fileTreeCard");
@@ -42,7 +38,6 @@ public class FileFirstLevelTree extends FirstLevelTree {
 			final ZLResource resource = Library.resource().getResource(resourceKey);
 			new FileTree(
 				this,
-				myCollection,
 				file,
 				resource.getValue(),
 				resource.getResource("summary").getValue()

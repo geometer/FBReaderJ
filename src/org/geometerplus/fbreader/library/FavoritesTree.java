@@ -22,16 +22,13 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.fbreader.book.*;
 
 public class FavoritesTree extends FirstLevelTree {
-	private final IBookCollection myCollection;
-
-	FavoritesTree(IBookCollection collection, RootTree root) {
+	FavoritesTree(RootTree root) {
 		super(root, Library.ROOT_FAVORITES);
-		myCollection = collection;
 	}
 
 	@Override
 	public Status getOpeningStatus() {
-		if (!myCollection.hasFavorites()) {
+		if (!Collection.hasFavorites()) {
 			return Status.CANNOT_OPEN;
 		}
 		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
@@ -46,16 +43,16 @@ public class FavoritesTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : myCollection.favorites()) {
+		for (Book book : Collection.favorites()) {
 			new BookTree(this, book, true);
 		}
 	}
 
 	public boolean onBookEvent(BookEvent event, Book book) {
-		if (event == BookEvent.Added && myCollection.isFavorite(book)) {
+		if (event == BookEvent.Added && Collection.isFavorite(book)) {
 			new BookTree(this, book, true);
 			return true;
-		} if (event == BookEvent.Updated && !myCollection.isFavorite(book)) {
+		} if (event == BookEvent.Updated && !Collection.isFavorite(book)) {
 			return removeBook(book, false);
 		} else {
 			return super.onBookEvent(event, book);

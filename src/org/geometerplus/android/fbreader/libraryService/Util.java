@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,21 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.android.fbreader.libraryService;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Author;
 
-public class RecentBooksTree extends FirstLevelTree {
-	RecentBooksTree(RootTree root) {
-		super(root, Library.ROOT_RECENT);
+abstract class Util {
+	static String authorToString(Author author) {
+		return new StringBuilder(author.DisplayName).append('\000').append(author.SortKey).toString();
 	}
 
-	@Override
-	public Status getOpeningStatus() {
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
-	}
-
-	@Override
-	public void waitForOpening() {
-		clear();
-		for (Book book : Collection.recentBooks()) {
-			new BookTree(this, book, true);
+	static Author stringToAuthor(String string) {
+		final String[] splitted = string.split("\000");
+		if (splitted.length == 2) {
+			return new Author(splitted[0], splitted[1]);
+		} else {
+			return Author.NULL;
 		}
 	}
 }

@@ -25,11 +25,8 @@ import java.util.List;
 import org.geometerplus.fbreader.book.*;
 
 public class AuthorListTree extends FirstLevelTree {
-	private final IBookCollection myCollection;
-
-	AuthorListTree(IBookCollection collection, RootTree root) {
+	AuthorListTree(RootTree root) {
 		super(root, Library.ROOT_BY_AUTHOR);
-		myCollection = collection;
 	}
 
 	@Override
@@ -40,7 +37,7 @@ public class AuthorListTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Author a : myCollection.authors()) {
+		for (Author a : Collection.authors()) {
 			createAuthorSubTree(a);
 		}
 	}
@@ -55,7 +52,7 @@ public class AuthorListTree extends FirstLevelTree {
 				boolean changed = false;
 				if (bookAuthors.isEmpty()) {
 					changed &= createAuthorSubTree(Author.NULL);
-				} else for (Author a : myCollection.authors()) {
+				} else for (Author a : Collection.authors()) {
 					changed &= createAuthorSubTree(a);
 				}
 				return changed;
@@ -70,12 +67,12 @@ public class AuthorListTree extends FirstLevelTree {
 	}
 
 	private boolean createAuthorSubTree(Author author) {
-		final AuthorTree temp = new AuthorTree(myCollection, author);
+		final AuthorTree temp = new AuthorTree(Collection, author);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {
-			new AuthorTree(myCollection, this, author, - position - 1);
+			new AuthorTree(this, author, - position - 1);
 			return true;
 		}
 	}

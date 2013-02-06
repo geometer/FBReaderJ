@@ -79,7 +79,7 @@ public final class Library {
 	public final IBookCollection Collection;
 	private final Map<Long,Book> myBooks = Collections.synchronizedMap(new HashMap<Long,Book>());
 
-	private final RootTree myRootTree = new RootTree();
+	private final RootTree myRootTree;
 	private boolean myDoGroupTitlesByFirstLetter;
 
 	private final static int STATUS_LOADING = 1;
@@ -99,12 +99,14 @@ public final class Library {
 	public Library(IBookCollection collection) {
 		Collection = collection;
 
-		new FavoritesTree(collection, myRootTree);
-		new RecentBooksTree(collection, myRootTree);
-		new AuthorListTree(collection, myRootTree);
+ 		myRootTree = new RootTree(collection);
+
+		new FavoritesTree(myRootTree);
+		new RecentBooksTree(myRootTree);
+		new AuthorListTree(myRootTree);
 		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
-		new FileFirstLevelTree(collection, myRootTree);
+		new FileFirstLevelTree(myRootTree);
 	}
 
 	public void init() {
