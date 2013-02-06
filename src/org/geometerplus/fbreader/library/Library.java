@@ -206,7 +206,7 @@ public final class Library {
 					ROOT_BY_SERIES
 				);
 			}
-			seriesRoot.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
+			seriesRoot.getSeriesSubTree(seriesInfo.Title).createBookInSeriesSubTree(book);
 		}
 
 		if (myDoGroupTitlesByFirstLetter) {

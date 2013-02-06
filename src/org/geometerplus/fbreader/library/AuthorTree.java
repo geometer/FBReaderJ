@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.geometerplus.fbreader.book.*;
@@ -80,28 +81,33 @@ public class AuthorTree extends LibraryTree {
 	public void waitForOpening() {
 		clear();
 		for (Book book : Collection.books(Author)) {
-			final SeriesInfo seriesInfo = book.getSeriesInfo();
-			if (seriesInfo == null) {
-				getBookSubTree(book);
-			} else {
-				getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
-			}
+			createBookSubTree(book);
 		}
 	}
 
 	@Override
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
-			default:
 			case Added:
-				// TODO: implement
-				return false;
-			case Removed:
-				// TODO: implement
-				return false;
-			case Updated:
-				// TODO: implement
-				return false;
+				return containsBook(book) && createBookSubTree(book);
+			default:
+				return super.onBookEvent(event, book);
+		}
+	}
+
+	boolean createBookSubTree(Book book) {
+		final SeriesInfo seriesInfo = book.getSeriesInfo();
+		if (seriesInfo != null) {
+			return getSeriesSubTree(seriesInfo.Title).createBookInSeriesSubTree(book);
+		}
+
+		final BookTree temp = new BookTree(Collection, book);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return false;
+		} else {
+			new BookTree(this, book, - position - 1);
+			return true;
 		}
 	}
 }
