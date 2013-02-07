@@ -19,13 +19,13 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.Tag;
+import org.geometerplus.fbreader.book.*;
 
 public final class TagTree extends LibraryTree {
 	public final Tag Tag;
 
-	TagTree(Tag tag) {
+	TagTree(IBookCollection collection, Tag tag) {
+		super(collection);
 		Tag = tag;
 	}
 
