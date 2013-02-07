@@ -10,10 +10,10 @@ DONE read book => go to library => go to book info => update book info => return
 * tags/books by tag request
 * series/books by series request
 * 'rescan' button in library menu
+* getHelpFile => getHelpBook
 
 bugs:
 * double tap only for action bar
-* 
 
 small features:
 * min/max font size
