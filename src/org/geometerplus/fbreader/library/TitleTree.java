@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.library;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.IBookCollection;
 
 public final class TitleTree extends LibraryTree {
 	static String firstTitleLetter(Book book) {
@@ -45,7 +46,8 @@ public final class TitleTree extends LibraryTree {
 
 	public final String Title;
 
-	TitleTree(String title) {
+	TitleTree(IBookCollection collection, String title) {
+		super(collection);
 		Title = title;
 	}
 
