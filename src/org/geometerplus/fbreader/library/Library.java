@@ -35,15 +35,6 @@ public final class Library {
 		return ZLResource.resource("library");
 	}
 
-	public static final String ROOT_FOUND = "found";
-	public static final String ROOT_FAVORITES = "favorites";
-	public static final String ROOT_RECENT = "recent";
-	public static final String ROOT_BY_AUTHOR = "byAuthor";
-	public static final String ROOT_BY_TITLE = "byTitle";
-	public static final String ROOT_BY_SERIES = "bySeries";
-	public static final String ROOT_BY_TAG = "byTag";
-	public static final String ROOT_FILE_TREE = "fileTree";
-
 	public static final int REMOVE_DONT_REMOVE = 0x00;
 	public static final int REMOVE_FROM_LIBRARY = 0x01;
 	public static final int REMOVE_FROM_DISK = 0x02;
@@ -92,7 +83,7 @@ public final class Library {
 
 	private final Map<ZLFile,Book> myBooks =
 		Collections.synchronizedMap(new HashMap<ZLFile,Book>());
-	private final RootTree myRootTree = new RootTree();
+	private final RootTree myRootTree;
 	private boolean myDoGroupTitlesByFirstLetter;
 
 	private final static int STATUS_LOADING = 1;
@@ -113,12 +104,14 @@ public final class Library {
 		myDatabase = db;
 		Collection = new BookCollection(db);
 
-		new FavoritesTree(Collection, myRootTree, ROOT_FAVORITES);
-		new RecentBooksTree(Collection, myRootTree, ROOT_RECENT);
-		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
-		new FirstLevelTree(myRootTree, ROOT_BY_TITLE);
-		new FirstLevelTree(myRootTree, ROOT_BY_TAG);
-		new FileFirstLevelTree(Collection, myRootTree, ROOT_FILE_TREE);
+		myRootTree = new RootTree(Collection);
+
+		new FavoritesTree(myRootTree);
+		new RecentBooksTree(myRootTree);
+		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_AUTHOR);
+		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_TITLE);
+		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_TAG);
+		new FileFirstLevelTree(myRootTree);
 	}
 
 	public LibraryTree getRootTree() {
@@ -237,7 +230,7 @@ public final class Library {
 
 	private LibraryTree getTagTree(Tag tag) {
 		if (tag == null || tag.Parent == null) {
-			return getFirstLevelTree(ROOT_BY_TAG).getTagSubTree(tag);
+			return getFirstLevelTree(LibraryTree.ROOT_BY_TAG).getTagSubTree(tag);
 		} else {
 			return getTagTree(tag.Parent).getTagSubTree(tag);
 		}
@@ -255,7 +248,7 @@ public final class Library {
 		}
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
 		for (Author a : authors) {
-			final AuthorTree authorTree = getFirstLevelTree(ROOT_BY_AUTHOR).getAuthorSubTree(a);
+			final AuthorTree authorTree = getFirstLevelTree(LibraryTree.ROOT_BY_AUTHOR).getAuthorSubTree(a);
 			if (seriesInfo == null) {
 				authorTree.getBookSubTree(book, false);
 			} else {
@@ -264,12 +257,12 @@ public final class Library {
 		}
 
 		if (seriesInfo != null) {
-			FirstLevelTree seriesRoot = getFirstLevelTree(ROOT_BY_SERIES);
+			FirstLevelTree seriesRoot = getFirstLevelTree(LibraryTree.ROOT_BY_SERIES);
 			if (seriesRoot == null) {
 				seriesRoot = new FirstLevelTree(
 					myRootTree,
-					myRootTree.indexOf(getFirstLevelTree(ROOT_BY_TITLE)) + 1,
-					ROOT_BY_SERIES
+					myRootTree.indexOf(getFirstLevelTree(LibraryTree.ROOT_BY_TITLE)) + 1,
+					LibraryTree.ROOT_BY_SERIES
 				);
 			}
 			seriesRoot.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
@@ -279,11 +272,11 @@ public final class Library {
 			final String letter = TitleTree.firstTitleLetter(book);
 			if (letter != null) {
 				final TitleTree tree =
-					getFirstLevelTree(ROOT_BY_TITLE).getTitleSubTree(letter);
+					getFirstLevelTree(LibraryTree.ROOT_BY_TITLE).getTitleSubTree(letter);
 				tree.getBookSubTree(book, true);
 			}
 		} else {
-			getFirstLevelTree(ROOT_BY_TITLE).getBookSubTree(book, true);
+			getFirstLevelTree(LibraryTree.ROOT_BY_TITLE).getBookSubTree(book, true);
 		}
 
 		List<Tag> tags = book.tags();
@@ -295,7 +288,7 @@ public final class Library {
 		}
 
 		final SearchResultsTree found =
-			(SearchResultsTree)getFirstLevelTree(ROOT_FOUND);
+			(SearchResultsTree)getFirstLevelTree(LibraryTree.ROOT_FOUND);
 		if (found != null && book.matches(found.getPattern())) {
 			found.getBookSubTree(book, true);
 		}
@@ -311,7 +304,7 @@ public final class Library {
 	private void refreshInTree(String rootId, Book book) {
 		final FirstLevelTree tree = getFirstLevelTree(rootId);
 		if (tree != null) {
-			int index = tree.indexOf(new BookTree(book, true));
+			int index = tree.indexOf(new BookTree(Collection, book, true));
 			if (index >= 0) {
 				tree.removeBook(book, false);
 				new BookTree(tree, book, true, index);
@@ -325,13 +318,12 @@ public final class Library {
 		}
 
 		myBooks.remove(book.File);
-		refreshInTree(ROOT_FAVORITES, book);
-		refreshInTree(ROOT_RECENT, book);
-		removeFromTree(ROOT_FOUND, book);
-		removeFromTree(ROOT_BY_TITLE, book);
-		removeFromTree(ROOT_BY_SERIES, book);
-		removeFromTree(ROOT_BY_AUTHOR, book);
-		removeFromTree(ROOT_BY_TAG, book);
+		refreshInTree(LibraryTree.ROOT_FAVORITES, book);
+		removeFromTree(LibraryTree.ROOT_FOUND, book);
+		removeFromTree(LibraryTree.ROOT_BY_TITLE, book);
+		removeFromTree(LibraryTree.ROOT_BY_SERIES, book);
+		removeFromTree(LibraryTree.ROOT_BY_AUTHOR, book);
+		removeFromTree(LibraryTree.ROOT_BY_TAG, book);
 		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
@@ -359,7 +351,7 @@ public final class Library {
 		}
 
 		for (Book book : Collection.favorites()) {
-			getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
+			getFirstLevelTree(LibraryTree.ROOT_FAVORITES).getBookSubTree(book, true);
 		}
 
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
@@ -514,7 +506,7 @@ public final class Library {
 
 		pattern = pattern.toLowerCase();
 
-		final SearchResultsTree oldSearchResults = (SearchResultsTree)getFirstLevelTree(ROOT_FOUND);
+		final SearchResultsTree oldSearchResults = (SearchResultsTree)getFirstLevelTree(LibraryTree.ROOT_FOUND);
 		if (oldSearchResults != null && pattern.equals(oldSearchResults.getPattern())) {
 			fireModelChangedEvent(ChangeListener.Code.Found);
 			return;
@@ -532,7 +524,7 @@ public final class Library {
 						if (oldSearchResults != null) {
 							oldSearchResults.removeSelf();
 						}
-						newSearchResults = new SearchResultsTree(myRootTree, ROOT_FOUND, pattern);
+						newSearchResults = new SearchResultsTree(myRootTree, LibraryTree.ROOT_FOUND, pattern);
 						fireModelChangedEvent(ChangeListener.Code.Found);
 					}
 					newSearchResults.getBookSubTree(book, true);
@@ -553,7 +545,7 @@ public final class Library {
 		if (book == null) {
 			return false;
 		}
-		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
+		final LibraryTree rootFavorites = getFirstLevelTree(LibraryTree.ROOT_FAVORITES);
 		for (FBTree tree : rootFavorites.subTrees()) {
 			if (tree instanceof BookTree && book.equals(((BookTree)tree).Book)) {
 				return true;
@@ -566,13 +558,13 @@ public final class Library {
 		if (isBookInFavorites(book)) {
 			return;
 		}
-		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
+		final LibraryTree rootFavorites = getFirstLevelTree(LibraryTree.ROOT_FAVORITES);
 		rootFavorites.getBookSubTree(book, true);
 		Collection.setBookFavorite(book, true);
 	}
 
 	public void removeBookFromFavorites(Book book) {
-		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
+		if (getFirstLevelTree(LibraryTree.ROOT_FAVORITES).removeBook(book, false)) {
 			Collection.setBookFavorite(book, false);
 			fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 		}
@@ -597,12 +589,12 @@ public final class Library {
 			return;
 		}
 		myBooks.remove(book.File);
-		if (getFirstLevelTree(ROOT_RECENT).removeBook(book, false)) {
+		if (getFirstLevelTree(LibraryTree.ROOT_RECENT).removeBook(book, false)) {
 			final List<Long> ids = myDatabase.loadRecentBookIds();
 			ids.remove(book.getId());
 			myDatabase.saveRecentBookIds(ids);
 		}
-		getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false);
+		getFirstLevelTree(LibraryTree.ROOT_FAVORITES).removeBook(book, false);
 		myRootTree.removeBook(book, true);
 
 		if ((removeMode & REMOVE_FROM_DISK) != 0) {

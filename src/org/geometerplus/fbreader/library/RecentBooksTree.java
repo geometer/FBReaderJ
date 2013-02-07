@@ -20,14 +20,10 @@
 package org.geometerplus.fbreader.library;
 
 import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.IBookCollection;
 
 public class RecentBooksTree extends FirstLevelTree {
-	private final IBookCollection myCollection;
-
-	RecentBooksTree(IBookCollection collection, RootTree root, String id) {
-		super(root, id);
-		myCollection = collection;
+	RecentBooksTree(RootTree root) {
+		super(root, ROOT_RECENT);
 	}
 
 	@Override
@@ -38,7 +34,7 @@ public class RecentBooksTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : myCollection.recentBooks()) {
+		for (Book book : Collection.recentBooks()) {
 			new BookTree(this, book, true);
 		}
 	}
