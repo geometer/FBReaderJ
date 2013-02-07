@@ -23,11 +23,8 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.IBookCollection;
 
 public class FavoritesTree extends FirstLevelTree {
-	private final IBookCollection myCollection;
-
-	FavoritesTree(IBookCollection collection, RootTree root, String id) {
-		super(root, id);
-		myCollection = collection;
+	FavoritesTree(RootTree root) {
+		super(root, ROOT_FAVORITES);
 	}
 
 	@Override

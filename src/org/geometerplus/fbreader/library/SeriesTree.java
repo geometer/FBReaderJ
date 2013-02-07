@@ -21,13 +21,13 @@ package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.SeriesInfo;
+import org.geometerplus.fbreader.book.*;
 
 public final class SeriesTree extends LibraryTree {
 	public final String Series;
 
-	SeriesTree(String series) {
+	SeriesTree(IBookCollection collection, String series) {
+		super(collection);
 		Series = series;
 	}
 
@@ -47,7 +47,7 @@ public final class SeriesTree extends LibraryTree {
 	}
 
 	BookTree getBookInSeriesSubTree(Book book) {
-		final BookInSeriesTree temp = new BookInSeriesTree(book);
+		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
 			return (BookInSeriesTree)subTrees().get(position);
