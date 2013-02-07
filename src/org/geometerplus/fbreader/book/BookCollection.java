@@ -86,6 +86,8 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
+			saveBook(book, false);
+			// saved
 			addBook(book, false);
 			return book;
 		}
@@ -120,6 +122,7 @@ public class BookCollection extends AbstractBookCollection {
 		final ZLFile bookFile = book.File;
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
 		if (physicalFile == null) {
+			// loaded from db
 			addBook(book, false);
 			return book;
 		}
@@ -129,6 +132,7 @@ public class BookCollection extends AbstractBookCollection {
 
 		FileInfoSet fileInfos = new FileInfoSet(myDatabase, physicalFile);
 		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
+			// loaded from db
 			addBook(book, false);
 			return book;
 		}
@@ -136,6 +140,7 @@ public class BookCollection extends AbstractBookCollection {
 
 		try {
 			book.readMetaInfo();
+			// loaded from db
 			addBook(book, false);
 			return book;
 		} catch (BookReadingException e) {
@@ -144,7 +149,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	private void addBook(Book book, boolean force) {
-		if (book == null) {
+		if (book == null || book.getId() == -1) {
 			return;
 		}
 
@@ -417,6 +422,7 @@ public class BookCollection extends AbstractBookCollection {
 					file.setCached(false);
 				}
 				if (doAdd) {
+					// loaded from db
 					addBook(book, false);
 				}
 			} else {
@@ -451,6 +457,8 @@ public class BookCollection extends AbstractBookCollection {
 			if (helpBook == null) {
 				helpBook = new Book(helpFile);
 			}
+			saveBook(helpBook, false);
+			// saved
 			addBook(helpBook, false);
 		} catch (BookReadingException e) {
 			// that's impossible

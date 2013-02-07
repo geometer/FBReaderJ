@@ -11,6 +11,7 @@ DONE read book => go to library => go to book info => update book info => return
 * series/books by series request
 * 'rescan' button in library menu
 * getHelpFile => getHelpBook
+* move BookCollection to libraryService package; change access rights to package local
 
 bugs:
 * double tap only for action bar
