@@ -23,7 +23,7 @@ import org.geometerplus.fbreader.book.Book;
 
 public class RecentBooksTree extends FirstLevelTree {
 	RecentBooksTree(RootTree root) {
-		super(root, Library.ROOT_RECENT);
+		super(root, ROOT_RECENT);
 	}
 
 	@Override

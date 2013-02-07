@@ -26,7 +26,7 @@ import org.geometerplus.fbreader.book.*;
 
 public class AuthorListTree extends FirstLevelTree {
 	AuthorListTree(RootTree root) {
-		super(root, Library.ROOT_BY_AUTHOR);
+		super(root, ROOT_BY_AUTHOR);
 	}
 
 	@Override
