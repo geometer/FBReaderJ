@@ -235,7 +235,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		new ZLStringOption("BookSearch", "Pattern", "");
 
 	private void openSearchResults() {
-		final FBTree tree = myLibrary.getRootTree().getSubTree(Library.ROOT_FOUND);
+		final FBTree tree = myLibrary.getRootTree().getSubTree(LibraryTree.ROOT_FOUND);
 		if (tree != null) {
 			openTree(tree);
 		}

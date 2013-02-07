@@ -28,7 +28,8 @@ public class BookTree extends LibraryTree {
 	public final Book Book;
 	private final boolean myShowAuthors;
 
-	BookTree(Book book, boolean showAuthors) {
+	BookTree(IBookCollection collection, Book book, boolean showAuthors) {
+		super(collection);
 		Book = book;
 		myShowAuthors = showAuthors;
 	}
