@@ -149,7 +149,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	protected void init(Intent intent) {
 		final FBTree.Key key = (FBTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
 		final FBTree.Key selectedKey = (FBTree.Key)intent.getSerializableExtra(SELECTED_TREE_KEY_KEY);
-		myCurrentTree = (T)getTreeByKey(key);
+		myCurrentTree = getTreeByKey(key);
 		// not myCurrentKey = key
 		// because key might be null
 		myCurrentKey = myCurrentTree.getUniqueKey();
