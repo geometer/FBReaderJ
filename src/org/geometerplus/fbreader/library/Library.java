@@ -559,18 +559,6 @@ public final class Library {
 		Collection.addBookToRecentList(book);
 	}
 
-	public boolean isBookInFavorites(Book book) {
-		return Collection.isFavorite(book);
-	}
-
-	public void addBookToFavorites(Book book) {
-		Collection.setBookFavorite(book, true);
-	}
-
-	public void removeBookFromFavorites(Book book) {
-		Collection.setBookFavorite(book, false);
-	}
-
 	public boolean canRemoveBookFile(Book book) {
 		ZLFile file = book.File;
 		if (file.getPhysicalFile() == null) {
