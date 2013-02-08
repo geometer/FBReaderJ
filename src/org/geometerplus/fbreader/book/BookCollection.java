@@ -86,6 +86,8 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
+			saveBook(book, false);
+			// saved
 			addBook(book, false);
 			return book;
 		}
@@ -120,6 +122,7 @@ public class BookCollection extends AbstractBookCollection {
 		final ZLFile bookFile = book.File;
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
 		if (physicalFile == null) {
+			// loaded from db
 			addBook(book, false);
 			return book;
 		}
@@ -129,6 +132,7 @@ public class BookCollection extends AbstractBookCollection {
 
 		FileInfoSet fileInfos = new FileInfoSet(myDatabase, physicalFile);
 		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
+			// loaded from db
 			addBook(book, false);
 			return book;
 		}
@@ -136,6 +140,7 @@ public class BookCollection extends AbstractBookCollection {
 
 		try {
 			book.readMetaInfo();
+			// loaded from db
 			addBook(book, false);
 			return book;
 		} catch (BookReadingException e) {
@@ -144,21 +149,20 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	private void addBook(Book book, boolean force) {
-		if (book == null) {
+		if (book == null || book.getId() == -1) {
 			return;
 		}
 
 		synchronized (myBooksByFile) {
-			Listener.BookEvent event = Listener.BookEvent.Added;
-			if (myBooksByFile.containsKey(book.File)) {
-				if (!force) {
-					return;
-				}
-				event = Listener.BookEvent.Updated;
+			final Book existing = myBooksByFile.get(book.File);
+			if (existing == null) {
+				myBooksByFile.put(book.File, book);
+				myBooksById.put(book.getId(), book);
+				fireBookEvent(BookEvent.Added, book);
+			} else if (force) {
+				existing.updateFrom(book);
+				fireBookEvent(BookEvent.Updated, existing);
 			}
-			myBooksByFile.put(book.File, book);
-			myBooksById.put(book.getId(), book);
-			fireBookEvent(event, book);
 		}
 	}
 
@@ -185,13 +189,25 @@ public class BookCollection extends AbstractBookCollection {
 				book.File.getPhysicalFile().delete();
 			}
 		}
-		fireBookEvent(Listener.BookEvent.Removed, book);
+		fireBookEvent(BookEvent.Removed, book);
 	}
 
 	public List<Book> books() {
 		synchronized (myBooksByFile) {
 			return new ArrayList<Book>(myBooksByFile.values());
 		}
+	}
+
+	public List<Book> books(Author author) {
+		final boolean isNull = Author.NULL.equals(author);
+		final LinkedList<Book> filtered = new LinkedList<Book>();
+		for (Book b : books()) {
+			final List<Author> bookAuthors = b.authors();
+			if (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author)) {
+				filtered.add(b);
+			}
+		}
+		return filtered;
 	}
 
 	public List<Book> books(String pattern) {
@@ -231,7 +247,12 @@ public class BookCollection extends AbstractBookCollection {
 		final Set<Author> authors = new TreeSet<Author>();
 		synchronized (myBooksByFile) {
 			for (Book book : myBooksByFile.values()) {
-				authors.addAll(book.authors());
+				final List<Author> bookAuthors = book.authors();
+				if (bookAuthors.isEmpty()) {
+					authors.add(Author.NULL);
+				} else {
+					authors.addAll(bookAuthors);
+				}
 			}
 		}
 		return new ArrayList<Author>(authors);
@@ -293,7 +314,7 @@ public class BookCollection extends AbstractBookCollection {
 		} else {
 			myDatabase.removeFromFavorites(book.getId());
 		}
-		fireBookEvent(Listener.BookEvent.Updated, book);
+		fireBookEvent(BookEvent.Updated, book);
 	}
 
 	public synchronized void startBuild() {
@@ -400,6 +421,7 @@ public class BookCollection extends AbstractBookCollection {
 					file.setCached(false);
 				}
 				if (doAdd) {
+					// loaded from db
 					addBook(book, false);
 				}
 			} else {
@@ -434,6 +456,8 @@ public class BookCollection extends AbstractBookCollection {
 			if (helpBook == null) {
 				helpBook = new Book(helpFile);
 			}
+			saveBook(helpBook, false);
+			// saved
 			addBook(helpBook, false);
 		} catch (BookReadingException e) {
 			// that's impossible
