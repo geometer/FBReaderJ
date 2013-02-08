@@ -46,13 +46,14 @@ public final class SeriesTree extends LibraryTree {
 		return "@SeriesTree " + getName();
 	}
 
-	BookTree getBookInSeriesSubTree(Book book) {
+	boolean createBookInSeriesSubTree(Book book) {
 		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
-			return (BookInSeriesTree)subTrees().get(position);
+			return false;
 		} else {
-			return new BookInSeriesTree(this, book, - position - 1);
+			new BookInSeriesTree(this, book, - position - 1);
+			return true;
 		}
 	}
 
