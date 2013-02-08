@@ -17,38 +17,21 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.book;
+package org.geometerplus.android.fbreader.libraryService;
 
-import java.util.*;
+import org.geometerplus.fbreader.book.Author;
 
-public abstract class AbstractBookCollection implements IBookCollection {
-	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
-
-	public void addListener(Listener listener) {
-		myListeners.add(listener);
+abstract class Util {
+	static String authorToString(Author author) {
+		return new StringBuilder(author.DisplayName).append('\000').append(author.SortKey).toString();
 	}
 
-	public void removeListener(Listener listener) {
-		myListeners.remove(listener);
-	}
-
-	protected boolean hasListeners() {
-		return !myListeners.isEmpty();
-	}
-
-	protected void fireBookEvent(BookEvent event, Book book) {
-		synchronized (myListeners) {
-			for (Listener l : myListeners) {
-				l.onBookEvent(event, book);
-			}
-		}
-	}
-
-	protected void fireBuildEvent(Listener.BuildEvent event) {
-		synchronized (myListeners) {
-			for (Listener l : myListeners) {
-				l.onBuildEvent(event);
-			}
+	static Author stringToAuthor(String string) {
+		final String[] splitted = string.split("\000");
+		if (splitted.length == 2) {
+			return new Author(splitted[0], splitted[1]);
+		} else {
+			return Author.NULL;
 		}
 	}
 }

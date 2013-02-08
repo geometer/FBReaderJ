@@ -49,7 +49,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 				final String type = intent.getStringExtra("type");
 				if (LibraryService.BOOK_EVENT_ACTION.equals(intent.getAction())) {
 					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"));
-					fireBookEvent(Listener.BookEvent.valueOf(type), book);
+					fireBookEvent(BookEvent.valueOf(type), book);
 				} else {
 					fireBuildEvent(Listener.BuildEvent.valueOf(type));
 				}
@@ -116,6 +116,19 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 		try {
 			return SerializerUtil.deserializeBookList(myInterface.books());
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	public synchronized List<Book> books(Author author) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookList(
+				myInterface.booksForAuthor(Util.authorToString(author))
+			);
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}
@@ -195,10 +208,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			final List<String> strings = myInterface.authors();
 			final List<Author> authors = new ArrayList<Author>(strings.size());
 			for (String s : strings) {
-				final String[] splited = s.split("\000");
-				if (splited.length == 2) {
-					authors.add(new Author(splited[0], splited[1]));
-				}
+				authors.add(Util.stringToAuthor(s));
 			}
 			return authors;
 		} catch (RemoteException e) {
