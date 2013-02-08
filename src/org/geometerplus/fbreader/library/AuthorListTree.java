@@ -20,54 +20,60 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.geometerplus.fbreader.book.*;
 
-public final class SeriesTree extends LibraryTree {
-	public final String Series;
-
-	SeriesTree(IBookCollection collection, String series) {
-		super(collection);
-		Series = series;
-	}
-
-	SeriesTree(LibraryTree parent, String series, int position) {
-		super(parent, position);
-		Series = series;
+public class AuthorListTree extends FirstLevelTree {
+	AuthorListTree(RootTree root) {
+		super(root, ROOT_BY_AUTHOR);
 	}
 
 	@Override
-	public String getName() {
-		return Series;
+	public Status getOpeningStatus() {
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
 	}
 
 	@Override
-	protected String getStringId() {
-		return "@SeriesTree " + getName();
+	public void waitForOpening() {
+		clear();
+		for (Author a : Collection.authors()) {
+			createAuthorSubTree(a);
+		}
 	}
 
-	boolean createBookInSeriesSubTree(Book book) {
-		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
+	@Override
+	public boolean onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			default:
+			case Added:
+			{
+				final List<Author> bookAuthors = book.authors();
+				boolean changed = false;
+				if (bookAuthors.isEmpty()) {
+					changed &= createAuthorSubTree(Author.NULL);
+				} else for (Author a : Collection.authors()) {
+					changed &= createAuthorSubTree(a);
+				}
+				return changed;
+			}
+			case Removed:
+				// TODO: implement
+				return false;
+			case Updated:
+				// TODO: implement
+				return false;
+		}
+	}
+
+	private boolean createAuthorSubTree(Author author) {
+		final AuthorTree temp = new AuthorTree(Collection, author);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {
-			new BookInSeriesTree(this, book, - position - 1);
+			new AuthorTree(this, author, - position - 1);
 			return true;
 		}
-	}
-
-	@Override
-	public boolean containsBook(Book book) {
-		if (book == null) {
-			return false;
-		}
-		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Title);
-	}
-
-	@Override
-	protected String getSortKey() {
-		return " Series:" + super.getSortKey();
 	}
 }
