@@ -44,7 +44,7 @@ import org.geometerplus.zlibrary.core.filetypes.*;
 import android.util.Log;
 
 public final class FBReaderApp extends ZLApplication {
-	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
+	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
 		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
@@ -52,70 +52,65 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
-	public final ZLBooleanOption EnableDoubleTapOption =
+	public final static ZLBooleanOption EnableDoubleTapOption =
 		new ZLBooleanOption("Options", "EnableDoubleTap", false);
-	public final ZLBooleanOption NavigateAllWordsOption =
+	public final static ZLBooleanOption NavigateAllWordsOption =
 		new ZLBooleanOption("Options", "NavigateAllWords", false);
 
 	public static enum WordTappingAction {
 		doNothing, selectSingleWord, startSelecting, openDictionary
 	}
-	public final ZLEnumOption<WordTappingAction> WordTappingActionOption =
+	public final static ZLEnumOption<WordTappingAction> WordTappingActionOption =
 		new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
 
-	public final ZLColorOption ImageViewBackgroundOption =
+	public final static ZLColorOption ImageViewBackgroundOption =
 		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
-	public final ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption =
+	public final static ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption =
 		new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
 	public static enum ImageTappingAction {
 		doNothing, selectImage, openImageView
 	}
-	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
+	public final static ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
 		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 
-	public final ZLIntegerRangeOption LeftMarginOption;
-	public final ZLIntegerRangeOption RightMarginOption;
-	public final ZLIntegerRangeOption TopMarginOption;
-	public final ZLIntegerRangeOption BottomMarginOption;
-	{
-		final int dpi = ZLibrary.Instance().getDisplayDPI();
-		final int x = ZLibrary.Instance().getPixelWidth();
-		final int y = ZLibrary.Instance().getPixelHeight();
-		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
-		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
-		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
-		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
-		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 20);
-	}
+	final static int dpi = ZLibrary.Instance().getDisplayDPI();
+	final static int x = ZLibrary.Instance().getPixelWidth();
+	final static int y = ZLibrary.Instance().getPixelHeight();
+	final static int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
+	
+	public final static ZLIntegerRangeOption LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
+	public final static ZLIntegerRangeOption RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
+	public final static ZLIntegerRangeOption TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
+	public final static ZLIntegerRangeOption BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
 
-	public final ZLIntegerRangeOption ScrollbarTypeOption =
+	public final static ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-	public final ZLIntegerRangeOption FooterHeightOption =
+	public final static ZLIntegerRangeOption FooterHeightOption =
 		new ZLIntegerRangeOption("Options", "FooterHeight", 8, 20, 9);
-	public final ZLBooleanOption FooterShowTOCMarksOption =
+	public final static ZLBooleanOption FooterShowTOCMarksOption =
 		new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
-	public final ZLBooleanOption FooterShowClockOption =
+	public final static ZLBooleanOption FooterShowClockOption =
 		new ZLBooleanOption("Options", "ShowClockInFooter", true);
-	public final ZLBooleanOption FooterShowBatteryOption =
+	public final static ZLBooleanOption FooterShowBatteryOption =
 		new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-	public final ZLBooleanOption FooterShowProgressOption =
+	public final static ZLBooleanOption FooterShowProgressOption =
 		new ZLBooleanOption("Options", "ShowProgressInFooter", true);
-	public final ZLStringOption FooterFontOption =
+	public final static ZLStringOption FooterFontOption =
 		new ZLStringOption("Options", "FooterFont", "Droid Sans");
 
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
-	public final ZLBooleanOption ShowLibraryInCancelMenuOption =
+	public final static ZLBooleanOption ShowLibraryInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "library", true);
-	public final ZLBooleanOption ShowNetworkLibraryInCancelMenuOption =
+	public final static ZLBooleanOption ShowNetworkLibraryInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "networkLibrary", true);
-	public final ZLBooleanOption ShowPreviousBookInCancelMenuOption =
+	public final static ZLBooleanOption ShowPreviousBookInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "previousBook", false);
-	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
+	public final static ZLBooleanOption ShowPositionsInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "positions", true);
 
-	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
+	private final static ZLKeyBindings ourBindings = new ZLKeyBindings("Keys");
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
@@ -235,11 +230,11 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 
-	public ColorProfile getColorProfile() {
+	public static ColorProfile getColorProfile() {
 		return ColorProfile.get(getColorProfileName());
 	}
 
-	public String getColorProfileName() {
+	public static String getColorProfileName() {
 		return new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
 	}
 
@@ -248,7 +243,16 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public ZLKeyBindings keyBindings() {
-		return myBindings;
+		return ourBindings;
+	}
+	
+	public static ZLKeyBindings keyBindingsStatic() {
+		return ourBindings;
+	}
+	
+	public final static boolean hasActionForKeyStatic(int key, boolean longPress) {
+		final String actionId = keyBindingsStatic().getBinding(key, longPress);
+		return actionId != null && !NoAction.equals(actionId);
 	}
 
 	public FBView getTextView() {
@@ -469,17 +473,17 @@ public final class FBReaderApp extends ZLApplication {
 	
 	public static List<CancelActionDescription> getStaticCancelActionsList() {
 		ArrayList<CancelActionDescription> cancelActionsList = new ArrayList<CancelActionDescription>();
-		if (new ZLBooleanOption("CancelMenu", "library", true).getValue()) {
+		if (ShowLibraryInCancelMenuOption.getValue()) {
 			cancelActionsList.add(new CancelActionDescription(
 				CancelActionType.library, null
 			));
 		}
-		if (new ZLBooleanOption("CancelMenu", "networkLibrary", true).getValue()) {
+		if (ShowNetworkLibraryInCancelMenuOption.getValue()) {
 			cancelActionsList.add(new CancelActionDescription(
 				CancelActionType.networkLibrary, null
 			));
 		}
-		if (new ZLBooleanOption("CancelMenu", "previousBook", false).getValue()) {
+		if (ShowPreviousBookInCancelMenuOption.getValue()) {
 			final Book previousBook = Library.Instance().getPreviousBook();
 			if (previousBook != null) {
 				cancelActionsList.add(new CancelActionDescription(
