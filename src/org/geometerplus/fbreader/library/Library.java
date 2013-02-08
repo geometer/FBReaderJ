@@ -319,7 +319,6 @@ public final class Library {
 		}
 
 		myBooks.remove(book.File);
-		refreshInTree(LibraryTree.ROOT_FAVORITES, book);
 		removeFromTree(LibraryTree.ROOT_FOUND, book);
 		removeFromTree(LibraryTree.ROOT_BY_TITLE, book);
 		removeFromTree(LibraryTree.ROOT_BY_SERIES, book);
@@ -349,10 +348,6 @@ public final class Library {
 				}
 			}
 			myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
-		}
-
-		for (Book book : Collection.favorites()) {
-			getFirstLevelTree(LibraryTree.ROOT_FAVORITES).getBookWithAuthorsSubTree(book);
 		}
 
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
@@ -565,16 +560,7 @@ public final class Library {
 	}
 
 	public boolean isBookInFavorites(Book book) {
-		if (book == null) {
-			return false;
-		}
-		final LibraryTree rootFavorites = getFirstLevelTree(LibraryTree.ROOT_FAVORITES);
-		for (FBTree tree : rootFavorites.subTrees()) {
-			if (tree instanceof BookTree && book.equals(((BookTree)tree).Book)) {
-				return true;
-			}
-		}
-		return false;
+		return Collection.isFavorite(book);
 	}
 
 	public void addBookToFavorites(Book book) {
