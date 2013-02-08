@@ -287,10 +287,6 @@ public final class FBReader extends Activity {
 		return myMainView;
 	}
 
-	public ZLAndroidWidget getMainView() {
-		return myMainView;
-	}
-
 	@Override
 	protected void onNewIntent(final Intent intent) {
 		final String action = intent.getAction();
