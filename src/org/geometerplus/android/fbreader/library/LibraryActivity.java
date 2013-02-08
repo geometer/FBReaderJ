@@ -53,7 +53,7 @@ import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
+public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener, IBookCollection.Listener {
 	static volatile boolean ourToBeKilled = false;
 
 	private BooksDatabase myDatabase;
@@ -123,6 +123,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (myLibrary == null) {
 			myLibrary = Library.Instance();
 			myLibrary.addChangeListener(this);
+			myLibrary.Collection.addListener(this);
 			myLibrary.startBuild();
 		}
 
@@ -407,5 +408,12 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				}
 			}
 		});
+	}
+
+	public void onBookEvent(BookEvent event, Book book) {
+		getCurrentTree().onBookEvent(event, book);
+	}
+
+	public void onBuildEvent(BuildEvent event) {
 	}
 }
