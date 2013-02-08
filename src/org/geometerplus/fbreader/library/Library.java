@@ -555,17 +555,8 @@ public final class Library {
 			return;
 		}
 		myBooks.remove(book.File);
-		if (getFirstLevelTree(LibraryTree.ROOT_RECENT).removeBook(book, false)) {
-			final List<Long> ids = myDatabase.loadRecentBookIds();
-			ids.remove(book.getId());
-			myDatabase.saveRecentBookIds(ids);
-		}
-		getFirstLevelTree(LibraryTree.ROOT_FAVORITES).removeBook(book, false);
+		Collection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
 		myRootTree.removeBook(book, true);
-
-		if ((removeMode & REMOVE_FROM_DISK) != 0) {
-			book.File.getPhysicalFile().delete();
-		}
 	}
 
 	public List<Bookmark> allBookmarks() {
