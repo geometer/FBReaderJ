@@ -26,24 +26,20 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 public class BookTree extends LibraryTree {
 	public final Book Book;
-	private final boolean myShowAuthors;
 
-	BookTree(IBookCollection collection, Book book, boolean showAuthors) {
+	BookTree(IBookCollection collection, Book book) {
 		super(collection);
 		Book = book;
-		myShowAuthors = showAuthors;
 	}
 
-	BookTree(LibraryTree parent, Book book, boolean showAuthors) {
+	BookTree(LibraryTree parent, Book book) {
 		super(parent);
 		Book = book;
-		myShowAuthors = showAuthors;
 	}
 
-	BookTree(LibraryTree parent, Book book, boolean showAuthors, int position) {
+	BookTree(LibraryTree parent, Book book, int position) {
 		super(parent, position);
 		Book = book;
-		myShowAuthors = showAuthors;
 	}
 
 	@Override
@@ -59,25 +55,6 @@ public class BookTree extends LibraryTree {
 	@Override
 	protected String getStringId() {
 		return "@BookTree " + getName();
-	}
-
-	@Override
-	public String getSummary() {
-		if (!myShowAuthors) {
-			return super.getSummary();
-		}
-		StringBuilder builder = new StringBuilder();
-		int count = 0;
-		for (Author author : Book.authors()) {
-			if (count++ > 0) {
-				builder.append(",  ");
-			}
-			builder.append(author.DisplayName);
-			if (count == 5) {
-				break;
-			}
-		}
-		return builder.toString();
 	}
 
 	@Override
