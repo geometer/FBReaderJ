@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.Paths;
 
 public class FileFirstLevelTree extends FirstLevelTree {
-	FileFirstLevelTree(IBookCollection collection, RootTree root, String id) {
+	FileFirstLevelTree(RootTree root, String id) {
 		super(root, id);
 
 		boolean first = true;

@@ -112,7 +112,7 @@ public final class Library {
 		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_AUTHOR);
 		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_TITLE);
 		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_TAG);
-		new FileFirstLevelTree(myRootTree);
+		new FileFirstLevelTree(myRootTree, LibraryTree.ROOT_FILE_TREE);
 	}
 
 	public LibraryTree getRootTree() {
@@ -608,7 +608,7 @@ public final class Library {
 	}
 
 	public void removeBookFromRecentList(Book book) {
-		getFirstLevelTree(ROOT_RECENT).removeBook(book, false);
+		getFirstLevelTree(LibraryTree.ROOT_RECENT).removeBook(book, false);
 		final List<Long> ids = myDatabase.loadRecentBookIds();
 		ids.remove(book.getId());
 		myDatabase.saveRecentBookIds(ids);
