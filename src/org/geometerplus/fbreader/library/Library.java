@@ -250,7 +250,7 @@ public final class Library {
 			if (seriesInfo == null) {
 				authorTree.getBookSubTree(book);
 			} else {
-				authorTree.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
+				authorTree.getSeriesSubTree(seriesInfo.Title).createBookInSeriesSubTree(book);
 			}
 		}
 
@@ -263,7 +263,7 @@ public final class Library {
 					LibraryTree.ROOT_BY_SERIES
 				);
 			}
-			seriesRoot.getSeriesSubTree(seriesInfo.Title).getBookInSeriesSubTree(book);
+			seriesRoot.getSeriesSubTree(seriesInfo.Title).createBookInSeriesSubTree(book);
 		}
 
 		if (myDoGroupTitlesByFirstLetter) {
