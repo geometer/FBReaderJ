@@ -40,7 +40,7 @@ public final class SeriesInfo {
 	public final String Title;
 	public final BigDecimal Index;
 
-	public SeriesInfo(String title, BigDecimal index) {
+	SeriesInfo(String title, BigDecimal index) {
 		Title = title;
 		Index = index;
 	}

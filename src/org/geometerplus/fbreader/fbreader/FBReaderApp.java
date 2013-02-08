@@ -120,7 +120,11 @@ public final class FBReaderApp extends ZLApplication {
 	private ZLTextPosition myJumpEndPosition;
 	private Date myJumpTimeStamp;
 
-	public FBReaderApp() {
+	public final IBookCollection Collection;
+
+	public FBReaderApp(IBookCollection collection) {
+		Collection = collection;
+
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 
