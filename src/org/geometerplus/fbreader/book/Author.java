@@ -20,6 +20,8 @@
 package org.geometerplus.fbreader.book;
 
 public final class Author implements Comparable<Author> {
+	public static final Author NULL = new Author("", "");
+
 	public final String DisplayName;
 	public final String SortKey;
 
