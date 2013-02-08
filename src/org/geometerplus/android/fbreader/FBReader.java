@@ -25,6 +25,7 @@ import java.util.*;
 import android.app.*;
 import android.util.Log;
 import android.content.*;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -190,6 +191,8 @@ public final class FBReader extends Activity {
 	public static final String ACTION_OPEN_BOOK = "android.fbreader.action.VIEW";
 	public static final String BOOK_KEY = "fbreader.book";
 	public static final String BOOKMARK_KEY = "fbreader.bookmark";
+	
+	static final int ACTION_BAR_COLOR = Color.DKGRAY;
 
 	public static final int REQUEST_PREFERENCES = 1;
 	public static final int REQUEST_BOOK_INFO = 2;
@@ -365,9 +368,6 @@ public final class FBReader extends Activity {
 		if (myFBReaderApp.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(myFBReaderApp);
 		}
-		if (myFBReaderApp.getPopupById(NavigationPopup.ID) == null) {
-			new NavigationPopup(myFBReaderApp);
-		}
 		if (myFBReaderApp.getPopupById(SelectionPopup.ID) == null) {
 			new SelectionPopup(myFBReaderApp);
 		}
@@ -478,6 +478,7 @@ public final class FBReader extends Activity {
 					if (myFBReaderApp.getTextView().search(pattern, true, false, false, false) != 0) {
 						runOnUiThread(new Runnable() {
 							public void run() {
+								hideBars();
 								myFBReaderApp.showPopup(popup.getId());
 							}
 						});
@@ -548,7 +549,6 @@ public final class FBReader extends Activity {
 
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
 		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, root);
-		((PopupPanel)myFBReaderApp.getPopupById(NavigationPopup.ID)).setPanelInfo(this, root);
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, root);
 	}
 
@@ -695,6 +695,7 @@ public final class FBReader extends Activity {
 	public boolean onSearchRequested() {
 		final FBReaderApp.PopupPanel popup = myFBReaderApp.getActivePopup();
 		myFBReaderApp.hideActivePopup();
+		hideBars();
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 		manager.setOnCancelListener(new SearchManager.OnCancelListener() {
 			public void onCancel() {
@@ -712,6 +713,7 @@ public final class FBReader extends Activity {
 		final ZLTextView view = myFBReaderApp.getTextView();
 		((SelectionPopup)myFBReaderApp.getPopupById(SelectionPopup.ID))
 			.move(view.getSelectionStartY(), view.getSelectionEndY());
+		hideBars();
 		myFBReaderApp.showPopup(SelectionPopup.ID);
 	}
 
@@ -764,8 +766,33 @@ public final class FBReader extends Activity {
 		}
 	}
 
-	public void navigate() {
-		((NavigationPopup)myFBReaderApp.getPopupById(NavigationPopup.ID)).runNavigation();
+	public void refresh() {
+		if (myNavigationPopup != null) {
+			myNavigationPopup.update();
+		}
+	}
+	
+	private NavigationPopup myNavigationPopup;
+	
+	boolean barsAreShown() {
+		return myNavigationPopup != null;
+	}
+	
+	void hideBars() {
+		if (myNavigationPopup != null) {
+			myNavigationPopup.stopNavigation();
+			myNavigationPopup = null;
+		}
+	}
+
+	void showBars() {
+		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
+
+		if (myNavigationPopup == null) {
+			myFBReaderApp.hideActivePopup();
+			myNavigationPopup = new NavigationPopup(myFBReaderApp);
+			myNavigationPopup.runNavigation(this, root);
+		}
 	}
 
 	private Menu addSubMenu(Menu menu, String id) {
@@ -812,7 +839,7 @@ public final class FBReader extends Activity {
 		}
 		addMenuItem(menu, ActionCode.INCREASE_FONT);
 		addMenuItem(menu, ActionCode.DECREASE_FONT);
-		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);
+//		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);
 		synchronized (myPluginActions) {
 			int index = 0;
 			for (PluginApi.ActionInfo info : myPluginActions) {

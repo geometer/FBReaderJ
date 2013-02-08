@@ -38,6 +38,7 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 
+import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.UIUtil;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
@@ -92,6 +93,9 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 					break;
 			}
 		}
+		final FBReader activity =
+				((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+			activity.refresh();
 	}
 
 	@Override
