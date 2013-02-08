@@ -19,6 +19,9 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.geometerplus.fbreader.book.*;
 
 public class AuthorTree extends LibraryTree {
@@ -29,7 +32,7 @@ public class AuthorTree extends LibraryTree {
 		Author = author;
 	}
 
-	AuthorTree(LibraryTree parent, Author author, int position) {
+	AuthorTree(AuthorListTree parent, Author author, int position) {
 		super(parent, position);
 		Author = author;
 	}
@@ -37,7 +40,7 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public String getName() {
 		return
-			Author != null ?
+			Author != Author.NULL ?
 				Author.DisplayName :
 				Library.resource().getResource("unknownAuthor").getValue();
 	}
@@ -62,6 +65,49 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	public boolean containsBook(Book book) {
-		return book != null && book.authors().contains(Author);
+		if (book == null) {
+			return false;
+		}
+		final List<Author> bookAuthors = book.authors();
+		return Author.equals(Author.NULL) ? bookAuthors.isEmpty() : bookAuthors.contains(Author);
+	}
+
+	@Override
+	public Status getOpeningStatus() {
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+	}
+
+	@Override
+	public void waitForOpening() {
+		clear();
+		for (Book book : Collection.books(Author)) {
+			createBookSubTree(book);
+		}
+	}
+
+	@Override
+	public boolean onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			case Added:
+				return containsBook(book) && createBookSubTree(book);
+			default:
+				return super.onBookEvent(event, book);
+		}
+	}
+
+	boolean createBookSubTree(Book book) {
+		final SeriesInfo seriesInfo = book.getSeriesInfo();
+		if (seriesInfo != null) {
+			return getSeriesSubTree(seriesInfo.Title).createBookInSeriesSubTree(book);
+		}
+
+		final BookTree temp = new BookTree(Collection, book);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return false;
+		} else {
+			new BookTree(this, book, - position - 1);
+			return true;
+		}
 	}
 }
