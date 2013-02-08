@@ -34,7 +34,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.library.Library;
@@ -139,6 +138,18 @@ public class Book {
 		final FormatPlugin plugin = getPlugin(file);
 		File = plugin.realBookFile(file);
 		readMetaInfo(plugin);
+	}
+
+	public void updateFrom(Book book) {
+		if (myId != book.myId) {
+			return;
+		}
+		myTitle = book.myTitle;
+		myEncoding = book.myEncoding;
+		myLanguage = book.myLanguage;
+		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
+		myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
+		mySeriesInfo = book.mySeriesInfo;
 	}
 
 	public void reloadInfoFromFile() {
