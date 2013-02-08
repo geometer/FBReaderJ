@@ -564,19 +564,11 @@ public final class Library {
 	}
 
 	public void addBookToFavorites(Book book) {
-		if (isBookInFavorites(book)) {
-			return;
-		}
-		final LibraryTree rootFavorites = getFirstLevelTree(LibraryTree.ROOT_FAVORITES);
-		rootFavorites.getBookWithAuthorsSubTree(book);
 		Collection.setBookFavorite(book, true);
 	}
 
 	public void removeBookFromFavorites(Book book) {
-		if (getFirstLevelTree(LibraryTree.ROOT_FAVORITES).removeBook(book, false)) {
-			Collection.setBookFavorite(book, false);
-			fireModelChangedEvent(ChangeListener.Code.BookRemoved);
-		}
+		Collection.setBookFavorite(book, false);
 	}
 
 	public boolean canRemoveBookFile(Book book) {
