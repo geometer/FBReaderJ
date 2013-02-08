@@ -190,7 +190,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (book.File.getPhysicalFile() != null) {
 			menu.add(0, SHARE_BOOK_ITEM_ID, 0, resource.getResource("shareBook").getValue());
 		}
-		if (myLibrary.isBookInFavorites(book)) {
+		if (myLibrary.Collection.isFavorite(book)) {
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
@@ -222,11 +222,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				FBUtil.shareBook(this, book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
-				myLibrary.addBookToFavorites(book);
+				myLibrary.Collection.setBookFavorite(book, true);
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
-				myLibrary.removeBookFromFavorites(book);
-				getListView().invalidateViews();
+				myLibrary.Collection.setBookFavorite(book, false);
+				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
+					getListAdapter().replaceAll(getCurrentTree().subTrees());
+					getListView().invalidateViews();
+				}
 				return true;
 			case DELETE_BOOK_ITEM_ID:
 				tryToDeleteBook(book);
