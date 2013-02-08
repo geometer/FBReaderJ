@@ -162,7 +162,6 @@ public class BookCollection extends AbstractBookCollection {
 			} else if (force) {
 				existing.updateFrom(book);
 				fireBookEvent(BookEvent.Updated, existing);
-				getBookById(book.getId());
 			}
 		}
 	}

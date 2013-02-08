@@ -10,8 +10,8 @@ import org.geometerplus.android.fbreader.api.TextPosition;
 interface LibraryInterface {
 	int size();
 	List<String> books();
-	List<String> booksForPattern(in String pattern);
 	List<String> booksForAuthor(in String author);
+	List<String> booksForPattern(in String pattern);
 	List<String> recentBooks();
 	List<String> favorites();
 	String getBookByFile(in String file);
