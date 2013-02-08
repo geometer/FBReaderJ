@@ -83,31 +83,11 @@ public abstract class LibraryTree extends FBTree {
 		}
 	}
 
-	AuthorTree getAuthorSubTree(Author author) {
-		final AuthorTree temp = new AuthorTree(Collection, author);
+	BookWithAuthorsTree getBookWithAuthorsSubTree(Book book) {
+		final BookWithAuthorsTree temp = new BookWithAuthorsTree(Collection, book);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
-			return (AuthorTree)subTrees().get(position);
-		} else {
-			return new AuthorTree(this, author, - position - 1);
-		}
-	}
-
-	BookTree getBookSubTree(Book book) {
-		final BookTree temp = new BookTree(Collection, book);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (BookTree)subTrees().get(position);
-		} else {
-			return new BookTree(this, book, - position - 1);
-		}
-	}
-
-	BookTree getBookWithAuthorsSubTree(Book book) {
-		final BookTree temp = new BookWithAuthorsTree(Collection, book);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (BookTree)subTrees().get(position);
+			return (BookWithAuthorsTree)subTrees().get(position);
 		} else {
 			return new BookWithAuthorsTree(this, book, - position - 1);
 		}
