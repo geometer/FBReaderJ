@@ -220,6 +220,9 @@ public final class FBReader extends Activity {
 	private FBReaderApp myFBReaderApp;
 	private volatile Book myBook;
 
+	private RelativeLayout myRootView;
+	private ZLAndroidWidget myMainView;
+
 	private int myFullScreenFlag;
 
 	private boolean myIsPaused = false;
@@ -323,6 +326,8 @@ public final class FBReader extends Activity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
+		myRootView = (RelativeLayout)findViewById(R.id.root_view);
+		myMainView = (ZLAndroidWidget)findViewById(R.id.main_view);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		getZLibrary().setActivity(this);
@@ -450,6 +455,10 @@ public final class FBReader extends Activity {
 	private boolean myNeedToSkipPlugin = false;
 
 	private int myCancelAction = -1;
+
+	public ZLAndroidWidget getMainView() {
+		return myMainView;
+	}
 
 	@Override
 	protected void onNewIntent(final Intent intent) {
@@ -868,14 +877,12 @@ public final class FBReader extends Activity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		final View view = findViewById(R.id.main_view);
-		return (view != null && view.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
+		return (myMainView != null && myMainView.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
 	}
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		final View view = findViewById(R.id.main_view);
-		return (view != null && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
+		return (myMainView != null && myMainView.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
 	}
 
 	private void setButtonLight(boolean enabled) {
