@@ -1009,4 +1009,8 @@ public final class FBReader extends Activity {
 		final int level = (int)(100 * getWindow().getAttributes().screenBrightness);
 		return (level >= 0) ? level : 50;
 	}
+
+	private BookCollectionShadow getCollection() {
+		return (BookCollectionShadow)myFBReaderApp.Collection;
+	}
 }
