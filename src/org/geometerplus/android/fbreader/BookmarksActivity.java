@@ -84,7 +84,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "BOOKMARKS");
 		}
-		myAllBooksBookmarks = Library.Instance().allBookmarks();
+		myAllBooksBookmarks = Library.Instance().Collection.allBookmarks();
 		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
 
 		long bookId = -1;

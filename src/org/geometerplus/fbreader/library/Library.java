@@ -167,33 +167,11 @@ public final class Library {
 	}
 
 	public Book getRecentBook() {
-		List<Long> recentIds = myDatabase.loadRecentBookIds();
-		for (Long id : recentIds) {
-			try {
-				if (PluginCollection.Instance().getPlugin(Book.getById(id).File).type() != FormatPlugin.Type.EXTERNAL) {
-					return Book.getById(id);
-				}
-			} catch (NullPointerException e) {
-			}
-		}
-		return null;
+		return Collection.getRecentBook(0);
 	}
 
 	public Book getPreviousBook() {
-		List<Long> recentIds = myDatabase.loadRecentBookIds();
-		boolean firstSkipped = false;
-		for (Long id : recentIds) {
-			if (firstSkipped) {
-				try {
-					if (PluginCollection.Instance().getPlugin(Book.getById(id).File).type() != FormatPlugin.Type.EXTERNAL) {
-						return Book.getById(id);
-					}
-				} catch (NullPointerException e) {
-				}
-			}
-			firstSkipped = true;
-		}
-		return null;
+		return Collection.getRecentBook(1);
 	}
 
 	public void startBookSearch(final String pattern) {
@@ -268,28 +246,11 @@ public final class Library {
 		return true;
 	}
 
-	public void removeBookFromRecentList(Book book) {
-		getFirstLevelTree(LibraryTree.ROOT_RECENT).removeBook(book);
-		final List<Long> ids = myDatabase.loadRecentBookIds();
-		ids.remove(book.getId());
-		myDatabase.saveRecentBookIds(ids);
-	}
-	
 	public void removeBook(Book book, int removeMode) {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
 		}
 		myBooks.remove(book.File);
 		Collection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
-	}
-
-	public List<Bookmark> allBookmarks() {
-		return BooksDatabase.Instance().loadAllVisibleBookmarks();
-	}
-
-	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = BooksDatabase.Instance().loadBookmarks(book.getId(), false);
-		Collections.sort(list, new Bookmark.ByTimeComparator());
-		return list;
 	}
 }
