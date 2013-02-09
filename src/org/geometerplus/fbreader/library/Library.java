@@ -88,7 +88,7 @@ public final class Library {
 	public Library(IBookCollection collection) {
 		Collection = collection;
 
- 		myRootTree = new RootTree(collection);
+		myRootTree = new RootTree(collection);
 
 		new FavoritesTree(myRootTree);
 		new RecentBooksTree(myRootTree);
