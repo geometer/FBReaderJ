@@ -132,7 +132,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	public /*protected*/ Book loadBook(long bookId) {
+	protected Book loadBook(long bookId) {
 		Book book = null;
 		final Cursor cursor = myDatabase.rawQuery("SELECT file_id,title,encoding,language FROM Books WHERE book_id = " + bookId, null);
 		if (cursor.moveToNext()) {
@@ -145,7 +145,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	public /*protected*/ void reloadBook(Book book) {
+	protected void reloadBook(Book book) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT title,encoding,language FROM Books WHERE book_id = " + book.getId(), null);
 		if (cursor.moveToNext()) {
 			book.setTitle(cursor.getString(0));
@@ -155,7 +155,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 	}
 
-	public /*protected*/ Book loadBookByFile(long fileId, ZLFile file) {
+	protected Book loadBookByFile(long fileId, ZLFile file) {
 		if (fileId == -1) {
 			return null;
 		}
@@ -193,7 +193,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	public /*protected*/ Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing) {
+	protected Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing) {
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id,file_id,title,encoding,language FROM Books WHERE `exists` = " + (existing ? 1 : 0), null
 		);
@@ -272,7 +272,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	public /*protected*/ void setExistingFlag(Collection<Book> books, boolean flag) {
+	protected void setExistingFlag(Collection<Book> books, boolean flag) {
 		if (books.isEmpty()) {
 			return;
 		}
