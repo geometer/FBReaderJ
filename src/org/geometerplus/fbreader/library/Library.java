@@ -68,7 +68,6 @@ public final class Library {
 	}
 
 	public final IBookCollection Collection;
-	private final Map<Long,Book> myBooks = Collections.synchronizedMap(new HashMap<Long,Book>());
 
 	private final RootTree myRootTree;
 
@@ -120,15 +119,6 @@ public final class Library {
 	}
 
 	private synchronized void addBookToLibrary(Book book) {
-		synchronized (myBooks) {
-			final Book existing = myBooks.get(book.getId());
-			if (existing != null) {
-				existing.updateFrom(book);
-				return;
-			}
-			myBooks.put(book.getId(), book);
-		}
-
 		synchronized (this) {
 			final SearchResultsTree found = (SearchResultsTree)getFirstLevelTree(LibraryTree.ROOT_FOUND);
 			if (found != null && book.matches(found.getPattern())) {
@@ -150,7 +140,6 @@ public final class Library {
 		}
 
 		Collection.saveBook(book, true);
-		myBooks.remove(book.getId());
 		removeFromTree(LibraryTree.ROOT_FOUND, book);
 		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
