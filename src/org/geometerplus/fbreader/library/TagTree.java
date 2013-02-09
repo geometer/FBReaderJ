@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.util.List;
+
 import org.geometerplus.fbreader.book.*;
 
 public final class TagTree extends LibraryTree {
@@ -36,8 +38,8 @@ public final class TagTree extends LibraryTree {
 
 	@Override
 	public String getName() {
-		return Tag != null
-			? Tag.Name : Library.resource().getResource("booksWithNoTags").getValue();
+		return Tag.NULL.equals(Tag)
+			? Library.resource().getResource("booksWithNoTags").getValue() : Tag.Name;
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public final class TagTree extends LibraryTree {
 	}
 
 	protected String getSortKey() {
-		return Tag != null ? Tag.Name : null;
+		return Tag.NULL.equals(Tag) ? null : Tag.Name;
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public final class TagTree extends LibraryTree {
 		if (book == null) {
 			return false;
 		}
-		if (Tag == null) {
+		if (Tag.NULL.equals(Tag)) {
 			return book.tags().isEmpty();
 		}
 		for (Tag t : book.tags()) {
@@ -65,5 +67,54 @@ public final class TagTree extends LibraryTree {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public Status getOpeningStatus() {
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+	}
+
+	@Override
+	public void waitForOpening() {
+		clear();
+		if (!Tag.NULL.equals(Tag)) {
+			for (Tag t : Collection.tags()) {
+				if (Tag.equals(t.Parent)) {
+					createTagSubTree(t);
+				}
+			}
+		}
+		for (Book book : Collection.books(Tag)) {
+			createBookWithAuthorsSubTree(book);
+		}
+	}
+
+	@Override
+	public boolean onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			case Added:
+			{
+				boolean changed = false;
+				final List<Tag> bookTags = book.tags();
+				if (bookTags.isEmpty()) {
+					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubTree(book);
+				} else {
+					for (Tag t : bookTags) {
+						if (Tag.equals(t)) {
+							changed &= createBookWithAuthorsSubTree(book);
+						} else if (Tag.equals(t.Parent)) {
+							changed &= createTagSubTree(t);
+						}
+					}
+				}
+				return changed;
+			}
+			case Removed:
+				// TODO: implement
+			case Updated:
+				// TODO: implement
+			default:
+				return super.onBookEvent(event, book);
+		}
 	}
 }

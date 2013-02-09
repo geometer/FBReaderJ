@@ -53,7 +53,7 @@ public class FavoritesTree extends FirstLevelTree {
 			new BookWithAuthorsTree(this, book);
 			return true;
 		} if (event == BookEvent.Updated && !Collection.isFavorite(book)) {
-			return removeBook(book, false);
+			return removeBook(book);
 		} else {
 			return super.onBookEvent(event, book);
 		}
