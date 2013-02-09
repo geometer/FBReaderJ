@@ -49,7 +49,6 @@ import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
-import org.geometerplus.android.fbreader.library.KillerCallback;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
@@ -416,10 +415,6 @@ public final class FBReader extends Activity {
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-		try {
-			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
-		} catch (Throwable t) {
-		}
 		PopupPanel.restoreVisibilities(myFBReaderApp);
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
 	}
