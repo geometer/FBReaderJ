@@ -81,6 +81,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		if (version >= currentVersion) {
 			return;
 		}
+
 		myDatabase.beginTransaction();
 
 		switch (myDatabase.getVersion()) {
