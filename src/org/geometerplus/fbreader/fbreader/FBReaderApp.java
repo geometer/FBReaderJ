@@ -304,7 +304,7 @@ public final class FBReaderApp extends ZLApplication {
 				return false;
 			}
 
-			final List<Bookmark> bookmarks = Library.Instance().invisibleBookmarks(Model.Book);
+			final List<Bookmark> bookmarks = Library.Instance().Collection.invisibleBookmarks(Model.Book);
 			if (bookmarks.isEmpty()) {
 				return false;
 			}
@@ -401,7 +401,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		if (ShowPositionsInCancelMenuOption.getValue()) {
 			if (Model != null && Model.Book != null) {
-				for (Bookmark bookmark : Library.Instance().invisibleBookmarks(Model.Book)) {
+				for (Bookmark bookmark : Library.Instance().Collection.invisibleBookmarks(Model.Book)) {
 					myCancelActionsList.add(new BookmarkDescription(bookmark));
 				}
 			}
@@ -443,13 +443,13 @@ public final class FBReaderApp extends ZLApplication {
 
 	private synchronized void updateInvisibleBookmarksList(Bookmark b) {
 		if (Model != null && Model.Book != null && b != null) {
-			for (Bookmark bm : Library.Instance().invisibleBookmarks(Model.Book)) {
+			for (Bookmark bm : Library.Instance().Collection.invisibleBookmarks(Model.Book)) {
 				if (b.equals(bm)) {
 					bm.delete();
 				}
 			}
 			b.save();
-			final List<Bookmark> bookmarks = Library.Instance().invisibleBookmarks(Model.Book);
+			final List<Bookmark> bookmarks = Library.Instance().Collection.invisibleBookmarks(Model.Book);
 			for (int i = 3; i < bookmarks.size(); ++i) {
 				bookmarks.get(i).delete();
 			}
