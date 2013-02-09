@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network.urlInfo;
 
 import java.io.Serializable;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 public class UrlInfo implements Serializable {
@@ -71,11 +71,11 @@ public class UrlInfo implements Serializable {
 			return false;
 		}
 		final UrlInfo info = (UrlInfo)o;
-		return InfoType == info.InfoType && ZLMiscUtil.equals(Url, info.Url);
+		return InfoType == info.InfoType && MiscUtil.equals(Url, info.Url);
 	}
 
 	@Override
 	public int hashCode() {
-		return InfoType.hashCode() + ZLMiscUtil.hashCode(Url);
+		return InfoType.hashCode() + MiscUtil.hashCode(Url);
 	}
 }

@@ -32,6 +32,11 @@ class RootTree extends LibraryTree {
 	}
 
 	@Override
+	public String getSummary() {
+		return Library.resource().getValue();
+	}
+
+	@Override
 	protected String getStringId() {
 		return "@FBReaderLibraryRoot";
 	}
