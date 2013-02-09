@@ -424,8 +424,8 @@ public class BookCollection extends AbstractBookCollection {
 		for (Long id : recentIds) {
 			if (index <= 0) {
 				try {
-					if (PluginCollection.Instance().getPlugin(Book.getById(id).File).type() != FormatPlugin.Type.EXTERNAL) {
-						return Book.getById(id);
+					if (PluginCollection.Instance().getPlugin(getBookById(id).File).type() != FormatPlugin.Type.EXTERNAL) {
+						return getBookById(id);
 					}
 				} catch (NullPointerException e) {
 				}
