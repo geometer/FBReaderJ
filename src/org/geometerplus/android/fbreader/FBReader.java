@@ -176,7 +176,8 @@ public final class FBReader extends Activity {
 			LaunchIntent.setData(uri);
 			LaunchIntent.putExtra("BOOKMARK", bookmark);
 			LaunchIntent.putExtra("BOOKID", bookId);
-			LaunchIntent.putExtra("TITLE", Book.getById(bookId).getTitle() != null ? Book.getById(bookId).getTitle() : "");	
+			final String title = myFBReaderApp.Collection.getBookById(bookId).getTitle();
+			LaunchIntent.putExtra("TITLE", title != null ? title : "");	
 			FileType ft = FileTypeCollection.Instance.typeForFile(f);
 			for (MimeType type : ft.mimeTypes()) {
 				LaunchIntent.setDataAndType(uri, type.Name);
@@ -447,7 +448,7 @@ public final class FBReader extends Activity {
 			} else if ("android.fbreader.action.PLUGIN_CRASH".equals(getIntent().getAction())) {
 				Log.d("fbj", "crash in oncreate");
 				long bookid = getIntent().getLongExtra("BOOKID", -1);
-				((BookCollection)Library.Instance().Collection).removeBookFromRecentList(Book.getById(bookid));
+				((BookCollection)Library.Instance().Collection).removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
 				myNeedToSkipPlugin = true;
 				myFBReaderApp.Model = null;
 				myFBReaderApp.openBook(Library.Instance().Collection.getRecentBook(0), null, null);
@@ -513,7 +514,7 @@ public final class FBReader extends Activity {
 		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(intent.getAction())) {
 			Log.d("fbj", "crash");
 			long bookid = intent.getLongExtra("BOOKID", -1);
-			((BookCollection)Library.Instance().Collection).removeBookFromRecentList(Book.getById(bookid));
+			((BookCollection)Library.Instance().Collection).removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
 			myNeedToSkipPlugin = true;
 			myFBReaderApp.Model = null;
 			myFBReaderApp.openBook(Library.Instance().Collection.getRecentBook(0), null, null);
@@ -916,7 +917,7 @@ public final class FBReader extends Activity {
 	}
 
 	protected void onPluginAbsent(long bookId) {
-		((BookCollection)Library.Instance().Collection).removeBookFromRecentList(Book.getById(bookId));
+		((BookCollection)Library.Instance().Collection).removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookId));
 		myFBReaderApp.Model = null;
 		myFBReaderApp.openBook(Library.Instance().Collection.getRecentBook(0), null, null);
 	}
