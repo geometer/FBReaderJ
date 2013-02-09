@@ -236,7 +236,9 @@ public class BookCollection extends AbstractBookCollection {
 	public List<Book> booksForTitlePrefix(String prefix) {
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
-			// TODO: implement
+			if (prefix.equals(TitleUtil.firstTitleLetter(b))) {
+				filtered.add(b);
+			}
 		}
 		return filtered;
 	}
@@ -440,19 +442,7 @@ public class BookCollection extends AbstractBookCollection {
 			savedBooksByBookId.put(b.getId(), b);
 		}
 
-		// Step 1: set myDoGroupTitlesByFirstLetter value
-		//if (savedBooksByFileId.size() > 10) {
-		//	final HashSet<String> letterSet = new HashSet<String>();
-		//	for (Book book : savedBooksByFileId.values()) {
-		//		final String letter = TitleTree.firstTitleLetter(book);
-		//		if (letter != null) {
-		//			letterSet.add(letter);
-		//		}
-		//	}
-		//	myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
-		//}
-
-		// Step 2: check if files corresponding to "existing" books really exists;
+		// Step 1: check if files corresponding to "existing" books really exists;
 		//         add books to library if yes (and reload book info if needed);
 		//         remove from recent/favorites list if no;
 		//         collect newly "orphaned" books
@@ -491,7 +481,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 		myDatabase.setExistingFlag(orphanedBooks, false);
 
-		// Step 3: collect books from physical files; add new, update already added,
+		// Step 2: collect books from physical files; add new, update already added,
 		//         unmark orphaned as existing again, collect newly added
 		final Map<Long,Book> orphanedBooksByFileId = myDatabase.loadBooks(fileInfos, false);
 		final Set<Book> newBooks = new HashSet<Book>();
@@ -510,7 +500,7 @@ public class BookCollection extends AbstractBookCollection {
 			file.setCached(false);
 		}
 
-		// Step 4: add help file
+		// Step 3: add help file
 		try {
 			final ZLFile helpFile = getHelpFile();
 			Book helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
@@ -525,7 +515,7 @@ public class BookCollection extends AbstractBookCollection {
 			e.printStackTrace();
 		}
 
-		// Step 5: save changes into database
+		// Step 4: save changes into database
 		fileInfos.save();
 
 		myDatabase.executeAsATransaction(new Runnable() {

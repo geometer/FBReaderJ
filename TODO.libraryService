@@ -1,5 +1,6 @@
 restore:
-* group titles by first letter
+DONE group titles by first letter
+* summaries for libraryTrees
 
 new:
 * filesystem event listener
