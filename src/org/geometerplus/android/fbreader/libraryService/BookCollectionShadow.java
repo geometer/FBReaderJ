@@ -372,6 +372,15 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized void removeBookFromRecentList(Book book) {
+		if (myInterface != null) {
+			try {
+				myInterface.removeBookFromRecentList(SerializerUtil.serialize(book));
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
 	public synchronized boolean hasFavorites() {
 		if (myInterface != null) {
 			try {

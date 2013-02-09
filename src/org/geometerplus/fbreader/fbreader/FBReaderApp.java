@@ -37,7 +37,6 @@ import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
-import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
@@ -189,7 +188,7 @@ public final class FBReaderApp extends ZLApplication {
 					if (myExternalFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue())) {
 						closeWindow();
 					} else {
-						((BookCollection)Library.Instance().Collection).removeBookFromRecentList(bookToOpen);
+						Collection.removeBookFromRecentList(bookToOpen);
 						openBook(null, null, null);
 					}
 				}
