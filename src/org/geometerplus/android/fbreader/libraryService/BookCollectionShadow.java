@@ -134,6 +134,19 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<Book> books(Tag tag) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookList(
+				myInterface.booksForTag(Util.tagToString(tag))
+			);
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
 	public synchronized List<Book> books(String pattern) {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -220,12 +233,16 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
-		//try {
-			// TODO: implement
+		try {
+			final List<String> strings = myInterface.tags();
+			final List<Tag> tags = new ArrayList<Tag>(strings.size());
+			for (String s : strings) {
+				tags.add(Util.stringToTag(s));
+			}
+			return tags;
+		} catch (RemoteException e) {
 			return Collections.emptyList();
-		//} catch (RemoteException e) {
-		//	return Collections.emptyList();
-		//}
+		}
 	}
 
 	public synchronized List<String> series() {
