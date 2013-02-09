@@ -372,7 +372,7 @@ public final class FBReaderApp extends ZLApplication {
 				return false;
 			}
 			final Bookmark b = bookmarks.get(0);
-			b.delete();
+			Collection.deleteBookmark(b);
 			gotoBookmark(b);
 			return true;
 		} finally {
@@ -523,7 +523,7 @@ public final class FBReaderApp extends ZLApplication {
 			case returnTo:
 			{
 				final Bookmark b = ((BookmarkDescription)description).Bookmark;
-				b.delete();
+				Collection.deleteBookmark(b);
 				gotoBookmark(b);
 				break;
 			}
