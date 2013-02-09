@@ -39,38 +39,6 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.library.Library;
 
 public class Book {
-	public static Book getById(long bookId) {
-		final BooksDatabase database = BooksDatabase.Instance();
-
-		final Book book = database.loadBook(bookId);
-		if (book == null) {
-			return null;
-		}
-		book.loadLists(database);
-
-		final ZLFile bookFile = book.File;
-		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
-		if (physicalFile == null) {
-			return book;
-		}
-		if (!physicalFile.exists()) {
-			return null;
-		}
-
-		FileInfoSet fileInfos = new FileInfoSet(database, physicalFile);
-		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
-			return book;
-		}
-		fileInfos.save();
-
-		try {
-			book.readMetaInfo();
-			return book;
-		} catch (BookReadingException e) {
-			return null;
-		}
-	}
-
 	public static Book getByFile(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
