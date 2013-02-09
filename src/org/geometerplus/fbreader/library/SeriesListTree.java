@@ -20,56 +20,34 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.geometerplus.fbreader.book.*;
 
-public final class SeriesTree extends LibraryTree {
-	public final String Series;
-
-	SeriesTree(IBookCollection collection, String series) {
-		super(collection);
-		Series = series;
-	}
-
-	SeriesTree(LibraryTree parent, String series, int position) {
-		super(parent, position);
-		Series = series;
-	}
-
-	@Override
-	public String getName() {
-		return Series;
-	}
-
-	@Override
-	protected String getStringId() {
-		return "@SeriesTree " + getName();
-	}
-
-	@Override
-	public boolean containsBook(Book book) {
-		if (book == null) {
-			return false;
-		}
-		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Title);
-	}
-
-	@Override
-	protected String getSortKey() {
-		return " Series:" + super.getSortKey();
+public class SeriesListTree extends FirstLevelTree {
+	SeriesListTree(RootTree root) {
+		super(root, ROOT_BY_SERIES);
 	}
 
 	@Override
 	public Status getOpeningStatus() {
+		if (!Collection.hasSeries()) {
+			return Status.CANNOT_OPEN;
+		}
 		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+	}
+
+	@Override
+	public String getOpeningStatusMessage() {
+		return getOpeningStatus() == Status.CANNOT_OPEN
+			? "noSeries" : super.getOpeningStatusMessage();
 	}
 
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.booksForSeries(Series)) {
-			createBookInSeriesSubTree(book);
+		for (String s : Collection.series()) {
+			createSeriesSubTree(s);
 		}
 	}
 
@@ -77,23 +55,27 @@ public final class SeriesTree extends LibraryTree {
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
-				return containsBook(book) && createBookInSeriesSubTree(book);
+			{
+				final SeriesInfo info = book.getSeriesInfo();
+				return info != null && createSeriesSubTree(info.Title);
+			}
 			case Removed:
 				// TODO: implement
+				return false;
+			default:
 			case Updated:
 				// TODO: implement
-			default:
-				return super.onBookEvent(event, book);
+				return false;
 		}
 	}
 
-	boolean createBookInSeriesSubTree(Book book) {
-		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
+	private boolean createSeriesSubTree(String series) {
+		final SeriesTree temp = new SeriesTree(Collection, series);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {
-			new BookInSeriesTree(this, book, - position - 1);
+			new SeriesTree(this, series, - position - 1);
 			return true;
 		}
 	}

@@ -110,6 +110,7 @@ public final class Library {
 		new RecentBooksTree(myRootTree);
 		new AuthorListTree(myRootTree);
 		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_TITLE);
+		new SeriesListTree(myRootTree);
 		new TagListTree(myRootTree);
 		new FileFirstLevelTree(myRootTree);
 	}
@@ -232,20 +233,6 @@ public final class Library {
 		}
 		myBooks.put(book.File, book);
 
-		final SeriesInfo seriesInfo = book.getSeriesInfo();
-
-		if (seriesInfo != null) {
-			FirstLevelTree seriesRoot = getFirstLevelTree(LibraryTree.ROOT_BY_SERIES);
-			if (seriesRoot == null) {
-				seriesRoot = new FirstLevelTree(
-					myRootTree,
-					myRootTree.indexOf(getFirstLevelTree(LibraryTree.ROOT_BY_TITLE)) + 1,
-					LibraryTree.ROOT_BY_SERIES
-				);
-			}
-			seriesRoot.getSeriesSubTree(seriesInfo.Title).createBookInSeriesSubTree(book);
-		}
-
 		if (myDoGroupTitlesByFirstLetter) {
 			final String letter = TitleTree.firstTitleLetter(book);
 			if (letter != null) {
@@ -279,7 +266,6 @@ public final class Library {
 		myBooks.remove(book.File);
 		removeFromTree(LibraryTree.ROOT_FOUND, book);
 		removeFromTree(LibraryTree.ROOT_BY_TITLE, book);
-		removeFromTree(LibraryTree.ROOT_BY_SERIES, book);
 		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
