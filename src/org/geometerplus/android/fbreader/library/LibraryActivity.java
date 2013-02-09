@@ -56,7 +56,6 @@ import org.geometerplus.android.fbreader.tree.TreeActivity;
 public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener, IBookCollection.Listener {
 	static volatile boolean ourToBeKilled = false;
 
-	private BooksDatabase myDatabase;
 	private Library myLibrary;
 
 	private Book mySelectedBook;
@@ -116,15 +115,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		myDatabase = SQLiteBooksDatabase.Instance();
-		if (myDatabase == null) {
-			myDatabase = new SQLiteBooksDatabase(this, "LIBRARY");
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 		if (myLibrary == null) {
 			myLibrary = Library.Instance();
 			myLibrary.addChangeListener(this);
 			myLibrary.Collection.addListener(this);
-			myLibrary.startBuild();
+			((BookCollection)myLibrary.Collection).startBuild();
 		}
 
 		mySelectedBook =

@@ -258,10 +258,6 @@ public final class Library {
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
-	public synchronized void startBuild() {
-		((BookCollection)Collection).startBuild();
-	}
-
 	public boolean isUpToDate() {
 		return myStatusMask == 0;
 	}
