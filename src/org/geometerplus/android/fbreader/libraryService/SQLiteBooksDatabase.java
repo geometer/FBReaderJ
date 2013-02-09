@@ -38,7 +38,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.SQLiteUtil;
 
 public final class SQLiteBooksDatabase extends BooksDatabase {
@@ -48,7 +47,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	public SQLiteBooksDatabase(Context context, String instanceId) {
 		myInstanceId = instanceId;
 		myDatabase = context.openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
-		migrate(context);
+		migrate();
 	}
 
 	protected void executeAsTransaction(Runnable actions) {
@@ -70,65 +69,62 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	private void migrate(Context context) {
+	private void migrate() {
 		final int version = myDatabase.getVersion();
 		final int currentVersion = 20;
 		if (version >= currentVersion) {
 			return;
 		}
-		UIUtil.wait(version == 0 ? "creatingBooksDatabase" : "updatingBooksDatabase", new Runnable() {
-			public void run() {
-				myDatabase.beginTransaction();
 
-				switch (myDatabase.getVersion()) {
-					case 0:
-						createTables();
-					case 1:
-						updateTables1();
-					case 2:
-						updateTables2();
-					case 3:
-						updateTables3();
-					case 4:
-						updateTables4();
-					case 5:
-						updateTables5();
-					case 6:
-						updateTables6();
-					case 7:
-						updateTables7();
-					case 8:
-						updateTables8();
-					case 9:
-						updateTables9();
-					case 10:
-						updateTables10();
-					case 11:
-						updateTables11();
-					case 12:
-						updateTables12();
-					case 13:
-						updateTables13();
-					case 14:
-						updateTables14();
-					case 15:
-						updateTables15();
-					case 16:
-						updateTables16();
-					case 17:
-						updateTables17();
-					case 18:
-						updateTables18();
-					case 19:
-						updateTables19();
-				}
-				myDatabase.setTransactionSuccessful();
-				myDatabase.setVersion(currentVersion);
-				myDatabase.endTransaction();
+		myDatabase.beginTransaction();
 
-				myDatabase.execSQL("VACUUM");
-			}
-		}, context);
+		switch (myDatabase.getVersion()) {
+			case 0:
+				createTables();
+			case 1:
+				updateTables1();
+			case 2:
+				updateTables2();
+			case 3:
+				updateTables3();
+			case 4:
+				updateTables4();
+			case 5:
+				updateTables5();
+			case 6:
+				updateTables6();
+			case 7:
+				updateTables7();
+			case 8:
+				updateTables8();
+			case 9:
+				updateTables9();
+			case 10:
+				updateTables10();
+			case 11:
+				updateTables11();
+			case 12:
+				updateTables12();
+			case 13:
+				updateTables13();
+			case 14:
+				updateTables14();
+			case 15:
+				updateTables15();
+			case 16:
+				updateTables16();
+			case 17:
+				updateTables17();
+			case 18:
+				updateTables18();
+			case 19:
+				updateTables19();
+		}
+		myDatabase.setTransactionSuccessful();
+		myDatabase.setVersion(currentVersion);
+		myDatabase.endTransaction();
+
+		myDatabase.execSQL("VACUUM");
 	}
 
 	@Override
