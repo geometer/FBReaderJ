@@ -115,7 +115,7 @@
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.library.LibrarySearchActivity"/>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:theme="@style/FBReader.Activity"/>
-		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:launchMode="singleTask" android:theme="@style/FBReader.Activity">
+		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:launchMode="singleTask" android:process=":bookmarks" android:theme="@style/FBReader.Activity">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH"/>
 			</intent-filter>
