@@ -56,11 +56,11 @@ public abstract class BooksDatabase {
 	public /*protected*/ abstract void executeAsATransaction(Runnable actions);
 
 	// returns map fileId -> book
-	public /*protected*/ abstract Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing);
-	public /*protected*/ abstract void setExistingFlag(Collection<Book> books, boolean flag);
-	public /*protected*/ abstract Book loadBook(long bookId);
-	public /*protected*/ abstract void reloadBook(Book book);
-	public /*protected*/ abstract Book loadBookByFile(long fileId, ZLFile file);
+	protected abstract Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing);
+	protected abstract void setExistingFlag(Collection<Book> books, boolean flag);
+	protected abstract Book loadBook(long bookId);
+	protected abstract void reloadBook(Book book);
+	protected abstract Book loadBookByFile(long fileId, ZLFile file);
 
 	protected abstract List<Author> listAuthors();
 	protected abstract List<Author> listAuthors(long bookId);
