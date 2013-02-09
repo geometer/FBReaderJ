@@ -210,6 +210,18 @@ public class BookCollection extends AbstractBookCollection {
 		return filtered;
 	}
 
+	public List<Book> books(Tag tag) {
+		final boolean isNull = Tag.NULL.equals(tag);
+		final LinkedList<Book> filtered = new LinkedList<Book>();
+		for (Book b : books()) {
+			final List<Tag> bookTags = b.tags();
+			if (isNull && bookTags.isEmpty() || bookTags.contains(tag)) {
+				filtered.add(b);
+			}
+		}
+		return filtered;
+	}
+
 	public List<Book> books(String pattern) {
 		if (pattern == null || pattern.length() == 0) {
 			return Collections.emptyList();
@@ -259,10 +271,19 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Tag> tags() {
-		final Set<Tag> tags = new TreeSet<Tag>();
+		final Set<Tag> tags = new HashSet<Tag>();
 		synchronized (myBooksByFile) {
 			for (Book book : myBooksByFile.values()) {
-				tags.addAll(book.tags());
+				final List<Tag> bookTags = book.tags();
+				if (bookTags.isEmpty()) {
+					tags.add(Tag.NULL);
+				} else {
+					for (Tag t : bookTags) {
+						for (; t != null; t = t.Parent) {
+							tags.add(t);
+						}
+					}
+				}
 			}
 		}
 		return new ArrayList<Tag>(tags);

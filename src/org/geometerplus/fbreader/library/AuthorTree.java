@@ -39,10 +39,8 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	public String getName() {
-		return
-			Author != Author.NULL ?
-				Author.DisplayName :
-				Library.resource().getResource("unknownAuthor").getValue();
+		return Author.NULL.equals(Author)
+			? Library.resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
 	}
 
 	@Override
@@ -52,7 +50,7 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	protected String getSortKey() {
-		if (Author == null) {
+		if (Author.NULL.equals(Author)) {
 			return null;
 		}
 		return new StringBuilder()
@@ -90,12 +88,16 @@ public class AuthorTree extends LibraryTree {
 		switch (event) {
 			case Added:
 				return containsBook(book) && createBookSubTree(book);
+			case Removed:
+				// TODO: implement
+			case Updated:
+				// TODO: implement
 			default:
 				return super.onBookEvent(event, book);
 		}
 	}
 
-	boolean createBookSubTree(Book book) {
+	private boolean createBookSubTree(Book book) {
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
 		if (seriesInfo != null) {
 			return getSeriesSubTree(seriesInfo.Title).createBookInSeriesSubTree(book);
