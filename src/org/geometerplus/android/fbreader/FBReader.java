@@ -50,7 +50,6 @@ import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
@@ -181,9 +180,6 @@ public final class FBReader extends Activity {
 
 		myFBReaderApp = (FBReaderApp)FBReaderApp.Instance();
 		if (myFBReaderApp == null) {
-			if (SQLiteBooksDatabase.Instance() == null) {
-				new SQLiteBooksDatabase(this, "READER");
-			}
 			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
 		}
 		myBook = null;
@@ -295,7 +291,11 @@ public final class FBReader extends Activity {
 			openBook(intent, null, true);
 		} else if (Intent.ACTION_VIEW.equals(action)
 					&& data != null && "fbreader-action".equals(data.getScheme())) {
-			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
+				}
+			});
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
