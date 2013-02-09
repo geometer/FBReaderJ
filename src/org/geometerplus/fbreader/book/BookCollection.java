@@ -271,14 +271,18 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Tag> tags() {
-		final Set<Tag> tags = new TreeSet<Tag>();
+		final Set<Tag> tags = new HashSet<Tag>();
 		synchronized (myBooksByFile) {
 			for (Book book : myBooksByFile.values()) {
 				final List<Tag> bookTags = book.tags();
 				if (bookTags.isEmpty()) {
 					tags.add(Tag.NULL);
 				} else {
-					tags.addAll(book.tags());
+					for (Tag t : bookTags) {
+						for (; t != null; t = t.Parent) {
+							tags.add(t);
+						}
+					}
 				}
 			}
 		}

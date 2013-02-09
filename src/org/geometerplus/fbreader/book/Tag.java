@@ -32,7 +32,7 @@ public final class Tag {
 		}
 		name = name.trim();
 		if (name.length() == 0) {
-			return parent;
+			return parent == null ? Tag.NULL : parent;
 		}
 		Tag tag = new Tag(parent, name);
 		Tag stored = ourTagSet.get(tag);
