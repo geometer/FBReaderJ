@@ -53,7 +53,7 @@ public abstract class BooksDatabase {
 		book.setSeriesInfoWithNoCheck(series, index);
 	}
 
-	public /*protected*/ abstract void executeAsATransaction(Runnable actions);
+	protected abstract void executeAsTransaction(Runnable actions);
 
 	// returns map fileId -> book
 	protected abstract Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing);

@@ -85,7 +85,7 @@ public final class FileInfoSet {
 	}
 
 	public void save() {
-		myDatabase.executeAsATransaction(new Runnable() {
+		myDatabase.executeAsTransaction(new Runnable() {
 			public void run() {
 				for (FileInfo info : myInfosToRemove) {
 					myDatabase.removeFileInfo(info.Id);
