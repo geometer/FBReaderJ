@@ -44,9 +44,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	public final String ModelId;
 	public final boolean IsVisible;
 
-	private boolean myIsChanged;
-
-	public Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int elementIndex, int charIndex, boolean isVisible) {
+	Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int elementIndex, int charIndex, boolean isVisible) {
 		super(paragraphIndex, elementIndex, charIndex);
 
 		myId = id;
@@ -65,7 +63,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myAccessCount = accessCount;
 		ModelId = modelId;
 		IsVisible = isVisible;
-		myIsChanged = false;
 	}
 
 	public Bookmark(Book book, String modelId, ZLTextWordCursor cursor, int maxLength, boolean isVisible) {
@@ -82,7 +79,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myCreationDate = new Date();
 		ModelId = modelId;
 		IsVisible = isVisible;
-		myIsChanged = true;
 	}
 
 	public long getId() {
@@ -124,7 +120,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 			myText = text;
 			myModificationDate = new Date();
 			myLatestDate = myModificationDate;
-			myIsChanged = true;
 		}
 	}
 
@@ -132,14 +127,10 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myAccessDate = new Date();
 		++myAccessCount;
 		myLatestDate = myAccessDate;
-		myIsChanged = true;
 	}
 
 	public void save() {
-		if (myIsChanged) {
-			myId = BooksDatabase.Instance().saveBookmark(this);
-			myIsChanged = false;
-		}
+		myId = BooksDatabase.Instance().saveBookmark(this);
 	}
 
 	public void delete() {
@@ -242,5 +233,10 @@ mainLoop:
 
 	void setId(long id) {
 		myId = id;
+	}
+
+	public void update(Bookmark other) {
+		// TODO: copy other fields (?)
+		myId = other.myId;
 	}
 }

@@ -478,12 +478,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 
 	public synchronized void saveBookmark(Bookmark bookmark) {
 		if (myInterface != null) {
-//			try {
-//				bookmark.update(SerializerUtil.deserializeBookmark(
-//					myInterface.saveBookmark(SerializerUtil.serialize(bookmark))
-//				));
-//			} catch (RemoteException e) {
-//			}
+			try {
+				bookmark.update(SerializerUtil.deserializeBookmark(
+					myInterface.saveBookmark(SerializerUtil.serialize(bookmark))
+				));
+			} catch (RemoteException e) {
+			}
 		}
 	}
 
