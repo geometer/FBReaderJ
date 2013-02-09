@@ -252,14 +252,4 @@ public final class Library {
 		myBooks.remove(book.File);
 		Collection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
 	}
-
-	public List<Bookmark> allBookmarks() {
-		return BooksDatabase.Instance().loadAllVisibleBookmarks();
-	}
-
-	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = BooksDatabase.Instance().loadBookmarks(book.getId(), false);
-		Collections.sort(list, new Bookmark.ByTimeComparator());
-		return list;
-	}
 }

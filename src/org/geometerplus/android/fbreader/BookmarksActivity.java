@@ -80,7 +80,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
-		myAllBooksBookmarks = Library.Instance().allBookmarks();
+		myAllBooksBookmarks = Library.Instance().Collection.allBookmarks();
 		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
 
 		final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
