@@ -63,9 +63,10 @@ public interface IBookCollection {
 	Book getBookById(long id);
 
 	List<Author> authors();
-	List<Tag> tags();
 	boolean hasSeries();
 	List<String> series();
+	List<Tag> tags();
+	List<String> titles();
 
 	boolean saveBook(Book book, boolean force);
 	void removeBook(Book book, boolean deleteFromDisk);
