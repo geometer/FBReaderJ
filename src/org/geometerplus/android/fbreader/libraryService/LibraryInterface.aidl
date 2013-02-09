@@ -34,6 +34,7 @@ interface LibraryInterface {
 	boolean saveBook(in String book, in boolean force);
 	void removeBook(in String book, in boolean deleteFromDisk);
 	void addBookToRecentList(in String book);
+	void removeBookFromRecentList(in String book);
 
 	boolean hasFavorites();
 	boolean isFavorite(in String book);

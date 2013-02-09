@@ -217,6 +217,10 @@ public class LibraryService extends Service {
 			myCollection.addBookToRecentList(SerializerUtil.deserializeBook(book));
 		}
 
+		public void removeBookFromRecentList(String book) {
+			myCollection.removeBookFromRecentList(SerializerUtil.deserializeBook(book));
+		}
+
 		public boolean hasFavorites() {
 			return myCollection.hasFavorites();
 		}
