@@ -170,7 +170,7 @@ public final class FBReaderApp extends ZLApplication {
 			System.err.println("3");
 			tempBook = Library.Instance().getRecentBook();
 			if (tempBook == null || !tempBook.File.exists()) {
-				tempBook = Book.getByFile(Library.getHelpFile());
+				tempBook = Book.getByFile(BookCollection.getHelpFile());
 			}
 			if (tempBook == null) {
 				return;
