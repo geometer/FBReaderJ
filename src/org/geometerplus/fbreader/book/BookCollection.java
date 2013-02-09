@@ -222,7 +222,26 @@ public class BookCollection extends AbstractBookCollection {
 		return filtered;
 	}
 
-	public List<Book> books(String pattern) {
+	public List<Book> booksForSeries(String series) {
+		final LinkedList<Book> filtered = new LinkedList<Book>();
+		for (Book b : books()) {
+			final SeriesInfo info = b.getSeriesInfo();
+			if (info != null && series.equals(info.Title)) {
+				filtered.add(b);
+			}
+		}
+		return filtered;
+	}
+
+	public List<Book> booksForTitlePrefix(String prefix) {
+		final LinkedList<Book> filtered = new LinkedList<Book>();
+		for (Book b : books()) {
+			// TODO: implement
+		}
+		return filtered;
+	}
+
+	public List<Book> booksForPattern(String pattern) {
 		if (pattern == null || pattern.length() == 0) {
 			return Collections.emptyList();
 		}
@@ -287,6 +306,17 @@ public class BookCollection extends AbstractBookCollection {
 			}
 		}
 		return new ArrayList<Tag>(tags);
+	}
+
+	public boolean hasSeries() {
+		synchronized (myBooksByFile) {
+			for (Book book : myBooksByFile.values()) {
+				if (book.getSeriesInfo() != null) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public List<String> series() {

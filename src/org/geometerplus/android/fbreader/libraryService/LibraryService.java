@@ -132,8 +132,16 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.books(Util.stringToTag(tag)));
 		}
 
+		public List<String> booksForSeries(String series) {
+			return SerializerUtil.serializeBookList(myCollection.booksForSeries(series));
+		}
+
+		public List<String> booksForTitlePrefix(String prefix) {
+			return SerializerUtil.serializeBookList(myCollection.booksForTitlePrefix(prefix));
+		}
+
 		public List<String> booksForPattern(String pattern) {
-			return SerializerUtil.serializeBookList(myCollection.books(pattern));
+			return SerializerUtil.serializeBookList(myCollection.booksForPattern(pattern));
 		}
 
 		public List<String> recentBooks() {
@@ -163,6 +171,10 @@ public class LibraryService extends Service {
 				strings.add(Util.authorToString(a));
 			}
 			return strings;
+		}
+
+		public boolean hasSeries() {
+			return myCollection.hasSeries();
 		}
 
 		public List<String> series() {
