@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.book;
 import java.util.HashMap;
 
 public final class Tag {
+	public static final Tag NULL = new Tag(null, "");
+
 	private static final HashMap<Tag,Tag> ourTagSet = new HashMap<Tag,Tag>();
 
 	public static Tag getTag(Tag parent, String name) {
