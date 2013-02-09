@@ -168,7 +168,7 @@ public final class FBReaderApp extends ZLApplication {
 		Book tempBook = book;
 		if (tempBook == null) {
 			System.err.println("3");
-			tempBook = Library.Instance().Collection.getRecentBook(0);
+			tempBook = Collection.getRecentBook(0);
 			if (tempBook == null || !tempBook.File.exists()) {
 				tempBook = Book.getByFile(BookCollection.getHelpFile());
 			}
@@ -182,7 +182,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
 			System.err.println("5");
-			Library.Instance().addBookToRecentList(bookToOpen);
+			Collection.addBookToRecentList(bookToOpen);
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
@@ -198,7 +198,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		if (p.type() == FormatPlugin.Type.PLUGIN) {
 			System.err.println("6");
-			Library.Instance().addBookToRecentList(bookToOpen);
+			Collection.addBookToRecentList(bookToOpen);
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
@@ -329,7 +329,7 @@ public final class FBReaderApp extends ZLApplication {
 			} else {
 				gotoBookmark(bookmark);
 			}
-			Library.Instance().addBookToRecentList(book);
+			Collection.addBookToRecentList(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
 			if (!book.authors().isEmpty()) {
 				boolean first = true;
@@ -367,7 +367,7 @@ public final class FBReaderApp extends ZLApplication {
 				return false;
 			}
 
-			final List<Bookmark> bookmarks = Library.Instance().Collection.invisibleBookmarks(Model.Book);
+			final List<Bookmark> bookmarks = Collection.invisibleBookmarks(Model.Book);
 			if (bookmarks.isEmpty()) {
 				return false;
 			}
@@ -455,7 +455,7 @@ public final class FBReaderApp extends ZLApplication {
 			));
 		}
 		if (ShowPreviousBookInCancelMenuOption.getValue()) {
-			final Book previousBook = Library.Instance().Collection.getRecentBook(1);
+			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
 				myCancelActionsList.add(new CancelActionDescription(
 					CancelActionType.previousBook, previousBook.getTitle()
@@ -464,7 +464,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		if (ShowPositionsInCancelMenuOption.getValue()) {
 			if (Model != null && Model.Book != null) {
-				for (Bookmark bookmark : Library.Instance().Collection.invisibleBookmarks(Model.Book)) {
+				for (Bookmark bookmark : Collection.invisibleBookmarks(Model.Book)) {
 					myCancelActionsList.add(new BookmarkDescription(bookmark));
 				}
 			}
@@ -487,14 +487,17 @@ public final class FBReaderApp extends ZLApplication {
 				CancelActionType.networkLibrary, null
 			));
 		}
+		// TODO: return previous book item
+		/*
 		if (ShowPreviousBookInCancelMenuOption.getValue()) {
-			final Book previousBook = Library.Instance().Collection.getRecentBook(1);
+			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
 				cancelActionsList.add(new CancelActionDescription(
 					CancelActionType.previousBook, previousBook.getTitle()
 				));
 			}
 		}
+		*/
 		cancelActionsList.add(new CancelActionDescription(
 			CancelActionType.close, null
 		));
@@ -515,7 +518,7 @@ public final class FBReaderApp extends ZLApplication {
 				runAction(ActionCode.SHOW_NETWORK_LIBRARY);
 				break;
 			case previousBook:
-				openBook(Library.Instance().Collection.getRecentBook(1), null, null);
+				openBook(Collection.getRecentBook(1), null, null);
 				break;
 			case returnTo:
 			{
@@ -532,13 +535,13 @@ public final class FBReaderApp extends ZLApplication {
 
 	private synchronized void updateInvisibleBookmarksList(Bookmark b) {
 		if (Model != null && Model.Book != null && b != null) {
-			for (Bookmark bm : Library.Instance().Collection.invisibleBookmarks(Model.Book)) {
+			for (Bookmark bm : Collection.invisibleBookmarks(Model.Book)) {
 				if (b.equals(bm)) {
 					bm.delete();
 				}
 			}
 			b.save();
-			final List<Bookmark> bookmarks = Library.Instance().Collection.invisibleBookmarks(Model.Book);
+			final List<Bookmark> bookmarks = Collection.invisibleBookmarks(Model.Book);
 			for (int i = 3; i < bookmarks.size(); ++i) {
 				bookmarks.get(i).delete();
 			}

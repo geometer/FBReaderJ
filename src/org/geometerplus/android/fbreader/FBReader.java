@@ -290,13 +290,13 @@ public final class FBReader extends Activity {
 		if (file == null) {
 			return null;
 		}
-		Book book = Book.getByFile(file);
+		Book book = myFBReaderApp.Collection.getBookByFile(file);
 		if (book != null) {
 			return book;
 		}
 //		if (file.isArchive()) {
 //			for (ZLFile child : file.children()) {
-//				book = Book.getByFile(child);
+//				book = myFBReaderApp.Collection.getBookByFile(child);
 //				if (book != null) {
 //					return book;
 //				}
@@ -688,6 +688,7 @@ public final class FBReader extends Activity {
 	protected void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(myFBReaderApp, this);
+		getCollection().unbind();
 		super.onStop();
 	}
 
