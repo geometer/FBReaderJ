@@ -166,14 +166,6 @@ public final class Library {
 		return myStatusMask == 0;
 	}
 
-	public Book getRecentBook() {
-		return Collection.getRecentBook(0);
-	}
-
-	public Book getPreviousBook() {
-		return Collection.getRecentBook(1);
-	}
-
 	public void startBookSearch(final String pattern) {
 		setStatus(myStatusMask | STATUS_SEARCHING);
 		final Thread searcher = new Thread("Library.searchBooks") {
