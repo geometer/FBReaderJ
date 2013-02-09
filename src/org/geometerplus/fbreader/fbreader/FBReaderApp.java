@@ -231,7 +231,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
 		if (book == null) {
-			book = Library.Instance().getRecentBook();
+			book = Library.Instance().Collection.getRecentBook(0);
 			if (book == null || !book.File.exists()) {
 				book = Book.getByFile(BookCollection.getHelpFile());
 			}
@@ -392,7 +392,7 @@ public final class FBReaderApp extends ZLApplication {
 			));
 		}
 		if (ShowPreviousBookInCancelMenuOption.getValue()) {
-			final Book previousBook = Library.Instance().getPreviousBook();
+			final Book previousBook = Library.Instance().Collection.getRecentBook(1);
 			if (previousBook != null) {
 				myCancelActionsList.add(new CancelActionDescription(
 					CancelActionType.previousBook, previousBook.getTitle()
@@ -426,7 +426,7 @@ public final class FBReaderApp extends ZLApplication {
 				runAction(ActionCode.SHOW_NETWORK_LIBRARY);
 				break;
 			case previousBook:
-				openBook(Library.Instance().getPreviousBook(), null, null);
+				openBook(Library.Instance().Collection.getRecentBook(1), null, null);
 				break;
 			case returnTo:
 			{
