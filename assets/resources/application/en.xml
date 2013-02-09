@@ -801,6 +801,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
+		<node name="noFavorites" value="There are no books in series, sorry"/>
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
