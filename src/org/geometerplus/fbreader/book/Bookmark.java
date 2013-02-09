@@ -128,7 +128,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		}
 	}
 
-	public void onOpen() {
+	public void markAsAccessed() {
 		myAccessDate = new Date();
 		++myAccessCount;
 		myLatestDate = myAccessDate;
