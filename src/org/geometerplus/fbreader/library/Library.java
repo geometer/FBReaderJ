@@ -19,13 +19,11 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.io.File;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
@@ -152,79 +150,6 @@ public final class Library {
 		}
 
 		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
-	}
-
-	private void collectBooks(
-		ZLFile file, FileInfoSet fileInfos,
-		Map<Long,Book> savedBooksByFileId, Map<Long,Book> orphanedBooksByFileId,
-		Set<Book> newBooks,
-		boolean doReadMetaInfo
-	) {
-		final long fileId = fileInfos.getId(file);
-		if (savedBooksByFileId.get(fileId) != null) {
-			return;
-		}
-
-		try {
-			final Book book = orphanedBooksByFileId.get(fileId);
-			if (book != null) {
-				if (doReadMetaInfo) {
-					book.readMetaInfo();
-				}
-				addBookToLibrary(book);
-				fireModelChangedEvent(ChangeListener.Code.BookAdded);
-				newBooks.add(book);
-				return;
-			}
-		} catch (BookReadingException e) {
-			// ignore
-		}
-
-		try {
-			final Book book = new Book(file);
-			addBookToLibrary(book);
-			fireModelChangedEvent(ChangeListener.Code.BookAdded);
-			newBooks.add(book);
-			return;
-		} catch (BookReadingException e) {
-			// ignore
-		}
-
-		if (file.isArchive()) {
-			for (ZLFile entry : fileInfos.archiveEntries(file)) {
-				collectBooks(
-					entry, fileInfos,
-					savedBooksByFileId, orphanedBooksByFileId,
-					newBooks,
-					doReadMetaInfo
-				);
-			}
-		}
-	}
-
-	private List<ZLPhysicalFile> collectPhysicalFiles() {
-		final Queue<ZLFile> dirQueue = new LinkedList<ZLFile>();
-		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
-		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
-
-		for (String s : Paths.BookPathOption().getValue()) {
-			dirQueue.offer(new ZLPhysicalFile(new File(s)));
-		}
-
-		while (!dirQueue.isEmpty()) {
-			for (ZLFile file : dirQueue.poll().children()) {
-				if (file.isDirectory()) {
-					if (!dirSet.contains(file)) {
-						dirQueue.add(file);
-						dirSet.add(file);
-					}
-				} else {
-					file.setCached(true);
-					fileList.add((ZLPhysicalFile)file);
-				}
-			}
-		}
-		return fileList;
 	}
 
 	private synchronized void addBookToLibrary(Book book) {
