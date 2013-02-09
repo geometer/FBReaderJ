@@ -21,8 +21,7 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.BookEvent;
+import org.geometerplus.fbreader.book.*;
 
 public class TitleListTree extends FirstLevelTree {
 	private boolean myDoGroupByFirstLetter;
@@ -43,9 +42,9 @@ public class TitleListTree extends FirstLevelTree {
 		myDoGroupByFirstLetter = false;
 		final TreeSet<String> letterSet = new TreeSet<String>();
 		final List<String> titles = Collection.titles();
-		if (titles.size() > 10) {
+		if (titles.size() > 9) {
 			for (String t : titles) {
-				final String letter = TitleTree.firstTitleLetter(t);
+				final String letter = TitleUtil.firstLetter(t);
 				if (letter != null) {
 					letterSet.add(letter);
 				}
@@ -69,7 +68,7 @@ public class TitleListTree extends FirstLevelTree {
 		switch (event) {
 			case Added:
 				if (myDoGroupByFirstLetter) {
-					final String letter = TitleTree.firstTitleLetter(book);
+					final String letter = TitleUtil.firstTitleLetter(book);
 					return letter != null && createTitleSubTree(letter);
 				} else {
 					return createBookWithAuthorsSubTree(book);

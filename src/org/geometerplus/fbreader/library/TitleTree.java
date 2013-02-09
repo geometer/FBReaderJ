@@ -19,34 +19,9 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.book.*;
 
 public final class TitleTree extends LibraryTree {
-	static String firstTitleLetter(Book book) {
-		if (book == null) {
-			return null;
-		}
-		return firstTitleLetter(book.getTitle());
-	}
-
-	static String firstTitleLetter(String title) {
-		if (title == null) {
-			return null;
-		}
-		title = title.trim();
-		if ("".equals(title)) {
-			return null;
-		}
-		for (int i = 0; i < title.length(); ++i) {
-			char letter = title.charAt(i);
-			if (Character.isLetterOrDigit(letter)) {
-				return String.valueOf(Character.toUpperCase(letter));
-			}
-		}
-		return String.valueOf(Character.toUpperCase(title.charAt(0)));
-	}
-
 	public final String Title;
 
 	TitleTree(IBookCollection collection, String title) {
@@ -71,6 +46,37 @@ public final class TitleTree extends LibraryTree {
 
 	@Override
 	public boolean containsBook(Book book) {
-		return Title.equals(firstTitleLetter(book));
+		return Title.equals(TitleUtil.firstTitleLetter(book));
+	}
+
+	@Override
+	public Status getOpeningStatus() {
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+	}
+
+	@Override
+	public void waitForOpening() {
+		clear();
+
+		for (Book b : Collection.booksForTitlePrefix(Title)) {
+			createBookWithAuthorsSubTree(b);
+		}
+	}
+
+	@Override
+	public boolean onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			case Added:
+				return
+					Title.equals(TitleUtil.firstTitleLetter(book)) &&
+					createBookWithAuthorsSubTree(book);
+			case Removed:
+				// TODO: implement
+				return false;
+			default:
+			case Updated:
+				// TODO: implement
+				return false;
+		}
 	}
 }
