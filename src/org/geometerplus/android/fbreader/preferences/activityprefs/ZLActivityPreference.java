@@ -26,7 +26,7 @@ import android.content.*;
 import android.preference.Preference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.android.fbreader.preferences.ZLReloadable;
 
@@ -89,6 +89,6 @@ public class ZLActivityPreference extends Preference {
 	}
 
 	private void updateSummary() {
-		setSummary(ZLMiscUtil.listToString(myHolder.getValue(), ":"));
+		setSummary(MiscUtil.join(myHolder.getValue(), ":"));
 	}
 }

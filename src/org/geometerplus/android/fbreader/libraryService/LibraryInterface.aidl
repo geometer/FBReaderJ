@@ -26,6 +26,10 @@ interface LibraryInterface {
 	List<String> series();
 	List<String> tags();
 	List<String> titles();
+	List<String> titlesForAuthor(in String author, int limit);
+	List<String> titlesForSeries(in String series, int limit);
+	List<String> titlesForTag(in String tag, int limit);
+	List<String> titlesForTitlePrefix(in String prefix, int limit);
 
 	boolean saveBook(in String book, in boolean force);
 	void removeBook(in String book, in boolean deleteFromDisk);

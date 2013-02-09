@@ -27,7 +27,7 @@ import android.view.*;
 import android.widget.*;
 import android.content.*;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
@@ -137,7 +137,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
 		pattern = pattern.toLowerCase();
 		for (Bookmark b : myAllBooksBookmarks) {
-			if (ZLMiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
+			if (MiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
 				bookmarks.add(b);
 			}
 		}
