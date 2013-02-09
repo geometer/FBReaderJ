@@ -40,7 +40,7 @@ public final class Library {
 	private static Library ourInstance;
 	public static Library Instance() {
 		if (ourInstance == null) {
-			ourInstance = new Library(BooksDatabase.Instance());
+			ourInstance = new Library(new BookCollection(BooksDatabase.Instance()));
 		}
 		return ourInstance;
 	}
@@ -76,7 +76,6 @@ public final class Library {
 	}
 
 	public final IBookCollection Collection;
-	private final BooksDatabase myDatabase;
 
 	private final Map<ZLFile,Book> myBooks =
 		Collections.synchronizedMap(new HashMap<ZLFile,Book>());
@@ -96,11 +95,10 @@ public final class Library {
 		}
 	}
 
-	public Library(BooksDatabase db) {
-		myDatabase = db;
-		Collection = new BookCollection(db);
+	public Library(IBookCollection collection) {
+		Collection = collection;
 
-		myRootTree = new RootTree(Collection);
+		myRootTree = new RootTree(collection);
 
 		new FavoritesTree(myRootTree);
 		new RecentBooksTree(myRootTree);
