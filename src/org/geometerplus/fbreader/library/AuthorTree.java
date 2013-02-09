@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.library;
 import java.util.Collections;
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
 import org.geometerplus.fbreader.book.*;
 
 public class AuthorTree extends LibraryTree {
@@ -41,6 +43,11 @@ public class AuthorTree extends LibraryTree {
 	public String getName() {
 		return Author.NULL.equals(Author)
 			? Library.resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
+	}
+
+	@Override
+	public String getSummary() {
+		return MiscUtil.join(Collection.titlesForAuthor(Author, 5), ", ");
 	}
 
 	@Override

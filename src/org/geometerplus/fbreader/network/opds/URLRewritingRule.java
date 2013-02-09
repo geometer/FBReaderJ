@@ -110,8 +110,8 @@ class URLRewritingRule {
 		final URLRewritingRule rule = (URLRewritingRule) o;
 		if (Type != rule.Type
 				|| Apply != rule.Apply
-				|| !ZLMiscUtil.equals(Name, rule.Name)
-				|| !ZLMiscUtil.equals(Value, rule.Value)) {
+				|| !MiscUtil.equals(Name, rule.Name)
+				|| !MiscUtil.equals(Value, rule.Value)) {
 			return false;
 		}
 		return true;
