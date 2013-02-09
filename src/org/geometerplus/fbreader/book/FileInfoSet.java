@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.*;
 
 public final class FileInfoSet {
@@ -48,7 +48,7 @@ public final class FileInfoSet {
 				return false;
 			}
 			Pair p = (Pair)o;
-			return (myName.equals(p.myName)) && ZLMiscUtil.equals(myParent, p.myParent);
+			return myName.equals(p.myName) && MiscUtil.equals(myParent, p.myParent);
 		}
 	}
 

@@ -299,6 +299,50 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<String> titlesForAuthor(Author author, int limit) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return myInterface.titlesForAuthor(Util.authorToString(author), limit);
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	public synchronized List<String> titlesForSeries(String series, int limit) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return myInterface.titlesForSeries(series, limit);
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	public synchronized List<String> titlesForTag(Tag tag, int limit) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return myInterface.titlesForTag(Util.tagToString(tag), limit);
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	public synchronized List<String> titlesForTitlePrefix(String prefix, int limit) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return myInterface.titlesForTitlePrefix(prefix, limit);
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
 	public synchronized boolean saveBook(Book book, boolean force) {
 		if (myInterface == null) {
 			return false;

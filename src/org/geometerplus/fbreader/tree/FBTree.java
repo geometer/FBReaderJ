@@ -21,9 +21,9 @@ package org.geometerplus.fbreader.tree;
 
 import java.io.Serializable;
 
-import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.tree.ZLTree;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree> {
 	public static class Key implements Serializable {
@@ -49,7 +49,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 				return false;
 			}
 			final Key key = (Key)other;
-			return Id.equals(key.Id) && ZLMiscUtil.equals(Parent, key.Parent);
+			return Id.equals(key.Id) && MiscUtil.equals(Parent, key.Parent);
 		}
 
 		@Override
@@ -170,20 +170,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return compareStringsIgnoreCase(key0, key1);
 	}
 
-	public String getSummary() {
-		StringBuilder builder = new StringBuilder();
-		int count = 0;
-		for (FBTree subtree : subTrees()) {
-			if (count++ > 0) {
-				builder.append(",  ");
-			}
-			builder.append(subtree.getName());
-			if (count == 5) {
-				break;
-			}
-		}
-		return builder.toString();
-	}
+	public abstract String getSummary();
 
 	protected ZLImage createCover() {
 		return null;

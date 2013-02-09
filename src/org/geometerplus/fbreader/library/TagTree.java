@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.library;
 
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
 import org.geometerplus.fbreader.book.*;
 
 public final class TagTree extends LibraryTree {
@@ -40,6 +42,11 @@ public final class TagTree extends LibraryTree {
 	public String getName() {
 		return Tag.NULL.equals(Tag)
 			? Library.resource().getResource("booksWithNoTags").getValue() : Tag.Name;
+	}
+
+	@Override
+	public String getSummary() {
+		return MiscUtil.join(Collection.titlesForTag(Tag, 5), ", ");
 	}
 
 	@Override

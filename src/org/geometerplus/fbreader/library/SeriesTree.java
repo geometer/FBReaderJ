@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
 import org.geometerplus.fbreader.book.*;
 
 public final class SeriesTree extends LibraryTree {
@@ -39,6 +41,11 @@ public final class SeriesTree extends LibraryTree {
 	@Override
 	public String getName() {
 		return Series;
+	}
+
+	@Override
+	public String getSummary() {
+		return MiscUtil.join(Collection.titlesForSeries(Series, 5), ", ");
 	}
 
 	@Override
