@@ -63,13 +63,14 @@ public abstract class LibraryTree extends FBTree {
 		return true;
 	}
 
-	TagTree getTagSubTree(Tag tag) {
+	boolean createTagSubTree(Tag tag) {
 		final TagTree temp = new TagTree(Collection, tag);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
-			return (TagTree)subTrees().get(position);
+			return false;
 		} else {
-			return new TagTree(this, tag, - position - 1);
+			new TagTree(this, tag, - position - 1);
+			return true;
 		}
 	}
 
@@ -83,13 +84,14 @@ public abstract class LibraryTree extends FBTree {
 		}
 	}
 
-	BookWithAuthorsTree getBookWithAuthorsSubTree(Book book) {
+	boolean createBookWithAuthorsSubTree(Book book) {
 		final BookWithAuthorsTree temp = new BookWithAuthorsTree(Collection, book);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
-			return (BookWithAuthorsTree)subTrees().get(position);
+			return false;
 		} else {
-			return new BookWithAuthorsTree(this, book, - position - 1);
+			new BookWithAuthorsTree(this, book, - position - 1);
+			return true;
 		}
 	}
 
@@ -103,7 +105,7 @@ public abstract class LibraryTree extends FBTree {
 		}
 	}
 
-	public boolean removeBook(Book book, boolean recursively) {
+	public boolean removeBook(Book book) {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 		for (FBTree tree : this) {
 			if (tree instanceof BookTree && ((BookTree)tree).Book.equals(book)) {
@@ -112,12 +114,6 @@ public abstract class LibraryTree extends FBTree {
 		}
 		for (FBTree tree : toRemove) {
 			tree.removeSelf();
-			FBTree parent = tree.Parent;
-			if (recursively) {
-				for (; parent != null && !parent.hasChildren(); parent = parent.Parent) {
-					parent.removeSelf();
-				}
-			}
 		}
 		return !toRemove.isEmpty();
 	}
@@ -128,7 +124,7 @@ public abstract class LibraryTree extends FBTree {
 			case Added:
 				return false;
 			case Removed:
-				return removeBook(book, true);
+				return removeBook(book);
 			case Updated:
 			{
 				boolean changed = false;

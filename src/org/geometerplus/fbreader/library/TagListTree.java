@@ -24,9 +24,9 @@ import java.util.List;
 
 import org.geometerplus.fbreader.book.*;
 
-public class AuthorListTree extends FirstLevelTree {
-	AuthorListTree(RootTree root) {
-		super(root, ROOT_BY_AUTHOR);
+public class TagListTree extends FirstLevelTree {
+	TagListTree(RootTree root) {
+		super(root, ROOT_BY_TAG);
 	}
 
 	@Override
@@ -37,8 +37,10 @@ public class AuthorListTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Author a : Collection.authors()) {
-			createAuthorSubTree(a);
+		for (Tag t : Collection.tags()) {
+			if (t.Parent == null) {
+				createTagSubTree(t);
+			}
 		}
 	}
 
@@ -47,12 +49,14 @@ public class AuthorListTree extends FirstLevelTree {
 		switch (event) {
 			case Added:
 			{
-				final List<Author> bookAuthors = book.authors();
+				final List<Tag> bookTags = book.tags();
 				boolean changed = false;
-				if (bookAuthors.isEmpty()) {
-					changed &= createAuthorSubTree(Author.NULL);
-				} else for (Author a : bookAuthors) {
-					changed &= createAuthorSubTree(a);
+				if (bookTags.isEmpty()) {
+					changed &= createTagSubTree(Tag.NULL);
+				} else for (Tag t : bookTags) {
+					if (t.Parent == null) {
+						changed &= createTagSubTree(t);
+					}
 				}
 				return changed;
 			}
@@ -63,17 +67,6 @@ public class AuthorListTree extends FirstLevelTree {
 			case Updated:
 				// TODO: implement
 				return false;
-		}
-	}
-
-	private boolean createAuthorSubTree(Author author) {
-		final AuthorTree temp = new AuthorTree(Collection, author);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return false;
-		} else {
-			new AuthorTree(this, author, - position - 1);
-			return true;
 		}
 	}
 }

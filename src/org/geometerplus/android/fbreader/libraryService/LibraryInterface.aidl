@@ -11,6 +11,7 @@ interface LibraryInterface {
 	int size();
 	List<String> books();
 	List<String> booksForAuthor(in String author);
+	List<String> booksForTag(in String tag);
 	List<String> booksForPattern(in String pattern);
 	List<String> recentBooks();
 	List<String> favorites();
@@ -19,6 +20,8 @@ interface LibraryInterface {
 	String getRecentBook(in int index);
 
 	List<String> authors();
+	List<String> series();
+	List<String> tags();
 
 	boolean saveBook(in String book, in boolean force);
 	void removeBook(in String book, in boolean deleteFromDisk);
