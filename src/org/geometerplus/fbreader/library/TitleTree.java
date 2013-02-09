@@ -19,34 +19,41 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
 import org.geometerplus.fbreader.book.*;
 
 public final class TitleTree extends LibraryTree {
-	public final String Title;
+	public final String Prefix;
 
-	TitleTree(IBookCollection collection, String title) {
+	TitleTree(IBookCollection collection, String prefix) {
 		super(collection);
-		Title = title;
+		Prefix = prefix;
 	}
 
-	TitleTree(LibraryTree parent, String title, int position) {
+	TitleTree(LibraryTree parent, String prefix, int position) {
 		super(parent, position);
-		Title = title;
+		Prefix = prefix;
 	}
 
 	@Override
 	public String getName() {
-		return Title;
+		return Prefix;
+	}
+
+	@Override
+	public String getSummary() {
+		return MiscUtil.join(Collection.titlesForTitlePrefix(Prefix, 5), ", ");
 	}
 
 	@Override
 	protected String getStringId() {
-		return "@TitleTree " + getName();
+		return "@PrefixTree " + getName();
 	}
 
 	@Override
 	public boolean containsBook(Book book) {
-		return Title.equals(TitleUtil.firstTitleLetter(book));
+		return Prefix.equals(TitleUtil.firstTitleLetter(book));
 	}
 
 	@Override
@@ -58,7 +65,7 @@ public final class TitleTree extends LibraryTree {
 	public void waitForOpening() {
 		clear();
 
-		for (Book b : Collection.booksForTitlePrefix(Title)) {
+		for (Book b : Collection.booksForTitlePrefix(Prefix)) {
 			createBookWithAuthorsSubTree(b);
 		}
 	}
@@ -68,7 +75,7 @@ public final class TitleTree extends LibraryTree {
 		switch (event) {
 			case Added:
 				return
-					Title.equals(TitleUtil.firstTitleLetter(book)) &&
+					Prefix.equals(TitleUtil.firstTitleLetter(book)) &&
 					createBookWithAuthorsSubTree(book);
 			case Removed:
 				// TODO: implement

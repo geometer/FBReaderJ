@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.util;
 
 import java.util.*;
 
-public abstract class ZLMiscUtil {
+public abstract class MiscUtil {
 	public static <T> boolean equals(T o0, T o1) {
 		return o0 == null ? o1 == null : o0.equals(o1);
 	}
@@ -67,7 +67,7 @@ public abstract class ZLMiscUtil {
 			   (text.toLowerCase().indexOf(lowerCasePattern) >= 0);
 	}
 
-	public static String listToString(List<String> list, String delimiter) {
+	public static String join(List<String> list, String delimiter) {
 		if (list == null || list.isEmpty()) {
 			return "";
 		}
@@ -84,7 +84,7 @@ public abstract class ZLMiscUtil {
 		return builder.toString();
 	}
 
-	public static List<String> stringToList(String str, String delimiter) {
+	public static List<String> split(String str, String delimiter) {
 		if (str == null || "".equals(str)) {
 			return Collections.emptyList();
 		}

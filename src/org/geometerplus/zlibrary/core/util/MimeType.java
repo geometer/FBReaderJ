@@ -149,17 +149,17 @@ public final class MimeType {
 		}
 		final MimeType type = (MimeType)o;
 		return
-			ZLMiscUtil.equals(Name, type.Name) &&
-			ZLMiscUtil.mapsEquals(myParameters, type.myParameters);
+			MiscUtil.equals(Name, type.Name) &&
+			MiscUtil.mapsEquals(myParameters, type.myParameters);
 	}
 
 	public boolean weakEquals(MimeType type) {
-		return ZLMiscUtil.equals(Name, type.Name);
+		return MiscUtil.equals(Name, type.Name);
 	}
 
 	@Override
 	public int hashCode() {
-		return ZLMiscUtil.hashCode(Name);
+		return MiscUtil.hashCode(Name);
 	}
 
 	@Override

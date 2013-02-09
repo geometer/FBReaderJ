@@ -344,6 +344,81 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	public List<String> titlesForAuthor(Author author, int limit) {
+		if (limit <= 0) {
+			return Collections.emptyList();
+		}
+		final ArrayList<String> titles = new ArrayList<String>(limit);
+		final boolean isNull = Author.NULL.equals(author);
+		synchronized (myBooksByFile) {
+			for (Book b : myBooksByFile.values()) {
+				if (isNull ? b.authors().isEmpty() : b.authors().contains(author)) {
+					titles.add(b.getTitle());
+					if (--limit == 0) {
+						break;
+					}
+				}
+			}
+		}
+		return titles;
+	}
+
+	public List<String> titlesForSeries(String series, int limit) {
+		if (limit <= 0) {
+			return Collections.emptyList();
+		}
+		final ArrayList<String> titles = new ArrayList<String>(limit);
+		synchronized (myBooksByFile) {
+			for (Book b : myBooksByFile.values()) {
+				final SeriesInfo info = b.getSeriesInfo();
+				if (info != null && series.equals(info.Title)) {
+					titles.add(b.getTitle());
+					if (--limit == 0) {
+						break;
+					}
+				}
+			}
+		}
+		return titles;
+	}
+
+	public List<String> titlesForTag(Tag tag, int limit) {
+		if (limit <= 0) {
+			return Collections.emptyList();
+		}
+		final ArrayList<String> titles = new ArrayList<String>(limit);
+		final boolean isNull = Tag.NULL.equals(tag);
+		synchronized (myBooksByFile) {
+			for (Book b : myBooksByFile.values()) {
+				if (isNull ? b.tags().isEmpty() : b.tags().contains(tag)) {
+					titles.add(b.getTitle());
+					if (--limit == 0) {
+						break;
+					}
+				}
+			}
+		}
+		return titles;
+	}
+
+	public List<String> titlesForTitlePrefix(String prefix, int limit) {
+		if (limit <= 0) {
+			return Collections.emptyList();
+		}
+		final ArrayList<String> titles = new ArrayList<String>(limit);
+		synchronized (myBooksByFile) {
+			for (Book b : myBooksByFile.values()) {
+				if (prefix.equals(TitleUtil.firstTitleLetter(b))) {
+					titles.add(b.getTitle());
+					if (--limit == 0) {
+						break;
+					}
+				}
+			}
+		}
+		return titles;
+	}
+
 	public Book getRecentBook(int index) {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
