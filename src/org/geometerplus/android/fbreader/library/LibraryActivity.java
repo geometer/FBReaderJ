@@ -54,8 +54,6 @@ import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener, IBookCollection.Listener {
-	static volatile boolean ourToBeKilled = false;
-
 	private Library myLibrary;
 
 	private Book mySelectedBook;
@@ -164,12 +162,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected LibraryTree getTreeByKey(FBTree.Key key) {
 		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.getRootTree();
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		ourToBeKilled = true;
 	}
 
 	@Override
