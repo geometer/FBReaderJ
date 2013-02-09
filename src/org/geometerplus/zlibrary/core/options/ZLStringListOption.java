@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.options;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 public class ZLStringListOption extends ZLOption {
 	private final List<String> myDefaultValue;
@@ -44,9 +44,9 @@ public class ZLStringListOption extends ZLOption {
 
 	public List<String> getValue() {
 		if (!myIsSynchronized) {
-			final String value = getConfigValue(ZLMiscUtil.listToString(myDefaultValue, myDelimiter));
+			final String value = getConfigValue(MiscUtil.join(myDefaultValue, myDelimiter));
 			if (value != null) {
-				myValue = ZLMiscUtil.stringToList(value, myDelimiter);
+				myValue = MiscUtil.split(value, myDelimiter);
 			}
 			myIsSynchronized = true;
 		}
@@ -64,7 +64,7 @@ public class ZLStringListOption extends ZLOption {
 		if (value.equals(myDefaultValue)) {
 			unsetConfigValue();
 		} else {
-			setConfigValue(ZLMiscUtil.listToString(value, myDelimiter));
+			setConfigValue(MiscUtil.join(value, myDelimiter));
 		}
 		myIsSynchronized = true;
 	}

@@ -39,6 +39,22 @@ public abstract class NetworkTree extends FBTree {
 		super(parent, position);
 	}
 
+	@Override
+	public String getSummary() {
+		StringBuilder builder = new StringBuilder();
+		int count = 0;
+		for (FBTree subtree : subTrees()) {
+			if (count++ > 0) {
+				builder.append(",  ");
+			}
+			builder.append(subtree.getName());
+			if (count == 5) {
+				break;
+			}
+		}
+		return builder.toString();
+	}
+
 	public INetworkLink getLink() {
 		final NetworkTree parent = (NetworkTree)Parent;
 		return parent != null ? parent.getLink() : null;

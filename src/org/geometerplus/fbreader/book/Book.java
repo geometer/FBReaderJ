@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -210,7 +210,7 @@ public class Book {
 	}
 
 	public void setTitle(String title) {
-		if (!ZLMiscUtil.equals(myTitle, title)) {
+		if (!MiscUtil.equals(myTitle, title)) {
 			myTitle = title;
 			myIsSaved = false;
 		}
@@ -248,7 +248,7 @@ public class Book {
 	}
 
 	public void setLanguage(String language) {
-		if (!ZLMiscUtil.equals(myLanguage, language)) {
+		if (!MiscUtil.equals(myLanguage, language)) {
 			myLanguage = language;
 			myIsSaved = false;
 		}
@@ -272,7 +272,7 @@ public class Book {
 	}
 
 	public void setEncoding(String encoding) {
-		if (!ZLMiscUtil.equals(myEncoding, encoding)) {
+		if (!MiscUtil.equals(myEncoding, encoding)) {
 			myEncoding = encoding;
 			myIsSaved = false;
 		}
@@ -313,27 +313,27 @@ public class Book {
 	}
 
 	public boolean matches(String pattern) {
-		if (myTitle != null && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
+		if (myTitle != null && MiscUtil.matchesIgnoreCase(myTitle, pattern)) {
 			return true;
 		}
-		if (mySeriesInfo != null && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Title, pattern)) {
+		if (mySeriesInfo != null && MiscUtil.matchesIgnoreCase(mySeriesInfo.Title, pattern)) {
 			return true;
 		}
 		if (myAuthors != null) {
 			for (Author author : myAuthors) {
-				if (ZLMiscUtil.matchesIgnoreCase(author.DisplayName, pattern)) {
+				if (MiscUtil.matchesIgnoreCase(author.DisplayName, pattern)) {
 					return true;
 				}
 			}
 		}
 		if (myTags != null) {
 			for (Tag tag : myTags) {
-				if (ZLMiscUtil.matchesIgnoreCase(tag.Name, pattern)) {
+				if (MiscUtil.matchesIgnoreCase(tag.Name, pattern)) {
 					return true;
 				}
 			}
 		}
-		if (ZLMiscUtil.matchesIgnoreCase(File.getLongName(), pattern)) {
+		if (MiscUtil.matchesIgnoreCase(File.getLongName(), pattern)) {
 			return true;
 		}
 		return false;

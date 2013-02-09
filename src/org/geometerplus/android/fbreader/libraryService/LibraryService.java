@@ -194,6 +194,22 @@ public class LibraryService extends Service {
 			return myCollection.titles();
 		}
 
+		public List<String> titlesForAuthor(String author, int limit) {
+			return myCollection.titlesForAuthor(Util.stringToAuthor(author), limit);
+		}
+
+		public List<String> titlesForSeries(String series, int limit) {
+			return myCollection.titlesForSeries(series, limit);
+		}
+
+		public List<String> titlesForTag(String tag, int limit) {
+			return myCollection.titlesForTag(Util.stringToTag(tag), limit);
+		}
+
+		public List<String> titlesForTitlePrefix(String prefix, int limit) {
+			return myCollection.titlesForTitlePrefix(prefix, limit);
+		}
+
 		public boolean saveBook(String book, boolean force) {
 			return myCollection.saveBook(SerializerUtil.deserializeBook(book), force);
 		}

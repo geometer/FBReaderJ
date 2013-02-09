@@ -67,6 +67,10 @@ public interface IBookCollection {
 	List<String> series();
 	List<Tag> tags();
 	List<String> titles();
+	List<String> titlesForAuthor(Author author, int limit);
+	List<String> titlesForSeries(String series, int limit);
+	List<String> titlesForTag(Tag tag, int limit);
+	List<String> titlesForTitlePrefix(String prefix, int limit);
 
 	boolean saveBook(Book book, boolean force);
 	void removeBook(Book book, boolean deleteFromDisk);

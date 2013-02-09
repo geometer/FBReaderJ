@@ -48,6 +48,11 @@ public class BookTree extends LibraryTree {
 	}
 
 	@Override
+	public String getSummary() {
+		return "";
+	}
+
+	@Override
 	public Book getBook() {
 		return Book;
 	}
