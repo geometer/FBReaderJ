@@ -26,13 +26,13 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
 	public static final String ROOT_FOUND = "found";
-	public static final String ROOT_FAVORITES = "favorites";
-	public static final String ROOT_RECENT = "recent";
-	public static final String ROOT_BY_AUTHOR = "byAuthor";
-	public static final String ROOT_BY_TITLE = "byTitle";
-	public static final String ROOT_BY_SERIES = "bySeries";
-	public static final String ROOT_BY_TAG = "byTag";
-	public static final String ROOT_FILE_TREE = "fileTree";
+	static final String ROOT_FAVORITES = "favorites";
+	static final String ROOT_RECENT = "recent";
+	static final String ROOT_BY_AUTHOR = "byAuthor";
+	static final String ROOT_BY_TITLE = "byTitle";
+	static final String ROOT_BY_SERIES = "bySeries";
+	static final String ROOT_BY_TAG = "byTag";
+	static final String ROOT_FILE_TREE = "fileTree";
 
 	public final IBookCollection Collection;
 
@@ -71,16 +71,6 @@ public abstract class LibraryTree extends FBTree {
 		} else {
 			new TagTree(this, tag, - position - 1);
 			return true;
-		}
-	}
-
-	TitleTree getTitleSubTree(String title) {
-		final TitleTree temp = new TitleTree(Collection, title);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (TitleTree)subTrees().get(position);
-		} else {
-			return new TitleTree(this, title, - position - 1);
 		}
 	}
 

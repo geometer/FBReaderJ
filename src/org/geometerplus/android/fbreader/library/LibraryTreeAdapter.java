@@ -75,23 +75,20 @@ class LibraryTreeAdapter extends TreeAdapter {
 	private int getCoverResourceId(LibraryTree tree) {
 		if (tree.getBook() != null) {
 			return R.drawable.ic_list_library_book;
-		} else if (tree instanceof FirstLevelTree) {
-			final String id = tree.getUniqueKey().Id;
-			if (LibraryTree.ROOT_FAVORITES.equals(id)) {
-				return R.drawable.ic_list_library_favorites;
-			} else if (LibraryTree.ROOT_RECENT.equals(id)) {
-				return R.drawable.ic_list_library_recent;
-			} else if (LibraryTree.ROOT_BY_AUTHOR.equals(id)) {
-				return R.drawable.ic_list_library_authors;
-			} else if (LibraryTree.ROOT_BY_TITLE.equals(id)) {
-				return R.drawable.ic_list_library_books;
-			} else if (LibraryTree.ROOT_BY_TAG.equals(id)) {
-				return R.drawable.ic_list_library_tags;
-			} else if (LibraryTree.ROOT_FILE_TREE.equals(id)) {
-				return R.drawable.ic_list_library_folder;
-			} else if (LibraryTree.ROOT_FOUND.equals(id)) {
-				return R.drawable.ic_list_library_search;
-			}
+		} else if (tree instanceof FavoritesTree) {
+			return R.drawable.ic_list_library_favorites;
+		} else if (tree instanceof RecentBooksTree) {
+			return R.drawable.ic_list_library_recent;
+		} else if (tree instanceof AuthorListTree) {
+			return R.drawable.ic_list_library_authors;
+		} else if (tree instanceof TitleListTree) {
+			return R.drawable.ic_list_library_books;
+		} else if (tree instanceof TagListTree) {
+			return R.drawable.ic_list_library_tags;
+		} else if (tree instanceof FileFirstLevelTree) {
+			return R.drawable.ic_list_library_folder;
+		} else if (tree instanceof SearchResultsTree) {
+			return R.drawable.ic_list_library_search;
 		} else if (tree instanceof FileTree) {
 			final ZLFile file = ((FileTree)tree).getFile();
 			if (file.isArchive()) {

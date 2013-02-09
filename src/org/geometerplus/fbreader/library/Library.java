@@ -85,7 +85,6 @@ public final class Library {
 	private final Map<ZLFile,Book> myBooks =
 		Collections.synchronizedMap(new HashMap<ZLFile,Book>());
 	private final RootTree myRootTree;
-	private boolean myDoGroupTitlesByFirstLetter;
 
 	private final static int STATUS_LOADING = 1;
 	private final static int STATUS_SEARCHING = 2;
@@ -110,7 +109,7 @@ public final class Library {
 		new FavoritesTree(myRootTree);
 		new RecentBooksTree(myRootTree);
 		new AuthorListTree(myRootTree);
-		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_TITLE);
+		new TitleListTree(myRootTree);
 		new SeriesListTree(myRootTree);
 		new TagListTree(myRootTree);
 		new FileFirstLevelTree(myRootTree);
@@ -234,17 +233,6 @@ public final class Library {
 		}
 		myBooks.put(book.File, book);
 
-		if (myDoGroupTitlesByFirstLetter) {
-			final String letter = TitleTree.firstTitleLetter(book);
-			if (letter != null) {
-				final TitleTree tree =
-					getFirstLevelTree(LibraryTree.ROOT_BY_TITLE).getTitleSubTree(letter);
-				tree.createBookWithAuthorsSubTree(book);
-			}
-		} else {
-			getFirstLevelTree(LibraryTree.ROOT_BY_TITLE).createBookWithAuthorsSubTree(book);
-		}
-
 		final SearchResultsTree found =
 			(SearchResultsTree)getFirstLevelTree(LibraryTree.ROOT_FOUND);
 		if (found != null && book.matches(found.getPattern())) {
@@ -266,7 +254,6 @@ public final class Library {
 
 		myBooks.remove(book.File);
 		removeFromTree(LibraryTree.ROOT_FOUND, book);
-		removeFromTree(LibraryTree.ROOT_BY_TITLE, book);
 		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
@@ -279,21 +266,6 @@ public final class Library {
 		for (Book b : savedBooksByFileId.values()) {
 			savedBooksByBookId.put(b.getId(), b);
 		}
-
-		// Step 1: set myDoGroupTitlesByFirstLetter value,
-		// add "existing" books into recent and favorites lists
-		if (savedBooksByFileId.size() > 10) {
-			final HashSet<String> letterSet = new HashSet<String>();
-			for (Book book : savedBooksByFileId.values()) {
-				final String letter = TitleTree.firstTitleLetter(book);
-				if (letter != null) {
-					letterSet.add(letter);
-				}
-			}
-			myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
-		}
-
-		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 
 		// Step 2: check if files corresponding to "existing" books really exists;
 		//         add books to library if yes (and reload book info if needed);
