@@ -218,10 +218,6 @@ public final class Library {
 		}
 	}
 
-	public void addBookToRecentList(Book book) {
-		Collection.addBookToRecentList(book);
-	}
-
 	public boolean canRemoveBookFile(Book book) {
 		ZLFile file = book.File;
 		if (file.getPhysicalFile() == null) {
