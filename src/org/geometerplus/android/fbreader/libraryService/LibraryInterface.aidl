@@ -12,6 +12,8 @@ interface LibraryInterface {
 	List<String> books();
 	List<String> booksForAuthor(in String author);
 	List<String> booksForTag(in String tag);
+	List<String> booksForSeries(in String series);
+	List<String> booksForTitlePrefix(in String prefix);
 	List<String> booksForPattern(in String pattern);
 	List<String> recentBooks();
 	List<String> favorites();
@@ -20,6 +22,7 @@ interface LibraryInterface {
 	String getRecentBook(in int index);
 
 	List<String> authors();
+	boolean hasSeries();
 	List<String> series();
 	List<String> tags();
 

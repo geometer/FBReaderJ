@@ -46,25 +46,29 @@ public interface IBookCollection {
 	List<Book> books();
 	List<Book> books(Author author);
 	List<Book> books(Tag tag);
-	List<Book> books(String pattern);
-	List<Book> recentBooks();
+	List<Book> booksForSeries(String series);
+	List<Book> booksForTitlePrefix(String prefix);
+	List<Book> booksForPattern(String pattern);
+
 	List<Book> favorites();
+	boolean hasFavorites();
+	boolean isFavorite(Book book);
+	void setBookFavorite(Book book, boolean favorite);
+
+	List<Book> recentBooks();
+	Book getRecentBook(int index);
+	void addBookToRecentList(Book book);
+
 	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
-	Book getRecentBook(int index);
 
 	List<Author> authors();
 	List<Tag> tags();
+	boolean hasSeries();
 	List<String> series();
 
 	boolean saveBook(Book book, boolean force);
 	void removeBook(Book book, boolean deleteFromDisk);
-
-	void addBookToRecentList(Book book);
-
-	boolean hasFavorites();
-	boolean isFavorite(Book book);
-	void setBookFavorite(Book book, boolean favorite);
 
 	ZLTextPosition getStoredPosition(long bookId);
 	void storePosition(long bookId, ZLTextPosition position);
