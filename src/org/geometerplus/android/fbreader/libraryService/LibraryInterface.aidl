@@ -25,6 +25,7 @@ interface LibraryInterface {
 	boolean hasSeries();
 	List<String> series();
 	List<String> tags();
+	List<String> titles();
 
 	boolean saveBook(in String book, in boolean force);
 	void removeBook(in String book, in boolean deleteFromDisk);

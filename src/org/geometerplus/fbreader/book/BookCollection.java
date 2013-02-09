@@ -332,6 +332,16 @@ public class BookCollection extends AbstractBookCollection {
 		return new ArrayList<String>(series);
 	}
 
+	public List<String> titles() {
+		synchronized (myBooksByFile) {
+			final List<String> titles = new ArrayList<String>(myBooksByFile.size());
+			for (Book book : myBooksByFile.values()) {
+				titles.add(book.getTitle());
+			}
+			return titles;
+		}
+	}
+
 	public Book getRecentBook(int index) {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
