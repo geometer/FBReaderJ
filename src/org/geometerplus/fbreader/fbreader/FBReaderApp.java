@@ -231,7 +231,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
 		if (book == null) {
-			book = Library.Instance().Collection.getRecentBook(0);
+			book = Collection.getRecentBook(0);
 			if (book == null || !book.File.exists()) {
 				book = Book.getByFile(BookCollection.getHelpFile());
 			}
@@ -266,7 +266,7 @@ public final class FBReaderApp extends ZLApplication {
 			} else {
 				gotoBookmark(bookmark);
 			}
-			Library.Instance().addBookToRecentList(book);
+			Collection.addBookToRecentList(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
 			if (!book.authors().isEmpty()) {
 				boolean first = true;
@@ -304,7 +304,7 @@ public final class FBReaderApp extends ZLApplication {
 				return false;
 			}
 
-			final List<Bookmark> bookmarks = Library.Instance().Collection.invisibleBookmarks(Model.Book);
+			final List<Bookmark> bookmarks = Collection.invisibleBookmarks(Model.Book);
 			if (bookmarks.isEmpty()) {
 				return false;
 			}
@@ -392,7 +392,7 @@ public final class FBReaderApp extends ZLApplication {
 			));
 		}
 		if (ShowPreviousBookInCancelMenuOption.getValue()) {
-			final Book previousBook = Library.Instance().Collection.getRecentBook(1);
+			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
 				myCancelActionsList.add(new CancelActionDescription(
 					CancelActionType.previousBook, previousBook.getTitle()
@@ -401,7 +401,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		if (ShowPositionsInCancelMenuOption.getValue()) {
 			if (Model != null && Model.Book != null) {
-				for (Bookmark bookmark : Library.Instance().Collection.invisibleBookmarks(Model.Book)) {
+				for (Bookmark bookmark : Collection.invisibleBookmarks(Model.Book)) {
 					myCancelActionsList.add(new BookmarkDescription(bookmark));
 				}
 			}
@@ -426,7 +426,7 @@ public final class FBReaderApp extends ZLApplication {
 				runAction(ActionCode.SHOW_NETWORK_LIBRARY);
 				break;
 			case previousBook:
-				openBook(Library.Instance().Collection.getRecentBook(1), null, null);
+				openBook(Collection.getRecentBook(1), null, null);
 				break;
 			case returnTo:
 			{
@@ -443,13 +443,13 @@ public final class FBReaderApp extends ZLApplication {
 
 	private synchronized void updateInvisibleBookmarksList(Bookmark b) {
 		if (Model != null && Model.Book != null && b != null) {
-			for (Bookmark bm : Library.Instance().Collection.invisibleBookmarks(Model.Book)) {
+			for (Bookmark bm : Collection.invisibleBookmarks(Model.Book)) {
 				if (b.equals(bm)) {
 					bm.delete();
 				}
 			}
 			b.save();
-			final List<Bookmark> bookmarks = Library.Instance().Collection.invisibleBookmarks(Model.Book);
+			final List<Bookmark> bookmarks = Collection.invisibleBookmarks(Model.Book);
 			for (int i = 3; i < bookmarks.size(); ++i) {
 				bookmarks.get(i).delete();
 			}
