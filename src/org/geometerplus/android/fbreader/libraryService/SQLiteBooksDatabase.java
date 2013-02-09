@@ -56,7 +56,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		migrate();
 	}
 
-	protected void executeAsATransaction(Runnable actions) {
+	protected void executeAsTransaction(Runnable actions) {
 		boolean transactionStarted = false;
 		try {
 			myDatabase.beginTransaction();
@@ -671,7 +671,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"INSERT OR IGNORE INTO RecentBooks (book_id) VALUES (?)"
 			);
 		}
-		executeAsATransaction(new Runnable() {
+		executeAsTransaction(new Runnable() {
 			public void run() {
 				myDatabase.delete("RecentBooks", null, null);
 				for (long id : ids) {
