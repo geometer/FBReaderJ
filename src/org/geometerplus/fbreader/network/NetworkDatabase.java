@@ -37,7 +37,7 @@ public abstract class NetworkDatabase {
 		ourInstance = this;
 	}
 
-	protected abstract void executeAsATransaction(Runnable actions);
+	protected abstract void executeAsTransaction(Runnable actions);
 
 	protected INetworkLink createLink(int id, INetworkLink.Type type, String predefinedId, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
 		if (siteName == null || title == null || infos.getInfo(UrlInfo.Type.Catalog) == null) {

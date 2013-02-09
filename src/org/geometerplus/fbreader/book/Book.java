@@ -444,7 +444,7 @@ public class Book {
 			return false;
 		}
 
-		database.executeAsATransaction(new Runnable() {
+		database.executeAsTransaction(new Runnable() {
 			public void run() {
 				if (myId >= 0) {
 					final FileInfoSet fileInfos = new FileInfoSet(database, File);

@@ -593,7 +593,7 @@ public class BookCollection extends AbstractBookCollection {
 		// Step 4: save changes into database
 		fileInfos.save();
 
-		myDatabase.executeAsATransaction(new Runnable() {
+		myDatabase.executeAsTransaction(new Runnable() {
 			public void run() {
 				for (Book book : newBooks) {
 					saveBook(book, false);
