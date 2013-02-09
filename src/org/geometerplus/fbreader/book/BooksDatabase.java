@@ -68,8 +68,8 @@ public abstract class BooksDatabase {
 	public /*protected*/ abstract List<Tag> listTags();
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 
-	public /*protected*/ abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
-	public /*protected*/ abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
+	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
+	protected abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
 	protected abstract void deleteAllBookAuthors(long bookId);
 	protected abstract void saveBookAuthorInfo(long bookId, long index, Author author);
 	protected abstract void deleteAllBookTags(long bookId);
@@ -80,14 +80,14 @@ public abstract class BooksDatabase {
 		return new FileInfo(name, parent, id);
 	}
 
-	public /*protected*/ abstract Collection<FileInfo> loadFileInfos();
-	public /*protected*/ abstract Collection<FileInfo> loadFileInfos(ZLFile file);
-	public /*protected*/ abstract Collection<FileInfo> loadFileInfos(long fileId);
-	public /*protected*/ abstract void removeFileInfo(long fileId);
-	public /*protected*/ abstract void saveFileInfo(FileInfo fileInfo);
+	protected abstract Collection<FileInfo> loadFileInfos();
+	protected abstract Collection<FileInfo> loadFileInfos(ZLFile file);
+	protected abstract Collection<FileInfo> loadFileInfos(long fileId);
+	protected abstract void removeFileInfo(long fileId);
+	protected abstract void saveFileInfo(FileInfo fileInfo);
 
-	public /*protected*/ abstract List<Long> loadRecentBookIds();
-	public /*protected*/ abstract void saveRecentBookIds(final List<Long> ids);
+	protected abstract List<Long> loadRecentBookIds();
+	protected abstract void saveRecentBookIds(final List<Long> ids);
 
 	protected abstract List<Long> loadFavoriteIds();
 	protected abstract boolean hasFavorites();
@@ -99,14 +99,14 @@ public abstract class BooksDatabase {
 		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex, isVisible);
 	}
 
-	public /*protected*/ abstract List<Bookmark> loadBookmarks(long bookId, boolean isVisible);
-	public /*protected*/ abstract List<Bookmark> loadAllVisibleBookmarks();
-	public /*protected*/ abstract long saveBookmark(Bookmark bookmark);
-	public /*protected*/ abstract void deleteBookmark(Bookmark bookmark);
+	protected abstract List<Bookmark> loadBookmarks(long bookId, boolean isVisible);
+	protected abstract List<Bookmark> loadAllVisibleBookmarks();
+	protected abstract long saveBookmark(Bookmark bookmark);
+	protected abstract void deleteBookmark(Bookmark bookmark);
 
-	public /*protected*/ abstract ZLTextPosition getStoredPosition(long bookId);
-	public /*protected*/ abstract void storePosition(long bookId, ZLTextPosition position);
+	protected abstract ZLTextPosition getStoredPosition(long bookId);
+	protected abstract void storePosition(long bookId, ZLTextPosition position);
 
-	public /*protected*/ abstract Collection<String> loadVisitedHyperlinks(long bookId);
-	public /*protected*/ abstract void addVisitedHyperlink(long bookId, String hyperlinkId);
+	protected abstract Collection<String> loadVisitedHyperlinks(long bookId);
+	protected abstract void addVisitedHyperlink(long bookId, String hyperlinkId);
 }
