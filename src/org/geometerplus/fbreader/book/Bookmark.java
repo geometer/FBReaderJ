@@ -133,12 +133,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myId = BooksDatabase.Instance().saveBookmark(this);
 	}
 
-	public void delete() {
-		if (myId != -1) {
-			BooksDatabase.Instance().deleteBookmark(this);
-		}
-	}
-
 	public static class ByTimeComparator implements Comparator<Bookmark> {
 		public int compare(Bookmark bm0, Bookmark bm1) {
 			return bm1.getDate(DateType.Latest).compareTo(bm0.getDate(DateType.Latest));
