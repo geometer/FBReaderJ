@@ -75,11 +75,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected void onStart() {
 		super.onStart();
-		((BookCollectionShadow)myLibrary.Collection).bindToService(this, new Runnable() {
-			public void run() {
-				myLibrary.init();
-			}
-		});
+		((BookCollectionShadow)myLibrary.Collection).bindToService(this, null);
 	}
 
 	@Override

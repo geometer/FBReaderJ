@@ -100,53 +100,6 @@ public final class Library {
 		new FileFirstLevelTree(myRootTree);
 	}
 
-	public void init() {
-		Collection.addListener(new IBookCollection.Listener() {
-			public void onBookEvent(BookEvent event, Book book) {
-				switch (event) {
-					case Added:
-						addBookToLibrary(book);
-						synchronized (myStatusLock) {
-							if ((myStatusMask & STATUS_LOADING) == 0 ||
-								Collection.size() % 16 == 0) {
-								Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
-							}
-						}
-						break;
-				}
-			}
-
-			public void onBuildEvent(BuildEvent event) {
-				switch (event) {
-					case Started:
-						//setStatus(myStatusMask | STATUS_LOADING);
-						break;
-					case Completed:
-						Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
-						//setStatus(myStatusMask & ~STATUS_LOADING);
-						break;
-				}
-			}
-		});
-
-		final Thread initializer = new Thread() {
-			public void run() {
-				setStatus(myStatusMask | STATUS_LOADING);
-				int count = 0;
-				for (Book book : Collection.books()) {
-					addBookToLibrary(book);
-					if (++count % 16 == 0) {
-						Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
-					}
-				}
-				Library.this.fireModelChangedEvent(ChangeListener.Code.BookAdded);
-				setStatus(myStatusMask & ~STATUS_LOADING);
-			}
-		};
-		initializer.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
-		initializer.start();
-	}
-
 	public LibraryTree getRootTree() {
 		return myRootTree;
 	}
