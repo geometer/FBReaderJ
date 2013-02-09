@@ -37,6 +37,11 @@ public final class RootTree extends NetworkTree {
 	}
 
 	@Override
+	public String getSummary() {
+		return NetworkLibrary.resource().getValue();
+	}
+
+	@Override
 	protected String getStringId() {
 		return myId;
 	}

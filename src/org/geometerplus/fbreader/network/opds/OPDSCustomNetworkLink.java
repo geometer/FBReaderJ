@@ -25,7 +25,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
@@ -60,17 +60,17 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 	}
 
 	public final void setSiteName(String name) {
-		myHasChanges = myHasChanges || !ZLMiscUtil.equals(mySiteName, name);
+		myHasChanges = myHasChanges || !MiscUtil.equals(mySiteName, name);
 		mySiteName = name;
 	}
 
 	public final void setSummary(String summary) {
-		myHasChanges = myHasChanges || !ZLMiscUtil.equals(mySummary, summary);
+		myHasChanges = myHasChanges || !MiscUtil.equals(mySummary, summary);
 		mySummary = summary;
 	}
 
 	public final void setTitle(String title) {
-		myHasChanges = myHasChanges || !ZLMiscUtil.equals(myTitle, title);
+		myHasChanges = myHasChanges || !MiscUtil.equals(myTitle, title);
 		myTitle = title;
 	}
 
