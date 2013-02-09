@@ -71,7 +71,6 @@ public final class Library {
 	private final Map<Long,Book> myBooks = Collections.synchronizedMap(new HashMap<Long,Book>());
 
 	private final RootTree myRootTree;
-	private boolean myDoGroupTitlesByFirstLetter;
 
 	private final static int STATUS_LOADING = 1;
 	private final static int STATUS_SEARCHING = 2;
@@ -95,7 +94,7 @@ public final class Library {
 		new FavoritesTree(myRootTree);
 		new RecentBooksTree(myRootTree);
 		new AuthorListTree(myRootTree);
-		new FirstLevelTree(myRootTree, LibraryTree.ROOT_BY_TITLE);
+		new TitleListTree(myRootTree);
 		new SeriesListTree(myRootTree);
 		new TagListTree(myRootTree);
 		new FileFirstLevelTree(myRootTree);
@@ -177,17 +176,6 @@ public final class Library {
 			myBooks.put(book.getId(), book);
 		}
 
-		if (myDoGroupTitlesByFirstLetter) {
-			final String letter = TitleTree.firstTitleLetter(book);
-			if (letter != null) {
-				final TitleTree tree =
-					getFirstLevelTree(LibraryTree.ROOT_BY_TITLE).getTitleSubTree(letter);
-				tree.createBookWithAuthorsSubTree(book);
-			}
-		} else {
-			getFirstLevelTree(LibraryTree.ROOT_BY_TITLE).createBookWithAuthorsSubTree(book);
-		}
-
 		synchronized (this) {
 			final SearchResultsTree found = (SearchResultsTree)getFirstLevelTree(LibraryTree.ROOT_FOUND);
 			if (found != null && book.matches(found.getPattern())) {
@@ -211,7 +199,6 @@ public final class Library {
 		Collection.saveBook(book, true);
 		myBooks.remove(book.getId());
 		removeFromTree(LibraryTree.ROOT_FOUND, book);
-		removeFromTree(LibraryTree.ROOT_BY_TITLE, book);
 		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}

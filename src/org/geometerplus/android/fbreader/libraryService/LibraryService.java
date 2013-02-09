@@ -190,6 +190,10 @@ public class LibraryService extends Service {
 			return strings;
 		}
 
+		public List<String> titles() {
+			return myCollection.titles();
+		}
+
 		public boolean saveBook(String book, boolean force) {
 			return myCollection.saveBook(SerializerUtil.deserializeBook(book), force);
 		}
