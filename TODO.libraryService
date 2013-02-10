@@ -1,9 +1,9 @@
 restore:
 DONE group titles by first letter
 DONE summaries for libraryTrees
-* progress indicator in library activity
-* book search
-* books for series _and_ author
+DONE progress indicator in library activity
+DONE book search
+DONE books for series _and_ author
 
 new:
 * filesystem event listener
