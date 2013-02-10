@@ -21,11 +21,19 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
-	public static final String ROOT_FOUND = "found";
+	public static ZLResource resource() {
+		return ZLResource.resource("library");
+	}
+
+	public final IBookCollection Collection;
+
+	static final String ROOT_FOUND = "found";
 	static final String ROOT_FAVORITES = "favorites";
 	static final String ROOT_RECENT = "recent";
 	static final String ROOT_BY_AUTHOR = "byAuthor";
@@ -33,8 +41,6 @@ public abstract class LibraryTree extends FBTree {
 	static final String ROOT_BY_SERIES = "bySeries";
 	static final String ROOT_BY_TAG = "byTag";
 	static final String ROOT_FILE_TREE = "fileTree";
-
-	public final IBookCollection Collection;
 
 	protected LibraryTree(IBookCollection collection) {
 		super();
