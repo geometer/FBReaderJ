@@ -26,21 +26,28 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 public interface IBookCollection {
-	public interface Listener {
-		public enum BuildEvent {
-			Started,
-			NotStarted,
-			Succeeded,
-			Failed,
-			Completed
-		}
+	public enum Status {
+		NotStarted(false),
+		Started(false),
+		Succeeded(true),
+		Failed(true);
 
+		public final Boolean IsCompleted;
+
+		Status(boolean completed) {
+			IsCompleted = completed;
+		}
+	}
+
+	public interface Listener {
 		void onBookEvent(BookEvent event, Book book);
-		void onBuildEvent(BuildEvent event);
+		void onBuildEvent(Status status);
 	}
 
 	public void addListener(Listener listener);
 	public void removeListener(Listener listener);
+
+	Status status();
 
 	int size();
 	List<Book> books();
@@ -49,6 +56,7 @@ public interface IBookCollection {
 	List<Book> booksForSeries(String series);
 	List<Book> booksForSeriesAndAuthor(String series, Author author);
 	List<Book> booksForTitlePrefix(String prefix);
+	boolean hasBooksForPattern(String pattern);
 	List<Book> booksForPattern(String pattern);
 
 	List<Book> favorites();

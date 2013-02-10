@@ -74,15 +74,17 @@ public final class TitleTree extends LibraryTree {
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
-				return
-					Prefix.equals(TitleUtil.firstTitleLetter(book)) &&
-					createBookWithAuthorsSubTree(book);
+				return containsBook(book) && createBookWithAuthorsSubTree(book);
+			case Updated:
+			{
+				boolean changed = removeBook(book);
+				changed |= containsBook(book) && createBookWithAuthorsSubTree(book);
+				return changed;
+			}
 			case Removed:
 				// TODO: implement
 				return false;
 			default:
-			case Updated:
-				// TODO: implement
 				return false;
 		}
 	}

@@ -21,19 +21,46 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.fbreader.book.IBookCollection;
 
-class RootTree extends LibraryTree {
-	RootTree(IBookCollection collection) {
+public class RootTree extends LibraryTree {
+	public RootTree(IBookCollection collection) {
 		super(collection);
+
+		new FavoritesTree(this);
+		new RecentBooksTree(this);
+		new AuthorListTree(this);
+		new TitleListTree(this);
+		new SeriesListTree(this);
+		new TagListTree(this);
+		new FileFirstLevelTree(this);
+	}
+
+	public LibraryTree getLibraryTree(LibraryTree.Key key) {
+		if (key == null) {
+			return null;
+		}
+		if (key.Parent == null) {
+			return key.Id.equals(getUniqueKey().Id) ? this : null;
+		}
+		final LibraryTree parentTree = getLibraryTree(key.Parent);
+		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
+	}
+
+	public SearchResultsTree getSearchResultsTree() {
+		return (SearchResultsTree)getSubTree(LibraryTree.ROOT_FOUND);
+	}
+
+	public SearchResultsTree createSearchResultsTree(String pattern) {
+		return new SearchResultsTree(this, LibraryTree.ROOT_FOUND, pattern);
 	}
 
 	@Override
 	public String getName() {
-		return Library.resource().getValue();
+		return resource().getValue();
 	}
 
 	@Override
 	public String getSummary() {
-		return Library.resource().getValue();
+		return resource().getValue();
 	}
 
 	@Override

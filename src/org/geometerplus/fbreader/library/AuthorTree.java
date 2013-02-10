@@ -42,7 +42,7 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public String getName() {
 		return Author.NULL.equals(Author)
-			? Library.resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
+			? resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
 	}
 
 	@Override
@@ -95,9 +95,13 @@ public class AuthorTree extends LibraryTree {
 		switch (event) {
 			case Added:
 				return containsBook(book) && createBookSubTree(book);
-			case Removed:
-				// TODO: implement
 			case Updated:
+			{
+				boolean changed = removeBook(book);
+				changed |= containsBook(book) && createBookSubTree(book);
+				return changed;
+			}
+			case Removed:
 				// TODO: implement
 			default:
 				return super.onBookEvent(event, book);

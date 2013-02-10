@@ -29,6 +29,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -36,7 +37,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.library.Library;
 
 public class Book {
 	public final ZLFile File;
@@ -127,7 +127,7 @@ public class Book {
 		}
 		final String demoPathPrefix = Paths.mainBookDirectory() + "/Demos/";
 		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = Library.resource().getResource("demo").getValue();
+			final String demoTag = ZLResource.resource("library").getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");
 			addTag(demoTag);
 		}
