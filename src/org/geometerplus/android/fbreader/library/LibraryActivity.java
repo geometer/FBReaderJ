@@ -75,7 +75,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected void onStart() {
 		super.onStart();
-		((BookCollectionShadow)myLibrary.Collection).bindToService(this, null);
+		((BookCollectionShadow)myLibrary.Collection).bindToService(this, new Runnable() {
+			public void run() {
+				setProgressBarIndeterminateVisibility(!myLibrary.Collection.status().IsCompleted);
+			}
+		});
 	}
 
 	@Override
@@ -94,7 +98,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	public void onResume() {
 	  	super.onResume();
-		setProgressBarIndeterminateVisibility(!myLibrary.isUpToDate());
 	}
 
 	@Override
@@ -329,9 +332,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 					default:
 						getListAdapter().replaceAll(getCurrentTree().subTrees());
 						break;
-					case StatusChanged:
-						setProgressBarIndeterminateVisibility(!myLibrary.isUpToDate());
-						break;
 					case Found:
 						openSearchResults();
 						break;
@@ -347,6 +347,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		getCurrentTree().onBookEvent(event, book);
 	}
 
-	public void onBuildEvent(BuildEvent event) {
+	public void onBuildEvent(IBookCollection.Status status) {
+		setProgressBarIndeterminateVisibility(!status.IsCompleted);
 	}
 }

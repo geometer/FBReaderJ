@@ -51,7 +51,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 					final Book book = SerializerUtil.deserializeBook(intent.getStringExtra("book"));
 					fireBookEvent(BookEvent.valueOf(type), book);
 				} else {
-					fireBuildEvent(Listener.BuildEvent.valueOf(type));
+					fireBuildEvent(Status.valueOf(type));
 				}
 			} catch (Exception e) {
 				// ignore
@@ -107,6 +107,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return myInterface.size();
 		} catch (RemoteException e) {
 			return 0;
+		}
+	}
+
+	public synchronized Status status() {
+		if (myInterface == null) {
+			return Status.NotStarted;
+		}
+		try {
+			return Status.valueOf(myInterface.status());
+		} catch (Throwable t) {
+			return Status.NotStarted;
 		}
 	}
 

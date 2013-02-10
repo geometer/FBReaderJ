@@ -8,6 +8,7 @@ import java.util.List;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 interface LibraryInterface {
+	String status();
 	int size();
 	List<String> books();
 	List<String> booksForAuthor(in String author);
