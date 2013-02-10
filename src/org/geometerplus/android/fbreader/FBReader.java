@@ -734,6 +734,7 @@ public final class FBReader extends Activity {
 
 	private void onPreferencesUpdate(Book book) {
 		AndroidFontUtil.clearFontCache();
+
 		final BookModel model = myFBReaderApp.Model;
 		if (book == null || model == null || model.Book == null) {
 			return;
