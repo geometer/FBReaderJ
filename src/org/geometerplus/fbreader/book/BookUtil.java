@@ -19,7 +19,9 @@
 
 package org.geometerplus.fbreader.book;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import java.util.Locale;
+
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.formats.FormatPlugin;
@@ -36,5 +38,39 @@ public abstract class BookUtil {
 		} catch (BookReadingException e) {
 			return null;
 		}
+	}
+
+	public static ZLResourceFile getHelpFile() {
+		final Locale locale = Locale.getDefault();
+
+		ZLResourceFile file = ZLResourceFile.createResourceFile(
+			"data/help/MiniHelp." + locale.getLanguage() + "_" + locale.getCountry() + ".fb2"
+		);
+		if (file.exists()) {
+			return file;
+		}
+
+		file = ZLResourceFile.createResourceFile(
+			"data/help/MiniHelp." + locale.getLanguage() + ".fb2"
+		);
+		if (file.exists()) {
+			return file;
+		}
+
+		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
+	}
+
+	public static boolean canRemoveBookFile(Book book) {
+		ZLFile file = book.File;
+		if (file.getPhysicalFile() == null) {
+			return false;
+		}
+		while (file instanceof ZLArchiveEntryFile) {
+			file = file.getParent();
+			if (file.children().size() != 1) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
