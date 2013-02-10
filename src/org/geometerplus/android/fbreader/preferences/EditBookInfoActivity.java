@@ -180,6 +180,11 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
+				if (myInitialized) {
+					return;
+				}
+				myInitialized = true;
+
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
 				addPreference(new LanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
