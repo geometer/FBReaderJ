@@ -193,6 +193,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized boolean hasBooksForPattern(String pattern) {
+		if (myInterface == null) {
+			return false;
+		}
+		try {
+			return myInterface.hasBooksForPattern(pattern);
+		} catch (RemoteException e) {
+			return false;
+		}
+	}
+
 	public synchronized List<Book> booksForPattern(String pattern) {
 		if (myInterface == null) {
 			return Collections.emptyList();

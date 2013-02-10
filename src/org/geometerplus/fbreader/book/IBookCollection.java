@@ -56,6 +56,7 @@ public interface IBookCollection {
 	List<Book> booksForSeries(String series);
 	List<Book> booksForSeriesAndAuthor(String series, Author author);
 	List<Book> booksForTitlePrefix(String prefix);
+	boolean hasBooksForPattern(String pattern);
 	List<Book> booksForPattern(String pattern);
 
 	List<Book> favorites();

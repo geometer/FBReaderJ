@@ -16,6 +16,7 @@ interface LibraryInterface {
 	List<String> booksForSeries(in String series);
 	List<String> booksForSeriesAndAuthor(in String series, in String author);
 	List<String> booksForTitlePrefix(in String prefix);
+	boolean hasBooksForPattern(in String pattern);
 	List<String> booksForPattern(in String pattern);
 	List<String> recentBooks();
 	List<String> favorites();

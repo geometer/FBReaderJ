@@ -40,8 +40,6 @@ public final class Library {
 
 	public interface ChangeListener {
 		public enum Code {
-			BookAdded,
-			BookRemoved,
 			Found,
 			NotFound
 		}
@@ -87,10 +85,6 @@ public final class Library {
 		return myRootTree;
 	}
 
-	private FirstLevelTree getFirstLevelTree(String key) {
-		return (FirstLevelTree)myRootTree.getSubTree(key);
-	}
-
 	public LibraryTree getLibraryTree(LibraryTree.Key key) {
 		if (key == null) {
 			return null;
@@ -102,20 +96,12 @@ public final class Library {
 		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
 	}
 
-	private void removeFromTree(String rootId, Book book) {
-		final FirstLevelTree tree = getFirstLevelTree(rootId);
-		if (tree != null) {
-			tree.removeBook(book);
-		}
-	}
-
 	public synchronized void refreshBookInfo(Book book) {
 		if (book == null) {
 			return;
 		}
 
 		Collection.saveBook(book, true);
-		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
 	public void startBookSearch(final String pattern) {
@@ -129,34 +115,18 @@ public final class Library {
 	}
 
 	private void searchBooks(String pattern) {
-		if (pattern == null) {
-			fireModelChangedEvent(ChangeListener.Code.NotFound);
-			return;
-		}
+		final SearchResultsTree oldSearchResults =
+			(SearchResultsTree)myRootTree.getSubTree(LibraryTree.ROOT_FOUND);
 
-		pattern = pattern.toLowerCase();
-
-		final SearchResultsTree oldSearchResults = (SearchResultsTree)getFirstLevelTree(LibraryTree.ROOT_FOUND);
-		if (oldSearchResults != null && pattern.equals(oldSearchResults.getPattern())) {
+		if (oldSearchResults != null && pattern.equals(oldSearchResults.Pattern)) {
 			fireModelChangedEvent(ChangeListener.Code.Found);
-			return;
-		}
-
-		FirstLevelTree newSearchResults = null;
-		synchronized (this) {
-			for (Book book : Collection.booksForPattern(pattern)) {
-				if (newSearchResults == null) {
-					if (oldSearchResults != null) {
-						oldSearchResults.removeSelf();
-					}
-					newSearchResults = new SearchResultsTree(myRootTree, LibraryTree.ROOT_FOUND, pattern);
-					fireModelChangedEvent(ChangeListener.Code.Found);
-				}
-				newSearchResults.createBookWithAuthorsSubTree(book);
-				fireModelChangedEvent(ChangeListener.Code.BookAdded);
+		} else if (Collection.hasBooksForPattern(pattern)) {
+			if (oldSearchResults != null) {
+				oldSearchResults.removeSelf();
 			}
-		}
-		if (newSearchResults == null) {
+			new SearchResultsTree(myRootTree, LibraryTree.ROOT_FOUND, pattern);
+			fireModelChangedEvent(ChangeListener.Code.Found);
+		} else {
 			fireModelChangedEvent(ChangeListener.Code.NotFound);
 		}
 	}

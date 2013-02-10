@@ -150,6 +150,10 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.booksForTitlePrefix(prefix));
 		}
 
+		public boolean hasBooksForPattern(String pattern) {
+			return myCollection.hasBooksForPattern(pattern);
+		}
+
 		public List<String> booksForPattern(String pattern) {
 			return SerializerUtil.serializeBookList(myCollection.booksForPattern(pattern));
 		}

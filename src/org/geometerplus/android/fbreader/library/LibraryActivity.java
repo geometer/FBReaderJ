@@ -329,9 +329,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		runOnUiThread(new Runnable() {
 			public void run() {
 				switch (code) {
-					default:
-						getListAdapter().replaceAll(getCurrentTree().subTrees());
-						break;
 					case Found:
 						openSearchResults();
 						break;

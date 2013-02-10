@@ -257,10 +257,25 @@ public class BookCollection extends AbstractBookCollection {
 		return filtered;
 	}
 
+	public boolean hasBooksForPattern(String pattern) {
+		if (pattern == null || pattern.length() == 0) {
+			return false;
+		}
+		pattern = pattern.toLowerCase();
+
+		for (Book b : books()) {
+			if (b.matches(pattern)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public List<Book> booksForPattern(String pattern) {
 		if (pattern == null || pattern.length() == 0) {
 			return Collections.emptyList();
 		}
+		pattern = pattern.toLowerCase();
 
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {

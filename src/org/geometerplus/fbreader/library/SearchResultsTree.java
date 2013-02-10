@@ -23,30 +23,38 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookEvent;
 
 public class SearchResultsTree extends FirstLevelTree {
-	private final String myPattern;
+	public final String Pattern;
 
 	SearchResultsTree(RootTree root, String id, String pattern) {
 		super(root, 0, id);
-		myPattern = pattern != null ? pattern : "";
-	}
-
-	final String getPattern() {
-		return myPattern;
+		Pattern = pattern != null ? pattern : "";
 	}
 
 	@Override
 	public String getSummary() {
-		return super.getSummary().replace("%s", myPattern);
+		return super.getSummary().replace("%s", Pattern);
+	}
+
+	@Override
+	public Status getOpeningStatus() {
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+	}
+
+	@Override
+	public void waitForOpening() {
+		clear();
+		for (Book book : Collection.booksForPattern(Pattern)) {
+			createBookWithAuthorsSubTree(book);
+		}
 	}
 
 	@Override
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
-				return book.matches(myPattern) && createBookWithAuthorsSubTree(book);
+				return book.matches(Pattern) && createBookWithAuthorsSubTree(book);
 			case Updated:
-				// TODO: implement
-				return super.onBookEvent(event, book);
+				return book.matches(Pattern) ? createBookWithAuthorsSubTree(book) : removeBook(book);
 			default:
 				return super.onBookEvent(event, book);
 		}

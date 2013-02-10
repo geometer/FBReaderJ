@@ -95,9 +95,9 @@ public class AuthorTree extends LibraryTree {
 		switch (event) {
 			case Added:
 				return containsBook(book) && createBookSubTree(book);
-			case Removed:
-				// TODO: implement
 			case Updated:
+				return containsBook(book) ? createBookSubTree(book) : removeBook(book);
+			case Removed:
 				// TODO: implement
 			default:
 				return super.onBookEvent(event, book);
