@@ -31,39 +31,9 @@ public final class Library {
 		return ZLResource.resource("library");
 	}
 
-	public final IBookCollection Collection;
 	public final RootTree RootTree;
 
 	public Library(IBookCollection collection) {
-		Collection = collection;
-
 		RootTree = new RootTree(collection);
-
-		new FavoritesTree(RootTree);
-		new RecentBooksTree(RootTree);
-		new AuthorListTree(RootTree);
-		new TitleListTree(RootTree);
-		new SeriesListTree(RootTree);
-		new TagListTree(RootTree);
-		new FileFirstLevelTree(RootTree);
-	}
-
-	public LibraryTree getLibraryTree(LibraryTree.Key key) {
-		if (key == null) {
-			return null;
-		}
-		if (key.Parent == null) {
-			return key.Id.equals(RootTree.getUniqueKey().Id) ? RootTree : null;
-		}
-		final LibraryTree parentTree = getLibraryTree(key.Parent);
-		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
-	}
-
-	public SearchResultsTree getSearchResultsTree() {
-		return (SearchResultsTree)RootTree.getSubTree(LibraryTree.ROOT_FOUND);
-	}
-
-	public SearchResultsTree createSearchResultsTree(String pattern) {
-		return new SearchResultsTree(RootTree, LibraryTree.ROOT_FOUND, pattern);
 	}
 }
