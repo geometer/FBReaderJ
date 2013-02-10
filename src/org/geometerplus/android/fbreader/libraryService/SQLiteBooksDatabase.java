@@ -351,20 +351,6 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myInsertBookAuthorStatement.execute();
 	}
 
-	public /*protected*/ List<Author> listAuthors() {
-		final Cursor cursor = myDatabase.rawQuery("SELECT name,sort_key FROM Authors", null);
-		if (!cursor.moveToNext()) {
-			cursor.close();
-			return null;
-		}
-		final ArrayList<Author> list = new ArrayList<Author>();
-		do {
-			list.add(new Author(cursor.getString(0), cursor.getString(1)));
-		} while (cursor.moveToNext());
-		cursor.close();
-		return list;
-	}
-
 	protected List<Author> listAuthors(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { "" + bookId });
 		if (!cursor.moveToNext()) {

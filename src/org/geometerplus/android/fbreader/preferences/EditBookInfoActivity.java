@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.formats.*;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
-import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 class BookTitlePreference extends ZLStringPreference {
@@ -150,6 +150,8 @@ class EncodingPreference extends ZLStringListPreference {
 }
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
+	private BookCollectionShadow myCollection = new BookCollectionShadow();
+
 	private Book myBook;
 	private final List<String> myAuthors = new ArrayList<String>();
 	private final List<String> myTags = new ArrayList<String>();
@@ -224,11 +226,13 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void init(Intent intent) {
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
+	}
 
-		myBook = BookInfoActivity.bookByIntent(intent);
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		myBook = BookInfoActivity.bookByIntent(getIntent());
 
 		if (myBook == null) {
 			finish();
