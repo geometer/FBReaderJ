@@ -198,7 +198,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<Book> books(Author author) {
+	public List<Book> booksForAuthor(Author author) {
 		final boolean isNull = Author.NULL.equals(author);
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
@@ -210,7 +210,7 @@ public class BookCollection extends AbstractBookCollection {
 		return filtered;
 	}
 
-	public List<Book> books(Tag tag) {
+	public List<Book> booksForTag(Tag tag) {
 		final boolean isNull = Tag.NULL.equals(tag);
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
@@ -227,6 +227,20 @@ public class BookCollection extends AbstractBookCollection {
 		for (Book b : books()) {
 			final SeriesInfo info = b.getSeriesInfo();
 			if (info != null && series.equals(info.Title)) {
+				filtered.add(b);
+			}
+		}
+		return filtered;
+	}
+
+	public List<Book> booksForSeriesAndAuthor(String series, Author author) {
+		final boolean isNull = Author.NULL.equals(author);
+		final LinkedList<Book> filtered = new LinkedList<Book>();
+		for (Book b : books()) {
+			final List<Author> bookAuthors = b.authors();
+			final SeriesInfo info = b.getSeriesInfo();
+			if (info != null && series.equals(info.Title)
+				&& (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author))) {
 				filtered.add(b);
 			}
 		}
@@ -372,6 +386,28 @@ public class BookCollection extends AbstractBookCollection {
 			for (Book b : myBooksByFile.values()) {
 				final SeriesInfo info = b.getSeriesInfo();
 				if (info != null && series.equals(info.Title)) {
+					titles.add(b.getTitle());
+					if (--limit == 0) {
+						break;
+					}
+				}
+			}
+		}
+		return titles;
+	}
+
+	public List<String> titlesForSeriesAndAuthor(String series, Author author, int limit) {
+		if (limit <= 0) {
+			return Collections.emptyList();
+		}
+		final boolean isNull = Author.NULL.equals(author);
+		final ArrayList<String> titles = new ArrayList<String>(limit);
+		synchronized (myBooksByFile) {
+			for (Book b : myBooksByFile.values()) {
+				final List<Author> bookAuthors = b.authors();
+				final SeriesInfo info = b.getSeriesInfo();
+				if (info != null && series.equals(info.Title)
+					&& (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author))) {
 					titles.add(b.getTitle());
 					if (--limit == 0) {
 						break;

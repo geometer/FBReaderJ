@@ -44,9 +44,10 @@ public interface IBookCollection {
 
 	int size();
 	List<Book> books();
-	List<Book> books(Author author);
-	List<Book> books(Tag tag);
+	List<Book> booksForAuthor(Author author);
+	List<Book> booksForTag(Tag tag);
 	List<Book> booksForSeries(String series);
+	List<Book> booksForSeriesAndAuthor(String series, Author author);
 	List<Book> booksForTitlePrefix(String prefix);
 	List<Book> booksForPattern(String pattern);
 
@@ -69,6 +70,7 @@ public interface IBookCollection {
 	List<String> titles();
 	List<String> titlesForAuthor(Author author, int limit);
 	List<String> titlesForSeries(String series, int limit);
+	List<String> titlesForSeriesAndAuthor(String series, Author author, int limit);
 	List<String> titlesForTag(Tag tag, int limit);
 	List<String> titlesForTitlePrefix(String prefix, int limit);
 
