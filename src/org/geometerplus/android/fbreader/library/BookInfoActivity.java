@@ -54,7 +54,6 @@ import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.library.LibraryActivity.PluginMetaInfoReaderImpl;
-import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
@@ -68,8 +67,8 @@ public class BookInfoActivity extends Activity {
 	private int myResult;
 	private boolean myDontReloadBook;
 	
-	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
-	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
+	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
+	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -81,10 +80,6 @@ public class BookInfoActivity extends Activity {
 		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myBook = bookByIntent(getIntent());
 
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
 
@@ -93,7 +88,7 @@ public class BookInfoActivity extends Activity {
 		if (MetaInfoUtil.PMIReader == null) {
 			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-				ServiceConnection servConn=new ServiceConnection() {
+				ServiceConnection servConn = new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {
 						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
 						setupCover(myBook);
@@ -153,7 +148,7 @@ public class BookInfoActivity extends Activity {
 					setupBookInfo(myBook);
 					setupCover(myBook);
 					myDontReloadBook = false;
-					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
+					myResult = FBReader.RESULT_REPAINT;
 					setResult(myResult, intentByBook(myBook));
 				}
 			}
@@ -187,7 +182,7 @@ public class BookInfoActivity extends Activity {
 			myDontReloadBook = false;
 		}
 
-		myResult = Math.max(myResult, resultCode);
+		myResult = FBReader.RESULT_REPAINT;
 		setResult(myResult, data);
 	}
 
