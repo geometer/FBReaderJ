@@ -208,15 +208,6 @@ public final class FBReader extends Activity {
 			myFBReaderApp.initWindow();
 		}
 
-		new Thread() {
-			public void run() {
-				openBook(getIntent(), getPostponedInitAction(), false);
-				myFBReaderApp.getViewWidget().repaint();
-			}
-		}.start();
-
-		myFBReaderApp.getViewWidget().repaint();
-
 		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
 		myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
 		myActionBarIsVisible = myShowActionBarFlag;
@@ -332,6 +323,19 @@ public final class FBReader extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		getCollection().bindToService(this, new Runnable() {
+			public void run() {
+				new Thread() {
+					public void run() {
+						openBook(getIntent(), getPostponedInitAction(), false);
+						myFBReaderApp.getViewWidget().repaint();
+					}
+				}.start();
+
+				myFBReaderApp.getViewWidget().repaint();
+			}
+		});
 
 		initPluginActions();
 
