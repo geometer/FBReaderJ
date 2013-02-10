@@ -44,18 +44,23 @@ public class FavoritesTree extends FirstLevelTree {
 	public void waitForOpening() {
 		clear();
 		for (Book book : Collection.favorites()) {
-			new BookWithAuthorsTree(this, book);
+			createBookWithAuthorsSubTree(book);
 		}
 	}
 
 	public boolean onBookEvent(BookEvent event, Book book) {
-		if (event == BookEvent.Added && Collection.isFavorite(book)) {
-			new BookWithAuthorsTree(this, book);
-			return true;
-		} if (event == BookEvent.Updated && !Collection.isFavorite(book)) {
-			return removeBook(book);
-		} else {
-			return super.onBookEvent(event, book);
+		switch (event) {
+			case Added:
+				return Collection.isFavorite(book) && createBookWithAuthorsSubTree(book);
+			case Updated:
+			{
+				boolean changed = removeBook(book);
+				changed |= Collection.isFavorite(book) && createBookWithAuthorsSubTree(book);
+				return changed;
+			}
+			case Removed:
+			default:
+				return super.onBookEvent(event, book);
 		}
 	}
 }
