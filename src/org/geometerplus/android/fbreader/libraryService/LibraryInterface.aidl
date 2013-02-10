@@ -13,6 +13,7 @@ interface LibraryInterface {
 	List<String> booksForAuthor(in String author);
 	List<String> booksForTag(in String tag);
 	List<String> booksForSeries(in String series);
+	List<String> booksForSeriesAndAuthor(in String series, in String author);
 	List<String> booksForTitlePrefix(in String prefix);
 	List<String> booksForPattern(in String pattern);
 	List<String> recentBooks();
@@ -28,6 +29,7 @@ interface LibraryInterface {
 	List<String> titles();
 	List<String> titlesForAuthor(in String author, int limit);
 	List<String> titlesForSeries(in String series, int limit);
+	List<String> titlesForSeriesAndAuthor(in String series, in String author, int limit);
 	List<String> titlesForTag(in String tag, int limit);
 	List<String> titlesForTitlePrefix(in String prefix, int limit);
 
