@@ -40,12 +40,7 @@ public class BookCollection extends AbstractBookCollection {
 	private final List<String> myFilesToRescan =
 		Collections.synchronizedList(new LinkedList<String>());
 
-	private static enum BuildStatus {
-		NotStarted,
-		Started,
-		Finished
-	};
-	private volatile BuildStatus myBuildStatus = BuildStatus.NotStarted;
+	private volatile Status myStatus = Status.NotStarted;
 
 	public BookCollection(BooksDatabase db) {
 		myDatabase = db;
@@ -193,6 +188,10 @@ public class BookCollection extends AbstractBookCollection {
 		fireBookEvent(BookEvent.Removed, book);
 	}
 
+	public Status status() {
+		return myStatus;
+	}
+
 	public List<Book> books() {
 		synchronized (myBooksByFile) {
 			return new ArrayList<Book>(myBooksByFile.values());
@@ -258,10 +257,25 @@ public class BookCollection extends AbstractBookCollection {
 		return filtered;
 	}
 
+	public boolean hasBooksForPattern(String pattern) {
+		if (pattern == null || pattern.length() == 0) {
+			return false;
+		}
+		pattern = pattern.toLowerCase();
+
+		for (Book b : books()) {
+			if (b.matches(pattern)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public List<Book> booksForPattern(String pattern) {
 		if (pattern == null || pattern.length() == 0) {
 			return Collections.emptyList();
 		}
+		pattern = pattern.toLowerCase();
 
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
@@ -492,25 +506,26 @@ public class BookCollection extends AbstractBookCollection {
 		fireBookEvent(BookEvent.Updated, book);
 	}
 
+	private void setStatus(Status status) {
+		myStatus = status;
+		fireBuildEvent(status);
+	}
+
 	public synchronized void startBuild() {
-		if (myBuildStatus != BuildStatus.NotStarted) {
-			fireBuildEvent(Listener.BuildEvent.NotStarted);
+		if (myStatus != Status.NotStarted) {
 			return;
 		}
-		myBuildStatus = BuildStatus.Started;
+		setStatus(Status.Started);
 
 		final Thread builder = new Thread("Library.build") {
 			public void run() {
 				try {
-					fireBuildEvent(Listener.BuildEvent.Started);
 					build();
-					fireBuildEvent(Listener.BuildEvent.Succeeded);
+					setStatus(Status.Succeeded);
 				} catch (Throwable t) {
-					fireBuildEvent(Listener.BuildEvent.Failed);
+					setStatus(Status.Failed);
 				} finally {
-					fireBuildEvent(Listener.BuildEvent.Completed);
 					synchronized (myFilesToRescan) {
-						myBuildStatus = BuildStatus.Finished;
 						processFilesQueue();
 					}
 				}
@@ -529,9 +544,10 @@ public class BookCollection extends AbstractBookCollection {
 
 	private void processFilesQueue() {
 		synchronized (myFilesToRescan) {
-			if (myBuildStatus != BuildStatus.Finished) {
+			if (!myStatus.IsCompleted) {
 				return;
 			}
+
 			for (ZLFile file : collectPhysicalFiles(myFilesToRescan)) {
 				// TODO:
 				// collect books from archives

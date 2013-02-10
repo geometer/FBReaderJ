@@ -24,10 +24,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-
-import org.geometerplus.fbreader.library.Library;
-
 public class LibrarySearchActivity extends Activity {
 	@Override
 	public void onCreate(Bundle icicle) {

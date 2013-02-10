@@ -44,10 +44,10 @@ public abstract class AbstractBookCollection implements IBookCollection {
 		}
 	}
 
-	protected void fireBuildEvent(Listener.BuildEvent event) {
+	protected void fireBuildEvent(Status status) {
 		synchronized (myListeners) {
 			for (Listener l : myListeners) {
-				l.onBuildEvent(event);
+				l.onBuildEvent(status);
 			}
 		}
 	}
