@@ -413,10 +413,10 @@ public final class FBReader extends Activity {
 			} else if ("android.fbreader.action.PLUGIN_CRASH".equals(getIntent().getAction())) {
 				Log.d("fbj", "crash in oncreate");
 				long bookid = getIntent().getLongExtra("BOOKID", -1);
-				((BookCollection)Library.Instance().Collection).removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
+				myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
 				myNeedToSkipPlugin = true;
 				myFBReaderApp.Model = null;
-				myFBReaderApp.openBook(Library.Instance().Collection.getRecentBook(0), null, null);
+				myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
 			}
 		}
 	}
@@ -510,10 +510,10 @@ public final class FBReader extends Activity {
 		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(intent.getAction())) {
 			Log.d("fbj", "crash");
 			long bookid = intent.getLongExtra("BOOKID", -1);
-			((BookCollection)Library.Instance().Collection).removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
+			myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
 			myNeedToSkipPlugin = true;
 			myFBReaderApp.Model = null;
-			myFBReaderApp.openBook(Library.Instance().Collection.getRecentBook(0), null, null);
+			myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
 		} else {
 			super.onNewIntent(intent);
 			if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
@@ -868,9 +868,9 @@ public final class FBReader extends Activity {
 	}
 
 	protected void onPluginAbsent(long bookId) {
-		((BookCollection)Library.Instance().Collection).removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookId));
+		myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookId));
 		myFBReaderApp.Model = null;
-		myFBReaderApp.openBook(Library.Instance().Collection.getRecentBook(0), null, null);
+		myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
 	}
 
 	@Override
