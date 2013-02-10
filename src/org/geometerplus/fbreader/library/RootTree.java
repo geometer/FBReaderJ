@@ -55,12 +55,12 @@ public class RootTree extends LibraryTree {
 
 	@Override
 	public String getName() {
-		return Library.resource().getValue();
+		return resource().getValue();
 	}
 
 	@Override
 	public String getSummary() {
-		return Library.resource().getValue();
+		return resource().getValue();
 	}
 
 	@Override

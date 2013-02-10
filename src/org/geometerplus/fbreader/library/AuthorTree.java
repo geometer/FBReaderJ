@@ -42,7 +42,7 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public String getName() {
 		return Author.NULL.equals(Author)
-			? Library.resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
+			? resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
 	}
 
 	@Override
