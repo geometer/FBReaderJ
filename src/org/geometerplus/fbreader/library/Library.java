@@ -194,23 +194,17 @@ public final class Library {
 		}
 
 		FirstLevelTree newSearchResults = null;
-		final List<Book> booksCopy;
-		synchronized (myBooks) {
-			booksCopy = new ArrayList<Book>(myBooks.values());
-		}
-		for (Book book : booksCopy) {
-			if (book.matches(pattern)) {
-				synchronized (this) {
-					if (newSearchResults == null) {
-						if (oldSearchResults != null) {
-							oldSearchResults.removeSelf();
-						}
-						newSearchResults = new SearchResultsTree(myRootTree, LibraryTree.ROOT_FOUND, pattern);
-						fireModelChangedEvent(ChangeListener.Code.Found);
+		synchronized (this) {
+			for (Book book : Collection.booksForPattern(pattern)) {
+				if (newSearchResults == null) {
+					if (oldSearchResults != null) {
+						oldSearchResults.removeSelf();
 					}
-					newSearchResults.createBookWithAuthorsSubTree(book);
-					fireModelChangedEvent(ChangeListener.Code.BookAdded);
+					newSearchResults = new SearchResultsTree(myRootTree, LibraryTree.ROOT_FOUND, pattern);
+					fireModelChangedEvent(ChangeListener.Code.Found);
 				}
+				newSearchResults.createBookWithAuthorsSubTree(book);
+				fireModelChangedEvent(ChangeListener.Code.BookAdded);
 			}
 		}
 		if (newSearchResults == null) {
