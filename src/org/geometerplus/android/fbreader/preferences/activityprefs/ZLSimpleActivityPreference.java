@@ -22,14 +22,13 @@ package org.geometerplus.android.fbreader.preferences.activityprefs;
 import java.util.*;
 
 import android.content.Context;
-import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class ZLBookDirActivityPreference extends ZLActivityPreference {
+public class ZLSimpleActivityPreference extends ZLActivityPreference {
 	private final ArrayList<String> mySuggestions;
 
-	public ZLBookDirActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
+	public ZLSimpleActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
 		super(context, holder, map, rootResource, resourceKey);
 		mySuggestions =
 			suggestions != null ? new ArrayList<String>(suggestions) : new ArrayList<String>();
@@ -38,11 +37,5 @@ public class ZLBookDirActivityPreference extends ZLActivityPreference {
 	@Override
 	protected ArrayList<String> suggestions() {
 		return mySuggestions;
-	}
-
-	@Override
-	protected Intent prepareIntent(Intent intent) {
-		intent.setClass(getContext(), BooksDirectoryActivity.class);
-		return intent;
 	}
 }

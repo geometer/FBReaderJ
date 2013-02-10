@@ -30,7 +30,7 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.android.fbreader.preferences.ZLReloadable;
 
-public class ZLActivityPreference extends Preference {
+public abstract class ZLActivityPreference extends Preference {
 	private ZLReloadable myBoundPref = null;
 
 	public static interface ListHolder {
@@ -40,14 +40,12 @@ public class ZLActivityPreference extends Preference {
 
 	private final ListHolder myHolder;
 	private final int myRequestCode;
-	protected List<String> mySuggestions;
 
-	public ZLActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
+	public ZLActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, ZLResource rootResource, String resourceKey) {
 		super(context);
 		myHolder = holder;
 		myRequestCode = map.size();
 		map.put(myRequestCode, this);
-		mySuggestions = suggestions != null ? suggestions : new ArrayList<String>();
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
@@ -63,6 +61,8 @@ public class ZLActivityPreference extends Preference {
 		return intent;
 	}
 
+	abstract protected ArrayList<String> suggestions();
+
 	@Override
 	protected void onClick() {
 		final Intent intent = new Intent();
@@ -72,7 +72,7 @@ public class ZLActivityPreference extends Preference {
 		);
 		intent.putStringArrayListExtra(
 			BaseStringListActivity.SUGGESTIONS,
-			new ArrayList<String>(mySuggestions)
+			new ArrayList<String>(suggestions())
 		);
 		intent.putExtra(BaseStringListActivity.TITLE, getTitle());
 

@@ -441,10 +441,6 @@ public class Book {
 		return false;
 	}
 
-	public boolean save() {
-		return save(BooksDatabase.Instance(), false);
-	}
-
 	boolean save(final BooksDatabase database, boolean force) {
 		if (!force && myId != -1 && myIsSaved) {
 			return false;
