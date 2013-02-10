@@ -150,7 +150,7 @@ class EncodingPreference extends ZLStringListPreference {
 }
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
-	private BookCollectionShadow myCollection = new BookCollectionShadow();
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
 	private Book myBook;
 
