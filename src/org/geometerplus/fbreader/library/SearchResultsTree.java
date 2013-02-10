@@ -54,7 +54,11 @@ public class SearchResultsTree extends FirstLevelTree {
 			case Added:
 				return book.matches(Pattern) && createBookWithAuthorsSubTree(book);
 			case Updated:
-				return book.matches(Pattern) ? createBookWithAuthorsSubTree(book) : removeBook(book);
+			{
+				boolean changed = removeBook(book);
+				changed |= book.matches(Pattern) && createBookWithAuthorsSubTree(book);
+				return changed;
+			}
 			default:
 				return super.onBookEvent(event, book);
 		}

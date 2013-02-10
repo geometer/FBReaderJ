@@ -96,7 +96,11 @@ public class AuthorTree extends LibraryTree {
 			case Added:
 				return containsBook(book) && createBookSubTree(book);
 			case Updated:
-				return containsBook(book) ? createBookSubTree(book) : removeBook(book);
+			{
+				boolean changed = removeBook(book);
+				changed |= containsBook(book) && createBookSubTree(book);
+				return changed;
+			}
 			case Removed:
 				// TODO: implement
 			default:

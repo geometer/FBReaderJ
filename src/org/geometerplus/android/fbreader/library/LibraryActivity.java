@@ -159,6 +159,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 					if (book != null) {
 						myLibrary.Collection.saveBook(book, true);
 						if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
+							getListAdapter().replaceAll(getCurrentTree().subTrees(), true);
 							getListView().invalidateViews();
 						}
 					}
@@ -343,7 +344,10 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	public void onBookEvent(BookEvent event, Book book) {
-		getCurrentTree().onBookEvent(event, book);
+		if (getCurrentTree().onBookEvent(event, book)) {
+			getListAdapter().replaceAll(getCurrentTree().subTrees());
+			getListView().invalidateViews();
+		}
 	}
 
 	public void onBuildEvent(IBookCollection.Status status) {
