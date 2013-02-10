@@ -151,6 +151,7 @@ class EncodingPreference extends ZLStringListPreference {
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+	private volatile boolean myInitialized;
 
 	private Book myBook;
 
@@ -177,8 +178,18 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			return;
 		}
 
-		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
-		addPreference(new LanguagePreference(this, Resource, "language", myBook));
-		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
+				addPreference(new LanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
+				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
+			}
+		});
+	}
+
+	@Override
+	protected void onStop() {
+		myCollection.unbind();
+		super.onStop();
 	}
 }
