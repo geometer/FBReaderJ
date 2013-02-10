@@ -164,7 +164,6 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void reloadBook() {
 		if (Model != null && Model.Book != null) {
-			Model.Book.reloadInfoFromDatabase();
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					openBookInternal(Model.Book, null, true);
@@ -257,9 +256,10 @@ public final class FBReaderApp extends ZLApplication {
 		System.gc();
 		try {
 			Model = BookModel.createModel(book);
+			Collection.saveBook(book, false);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
-			BookTextView.gotoPosition(book.getStoredPosition());
+			BookTextView.gotoPosition(Collection.getStoredPosition(book.getId()));
 			if (bookmark == null) {
 				setView(BookTextView);
 			} else {
@@ -340,8 +340,8 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void storePosition() {
-		if (Model != null && BookTextView != null) {
-			Model.Book.storePosition(BookTextView.getStartCursor());
+		if (Model != null && Model.Book != null && BookTextView != null) {
+			Collection.storePosition(Model.Book.getId(), BookTextView.getStartCursor());
 		}
 	}
 
