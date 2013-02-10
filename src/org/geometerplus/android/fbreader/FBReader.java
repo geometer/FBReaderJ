@@ -684,10 +684,10 @@ public final class FBReader extends Activity {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
 					openBook(myIntentToOpen, null, true);
+					myIntentToOpen = null;
 				}
 			});
 			myNeedToOpenFile = false;
-			myIntentToOpen = null;
 		}
 		PopupPanel.restoreVisibilities(myFBReaderApp);
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
