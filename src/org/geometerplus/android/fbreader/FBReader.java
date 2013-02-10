@@ -33,6 +33,7 @@ import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
@@ -580,6 +581,26 @@ public final class FBReader extends Activity {
 		application.myMainWindow.refresh();
 
 		return true;
+	}
+
+	void addSelectionBookmark() {
+		final FBView fbView = myFBReaderApp.getTextView();
+		final String text = fbView.getSelectedText();
+
+		final Bookmark bookmark = new Bookmark(
+			myFBReaderApp.Model.Book,
+			fbView.getModel().getId(),
+			fbView.getSelectionStartPosition(),
+			text,
+			true
+		);
+		myFBReaderApp.Collection.saveBookmark(bookmark);
+		fbView.clearSelection();
+
+		UIUtil.showMessageText(
+			this,
+			ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
+		);
 	}
 
 	@Override
