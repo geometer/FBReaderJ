@@ -44,7 +44,7 @@ import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener, IBookCollection.Listener {
+public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, IBookCollection.Listener {
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
 	private Library myLibrary;
@@ -57,7 +57,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		if (myLibrary == null) {
 			myLibrary = new Library(new BookCollectionShadow());
-			myLibrary.addChangeListener(this);
 			myLibrary.Collection.addListener(this);
 		}
 
@@ -87,8 +86,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (START_SEARCH_ACTION.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			if (pattern != null && pattern.length() > 0) {
-				BookSearchPatternOption.setValue(pattern);
-				myLibrary.startBookSearch(pattern);
+				startBookSearch(pattern);
 			}
 		} else {
 			super.onNewIntent(intent);
@@ -114,7 +112,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected void onDestroy() {
 		myLibrary.Collection.removeListener(this);
-		myLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
 	}
@@ -177,7 +174,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		new ZLStringOption("BookSearch", "Pattern", "");
 
 	private void openSearchResults() {
-		final FBTree tree = myLibrary.getRootTree().getSubTree(LibraryTree.ROOT_FOUND);
+		final LibraryTree tree = myLibrary.getSearchResultsTree();
 		if (tree != null) {
 			openTree(tree);
 		}
@@ -328,16 +325,37 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			.create().show();
 	}
 
-	public void onLibraryChanged(final Code code) {
+	private void startBookSearch(final String pattern) {
+		BookSearchPatternOption.setValue(pattern);
+
+		final Thread searcher = new Thread("Library.searchBooks") {
+			public void run() {
+				final SearchResultsTree oldSearchResults = myLibrary.getSearchResultsTree();
+            
+				if (oldSearchResults != null && pattern.equals(oldSearchResults.Pattern)) {
+					onSearchEvent(true);
+				} else if (myLibrary.Collection.hasBooksForPattern(pattern)) {
+					if (oldSearchResults != null) {
+						oldSearchResults.removeSelf();
+					}
+					myLibrary.createSearchResultsTree(pattern);
+					onSearchEvent(true);
+				} else {
+					onSearchEvent(false);
+				}
+			}
+		};
+		searcher.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
+		searcher.start();
+	}
+
+	private void onSearchEvent(final boolean found) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				switch (code) {
-					case Found:
-						openSearchResults();
-						break;
-					case NotFound:
-						UIUtil.showErrorMessage(LibraryActivity.this, "bookNotFound");
-						break;
+				if (found) {
+					openSearchResults();
+				} else {
+					UIUtil.showErrorMessage(LibraryActivity.this, "bookNotFound");
 				}
 			}
 		});

@@ -96,30 +96,11 @@ public final class Library {
 		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
 	}
 
-	public void startBookSearch(final String pattern) {
-		final Thread searcher = new Thread("Library.searchBooks") {
-			public void run() {
-				searchBooks(pattern);
-			}
-		};
-		searcher.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
-		searcher.start();
+	public SearchResultsTree getSearchResultsTree() {
+		return (SearchResultsTree)myRootTree.getSubTree(LibraryTree.ROOT_FOUND);
 	}
 
-	private void searchBooks(String pattern) {
-		final SearchResultsTree oldSearchResults =
-			(SearchResultsTree)myRootTree.getSubTree(LibraryTree.ROOT_FOUND);
-
-		if (oldSearchResults != null && pattern.equals(oldSearchResults.Pattern)) {
-			fireModelChangedEvent(ChangeListener.Code.Found);
-		} else if (Collection.hasBooksForPattern(pattern)) {
-			if (oldSearchResults != null) {
-				oldSearchResults.removeSelf();
-			}
-			new SearchResultsTree(myRootTree, LibraryTree.ROOT_FOUND, pattern);
-			fireModelChangedEvent(ChangeListener.Code.Found);
-		} else {
-			fireModelChangedEvent(ChangeListener.Code.NotFound);
-		}
+	public SearchResultsTree createSearchResultsTree(String pattern) {
+		return new SearchResultsTree(myRootTree, LibraryTree.ROOT_FOUND, pattern);
 	}
 }

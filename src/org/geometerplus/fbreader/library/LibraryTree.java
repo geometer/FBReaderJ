@@ -25,7 +25,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
-	public static final String ROOT_FOUND = "found";
+	static final String ROOT_FOUND = "found";
 	static final String ROOT_FAVORITES = "favorites";
 	static final String ROOT_RECENT = "recent";
 	static final String ROOT_BY_AUTHOR = "byAuthor";
