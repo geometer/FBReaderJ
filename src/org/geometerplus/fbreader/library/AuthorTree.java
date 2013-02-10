@@ -102,7 +102,6 @@ public class AuthorTree extends LibraryTree {
 				return changed;
 			}
 			case Removed:
-				// TODO: implement
 			default:
 				return super.onBookEvent(event, book);
 		}

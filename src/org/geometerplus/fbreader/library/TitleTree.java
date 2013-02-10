@@ -82,10 +82,8 @@ public final class TitleTree extends LibraryTree {
 				return changed;
 			}
 			case Removed:
-				// TODO: implement
-				return false;
 			default:
-				return false;
+				return super.onBookEvent(event, book);
 		}
 	}
 }

@@ -98,10 +98,13 @@ public final class SeriesTree extends LibraryTree {
 		switch (event) {
 			case Added:
 				return containsBook(book) && createBookInSeriesSubTree(book);
-			case Removed:
-				// TODO: implement
 			case Updated:
-				// TODO: implement
+			{
+				boolean changed = removeBook(book);
+				changed |= containsBook(book) && createBookInSeriesSubTree(book);
+				return changed;
+			}
+			case Removed:
 			default:
 				return super.onBookEvent(event, book);
 		}
