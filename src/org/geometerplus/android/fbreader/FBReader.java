@@ -71,7 +71,6 @@ public final class FBReader extends Activity {
 
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
-	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
 		context.startActivity(
@@ -504,9 +503,6 @@ public final class FBReader extends Activity {
 				myFBReaderApp.getViewWidget().repaint();
 				break;
 			}
-			case RESULT_RELOAD_BOOK:
-				myFBReaderApp.reloadBook();
-				break;
 		}
 	}
 
