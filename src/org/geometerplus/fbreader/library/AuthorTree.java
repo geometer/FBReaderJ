@@ -85,7 +85,7 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.books(Author)) {
+		for (Book book : Collection.booksForAuthor(Author)) {
 			createBookSubTree(book);
 		}
 	}
@@ -105,12 +105,12 @@ public class AuthorTree extends LibraryTree {
 	}
 
 	private SeriesTree getSeriesSubTree(String series) {
-		final SeriesTree temp = new SeriesTree(Collection, series);
+		final SeriesTree temp = new SeriesTree(Collection, series, Author);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
 			return (SeriesTree)subTrees().get(position);
 		} else {
-			return new SeriesTree(this, series, - position - 1);
+			return new SeriesTree(this, series, Author, - position - 1);
 		}
 	}
 
