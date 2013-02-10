@@ -185,11 +185,4 @@ public final class Library {
 			fireModelChangedEvent(ChangeListener.Code.NotFound);
 		}
 	}
-
-	public void removeBook(Book book, int removeMode) {
-		if (removeMode == REMOVE_DONT_REMOVE) {
-			return;
-		}
-		Collection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
-	}
 }
