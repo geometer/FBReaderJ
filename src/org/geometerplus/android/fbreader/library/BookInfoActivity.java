@@ -50,7 +50,6 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
-import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener {
@@ -60,7 +59,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private Book myBook;
-	private int myResult;
 	private boolean myDontReloadBook;
 
 	@Override
@@ -74,18 +72,13 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myBook = bookByIntent(intent);
 
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
-
 		final ActionBar bar = getActionBar();
 		if (bar != null) {
 			bar.setDisplayShowTitleEnabled(false);
 		}
 		setContentView(R.layout.book_info);
 
-		myResult = FBReader.RESULT_DO_NOTHING;
-		setResult(myResult, intent);
+		setResult(FBReader.RESULT_DO_NOTHING, intent);
 	}
 
 	@Override
@@ -132,8 +125,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			myDontReloadBook = false;
 		}
 
-		myResult = Math.max(myResult, resultCode);
-		setResult(myResult, data);
+		setResult(FBReader.RESULT_REPAINT, data);
 	}
 
 	private Button findButton(int buttonId) {
@@ -346,15 +338,12 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				FBUtil.shareBook(this, myBook);
 				return true;
 			case RELOAD_INFO:
-			{
 				if (myBook != null) {
 					myBook.reloadInfoFromFile();
 					setupBookInfo(myBook);
-					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
-					setResult(myResult);
+					setResult(FBReader.RESULT_REPAINT);
 				}
 				return true;
-			}
 			default:
 				return true;
 		}
