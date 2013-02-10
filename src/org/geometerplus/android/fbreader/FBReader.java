@@ -440,7 +440,11 @@ public final class FBReader extends Activity {
 				myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
 				myNeedToSkipPlugin = true;
 				myFBReaderApp.Model = null;
-				myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+				getCollection().bindToService(this, new Runnable() {
+					public void run() {
+						myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+					}
+				});
 			}
 		}
 	}
@@ -510,7 +514,11 @@ public final class FBReader extends Activity {
 			myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
 			myNeedToSkipPlugin = true;
 			myFBReaderApp.Model = null;
-			myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+				}
+			});
 		} else {
 			super.onNewIntent(intent);
 			if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
@@ -663,7 +671,11 @@ public final class FBReader extends Activity {
 				if (p.type() == FormatPlugin.Type.PLUGIN) {
 					if (!myNeedToSkipPlugin) {
 						Log.d("fbj", "opening book from onresume");
-						myFBReaderApp.openBook(myFBReaderApp.Model.Book, null, null);
+						getCollection().bindToService(this, new Runnable() {
+							public void run() {
+								myFBReaderApp.openBook(myFBReaderApp.Model.Book, null, null);
+							}
+						});
 					} else {
 						Log.d("fbj", "skipping");
 					}
@@ -674,7 +686,11 @@ public final class FBReader extends Activity {
 
 		if (myNeedToOpenFile) {
 			Log.d("fbj", "needtoopen");
-			openBook(myIntentToOpen, null, true);
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					openBook(myIntentToOpen, null, true);
+				}
+			});
 			myNeedToOpenFile = false;
 			myIntentToOpen = null;
 		}
@@ -931,7 +947,11 @@ public final class FBReader extends Activity {
 	protected void onPluginAbsent(long bookId) {
 		myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookId));
 		myFBReaderApp.Model = null;
-		myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+		getCollection().bindToService(this, new Runnable() {
+			public void run() {
+				myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+			}
+		});
 	}
 
 	void addSelectionBookmark() {
