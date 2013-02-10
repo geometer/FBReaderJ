@@ -101,11 +101,12 @@ public class Book {
 		myIsSaved = true;
 	}
 
-	public Book(ZLFile file) throws BookReadingException {
+	Book(ZLFile file) throws BookReadingException {
 		myId = -1;
 		final FormatPlugin plugin = getPlugin(file);
 		File = plugin.realBookFile(file);
 		readMetaInfo(plugin);
+		myIsSaved = false;
 	}
 
 	public void updateFrom(Book book) {
@@ -150,7 +151,7 @@ public class Book {
 		return getPlugin(File);
 	}
 
-	public void readMetaInfo() throws BookReadingException {
+	void readMetaInfo() throws BookReadingException {
 		readMetaInfo(getPlugin());
 	}
 
@@ -208,7 +209,7 @@ public class Book {
 		}
 	}
 
-	public void addAuthorWithNoCheck(Author author) {
+	void addAuthorWithNoCheck(Author author) {
 		if (myAuthors == null) {
 			myAuthors = new ArrayList<Author>();
 		}
@@ -284,7 +285,7 @@ public class Book {
 		return mySeriesInfo;
 	}
 
-	public void setSeriesInfoWithNoCheck(String name, String index) {
+	void setSeriesInfoWithNoCheck(String name, String index) {
 		mySeriesInfo = SeriesInfo.createSeriesInfo(name, index);
 	}
 
@@ -346,7 +347,7 @@ public class Book {
 		return myTags != null ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
 	}
 
-	public void addTagWithNoCheck(Tag tag) {
+	void addTagWithNoCheck(Tag tag) {
 		if (myTags == null) {
 			myTags = new ArrayList<Tag>();
 		}
