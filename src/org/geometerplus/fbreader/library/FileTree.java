@@ -99,7 +99,7 @@ public class FileTree extends LibraryTree {
 	@Override
 	public Book getBook() {
 		if (myBook == null) {
-			myBook = Book.getByFile(myFile);
+			myBook = Collection.getBookByFile(myFile);
 			if (myBook == null) {
 				myBook = NULL_BOOK;
 			}
