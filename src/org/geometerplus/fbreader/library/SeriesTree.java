@@ -27,15 +27,18 @@ import org.geometerplus.fbreader.book.*;
 
 public final class SeriesTree extends LibraryTree {
 	public final String Series;
+	public final Author Author;
 
-	SeriesTree(IBookCollection collection, String series) {
+	SeriesTree(IBookCollection collection, String series, Author author) {
 		super(collection);
 		Series = series;
+		Author = author;
 	}
 
-	SeriesTree(LibraryTree parent, String series, int position) {
+	SeriesTree(LibraryTree parent, String series, Author author, int position) {
 		super(parent, position);
 		Series = series;
+		Author = author;
 	}
 
 	@Override
@@ -45,7 +48,11 @@ public final class SeriesTree extends LibraryTree {
 
 	@Override
 	public String getSummary() {
-		return MiscUtil.join(Collection.titlesForSeries(Series, 5), ", ");
+		if (Author != null) {
+			return MiscUtil.join(Collection.titlesForSeriesAndAuthor(Series, Author, 5), ", ");
+		} else {
+			return MiscUtil.join(Collection.titlesForSeries(Series, 5), ", ");
+		}
 	}
 
 	@Override
@@ -75,8 +82,14 @@ public final class SeriesTree extends LibraryTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.booksForSeries(Series)) {
-			createBookInSeriesSubTree(book);
+		if (Author != null) {
+			for (Book book : Collection.booksForSeriesAndAuthor(Series, Author)) {
+				createBookInSeriesSubTree(book);
+			}
+		} else {
+			for (Book book : Collection.booksForSeries(Series)) {
+				createBookInSeriesSubTree(book);
+			}
 		}
 	}
 
