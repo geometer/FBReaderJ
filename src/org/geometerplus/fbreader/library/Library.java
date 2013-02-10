@@ -77,8 +77,6 @@ public final class Library {
 
 	public final IBookCollection Collection;
 
-	private final Map<ZLFile,Book> myBooks =
-		Collections.synchronizedMap(new HashMap<ZLFile,Book>());
 	private final RootTree myRootTree;
 
 	private final static int STATUS_LOADING = 1;
@@ -129,11 +127,6 @@ public final class Library {
 	}
 
 	private synchronized void addBookToLibrary(Book book) {
-		if (myBooks.containsKey(book.File)) {
-			return;
-		}
-		myBooks.put(book.File, book);
-
 		final SearchResultsTree found =
 			(SearchResultsTree)getFirstLevelTree(LibraryTree.ROOT_FOUND);
 		if (found != null && book.matches(found.getPattern())) {
@@ -153,7 +146,6 @@ public final class Library {
 			return;
 		}
 
-		myBooks.remove(book.File);
 		removeFromTree(LibraryTree.ROOT_FOUND, book);
 		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
@@ -229,7 +221,6 @@ public final class Library {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
 		}
-		myBooks.remove(book.File);
 		Collection.removeBook(book, (removeMode & REMOVE_FROM_DISK) != 0);
 	}
 }
