@@ -118,15 +118,6 @@ public final class Library {
 		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
 	}
 
-	private synchronized void addBookToLibrary(Book book) {
-		synchronized (this) {
-			final SearchResultsTree found = (SearchResultsTree)getFirstLevelTree(LibraryTree.ROOT_FOUND);
-			if (found != null && book.matches(found.getPattern())) {
-				found.createBookWithAuthorsSubTree(book);
-			}
-		}
-	}
-
 	private void removeFromTree(String rootId, Book book) {
 		final FirstLevelTree tree = getFirstLevelTree(rootId);
 		if (tree != null) {
@@ -140,8 +131,6 @@ public final class Library {
 		}
 
 		Collection.saveBook(book, true);
-		removeFromTree(LibraryTree.ROOT_FOUND, book);
-		addBookToLibrary(book);
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
