@@ -72,7 +72,7 @@ public class Book {
 			return null;
 		}
 
-		book.save();
+		book.save(database, false);
 		return book;
 	}
 
@@ -124,7 +124,6 @@ public class Book {
 	public void reloadInfoFromFile() {
 		try {
 			readMetaInfo();
-			save();
 		} catch (BookReadingException e) {
 			// ignore
 		}
