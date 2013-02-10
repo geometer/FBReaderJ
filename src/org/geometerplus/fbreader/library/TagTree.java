@@ -91,7 +91,7 @@ public final class TagTree extends LibraryTree {
 				}
 			}
 		}
-		for (Book book : Collection.books(Tag)) {
+		for (Book book : Collection.booksForTag(Tag)) {
 			createBookWithAuthorsSubTree(book);
 		}
 	}
