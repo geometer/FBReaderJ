@@ -455,7 +455,7 @@ public class Book {
 	}
 
 	boolean save(final BooksDatabase database, boolean force) {
-		if (!force && myIsSaved) {
+		if (!force && myId != -1 && myIsSaved) {
 			return false;
 		}
 
