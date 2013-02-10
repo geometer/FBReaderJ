@@ -26,23 +26,30 @@ import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class ZLBookDirActivityPreference extends ZLActivityPreference {
-	private final ArrayList<String> mySuggestions;
+import org.geometerplus.fbreader.book.Tag;
 
-	public ZLBookDirActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
+public class TagListPreference extends ZLActivityPreference {
+	private final TreeMap<String,Tag> myTags = new TreeMap<String,Tag>();
+
+	public TagListPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, ZLResource rootResource, String resourceKey) {
 		super(context, holder, map, rootResource, resourceKey);
-		mySuggestions =
-			suggestions != null ? new ArrayList<String>(suggestions) : new ArrayList<String>();
+	}
+
+	public void setTags(Collection<Tag> tags) {
+		myTags.clear();
+		for (Tag t : tags) {
+			myTags.put(t.toString("/"), t);
+		} 
 	}
 
 	@Override
 	protected ArrayList<String> suggestions() {
-		return mySuggestions;
+		return new ArrayList(myTags.keySet());
 	}
 
 	@Override
 	protected Intent prepareIntent(Intent intent) {
-		intent.setClass(getContext(), BooksDirectoryActivity.class);
+		intent.setClass(getContext(), EditableSpinnerActivity.class);
 		return intent;
 	}
 }

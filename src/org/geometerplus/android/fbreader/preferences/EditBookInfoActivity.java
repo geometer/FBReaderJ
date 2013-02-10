@@ -151,12 +151,11 @@ class EncodingPreference extends ZLStringListPreference {
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+	private volatile boolean myInitialized;
 
 	private Book myBook;
-	private final List<String> myAuthors = new ArrayList<String>();
-	private final List<String> myTags = new ArrayList<String>();
-	private ZLSpinnerActivityPreference myAuthorPref;
-	private ZLSpinnerActivityPreference myTagPref;
+	private AuthorListPreference myAuthorListPreference;
+	private TagListPreference myTagListPreference;
 
 	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
 		new HashMap<Integer,ZLActivityPreference>();
@@ -207,19 +206,11 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		if (resultCode == RESULT_OK) {
 			p.setValue(data);
 		}
-		myBook.save();
-		myAuthors.clear();
-		myTags.clear();
+		updateResult();
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				for (Author a : myCollection.authors()) {
-					if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
-				}
-				myAuthorPref.setSuggestions(myAuthors);
-				for (Tag t : myCollection.tags()) {
-					if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
-				}
-				myTagPref.setSuggestions(myTags);
+				myAuthorListPreference.setAuthors(myCollection.authors());
+				myTagListPreference.setTags(myCollection.tags());
 			}
 		});
 	}
@@ -243,28 +234,28 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			return;
 		}
 
+		if (myInitialized) {
+			return;
+		}
+		myInitialized = true;
+
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				for (Author a : myCollection.authors()) {
-					if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);
-				}
-				for (Tag t : myCollection.tags()) {
-					if (!myTags.contains(t.Name)) myTags.add(t.Name);
-				}
-
-				myAuthorPref = new ZLSpinnerActivityPreference(
-					EditBookInfoActivity.this, new AuthorsHolder(), myActivityPrefs, myAuthors,
+				myAuthorListPreference = new AuthorListPreference(
+					EditBookInfoActivity.this, new AuthorsHolder(), myActivityPrefs,
 					Resource, "authors"
 				);
+				myAuthorListPreference.setAuthors(myCollection.authors());
 
-				myTagPref = new ZLSpinnerActivityPreference(
-					EditBookInfoActivity.this, new TagsHolder(), myActivityPrefs, myTags,
+				myTagListPreference = new TagListPreference(
+					EditBookInfoActivity.this, new TagsHolder(), myActivityPrefs,
 					Resource, "tags"
 				);
+				myTagListPreference.setTags(myCollection.tags());
 
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
-				addPreference(myAuthorPref);
-				addPreference(myTagPref);
+				addPreference(myAuthorListPreference);
+				addPreference(myTagListPreference);
 				addPreference(new LanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
 			}

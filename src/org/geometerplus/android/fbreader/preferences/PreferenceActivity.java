@@ -90,12 +90,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, new OptionHolder(Paths.BookPathOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "bookPath"
 		));
-		final ZLActivityPreference fontDirPreference = new ZLActivityPreference(
+		final ZLActivityPreference fontDirPreference = new ZLSimpleActivityPreference(
 			this, new OptionHolder(Paths.FontPathOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "fontPath"
 		);
 		directoriesScreen.addPreference(fontDirPreference);
-		final ZLActivityPreference wallpaperDirPreference = new ZLActivityPreference(
+		final ZLActivityPreference wallpaperDirPreference = new ZLSimpleActivityPreference(
 			this, new OptionHolder(Paths.WallpaperPathOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "wallpaperPath"
 		);

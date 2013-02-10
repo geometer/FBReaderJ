@@ -19,21 +19,34 @@
 
 package org.geometerplus.android.fbreader.preferences.activityprefs;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import android.content.*;
-import android.preference.Preference;
+import android.content.Context;
+import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class ZLSpinnerActivityPreference extends ZLActivityPreference {
-	public ZLSpinnerActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
-		super(context, holder, map, suggestions, rootResource, resourceKey);
+import org.geometerplus.fbreader.book.Author;
+
+public class AuthorListPreference extends ZLActivityPreference {
+	private final TreeSet<Author> myAuthors = new TreeSet<Author>();
+
+	public AuthorListPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, ZLResource rootResource, String resourceKey) {
+		super(context, holder, map, rootResource, resourceKey);
 	}
 
-	public void setSuggestions(List<String> suggestions) {
-		mySuggestions = suggestions;
+	public void setAuthors(Collection<Author> authors) {
+		myAuthors.clear();
+		myAuthors.addAll(authors);
+	}
+
+	@Override
+	protected ArrayList<String> suggestions() {
+		final ArrayList<String> list = new ArrayList(myAuthors.size());
+		for (Author a : myAuthors) {
+			list.add(a.DisplayName);
+		}
+		return list;
 	}
 
 	@Override
