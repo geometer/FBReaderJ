@@ -42,7 +42,6 @@ public final class Library {
 		public enum Code {
 			BookAdded,
 			BookRemoved,
-			StatusChanged,
 			Found,
 			NotFound
 		}
@@ -69,20 +68,6 @@ public final class Library {
 	public final IBookCollection Collection;
 
 	private final RootTree myRootTree;
-
-	private final static int STATUS_LOADING = 1;
-	private final static int STATUS_SEARCHING = 2;
-	private volatile int myStatusMask = 0;
-	private final Object myStatusLock = new Object();
-
-	private void setStatus(int status) {
-		synchronized (myStatusLock) {
-			if (myStatusMask != status) {
-				myStatusMask = status;
-				fireModelChangedEvent(ChangeListener.Code.StatusChanged);
-			}
-		}
-	}
 
 	public Library(IBookCollection collection) {
 		Collection = collection;
@@ -133,19 +118,10 @@ public final class Library {
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
-	public boolean isUpToDate() {
-		return myStatusMask == 0;
-	}
-
 	public void startBookSearch(final String pattern) {
-		setStatus(myStatusMask | STATUS_SEARCHING);
 		final Thread searcher = new Thread("Library.searchBooks") {
 			public void run() {
-				try {
-					searchBooks(pattern);
-				} finally {
-					setStatus(myStatusMask & ~STATUS_SEARCHING);
-				}
+				searchBooks(pattern);
 			}
 		};
 		searcher.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
