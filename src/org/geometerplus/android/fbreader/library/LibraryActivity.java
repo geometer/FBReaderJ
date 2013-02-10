@@ -150,10 +150,16 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
-		if (requestCode == BOOK_INFO_REQUEST && intent != null) {
+		if (requestCode == BOOK_INFO_REQUEST) {
 			final Book book = BookInfoActivity.bookByIntent(intent);
-			myLibrary.refreshBookInfo(book);
-			getListView().invalidateViews();
+			((BookCollectionShadow)myLibrary.Collection).bindToService(this, new Runnable() {
+				public void run() {
+					myLibrary.refreshBookInfo(book);
+					if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
+						getListView().invalidateViews();
+					}
+				}
+			});
 		} else {
 			super.onActivityResult(requestCode, returnCode, intent);
 		}
@@ -312,14 +318,15 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	private void deleteBook(Book book, int mode) {
-		myLibrary.removeBook(book, mode);
-
 		if (getCurrentTree() instanceof FileTree) {
 			getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), book.File));
-		} else {
+			getListView().invalidateViews();
+		} else if (getCurrentTree().onBookEvent(BookEvent.Removed, book)) {
 			getListAdapter().replaceAll(getCurrentTree().subTrees());
+			getListView().invalidateViews();
 		}
-		getListView().invalidateViews();
+
+		myLibrary.removeBook(book, mode);
 	}
 
 	public void onLibraryChanged(final Code code) {
