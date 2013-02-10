@@ -73,6 +73,25 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		((BookCollectionShadow)myLibrary.Collection).bindToService(this, null);
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (START_SEARCH_ACTION.equals(intent.getAction())) {
+			final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			if (pattern != null && pattern.length() > 0) {
+				BookSearchPatternOption.setValue(pattern);
+				myLibrary.startBookSearch(pattern);
+			}
+		} else {
+			super.onNewIntent(intent);
+		}
+	}
+
+	@Override
 	public void onResume() {
 	  	super.onResume();
 		setProgressBarIndeterminateVisibility(!myLibrary.isUpToDate());
@@ -84,7 +103,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
+	protected void onStop() {
+		((BookCollectionShadow)myLibrary.Collection).unbind();
+		super.onStop();
+	}
+
+	@Override
 	protected void onDestroy() {
+		myLibrary.Collection.removeListener(this);
 		myLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
@@ -135,7 +161,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	//
 	// Search
 	//
-	static final ZLStringOption BookSearchPatternOption =
+	private final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 
 	private void openSearchResults() {
