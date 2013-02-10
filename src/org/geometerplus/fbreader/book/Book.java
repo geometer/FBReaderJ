@@ -141,15 +141,6 @@ public class Book {
 		}
 	}
 
-	public void reloadInfoFromDatabase() {
-		final BooksDatabase database = BooksDatabase.Instance();
-		database.reloadBook(this);
-		myAuthors = database.listAuthors(myId);
-		myTags = database.listTags(myId);
-		mySeriesInfo = database.getSeriesInfo(myId);
-		myIsSaved = true;
-	}
-
 	private static FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
 		if (plugin == null) {

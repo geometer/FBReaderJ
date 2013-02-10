@@ -139,17 +139,6 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return book;
 	}
 
-	@Override
-	protected void reloadBook(Book book) {
-		final Cursor cursor = myDatabase.rawQuery("SELECT title,encoding,language FROM Books WHERE book_id = " + book.getId(), null);
-		if (cursor.moveToNext()) {
-			book.setTitle(cursor.getString(0));
-			book.setEncoding(cursor.getString(1));
-			book.setLanguage(cursor.getString(2));
-		}
-		cursor.close();
-	}
-
 	protected Book loadBookByFile(long fileId, ZLFile file) {
 		if (fileId == -1) {
 			return null;
