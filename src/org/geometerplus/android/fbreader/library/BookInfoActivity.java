@@ -49,7 +49,6 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
-import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity {
@@ -71,10 +70,6 @@ public class BookInfoActivity extends Activity {
 
 		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myBook = bookByIntent(getIntent());
-
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
@@ -124,7 +119,7 @@ public class BookInfoActivity extends Activity {
 					myBook.reloadInfoFromFile();
 					setupBookInfo(myBook);
 					myDontReloadBook = false;
-					myResult = Math.max(myResult, FBReader.RESULT_RELOAD_BOOK);
+					myResult = FBReader.RESULT_REPAINT;
 					setResult(myResult, intentByBook(myBook));
 				}
 			}
@@ -158,7 +153,7 @@ public class BookInfoActivity extends Activity {
 			myDontReloadBook = false;
 		}
 
-		myResult = Math.max(myResult, resultCode);
+		myResult = FBReader.RESULT_REPAINT;
 		setResult(myResult, data);
 	}
 
