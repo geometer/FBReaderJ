@@ -324,6 +324,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			getListAdapter().replaceAll(getCurrentTree().subTrees());
 			getListView().invalidateViews();
 		}
+
 		myLibrary.removeBook(book, mode);
 	}
 
