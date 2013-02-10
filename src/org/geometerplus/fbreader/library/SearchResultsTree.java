@@ -19,6 +19,9 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookEvent;
+
 public class SearchResultsTree extends FirstLevelTree {
 	private final String myPattern;
 
@@ -34,5 +37,18 @@ public class SearchResultsTree extends FirstLevelTree {
 	@Override
 	public String getSummary() {
 		return super.getSummary().replace("%s", myPattern);
+	}
+
+	@Override
+	public boolean onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			case Added:
+				return book.matches(myPattern) && createBookWithAuthorsSubTree(book);
+			case Updated:
+				// TODO: implement
+				return super.onBookEvent(event, book);
+			default:
+				return super.onBookEvent(event, book);
+		}
 	}
 }
