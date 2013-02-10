@@ -510,17 +510,9 @@ public class Book {
 		}
 	}
 
-	public boolean isHyperlinkVisited(String linkId) {
-		return isHyperlinkVisited(BooksDatabase.Instance(), linkId);
-	}
-
 	boolean isHyperlinkVisited(BooksDatabase database, String linkId) {
 		initHyperlinkSet(database);
 		return myVisitedHyperlinks.contains(linkId);
-	}
-
-	public void markHyperlinkAsVisited(String linkId) {
-		markHyperlinkAsVisited(BooksDatabase.Instance(), linkId);
 	}
 
 	void markHyperlinkAsVisited(BooksDatabase database, String linkId) {
