@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.library;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.*;
 import android.os.Bundle;
 import android.view.*;
@@ -40,10 +41,12 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.*;
-import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener, IBookCollection.Listener {
+	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
+
 	private Library myLibrary;
 
 	private Book mySelectedBook;
@@ -52,14 +55,10 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
 		if (myLibrary == null) {
-			myLibrary = Library.Instance();
+			myLibrary = new Library(new BookCollectionShadow());
 			myLibrary.addChangeListener(this);
 			myLibrary.Collection.addListener(this);
-			((BookCollection)myLibrary.Collection).startBuild();
 		}
 
 		mySelectedBook =
