@@ -234,13 +234,13 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			return;
 		}
 
-		if (myInitialized) {
-			return;
-		}
-		myInitialized = true;
-
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
+				if (myInitialized) {
+					return;
+				}
+				myInitialized = true;
+
 				myAuthorListPreference = new AuthorListPreference(
 					EditBookInfoActivity.this, new AuthorsHolder(), myActivityPrefs,
 					Resource, "authors"
