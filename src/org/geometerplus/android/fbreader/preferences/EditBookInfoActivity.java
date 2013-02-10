@@ -53,7 +53,7 @@ class BookTitlePreference extends ZLStringPreference {
 	protected void setValue(String value) {
 		super.setValue(value);
 		myBook.setTitle(value);
-		((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
+		((EditBookInfoActivity)getContext()).updateResult();
 	}
 }
 
@@ -89,7 +89,7 @@ class LanguagePreference extends ZLStringListPreference {
 		if (result) {
 			final String value = getValue();
 			myBook.setLanguage(value.length() > 0 ? value : null);
-			((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
+			((EditBookInfoActivity)getContext()).updateResult();
 		}
 	}
 }
@@ -143,14 +143,13 @@ class EncodingPreference extends ZLStringListPreference {
 			final String value = getValue();
 			if (!value.equalsIgnoreCase(myBook.getEncoding())) {
 				myBook.setEncoding(value);
-				((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_RELOAD_BOOK);
+				((EditBookInfoActivity)getContext()).updateResult();
 			}
 		}
 	}
 }
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
-	private int myStatus = FBReader.RESULT_REPAINT;
 	private Book myBook;
 	private final List<String> myAuthors = new ArrayList<String>();
 	private final List<String> myTags = new ArrayList<String>();
@@ -219,9 +218,8 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		myTagPref.setSuggestions(myTags);
 	}
 
-	void setBookStatus(int code) {
-		myStatus = Math.max(myStatus, code);
-		setResult(myStatus, BookInfoActivity.intentByBook(myBook));
+	void updateResult() {
+		setResult(FBReader.RESULT_REPAINT, BookInfoActivity.intentByBook(myBook));
 	}
 
 	@Override
@@ -231,7 +229,6 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		}
 
 		myBook = BookInfoActivity.bookByIntent(intent);
-		myStatus = FBReader.RESULT_REPAINT;
 
 		if (myBook == null) {
 			finish();
@@ -264,13 +261,5 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		addPreference(myTagPref);
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
 		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		if (myBook != null) {
-			myBook.save();
-		}
 	}
 }
