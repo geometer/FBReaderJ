@@ -62,8 +62,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private Book myBook;
 	private boolean myDontReloadBook;
 	
-	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
-	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
+	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
+	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -85,7 +85,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		if (MetaInfoUtil.PMIReader == null) {
 			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-				ServiceConnection servConn=new ServiceConnection() {
+				ServiceConnection servConn = new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {
 						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
 						setupCover(myBook);
