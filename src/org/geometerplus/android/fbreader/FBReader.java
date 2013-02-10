@@ -50,6 +50,7 @@ import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
+import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
@@ -476,25 +477,24 @@ public final class FBReader extends Activity {
 		}
 	}
 
-	private void onPreferencesUpdate(int resultCode) {
-		switch (resultCode) {
-			case RESULT_DO_NOTHING:
-				break;
-			case RESULT_REPAINT:
-			{
-				AndroidFontUtil.clearFontCache();
-				final BookModel model = myFBReaderApp.Model;
-				if (model != null) {
-					final Book book = model.Book;
-					if (book != null) {
-						book.reloadInfoFromDatabase();
-						ZLTextHyphenator.Instance().load(book.getLanguage());
-					}
-				}
-				myFBReaderApp.clearTextCaches();
-				myFBReaderApp.getViewWidget().repaint();
-				break;
-			}
+	private void onPreferencesUpdate(Book book) {
+		AndroidFontUtil.clearFontCache();
+		final BookModel model = myFBReaderApp.Model;
+		if (book == null || model == null || model.Book == null) {
+			return;
+		}
+
+		final String newEncoding = book.getEncodingNoDetection();
+		final String oldEncoding = model.Book.getEncodingNoDetection();
+
+		model.Book.updateFrom(book);
+
+		if (newEncoding != null && !newEncoding.equals(oldEncoding)) {
+			myFBReaderApp.reloadBook();
+		} else {
+			ZLTextHyphenator.Instance().load(model.Book.getLanguage());
+			myFBReaderApp.clearTextCaches();
+			myFBReaderApp.getViewWidget().repaint();
 		}
 	}
 
@@ -503,7 +503,17 @@ public final class FBReader extends Activity {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 			case REQUEST_BOOK_INFO:
-				onPreferencesUpdate(resultCode);
+				if (resultCode != RESULT_DO_NOTHING) {
+					final Book book = BookInfoActivity.bookByIntent(data);
+					if (book != null) {
+						getCollection().bindToService(this, new Runnable() {
+							public void run() {
+								myFBReaderApp.Collection.saveBook(book, true);
+								onPreferencesUpdate(book);
+							}
+						});
+					}
+				}
 				break;
 			case REQUEST_CANCEL_MENU:
 				myFBReaderApp.runCancelAction(resultCode - 1);
