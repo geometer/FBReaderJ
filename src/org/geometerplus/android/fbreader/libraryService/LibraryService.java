@@ -43,8 +43,13 @@ public class LibraryService extends Service {
 		private static final int MASK =
 			MOVE_SELF | MOVED_TO | MOVED_FROM | DELETE_SELF | DELETE | CLOSE_WRITE | ATTRIB;
 
-		public Observer(String path) {
+		private final String myPrefix;
+		private final BookCollection myCollection;
+
+		public Observer(String path, BookCollection collection) {
 			super(path, MASK);
+			myPrefix = path + '/';
+			myCollection = collection;
 		}
 
 		@Override
@@ -56,21 +61,21 @@ public class LibraryService extends Service {
 					// TODO: File(path) removed; stop watching (?)
 					break;
 				case MOVED_TO:
-					// TODO: File(path) removed; File(path) added
+					myCollection.rescan(myPrefix + path);
 					break;
 				case MOVED_FROM:
 				case DELETE:
-					// TODO: File(path) removed
+					myCollection.rescan(myPrefix + path);
 					break;
 				case DELETE_SELF:
 					// TODO: File(path) removed; watching is stopped automatically (?)
 					break;
 				case CLOSE_WRITE:
 				case ATTRIB:
-					// TODO: File(path) changed (added, removed?)
+					myCollection.rescan(myPrefix + path);
 					break;
 				default:
-					System.err.println("Unexpected event " + event + " on " + path);
+					System.err.println("Unexpected event " + event + " on " + myPrefix + path);
 					break;
 			}
 		}
@@ -82,11 +87,11 @@ public class LibraryService extends Service {
 
 		LibraryImplementation() {
 			myCollection = null;//new BookCollection(SQLiteBooksDatabase.Instance(LibraryService.this));
-			//for (String path : myCollection.bookDirectories()) {
-			//	final Observer observer = new Observer(path);
-			//	observer.startWatching();
-			//	myFileObservers.add(observer);
-			//}
+			for (String path : myCollection.bookDirectories()) {
+				final Observer observer = new Observer(path, myCollection);
+				observer.startWatching();
+				myFileObservers.add(observer);
+			}
 
 			myCollection.addListener(new BookCollection.Listener() {
 				public void onBookEvent(BookEvent event, Book book) {
@@ -102,7 +107,7 @@ public class LibraryService extends Service {
 					sendBroadcast(intent);
 				}
 			});
-			//myCollection.startBuild();
+			myCollection.startBuild();
 		}
 
 		public void deactivate() {
