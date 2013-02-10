@@ -38,14 +38,6 @@ public final class Library {
 	public static final int REMOVE_FROM_DISK = 0x02;
 	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
 
-	private static Library ourInstance;
-	public static Library Instance() {
-		if (ourInstance == null) {
-			ourInstance = new Library(new BookCollection(BooksDatabase.Instance()));
-		}
-		return ourInstance;
-	}
-
 	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
 
 	public interface ChangeListener {
