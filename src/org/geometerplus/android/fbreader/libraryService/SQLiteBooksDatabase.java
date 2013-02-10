@@ -36,7 +36,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.util.SQLiteUtil;
 
