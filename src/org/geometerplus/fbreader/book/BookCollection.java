@@ -22,7 +22,8 @@ package org.geometerplus.fbreader.book;
 import java.io.File;
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -613,7 +614,7 @@ public class BookCollection extends AbstractBookCollection {
 
 		// Step 3: add help file
 		try {
-			final ZLFile helpFile = getHelpFile();
+			final ZLFile helpFile = BookUtil.getHelpFile();
 			Book helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
 			if (helpBook == null) {
 				helpBook = new Book(helpFile);
@@ -735,26 +736,6 @@ public class BookCollection extends AbstractBookCollection {
 		if (bookmark != null && bookmark.getId() != -1) {
 			myDatabase.deleteBookmark(bookmark);
 		}
-	}
-
-	public static ZLResourceFile getHelpFile() {
-		final Locale locale = Locale.getDefault();
-
-		ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + "_" + locale.getCountry() + ".fb2"
-		);
-		if (file.exists()) {
-			return file;
-		}
-
-		file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + ".fb2"
-		);
-		if (file.exists()) {
-			return file;
-		}
-
-		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
 	}
 
 	public ZLTextPosition getStoredPosition(long bookId) {
