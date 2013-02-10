@@ -62,9 +62,7 @@ public abstract class BooksDatabase {
 	protected abstract Book loadBookByFile(long fileId, ZLFile file);
 
 	protected abstract List<Author> listAuthors(long bookId);
-	public /*protected*/ abstract List<Author> listAuthors();
 	protected abstract List<Tag> listTags(long bookId);
-	public /*protected*/ abstract List<Tag> listTags();
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 
 	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);

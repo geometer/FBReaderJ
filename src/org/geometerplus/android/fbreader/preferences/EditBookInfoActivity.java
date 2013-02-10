@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.formats.*;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
-import org.geometerplus.android.fbreader.libraryService.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 class BookTitlePreference extends ZLStringPreference {
@@ -150,6 +150,8 @@ class EncodingPreference extends ZLStringListPreference {
 }
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+
 	private Book myBook;
 	private final List<String> myAuthors = new ArrayList<String>();
 	private final List<String> myTags = new ArrayList<String>();
@@ -208,14 +210,18 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		myBook.save();
 		myAuthors.clear();
 		myTags.clear();
-		for (Author a : BooksDatabase.Instance().listAuthors()) {
-			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
-		}
-		myAuthorPref.setSuggestions(myAuthors);
-		for (Tag t : BooksDatabase.Instance().listTags()) {
-			if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
-		}
-		myTagPref.setSuggestions(myTags);
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				for (Author a : myCollection.authors()) {
+					if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
+				}
+				myAuthorPref.setSuggestions(myAuthors);
+				for (Tag t : myCollection.tags()) {
+					if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
+				}
+				myTagPref.setSuggestions(myTags);
+			}
+		});
 	}
 
 	void updateResult() {
@@ -224,42 +230,50 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void init(Intent intent) {
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
+	}
 
-		myBook = BookInfoActivity.bookByIntent(intent);
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		myBook = BookInfoActivity.bookByIntent(getIntent());
 
 		if (myBook == null) {
 			finish();
 			return;
 		}
 
-		for (Author a : BooksDatabase.Instance().listAuthors()) {
-			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
-		}
-		List<Tag> tags = BooksDatabase.Instance().listTags();
-		if (tags == null) {
-			tags = Collections.<Tag>emptyList();
-		}
-		for (Tag t : tags) {
-			if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
-		}
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				for (Author a : myCollection.authors()) {
+					if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);
+				}
+				for (Tag t : myCollection.tags()) {
+					if (!myTags.contains(t.Name)) myTags.add(t.Name);
+				}
 
-		myAuthorPref = new ZLSpinnerActivityPreference(
-			this, new AuthorsHolder(), myActivityPrefs, myAuthors,
-			Resource, "authors"
-		);
+				myAuthorPref = new ZLSpinnerActivityPreference(
+					EditBookInfoActivity.this, new AuthorsHolder(), myActivityPrefs, myAuthors,
+					Resource, "authors"
+				);
 
-		myTagPref = new ZLSpinnerActivityPreference(
-			this, new TagsHolder(), myActivityPrefs, myTags,
-			Resource, "tags"
-		);
+				myTagPref = new ZLSpinnerActivityPreference(
+					EditBookInfoActivity.this, new TagsHolder(), myActivityPrefs, myTags,
+					Resource, "tags"
+				);
 
-		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
-		addPreference(myAuthorPref);
-		addPreference(myTagPref);
-		addPreference(new LanguagePreference(this, Resource, "language", myBook));
-		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
+				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
+				addPreference(myAuthorPref);
+				addPreference(myTagPref);
+				addPreference(new LanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
+				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
+			}
+		});
+	}
+
+	@Override
+	protected void onStop() {
+		myCollection.unbind();
+		super.onStop();
 	}
 }
