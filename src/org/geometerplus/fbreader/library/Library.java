@@ -96,14 +96,6 @@ public final class Library {
 		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
 	}
 
-	public synchronized void refreshBookInfo(Book book) {
-		if (book == null) {
-			return;
-		}
-
-		Collection.saveBook(book, true);
-	}
-
 	public void startBookSearch(final String pattern) {
 		final Thread searcher = new Thread("Library.searchBooks") {
 			public void run() {

@@ -156,9 +156,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			final Book book = BookInfoActivity.bookByIntent(intent);
 			((BookCollectionShadow)myLibrary.Collection).bindToService(this, new Runnable() {
 				public void run() {
-					myLibrary.refreshBookInfo(book);
-					if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
-						getListView().invalidateViews();
+					if (book != null) {
+						myLibrary.Collection.saveBook(book, true);
+						if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
+							getListView().invalidateViews();
+						}
 					}
 				}
 			});
