@@ -292,15 +292,21 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	//
 	private class BookDeleter implements DialogInterface.OnClickListener {
 		private final Book myBook;
-		private final int myMode;
 
-		BookDeleter(Book book, int removeMode) {
+		BookDeleter(Book book) {
 			myBook = book;
-			myMode = removeMode;
 		}
 
 		public void onClick(DialogInterface dialog, int which) {
-			deleteBook(myBook, myMode);
+			if (getCurrentTree() instanceof FileTree) {
+				getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), myBook.File));
+				getListView().invalidateViews();
+			} else if (getCurrentTree().onBookEvent(BookEvent.Removed, myBook)) {
+				getListAdapter().replaceAll(getCurrentTree().subTrees());
+				getListView().invalidateViews();
+			}
+
+			myLibrary.Collection.removeBook(myBook, true);
 		}
 	}
 
@@ -312,21 +318,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			.setTitle(book.getTitle())
 			.setMessage(boxResource.getResource("message").getValue())
 			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book, Library.REMOVE_FROM_DISK))
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book))
 			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
 			.create().show();
-	}
-
-	private void deleteBook(Book book, int mode) {
-		if (getCurrentTree() instanceof FileTree) {
-			getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), book.File));
-			getListView().invalidateViews();
-		} else if (getCurrentTree().onBookEvent(BookEvent.Removed, book)) {
-			getListAdapter().replaceAll(getCurrentTree().subTrees());
-			getListView().invalidateViews();
-		}
-
-		myLibrary.removeBook(book, mode);
 	}
 
 	public void onLibraryChanged(final Code code) {
