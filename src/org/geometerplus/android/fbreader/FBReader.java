@@ -359,13 +359,6 @@ public final class FBReader extends Activity {
 			myFBReaderApp.initWindow();
 		}
 
-		new Thread() {
-			public void run() {
-				getPostponedInitAction().run();
-			}
-		}.start();
-
-		myFBReaderApp.getViewWidget().repaint();
 //		if (!myFBReaderApp.externalFileOpenerIsSet()) {
 			myFBReaderApp.setExternalFileOpener(new ExtFileOpener());
 //		}
@@ -548,6 +541,18 @@ public final class FBReader extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		getCollection().bindToService(this, new Runnable() {
+			public void run() {
+				new Thread() {
+					public void run() {
+						getPostponedInitAction().run();
+					}
+				}.start();
+
+				myFBReaderApp.getViewWidget().repaint();
+			}
+		});
 
 		initPluginActions();
 
