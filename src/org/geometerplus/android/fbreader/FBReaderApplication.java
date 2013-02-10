@@ -28,6 +28,6 @@ public class FBReaderApplication extends ZLAndroidApplication {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		//bindService(new Intent(this, LibraryService.class), null, LibraryService.BIND_AUTO_CREATE);
+		startService(new Intent(this, LibraryService.class));
 	}
 }
