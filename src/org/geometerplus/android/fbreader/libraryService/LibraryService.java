@@ -86,7 +86,7 @@ public class LibraryService extends Service {
 		private final List<FileObserver> myFileObservers = new LinkedList<FileObserver>();
 
 		LibraryImplementation() {
-			myCollection = null;//new BookCollection(SQLiteBooksDatabase.Instance(LibraryService.this));
+			myCollection = new BookCollection(new SQLiteBooksDatabase(LibraryService.this, "LIBRARY_SERVICE"));
 			for (String path : myCollection.bookDirectories()) {
 				final Observer observer = new Observer(path, myCollection);
 				observer.startWatching();
