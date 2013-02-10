@@ -31,7 +31,7 @@ public class FileFirstLevelTree extends FirstLevelTree {
 		boolean first = true;
 		for (String s : Paths.BookPathOption().getValue()) {
 			String resourceKey = first ? "fileTreeLibrary" : "fileTreeAddLibrary";
-			addChild(s, s, Library.resource().getResource(resourceKey).getValue());
+			addChild(s, s, resource().getResource(resourceKey).getValue());
 			first = false;
 		}
 		addChild("/", "fileTreeRoot");
@@ -51,7 +51,7 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	}
 
 	private void addChild(String path, String resourceKey) {
-		final ZLResource resource = Library.resource().getResource(resourceKey);
+		final ZLResource resource = resource().getResource(resourceKey);
 		addChild(path, resource.getValue(), resource.getResource("summary").getValue());
 	}
 

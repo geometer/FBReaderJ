@@ -101,9 +101,9 @@ public class LibraryService extends Service {
 					sendBroadcast(intent);
 				}
 
-				public void onBuildEvent(BuildEvent event) {
+				public void onBuildEvent(BookCollection.Status status) {
 					final Intent intent = new Intent(BUILD_EVENT_ACTION);
-					intent.putExtra("type", event.toString());
+					intent.putExtra("type", status.toString());
 					sendBroadcast(intent);
 				}
 			});
@@ -114,6 +114,10 @@ public class LibraryService extends Service {
 			for (FileObserver observer : myFileObservers) {
 				observer.stopWatching();
 			}
+		}
+
+		public String status() {
+			return myCollection.status().toString();
 		}
 
 		public int size() {
@@ -144,6 +148,10 @@ public class LibraryService extends Service {
 
 		public List<String> booksForTitlePrefix(String prefix) {
 			return SerializerUtil.serializeBookList(myCollection.booksForTitlePrefix(prefix));
+		}
+
+		public boolean hasBooksForPattern(String pattern) {
+			return myCollection.hasBooksForPattern(pattern);
 		}
 
 		public List<String> booksForPattern(String pattern) {
