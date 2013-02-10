@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.*;
@@ -184,20 +183,6 @@ public final class Library {
 		if (newSearchResults == null) {
 			fireModelChangedEvent(ChangeListener.Code.NotFound);
 		}
-	}
-
-	public boolean canRemoveBookFile(Book book) {
-		ZLFile file = book.File;
-		if (file.getPhysicalFile() == null) {
-			return false;
-		}
-		while (file instanceof ZLArchiveEntryFile) {
-			file = file.getParent();
-			if (file.children().size() != 1) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	public void removeBook(Book book, int removeMode) {

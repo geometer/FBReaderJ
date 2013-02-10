@@ -215,7 +215,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
 		}
-		if (myLibrary.canRemoveBookFile(book)) {
+		if (BookUtil.canRemoveBookFile(book)) {
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
 		}
 	}
