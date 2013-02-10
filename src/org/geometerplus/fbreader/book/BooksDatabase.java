@@ -61,7 +61,6 @@ public abstract class BooksDatabase {
 	protected abstract Book loadBook(long bookId);
 	protected abstract Book loadBookByFile(long fileId, ZLFile file);
 
-	protected abstract List<Author> listAuthors();
 	protected abstract List<Author> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
