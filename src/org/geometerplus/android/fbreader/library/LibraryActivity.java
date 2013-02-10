@@ -100,7 +100,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	protected LibraryTree getTreeByKey(FBTree.Key key) {
-		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.getRootTree();
+		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.RootTree;
 	}
 
 	@Override

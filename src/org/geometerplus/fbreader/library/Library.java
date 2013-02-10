@@ -31,58 +31,21 @@ public final class Library {
 		return ZLResource.resource("library");
 	}
 
-	public static final int REMOVE_DONT_REMOVE = 0x00;
-	public static final int REMOVE_FROM_LIBRARY = 0x01;
-	public static final int REMOVE_FROM_DISK = 0x02;
-	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
-
-	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
-
-	public interface ChangeListener {
-		public enum Code {
-			Found,
-			NotFound
-		}
-
-		void onLibraryChanged(Code code);
-	}
-
-	public void addChangeListener(ChangeListener listener) {
-		myListeners.add(listener);
-	}
-
-	public void removeChangeListener(ChangeListener listener) {
-		myListeners.remove(listener);
-	}
-
-	protected void fireModelChangedEvent(ChangeListener.Code code) {
-		synchronized (myListeners) {
-			for (ChangeListener l : myListeners) {
-				l.onLibraryChanged(code);
-			}
-		}
-	}
-
 	public final IBookCollection Collection;
-
-	private final RootTree myRootTree;
+	public final RootTree RootTree;
 
 	public Library(IBookCollection collection) {
 		Collection = collection;
 
-		myRootTree = new RootTree(collection);
+		RootTree = new RootTree(collection);
 
-		new FavoritesTree(myRootTree);
-		new RecentBooksTree(myRootTree);
-		new AuthorListTree(myRootTree);
-		new TitleListTree(myRootTree);
-		new SeriesListTree(myRootTree);
-		new TagListTree(myRootTree);
-		new FileFirstLevelTree(myRootTree);
-	}
-
-	public LibraryTree getRootTree() {
-		return myRootTree;
+		new FavoritesTree(RootTree);
+		new RecentBooksTree(RootTree);
+		new AuthorListTree(RootTree);
+		new TitleListTree(RootTree);
+		new SeriesListTree(RootTree);
+		new TagListTree(RootTree);
+		new FileFirstLevelTree(RootTree);
 	}
 
 	public LibraryTree getLibraryTree(LibraryTree.Key key) {
@@ -90,17 +53,17 @@ public final class Library {
 			return null;
 		}
 		if (key.Parent == null) {
-			return key.Id.equals(myRootTree.getUniqueKey().Id) ? myRootTree : null;
+			return key.Id.equals(RootTree.getUniqueKey().Id) ? RootTree : null;
 		}
 		final LibraryTree parentTree = getLibraryTree(key.Parent);
 		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
 	}
 
 	public SearchResultsTree getSearchResultsTree() {
-		return (SearchResultsTree)myRootTree.getSubTree(LibraryTree.ROOT_FOUND);
+		return (SearchResultsTree)RootTree.getSubTree(LibraryTree.ROOT_FOUND);
 	}
 
 	public SearchResultsTree createSearchResultsTree(String pattern) {
-		return new SearchResultsTree(myRootTree, LibraryTree.ROOT_FOUND, pattern);
+		return new SearchResultsTree(RootTree, LibraryTree.ROOT_FOUND, pattern);
 	}
 }
