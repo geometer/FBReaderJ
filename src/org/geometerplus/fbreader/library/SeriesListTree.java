@@ -70,12 +70,12 @@ public class SeriesListTree extends FirstLevelTree {
 	}
 
 	private boolean createSeriesSubTree(String series) {
-		final SeriesTree temp = new SeriesTree(Collection, series);
+		final SeriesTree temp = new SeriesTree(Collection, series, null);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {
-			new SeriesTree(this, series, - position - 1);
+			new SeriesTree(this, series, null, - position - 1);
 			return true;
 		}
 	}
