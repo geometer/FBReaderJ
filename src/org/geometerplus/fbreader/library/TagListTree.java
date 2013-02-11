@@ -48,7 +48,9 @@ public class TagListTree extends FirstLevelTree {
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
+			case Updated:
 			{
+				// TODO: remove empty tag trees after update (?)
 				final List<Tag> bookTags = book.tags();
 				boolean changed = false;
 				if (bookTags.isEmpty()) {
@@ -61,11 +63,9 @@ public class TagListTree extends FirstLevelTree {
 				return changed;
 			}
 			case Removed:
-				// TODO: implement
+				// TODO: remove empty tag trees (?)
 				return false;
 			default:
-			case Updated:
-				// TODO: implement
 				return false;
 		}
 	}
