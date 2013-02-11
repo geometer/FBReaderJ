@@ -46,7 +46,9 @@ public class AuthorListTree extends FirstLevelTree {
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
+			case Updated:
 			{
+				// TODO: remove empty authors tree after update (?)
 				final List<Author> bookAuthors = book.authors();
 				boolean changed = false;
 				if (bookAuthors.isEmpty()) {
@@ -57,11 +59,9 @@ public class AuthorListTree extends FirstLevelTree {
 				return changed;
 			}
 			case Removed:
-				// TODO: implement
+				// TODO: remove empty authors tree (?)
 				return false;
 			default:
-			case Updated:
-				// TODO: implement
 				return false;
 		}
 	}

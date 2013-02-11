@@ -74,12 +74,23 @@ public class TitleListTree extends FirstLevelTree {
 					return createBookWithAuthorsSubTree(book);
 				}
 			case Removed:
-				// TODO: implement
-				return false;
+				if (myDoGroupByFirstLetter) {
+					// TODO: remove old tree (?)
+					return false;
+				} else {
+					return super.onBookEvent(event, book);
+				}
 			default:
 			case Updated:
-				// TODO: implement
-				return false;
+				if (myDoGroupByFirstLetter) {
+					// TODO: remove old tree (?)
+					final String letter = TitleUtil.firstTitleLetter(book);
+					return letter != null && createTitleSubTree(letter);
+				} else {
+					boolean changed = removeBook(book);
+					changed |= containsBook(book) && createBookWithAuthorsSubTree(book);
+					return changed;
+				}
 		}
 	}
 
