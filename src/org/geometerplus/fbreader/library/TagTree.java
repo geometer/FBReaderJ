@@ -116,9 +116,26 @@ public final class TagTree extends LibraryTree {
 				return changed;
 			}
 			case Removed:
-				// TODO: implement
+				// TODO: remove empty tag trees (?)
+				return super.onBookEvent(event, book);
 			case Updated:
-				// TODO: implement
+			{
+				// TODO: remove empty tag trees (?)
+				boolean changed = removeBook(book);
+				final List<Tag> bookTags = book.tags();
+				if (bookTags.isEmpty()) {
+					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubTree(book);
+				} else {
+					for (Tag t : bookTags) {
+						if (Tag.equals(t)) {
+							changed &= createBookWithAuthorsSubTree(book);
+						} else if (Tag.equals(t.Parent)) {
+							changed &= createTagSubTree(t);
+						}
+					}
+				}
+				return changed;
+			}
 			default:
 				return super.onBookEvent(event, book);
 		}
