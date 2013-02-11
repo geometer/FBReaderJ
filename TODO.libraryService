@@ -4,15 +4,12 @@ DONE summaries for libraryTrees
 DONE progress indicator in library activity
 DONE book search
 DONE books for series _and_ author
+* update book collection on path changing (from options dialog)
 
 new:
 * filesystem event listener
-* update book collection on path changing (from options dialog)
 DONE read book => go to library => go to book info => update book info => return to reading mode: book info is not updated
 * text search => found multiple occurencies => turn page right => right button is disabled
-* authors/books by author request
-* tags/books by tag request
-* series/books by series request
 * 'rescan' button in library menu
 * getHelpFile => getHelpBook
 * move BookCollection to libraryService package; change access rights to package local
@@ -27,6 +24,7 @@ small features:
 large features:
 * two page view
 * bookmarks highlighting
+* https://en.wikipedia.org/wiki/Alphabetical_order
 
 plugin:
 * bookmarks import/export

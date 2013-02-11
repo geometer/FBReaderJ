@@ -55,16 +55,16 @@ public class SeriesListTree extends FirstLevelTree {
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
+			case Updated:
 			{
+				// TODO: remove empty series tree after update (?)
 				final SeriesInfo info = book.getSeriesInfo();
 				return info != null && createSeriesSubTree(info.Title);
 			}
 			case Removed:
-				// TODO: implement
+				// TODO: remove empty series tree (?)
 				return false;
 			default:
-			case Updated:
-				// TODO: implement
 				return false;
 		}
 	}
