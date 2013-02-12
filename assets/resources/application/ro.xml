@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Cautare locala"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Deschide carte"/>
 		<node name="showBookInfo" value="Informatii despre carte"/>
@@ -794,6 +795,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionarul nu este instalat, imi pare rau"/>
 		<node name="permissionDenied" value="Permisiune refuzata, îmi pare rau"/>
 		<node name="noFavorites" value="Lista ta de favorite este goala, îmi pare rau"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Catalogul este gol, îmi pare rau"/>
 		<node name="emptyBasket" value="Cosul Dvs. este gol, îmi pare rau"/>
 		<node name="emptyNetworkSearchResults" value="Nu s-a gasit nici o carte"/>

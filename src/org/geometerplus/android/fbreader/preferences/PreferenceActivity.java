@@ -33,17 +33,19 @@ import org.geometerplus.zlibrary.text.view.style.*;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
-import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
+import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.fbreader.formats.Formats;
 
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
+	private BookCollectionShadow myCollection = new BookCollectionShadow();
 
 	private final List<String> myRootpaths = Arrays.asList(Paths.cardDirectory() + "/");
 
@@ -79,6 +81,20 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+
+		myCollection.bindToService(this, null);
+	}
+
+	@Override
+	protected void onStop() {
+		myCollection.unbind();
+
+		super.onStop();
+	}
+
+	@Override
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
@@ -87,7 +103,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addOption(Paths.TempDirectoryOption(), "temp");
 		directoriesScreen.addPreference(new ZLBookDirActivityPreference(
-			this, new OptionHolder(Paths.BookPathOption()), myActivityPrefs, myRootpaths,
+			this, new OptionHolder(Paths.BookPathOption()) {
+				@Override
+				public void setValue(List<String> value) {
+					super.setValue(value);
+					myCollection.reset(false);
+				}
+			},
+			myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "bookPath"
 		));
 		final ZLActivityPreference fontDirPreference = new ZLSimpleActivityPreference(

@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Пошук"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Адчыніць кнігу"/>
 		<node name="showBookInfo" value="Інфармацыя кнігі"/>
@@ -807,6 +808,7 @@
 		<node name="dictionaryIsNotInstalled" value="Слоўнік не ўсталяваны, прабачце"/>
 		<node name="permissionDenied" value="Адмоўлена ў дазволе, прабачце"/>
 		<node name="noFavorites" value="Ваш сьпіс упадабанага пусты, прабачце"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Каталёґ пусты, прабачце"/>
 		<node name="emptyBasket" value="Ваш кошык пусты, прабачце"/>
 		<node name="emptyNetworkSearchResults" value="Кнігі ня знойдзеныя, прабачце"/>

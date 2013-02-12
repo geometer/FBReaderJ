@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="ค้นหา"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="อ่านหนังสือ"/>
 		<node name="showBookInfo" value="ข้อมูลหนังสือ"/>
@@ -794,6 +795,7 @@
 		<node name="dictionaryIsNotInstalled" value="ขออภัย, พจนานุกรมไม่ได้รับการติดตั้ง"/>
 		<node name="permissionDenied" value="ขออภัย, ไม่ได้รับการอนุญาต"/>
 		<node name="noFavorites" value="ขออภัย, ไม่มีข้อมูลในรายการโปรดของคุณ"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="แคตตาล็อกไม่มีข้อมูล"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>

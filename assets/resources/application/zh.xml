@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="本地搜索"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="打开阅读"/>
 		<node name="showBookInfo" value="书文信息"/>
@@ -794,6 +795,7 @@
 		<node name="dictionaryIsNotInstalled" value="抱歉，你没有安装字典."/>
 		<node name="permissionDenied" value="对不起，没有权限"/>
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="空书库目录"/>
 		<node name="emptyBasket" value="很抱歉，你的购物篮是空的"/>
 		<node name="emptyNetworkSearchResults" value="没有找到对应的书籍"/>
