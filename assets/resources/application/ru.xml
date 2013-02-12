@@ -43,6 +43,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
+			<node name="rescan" value="Пересканировать"/>
 		</node>
 		<node name="openBook" value="Читать книгу"/>
 		<node name="showBookInfo" value="Информация о книге"/>
@@ -816,6 +817,7 @@
 		<node name="dictionaryIsNotInstalled" value="Не удалось запустить словарь"/>
 		<node name="permissionDenied" value="Нет доступа к файлам"/>
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Каталог пуст"/>
 		<node name="emptyBasket" value="В корзине нет книг"/>
 		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги"/>
