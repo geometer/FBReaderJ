@@ -75,4 +75,11 @@
 		dataKey="query"
 		pattern="%s"
 	/>
+	<dictionary
+		id="Popup Dictionary"
+		package="com.barisatamer.popupdictionary"
+		class=".MainActivity"
+		action="android.intent.action.VIEW"
+		pattern="%s"
+	/>
 </dictionaries>
