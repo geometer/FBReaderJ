@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
@@ -90,12 +91,23 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public void unbind() {
+	public synchronized void unbind() {
 		if (myContext != null && myInterface != null) {
 			myContext.unregisterReceiver(myReceiver);
 			myContext.unbindService(this);
 			myInterface = null;
 			myContext = null;
+		}
+	}
+
+	public synchronized void reset(boolean force) {
+		if (myInterface != null) {
+			try {
+				myInterface.reset(
+					Collections.singletonList(Paths.BooksDirectoryOption().getValue()), force
+				);
+			} catch (RemoteException e) {
+			}
 		}
 	}
 

@@ -41,6 +41,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Ricerca locale"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Apri libro"/>
 		<node name="showBookInfo" value="Informazioni sul libro"/>
@@ -792,6 +793,7 @@
 		<node name="dictionaryIsNotInstalled" value="Spiacente, il dizionario non è installato"/>
 		<node name="permissionDenied" value="Spiacente, permesso negato"/>
 		<node name="noFavorites" value="Spiacente, l'elenco dei favoriti e' vuoto"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
 		<node name="emptyBasket" value="Spiacente, il carrello è vuoto"/>
 		<node name="emptyNetworkSearchResults" value="Non sono stati trovati libri adatti"/>
