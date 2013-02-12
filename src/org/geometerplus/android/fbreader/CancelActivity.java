@@ -25,28 +25,62 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
+import android.util.Log;
 import android.view.*;
 
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.fbreader.book.IBookCollection;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class CancelActivity extends ListActivity {
+	@Override
+	protected void onStop() {
+		if (myCollection != null) {
+			myCollection.unbind();
+		}
+		super.onStop();
+	}
+
 	static final String LIST_SIZE = "listSize";
 	static final String ITEM_TITLE = "title";
 	static final String ITEM_SUMMARY = "summary";
+	
+	private BookCollectionShadow myCollection = null;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		Intent i = getIntent();
-		FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		List<FBReaderApp.CancelActionDescription> descriptionList;
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if (fbReader != null) {
-			descriptionList = fbReader.getCancelActionsList();
+			Intent i = getIntent();
+			if (i.getStringExtra("FROM_PLUGIN") != null) {
+				myCollection = new BookCollectionShadow();
+				myCollection.bindToService(this, new Runnable() {
+					public void run() {
+						List<FBReaderApp.CancelActionDescription> descriptionList = fbReader.getCancelActionsList(myCollection);
+						init(descriptionList);
+					}
+				});
+			} else {
+				List<FBReaderApp.CancelActionDescription> descriptionList = fbReader.getCancelActionsList();
+				init(descriptionList);
+			}
 		} else {
-			descriptionList = FBReaderApp.getStaticCancelActionsList();
+			myCollection = new BookCollectionShadow();
+			myCollection.bindToService(this, new Runnable() {
+				public void run() {
+					List<FBReaderApp.CancelActionDescription> descriptionList = FBReaderApp.getStaticCancelActionsList(myCollection);
+					init(descriptionList);
+				}
+			});
 		}
+
+	}
+	
+	private void init(List<FBReaderApp.CancelActionDescription> descriptionList) {
+		Intent i = getIntent();
 		i.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
 		int index = 0;
 		for (FBReaderApp.CancelActionDescription description : descriptionList) {

@@ -19,13 +19,27 @@
 
 package org.geometerplus.android.fbreader.api;
 
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
 public class ApiService extends Service {
+	
+	@Override
+	public void onDestroy() {
+		if (myCollection != null) {
+			myCollection.unbind();
+		}
+		super.onDestroy();
+	}
+
+	private BookCollectionShadow myCollection;
+	
 	@Override
 	public IBinder onBind(Intent intent) {
-		return new ApiServerImplementation(this);
+		myCollection = new BookCollectionShadow();
+		return new ApiServerImplementation(this, myCollection);
 	}
 }

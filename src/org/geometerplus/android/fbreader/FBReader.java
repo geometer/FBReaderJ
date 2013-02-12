@@ -658,7 +658,11 @@ public final class FBReader extends Activity {
 		if (myCancelCalled) {
 			myCancelCalled = false;
 			if (myCancelAction != -1) {
-				myFBReaderApp.runCancelAction(myCancelAction - 1);
+				getCollection().bindToService(this, new Runnable() {
+					public void run() {
+						myFBReaderApp.runCancelAction(myCancelAction - 1);
+					}
+				});
 			} else {
 				finish();
 			}
@@ -792,7 +796,7 @@ public final class FBReader extends Activity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 			case REQUEST_BOOK_INFO:
@@ -809,12 +813,16 @@ public final class FBReader extends Activity {
 				}
 				break;
 			case REQUEST_CANCEL_MENU:
-				if (resultCode != RESULT_CANCELED && resultCode != -1) {
-					myNeedToSkipPlugin = true;
-				} else {
+			if (resultCode != RESULT_CANCELED && resultCode != -1) {
+				myNeedToSkipPlugin = true;
+			} else {
+			}
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					myFBReaderApp.runCancelAction(resultCode - 1);
 				}
-				myFBReaderApp.runCancelAction(resultCode - 1);
-				break;
+			});
+			break;
 		}
 	}
 

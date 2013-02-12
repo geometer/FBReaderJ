@@ -466,22 +466,10 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 	
-	public TextPosition getStoredPosition(String file) throws ApiException {
-		return requestTextPosition(GET_STORED_POSITION, new ApiObject[] {
-			ApiObject.envelope(file)
-		});
-	}
-	
 	public void storeTextPosition(String file, TextPosition pos) throws ApiException {
 		request(SET_STORED_POSITION, new ApiObject[] {
 			ApiObject.envelope(file),
 			pos
-		});
-	}
-	
-	public long getBookId(String file) throws ApiException {
-		return requestLong(GET_BOOK_ID, new ApiObject[] {
-			ApiObject.envelope(file)
 		});
 	}
 	
