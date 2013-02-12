@@ -39,43 +39,6 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
 public class Book {
-	public static Book getByFile(ZLFile bookFile) {
-		if (bookFile == null) {
-			return null;
-		}
-
-		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
-		if (physicalFile != null && !physicalFile.exists()) {
-			return null;
-		}
-
-		final BooksDatabase database = BooksDatabase.Instance();
-		final FileInfoSet fileInfos = new FileInfoSet(database, bookFile);
-
-		Book book = database.loadBookByFile(fileInfos.getId(bookFile), bookFile);
-		if (book != null) {
-			book.loadLists(database);
-		}
-
-		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
-			return book;
-		}
-		fileInfos.save();
-
-		try {
-			if (book == null) {
-				book = new Book(bookFile);
-			} else {
-				book.readMetaInfo();
-			}
-		} catch (BookReadingException e) {
-			return null;
-		}
-
-		book.save(database, false);
-		return book;
-	}
-
 	public final ZLFile File;
 
 	private volatile long myId;
@@ -410,16 +373,6 @@ public class Book {
 
 		myIsSaved = true;
 		return true;
-	}
-
-	public ZLTextPosition getStoredPosition() {
-		return BooksDatabase.Instance().getStoredPosition(myId);
-	}
-
-	public void storePosition(ZLTextPosition position) {
-		if (myId != -1) {
-			BooksDatabase.Instance().storePosition(myId, position);
-		}
 	}
 
 	private Set<String> myVisitedHyperlinks;
