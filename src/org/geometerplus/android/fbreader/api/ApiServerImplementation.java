@@ -449,7 +449,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		getReader().getTextView().highlight(
 				getZLTextPosition(start),
 				getZLTextPosition(end)
-				);
+		);
 	}
 
 	public void clearHighlighting() {
