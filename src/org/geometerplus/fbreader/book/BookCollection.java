@@ -567,15 +567,39 @@ public class BookCollection extends AbstractBookCollection {
 				return;
 			}
 
+			final Set<ZLFile> filesToRemove = new HashSet<ZLFile>();
+			for (String path : myFilesToRescan) {
+				path = new ZLPhysicalFile(new File(path)).getPath();
+				synchronized (myBooksByFile) {
+					for (ZLFile f : myBooksByFile.keySet()) {
+						if (f.getPath().startsWith(path)) {
+							filesToRemove.add(f);
+						}
+					}
+				}
+			}
+
 			for (ZLFile file : collectPhysicalFiles(myFilesToRescan)) {
 				// TODO:
 				// collect books from archives
 				// rescan files and check book id
+				filesToRemove.remove(file);
 				final Book book = getBookByFile(file);
 				if (book != null) {
 					saveBook(book, false);
 				}
 			}
+
+			for (ZLFile f : filesToRemove) {
+				synchronized (myBooksByFile) {
+					final Book book = myBooksByFile.remove(f);
+					if (book != null) {
+						myBooksById.remove(book.getId());
+						fireBookEvent(BookEvent.Removed, book);
+					}
+				}
+			}
+
 			myFilesToRescan.clear();
 		}
 	}
@@ -675,17 +699,20 @@ public class BookCollection extends AbstractBookCollection {
 		myDatabase.setExistingFlag(newBooks, true);
 	}
 
-	private List<ZLPhysicalFile> collectPhysicalFiles(List<String> directories) {
+	private List<ZLPhysicalFile> collectPhysicalFiles(List<String> paths) {
 		final Queue<ZLPhysicalFile> fileQueue = new LinkedList<ZLPhysicalFile>();
 		final HashSet<ZLPhysicalFile> dirSet = new HashSet<ZLPhysicalFile>();
 		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
 
-		for (String path : directories) {
-			fileQueue.offer(new ZLPhysicalFile(new File(path)));
+		for (String p : paths) {
+			fileQueue.offer(new ZLPhysicalFile(new File(p)));
 		}
 
 		while (!fileQueue.isEmpty()) {
 			final ZLPhysicalFile entry = fileQueue.poll();
+			if (!entry.exists()) {
+				continue;
+			}
 			if (entry.isDirectory()) {
 				if (dirSet.contains(entry)) {
 					continue;
