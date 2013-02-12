@@ -24,6 +24,7 @@ import java.util.*;
 import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -76,12 +77,14 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	public synchronized void bindToService(Context context, Runnable onBindAction) {
+		Log.d("shadow", "bind");
 		if (myInterface != null && myContext == context) {
 			if (onBindAction != null) {
 				onBindAction.run();
 			}
 		} else {
 			myOnBindAction = combined(myOnBindAction, onBindAction);
+			Log.d("shadow", "bind1");
 			context.bindService(
 				new Intent(context, LibraryService.class),
 				this,
@@ -92,6 +95,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	public synchronized void unbind() {
+		Log.d("shadow", "unbind");
 		if (myContext != null && myInterface != null) {
 			myContext.unregisterReceiver(myReceiver);
 			myContext.unbindService(this);
@@ -254,6 +258,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		try {
 			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index));
 		} catch (RemoteException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -563,6 +568,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
+		Log.d("shadow", "conected");
 		myInterface = LibraryInterface.Stub.asInterface(service);
 		if (myOnBindAction != null) {
 			myOnBindAction.run();

@@ -653,7 +653,11 @@ public final class FBReader extends Activity {
 		if (myCancelCalled) {
 			myCancelCalled = false;
 			if (myCancelAction != -1) {
-				myFBReaderApp.runCancelAction(myCancelAction - 1);
+				getCollection().bindToService(this, new Runnable() {
+					public void run() {
+						myFBReaderApp.runCancelAction(myCancelAction - 1);
+					}
+				});
 			} else {
 				finish();
 			}

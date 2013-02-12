@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.view.*;
 
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.*;
@@ -442,6 +443,10 @@ public final class FBReaderApp extends ZLApplication {
 		new ArrayList<CancelActionDescription>();
 
 	public List<CancelActionDescription> getCancelActionsList() {
+		return getCancelActionsList(Collection);
+	}
+	
+	public List<CancelActionDescription> getCancelActionsList(IBookCollection Collection) {
 		myCancelActionsList.clear();
 		if (ShowLibraryInCancelMenuOption.getValue()) {
 			myCancelActionsList.add(new CancelActionDescription(
@@ -474,7 +479,7 @@ public final class FBReaderApp extends ZLApplication {
 		return myCancelActionsList;
 	}
 	
-	public static List<CancelActionDescription> getStaticCancelActionsList() {
+	public static List<CancelActionDescription> getStaticCancelActionsList(IBookCollection Collection) {
 		ArrayList<CancelActionDescription> cancelActionsList = new ArrayList<CancelActionDescription>();
 		if (ShowLibraryInCancelMenuOption.getValue()) {
 			cancelActionsList.add(new CancelActionDescription(
@@ -486,8 +491,6 @@ public final class FBReaderApp extends ZLApplication {
 				CancelActionType.networkLibrary, null
 			));
 		}
-		// TODO: return previous book item
-		/*
 		if (ShowPreviousBookInCancelMenuOption.getValue()) {
 			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
@@ -496,7 +499,6 @@ public final class FBReaderApp extends ZLApplication {
 				));
 			}
 		}
-		*/
 		cancelActionsList.add(new CancelActionDescription(
 			CancelActionType.close, null
 		));
