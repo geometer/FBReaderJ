@@ -39,12 +39,10 @@ import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.util.SQLiteUtil;
 
-public final class SQLiteBooksDatabase extends BooksDatabase {
-	private final String myInstanceId;
+final class SQLiteBooksDatabase extends BooksDatabase {
 	private final SQLiteDatabase myDatabase;
 
-	public SQLiteBooksDatabase(Context context, String instanceId) {
-		myInstanceId = instanceId;
+	public SQLiteBooksDatabase(Context context) {
 		myDatabase = context.openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
 		migrate();
 	}
