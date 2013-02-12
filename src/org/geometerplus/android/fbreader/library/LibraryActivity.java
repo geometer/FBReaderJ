@@ -295,6 +295,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			case 2:
 				if (myRootTree.Collection.status().IsCompleted) {
 					((BookCollectionShadow)myRootTree.Collection).reset(true);
+					openTree(myRootTree);
 				}
 				return true;
 			default:

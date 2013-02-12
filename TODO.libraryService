@@ -7,15 +7,15 @@ DONE books for series _and_ author
 DONE update book collection on path changing (from options dialog)
 
 new:
-* filesystem event listener
+DONE filesystem event listener
 DONE read book => go to library => go to book info => update book info => return to reading mode: book info is not updated
-* text search => found multiple occurencies => turn page right => right button is disabled
 DONE 'rescan' button in library menu
-* getHelpFile => getHelpBook
-* move BookCollection to libraryService package; change access rights to package local
+DELAYED getHelpFile => getHelpBook
+DELAYED move BookCollection to libraryService package; change access rights to package local
 
 bugs:
 * double tap only for action bar
+* text search => found multiple occurencies => turn page right => right button is disabled
 
 small features:
 * min/max font size
