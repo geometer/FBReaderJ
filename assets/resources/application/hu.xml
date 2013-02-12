@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Helyi keresés"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Könyv megnyitása"/>
 		<node name="showBookInfo" value="Információk a könyvről"/>
@@ -791,6 +792,7 @@
 		<node name="dictionaryIsNotInstalled" value="Sajnos nincs telepítve szótár"/>
 		<node name="permissionDenied" value="Sanos nem engedélyezett"/>
 		<node name="noFavorites" value="A Kedvencek listája üres"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="A katalógus üres"/>
 		<node name="emptyBasket" value="A kosár sajnos üres"/>
 		<node name="emptyNetworkSearchResults" value="Nem található megfelelő könyv"/>

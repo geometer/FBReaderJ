@@ -32,17 +32,34 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
-import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
+import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
+	private BookCollectionShadow myCollection = new BookCollectionShadow();
+
 	public PreferenceActivity() {
 		super("Preferences");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		myCollection.bindToService(this, null);
+	}
+
+	@Override
+	protected void onStop() {
+		myCollection.unbind();
+
+		super.onStop();
 	}
 
 	@Override
@@ -54,7 +71,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
+		directoriesScreen.addPreference(new ZLStringOptionPreference(
+			this, Paths.BooksDirectoryOption(), directoriesScreen.Resource, "books"
+		) {
+			protected void setValue(String value) {
+				super.setValue(value);
+				myCollection.reset(false);
+			}
+		});
 		directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
 		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
 
