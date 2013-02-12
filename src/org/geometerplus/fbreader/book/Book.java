@@ -45,7 +45,7 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
 public class Book {
-	public static Book getByFile(ZLFile bookFile) {
+	static Book getByFile(ZLFile bookFile) {
 		System.err.println("getByFile");
 		if (bookFile == null) {
 			System.err.println("bookFile == null");
@@ -477,15 +477,15 @@ public class Book {
 		return true;
 	}
 
-	public ZLTextPosition getStoredPosition() {
-		return BooksDatabase.Instance().getStoredPosition(myId);
-	}
+//	public ZLTextPosition getStoredPosition() {
+//		return BooksDatabase.Instance().getStoredPosition(myId);
+//	}
 
-	public void storePosition(ZLTextPosition position) {
-		if (myId != -1) {
-			BooksDatabase.Instance().storePosition(myId, position);
-		}
-	}
+//	public void storePosition(ZLTextPosition position) {
+//		if (myId != -1) {
+//			BooksDatabase.Instance().storePosition(myId, position);
+//		}
+//	}
 
 	private Set<String> myVisitedHyperlinks;
 	private void initHyperlinkSet(BooksDatabase database) {
