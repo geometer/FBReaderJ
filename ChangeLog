@@ -3,6 +3,7 @@
 * Fixed issue for XHTML files with several body tags (sometimes produced by Calibre)
 * Fixed navigation popup text
 * Fixed NPE in findViewById in the main activity
+* Popup dictionary (https://play.google.com/store/apps/details?id=com.barisatamer.popupdictionary) integration
 
 ===== 1.6.9 (Jan 03, 2013) =====
 * Added Bulgarian translation (by Ники Арсов)
