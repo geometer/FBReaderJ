@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Busca local"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Abrir libro"/>
 		<node name="showBookInfo" value="Información do libro"/>
@@ -791,6 +792,7 @@
 		<node name="dictionaryIsNotInstalled" value="O dicionario non está instalado"/>
 		<node name="permissionDenied" value="Permiso denegado"/>
 		<node name="noFavorites" value="A súa lista de preferencias está baleira"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="O catálogo está baleiro"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="Non se atopa ningún libro coincidente"/>

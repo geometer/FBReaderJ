@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Lokaal zoeken"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Boek openen"/>
 		<node name="showBookInfo" value="Boekinformatie"/>
@@ -801,6 +802,7 @@
 		<node name="dictionaryIsNotInstalled" value="Woordenboek is niet geïnstalleerd"/>
 		<node name="permissionDenied" value="Toegang geweigerd"/>
 		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Catalogus is leeg"/>
 		<node name="emptyBasket" value="Je mandje is leeg, sorry"/>
 		<node name="emptyNetworkSearchResults" value="Geen boeken gevonden, sorry"/>

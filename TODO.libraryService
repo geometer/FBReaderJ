@@ -4,13 +4,13 @@ DONE summaries for libraryTrees
 DONE progress indicator in library activity
 DONE book search
 DONE books for series _and_ author
-* update book collection on path changing (from options dialog)
+DONE update book collection on path changing (from options dialog)
 
 new:
 * filesystem event listener
 DONE read book => go to library => go to book info => update book info => return to reading mode: book info is not updated
 * text search => found multiple occurencies => turn page right => right button is disabled
-* 'rescan' button in library menu
+DONE 'rescan' button in library menu
 * getHelpFile => getHelpBook
 * move BookCollection to libraryService package; change access rights to package local
 
