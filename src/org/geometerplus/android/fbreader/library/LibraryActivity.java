@@ -267,14 +267,23 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, 1, "localSearch");
+		addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
+		addMenuItem(menu, 2, "rescan", R.drawable.ic_menu_refresh);
 		return true;
 	}
 
-	private MenuItem addMenuItem(Menu menu, int index, String resourceKey) {
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		menu.findItem(2).setEnabled(myRootTree.Collection.status().IsCompleted);
+		return true;
+	}
+
+	private MenuItem addMenuItem(Menu menu, int id, String resourceKey, int iconId) {
 		final String label = LibraryTree.resource().getResource("menu").getResource(resourceKey).getValue();
-		final MenuItem item = menu.add(0, index, Menu.NONE, label);
+		final MenuItem item = menu.add(0, id, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
+		//item.setIcon(iconId);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return item;
 	}
@@ -283,6 +292,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		switch (item.getItemId()) {
 			case 1:
 				return onSearchRequested();
+			case 2:
+				if (myRootTree.Collection.status().IsCompleted) {
+					((BookCollectionShadow)myRootTree.Collection).reset(true);
+				}
+				return true;
 			default:
 				return true;
 		}

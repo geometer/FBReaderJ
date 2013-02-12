@@ -27,12 +27,13 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
 public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
+	public final List<String> BookDirectories;
+
 	private final Map<ZLFile,Book> myBooksByFile =
 		Collections.synchronizedMap(new LinkedHashMap<ZLFile,Book>());
 	private final Map<Long,Book> myBooksById =
@@ -42,8 +43,9 @@ public class BookCollection extends AbstractBookCollection {
 
 	private volatile Status myStatus = Status.NotStarted;
 
-	public BookCollection(BooksDatabase db) {
+	public BookCollection(BooksDatabase db, List<String> bookDirectories) {
 		myDatabase = db;
+		BookDirectories = Collections.unmodifiableList(new ArrayList<String>(bookDirectories));
 	}
 
 	public int size() {
@@ -614,7 +616,7 @@ public class BookCollection extends AbstractBookCollection {
 		final Map<Long,Book> orphanedBooksByFileId = myDatabase.loadBooks(fileInfos, false);
 		final Set<Book> newBooks = new HashSet<Book>();
 
-		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles(bookDirectories());
+		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles(BookDirectories);
 		for (ZLPhysicalFile file : physicalFilesList) {
 			if (physicalFiles.contains(file)) {
 				continue;
@@ -654,10 +656,6 @@ public class BookCollection extends AbstractBookCollection {
 			}
 		});
 		myDatabase.setExistingFlag(newBooks, true);
-	}
-
-	public List<String> bookDirectories() {
-		return Collections.singletonList(Paths.BooksDirectoryOption().getValue());
 	}
 
 	private List<ZLPhysicalFile> collectPhysicalFiles(List<String> directories) {

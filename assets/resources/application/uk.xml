@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Пошук"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Читати книжку"/>
 		<node name="showBookInfo" value="Деталі про книгу"/>
@@ -791,6 +792,7 @@
 		<node name="dictionaryIsNotInstalled" value="На жаль словник не встановлено"/>
 		<node name="permissionDenied" value="Немає доступу, на жаль"/>
 		<node name="noFavorites" value="Ваш список улюблених порожній"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Каталог порожній"/>
 		<node name="emptyBasket" value="На жаль ваш кошик порожній"/>
 		<node name="emptyNetworkSearchResults" value="Відповідних книг не знайдено"/>

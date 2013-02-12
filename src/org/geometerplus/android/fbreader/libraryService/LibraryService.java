@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
@@ -82,12 +83,25 @@ public class LibraryService extends Service {
 	}
 
 	public final class LibraryImplementation extends LibraryInterface.Stub {
-		private final BookCollection myCollection;
+		private final SQLiteBooksDatabase myDatabase;
 		private final List<FileObserver> myFileObservers = new LinkedList<FileObserver>();
+		private BookCollection myCollection;
 
 		LibraryImplementation() {
-			myCollection = new BookCollection(new SQLiteBooksDatabase(LibraryService.this, "LIBRARY_SERVICE"));
-			for (String path : myCollection.bookDirectories()) {
+			myDatabase = new SQLiteBooksDatabase(LibraryService.this, "LIBRARY_SERVICE");
+			reset(Collections.singletonList(Paths.BooksDirectoryOption().getValue()), true);
+		}
+
+		public void reset(List<String> bookDirectories, boolean force) {
+			if (!force && myCollection != null && bookDirectories.equals(myCollection.BookDirectories)) {
+				return;
+			}
+
+			deactivate();
+			myFileObservers.clear();
+
+			myCollection = new BookCollection(myDatabase, bookDirectories);
+			for (String path : bookDirectories) {
 				final Observer observer = new Observer(path, myCollection);
 				observer.startWatching();
 				myFileObservers.add(observer);

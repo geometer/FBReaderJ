@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Търсене"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Отвори книгата"/>
 		<node name="showBookInfo" value="Информация за книгата"/>
@@ -806,6 +807,7 @@
 		<node name="dictionaryIsNotInstalled" value="Речникът не е инсталиран"/>
 		<node name="permissionDenied" value="Файлът е недостъпен"/>
 		<node name="noFavorites" value="Списъкът с фаворити е празен"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Каталогът е празен"/>
 		<node name="emptyBasket" value="Кошчето е празно"/>
 		<node name="emptyNetworkSearchResults" value="Книгата не е намерена"/>
