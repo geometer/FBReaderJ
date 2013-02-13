@@ -88,7 +88,7 @@ public class LibraryService extends Service {
 		private BookCollection myCollection;
 
 		LibraryImplementation() {
-			myDatabase = new SQLiteBooksDatabase(LibraryService.this);
+			myDatabase = SQLiteBooksDatabase.Instance(LibraryService.this);
 			reset(Collections.singletonList(Paths.BooksDirectoryOption().getValue()), true);
 		}
 

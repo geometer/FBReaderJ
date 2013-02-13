@@ -129,10 +129,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myLatestDate = myAccessDate;
 	}
 
-	public void save() {
-		myId = BooksDatabase.Instance().saveBookmark(this);
-	}
-
 	public static class ByTimeComparator implements Comparator<Bookmark> {
 		public int compare(Bookmark bm0, Bookmark bm1) {
 			return bm1.getDate(DateType.Latest).compareTo(bm0.getDate(DateType.Latest));
