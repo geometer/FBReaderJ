@@ -26,16 +26,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 public abstract class BooksDatabase {
-	private static BooksDatabase ourInstance;
-
-	public static BooksDatabase Instance() {
-		return ourInstance;
-	}
-
-	protected BooksDatabase() {
-		ourInstance = this;
-	}
-
 	protected Book createBook(long id, long fileId, String title, String encoding, String language) {
 		final FileInfoSet infos = new FileInfoSet(this, fileId);
 		return createBook(id, infos.getFile(fileId), title, encoding, language);
