@@ -257,7 +257,7 @@ public class Book {
 			}
 		}
 
-		addAuthor(new Author(strippedName, strippedKey));
+		addAuthor(new Author(strippedName, strippedKey.toLowerCase()));
 	}
 
 	public long getId() {
