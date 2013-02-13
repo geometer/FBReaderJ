@@ -633,7 +633,12 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return r.getValue();
 	}
 
-	public void saveBookmark(String s) {
-		SerializerUtil.deserializeBookmark(s).save();
+	public void saveBookmark(final String s) {
+		myCollection.bindToService(myContext, new Runnable() {
+			@Override
+			public void run() {
+				myCollection.saveBookmark(SerializerUtil.deserializeBookmark(s));
+			}
+		});
 	}
 }
