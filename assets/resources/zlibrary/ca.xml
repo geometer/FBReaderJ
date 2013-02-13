@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Catalan zlibrary resources, by Alfonso Montero. -->
+<!-- CHANGELOG
+	02-12-2013: Initial version. Based on Spanish translation.
+-->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Accepta"/>
+			<node name="cancel" value="Cancela"/>
+			<node name="yes" value="Sí"/>
+			<node name="no" value="No"/>
+			<node name="apply" value="Aplica"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Error de xarxa"/>
+			<node name="unknownErrorMessage" value="Error desconegut"/>
+			<node name="operationTimedOutMessage" value="El temps per a l'operació ha expirat"/>
+			<node name="somethingWrongMessage" value="Alguna cosa ha fallat per&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="No s'ha pogut crear el directori&#10;%s"/>
+			<node name="couldntCreateFileMessage" value="No s'ha pogut crear el fitxer&#10;%s"/>
+			<node name="couldntConnectToNetworkMessage" value="No s'ha pogut connectar a la xarxa"/>
+			<node name="couldntConnectMessage" value="No s'ha pogut connectar al servidor&#10;%s"/>
+			<node name="couldntResolveHostMessage" value="No s'ha pogut resoldre el servidor&#10;%s"/>
+			<node name="authenticationFailed" value="L'autenticació ha fallat"/>
+			<node name="unsupportedProtocol" value="Protocol no suportat"/>
+			<node name="invalidURL" value="URL no vàlida"/>
+			<node name="hostCantBeReached" value="No es pot connectar al servidor&#10;%s"/>
+			<node name="connectionRefused" value="Connexió refusada per&#10;%s"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Roig"/>
+		<node name="green" value="Verd"/>
+		<node name="blue" value="Blau"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Árabe" toBeTranslated="true"/>
+		<node name="bg" value="Búlgaro" toBeTranslated="true"/>
+		<node name="cs" value="Checo" toBeTranslated="true"/>
+		<node name="de" value="Alemán" toBeTranslated="true"/>
+		<node name="de-traditional" value="Alemán (ortografía tradicional)" toBeTranslated="true"/>
+		<node name="el" value="Griego" toBeTranslated="true"/>
+		<node name="en" value="Inglés" toBeTranslated="true"/>
+		<node name="eo" value="Esperanto" toBeTranslated="true"/>
+		<node name="es" value="Español" toBeTranslated="true"/>
+		<node name="fi" value="Finlandés" toBeTranslated="true"/>
+		<node name="fr" value="Francés" toBeTranslated="true"/>
+		<node name="gl" value="Gallego" toBeTranslated="true"/>
+		<node name="he" value="Hebreo" toBeTranslated="true"/>
+		<node name="hu" value="Húngaro" toBeTranslated="true"/>
+		<node name="id" value="Indonesio" toBeTranslated="true"/>
+		<node name="it" value="Italiano" toBeTranslated="true"/>
+		<node name="lt" value="Lituano" toBeTranslated="true"/>
+		<node name="nl" value="Holandés" toBeTranslated="true"/>
+		<node name="nb" value="Noruego" toBeTranslated="true"/>
+		<node name="pl" value="Polaco" toBeTranslated="true"/>
+		<node name="pt" value="Portugués" toBeTranslated="true"/>
+		<node name="ro" value="Rumano" toBeTranslated="true"/>
+		<node name="ru" value="Ruso" toBeTranslated="true"/>
+		<node name="sv" value="Sueco" toBeTranslated="true"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="th" value="Tailandés" toBeTranslated="true"/>
+		<node name="tr" value="Turco" toBeTranslated="true"/>
+		<node name="uk" value="Ucraniano" toBeTranslated="true"/>
+		<node name="vi" value="Vietnamita" toBeTranslated="true"/>
+		<node name="zh" value="Chino" toBeTranslated="true"/>
+		<node name="other" value="Otro" toBeTranslated="true"/>
+		<node name="multi" value="Multilingüe" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="encès"/>
+		<node name="off" value="apagat"/>
+		<node name="unchanged" value="sense canvis"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Acció per a tecla"/>
+	</node>
+</resources>
