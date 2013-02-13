@@ -30,11 +30,11 @@
 		<node name="found" value="Trobats">
 			<node name="summary" value="Resultats de la cerca per a: %s"/>
 		</node>
-		<node name="fileTree" value="Arbre d'arxius">
-			<node name="summary" value="Navegar pel sistema d'arxius"/>
+		<node name="fileTree" value="Arbre de fitxers">
+			<node name="summary" value="Navegar pel sistema de fitxers"/>
 		</node>
 		<node name="fileTreeRoot" value="Dispositiu">
-			<node name="summary" value="Tot el sistema d'arxius del dispositiu"/>
+			<node name="summary" value="Tot el sistema de fitxers del dispositiu"/>
 		</node>
 		<node name="fileTreeCard" value="Tarja de memòria">
 			<node name="summary" value="Tarja de memòria inserida al dispositiu"/>
@@ -158,7 +158,7 @@
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informació del llibre"/>
-		<node name="fileInfo" value="Informació de l'arxiu"/>
+		<node name="fileInfo" value="Informació del fitxer"/>
 		<node name="description" value="Descripció"/>
 		<node name="noDescription" value="No hi ha descripció disponible."/>
 		<node name="annotation" value="Anotació"/>
@@ -202,15 +202,15 @@
 		<node name="readText" value="Leer texto del libro" toBeTranslated="true"/>
 	</node>
 	<node name="bookmarksView">
-		<node name="thisBook" value="Este libro" toBeTranslated="true"/>
-		<node name="allBooks" value="Todos los libros"/>
-		<node name="found" value="Encontrados" toBeTranslated="true"/>
-		<node name="new" value="Nuevo marcador" toBeTranslated="true"/>
-		<node name="open" value="Abrir" toBeTranslated="true"/>
-		<node name="edit" value="Editar marcador" toBeTranslated="true"/>
-		<node name="delete" value="Borrar marcador" toBeTranslated="true"/>
+		<node name="thisBook" value="Aquest llibre"/>
+		<node name="allBooks" value="Tots els llibres"/>
+		<node name="found" value="Trobats"/>
+		<node name="new" value="Nou punt de llibre"/>
+		<node name="open" value="Obre"/>
+		<node name="edit" value="Edita punt de llibre"/>
+		<node name="delete" value="Esborra punt de llibre"/>
 		<node name="menu">
-			<node name="search" value="Buscar" toBeTranslated="true"/>
+			<node name="search" value="Cerca"/>
 		</node>
 	</node>
 	<node name="cancelMenu">
@@ -234,10 +234,10 @@
 		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
-		<node name="preferences" value="Ajustes" toBeTranslated="true"/>
+		<node name="preferences" value="Preferències"/>
 		<node name="bookInfo" value="Informació del llibre"/>
 		<node name="library" value="Biblioteca"/>
-		<node name="toc" value="TDC" toBeTranslated="true"/>
+		<node name="toc" value="Índex"/>
 		<node name="day" value="Dia"/>
 		<node name="night" value="Nit"/>
 		<node name="networkLibrary" value="Biblioteca en xarxa"/>
@@ -262,13 +262,13 @@
 		<node name="screenOrientationLandscape" value="Horitzontal"/>
 		<node name="screenOrientationReversePortrait" value="Vertical inversa"/>
 		<node name="screenOrientationReverseLandscape" value="Horitzontal inversa"/>
-		<node name="increaseFont" value="Aumentar fuente" toBeTranslated="true"/>
-		<node name="decreaseFont" value="Disminuír fuente" toBeTranslated="true"/>
-		<node name="toggleFullscreen" value="Pantalla completa" toBeTranslated="true"/>
-		<node name="bookmarks" value="Marcadores" toBeTranslated="true"/>
+		<node name="increaseFont" value="Augmentar lletra"/>
+		<node name="decreaseFont" value="Disminuir lletra"/>
+		<node name="toggleFullscreen" value="Pantalla completa"/>
+		<node name="bookmarks" value="Punts de llibre"/>
 	</node>
 	<node name="BookInfo">
-		<node name="fileName" value="Nom de l'arxiu"/>
+		<node name="fileName" value="Nom del fitxer"/>
 		<node name="title" value="Títol"/>
 		<node name="language" value="Idioma"/>
 		<node name="encoding" value="Codificació"/>
@@ -278,7 +278,7 @@
 	</node>
 	<node name="Preferences">
 		<node name="directories" value="Directoris">
-			<node name="summary" value="Directoris per a cercar arxius"/>
+			<node name="summary" value="Directoris per a cercar fitxers"/>
 			<node name="books" value="Directori de llibres"/>
 			<node name="fonts" value="Directori de tipus de lletra"/>
 			<node name="wallpapers" value="Directorio de fondos de pantalla" toBeTranslated="true"/>
