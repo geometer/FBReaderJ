@@ -133,7 +133,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myLatestDate = myAccessDate;
 	}
 
-	public void save() {
+	void save() {
 		myId = BooksDatabase.Instance().saveBookmark(this);
 	}
 
