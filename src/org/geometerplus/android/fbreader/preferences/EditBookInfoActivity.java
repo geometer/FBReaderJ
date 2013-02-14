@@ -109,7 +109,7 @@ class EncodingPreference extends ZLStringListPreference {
 		}
 
 		final List<Encoding> encodings =
-			new ArrayList<Encoding>(plugin.supportedEncodings().encodings());
+				new ArrayList<Encoding>(plugin.supportedEncodings().encodings());
 		Collections.sort(encodings, new Comparator<Encoding>() {
 			public int compare(Encoding e1, Encoding e2) {
 				return e1.DisplayName.compareTo(e2.DisplayName);
@@ -158,7 +158,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private TagListPreference myTagListPreference;
 
 	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
-		new HashMap<Integer,ZLActivityPreference>();
+			new HashMap<Integer,ZLActivityPreference>();
 
 	public EditBookInfoActivity() {
 		super("BookInfo");
@@ -166,11 +166,38 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 	private class AuthorsHolder implements ZLActivityPreference.ListHolder {
 		public List<String> getValue() {
-			return myBook.getAuthors();
+			List<Author> authors = myBook.authors();
+			List<String> res = new ArrayList<String>();
+			for (Author a : authors) {
+				String s = a.DisplayName + BaseStringListActivity.StringItem.Divider + a.SortKey;
+				res.add(s);
+			}
+			return res;
+		}
+		
+		public List<String> getDisplayValue() {
+			List<Author> authors = myBook.authors();
+			List<String> res = new ArrayList<String>();
+			for (Author a : authors) {
+				String s = a.DisplayName;
+				res.add(s);
+			}
+			return res;
 		}
 
 		public void setValue(List<String> l) {
-			myBook.setAuthors(l);
+			List<Author> authors = new ArrayList<Author>();
+			for (String s : l) {
+				int index = s.indexOf(BaseStringListActivity.StringItem.Divider);
+				if (index != -1) {
+					Author a = new Author(s.substring(0, index), s.substring(index + 1).toLowerCase());
+					authors.add(a);
+				} else {
+					Author a = new Author(s, "");
+					authors.add(a);
+				}
+			}
+			myBook.setAuthors(authors);
 			//((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
 		}
 	}
@@ -186,6 +213,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				}
 			}
 			return myValues;
+		}
+		
+		public synchronized List<String> getDisplayValue() {
+			return getValue();
 		}
 
 		public synchronized void setValue(List<String> tags) {
@@ -242,15 +273,15 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				myInitialized = true;
 
 				myAuthorListPreference = new AuthorListPreference(
-					EditBookInfoActivity.this, new AuthorsHolder(), myActivityPrefs,
-					Resource, "authors"
-				);
+						EditBookInfoActivity.this, new AuthorsHolder(), myActivityPrefs,
+						Resource, "authors"
+						);
 				myAuthorListPreference.setAuthors(myCollection.authors());
 
 				myTagListPreference = new TagListPreference(
-					EditBookInfoActivity.this, new TagsHolder(), myActivityPrefs,
-					Resource, "tags"
-				);
+						EditBookInfoActivity.this, new TagsHolder(), myActivityPrefs,
+						Resource, "tags"
+						);
 				myTagListPreference.setTags(myCollection.tags());
 
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));

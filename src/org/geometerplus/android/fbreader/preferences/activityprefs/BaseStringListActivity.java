@@ -25,14 +25,9 @@ import android.content.*;
 import android.app.*;
 import android.view.*;
 import android.widget.*;
-import android.text.*;
-import android.os.Bundle;
-import android.view.inputmethod.InputMethodManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.fbreader.Paths;
 
 public abstract class BaseStringListActivity extends ListActivity {
 	public static final String LIST = "list";
@@ -90,7 +85,7 @@ public abstract class BaseStringListActivity extends ListActivity {
 				public void onClick(View view) {
 					ArrayList<String> paths = new ArrayList<String>();
 					for (int i = 0; i < getListAdapter().getCount(); i++) {
-						paths.add(getListAdapter().getItem(i).getData());
+						paths.add(getListAdapter().getItem(i).getFullData());
 					}
 					Intent intent = new Intent();
 					intent.putStringArrayListExtra(LIST, paths);
@@ -190,17 +185,31 @@ public abstract class BaseStringListActivity extends ListActivity {
 
 	}
 
-	protected static class StringItem {
+	public static class StringItem {
 		private String myData = "";
+		private String mySubData = "";
 		private int myId;
+		public static char Divider = '\n';
 
 		public String getData() {
 			return myData;
 		}
-		public void setData(String data) {
-			myData = data;
+		
+		public String getFullData() {
+			return myData + Divider + mySubData;
 		}
-
+		
+		public void setData(String data) {
+			int index = data.indexOf(Divider);
+			if (index != -1) {
+				myData = data.substring(0, index);
+				mySubData = data.substring(index + 1);
+			} else {
+				myData = data;
+				mySubData = "";
+			}
+		}
+		
 		public int getId() {
 			return myId;
 		}
