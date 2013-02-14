@@ -42,9 +42,9 @@ public class AuthorListPreference extends ZLActivityPreference {
 
 	@Override
 	protected ArrayList<String> suggestions() {
-		final ArrayList<String> list = new ArrayList(myAuthors.size());
+		final ArrayList<String> list = new ArrayList<String>(myAuthors.size());
 		for (Author a : myAuthors) {
-			list.add(a.DisplayName);
+			list.add(a.DisplayName + BaseStringListActivity.StringItem.Divider + a.SortKey);
 		}
 		return list;
 	}

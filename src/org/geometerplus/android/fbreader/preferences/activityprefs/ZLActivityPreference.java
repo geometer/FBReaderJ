@@ -35,6 +35,7 @@ public abstract class ZLActivityPreference extends Preference {
 
 	public static interface ListHolder {
 		public List<String> getValue();
+		public List<String> getDisplayValue();
 		public void setValue(List<String> l);
 	}
 
@@ -89,6 +90,6 @@ public abstract class ZLActivityPreference extends Preference {
 	}
 
 	private void updateSummary() {
-		setSummary(MiscUtil.join(myHolder.getValue(), ":"));
+		setSummary(MiscUtil.join(myHolder.getDisplayValue(), ":"));
 	}
 }

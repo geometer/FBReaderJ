@@ -44,7 +44,7 @@ public class TagListPreference extends ZLActivityPreference {
 
 	@Override
 	protected ArrayList<String> suggestions() {
-		return new ArrayList(myTags.keySet());
+		return new ArrayList<String>(myTags.keySet());
 	}
 
 	@Override
