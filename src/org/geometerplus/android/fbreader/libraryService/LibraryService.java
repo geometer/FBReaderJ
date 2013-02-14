@@ -83,12 +83,12 @@ public class LibraryService extends Service {
 	}
 
 	public final class LibraryImplementation extends LibraryInterface.Stub {
-		private final SQLiteBooksDatabase myDatabase;
+		private final BooksDatabase myDatabase;
 		private final List<FileObserver> myFileObservers = new LinkedList<FileObserver>();
 		private BookCollection myCollection;
 
 		LibraryImplementation() {
-			myDatabase = new SQLiteBooksDatabase(LibraryService.this);
+			myDatabase = SQLiteBooksDatabase.Instance(LibraryService.this);
 			reset(Paths.BookPathOption().getValue(), true);
 		}
 
