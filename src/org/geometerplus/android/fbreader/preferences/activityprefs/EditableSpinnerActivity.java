@@ -105,8 +105,13 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(myActivity);
 			String[] suggs = new String[myActivity.Suggestions.size()];
 			for (int i = 0; i < myActivity.Suggestions.size(); ++i) {
-				int index = myActivity.Suggestions.get(i).indexOf(StringItem.Divider);
-				suggs[i] = myActivity.Suggestions.get(i).substring(0, index);
+				String cur = myActivity.Suggestions.get(i);
+				int index = cur.indexOf(StringItem.Divider);
+				if (index != -1) {
+					suggs[i] = cur.substring(0, index);
+				} else {
+					suggs[i] = cur;
+				}
 			}
 			Log.d("spinner", Integer.toString(pos));
 			builder.setSingleChoiceItems(suggs, pos, 
