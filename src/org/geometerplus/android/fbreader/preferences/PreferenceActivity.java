@@ -74,6 +74,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		public List<String> getValue() {
 			return myOption.getValue();
 		}
+		
+		public List<String> getDisplayValue() {
+			return getValue();
+		}
 
 		public void setValue(List<String> l) {
 			myOption.setValue(l);

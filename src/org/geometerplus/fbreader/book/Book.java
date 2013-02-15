@@ -185,20 +185,9 @@ public class Book {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
 	}
 
-	public List<String> getAuthors() {
-		if (myAuthors == null) {
-			return Collections.<String>emptyList();
-		}
-		List<String> result = new ArrayList<String>();
-		for (Author a : myAuthors) {
-			result.add(a.DisplayName);
-		}
-		return result;
-	}
-
-	public void setAuthors(List<String> list) {
+	public void setAuthors(List<Author> list) {
 		myAuthors = null;
-		for (String s : list) {
+		for (Author s : list) {
 			addAuthor(s);
 		}
 	}
