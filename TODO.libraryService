@@ -14,6 +14,8 @@ DELAYED getHelpFile => getHelpBook
 DELAYED move BookCollection to libraryService package; change access rights to package local
 
 bugs:
+* trim author names in fb2 (and may be in other formats)
+* action hyperlinks
 * double tap only for action bar
 * text search => found multiple occurencies => turn page right => right button is disabled
 
