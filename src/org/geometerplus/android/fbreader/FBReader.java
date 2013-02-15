@@ -464,17 +464,13 @@ public final class FBReader extends Activity {
 
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
+		} else if (Intent.ACTION_VIEW.equals(action)
+					&& data != null && "fbreader-action".equals(data.getScheme())) {
+			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
 			myNeedToOpenFile = true;
 			myIntentToOpen = intent;
 			myNeedToSkipPlugin = true;
-		} else if (Intent.ACTION_VIEW.equals(action)
-				&& data != null && "fbreader-action".equals(data.getScheme())) {
-			getCollection().bindToService(this, new Runnable() {
-				public void run() {
-					myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
-				}
-			});
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
