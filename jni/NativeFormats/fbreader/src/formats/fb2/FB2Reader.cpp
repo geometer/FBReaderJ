@@ -25,7 +25,7 @@
 
 #include "FB2Reader.h"
 
-FB2Reader::FB2Reader() : myHrefPredicate(ZLXMLNamespace::XLink, "href") {
+FB2Reader::FB2Reader() : myHrefPredicate(ZLXMLNamespace::XLink, "href"), myBrokenHrefPredicate("href") {
 }
 
 void FB2Reader::startElementHandler(const char *t, const char **attributes) {
@@ -38,6 +38,7 @@ void FB2Reader::endElementHandler(const char *t) {
 
 static const FB2Reader::Tag TAGS[] = {
 	{"p", FB2Reader::_P},
+	{"li", FB2Reader::_LI},
 	{"subtitle", FB2Reader::_SUBTITLE},
 	{"cite", FB2Reader::_CITE},
 	{"text-author", FB2Reader::_TEXT_AUTHOR},
@@ -54,7 +55,9 @@ static const FB2Reader::Tag TAGS[] = {
 	{"code", FB2Reader::_CODE},
 	{"strikethrough", FB2Reader::_STRIKETHROUGH},
 	{"strong", FB2Reader::_STRONG},
+	{"b", FB2Reader::_STRONG},
 	{"emphasis", FB2Reader::_EMPHASIS},
+	{"i", FB2Reader::_EMPHASIS},
 	{"a", FB2Reader::_A},
 	{"image", FB2Reader::_IMAGE},
 	{"binary", FB2Reader::_BINARY},
