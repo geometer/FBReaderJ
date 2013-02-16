@@ -9,6 +9,7 @@
 * Fixed NPE in findViewById in the main activity
 * Popup dictionary (https://play.google.com/store/apps/details?id=com.barisatamer.popupdictionary) integration
 * Catalan localization (by Alfonso Montero)
+* Open 'additional links in network library' with correct orientation
 
 ===== 1.6.9 (Jan 03, 2013) =====
 * Added Bulgarian translation (by Ники Арсов)
