@@ -65,6 +65,17 @@ public:
 		const std::string myName;
 	};
 
+	class BrokenNamePredicate : public NamePredicate {
+
+	public:
+		BrokenNamePredicate(const std::string &name);
+		bool accepts(const ZLXMLReader &reader, const char *name) const;
+		bool accepts(const ZLXMLReader &reader, const std::string &name) const;
+
+	private:
+		const std::string myName;
+	};
+
 protected:
 	ZLXMLReader(const char *encoding = 0);
 
