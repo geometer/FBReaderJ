@@ -25,7 +25,7 @@ public final class ZLStringOption extends ZLOption {
 
 	public ZLStringOption(String group, String optionName, String defaultValue) {
 		super(group, optionName);
-		myDefaultValue = (defaultValue != null) ? defaultValue.intern() : "";
+		myDefaultValue = defaultValue != null ? defaultValue.intern() : "";
 		myValue = myDefaultValue;
 	}
 

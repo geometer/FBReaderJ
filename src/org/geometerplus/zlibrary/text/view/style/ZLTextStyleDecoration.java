@@ -39,9 +39,9 @@ public class ZLTextStyleDecoration {
 
 	private final String myName;
 
-	public ZLTextStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int verticalShift, ZLBoolean3 allowHyphenations) {
+	public ZLTextStyleDecoration(String name, String fontFamily, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int verticalShift, ZLBoolean3 allowHyphenations) {
 		myName = name;
-		FontFamilyOption = new ZLStringOption(STYLE, name + ":fontFamily", "");
+		FontFamilyOption = new ZLStringOption(STYLE, name + ":fontFamily", fontFamily);
 		FontSizeDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
 		BoldOption = new ZLBoolean3Option(STYLE, name + ":bold", bold);
 		ItalicOption = new ZLBoolean3Option(STYLE, name + ":italic", italic);
