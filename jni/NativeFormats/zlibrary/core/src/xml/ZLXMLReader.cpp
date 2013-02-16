@@ -198,6 +198,17 @@ bool ZLXMLReader::FullNamePredicate::accepts(const ZLXMLReader &reader, const st
 		name.substr(index + 1) == myName;
 }
 
+ZLXMLReader::BrokenNamePredicate::BrokenNamePredicate(const std::string &name) : myName(name) {
+}
+
+bool ZLXMLReader::BrokenNamePredicate::accepts(const ZLXMLReader &reader, const char *name) const {
+	return accepts(reader, std::string(name));
+}
+
+bool ZLXMLReader::BrokenNamePredicate::accepts(const ZLXMLReader &reader, const std::string &name) const {
+	return myName == name.substr(name.find(':') + 1);
+}
+
 const char *ZLXMLReader::attributeValue(const char **xmlattributes, const NamePredicate &predicate) const {
 	while (*xmlattributes != 0) {
 		bool useNext = predicate.accepts(*this, *xmlattributes);

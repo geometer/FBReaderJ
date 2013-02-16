@@ -80,6 +80,16 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 			}
 			myModelReader.beginParagraph();
 			break;
+		case _LI:
+		{
+			if (mySectionStarted) {
+				mySectionStarted = false;
+			}
+			myModelReader.beginParagraph();
+			static const std::string BULLET_NBSP = "\xE2\x80\xA2\xC0\xA0";
+			myModelReader.addData(BULLET_NBSP);
+			break;
+		}
 		case _V:
 			myModelReader.pushKind(VERSE);
 			myModelReader.beginParagraph();
@@ -163,6 +173,9 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 		case _A:
 		{
 			const char *ref = attributeValue(xmlattributes, myHrefPredicate);
+			if (ref == 0) {
+				ref = attributeValue(xmlattributes, myBrokenHrefPredicate);
+			}
 			if (ref != 0) {
 				if (ref[0] == '#') {
 					const char *type = attributeValue(xmlattributes, "type");
@@ -186,6 +199,9 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 		case _IMAGE:
 		{
 			const char *ref = attributeValue(xmlattributes, myHrefPredicate);
+			if (ref == 0) {
+				ref = attributeValue(xmlattributes, myBrokenHrefPredicate);
+			}
 			const char *vOffset = attributeValue(xmlattributes, "voffset");
 			char offset = (vOffset != 0) ? atoi(vOffset) : 0;
 			if ((ref != 0) && (*ref == '#')) {
@@ -232,6 +248,7 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 void FB2BookReader::endElementHandler(int tag) {
 	switch (tag) {
 		case _P:
+		case _LI:
 			myModelReader.endParagraph();
 			break;
 		case _V:
