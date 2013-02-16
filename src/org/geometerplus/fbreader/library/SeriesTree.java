@@ -66,7 +66,9 @@ public final class SeriesTree extends LibraryTree {
 			return false;
 		}
 		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Title);
+		return
+			info != null && Series.equals(info.Title)
+			&& (Author == null || book.authors().contains(Author));
 	}
 
 	@Override
