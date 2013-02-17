@@ -25,12 +25,12 @@ ant clean
 mv bin/FBReaderJ.apk READY/FBReaderJ_ice-cream-sandwich.apk
 cp bin/proguard/mapping.txt mappings/mapping-`cat VERSION`.ice-cream-sandwich.txt
 
-#git checkout beta
-#ant distclean
-#./buildSignedJar.sh
-#mv bin/FBReaderJ.apk READY/FBReaderJ-`cat VERSION-BETA | sed "s/ //g"`.apk
-#
-#git checkout beta-ics
-#ant clean
-#./buildSignedJar.sh
-#mv bin/FBReaderJ.apk READY/FBReaderJ_ice-cream-sandwich-`cat VERSION-BETA | sed "s/ //g"`.apk
+git checkout beta
+ant distclean
+./buildSignedJar.sh
+mv bin/FBReaderJ.apk READY/FBReaderJ-`cat VERSION-BETA | sed "s/ //g"`.apk
+
+git checkout beta-ics
+ant clean
+./buildSignedJar.sh
+mv bin/FBReaderJ.apk READY/FBReaderJ_ice-cream-sandwich-`cat VERSION-BETA | sed "s/ //g"`.apk
