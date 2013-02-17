@@ -44,6 +44,7 @@ private:
 	std::size_t myParagraphsBeforeBodyNumber;
 	std::string myCoverImageReference;
 	bool myInsidePoem;
+	int myListDepth;
 	BookReader myModelReader;
 
 	int myCurrentImageStart;
