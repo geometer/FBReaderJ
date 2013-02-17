@@ -40,6 +40,7 @@ FB2BookReader::FB2BookReader(BookModel &model) : myModelReader(model) {
 	myCurrentImageStart = -1;
 	mySectionStarted = false;
 	myInsideTitle = false;
+	myListDepth = 0;
 }
 
 void FB2BookReader::characterDataHandler(const char *text, std::size_t len) {
@@ -80,14 +81,22 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 			}
 			myModelReader.beginParagraph();
 			break;
+		case _UL:
+		case _OL:
+			++myListDepth;
+			break;
 		case _LI:
 		{
 			if (mySectionStarted) {
 				mySectionStarted = false;
 			}
 			myModelReader.beginParagraph();
-			static const std::string BULLET_NBSP = "\xE2\x80\xA2\xC0\xA0";
-			myModelReader.addData(BULLET_NBSP);
+			static const std::string BULLET = "\xE2\x80\xA2";
+			if (myListDepth > 1) {
+				myModelReader.addFixedHSpace(3 * (myListDepth - 1));
+			}
+			myModelReader.addData(BULLET);
+			myModelReader.addFixedHSpace(1);
 			break;
 		}
 		case _V:
@@ -250,6 +259,10 @@ void FB2BookReader::endElementHandler(int tag) {
 		case _P:
 		case _LI:
 			myModelReader.endParagraph();
+			break;
+		case _UL:
+		case _OL:
+			--myListDepth;
 			break;
 		case _V:
 		case _SUBTITLE:
