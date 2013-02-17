@@ -19,16 +19,37 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.content.*;
 import android.os.IBinder;
-import android.content.ServiceConnection;
-import android.content.ComponentName;
 
 public class BookDownloaderServiceConnection implements ServiceConnection {
-
+	private volatile Runnable myAction;
 	private BookDownloaderInterface myInterface;
+
+	synchronized void bindToService(Context context, Runnable action) {
+		if (myInterface != null) {
+			action.run();
+		} else {
+			myAction = action;
+			context.bindService(
+				new Intent(context, BookDownloaderService.class),
+				this,
+				Context.BIND_AUTO_CREATE
+			);
+		}
+	}
+
+	synchronized void unbind(Context context) {
+		myAction = null;
+		context.unbindService(this);
+	}
 
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
 		myInterface = BookDownloaderInterface.Stub.asInterface(service);
+		if (myAction != null) {
+			myAction.run();
+			myAction = null;
+		}
 	}
 
 	public synchronized void onServiceDisconnected(ComponentName name) {
