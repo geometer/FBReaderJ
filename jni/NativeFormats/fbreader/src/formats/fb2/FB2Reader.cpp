@@ -38,6 +38,8 @@ void FB2Reader::endElementHandler(const char *t) {
 
 static const FB2Reader::Tag TAGS[] = {
 	{"p", FB2Reader::_P},
+	{"ul", FB2Reader::_UL},
+	{"ol", FB2Reader::_OL},
 	{"li", FB2Reader::_LI},
 	{"subtitle", FB2Reader::_SUBTITLE},
 	{"cite", FB2Reader::_CITE},
