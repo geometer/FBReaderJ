@@ -28,7 +28,7 @@
 				<data android:scheme="ExceptionInInitializerError"/>
 			</intent-filter>
 		</activity>
-		<service android:name="org.geometerplus.android.fbreader.api.ApiService">
+		<service android:name="org.geometerplus.android.fbreader.api.ApiService" android:launchMode="singleTask">
 			<intent-filter>
 				<action android:name="android.fbreader.action.API"/>
 				<category android:name="android.intent.category.DEFAULT"/>
@@ -204,7 +204,7 @@
 				<data android:host="*" android:scheme="epub"/>
 			</intent-filter>
 		</activity>
-		<service android:name="org.geometerplus.android.fbreader.network.BookDownloaderService" android:process=":networkLibrary"/>
+		<service android:name="org.geometerplus.android.fbreader.network.BookDownloaderService" android:launchMode="singleTask" android:process=":networkLibrary"/>
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkSearchActivity" android:process=":networkLibrary" android:theme="@android:style/Theme.NoDisplay">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH"/>

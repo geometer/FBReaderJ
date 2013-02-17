@@ -24,11 +24,13 @@ import android.os.IBinder;
 
 public class BookDownloaderServiceConnection implements ServiceConnection {
 	private volatile Runnable myAction;
-	private BookDownloaderInterface myInterface;
+	private volatile BookDownloaderInterface myInterface;
 
 	synchronized void bindToService(Context context, Runnable action) {
 		if (myInterface != null) {
-			action.run();
+			if (action != null) {
+				action.run();
+			}
 		} else {
 			myAction = action;
 			context.bindService(
@@ -41,7 +43,10 @@ public class BookDownloaderServiceConnection implements ServiceConnection {
 
 	synchronized void unbind(Context context) {
 		myAction = null;
-		context.unbindService(this);
+		if (myInterface != null) {
+			context.unbindService(this);
+			myInterface = null;
+		}
 	}
 
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
