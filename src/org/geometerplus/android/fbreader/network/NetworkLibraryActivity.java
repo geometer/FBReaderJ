@@ -95,11 +95,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	protected void onStart() {
 		super.onStart();
 
-		bindService(
-			new Intent(getApplicationContext(), BookDownloaderService.class),
-			Connection,
-			BIND_AUTO_CREATE
-		);
+		Connection.bindToService(this, null);
 
 		NetworkLibrary.Instance().addChangeListener(this);
 	}
@@ -115,7 +111,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	protected void onStop() {
 		NetworkLibrary.Instance().removeChangeListener(this);
 
-		unbindService(Connection);
+		Connection.unbind(this);
 
 		super.onStop();
 	}
@@ -145,6 +141,15 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		if (!openTreeByIntent(intent)) {
 			super.onNewIntent(intent);
 		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Connection.bindToService(this, new Runnable() {
+			public void run() {
+				getListView().invalidateViews();
+			}
+		});
 	}
 
 	@Override
