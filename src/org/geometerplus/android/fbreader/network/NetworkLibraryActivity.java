@@ -47,7 +47,7 @@ import org.geometerplus.android.util.UIUtil;
 public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
-	BookDownloaderServiceConnection Connection;
+	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
@@ -62,13 +62,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		AuthenticationActivity.initCredentialsCreator(this);
 
 		SQLiteCookieDatabase.init(this);
-
-		Connection = new BookDownloaderServiceConnection();
-		bindService(
-			new Intent(getApplicationContext(), BookDownloaderService.class),
-			Connection,
-			BIND_AUTO_CREATE
-		);
 
 		setListAdapter(new NetworkLibraryAdapter(this));
 		final Intent intent = getIntent();
@@ -102,6 +95,12 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	protected void onStart() {
 		super.onStart();
 
+		bindService(
+			new Intent(getApplicationContext(), BookDownloaderService.class),
+			Connection,
+			BIND_AUTO_CREATE
+		);
+
 		NetworkLibrary.Instance().addChangeListener(this);
 	}
 
@@ -115,15 +114,14 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	protected void onStop() {
 		NetworkLibrary.Instance().removeChangeListener(this);
+
+		unbindService(Connection);
+
 		super.onStop();
 	}
 
 	@Override
 	public void onDestroy() {
-		if (Connection != null) {
-			unbindService(Connection);
-			Connection = null;
-		}
 		super.onDestroy();
 	}
 

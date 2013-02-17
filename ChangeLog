@@ -7,6 +7,7 @@
 * Catalan localization (by Alfonso Montero)
 * Open 'additional links in network library' with correct orientation
 * Some incorrect FB2 files support (li/i/b tags, href attributes with no namespace and with unknown namespace ids) -- e.g. CoolReader manual
+* Fixed 'Book is being downloaded' button behaviour (in Network book info activity)
 
 ===== 1.6.9 (Jan 03, 2013) =====
 * Added Bulgarian translation (by Ники Арсов)

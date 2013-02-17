@@ -277,6 +277,10 @@ public class ZLNetworkManager {
 	}
 
 	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
+		perform(request, 30000, 15000);
+	}
+
+	private void perform(ZLNetworkRequest request, int socketTimeout, int connectionTimeout) throws ZLNetworkException {
 		boolean success = false;
 		DefaultHttpClient httpClient = null;
 		HttpEntity entity = null;
@@ -286,8 +290,8 @@ public class ZLNetworkManager {
 
 			request.doBefore();
 			final HttpParams params = new BasicHttpParams();
-			HttpConnectionParams.setSoTimeout(params, 30000);
-			HttpConnectionParams.setConnectionTimeout(params, 15000);
+			HttpConnectionParams.setSoTimeout(params, socketTimeout);
+			HttpConnectionParams.setConnectionTimeout(params, connectionTimeout);
 			httpClient = new DefaultHttpClient(params);
 			final HttpRequestBase httpRequest;
 			if (request.PostData != null) {
@@ -344,7 +348,9 @@ public class ZLNetworkManager {
 			final int responseCode = response.getStatusLine().getStatusCode();
 
 			InputStream stream = null;
-			if (entity != null && responseCode == HttpURLConnection.HTTP_OK) {
+			if (entity != null &&
+				(responseCode == HttpURLConnection.HTTP_OK ||
+				 responseCode == HttpURLConnection.HTTP_PARTIAL)) {
 				stream = entity.getContent();
 			}
 
@@ -445,6 +451,6 @@ public class ZLNetworkManager {
 					outStream.close();
 				}
 			}
-		});
+		}, 0, 0);
 	}
 }
