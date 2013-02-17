@@ -62,7 +62,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	private View myMainView;
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
-	private BookDownloaderServiceConnection myConnection;
+	private final BookDownloaderServiceConnection myConnection = new BookDownloaderServiceConnection();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -76,14 +76,27 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+
+		OrientationUtil.setOrientation(this, getIntent());
+
+		myConnection.bindToService(this, new Runnable() {
+			public void run() {
+				if (!myInitializerStarted) {
+					UIUtil.wait("loadingNetworkBookInfo", myInitializer, NetworkBookInfoActivity.this);
+				}
+			}
+		});
+
+		NetworkLibrary.Instance().addChangeListener(this);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-
-		if (!myInitializerStarted) {
-			UIUtil.wait("loadingNetworkBookInfo", myInitializer, this);
-		}
 	}
 
 	private volatile boolean myInitializerStarted;
@@ -136,13 +149,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			if (myBook == null) {
 				finish();
 			} else {
-				myConnection = new BookDownloaderServiceConnection();
-				bindService(
-					new Intent(getApplicationContext(), BookDownloaderService.class),
-					myConnection,
-					BIND_AUTO_CREATE
-				);
-
 				setTitle(myBook.Title);
 
 				setupDescription();
@@ -169,10 +175,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public void onDestroy() {
-		if (myConnection != null) {
-			unbindService(myConnection);
-			myConnection = null;
-		}
 		super.onDestroy();
 	}
 
@@ -368,20 +370,16 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		OrientationUtil.setOrientation(this, getIntent());
-		NetworkLibrary.Instance().addChangeListener(this);
-	}
-
-	@Override
 	protected void onNewIntent(Intent intent) {
 		OrientationUtil.setOrientation(this, intent);
 	}
 
 	@Override
 	protected void onStop() {
+		myConnection.unbind(this);
+
 		NetworkLibrary.Instance().removeChangeListener(this);
+
 		super.onStop();
 	}
 
