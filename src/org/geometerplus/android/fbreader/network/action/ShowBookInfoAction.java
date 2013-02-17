@@ -61,10 +61,11 @@ public class ShowBookInfoAction extends BookAction {
 	}
 
 	private void showBookInfo(NetworkTree tree) {
-		OrientationUtil.startActivity(
+		OrientationUtil.startActivityForResult(
 			myActivity,
 			new Intent(myActivity, NetworkBookInfoActivity.class)
-				.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
+				.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey()),
+			1
 		);
 	}
 }
