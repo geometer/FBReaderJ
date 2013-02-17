@@ -45,6 +45,8 @@ private:
 public:
 	enum TagCode {
 		_P,
+		_UL,
+		_OL,
 		_LI,
 		_SUBTITLE,
 		_CITE,
