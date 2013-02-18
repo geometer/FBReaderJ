@@ -136,7 +136,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 			if (date0 == null) {
 				return date1 == null ? 0 : -1;
 			}
-			return date1 == null ? 1 : date1.compare(date0);
+			return date1 == null ? 1 : date1.compareTo(date0);
 		}
 	}
 
