@@ -705,7 +705,11 @@ public final class FBReader extends Activity {
 	@Override
 	protected void onPause() {
 		myIsPaused = true;
-		unregisterReceiver(myBatteryInfoReceiver);
+		try {
+			unregisterReceiver(myBatteryInfoReceiver);
+		} catch (IllegalArgumentException e) {
+			// do nothing, this exception means myBatteryInfoReceiver was not registered
+		}
 		myFBReaderApp.stopTimer();
 		switchWakeLock(false);
 		if (getZLibrary().DisableButtonLightsOption.getValue()) {
