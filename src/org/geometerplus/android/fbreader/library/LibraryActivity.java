@@ -47,7 +47,7 @@ import org.geometerplus.android.fbreader.tree.TreeActivity;
 public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, IBookCollection.Listener {
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
-	private RootTree myRootTree;
+	private volatile RootTree myRootTree;
 	private Book mySelectedBook;
 
 	@Override
@@ -56,8 +56,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		if (myRootTree == null) {
 			myRootTree = new RootTree(new BookCollectionShadow());
-			myRootTree.Collection.addListener(this);
 		}
+		myRootTree.Collection.addListener(this);
 
 		mySelectedBook =
 			SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
@@ -112,7 +112,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected void onDestroy() {
 		myRootTree.Collection.removeListener(this);
-		myRootTree = null;
 		super.onDestroy();
 	}
 
