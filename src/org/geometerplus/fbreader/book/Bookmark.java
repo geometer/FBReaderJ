@@ -135,7 +135,12 @@ public final class Bookmark extends ZLTextFixedPosition {
 
 	public static class ByTimeComparator implements Comparator<Bookmark> {
 		public int compare(Bookmark bm0, Bookmark bm1) {
-			return bm1.getDate(DateType.Latest).compareTo(bm0.getDate(DateType.Latest));
+			final Date date0 = bm0.getDate(DateType.Latest);
+			final Date date1 = bm1.getDate(DateType.Latest);
+			if (date0 == null) {
+				return date1 == null ? 0 : -1;
+			}
+			return date1 == null ? 1 : date1.compare(date0);
 		}
 	}
 
