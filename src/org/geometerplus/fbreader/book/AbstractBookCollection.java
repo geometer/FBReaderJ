@@ -25,7 +25,9 @@ public abstract class AbstractBookCollection implements IBookCollection {
 	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
 
 	public void addListener(Listener listener) {
-		myListeners.add(listener);
+		if (!myListeners.contains(listener)) {
+			myListeners.add(listener);
+		}
 	}
 
 	public void removeListener(Listener listener) {
