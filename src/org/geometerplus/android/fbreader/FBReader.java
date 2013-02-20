@@ -172,8 +172,8 @@ public final class FBReader extends Activity {
 			Intent LaunchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
 			LaunchIntent.setPackage(appData);
 			//			LaunchIntent.setData(uri);
-			LaunchIntent.putExtra("BOOKMARK", bookmark);
-			LaunchIntent.putExtra("BOOK", book);
+			LaunchIntent.putExtra(BOOKMARK_KEY, bookmark);
+			LaunchIntent.putExtra(BOOK_KEY, book);
 			Log.d("fbj", book);
 			try {
 				startActivity(LaunchIntent);
