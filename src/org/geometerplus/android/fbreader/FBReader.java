@@ -161,29 +161,35 @@ public final class FBReader extends Activity {
 			});
 		}
 
-		public void openFile(ZLFile f, String appData, String bookmark, long bookId) {
+		public void openFile(String appData, String bookmark, String book) {
+			Book bookToOpen = SerializerUtil.deserializeBook(book);
+			ZLFile f = bookToOpen.File;
 			if (f == null) {
 				showErrorDialog("unzipFailed");
 				return;
 			}
-			Uri uri = Uri.parse("file://" + f.getPath());
+			//			Uri uri = Uri.parse("file://" + f.getPath());
 			Intent LaunchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
 			LaunchIntent.setPackage(appData);
-			LaunchIntent.setData(uri);
+			//			LaunchIntent.setData(uri);
 			LaunchIntent.putExtra("BOOKMARK", bookmark);
-			LaunchIntent.putExtra("BOOKID", bookId);
-			final String title = myFBReaderApp.Collection.getBookById(bookId).getTitle();
-			LaunchIntent.putExtra("TITLE", title != null ? title : "");	
-			FileType ft = FileTypeCollection.Instance.typeForFile(f);
-			for (MimeType type : ft.mimeTypes()) {
-				LaunchIntent.setDataAndType(uri, type.Name);
-				try {
-					startActivity(LaunchIntent);
-					return;
-				} catch (ActivityNotFoundException e) {
-				}
+			LaunchIntent.putExtra("BOOK", book);
+			Log.d("fbj", book);
+			try {
+				startActivity(LaunchIntent);
+				return;
+			} catch (ActivityNotFoundException e) {
 			}
-			showErrorDialog("noPlugin", appData, bookId);
+			//			FileType ft = FileTypeCollection.Instance.typeForFile(f);
+			//			for (MimeType type : ft.mimeTypes()) {
+			//				LaunchIntent.setDataAndType(uri, type.Name);
+			//				try {
+			//					startActivity(LaunchIntent);
+			//					return;
+			//				} catch (ActivityNotFoundException e) {
+			//				}
+			//			}
+			showErrorDialog("noPlugin", appData, bookToOpen.getId());
 			return;
 		}
 
@@ -465,7 +471,7 @@ public final class FBReader extends Activity {
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
 		} else if (Intent.ACTION_VIEW.equals(action)
-					&& data != null && "fbreader-action".equals(data.getScheme())) {
+				&& data != null && "fbreader-action".equals(data.getScheme())) {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
 			myNeedToOpenFile = true;
