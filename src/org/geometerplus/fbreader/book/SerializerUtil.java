@@ -54,7 +54,10 @@ public abstract class SerializerUtil {
 	public static List<Book> deserializeBookList(List<String> xmlList) {
 		final List<Book> books = new ArrayList<Book>(xmlList.size());
 		for (String xml : xmlList) {
-			books.add(defaultSerializer.deserializeBook(xml));
+			final Book b = defaultSerializer.deserializeBook(xml);
+			if (b != null) {
+				books.add(b);
+			}
 		}
 		return books;
 	}
@@ -70,7 +73,10 @@ public abstract class SerializerUtil {
 	public static List<Bookmark> deserializeBookmarkList(List<String> xmlList) {
 		final List<Bookmark> bookmarks = new ArrayList<Bookmark>(xmlList.size());
 		for (String xml : xmlList) {
-			bookmarks.add(defaultSerializer.deserializeBookmark(xml));
+			final Bookmark b = defaultSerializer.deserializeBookmark(xml);
+			if (b != null) {
+				bookmarks.add(b);
+			}
 		}
 		return bookmarks;
 	}
