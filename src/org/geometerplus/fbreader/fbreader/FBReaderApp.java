@@ -208,13 +208,16 @@ public final class FBReaderApp extends ZLApplication {
 				bm = bookmark;
 			} else {
 				ZLTextPosition pos = Collection.getStoredPosition(bookToOpen.getId());
+				if (pos == null) {
+					pos = new ZLTextFixedPosition(0, 0, 0);
+				}
 				bm = new Bookmark(bookToOpen, "", pos, "", false);
 			}
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
 					System.err.println(SerializerUtil.serialize(bm));
-					myPluginFileOpener.openFile(f, ((PluginFormatPlugin)p).getPackage(), SerializerUtil.serialize(bm), bookToOpen.getId());
+					myPluginFileOpener.openFile(((PluginFormatPlugin)p).getPackage(), SerializerUtil.serialize(bm), SerializerUtil.serialize(bookToOpen));
 				}
 			}, postAction);
 			return;
