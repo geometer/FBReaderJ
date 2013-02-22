@@ -57,6 +57,8 @@ public abstract class SerializerUtil {
 			final Book b = defaultSerializer.deserializeBook(xml);
 			if (b != null) {
 				books.add(b);
+			} else {
+				throw new RuntimeException("deserialization problem: " + xml);
 			}
 		}
 		return books;
@@ -76,6 +78,8 @@ public abstract class SerializerUtil {
 			final Bookmark b = defaultSerializer.deserializeBookmark(xml);
 			if (b != null) {
 				bookmarks.add(b);
+			} else {
+				throw new RuntimeException("deserialization problem: " + xml);
 			}
 		}
 		return bookmarks;
