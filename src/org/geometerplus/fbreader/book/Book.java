@@ -46,6 +46,7 @@ public class Book {
 	private volatile String myEncoding;
 	private volatile String myLanguage;
 	private volatile String myTitle;
+	private volatile String mySortKey;
 	private volatile List<Author> myAuthors;
 	private volatile List<Tag> myTags;
 	private volatile SeriesInfo mySeriesInfo;
@@ -77,6 +78,7 @@ public class Book {
 			return;
 		}
 		myTitle = book.myTitle;
+		mySortKey = null;
 		myEncoding = book.myEncoding;
 		myLanguage = book.myLanguage;
 		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
@@ -112,6 +114,7 @@ public class Book {
 		myEncoding = null;
 		myLanguage = null;
 		myTitle = null;
+		mySortKey = null;
 		myAuthors = null;
 		myTags = null;
 		mySeriesInfo = null;
@@ -208,11 +211,19 @@ public class Book {
 	public String getTitle() {
 		return myTitle;
 	}
+	
+	public String getSortKey() {
+		if (mySortKey == null) {
+			mySortKey = TitleSort.trim(myTitle);
+		}
+		return mySortKey;
+	}
 
 	public void setTitle(String title) {
 		if (!MiscUtil.equals(myTitle, title)) {
 			myTitle = title;
 			myIsSaved = false;
+			mySortKey = null;
 		}
 	}
 
