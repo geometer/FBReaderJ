@@ -1,4 +1,7 @@
-===== 2.0 beta 8 (Feb ??, 2013) =====
+===== 2.0 beta 8 (Feb 23, 2013) =====
+* All changes for 1.7.2
+* No obfuscation (bug reports are easier to understand)
+* Fixed PDF plugin communication
 
 ===== 2.0 beta 7 (Feb 18, 2013) =====
 * 'Open book in external program' feature
