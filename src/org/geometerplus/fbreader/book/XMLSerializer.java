@@ -173,16 +173,16 @@ class XMLSerializer extends AbstractSerializer {
 			data = data.replaceAll("&", "&amp;");
 		}
 		if (data.indexOf('<') != -1) {
-			data = data.replaceAll("&", "&lt;");
+			data = data.replaceAll("<", "&lt;");
 		}
 		if (data.indexOf('>') != -1) {
-			data = data.replaceAll("&", "&gt;");
+			data = data.replaceAll(">", "&gt;");
 		}
 		if (data.indexOf('\'') != -1) {
-			data = data.replaceAll("&", "&apos;");
+			data = data.replaceAll("'", "&apos;");
 		}
 		if (data.indexOf('"') != -1) {
-			data = data.replaceAll("&", "&quot;");
+			data = data.replaceAll("\"", "&quot;");
 		}
 		return data;
 	}
