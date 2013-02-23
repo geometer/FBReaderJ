@@ -212,8 +212,8 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 				ref = attributeValue(xmlattributes, myBrokenHrefPredicate);
 			}
 			const char *vOffset = attributeValue(xmlattributes, "voffset");
-			char offset = (vOffset != 0) ? atoi(vOffset) : 0;
-			if ((ref != 0) && (*ref == '#')) {
+			char offset = vOffset != 0 ? std::atoi(vOffset) : 0;
+			if (ref != 0 && *ref == '#') {
 				++ref;
 				const bool isCoverImage =
 					myParagraphsBeforeBodyNumber ==
