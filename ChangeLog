@@ -1,3 +1,6 @@
+===== 1.7.3 (??? ??, 2013) =====
+* We do not obfuscate code
+
 ===== 1.7.2 (Feb 22, 2013) =====
 * Restored android:changes attribute for all activities
 * Fixed possible NPE in BookmarksActivity
