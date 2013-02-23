@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
 
 public class OPDSLinkReader {
-	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.7.xml";
+	static final String CATALOGS_URL = "http://udmv.net/android/generic-1.7.xml";
 	static final String FILE_NAME = "fbreader_catalogs-"
 			+ CATALOGS_URL.substring(CATALOGS_URL.lastIndexOf("/") + 1);
 
@@ -43,9 +43,12 @@ public class OPDSLinkReader {
 
 	public static List<INetworkLink> loadOPDSLinks(CacheMode cacheMode) throws ZLNetworkException {
 		final OPDSLinkXMLReader xmlReader = new OPDSLinkXMLReader();
-
+		
+		System.out.println("CATALOGS_URL: "+CATALOGS_URL);
+		
 		final File dirFile = new File(Paths.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
+			System.out.println("Cache is wiped! Reloading...");
 			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(CATALOGS_URL) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {

@@ -251,6 +251,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		}
 
 		if (litresRel != null) {
+			System.out.println("OPDSFeedHandler readCatalogItem Litres Catalog");
 			if (REL_BOOKSHELF.equals(litresRel)) {
 				return new LitResBookshelfItem(
 					opdsLink,
@@ -271,6 +272,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 				return null;
 			}
 		} else {
+			System.out.println("OPDSFeedHandler readCatalogItem OPDS Catalog");
 			return new OPDSCatalogItem(
 				opdsLink,
 				entry.Title,

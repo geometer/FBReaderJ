@@ -19,18 +19,22 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
-import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.atom.*;
+import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
-import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.rss.RSSNetworkLink;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 	private static class FeedHandler extends AbstractOPDSFeedHandler {
@@ -98,6 +102,9 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 					if (MimeType.APP_ATOM_XML.weakEquals(mime)) {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href, mime));
 					}
+					if (MimeType.APP_RSS_XML.weakEquals(mime)) {
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href, mime));
+					}
 				} else if (rel == "search") {
 					if (MimeType.APP_ATOM_XML.weakEquals(mime) || MimeType.TEXT_HTML.weakEquals(mime)) {
 						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href, mime);
@@ -120,7 +127,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.RecoverPassword, href, mime));
 				}
 			}
-
+			
 			if (siteName != null && title != null && infos.getInfo(UrlInfo.Type.Catalog) != null) {
 				myLinks.add(link(id, siteName, title, summary, language, infos));
 			}
@@ -137,30 +144,46 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		) {
 			final String titleString = title.toString();
 			final String summaryString = summary != null ? summary.toString() : null;
+			
+			UrlInfoWithDate ud = infos.getInfo(UrlInfo.Type.Catalog);
+			System.out.println("OPDSLinkXMLReader::processFeedEntry::link Create link with mime: "+ud.Mime.Name);
+			
+			if (!MimeType.APP_RSS_XML.weakEquals(ud.Mime)) {
+				System.out.println("!!1");
+				OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
+						OPDSNetworkLink.INVALID_ID,
+						id,
+						siteName,
+						titleString,
+						summaryString,
+						language,
+						infos
+					);
+				opdsLink.setRelationAliases(myRelationAliases);
+				opdsLink.setUrlRewritingRules(myUrlRewritingRules);
+				opdsLink.setExtraData(myExtraData);
 
-			OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
-				OPDSNetworkLink.INVALID_ID,
-				id,
-				siteName,
-				titleString,
-				summaryString,
-				language,
-				infos
-			);
-
-			opdsLink.setRelationAliases(myRelationAliases);
-			opdsLink.setUrlRewritingRules(myUrlRewritingRules);
-			opdsLink.setExtraData(myExtraData);
-
-			if (myAuthenticationType == "litres") {
-				opdsLink.setAuthenticationManager(
-					NetworkAuthenticationManager.createManager(
-						opdsLink, LitResAuthenticationManager.class
-					)
-				);
-			}
-
-			return opdsLink;
+				if (myAuthenticationType == "litres") {
+					opdsLink.setAuthenticationManager(
+						NetworkAuthenticationManager.createManager(
+							opdsLink, LitResAuthenticationManager.class
+						)
+					);
+				}
+				return opdsLink;
+			}else{
+				System.out.println("!!2");
+				RSSNetworkLink rssLink = new RSSNetworkLink(
+						OPDSNetworkLink.INVALID_ID,
+						siteName,
+						titleString,
+						summaryString,
+						language,
+						infos
+					);
+				rssLink.setExtraData(myExtraData);
+				return rssLink;
+			}			
 		}
 
 		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {

@@ -41,7 +41,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
-	OPDSNetworkLink(int id, String siteName, String title, String summary, String language,
+	protected OPDSNetworkLink(int id, String siteName, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, siteName, title, summary, language, infos);
 	}
@@ -86,6 +86,9 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		if (url == null) {
 			return null;
 		}
+		
+		System.out.println("OPDSNetworkLink createNetworkData: "+url+", mime: "+mime.Name);
+		
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
 		library.startLoading(catalogItem);
@@ -118,6 +121,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 
 	@Override
 	public OPDSCatalogItem.State createOperationData(NetworkItemsLoader loader) {
+		System.out.println("OPDSNetworkLink createOperationData");
 		return new OPDSCatalogItem.State(this, loader);
 	}
 
@@ -130,14 +134,21 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 			pattern = URLEncoder.encode(pattern, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 		}
+		
+		System.out.println("OPDSNetworkLink simpleSearchRequest url: "+info.Url);
+		
 		return createNetworkData(info.Url.replace("%s", pattern), info.Mime, (OPDSCatalogItem.State)data);
 	}
 
 	public ZLNetworkRequest resume(NetworkOperationData data) {
+		
+		System.out.println("OPDSNetworkLink resume url: "+data.ResumeURI);
+		
 		return createNetworkData(data.ResumeURI, MimeType.APP_ATOM_XML, (OPDSCatalogItem.State)data);
 	}
 
 	public NetworkCatalogItem libraryItem() {
+		System.out.println("OPDSNetworkLink::libraryItem()");
 		final UrlInfoCollection<UrlInfo> urlMap = new UrlInfoCollection<UrlInfo>();
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));

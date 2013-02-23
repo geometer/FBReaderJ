@@ -78,6 +78,8 @@ public final class MimeType {
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_ATOM_XML = get("application/atom+xml");
 	public static final MimeType APP_ATOM_XML_ENTRY = get("application/atom+xml;type=entry");
+	
+	public static final MimeType APP_RSS_XML = get("application/rss+xml");
 	// ???
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
     // unofficial, used in data.fbreader.org LitRes catalog
