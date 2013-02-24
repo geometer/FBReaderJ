@@ -25,9 +25,4 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.android.fbreader.libraryService.LibraryService;
 
 public class FBReaderApplication extends ZLAndroidApplication {
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		startService(new Intent(this, LibraryService.class));
-	}
 }
