@@ -1,4 +1,5 @@
 ===== 1.7.3 (??? ??, 2013) =====
+* Library service start is not forced
 * We do not obfuscate code
 
 ===== 1.7.2 (Feb 22, 2013) =====
