@@ -28,6 +28,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.*;
@@ -186,7 +187,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			description = myResource.getResource("noDescription").getValue();
 		}
 		final TextView descriptionView = (TextView)findViewById(R.id.network_book_description);
-		descriptionView.setText(description);
+		descriptionView.setText(Html.fromHtml(description.toString()));
 		descriptionView.setMovementMethod(new LinkMovementMethod());
 		descriptionView.setTextColor(
 			ColorStateList.valueOf(descriptionView.getTextColors().getDefaultColor())

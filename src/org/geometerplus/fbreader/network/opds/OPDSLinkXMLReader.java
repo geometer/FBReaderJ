@@ -146,10 +146,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			final String summaryString = summary != null ? summary.toString() : null;
 			
 			UrlInfoWithDate ud = infos.getInfo(UrlInfo.Type.Catalog);
-			System.out.println("OPDSLinkXMLReader::processFeedEntry::link Create link with mime: "+ud.Mime.Name);
 			
 			if (!MimeType.APP_RSS_XML.weakEquals(ud.Mime)) {
-				System.out.println("!!1");
 				OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
 						OPDSNetworkLink.INVALID_ID,
 						id,
@@ -172,7 +170,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				}
 				return opdsLink;
 			}else{
-				System.out.println("!!2");
 				RSSNetworkLink rssLink = new RSSNetworkLink(
 						OPDSNetworkLink.INVALID_ID,
 						siteName,

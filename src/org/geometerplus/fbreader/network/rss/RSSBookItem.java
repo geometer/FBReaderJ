@@ -4,21 +4,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.atom.ATOMAuthor;
 import org.geometerplus.fbreader.network.atom.ATOMCategory;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class RSSBookItem extends NetworkBookItem {
 	
-	public RSSBookItem(
-			RSSNetworkLink link, String id, int index,
+	public RSSBookItem(RSSNetworkLink link, String id, int index,
 			CharSequence title, CharSequence summary,
 			List<AuthorData> authors, List<String> tags,
 			String seriesTitle, float indexInSeries,
-			UrlInfoCollection<?> urls
-		) {
-			super(
-				link, id, index,
+			UrlInfoCollection<?> urls) {
+			super(link, id, index,
 				title, summary,
 				authors, tags,
 				seriesTitle, indexInSeries,
@@ -27,12 +24,9 @@ public class RSSBookItem extends NetworkBookItem {
 		}
 	
 	RSSBookItem(RSSNetworkLink networkLink, RSSItem entry, String baseUrl, int index) {
-		this(
-			networkLink, entry.Id.Uri, index,
+		this(networkLink, entry.Id.Uri, index,
 			entry.Title, getAnnotation(entry),
-			getAuthors(entry), getTags(entry),
-			entry.SeriesTitle+index, index,
-			getUrls(networkLink, entry, baseUrl)
+			getAuthors(entry), getTags(entry), null, 0, null
 		);
 	}
 	
@@ -48,6 +42,9 @@ public class RSSBookItem extends NetworkBookItem {
 	
 	private static List<AuthorData> getAuthors(RSSItem entry) {
 		final LinkedList<AuthorData> authors = new LinkedList<AuthorData>();
+		for (ATOMAuthor author: entry.Authors) {
+			authors.add(new AuthorData(author.Name, null));
+		}
 		return authors;
 	}
 	
@@ -63,10 +60,5 @@ public class RSSBookItem extends NetworkBookItem {
 			}
 		}
 		return tags;
-	}
-	
-	private static UrlInfoCollection<UrlInfo> getUrls(RSSNetworkLink networkLink, RSSItem entry, String baseUrl) {
-		final UrlInfoCollection<UrlInfo> urls = new UrlInfoCollection<UrlInfo>();
-		return urls;
 	}
 }

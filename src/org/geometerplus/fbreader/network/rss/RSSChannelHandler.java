@@ -11,18 +11,14 @@ public class RSSChannelHandler extends AbstractRSSChannelHandler {
 	private final RSSCatalogItem.State myData;
 
 	private int myIndex;
-
-	private String myNextURL;
 	private String mySkipUntilId;
 	private boolean myFoundNewIds;
-
-	private int myItemsToLoad = -1;
 	
 	/**
-	 * Creates new OPDSFeedHandler instance that can be used to get NetworkItem objects from OPDS feeds.
+	 * Creates new RSSChannelHandler instance that can be used to get NetworkItem objects from RSS feeds.
 	 *
-	 * @param baseURL    string that contains URL of the OPDS feed, that will be read using this instance of the reader
-	 * @param result     network results buffer. Must be created using OPDSNetworkLink corresponding to the OPDS feed,
+	 * @param baseURL    string that contains URL of the RSS feed, that will be read using this instance of the reader
+	 * @param result     network results buffer. Must be created using RSSNetworkLink corresponding to the RSS feed,
 	 *                   that will be read using this instance of the reader.
 	 */
 	RSSChannelHandler(String baseURL, RSSCatalogItem.State result) {
@@ -39,27 +35,20 @@ public class RSSChannelHandler extends AbstractRSSChannelHandler {
 
 	@Override
 	public void processFeedStart() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public boolean processFeedMetadata(RSSChannelMetadata feed,
 			boolean beforeEntries) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean processFeedEntry(RSSItem entry) {
-		System.out.println("!!!!!!!! processFeedEntry !!!!!!");
-		
-		final RSSNetworkLink rssLink = (RSSNetworkLink)myData.Link;
-		boolean hasBookLink = true;
 		
 		if (entry.Id == null) {
-			
 			entry.Id = new ATOMId();
-			entry.Id.Uri = "id"+myIndex;//TODO Fix it, udmv
+			entry.Id.Uri = "id_"+myIndex;
 		}
 
 		myData.LastLoadedId = entry.Id.Uri;
@@ -68,10 +57,8 @@ public class RSSChannelHandler extends AbstractRSSChannelHandler {
 		}
 		myData.LoadedIds.add(entry.Id.Uri);
 		
-		NetworkItem item = null;
-		if (hasBookLink) {
-			item = new RSSBookItem((RSSNetworkLink)myData.Link, entry, myBaseURL, myIndex++);
-		} 
+		NetworkItem item = new RSSBookItem((RSSNetworkLink)myData.Link, entry, myBaseURL, myIndex++);
+		
 		if (item != null) {
 			myData.Loader.onNewItem(item);
 		}
@@ -80,8 +67,6 @@ public class RSSChannelHandler extends AbstractRSSChannelHandler {
 
 	@Override
 	public void processFeedEnd() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

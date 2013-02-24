@@ -22,24 +22,20 @@ public class RSSCatalogItem extends NetworkURLCatalogItem {
 		}
 	}
 	private State myLoadingState;
-	private final Map<String,String> myExtraData; //udmv, need it?
 	
 	protected RSSCatalogItem(INetworkLink link, CharSequence title,
 			CharSequence summary, UrlInfoCollection<?> urls,
-			Accessibility accessibility, int flags, Map<String,String> extraData) {
+			Accessibility accessibility, int flags) {
 		super(link, title, summary, urls, accessibility, flags);
-
-		myExtraData = extraData;
 	}
 
 	@Override
 	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
-		System.out.println("RSSCatalogItem::loadChildren()");
 		
 		final RSSNetworkLink rssLink = (RSSNetworkLink)Link;
 		myLoadingState = rssLink.createOperationData(loader);
 		
-		doLoadChildren(rssLink.createNetworkData(getCatalogUrl(), MimeType.APP_ATOM_XML, myLoadingState));
+		doLoadChildren(rssLink.createNetworkData(getCatalogUrl(), MimeType.APP_RSS_XML, myLoadingState));
 	}
 	
 	private void doLoadChildren(ZLNetworkRequest networkRequest) throws ZLNetworkException {

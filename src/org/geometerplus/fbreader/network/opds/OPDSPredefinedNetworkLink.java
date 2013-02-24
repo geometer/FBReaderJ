@@ -28,7 +28,6 @@ public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPrede
 	public OPDSPredefinedNetworkLink(int id, String predifinedId, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, siteName, title, summary, language, infos);
 		myPredefinedId = predifinedId;
-		System.out.println("OPDSPredefinedNetworkLink created: "+siteName);
 	}
 
 	public Type getType() {

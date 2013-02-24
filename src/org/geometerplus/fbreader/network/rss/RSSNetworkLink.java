@@ -27,8 +27,6 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 	public RSSNetworkLink(int id, String siteName, String title, String summary,
 			String language, UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, siteName, title, summary, language, infos);
-		// TODO Auto-generated constructor stub
-		System.out.println("RSSNetworkLink created: "+siteName);
 	}
 	
 	ZLNetworkRequest createNetworkData(String url, MimeType mime, final RSSCatalogItem.State result) {
@@ -36,35 +34,23 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 			return null;
 		}
 		
-		System.out.println("RSSNetworkLink::createNetworkData() url: "+url+", mime: "+mime.Name);
-		
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		System.out.println("RSSNetworkLink::createNetworkData() 1");
 		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
-		System.out.println("RSSNetworkLink::createNetworkData() 2");
 		library.startLoading(catalogItem);
-		System.out.println("RSSNetworkLink::createNetworkData() 3 catalogItem: "+catalogItem);
-		//url = rewriteUrl(url, false);
-		System.out.println("RSSNetworkLink::createNetworkData() 4 url: "+url);
+
 		return new ZLNetworkRequest(url, mime, null, false) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				System.out.println("handleStream 1");
 				if (result.Loader.confirmInterruption()) {
 					return;
 				}
-				System.out.println("handleStream 2");
-				new RSSXMLReader(
-					new RSSChannelHandler(getURL(), result), false
-				).read(inputStream);
+
+				new RSSXMLReader(new RSSChannelHandler(getURL(), result), false).read(inputStream);
 				
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
-					// reset state to load current page from the beginning
-					System.out.println("handleStream 3.1");
 					result.LastLoadedId = null;
 				} else {
-					System.out.println("handleStream 3.2");
 					result.Loader.getTree().confirmAllItems();
 				}
 			}
@@ -78,7 +64,6 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 
 	@Override
 	public RSSCatalogItem.State createOperationData(NetworkItemsLoader loader) {
-		System.out.println("RSSNetworkLink createOperationData");
 		return new RSSCatalogItem.State(this, loader);
 	}
 	
@@ -108,7 +93,6 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 
 	@Override
 	public NetworkCatalogItem libraryItem() {
-		System.out.println("RSSNetworkLink::libraryItem()");
 		final UrlInfoCollection<UrlInfo> urlMap = new UrlInfoCollection<UrlInfo>();
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));
@@ -119,8 +103,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 			getSummary(),
 			urlMap,
 			RSSCatalogItem.Accessibility.ALWAYS,
-			RSSCatalogItem.FLAGS_DEFAULT | OPDSCatalogItem.FLAG_ADD_SEARCH_ITEM,
-			myExtraData
+			RSSCatalogItem.FLAGS_DEFAULT | RSSCatalogItem.FLAG_ADD_SEARCH_ITEM
 		);
 	}
 
