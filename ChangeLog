@@ -1,4 +1,15 @@
-===== 1.7 (Feb ??, 2013) =====
+===== 1.7.3 (??? ??, 2013) =====
+* Library service start is not forced
+* We do not obfuscate code
+
+===== 1.7.2 (Feb 22, 2013) =====
+* Restored android:changes attribute for all activities
+* Fixed possible NPE in BookmarksActivity
+
+===== 1.7.1 (Feb 18, 2013) =====
+* Fixed several NPEs
+
+===== 1.7 (Feb 17, 2013) =====
 * Introduced library service; FBReader loads library in background
 * Fixed issue for XHTML files with several body tags (sometimes produced by Calibre)
 * Fixed navigation popup text

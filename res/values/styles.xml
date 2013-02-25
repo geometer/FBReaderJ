@@ -1,8 +1,6 @@
 <resources>
   <style name="FBReader.Activity" parent="android:Theme">
-		<item name="android:configChanges">orientation|keyboardHidden</item>
 	</style>
   <style name="FBReader.Dialog" parent="android:Theme.Dialog">
-		<item name="android:configChanges">orientation|keyboardHidden</item>
 	</style>
 </resources>
