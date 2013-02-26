@@ -20,34 +20,65 @@ package org.geometerplus.fbreader.book;
  */
 
 import java.text.Normalizer;
-import java.util.Comparator;
+import java.util.*;
+
+import org.geometerplus.fbreader.library.BookTree;
 
 import android.annotation.TargetApi;
 import android.os.Build;
 
-public class TitleSort implements Comparator<Book> {
+public class TitleSort implements Comparator<BookTree> {
+	
 	@Override
-	public int compare(Book book1, Book book2) {
-		return book1.getSortKey().compareTo(book2.getSortKey());
+	public int compare(BookTree bookTree1, BookTree bookTree2) {
+		return bookTree1.Book.getSortKey().compareTo(bookTree2.Book.getSortKey());
 	}
-
-	private final static String[] ARTICLES = new String[] {
-		//English
-		"the ", "a ", "an ",
-		//French
-		"un ", "une ", "le ", "la ", "les ", "du ", "de ", "des ", "l ", "d ",
-		//Deutsch
+	
+	private final static Map<String, String[]> ARTICLES = new HashMap<String, String[]>();
+	// English articles
+	private final static String[] EN_ARTICLES = new String[] {
+		"the ", "a ", "an "
+		};
+	// French articles
+	private final static String[] FR_ARTICLES = new String[] {
+		"un ", "une ", "le ", "la ", "les ", "du ", "de ",
+		"des ", "de la", "l ", "de l "
+		};
+	// German articles
+	private final static String[] GE_ARTICLES = new String[] {
 		"das ", "des ", "dem ", "die ", "der ", "den ",
 		"ein ", "eine ", "einer ", "einem ", "einen ", "eines "
 	};
+	// Italian articles
+	private final static String[] IT_ARTICLES = new String[] {
+		"il ", "lo ", "la ", "l ", "un ", "uno ", "una ",
+		"i ", "gli ", "le "
+	};
+	// Spanish articles
+	private final static String[] SP_ARTICLES = new String[] {
+		"el ", "la ", "los ", "las ", "un ", "unos ", "una ", "unas "
+	};
+	
+	static {
+		ARTICLES.put("english", EN_ARTICLES);
+		ARTICLES.put("french", FR_ARTICLES);
+		ARTICLES.put("german", GE_ARTICLES);
+		ARTICLES.put("italian", IT_ARTICLES);
+		ARTICLES.put("spanish", SP_ARTICLES);
+		}
 
-	public static String trim(String s) {
+	public static String trim(String s, String language) {
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			s = normalize(s);
 		}
 		final StringBuilder buffer = new StringBuilder();
 		boolean afterSpace = false;
-		for (int i = 0; i < s.length(); i++) {
+		int start = 0;
+		if(s.startsWith("M\'") || s.startsWith("Mc")) {
+			buffer.append("Mac");
+			start = 2;
+		}
+		for (int i = start; i < s.length(); i++) {
 			char ch = s.charAt(i);
 			// In case it is d' or l', may be it is "I'm", but it's OK.
 			if (ch == '\'' || Character.isWhitespace(ch)) {
@@ -79,7 +110,10 @@ public class TitleSort implements Comparator<Book> {
 		}
 
 		final String result = buffer.toString();
-		for (String a : ARTICLES) {
+		if (result.startsWith("a is")) {
+			return result;
+		}
+		for (String a : ARTICLES.get(language.toLowerCase())) {
 			if (result.startsWith(a)) {
 				return result.substring(a.length());
 			}
