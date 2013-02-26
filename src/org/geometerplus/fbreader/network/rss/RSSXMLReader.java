@@ -85,51 +85,47 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	public boolean startElementHandler(String ns, String tag, ZLStringMap attributes, String bufferContent) {
 		switch (myState) {
 			case START:
-				if(testTag(ns, TAG_RSS, tag)) {
+				if(testTag(TAG_RSS, tag, ns, null)) {
 					myState = RSS;
 				}
 				break;
 			case RSS:
-	            if (testTag(ns, TAG_CHANNEL, tag)) {
+	            if (testTag(TAG_CHANNEL, tag, ns, null)) {
 	                myState = CHANNEL;
 	            }
 	            break;
 			case CHANNEL:
-	            if (testTag(ns, TAG_TITLE, tag)) {
+	            if (testTag(TAG_TITLE, tag, ns, null)) {
 	                myState = C_TITLE;
 	            }
-	            if (testTag(ns, TAG_LINK, tag)) {                
+	            if (testTag(TAG_LINK, tag, ns, null)) {                
 	                myState = C_LINK;
 	            }
-	            if (testTag(ns, TAG_ITEM, tag)) {
+	            if (testTag(TAG_ITEM, tag, ns, null)) {
 	            	myItem = myFeedHandler.createEntry(attributes);
 	                myState = ITEM;
 	            }
 	            break;
 	        case ITEM:
-	            if (testTag(ns, TAG_TITLE, tag)) {
+	            if (testTag(TAG_TITLE, tag, ns, null)) {
 	            	myAuthor = new RSSAuthor(attributes);
 	                myState = TITLE;
 	            }
-	            if (testTag(ns, TAG_LINK, tag)) {
+	            if (testTag(TAG_LINK, tag, ns, null)) {
 	                myState = LINK;
 	            }
-	            if (testTag(ns, TAG_DESCRIPTION, tag)) {
+	            if (testTag(TAG_DESCRIPTION, tag, ns, null)) {
 	                myState = DESCRIPTION;
 	            }
-	            if (testTag(ns, TAG_GUID, tag)) {
+	            if (testTag(TAG_GUID, tag, ns, null)) {
 	            	myId = new ATOMId();
 	                myState = GUID;
 	            }
-	            if (testTag(ns, TAG_PUBDATE, tag)) {
+	            if (testTag(TAG_PUBDATE, tag, ns, null)) {
 	                myState = PUBDATE;
 	            }
 		}
 		return false;
-	}
-	
-	public boolean testTag(String ns, String name, String tag){
-		return (ns == XMLNamespaces.Atom && name == tag) ? true : false;
 	}
 	
 	public boolean endElementHandler(String ns, String tag, String bufferContent) {
@@ -137,32 +133,32 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 			case START:
 				break;
 			case RSS:
-				if (testTag(ns, TAG_RSS, tag)) {
+				if (testTag(TAG_RSS, tag, ns, null)) {
 					myState = START;
 				}
 				break;
 			case CHANNEL:
-				if (testTag(ns, TAG_CHANNEL, tag)) {
+				if (testTag(TAG_CHANNEL, tag, ns, null)) {
 					myState = RSS;
 				}
 				break;
 			case C_TITLE:
-				if (testTag(ns, TAG_TITLE, tag)) {
+				if (testTag(TAG_TITLE, tag, ns, null)) {
 					myState = CHANNEL;
 				}
 				break;
 			case C_LINK:
-				if (testTag(ns, TAG_LINK, tag)) {                
+				if (testTag(TAG_LINK, tag, ns, null)) {                
 					myState = CHANNEL;
 				}
 				break;
 			case ITEM:
-				if (testTag(ns, TAG_ITEM, tag)) {
+				if (testTag(TAG_ITEM, tag, ns, null)) {
 					myFeedHandler.processFeedEntry(myItem);
 					myState = CHANNEL;
 				}
 			case TITLE:
-				if (testTag(ns, TAG_TITLE, tag)) {
+				if (testTag(TAG_TITLE, tag, ns, null)) {
 					String mark = "~ by:";
 					int foundIndex = bufferContent.indexOf(mark);
 					if(foundIndex >= 0){
@@ -181,7 +177,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 				}
 				break;
 			case GUID:
-				if (testTag(ns, TAG_GUID, tag)) {
+				if (testTag(TAG_GUID, tag, ns, null)) {
 					if(myId != null){
 						myId.Uri = bufferContent;
 						myItem.Id = myId;
@@ -191,23 +187,32 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 				}
 				break;
 			case DESCRIPTION:
-				if (testTag(ns, TAG_DESCRIPTION, tag)) {
+				if (testTag(TAG_DESCRIPTION, tag, ns, null)) {
 					myItem.Summary = bufferContent;
 					myState = ITEM;
 				}
 				break;
 			case PUBDATE:
-				if (testTag(ns, TAG_PUBDATE, tag)) {
+				if (testTag(TAG_PUBDATE, tag, ns, null)) {
 					myState = ITEM;
 				}
 				break;
 			case LINK:
-				if (testTag(ns, TAG_LINK, tag)) {
+				if (testTag(TAG_LINK, tag, ns, null)) {
 					myState = ITEM;
 				}
 				break;
 		}
 		return false;
+	}
+	
+	public boolean testTag(String name, String tag, String ns, String nsName){
+		return (name == tag && ns == nsName) ? true : false;
+	}
+	
+	@Override
+	public final boolean processNamespaces() {
+		return true;
 	}
 	
 	@Override
@@ -216,7 +221,11 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	}
 	
 	protected final String getNamespace(String prefix) {
-		return XMLNamespaces.Atom;
+		if (myNamespaceMap == null) {
+			return null;
+		}
+		final String ns = myNamespaceMap.get(prefix);
+		return ns != null ? ns.intern() : null;
 	}
 	
 	private final String extractBufferContent() {
