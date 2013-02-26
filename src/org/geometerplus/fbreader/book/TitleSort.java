@@ -1,5 +1,3 @@
-package org.geometerplus.fbreader.book;
-
 /*
  * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
@@ -18,6 +16,8 @@ package org.geometerplus.fbreader.book;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
+package org.geometerplus.fbreader.book;
 
 import java.text.Normalizer;
 import java.util.*;
