@@ -22,10 +22,8 @@ package org.geometerplus.fbreader.book;
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.*;
-import java.io.InputStream;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.io.*;
+import java.security.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -214,7 +212,7 @@ public class Book {
 	
 	public String getSortKey() {
 		if (mySortKey == null) {
-			mySortKey = TitleSort.trim(myTitle);
+			mySortKey = TitleSort.trim(myTitle, myLanguage);
 		}
 		return mySortKey;
 	}
