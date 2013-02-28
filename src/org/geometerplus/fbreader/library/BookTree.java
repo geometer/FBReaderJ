@@ -26,7 +26,6 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 public class BookTree extends LibraryTree {
 	public final Book Book;
-	private TitleSort myComparator;
 	
 	BookTree(IBookCollection collection, Book book) {
 		super(collection);
@@ -62,13 +61,6 @@ public class BookTree extends LibraryTree {
 	protected String getStringId() {
 		return "@BookTree " + getName();
 	}
-	
-	private TitleSort getComparator() {
-		if (myComparator == null) {
-			return myComparator = new TitleSort();
-		}
-		return myComparator;
-	}
 
 	@Override
 	protected ZLImage createCover() {
@@ -82,13 +74,7 @@ public class BookTree extends LibraryTree {
 
 	@Override
 	public int compareTo(FBTree tree) {
-		final int cmp;
-		if (tree instanceof BookTree) {
-			cmp = getComparator().compare(this, (BookTree)tree);
-		}
-		else {
-			cmp = super.compareTo(tree);
-		}
+		final int cmp = super.compareTo(tree);
 		if (cmp == 0 && tree instanceof BookTree) {
 			final Book b = ((BookTree)tree).Book;
 			if (Book != null && b != null) {
