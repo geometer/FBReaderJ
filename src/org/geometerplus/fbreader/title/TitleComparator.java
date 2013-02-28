@@ -24,6 +24,6 @@ import java.util.*;
 public class TitleComparator implements Comparator<Title> {
 	@Override
 	public int compare(Title title0, Title title1) {
-		return title0.getKeySort().compareTo(title1.getKeySort());
+		return title0.getSortKey().compareTo(title1.getSortKey());
 	}
 }
