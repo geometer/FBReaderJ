@@ -24,34 +24,35 @@ import java.util.Collections;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.title.Title;
 
 public final class SeriesTree extends LibraryTree {
-	public final String Series;
+	public final Title Series;
 	public final Author Author;
 
 	SeriesTree(IBookCollection collection, String series, Author author) {
 		super(collection);
-		Series = series;
+		Series = new Title(series, null);
 		Author = author;
 	}
 
 	SeriesTree(LibraryTree parent, String series, Author author, int position) {
 		super(parent, position);
-		Series = series;
+		Series = new Title(series, null);
 		Author = author;
 	}
 
 	@Override
 	public String getName() {
-		return Series;
+		return Series.getTitle();
 	}
 
 	@Override
 	public String getSummary() {
 		if (Author != null) {
-			return MiscUtil.join(Collection.titlesForSeriesAndAuthor(Series, Author, 5), ", ");
+			return MiscUtil.join(Collection.titlesForSeriesAndAuthor(Series.getTitle(), Author, 5), ", ");
 		} else {
-			return MiscUtil.join(Collection.titlesForSeries(Series, 5), ", ");
+			return MiscUtil.join(Collection.titlesForSeries(Series.getTitle(), 5), ", ");
 		}
 	}
 
@@ -83,11 +84,11 @@ public final class SeriesTree extends LibraryTree {
 	public void waitForOpening() {
 		clear();
 		if (Author != null) {
-			for (Book book : Collection.booksForSeriesAndAuthor(Series, Author)) {
+			for (Book book : Collection.booksForSeriesAndAuthor(Series.getTitle(), Author)) {
 				createBookInSeriesSubTree(book);
 			}
 		} else {
-			for (Book book : Collection.booksForSeries(Series)) {
+			for (Book book : Collection.booksForSeries(Series.getTitle())) {
 				createBookInSeriesSubTree(book);
 			}
 		}
