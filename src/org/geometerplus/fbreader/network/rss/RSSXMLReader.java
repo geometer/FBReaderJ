@@ -2,11 +2,15 @@ package org.geometerplus.fbreader.network.rss;
 
 import java.util.Map;
 
+import org.geometerplus.fbreader.network.atom.ATOMCategory;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 import org.geometerplus.fbreader.network.atom.ATOMId;
+import org.geometerplus.fbreader.network.atom.FormattedBuffer;
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+
+import android.net.Uri;
 
 public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType extends RSSItem> extends ZLXMLReaderAdapter {
 	
@@ -19,8 +23,10 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	private final ATOMFeedHandler<MetadataType,EntryType> myFeedHandler;
 	private Map<String,String> myNamespaceMap;
 	private final StringBuilder myBuffer = new StringBuilder();
+	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
 	private EntryType myItem;
 	private RSSAuthor myAuthor;
+	private RSSCategory myCategory;
 	private ATOMId myId;
 	
 	private static final int START = 0;
@@ -43,6 +49,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	protected static final String TAG_CHANNEL = "channel";
 	protected static final String TAG_ITEM = "item";
 	protected static final String TAG_TITLE = "title";
+	protected static final String TAG_CATEGORY = "category";
 	protected static final String TAG_LINK = "link";
 	protected static final String TAG_GUID = "guid";
 	protected static final String TAG_DESCRIPTION = "description";
@@ -117,6 +124,9 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	            if (testTag(TAG_DESCRIPTION, tag, ns, null)) {
 	                myState = DESCRIPTION;
 	            }
+	            if (testTag(TAG_CATEGORY, tag, ns, null)) {
+	                myState = CATEGORY;
+	            }
 	            if (testTag(TAG_GUID, tag, ns, null)) {
 	            	myId = new ATOMId();
 	                myState = GUID;
@@ -166,7 +176,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 							String title = bufferContent.substring(0, foundIndex);
 							myItem.Title = title;
 							String authorName = bufferContent.substring(foundIndex+mark.length());
-							myAuthor.Name = authorName;
+							myAuthor.Name = authorName.trim();
 							myItem.Authors.push(myAuthor);
 							myAuthor = null;
 						}
@@ -188,7 +198,24 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 				break;
 			case DESCRIPTION:
 				if (testTag(TAG_DESCRIPTION, tag, ns, null)) {
-					myItem.Summary = bufferContent;
+					myFormattedBuffer.reset(FormattedBuffer.Type.Html);
+					myFormattedBuffer.appendText(makeFormat(bufferContent));
+					myItem.Summary = myFormattedBuffer.getText();
+					myState = ITEM;
+				}
+				break;
+			case CATEGORY:
+				if (testTag(TAG_CATEGORY, tag, ns, null)) {
+					String[] tokens = bufferContent.split(", ");
+					for (String str : tokens){
+						ZLStringMap source = new ZLStringMap();
+						source.put(RSSCategory.LABEL, str);
+						myCategory = new RSSCategory(source);
+						if(myCategory != null){
+							myItem.Categories.push(myCategory);
+						}
+						myCategory = null;
+					}
 					myState = ITEM;
 				}
 				break;
@@ -204,6 +231,22 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 				break;
 		}
 		return false;
+	}
+	
+	private String makeFormat(String buffer){
+		//TODO: maybe need to make the text more readable?
+		StringBuffer s1 = new StringBuffer(buffer);
+		int index;
+		String[] marks = {"Author:", "Price:", "Rating:"};
+		
+		for(int i=0; i< marks.length; i++){
+			index = s1.indexOf(marks[i]);
+			if(index >= 0){
+				s1.insert(index, "<br/>");
+			}
+		}
+		
+		return s1.toString();
 	}
 	
 	public boolean testTag(String name, String tag, String ns, String nsName){
