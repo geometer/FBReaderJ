@@ -211,7 +211,7 @@ public class Book {
 	}
 
 	public void setTitle(String title) {
-		if (!MiscUtil.equals(myTitle, title)) {
+		if (!MiscUtil.equals(myTitle.getTitle(), title)) {
 			myTitle.setTitle(title);
 			myIsSaved = false;
 		}
