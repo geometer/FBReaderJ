@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.title.Title;
 
 public class Book {
 	public final ZLFile File;
@@ -58,7 +59,7 @@ public class Book {
 	Book(long id, ZLFile file, String title, String encoding, String language) {
 		myId = id;
 		File = file;
-		myTitle = title;
+		myTitle = new Title(title, language);
 		myEncoding = encoding;
 		myLanguage = language;
 		myIsSaved = true;
@@ -77,7 +78,6 @@ public class Book {
 			return;
 		}
 		myTitle = book.myTitle;
-		mySortKey = null;
 		myEncoding = book.myEncoding;
 		myLanguage = book.myLanguage;
 		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
@@ -113,7 +113,6 @@ public class Book {
 		myEncoding = null;
 		myLanguage = null;
 		myTitle = null;
-		mySortKey = null;
 		myAuthors = null;
 		myTags = null;
 		mySeriesInfo = null;
@@ -122,7 +121,7 @@ public class Book {
 
 		plugin.readMetaInfo(this);
 
-		if (myTitle == null || myTitle.length() == 0) {
+		if (myTitle.getTitle() == null || myTitle.getTitle().length() == 0) {
 			final String fileName = File.getShortName();
 			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
@@ -208,21 +207,13 @@ public class Book {
 	}
 
 	public String getTitle() {
-		return myTitle;
-	}
-	
-	public String getSortKey() {
-		if (mySortKey == null) {
-			mySortKey = TitleSort.trim(myTitle, myLanguage);
-		}
-		return mySortKey;
+		return myTitle.getTitle();
 	}
 
 	public void setTitle(String title) {
 		if (!MiscUtil.equals(myTitle, title)) {
-			myTitle = title;
+			myTitle.setTitle(title);
 			myIsSaved = false;
-			mySortKey = null;
 		}
 	}
 
@@ -323,7 +314,7 @@ public class Book {
 	}
 
 	public boolean matches(String pattern) {
-		if (myTitle != null && MiscUtil.matchesIgnoreCase(myTitle, pattern)) {
+		if (myTitle.getTitle() != null && MiscUtil.matchesIgnoreCase(myTitle.getTitle(), pattern)) {
 			return true;
 		}
 		if (mySeriesInfo != null && MiscUtil.matchesIgnoreCase(mySeriesInfo.Title, pattern)) {
@@ -358,9 +349,9 @@ public class Book {
 			public void run() {
 				if (myId >= 0) {
 					final FileInfoSet fileInfos = new FileInfoSet(database, File);
-					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
+					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle.getTitle());
 				} else {
-					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
+					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle.getTitle());
 					if (myId != -1 && myVisitedHyperlinks != null) {
 						for (String linkId : myVisitedHyperlinks) {
 							database.addVisitedHyperlink(myId, linkId);
