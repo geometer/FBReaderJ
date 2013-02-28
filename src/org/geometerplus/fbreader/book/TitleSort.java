@@ -22,15 +22,12 @@ package org.geometerplus.fbreader.book;
 import java.text.Normalizer;
 import java.util.*;
 
-import org.geometerplus.fbreader.library.BookTree;
-
 import android.annotation.TargetApi;
 import android.os.Build;
 
-public class TitleSort implements Comparator<BookTree> {
-	
+public class TitleComparator implements Comparator<Title> {
 	@Override
-	public int compare(BookTree bookTree1, BookTree bookTree2) {
+	public int compare(Title title0, Title title1) {
 		return bookTree1.Book.getSortKey().compareTo(bookTree2.Book.getSortKey());
 	}
 	
@@ -60,12 +57,12 @@ public class TitleSort implements Comparator<BookTree> {
 	};
 	
 	static {
-		ARTICLES.put("english", EN_ARTICLES);
-		ARTICLES.put("french", FR_ARTICLES);
-		ARTICLES.put("german", GE_ARTICLES);
-		ARTICLES.put("italian", IT_ARTICLES);
-		ARTICLES.put("spanish", SP_ARTICLES);
-		}
+		ARTICLES.put("en", EN_ARTICLES);
+		ARTICLES.put("fr", FR_ARTICLES);
+		ARTICLES.put("de", GE_ARTICLES);
+		ARTICLES.put("it", IT_ARTICLES);
+		ARTICLES.put("es", SP_ARTICLES);
+	}
 
 	public static String trim(String s, String language) {
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
