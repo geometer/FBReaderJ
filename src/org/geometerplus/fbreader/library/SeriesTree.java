@@ -24,7 +24,7 @@ import java.util.Collections;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.title.Title;
+import org.geometerplus.fbreader.sort.Title;
 
 public final class SeriesTree extends LibraryTree {
 	public final Title Series;
@@ -67,7 +67,7 @@ public final class SeriesTree extends LibraryTree {
 			return false;
 		}
 		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Title);
+		return info != null && Series.getTitle().equals(info.Title);
 	}
 
 	@Override
@@ -120,5 +120,11 @@ public final class SeriesTree extends LibraryTree {
 			new BookInSeriesTree(this, book, - position - 1);
 			return true;
 		}
+	}
+
+	@Override
+	public Title getTitle() {
+		// TODO Auto-generated method stub
+		return Series;
 	}
 }

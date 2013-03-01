@@ -24,6 +24,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.sort.Title;
+import org.geometerplus.fbreader.sort.TitleComparator;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
@@ -33,6 +35,8 @@ public abstract class LibraryTree extends FBTree {
 
 	public final IBookCollection Collection;
 
+	private static final TitleComparator COMPARATOR = new TitleComparator();
+	
 	static final String ROOT_FOUND = "found";
 	static final String ROOT_FAVORITES = "favorites";
 	static final String ROOT_RECENT = "recent";
@@ -41,7 +45,7 @@ public abstract class LibraryTree extends FBTree {
 	static final String ROOT_BY_SERIES = "bySeries";
 	static final String ROOT_BY_TAG = "byTag";
 	static final String ROOT_FILE_TREE = "fileTree";
-
+	
 	protected LibraryTree(IBookCollection collection) {
 		super();
 		Collection = collection;
@@ -130,10 +134,20 @@ public abstract class LibraryTree extends FBTree {
 
 	@Override
 	public int compareTo(FBTree tree) {
-		final int cmp = super.compareTo(tree);
+		final int cmp;
+		if (tree instanceof LibraryTree && null != getTitle() && null != ((LibraryTree)tree).getTitle()) {
+				cmp = COMPARATOR.compare(getTitle(), ((LibraryTree) tree).getTitle());
+		}
+		else {
+			cmp = super.compareTo(tree);
+		}
 		if (cmp == 0) {
 			return getClass().getSimpleName().compareTo(tree.getClass().getSimpleName());
 		}
 		return cmp;
+	}
+	
+	public Title getTitle() {
+		return null;
 	}
 }

@@ -37,7 +37,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.title.Title;
+import org.geometerplus.fbreader.sort.Title;
 
 public class Book {
 	public final ZLFile File;
@@ -45,8 +45,7 @@ public class Book {
 	private volatile long myId;
 
 	private volatile String myEncoding;
-	private volatile String myLanguage;
-	private volatile Title myTitle;
+	private volatile Title myInfo;
 	private volatile List<Author> myAuthors;
 	private volatile List<Tag> myTags;
 	private volatile SeriesInfo mySeriesInfo;
@@ -59,9 +58,8 @@ public class Book {
 	Book(long id, ZLFile file, String title, String encoding, String language) {
 		myId = id;
 		File = file;
-		myTitle = new Title(title, language);
+		myInfo = new Title(title, language);
 		myEncoding = encoding;
-		myLanguage = language;
 		myIsSaved = true;
 	}
 
@@ -77,9 +75,8 @@ public class Book {
 		if (myId != book.myId) {
 			return;
 		}
-		myTitle = book.myTitle;
+		myInfo = book.myInfo;
 		myEncoding = book.myEncoding;
-		myLanguage = book.myLanguage;
 		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
 		myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
 		mySeriesInfo = book.mySeriesInfo;
@@ -111,8 +108,7 @@ public class Book {
 
 	private void readMetaInfo(FormatPlugin plugin) throws BookReadingException {
 		myEncoding = null;
-		myLanguage = null;
-		myTitle = null;
+		myInfo = new Title (null, null);
 		myAuthors = null;
 		myTags = null;
 		mySeriesInfo = null;
@@ -121,7 +117,7 @@ public class Book {
 
 		plugin.readMetaInfo(this);
 
-		if (myTitle.getTitle() == null || myTitle.getTitle().length() == 0) {
+		if (myInfo.getTitle() == null || myInfo.getTitle().length() == 0) {
 			final String fileName = File.getShortName();
 			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
@@ -207,12 +203,12 @@ public class Book {
 	}
 
 	public String getTitle() {
-		return myTitle.getTitle();
+		return myInfo.getTitle();
 	}
 
 	public void setTitle(String title) {
-		if (!MiscUtil.equals(myTitle.getTitle(), title)) {
-			myTitle.setTitle(title);
+		if (!MiscUtil.equals(myInfo.getTitle(), title)) {
+			myInfo.setTitle(title);
 			myIsSaved = false;
 		}
 	}
@@ -244,13 +240,17 @@ public class Book {
 		}
 	}
 
+	public Title getInfo() {
+		return myInfo;
+	}
+	
 	public String getLanguage() {
-		return myLanguage;
+		return myInfo.getLanguage();
 	}
 
 	public void setLanguage(String language) {
-		if (!MiscUtil.equals(myLanguage, language)) {
-			myLanguage = language;
+		if (!MiscUtil.equals(myInfo.getLanguage(), language)) {
+			myInfo.setLanguage(language);
 			myIsSaved = false;
 		}
 	}
@@ -314,7 +314,7 @@ public class Book {
 	}
 
 	public boolean matches(String pattern) {
-		if (myTitle.getTitle() != null && MiscUtil.matchesIgnoreCase(myTitle.getTitle(), pattern)) {
+		if (myInfo.getTitle() != null && MiscUtil.matchesIgnoreCase(myInfo.getTitle(), pattern)) {
 			return true;
 		}
 		if (mySeriesInfo != null && MiscUtil.matchesIgnoreCase(mySeriesInfo.Title, pattern)) {
@@ -349,9 +349,9 @@ public class Book {
 			public void run() {
 				if (myId >= 0) {
 					final FileInfoSet fileInfos = new FileInfoSet(database, File);
-					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle.getTitle());
+					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myInfo.getLanguage(), myInfo.getTitle());
 				} else {
-					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle.getTitle());
+					myId = database.insertBookInfo(File, myEncoding, myInfo.getLanguage(), myInfo.getTitle());
 					if (myId != -1 && myVisitedHyperlinks != null) {
 						for (String linkId : myVisitedHyperlinks) {
 							database.addVisitedHyperlink(myId, linkId);

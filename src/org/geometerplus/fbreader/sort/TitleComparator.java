@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.title;
+package org.geometerplus.fbreader.sort;
 
 import java.util.*;
 
