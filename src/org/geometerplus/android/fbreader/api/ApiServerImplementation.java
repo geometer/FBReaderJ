@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -50,10 +51,12 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	private Context myContext;
 	private BookCollectionShadow myCollection;
+	private ZLKeyBindings myBindings;
 
 	public ApiServerImplementation(Context c, BookCollectionShadow bcs) {
 		myContext = c;
 		myCollection = bcs;
+		myBindings = new ZLKeyBindings("Keys");
 	}
 
 	private volatile FBReaderApp myReader;
@@ -556,8 +559,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getKeyAction(int key, boolean longPress) {
-		// TODO: implement
-		return null;
+		return myBindings.getBinding(key, longPress);
 	}
 
 	public void setKeyAction(int key, boolean longPress, String action) {
