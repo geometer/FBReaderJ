@@ -300,8 +300,8 @@ public class LibraryService extends Service {
 			);
 		}
 
-		public List<String> allBookmarks() {
-			return SerializerUtil.serializeBookmarkList(myCollection.allBookmarks());
+		public List<String> bookmarks(long fromId, int limitCount) {
+			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(fromId, limitCount));
 		}
 
 		public String saveBookmark(String serialized) {

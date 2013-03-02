@@ -87,7 +87,7 @@ public abstract class BooksDatabase {
 	}
 
 	protected abstract List<Bookmark> loadBookmarks(long bookId, boolean isVisible);
-	protected abstract List<Bookmark> loadAllVisibleBookmarks();
+	protected abstract List<Bookmark> loadVisibleBookmarks(long fromId, int limitCount);
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 
