@@ -20,11 +20,14 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.sort.Title;
+
+import android.widget.Toast;
 
 public final class SeriesTree extends LibraryTree {
 	public final Title Series;
@@ -32,13 +35,15 @@ public final class SeriesTree extends LibraryTree {
 
 	SeriesTree(IBookCollection collection, String series, Author author) {
 		super(collection);
-		Series = new Title(series, null);
+		String language = "en";
+		Series = new Title(series, language);
 		Author = author;
 	}
 
 	SeriesTree(LibraryTree parent, String series, Author author, int position) {
 		super(parent, position);
-		Series = new Title(series, null);
+		String language = "en";
+		Series = new Title(series, language);
 		Author = author;
 	}
 
@@ -125,6 +130,7 @@ public final class SeriesTree extends LibraryTree {
 	@Override
 	public Title getTitle() {
 		// TODO Auto-generated method stub
+		//System.err.println(Series.getSortKey() + Series.getLanguage());
 		return Series;
 	}
 }
