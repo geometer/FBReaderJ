@@ -11,6 +11,7 @@
 ===== 1.7.3 (??? ??, 2013) =====
 * Library service start is not forced
 * We do not obfuscate code
+* Fixed issue in 'Books sorted by title' library catalog: viewing book info does not remove book from the list
 
 ===== 1.7.2 (Feb 22, 2013) =====
 * Restored android:changes attribute for all activities

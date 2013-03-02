@@ -356,6 +356,7 @@ public final class FBReader extends Activity {
 		if (myFBReaderApp == null) {
 			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
 		}
+		getCollection().bindToService(this, null);
 		myBook = null;
 
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
@@ -737,8 +738,13 @@ public final class FBReader extends Activity {
 	protected void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(myFBReaderApp, this);
-		getCollection().unbind();
 		super.onStop();
+	}
+
+	@Override
+	protected void onDestroy() {
+		getCollection().unbind();
+		super.onDestroy();
 	}
 
 	@Override

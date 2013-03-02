@@ -148,11 +148,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				bindService(i, servConn, Context.BIND_AUTO_CREATE);
 			}
 		}
-	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
 		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
 			public void run() {
 				setProgressBarIndeterminateVisibility(!myRootTree.Collection.status().IsCompleted);
@@ -183,12 +179,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
-	protected void onStop() {
-		((BookCollectionShadow)myRootTree.Collection).unbind();
-		super.onStop();
-	}
-
-	@Override
 	protected void onDestroy() {
 		myRootTree.Collection.removeListener(this);
 		for (String pack : myServConns.keySet()) {
@@ -197,6 +187,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				myServConns.remove(pack);
 			}
 		}
+		((BookCollectionShadow)myRootTree.Collection).unbind();
 		super.onDestroy();
 	}
 
