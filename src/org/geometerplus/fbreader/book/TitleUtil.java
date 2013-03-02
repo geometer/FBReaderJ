@@ -24,7 +24,7 @@ public abstract class TitleUtil {
 		if (book == null) {
 			return null;
 		}
-		return firstLetter(book.getTitle());
+		return firstLetter(book.getInfo().getSortKey());
 	}
 
 	public static String firstLetter(String title) {
@@ -34,12 +34,6 @@ public abstract class TitleUtil {
 		title = title.trim();
 		if ("".equals(title)) {
 			return null;
-		}
-		for (int i = 0; i < title.length(); ++i) {
-			char letter = title.charAt(i);
-			if (Character.isLetterOrDigit(letter)) {
-				return String.valueOf(Character.toUpperCase(letter));
-			}
 		}
 		return String.valueOf(Character.toUpperCase(title.charAt(0)));
 	}

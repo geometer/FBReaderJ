@@ -41,15 +41,19 @@ public class TitleListTree extends FirstLevelTree {
 
 		myDoGroupByFirstLetter = false;
 		final TreeSet<String> letterSet = new TreeSet<String>();
-		final List<String> titles = Collection.titles();
-		if (titles.size() > 9) {
-			for (String t : titles) {
+		final List<Book> book = Collection.books();
+		final List<String> keys = new ArrayList<String>();
+		for (Book b : book) {
+			keys.add(b.getInfo().getSortKey());
+		}
+		if (keys.size() > 9) {
+			for (String t : keys) {
 				final String letter = TitleUtil.firstLetter(t);
 				if (letter != null) {
 					letterSet.add(letter);
 				}
 			}
-			myDoGroupByFirstLetter = titles.size() > letterSet.size() * 5 / 4;
+			myDoGroupByFirstLetter = keys.size() > letterSet.size() * 5 / 4;
 		}
 
 		if (myDoGroupByFirstLetter) {
