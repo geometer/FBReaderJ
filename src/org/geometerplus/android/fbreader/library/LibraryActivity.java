@@ -179,12 +179,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
-	protected void onStop() {
-		((BookCollectionShadow)myRootTree.Collection).unbind();
-		super.onStop();
-	}
-
-	@Override
 	protected void onDestroy() {
 		myRootTree.Collection.removeListener(this);
 		for (String pack : myServConns.keySet()) {
@@ -193,6 +187,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				myServConns.remove(pack);
 			}
 		}
+		((BookCollectionShadow)myRootTree.Collection).unbind();
 		super.onDestroy();
 	}
 

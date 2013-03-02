@@ -81,7 +81,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private void init() {
-		myAllBooksBookmarks = new ArrayList<Bookmark>(myCollection.allBookmarks());
+		myAllBooksBookmarks = new ArrayList<Bookmark>(myCollection.bookmarks(0, 100000));
 		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
 
 		long bookId = -1;
