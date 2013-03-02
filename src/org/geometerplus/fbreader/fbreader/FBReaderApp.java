@@ -110,7 +110,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final static ZLBooleanOption ShowPositionsInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "positions", true);
 
-	private final static ZLKeyBindings ourBindings = new ZLKeyBindings("Keys");
+	private final static ZLKeyBindings ourBindings = ZLKeyBindings.get("Keys");
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;

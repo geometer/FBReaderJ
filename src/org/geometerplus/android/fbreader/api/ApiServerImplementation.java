@@ -56,7 +56,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	public ApiServerImplementation(Context c, BookCollectionShadow bcs) {
 		myContext = c;
 		myCollection = bcs;
-		myBindings = new ZLKeyBindings("Keys");
+		myBindings = ZLKeyBindings.get("Keys");
 	}
 
 	private volatile FBReaderApp myReader;
