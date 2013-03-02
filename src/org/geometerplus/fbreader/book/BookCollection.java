@@ -757,8 +757,8 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<Bookmark> allBookmarks() {
-		return myDatabase.loadAllVisibleBookmarks();
+	public List<Bookmark> bookmarks(long fromId, int limitCount) {
+		return myDatabase.loadVisibleBookmarks(fromId, limitCount);
 	}
 
 	public List<Bookmark> invisibleBookmarks(Book book) {
