@@ -1,5 +1,5 @@
 ===== 1.7.3 (Mar 04, 2013) =====
-* Library service start is not forced
+* Library service does not work in background after program closing
 * We do not obfuscate code
 * Fixed issue in 'Books sorted by title' library catalog: viewing book info does not remove book from the list
 * Fixed issue with large (1000+) bookmarks collection opening
