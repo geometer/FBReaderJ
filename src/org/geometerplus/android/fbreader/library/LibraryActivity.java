@@ -68,11 +68,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
-	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
 		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
 			public void run() {
 				setProgressBarIndeterminateVisibility(!myRootTree.Collection.status().IsCompleted);
@@ -103,14 +99,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
-	protected void onStop() {
-		((BookCollectionShadow)myRootTree.Collection).unbind();
-		super.onStop();
-	}
-
-	@Override
 	protected void onDestroy() {
 		myRootTree.Collection.removeListener(this);
+		((BookCollectionShadow)myRootTree.Collection).unbind();
 		super.onDestroy();
 	}
 

@@ -40,7 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Místní hledání"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="rescan" value="Prohledat znovu"/>
 		</node>
 		<node name="openBook" value="Otevřít knihu"/>
 		<node name="showBookInfo" value="Informace o knize"/>
@@ -811,7 +811,7 @@
 		<node name="dictionaryIsNotInstalled" value="Slovník není bohužel nainstalován"/>
 		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="V sérii nejsou bohužel žádné knihy"/>
 		<node name="emptyCatalog" value="Katalog je bohužel prázdný"/>
 		<node name="emptyBasket" value="Váš košík je bohužel prázdný"/>
 		<node name="emptyNetworkSearchResults" value="Nebyly nalezeny žádné knihy"/>

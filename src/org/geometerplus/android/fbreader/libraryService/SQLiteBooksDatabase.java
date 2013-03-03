@@ -762,11 +762,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Bookmark> loadAllVisibleBookmarks() {
+	protected List<Bookmark> loadVisibleBookmarks(long fromId, int limitCount) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id = -1");
-		Cursor cursor = myDatabase.rawQuery(
-			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE Bookmarks.visible = 1", null
+		Cursor cursor = myDatabase.rawQuery("SELECT" +
+			" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text," +
+			"bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter," +
+			"bm.model_id,bm.paragraph,bm.word,bm.char" +
+			" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id" +
+			" WHERE bm.bookmark_id >= ? AND bm.visible = 1 ORDER BY bm.bookmark_id LIMIT ?",
+			new String[] { String.valueOf(fromId), String.valueOf(limitCount) }
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
