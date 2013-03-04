@@ -8,10 +8,14 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.7.3 (??? ??, 2013) =====
-* Library service start is not forced
+===== 1.7.4 (Mar ??, 2013) =====
+* Book/bookmark deserializer: SAX instead of our own XML parser
+
+===== 1.7.3 (Mar 04, 2013) =====
+* Library service does not work in background after program closing
 * We do not obfuscate code
 * Fixed issue in 'Books sorted by title' library catalog: viewing book info does not remove book from the list
+* Fixed issue with large (1000+) bookmarks collection opening
 
 ===== 1.7.2 (Feb 22, 2013) =====
 * Restored android:changes attribute for all activities
