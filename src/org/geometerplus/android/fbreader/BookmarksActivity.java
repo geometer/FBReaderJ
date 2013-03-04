@@ -44,7 +44,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private static final int DELETE_ITEM_ID = 2;
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
-	private volatile Book myBook;
+	private volatile long myBookId = -1;
 
 	private final Comparator<Bookmark> myComparator = new Bookmark.ByTimeComparator();
 
@@ -81,7 +81,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
-		myBook = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+		final Book book =
+			SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+		myBookId = book != null ? book.getId() : -1;
 	}
 
 	private class Initializer implements Runnable {
@@ -96,11 +98,10 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				}
 
 				myAllBooksAdapter.addAll(allBookmarks);
-				if (myBook != null) {
+				if (myBookId != -1) {
 					final List<Bookmark> thisBookBookmarks = new LinkedList<Bookmark>();
-					final long bookId = myBook.getId();
 					for (Bookmark b : allBookmarks) {
-						if (b.getBookId() == bookId) {
+						if (b.getBookId() == myBookId) {
 							thisBookBookmarks.add(b);
 						}
 					}
@@ -120,7 +121,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 					return;
 				}
 
-				if (myBook != null) {
+				if (myBookId != -1) {
 					myThisBookAdapter = new BookmarksAdapter(
 						createTab("thisBook", R.id.this_book), true
 					);
@@ -197,9 +198,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		} else {
 			mySearchResultsAdapter.clear();
 		}
-		for (Bookmark b : results) {
-			mySearchResultsAdapter.add(b);
-		}
+		mySearchResultsAdapter.addAll(results);
 		getTabHost().setCurrentTabByTag("found");
 	}
 
