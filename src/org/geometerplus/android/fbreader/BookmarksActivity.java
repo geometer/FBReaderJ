@@ -80,38 +80,40 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 	}
 
-	private void init() {
-		myAllBooksBookmarks = new ArrayList<Bookmark>(myCollection.bookmarks(0, 100000));
-		Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
+	private class Initializer implements Runnable {
+		public void run() {
+			myAllBooksBookmarks = new ArrayList<Bookmark>(myCollection.bookmarks(0, 100000));
+			Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
 
-		long bookId = -1;
-		final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
-		if (book != null) {
-			bookId = book.getId();
-		} else {
-			final Bookmark bookmark =
-				SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
-			if (bookmark != null) {
-				bookId = bookmark.getBookId();
-			}
-		}
-		if (bookId != -1) {
-			for (Bookmark bm : myAllBooksBookmarks) {
-				if (bm.getBookId() == bookId) {
-					myThisBookBookmarks.add(bm);
+			long bookId = -1;
+			final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+			if (book != null) {
+				bookId = book.getId();
+			} else {
+				final Bookmark bookmark =
+					SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
+				if (bookmark != null) {
+					bookId = bookmark.getBookId();
 				}
 			}
+			if (bookId != -1) {
+				for (Bookmark bm : myAllBooksBookmarks) {
+					if (bm.getBookId() == bookId) {
+						myThisBookBookmarks.add(bm);
+					}
+				}
 
-			myThisBookView = createTab("thisBook", R.id.this_book);
-			new BookmarksAdapter(myThisBookView, myThisBookBookmarks, true);
-		} else {
-			findViewById(R.id.this_book).setVisibility(View.GONE);
+				myThisBookView = createTab("thisBook", R.id.this_book);
+				new BookmarksAdapter(myThisBookView, myThisBookBookmarks, true);
+			} else {
+				findViewById(R.id.this_book).setVisibility(View.GONE);
+			}
+
+			myAllBooksView = createTab("allBooks", R.id.all_books);
+			new BookmarksAdapter(myAllBooksView, myAllBooksBookmarks, false);
+
+			findViewById(R.id.search_results).setVisibility(View.GONE);
 		}
-
-		myAllBooksView = createTab("allBooks", R.id.all_books);
-		new BookmarksAdapter(myAllBooksView, myAllBooksBookmarks, false);
-
-		findViewById(R.id.search_results).setVisibility(View.GONE);
 	}
 
 	@Override
@@ -121,7 +123,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
 				if (myAllBooksBookmarks == null) {
-					init();
+					new Initializer().run();
 				}
 			}
 		});
