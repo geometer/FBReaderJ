@@ -446,7 +446,6 @@ class XMLSerializer extends AbstractSerializer {
 		//appendTagWithContent(buffer, "text", bookmark.getText());
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-//			System.err.println("start: " + tag + " " + myState);
 			switch (myState) {
 				case READ_NOTHING:
 					if (!"bookmark".equals(tag)) {
@@ -503,7 +502,6 @@ class XMLSerializer extends AbstractSerializer {
 
 		@Override
 		public boolean endElementHandler(String tag) {
-//			System.err.println("end: " + tag + " " + myState);
 			switch (myState) {
 				case READ_NOTHING:
 					return true;
