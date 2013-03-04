@@ -53,7 +53,7 @@ interface LibraryInterface {
 	void markHyperlinkAsVisited(in String book, in String linkId);
 
 	List<String> invisibleBookmarks(in String book);
-	List<String> allBookmarks();
+	List<String> bookmarks(in long fromId, in int limitCount);
 	String saveBookmark(in String bookmark);
 	void deleteBookmark(in String bookmark);
 }
