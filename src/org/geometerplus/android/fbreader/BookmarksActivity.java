@@ -44,14 +44,13 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private static final int DELETE_ITEM_ID = 2;
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+	private volatile long myBookId = -1;
 
-	private List<Bookmark> myAllBooksBookmarks;
-	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
-	private final List<Bookmark> mySearchResults = new LinkedList<Bookmark>();
+	private final Comparator<Bookmark> myComparator = new Bookmark.ByTimeComparator();
 
-	private ListView myThisBookView;
-	private ListView myAllBooksView;
-	private ListView mySearchResultsView;
+	private volatile BookmarksAdapter myThisBookAdapter;
+	private volatile BookmarksAdapter myAllBooksAdapter;
+	private volatile BookmarksAdapter mySearchResultsAdapter;
 
 	private final ZLResource myResource = ZLResource.resource("bookmarksView");
 	private final ZLStringOption myBookmarkSearchPatternOption =
@@ -78,41 +77,43 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
+
+		myBookId = -1;
+		final Book book =
+			SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+		if (book != null) {
+			myBookId = book.getId();
+		} else {
+			final Bookmark bookmark =
+				SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
+			if (bookmark != null) {
+				myBookId = bookmark.getBookId();
+			}
+		}
 	}
 
 	private class Initializer implements Runnable {
 		public void run() {
-			myAllBooksBookmarks = new ArrayList<Bookmark>(myCollection.bookmarks(0, 100000));
-			Collections.sort(myAllBooksBookmarks, new Bookmark.ByTimeComparator());
-
-			long bookId = -1;
-			final Book book = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
-			if (book != null) {
-				bookId = book.getId();
-			} else {
-				final Bookmark bookmark =
-					SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
-				if (bookmark != null) {
-					bookId = bookmark.getBookId();
+			long id = 0;
+			while (true) {
+				final List<Bookmark> allBookmarks = myCollection.bookmarks(id, 20);
+				if (allBookmarks.isEmpty()) {
+					break;
+				} else {
+					id = allBookmarks.get(allBookmarks.size() - 1).getId() + 1;
 				}
-			}
-			if (bookId != -1) {
-				for (Bookmark bm : myAllBooksBookmarks) {
-					if (bm.getBookId() == bookId) {
-						myThisBookBookmarks.add(bm);
+
+				myAllBooksAdapter.addAll(allBookmarks);
+				if (myBookId != -1) {
+					final List<Bookmark> thisBookBookmarks = new LinkedList<Bookmark>();
+					for (Bookmark b : allBookmarks) {
+						if (b.getBookId() == myBookId) {
+							thisBookBookmarks.add(b);
+						}
 					}
+					myThisBookAdapter.addAll(thisBookBookmarks);
 				}
-
-				myThisBookView = createTab("thisBook", R.id.this_book);
-				new BookmarksAdapter(myThisBookView, myThisBookBookmarks, true);
-			} else {
-				findViewById(R.id.this_book).setVisibility(View.GONE);
 			}
-
-			myAllBooksView = createTab("allBooks", R.id.all_books);
-			new BookmarksAdapter(myAllBooksView, myAllBooksBookmarks, false);
-
-			findViewById(R.id.search_results).setVisibility(View.GONE);
 		}
 	}
 
@@ -122,9 +123,25 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				if (myAllBooksBookmarks == null) {
-					new Initializer().run();
+				if (myAllBooksAdapter != null) {
+					return;
 				}
+
+				if (myBookId != -1) {
+					myThisBookAdapter = new BookmarksAdapter(
+						createTab("thisBook", R.id.this_book), true
+					);
+				} else {
+					findViewById(R.id.this_book).setVisibility(View.GONE);
+				}
+				myAllBooksAdapter = new BookmarksAdapter(
+					createTab("allBooks", R.id.all_books), false
+				);
+				findViewById(R.id.search_results).setVisibility(View.GONE);
+
+				final Thread initializer = new Thread(new Initializer());
+				initializer.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
+				initializer.start();
 			}
 		});
 
@@ -144,7 +161,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
 		pattern = pattern.toLowerCase();
-		for (Bookmark b : myAllBooksBookmarks) {
+		for (Bookmark b : myAllBooksAdapter.bookmarks()) {
 			if (MiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
 				bookmarks.add(b);
 			}
@@ -181,15 +198,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	void showSearchResultsTab(LinkedList<Bookmark> results) {
-		if (mySearchResultsView == null) {
-			mySearchResultsView = createTab("found", R.id.search_results);
-			new BookmarksAdapter(mySearchResultsView, mySearchResults, false);
+		if (mySearchResultsAdapter == null) {
+			mySearchResultsAdapter = new BookmarksAdapter(
+				createTab("found", R.id.search_results), false
+			);
 		} else {
-			mySearchResults.clear();
+			mySearchResultsAdapter.clear();
 		}
-		mySearchResults.addAll(results);
-		mySearchResultsView.invalidateViews();
-		mySearchResultsView.requestLayout();
+		mySearchResultsAdapter.addAll(results);
 		getTabHost().setCurrentTabByTag("found");
 	}
 
@@ -199,17 +215,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				return onSearchRequested();
 			default:
 				return true;
-		}
-	}
-
-	private void invalidateAllViews() {
-		myThisBookView.invalidateViews();
-		myThisBookView.requestLayout();
-		myAllBooksView.invalidateViews();
-		myAllBooksView.requestLayout();
-		if (mySearchResultsView != null) {
-			mySearchResultsView.invalidateViews();
-			mySearchResultsView.requestLayout();
 		}
 	}
 
@@ -229,10 +234,15 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				return true;
 			case DELETE_ITEM_ID:
 				myCollection.deleteBookmark(bookmark);
-				myThisBookBookmarks.remove(bookmark);
-				myAllBooksBookmarks.remove(bookmark);
-				mySearchResults.remove(bookmark);
-				invalidateAllViews();
+				if (myThisBookAdapter != null) {
+					myThisBookAdapter.remove(bookmark);
+				}
+				if (myAllBooksAdapter != null) {
+					myAllBooksAdapter.remove(bookmark);
+				}
+				if (mySearchResultsAdapter != null) {
+					mySearchResultsAdapter.remove(bookmark);
+				}
 				return true;
 		}
 		return super.onContextItemSelected(item);
@@ -243,9 +253,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
 		if (bookmark != null) {
 			myCollection.saveBookmark(bookmark);
-			myThisBookBookmarks.add(0, bookmark);
-			myAllBooksBookmarks.add(0, bookmark);
-			invalidateAllViews();
+			myThisBookAdapter.add(bookmark);
+			myAllBooksAdapter.add(bookmark);
 		}
 	}
 
@@ -261,15 +270,67 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
-		private final List<Bookmark> myBookmarks;
-		private final boolean myCurrentBook;
+		private final List<Bookmark> myBookmarks =
+			Collections.synchronizedList(new LinkedList<Bookmark>());
+		private final boolean myShowAddBookmarkItem;
 
-		BookmarksAdapter(ListView listView, List<Bookmark> bookmarks, boolean currentBook) {
-			myBookmarks = bookmarks;
-			myCurrentBook = currentBook;
+		BookmarksAdapter(ListView listView, boolean showAddBookmarkItem) {
+			myShowAddBookmarkItem = showAddBookmarkItem;
 			listView.setAdapter(this);
 			listView.setOnItemClickListener(this);
 			listView.setOnCreateContextMenuListener(this);
+		}
+
+		public List<Bookmark> bookmarks() {
+			return Collections.unmodifiableList(myBookmarks);
+		}
+
+		public void addAll(final List<Bookmark> bookmarks) {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					synchronized (myBookmarks) {
+						for (Bookmark b : bookmarks) {
+							final int position = Collections.binarySearch(myBookmarks, b, myComparator);
+							if (position < 0) {
+								myBookmarks.add(- position - 1, b);
+							}
+						}
+					}
+					notifyDataSetChanged();
+				}
+			});
+		}
+
+		public void add(final Bookmark b) {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					synchronized (myBookmarks) {
+						final int position = Collections.binarySearch(myBookmarks, b, myComparator);
+						if (position < 0) {
+							myBookmarks.add(- position - 1, b);
+						}
+					}
+					notifyDataSetChanged();
+				}
+			});
+		}
+
+		public void remove(final Bookmark b) {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					myBookmarks.remove(b);
+					notifyDataSetChanged();
+				}
+			});
+		}
+
+		public void clear() {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					myBookmarks.clear();
+					notifyDataSetChanged();
+				}
+			});
 		}
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -298,7 +359,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			} else {
 				imageView.setVisibility(View.GONE);
 				textView.setText(bookmark.getText());
-				if (myCurrentBook) {
+				if (myShowAddBookmarkItem) {
 					bookTitleView.setVisibility(View.GONE);
 				} else {
 					bookTitleView.setVisibility(View.VISIBLE);
@@ -321,14 +382,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		}
 
 		public final Bookmark getItem(int position) {
-			if (myCurrentBook) {
+			if (myShowAddBookmarkItem) {
 				--position;
 			}
 			return (position >= 0) ? myBookmarks.get(position) : null;
 		}
 
 		public final int getCount() {
-			return myCurrentBook ? myBookmarks.size() + 1 : myBookmarks.size();
+			return myShowAddBookmarkItem ? myBookmarks.size() + 1 : myBookmarks.size();
 		}
 
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
