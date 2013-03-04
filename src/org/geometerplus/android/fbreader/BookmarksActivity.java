@@ -48,9 +48,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	private final Comparator<Bookmark> myComparator = new Bookmark.ByTimeComparator();
 
-	private ListView myThisBookView;
-	private ListView mySearchResultsView;
-
 	private volatile BookmarksAdapter myThisBookAdapter;
 	private volatile BookmarksAdapter myAllBooksAdapter;
 	private volatile BookmarksAdapter mySearchResultsAdapter;
@@ -121,12 +118,15 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				}
 
 				if (myBook != null) {
-					myThisBookView = createTab("thisBook", R.id.this_book);
-					myThisBookAdapter = new BookmarksAdapter(myThisBookView, true);
+					myThisBookAdapter = new BookmarksAdapter(
+						createTab("thisBook", R.id.this_book), true
+					);
 				} else {
 					findViewById(R.id.this_book).setVisibility(View.GONE);
 				}
-				myAllBooksAdapter = new BookmarksAdapter(createTab("allBooks", R.id.all_books), false);
+				myAllBooksAdapter = new BookmarksAdapter(
+					createTab("allBooks", R.id.all_books), false
+				);
 				findViewById(R.id.search_results).setVisibility(View.GONE);
 
 				final Thread initializer = new Thread(new Initializer());
@@ -187,9 +187,10 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	void showSearchResultsTab(LinkedList<Bookmark> results) {
-		if (mySearchResultsView == null) {
-			mySearchResultsView = createTab("found", R.id.search_results);
-			mySearchResultsAdapter = new BookmarksAdapter(mySearchResultsView, false);
+		if (mySearchResultsAdapter == null) {
+			mySearchResultsAdapter = new BookmarksAdapter(
+				createTab("found", R.id.search_results), false
+			);
 		} else {
 			mySearchResultsAdapter.clear();
 		}
