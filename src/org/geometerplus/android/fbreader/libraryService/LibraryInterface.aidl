@@ -55,6 +55,7 @@ interface LibraryInterface {
 
 	List<String> invisibleBookmarks(in String book);
 	List<String> bookmarks(in long fromId, in int limitCount);
+	List<String> bookmarksForBook(in String book, in long fromId, in int limitCount);
 	String saveBookmark(in String bookmark);
 	void deleteBookmark(in String bookmark);
 }
