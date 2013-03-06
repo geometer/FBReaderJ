@@ -92,6 +92,7 @@ public interface IBookCollection {
 	void markHyperlinkAsVisited(Book book, String linkId);
 
 	List<Bookmark> bookmarks(long fromId, int limitCount);
+	List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount);
 	List<Bookmark> invisibleBookmarks(Book book);
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);
