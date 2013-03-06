@@ -778,8 +778,12 @@ public class BookCollection extends AbstractBookCollection {
 		return myDatabase.loadVisibleBookmarks(fromId, limitCount);
 	}
 
+	public List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount) {
+		return myDatabase.loadVisibleBookmarks(book.getId(), fromId, limitCount);
+	}
+
 	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = myDatabase.loadBookmarks(book.getId(), false);
+		final List<Bookmark> list = myDatabase.loadInvisibleBookmarks(book.getId());
 		Collections.sort(list, new Bookmark.ByTimeComparator());
 		return list;
 	}

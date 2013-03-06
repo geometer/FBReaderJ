@@ -44,7 +44,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private static final int DELETE_ITEM_ID = 2;
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
-	private volatile long myBookId = -1;
+	private volatile Book myBook;
 
 	private final Comparator<Bookmark> myComparator = new Bookmark.ByTimeComparator();
 
@@ -68,6 +68,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		super.onCreate(bundle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -78,16 +79,16 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
-		myBookId = -1;
-		final Book book =
-			SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
-		if (book != null) {
-			myBookId = book.getId();
-		} else {
+		myBook = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+		if (myBook == null) {
 			final Bookmark bookmark =
 				SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
 			if (bookmark != null) {
-				myBookId = bookmark.getBookId();
+				myCollection.bindToService(this, new Runnable() {
+					public void run() {
+						myBook = myCollection.getBookById(bookmark.getBookId());
+					}
+				});
 			}
 		}
 	}
@@ -95,6 +96,20 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private class Initializer implements Runnable {
 		public void run() {
 			long id = 0;
+			if (myBook != null) {
+				while (true) {
+					final List<Bookmark> thisBookBookmarks =
+						myCollection.bookmarksForBook(myBook, id, 20);
+					if (thisBookBookmarks.isEmpty()) {
+						break;
+					} else {
+						id = thisBookBookmarks.get(thisBookBookmarks.size() - 1).getId() + 1;
+					}
+					myThisBookAdapter.addAll(thisBookBookmarks);
+					myAllBooksAdapter.addAll(thisBookBookmarks);
+				}
+			}
+			id = 0;
 			while (true) {
 				final List<Bookmark> allBookmarks = myCollection.bookmarks(id, 20);
 				if (allBookmarks.isEmpty()) {
@@ -102,18 +117,13 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				} else {
 					id = allBookmarks.get(allBookmarks.size() - 1).getId() + 1;
 				}
-
 				myAllBooksAdapter.addAll(allBookmarks);
-				if (myBookId != -1) {
-					final List<Bookmark> thisBookBookmarks = new LinkedList<Bookmark>();
-					for (Bookmark b : allBookmarks) {
-						if (b.getBookId() == myBookId) {
-							thisBookBookmarks.add(b);
-						}
-					}
-					myThisBookAdapter.addAll(thisBookBookmarks);
-				}
 			}
+			runOnUiThread(new Runnable() {
+				public void run() {
+					setProgressBarIndeterminateVisibility(false);
+				}
+			});
 		}
 	}
 
@@ -121,13 +131,19 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	protected void onStart() {
 		super.onStart();
 
+		runOnUiThread(new Runnable() {
+			public void run() {
+				setProgressBarIndeterminateVisibility(true);
+			}
+		});
+
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
 				if (myAllBooksAdapter != null) {
 					return;
 				}
 
-				if (myBookId != -1) {
+				if (myBook != null) {
 					myThisBookAdapter = new BookmarksAdapter(
 						createTab("thisBook", R.id.this_book), true
 					);
@@ -139,9 +155,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				);
 				findViewById(R.id.search_results).setVisibility(View.GONE);
 
-				final Thread initializer = new Thread(new Initializer());
-				initializer.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
-				initializer.start();
+				new Thread(new Initializer()).start();
 			}
 		});
 
@@ -174,9 +188,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
-	protected void onStop() {
+	protected void onDestroy() {
 		myCollection.unbind();
-		super.onStop();
+		super.onDestroy();
 	}
 
 	@Override
