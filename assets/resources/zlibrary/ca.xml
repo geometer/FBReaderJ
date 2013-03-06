@@ -51,6 +51,7 @@
 		<node name="hu" value="Húngaro" toBeTranslated="true"/>
 		<node name="id" value="Indonesio" toBeTranslated="true"/>
 		<node name="it" value="Italiano" toBeTranslated="true"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Lituano" toBeTranslated="true"/>
 		<node name="nl" value="Holandés" toBeTranslated="true"/>
 		<node name="nb" value="Noruego" toBeTranslated="true"/>

@@ -50,6 +50,7 @@
 		<node name="hu" value="Ungarisch"/>
 		<node name="id" value="Indonesisch"/>
 		<node name="it" value="Italienisch"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Litauisch"/>
 		<node name="nl" value="Niederländisch"/>
 		<node name="nb" value="Norwegisch"/>

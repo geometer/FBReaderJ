@@ -47,6 +47,7 @@
 		<node name="hu" value="Ungara"/>
 		<node name="id" value="Indoneziana"/>
 		<node name="it" value="Italiana"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Lituaniana"/>
 		<node name="nl" value="Olandeza"/>
 		<node name="nb" value="Norvegiana"/>

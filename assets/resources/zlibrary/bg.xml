@@ -47,6 +47,7 @@
 		<node name="hu" value="унгаски"/>
 		<node name="id" value="индонезийски"/>
 		<node name="it" value="италиански"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="литовски"/>
 		<node name="nl" value="холандски"/>
 		<node name="nb" value="норвежски"/>

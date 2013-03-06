@@ -47,6 +47,7 @@
 		<node name="hu" value="უნგრული"/>
 		<node name="id" value="ინდონეზიური"/>
 		<node name="it" value="იტალიური"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="ლიტვური"/>
 		<node name="nl" value="ჰოლანდიური"/>
 		<node name="nb" value="ნორვეგიული"/>

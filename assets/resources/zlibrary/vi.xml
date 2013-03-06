@@ -48,6 +48,7 @@
 		<node name="hu" value="Tiếng Hungari"/>
 		<node name="id" value="Tiếng Inđônêxia"/>
 		<node name="it" value="Tiếng Ý"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Tiếng Lát-vi"/>
 		<node name="nl" value="Tiếng Hà Lan"/>
 		<node name="nb" value="Tiếng Nauy"/>
