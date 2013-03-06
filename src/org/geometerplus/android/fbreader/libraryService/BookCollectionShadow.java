@@ -534,6 +534,19 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount) {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeBookmarkList(myInterface.bookmarksForBook(
+				SerializerUtil.serialize(book), fromId, limitCount
+			));
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
 	public synchronized void saveBookmark(Bookmark bookmark) {
 		if (myInterface != null) {
 			try {
