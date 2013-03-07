@@ -65,6 +65,7 @@
 		<node name="zh" value="จีน"/>
 		<node name="other" value="อื่นๆ"/>
 		<node name="multi" value="หลายภาษา"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="เปิด"/>

@@ -64,6 +64,7 @@
 		<node name="zh" value="Chineza"/>
 		<node name="other" value="Altele"/>
 		<node name="multi" value="Multi limba"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="deschis"/>

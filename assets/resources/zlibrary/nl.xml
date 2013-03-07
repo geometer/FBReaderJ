@@ -65,6 +65,7 @@
 		<node name="zh" value="Chinees"/>
 		<node name="other" value="Anders"/>
 		<node name="multi" value="Meertalig"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="aan"/>

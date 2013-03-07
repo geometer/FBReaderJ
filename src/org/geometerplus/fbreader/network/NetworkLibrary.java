@@ -26,8 +26,10 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -99,44 +101,42 @@ public class NetworkLibrary {
 		return new ArrayList<String>(languageSet);
 	}
 
-	private ZLStringOption myActiveLanguageCodesOption;
-	private ZLStringOption activeLanguageCodesOption() {
+	private ZLStringListOption myActiveLanguageCodesOption;
+	private ZLStringListOption activeLanguageCodesOption() {
  		if (myActiveLanguageCodesOption == null) {
-			final TreeSet<String> defaultCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
-			defaultCodes.addAll(ZLibrary.Instance().defaultLanguageCodes());
 			myActiveLanguageCodesOption =
-				new ZLStringOption(
+				new ZLStringListOption(
 					"Options",
 					"ActiveLanguages",
-					commaSeparatedString(defaultCodes)
+					ZLibrary.Instance().defaultLanguageCodes(),
+					","
 				);
 		}
 		return myActiveLanguageCodesOption;
 	}
 
-	public Collection<String> activeLanguageCodes() {
-		return Arrays.asList(activeLanguageCodesOption().getValue().split(","));
+	public List<String> activeLanguageCodes() {
+		return activeLanguageCodesOption().getValue();
 	}
 
 	public void setActiveLanguageCodes(Collection<String> codes) {
-		final TreeSet<String> allCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+		final TreeSet<String> allCodes = new TreeSet<String>();
 		allCodes.addAll(ZLibrary.Instance().defaultLanguageCodes());
 		allCodes.removeAll(languageCodes());
 		allCodes.addAll(codes);
-		activeLanguageCodesOption().setValue(commaSeparatedString(allCodes));
-		invalidateChildren();
-	}
 
-	private String commaSeparatedString(Collection<String> codes) {
-		final StringBuilder builder = new StringBuilder();
-		for (String code : codes) {
-			builder.append(code);
-			builder.append(",");
+		// sort codes
+		final TreeSet<Language> languages = new TreeSet<Language>();
+		for (String code : allCodes) {
+			languages.add(new Language(code));
 		}
-		if (builder.length() > 0) {
-			builder.delete(builder.length() - 1, builder.length());
+		final ArrayList<String> codesList = new ArrayList<String>(languages.size());
+		for (Language l : languages) {
+			codesList.add(l.Code);
 		}
-		return builder.toString();
+
+		activeLanguageCodesOption().setValue(codesList);
+		invalidateChildren();
 	}
 
 	List<INetworkLink> activeLinks() {

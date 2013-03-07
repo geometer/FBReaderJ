@@ -64,6 +64,7 @@
 		<node name="zh" value="Chinese"/>
 		<node name="other" value="Other"/>
 		<node name="multi" value="Multilanguage"/>
+		<node name="system" value="System"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="on"/>

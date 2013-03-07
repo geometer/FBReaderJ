@@ -65,6 +65,7 @@
 		<node name="zh" value="Кітайская мова"/>
 		<node name="other" value="Іншая мова"/>
 		<node name="multi" value="Некалькі моваў"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="уключана"/>
