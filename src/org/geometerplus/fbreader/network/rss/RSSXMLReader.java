@@ -2,15 +2,11 @@ package org.geometerplus.fbreader.network.rss;
 
 import java.util.Map;
 
-import org.geometerplus.fbreader.network.atom.ATOMCategory;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 import org.geometerplus.fbreader.network.atom.ATOMId;
 import org.geometerplus.fbreader.network.atom.FormattedBuffer;
-import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-
-import android.net.Uri;
 
 public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType extends RSSItem> extends ZLXMLReaderAdapter {
 	
