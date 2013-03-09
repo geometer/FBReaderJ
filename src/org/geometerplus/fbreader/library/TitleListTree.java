@@ -44,7 +44,7 @@ public class TitleListTree extends FirstLevelTree {
 		final List<Book> book = Collection.books();
 		final List<String> keys = new ArrayList<String>();
 		for (Book b : book) {
-			keys.add(b.getInfo().getSortKey());
+			keys.add(b.getSortKey());
 		}
 		if (keys.size() > 9) {
 			for (String t : keys) {

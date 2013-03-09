@@ -25,25 +25,21 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.sort.Title;
+import org.geometerplus.fbreader.sort.TitledEntity;
 
-import android.widget.Toast;
-
-public final class SeriesTree extends LibraryTree {
-	public final Title Series;
+public final class SeriesTree extends TitledEntityTree {
+	public final Series Series;
 	public final Author Author;
 
-	SeriesTree(IBookCollection collection, String series, Author author) {
+	SeriesTree(IBookCollection collection, Series series, Author author) {
 		super(collection);
-		String language = collection.booksForSeries(series).get(0).getLanguage();
-		Series = new Title(series, language);
+		Series = series;
 		Author = author;
 	}
 
-	SeriesTree(LibraryTree parent, String series, Author author, int position) {
+	SeriesTree(LibraryTree parent, Series series, Author author, int position) {
 		super(parent, position);
-		String language = parent.Collection.booksForSeries(series).get(0).getLanguage();
-		Series = new Title(series, language);
+		Series = series;
 		Author = author;
 	}
 
@@ -72,7 +68,7 @@ public final class SeriesTree extends LibraryTree {
 			return false;
 		}
 		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.getTitle().equals(info.Title);
+		return info != null && Series.equals(info.Series);
 	}
 
 	@Override
@@ -128,9 +124,7 @@ public final class SeriesTree extends LibraryTree {
 	}
 
 	@Override
-	public Title getTitle() {
-		// TODO Auto-generated method stub
-		//System.err.println(Series.getSortKey() + Series.getLanguage());
+	public TitledEntity getTitledEntity() {
 		return Series;
 	}
 }

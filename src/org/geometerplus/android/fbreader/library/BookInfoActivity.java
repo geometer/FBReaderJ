@@ -241,7 +241,7 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.book_authors, "authors", buffer, authors.size());
 
 		final SeriesInfo series = book.getSeriesInfo();
-		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Title);
+		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Series.getTitle());
 		String seriesIndexString = null;
 		if (series != null && series.Index != null) {
 			seriesIndexString = series.Index.toString();

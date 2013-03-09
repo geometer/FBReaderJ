@@ -17,13 +17,35 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.sort;
+package org.geometerplus.fbreader.book;
 
-import java.util.*;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
-public class TitleComparator implements Comparator<Title> {
+import org.geometerplus.fbreader.sort.TitledEntity;
+
+public class Series extends TitledEntity {
+	public Series(String title) {
+		super(title);
+	}
+
+	public String getLanguage() {
+		// TODO: return real language
+		return "en";
+	}
+
 	@Override
-	public int compare(Title title0, Title title1) {
-		return title0.getSortKey().compareTo(title1.getSortKey());
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Series)) {
+			return false;
+		}
+		return MiscUtil.equals(getTitle(), ((Series)o).getTitle());
+	}
+
+	@Override
+	public int hashCode() {
+		return MiscUtil.hashCode(getTitle());
 	}
 }

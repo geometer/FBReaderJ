@@ -26,38 +26,33 @@ import java.util.Map;
 import android.annotation.TargetApi;
 import android.os.Build;
 
-public class Title {
-	private String myText;
-	private String myLanguage;
+public abstract class TitledEntity implements Comparable<TitledEntity> {
+	private String myTitle;
 	private String mySortKey;
 	
-	public Title(String title, String language) {
-		myText = title;
-		myLanguage = language;
-	}
-	
-	public void setTitle(String title) {
-		myText = title;
-		mySortKey = null;
-	}
-	
-	public void setLanguage(String language) {
-		myLanguage = language;
-		mySortKey = null;
+	public TitledEntity(String title) {
+		myTitle = title;
 	}
 	
 	public String getTitle() {
-		return myText;
+		return myTitle;
 	}
 
-	public String getLanguage() {
-		return myLanguage;
+	public void setTitle(String title) {
+		myTitle = title;
+		mySortKey = null;
 	}
+
+	protected void resetSortKey() {
+		mySortKey = null;
+	}
+	
+	public abstract String getLanguage();
 	
 	public String getSortKey() {
 		if (null == mySortKey) {
-			mySortKey = trim(myText, myLanguage);
-			}
+			mySortKey = trim(myTitle, getLanguage());
+		}
 		return mySortKey;
 	}
 	
@@ -65,12 +60,12 @@ public class Title {
 	// English articles
 	private final static String[] EN_ARTICLES = new String[] {
 		"the ", "a ", "an "
-		};
+	};
 	// French articles
 	private final static String[] FR_ARTICLES = new String[] {
 		"un ", "une ", "le ", "la ", "les ", "du ", "de ",
 		"des ", "de la", "l ", "de l "
-		};
+	};
 	// German articles
 	private final static String[] GE_ARTICLES = new String[] {
 		"das ", "des ", "dem ", "die ", "der ", "den ",
@@ -154,5 +149,9 @@ public class Title {
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	private static String normalize(String s) {
 		return Normalizer.normalize(s, Normalizer.Form.NFKD);
+	}
+
+	public int compareTo(TitledEntity entity) {
+		return getSortKey().compareTo(entity.getSortKey());
 	}
 }

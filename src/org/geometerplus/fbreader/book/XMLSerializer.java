@@ -63,7 +63,7 @@ class XMLSerializer extends AbstractSerializer {
 
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
 		if (seriesInfo != null) {
-			appendTagWithContent(buffer, "calibre:series", seriesInfo.Title);
+			appendTagWithContent(buffer, "calibre:series", seriesInfo.Series.getTitle());
 			if (seriesInfo.Index != null) {
 				appendTagWithContent(buffer, "calibre:series_index", seriesInfo.Index);
 			}
