@@ -77,7 +77,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 20;
+		final int currentVersion = 21;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -125,6 +125,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables18();
 			case 19:
 				updateTables19();
+			case 20:
+				updateTables20();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -683,7 +685,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected boolean hasFavorites() {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id FROM Favorites LIMIT 1", null
+			"SELECT BookLabel.book_id FROM BookLabel" +
+			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
+			" WHERE Labels.name='favorite' LIMIT 1", null
 		);
 		boolean result = cursor.moveToNext();
 		cursor.close();
@@ -692,7 +696,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected boolean isFavorite(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id FROM Favorites WHERE book_id = ? LIMIT 1",
+			"SELECT BookLabel.book_id FROM BookLabel" +
+			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
+			" WHERE BookLabel.book_id=? AND Labels.name='favorite' LIMIT 1",
 			new String[] { String.valueOf(bookId) }
 		);
 		boolean result = cursor.moveToNext();
@@ -702,9 +708,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private SQLiteStatement myAddToFavoritesStatement;
 	protected void addToFavorites(long bookId) {
+		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES ('favorite')");
 		if (myAddToFavoritesStatement == null) {
 			myAddToFavoritesStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO Favorites(book_id) VALUES (?)"
+				"INSERT OR IGNORE INTO BookLabel(label_id,book_id)" +
+				" SELECT label_id,? FROM Labels WHERE name='favorite'"
 			);
 		}
 		myAddToFavoritesStatement.bindLong(1, bookId);
@@ -715,7 +723,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void removeFromFavorites(long bookId) {
 		if (myRemoveFromFavoritesStatement == null) {
 			myRemoveFromFavoritesStatement = myDatabase.compileStatement(
-				"DELETE FROM Favorites WHERE book_id = ?"
+				"DELETE FROM BookLabel WHERE book_id=? AND label_id IN" +
+				" (SELECT label_id FROM Labels WHERE name='favorite')"
 			);
 		}
 		myRemoveFromFavoritesStatement.bindLong(1, bookId);
@@ -724,7 +733,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected List<Long> loadFavoriteIds() {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id FROM Favorites", null
+			"SELECT BookLabel.book_id FROM BookLabel" +
+			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
+			" WHERE Labels.name='favorite'", null
 		);
 		final LinkedList<Long> ids = new LinkedList<Long>();
 		while (cursor.moveToNext()) {
@@ -1294,5 +1305,28 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables19() {
 		myDatabase.execSQL("DROP TABLE BookList");
+	}
+
+	private void updateTables20() {
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookUid(" +
+				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"type TEXT NOT NULL," +
+				"uid TEXT NOT NULL)");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Labels(" +
+				"label_id INTEGER PRIMARY KEY," +
+				"name TEXT NOT NULL UNIQUE)");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookLabel(" +
+				"label_id INTEGER NOT NULL REFERENCES Labels(label_id)," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"CONSTRAINT BookLabel_Unique UNIQUE (label_id,book_id))");
+		final SQLiteStatement insert = myDatabase.compileStatement(
+			"INSERT INTO Labels (name) VALUES ('favorite')"
+		);
+		final long id = insert.executeInsert();
+		myDatabase.execSQL("INSERT INTO BookLabel (label_id,book_id) SELECT " + id + ",book_id FROM Favorites");
+		myDatabase.execSQL("DROP TABLE Favorites");
 	}
 }
