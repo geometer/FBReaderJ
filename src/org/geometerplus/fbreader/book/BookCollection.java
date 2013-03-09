@@ -252,7 +252,7 @@ public class BookCollection extends AbstractBookCollection {
 	public List<Book> booksForTitlePrefix(String prefix) {
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
-			if (prefix.equals(TitleUtil.firstTitleLetter(b))) {
+			if (b.getSortKey().startsWith(prefix)) {
 				filtered.add(b);
 			}
 		}
@@ -461,7 +461,7 @@ public class BookCollection extends AbstractBookCollection {
 		final ArrayList<String> titles = new ArrayList<String>(limit);
 		synchronized (myBooksByFile) {
 			for (Book b : myBooksByFile.values()) {
-				if (prefix.equals(TitleUtil.firstTitleLetter(b))) {
+				if (b.getSortKey().startsWith(prefix)) {
 					titles.add(b.getTitle());
 					if (--limit == 0) {
 						break;
