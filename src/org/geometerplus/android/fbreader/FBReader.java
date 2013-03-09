@@ -825,16 +825,15 @@ public final class FBReader extends Activity {
 				}
 				break;
 			case REQUEST_CANCEL_MENU:
-			if (resultCode != RESULT_CANCELED && resultCode != -1) {
-				myNeedToSkipPlugin = true;
-			} else {
-			}
-			getCollection().bindToService(this, new Runnable() {
-				public void run() {
-					myFBReaderApp.runCancelAction(resultCode - 1);
+				if (resultCode != RESULT_CANCELED && resultCode != -1) {
+					myNeedToSkipPlugin = true;
 				}
-			});
-			break;
+				getCollection().bindToService(this, new Runnable() {
+					public void run() {
+						myFBReaderApp.runCancelAction(resultCode - 1);
+					}
+				});
+				break;
 		}
 	}
 
