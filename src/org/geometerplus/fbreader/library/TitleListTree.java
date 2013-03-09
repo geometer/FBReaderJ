@@ -41,15 +41,15 @@ public class TitleListTree extends FirstLevelTree {
 
 		myDoGroupByFirstLetter = false;
 		final TreeSet<String> letterSet = new TreeSet<String>();
-		final List<String> titles = Collection.titles();
-		if (titles.size() > 9) {
-			for (String t : titles) {
-				final String letter = TitleUtil.firstLetter(t);
+		final List<Book> books = Collection.books();
+		if (books.size() > 9) {
+			for (Book b : books) {
+				final String letter = b.firstTitleLetter();
 				if (letter != null) {
 					letterSet.add(letter);
 				}
 			}
-			myDoGroupByFirstLetter = titles.size() > letterSet.size() * 5 / 4;
+			myDoGroupByFirstLetter = books.size() > letterSet.size() * 5 / 4;
 		}
 
 		if (myDoGroupByFirstLetter) {
@@ -57,7 +57,7 @@ public class TitleListTree extends FirstLevelTree {
 				createTitleSubTree(letter);
 			}
 		} else {
-			for (Book b : Collection.books()) {
+			for (Book b : books) {
 				createBookWithAuthorsSubTree(b);
 			}
 		}
@@ -65,10 +65,13 @@ public class TitleListTree extends FirstLevelTree {
 
 	@Override
 	public boolean onBookEvent(BookEvent event, Book book) {
+		if (book == null) {
+			return false;
+		}
 		switch (event) {
 			case Added:
 				if (myDoGroupByFirstLetter) {
-					final String letter = TitleUtil.firstTitleLetter(book);
+					final String letter = book.firstTitleLetter();
 					return letter != null && createTitleSubTree(letter);
 				} else {
 					return createBookWithAuthorsSubTree(book);
@@ -84,7 +87,7 @@ public class TitleListTree extends FirstLevelTree {
 			case Updated:
 				if (myDoGroupByFirstLetter) {
 					// TODO: remove old tree (?)
-					final String letter = TitleUtil.firstTitleLetter(book);
+					final String letter = book.firstTitleLetter();
 					return letter != null && createTitleSubTree(letter);
 				} else {
 					boolean changed = removeBook(book);
