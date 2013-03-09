@@ -89,7 +89,11 @@ public abstract class TitledEntity implements Comparable<TitledEntity> {
 		ARTICLES.put("es", SP_ARTICLES);
 	}
 
-	private String trim(String s, String language) {
+	private static String trim(String s, String language) {
+		if (s == null) {
+			return "";
+		}
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			s = normalize(s);
 		}
