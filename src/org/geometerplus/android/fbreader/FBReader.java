@@ -606,21 +606,21 @@ public final class FBReader extends Activity {
 		public void run() {
 			final TipsManager manager = TipsManager.Instance();
 			switch (manager.requiredAction()) {
-			case Initialize:
-				startActivity(new Intent(
-						TipsActivity.INITIALIZE_ACTION, null, FBReader.this, TipsActivity.class
-						));
-				break;
-			case Show:
-				startActivity(new Intent(
-						TipsActivity.SHOW_TIP_ACTION, null, FBReader.this, TipsActivity.class
-						));
-				break;
-			case Download:
-				manager.startDownloading();
-				break;
-			case None:
-				break;
+				case Initialize:
+					startActivity(new Intent(
+							TipsActivity.INITIALIZE_ACTION, null, FBReader.this, TipsActivity.class
+							));
+					break;
+				case Show:
+					startActivity(new Intent(
+							TipsActivity.SHOW_TIP_ACTION, null, FBReader.this, TipsActivity.class
+							));
+					break;
+				case Download:
+					manager.startDownloading();
+					break;
+				case None:
+					break;
 			}
 		}
 	}
@@ -803,31 +803,31 @@ public final class FBReader extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
 		switch (requestCode) {
-		case REQUEST_PREFERENCES:
-		case REQUEST_BOOK_INFO:
-			if (resultCode != RESULT_DO_NOTHING) {
-				final Book book = BookInfoActivity.bookByIntent(data);
-				if (book != null) {
-					getCollection().bindToService(this, new Runnable() {
-						public void run() {
-							myFBReaderApp.Collection.saveBook(book, true);
-							onPreferencesUpdate(book);
-						}
-					});
+			case REQUEST_PREFERENCES:
+			case REQUEST_BOOK_INFO:
+				if (resultCode != RESULT_DO_NOTHING) {
+					final Book book = BookInfoActivity.bookByIntent(data);
+					if (book != null) {
+						getCollection().bindToService(this, new Runnable() {
+							public void run() {
+								myFBReaderApp.Collection.saveBook(book, true);
+								onPreferencesUpdate(book);
+							}
+						});
+					}
 				}
-			}
-			break;
-		case REQUEST_CANCEL_MENU:
-			if (resultCode != RESULT_CANCELED && resultCode != -1) {
-				myNeedToSkipPlugin = true;
-			} else {
-			}
-			getCollection().bindToService(this, new Runnable() {
-				public void run() {
-					myFBReaderApp.runCancelAction(resultCode - 1);
+				break;
+			case REQUEST_CANCEL_MENU:
+				if (resultCode != RESULT_CANCELED && resultCode != -1) {
+					myNeedToSkipPlugin = true;
+				} else {
 				}
-			});
-			break;
+				getCollection().bindToService(this, new Runnable() {
+					public void run() {
+						myFBReaderApp.runCancelAction(resultCode - 1);
+					}
+				});
+				break;
 		}
 	}
 
