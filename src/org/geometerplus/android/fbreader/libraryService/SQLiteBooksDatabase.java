@@ -671,6 +671,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		});
 	}
 
+	@Override
 	protected List<Long> loadRecentBookIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM RecentBooks ORDER BY book_index", null
@@ -683,59 +684,73 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	protected boolean hasFavorites() {
+	@Override
+	protected List<String> labels() {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT BookLabel.book_id FROM BookLabel" +
-			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
-			" WHERE Labels.name='favorite' LIMIT 1", null
+			"SELECT Labels.name FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
+			" GROUP BY Labels.name",
+			null
 		);
-		boolean result = cursor.moveToNext();
+		final LinkedList<String> names = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			names.add(cursor.getString(0));
+		}
 		cursor.close();
-		return result;
+		return names;
 	}
 
-	protected boolean isFavorite(long bookId) {
+	@Override
+	protected List<String> labels(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT BookLabel.book_id FROM BookLabel" +
-			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
-			" WHERE BookLabel.book_id=? AND Labels.name='favorite' LIMIT 1",
+			"SELECT Labels.name FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
+			" WHERE BookLabel.book_id=?",
 			new String[] { String.valueOf(bookId) }
 		);
-		boolean result = cursor.moveToNext();
+		final LinkedList<String> names = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			names.add(cursor.getString(0));
+		}
 		cursor.close();
-		return result;
+		return names;
 	}
 
-	private SQLiteStatement myAddToFavoritesStatement;
-	protected void addToFavorites(long bookId) {
-		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES ('favorite')");
-		if (myAddToFavoritesStatement == null) {
-			myAddToFavoritesStatement = myDatabase.compileStatement(
+	private SQLiteStatement mySetLabelStatement;
+	@Override
+	protected void setLabel(long bookId, String label) {
+		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES (?)", new Object[] { label });
+		if (mySetLabelStatement == null) {
+			mySetLabelStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO BookLabel(label_id,book_id)" +
-				" SELECT label_id,? FROM Labels WHERE name='favorite'"
+				" SELECT label_id,? FROM Labels WHERE name=?"
 			);
 		}
-		myAddToFavoritesStatement.bindLong(1, bookId);
-		myAddToFavoritesStatement.execute();
+		mySetLabelStatement.bindLong(1, bookId);
+		mySetLabelStatement.bindString(2, label);
+		mySetLabelStatement.execute();
 	}
 
-	private SQLiteStatement myRemoveFromFavoritesStatement;
-	protected void removeFromFavorites(long bookId) {
-		if (myRemoveFromFavoritesStatement == null) {
-			myRemoveFromFavoritesStatement = myDatabase.compileStatement(
+	private SQLiteStatement myRemoveLabelStatement;
+	@Override
+	protected void removeLabel(long bookId, String label) {
+		if (myRemoveLabelStatement == null) {
+			myRemoveLabelStatement = myDatabase.compileStatement(
 				"DELETE FROM BookLabel WHERE book_id=? AND label_id IN" +
-				" (SELECT label_id FROM Labels WHERE name='favorite')"
+				" (SELECT label_id FROM Labels WHERE name=?)"
 			);
 		}
-		myRemoveFromFavoritesStatement.bindLong(1, bookId);
-		myRemoveFromFavoritesStatement.execute();
+		myRemoveLabelStatement.bindLong(1, bookId);
+		myRemoveLabelStatement.bindString(2, label);
+		myRemoveLabelStatement.execute();
 	}
 
-	protected List<Long> loadFavoriteIds() {
+	@Override
+	protected List<Long> loadBooksForLabelIds(String label) {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT BookLabel.book_id FROM BookLabel" +
 			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
-			" WHERE Labels.name='favorite'", null
+			" WHERE Labels.name=?", new String[] { label }
 		);
 		final LinkedList<Long> ids = new LinkedList<Long>();
 		while (cursor.moveToNext()) {

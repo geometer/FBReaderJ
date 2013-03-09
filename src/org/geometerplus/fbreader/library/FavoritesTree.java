@@ -28,7 +28,7 @@ public class FavoritesTree extends FirstLevelTree {
 
 	@Override
 	public Status getOpeningStatus() {
-		if (!Collection.hasFavorites()) {
+		if (!Collection.labels().contains(Book.FAVORITE_LABEL)) {
 			return Status.CANNOT_OPEN;
 		}
 		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
@@ -43,7 +43,7 @@ public class FavoritesTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.favorites()) {
+		for (Book book : Collection.booksForLabel(Book.FAVORITE_LABEL)) {
 			createBookWithAuthorsSubTree(book);
 		}
 	}
@@ -51,11 +51,11 @@ public class FavoritesTree extends FirstLevelTree {
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
-				return Collection.isFavorite(book) && createBookWithAuthorsSubTree(book);
+				return Collection.labels(book).contains(Book.FAVORITE_LABEL) && createBookWithAuthorsSubTree(book);
 			case Updated:
 			{
 				boolean changed = removeBook(book);
-				changed |= Collection.isFavorite(book) && createBookWithAuthorsSubTree(book);
+				changed |= Collection.labels(book).contains(Book.FAVORITE_LABEL) && createBookWithAuthorsSubTree(book);
 				return changed;
 			}
 			case Removed:
