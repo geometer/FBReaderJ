@@ -278,6 +278,7 @@
 		</node>
 		<node name="appearance" value="Apparence">
 			<node name="summary" value="Rotation, barre de statut"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Orientation de l'écran">
 				<node name="system" value="Système"/>
 				<node name="sensor" value="Détectée par les capteurs"/>

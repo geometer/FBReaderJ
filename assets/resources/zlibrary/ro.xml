@@ -47,6 +47,7 @@
 		<node name="hu" value="Ungara"/>
 		<node name="id" value="Indoneziana"/>
 		<node name="it" value="Italiana"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Lituaniana"/>
 		<node name="nl" value="Olandeza"/>
 		<node name="nb" value="Norvegiana"/>
@@ -63,6 +64,7 @@
 		<node name="zh" value="Chineza"/>
 		<node name="other" value="Altele"/>
 		<node name="multi" value="Multi limba"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="deschis"/>

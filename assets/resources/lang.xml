@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="language-self">
+		<node name="be" value="Беларуская"/>
+		<node name="bg" value="Български"/>
+		<node name="ca" value="Català"/>
+		<node name="cs" value="Česky"/>
+		<node name="de" value="Deutsch"/>
+		<node name="en" value="English"/>
+		<node name="es" value="Español"/>
+		<node name="fr" value="Français"/>
+		<node name="gl" value="Galego"/>
+		<node name="hu" value="Magyar"/>
+		<node name="it" value="Italiano"/>
+		<node name="ka" value="ქართული"/>
+		<node name="nb" value="Norsk"/>
+		<node name="nl" value="Nederlands"/>
+		<node name="pl" value="Polski"/>
+		<node name="pt" value="Português"/>
+		<node name="ro" value="Romana"/>
+		<node name="ru" value="Русский"/>
+		<node name="sr" value="Српски"/>
+		<node name="th" value="ไทย"/>
+		<node name="tr" value="Türkçe"/>
+		<node name="uk" value="Українська"/>
+		<node name="vi" value="Tiếng Việt"/>
+		<node name="zh" value="中文"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+	</node>
+</resources>

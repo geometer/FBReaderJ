@@ -48,6 +48,7 @@
 		<node name="hu" value="Вуґорская мова"/>
 		<node name="id" value="Інданэзійская мова"/>
 		<node name="it" value="Італійская мова"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Літоўская мова"/>
 		<node name="nl" value="Галяндзкая мова"/>
 		<node name="nb" value="Нарвэская мова"/>
@@ -64,6 +65,7 @@
 		<node name="zh" value="Кітайская мова"/>
 		<node name="other" value="Іншая мова"/>
 		<node name="multi" value="Некалькі моваў"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="уключана"/>

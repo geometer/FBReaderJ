@@ -285,6 +285,7 @@
 		</node>
 		<node name="appearance" value="Weergave">
 			<node name="summary" value="Draaien, statusbalk"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Schermorientatie">
 				<node name="system" value="Systeem"/>
 				<node name="sensor" value="Afhankelijk van stand apparaat"/>

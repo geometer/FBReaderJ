@@ -806,6 +806,7 @@ public final class FBReader extends Activity {
 			case REQUEST_PREFERENCES:
 			case REQUEST_BOOK_INFO:
 				if (resultCode != RESULT_DO_NOTHING) {
+					invalidateOptionsMenu();
 					final Book book = BookInfoActivity.bookByIntent(data);
 					if (book != null) {
 						getCollection().bindToService(this, new Runnable() {

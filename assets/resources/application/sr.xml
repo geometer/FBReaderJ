@@ -282,6 +282,7 @@
 		</node>
 		<node name="appearance" value="Изглед">
 			<node name="summary" value="Приказ подешавања, траке стања и осветљења дугмади."/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Усмерење екрана">
 				<node name="system" value="Систем"/>
 				<node name="sensor" value="Осетљивост на усмерење"/>
