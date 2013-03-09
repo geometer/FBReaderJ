@@ -19,6 +19,10 @@
 
 package org.geometerplus.zlibrary.core.language;
 
+import java.text.Normalizer;
+
+import android.os.Build;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class Language implements Comparable<Language> {
@@ -44,7 +48,11 @@ public class Language implements Comparable<Language> {
 	public Language(String code, String name) {
 		Code = code;
 		Name = name;
-		mySortKey = name;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+			mySortKey = Normalizer.normalize(name.toLowerCase(), Normalizer.Form.NFKD);
+		} else {
+			mySortKey = name.toLowerCase();
+		}
 		if (SYSTEM_CODE.equals(code)) {
 			myOrder = Order.Before;
 		} else if (MULTI_CODE.equals(code) || OTHER_CODE.equals(code)) {
