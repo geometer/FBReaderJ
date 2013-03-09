@@ -2,11 +2,15 @@ package org.geometerplus.fbreader.network.rss;
 
 import java.util.Map;
 
+import org.geometerplus.fbreader.network.atom.ATOMCategory;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 import org.geometerplus.fbreader.network.atom.ATOMId;
+import org.geometerplus.fbreader.network.atom.FormattedBuffer;
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+
+import android.net.Uri;
 
 public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType extends RSSItem> extends ZLXMLReaderAdapter {
 	
@@ -19,8 +23,10 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	private final ATOMFeedHandler<MetadataType,EntryType> myFeedHandler;
 	private Map<String,String> myNamespaceMap;
 	private final StringBuilder myBuffer = new StringBuilder();
+	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
 	private EntryType myItem;
 	private RSSAuthor myAuthor;
+	private RSSCategory myCategory;
 	private ATOMId myId;
 	
 	private static final int START = 0;
@@ -43,6 +49,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	protected static final String TAG_CHANNEL = "channel";
 	protected static final String TAG_ITEM = "item";
 	protected static final String TAG_TITLE = "title";
+	protected static final String TAG_CATEGORY = "category";
 	protected static final String TAG_LINK = "link";
 	protected static final String TAG_GUID = "guid";
 	protected static final String TAG_DESCRIPTION = "description";
@@ -85,51 +92,50 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	public boolean startElementHandler(String ns, String tag, ZLStringMap attributes, String bufferContent) {
 		switch (myState) {
 			case START:
-				if(testTag(ns, TAG_RSS, tag)) {
+				if(testTag(TAG_RSS, tag, ns, null)) {
 					myState = RSS;
 				}
 				break;
 			case RSS:
-	            if (testTag(ns, TAG_CHANNEL, tag)) {
+	            if (testTag(TAG_CHANNEL, tag, ns, null)) {
 	                myState = CHANNEL;
 	            }
 	            break;
 			case CHANNEL:
-	            if (testTag(ns, TAG_TITLE, tag)) {
+	            if (testTag(TAG_TITLE, tag, ns, null)) {
 	                myState = C_TITLE;
 	            }
-	            if (testTag(ns, TAG_LINK, tag)) {                
+	            if (testTag(TAG_LINK, tag, ns, null)) {                
 	                myState = C_LINK;
 	            }
-	            if (testTag(ns, TAG_ITEM, tag)) {
+	            if (testTag(TAG_ITEM, tag, ns, null)) {
 	            	myItem = myFeedHandler.createEntry(attributes);
 	                myState = ITEM;
 	            }
 	            break;
 	        case ITEM:
-	            if (testTag(ns, TAG_TITLE, tag)) {
+	            if (testTag(TAG_TITLE, tag, ns, null)) {
 	            	myAuthor = new RSSAuthor(attributes);
 	                myState = TITLE;
 	            }
-	            if (testTag(ns, TAG_LINK, tag)) {
+	            if (testTag(TAG_LINK, tag, ns, null)) {
 	                myState = LINK;
 	            }
-	            if (testTag(ns, TAG_DESCRIPTION, tag)) {
+	            if (testTag(TAG_DESCRIPTION, tag, ns, null)) {
 	                myState = DESCRIPTION;
 	            }
-	            if (testTag(ns, TAG_GUID, tag)) {
+	            if (testTag(TAG_CATEGORY, tag, ns, null)) {
+	                myState = CATEGORY;
+	            }
+	            if (testTag(TAG_GUID, tag, ns, null)) {
 	            	myId = new ATOMId();
 	                myState = GUID;
 	            }
-	            if (testTag(ns, TAG_PUBDATE, tag)) {
+	            if (testTag(TAG_PUBDATE, tag, ns, null)) {
 	                myState = PUBDATE;
 	            }
 		}
 		return false;
-	}
-	
-	public boolean testTag(String ns, String name, String tag){
-		return (ns == XMLNamespaces.Atom && name == tag) ? true : false;
 	}
 	
 	public boolean endElementHandler(String ns, String tag, String bufferContent) {
@@ -137,32 +143,32 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 			case START:
 				break;
 			case RSS:
-				if (testTag(ns, TAG_RSS, tag)) {
+				if (testTag(TAG_RSS, tag, ns, null)) {
 					myState = START;
 				}
 				break;
 			case CHANNEL:
-				if (testTag(ns, TAG_CHANNEL, tag)) {
+				if (testTag(TAG_CHANNEL, tag, ns, null)) {
 					myState = RSS;
 				}
 				break;
 			case C_TITLE:
-				if (testTag(ns, TAG_TITLE, tag)) {
+				if (testTag(TAG_TITLE, tag, ns, null)) {
 					myState = CHANNEL;
 				}
 				break;
 			case C_LINK:
-				if (testTag(ns, TAG_LINK, tag)) {                
+				if (testTag(TAG_LINK, tag, ns, null)) {                
 					myState = CHANNEL;
 				}
 				break;
 			case ITEM:
-				if (testTag(ns, TAG_ITEM, tag)) {
+				if (testTag(TAG_ITEM, tag, ns, null)) {
 					myFeedHandler.processFeedEntry(myItem);
 					myState = CHANNEL;
 				}
 			case TITLE:
-				if (testTag(ns, TAG_TITLE, tag)) {
+				if (testTag(TAG_TITLE, tag, ns, null)) {
 					String mark = "~ by:";
 					int foundIndex = bufferContent.indexOf(mark);
 					if(foundIndex >= 0){
@@ -170,7 +176,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 							String title = bufferContent.substring(0, foundIndex);
 							myItem.Title = title;
 							String authorName = bufferContent.substring(foundIndex+mark.length());
-							myAuthor.Name = authorName;
+							myAuthor.Name = authorName.trim();
 							myItem.Authors.push(myAuthor);
 							myAuthor = null;
 						}
@@ -181,7 +187,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 				}
 				break;
 			case GUID:
-				if (testTag(ns, TAG_GUID, tag)) {
+				if (testTag(TAG_GUID, tag, ns, null)) {
 					if(myId != null){
 						myId.Uri = bufferContent;
 						myItem.Id = myId;
@@ -191,23 +197,65 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 				}
 				break;
 			case DESCRIPTION:
-				if (testTag(ns, TAG_DESCRIPTION, tag)) {
-					myItem.Summary = bufferContent;
+				if (testTag(TAG_DESCRIPTION, tag, ns, null)) {
+					myFormattedBuffer.reset(FormattedBuffer.Type.Html);
+					myFormattedBuffer.appendText(makeFormat(bufferContent));
+					myItem.Summary = myFormattedBuffer.getText();
+					myState = ITEM;
+				}
+				break;
+			case CATEGORY:
+				if (testTag(TAG_CATEGORY, tag, ns, null)) {
+					String[] tokens = bufferContent.split(", ");
+					for (String str : tokens){
+						ZLStringMap source = new ZLStringMap();
+						source.put(RSSCategory.LABEL, str);
+						myCategory = new RSSCategory(source);
+						if(myCategory != null){
+							myItem.Categories.push(myCategory);
+						}
+						myCategory = null;
+					}
 					myState = ITEM;
 				}
 				break;
 			case PUBDATE:
-				if (testTag(ns, TAG_PUBDATE, tag)) {
+				if (testTag(TAG_PUBDATE, tag, ns, null)) {
 					myState = ITEM;
 				}
 				break;
 			case LINK:
-				if (testTag(ns, TAG_LINK, tag)) {
+				if (testTag(TAG_LINK, tag, ns, null)) {
 					myState = ITEM;
 				}
 				break;
 		}
 		return false;
+	}
+	
+	private String makeFormat(String buffer){
+		//TODO: maybe need to make the text more readable?
+		StringBuffer s1 = new StringBuffer(buffer);
+		int index;
+		String[] marks = {"Author:", "Price:", "Rating:"};
+		
+		for(int i=0; i< marks.length; i++){
+			index = s1.indexOf(marks[i]);
+			if(index >= 0){
+				s1.insert(index, "<br/>");
+			}
+		}
+		
+		return s1.toString();
+	}
+	
+	public boolean testTag(String name, String tag, String ns, String nsName){
+		return (name == tag && ns == nsName) ? true : false;
+	}
+	
+	@Override
+	public final boolean processNamespaces() {
+		return true;
 	}
 	
 	@Override
@@ -216,7 +264,11 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 	}
 	
 	protected final String getNamespace(String prefix) {
-		return XMLNamespaces.Atom;
+		if (myNamespaceMap == null) {
+			return null;
+		}
+		final String ns = myNamespaceMap.get(prefix);
+		return ns != null ? ns.intern() : null;
 	}
 	
 	private final String extractBufferContent() {

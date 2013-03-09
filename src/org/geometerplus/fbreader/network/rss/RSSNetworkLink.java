@@ -11,7 +11,6 @@ import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
@@ -115,8 +114,14 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 
 	@Override
 	public String rewriteUrl(String url, boolean isUrlExternal) {
-		// TODO Auto-generated method stub
-		return null;
+		/*final int apply = isUrlExternal
+			? URLRewritingRule.APPLY_EXTERNAL : URLRewritingRule.APPLY_INTERNAL;
+		for (URLRewritingRule rule: myUrlRewritingRules) {
+			if ((rule.whereToApply() & apply) != 0) {
+				url = rule.apply(url);
+			}
+		}*/
+		return url;
 	}
 
 	@Override
