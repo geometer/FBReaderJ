@@ -37,11 +37,11 @@ public final class SeriesInfo {
 		}
 	}
 
-	public final String Title;
+	public final Series Series;
 	public final BigDecimal Index;
 
 	SeriesInfo(String title, BigDecimal index) {
-		Title = title;
+		Series = new Series(title);
 		Index = index;
 	}
 }
