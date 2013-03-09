@@ -304,6 +304,12 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(fromId, limitCount));
 		}
 
+		public List<String> bookmarksForBook(String book, long fromId, int limitCount) {
+			return SerializerUtil.serializeBookmarkList(myCollection.bookmarksForBook(
+				SerializerUtil.deserializeBook(book), fromId, limitCount
+			));
+		}
+
 		public String saveBookmark(String serialized) {
 			final Bookmark bookmark = SerializerUtil.deserializeBookmark(serialized);
 			myCollection.saveBookmark(bookmark);

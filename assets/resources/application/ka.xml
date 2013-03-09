@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Georgian FBReaderJ resources, by Zurab Sebiskveradze, George Zautashvili -->
+<resources>
+	<node name="library" value="FBReader: ბიბლიოთეკა">
+		<node name="unknownAuthor" value="ავტორი არ არის მითითებული"/>
+		<node name="booksWithNoTags" value="წიგნები კატეგორიის გარეშე"/>
+		<node name="demo" value="ფრაგმენტი"/>
+		<node name="byAuthor" value="ავტორებით">
+			<node name="summary" value="წიგნები, დალაგებული ავტორების მიხედვით"/>
+		</node>
+		<node name="byTitle" value="სათაურით">
+			<node name="summary" value="წიგნები, დალაგებული სათაურების მიხედვით"/>
+		</node>
+		<node name="bySeries" value="სერიებით">
+			<node name="summary" value="წიგნები, დალაგებული სერიების მიხედვით"/>
+		</node>
+		<node name="byTag" value="კატეგორიით">
+			<node name="summary" value="წიგნები, დალაგებული კატეგორიების მიხედვით"/>
+		</node>
+		<node name="recent" value="ცოტა ხნის წინანდელი">
+			<node name="summary" value="წიგნები, რომლებიც ცოტა ხნის წინ იყო გახსნილი"/>
+		</node>
+		<node name="favorites" value="რჩეულები">
+			<node name="summary" value="ჩემი საყვარელი წიგნები"/>
+		</node>
+		<node name="found" value="ნაპოვნია">
+			<node name="summary" value="ძიების შედეგები: %s -სთვის"/>
+		</node>
+		<node name="fileTree" value="ფაილოვანი სისტემა">
+			<node name="summary" value="ფაილები ჩემს მოწყობილობაზე"/>
+		</node>
+		<node name="fileTreeRoot" value="მოწყობილობა">
+			<node name="summary" value="ყველა ფაილის დათვალიერება ჩემს მოწყობილობაზე"/>
+		</node>
+		<node name="fileTreeCard" value="მეხსიერების ბარათი">
+			<node name="summary" value="მეხსიერების ბარათის დათვალიერება"/>
+		</node>
+		<node name="fileTreeLibrary" value="ბიბლიოთეკა FBReader">
+			<node name="summary" value="წიგნების კატალოგის დათვალიერება"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="ძებნა"/>
+			<node name="rescan" value="გადასკანერება"/>
+		</node>
+		<node name="openBook" value="წიგნის წაკითხვა"/>
+		<node name="showBookInfo" value="ინფორმაცია წიგნის შესახებ"/>
+		<node name="shareBook" value="წიგნის გაზიარება"/>
+		<node name="deleteBook" value="წიგნის წაშლა"/>
+		<node name="addToFavorites" value="რჩეულებში დამატება"/>
+		<node name="removeFromFavorites" value="რჩეულებიდან წაშლა"/>
+	</node>
+	<node name="networkLibrary" value="FBReader: ქსელური ბიბლიოთეკა">
+		<node name="byAuthor" value="ავტორებით">
+			<node name="summary" value="წიგნები, დალაგებული ავტორების მიხედვით"/>
+		</node>
+		<node name="byTitle" value="სათაურებით">
+			<node name="summary" value="წიგნები, დალაგებული სათაურების მიხედვით"/>
+		</node>
+		<node name="byDate" value="თარიღით">
+			<node name="summary" value="წიგნები, დალაგებული ყიდვის თარიღის მიხედვით"/>
+		</node>
+		<node name="bySeries" value="სერიებით">
+			<node name="summary" value="წიგნები, დალაგებული სერიების მიხედვით"/>
+		</node>
+		<node name="search" value="ძებნა">
+			<node name="summary" value="მოძებნე წიგნები %s-ზე"/>
+			<node name="summaryAllCatalogs" value="წიგნების ძებნა ყველა კატალოგში"/>
+			<node name="summaryInProgress" value="მიმდინარეობს ძებნა…"/>
+		</node>
+		<node name="found" value="ნაპოვნია">
+			<node name="summary" value="ძებნის შედეგები %s-სთვის"/>
+		</node>
+		<node name="openCatalog" value="კატალოგის გახსნა"/>
+		<node name="networkSearch" value="ძებნა"/>
+		<node name="showResults" value="შედეგების ჩვენება"/>
+		<node name="showBooks" value="აჩვენე წიგნები"/>
+		<node name="download" value="გადმოწერა"/>
+		<node name="read" value="წაიკითხე ლოკალური ასლი"/>
+		<node name="delete" value="წაშალე ლოკალური ასლი"/>
+		<node name="readDemo" value="ფრაგმენტის წაკითხვა"/>
+		<node name="deleteDemo" value="ფრაგმენტის წაშლა"/>
+		<node name="downloadDemo" value="ფრაგმენტის გადმოწერა"/>
+		<node name="buy" value="ყიდვა (%s)"/>
+		<node name="addToBasket" value="კალათში დამატება"/>
+		<node name="removeFromBasket" value="კალათიდან წაშლა"/>
+		<node name="openBasket" value="კალათა"/>
+		<node name="clearBasket" value="კალათის გასუფთავება"/>
+		<node name="buyAllBooks" value="ყველა წიგნის ყიდვა"/>
+		<node name="openInBrowser" value="ბრაუზერში გახსნა"/>
+		<node name="stopLoading" value="გადმოწერის შეჩერება"/>
+		<node name="stopSearching" value="ძებნის შეჩერება"/>
+		<node name="signIn" value="შესვლა"/>
+		<node name="signOut" value="გამოსვლა (%s)"/>
+		<node name="topup" value="ანგარიშის შევსება (ბალანსი: %s)"/>
+		<node name="topupTitle" value="გადახდა"/>
+		<node name="topupViaBrowser" value="ბრაუზერის ფანჯარაში"/>
+		<node name="authorizationMenuTitle" value="ამოირჩიეთ ქმედება"/>
+		<node name="topupSummary" value="მიმდინარე ანგარიში: %s"/>
+		<node name="basket" value="კალათა"/>
+		<node name="basketSummaryEmpty" value="ცარიელი კალათა"/>
+		<node name="basketSummaryCountOnly" value="%0 წიგნების">
+			<node condition="modrange 11 19 100" value="%0 წიგნების"/>
+			<node condition="mod 1 10" value="%0 წიგნი"/>
+			<node condition="modrange 2 4 10" value="%0 წიგნები"/>
+		</node>
+		<node name="basketSummary" value="%0 წიგნი, ღირებულებით %1">
+			<node condition="modrange 11 19 100" value="%0 წიგნი, ღირებულებით %1"/>
+			<node condition="mod 1 10" value="%0 წიგნი, ღირებულებით %1"/>
+			<node condition="modrange 2 4 10" value="%0 წიგნი, ღირებულებით %1"/>
+		</node>
+		<node name="alreadyDownloading" value="წიგნი იტვირთება"/>
+		<node name="alreadyDownloadingDemo" value="ფრაგმენტი იტვირთება"/>
+		<node name="stoppingCatalogLoading" value="ჩატვირთვის შეჩერება"/>
+		<node name="stoppingNetworkSearch" value="ძებნის დასრულება"/>
+		<node name="editCustomCatalog" value="კატალოგის შეცვლა"/>
+		<node name="removeCustomCatalog" value="კატალოგის წაშლა"/>
+		<node name="addCustomCatalog" value="კატალოგის დამატება"/>
+		<node name="addCustomCatalogSummary" value="OPDS კატალოგის დამატება ხელით"/>
+		<node name="confirmQuestions">
+			<node name="read" value="გნებავთ ლოკალური ასლის გახსნა?"/>
+			<node name="download" value="გნებავთ ამ წიგნის გადმოწერა?"/>
+			<node name="readDemo" value="გნებავთ ფრაგმენტის გახსნა?"/>
+			<node name="downloadDemo" value="გნებავთ ფრაგმენტის გადმოწერა?"/>
+			<node name="buy" value="გნებავთ ამ წიგნის ყიდვა? (%s)"/>
+			<node name="openInBrowser" value="გნებავთ ამ კატალოგის გახსნა ბრაუზერში?"/>
+		</node>
+		<node name="downloadingCatalogs" value="მიმდინარეობს კატალოგების ჩატვირთვა"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="წიგნების მოძებნა ქსელში"/>
+		<!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="კატალოგის დამატება"/>
+			<node name="editUrl" value="Url მისამართის ხელით შეყვანა"/>
+		</node>
+		<node name="menu">
+			<node name="networkSearch" value="ქსელში ძებნა"/>
+			<node name="reload" value="განახლება"/>
+			<node name="signIn" value="შესვლა"/>
+			<node name="signUp" value="რეგისტრაცია"/>
+			<node name="signOut" value="გამოსვლა (%s)"/>
+			<node name="topup" value="ანგარიშის შევსება"/>
+			<node name="addCustomCatalog" value="კატალოგის დამატება"/>
+			<node name="refreshCatalogsList" value="კატალოგის განახლება"/>
+			<node name="languages" value="ენების მიხედვით გაფილტვრა"/>
+			<node name="clearBasket" value="კალათის გასუფთავება"/>
+			<node name="buyAllBooks" value="ყველა წიგნის ყიდვა"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="წიგნის ყიდვა"/>
+		<node name="titleSeveralBooks" value="წიგნის ყიდვა"/>
+		<node name="confirm" value="დარწმუნებული ხართ, რომ გნებავთ წიგნის შეძენა&#10;«%s»?"/>
+		<node name="confirmSeveralBooks" value="დარწმუნებული ხართ, რომ გნებავთ შეიძინოთ %s წიგნები?"/>
+		<node name="alreadyBought" value="წიგნი უკვე ნაყიდია"/>
+		<node name="notAuthorized" value="საჭიროა ავტორიზაცია"/>
+		<node name="noAccountInformation" value="ვერ მოხერხდა ანგარიშის შემოწმება"/>
+		<node name="unsufficientFunds" value="საყიდლად საჭიროა %0, ხოლო ანგარიშზეა მხოლოდ %1"/>
+		<node name="zeroFunds" value="ყიდვისთვის საჭიროა %0"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="ინფორმაცია წიგნია შესახებ"/>
+		<node name="fileInfo" value="ინფორმაცია ფაილის შესახებ"/>
+		<node name="description" value="აღწერილობა"/>
+		<node name="noDescription" value="აღწერილობა არ აქვს."/>
+		<node name="annotation" value="ანოტაცია"/>
+		<node name="title" value="სათაური:"/>
+		<node name="authors" value="ავტორები:">
+			<node condition="value 1" value="ავტორი:"/>
+		</node>
+		<node name="series" value="სერია:"/>
+		<node name="indexInSeries" value="ნომერი სერიაში:"/>
+		<node name="tags" value="კატეგორიები:">
+			<node condition="value 1" value="კატეგორია:"/>
+		</node>
+		<node name="language" value="ენა:"/>
+		<node name="name" value="დასახელება:"/>
+		<node name="type" value="ტიპი:"/>
+		<node name="size" value="ზომა:"/>
+		<node name="time" value="ბოლო ცვლილება:"/>
+		<node name="sizeInBytes" value="%s ბაიტი">
+			<node condition="modrange 11 19 100" value="%0 ბაიტი"/>
+			<node condition="modrange 2 4 10" value="%0 ბაიტი"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s კბ"/>
+		<node name="catalog" value="კატალოგი:"/>
+		<node name="extraLinks" value="ლინკები"/>
+		<node name="menu">
+			<node name="edit" value="რედაქტირება"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="წიგნი გადმოწერილია"/>
+		<node name="tickerError" value="წიგნის გადმოწერა ვერ მოხერხდა"/>
+		<node name="contentSuccess" value="გადმოწერა დასრულებულია"/>
+		<node name="contentError" value="ვერ მოხერხდა გადმოწერა"/>
+		<node name="downloadingStarted" value="წიგნის გადმოწერა დაწყებულია"/>
+		<node name="alreadyDownloading" value="წიგნი უკვე იტვირთება"/>
+		<node name="cannotCreateDirectory" value="შეუძლებელია კატალოგის %s შექმნა"/>
+		<node name="cannotCreateFile" value="შეუძლებელია ფაილის %s შექმნა"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="სტრუქტურული ხის გაშლა"/>
+		<node name="collapseTree" value="სტრუქტურული ხის დახურვა"/>
+		<node name="readText" value="თავის კითხვა"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="ეს წიგნი"/>
+		<node name="allBooks" value="ყველა წიგნი"/>
+		<node name="found" value="ნაპოვნია"/>
+		<node name="new" value="სანიშნის დამატება"/>
+		<node name="open" value="გახსნა"/>
+		<node name="edit" value="სანიშნის შესწორება"/>
+		<node name="delete" value="სანიშნის წაშლა"/>
+		<node name="menu">
+			<node name="search" value="ძებნა"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="ბიბლიოთეკის გახსნა"/>
+		<node name="networkLibrary" value="ქსელური ბიბლიოთეკის გახსნა"/>
+		<node name="previousBook" value="წინა წიგნის გახსნა"/>
+		<node name="returnTo" value="დაბრუნება…"/>
+		<node name="back" value="უკან"/>
+		<node name="forward" value="წინ"/>
+		<node name="close" value="FBReader დახურვა"/>
+	</node>
+	<node name="selection" value="ნიშნული">
+		<node name="copyToClipboard" value="ბუფერში დაკოპირება"/>
+		<node name="openInDictionary" value="ლექსიკონში ნახვა"/>
+		<node name="quoteFrom" value="ციტატა %sდან"/>
+		<node name="textInBuffer" value="ტექსტი გაცვლის ბუფერში:&#10;%s"/>
+		<node name="bookmarkCreated" value="შექმნილია სანიშნი:&#10;%s"/>
+		<node name="clearSelection" value="ნიშნულის მოხსნა"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;http://www.fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="პარამეტრები"/>
+		<node name="bookInfo" value="წიგნის შესახებ"/>
+		<node name="library" value="ბიბლიოთეკა"/>
+		<node name="toc" value="სარჩევი"/>
+		<node name="day" value="დღე"/>
+		<node name="night" value="ღამე"/>
+		<node name="networkLibrary" value="ქსელური ბიბლიოთეკა"/>
+		<node name="navigate" value="გადასვლა">
+			<node name="toc" value="სარჩევი"/>
+			<node name="gotoHome" value="წიგნის დასაწყისში"/>
+			<node name="gotoPageNumber" value="გვერდზე…"/>
+			<node name="gotoSectionStart" value="ნაწილის დასაწყისში"/>
+			<node name="gotoSectionEnd" value="ნაწილის ბოლოს"/>
+			<node name="nextTOCSection" value="შემდეგ თავზე"/>
+			<node name="previousTOCSection" value="წინა თავზე"/>
+			<node name="undo" value="უკან"/>
+			<node name="redo" value="წინ"/>
+		</node>
+		<node name="shareBook" value="წიგნის გაზიარება"/>
+		<node name="search" value="ძებნა"/>
+		<node name="rotate" value="მოტრიალება"/>
+		<node name="screenOrientation" value="ეკრანის ორიენტაცია"/>
+		<node name="screenOrientationSystem" value="სისტემური"/>
+		<node name="screenOrientationSensor" value="დამოკიდებულია მოწყობილობის ორიენტაციაზე"/>
+		<node name="screenOrientationPortrait" value="ვერტიკალური"/>
+		<node name="screenOrientationLandscape" value="ჰორიზონტალური"/>
+		<node name="screenOrientationReversePortrait" value="შებრუნებული ვერტიკალური"/>
+		<node name="screenOrientationReverseLandscape" value="შებრუნებული ჰორიზონტალური"/>
+		<node name="increaseFont" value="შრიფტის გაზრდა"/>
+		<node name="decreaseFont" value="შრიფტის შემცირება"/>
+		<node name="toggleFullscreen" value="მთლიან ეკრანზე"/>
+		<node name="bookmarks" value="სანიშნეები"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="ფაილი"/>
+		<node name="title" value="სათაური"/>
+		<node name="language" value="ენა"/>
+		<node name="encoding" value="კოდირება"/>
+		<node name="authors" value="ავტორები"/>
+		<node name="tags" value="კატეგორიები"/>
+		<node name="series" value="სერია"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="კატალოგები">
+			<node name="summary" value="სად მოიძებნოს ფაილები"/>
+			<node name="books" value="კატალოგი წიგნებით"/>
+			<node name="fonts" value="კატალოგი შრიფტებით"/>
+			<node name="wallpapers" value="კატალოგი ფონის სურათებით"/>
+		</node>
+		<node name="appearance" value="გარეგნობა">
+			<node name="summary" value="ეკრანი, სტატუს ბარი, ღილაკების განათება"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="screenOrientation" value="ეკრანის ორიენტაცია">
+				<node name="system" value="სისტემური"/>
+				<node name="sensor" value="დამოკიდებულია მოწყობილობის ორიენტაციაზე"/>
+				<node name="portrait" value="ვერტიკალური"/>
+				<node name="landscape" value="ჰორიზონტლური"/>
+				<node name="reversePortrait" value="შებრუნებული ვერტიკალური"/>
+				<node name="reverseLandscape" value="შებრუნებული ჰორიზონტალური"/>
+			</node>
+			<node name="autoOrientation" value="ავტომატური მოტრიალება">
+				<node name="summaryOn" value="გამოსახულება ტრიალდება მოწყობილობის მოტრიალებისას"/>
+				<node name="summaryOff" value="გამოსახულება არ ტრიალდება მოწყობილობის მოტრიალებისას"/>
+			</node>
+			<node name="showStatusBar" value="აჩვენე სტატუს ბარი">
+				<node name="summaryOn" value="სტატუს ბარი ჩანს კითხვის დროს"/>
+				<node name="summaryOff" value="სტატუს ბარი არ ჩანს კითხვის დროს"/>
+			</node>
+			<node name="showActionBar" value="მენიუ ბარის ჩვენება">
+				<node name="summaryOn" value="მენიუ ბარი ჩანს კითხვის დროს"/>
+				<node name="summaryOff" value="მენიუ ბარი არ ჩანს კითხვის დროს"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="სტატუს ბარის ჩვენება მენიუს გააქტიურებისას">
+				<node name="summaryOn" value="სტატუს ბარის ჩვენება, როცა მენიუ გამოჩნდება ეკრანზე"/>
+				<node name="summaryOff" value="არ აჩვენო სტატუს ბარის, როცა მენიუ გამოჩნდება ეკრანზე"/>
+			</node>
+			<node name="disableButtonLights" value="კითხვის დროს ღილაკების განათების გამორთვა">
+				<node name="summaryOn" value="განათების გამორთვა (მუშაობს ყველა მოწყობილობაზე)"/>
+				<node name="summaryOff" value="არ სცადოთ განათების გამორთვა"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="ეკრანის სიკაშკაშის რეგულირება">
+				<node name="summaryOn" value="თითის მოძრაობით ზევიდან ქვევით ეკრანის მარცხენა კუთხეში"/>
+				<node name="summaryOff" value="გამორთულია"/>
+			</node>
+			<node name="dontTurnScreenOff" value="არ გამოირთოს ეკრანი კითხვის დროს">
+				<node name="0" value="არასდროს არ გამოირთოს"/>
+				<node name="25" value="სანამ ელემენტი მეოთხედამდე მაინც დამუხტულია"/>
+				<node name="50" value="სანამ ელემენტი ნახევრამდე მაინც დამუხტულია"/>
+				<node name="100" value="ყოველთვის გამოირთოს"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="არ გამოირთოს ეკრანი, თუ ელემენტი დამუხტულია">
+				<node name="summaryOn" value="არასდროს გამოირთოს ეკრანი, თუ კითხვა მიმდინარეობს დამუხტვის პროცესში"/>
+				<node name="summaryOff" value="გამოირთოს ეკრანი დამუხტვის რეჟიმშიც კი"/>
+			</node>
+		</node>
+		<node name="text" value="ტექსტი">
+			<node name="summary" value="შრიფტები, გადატანები და ა.შ."/>
+			<node name="fontProperties" value="შრიფტების თვისებები">
+				<node name="summary" value="შრიფტების დამრგვალების პარამეტრები"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="შრიფტი">
+				<node name="unchanged" value="&lt;არ შეცვალო&gt;"/>
+			</node>
+			<node name="fontSize" value="შრიფტის ზომა"/>
+			<node name="fontSizeDifference" value="ზომა"/>
+			<node name="fontStyle" value="შრიფტის სტილი">
+				<node name="regular" value="ნორმალური"/>
+				<node name="bold" value="მსუყე"/>
+				<node name="italic" value="დახრილი"/>
+				<node name="boldItalic" value="მსუყე დახრილი"/>
+			</node>
+			<node name="bold" value="მსუყე შრიფტი">
+				<node name="summaryOn" value="მსუყე სტილის გამოყენება"/>
+				<node name="summaryOff" value="ნორმალური სტილის გამოყენება"/>
+				<node name="unchanged" value="შეუცვლელად"/>
+			</node>
+			<node name="italic" value="დახრილი">
+				<node name="summaryOn" value="დახრილი სტილის გამოყენება"/>
+				<node name="summaryOff" value="ნორმალური სტილის გამოყენება"/>
+				<node name="unchanged" value="შეუცვლელად"/>
+			</node>
+			<node name="underlined" value="ხაზგასმული">
+				<node name="summaryOn" value="ჩართვა"/>
+				<node name="summaryOff" value="გამორთვა"/>
+				<node name="unchanged" value="შეუცვლელად"/>
+			</node>
+			<node name="strikedThrough" value="გადახაზული">
+				<node name="summaryOn" value="ჩართვა"/>
+				<node name="summaryOff" value="გამორთვა"/>
+				<node name="unchanged" value="შეუცვლელად"/>
+			</node>
+			<node name="lineSpacing" value="ინტერვალი">
+				<node name="unchanged" value="&lt;შეუცვლელად&gt;"/>
+			</node>
+			<node name="alignment" value="სწორება">
+				<node name="left" value="მარცხნივ"/>
+				<node name="right" value="მარჯვნივ"/>
+				<node name="center" value="ცენტრში"/>
+				<node name="justify" value="გვერდებზე"/>
+				<node name="unchanged" value="&lt;შეუცვლელად&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="გადატანები">
+				<node name="summaryOn" value="გადატანების ავტომატური დაყენება"/>
+				<node name="summaryOff" value="გადატანების გარეშე"/>
+			</node>
+			<node name="allowHyphenations" value="გადატანები">
+				<node name="summaryOn" value="გაადტანები დაშვებულია"/>
+				<node name="summaryOff" value="გადატანები დაუშვებელია"/>
+				<node name="unchanged" value="&lt;შეუცვლელად&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="აბზაცის პირველი სტრიქონი"/>
+			<node name="spaceBefore" value="დაშორება თავში"/>
+			<node name="spaceAfter" value="დაშორება ბოლოში"/>
+			<node name="leftIndent" value="დაშორება მარცხვნივ"/>
+			<node name="rightIndent" value="დაშორება მარჯვნივ"/>
+			<node name="more" value="სხვა სტილები">
+				<node name="summary" value="ცალკეული პარამეტრები სათაურებისთვის, ეპიგრაფებისთვის და ა.შ."/>
+				<node name="Regular Paragraph" value="ჩვეულებრივი ტექსტი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="სათაური">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="თავის დასახელება">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="ლექსის სათაური">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="ქვესათაური">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="ანოტაცია">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="ეპიგრაფი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="სტროფი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="ლექსები">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="ტექსტი &lt;pre&gt; შიგნით">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="სურათი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="ციტატა">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="ავტორი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="თარიღი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="ლინკი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="ტექსტქვეშა შენიშვნა">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="გამოყოფა (emphasis)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="გამოყოფა (strong)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="ქვეინდექსი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="ზეინდექსი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="პროგრამის ტექსტი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="ხაზგასმული ტექსტი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="დახრილი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="მსუყე ტექსტი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="განმარტება">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="განმარტების ტექსტი">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="ტექსტი &lt;h1&gt; შიგნით">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="ტექსტი &lt;h2&gt; შიგნით">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="ტექსტი &lt;h3&gt; შიგნით">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="ტექსტი &lt;h4&gt; შიგნით">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="ტექსტი &lt;h5&gt; შიგნით">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="ტექსტი &lt;h6&gt; შიგნით">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="გარე ლინკი">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="გამოიყენოს CSS ფორმატირება"/>
+			<node name="fontSize" value="შრიფტის ზომა">
+				<node name="summaryOn" value="CSS-ში მითითებული შრიფტის ზომის გამოყენება"/>
+				<node name="summaryOff" value="CSS-ში მითითებული შრიფტის ზომის იგნორირება"/>
+			</node>
+			<node name="textAlignment" value="ტექსტის გათანაბრება">
+				<node name="summaryOn" value="ტექსტის გათანაბრება, როგორც მითითებულია CSS-ში"/>
+				<node name="summaryOff" value="CSS-ში მითითებული ტექსტის გათანაბრების იგნორირება"/>
+			</node>
+		</node>
+		<node name="colors" value="ფერები და ფონის ფერები">
+			<node name="summary" value="ფერების პარამეტრები"/>
+			<node name="background" value="ფონი">
+				<node name="solidColor" value="მყარი ფერი"/>
+				<node name="leather" value="ტყავი"/>
+				<node name="sepia" value="სეპია"/>
+				<node name="wood" value="ხე"/>
+			</node>
+			<node name="backgroundColor" value="ფონი ფერი"/>
+			<node name="selectionBackground" value="მონიშვნის ფერი"/>
+			<node name="selectionForeground" value="მონიშვნის ტექსტი"/>
+			<node name="text" value="ჩვეულებრივი ტექსტი"/>
+			<node name="hyperlink" value="ჰიპერლინკი"/>
+			<node name="hyperlinkVisited" value="მონახულებული ლინკი"/>
+			<node name="highlighting" value="ძიების რეზულტატების ფონი"/>
+			<node name="footer" value="სარდაფი"/>
+		</node>
+		<node name="margins" value="დაშორებები">
+			<node name="summary" value="სივრცე ტექსტის გარშემო"/>
+			<node name="left" value="დაშორება მარცხნიდან"/>
+			<node name="right" value="დაშორება მარჯვნიდან"/>
+			<node name="top" value="დაშორება ზემოდან"/>
+			<node name="bottom" value="დაშორება ქვემოდან"/>
+		</node>
+		<node name="scrollBar" value="გადახვევის ბარი">
+			<node name="summary" value="წაკითხულის ინდიკატორი"/>
+			<node name="scrollbarType" value="გადახვევის ბარის სახეობა">
+				<node name="hide" value="დამალვა"/>
+				<node name="show" value="ვერტიკალური ცოცია"/>
+				<node name="showAsProgress" value="ვერტიკალური პროგრეს-ბარი"/>
+				<node name="showAsFooter" value="სარდაფი"/>
+			</node>
+			<node name="footerHeight" value="სარდაფის სიმაღლე"/>
+			<node name="footerColor" value="სარდაფის ფერი"/>
+			<node name="tocMarks" value="ნიშნულების ჩვენება თავების მიხედვით">
+				<node name="summaryOn" value="სარდაფზე ნიშნულის დახატვა თავის დასაწყისში"/>
+				<node name="summaryOff" value="სარდაფი ნიშნულების გარეშე"/>
+			</node>
+			<node name="showProgress" value="გვერდების რაოდენობის ჩვენება">
+				<node name="summaryOn" value="გვერდების რაოდენობის ჩვენება სარდაფში"/>
+				<node name="summaryOff" value="არ აჩვენო გვერდების რაოდენობა სარდაფში"/>
+			</node>
+			<node name="showBattery" value="ელემენტის მუხტის ჩვენება">
+				<node name="summaryOn" value="ელემენტის მუხტის ჩვენება სარდაფში"/>
+				<node name="summaryOff" value="არ აჩვენო ელემენტის მუხტი სარდაფში"/>
+			</node>
+			<node name="showClock" value="საათის ჩვენება">
+				<node name="summaryOn" value="საათის ჩვენება სარდაფში"/>
+				<node name="summaryOff" value="არ აჩვენო საათი სარდაფში"/>
+			</node>
+			<node name="font" value="შრიფტები"/>
+		</node>
+		<node name="scrolling" value="გვერდის გადაფურცვლა">
+			<node name="summary" value="როგორ გადაფურცლოს გვერდები"/>
+			<node name="fingerScrolling" value="თითით გადაფურცვლა ეკრანზე">
+				<node name="byTap" value="გადაფურცვლა თითის დაჭერით ეკრანზე"/>
+				<node name="byFlick" value="გადაფურცვლა გვერდის გაწევით"/>
+				<node name="byTapAndFlick" value="გადაფურცვლა თითის დაჭერით ეკრანზე, ან გადაფურცვლა გვერდის გაწევით"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="ორმაგი დაჭერის დამუშავება">
+				<node name="summaryOn" value="ორმაგი დაჭერისას გაიხსნას დიალოგი გადატანა/მენიუ"/>
+				<node name="summaryOff" value="ორმაგი დაჭერის იგნორირება"/>
+			</node>
+			<node name="volumeKeys" value="ხმის რეგულირების ღილაკების გამოყენება">
+				<node name="summaryOn" value="ხმის მომატება/დაკლების ღილაკები გადაფურცლავენ გვერდებს"/>
+				<node name="summaryOff" value="მის მომატება/დაკლების ღილაკები მუშაობენ ჩვეულებრივად"/>
+			</node>
+			<node name="invertVolumeKeys" value="ღილაკებით გადაფურცვლა უკუ მიმართულებით">
+				<node name="summaryOn" value="ზედა ღილაკი ფურცლავს გვერდს წინ"/>
+				<node name="summaryOff" value="ქვედა ღილაკი ფურცლავს გვერდს წინ"/>
+			</node>
+			<node name="animation" value="ანიმაცია">
+				<node name="none" value="ანიმაციის გამორთვა"/>
+				<node name="curl" value="სამგანზომილებიანი ანიმაცია"/>
+				<node name="slide" value="გაწევა გადაფარვით"/>
+				<node name="shift" value="გაწევა"/>
+			</node>
+			<node name="animationSpeed" value="ანიმაციის სიჩქარე">
+				<node name="fast" value="სწრაფი"/>
+				<node name="slow" value="ნელი"/>
+			</node>
+			<node name="horizontal" value="ჰორიზონტალური გადაფურცვლა">
+				<node name="summaryOn" value="გადაფურცვლისას გვერდი მოძრაობს ჰორიზონტალურად"/>
+				<node name="summaryOff" value="გადაფურცვლისას გვერდი მოძრაობს ვერტიკალურად"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Tap zones" toBeTranslated="true">
+			<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+			<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+				<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+				<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+				<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+				<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+				<node name="custom" value="Custom…" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="dictionary" value="ლექსიკონი">
+			<node name="summary" value="ლექსიკონის პარამეტრები"/>
+			<node name="dictionary" value="ლექსიკონი"/>
+			<node name="translator" value="თარჯიმანი"/>
+			<node name="tappingAction" value="ეკრანზე ხანგრძლივი დაჭერის ქმედება">
+				<node name="doNothing" value="არაფრის გაკეთება"/>
+				<node name="selectSingleWord" value="ერთი სიტყვის გამოყოფა"/>
+				<node name="startSelecting" value="მონიშვნის პროცესის დაწყება"/>
+				<node name="openDictionary" value="ერთი სიტყვის გამოყოფა, ხოლო თითის აშვებისას - ლექსიკონის ჩართვა"/>
+			</node>
+			<node name="navigateOverAllWords" value="ყველა სიტყვაზე გადაადგილება">
+				<node name="summaryOn" value="ყველა სიტყვაზე გადაადგილებისას ღილაკების მეშვეობით მონიშნოს ყველა სიტყვა"/>
+				<node name="summaryOff" value="გადაადგილებისას ღილაკების მეშვეობით მონიშნოს მხოლოდ ჰიპერლინკები"/>
+			</node>
+		</node>
+		<node name="images" value="სურათები">
+			<node name="summary" value="სურათის ჩვენების პარამეტრები"/>
+			<node name="backgroundColor" value="ფონის ფერი მთლიანეკრანიანი ყურების დროს"/>
+			<node name="tappingAction" value="ეკრანზე ხანგრძლივი დაჭერის ქმედება">
+				<node name="doNothing" value="არაფრის გაკეთება"/>
+				<node name="selectImage" value="ერთი სურათის გამოყოფა"/>
+				<node name="openImageView" value="მთლიან ეკრანზე ნახვა"/>
+			</node>
+			<node name="fitImagesToScreen" value="შეავსე მთელი ეკრანი">
+				<node name="none" value="არასდროს"/>
+				<node name="covers" value="მხოლოდ გარეკნები"/>
+				<node name="all" value="ყველა სურათი"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="პროგრამიდან გასვლის მენიუ">
+			<node name="summary" value="ქმედებების ჩამონათვალი 'უკან' ღილაკზე დაჭერისას"/>
+			<node name="library" value="ბიბლიოთეკა">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="ქსელური ბიბლიოთეკა">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="წინა წიგნი">
+				<node name="summaryOn" value="მენიუს პუნქტის ჩვენება წინა წიგნზე დასაბრუნებლად"/>
+				<node name="summaryOff" value="არ არის საჭირო წინა წიგნზე დაბრუნების შესაძლებლობის არსებობა"/>
+			</node>
+			<node name="positions" value="ლინკებზე დაბრუნება">
+				<node name="summaryOn" value="მენიუს პუნქტების ჩვენება ბოლო სამი პოზიციისთვის წიგნში"/>
+				<node name="summaryOff" value="არ არის საჭირო წინა ლინკზე დაბრუნების შესაძლებლობის არსებობა"/>
+			</node>
+			<node name="backKeyAction" value="ქმედება ღილაკზე 'უკან'">
+				<node name="exit" value="FBReader-ის დახურვა"/>
+				<node name="goBack" value="ლინკზე დაბრუნება"/>
+				<node name="cancelMenu" value="ქმედებების ჩამონათვალის ჩვენება"/>
+			</node>
+			<node name="backKeyLongPressAction" value="ხანგრძლივი დაჭერის ქმედება">
+				<node name="exit" value="FBReader-ის დახურვა"/>
+				<node name="goBack" value="ლინკზე დაბრუნება"/>
+				<node name="cancelMenu" value="ქმედებების ჩამონათვალის ჩვენება"/>
+				<node name="none" value="არაფრის გაკეთება"/>
+			</node>
+		</node>
+		<node name="tips" value="რჩევები">
+			<node name="summary" value="ყოველდღიური რჩევები"/>
+			<node name="showTips" value="რჩევების ჩვენება">
+				<node name="summaryOn" value="ჩვენება"/>
+				<node name="summaryOff" value="არ ჩვენება"/>
+			</node>
+		</node>
+		<node name="about" value="FBReader პროგრამის შესახებ">
+			<node name="summary" value="ვერსია, კონტაქტები"/>
+			<node name="version" value="ვერსია"/>
+			<node name="site" value="ჩვენი ვებ-გვერდი">
+				<node name="url" value="http://www.fbreader.ru/"/>
+			</node>
+			<node name="email" value="მოგვწერეთ წერილი">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="გამოგვყევით ტვიტერზე">
+				<node name="url" value="http://twitter.com/fbreader_ru"/>
+			</node>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="დაინსტალირება"/>
+			<node name="update" value="განახლება"/>
+			<node name="skip" value="ჯერ არა"/>
+			<node name="buy" value="ყიდვა"/>
+			<node name="buyAndDownload" value="ყიდვა და გადმოწერა"/>
+			<node name="continue" value="გაგრძელება"/>
+			<node name="editUrl" value="URL-ის შეცვლა"/>
+			<node name="tryAgain" value="გამეორება"/>
+			<node name="openBook" value="კითხვა"/>
+			<node name="editInfo" value="შეცვლა"/>
+			<node name="reloadInfo" value="განახლება"/>
+			<node name="shareBook" value="გაზიარება"/>
+			<node name="topup" value="ანგარიშის შევსება"/>
+			<node name="pay" value="გადახდა"/>
+			<node name="refresh" value="განახლება"/>
+			<node name="authorize" value="ავტორიზაცია"/>
+			<node name="resetPosition" value="უკან"/>
+			<node name="sendReport" value="შეტყობინების გაგზავნა"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="დანამატების დაინსტალირება"/>
+			<node name="updateTitle" value="ახალი ვერსია"/>
+			<node name="dontAskAgain" value="მეტჯერ აღარ მკითხო"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="ლექსიკონის დაყენება"/>
+			<node name="message" value="დაყენდეს %s?"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="წიგნის ფაილი წაიშლება აღდგენის შესაძლებლობის გარეშე. გაგრძელდეს?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="ფაილი უკვე არის მოწყობილობაში. ახლიდან გადმოიწეროს?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="იტვირთება წიგნი %s"/>
+			<node name="search" value="მიმდინარეობს ძებნა. გთხოვთ, დაიცადოთ…"/>
+			<node name="loadInfo" value="იტვირთება ინფორმაცია. გთხოვთ, დაიცადოთ…"/>
+			<node name="loadingBook" value="იხსნება წიგნი. გთხოვთ, დაიცადოთ…"/>
+			<node name="loadingBookList" value="იხსნება ბიბლიოთეკა. გთხოვთ, დაიცადოთ…"/>
+			<node name="creatingBooksDatabase" value="იქმნება წიგნების ბაზა. გთხოვთ, დაიცადოთ…"/>
+			<node name="updatingBooksDatabase" value="მიმდინარეობს წიგნების ბაზის განახლება. გთხოვთ, დაიცადოთ…"/>
+			<node name="loadingNetworkLibrary" value="იხსნება ბიბლიოთეკა. გთხოვთ, დაიცადოთ…"/>
+			<node name="authentication" value="მიმდინარეობს ავტორიზაცია. გთხოვთ, დაიცადოთ…"/>
+			<node name="signOut" value="სიტემიდან გასვლა. გთხოვთ, დაიცადოთ…"/>
+			<node name="purchaseBook" value="მიმდინარეობს წიგნის ყიდვის პროცესი. გთხოვთ, დაიცადოთ…"/>
+			<node name="loadingCatalogInfo" value="კატალოგიდან ინფორმაციის ჩატვირთვა. გთხოვთ, დაიცადოთ…"/>
+			<node name="loadingNetworkBookInfo" value="წიგნის შესახებ ინფორმაციის ჩატვირთვა. გთხოვთ, დაიცადოთ…"/>
+			<node name="updatingCatalogsList" value="მიმდინარეობს კატალოგების ჩამონათვალის განახლება. გთხოვთ, დაიცადოთ…"/>
+			<node name="updatingAccountInformation" value="იტვირთება ინფორმაცია ანგარიშის შესახებ. გთხოვთ, დაიცადოთ…"/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="სერვერსშიდა შეცდომა"/>
+			<node name="purchaseNotEnoughMoney" value="არასაკმარისი თანხა ანგარიშზე"/>
+			<node name="purchaseMissingBook" value="წიგნი არ არის გაყიდვაში"/>
+			<node name="purchaseAlreadyPurchased" value="წიგნი უკვე ნაყიდია"/>
+			<node name="bookNotPurchased" value="წიგნი არ არის ნაყიდი"/>
+			<node name="downloadLimitExceeded" value="გადმოწერების ლიმიტი ამოწურულია"/>
+			<node name="noUserEmail" value="ამ ელექტრონული მისამართით არ არის დარეგისტრირებული მომხმარებელი"/>
+			<node name="unsupportedOperation" value="არ არის ოპერაციული მხარდაჭერა"/>
+			<node name="notAnOPDS" value="ეს არ არის OPDS კატალოგი"/>
+			<node name="noRequiredInformation" value="ინფორმაცია არ არის კატალოგში"/>
+			<node name="cacheDirectoryError" value="არ ხერხდება ქეშისთვის კატალოგის შექმნა"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="ავტორიზაცია"/>
+			<node name="unencryptedWarning" value="პაროლი იგზავნება დაუშიფრავად"/>
+			<node name="login" value="მომხმარებლის სახელი"/>
+			<node name="password" value="პაროლი"/>
+			<node name="loginIsEmpty" value="მომხმარებლის სახელი არ შეიძლება იყოს ცარიელი"/>
+			<node name="register" value="დარეგისტრირება"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FBReader: კატალოგის დამატება"/>
+			<node name="catalogTitle" value="დასახელება"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="აღწერილობა"/>
+			<node name="catalogTitleExample" value="მაგ.: Epub Books"/>
+			<node name="catalogUrlExample" value="მაგ.: http://www.epubbooks.ru/index.xml"/>
+			<node name="catalogSummaryExample" value="მაგ.: წიგნები ქართულ ენაზე"/>
+			<node name="titleIsEmpty" value="დასახელება არ შეიძლება იყოს ცარიელი"/>
+			<node name="urlIsEmpty" value="URL არ შეიძლება იყოს ცარიელი"/>
+			<node name="invalidUrl" value="არასწორი URL"/>
+			<node name="titleAlreadyExists" value="ეს დასახელება უკვე არსებობს"/>
+			<node name="siteAlreadyExists" value="ეს კატალოგი უკვე არის სიაში"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="ფილტრი ენის მიხედვით"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="დღის რჩევა"/>
+			<node name="initializationText" value="გნებავთ დღეში ერთხელ მიიღოთ რჩევები FBReader-ის მოხმარებაზე? ახალი რჩევები ჩაიტვირთება FBReader-ის სერვერიდან. საჭიროებს 1-2 კილობაიტის გადმოტვირთვას კვირაში.&#10;&#10;ჩავრთოთ რჩევები?"/>
+			<node name="dontShowAgain" value="მეტჯერ აღარ მანახო"/>
+			<node name="more" value="მეტი"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="არ ხერხდება Android Market-ის ჩართვა. სცადეთ დააყენოთ %s ხელით"/>
+		<node name="textNotFound" value="ამ წიგნში არ არის მასეთი ტექსტი"/>
+		<node name="bookNotFound" value="არ მოიძებნა შესაფერისი წიგნი"/>
+		<node name="bookmarkNotFound" value="არ არის შესატყვისი სანიშნე"/>
+		<node name="cannotOpenBook" value="არ ხერხდება წიგნის გახსნა"/>
+		<node name="dictionaryIsNotInstalled" value="არ მოხერხდა ლექსიკონის ჩართვა"/>
+		<node name="permissionDenied" value="ფაილებზე წვდომა არ არის"/>
+		<node name="noFavorites" value="ჯერ არ დაგიმატებიათ არცერთი წიგნი «რჩეულებში»"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="კატალოგი ცარიელია"/>
+		<node name="emptyBasket" value="კალათა ცარიელია"/>
+		<node name="emptyNetworkSearchResults" value="არ მოიძებნა არცერთი წიგნი"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="ბრაუზერი"/>
+		<node name="defaultBrowser" value="ბრაუზერი"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="უცნობი შეცდომა"/>
+		<node name="unsupportedCompressionMethod" value="შეკუმშვის არამხარდაჭერილი მეთოდი"/>
+		<node name="encryptedFile" value="ფაილი დაცულია DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader-ის პრობლემა"/>
+			<node name="text" value="FBReader ვერ ინახავს დროებით ფაილებს. შეიძლება დაგავიწყდათ მეხსიერების ბარათის ჩადება მოწყობილობაში, ან მასზე არ არის წვდომა კომპიუტერთან შეერთების გამო. გთხოვთ მოაგვაროთ ეს პრობლემა, ან შეიყვანეთ კატალოგის სხვა სახელი დროებითი ფაილებისთვის."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader-ის პრობლემა"/>
+			<node name="text" value="ვერ ხერხდება ადგილობრივი ბიბლიოთეკის ჩატვირთვა. შეიძლება, FBReader არასწორედ არის დაყენებული. თუ ეს შეტყობინება მეორდება ყოველი გახსნის მცდელობისას, მაშინ სცადეთ გადააყენოთ FBReader ახლიდან."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader-ის პრობლემა"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="შეცდომა '%s'-ს კითხვისას"/>
+		<node name="errorReadingZip" value="შეცდომა '%s'-ს განარქივებისას"/>
+		<node name="pluginNotFound" value="ვერ მოიძებნა პლაგინი '%s'-სთვის"/>
+		<node name="unknownPluginType" value="უცნობი ტიპის პლაგინი: %s"/>
+		<node name="fileNotFound" value="არ მოიძებნა ფაილი: %s"/>
+		<node name="opfFileNotFound" value="არ მოიძებნა OPF %s-ში"/>
+		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
+		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
+	</node>
+</resources>

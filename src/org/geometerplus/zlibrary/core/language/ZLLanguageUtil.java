@@ -25,39 +25,9 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class ZLLanguageUtil {
-	public static final String OTHER_LANGUAGE_CODE = "other";
-	public static final String MULTI_LANGUAGE_CODE = "multi";
-
 	private static ArrayList<String> ourLanguageCodes = new ArrayList<String>();
 
 	private ZLLanguageUtil() {
-	}
-
-	public static class CodeComparator implements Comparator<String> {
-		public int compare(String code0, String code1) {
-			if (code0 == null) {
-				return code1 == null ? 0 : -1;
-			}
-			if (code1 == null) {
-				return 1;
-			}
-			if (code0.equals(code1)) {
-				return 0;
-			}
-			if (MULTI_LANGUAGE_CODE.equals(code0)) {
-				return 1;
-			}
-			if (MULTI_LANGUAGE_CODE.equals(code1)) {
-				return -1;
-			}
-			if (OTHER_LANGUAGE_CODE.equals(code0)) {
-				return 1;
-			}
-			if (OTHER_LANGUAGE_CODE.equals(code1)) {
-				return -1;
-			}
-			return languageName(code0).compareTo(languageName(code1));
-		}
 	}
 
 	public static String defaultLanguageCode() {
@@ -84,10 +54,6 @@ public abstract class ZLLanguageUtil {
 		}
 
 		return Collections.unmodifiableList(ourLanguageCodes);
-	}
-
-	public static String languageName(String code) {
-		return ZLResource.resource("language").getResource(code).getValue();
 	}
 
 	public static ZLFile patternsFile() {
