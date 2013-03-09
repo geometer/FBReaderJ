@@ -20,22 +20,24 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.sort.TitledEntity;
 
-public final class SeriesTree extends LibraryTree {
-	public final String Series;
+public final class SeriesTree extends TitledEntityTree {
+	public final Series Series;
 	public final Author Author;
 
-	SeriesTree(IBookCollection collection, String series, Author author) {
+	SeriesTree(IBookCollection collection, Series series, Author author) {
 		super(collection);
 		Series = series;
 		Author = author;
 	}
 
-	SeriesTree(LibraryTree parent, String series, Author author, int position) {
+	SeriesTree(LibraryTree parent, Series series, Author author, int position) {
 		super(parent, position);
 		Series = series;
 		Author = author;
@@ -43,15 +45,15 @@ public final class SeriesTree extends LibraryTree {
 
 	@Override
 	public String getName() {
-		return Series;
+		return Series.getTitle();
 	}
 
 	@Override
 	public String getSummary() {
 		if (Author != null) {
-			return MiscUtil.join(Collection.titlesForSeriesAndAuthor(Series, Author, 5), ", ");
+			return MiscUtil.join(Collection.titlesForSeriesAndAuthor(Series.getTitle(), Author, 5), ", ");
 		} else {
-			return MiscUtil.join(Collection.titlesForSeries(Series, 5), ", ");
+			return MiscUtil.join(Collection.titlesForSeries(Series.getTitle(), 5), ", ");
 		}
 	}
 
@@ -66,7 +68,7 @@ public final class SeriesTree extends LibraryTree {
 			return false;
 		}
 		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Title);
+		return info != null && Series.equals(info.Series);
 	}
 
 	@Override
@@ -83,11 +85,11 @@ public final class SeriesTree extends LibraryTree {
 	public void waitForOpening() {
 		clear();
 		if (Author != null) {
-			for (Book book : Collection.booksForSeriesAndAuthor(Series, Author)) {
+			for (Book book : Collection.booksForSeriesAndAuthor(Series.getTitle(), Author)) {
 				createBookInSeriesSubTree(book);
 			}
 		} else {
-			for (Book book : Collection.booksForSeries(Series)) {
+			for (Book book : Collection.booksForSeries(Series.getTitle())) {
 				createBookInSeriesSubTree(book);
 			}
 		}
@@ -119,5 +121,10 @@ public final class SeriesTree extends LibraryTree {
 			new BookInSeriesTree(this, book, - position - 1);
 			return true;
 		}
+	}
+
+	@Override
+	public TitledEntity getTitledEntity() {
+		return Series;
 	}
 }
