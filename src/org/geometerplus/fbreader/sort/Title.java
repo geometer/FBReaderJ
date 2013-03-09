@@ -95,7 +95,7 @@ public class Title {
 	}
 
 	private String trim(String s, String language) {
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			s = normalize(s);
 		}
 		final StringBuilder buffer = new StringBuilder();
@@ -153,7 +153,6 @@ public class Title {
 
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	private static String normalize(String s) {
-		s = Normalizer.normalize(s, Normalizer.Form.NFKD);
-		return s;
+		return Normalizer.normalize(s, Normalizer.Form.NFKD);
 	}
 }
