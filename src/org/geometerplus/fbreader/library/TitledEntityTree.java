@@ -17,24 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.book;
+package org.geometerplus.fbreader.library;
 
-public abstract class TitleUtil {
-	public static String firstTitleLetter(Book book) {
-		if (book == null) {
-			return null;
-		}
-		return firstLetter(book.getSortKey());
+import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.sort.TitledEntity;
+import org.geometerplus.fbreader.tree.FBTree;
+
+public abstract class TitledEntityTree extends LibraryTree {
+	TitledEntityTree(IBookCollection collection) {
+		super(collection);
 	}
 
-	public static String firstLetter(String title) {
-		if (title == null) {
-			return null;
+	TitledEntityTree(LibraryTree parent) {
+		super(parent);
+	}
+
+	TitledEntityTree(LibraryTree parent, int position) {
+		super(parent, position);
+	}
+
+	protected abstract TitledEntity getTitledEntity();
+
+	@Override
+	public int compareTo(FBTree tree) {
+		if (tree instanceof TitledEntityTree) {
+			return getTitledEntity().compareTo(((TitledEntityTree)tree).getTitledEntity());
 		}
-		title = title.trim();
-		if ("".equals(title)) {
-			return null;
-		}
-		return String.valueOf(Character.toUpperCase(title.charAt(0)));
+		return super.compareTo(tree);
 	}
 }

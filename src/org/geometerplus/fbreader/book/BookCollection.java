@@ -228,7 +228,7 @@ public class BookCollection extends AbstractBookCollection {
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
 			final SeriesInfo info = b.getSeriesInfo();
-			if (info != null && series.equals(info.Title)) {
+			if (info != null && series.equals(info.Series.getTitle())) {
 				filtered.add(b);
 			}
 		}
@@ -241,7 +241,7 @@ public class BookCollection extends AbstractBookCollection {
 		for (Book b : books()) {
 			final List<Author> bookAuthors = b.authors();
 			final SeriesInfo info = b.getSeriesInfo();
-			if (info != null && series.equals(info.Title)
+			if (info != null && series.equals(info.Series.getTitle())
 				&& (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author))) {
 				filtered.add(b);
 			}
@@ -358,7 +358,7 @@ public class BookCollection extends AbstractBookCollection {
 			for (Book book : myBooksByFile.values()) {
 				final SeriesInfo info = book.getSeriesInfo();
 				if (info != null) {
-					series.add(info.Title);
+					series.add(info.Series.getTitle());
 				}
 			}
 		}
@@ -402,7 +402,7 @@ public class BookCollection extends AbstractBookCollection {
 		synchronized (myBooksByFile) {
 			for (Book b : myBooksByFile.values()) {
 				final SeriesInfo info = b.getSeriesInfo();
-				if (info != null && series.equals(info.Title)) {
+				if (info != null && series.equals(info.Series.getTitle())) {
 					titles.add(b.getTitle());
 					if (--limit == 0) {
 						break;
@@ -423,7 +423,7 @@ public class BookCollection extends AbstractBookCollection {
 			for (Book b : myBooksByFile.values()) {
 				final List<Author> bookAuthors = b.authors();
 				final SeriesInfo info = b.getSeriesInfo();
-				if (info != null && series.equals(info.Title)
+				if (info != null && series.equals(info.Series.getTitle())
 					&& (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author))) {
 					titles.add(b.getTitle());
 					if (--limit == 0) {
