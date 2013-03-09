@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 public class BookTree extends LibraryTree {
 	public final Book Book;
-	
+
 	BookTree(IBookCollection collection, Book book) {
 		super(collection);
 		Book = book;
