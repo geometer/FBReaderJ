@@ -287,6 +287,7 @@
 		</node>
 		<node name="appearance" value="Внешний вид">
 			<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>
+			<node name="language" value="Язык интерфейса"/>
 			<node name="screenOrientation" value="Ориентация экрана">
 				<node name="system" value="системная"/>
 				<node name="sensor" value="зависит от ориентации устройства"/>

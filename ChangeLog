@@ -1,6 +1,7 @@
 ===== 1.7.4 (Mar ??, 2013) =====
 * Book/bookmark deserializer: SAX instead of our own XML parser
 * Georgian localization (by Bookland.ge)
+* Interface language option
 
 ===== 1.7.3 (Mar 04, 2013) =====
 * Library service does not work in background after program closing
