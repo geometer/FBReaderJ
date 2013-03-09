@@ -40,6 +40,8 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.sort.Title;
 
 public class Book {
+	public static final String FAVORITE_LABEL = "favorite";
+
 	public final ZLFile File;
 
 	private volatile long myId;
