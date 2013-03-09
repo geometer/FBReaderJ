@@ -154,4 +154,12 @@ public abstract class TitledEntity implements Comparable<TitledEntity> {
 	public int compareTo(TitledEntity entity) {
 		return getSortKey().compareTo(entity.getSortKey());
 	}
+
+	public String firstTitleLetter() {
+		final String str = getSortKey();
+		if ("".equals(str)) {
+			return null;
+		}
+		return String.valueOf(Character.toUpperCase(str.charAt(0)));
+	}
 }
