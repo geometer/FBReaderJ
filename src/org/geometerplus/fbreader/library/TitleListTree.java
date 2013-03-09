@@ -24,7 +24,7 @@ import java.util.*;
 import org.geometerplus.fbreader.book.*;
 
 public class TitleListTree extends FirstLevelTree {
-	private boolean myDoGroupByFirstLetter;
+	private boolean myGroupByFirstLetter;
 
 	TitleListTree(RootTree root) {
 		super(root, ROOT_BY_TITLE);
@@ -39,25 +39,20 @@ public class TitleListTree extends FirstLevelTree {
 	public void waitForOpening() {
 		clear();
 
-		myDoGroupByFirstLetter = false;
-		final TreeSet<String> letterSet = new TreeSet<String>();
-		final List<Book> books = Collection.books();
-		if (books.size() > 9) {
-			for (Book b : books) {
-				final String letter = b.firstTitleLetter();
-				if (letter != null) {
-					letterSet.add(letter);
-				}
-			}
-			myDoGroupByFirstLetter = books.size() > letterSet.size() * 5 / 4;
+		myGroupByFirstLetter = false;
+
+		List<String> letters = null;
+		if (Collection.size() > 9) {
+			letters = Collection.firstTitleLetters();
+			myGroupByFirstLetter = Collection.size() > letters.size() * 5 / 4;
 		}
 
-		if (myDoGroupByFirstLetter) {
-			for (String letter : letterSet) {
-				createTitleSubTree(letter);
+		if (myGroupByFirstLetter) {
+			for (String l : letters) {
+				createTitleSubTree(l);
 			}
 		} else {
-			for (Book b : books) {
+			for (Book b : Collection.books()) {
 				createBookWithAuthorsSubTree(b);
 			}
 		}
@@ -70,14 +65,14 @@ public class TitleListTree extends FirstLevelTree {
 		}
 		switch (event) {
 			case Added:
-				if (myDoGroupByFirstLetter) {
+				if (myGroupByFirstLetter) {
 					final String letter = book.firstTitleLetter();
 					return letter != null && createTitleSubTree(letter);
 				} else {
 					return createBookWithAuthorsSubTree(book);
 				}
 			case Removed:
-				if (myDoGroupByFirstLetter) {
+				if (myGroupByFirstLetter) {
 					// TODO: remove old tree (?)
 					return false;
 				} else {
@@ -85,7 +80,7 @@ public class TitleListTree extends FirstLevelTree {
 				}
 			default:
 			case Updated:
-				if (myDoGroupByFirstLetter) {
+				if (myGroupByFirstLetter) {
 					// TODO: remove old tree (?)
 					final String letter = book.firstTitleLetter();
 					return letter != null && createTitleSubTree(letter);
