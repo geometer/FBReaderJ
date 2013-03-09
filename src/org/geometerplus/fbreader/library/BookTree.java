@@ -22,10 +22,9 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.sort.TitledEntity;
 import org.geometerplus.fbreader.tree.FBTree;
 
-public class BookTree extends TitledEntityTree {
+public class BookTree extends LibraryTree {
 	public final Book Book;
 
 	BookTree(IBookCollection collection, Book book) {
@@ -74,6 +73,11 @@ public class BookTree extends TitledEntityTree {
 	}
 
 	@Override
+	protected String getSortKey() {
+		return Book.getSortKey();
+	}
+
+	@Override
 	public int compareTo(FBTree tree) {
 		final int cmp = super.compareTo(tree);
 		if (cmp == 0 && tree instanceof BookTree) {
@@ -94,10 +98,5 @@ public class BookTree extends TitledEntityTree {
 			return false;
 		}
 		return Book.equals(((BookTree)object).Book);
-	}
-	
-	@Override
-	public TitledEntity getTitledEntity() {
-		return Book;
 	}
 }

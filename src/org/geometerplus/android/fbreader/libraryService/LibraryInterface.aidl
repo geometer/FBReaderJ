@@ -32,6 +32,7 @@ interface LibraryInterface {
 	List<String> series();
 	List<String> tags();
 	List<String> titles();
+	List<String> firstTitleLetters();
 	List<String> titlesForAuthor(in String author, int limit);
 	List<String> titlesForSeries(in String series, int limit);
 	List<String> titlesForSeriesAndAuthor(in String series, in String author, int limit);

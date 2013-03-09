@@ -375,6 +375,16 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	public List<String> firstTitleLetters() {
+		synchronized (myBooksByFile) {
+			final TreeSet<String> titles = new TreeSet<String>();
+			for (Book book : myBooksByFile.values()) {
+				titles.add(book.firstTitleLetter());
+			}
+			return new ArrayList<String>(titles);
+		}
+	}
+
 	public List<String> titlesForAuthor(Author author, int limit) {
 		if (limit <= 0) {
 			return Collections.emptyList();
