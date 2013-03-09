@@ -293,7 +293,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Book> booksForLabel(String label) {
-		return books(myDatabase.loadFavoriteIds());
+		return books(myDatabase.loadBooksForLabelIds(label));
 	}
 
 	private List<Book> books(List<Long> ids) {
@@ -489,27 +489,23 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<String> labels() {
-		return myDatabase.hasFavorites()
-			? Collections.singletonList(Book.FAVORITE_LABEL)
-			: Collections.<String>emptyList();
+		return myDatabase.labels();
 	}
 
 	public List<String> labels(Book book) {
 		if (book == null) {
 			return Collections.<String>emptyList();
 		}
-		return myDatabase.isFavorite(book.getId())
-			? Collections.singletonList(Book.FAVORITE_LABEL)
-			: Collections.<String>emptyList();
+		return myDatabase.labels(book.getId());
 	}
 
 	public void setLabel(Book book, String label) {
-		myDatabase.addToFavorites(book.getId());
+		myDatabase.setLabel(book.getId(), label);
 		fireBookEvent(BookEvent.Updated, book);
 	}
 
 	public void removeLabel(Book book, String label) {
-		myDatabase.removeFromFavorites(book.getId());
+		myDatabase.removeLabel(book.getId(), label);
 		fireBookEvent(BookEvent.Updated, book);
 	}
 
