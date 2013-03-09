@@ -107,7 +107,7 @@ public class AuthorTree extends LibraryTree {
 		}
 	}
 
-	private SeriesTree getSeriesSubTree(String series) {
+	private SeriesTree getSeriesSubTree(Series series) {
 		final SeriesTree temp = new SeriesTree(Collection, series, Author);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
@@ -120,7 +120,7 @@ public class AuthorTree extends LibraryTree {
 	private boolean createBookSubTree(Book book) {
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
 		if (seriesInfo != null) {
-			return getSeriesSubTree(seriesInfo.Title).createBookInSeriesSubTree(book);
+			return getSeriesSubTree(seriesInfo.Series).createBookInSeriesSubTree(book);
 		}
 
 		final BookTree temp = new BookTree(Collection, book);

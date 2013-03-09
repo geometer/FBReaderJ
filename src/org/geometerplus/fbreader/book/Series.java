@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,22 +19,33 @@
 
 package org.geometerplus.fbreader.book;
 
-public abstract class TitleUtil {
-	public static String firstTitleLetter(Book book) {
-		if (book == null) {
-			return null;
-		}
-		return firstLetter(book.getSortKey());
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
+import org.geometerplus.fbreader.sort.TitledEntity;
+
+public class Series extends TitledEntity {
+	public Series(String title) {
+		super(title);
 	}
 
-	public static String firstLetter(String title) {
-		if (title == null) {
-			return null;
+	public String getLanguage() {
+		// TODO: return real language
+		return "en";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
 		}
-		title = title.trim();
-		if ("".equals(title)) {
-			return null;
+		if (!(o instanceof Series)) {
+			return false;
 		}
-		return String.valueOf(Character.toUpperCase(title.charAt(0)));
+		return MiscUtil.equals(getTitle(), ((Series)o).getTitle());
+	}
+
+	@Override
+	public int hashCode() {
+		return MiscUtil.hashCode(getTitle());
 	}
 }
