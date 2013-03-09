@@ -25,9 +25,8 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.sort.TitledEntity;
 
-public final class SeriesTree extends TitledEntityTree {
+public final class SeriesTree extends LibraryTree {
 	public final Series Series;
 	public final Author Author;
 
@@ -75,7 +74,7 @@ public final class SeriesTree extends TitledEntityTree {
 
 	@Override
 	protected String getSortKey() {
-		return " Series:" + super.getSortKey();
+		return Series.getSortKey();
 	}
 
 	@Override
@@ -123,10 +122,5 @@ public final class SeriesTree extends TitledEntityTree {
 			new BookInSeriesTree(this, book, - position - 1);
 			return true;
 		}
-	}
-
-	@Override
-	public TitledEntity getTitledEntity() {
-		return Series;
 	}
 }
