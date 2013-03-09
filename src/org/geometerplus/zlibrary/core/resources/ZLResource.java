@@ -44,10 +44,12 @@ abstract public class ZLResource {
 					ourLanguages.add(new Language(code, resource.getResource(code).getValue()));
 				}
 			}
-			ourLanguages.add(new Language(Language.SYSTEM_CODE));
 			Collections.sort(ourLanguages);
 		}
-		return Collections.unmodifiableList(ourLanguages);
+		final List<Language> allLanguages = new ArrayList<Language>(ourLanguages.size() + 1);
+		allLanguages.add(new Language(Language.SYSTEM_CODE));
+		allLanguages.addAll(ourLanguages);
+		return allLanguages;
 	}
 
 	public static ZLResource resource(String key) {
