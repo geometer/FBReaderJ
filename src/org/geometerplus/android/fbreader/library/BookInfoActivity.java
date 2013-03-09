@@ -40,6 +40,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -225,9 +226,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		setupInfoPair(R.id.book_tags, "tags", buffer, tagNames.size());
 		String language = book.getLanguage();
 		if (!ZLLanguageUtil.languageCodes().contains(language)) {
-			language = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
+			language = Language.OTHER_CODE;
 		}
-		setupInfoPair(R.id.book_language, "language", ZLLanguageUtil.languageName(language));
+		setupInfoPair(R.id.book_language, "language", new Language(language).Name);
 	}
 
 	private void setupAnnotation(Book book) {

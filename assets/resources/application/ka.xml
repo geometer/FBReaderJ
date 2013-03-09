@@ -287,6 +287,7 @@
 		</node>
 		<node name="appearance" value="გარეგნობა">
 			<node name="summary" value="ეკრანი, სტატუს ბარი, ღილაკების განათება"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="ეკრანის ორიენტაცია">
 				<node name="system" value="სისტემური"/>
 				<node name="sensor" value="დამოკიდებულია მოწყობილობის ორიენტაციაზე"/>

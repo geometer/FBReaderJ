@@ -47,6 +47,7 @@
 		<node name="hu" value="უნგრული"/>
 		<node name="id" value="ინდონეზიური"/>
 		<node name="it" value="იტალიური"/>
+		<node name="ka" value="ქართული"/>
 		<node name="lt" value="ლიტვური"/>
 		<node name="nl" value="ჰოლანდიური"/>
 		<node name="nb" value="ნორვეგიული"/>
@@ -63,6 +64,7 @@
 		<node name="zh" value="ჩინური"/>
 		<node name="other" value="სხვა"/>
 		<node name="multi" value="მრავალენოვანი"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="ჩართვა"/>

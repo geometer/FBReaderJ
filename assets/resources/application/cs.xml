@@ -291,6 +291,7 @@
 		</node>
 		<node name="appearance" value="Vzhled">
 			<node name="summary" value="Otáčení, stavový řádek"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Orientace obrazovky">
 				<node name="system" value="Systém"/>
 				<node name="sensor" value="Podle orientace zařízení"/>
