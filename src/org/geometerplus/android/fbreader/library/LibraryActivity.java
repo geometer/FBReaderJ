@@ -47,7 +47,7 @@ import org.geometerplus.android.fbreader.tree.TreeActivity;
 public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, IBookCollection.Listener {
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
-	private RootTree myRootTree;
+	private volatile RootTree myRootTree;
 	private Book mySelectedBook;
 
 	@Override
@@ -56,8 +56,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		if (myRootTree == null) {
 			myRootTree = new RootTree(new BookCollectionShadow());
-			myRootTree.Collection.addListener(this);
 		}
+		myRootTree.Collection.addListener(this);
 
 		mySelectedBook =
 			SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
@@ -68,11 +68,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
-	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
 		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
 			public void run() {
 				setProgressBarIndeterminateVisibility(!myRootTree.Collection.status().IsCompleted);
@@ -103,15 +99,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
-	protected void onStop() {
-		((BookCollectionShadow)myRootTree.Collection).unbind();
-		super.onStop();
-	}
-
-	@Override
 	protected void onDestroy() {
 		myRootTree.Collection.removeListener(this);
-		myRootTree = null;
+		((BookCollectionShadow)myRootTree.Collection).unbind();
 		super.onDestroy();
 	}
 

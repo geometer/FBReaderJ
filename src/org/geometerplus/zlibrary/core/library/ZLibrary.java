@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.core.library;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -55,7 +55,7 @@ public abstract class ZLibrary {
 	abstract public int getDisplayDPI();
 	abstract public int getPixelWidth();
 	abstract public int getPixelHeight();
-	abstract public Collection<String> defaultLanguageCodes();
+	abstract public List<String> defaultLanguageCodes();
 
 	abstract public boolean supportsAllOrientations();
 	public String[] allOrientations() {

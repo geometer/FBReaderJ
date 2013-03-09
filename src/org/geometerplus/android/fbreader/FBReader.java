@@ -200,6 +200,7 @@ public final class FBReader extends Activity {
 		if (myFBReaderApp == null) {
 			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
 		}
+		getCollection().bindToService(this, null);
 		myBook = null;
 
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
@@ -443,7 +444,11 @@ public final class FBReader extends Activity {
 
 	@Override
 	protected void onPause() {
-		unregisterReceiver(myBatteryInfoReceiver);
+		try {
+			unregisterReceiver(myBatteryInfoReceiver);
+		} catch (IllegalArgumentException e) {
+			// do nothing, this exception means myBatteryInfoReceiver was not registered
+		}
 		myFBReaderApp.stopTimer();
 		switchWakeLock(false);
 		if (getZLibrary().DisableButtonLightsOption.getValue()) {
@@ -457,8 +462,13 @@ public final class FBReader extends Activity {
 	protected void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(myFBReaderApp, this);
-		getCollection().unbind();
 		super.onStop();
+	}
+
+	@Override
+	protected void onDestroy() {
+		getCollection().unbind();
+		super.onDestroy();
 	}
 
 	@Override
@@ -527,6 +537,7 @@ public final class FBReader extends Activity {
 			case REQUEST_PREFERENCES:
 			case REQUEST_BOOK_INFO:
 				if (resultCode != RESULT_DO_NOTHING) {
+					invalidateOptionsMenu();
 					final Book book = BookInfoActivity.bookByIntent(data);
 					if (book != null) {
 						getCollection().bindToService(this, new Runnable() {

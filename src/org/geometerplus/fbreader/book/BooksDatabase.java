@@ -86,8 +86,9 @@ public abstract class BooksDatabase {
 		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex, isVisible);
 	}
 
-	protected abstract List<Bookmark> loadBookmarks(long bookId, boolean isVisible);
-	protected abstract List<Bookmark> loadAllVisibleBookmarks();
+	protected abstract List<Bookmark> loadInvisibleBookmarks(long bookId);
+	protected abstract List<Bookmark> loadVisibleBookmarks(long fromId, int limitCount);
+	protected abstract List<Bookmark> loadVisibleBookmarks(long bookId, long fromId, int limitCount);
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 

@@ -88,7 +88,7 @@ public class TitleListTree extends FirstLevelTree {
 					return letter != null && createTitleSubTree(letter);
 				} else {
 					boolean changed = removeBook(book);
-					changed |= containsBook(book) && createBookWithAuthorsSubTree(book);
+					changed |= createBookWithAuthorsSubTree(book);
 					return changed;
 				}
 		}

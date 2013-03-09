@@ -288,6 +288,7 @@
 		</node>
 		<node name="appearance" value="Выгляд">
 			<node name="summary" value="Налады экрану, паліцы стану, сьвятла кнопак"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Арыентацыя экрану">
 				<node name="system" value="Сыстэмная"/>
 				<node name="sensor" value="Адпаведна з арыентацыяй прылады"/>
@@ -322,8 +323,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="Не даваць экрану гаснуць">
 				<node name="0" value="Заўсёды"/>
-				<node name="25" value="Калі зарад батарэі большы за 25%"/>
-				<node name="50" value="Калі зарад батарэі большы за 50%"/>
+				<node name="25" value="Калі зарад батарэі большы за 25%%"/>
+				<node name="50" value="Калі зарад батарэі большы за 50%%"/>
 				<node name="100" value="Ніколі"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Не даваць экрану гаснуць падчас зараджаньня">
