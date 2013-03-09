@@ -176,8 +176,8 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.recentBooks());
 		}
 
-		public List<String> favorites() {
-			return SerializerUtil.serializeBookList(myCollection.favorites());
+		public List<String> booksForLabel(String label) {
+			return SerializerUtil.serializeBookList(myCollection.booksForLabel(label));
 		}
 
 		public String getRecentBook(int index) {
@@ -258,16 +258,20 @@ public class LibraryService extends Service {
 			myCollection.removeBookFromRecentList(SerializerUtil.deserializeBook(book));
 		}
 
-		public boolean hasFavorites() {
-			return myCollection.hasFavorites();
+		public List<String> labels() {
+			return myCollection.labels();
 		}
 
-		public boolean isFavorite(String book) {
-			return myCollection.isFavorite(SerializerUtil.deserializeBook(book));
+		public List<String> labelsForBook(String book) {
+			return myCollection.labels(SerializerUtil.deserializeBook(book));
 		}
 
-		public void setBookFavorite(String book, boolean favorite) {
-			myCollection.setBookFavorite(SerializerUtil.deserializeBook(book), favorite);
+		public void setLabel(String book, String label) {
+			myCollection.setLabel(SerializerUtil.deserializeBook(book), label);
+		}
+
+		public void removeLabel(String book, String label) {
+			myCollection.removeLabel(SerializerUtil.deserializeBook(book), label);
 		}
 
 		public TextPosition getStoredPosition(long bookId) {

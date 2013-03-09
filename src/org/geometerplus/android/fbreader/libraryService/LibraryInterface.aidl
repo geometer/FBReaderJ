@@ -14,6 +14,7 @@ interface LibraryInterface {
 
 	int size();
 	List<String> books();
+	List<String> booksForLabel(String label);
 	List<String> booksForAuthor(in String author);
 	List<String> booksForTag(in String tag);
 	List<String> booksForSeries(in String series);
@@ -22,7 +23,6 @@ interface LibraryInterface {
 	boolean hasBooksForPattern(in String pattern);
 	List<String> booksForPattern(in String pattern);
 	List<String> recentBooks();
-	List<String> favorites();
 	String getBookByFile(in String file);
 	String getBookById(in long id);
 	String getRecentBook(in int index);
@@ -38,14 +38,15 @@ interface LibraryInterface {
 	List<String> titlesForTag(in String tag, int limit);
 	List<String> titlesForTitlePrefix(in String prefix, int limit);
 
+	List<String> labels();
+	List<String> labelsForBook(in String book);
+	void setLabel(in String book, in String label);
+	void removeLabel(in String book, in String label);
+
 	boolean saveBook(in String book, in boolean force);
 	void removeBook(in String book, in boolean deleteFromDisk);
 	void addBookToRecentList(in String book);
 	void removeBookFromRecentList(in String book);
-
-	boolean hasFavorites();
-	boolean isFavorite(in String book);
-	void setBookFavorite(in String book, in boolean favorite);
 
 	TextPosition getStoredPosition(in long bookId);
 	void storePosition(in long bookId, in TextPosition position);

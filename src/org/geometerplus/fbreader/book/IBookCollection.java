@@ -51,6 +51,7 @@ public interface IBookCollection {
 
 	int size();
 	List<Book> books();
+	List<Book> booksForLabel(String label);
 	List<Book> booksForAuthor(Author author);
 	List<Book> booksForTag(Tag tag);
 	List<Book> booksForSeries(String series);
@@ -59,10 +60,10 @@ public interface IBookCollection {
 	boolean hasBooksForPattern(String pattern);
 	List<Book> booksForPattern(String pattern);
 
-	List<Book> favorites();
-	boolean hasFavorites();
-	boolean isFavorite(Book book);
-	void setBookFavorite(Book book, boolean favorite);
+	List<String> labels();
+	List<String> labels(Book book);
+	void setLabel(Book book, String label);
+	void removeLabel(Book book, String label);
 
 	List<Book> recentBooks();
 	Book getRecentBook(int index);
