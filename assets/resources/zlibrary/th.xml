@@ -48,6 +48,7 @@
 		<node name="hu" value="ฮังการี"/>
 		<node name="id" value="อินโดนีเซีย"/>
 		<node name="it" value="อิตาลี"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="ลิทัวเนีย"/>
 		<node name="nl" value="ดัตช์"/>
 		<node name="nb" value="นอร์เวย์"/>
@@ -64,6 +65,7 @@
 		<node name="zh" value="จีน"/>
 		<node name="other" value="อื่นๆ"/>
 		<node name="multi" value="หลายภาษา"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="เปิด"/>

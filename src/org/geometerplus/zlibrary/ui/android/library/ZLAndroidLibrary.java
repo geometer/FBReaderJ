@@ -188,7 +188,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	@Override
-	public Collection<String> defaultLanguageCodes() {
+	public List<String> defaultLanguageCodes() {
 		final TreeSet<String> set = new TreeSet<String>();
 		set.add(Locale.getDefault().getLanguage());
 		final TelephonyManager manager = (TelephonyManager)myApplication.getSystemService(Context.TELEPHONY_SERVICE);
@@ -211,7 +211,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			}
 		}
 		set.add("multi");
-		return set;
+		return new ArrayList<String>(set);
 	}
 
 	@Override

@@ -48,9 +48,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	private final Comparator<Bookmark> myComparator = new Bookmark.ByTimeComparator();
 
-	private ListView myThisBookView;
-	private ListView mySearchResultsView;
-
 	private volatile BookmarksAdapter myThisBookAdapter;
 	private volatile BookmarksAdapter myAllBooksAdapter;
 	private volatile BookmarksAdapter mySearchResultsAdapter;
@@ -71,6 +68,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		super.onCreate(bundle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -87,6 +85,20 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private class Initializer implements Runnable {
 		public void run() {
 			long id = 0;
+			if (myBook != null) {
+				while (true) {
+					final List<Bookmark> thisBookBookmarks =
+						myCollection.bookmarksForBook(myBook, id, 20);
+					if (thisBookBookmarks.isEmpty()) {
+						break;
+					} else {
+						id = thisBookBookmarks.get(thisBookBookmarks.size() - 1).getId() + 1;
+					}
+					myThisBookAdapter.addAll(thisBookBookmarks);
+					myAllBooksAdapter.addAll(thisBookBookmarks);
+				}
+			}
+			id = 0;
 			while (true) {
 				final List<Bookmark> allBookmarks = myCollection.bookmarks(id, 20);
 				if (allBookmarks.isEmpty()) {
@@ -94,25 +106,25 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				} else {
 					id = allBookmarks.get(allBookmarks.size() - 1).getId() + 1;
 				}
-
 				myAllBooksAdapter.addAll(allBookmarks);
-				if (myBook != null) {
-					final List<Bookmark> thisBookBookmarks = new LinkedList<Bookmark>();
-					final long bookId = myBook.getId();
-					for (Bookmark b : allBookmarks) {
-						if (b.getBookId() == bookId) {
-							thisBookBookmarks.add(b);
-						}
-					}
-					myThisBookAdapter.addAll(thisBookBookmarks);
-				}
 			}
+			runOnUiThread(new Runnable() {
+				public void run() {
+					setProgressBarIndeterminateVisibility(false);
+				}
+			});
 		}
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		runOnUiThread(new Runnable() {
+			public void run() {
+				setProgressBarIndeterminateVisibility(true);
+			}
+		});
 
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
@@ -121,17 +133,18 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				}
 
 				if (myBook != null) {
-					myThisBookView = createTab("thisBook", R.id.this_book);
-					myThisBookAdapter = new BookmarksAdapter(myThisBookView, true);
+					myThisBookAdapter = new BookmarksAdapter(
+						createTab("thisBook", R.id.this_book), true
+					);
 				} else {
 					findViewById(R.id.this_book).setVisibility(View.GONE);
 				}
-				myAllBooksAdapter = new BookmarksAdapter(createTab("allBooks", R.id.all_books), false);
+				myAllBooksAdapter = new BookmarksAdapter(
+					createTab("allBooks", R.id.all_books), false
+				);
 				findViewById(R.id.search_results).setVisibility(View.GONE);
 
-				final Thread initializer = new Thread(new Initializer());
-				initializer.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
-				initializer.start();
+				new Thread(new Initializer()).start();
 			}
 		});
 
@@ -187,15 +200,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	void showSearchResultsTab(LinkedList<Bookmark> results) {
-		if (mySearchResultsView == null) {
-			mySearchResultsView = createTab("found", R.id.search_results);
-			mySearchResultsAdapter = new BookmarksAdapter(mySearchResultsView, false);
+		if (mySearchResultsAdapter == null) {
+			mySearchResultsAdapter = new BookmarksAdapter(
+				createTab("found", R.id.search_results), false
+			);
 		} else {
 			mySearchResultsAdapter.clear();
 		}
-		for (Bookmark b : results) {
-			mySearchResultsAdapter.add(b);
-		}
+		mySearchResultsAdapter.addAll(results);
 		getTabHost().setCurrentTabByTag("found");
 	}
 

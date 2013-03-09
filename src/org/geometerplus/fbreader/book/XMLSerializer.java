@@ -25,8 +25,11 @@ import java.text.ParseException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import android.util.Xml;
 
 class XMLSerializer extends AbstractSerializer {
 	@Override
@@ -82,9 +85,13 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public Book deserializeBook(String xml) {
-		final BookDeserializer deserializer = new BookDeserializer();
-		deserializer.readQuietly(xml);
-		return deserializer.getBook();
+		try {
+			final BookDeserializer deserializer = new BookDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getBook();
+		} catch (SAXException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -121,9 +128,13 @@ class XMLSerializer extends AbstractSerializer {
 
 	@Override
 	public Bookmark deserializeBookmark(String xml) {
-		final BookmarkDeserializer deserializer = new BookmarkDeserializer();
-		deserializer.readQuietly(xml);
-		return deserializer.getBookmark();
+		try {
+			final BookmarkDeserializer deserializer = new BookmarkDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getBookmark();
+		} catch (SAXException e) {
+			return null;
+		}
 	}
 
 	private static DateFormat ourDateFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.FULL, Locale.ENGLISH);
@@ -195,7 +206,7 @@ class XMLSerializer extends AbstractSerializer {
 		return buffer.length() != 0 ? buffer.toString() : null;
 	}
 
-	private static final class BookDeserializer extends ZLXMLReaderAdapter {
+	private static final class BookDeserializer extends DefaultHandler {
 		private static enum State {
 			READ_NOTHING,
 			READ_ENTRY,
@@ -231,7 +242,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 
 		@Override
-		public void startDocumentHandler() {
+		public void startDocument() {
 			myBook = null;
 
 			myId = -1;
@@ -248,7 +259,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 
 		@Override
-		public void endDocumentHandler() {
+		public void endDocument() {
 			if (myId == -1) {
 				return;
 			}
@@ -269,63 +280,62 @@ class XMLSerializer extends AbstractSerializer {
 		}
 
 		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			switch (myState) {
 				case READ_NOTHING:
-					if (!"entry".equals(tag)) {
-						return true;
+					if (!"entry".equals(qName)) {
+						throw new SAXException("Unexpected tag " + qName);
 					}
 					myState = State.READ_ENTRY;
 					break;
 				case READ_ENTRY:
-					if ("id".equals(tag)) {
+					if ("id".equals(qName)) {
 						myState = State.READ_ID;
-					} else if ("title".equals(tag)) {
+					} else if ("title".equals(qName)) {
 						myState = State.READ_TITLE;
-					} else if ("dc:language".equals(tag)) {
+					} else if ("dc:language".equals(qName)) {
 						myState = State.READ_LANGUAGE;
-					} else if ("dc:encoding".equals(tag)) {
+					} else if ("dc:encoding".equals(qName)) {
 						myState = State.READ_ENCODING;
-					} else if ("author".equals(tag)) {
+					} else if ("author".equals(qName)) {
 						myState = State.READ_AUTHOR;
 						clear(myAuthorName);
 						clear(myAuthorSortKey);
-					} else if ("category".equals(tag)) {
+					} else if ("category".equals(qName)) {
 						final String term = attributes.getValue("term");
 						if (term != null) {
 							myTags.add(Tag.getTag(term.split("/")));
 						}
-					} else if ("calibre:series".equals(tag)) {
+					} else if ("calibre:series".equals(qName)) {
 						myState = State.READ_SERIES_TITLE;
-					} else if ("calibre:series_index".equals(tag)) {
+					} else if ("calibre:series_index".equals(qName)) {
 						myState = State.READ_SERIES_INDEX;
-					} else if ("link".equals(tag)) {
+					} else if ("link".equals(qName)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
 					} else {
-						return true;
+						throw new SAXException("Unexpected tag " + qName);
 					}
 					break;
 				case READ_AUTHOR:
-					if ("uri".equals(tag)) {
+					if ("uri".equals(qName)) {
 						myState = State.READ_AUTHOR_URI;
-					} else if ("name".equals(tag)) {
+					} else if ("name".equals(qName)) {
 						myState = State.READ_AUTHOR_NAME;
 					} else {
-						return true;
+						throw new SAXException("Unexpected tag " + qName);
 					}
 					break;
 			}
-			return false;
 		}
 
 		@Override
-		public boolean endElementHandler(String tag) {
+		public void endElement(String uri, String localName, String qName) throws SAXException {
 			switch (myState) {
 				case READ_NOTHING:
-					return true;
+					throw new SAXException("Unexpected closing tag " + qName);
 				case READ_ENTRY:
-					if ("entry".equals(tag)) {
+					if ("entry".equals(qName)) {
 						myState = State.READ_NOTHING;
 					}
 					break;
@@ -345,11 +355,10 @@ class XMLSerializer extends AbstractSerializer {
 					myState = State.READ_ENTRY;
 					break;
 			}
-			return false;
 		}
 
 		@Override
-		public void characterDataHandler(char[] ch, int start, int length) {
+		public void characters(char[] ch, int start, int length) {
 			switch (myState) {
 				case READ_ID:
 					try {
@@ -382,7 +391,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
-	private static final class BookmarkDeserializer extends ZLXMLReaderAdapter {
+	private static final class BookmarkDeserializer extends DefaultHandler {
 		private static enum State {
 			READ_NOTHING,
 			READ_BOOKMARK,
@@ -411,7 +420,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 
 		@Override
-		public void startDocumentHandler() {
+		public void startDocument() {
 			myBookmark = null;
 
 			myId = -1;
@@ -432,7 +441,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 
 		@Override
-		public void endDocumentHandler() {
+		public void endDocument() {
 			if (myBookId == -1) {
 				return;
 			}
@@ -445,76 +454,74 @@ class XMLSerializer extends AbstractSerializer {
 
 		//appendTagWithContent(buffer, "text", bookmark.getText());
 		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			switch (myState) {
 				case READ_NOTHING:
-					if (!"bookmark".equals(tag)) {
-						return true;
+					if (!"bookmark".equals(qName)) {
+						throw new SAXException("Unexpected tag " + qName);
 					}
 					try {
 						myId = Long.parseLong(attributes.getValue("id"));
 						myIsVisible = Boolean.parseBoolean(attributes.getValue("visible"));
 						myState = State.READ_BOOKMARK;
 					} catch (Exception e) {
-						return true;
+						throw new SAXException("XML parsing error", e);
 					}
 					break;
 				case READ_BOOKMARK:
-					if ("book".equals(tag)) {
+					if ("book".equals(qName)) {
 						try {
 							myBookId = Long.parseLong(attributes.getValue("id"));
 							myBookTitle = attributes.getValue("title");
 						} catch (Exception e) {
-							return true;
+							throw new SAXException("XML parsing error", e);
 						}
-					} else if ("text".equals(tag)) {
+					} else if ("text".equals(qName)) {
 						myState = State.READ_TEXT;
-					} else if ("history".equals(tag)) {
+					} else if ("history".equals(qName)) {
 						try {
 							myCreationDate = parseDate(attributes.getValue("date-creation"));
 							myModificationDate = parseDate(attributes.getValue("date-modification"));
 							myAccessDate = parseDate(attributes.getValue("date-access"));
 							myAccessCount = Integer.parseInt(attributes.getValue("access-count"));
 						} catch (Exception e) {
-							return true;
+							throw new SAXException("XML parsing error", e);
 						}
-					} else if ("position".equals(tag)) {
+					} else if ("position".equals(qName)) {
 						try {
 							myModelId = attributes.getValue("model");
 							myParagraphIndex = Integer.parseInt(attributes.getValue("paragraph"));
 							myElementIndex = Integer.parseInt(attributes.getValue("element"));
 							myCharIndex = Integer.parseInt(attributes.getValue("char"));
 						} catch (Exception e) {
-							return true;
+							throw new SAXException("XML parsing error", e);
 						}
 					} else {
-						return true;
+						throw new SAXException("Unexpected tag " + qName);
 					}
 					break;
 				case READ_TEXT:
-					return true;
+					throw new SAXException("Unexpected tag " + qName);
 			}
-			return false;
 		}
 
 		@Override
-		public boolean endElementHandler(String tag) {
+		public void endElement(String uri, String localName, String qName) throws SAXException {
 			switch (myState) {
 				case READ_NOTHING:
-					return true;
+					throw new SAXException("Unexpected closing tag " + qName);
 				case READ_BOOKMARK:
-					if ("bookmark".equals(tag)) {
+					if ("bookmark".equals(qName)) {
 						myState = State.READ_NOTHING;
 					}
 					break;
 				case READ_TEXT:
 					myState = State.READ_BOOKMARK;
 			}
-			return false;
 		}
 
 		@Override
-		public void characterDataHandler(char[] ch, int start, int length) {
+		public void characters(char[] ch, int start, int length) {
 			if (myState == State.READ_TEXT) {
 				myText.append(ch, start, length);
 			}

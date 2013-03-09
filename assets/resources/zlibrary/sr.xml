@@ -48,6 +48,7 @@
 		<node name="hu" value="мађарски"/>
 		<node name="id" value="индонезијски"/>
 		<node name="it" value="италијански"/>
+		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="литвански"/>
 		<node name="nl" value="холандски"/>
 		<node name="nb" value="норвешки"/>
@@ -64,6 +65,7 @@
 		<node name="zh" value="кинески"/>
 		<node name="other" value="други"/>
 		<node name="multi" value="вишејезични"/>
+		<node name="system" value="System" toBeTranslated="true"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="укључено"/>
