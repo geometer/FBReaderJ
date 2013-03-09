@@ -275,6 +275,7 @@
 		</node>
 		<node name="appearance" value="呈现方式">
 			<node name="summary" value="旋转，状态工具条"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="屏幕方向">
 				<node name="system" value="系统"/>
 				<node name="sensor" value="感知设备方向"/>

@@ -813,6 +813,7 @@ public final class FBReader extends Activity {
 			case REQUEST_PREFERENCES:
 			case REQUEST_BOOK_INFO:
 				if (resultCode != RESULT_DO_NOTHING) {
+					invalidateOptionsMenu();
 					final Book book = BookInfoActivity.bookByIntent(data);
 					if (book != null) {
 						getCollection().bindToService(this, new Runnable() {
@@ -834,6 +835,35 @@ public final class FBReader extends Activity {
 					}
 				});
 				break;
+		}
+	}
+
+	public void refresh() {
+		if (myNavigationPopup != null) {
+			myNavigationPopup.update();
+		}
+	}
+
+	private NavigationPopup myNavigationPopup;
+
+	boolean barsAreShown() {
+		return myNavigationPopup != null;
+	}
+
+	void hideBars() {
+		if (myNavigationPopup != null) {
+			myNavigationPopup.stopNavigation();
+			myNavigationPopup = null;
+		}
+	}
+
+	void showBars() {
+		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
+
+		if (myNavigationPopup == null) {
+			myFBReaderApp.hideActivePopup();
+			myNavigationPopup = new NavigationPopup(myFBReaderApp);
+			myNavigationPopup.runNavigation(this, root);
 		}
 	}
 
