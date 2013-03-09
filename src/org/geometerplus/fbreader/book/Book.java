@@ -45,6 +45,8 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
 public class Book {
+	public static final String FAVORITE_LABEL = "favorite";
+
 	public final ZLFile File;
 
 	private volatile long myId;

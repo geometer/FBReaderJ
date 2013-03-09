@@ -238,12 +238,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Book> favorites() {
+	public synchronized List<Book> booksForLabel(String label) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
 		try {
-			return SerializerUtil.deserializeBookList(myInterface.favorites());
+			return SerializerUtil.deserializeBookList(myInterface.booksForLabel(label));
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}
@@ -440,30 +440,39 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized boolean hasFavorites() {
+	public synchronized List<String> labels() {
 		if (myInterface != null) {
 			try {
-				return myInterface.hasFavorites();
+				return myInterface.labels();
 			} catch (RemoteException e) {
 			}
 		}
-		return false;
+		return Collections.emptyList();
 	}
 
-	public synchronized boolean isFavorite(Book book) {
+	public synchronized List<String> labels(Book book) {
 		if (myInterface != null) {
 			try {
-				return myInterface.isFavorite(SerializerUtil.serialize(book));
+				return myInterface.labelsForBook(SerializerUtil.serialize(book));
 			} catch (RemoteException e) {
 			}
 		}
-		return false;
+		return Collections.emptyList();
 	}
 
-	public synchronized void setBookFavorite(Book book, boolean favorite) {
+	public synchronized void setLabel(Book book, String label) {
 		if (myInterface != null) {
 			try {
-				myInterface.setBookFavorite(SerializerUtil.serialize(book), favorite);
+				myInterface.setLabel(SerializerUtil.serialize(book), label);
+			} catch (RemoteException e) {
+			}
+		}
+	}
+
+	public synchronized void removeLabel(Book book, String label) {
+		if (myInterface != null) {
+			try {
+				myInterface.removeLabel(SerializerUtil.serialize(book), label);
 			} catch (RemoteException e) {
 			}
 		}
