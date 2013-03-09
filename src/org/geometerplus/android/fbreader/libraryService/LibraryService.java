@@ -222,6 +222,10 @@ public class LibraryService extends Service {
 			return myCollection.titles();
 		}
 
+		public List<String> firstTitleLetters() {
+			return myCollection.firstTitleLetters();
+		}
+
 		public List<String> titlesForAuthor(String author, int limit) {
 			return myCollection.titlesForAuthor(Util.stringToAuthor(author), limit);
 		}

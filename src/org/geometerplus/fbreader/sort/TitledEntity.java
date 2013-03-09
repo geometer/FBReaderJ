@@ -26,7 +26,7 @@ import java.util.Map;
 import android.annotation.TargetApi;
 import android.os.Build;
 
-public abstract class TitledEntity implements Comparable<TitledEntity> {
+public abstract class TitledEntity {
 	private String myTitle;
 	private String mySortKey;
 	
@@ -153,10 +153,6 @@ public abstract class TitledEntity implements Comparable<TitledEntity> {
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	private static String normalize(String s) {
 		return Normalizer.normalize(s, Normalizer.Form.NFKD);
-	}
-
-	public int compareTo(TitledEntity entity) {
-		return getSortKey().compareTo(entity.getSortKey());
 	}
 
 	public String firstTitleLetter() {
