@@ -40,24 +40,19 @@ public class TitleListTree extends FirstLevelTree {
 		clear();
 
 		myDoGroupByFirstLetter = false;
-		final TreeSet<String> letterSet = new TreeSet<String>();
-		final List<Book> books = Collection.books();
-		if (books.size() > 9) {
-			for (Book b : books) {
-				final String letter = b.firstTitleLetter();
-				if (letter != null) {
-					letterSet.add(letter);
-				}
-			}
-			myDoGroupByFirstLetter = books.size() > letterSet.size() * 5 / 4;
+
+		List<String> letters = null;
+		if (Collection.size() > 9) {
+			letters = Collection.firstTitleLetters();
+			myDoGroupByFirstLetter = Collection.size() > letters.size() * 5 / 4;
 		}
 
 		if (myDoGroupByFirstLetter) {
-			for (String letter : letterSet) {
-				createTitleSubTree(letter);
+			for (String l : letters) {
+				createTitleSubTree(l);
 			}
 		} else {
-			for (Book b : books) {
+			for (Book b : Collection.books()) {
 				createBookWithAuthorsSubTree(b);
 			}
 		}

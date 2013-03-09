@@ -346,6 +346,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized List<String> firstTitleLetters() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return myInterface.firstTitleLetters();
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
 	public synchronized List<String> titlesForAuthor(Author author, int limit) {
 		if (myInterface == null) {
 			return Collections.emptyList();
