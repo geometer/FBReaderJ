@@ -35,14 +35,14 @@ public final class SeriesTree extends LibraryTree {
 
 	SeriesTree(IBookCollection collection, String series, Author author) {
 		super(collection);
-		String language = "en";
+		String language = collection.booksForSeries(series).get(0).getLanguage();
 		Series = new Title(series, language);
 		Author = author;
 	}
 
 	SeriesTree(LibraryTree parent, String series, Author author, int position) {
 		super(parent, position);
-		String language = "en";
+		String language = parent.Collection.booksForSeries(series).get(0).getLanguage();
 		Series = new Title(series, language);
 		Author = author;
 	}
