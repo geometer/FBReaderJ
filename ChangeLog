@@ -8,7 +8,7 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.7.4 (Mar 11, 2013) =====
+===== 1.7.4/5 (Mar 11, 2013) =====
 * Book/bookmark deserializer: SAX instead of our own XML parser
 * Georgian localization (by Bookland.ge)
 * Interface language option
