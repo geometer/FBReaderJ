@@ -838,35 +838,6 @@ public final class FBReader extends Activity {
 		}
 	}
 
-	public void refresh() {
-		if (myNavigationPopup != null) {
-			myNavigationPopup.update();
-		}
-	}
-
-	private NavigationPopup myNavigationPopup;
-
-	boolean barsAreShown() {
-		return myNavigationPopup != null;
-	}
-
-	void hideBars() {
-		if (myNavigationPopup != null) {
-			myNavigationPopup.stopNavigation();
-			myNavigationPopup = null;
-		}
-	}
-
-	void showBars() {
-		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-
-		if (myNavigationPopup == null) {
-			myFBReaderApp.hideActivePopup();
-			myNavigationPopup = new NavigationPopup(myFBReaderApp);
-			myNavigationPopup.runNavigation(this, root);
-		}
-	}
-
 	private Menu addSubMenu(Menu menu, String id) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		return application.myMainWindow.addSubMenu(menu, id);
