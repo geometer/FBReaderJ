@@ -451,20 +451,24 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
-		dictionaryScreen.addPreference(new DictionaryPreference(
-			this,
-			dictionaryScreen.Resource,
-			"dictionary",
-			DictionaryUtil.singleWordTranslatorOption(),
-			DictionaryUtil.dictionaryInfos(this, true)
-		));
-		dictionaryScreen.addPreference(new DictionaryPreference(
-			this,
-			dictionaryScreen.Resource,
-			"translator",
-			DictionaryUtil.multiWordTranslatorOption(),
-			DictionaryUtil.dictionaryInfos(this, false)
-		));
+		try {
+			dictionaryScreen.addPreference(new DictionaryPreference(
+				this,
+				dictionaryScreen.Resource,
+				"dictionary",
+				DictionaryUtil.singleWordTranslatorOption(),
+				DictionaryUtil.dictionaryInfos(this, true)
+			));
+			dictionaryScreen.addPreference(new DictionaryPreference(
+				this,
+				dictionaryScreen.Resource,
+				"translator",
+				DictionaryUtil.multiWordTranslatorOption(),
+				DictionaryUtil.dictionaryInfos(this, false)
+			));
+		} catch (Exception e) {
+			// ignore: dictionary lists are not initialized yet
+		}
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
 			this,
 			fbReader.NavigateAllWordsOption,
