@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.book;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
-
 import org.geometerplus.fbreader.sort.TitledEntity;
 
 public class Series extends TitledEntity {
@@ -41,11 +39,11 @@ public class Series extends TitledEntity {
 		if (!(o instanceof Series)) {
 			return false;
 		}
-		return MiscUtil.equals(getTitle(), ((Series)o).getTitle());
+		return getTitle().equals(((Series)o).getTitle());
 	}
 
 	@Override
 	public int hashCode() {
-		return MiscUtil.hashCode(getTitle());
+		return getTitle().hashCode();
 	}
 }

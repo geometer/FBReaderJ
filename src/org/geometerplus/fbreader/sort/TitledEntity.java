@@ -35,7 +35,11 @@ public abstract class TitledEntity {
 	}
 	
 	public String getTitle() {
-		return myTitle;
+		return myTitle != null ? myTitle : "";
+	}
+
+	public boolean isTitleEmpty() {
+		return myTitle == null || "".equals(myTitle);
 	}
 
 	public void setTitle(String title) {
