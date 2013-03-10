@@ -8,11 +8,11 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.7.4 (Mar ??, 2013) =====
+===== 1.7.4 (Mar 11, 2013) =====
 * Book/bookmark deserializer: SAX instead of our own XML parser
 * Georgian localization (by Bookland.ge)
 * Interface language option
-* Book sort order in Library skips leading articles
+* Book sort order in Library omits leading articles
 * Fixed "screen stays switched on while locked" issue
 
 ===== 1.7.3 (Mar 04, 2013) =====
