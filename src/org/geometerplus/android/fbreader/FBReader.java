@@ -578,6 +578,15 @@ public final class FBReader extends Activity {
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, root);
 	}
 
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		switchWakeLock(hasFocus &&
+			getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() <
+			myFBReaderApp.getBatteryLevel()
+		);
+	}
+
 	private void initPluginActions() {
 		synchronized (myPluginActions) {
 			int index = 0;
@@ -629,9 +638,6 @@ public final class FBReader extends Activity {
 	protected void onResume() {
 		super.onResume();
 
-		switchWakeLock(
-				getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() < myFBReaderApp.getBatteryLevel()
-				);
 		myStartTimer = true;
 		final int brightnessLevel =
 				getZLibrary().ScreenBrightnessLevelOption().getValue();
@@ -718,7 +724,6 @@ public final class FBReader extends Activity {
 			// do nothing, this exception means myBatteryInfoReceiver was not registered
 		}
 		myFBReaderApp.stopTimer();
-		switchWakeLock(false);
 		if (getZLibrary().DisableButtonLightsOption.getValue()) {
 			setButtonLight(true);
 		}
@@ -1023,8 +1028,9 @@ public final class FBReader extends Activity {
 			final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 			application.myMainWindow.setBatteryLevel(level);
 			switchWakeLock(
-					getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() < level
-					);
+				hasWindowFocus() &&
+				getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() < level
+			);
 		}
 	};
 
