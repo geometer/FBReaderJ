@@ -3,6 +3,7 @@
 * Georgian localization (by Bookland.ge)
 * Interface language option
 * Book sort order in Library skips leading articles
+* Fixed "screen stays on while locked" issue
 
 ===== 1.7.3 (Mar 04, 2013) =====
 * Library service does not work in background after program closing
