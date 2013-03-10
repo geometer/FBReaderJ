@@ -61,8 +61,8 @@ public class Book extends TitledEntity {
 		super(title);
 		myId = id;
 		File = file;
-		myLanguage = language;
 		myEncoding = encoding;
+		myLanguage = language;
 		myIsSaved = true;
 	}
 
@@ -80,8 +80,8 @@ public class Book extends TitledEntity {
 			return;
 		}
 		setTitle(book.getTitle());
-		myLanguage = book.myLanguage;
 		myEncoding = book.myEncoding;
+		myLanguage = book.myLanguage;
 		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
 		myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
 		mySeriesInfo = book.mySeriesInfo;
@@ -112,9 +112,9 @@ public class Book extends TitledEntity {
 	}
 
 	private void readMetaInfo(FormatPlugin plugin) throws BookReadingException {
-		setTitle(null);
 		myEncoding = null;
 		myLanguage = null;
+		setTitle(null);
 		myAuthors = null;
 		myTags = null;
 		mySeriesInfo = null;
@@ -123,7 +123,7 @@ public class Book extends TitledEntity {
 
 		plugin.readMetaInfo(this);
 
-		if (getTitle() == null || getTitle().length() == 0) {
+		if (isTitleEmpty()) {
 			final String fileName = File.getShortName();
 			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
@@ -209,7 +209,7 @@ public class Book extends TitledEntity {
 	}
 
 	public void setTitle(String title) {
-		if (!MiscUtil.equals(getTitle(), title)) {
+		if (!getTitle().equals(title)) {
 			super.setTitle(title);
 			myIsSaved = false;
 		}
@@ -313,7 +313,7 @@ public class Book extends TitledEntity {
 	}
 
 	public boolean matches(String pattern) {
-		if (getTitle() != null && MiscUtil.matchesIgnoreCase(getTitle(), pattern)) {
+		if (MiscUtil.matchesIgnoreCase(getTitle(), pattern)) {
 			return true;
 		}
 		if (mySeriesInfo != null && MiscUtil.matchesIgnoreCase(mySeriesInfo.Series.getTitle(), pattern)) {
