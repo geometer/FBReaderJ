@@ -66,8 +66,7 @@ public class TitleListTree extends FirstLevelTree {
 		switch (event) {
 			case Added:
 				if (myGroupByFirstLetter) {
-					final String letter = book.firstTitleLetter();
-					return letter != null && createTitleSubTree(letter);
+					return createTitleSubTree(book.firstTitleLetter());
 				} else {
 					return createBookWithAuthorsSubTree(book);
 				}
@@ -82,8 +81,7 @@ public class TitleListTree extends FirstLevelTree {
 			case Updated:
 				if (myGroupByFirstLetter) {
 					// TODO: remove old tree (?)
-					final String letter = book.firstTitleLetter();
-					return letter != null && createTitleSubTree(letter);
+					return createTitleSubTree(book.firstTitleLetter());
 				} else {
 					boolean changed = removeBook(book);
 					changed |= createBookWithAuthorsSubTree(book);
@@ -92,13 +90,16 @@ public class TitleListTree extends FirstLevelTree {
 		}
 	}
 
-	boolean createTitleSubTree(String title) {
-		final TitleTree temp = new TitleTree(Collection, title);
+	private boolean createTitleSubTree(String prefix) {
+		if (prefix == null) {
+			return false;
+		}
+		final TitleTree temp = new TitleTree(Collection, prefix);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {
-			new TitleTree(this, title, - position - 1);
+			new TitleTree(this, prefix, - position - 1);
 			return true;
 		}
 	}
