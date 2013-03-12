@@ -102,13 +102,14 @@ public abstract class TitledEntity {
 			s = normalize(s);
 		}
 		final StringBuilder buffer = new StringBuilder();
-		boolean afterSpace = false;
 		int start = 0;
-		if(s.startsWith("M\'") || s.startsWith("Mc")) {
+		if (s.startsWith("M\'") || s.startsWith("Mc")) {
 			buffer.append("Mac");
 			start = 2;
 		}
-		for (int i = start; i < s.length(); i++) {
+
+		boolean afterSpace = false;
+		for (int i = start; i < s.length(); ++i) {
 			char ch = s.charAt(i);
 			// In case it is d' or l', may be it is "I'm", but it's OK.
 			if (ch == '\'' || Character.isWhitespace(ch)) {
