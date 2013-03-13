@@ -55,7 +55,11 @@ public abstract class TitledEntity {
 	
 	public String getSortKey() {
 		if (null == mySortKey) {
-			mySortKey = trim(myTitle, getLanguage());
+			try {
+				mySortKey = trim(myTitle, getLanguage());
+			} catch (Throwable t) {
+				mySortKey = "";
+			}
 		}
 		return mySortKey;
 	}
@@ -162,7 +166,7 @@ public abstract class TitledEntity {
 
 	public String firstTitleLetter() {
 		final String str = getSortKey();
-		if ("".equals(str)) {
+		if (str == null || "".equals(str)) {
 			return null;
 		}
 		return String.valueOf(Character.toUpperCase(str.charAt(0)));
