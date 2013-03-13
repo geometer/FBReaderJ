@@ -19,12 +19,8 @@
 
 package org.geometerplus.fbreader.sort;
 
-import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
-
-import android.annotation.TargetApi;
-import android.os.Build;
 
 public abstract class TitledEntity {
 	private String myTitle;
@@ -102,9 +98,6 @@ public abstract class TitledEntity {
 			return "";
 		}
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-			s = normalize(s);
-		}
 		final StringBuilder buffer = new StringBuilder();
 		int start = 0;
 		if (s.startsWith("M\'") || s.startsWith("Mc")) {
@@ -157,11 +150,6 @@ public abstract class TitledEntity {
 			}
 		}
 		return result;
-	}
-
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
-	private static String normalize(String s) {
-		return Normalizer.normalize(s, Normalizer.Form.NFKD);
 	}
 
 	public String firstTitleLetter() {

@@ -12,6 +12,5 @@
 		android:focusable="true"
 		android:scrollbars="vertical"
 		android:scrollbarAlwaysDrawVerticalTrack="true"
-		android:fadeScrollbars="false"
 	/>
 </RelativeLayout>

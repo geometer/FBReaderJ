@@ -48,7 +48,7 @@ updateVersion() {
 }
 
 buildSourceArchive() {
-	updateVersion
+	#updateVersion
   ant distclean
   rm -rf $dir $archive
   mkdir $dir
