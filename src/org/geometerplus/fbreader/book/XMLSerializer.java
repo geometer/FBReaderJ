@@ -283,47 +283,47 @@ class XMLSerializer extends AbstractSerializer {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			switch (myState) {
 				case READ_NOTHING:
-					if (!"entry".equals(qName)) {
-						throw new SAXException("Unexpected tag " + qName);
+					if (!"entry".equals(localName)) {
+						throw new SAXException("Unexpected tag " + localName);
 					}
 					myState = State.READ_ENTRY;
 					break;
 				case READ_ENTRY:
-					if ("id".equals(qName)) {
+					if ("id".equals(localName)) {
 						myState = State.READ_ID;
-					} else if ("title".equals(qName)) {
+					} else if ("title".equals(localName)) {
 						myState = State.READ_TITLE;
-					} else if ("dc:language".equals(qName)) {
+					} else if ("language".equals(localName) && XMLNamespaces.DublinCore.equals(uri)) {
 						myState = State.READ_LANGUAGE;
-					} else if ("dc:encoding".equals(qName)) {
+					} else if ("encoding".equals(localName) && XMLNamespaces.DublinCore.equals(uri)) {
 						myState = State.READ_ENCODING;
-					} else if ("author".equals(qName)) {
+					} else if ("author".equals(localName)) {
 						myState = State.READ_AUTHOR;
 						clear(myAuthorName);
 						clear(myAuthorSortKey);
-					} else if ("category".equals(qName)) {
+					} else if ("category".equals(localName)) {
 						final String term = attributes.getValue("term");
 						if (term != null) {
 							myTags.add(Tag.getTag(term.split("/")));
 						}
-					} else if ("calibre:series".equals(qName)) {
+					} else if ("series".equals(localName) && XMLNamespaces.CalibreMetadata.equals(uri)) {
 						myState = State.READ_SERIES_TITLE;
-					} else if ("calibre:series_index".equals(qName)) {
+					} else if ("series_index".equals(localName) && XMLNamespaces.CalibreMetadata.equals(uri)) {
 						myState = State.READ_SERIES_INDEX;
-					} else if ("link".equals(qName)) {
+					} else if ("link".equals(localName)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
 					} else {
-						throw new SAXException("Unexpected tag " + qName);
+						throw new SAXException("Unexpected tag " + localName);
 					}
 					break;
 				case READ_AUTHOR:
-					if ("uri".equals(qName)) {
+					if ("uri".equals(localName)) {
 						myState = State.READ_AUTHOR_URI;
-					} else if ("name".equals(qName)) {
+					} else if ("name".equals(localName)) {
 						myState = State.READ_AUTHOR_NAME;
 					} else {
-						throw new SAXException("Unexpected tag " + qName);
+						throw new SAXException("Unexpected tag " + localName);
 					}
 					break;
 			}
@@ -333,9 +333,9 @@ class XMLSerializer extends AbstractSerializer {
 		public void endElement(String uri, String localName, String qName) throws SAXException {
 			switch (myState) {
 				case READ_NOTHING:
-					throw new SAXException("Unexpected closing tag " + qName);
+					throw new SAXException("Unexpected closing tag " + localName);
 				case READ_ENTRY:
-					if ("entry".equals(qName)) {
+					if ("entry".equals(localName)) {
 						myState = State.READ_NOTHING;
 					}
 					break;
@@ -457,8 +457,8 @@ class XMLSerializer extends AbstractSerializer {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			switch (myState) {
 				case READ_NOTHING:
-					if (!"bookmark".equals(qName)) {
-						throw new SAXException("Unexpected tag " + qName);
+					if (!"bookmark".equals(localName)) {
+						throw new SAXException("Unexpected tag " + localName);
 					}
 					try {
 						myId = Long.parseLong(attributes.getValue("id"));
@@ -469,16 +469,16 @@ class XMLSerializer extends AbstractSerializer {
 					}
 					break;
 				case READ_BOOKMARK:
-					if ("book".equals(qName)) {
+					if ("book".equals(localName)) {
 						try {
 							myBookId = Long.parseLong(attributes.getValue("id"));
 							myBookTitle = attributes.getValue("title");
 						} catch (Exception e) {
 							throw new SAXException("XML parsing error", e);
 						}
-					} else if ("text".equals(qName)) {
+					} else if ("text".equals(localName)) {
 						myState = State.READ_TEXT;
-					} else if ("history".equals(qName)) {
+					} else if ("history".equals(localName)) {
 						try {
 							myCreationDate = parseDate(attributes.getValue("date-creation"));
 							myModificationDate = parseDate(attributes.getValue("date-modification"));
@@ -487,7 +487,7 @@ class XMLSerializer extends AbstractSerializer {
 						} catch (Exception e) {
 							throw new SAXException("XML parsing error", e);
 						}
-					} else if ("position".equals(qName)) {
+					} else if ("position".equals(localName)) {
 						try {
 							myModelId = attributes.getValue("model");
 							myParagraphIndex = Integer.parseInt(attributes.getValue("paragraph"));
@@ -497,11 +497,11 @@ class XMLSerializer extends AbstractSerializer {
 							throw new SAXException("XML parsing error", e);
 						}
 					} else {
-						throw new SAXException("Unexpected tag " + qName);
+						throw new SAXException("Unexpected tag " + localName);
 					}
 					break;
 				case READ_TEXT:
-					throw new SAXException("Unexpected tag " + qName);
+					throw new SAXException("Unexpected tag " + localName);
 			}
 		}
 
@@ -509,9 +509,9 @@ class XMLSerializer extends AbstractSerializer {
 		public void endElement(String uri, String localName, String qName) throws SAXException {
 			switch (myState) {
 				case READ_NOTHING:
-					throw new SAXException("Unexpected closing tag " + qName);
+					throw new SAXException("Unexpected closing tag " + localName);
 				case READ_BOOKMARK:
-					if ("bookmark".equals(qName)) {
+					if ("bookmark".equals(localName)) {
 						myState = State.READ_NOTHING;
 					}
 					break;
