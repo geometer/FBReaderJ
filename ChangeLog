@@ -1,5 +1,6 @@
 ===== 1.7.7 (Mar 14, 2013) =====
 * Fixed XML parsing
+* Fixed series order in library
 
 ===== 1.7.6 (Mar 13, 2013) =====
 * Fixed several possible NPEs
