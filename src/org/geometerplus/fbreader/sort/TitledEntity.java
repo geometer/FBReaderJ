@@ -58,7 +58,7 @@ public abstract class TitledEntity {
 			try {
 				mySortKey = trim(myTitle, getLanguage());
 			} catch (Throwable t) {
-				mySortKey = "";
+				mySortKey = myTitle;
 			}
 		}
 		return mySortKey;
