@@ -23,10 +23,6 @@ import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.*;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.*;
@@ -57,6 +53,7 @@ public class Book extends TitledEntity {
 	private volatile List<Author> myAuthors;
 	private volatile List<Tag> myTags;
 	private volatile SeriesInfo mySeriesInfo;
+	private volatile List<UID> myUids;
 
 	private volatile boolean myIsSaved;
 
@@ -181,6 +178,7 @@ public class Book extends TitledEntity {
 		myAuthors = database.listAuthors(myId);
 		myTags = database.listTags(myId);
 		mySeriesInfo = database.getSeriesInfo(myId);
+		myUids = database.listUids(myId);
 		myIsSaved = true;
 	}
 
@@ -444,41 +442,6 @@ public class Book extends TitledEntity {
 			myVisitedHyperlinks.add(linkId);
 			if (myId != -1) {
 				database.addVisitedHyperlink(myId, linkId);
-			}
-		}
-	}
-
-	public String getContentHashCode() {
-		InputStream stream = null;
-
-		try {
-			final MessageDigest hash = MessageDigest.getInstance("SHA-256");
-			stream = File.getInputStream();
-
-			final byte[] buffer = new byte[2048];
-			while (true) {
-				final int nread = stream.read(buffer);
-				if (nread == -1) {
-					break;
-				}
-				hash.update(buffer, 0, nread);
-			}
-
-			final Formatter f = new Formatter();
-			for (byte b : hash.digest()) {
-				f.format("%02X", b & 0xFF);
-			}
-			return f.toString();
-		} catch (IOException e) {
-			return null;
-		} catch (NoSuchAlgorithmException e) {
-			return null;
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-				}
 			}
 		}
 	}
