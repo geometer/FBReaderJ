@@ -282,7 +282,7 @@
 		</node>
 		<node name="appearance" value="Utseende">
 			<node name="summary" value="Visningsinnstillinger, statuslinje, knappelys"/>
-			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="language" value="Språk"/>
 			<node name="screenOrientation" value="Visningsretning">
 				<node name="system" value="System"/>
 				<node name="sensor" value="Følger retningen til enhet"/>
@@ -512,11 +512,11 @@
 		<node name="css" value="CSS">
 			<node name="summary" value="Bruk/ignorer verdier definert i CSS-stilark"/>
 			<node name="fontSize" value="Skriftstørrelse">
-				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOn" value="Bruk skriftstørrelse definert i CSS"/>
 				<node name="summaryOff" value="Ignorer skriftstørrelse definert i CSS"/>
 			</node>
 			<node name="textAlignment" value="Tekstjustering">
-				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOn" value="Bruk tekstjustering definert i CSS"/>
 				<node name="summaryOff" value="Ignorer tekstjustering definert i CSS"/>
 			</node>
 		</node>
