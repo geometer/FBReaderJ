@@ -1,0 +1,18 @@
+* imports order:
+  java.*
+  android.*
+  org.geometerplus.zlibrary.core.*
+  org.geometerplus.zlibrary.ui.*
+  org.geometerplus.fbreader.*
+  org.geometerplus.android.*
+
+* we group imports if 3+ classes from same package are imported:
+  import java.util.*;
+    instead of
+  import java.util.List;
+  import java.util.Map;
+  import java.util.Set;
+
+* copyright notices are missing in new classes (in rss package)
+
+* why OPDSLinkXMLReader knows something about RSS?
