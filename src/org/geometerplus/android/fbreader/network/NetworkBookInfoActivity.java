@@ -21,27 +21,6 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.List;
 
-import org.geometerplus.android.fbreader.OrientationUtil;
-import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
-import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.fbreader.network.NetworkBookItem;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.opds.OPDSBookItem;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.urlInfo.RelatedUrlInfo;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -50,13 +29,29 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
+
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MimeType;
+
+import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
+
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.opds.OPDSBookItem;
+import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.urlInfo.RelatedUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+
+import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
+import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
+import org.geometerplus.android.util.UIUtil;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
 	private NetworkBookTree myTree;
