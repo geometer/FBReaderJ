@@ -250,9 +250,12 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Book> booksForTitlePrefix(String prefix) {
+		if (prefix == null) {
+			return Collections.emptyList();
+		}
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
-			if (prefix.equals(b.firstTitleLetter())) {
+			if (b != null && prefix.equals(b.firstTitleLetter())) {
 				filtered.add(b);
 			}
 		}
@@ -377,11 +380,14 @@ public class BookCollection extends AbstractBookCollection {
 
 	public List<String> firstTitleLetters() {
 		synchronized (myBooksByFile) {
-			final TreeSet<String> titles = new TreeSet<String>();
+			final TreeSet<String> letters = new TreeSet<String>();
 			for (Book book : myBooksByFile.values()) {
-				titles.add(book.firstTitleLetter());
+				final String l = book.firstTitleLetter();
+				if (l != null) {
+					letters.add(l);
+				}
 			}
-			return new ArrayList<String>(titles);
+			return new ArrayList<String>(letters);
 		}
 	}
 

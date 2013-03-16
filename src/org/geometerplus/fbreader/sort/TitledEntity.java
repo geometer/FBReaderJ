@@ -55,7 +55,11 @@ public abstract class TitledEntity {
 	
 	public String getSortKey() {
 		if (null == mySortKey) {
-			mySortKey = trim(myTitle, getLanguage());
+			try {
+				mySortKey = trim(myTitle, getLanguage());
+			} catch (Throwable t) {
+				mySortKey = myTitle;
+			}
 		}
 		return mySortKey;
 	}
@@ -102,13 +106,14 @@ public abstract class TitledEntity {
 			s = normalize(s);
 		}
 		final StringBuilder buffer = new StringBuilder();
-		boolean afterSpace = false;
 		int start = 0;
-		if(s.startsWith("M\'") || s.startsWith("Mc")) {
+		if (s.startsWith("M\'") || s.startsWith("Mc")) {
 			buffer.append("Mac");
 			start = 2;
 		}
-		for (int i = start; i < s.length(); i++) {
+
+		boolean afterSpace = false;
+		for (int i = start; i < s.length(); ++i) {
 			char ch = s.charAt(i);
 			// In case it is d' or l', may be it is "I'm", but it's OK.
 			if (ch == '\'' || Character.isWhitespace(ch)) {
@@ -161,7 +166,7 @@ public abstract class TitledEntity {
 
 	public String firstTitleLetter() {
 		final String str = getSortKey();
-		if ("".equals(str)) {
+		if (str == null || "".equals(str)) {
 			return null;
 		}
 		return String.valueOf(Character.toUpperCase(str.charAt(0)));

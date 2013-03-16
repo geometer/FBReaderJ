@@ -232,6 +232,8 @@ mainLoop:
 
 	public void update(Bookmark other) {
 		// TODO: copy other fields (?)
-		myId = other.myId;
+		if (other != null) {
+			myId = other.myId;
+		}
 	}
 }

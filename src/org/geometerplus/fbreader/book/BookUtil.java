@@ -19,6 +19,11 @@
 
 package org.geometerplus.fbreader.book;
 
+import java.io.InputStream;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 import java.util.Locale;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
@@ -73,4 +78,40 @@ public abstract class BookUtil {
 		}
 		return true;
 	}
+
+	public static UID createSHA256Uid(ZLFile file) {
+		InputStream stream = null;
+
+		try {
+			final MessageDigest hash = MessageDigest.getInstance("SHA-256");
+			stream = file.getInputStream();
+
+			final byte[] buffer = new byte[2048];
+			while (true) {
+				final int nread = stream.read(buffer);
+				if (nread == -1) {
+					break;
+				}
+				hash.update(buffer, 0, nread);
+			}
+
+			final Formatter f = new Formatter();
+			for (byte b : hash.digest()) {
+				f.format("%02X", b & 0xFF);
+			}
+			return new UID("SHA256", f.toString());
+		} catch (IOException e) {
+			return null;
+		} catch (NoSuchAlgorithmException e) {
+			return null;
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+	}
+
 }

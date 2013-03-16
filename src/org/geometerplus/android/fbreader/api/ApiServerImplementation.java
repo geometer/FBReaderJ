@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 import org.geometerplus.zlibrary.text.view.*;
 
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
@@ -310,7 +311,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookHash() {
-		return getReader().Model.Book.getContentHashCode();
+		final UID uid = BookUtil.createSHA256Uid(getReader().Model.Book.File);
+		return uid != null ? uid.Id : null;
 	}
 
 	public String getBookUniqueId() {
