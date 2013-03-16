@@ -282,6 +282,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized Book getBookByUid(UID uid) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return SerializerUtil.deserializeBook(myInterface.getBookByUid(uid.Type, uid.Id));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
 	public synchronized List<Author> authors() {
 		if (myInterface == null) {
 			return Collections.emptyList();

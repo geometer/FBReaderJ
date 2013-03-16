@@ -23,8 +23,10 @@ interface LibraryInterface {
 	boolean hasBooksForPattern(in String pattern);
 	List<String> booksForPattern(in String pattern);
 	List<String> recentBooks();
+
 	String getBookByFile(in String file);
 	String getBookById(in long id);
+	String getBookByUid(in String type, in String id);
 	String getRecentBook(in int index);
 
 	List<String> authors();
