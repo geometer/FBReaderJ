@@ -41,7 +41,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
-	protected OPDSNetworkLink(int id, String siteName, String title, String summary, String language,
+	OPDSNetworkLink(int id, String siteName, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, siteName, title, summary, language, infos);
 	}
@@ -86,7 +86,6 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		if (url == null) {
 			return null;
 		}
-		
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
 		library.startLoading(catalogItem);
@@ -131,7 +130,6 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 			pattern = URLEncoder.encode(pattern, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 		}
-	
 		return createNetworkData(info.Url.replace("%s", pattern), info.Mime, (OPDSCatalogItem.State)data);
 	}
 

@@ -3,14 +3,13 @@ package org.geometerplus.fbreader.network.rss;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkOperationData;
-import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
-import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.util.MimeType;
+
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class RSSCatalogItem extends NetworkURLCatalogItem {
 	static class State extends NetworkOperationData {

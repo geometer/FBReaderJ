@@ -123,7 +123,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.RecoverPassword, href, mime));
 				}
 			}
-			
+
 			if (siteName != null && title != null && infos.getInfo(UrlInfo.Type.Catalog) != null) {
 				myLinks.add(link(id, siteName, title, summary, language, infos));
 			}
@@ -140,9 +140,9 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		) {
 			final String titleString = title.toString();
 			final String summaryString = summary != null ? summary.toString() : null;
-			
+
 			UrlInfoWithDate ud = infos.getInfo(UrlInfo.Type.Catalog);
-			
+
 			if (!MimeType.APP_RSS_XML.weakEquals(ud.Mime)) {
 				OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
 						OPDSNetworkLink.INVALID_ID,
@@ -176,7 +176,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 					);
 				rssLink.setExtraData(myExtraData);
 				return rssLink;
-			}			
+			}
 		}
 
 		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {

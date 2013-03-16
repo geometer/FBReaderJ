@@ -95,7 +95,6 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 	}
 
 	public boolean testTag(String namespace, String name, String tag) {
-		
 		if (name.equals(tag) && namespace.equals(myNamespaceMap.get(""))) {
 			return true;
 		}
