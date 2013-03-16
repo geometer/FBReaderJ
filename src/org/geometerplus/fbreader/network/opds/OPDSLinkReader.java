@@ -43,6 +43,7 @@ public class OPDSLinkReader {
 
 	public static List<INetworkLink> loadOPDSLinks(CacheMode cacheMode) throws ZLNetworkException {
 		final OPDSLinkXMLReader xmlReader = new OPDSLinkXMLReader();
+
 		final File dirFile = new File(Paths.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
 			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(CATALOGS_URL) {
