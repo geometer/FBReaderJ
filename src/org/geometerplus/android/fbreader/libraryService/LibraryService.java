@@ -192,6 +192,10 @@ public class LibraryService extends Service {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
 		}
 
+		public String getBookByUid(String type, String id) {
+			return SerializerUtil.serialize(myCollection.getBookByUid(new UID(type, id)));
+		}
+
 		public List<String> authors() {
 			final List<Author> authors = myCollection.authors();
 			final List<String> strings = new ArrayList<String>(authors.size());
