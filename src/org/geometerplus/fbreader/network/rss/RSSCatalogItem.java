@@ -21,7 +21,7 @@ public class RSSCatalogItem extends NetworkURLCatalogItem {
 		}
 	}
 	private State myLoadingState;
-	
+
 	protected RSSCatalogItem(INetworkLink link, CharSequence title,
 			CharSequence summary, UrlInfoCollection<?> urls,
 			Accessibility accessibility, int flags) {
@@ -30,13 +30,13 @@ public class RSSCatalogItem extends NetworkURLCatalogItem {
 
 	@Override
 	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
-		
+
 		final RSSNetworkLink rssLink = (RSSNetworkLink)Link;
 		myLoadingState = rssLink.createOperationData(loader);
-		
+
 		doLoadChildren(rssLink.createNetworkData(getCatalogUrl(), MimeType.APP_RSS_XML, myLoadingState));
 	}
-	
+
 	private void doLoadChildren(ZLNetworkRequest networkRequest) throws ZLNetworkException {
 		try {
 			super.doLoadChildren(myLoadingState, networkRequest);
