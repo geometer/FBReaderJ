@@ -458,10 +458,36 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			cursor.close();
 			return null;
 		}
-		ArrayList<Tag> list = new ArrayList<Tag>();
+		final ArrayList<Tag> list = new ArrayList<Tag>();
 		do {
 			list.add(getTagById(cursor.getLong(0)));
 		} while (cursor.moveToNext());
+		cursor.close();
+		return list;
+	}
+
+	private SQLiteStatement myInsertBookUidStatement;
+	protected void saveBookUid(long bookId, UID uid) {
+		if (myInsertBookUidStatement == null) {
+			myInsertBookUidStatement = myDatabase.compileStatement(
+				"INSERT OR REPLACE INTO BookUid (book_id,type,uid) VALUES (?,?,?)"
+			);
+		}
+
+		synchronized (myInsertBookUidStatement) {
+			myInsertBookUidStatement.bindLong(1, bookId);
+			myInsertBookUidStatement.bindString(2, uid.Type);
+			myInsertBookUidStatement.bindString(2, uid.Id);
+			myInsertBookAuthorStatement.execute();
+		}
+	}
+
+	protected List<UID> listUids(long bookId) {
+		final ArrayList<UID> list = new ArrayList<UID>();
+		final Cursor cursor = myDatabase.rawQuery("SELECT type,uid FROM BookUid WHERE book_id = ?", new String[] { "" + bookId });
+		if (cursor.moveToNext()) {
+			list.add(new UID(cursor.getString(0), cursor.getString(1)));
+		}
 		cursor.close();
 		return list;
 	}
