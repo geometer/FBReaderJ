@@ -54,6 +54,7 @@ public abstract class BooksDatabase {
 	protected abstract List<Author> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
+	protected abstract List<UID> listUids(long bookId);
 
 	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
 	protected abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
@@ -62,6 +63,7 @@ public abstract class BooksDatabase {
 	protected abstract void deleteAllBookTags(long bookId);
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
+	protected abstract void saveBookUid(long bookId, UID uid);
 
 	protected FileInfo createFileInfo(long id, String name, FileInfo parent) {
 		return new FileInfo(name, parent, id);
