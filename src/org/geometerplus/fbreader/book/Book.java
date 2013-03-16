@@ -358,6 +358,10 @@ public class Book extends TitledEntity {
 		addTag(Tag.getTag(null, tagName));
 	}
 
+	public boolean matchesUid(UID uid) {
+		return myUids.contains(uid);
+	}
+
 	public boolean matches(String pattern) {
 		if (MiscUtil.matchesIgnoreCase(getTitle(), pattern)) {
 			return true;

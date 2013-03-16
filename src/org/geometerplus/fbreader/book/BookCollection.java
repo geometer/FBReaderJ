@@ -146,6 +146,16 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	public Book getBookByUid(UID uid) {
+		for (Book book : myBooksById.values()) {
+			if (book.matchesUid(uid)) {
+				return book;
+			}
+		}
+		final Long bookId = myDatabase.bookIdByUid(uid);
+		return bookId != null ? getBookById(bookId) : null;
+	}
+
 	private void addBook(Book book, boolean force) {
 		if (book == null || book.getId() == -1) {
 			return;
