@@ -56,6 +56,8 @@ public abstract class BooksDatabase {
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	protected abstract List<UID> listUids(long bookId);
 
+	protected abstract Long bookIdByUid(UID uid);
+
 	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
 	protected abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
 	protected abstract void deleteAllBookAuthors(long bookId);

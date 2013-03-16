@@ -361,7 +361,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected List<Author> listAuthors(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { "" + bookId });
+		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { String.valueOf(bookId) });
 		if (!cursor.moveToNext()) {
 			cursor.close();
 			return null;
@@ -440,7 +440,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private Tag getTagById(long id) {
 		Tag tag = myTagById.get(id);
 		if (tag == null) {
-			final Cursor cursor = myDatabase.rawQuery("SELECT parent_id,name FROM Tags WHERE tag_id = ?", new String[] { "" + id });
+			final Cursor cursor = myDatabase.rawQuery("SELECT parent_id,name FROM Tags WHERE tag_id = ?", new String[] { String.valueOf(id) });
 			if (cursor.moveToNext()) {
 				final Tag parent = cursor.isNull(0) ? null : getTagById(cursor.getLong(0));
 				tag = Tag.getTag(parent, cursor.getString(1));
@@ -453,7 +453,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected List<Tag> listTags(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery("SELECT Tags.tag_id FROM BookTag INNER JOIN Tags ON Tags.tag_id = BookTag.tag_id WHERE BookTag.book_id = ?", new String[] { "" + bookId });
+		final Cursor cursor = myDatabase.rawQuery("SELECT Tags.tag_id FROM BookTag INNER JOIN Tags ON Tags.tag_id = BookTag.tag_id WHERE BookTag.book_id = ?", new String[] { String.valueOf(bookId) });
 		if (!cursor.moveToNext()) {
 			cursor.close();
 			return null;
@@ -467,6 +467,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myInsertBookUidStatement;
+	@Override
 	protected void saveBookUid(long bookId, UID uid) {
 		if (myInsertBookUidStatement == null) {
 			myInsertBookUidStatement = myDatabase.compileStatement(
@@ -482,14 +483,26 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
+	@Override
 	protected List<UID> listUids(long bookId) {
 		final ArrayList<UID> list = new ArrayList<UID>();
-		final Cursor cursor = myDatabase.rawQuery("SELECT type,uid FROM BookUid WHERE book_id = ?", new String[] { "" + bookId });
-		if (cursor.moveToNext()) {
+		final Cursor cursor = myDatabase.rawQuery("SELECT type,uid FROM BookUid WHERE book_id = ?", new String[] { String.valueOf(bookId) });
+		while (cursor.moveToNext()) {
 			list.add(new UID(cursor.getString(0), cursor.getString(1)));
 		}
 		cursor.close();
 		return list;
+	}
+
+	@Override
+	protected Long bookIdByUid(UID uid) {
+		Long bookId = null;
+		final Cursor cursor = myDatabase.rawQuery("SELECT book_id FROM BookUid WHERE type = ? AND uid = ?", new String[] { uid.Type, uid.Id });
+		if (cursor.moveToNext()) {
+			bookId = cursor.getLong(0);
+		}
+		cursor.close();
+		return bookId;
 	}
 
 	private SQLiteStatement myGetSeriesIdStatement;
@@ -535,7 +548,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected SeriesInfo getSeriesInfo(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { "" + bookId });
+		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { String.valueOf(bookId) });
 		SeriesInfo info = null;
 		if (cursor.moveToNext()) {
 			info = SeriesInfo.createSeriesInfo(cursor.getString(0), cursor.getString(1));
@@ -991,7 +1004,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected Collection<String> loadVisitedHyperlinks(long bookId) {
 		final TreeSet<String> links = new TreeSet<String>();
-		final Cursor cursor = myDatabase.rawQuery("SELECT hyperlink_id FROM VisitedHyperlinks WHERE book_id = ?", new String[] { "" + bookId });
+		final Cursor cursor = myDatabase.rawQuery("SELECT hyperlink_id FROM VisitedHyperlinks WHERE book_id = ?", new String[] { String.valueOf(bookId) });
 		while (cursor.moveToNext()) {
 			links.add(cursor.getString(0));
 		}
