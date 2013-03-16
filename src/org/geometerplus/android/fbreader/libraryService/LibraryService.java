@@ -37,8 +37,8 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 public class LibraryService extends Service {
-	static String BOOK_EVENT_ACTION = "fbreader.library-service.book-event";
-	static String BUILD_EVENT_ACTION = "fbreader.library-service.build-event";
+	static final String BOOK_EVENT_ACTION = "fbreader.library-service.book-event";
+	static final String BUILD_EVENT_ACTION = "fbreader.library-service.build-event";
 
 	private static final class Observer extends FileObserver {
 		private static final int MASK =
