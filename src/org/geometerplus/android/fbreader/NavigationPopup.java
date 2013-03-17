@@ -119,7 +119,7 @@ final class NavigationPopup {
 				}
 				myFBReader.getViewWidget().reset();
 				myFBReader.getViewWidget().repaint();
-				setupNavigation();
+				update();
 			}
 		});
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
