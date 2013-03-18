@@ -18,3 +18,14 @@
  */
 
 #include "UID.h"
+
+UID::UID(const std::string &type, const std::string &id) : Type(type), Id(id) {
+}
+
+bool UID::operator == (const UID &uid) const {
+	return Type == uid.Type && Id == uid.Id;
+}
+
+bool UID::operator != (const UID &uid) const {
+	return !(*this == uid);
+}

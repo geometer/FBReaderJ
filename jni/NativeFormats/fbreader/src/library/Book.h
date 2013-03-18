@@ -88,6 +88,10 @@ public:
 	bool replaceAuthor(shared_ptr<Author> from, shared_ptr<Author> to);
 	void removeAllAuthors();
 
+	void addUid(shared_ptr<UID> uid);
+	void addUid(const std::string &type, const std::string &id);
+	void removeAllUids();
+
 public:
 	int bookId() const;
 	void setBookId(int bookId);
