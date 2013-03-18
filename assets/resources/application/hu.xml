@@ -275,6 +275,7 @@
 		</node>
 		<node name="appearance" value="Megjelenés">
 			<node name="summary" value="Elforgatás, állapotsor"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Kijelző iránya">
 				<node name="system" value="Rendszerbeállítás"/>
 				<node name="sensor" value="A készülék irányától függ"/>

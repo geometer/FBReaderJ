@@ -42,6 +42,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -269,7 +270,7 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.book_authors, "authors", buffer, authors.size());
 
 		final SeriesInfo series = book.getSeriesInfo();
-		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Title);
+		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Series.getTitle());
 		String seriesIndexString = null;
 		if (series != null && series.Index != null) {
 			seriesIndexString = series.Index.toString();
@@ -290,9 +291,9 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.book_tags, "tags", buffer, tagNames.size());
 		String language = book.getLanguage();
 		if (!ZLLanguageUtil.languageCodes().contains(language)) {
-			language = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
+			language = Language.OTHER_CODE;
 		}
-		setupInfoPair(R.id.book_language, "language", ZLLanguageUtil.languageName(language));
+		setupInfoPair(R.id.book_language, "language", new Language(language).Name);
 	}
 
 	private void setupAnnotation(Book book) {

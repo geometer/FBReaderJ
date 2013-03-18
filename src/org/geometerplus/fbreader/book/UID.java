@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,28 +19,29 @@
 
 package org.geometerplus.fbreader.book;
 
-public abstract class TitleUtil {
-	public static String firstTitleLetter(Book book) {
-		if (book == null) {
-			return null;
-		}
-		return firstLetter(book.getTitle());
+public class UID {
+	public final String Type;
+	public final String Id;
+
+	public UID(String type, String id) {
+		Type = type;
+		Id = id;
 	}
 
-	public static String firstLetter(String title) {
-		if (title == null) {
-			return null;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
 		}
-		title = title.trim();
-		if ("".equals(title)) {
-			return null;
+		if (!(o instanceof UID)) {
+			return false;
 		}
-		for (int i = 0; i < title.length(); ++i) {
-			char letter = title.charAt(i);
-			if (Character.isLetterOrDigit(letter)) {
-				return String.valueOf(Character.toUpperCase(letter));
-			}
-		}
-		return String.valueOf(Character.toUpperCase(title.charAt(0)));
+		final UID u = (UID)o;
+		return Type.equals(u.Type) && Id.equals(u.Id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Type.hashCode() + Id.hashCode();
 	}
 }

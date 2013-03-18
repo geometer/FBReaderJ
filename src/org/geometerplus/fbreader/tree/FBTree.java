@@ -167,7 +167,8 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		if (key1 == null) {
 			return 1;
 		}
-		return compareStringsIgnoreCase(key0, key1);
+		final int diff = compareStringsIgnoreCase(key0, key1);
+		return diff != 0 ? diff : getName().compareTo(tree.getName());
 	}
 
 	public abstract String getSummary();

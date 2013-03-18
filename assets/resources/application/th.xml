@@ -275,6 +275,7 @@
 		</node>
 		<node name="appearance" value="ลักษณะการแสดงผล">
 			<node name="summary" value="การหมุนหน้าจอ, แถบสถานะ"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
 				<node name="system" value="System" toBeTranslated="true"/>
 				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>

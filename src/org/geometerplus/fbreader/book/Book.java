@@ -23,10 +23,6 @@ import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.*;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.*;
@@ -43,18 +39,21 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.sort.TitledEntity;
 
-public class Book {
+public class Book extends TitledEntity {
+	public static final String FAVORITE_LABEL = "favorite";
+
 	public final ZLFile File;
 
 	private volatile long myId;
 
 	private volatile String myEncoding;
 	private volatile String myLanguage;
-	private volatile String myTitle;
 	private volatile List<Author> myAuthors;
 	private volatile List<Tag> myTags;
 	private volatile SeriesInfo mySeriesInfo;
+	private volatile List<UID> myUids;
 
 	private volatile boolean myIsSaved;
 
@@ -62,15 +61,16 @@ public class Book {
 	private WeakReference<ZLImage> myCover;
 
 	Book(long id, ZLFile file, String title, String encoding, String language) {
+		super(title);
 		myId = id;
 		File = file;
-		myTitle = title;
 		myEncoding = encoding;
 		myLanguage = language;
 		myIsSaved = true;
 	}
 
 	Book(ZLFile file) throws BookReadingException {
+		super(null);
 		myId = -1;
 		final FormatPlugin plugin = getPlugin(file);
 		File = plugin.realBookFile(file);
@@ -82,7 +82,7 @@ public class Book {
 		if (myId != book.myId) {
 			return;
 		}
-		myTitle = book.myTitle;
+		setTitle(book.getTitle());
 		myEncoding = book.myEncoding;
 		myLanguage = book.myLanguage;
 		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
@@ -133,7 +133,7 @@ public class Book {
 	private void readMetaInfo(FormatPlugin plugin) throws BookReadingException {
 		myEncoding = null;
 		myLanguage = null;
-		myTitle = null;
+		setTitle(null);
 		myAuthors = null;
 		myTags = null;
 		mySeriesInfo = null;
@@ -161,7 +161,7 @@ public class Book {
 		}
 
 
-		if (myTitle == null || myTitle.length() == 0) {
+		if (isTitleEmpty()) {
 			final String fileName = File.getShortName();
 			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL ? -1 : fileName.lastIndexOf('.'));
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
@@ -178,6 +178,7 @@ public class Book {
 		myAuthors = database.listAuthors(myId);
 		myTags = database.listTags(myId);
 		mySeriesInfo = database.getSeriesInfo(myId);
+		myUids = database.listUids(myId);
 		myIsSaved = true;
 	}
 
@@ -253,13 +254,9 @@ public class Book {
 		return myId;
 	}
 
-	public String getTitle() {
-		return myTitle;
-	}
-
 	public void setTitle(String title) {
-		if (!MiscUtil.equals(myTitle, title)) {
-			myTitle = title;
+		if (!getTitle().equals(title)) {
+			super.setTitle(title);
 			myIsSaved = false;
 		}
 	}
@@ -285,7 +282,7 @@ public class Book {
 		} else if (name == null) {
 			mySeriesInfo = null;
 			myIsSaved = false;
-		} else if (!name.equals(mySeriesInfo.Title) || mySeriesInfo.Index != index) {
+		} else if (!name.equals(mySeriesInfo.Series.getTitle()) || mySeriesInfo.Index != index) {
 			mySeriesInfo = new SeriesInfo(name, index);
 			myIsSaved = false;
 		}
@@ -298,6 +295,7 @@ public class Book {
 	public void setLanguage(String language) {
 		if (!MiscUtil.equals(myLanguage, language)) {
 			myLanguage = language;
+			resetSortKey();
 			myIsSaved = false;
 		}
 	}
@@ -360,11 +358,15 @@ public class Book {
 		addTag(Tag.getTag(null, tagName));
 	}
 
+	public boolean matchesUid(UID uid) {
+		return myUids.contains(uid);
+	}
+
 	public boolean matches(String pattern) {
-		if (myTitle != null && MiscUtil.matchesIgnoreCase(myTitle, pattern)) {
+		if (MiscUtil.matchesIgnoreCase(getTitle(), pattern)) {
 			return true;
 		}
-		if (mySeriesInfo != null && MiscUtil.matchesIgnoreCase(mySeriesInfo.Title, pattern)) {
+		if (mySeriesInfo != null && MiscUtil.matchesIgnoreCase(mySeriesInfo.Series.getTitle(), pattern)) {
 			return true;
 		}
 		if (myAuthors != null) {
@@ -396,9 +398,9 @@ public class Book {
 			public void run() {
 				if (myId >= 0) {
 					final FileInfoSet fileInfos = new FileInfoSet(database, File);
-					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
+					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, getTitle());
 				} else {
-					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
+					myId = database.insertBookInfo(File, myEncoding, myLanguage, getTitle());
 					if (myId != -1 && myVisitedHyperlinks != null) {
 						for (String linkId : myVisitedHyperlinks) {
 							database.addVisitedHyperlink(myId, linkId);
@@ -444,41 +446,6 @@ public class Book {
 			myVisitedHyperlinks.add(linkId);
 			if (myId != -1) {
 				database.addVisitedHyperlink(myId, linkId);
-			}
-		}
-	}
-
-	public String getContentHashCode() {
-		InputStream stream = null;
-
-		try {
-			final MessageDigest hash = MessageDigest.getInstance("SHA-256");
-			stream = File.getInputStream();
-
-			final byte[] buffer = new byte[2048];
-			while (true) {
-				final int nread = stream.read(buffer);
-				if (nread == -1) {
-					break;
-				}
-				hash.update(buffer, 0, nread);
-			}
-
-			final Formatter f = new Formatter();
-			for (byte b : hash.digest()) {
-				f.format("%02X", b & 0xFF);
-			}
-			return f.toString();
-		} catch (IOException e) {
-			return null;
-		} catch (NoSuchAlgorithmException e) {
-			return null;
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-				}
 			}
 		}
 	}

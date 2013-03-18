@@ -341,6 +341,7 @@ public final class FBReader extends Activity {
 		if (myFBReaderApp == null) {
 			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
 		}
+		getCollection().bindToService(this, null);
 		myBook = null;
 
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
@@ -577,6 +578,15 @@ public final class FBReader extends Activity {
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, root);
 	}
 
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		switchWakeLock(hasFocus &&
+			getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() <
+			myFBReaderApp.getBatteryLevel()
+		);
+	}
+
 	private void initPluginActions() {
 		synchronized (myPluginActions) {
 			int index = 0;
@@ -605,21 +615,21 @@ public final class FBReader extends Activity {
 		public void run() {
 			final TipsManager manager = TipsManager.Instance();
 			switch (manager.requiredAction()) {
-			case Initialize:
-				startActivity(new Intent(
+				case Initialize:
+					startActivity(new Intent(
 						TipsActivity.INITIALIZE_ACTION, null, FBReader.this, TipsActivity.class
-						));
-				break;
-			case Show:
-				startActivity(new Intent(
+					));
+					break;
+				case Show:
+					startActivity(new Intent(
 						TipsActivity.SHOW_TIP_ACTION, null, FBReader.this, TipsActivity.class
-						));
-				break;
-			case Download:
-				manager.startDownloading();
-				break;
-			case None:
-				break;
+					));
+					break;
+				case Download:
+					manager.startDownloading();
+					break;
+				case None:
+					break;
 			}
 		}
 	}
@@ -628,9 +638,6 @@ public final class FBReader extends Activity {
 	protected void onResume() {
 		super.onResume();
 
-		switchWakeLock(
-				getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() < myFBReaderApp.getBatteryLevel()
-				);
 		myStartTimer = true;
 		final int brightnessLevel =
 				getZLibrary().ScreenBrightnessLevelOption().getValue();
@@ -717,7 +724,6 @@ public final class FBReader extends Activity {
 			// do nothing, this exception means myBatteryInfoReceiver was not registered
 		}
 		myFBReaderApp.stopTimer();
-		switchWakeLock(false);
 		if (getZLibrary().DisableButtonLightsOption.getValue()) {
 			setButtonLight(true);
 		}
@@ -729,8 +735,13 @@ public final class FBReader extends Activity {
 	protected void onStop() {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
 		PopupPanel.removeAllWindows(myFBReaderApp, this);
-		getCollection().unbind();
 		super.onStop();
+	}
+
+	@Override
+	protected void onDestroy() {
+		getCollection().unbind();
+		super.onDestroy();
 	}
 
 	@Override
@@ -797,31 +808,30 @@ public final class FBReader extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
 		switch (requestCode) {
-		case REQUEST_PREFERENCES:
-		case REQUEST_BOOK_INFO:
-			if (resultCode != RESULT_DO_NOTHING) {
-				final Book book = BookInfoActivity.bookByIntent(data);
-				if (book != null) {
-					getCollection().bindToService(this, new Runnable() {
-						public void run() {
-							myFBReaderApp.Collection.saveBook(book, true);
-							onPreferencesUpdate(book);
-						}
-					});
+			case REQUEST_PREFERENCES:
+			case REQUEST_BOOK_INFO:
+				if (resultCode != RESULT_DO_NOTHING) {
+					final Book book = BookInfoActivity.bookByIntent(data);
+					if (book != null) {
+						getCollection().bindToService(this, new Runnable() {
+							public void run() {
+								myFBReaderApp.Collection.saveBook(book, true);
+								onPreferencesUpdate(book);
+							}
+						});
+					}
 				}
-			}
-			break;
-		case REQUEST_CANCEL_MENU:
-			if (resultCode != RESULT_CANCELED && resultCode != -1) {
-				myNeedToSkipPlugin = true;
-			} else {
-			}
-			getCollection().bindToService(this, new Runnable() {
-				public void run() {
-					myFBReaderApp.runCancelAction(resultCode - 1);
+				break;
+			case REQUEST_CANCEL_MENU:
+				if (resultCode != RESULT_CANCELED && resultCode != -1) {
+					myNeedToSkipPlugin = true;
 				}
-			});
-			break;
+				getCollection().bindToService(this, new Runnable() {
+					public void run() {
+						myFBReaderApp.runCancelAction(resultCode - 1);
+					}
+				});
+				break;
 		}
 	}
 
@@ -1008,8 +1018,9 @@ public final class FBReader extends Activity {
 			final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 			application.myMainWindow.setBatteryLevel(level);
 			switchWakeLock(
-					getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() < level
-					);
+				hasWindowFocus() &&
+				getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() < level
+			);
 		}
 	};
 

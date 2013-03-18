@@ -279,6 +279,7 @@
 		</node>
 		<node name="appearance" value="Aussehen">
 			<node name="summary" value="Ausrichtung, Statuszeile"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Bildschirm Ausrichtung">
 				<node name="system" value="System"/>
 				<node name="sensor" value="Sensor"/>

@@ -148,11 +148,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				bindService(i, servConn, Context.BIND_AUTO_CREATE);
 			}
 		}
-	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
 		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
 			public void run() {
 				setProgressBarIndeterminateVisibility(!myRootTree.Collection.status().IsCompleted);
@@ -183,12 +179,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
-	protected void onStop() {
-		((BookCollectionShadow)myRootTree.Collection).unbind();
-		super.onStop();
-	}
-
-	@Override
 	protected void onDestroy() {
 		myRootTree.Collection.removeListener(this);
 		for (String pack : myServConns.keySet()) {
@@ -197,6 +187,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				myServConns.remove(pack);
 			}
 		}
+		((BookCollectionShadow)myRootTree.Collection).unbind();
 		super.onDestroy();
 	}
 
@@ -297,7 +288,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (book.File.getPhysicalFile() != null) {
 			menu.add(0, SHARE_BOOK_ITEM_ID, 0, resource.getResource("shareBook").getValue());
 		}
-		if (myRootTree.Collection.isFavorite(book)) {
+		if (myRootTree.Collection.labels(book).contains(Book.FAVORITE_LABEL)) {
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
@@ -329,10 +320,10 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				FBUtil.shareBook(this, book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
-				myRootTree.Collection.setBookFavorite(book, true);
+				myRootTree.Collection.setLabel(book, Book.FAVORITE_LABEL);
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
-				myRootTree.Collection.setBookFavorite(book, false);
+				myRootTree.Collection.removeLabel(book, Book.FAVORITE_LABEL);
 				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
 					getListAdapter().replaceAll(getCurrentTree().subTrees());
 					getListView().invalidateViews();

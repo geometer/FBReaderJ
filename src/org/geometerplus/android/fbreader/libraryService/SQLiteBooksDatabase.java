@@ -77,7 +77,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 20;
+		final int currentVersion = 21;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -125,6 +125,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables18();
 			case 19:
 				updateTables19();
+			case 20:
+				updateTables20();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -359,7 +361,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected List<Author> listAuthors(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { "" + bookId });
+		final Cursor cursor = myDatabase.rawQuery("SELECT Authors.name,Authors.sort_key FROM BookAuthor INNER JOIN Authors ON Authors.author_id = BookAuthor.author_id WHERE BookAuthor.book_id = ?", new String[] { String.valueOf(bookId) });
 		if (!cursor.moveToNext()) {
 			cursor.close();
 			return null;
@@ -438,7 +440,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private Tag getTagById(long id) {
 		Tag tag = myTagById.get(id);
 		if (tag == null) {
-			final Cursor cursor = myDatabase.rawQuery("SELECT parent_id,name FROM Tags WHERE tag_id = ?", new String[] { "" + id });
+			final Cursor cursor = myDatabase.rawQuery("SELECT parent_id,name FROM Tags WHERE tag_id = ?", new String[] { String.valueOf(id) });
 			if (cursor.moveToNext()) {
 				final Tag parent = cursor.isNull(0) ? null : getTagById(cursor.getLong(0));
 				tag = Tag.getTag(parent, cursor.getString(1));
@@ -451,17 +453,56 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected List<Tag> listTags(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery("SELECT Tags.tag_id FROM BookTag INNER JOIN Tags ON Tags.tag_id = BookTag.tag_id WHERE BookTag.book_id = ?", new String[] { "" + bookId });
+		final Cursor cursor = myDatabase.rawQuery("SELECT Tags.tag_id FROM BookTag INNER JOIN Tags ON Tags.tag_id = BookTag.tag_id WHERE BookTag.book_id = ?", new String[] { String.valueOf(bookId) });
 		if (!cursor.moveToNext()) {
 			cursor.close();
 			return null;
 		}
-		ArrayList<Tag> list = new ArrayList<Tag>();
+		final ArrayList<Tag> list = new ArrayList<Tag>();
 		do {
 			list.add(getTagById(cursor.getLong(0)));
 		} while (cursor.moveToNext());
 		cursor.close();
 		return list;
+	}
+
+	private SQLiteStatement myInsertBookUidStatement;
+	@Override
+	protected void saveBookUid(long bookId, UID uid) {
+		if (myInsertBookUidStatement == null) {
+			myInsertBookUidStatement = myDatabase.compileStatement(
+				"INSERT OR REPLACE INTO BookUid (book_id,type,uid) VALUES (?,?,?)"
+			);
+		}
+
+		synchronized (myInsertBookUidStatement) {
+			myInsertBookUidStatement.bindLong(1, bookId);
+			myInsertBookUidStatement.bindString(2, uid.Type);
+			myInsertBookUidStatement.bindString(2, uid.Id);
+			myInsertBookAuthorStatement.execute();
+		}
+	}
+
+	@Override
+	protected List<UID> listUids(long bookId) {
+		final ArrayList<UID> list = new ArrayList<UID>();
+		final Cursor cursor = myDatabase.rawQuery("SELECT type,uid FROM BookUid WHERE book_id = ?", new String[] { String.valueOf(bookId) });
+		while (cursor.moveToNext()) {
+			list.add(new UID(cursor.getString(0), cursor.getString(1)));
+		}
+		cursor.close();
+		return list;
+	}
+
+	@Override
+	protected Long bookIdByUid(UID uid) {
+		Long bookId = null;
+		final Cursor cursor = myDatabase.rawQuery("SELECT book_id FROM BookUid WHERE type = ? AND uid = ?", new String[] { uid.Type, uid.Id });
+		if (cursor.moveToNext()) {
+			bookId = cursor.getLong(0);
+		}
+		cursor.close();
+		return bookId;
 	}
 
 	private SQLiteStatement myGetSeriesIdStatement;
@@ -490,10 +531,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		} else {
 			long seriesId;
 			try {
-				myGetSeriesIdStatement.bindString(1, seriesInfo.Title);
+				myGetSeriesIdStatement.bindString(1, seriesInfo.Series.getTitle());
 				seriesId = myGetSeriesIdStatement.simpleQueryForLong();
 			} catch (SQLException e) {
-				myInsertSeriesStatement.bindString(1, seriesInfo.Title);
+				myInsertSeriesStatement.bindString(1, seriesInfo.Series.getTitle());
 				seriesId = myInsertSeriesStatement.executeInsert();
 			}
 			myInsertBookSeriesStatement.bindLong(1, bookId);
@@ -507,7 +548,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected SeriesInfo getSeriesInfo(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { "" + bookId });
+		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { String.valueOf(bookId) });
 		SeriesInfo info = null;
 		if (cursor.moveToNext()) {
 			info = SeriesInfo.createSeriesInfo(cursor.getString(0), cursor.getString(1));
@@ -669,6 +710,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		});
 	}
 
+	@Override
 	protected List<Long> loadRecentBookIds() {
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM RecentBooks ORDER BY book_index", null
@@ -681,50 +723,73 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	protected boolean hasFavorites() {
+	@Override
+	protected List<String> labels() {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id FROM Favorites LIMIT 1", null
+			"SELECT Labels.name FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
+			" GROUP BY Labels.name",
+			null
 		);
-		boolean result = cursor.moveToNext();
+		final LinkedList<String> names = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			names.add(cursor.getString(0));
+		}
 		cursor.close();
-		return result;
+		return names;
 	}
 
-	protected boolean isFavorite(long bookId) {
+	@Override
+	protected List<String> labels(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id FROM Favorites WHERE book_id = ? LIMIT 1",
+			"SELECT Labels.name FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
+			" WHERE BookLabel.book_id=?",
 			new String[] { String.valueOf(bookId) }
 		);
-		boolean result = cursor.moveToNext();
+		final LinkedList<String> names = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			names.add(cursor.getString(0));
+		}
 		cursor.close();
-		return result;
+		return names;
 	}
 
-	private SQLiteStatement myAddToFavoritesStatement;
-	protected void addToFavorites(long bookId) {
-		if (myAddToFavoritesStatement == null) {
-			myAddToFavoritesStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO Favorites(book_id) VALUES (?)"
+	private SQLiteStatement mySetLabelStatement;
+	@Override
+	protected void setLabel(long bookId, String label) {
+		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES (?)", new Object[] { label });
+		if (mySetLabelStatement == null) {
+			mySetLabelStatement = myDatabase.compileStatement(
+				"INSERT OR IGNORE INTO BookLabel(label_id,book_id)" +
+				" SELECT label_id,? FROM Labels WHERE name=?"
 			);
 		}
-		myAddToFavoritesStatement.bindLong(1, bookId);
-		myAddToFavoritesStatement.execute();
+		mySetLabelStatement.bindLong(1, bookId);
+		mySetLabelStatement.bindString(2, label);
+		mySetLabelStatement.execute();
 	}
 
-	private SQLiteStatement myRemoveFromFavoritesStatement;
-	protected void removeFromFavorites(long bookId) {
-		if (myRemoveFromFavoritesStatement == null) {
-			myRemoveFromFavoritesStatement = myDatabase.compileStatement(
-				"DELETE FROM Favorites WHERE book_id = ?"
+	private SQLiteStatement myRemoveLabelStatement;
+	@Override
+	protected void removeLabel(long bookId, String label) {
+		if (myRemoveLabelStatement == null) {
+			myRemoveLabelStatement = myDatabase.compileStatement(
+				"DELETE FROM BookLabel WHERE book_id=? AND label_id IN" +
+				" (SELECT label_id FROM Labels WHERE name=?)"
 			);
 		}
-		myRemoveFromFavoritesStatement.bindLong(1, bookId);
-		myRemoveFromFavoritesStatement.execute();
+		myRemoveLabelStatement.bindLong(1, bookId);
+		myRemoveLabelStatement.bindString(2, label);
+		myRemoveLabelStatement.execute();
 	}
 
-	protected List<Long> loadFavoriteIds() {
+	@Override
+	protected List<Long> loadBooksForLabelIds(String label) {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id FROM Favorites", null
+			"SELECT BookLabel.book_id FROM BookLabel" +
+			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
+			" WHERE Labels.name=?", new String[] { label }
 		);
 		final LinkedList<Long> ids = new LinkedList<Long>();
 		while (cursor.moveToNext()) {
@@ -735,10 +800,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Bookmark> loadBookmarks(long bookId, boolean visible) {
+	protected List<Bookmark> loadInvisibleBookmarks(long bookId) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE Bookmarks.book_id = ? AND Bookmarks.visible = ?", new String[] { "" + bookId, visible ? "1" : "0" }
+			"SELECT bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,bm.model_id,bm.paragraph,bm.word,bm.char FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id WHERE bm.book_id = ? AND bm.visible = 0", new String[] { String.valueOf(bookId) }
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
@@ -754,7 +819,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				(int)cursor.getLong(9),
 				(int)cursor.getLong(10),
 				(int)cursor.getLong(11),
-				visible
+				false
 			));
 		}
 		cursor.close();
@@ -762,11 +827,49 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Bookmark> loadAllVisibleBookmarks() {
+	protected List<Bookmark> loadVisibleBookmarks(long fromId, int limitCount) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
-		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id = -1");
-		Cursor cursor = myDatabase.rawQuery(
-			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE Bookmarks.visible = 1", null
+		Cursor cursor = myDatabase.rawQuery("SELECT" +
+			" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text," +
+			"bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter," +
+			"bm.model_id,bm.paragraph,bm.word,bm.char" +
+			" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id" +
+			" WHERE bm.bookmark_id >= ? AND bm.visible = 1 ORDER BY bm.bookmark_id LIMIT ?",
+			new String[] { String.valueOf(fromId), String.valueOf(limitCount) }
+		);
+		while (cursor.moveToNext()) {
+			list.add(createBookmark(
+				cursor.getLong(0),
+				cursor.getLong(1),
+				cursor.getString(2),
+				cursor.getString(3),
+				SQLiteUtil.getDate(cursor, 4),
+				SQLiteUtil.getDate(cursor, 5),
+				SQLiteUtil.getDate(cursor, 6),
+				(int)cursor.getLong(7),
+				cursor.getString(8),
+				(int)cursor.getLong(9),
+				(int)cursor.getLong(10),
+				(int)cursor.getLong(11),
+				true
+			));
+		}
+		cursor.close();
+		return list;
+	}
+
+
+	@Override
+	protected List<Bookmark> loadVisibleBookmarks(long bookId, long fromId, int limitCount) {
+		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
+		Cursor cursor = myDatabase.rawQuery("SELECT" +
+			" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text," +
+			"bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter," +
+			"bm.model_id,bm.paragraph,bm.word,bm.char" +
+			" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id" +
+			" WHERE b.book_id = ? AND bm.bookmark_id >= ? AND bm.visible = 1" +
+			" ORDER BY bm.bookmark_id LIMIT ?",
+			new String[] { String.valueOf(bookId), String.valueOf(fromId), String.valueOf(limitCount) }
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
@@ -901,7 +1004,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected Collection<String> loadVisitedHyperlinks(long bookId) {
 		final TreeSet<String> links = new TreeSet<String>();
-		final Cursor cursor = myDatabase.rawQuery("SELECT hyperlink_id FROM VisitedHyperlinks WHERE book_id = ?", new String[] { "" + bookId });
+		final Cursor cursor = myDatabase.rawQuery("SELECT hyperlink_id FROM VisitedHyperlinks WHERE book_id = ?", new String[] { String.valueOf(bookId) });
 		while (cursor.moveToNext()) {
 			links.add(cursor.getString(0));
 		}
@@ -1256,5 +1359,28 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables19() {
 		myDatabase.execSQL("DROP TABLE BookList");
+	}
+
+	private void updateTables20() {
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookUid(" +
+				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"type TEXT NOT NULL," +
+				"uid TEXT NOT NULL)");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Labels(" +
+				"label_id INTEGER PRIMARY KEY," +
+				"name TEXT NOT NULL UNIQUE)");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookLabel(" +
+				"label_id INTEGER NOT NULL REFERENCES Labels(label_id)," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"CONSTRAINT BookLabel_Unique UNIQUE (label_id,book_id))");
+		final SQLiteStatement insert = myDatabase.compileStatement(
+			"INSERT INTO Labels (name) VALUES ('favorite')"
+		);
+		final long id = insert.executeInsert();
+		myDatabase.execSQL("INSERT INTO BookLabel (label_id,book_id) SELECT " + id + ",book_id FROM Favorites");
+		myDatabase.execSQL("DROP TABLE Favorites");
 	}
 }

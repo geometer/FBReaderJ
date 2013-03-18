@@ -37,8 +37,8 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 public class LibraryService extends Service {
-	static String BOOK_EVENT_ACTION = "fbreader.library-service.book-event";
-	static String BUILD_EVENT_ACTION = "fbreader.library-service.build-event";
+	static final String BOOK_EVENT_ACTION = "fbreader.library-service.book-event";
+	static final String BUILD_EVENT_ACTION = "fbreader.library-service.build-event";
 
 	private static final class Observer extends FileObserver {
 		private static final int MASK =
@@ -176,8 +176,8 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.recentBooks());
 		}
 
-		public List<String> favorites() {
-			return SerializerUtil.serializeBookList(myCollection.favorites());
+		public List<String> booksForLabel(String label) {
+			return SerializerUtil.serializeBookList(myCollection.booksForLabel(label));
 		}
 
 		public String getRecentBook(int index) {
@@ -190,6 +190,10 @@ public class LibraryService extends Service {
 
 		public String getBookById(long id) {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
+		}
+
+		public String getBookByUid(String type, String id) {
+			return SerializerUtil.serialize(myCollection.getBookByUid(new UID(type, id)));
 		}
 
 		public List<String> authors() {
@@ -220,6 +224,10 @@ public class LibraryService extends Service {
 
 		public List<String> titles() {
 			return myCollection.titles();
+		}
+
+		public List<String> firstTitleLetters() {
+			return myCollection.firstTitleLetters();
 		}
 
 		public List<String> titlesForAuthor(String author, int limit) {
@@ -258,16 +266,20 @@ public class LibraryService extends Service {
 			myCollection.removeBookFromRecentList(SerializerUtil.deserializeBook(book));
 		}
 
-		public boolean hasFavorites() {
-			return myCollection.hasFavorites();
+		public List<String> labels() {
+			return myCollection.labels();
 		}
 
-		public boolean isFavorite(String book) {
-			return myCollection.isFavorite(SerializerUtil.deserializeBook(book));
+		public List<String> labelsForBook(String book) {
+			return myCollection.labels(SerializerUtil.deserializeBook(book));
 		}
 
-		public void setBookFavorite(String book, boolean favorite) {
-			myCollection.setBookFavorite(SerializerUtil.deserializeBook(book), favorite);
+		public void setLabel(String book, String label) {
+			myCollection.setLabel(SerializerUtil.deserializeBook(book), label);
+		}
+
+		public void removeLabel(String book, String label) {
+			myCollection.removeLabel(SerializerUtil.deserializeBook(book), label);
 		}
 
 		public TextPosition getStoredPosition(long bookId) {
@@ -304,8 +316,14 @@ public class LibraryService extends Service {
 			);
 		}
 
-		public List<String> allBookmarks() {
-			return SerializerUtil.serializeBookmarkList(myCollection.allBookmarks());
+		public List<String> bookmarks(long fromId, int limitCount) {
+			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(fromId, limitCount));
+		}
+
+		public List<String> bookmarksForBook(String book, long fromId, int limitCount) {
+			return SerializerUtil.serializeBookmarkList(myCollection.bookmarksForBook(
+				SerializerUtil.deserializeBook(book), fromId, limitCount
+			));
 		}
 
 		public String saveBookmark(String serialized) {

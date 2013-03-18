@@ -19,8 +19,38 @@
 
 package org.geometerplus.zlibrary.core.resources;
 
+import java.util.*;
+
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
 abstract public class ZLResource {
 	public final String Name;
+
+	public static final ZLStringOption LanguageOption =
+		new ZLStringOption("LookNFeel", "Language", Language.SYSTEM_CODE);
+
+	private static final List<Language> ourLanguages = new LinkedList<Language>();
+	public static List<Language> languages() {
+		if (ourLanguages.isEmpty()) {
+			final ZLResource resource = ZLResource.resource("language-self");
+			final ZLFile dir = ZLResourceFile.createResourceFile("resources/application");
+			for (ZLFile file : dir.children()) {
+				final String name = file.getShortName();
+				if (name.endsWith(".xml")) {
+					final String code = name.substring(0, name.length() - 4);
+					ourLanguages.add(new Language(code, resource.getResource(code).getValue()));
+				}
+			}
+			Collections.sort(ourLanguages);
+		}
+		final List<Language> allLanguages = new ArrayList<Language>(ourLanguages.size() + 1);
+		allLanguages.add(new Language(Language.SYSTEM_CODE));
+		allLanguages.addAll(ourLanguages);
+		return allLanguages;
+	}
 
 	public static ZLResource resource(String key) {
 		ZLTreeResource.buildTree();

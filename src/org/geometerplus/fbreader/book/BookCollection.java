@@ -146,6 +146,16 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	public Book getBookByUid(UID uid) {
+		for (Book book : myBooksById.values()) {
+			if (book.matchesUid(uid)) {
+				return book;
+			}
+		}
+		final Long bookId = myDatabase.bookIdByUid(uid);
+		return bookId != null ? getBookById(bookId) : null;
+	}
+
 	private void addBook(Book book, boolean force) {
 		if (book == null || book.getId() == -1) {
 			return;
@@ -228,7 +238,7 @@ public class BookCollection extends AbstractBookCollection {
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
 			final SeriesInfo info = b.getSeriesInfo();
-			if (info != null && series.equals(info.Title)) {
+			if (info != null && series.equals(info.Series.getTitle())) {
 				filtered.add(b);
 			}
 		}
@@ -241,7 +251,7 @@ public class BookCollection extends AbstractBookCollection {
 		for (Book b : books()) {
 			final List<Author> bookAuthors = b.authors();
 			final SeriesInfo info = b.getSeriesInfo();
-			if (info != null && series.equals(info.Title)
+			if (info != null && series.equals(info.Series.getTitle())
 				&& (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author))) {
 				filtered.add(b);
 			}
@@ -250,9 +260,12 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Book> booksForTitlePrefix(String prefix) {
+		if (prefix == null) {
+			return Collections.emptyList();
+		}
 		final LinkedList<Book> filtered = new LinkedList<Book>();
 		for (Book b : books()) {
-			if (prefix.equals(TitleUtil.firstTitleLetter(b))) {
+			if (b != null && prefix.equals(b.firstTitleLetter())) {
 				filtered.add(b);
 			}
 		}
@@ -292,8 +305,8 @@ public class BookCollection extends AbstractBookCollection {
 		return books(myDatabase.loadRecentBookIds());
 	}
 
-	public List<Book> favorites() {
-		return books(myDatabase.loadFavoriteIds());
+	public List<Book> booksForLabel(String label) {
+		return books(myDatabase.loadBooksForLabelIds(label));
 	}
 
 	private List<Book> books(List<Long> ids) {
@@ -358,7 +371,7 @@ public class BookCollection extends AbstractBookCollection {
 			for (Book book : myBooksByFile.values()) {
 				final SeriesInfo info = book.getSeriesInfo();
 				if (info != null) {
-					series.add(info.Title);
+					series.add(info.Series.getTitle());
 				}
 			}
 		}
@@ -372,6 +385,19 @@ public class BookCollection extends AbstractBookCollection {
 				titles.add(book.getTitle());
 			}
 			return titles;
+		}
+	}
+
+	public List<String> firstTitleLetters() {
+		synchronized (myBooksByFile) {
+			final TreeSet<String> letters = new TreeSet<String>();
+			for (Book book : myBooksByFile.values()) {
+				final String l = book.firstTitleLetter();
+				if (l != null) {
+					letters.add(l);
+				}
+			}
+			return new ArrayList<String>(letters);
 		}
 	}
 
@@ -402,7 +428,7 @@ public class BookCollection extends AbstractBookCollection {
 		synchronized (myBooksByFile) {
 			for (Book b : myBooksByFile.values()) {
 				final SeriesInfo info = b.getSeriesInfo();
-				if (info != null && series.equals(info.Title)) {
+				if (info != null && series.equals(info.Series.getTitle())) {
 					titles.add(b.getTitle());
 					if (--limit == 0) {
 						break;
@@ -423,7 +449,7 @@ public class BookCollection extends AbstractBookCollection {
 			for (Book b : myBooksByFile.values()) {
 				final List<Author> bookAuthors = b.authors();
 				final SeriesInfo info = b.getSeriesInfo();
-				if (info != null && series.equals(info.Title)
+				if (info != null && series.equals(info.Series.getTitle())
 					&& (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author))) {
 					titles.add(b.getTitle());
 					if (--limit == 0) {
@@ -461,7 +487,7 @@ public class BookCollection extends AbstractBookCollection {
 		final ArrayList<String> titles = new ArrayList<String>(limit);
 		synchronized (myBooksByFile) {
 			for (Book b : myBooksByFile.values()) {
-				if (prefix.equals(TitleUtil.firstTitleLetter(b))) {
+				if (prefix.equals(b.firstTitleLetter())) {
 					titles.add(b.getTitle());
 					if (--limit == 0) {
 						break;
@@ -505,23 +531,24 @@ public class BookCollection extends AbstractBookCollection {
 		myDatabase.saveRecentBookIds(ids);
 	}
 
-	public boolean hasFavorites() {
-		return myDatabase.hasFavorites();
+	public List<String> labels() {
+		return myDatabase.labels();
 	}
 
-	public boolean isFavorite(Book book) {
+	public List<String> labels(Book book) {
 		if (book == null) {
-			return false;
+			return Collections.<String>emptyList();
 		}
-		return myDatabase.isFavorite(book.getId());
+		return myDatabase.labels(book.getId());
 	}
 
-	public void setBookFavorite(Book book, boolean favorite) {
-		if (favorite) {
-			myDatabase.addToFavorites(book.getId());
-		} else {
-			myDatabase.removeFromFavorites(book.getId());
-		}
+	public void setLabel(Book book, String label) {
+		myDatabase.setLabel(book.getId(), label);
+		fireBookEvent(BookEvent.Updated, book);
+	}
+
+	public void removeLabel(Book book, String label) {
+		myDatabase.removeLabel(book.getId(), label);
 		fireBookEvent(BookEvent.Updated, book);
 	}
 
@@ -774,12 +801,16 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<Bookmark> allBookmarks() {
-		return myDatabase.loadAllVisibleBookmarks();
+	public List<Bookmark> bookmarks(long fromId, int limitCount) {
+		return myDatabase.loadVisibleBookmarks(fromId, limitCount);
+	}
+
+	public List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount) {
+		return myDatabase.loadVisibleBookmarks(book.getId(), fromId, limitCount);
 	}
 
 	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = myDatabase.loadBookmarks(book.getId(), false);
+		final List<Bookmark> list = myDatabase.loadInvisibleBookmarks(book.getId());
 		Collections.sort(list, new Bookmark.ByTimeComparator());
 		return list;
 	}

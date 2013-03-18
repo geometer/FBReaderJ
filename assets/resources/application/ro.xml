@@ -275,6 +275,7 @@
 		</node>
 		<node name="appearance" value="Aspect">
 			<node name="summary" value="Rotire, bara de stare"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Orientarea ecranului">
 				<node name="system" value="Sistem"/>
 				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>

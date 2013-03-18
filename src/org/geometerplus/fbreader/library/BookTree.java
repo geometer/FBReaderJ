@@ -73,6 +73,11 @@ public class BookTree extends LibraryTree {
 	}
 
 	@Override
+	protected String getSortKey() {
+		return Book.getSortKey();
+	}
+
+	@Override
 	public int compareTo(FBTree tree) {
 		final int cmp = super.compareTo(tree);
 		if (cmp == 0 && tree instanceof BookTree) {

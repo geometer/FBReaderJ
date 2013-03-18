@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
@@ -141,7 +141,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	}
 
 	private static int getLanguageOrder(String language) {
-		if (ZLLanguageUtil.MULTI_LANGUAGE_CODE.equals(language)) {
+		if (Language.MULTI_CODE.equals(language)) {
 			return 1;
 		}
 		if (language.equals(Locale.getDefault().getLanguage())) {

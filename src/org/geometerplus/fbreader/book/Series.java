@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,29 +19,31 @@
 
 package org.geometerplus.fbreader.book;
 
-import java.math.BigDecimal;
+import org.geometerplus.fbreader.sort.TitledEntity;
 
-public final class SeriesInfo {
-	public static SeriesInfo createSeriesInfo(String title, String index) {
-		if (title == null) {
-			return null;
-		}
-		return new SeriesInfo(title, createIndex(index));
+public class Series extends TitledEntity {
+	public Series(String title) {
+		super(title);
 	}
 
-	public static BigDecimal createIndex(String index) {
-		try {
-			return index != null ? new BigDecimal(index).stripTrailingZeros() : null;
-		} catch (NumberFormatException e) {
-			return null;
-		}
+	public String getLanguage() {
+		// TODO: return real language
+		return "en";
 	}
 
-	public final Series Series;
-	public final BigDecimal Index;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Series)) {
+			return false;
+		}
+		return getTitle().equals(((Series)o).getTitle());
+	}
 
-	SeriesInfo(String title, BigDecimal index) {
-		Series = new Series(title);
-		Index = index;
+	@Override
+	public int hashCode() {
+		return getTitle().hashCode();
 	}
 }

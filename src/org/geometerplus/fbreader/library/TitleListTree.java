@@ -24,7 +24,7 @@ import java.util.*;
 import org.geometerplus.fbreader.book.*;
 
 public class TitleListTree extends FirstLevelTree {
-	private boolean myDoGroupByFirstLetter;
+	private boolean myGroupByFirstLetter;
 
 	TitleListTree(RootTree root) {
 		super(root, ROOT_BY_TITLE);
@@ -39,22 +39,17 @@ public class TitleListTree extends FirstLevelTree {
 	public void waitForOpening() {
 		clear();
 
-		myDoGroupByFirstLetter = false;
-		final TreeSet<String> letterSet = new TreeSet<String>();
-		final List<String> titles = Collection.titles();
-		if (titles.size() > 9) {
-			for (String t : titles) {
-				final String letter = TitleUtil.firstLetter(t);
-				if (letter != null) {
-					letterSet.add(letter);
-				}
-			}
-			myDoGroupByFirstLetter = titles.size() > letterSet.size() * 5 / 4;
+		myGroupByFirstLetter = false;
+
+		List<String> letters = null;
+		if (Collection.size() > 9) {
+			letters = Collection.firstTitleLetters();
+			myGroupByFirstLetter = Collection.size() > letters.size() * 5 / 4;
 		}
 
-		if (myDoGroupByFirstLetter) {
-			for (String letter : letterSet) {
-				createTitleSubTree(letter);
+		if (myGroupByFirstLetter) {
+			for (String l : letters) {
+				createTitleSubTree(l);
 			}
 		} else {
 			for (Book b : Collection.books()) {
@@ -65,16 +60,18 @@ public class TitleListTree extends FirstLevelTree {
 
 	@Override
 	public boolean onBookEvent(BookEvent event, Book book) {
+		if (book == null) {
+			return false;
+		}
 		switch (event) {
 			case Added:
-				if (myDoGroupByFirstLetter) {
-					final String letter = TitleUtil.firstTitleLetter(book);
-					return letter != null && createTitleSubTree(letter);
+				if (myGroupByFirstLetter) {
+					return createTitleSubTree(book.firstTitleLetter());
 				} else {
 					return createBookWithAuthorsSubTree(book);
 				}
 			case Removed:
-				if (myDoGroupByFirstLetter) {
+				if (myGroupByFirstLetter) {
 					// TODO: remove old tree (?)
 					return false;
 				} else {
@@ -82,25 +79,27 @@ public class TitleListTree extends FirstLevelTree {
 				}
 			default:
 			case Updated:
-				if (myDoGroupByFirstLetter) {
+				if (myGroupByFirstLetter) {
 					// TODO: remove old tree (?)
-					final String letter = TitleUtil.firstTitleLetter(book);
-					return letter != null && createTitleSubTree(letter);
+					return createTitleSubTree(book.firstTitleLetter());
 				} else {
 					boolean changed = removeBook(book);
-					changed |= containsBook(book) && createBookWithAuthorsSubTree(book);
+					changed |= createBookWithAuthorsSubTree(book);
 					return changed;
 				}
 		}
 	}
 
-	boolean createTitleSubTree(String title) {
-		final TitleTree temp = new TitleTree(Collection, title);
+	private boolean createTitleSubTree(String prefix) {
+		if (prefix == null) {
+			return false;
+		}
+		final TitleTree temp = new TitleTree(Collection, prefix);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {
-			new TitleTree(this, title, - position - 1);
+			new TitleTree(this, prefix, - position - 1);
 			return true;
 		}
 	}

@@ -53,7 +53,7 @@ public final class TitleTree extends LibraryTree {
 
 	@Override
 	public boolean containsBook(Book book) {
-		return Prefix.equals(TitleUtil.firstTitleLetter(book));
+		return book != null && Prefix.equals(book.firstTitleLetter());
 	}
 
 	@Override

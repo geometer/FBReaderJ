@@ -51,6 +51,7 @@ public interface IBookCollection {
 
 	int size();
 	List<Book> books();
+	List<Book> booksForLabel(String label);
 	List<Book> booksForAuthor(Author author);
 	List<Book> booksForTag(Tag tag);
 	List<Book> booksForSeries(String series);
@@ -59,10 +60,10 @@ public interface IBookCollection {
 	boolean hasBooksForPattern(String pattern);
 	List<Book> booksForPattern(String pattern);
 
-	List<Book> favorites();
-	boolean hasFavorites();
-	boolean isFavorite(Book book);
-	void setBookFavorite(Book book, boolean favorite);
+	List<String> labels();
+	List<String> labels(Book book);
+	void setLabel(Book book, String label);
+	void removeLabel(Book book, String label);
 
 	List<Book> recentBooks();
 	Book getRecentBook(int index);
@@ -71,12 +72,14 @@ public interface IBookCollection {
 
 	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
+	Book getBookByUid(UID uid);
 
 	List<Author> authors();
 	boolean hasSeries();
 	List<String> series();
 	List<Tag> tags();
 	List<String> titles();
+	List<String> firstTitleLetters();
 	List<String> titlesForAuthor(Author author, int limit);
 	List<String> titlesForSeries(String series, int limit);
 	List<String> titlesForSeriesAndAuthor(String series, Author author, int limit);
@@ -92,7 +95,8 @@ public interface IBookCollection {
 	boolean isHyperlinkVisited(Book book, String linkId);
 	void markHyperlinkAsVisited(Book book, String linkId);
 
-	List<Bookmark> allBookmarks();
+	List<Bookmark> bookmarks(long fromId, int limitCount);
+	List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount);
 	List<Bookmark> invisibleBookmarks(Book book);
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);

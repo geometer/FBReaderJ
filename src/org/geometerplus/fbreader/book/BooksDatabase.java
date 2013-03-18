@@ -54,6 +54,9 @@ public abstract class BooksDatabase {
 	protected abstract List<Author> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
+	protected abstract List<UID> listUids(long bookId);
+
+	protected abstract Long bookIdByUid(UID uid);
 
 	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
 	protected abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);
@@ -62,6 +65,7 @@ public abstract class BooksDatabase {
 	protected abstract void deleteAllBookTags(long bookId);
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
+	protected abstract void saveBookUid(long bookId, UID uid);
 
 	protected FileInfo createFileInfo(long id, String name, FileInfo parent) {
 		return new FileInfo(name, parent, id);
@@ -76,18 +80,19 @@ public abstract class BooksDatabase {
 	protected abstract List<Long> loadRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
-	protected abstract List<Long> loadFavoriteIds();
-	protected abstract boolean hasFavorites();
-	protected abstract boolean isFavorite(long bookId);
-	protected abstract void addToFavorites(long bookId);
-	protected abstract void removeFromFavorites(long bookId);
+	protected abstract List<Long> loadBooksForLabelIds(String label);
+	protected abstract List<String> labels();
+	protected abstract List<String> labels(long bookId);
+	protected abstract void setLabel(long bookId, String label);
+	protected abstract void removeLabel(long bookId, String label);
 
 	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex, boolean isVisible) {
 		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex, isVisible);
 	}
 
-	protected abstract List<Bookmark> loadBookmarks(long bookId, boolean isVisible);
-	protected abstract List<Bookmark> loadAllVisibleBookmarks();
+	protected abstract List<Bookmark> loadInvisibleBookmarks(long bookId);
+	protected abstract List<Bookmark> loadVisibleBookmarks(long fromId, int limitCount);
+	protected abstract List<Bookmark> loadVisibleBookmarks(long bookId, long fromId, int limitCount);
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 

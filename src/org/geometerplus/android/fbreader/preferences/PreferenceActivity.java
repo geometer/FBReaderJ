@@ -22,10 +22,12 @@ package org.geometerplus.android.fbreader.preferences;
 import java.util.*;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.style.*;
 
@@ -128,6 +130,24 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		directoriesScreen.addPreference(wallpaperDirPreference);
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
+		appearanceScreen.addPreference(new LanguagePreference(
+			this, appearanceScreen.Resource, "language", ZLResource.languages()
+		) {
+			@Override
+			protected void init() {
+				setInitialValue(ZLResource.LanguageOption.getValue());
+			}
+
+			@Override
+			protected void setLanguage(String code) {
+				if (!code.equals(ZLResource.LanguageOption.getValue())) {
+					ZLResource.LanguageOption.setValue(code);
+					startActivity(new Intent(
+						Intent.ACTION_VIEW, Uri.parse("fbreader-action:preferences#appearance")
+					));
+				}
+			}
+		});
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
 			this, appearanceScreen.Resource, "screenOrientation",
 			androidLibrary.getOrientationOption(), androidLibrary.allOrientations()

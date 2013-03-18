@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -42,16 +43,20 @@ public class LanguageFilterAction extends RootAction {
 	public void run(NetworkTree tree) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
-		final List<String> allLanguageCodes = library.languageCodes();
-		Collections.sort(allLanguageCodes, new ZLLanguageUtil.CodeComparator());
+		final List<Language> allLanguages = new ArrayList<Language>();
+		for (String code : library.languageCodes()) {
+			allLanguages.add(new Language(code));
+		}
+		Collections.sort(allLanguages);
 		final Collection<String> activeLanguageCodes = library.activeLanguageCodes();
-		final CharSequence[] languageNames = new CharSequence[allLanguageCodes.size()];
-		final boolean[] checked = new boolean[allLanguageCodes.size()];
+		final CharSequence[] languageNames = new CharSequence[allLanguages.size()];
+		final boolean[] checked = new boolean[allLanguages.size()];
 
-		for (int i = 0; i < allLanguageCodes.size(); ++i) {
-			final String code = allLanguageCodes.get(i);
-			languageNames[i] = ZLLanguageUtil.languageName(code);
-			checked[i] = activeLanguageCodes.contains(code);
+		int index = 0;
+		for (Language language : allLanguages) {
+			languageNames[index] = language.Name;
+			checked[index] = activeLanguageCodes.contains(language.Code);
+			++index;
 		}
 
 		final DialogInterface.OnMultiChoiceClickListener listener =
@@ -66,13 +71,17 @@ public class LanguageFilterAction extends RootAction {
 			.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
 			.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					final TreeSet<String> newActiveCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+					final TreeSet<Language> newActiveLanguages = new TreeSet<Language>();
 					for (int i = 0; i < checked.length; ++i) {
 						if (checked[i]) {
-							newActiveCodes.add(allLanguageCodes.get(i));
+							newActiveLanguages.add(allLanguages.get(i));
 						}
 					}
-					library.setActiveLanguageCodes(newActiveCodes);
+					final List<String> codes = new ArrayList<String>(newActiveLanguages.size());
+					for (Language language : newActiveLanguages) {
+						codes.add(language.Code);
+					}
+					library.setActiveLanguageCodes(codes);
 					library.synchronize();
 				}
 			})

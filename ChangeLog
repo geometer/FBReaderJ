@@ -8,9 +8,25 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.7.3 (??? ??, 2013) =====
-* Library service start is not forced
+===== 1.7.7 (Mar 14, 2013) =====
+* Fixed XML parsing
+* Fixed series order in library
+
+===== 1.7.6 (Mar 13, 2013) =====
+* Fixed several possible NPEs
+
+===== 1.7.4/5 (Mar 11, 2013) =====
+* Book/bookmark deserializer: SAX instead of our own XML parser
+* Georgian localization (by Bookland.ge)
+* Interface language option
+* Book sort order in Library omits leading articles
+* Fixed "screen stays switched on while locked" issue
+
+===== 1.7.3 (Mar 04, 2013) =====
+* Library service does not work in background after program closing
 * We do not obfuscate code
+* Fixed issue in 'Books sorted by title' library catalog: viewing book info does not remove book from the list
+* Fixed issue with large (1000+) bookmarks collection opening
 
 ===== 1.7.2 (Feb 22, 2013) =====
 * Restored android:changes attribute for all activities
