@@ -1399,6 +1399,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
 				"type TEXT NOT NULL," +
 				"uid TEXT NOT NULL," +
-				"CONSTRAINT BookUid_Unique(book_id,type,uid))");
+				"CONSTRAINT BookUid_Unique UNIQUE (book_id,type,uid))");
 	}
 }
