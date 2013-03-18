@@ -62,6 +62,10 @@ bool DocPlugin::readMetaInfo(Book &book) const {
 	return true;
 }
 
+bool DocPlugin::readUids(Book&) const {
+	return false;
+}
+
 bool DocPlugin::readLanguageAndEncoding(Book &/*book*/) const {
 	return true;
 }

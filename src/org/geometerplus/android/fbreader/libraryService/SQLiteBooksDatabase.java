@@ -77,7 +77,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 21;
+		final int currentVersion = 22;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -127,6 +127,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables19();
 			case 20:
 				updateTables20();
+			case 21:
+				updateTables21();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -482,15 +484,15 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void saveBookUid(long bookId, UID uid) {
 		if (myInsertBookUidStatement == null) {
 			myInsertBookUidStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO BookUid (book_id,type,uid) VALUES (?,?,?)"
+				"INSERT OR IGNORE INTO BookUid (book_id,type,uid) VALUES (?,?,?)"
 			);
 		}
 
 		synchronized (myInsertBookUidStatement) {
 			myInsertBookUidStatement.bindLong(1, bookId);
 			myInsertBookUidStatement.bindString(2, uid.Type);
-			myInsertBookUidStatement.bindString(2, uid.Id);
-			myInsertBookAuthorStatement.execute();
+			myInsertBookUidStatement.bindString(3, uid.Id);
+			myInsertBookUidStatement.execute();
 		}
 	}
 
@@ -1374,11 +1376,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables20() {
 		myDatabase.execSQL(
-			"CREATE TABLE IF NOT EXISTS BookUid(" +
-				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
-				"type TEXT NOT NULL," +
-				"uid TEXT NOT NULL)");
-		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS Labels(" +
 				"label_id INTEGER PRIMARY KEY," +
 				"name TEXT NOT NULL UNIQUE)");
@@ -1393,5 +1390,15 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final long id = insert.executeInsert();
 		myDatabase.execSQL("INSERT INTO BookLabel (label_id,book_id) SELECT " + id + ",book_id FROM Favorites");
 		myDatabase.execSQL("DROP TABLE Favorites");
+	}
+
+	private void updateTables21() {
+		myDatabase.execSQL("DROP TABLE BookUid");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookUid(" +
+				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"type TEXT NOT NULL," +
+				"uid TEXT NOT NULL," +
+				"CONSTRAINT BookUid_Unique(book_id,type,uid))");
 	}
 }

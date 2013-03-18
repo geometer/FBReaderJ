@@ -31,7 +31,7 @@ public abstract class BooksDatabase {
 		return createBook(id, infos.getFile(fileId), title, encoding, language);
 	}
 	protected Book createBook(long id, ZLFile file, String title, String encoding, String language) {
-		return (file != null) ? new Book(id, file, title, encoding, language) : null;
+		return file != null ? new Book(id, file, title, encoding, language) : null;
 	}
 	protected void addAuthor(Book book, Author author) {
 		book.addAuthorWithNoCheck(author);

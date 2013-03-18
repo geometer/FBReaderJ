@@ -30,6 +30,7 @@
 #include "Book.h"
 #include "Author.h"
 #include "Tag.h"
+#include "UID.h"
 
 #include "../formats/FormatPlugin.h"
 //#include "../migration/BookInfo.h"

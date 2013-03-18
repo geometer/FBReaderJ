@@ -142,7 +142,8 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/library/Book.cpp \
 	NativeFormats/fbreader/src/library/Comparators.cpp \
 	NativeFormats/fbreader/src/library/Library.cpp \
-	NativeFormats/fbreader/src/library/Tag.cpp
+	NativeFormats/fbreader/src/library/Tag.cpp \
+	NativeFormats/fbreader/src/library/UID.cpp
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \
