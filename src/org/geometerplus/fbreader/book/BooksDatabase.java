@@ -65,6 +65,7 @@ public abstract class BooksDatabase {
 	protected abstract void deleteAllBookTags(long bookId);
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
+	protected abstract void deleteAllBookUids(long bookId);
 	protected abstract void saveBookUid(long bookId, UID uid);
 
 	protected FileInfo createFileInfo(long id, String name, FileInfo parent) {

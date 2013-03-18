@@ -466,6 +466,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
+	private SQLiteStatement myDeleteBookUidsStatement;
+	protected void deleteAllBookUids(long bookId) {
+		if (myDeleteBookUidsStatement == null) {
+			myDeleteBookUidsStatement = myDatabase.compileStatement(
+				"DELETE FROM BookUid WHERE book_id = ?"
+			);
+		}
+		myDeleteBookUidsStatement.bindLong(1, bookId);
+		myDeleteBookUidsStatement.execute();
+	}
+
 	private SQLiteStatement myInsertBookUidStatement;
 	@Override
 	protected void saveBookUid(long bookId, UID uid) {
