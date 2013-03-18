@@ -71,6 +71,7 @@ public interface IBookCollection {
 
 	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
+	Book getBookByUid(UID uid);
 
 	List<Author> authors();
 	boolean hasSeries();
