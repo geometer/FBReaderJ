@@ -864,7 +864,7 @@ public final class FBReader extends Activity {
 		application.myMainWindow.addMenuItem(menu, actionId, null, name);
 	}
 
-	private void addMenuItem(Menu menu, String actionId, int iconId) {
+	private void addMenuItem(Menu menu, String actionId, Integer iconId) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.addMenuItem(menu, actionId, iconId, null);
 	}
@@ -874,31 +874,22 @@ public final class FBReader extends Activity {
 		application.myMainWindow.addMenuItem(menu, actionId, null, null);
 	}
 
+	
+	private void fillMenu(Menu menu, MenuItemData source) {
+		for (MenuItemData el : source.Children) {
+			if (el.Type == MenuItemData.MenuType.ACTION) {
+				addMenuItem(menu, el.Code, el.IconId);
+			} else {
+				final Menu subMenu = addSubMenu(menu, el.Code);
+				fillMenu(subMenu, el);
+			}
+		}
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library);
-		addMenuItem(menu, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary);
-		addMenuItem(menu, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc);
-		addMenuItem(menu, ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks);
-		addMenuItem(menu, ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night);
-		addMenuItem(menu, ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day);
-		addMenuItem(menu, ActionCode.SEARCH, R.drawable.ic_menu_search);
-		addMenuItem(menu, ActionCode.SHARE_BOOK, R.drawable.ic_menu_search);
-		addMenuItem(menu, ActionCode.SHOW_PREFERENCES);
-		addMenuItem(menu, ActionCode.SHOW_BOOK_INFO);
-		final Menu subMenu = addSubMenu(menu, "screenOrientation");
-		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_SYSTEM);
-		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_SENSOR);
-		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT);
-		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE);
-		if (ZLibrary.Instance().supportsAllOrientations()) {
-			addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT);
-			addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-		}
-		addMenuItem(menu, ActionCode.INCREASE_FONT);
-		addMenuItem(menu, ActionCode.DECREASE_FONT);
-		//		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);
+		fillMenu(menu, MenuItemData.getRoot());
 		synchronized (myPluginActions) {
 			int index = 0;
 			for (PluginApi.ActionInfo info : myPluginActions) {

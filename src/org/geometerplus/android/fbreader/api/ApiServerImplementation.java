@@ -19,11 +19,17 @@
 
 package org.geometerplus.android.fbreader.api;
 
+import java.io.ByteArrayOutputStream;
 import java.util.*;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.util.Base64;
 import android.util.Log;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -35,10 +41,12 @@ import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
 
+import org.geometerplus.android.fbreader.MenuItemData;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
@@ -243,7 +251,12 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			case SAVE_BOOKMARK:
 				saveBookmark(((ApiObject.String)parameters[0]).Value);
 				return ApiObject.Void.Instance;
-
+			case GET_MENU_TEXT:
+				return ApiObject.envelope(getMenuText(((ApiObject.String)parameters[0]).Value));
+			case GET_MENU_ICON:
+				return ApiObject.envelope(getMenuIcon(((ApiObject.String)parameters[0]).Value));
+			case GET_MENU_TYPE:
+				return ApiObject.envelope(getMenuType(((ApiObject.String)parameters[0]).Value));
 			default:
 				return unsupportedMethodError(method);
 			}
@@ -283,6 +296,10 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			case GET_PARAGRAPH_WORD_INDICES:
 				return ApiObject.envelopeIntegerList(getParagraphWordIndices(
 						((ApiObject.Integer)parameters[0]).Value
+						));
+			case GET_MENU_CHILDREN:
+				return ApiObject.envelopeStringList(getMenuChildren(
+						((ApiObject.String)parameters[0]).Value
 						));
 			default:
 				return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
@@ -452,7 +469,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		getReader().getTextView().highlight(
 				getZLTextPosition(start),
 				getZLTextPosition(end)
-		);
+				);
 	}
 
 	public void clearHighlighting() {
@@ -643,4 +660,49 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			}
 		});
 	}
+
+	public List<String> getMenuChildren(String code) {
+		MenuItemData root = MenuItemData.getRoot();
+		MenuItemData cur = root.findByCode(code);
+		Log.d("gsdfgvbdf", code);
+		ArrayList<String> res = new ArrayList<String>();
+		for (MenuItemData el : cur.Children) {
+			Log.d("gsdfgvbdf", el.Code);
+			res.add(el.Code);
+		}
+		return res;
+	}
+
+	public String getMenuText(String code) {
+		MenuItemData root = MenuItemData.getRoot();
+		MenuItemData cur = root.findByCode(code);
+		return ZLResource.resource("menu").getResource(cur.Code).getValue();
+	}
+	
+	public String getMenuType(String code) {
+		MenuItemData root = MenuItemData.getRoot();
+		MenuItemData cur = root.findByCode(code);
+		return cur.Type.name();
+	}
+
+	@TargetApi(Build.VERSION_CODES.FROYO)
+	public String getMenuIcon(String code) {
+		MenuItemData root = MenuItemData.getRoot();
+		MenuItemData cur = root.findByCode(code);
+		Integer id = cur.IconId;
+		if (id == null) {
+			return null;
+		}
+		try{
+			Bitmap bm = BitmapFactory.decodeResource(myContext.getResources(), id);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+			bm.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object   
+			byte[] b = baos.toByteArray();
+			return Base64.encodeToString(b, Base64.DEFAULT);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }
