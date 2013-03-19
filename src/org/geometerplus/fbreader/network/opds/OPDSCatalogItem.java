@@ -78,7 +78,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
 
-		myLoadingState = opdsLink.createOperationData(loader);
+		myLoadingState = (OPDSCatalogItem.State)opdsLink.createOperationData(loader);
 
 		doLoadChildren(
 			opdsLink.createNetworkData(getCatalogUrl(), MimeType.APP_ATOM_XML, myLoadingState)

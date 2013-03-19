@@ -19,18 +19,22 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.NetworkLinkCreator;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
-import org.geometerplus.fbreader.network.rss.RSSNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
+
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 	private static class FeedHandler extends AbstractOPDSFeedHandler {
@@ -40,6 +44,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 		private final HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
 		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>();
+		private final NetworkLinkCreator linkCreator = new NetworkLinkCreator();
+		
 		List<INetworkLink> links() {
 			return myLinks;
 		}
@@ -144,15 +150,13 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			UrlInfoWithDate ud = infos.getInfo(UrlInfo.Type.Catalog);
 
 			if (!MimeType.APP_RSS_XML.weakEquals(ud.Mime)) {
-				OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
-						OPDSNetworkLink.INVALID_ID,
+				OPDSNetworkLink opdsLink = (OPDSNetworkLink)linkCreator.createOPDSLink(OPDSNetworkLink.INVALID_ID,
 						id,
 						siteName,
 						titleString,
 						summaryString,
 						language,
-						infos
-					);
+						infos);
 				opdsLink.setRelationAliases(myRelationAliases);
 				opdsLink.setUrlRewritingRules(myUrlRewritingRules);
 				opdsLink.setExtraData(myExtraData);
@@ -166,16 +170,12 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				}
 				return opdsLink;
 			}else{
-				RSSNetworkLink rssLink = new RSSNetworkLink(
-						OPDSNetworkLink.INVALID_ID,
+				return linkCreator.createRSSLink(OPDSNetworkLink.INVALID_ID,
 						siteName,
 						titleString,
 						summaryString,
 						language,
-						infos
-					);
-				rssLink.setExtraData(myExtraData);
-				return rssLink;
+						infos);
 			}
 		}
 
