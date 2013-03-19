@@ -183,20 +183,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 				}
 			case TITLE:
 				if (testTag(TAG_TITLE, tag, ns, null)) {
-					String mark = "~ by:";
-					int foundIndex = bufferContent.indexOf(mark);
-					if(foundIndex >= 0){
-						if(myAuthor != null){
-							String title = bufferContent.substring(0, foundIndex);
-							myItem.Title = title;
-							String authorName = bufferContent.substring(foundIndex+mark.length());
-							myAuthor.Name = authorName.trim();
-							myItem.Authors.push(myAuthor);
-							myAuthor = null;
-						}
-					}else{
-						myItem.Title = bufferContent;
-					}
+					parseTitle(bufferContent);
 					myState = ITEM;
 				}
 				break;
@@ -245,6 +232,31 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 				break;
 		}
 		return false;
+	}
+	
+	private void parseTitle(String bufferContent){
+		String[] marks = {"~ by:", "By"};
+		boolean found = false;
+		
+		for(int i=0; i< marks.length; i++){
+			int foundIndex = bufferContent.indexOf(marks[i]);
+			if(foundIndex >= 0){
+				if(myAuthor != null){
+					String title = bufferContent.substring(0, foundIndex);
+					myItem.Title = title;
+					String authorName = bufferContent.substring(foundIndex+marks[i].length());
+					myAuthor.Name = authorName.trim();
+					myItem.Authors.push(myAuthor);
+					myAuthor = null;
+				}
+				found = true;
+				break;
+			}
+		}
+		
+		if(!found){
+			myItem.Title = bufferContent;
+		}
 	}
 	
 	private String makeFormat(String buffer){
