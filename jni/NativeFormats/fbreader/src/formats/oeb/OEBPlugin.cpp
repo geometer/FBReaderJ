@@ -123,6 +123,10 @@ bool OEBPlugin::readMetaInfo(Book &book) const {
 	return OEBMetaInfoReader(book).readMetaInfo(opfFile(file));
 }
 
+bool OEBPlugin::readUids(Book &/*book*/) const {
+	return true;
+}
+
 bool OEBPlugin::readModel(BookModel &model) const {
 	const ZLFile &file = model.book()->file();
 	return OEBBookReader(model).readBook(opfFile(file));

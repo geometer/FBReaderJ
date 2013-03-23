@@ -65,6 +65,10 @@ bool TxtPlugin::readModel(BookModel &model) const {
 //	return new PlainTextInfoPage(dialog, file, ZLResourceKey("Text"), true);
 //}
 
+bool TxtPlugin::readUids(Book &/*book*/) const {
+	return true;
+}
+
 bool TxtPlugin::readLanguageAndEncoding(Book &book) const {
 	shared_ptr<ZLInputStream> stream = book.file().inputStream();
 	if (stream.isNull()) {

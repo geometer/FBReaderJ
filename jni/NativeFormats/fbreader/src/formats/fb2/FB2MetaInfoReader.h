@@ -50,7 +50,9 @@ private:
 		READ_AUTHOR_NAME_1,
 		READ_AUTHOR_NAME_2,
 		READ_LANGUAGE,
-		READ_GENRE
+		READ_GENRE,
+		READ_DOCUMENT_INFO,
+		READ_ID
 	} myReadState;
 
 	std::string myAuthorNames[3];
