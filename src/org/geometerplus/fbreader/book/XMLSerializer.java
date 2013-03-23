@@ -52,7 +52,7 @@ class XMLSerializer extends AbstractSerializer {
 				"scheme", uid.Type
 			);
 			buffer.append(uid.Id);
-			closeTag(buffer, "id");
+			closeTag(buffer, "dc:identifier");
 		}
 
 		for (Author author : book.authors()) {
@@ -99,6 +99,8 @@ class XMLSerializer extends AbstractSerializer {
 			Xml.parse(xml, deserializer);
 			return deserializer.getBook();
 		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -142,6 +144,8 @@ class XMLSerializer extends AbstractSerializer {
 			Xml.parse(xml, deserializer);
 			return deserializer.getBookmark();
 		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
 			return null;
 		}
 	}
