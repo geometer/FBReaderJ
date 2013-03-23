@@ -207,6 +207,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 				myBuffer.erase();
 				myReadState = READ_DOCUMENT_INFO;
 			}
+			break;
 		default:
 			break;
 	}
