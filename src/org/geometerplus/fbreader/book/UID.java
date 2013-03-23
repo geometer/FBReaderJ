@@ -25,7 +25,7 @@ public class UID {
 
 	public UID(String type, String id) {
 		Type = type;
-		Id = id;
+		Id = id.trim();
 	}
 
 	@Override
