@@ -38,7 +38,11 @@ const std::string TxtPlugin::supportedFileType() const {
 	return "plain text";
 }
 
-bool TxtPlugin::readMetaInfo(Book &book) const {
+bool TxtPlugin::readMetaInfo(Book &/*book*/) const {
+	return true;
+}
+
+bool TxtPlugin::readUids(Book &/*book*/) const {
 	return true;
 }
 
@@ -64,10 +68,6 @@ bool TxtPlugin::readModel(BookModel &model) const {
 //FormatInfoPage *TxtPlugin::createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file) {
 //	return new PlainTextInfoPage(dialog, file, ZLResourceKey("Text"), true);
 //}
-
-bool TxtPlugin::readUids(Book &/*book*/) const {
-	return true;
-}
 
 bool TxtPlugin::readLanguageAndEncoding(Book &book) const {
 	shared_ptr<ZLInputStream> stream = book.file().inputStream();
