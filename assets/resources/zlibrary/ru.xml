@@ -17,7 +17,7 @@
 			<node name="couldntCreateFileMessage" value="Не удалось создать файл %s"/>
 			<node name="couldntConnectToNetworkMessage" value="Не удалось соединиться с сетью"/>
 			<node name="couldntConnectMessage" value="Не удалось соединиться с сайтом %s"/>
-			<node name="couldntResolveHostMessage" value="Не удается найти сайт %s"/>
+			<node name="couldntResolveHostMessage" value="Не удаётся найти сайт %s"/>
 			<node name="authenticationFailed" value="Ошибка авторизации"/>
 			<node name="unsupportedProtocol" value="Неизвестный протокол"/>
 			<node name="invalidURL" value="Неправильный URL"/>
