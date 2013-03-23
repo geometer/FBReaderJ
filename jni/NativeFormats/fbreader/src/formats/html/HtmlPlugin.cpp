@@ -50,8 +50,8 @@ bool HtmlPlugin::readMetaInfo(Book &book) const {
 	return true;
 }
 
-bool HtmlPlugin::readUids(Book&) const {
-	return false;
+bool HtmlPlugin::readUids(Book &/*book*/) const {
+	return true;
 }
 
 bool HtmlPlugin::readModel(BookModel &model) const {

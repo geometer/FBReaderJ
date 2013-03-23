@@ -42,8 +42,8 @@ bool TxtPlugin::readMetaInfo(Book&) const {
 	return true;
 }
 
-bool TxtPlugin::readUids(Book&) const {
-	return false;
+bool TxtPlugin::readUids(Book &/*book*/) const {
+	return true;
 }
 
 bool TxtPlugin::readModel(BookModel &model) const {

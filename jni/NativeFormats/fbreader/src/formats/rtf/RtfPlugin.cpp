@@ -54,8 +54,8 @@ bool RtfPlugin::readMetaInfo(Book &book) const {
 	return true;
 }
 
-bool RtfPlugin::readUids(Book&) const {
-	return false;
+bool RtfPlugin::readUids(Book &/*book*/) const {
+	return true;
 }
 
 bool RtfPlugin::readModel(BookModel &model) const {
