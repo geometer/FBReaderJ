@@ -308,6 +308,9 @@ void Book::addUid(shared_ptr<UID> uid) {
 }
 
 void Book::addUid(const std::string &type, const std::string &id) {
+	if (type == "" || id == "") {
+		return;
+	}
 	addUid(new UID(type, id));
 }
 

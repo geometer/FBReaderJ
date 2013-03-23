@@ -61,6 +61,7 @@ void FB2UidReader::endElementHandler(int tag) {
 				myBuffer.erase();
 				myReadState = READ_DOCUMENT_INFO;
 			}
+			break;
 		default:
 			break;
 	}

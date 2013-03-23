@@ -180,7 +180,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Book_setEncoding = new VoidMethod(Class_Book, "setEncoding", "(Ljava/lang/String;)");
 	Method_Book_addAuthor = new VoidMethod(Class_Book, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
 	Method_Book_addTag = new VoidMethod(Class_Book, "addTag", "(Lorg/geometerplus/fbreader/book/Tag;)");
-	Method_Book_addTag = new VoidMethod(Class_Book, "addUid", "(Ljava/lang/String;Ljava/lang/String;)");
+	Method_Book_addUid = new VoidMethod(Class_Book, "addUid", "(Ljava/lang/String;Ljava/lang/String;)");
 
 	StaticMethod_Tag_getTag = new StaticObjectMethod(Class_Tag, "getTag", Class_Tag, "(Lorg/geometerplus/fbreader/book/Tag;Ljava/lang/String;)");
 

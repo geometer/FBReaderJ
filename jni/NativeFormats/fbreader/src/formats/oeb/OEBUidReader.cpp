@@ -21,7 +21,6 @@
 
 #include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
-#include <ZLLogger.h>
 #include <ZLXMLNamespace.h>
 
 #include "OEBUidReader.h"
@@ -119,7 +118,6 @@ bool OEBUidReader::processNamespaces() const {
 bool OEBUidReader::readUids(const ZLFile &file) {
 	myReadState = READ_NONE;
 	if (!readDocument(file)) {
-		ZLLogger::Instance().println("epub", "Failure while reading info from " + file.path());
 		return false;
 	}
 	return true;

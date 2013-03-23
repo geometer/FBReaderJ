@@ -84,7 +84,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 		myDatabase.beginTransaction();
 
-		switch (myDatabase.getVersion()) {
+		switch (version) {
 			case 0:
 				createTables();
 			case 1:
