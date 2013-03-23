@@ -65,7 +65,7 @@ private:
 class ZLZipInputStream : public ZLInputStream {
 
 private:
-	ZLZipInputStream(shared_ptr<ZLInputStream> &base, const std::string &baseName, const std::string &entryName);
+	ZLZipInputStream(shared_ptr<ZLInputStream> base, const std::string &baseName, const std::string &entryName);
 
 public:
 	~ZLZipInputStream();

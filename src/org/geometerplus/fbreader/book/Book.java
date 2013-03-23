@@ -333,6 +333,9 @@ public class Book extends TitledEntity {
 	}
 
 	void addUidWithNoCheck(UID uid) {
+		if (uid == null) {
+			return;
+		}
 		if (myUids == null) {
 			myUids = new ArrayList<UID>();
 		}
@@ -340,6 +343,9 @@ public class Book extends TitledEntity {
 	}
 
 	public void addUid(UID uid) {
+		if (uid == null) {
+			return;
+		}
 		if (myUids == null) {
 			myUids = new ArrayList<UID>();
 		}
