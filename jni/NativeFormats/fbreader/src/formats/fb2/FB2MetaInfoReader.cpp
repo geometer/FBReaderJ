@@ -37,9 +37,9 @@ FB2MetaInfoReader::FB2MetaInfoReader(Book &book) : myBook(book) {
 void FB2MetaInfoReader::characterDataHandler(const char *text, std::size_t len) {
 	switch (myReadState) {
 		case READ_TITLE:
-			myBuffer.append(text, len);
-			break;
 		case READ_LANGUAGE:
+		case READ_GENRE:
+		case READ_ID:
 			myBuffer.append(text, len);
 			break;
 		case READ_AUTHOR_NAME_0:
@@ -50,9 +50,6 @@ void FB2MetaInfoReader::characterDataHandler(const char *text, std::size_t len) 
 			break;
 		case READ_AUTHOR_NAME_2:
 			myAuthorNames[2].append(text, len);
-			break;
-		case READ_GENRE:
-			myBuffer.append(text, len);
 			break;
 		default:
 			break;
@@ -67,6 +64,9 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 			break;
 		case _TITLE_INFO:
 			myReadState = READ_TITLE_INFO;
+			break;
+		case _DOCUMENT_INFO:
+			myReadState = READ_DOCUMENT_INFO;
 			break;
 		case _BOOK_TITLE:
 			if (myReadState == READ_TITLE_INFO) {
@@ -114,6 +114,11 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 				}
 			}
 			break;
+		case _ID:
+			if (myReadState == READ_DOCUMENT_INFO) {
+				myReadState = READ_ID;
+			}
+			break;
 		default:
 			break;
 	}
@@ -122,6 +127,9 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 void FB2MetaInfoReader::endElementHandler(int tag) {
 	switch (tag) {
 		case _TITLE_INFO:
+			myReadState = READ_NOTHING;
+			break;
+		case _DOCUMENT_INFO:
 			myReadState = READ_NOTHING;
 			break;
 		case _BOOK_TITLE:
@@ -192,6 +200,12 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 				myReadState = READ_AUTHOR;
 			}
 			break;
+		case _ID:
+			if (myReadState == READ_ID) {
+				myBuffer.erase();
+				myReadState = READ_DOCUMENT_INFO;
+			}
+			break;
 		default:
 			break;
 	}
@@ -199,6 +213,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 
 bool FB2MetaInfoReader::readMetaInfo() {
 	myReadState = READ_NOTHING;
+	myBuffer.erase();
 	for (int i = 0; i < 3; ++i) {
 		myAuthorNames[i].erase();
 	}
