@@ -482,4 +482,21 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			ApiObject.envelope(s)
 		});
 	}
+	
+	public List<String> getMenuChildren(String code) throws ApiException {
+		return requestStringList(GET_MENU_CHILDREN, envelope(code));
+	}
+	
+	public String getMenuText(String code) throws ApiException {
+		return requestString(GET_MENU_TEXT, envelope(code));
+	}
+	
+	public String getMenuIcon(String code) throws ApiException {
+		return requestString(GET_MENU_ICON, envelope(code));
+	}
+	
+	public String getMenuType(String code) throws ApiException {
+		return requestString(GET_MENU_TYPE, envelope(code));
+	}
+	
 }
