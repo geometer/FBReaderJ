@@ -66,25 +66,25 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 			interrupt();
 			break;
 		case _TITLE_INFO:
-			myReadState = READ_SOMETHING;
+			myReadState = READ_TITLE_INFO;
 			break;
 		case _BOOK_TITLE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_TITLE;
 			}
 			break;
 		case _GENRE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_GENRE;
 			}
 			break;
 		case _AUTHOR:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_AUTHOR;
 			}
 			break;
 		case _LANG:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_LANGUAGE;
 			}
 			break;
@@ -104,7 +104,7 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 			}
 			break;
 		case _SEQUENCE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				const char *name = attributeValue(attributes, "name");
 				if (name != 0) {
 					std::string seriesTitle = name;
@@ -128,7 +128,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 			if (myReadState == READ_TITLE) {
 				myBook.setTitle(myBuffer);
 				myBuffer.erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _GENRE:
@@ -146,7 +146,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 					}
 					myBuffer.erase();
 				}
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _AUTHOR:
@@ -167,14 +167,14 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 				myAuthorNames[0].erase();
 				myAuthorNames[1].erase();
 				myAuthorNames[2].erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _LANG:
 			if (myReadState == READ_LANGUAGE) {
 				myBook.setLanguage(myBuffer);
 				myBuffer.erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _FIRST_NAME:
