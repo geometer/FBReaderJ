@@ -117,7 +117,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	@Override
-	public NetworkOperationData createOperationData(NetworkItemsLoader loader) {
+	public OPDSCatalogItem.State createOperationData(NetworkItemsLoader loader) {
 		return new OPDSCatalogItem.State(this, loader);
 	}
 

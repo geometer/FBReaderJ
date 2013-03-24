@@ -31,7 +31,7 @@ public class RSSChannelHandler extends AbstractRSSChannelHandler {
 	private int myIndex;
 	private String mySkipUntilId;
 	private boolean myFoundNewIds;
-	
+
 	/**
 	 * Creates new RSSChannelHandler instance that can be used to get NetworkItem objects from RSS feeds.
 	 *
@@ -48,7 +48,7 @@ public class RSSChannelHandler extends AbstractRSSChannelHandler {
 		if (!(result.Link instanceof RSSNetworkLink)) {
 			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of OPDSNetworkLink class.");
 		}
-		
+
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class RSSChannelHandler extends AbstractRSSChannelHandler {
 
 	@Override
 	public boolean processFeedEntry(RSSItem entry) {
-		
+
 		if (entry.Id == null) {
 			entry.Id = new ATOMId();
 			entry.Id.Uri = "id_"+myIndex;
@@ -74,9 +74,9 @@ public class RSSChannelHandler extends AbstractRSSChannelHandler {
 			myFoundNewIds = true;
 		}
 		myData.LoadedIds.add(entry.Id.Uri);
-		
+
 		NetworkItem item = new RSSBookItem((RSSNetworkLink)myData.Link, entry, myBaseURL, myIndex++);
-		
+
 		if (item != null) {
 			myData.Loader.onNewItem(item);
 		}
