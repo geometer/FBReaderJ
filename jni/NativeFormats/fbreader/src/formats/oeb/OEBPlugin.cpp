@@ -28,6 +28,7 @@
 
 #include "OEBPlugin.h"
 #include "OEBMetaInfoReader.h"
+#include "OEBUidReader.h"
 #include "OEBBookReader.h"
 #include "OEBCoverReader.h"
 #include "OEBTextStream.h"
@@ -123,8 +124,9 @@ bool OEBPlugin::readMetaInfo(Book &book) const {
 	return OEBMetaInfoReader(book).readMetaInfo(opfFile(file));
 }
 
-bool OEBPlugin::readUids(Book &/*book*/) const {
-	return true;
+bool OEBPlugin::readUids(Book &book) const {
+	const ZLFile &file = book.file();
+	return OEBUidReader(book).readUids(opfFile(file));
 }
 
 bool OEBPlugin::readModel(BookModel &model) const {

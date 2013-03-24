@@ -46,6 +46,15 @@ class XMLSerializer extends AbstractSerializer {
 		appendTagWithContent(buffer, "dc:language", book.getLanguage());
 		appendTagWithContent(buffer, "dc:encoding", book.getEncodingNoDetection());
 
+		for (UID uid : book.uids()) {
+			appendTag(
+				buffer, "dc:identifier", false,
+				"scheme", uid.Type
+			);
+			buffer.append(uid.Id);
+			closeTag(buffer, "dc:identifier");
+		}
+
 		for (Author author : book.authors()) {
 			appendTag(buffer, "author", false);
 			appendTagWithContent(buffer, "uri", author.SortKey);
@@ -90,6 +99,8 @@ class XMLSerializer extends AbstractSerializer {
 			Xml.parse(xml, deserializer);
 			return deserializer.getBook();
 		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -133,6 +144,8 @@ class XMLSerializer extends AbstractSerializer {
 			Xml.parse(xml, deserializer);
 			return deserializer.getBookmark();
 		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -211,6 +224,7 @@ class XMLSerializer extends AbstractSerializer {
 			READ_NOTHING,
 			READ_ENTRY,
 			READ_ID,
+			READ_UID,
 			READ_TITLE,
 			READ_LANGUAGE,
 			READ_ENCODING,
@@ -228,6 +242,9 @@ class XMLSerializer extends AbstractSerializer {
 		private final StringBuilder myTitle = new StringBuilder();
 		private final StringBuilder myLanguage = new StringBuilder();
 		private final StringBuilder myEncoding = new StringBuilder();
+		private String myScheme;
+		private final StringBuilder myUid = new StringBuilder();
+		private final ArrayList<UID> myUidList = new ArrayList<UID>();
 		private final ArrayList<Author> myAuthors = new ArrayList<Author>();
 		private final ArrayList<Tag> myTags = new ArrayList<Tag>();
 		private final StringBuilder myAuthorSortKey = new StringBuilder();
@@ -252,6 +269,8 @@ class XMLSerializer extends AbstractSerializer {
 			clear(myEncoding);
 			clear(mySeriesTitle);
 			clear(mySeriesIndex);
+			clear(myUid);
+			myUidList.clear();
 			myAuthors.clear();
 			myTags.clear();
 
@@ -276,6 +295,9 @@ class XMLSerializer extends AbstractSerializer {
 			for (Tag tag : myTags) {
 				myBook.addTagWithNoCheck(tag);
 			}
+			for (UID uid : myUidList) {
+				myBook.addUid(uid);
+			}
 			myBook.setSeriesInfoWithNoCheck(string(mySeriesTitle), string(mySeriesIndex));
 		}
 
@@ -293,6 +315,9 @@ class XMLSerializer extends AbstractSerializer {
 						myState = State.READ_ID;
 					} else if ("title".equals(localName)) {
 						myState = State.READ_TITLE;
+					} else if ("identifier".equals(localName) && XMLNamespaces.DublinCore.equals(uri)) {
+						myState = State.READ_UID;
+						myScheme = attributes.getValue("scheme");
 					} else if ("language".equals(localName) && XMLNamespaces.DublinCore.equals(uri)) {
 						myState = State.READ_LANGUAGE;
 					} else if ("encoding".equals(localName) && XMLNamespaces.DublinCore.equals(uri)) {
@@ -351,6 +376,11 @@ class XMLSerializer extends AbstractSerializer {
 					}
 					myState = State.READ_ENTRY;
 					break;
+				case READ_UID:
+					myUidList.add(new UID(myScheme, myUid.toString()));
+					clear(myUid);
+					myState = State.READ_ENTRY;
+					break;
 				default:
 					myState = State.READ_ENTRY;
 					break;
@@ -368,6 +398,9 @@ class XMLSerializer extends AbstractSerializer {
 					break;
 				case READ_TITLE:
 					myTitle.append(ch, start, length);
+					break;
+				case READ_UID:
+					myUid.append(ch, start, length);
 					break;
 				case READ_LANGUAGE:
 					myLanguage.append(ch, start, length);

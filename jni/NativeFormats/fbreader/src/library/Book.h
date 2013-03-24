@@ -30,9 +30,6 @@
 
 #include "Lists.h"
 
-class Author;
-class Tag;
-
 class Book {
 
 public:
@@ -70,6 +67,7 @@ public: // unmodifiable book methods
 
 	const TagList &tags() const;
 	const AuthorList &authors() const;
+	const UIDList &uids() const;
 
 public: // modifiable book methods
 	void setTitle(const std::string &title);
@@ -90,6 +88,10 @@ public:
 	bool replaceAuthor(shared_ptr<Author> from, shared_ptr<Author> to);
 	void removeAllAuthors();
 
+	void addUid(shared_ptr<UID> uid);
+	void addUid(const std::string &type, const std::string &id);
+	void removeAllUids();
+
 public:
 	int bookId() const;
 	void setBookId(int bookId);
@@ -105,6 +107,7 @@ private:
 	std::string myIndexInSeries;
 	TagList myTags;
 	AuthorList myAuthors;
+	UIDList myUIDs;
 
 private: // disable copying
 	Book(const Book &);
@@ -138,6 +141,7 @@ inline const std::string &Book::indexInSeries() const { return myIndexInSeries; 
 
 inline const TagList &Book::tags() const { return myTags; }
 inline const AuthorList &Book::authors() const { return myAuthors; }
+inline const UIDList &Book::uids() const { return myUIDs; }
 
 inline int Book::bookId() const { return myBookId; }
 inline void Book::setBookId(int bookId) { myBookId = bookId; }

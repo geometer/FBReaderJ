@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.book;
+#ifndef __UID_H__
+#define __UID_H__
 
-public class UID {
-	public final String Type;
-	public final String Id;
+#include <string>
 
-	public UID(String type, String id) {
-		Type = type;
-		Id = id.trim();
-	}
+#include "Lists.h"
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof UID)) {
-			return false;
-		}
-		final UID u = (UID)o;
-		return Type.equals(u.Type) && Id.equals(u.Id);
-	}
+class UID {
 
-	@Override
-	public int hashCode() {
-		return Type.hashCode() + Id.hashCode();
-	}
-}
+public:
+	UID(const std::string &type, const std::string &id);
+	bool operator == (const UID &uid) const;
+	bool operator != (const UID &uid) const;
+
+public:
+	const std::string Type;
+	const std::string Id;
+};
+
+#endif /* __UID_H__ */
