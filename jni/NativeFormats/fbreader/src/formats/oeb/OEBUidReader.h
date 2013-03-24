@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-#ifndef __OEBMETAINFOREADER_H__
-#define __OEBMETAINFOREADER_H__
+#ifndef __OEBUIDREADER_H__
+#define __OEBUIDREADER_H__
 
 #include <vector>
 
@@ -26,11 +26,11 @@
 
 class Book;
 
-class OEBMetaInfoReader : public ZLXMLReader {
+class OEBUidReader : public ZLXMLReader {
 
 public:
-	OEBMetaInfoReader(Book &book);
-	bool readMetaInfo(const ZLFile &file);
+	OEBUidReader(Book &book);
+	bool readUids(const ZLFile &file);
 
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
@@ -48,18 +48,11 @@ private:
 	enum {
 		READ_NONE,
 		READ_METADATA,
-		READ_AUTHOR,
-		READ_AUTHOR2,
-		READ_TITLE,
-		READ_SUBJECT,
-		READ_LANGUAGE,
 		READ_IDENTIFIER,
 	} myReadState;
 
 	std::string myIdentifierScheme;
 	std::string myBuffer;
-	std::vector<std::string> myAuthorList;
-	std::vector<std::string> myAuthorList2;
 };
 
-#endif /* __OEBMETAINFOREADER_H__ */
+#endif /* __OEBUIDREADER_H__ */

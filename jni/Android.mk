@@ -97,6 +97,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/fb2/FB2Plugin.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2UidReader.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlBookReader.cpp \
@@ -111,6 +112,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/oeb/OEBMetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBPlugin.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBTextStream.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBUidReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/XHTMLImageFinder.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
@@ -142,7 +144,8 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/library/Book.cpp \
 	NativeFormats/fbreader/src/library/Comparators.cpp \
 	NativeFormats/fbreader/src/library/Library.cpp \
-	NativeFormats/fbreader/src/library/Tag.cpp
+	NativeFormats/fbreader/src/library/Tag.cpp \
+	NativeFormats/fbreader/src/library/UID.cpp
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \

@@ -32,6 +32,7 @@ FB2MetaInfoReader::FB2MetaInfoReader(Book &book) : myBook(book) {
 	myBook.setTitle(std::string());
 	myBook.setLanguage(std::string());
 	myBook.removeAllTags();
+	myBook.removeAllUids();
 }
 
 void FB2MetaInfoReader::characterDataHandler(const char *text, std::size_t len) {
@@ -202,6 +203,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 			break;
 		case _ID:
 			if (myReadState == READ_ID) {
+				myBook.addUid("FB2-DOC-ID", myBuffer);
 				myBuffer.erase();
 				myReadState = READ_DOCUMENT_INFO;
 			}
