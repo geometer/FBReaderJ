@@ -30,6 +30,7 @@ public:
 	bool providesMetaInfo() const;
 	const std::string supportedFileType() const;
 	bool readMetaInfo(Book &book) const;
+	bool readUids(Book &book) const;
 	bool readLanguageAndEncoding(Book &book) const;
 	bool readModel(BookModel &model) const;
 	shared_ptr<const ZLImage> coverImage(const ZLFile &file) const;

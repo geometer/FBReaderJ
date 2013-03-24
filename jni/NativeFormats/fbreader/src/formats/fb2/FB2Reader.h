@@ -81,6 +81,8 @@ public:
 		_COVERPAGE,
 		_SEQUENCE,
 		_GENRE,
+		_DOCUMENT_INFO,
+		_ID,
 		_UNKNOWN
 	};
 
