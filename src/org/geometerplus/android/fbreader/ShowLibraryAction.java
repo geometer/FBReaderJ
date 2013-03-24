@@ -34,15 +34,21 @@ class ShowLibraryAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		Intent intent = new Intent("android.fbreader.action.EXTERNAL_LIBRARY");
 		try {
-			OrientationUtil.startActivity(BaseActivity, intent);
+			startLibraryActivity(
+				new Intent("android.fbreader.action.EXTERNAL_LIBRARY")
+			);
 		} catch (ActivityNotFoundException e) {
-			intent = new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
-			if (Reader.Model != null) {
-				intent.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(Reader.Model.Book));
-			}
-			OrientationUtil.startActivity(BaseActivity, intent);
+			startLibraryActivity(
+				new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class)
+			);
 		}
+	}
+
+	private void startLibraryActivity(Intent intent) {
+		if (Reader.Model != null) {
+			intent.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(Reader.Model.Book));
+		}
+		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }
