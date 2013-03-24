@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,23 @@
  * 02110-1301, USA.
  */
 
-#ifndef __OEBPLUGIN_H__
-#define __OEBPLUGIN_H__
+#ifndef __UID_H__
+#define __UID_H__
 
-#include "../FormatPlugin.h"
+#include <string>
 
-class OEBPlugin : public FormatPlugin {
+#include "Lists.h"
+
+class UID {
 
 public:
-	static ZLFile opfFile(const ZLFile &oebFile);
+	UID(const std::string &type, const std::string &id);
+	bool operator == (const UID &uid) const;
+	bool operator != (const UID &uid) const;
 
 public:
-	~OEBPlugin();
-	bool providesMetaInfo() const;
-	const std::string supportedFileType() const;
-	bool readMetaInfo(Book &book) const;
-	bool readUids(Book &book) const;
-	bool readLanguageAndEncoding(Book &book) const;
-	bool readModel(BookModel &model) const;
-	shared_ptr<const ZLImage> coverImage(const ZLFile &file) const;
+	const std::string Type;
+	const std::string Id;
 };
 
-#endif /* __OEBPLUGIN_H__ */
+#endif /* __UID_H__ */

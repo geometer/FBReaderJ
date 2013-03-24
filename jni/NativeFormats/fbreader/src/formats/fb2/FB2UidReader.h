@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FB2METAINFOREADER_H__
-#define __FB2METAINFOREADER_H__
+#ifndef __FB2UIDREADER_H__
+#define __FB2UIDREADER_H__
 
 #include <string>
 
@@ -26,11 +26,11 @@
 
 class Book;
 
-class FB2MetaInfoReader : public FB2Reader {
+class FB2UidReader : public FB2Reader {
 
 public:
-	FB2MetaInfoReader(Book &book);
-	bool readMetaInfo();
+	FB2UidReader(Book &book);
+	bool readUids();
 
 	void startElementHandler(int tag, const char **attributes);
 	void endElementHandler(int tag);
@@ -43,20 +43,11 @@ private:
 
 	enum {
 		READ_NOTHING,
-		READ_TITLE_INFO,
-		READ_TITLE,
-		READ_AUTHOR,
-		READ_AUTHOR_NAME_0,
-		READ_AUTHOR_NAME_1,
-		READ_AUTHOR_NAME_2,
-		READ_LANGUAGE,
-		READ_GENRE,
 		READ_DOCUMENT_INFO,
 		READ_ID
 	} myReadState;
 
-	std::string myAuthorNames[3];
 	std::string myBuffer;
 };
 
-#endif /* __FB2METAINFOREADER_H__ */
+#endif /* __FB2UIDREADER_H__ */

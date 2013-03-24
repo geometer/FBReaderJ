@@ -50,6 +50,10 @@ bool HtmlPlugin::readMetaInfo(Book &book) const {
 	return true;
 }
 
+bool HtmlPlugin::readUids(Book &/*book*/) const {
+	return true;
+}
+
 bool HtmlPlugin::readModel(BookModel &model) const {
 	const Book& book = *model.book();
 	const ZLFile &file = book.file();

@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.JavaFormatPlugin;
@@ -119,6 +120,13 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 				} catch (IOException e) {
 				}
 			}
+		}
+	}
+
+	@Override
+	public void readUids(Book book) throws BookReadingException {
+		if (book.uids().isEmpty()) {
+			book.addUid(BookUtil.createSHA256Uid(book.File));
 		}
 	}
 

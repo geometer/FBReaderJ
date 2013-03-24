@@ -17,46 +17,42 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FB2METAINFOREADER_H__
-#define __FB2METAINFOREADER_H__
+#ifndef __OEBUIDREADER_H__
+#define __OEBUIDREADER_H__
 
-#include <string>
+#include <vector>
 
-#include "FB2Reader.h"
+#include <ZLXMLReader.h>
 
 class Book;
 
-class FB2MetaInfoReader : public FB2Reader {
+class OEBUidReader : public ZLXMLReader {
 
 public:
-	FB2MetaInfoReader(Book &book);
-	bool readMetaInfo();
+	OEBUidReader(Book &book);
+	bool readUids(const ZLFile &file);
 
-	void startElementHandler(int tag, const char **attributes);
-	void endElementHandler(int tag);
+	void startElementHandler(const char *tag, const char **attributes);
+	void endElementHandler(const char *tag);
 	void characterDataHandler(const char *text, std::size_t len);
+	bool processNamespaces() const;
+	const std::vector<std::string> &externalDTDs() const;
+
+private:
+	bool testDCTag(const std::string &name, const std::string &tag) const;
+	bool isNSName(const std::string &fullName, const std::string &shortName, const std::string &fullNSId) const;
 
 private:
 	Book &myBook;
 
-	bool myReturnCode;
-
 	enum {
-		READ_NOTHING,
-		READ_TITLE_INFO,
-		READ_TITLE,
-		READ_AUTHOR,
-		READ_AUTHOR_NAME_0,
-		READ_AUTHOR_NAME_1,
-		READ_AUTHOR_NAME_2,
-		READ_LANGUAGE,
-		READ_GENRE,
-		READ_DOCUMENT_INFO,
-		READ_ID
+		READ_NONE,
+		READ_METADATA,
+		READ_IDENTIFIER,
 	} myReadState;
 
-	std::string myAuthorNames[3];
+	std::string myIdentifierScheme;
 	std::string myBuffer;
 };
 
-#endif /* __FB2METAINFOREADER_H__ */
+#endif /* __OEBUIDREADER_H__ */

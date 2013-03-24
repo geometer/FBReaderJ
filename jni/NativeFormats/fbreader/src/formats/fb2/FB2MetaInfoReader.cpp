@@ -32,14 +32,15 @@ FB2MetaInfoReader::FB2MetaInfoReader(Book &book) : myBook(book) {
 	myBook.setTitle(std::string());
 	myBook.setLanguage(std::string());
 	myBook.removeAllTags();
+	myBook.removeAllUids();
 }
 
 void FB2MetaInfoReader::characterDataHandler(const char *text, std::size_t len) {
 	switch (myReadState) {
 		case READ_TITLE:
-			myBuffer.append(text, len);
-			break;
 		case READ_LANGUAGE:
+		case READ_GENRE:
+		case READ_ID:
 			myBuffer.append(text, len);
 			break;
 		case READ_AUTHOR_NAME_0:
@@ -50,9 +51,6 @@ void FB2MetaInfoReader::characterDataHandler(const char *text, std::size_t len) 
 			break;
 		case READ_AUTHOR_NAME_2:
 			myAuthorNames[2].append(text, len);
-			break;
-		case READ_GENRE:
-			myBuffer.append(text, len);
 			break;
 		default:
 			break;
@@ -66,25 +64,28 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 			interrupt();
 			break;
 		case _TITLE_INFO:
-			myReadState = READ_SOMETHING;
+			myReadState = READ_TITLE_INFO;
+			break;
+		case _DOCUMENT_INFO:
+			myReadState = READ_DOCUMENT_INFO;
 			break;
 		case _BOOK_TITLE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_TITLE;
 			}
 			break;
 		case _GENRE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_GENRE;
 			}
 			break;
 		case _AUTHOR:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_AUTHOR;
 			}
 			break;
 		case _LANG:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_LANGUAGE;
 			}
 			break;
@@ -104,7 +105,7 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 			}
 			break;
 		case _SEQUENCE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				const char *name = attributeValue(attributes, "name");
 				if (name != 0) {
 					std::string seriesTitle = name;
@@ -112,6 +113,11 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 					const char *number = attributeValue(attributes, "number");
 					myBook.setSeries(seriesTitle, number != 0 ? std::string(number) : std::string());
 				}
+			}
+			break;
+		case _ID:
+			if (myReadState == READ_DOCUMENT_INFO) {
+				myReadState = READ_ID;
 			}
 			break;
 		default:
@@ -124,11 +130,14 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 		case _TITLE_INFO:
 			myReadState = READ_NOTHING;
 			break;
+		case _DOCUMENT_INFO:
+			myReadState = READ_NOTHING;
+			break;
 		case _BOOK_TITLE:
 			if (myReadState == READ_TITLE) {
 				myBook.setTitle(myBuffer);
 				myBuffer.erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _GENRE:
@@ -146,7 +155,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 					}
 					myBuffer.erase();
 				}
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _AUTHOR:
@@ -167,14 +176,14 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 				myAuthorNames[0].erase();
 				myAuthorNames[1].erase();
 				myAuthorNames[2].erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _LANG:
 			if (myReadState == READ_LANGUAGE) {
 				myBook.setLanguage(myBuffer);
 				myBuffer.erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _FIRST_NAME:
@@ -192,6 +201,13 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 				myReadState = READ_AUTHOR;
 			}
 			break;
+		case _ID:
+			if (myReadState == READ_ID) {
+				myBook.addUid("FB2-DOC-ID", myBuffer);
+				myBuffer.erase();
+				myReadState = READ_DOCUMENT_INFO;
+			}
+			break;
 		default:
 			break;
 	}
@@ -199,6 +215,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 
 bool FB2MetaInfoReader::readMetaInfo() {
 	myReadState = READ_NOTHING;
+	myBuffer.erase();
 	for (int i = 0; i < 3; ++i) {
 		myAuthorNames[i].erase();
 	}

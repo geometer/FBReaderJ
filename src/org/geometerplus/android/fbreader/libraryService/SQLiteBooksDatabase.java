@@ -77,14 +77,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 21;
+		final int currentVersion = 22;
 		if (version >= currentVersion) {
 			return;
 		}
 
 		myDatabase.beginTransaction();
 
-		switch (myDatabase.getVersion()) {
+		switch (version) {
 			case 0:
 				createTables();
 			case 1:
@@ -127,6 +127,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables19();
 			case 20:
 				updateTables20();
+			case 21:
+				updateTables21();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -466,20 +468,31 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
+	private SQLiteStatement myDeleteBookUidsStatement;
+	protected void deleteAllBookUids(long bookId) {
+		if (myDeleteBookUidsStatement == null) {
+			myDeleteBookUidsStatement = myDatabase.compileStatement(
+				"DELETE FROM BookUid WHERE book_id = ?"
+			);
+		}
+		myDeleteBookUidsStatement.bindLong(1, bookId);
+		myDeleteBookUidsStatement.execute();
+	}
+
 	private SQLiteStatement myInsertBookUidStatement;
 	@Override
 	protected void saveBookUid(long bookId, UID uid) {
 		if (myInsertBookUidStatement == null) {
 			myInsertBookUidStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO BookUid (book_id,type,uid) VALUES (?,?,?)"
+				"INSERT OR IGNORE INTO BookUid (book_id,type,uid) VALUES (?,?,?)"
 			);
 		}
 
 		synchronized (myInsertBookUidStatement) {
 			myInsertBookUidStatement.bindLong(1, bookId);
 			myInsertBookUidStatement.bindString(2, uid.Type);
-			myInsertBookUidStatement.bindString(2, uid.Id);
-			myInsertBookAuthorStatement.execute();
+			myInsertBookUidStatement.bindString(3, uid.Id);
+			myInsertBookUidStatement.execute();
 		}
 	}
 
@@ -1065,7 +1078,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"parent_id INTEGER REFERENCES Tags(tag_id)," +
 				"CONSTRAINT Tags_Unique UNIQUE (name, parent_id))");
 		myDatabase.execSQL("INSERT INTO Tags (tag_id,name,parent_id) SELECT tag_id,name,parent FROM Tags_Obsolete");
-		myDatabase.execSQL("DROP TABLE Tags_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS Tags_Obsolete");
 
 		myDatabase.execSQL("ALTER TABLE BookTag RENAME TO BookTag_Obsolete");
 		myDatabase.execSQL(
@@ -1074,7 +1087,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"CONSTRAINT BookTag_Unique UNIQUE (tag_id, book_id))");
 		myDatabase.execSQL("INSERT INTO BookTag (tag_id,book_id) SELECT tag_id,book_id FROM BookTag_Obsolete");
-		myDatabase.execSQL("DROP TABLE BookTag_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookTag_Obsolete");
 	}
 
 	private void updateTables2() {
@@ -1222,7 +1235,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"title TEXT NOT NULL," +
 				"file_id INTEGER UNIQUE NOT NULL REFERENCES Files(file_id))");
 		myDatabase.execSQL("INSERT INTO Books (book_id,encoding,language,title,file_id) SELECT book_id,encoding,language,title,file_id FROM Books_Obsolete");
-		myDatabase.execSQL("DROP TABLE Books_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS Books_Obsolete");
 	}
 
 	private void updateTables7() {
@@ -1298,7 +1311,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
 				"book_index REAL)");
 		myDatabase.execSQL("INSERT INTO BookSeries (series_id,book_id,book_index) SELECT series_id,book_id,book_index FROM BookSeries_Obsolete");
-		myDatabase.execSQL("DROP TABLE BookSeries_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookSeries_Obsolete");
 	}
 
 	private void updateTables15() {
@@ -1354,19 +1367,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			insert.executeInsert();
 		}
 		cursor.close();
-		myDatabase.execSQL("DROP TABLE BookSeries_Obsolete");
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookSeries_Obsolete");
 	}
 
 	private void updateTables19() {
-		myDatabase.execSQL("DROP TABLE BookList");
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookList");
 	}
 
 	private void updateTables20() {
-		myDatabase.execSQL(
-			"CREATE TABLE IF NOT EXISTS BookUid(" +
-				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
-				"type TEXT NOT NULL," +
-				"uid TEXT NOT NULL)");
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS Labels(" +
 				"label_id INTEGER PRIMARY KEY," +
@@ -1381,6 +1389,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		);
 		final long id = insert.executeInsert();
 		myDatabase.execSQL("INSERT INTO BookLabel (label_id,book_id) SELECT " + id + ",book_id FROM Favorites");
-		myDatabase.execSQL("DROP TABLE Favorites");
+		myDatabase.execSQL("DROP TABLE IF EXISTS Favorites");
+	}
+
+	private void updateTables21() {
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookUid");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookUid(" +
+				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"type TEXT NOT NULL," +
+				"uid TEXT NOT NULL," +
+				"CONSTRAINT BookUid_Unique UNIQUE (book_id,type,uid))");
 	}
 }

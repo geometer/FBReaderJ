@@ -53,8 +53,10 @@ private:
 		READ_TITLE,
 		READ_SUBJECT,
 		READ_LANGUAGE,
+		READ_IDENTIFIER,
 	} myReadState;
 
+	std::string myIdentifierScheme;
 	std::string myBuffer;
 	std::vector<std::string> myAuthorList;
 	std::vector<std::string> myAuthorList2;

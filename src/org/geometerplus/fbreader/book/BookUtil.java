@@ -99,7 +99,7 @@ public abstract class BookUtil {
 			for (byte b : hash.digest()) {
 				f.format("%02X", b & 0xFF);
 			}
-			return new UID("SHA256", f.toString());
+			return new UID("SHA-256", f.toString());
 		} catch (IOException e) {
 			return null;
 		} catch (NoSuchAlgorithmException e) {

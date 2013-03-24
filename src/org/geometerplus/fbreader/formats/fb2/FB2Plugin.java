@@ -48,6 +48,11 @@ public class FB2Plugin extends JavaFormatPlugin {
 	}
 
 	@Override
+	public void readUids(Book book) throws BookReadingException {
+		// this method does nothing, we expect it will be never called
+	}
+
+	@Override
 	public void readModel(BookModel model) throws BookReadingException {
 		new FB2Reader(model).readBook();
 	}
