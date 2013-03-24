@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,37 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.book;
+#ifndef __FB2UIDREADER_H__
+#define __FB2UIDREADER_H__
 
-public class UID {
-	public final String Type;
-	public final String Id;
+#include <string>
 
-	public UID(String type, String id) {
-		Type = type;
-		Id = id.trim();
-	}
+#include "FB2Reader.h"
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof UID)) {
-			return false;
-		}
-		final UID u = (UID)o;
-		return Type.equals(u.Type) && Id.equals(u.Id);
-	}
+class Book;
 
-	@Override
-	public int hashCode() {
-		return Type.hashCode() + Id.hashCode();
-	}
-}
+class FB2UidReader : public FB2Reader {
+
+public:
+	FB2UidReader(Book &book);
+	bool readUids();
+
+	void startElementHandler(int tag, const char **attributes);
+	void endElementHandler(int tag);
+	void characterDataHandler(const char *text, std::size_t len);
+
+private:
+	Book &myBook;
+
+	bool myReturnCode;
+
+	enum {
+		READ_NOTHING,
+		READ_DOCUMENT_INFO,
+		READ_ID
+	} myReadState;
+
+	std::string myBuffer;
+};
+
+#endif /* __FB2UIDREADER_H__ */

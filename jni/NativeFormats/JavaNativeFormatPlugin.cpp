@@ -27,6 +27,7 @@
 #include "fbreader/src/library/Author.h"
 #include "fbreader/src/library/Book.h"
 #include "fbreader/src/library/Tag.h"
+#include "fbreader/src/library/UID.h"
 
 static shared_ptr<FormatPlugin> findCppPlugin(jobject base) {
 	const std::string fileType = AndroidUtil::Method_NativeFormatPlugin_supportedFileType->callForCppString(base);
@@ -35,6 +36,17 @@ static shared_ptr<FormatPlugin> findCppPlugin(jobject base) {
 		AndroidUtil::throwRuntimeException("Native FormatPlugin instance is NULL for type " + fileType);
 	}
 	return plugin;
+}
+
+static void fillUids(JNIEnv* env, jobject javaBook, Book &book) {
+	const UIDList &uids = book.uids();
+	for (UIDList::const_iterator it = uids.begin(); it != uids.end(); ++it) {
+		jstring type = AndroidUtil::createJavaString(env, (*it)->Type);
+		jstring id = AndroidUtil::createJavaString(env, (*it)->Id);
+		AndroidUtil::Method_Book_addUid->call(javaBook, type, id);
+		env->DeleteLocalRef(id);
+		env->DeleteLocalRef(type);
+	}
 }
 
 static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
@@ -81,6 +93,8 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 		const Tag &tag = *tags[i];
 		AndroidUtil::Method_Book_addTag->call(javaBook, tag.javaTag(env));
 	}
+
+	fillUids(env, javaBook, book);
 }
 
 static void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
@@ -114,6 +128,19 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 
 	fillMetaInfo(env, javaBook, *book);
 	return JNI_TRUE;
+}
+
+extern "C"
+JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readUidsNative(JNIEnv* env, jobject thiz, jobject javaBook) {
+	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
+	if (plugin.isNull()) {
+		return;
+	}
+
+	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
+
+	plugin->readUids(*book);
+	fillUids(env, javaBook, *book);
 }
 
 extern "C"

@@ -781,14 +781,6 @@ public class BookCollection extends AbstractBookCollection {
 			// ignore
 		}
 
-		try {
-			final Book book = new Book(file);
-			newBooks.add(book);
-			return;
-		} catch (BookReadingException e) {
-			// ignore
-		}
-
 		if (file.isArchive()) {
 			for (ZLFile entry : fileInfos.archiveEntries(file)) {
 				collectBooks(
@@ -797,6 +789,14 @@ public class BookCollection extends AbstractBookCollection {
 					newBooks,
 					doReadMetaInfo
 				);
+			}
+		} else {
+			try {
+				final Book book = new Book(file);
+				newBooks.add(book);
+				return;
+			} catch (BookReadingException e) {
+				// ignore
 			}
 		}
 	}

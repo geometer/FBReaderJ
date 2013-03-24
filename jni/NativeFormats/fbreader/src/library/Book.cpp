@@ -30,6 +30,7 @@
 #include "Book.h"
 #include "Author.h"
 #include "Tag.h"
+#include "UID.h"
 
 #include "../formats/FormatPlugin.h"
 //#include "../migration/BookInfo.h"
@@ -294,4 +295,25 @@ void Book::addAuthor(shared_ptr<Author> author) {
 
 void Book::removeAllAuthors() {
 	myAuthors.clear();
+}
+
+void Book::addUid(shared_ptr<UID> uid) {
+	if (uid.isNull()) {
+		return;
+	}
+	UIDList::const_iterator it = std::find(myUIDs.begin(), myUIDs.end(), uid);
+	if (it == myUIDs.end()) {
+		myUIDs.push_back(uid);
+	}
+}
+
+void Book::addUid(const std::string &type, const std::string &id) {
+	if (type == "" || id == "") {
+		return;
+	}
+	addUid(new UID(type, id));
+}
+
+void Book::removeAllUids() {
+	myUIDs.clear();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.book;
+#include "UID.h"
 
-public class UID {
-	public final String Type;
-	public final String Id;
+UID::UID(const std::string &type, const std::string &id) : Type(type), Id(id) {
+}
 
-	public UID(String type, String id) {
-		Type = type;
-		Id = id.trim();
-	}
+bool UID::operator == (const UID &uid) const {
+	return Type == uid.Type && Id == uid.Id;
+}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof UID)) {
-			return false;
-		}
-		final UID u = (UID)o;
-		return Type.equals(u.Type) && Id.equals(u.Id);
-	}
-
-	@Override
-	public int hashCode() {
-		return Type.hashCode() + Id.hashCode();
-	}
+bool UID::operator != (const UID &uid) const {
+	return !(*this == uid);
 }

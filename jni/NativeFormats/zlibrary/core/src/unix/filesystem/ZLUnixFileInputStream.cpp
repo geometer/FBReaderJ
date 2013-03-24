@@ -85,5 +85,5 @@ void ZLUnixFileInputStream::seek(int offset, bool absoluteOffset) {
 }
 
 std::size_t ZLUnixFileInputStream::offset() const {
-	return myNeedRepositionToStart ? 0 : ftell(myFile);
+	return myFile == 0 || myNeedRepositionToStart ? 0 : ftell(myFile);
 }
