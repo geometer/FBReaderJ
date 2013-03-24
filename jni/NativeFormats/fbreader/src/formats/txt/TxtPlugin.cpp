@@ -38,7 +38,11 @@ const std::string TxtPlugin::supportedFileType() const {
 	return "plain text";
 }
 
-bool TxtPlugin::readMetaInfo(Book &book) const {
+bool TxtPlugin::readMetaInfo(Book &/*book*/) const {
+	return true;
+}
+
+bool TxtPlugin::readUids(Book &/*book*/) const {
 	return true;
 }
 
