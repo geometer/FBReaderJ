@@ -33,6 +33,10 @@ bool FB2Plugin::readMetaInfo(Book &book) const {
 	return FB2MetaInfoReader(book).readMetaInfo();
 }
 
+bool FB2Plugin::readUids(Book &/*book*/) const {
+	return true;
+}
+
 bool FB2Plugin::readModel(BookModel &model) const {
 	return FB2BookReader(model).readBook();
 }
