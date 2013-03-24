@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
 import org.geometerplus.fbreader.book.SerializerUtil;
@@ -36,8 +37,18 @@ class ShowBookmarksAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final Intent intent =
-			new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
+		try {
+			startBookmarksActivity(
+				new Intent("android.fbreader.action.EXTERNAL_BOOKMARKS")
+			);
+		} catch (ActivityNotFoundException e) {
+			startBookmarksActivity(
+				new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class)
+			);
+		}
+	}
+
+	private void startBookmarksActivity(Intent intent) {
 		intent.putExtra(
 			FBReader.BOOK_KEY, SerializerUtil.serialize(Reader.Model.Book)
 		);
