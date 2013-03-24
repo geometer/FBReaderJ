@@ -137,9 +137,9 @@ public class Book extends TitledEntity {
 		myAuthors = null;
 		myTags = null;
 		mySeriesInfo = null;
+		myUids = null;
 
 		myIsSaved = false;
-
 
 		final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
 		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
@@ -158,8 +158,10 @@ public class Book extends TitledEntity {
 			}
 		} else {
 			plugin.readMetaInfo(this);
+			if (myUids == null || myUids.isEmpty()) {
+				plugin.readUids(this);
+			}
 		}
-
 
 		if (isTitleEmpty()) {
 			final String fileName = File.getShortName();
@@ -180,6 +182,16 @@ public class Book extends TitledEntity {
 		mySeriesInfo = database.getSeriesInfo(myId);
 		myUids = database.listUids(myId);
 		myIsSaved = true;
+		if (myUids == null || myUids.isEmpty()) {
+			try {
+				final FormatPlugin plugin = getPlugin();
+				if (plugin != null) {
+					plugin.readUids(this);
+					save(database, false);
+				}
+			} catch (BookReadingException e) {
+			}
+		}
 	}
 
 	public List<Author> authors() {
@@ -358,6 +370,37 @@ public class Book extends TitledEntity {
 		addTag(Tag.getTag(null, tagName));
 	}
 
+	public List<UID> uids() {
+		return myUids != null ? Collections.unmodifiableList(myUids) : Collections.<UID>emptyList();
+	}
+
+	public void addUid(String type, String id) {
+		addUid(new UID(type, id));
+	}
+
+	void addUidWithNoCheck(UID uid) {
+		if (uid == null) {
+			return;
+		}
+		if (myUids == null) {
+			myUids = new ArrayList<UID>();
+		}
+		myUids.add(uid);
+	}
+
+	public void addUid(UID uid) {
+		if (uid == null) {
+			return;
+		}
+		if (myUids == null) {
+			myUids = new ArrayList<UID>();
+		}
+		if (!myUids.contains(uid)) {
+			myUids.add(uid);
+			myIsSaved = false;
+		}
+	}
+
 	public boolean matchesUid(UID uid) {
 		return myUids.contains(uid);
 	}
@@ -418,6 +461,10 @@ public class Book extends TitledEntity {
 					database.saveBookTagInfo(myId, tag);
 				}
 				database.saveBookSeriesInfo(myId, mySeriesInfo);
+				database.deleteAllBookUids(myId);
+				for (UID uid : uids()) {
+					database.saveBookUid(myId, uid);
+				}
 			}
 		});
 

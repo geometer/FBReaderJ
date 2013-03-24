@@ -31,7 +31,7 @@ public abstract class BooksDatabase {
 		return createBook(id, infos.getFile(fileId), title, encoding, language);
 	}
 	protected Book createBook(long id, ZLFile file, String title, String encoding, String language) {
-		return (file != null) ? new Book(id, file, title, encoding, language) : null;
+		return file != null ? new Book(id, file, title, encoding, language) : null;
 	}
 	protected void addAuthor(Book book, Author author) {
 		book.addAuthorWithNoCheck(author);
@@ -65,6 +65,7 @@ public abstract class BooksDatabase {
 	protected abstract void deleteAllBookTags(long bookId);
 	protected abstract void saveBookTagInfo(long bookId, Tag tag);
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
+	protected abstract void deleteAllBookUids(long bookId);
 	protected abstract void saveBookUid(long bookId, UID uid);
 
 	protected FileInfo createFileInfo(long id, String name, FileInfo parent) {
