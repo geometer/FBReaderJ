@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
@@ -116,5 +117,16 @@ public class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public void detectLanguageAndEncoding(Book book) {
+	}
+
+	@Override
+	public void readUids(Book book) throws BookReadingException {
+		if (myInfoReader != null) {
+			myInfoReader.readUids(book);
+			return;
+		}
+		if (book.uids().isEmpty()) {
+			book.addUid(BookUtil.createSHA256Uid(book.File));
+		}
 	}
 }

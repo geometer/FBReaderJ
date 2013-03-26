@@ -23,6 +23,7 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class PdfPluginFormatPlugin extends PluginFormatPlugin {
@@ -53,6 +54,13 @@ public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 	public String readAnnotation(ZLFile file) {
 		//TODO
 		return null;
+	}
+	
+	@Override
+	public void readUids(Book book) throws BookReadingException {
+		if (book.uids().isEmpty()) {
+			book.addUid(BookUtil.createSHA256Uid(book.File));
+		}
 	}
 
 }
