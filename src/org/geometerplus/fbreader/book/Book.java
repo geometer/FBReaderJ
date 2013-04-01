@@ -201,7 +201,7 @@ public class Book extends TitledEntity {
 	public void setAuthors(List<Author> list) {
 		myAuthors = null;
 		for (Author s : list) {
-			addAuthor(s);
+			addAuthor(s.DisplayName, s.SortKey);
 		}
 	}
 
