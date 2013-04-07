@@ -33,6 +33,75 @@ import android.util.Xml;
 
 class XMLSerializer extends AbstractSerializer {
 	@Override
+	public String serialize(Query query) {
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(buffer, "query", false,
+			"limit", String.valueOf(query.Limit),
+			"page", String.valueOf(query.Page)
+		);
+		serialize(buffer, query.Filter);
+		closeTag(buffer, "query");
+		return buffer.toString();
+	}
+
+	private void serialize(StringBuilder buffer, Filter filter) {
+		final String type;
+		if (filter instanceof Filter.Empty) {
+			type = "empty";
+		} else if (filter instanceof Filter.And) {
+			type = "and";
+		} else if (filter instanceof Filter.Or) {
+			type = "or";
+		} else if (filter instanceof Filter.ByBook) {
+			type = "book";
+		} else if (filter instanceof Filter.ByAuthor) {
+			type = "author";
+		} else if (filter instanceof Filter.BySeries) {
+			type = "series";
+		} else if (filter instanceof Filter.ByPattern) {
+			type = "pattern";
+		} else if (filter instanceof Filter.ByTitlePrefix) {
+			type = "title-prefix";
+		} else if (filter instanceof Filter.HasBookmark) {
+			type = "has-bookmark";
+		} else {
+			throw new RuntimeException("Unsupported filter type: " + filter.getClass());
+		}
+		appendTag(buffer, type, false);
+		if (filter instanceof Filter.And) {
+			serialize(buffer, ((Filter.And)filter).First);
+			serialize(buffer, ((Filter.And)filter).Second);
+		} else if (filter instanceof Filter.Or) {
+			serialize(buffer, ((Filter.Or)filter).First);
+			serialize(buffer, ((Filter.Or)filter).Second);
+		} else if (filter instanceof Filter.ByBook) {
+			buffer.append(String.valueOf(((Filter.ByBook)filter).Book.getId()));
+		} else if (filter instanceof Filter.ByAuthor) {
+			// TODO: implement
+		} else if (filter instanceof Filter.BySeries) {
+			// TODO: implement
+		} else if (filter instanceof Filter.ByPattern) {
+			buffer.append(((Filter.ByPattern)filter).Pattern);
+		} else if (filter instanceof Filter.ByTitlePrefix) {
+			buffer.append(((Filter.ByTitlePrefix)filter).Prefix);
+		}
+		closeTag(buffer, type);
+	}
+
+	@Override
+	public Query deserializeQuery(String xml) {
+		try {
+			final QueryDeserializer deserializer = new QueryDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getQuery();
+		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
 	public String serialize(Book book) {
 		final StringBuilder buffer = new StringBuilder();
 		appendTag(
@@ -420,6 +489,59 @@ class XMLSerializer extends AbstractSerializer {
 				case READ_SERIES_INDEX:
 					mySeriesIndex.append(ch, start, length);
 					break;
+			}
+		}
+	}
+
+	private static final class QueryDeserializer extends DefaultHandler {
+		private static enum State {
+			READ_TOP_LEVEL,
+			READ_FILTER_EMPTY,
+			READ_FILTER_AND,
+			READ_FILTER_OR,
+			READ_FILTER_BOOK,
+			READ_FILTER_AUTHOR,
+			READ_FILTER_SERIES,
+			READ_FILTER_TITLE_PREFIX,
+			READ_FILTER_HAS_BOOKMARK,
+			READ_FILTER_PATTERN
+		}
+
+		private LinkedList<State> myStateStack = new LinkedList<State>();
+
+		public Query getQuery() {
+			return null;
+		}
+
+		@Override
+		public void startDocument() {
+			myState = State.READ_NOTHING;
+		}
+
+		@Override
+		public void endDocument() {
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			switch (myState) {
+				case READ_NOTHING:
+				case READ_QUERY:
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			switch (myState) {
+				case READ_NOTHING:
+				case READ_QUERY:
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length) {
+			switch (myState) {
+				case READ_QUERY:
 			}
 		}
 	}
