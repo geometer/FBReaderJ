@@ -174,7 +174,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public boolean saveBook(Book book, boolean force) {
+	public synchronized boolean saveBook(Book book, boolean force) {
 		if (book == null) {
 			return false;
 		}
@@ -682,19 +682,14 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		// Step 3: add help file
-		try {
-			final ZLFile helpFile = BookUtil.getHelpFile();
-			Book helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
-			if (helpBook == null) {
-				helpBook = new Book(helpFile);
-			}
-			saveBook(helpBook, false);
-			// saved
-			addBook(helpBook, false);
-		} catch (BookReadingException e) {
-			// that's impossible
-			e.printStackTrace();
+		final ZLFile helpFile = BookUtil.getHelpFile();
+		Book helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
+		if (helpBook == null) {
+			helpBook = getBookByFile(helpFile);
 		}
+		saveBook(helpBook, false);
+		// saved
+		addBook(helpBook, false);
 
 		// Step 4: save changes into database
 		fileInfos.save();
@@ -774,12 +769,9 @@ public class BookCollection extends AbstractBookCollection {
 				);
 			}
 		} else {
-			try {
-				final Book book = new Book(file);
+			final Book book = getBookByFile(file);
+			if (book != null) {
 				newBooks.add(book);
-				return;
-			} catch (BookReadingException e) {
-				// ignore
 			}
 		}
 	}

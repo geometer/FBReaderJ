@@ -485,4 +485,14 @@ public class Book extends TitledEntity {
 		}
 		return File.equals(((Book)o).File);
 	}
+
+	@Override
+	public String toString() {
+		return new StringBuilder("Book[")
+			.append(File.getPath())
+			.append(", ")
+			.append(myId)
+			.append("]")
+			.toString();
+	}
 }
