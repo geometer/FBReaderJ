@@ -45,47 +45,54 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	private void serialize(StringBuilder buffer, Filter filter) {
-		final String type;
 		if (filter instanceof Filter.Empty) {
-			type = "empty";
+			appendTag(buffer, "filter", true,
+				"type", "empty"
+			);
 		} else if (filter instanceof Filter.And) {
-			type = "and";
+			appendTag(buffer, "and", false);
+			serialize(buffer, ((Filter.And)filter).First);
+			serialize(buffer, ((Filter.And)filter).Second);
+			closeTag(buffer, "and");
 		} else if (filter instanceof Filter.Or) {
-			type = "or";
+			appendTag(buffer, "or", false);
+			serialize(buffer, ((Filter.Or)filter).First);
+			serialize(buffer, ((Filter.Or)filter).Second);
+			closeTag(buffer, "or");
 		} else if (filter instanceof Filter.ByBook) {
-			type = "book";
+			appendTag(buffer, "filter", true,
+				"type", "book",
+				"id", String.valueOf(((Filter.ByBook)filter).Book.getId())
+			);
 		} else if (filter instanceof Filter.ByAuthor) {
-			type = "author";
+			final Author author = ((Filter.ByAuthor)filter).Author;
+			appendTag(buffer, "filter", true,
+				"type", "author",
+				"displayName", author.DisplayName,
+				"sorkKey", author.SortKey
+			);
 		} else if (filter instanceof Filter.BySeries) {
-			type = "series";
+			appendTag(buffer, "filter", true,
+				"type", "series",
+				"title", ((Filter.BySeries)filter).Series.getTitle()
+			);
 		} else if (filter instanceof Filter.ByPattern) {
-			type = "pattern";
+			appendTag(buffer, "filter", true,
+				"type", "pattern",
+				"pattern", ((Filter.ByPattern)filter).Pattern
+			);
 		} else if (filter instanceof Filter.ByTitlePrefix) {
-			type = "title-prefix";
+			appendTag(buffer, "filter", true,
+				"type", "title-prefix",
+				"prefix", ((Filter.ByPattern)filter).Pattern
+			);
 		} else if (filter instanceof Filter.HasBookmark) {
-			type = "has-bookmark";
+			appendTag(buffer, "filter", true,
+				"type", "has-bookmark"
+			);
 		} else {
 			throw new RuntimeException("Unsupported filter type: " + filter.getClass());
 		}
-		appendTag(buffer, type, false);
-		if (filter instanceof Filter.And) {
-			serialize(buffer, ((Filter.And)filter).First);
-			serialize(buffer, ((Filter.And)filter).Second);
-		} else if (filter instanceof Filter.Or) {
-			serialize(buffer, ((Filter.Or)filter).First);
-			serialize(buffer, ((Filter.Or)filter).Second);
-		} else if (filter instanceof Filter.ByBook) {
-			buffer.append(String.valueOf(((Filter.ByBook)filter).Book.getId()));
-		} else if (filter instanceof Filter.ByAuthor) {
-			// TODO: implement
-		} else if (filter instanceof Filter.BySeries) {
-			// TODO: implement
-		} else if (filter instanceof Filter.ByPattern) {
-			buffer.append(((Filter.ByPattern)filter).Pattern);
-		} else if (filter instanceof Filter.ByTitlePrefix) {
-			buffer.append(((Filter.ByTitlePrefix)filter).Prefix);
-		}
-		closeTag(buffer, type);
 	}
 
 	@Override
@@ -495,16 +502,10 @@ class XMLSerializer extends AbstractSerializer {
 
 	private static final class QueryDeserializer extends DefaultHandler {
 		private static enum State {
-			READ_TOP_LEVEL,
-			READ_FILTER_EMPTY,
+			READ_QUERY,
 			READ_FILTER_AND,
 			READ_FILTER_OR,
-			READ_FILTER_BOOK,
-			READ_FILTER_AUTHOR,
-			READ_FILTER_SERIES,
-			READ_FILTER_TITLE_PREFIX,
-			READ_FILTER_HAS_BOOKMARK,
-			READ_FILTER_PATTERN
+			READ_FILTER_SIMPLE
 		}
 
 		private LinkedList<State> myStateStack = new LinkedList<State>();
@@ -515,7 +516,7 @@ class XMLSerializer extends AbstractSerializer {
 
 		@Override
 		public void startDocument() {
-			myState = State.READ_NOTHING;
+			myStateStack.clear();
 		}
 
 		@Override
@@ -524,24 +525,47 @@ class XMLSerializer extends AbstractSerializer {
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			switch (myState) {
-				case READ_NOTHING:
-				case READ_QUERY:
+			if (myStateStack.isEmpty()) {
+				if ("query".equals(localName)) {
+					myStateStack.add(State.READ_QUERY);
+					// TODO: read query params
+				} else {
+					throw new SAXException("Unexpected tag " + localName);
+				}
+			} else {
+				if ("filter".equals(localName)) {
+					// TODO: implement
+					myStateStack.add(State.READ_FILTER_SIMPLE);
+				} else if ("and".equals(localName)) {
+					// TODO: implement
+					myStateStack.add(State.READ_FILTER_AND);
+				} else if ("or".equals(localName)) {
+					// TODO: implement
+					myStateStack.add(State.READ_FILTER_OR);
+				} else {
+					throw new SAXException("Unexpected tag " + localName);
+				}
 			}
 		}
 
 		@Override
 		public void endElement(String uri, String localName, String qName) throws SAXException {
-			switch (myState) {
-				case READ_NOTHING:
-				case READ_QUERY:
+			if (myStateStack.isEmpty()) {
+				// should be never thrown
+				throw new SAXException("Unexpected end of tag " + localName);
 			}
-		}
-
-		@Override
-		public void characters(char[] ch, int start, int length) {
-			switch (myState) {
+			switch (myStateStack.removeLast()) {
 				case READ_QUERY:
+					// TODO: implement
+					break;
+				case READ_FILTER_AND:
+					// TODO: implement
+					break;
+				case READ_FILTER_OR:
+					// TODO: implement
+					break;
+				case READ_FILTER_SIMPLE:
+					break;
 			}
 		}
 	}
