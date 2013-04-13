@@ -20,10 +20,10 @@
 package org.geometerplus.fbreader.book;
 
 public class Filter {
-	public final class Empty extends Filter {
+	public final static class Empty extends Filter {
 	}
 
-	public final class ByBook extends Filter {
+	public final static class ByBook extends Filter {
 		public final Book Book;
 
 		public ByBook(Book book) {
@@ -31,7 +31,7 @@ public class Filter {
 		}
 	}
 
-	public final class ByAuthor extends Filter {
+	public final static class ByAuthor extends Filter {
 		public final Author Author;
 
 		public ByAuthor(Author author) {
@@ -39,7 +39,7 @@ public class Filter {
 		}
 	}
 
-	public final class ByPattern extends Filter {
+	public final static class ByPattern extends Filter {
 		public final String Pattern;
 
 		public ByPattern(String pattern) {
@@ -47,7 +47,7 @@ public class Filter {
 		}
 	}
 
-	public final class ByTitlePrefix extends Filter {
+	public final static class ByTitlePrefix extends Filter {
 		public final String Prefix;
 
 		public ByTitlePrefix(String prefix) {
@@ -55,7 +55,7 @@ public class Filter {
 		}
 	}
 
-	public final class BySeries extends Filter {
+	public final static class BySeries extends Filter {
 		public final Series Series;
 
 		public BySeries(Series series) {
@@ -63,10 +63,10 @@ public class Filter {
 		}
 	}
 
-	public final class HasBookmark extends Filter {
+	public final static class HasBookmark extends Filter {
 	}
 
-	public final class And extends Filter {
+	public final static class And extends Filter {
 		public final Filter First;
 		public final Filter Second;
 
@@ -76,7 +76,7 @@ public class Filter {
 		}
 	}
 
-	public final class Or extends Filter {
+	public final static class Or extends Filter {
 		public final Filter First;
 		public final Filter Second;
 

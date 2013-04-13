@@ -509,6 +509,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 
 		private LinkedList<State> myStateStack = new LinkedList<State>();
+		private Filter myFilter;
 
 		public Query getQuery() {
 			return null;
@@ -534,7 +535,24 @@ class XMLSerializer extends AbstractSerializer {
 				}
 			} else {
 				if ("filter".equals(localName)) {
-					// TODO: implement
+					final String type = attributes.getValue("type");
+					if ("empty".equals(type)) {
+						myFilter = new Filter.Empty();
+					} else if ("book".equals(type)) {
+						// TODO: implement
+					} else if ("author".equals(type)) {
+						// TODO: implement
+					} else if ("series".equals(type)) {
+						// TODO: implement
+					} else if ("pattern".equals(type)) {
+						myFilter = new Filter.ByPattern(attributes.getValue("pattern"));
+					} else if ("title-prefix".equals(type)) {
+						myFilter = new Filter.ByTitlePrefix(attributes.getValue("prefix"));
+					} else if ("has-bookmark".equals(type)) {
+						myFilter = new Filter.HasBookmark();
+					} else {
+						throw new SAXException("Unexpected filter type: " + type);
+					}
 					myStateStack.add(State.READ_FILTER_SIMPLE);
 				} else if ("and".equals(localName)) {
 					// TODO: implement
