@@ -80,10 +80,14 @@ public final class MimeType {
 	public static final MimeType APP_ATOM_XML_ENTRY = get("application/atom+xml;type=entry");
 	// http://tools.ietf.org/id/draft-nottingham-rss-media-type-00.txt
 	public static final MimeType APP_RSS_XML = get("application/rss+xml");
+
 	// ???
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
     // unofficial, used in data.fbreader.org LitRes catalog
-	public static final MimeType APP_LITRES = get("application/litres+xml");
+	public static final MimeType APP_LITRES_XML = get("application/litres+xml");
+	public static final MimeType APP_LITRES_XML_BOOKS = get("application/litres+xml;type=books");
+	public static final MimeType APP_LITRES_XML_AUTHORS = get("application/litres+xml;type=authors");
+	public static final MimeType APP_LITRES_XML_GENRES = get("application/litres+xml;type=genres");
 
 	// MIME types / text
 	// ???

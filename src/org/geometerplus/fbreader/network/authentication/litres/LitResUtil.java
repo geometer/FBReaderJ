@@ -25,9 +25,10 @@ import org.geometerplus.fbreader.network.INetworkLink;
 
 
 class LitResUtil {
-
+	static String LITRES_API_URL = "://robot.litres.ru/";
+	
 	public static String url(String path) {
-		String url = "://robot.litres.ru/" + path;
+		String url = LITRES_API_URL + path;
 		if (ZLNetworkUtil.hasParameter(url, "sid") ||
 				ZLNetworkUtil.hasParameter(url, "pwd")) {
 			url = "https" + url;
@@ -37,7 +38,71 @@ class LitResUtil {
 		return url;
 	}
 
-	public static String url(INetworkLink link, String path) {
-		return link.rewriteUrl(url(path), false);
+	public static String url(final INetworkLink link, final String path) {
+		String urlString = url(path);
+		link.rewriteUrl(urlString, true);
+		return urlString;
+	}
+
+	public static String url(boolean secure, final String path) {
+		String url = LITRES_API_URL + path;
+		if (secure) {
+			url = "https" + url;
+		} else {
+			url = "http" + url;
+		}
+		return url;
+	}
+
+	public static String url(final INetworkLink link, boolean secure, final String path) {
+		String urlString = url(secure, path);
+		link.rewriteUrl(urlString, true);
+		return urlString;
+	}
+
+	public static String generateTrialUrl(String bookId) {
+		int len = bookId.length();
+		if (len < 8) {
+			//bookId = std::string(8 - len, '0') + bookId;
+		}
+		String query = "static/trials/%s/%s/%s/%s.fb2.zip";
+		//query = ZLStringUtil.printf(query, bookId.substr(0,2));
+		//query = ZLStringUtil.printf(query, bookId.substr(2,2));
+		//query = ZLStringUtil.printf(query, bookId.substr(4,2));
+		//query = ZLStringUtil.printf(query, bookId);
+		return url(false, query);
+	}
+
+	public static String generatePurchaseUrl(final INetworkLink link, final String bookId) {
+		String query = "";
+		ZLNetworkUtil.appendParameter(query, "art", bookId);
+		return url(link, true, "pages/purchase_book/" + query);
+	}
+
+	public static String generateDownloadUrl(final String bookId) {
+		String query = "";
+		ZLNetworkUtil.appendParameter(query, "art", bookId);
+		return url(true, "pages/catalit_download_book/" + query);
+	}
+
+	public static String generateAlsoReadUrl(final String bookId) {
+		String query = "";
+		ZLNetworkUtil.appendParameter(query, "rating", "with");
+		ZLNetworkUtil.appendParameter(query, "art", bookId);
+		return url(false, "pages/catalit_browser/" + query);
+	}
+
+	public static String generateBooksByGenreUrl(final String genreId) {
+		String query = "";
+		ZLNetworkUtil.appendParameter(query, "checkpoint", "2000-01-01");
+		ZLNetworkUtil.appendParameter(query, "genre", genreId);
+		return url(false, "pages/catalit_browser/" + query);
+	}
+
+	public static String generateBooksByAuthorUrl(final String authorId) {
+		String query = "";
+		ZLNetworkUtil.appendParameter(query, "checkpoint", "2000-01-01");
+		ZLNetworkUtil.appendParameter(query, "person", authorId);
+		return url(false, "pages/catalit_browser/" + query);
 	}
 }

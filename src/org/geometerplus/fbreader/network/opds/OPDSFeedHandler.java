@@ -19,14 +19,21 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import org.geometerplus.fbreader.network.NetworkCatalogItem;
+import org.geometerplus.fbreader.network.NetworkItem;
+import org.geometerplus.fbreader.network.TopUpItem;
+import org.geometerplus.fbreader.network.atom.ATOMId;
+import org.geometerplus.fbreader.network.atom.ATOMLink;
+import org.geometerplus.fbreader.network.authentication.litres.LitResAuthorsItem;
+import org.geometerplus.fbreader.network.authentication.litres.LitResBooksFeedItem;
+import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
+import org.geometerplus.fbreader.network.authentication.litres.LitResByGenresItem;
+import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
-
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.atom.*;
-import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
-import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
-import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	private final NetworkCatalogItem myCatalog;
@@ -197,6 +204,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 
 		boolean urlIsAlternate = false;
 		String litresRel = null;
+		MimeType litresMime = null;
 		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final MimeType mime = MimeType.get(link.getType());
@@ -226,9 +234,11 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 					rel == null) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.HtmlPage, href, mime));
 				}
-			} else if (MimeType.APP_LITRES.weakEquals(mime)) {
+			} else if (MimeType.APP_LITRES_XML.weakEquals(mime)) {
+				System.out.println("[OPDSFeedHandler] readCatalogItem() mime: "+mime.toString());
 				urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href, mime));
 				litresRel = rel;
+				litresMime = mime;
 			}
 		}
 
@@ -251,25 +261,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		}
 
 		if (litresRel != null) {
-			if (REL_BOOKSHELF.equals(litresRel)) {
-				return new LitResBookshelfItem(
-					opdsLink,
-					entry.Title,
-					annotation,
-					urlMap
-				);
-			} else if (REL_RECOMMENDATIONS.equals(litresRel)) {
-				return new LitResRecommendationsItem(
-					opdsLink,
-					entry.Title,
-					annotation,
-					urlMap
-				);
-			} else if (REL_TOPUP.equals(litresRel)) {
-				return new TopUpItem(opdsLink, urlMap);
-			} else {
-				return null;
-			}
+			return createLitresCatalogItem(litresMime, litresRel, opdsLink, entry.Title, annotation, urlMap);
 		} else {
 			return new OPDSCatalogItem(
 				opdsLink,
@@ -277,6 +269,92 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 				annotation,
 				urlMap
 			);
+		}
+	}
+	
+	public NetworkItem createLitresCatalogItem(final MimeType mime, final String rel,
+			final OPDSNetworkLink link, CharSequence title,
+			CharSequence annotation, final UrlInfoCollection<UrlInfo> urlMap){
+		
+		final String TYPE = "type";
+		final String NO = "no";
+
+		String litresType = mime.getParameter(TYPE);
+		
+		if (REL_BOOKSHELF.equals(rel)) {
+			return new LitResBookshelfItem(
+					link,
+					title,
+				annotation,
+				urlMap
+			);
+		} else if (REL_RECOMMENDATIONS.equals(rel)) {
+			return new LitResRecommendationsItem(
+					link,
+					title,
+				annotation,
+				urlMap
+			);
+		} else if (litresType == MimeType.APP_LITRES_XML_BOOKS.getParameter(TYPE)) {
+			int flags = NetworkCatalogItem.FLAGS_DEFAULT;
+			if (mime.getParameter("groupSeries") == NO) {
+				flags &= ~NetworkCatalogItem.FLAG_GROUP_MORE_THAN_1_BOOK_BY_SERIES;
+			}
+			if (mime.getParameter("showAuthor") == "false") {
+				flags &= ~NetworkCatalogItem.FLAG_SHOW_AUTHOR;
+			}
+			return new LitResBooksFeedItem(
+					link,
+					title,
+				annotation,
+				urlMap
+			);
+			/*
+			bool sort = type->getParameter("sort") != NO;
+			return new LitResBooksFeedItem(
+				sort,
+				link,
+				title,
+				annotation,
+				urlMap,
+				dependsOnAccount ? NetworkCatalogItem::SIGNED_IN : NetworkCatalogItem::ALWAYS,
+				flags
+			);*/
+		
+		} else if (litresType == MimeType.APP_LITRES_XML_GENRES.getParameter(TYPE)) {
+			return new LitResByGenresItem(
+					link,
+					title,
+				annotation,
+				urlMap
+			);
+			/*return new LitResByGenresItem(
+				LitResGenreMap::Instance().genresTree(),
+				link,
+				title,
+				annotation,
+				urlMap,
+				NetworkCatalogItem::ALWAYS,
+				NetworkCatalogItem::FLAG_SHOW_AUTHOR
+			);*/
+		} else if (litresType == MimeType.APP_LITRES_XML_AUTHORS.getParameter(TYPE)) {
+			return new LitResAuthorsItem(
+					link,
+					title,
+				annotation,
+				urlMap
+			);
+			/*return new LitResAuthorsItem(
+				link,
+				title,
+				annotation,
+				urlMap,
+				NetworkCatalogItem::ALWAYS
+			);*/
+		} else if (REL_TOPUP.equals(rel)) {
+			return new TopUpItem(link, urlMap);
+		} else {
+			return null;
 		}
 	}
 }
