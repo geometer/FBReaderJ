@@ -1,3 +1,7 @@
+===== 1.7.9 (Apr ??, 2013) =====
+* Fixed Ukrainian hyphenations
+* Fixed missing paragraph before new section issue (in some book formats)
+
 ===== 1.7.8 (Mar 24, 2013) =====
 * Fixed library scanning: all books are visible in the library
 * Updated Czech & Norwegian translations
