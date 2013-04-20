@@ -857,4 +857,28 @@
 		<node name="unsupportedFileFormat" value="Не поддерживается формат файла '%s'"/>
 		<node name="errorParsingRtf" value="Ошибка при чтении RTF-файла %s"/>
 	</node>
+	<node name="pdfPlugin">
+	    <node name="bookOptions" value="Настройки книги"/>
+	    <node name="save" value="Сохранить"/>
+	    <node name="crop" value="Обрезка полей">
+	        <node name="top" value="Сверху:"/>
+	        <node name="bottom" value="Снизу:"/>
+	        <node name="right" value="Справа:"/>
+	        <node name="left" value="Слева:"/>
+	    </node>
+	    <node name="traversal" value="Пересечения при обходе">
+	        <node name="x" value="гориз.:"/>
+	        <node name="y" value="верт.:"/>
+	    </node>
+		<node name="zoomMode" value="Режим увеличения">
+	        <node name="free" value="Свободное"/>
+	        <node name="fixed" value="Фиксированное:"/>
+	        <node name="fitPage" value="Страница целиком"/>
+	        <node name="fitWidth" value="По ширине"/>
+	        <node name="fitHeight" value="По высоте"/>
+	        <node name="screenPercent" value="Процент от экрана"/>
+	        <node name="pagePercent" value="Процент от страницы"/>
+	    </node>
+	    <node name="pageWay" value="Путь обхода страницы"/>
+	</node>
 </resources>
