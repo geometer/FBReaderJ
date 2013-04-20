@@ -121,4 +121,19 @@ public final class ZLTextTeXHyphenationPattern {
 	public byte[] getValues() {
 		return myValues;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder buffer = new StringBuilder();
+		for (int i = 0; i < myLength; ++i) {
+			if (myValues != null) {
+				buffer.append((int)myValues[i]);
+			}
+			buffer.append(mySymbols[i]);
+		}
+		if (myValues != null) {
+			buffer.append((int)myValues[myLength]);
+		}
+		return buffer.toString();
+	}
 }
