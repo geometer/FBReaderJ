@@ -62,7 +62,7 @@ class XMLSerializer extends AbstractSerializer {
 		} else if (filter instanceof Filter.ByBook) {
 			appendTag(buffer, "filter", true,
 				"type", "book",
-				"id", String.valueOf(((Filter.ByBook)filter).Book.getId())
+				"id", String.valueOf(((Filter.ByBook)filter).Id)
 			);
 		} else if (filter instanceof Filter.ByAuthor) {
 			final Author author = ((Filter.ByAuthor)filter).Author;
@@ -509,6 +509,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 
 		private LinkedList<State> myStateStack = new LinkedList<State>();
+		private LinkedList<Filter> myFilterStack = new LinkedList<Filter>();
 		private Filter myFilter;
 
 		public Query getQuery() {
@@ -539,11 +540,16 @@ class XMLSerializer extends AbstractSerializer {
 					if ("empty".equals(type)) {
 						myFilter = new Filter.Empty();
 					} else if ("book".equals(type)) {
-						// TODO: implement
+						myFilter = new Filter.ByBook(Long.parseLong(attributes.getValue("id")));
 					} else if ("author".equals(type)) {
-						// TODO: implement
+						myFilter = new Filter.ByAuthor(new Author(
+							attributes.getValue("displayName"),
+							attributes.getValue("sorkKey")
+						));
 					} else if ("series".equals(type)) {
-						// TODO: implement
+						myFilter = new Filter.BySeries(new Series(
+							attributes.getValue("title")
+						));
 					} else if ("pattern".equals(type)) {
 						myFilter = new Filter.ByPattern(attributes.getValue("pattern"));
 					} else if ("title-prefix".equals(type)) {

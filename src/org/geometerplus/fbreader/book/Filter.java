@@ -24,10 +24,14 @@ public class Filter {
 	}
 
 	public final static class ByBook extends Filter {
-		public final Book Book;
+		public final long Id;
+
+		public ByBook(long id) {
+			Id = id;
+		}
 
 		public ByBook(Book book) {
-			Book = book;
+			this(book.getId());
 		}
 	}
 

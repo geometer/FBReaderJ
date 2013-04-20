@@ -50,6 +50,8 @@ public interface IBookCollection {
 	Status status();
 
 	int size();
+	List<Book> books(Query query);
+
 	List<Book> books();
 	List<Book> booksForLabel(String label);
 	List<Book> booksForAuthor(Author author);
@@ -57,8 +59,10 @@ public interface IBookCollection {
 	List<Book> booksForSeries(String series);
 	List<Book> booksForSeriesAndAuthor(String series, Author author);
 	List<Book> booksForTitlePrefix(String prefix);
-	boolean hasBooksForPattern(String pattern);
 	List<Book> booksForPattern(String pattern);
+	List<Book> booksWithBookmarks();
+
+	boolean hasBooksForPattern(String pattern);
 
 	List<String> labels();
 	List<String> labels(Book book);
