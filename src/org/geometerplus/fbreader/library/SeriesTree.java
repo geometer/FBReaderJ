@@ -20,31 +20,25 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
-import java.util.List;
-
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
 
-public final class SeriesTree extends LibraryTree {
+public final class SeriesTree extends FilteredTree {
 	public final Series Series;
-	public final Author Author;
-	public final Filter Filter;
+
+	private static Filter filter(Series series, Author author) {
+		final Filter f = new Filter.BySeries(series);
+		return author != null ? new Filter.And(f, new Filter.ByAuthor(author)) : f;
+	}
 
 	SeriesTree(IBookCollection collection, Series series, Author author) {
-		super(collection);
+		super(collection, filter(series, author));
 		Series = series;
-		Author = author;
-		final Filter f = new Filter.BySeries(series);
-		Filter = author != null ? new Filter.And(f, new Filter.ByAuthor(author)) : f;
 	}
 
 	SeriesTree(LibraryTree parent, Series series, Author author, int position) {
-		super(parent, position);
+		super(parent, filter(series, author), position);
 		Series = series;
-		Author = author;
-		final Filter f = new Filter.BySeries(series);
-		Filter = author != null ? new Filter.And(f, new Filter.ByAuthor(author)) : f;
 	}
 
 	@Override
@@ -53,18 +47,8 @@ public final class SeriesTree extends LibraryTree {
 	}
 
 	@Override
-	public String getSummary() {
-		return MiscUtil.join(Collection.titles(new Query(Filter, 5, 0)), ", ");
-	}
-
-	@Override
 	protected String getStringId() {
 		return "@SeriesTree " + getName();
-	}
-
-	@Override
-	public boolean containsBook(Book book) {
-		return book != null && Filter.matches(book);
 	}
 
 	@Override
@@ -72,37 +56,7 @@ public final class SeriesTree extends LibraryTree {
 		return Series.getSortKey();
 	}
 
-	@Override
-	public Status getOpeningStatus() {
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
-	}
-
-	@Override
-	public void waitForOpening() {
-		clear();
-		for (Book book : Collection.books(new Query(Filter, 1000, 0))) {
-			createBookInSeriesSubTree(book);
-		}
-	}
-
-	@Override
-	public boolean onBookEvent(BookEvent event, Book book) {
-		switch (event) {
-			case Added:
-				return containsBook(book) && createBookInSeriesSubTree(book);
-			case Updated:
-			{
-				boolean changed = removeBook(book);
-				changed |= containsBook(book) && createBookInSeriesSubTree(book);
-				return changed;
-			}
-			case Removed:
-			default:
-				return super.onBookEvent(event, book);
-		}
-	}
-
-	boolean createBookInSeriesSubTree(Book book) {
+	protected boolean createSubTree(Book book) {
 		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
 		int position = Collections.binarySearch(subTrees(), temp);
 		if (position >= 0) {

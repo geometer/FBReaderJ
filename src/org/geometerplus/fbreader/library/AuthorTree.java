@@ -20,37 +20,26 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
-import java.util.List;
-
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
 
-public class AuthorTree extends LibraryTree {
+public class AuthorTree extends FilteredTree {
 	public final Author Author;
-	public final Filter Filter;
 
 	AuthorTree(IBookCollection collection, Author author) {
-		super(collection);
+		super(collection, new Filter.ByAuthor(author));
 		Author = author;
-		Filter = new Filter.ByAuthor(author);
 	}
 
 	AuthorTree(AuthorListTree parent, Author author, int position) {
-		super(parent, position);
+		super(parent, new Filter.ByAuthor(author), position);
 		Author = author;
-		Filter = new Filter.ByAuthor(author);
 	}
 
 	@Override
 	public String getName() {
 		return Author.NULL.equals(Author)
 			? resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
-	}
-
-	@Override
-	public String getSummary() {
-		return MiscUtil.join(Collection.titles(new Query(Filter, 5, 0)), ", ");
 	}
 
 	@Override
@@ -71,41 +60,6 @@ public class AuthorTree extends LibraryTree {
 			.toString();
 	}
 
-	@Override
-	public boolean containsBook(Book book) {
-		return book != null && Filter.matches(book);
-	}
-
-	@Override
-	public Status getOpeningStatus() {
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
-	}
-
-	@Override
-	public void waitForOpening() {
-		clear();
-		for (Book book : Collection.books(new Query(Filter, 1000, 0))) {
-			createBookSubTree(book);
-		}
-	}
-
-	@Override
-	public boolean onBookEvent(BookEvent event, Book book) {
-		switch (event) {
-			case Added:
-				return containsBook(book) && createBookSubTree(book);
-			case Updated:
-			{
-				boolean changed = removeBook(book);
-				changed |= containsBook(book) && createBookSubTree(book);
-				return changed;
-			}
-			case Removed:
-			default:
-				return super.onBookEvent(event, book);
-		}
-	}
-
 	private SeriesTree getSeriesSubTree(Series series) {
 		final SeriesTree temp = new SeriesTree(Collection, series, Author);
 		int position = Collections.binarySearch(subTrees(), temp);
@@ -116,10 +70,10 @@ public class AuthorTree extends LibraryTree {
 		}
 	}
 
-	private boolean createBookSubTree(Book book) {
+	protected boolean createSubTree(Book book) {
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
 		if (seriesInfo != null) {
-			return getSeriesSubTree(seriesInfo.Series).createBookInSeriesSubTree(book);
+			return getSeriesSubTree(seriesInfo.Series).createSubTree(book);
 		}
 
 		final BookTree temp = new BookTree(Collection, book);
