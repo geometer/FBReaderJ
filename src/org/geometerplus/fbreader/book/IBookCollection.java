@@ -50,15 +50,12 @@ public interface IBookCollection {
 	Status status();
 
 	int size();
-	List<Book> books();
+
+	List<Book> books(Query query);
+	boolean hasBooks(Query query);
+	List<String> titles(Query query);
+
 	List<Book> booksForLabel(String label);
-	List<Book> booksForAuthor(Author author);
-	List<Book> booksForTag(Tag tag);
-	List<Book> booksForSeries(String series);
-	List<Book> booksForSeriesAndAuthor(String series, Author author);
-	List<Book> booksForTitlePrefix(String prefix);
-	boolean hasBooksForPattern(String pattern);
-	List<Book> booksForPattern(String pattern);
 
 	List<String> labels();
 	List<String> labels(Book book);
@@ -78,13 +75,7 @@ public interface IBookCollection {
 	boolean hasSeries();
 	List<String> series();
 	List<Tag> tags();
-	List<String> titles();
 	List<String> firstTitleLetters();
-	List<String> titlesForAuthor(Author author, int limit);
-	List<String> titlesForSeries(String series, int limit);
-	List<String> titlesForSeriesAndAuthor(String series, Author author, int limit);
-	List<String> titlesForTag(Tag tag, int limit);
-	List<String> titlesForTitlePrefix(String prefix, int limit);
 
 	boolean saveBook(Book book, boolean force);
 	void removeBook(Book book, boolean deleteFromDisk);

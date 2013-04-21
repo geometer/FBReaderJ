@@ -423,7 +423,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
             
 				if (oldSearchResults != null && pattern.equals(oldSearchResults.Pattern)) {
 					onSearchEvent(true);
-				} else if (myRootTree.Collection.hasBooksForPattern(pattern)) {
+				} else if (myRootTree.Collection.hasBooks(new Query(new Filter.ByPattern(pattern), 1))) {
 					if (oldSearchResults != null) {
 						oldSearchResults.removeSelf();
 					}

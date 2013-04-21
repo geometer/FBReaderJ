@@ -19,20 +19,18 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
-
 import org.geometerplus.fbreader.book.*;
 
-public final class TitleTree extends LibraryTree {
+public final class TitleTree extends FilteredTree {
 	public final String Prefix;
 
 	TitleTree(IBookCollection collection, String prefix) {
-		super(collection);
+		super(collection, new Filter.ByTitlePrefix(prefix));
 		Prefix = prefix;
 	}
 
 	TitleTree(LibraryTree parent, String prefix, int position) {
-		super(parent, position);
+		super(parent, new Filter.ByTitlePrefix(prefix), position);
 		Prefix = prefix;
 	}
 
@@ -42,48 +40,12 @@ public final class TitleTree extends LibraryTree {
 	}
 
 	@Override
-	public String getSummary() {
-		return MiscUtil.join(Collection.titlesForTitlePrefix(Prefix, 5), ", ");
-	}
-
-	@Override
 	protected String getStringId() {
 		return "@PrefixTree " + getName();
 	}
 
 	@Override
-	public boolean containsBook(Book book) {
-		return book != null && Prefix.equals(book.firstTitleLetter());
-	}
-
-	@Override
-	public Status getOpeningStatus() {
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
-	}
-
-	@Override
-	public void waitForOpening() {
-		clear();
-
-		for (Book b : Collection.booksForTitlePrefix(Prefix)) {
-			createBookWithAuthorsSubTree(b);
-		}
-	}
-
-	@Override
-	public boolean onBookEvent(BookEvent event, Book book) {
-		switch (event) {
-			case Added:
-				return containsBook(book) && createBookWithAuthorsSubTree(book);
-			case Updated:
-			{
-				boolean changed = removeBook(book);
-				changed |= containsBook(book) && createBookWithAuthorsSubTree(book);
-				return changed;
-			}
-			case Removed:
-			default:
-				return super.onBookEvent(event, book);
-		}
+	protected boolean createSubTree(Book book) {
+		return createBookWithAuthorsSubTree(book);
 	}
 }

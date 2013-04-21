@@ -33,6 +33,92 @@ import android.util.Xml;
 
 class XMLSerializer extends AbstractSerializer {
 	@Override
+	public String serialize(Query query) {
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(buffer, "query", false,
+			"limit", String.valueOf(query.Limit),
+			"page", String.valueOf(query.Page)
+		);
+		serialize(buffer, query.Filter);
+		closeTag(buffer, "query");
+		return buffer.toString();
+	}
+
+	private void serialize(StringBuilder buffer, Filter filter) {
+		if (filter instanceof Filter.Empty) {
+			appendTag(buffer, "filter", true,
+				"type", "empty"
+			);
+		} else if (filter instanceof Filter.And) {
+			appendTag(buffer, "and", false);
+			serialize(buffer, ((Filter.And)filter).First);
+			serialize(buffer, ((Filter.And)filter).Second);
+			closeTag(buffer, "and");
+		} else if (filter instanceof Filter.Or) {
+			appendTag(buffer, "or", false);
+			serialize(buffer, ((Filter.Or)filter).First);
+			serialize(buffer, ((Filter.Or)filter).Second);
+			closeTag(buffer, "or");
+		} else if (filter instanceof Filter.ByAuthor) {
+			final Author author = ((Filter.ByAuthor)filter).Author;
+			appendTag(buffer, "filter", true,
+				"type", "author",
+				"displayName", author.DisplayName,
+				"sorkKey", author.SortKey
+			);
+		} else if (filter instanceof Filter.ByTag) {
+			final LinkedList<String> lst = new LinkedList<String>();
+			for (Tag t = ((Filter.ByTag)filter).Tag; t != null; t = t.Parent) {
+				lst.add(0, t.Name);
+			}
+			final String[] params = new String[lst.size() * 2 + 2];
+			int index = 0;
+			params[index++] = "type";
+			params[index++] = "tag";
+			int num = 0;
+			for (String name : lst) {
+				params[index++] = "name" + num++;
+				params[index++] = name;
+			}
+			appendTag(buffer, "filter", true, params);
+		} else if (filter instanceof Filter.BySeries) {
+			appendTag(buffer, "filter", true,
+				"type", "series",
+				"title", ((Filter.BySeries)filter).Series.getTitle()
+			);
+		} else if (filter instanceof Filter.ByPattern) {
+			appendTag(buffer, "filter", true,
+				"type", "pattern",
+				"pattern", ((Filter.ByPattern)filter).Pattern
+			);
+		} else if (filter instanceof Filter.ByTitlePrefix) {
+			appendTag(buffer, "filter", true,
+				"type", "title-prefix",
+				"prefix", ((Filter.ByTitlePrefix)filter).Prefix
+			);
+		} else if (filter instanceof Filter.HasBookmark) {
+			appendTag(buffer, "filter", true,
+				"type", "has-bookmark"
+			);
+		} else {
+			throw new RuntimeException("Unsupported filter type: " + filter.getClass());
+		}
+	}
+
+	@Override
+	public Query deserializeQuery(String xml) {
+		try {
+			final QueryDeserializer deserializer = new QueryDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getQuery();
+		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
 	public String serialize(Book book) {
 		final StringBuilder buffer = new StringBuilder();
 		appendTag(
@@ -419,6 +505,121 @@ class XMLSerializer extends AbstractSerializer {
 					break;
 				case READ_SERIES_INDEX:
 					mySeriesIndex.append(ch, start, length);
+					break;
+			}
+		}
+	}
+
+	private static final class QueryDeserializer extends DefaultHandler {
+		private static enum State {
+			READ_QUERY,
+			READ_FILTER_AND,
+			READ_FILTER_OR,
+			READ_FILTER_SIMPLE
+		}
+
+		private LinkedList<State> myStateStack = new LinkedList<State>();
+		private LinkedList<Filter> myFilterStack = new LinkedList<Filter>();
+		private Filter myFilter;
+		private int myLimit = -1;
+		private int myPage = -1;
+		private Query myQuery;
+
+		public Query getQuery() {
+			return myQuery;
+		}
+
+		@Override
+		public void startDocument() {
+			myStateStack.clear();
+		}
+
+		@Override
+		public void endDocument() {
+			if (myFilter != null && myLimit > 0 && myPage >= 0) {
+				myQuery = new Query(myFilter, myLimit, myPage);
+			}
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if (myStateStack.isEmpty()) {
+				if ("query".equals(localName)) {
+					try {
+						myLimit = Integer.parseInt(attributes.getValue("limit"));
+						myPage = Integer.parseInt(attributes.getValue("page"));
+					} catch (Exception e) {
+						throw new SAXException("XML parsing error");
+					}
+					myStateStack.add(State.READ_QUERY);
+				} else {
+					throw new SAXException("Unexpected tag " + localName);
+				}
+			} else {
+				if ("filter".equals(localName)) {
+					final String type = attributes.getValue("type");
+					if ("empty".equals(type)) {
+						myFilter = new Filter.Empty();
+					} else if ("author".equals(type)) {
+						myFilter = new Filter.ByAuthor(new Author(
+							attributes.getValue("displayName"),
+							attributes.getValue("sorkKey")
+						));
+					} else if ("tag".equals(type)) {
+						final LinkedList<String> names = new LinkedList<String>();
+						int num = 0;
+						String n;
+						while ((n = attributes.getValue("name" + num++)) != null) {
+							names.add(n);
+						}
+						myFilter = new Filter.ByTag(Tag.getTag(names.toArray(new String[names.size()])));
+					} else if ("series".equals(type)) {
+						myFilter = new Filter.BySeries(new Series(
+							attributes.getValue("title")
+						));
+					} else if ("pattern".equals(type)) {
+						myFilter = new Filter.ByPattern(attributes.getValue("pattern"));
+					} else if ("title-prefix".equals(type)) {
+						myFilter = new Filter.ByTitlePrefix(attributes.getValue("prefix"));
+					} else if ("has-bookmark".equals(type)) {
+						myFilter = new Filter.HasBookmark();
+					} else {
+						// we create empty filter for all other types
+						// to keep a door to add new filters in a future
+						myFilter = new Filter.Empty();
+					}
+					if (!myFilterStack.isEmpty() && myFilterStack.getLast() == null) {
+						myFilterStack.set(myFilterStack.size() - 1, myFilter);
+					}
+					myStateStack.add(State.READ_FILTER_SIMPLE);
+				} else if ("and".equals(localName)) {
+					myFilterStack.add(null);
+					myStateStack.add(State.READ_FILTER_AND);
+				} else if ("or".equals(localName)) {
+					myFilterStack.add(null);
+					myStateStack.add(State.READ_FILTER_OR);
+				} else {
+					throw new SAXException("Unexpected tag " + localName);
+				}
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			if (myStateStack.isEmpty()) {
+				// should be never thrown
+				throw new SAXException("Unexpected end of tag " + localName);
+			}
+			switch (myStateStack.removeLast()) {
+				case READ_QUERY:
+					break;
+				case READ_FILTER_AND:
+					myFilter = new Filter.And(myFilterStack.removeLast(), myFilter);
+					break;
+				case READ_FILTER_OR:
+					myFilter = new Filter.Or(myFilterStack.removeLast(), myFilter);
+					break;
+				case READ_FILTER_SIMPLE:
 					break;
 			}
 		}
