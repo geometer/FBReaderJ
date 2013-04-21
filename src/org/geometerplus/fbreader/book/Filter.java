@@ -57,7 +57,21 @@ public abstract class Filter {
 		public boolean matches(Book book) {
 			final List<Author> bookAuthors = book.authors();
 			return
-				Author.NULL.equals(Author) && bookAuthors.isEmpty() || bookAuthors.contains(Author);
+				Author.NULL.equals(Author) ? bookAuthors.isEmpty() : bookAuthors.contains(Author);
+		}
+	}
+
+	public final static class ByTag extends Filter {
+		public final Tag Tag;
+
+		public ByTag(Tag tag) {
+			Tag = tag;
+		}
+
+		public boolean matches(Book book) {
+			final List<Tag> bookTags = book.tags();
+			return
+				Tag.NULL.equals(Tag) ? bookTags.isEmpty() : bookTags.contains(Tag);
 		}
 	}
 

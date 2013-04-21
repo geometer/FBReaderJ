@@ -240,15 +240,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Book> booksForTag(Tag tag) {
-		final boolean isNull = Tag.NULL.equals(tag);
-		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books(new Query(new Filter.Empty(), 1000, 0))) {
-			final List<Tag> bookTags = b.tags();
-			if (isNull && bookTags.isEmpty() || bookTags.contains(tag)) {
-				filtered.add(b);
-			}
-		}
-		return filtered;
+		return books(new Query(new Filter.ByTag(tag), 1000, 0));
 	}
 
 	public boolean hasBooksForPattern(String pattern) {
@@ -371,40 +363,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<String> titlesForTag(Tag tag, int limit) {
-		if (limit <= 0) {
-			return Collections.emptyList();
-		}
-		final ArrayList<String> titles = new ArrayList<String>(limit);
-		final boolean isNull = Tag.NULL.equals(tag);
-		synchronized (myBooksByFile) {
-			for (Book b : myBooksByFile.values()) {
-				if (isNull ? b.tags().isEmpty() : b.tags().contains(tag)) {
-					titles.add(b.getTitle());
-					if (--limit == 0) {
-						break;
-					}
-				}
-			}
-		}
-		return titles;
-	}
-
-	public List<String> titlesForTitlePrefix(String prefix, int limit) {
-		if (limit <= 0) {
-			return Collections.emptyList();
-		}
-		final ArrayList<String> titles = new ArrayList<String>(limit);
-		synchronized (myBooksByFile) {
-			for (Book b : myBooksByFile.values()) {
-				if (prefix.equals(b.firstTitleLetter())) {
-					titles.add(b.getTitle());
-					if (--limit == 0) {
-						break;
-					}
-				}
-			}
-		}
-		return titles;
+		return titles(new Query(new Filter.ByTag(tag), 1000, 0));
 	}
 
 	public Book getRecentBook(int index) {
