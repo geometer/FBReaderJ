@@ -17,14 +17,13 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.authentication.litres;
+package org.geometerplus.fbreader.network.litres;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 
-
-class LitResUtil {
+public class LitresUtil {
 	static String LITRES_API_URL = "://robot.litres.ru/";
 	
 	public static String url(String path) {
@@ -74,35 +73,35 @@ class LitResUtil {
 	}
 
 	public static String generatePurchaseUrl(final INetworkLink link, final String bookId) {
-		String query = "";
-		ZLNetworkUtil.appendParameter(query, "art", bookId);
-		return url(link, true, "pages/purchase_book/" + query);
+		String query = url(link, true, "pages/purchase_book/?");
+		query = ZLNetworkUtil.appendParameter(query, "art", bookId);
+		return query;
 	}
 
 	public static String generateDownloadUrl(final String bookId) {
-		String query = "";
-		ZLNetworkUtil.appendParameter(query, "art", bookId);
-		return url(true, "pages/catalit_download_book/" + query);
+		String query = url(true, "pages/catalit_download_book/?");
+		query = ZLNetworkUtil.appendParameter(query, "art", bookId);
+		return query;
 	}
 
 	public static String generateAlsoReadUrl(final String bookId) {
-		String query = "";
-		ZLNetworkUtil.appendParameter(query, "rating", "with");
-		ZLNetworkUtil.appendParameter(query, "art", bookId);
-		return url(false, "pages/catalit_browser/" + query);
+		String query = url(false, "pages/catalit_browser/?");
+		query = ZLNetworkUtil.appendParameter(query, "rating", "with");
+		query = ZLNetworkUtil.appendParameter(query, "art", bookId);
+		return query;
 	}
 
 	public static String generateBooksByGenreUrl(final String genreId) {
-		String query = "";
-		ZLNetworkUtil.appendParameter(query, "checkpoint", "2000-01-01");
-		ZLNetworkUtil.appendParameter(query, "genre", genreId);
-		return url(false, "pages/catalit_browser/" + query);
+		String query = url(false, "pages/catalit_browser/?");
+		query = ZLNetworkUtil.appendParameter(query, "checkpoint", "2000-01-01");
+		query = ZLNetworkUtil.appendParameter(query, "genre", genreId);
+		return query;
 	}
 
 	public static String generateBooksByAuthorUrl(final String authorId) {
-		String query = "";
-		ZLNetworkUtil.appendParameter(query, "checkpoint", "2000-01-01");
-		ZLNetworkUtil.appendParameter(query, "person", authorId);
-		return url(false, "pages/catalit_browser/" + query);
+		String query = url(false, "pages/catalit_browser/?");
+		query = ZLNetworkUtil.appendParameter(query, "checkpoint", "2000-01-01");
+		query = ZLNetworkUtil.appendParameter(query, "person", authorId);
+		return query;
 	}
 }

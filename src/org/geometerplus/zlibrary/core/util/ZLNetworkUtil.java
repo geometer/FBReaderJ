@@ -79,10 +79,12 @@ public class ZLNetworkUtil {
 
 	public static String appendParameter(String url, String name, String value) {
 		if (name == null || value == null) {
+			System.out.println("appendParameter 1");
 			return url;
 		}
 		value = value.trim();
 		if (value.length() == 0) {
+			System.out.println("appendParameter 2");
 			return url;
 		}
 		try {
@@ -98,12 +100,15 @@ public class ZLNetworkUtil {
 			if (eqIndex != -1 && url.substring(start, eqIndex).equals(name)) {
 				final int end = (index != -1 ? index : url.length());
 				if (url.substring(eqIndex + 1, end).equals(value)) {
+					System.out.println("appendParameter 3");
 					return url;
 				} else {
+					System.out.println("appendParameter 4");
 					return new StringBuilder(url).replace(eqIndex + 1, end, value).toString();
 				}
 			}
 		}
+		System.out.println("appendParameter 5");
 		return new StringBuilder(url).append(delimiter).append(name).append('=').append(value).toString();
 	}
 

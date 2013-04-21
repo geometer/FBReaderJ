@@ -1,4 +1,4 @@
-package org.geometerplus.fbreader.network.authentication.litres;
+package org.geometerplus.fbreader.network.litres;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
@@ -6,9 +6,9 @@ import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-public class LitResAuthorsItem extends NetworkURLCatalogItem {
+public class LitResAuthorsItem extends LitresCatalogItem {
 	public LitResAuthorsItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
-		super(link, title, summary, urls, Accessibility.SIGNED_IN, FLAGS_DEFAULT);
+		super(link, title, summary, urls);
 	}
 
 	@Override

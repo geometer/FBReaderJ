@@ -19,20 +19,29 @@
 
 package org.geometerplus.fbreader.network.authentication.litres;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
+import org.geometerplus.fbreader.network.BasketItem;
+import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.NetworkException;
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.litres.LitresUtil;
+import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.DecoratedBookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.zlibrary.core.money.Money;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
-import org.geometerplus.zlibrary.core.money.Money;
-
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
-import org.geometerplus.fbreader.network.authentication.*;
-import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private volatile boolean myFullyInitialized;
@@ -396,7 +405,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		final String query = "pages/catalit_browser/";
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
-			LitResUtil.url(Link, query),
+			LitresUtil.url(Link, query),
 			new LitResXMLReader((OPDSNetworkLink)Link)
 		);
 		request.addPostParameter("my", "1");
@@ -420,7 +429,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		final String query = "pages/purchase_book/";
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
-			LitResUtil.url(Link, query),
+			LitresUtil.url(Link, query),
 			new LitResPurchaseXMLReader(Link.getSiteName())
 		);
 		request.addPostParameter("sid", sid);
