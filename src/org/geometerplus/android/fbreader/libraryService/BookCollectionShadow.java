@@ -309,12 +309,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<String> titles() {
+	public synchronized List<String> titles(Query query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
 		try {
-			return myInterface.titles();
+			return myInterface.titles(SerializerUtil.serialize(query));
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}
@@ -326,39 +326,6 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 		try {
 			return myInterface.firstTitleLetters();
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
-	}
-
-	public synchronized List<String> titlesForAuthor(Author author, int limit) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return myInterface.titlesForAuthor(Util.authorToString(author), limit);
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
-	}
-
-	public synchronized List<String> titlesForSeries(String series, int limit) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return myInterface.titlesForSeries(series, limit);
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
-	}
-
-	public synchronized List<String> titlesForSeriesAndAuthor(String series, Author author, int limit) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return myInterface.titlesForSeriesAndAuthor(series, Util.authorToString(author), limit);
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}

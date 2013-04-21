@@ -28,15 +28,18 @@ import org.geometerplus.fbreader.book.*;
 
 public class AuthorTree extends LibraryTree {
 	public final Author Author;
+	public final Filter Filter;
 
 	AuthorTree(IBookCollection collection, Author author) {
 		super(collection);
 		Author = author;
+		Filter = new Filter.ByAuthor(author);
 	}
 
 	AuthorTree(AuthorListTree parent, Author author, int position) {
 		super(parent, position);
 		Author = author;
+		Filter = new Filter.ByAuthor(author);
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	public String getSummary() {
-		return MiscUtil.join(Collection.titlesForAuthor(Author, 5), ", ");
+		return MiscUtil.join(Collection.titles(new Query(Filter, 5, 0)), ", ");
 	}
 
 	@Override
@@ -70,11 +73,7 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	public boolean containsBook(Book book) {
-		if (book == null) {
-			return false;
-		}
-		final List<Author> bookAuthors = book.authors();
-		return Author.equals(Author.NULL) ? bookAuthors.isEmpty() : bookAuthors.contains(Author);
+		return book != null && Filter.matches(book);
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.books(new Query(new Filter.ByAuthor(Author), 1000, 0))) {
+		for (Book book : Collection.books(new Query(Filter, 1000, 0))) {
 			createBookSubTree(book);
 		}
 	}

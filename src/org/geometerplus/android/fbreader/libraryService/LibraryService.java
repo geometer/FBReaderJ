@@ -208,24 +208,12 @@ public class LibraryService extends Service {
 			return strings;
 		}
 
-		public List<String> titles() {
-			return myCollection.titles();
+		public List<String> titles(String query) {
+			return myCollection.titles(SerializerUtil.deserializeQuery(query));
 		}
 
 		public List<String> firstTitleLetters() {
 			return myCollection.firstTitleLetters();
-		}
-
-		public List<String> titlesForAuthor(String author, int limit) {
-			return myCollection.titlesForAuthor(Util.stringToAuthor(author), limit);
-		}
-
-		public List<String> titlesForSeries(String series, int limit) {
-			return myCollection.titlesForSeries(series, limit);
-		}
-
-		public List<String> titlesForSeriesAndAuthor(String series, String author, int limit) {
-			return myCollection.titlesForSeriesAndAuthor(series, Util.stringToAuthor(author), limit);
 		}
 
 		public List<String> titlesForTag(String tag, int limit) {

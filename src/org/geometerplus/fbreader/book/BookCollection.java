@@ -215,7 +215,7 @@ public class BookCollection extends AbstractBookCollection {
 			return allBooks.subList(start, end);
 		} else {
 			int count = 0;
-			final LinkedList<Book> filtered = new LinkedList<Book>();
+			final List<Book> filtered = new ArrayList<Book>(query.Limit);
 			for (Book b : allBooks) {
 				if (query.Filter.matches(b)) {
 					if (count >= start) {
@@ -228,6 +228,15 @@ public class BookCollection extends AbstractBookCollection {
 			}
 			return filtered;
 		}
+	}
+
+	public List<String> titles(Query query) {
+		final List<Book> books = books(query);
+		final List<String> titles = new ArrayList<String>(books.size());
+		for (Book b : books) {
+			titles.add(b.getTitle());
+		}
+		return titles;
 	}
 
 	public List<Book> booksForTag(Tag tag) {
@@ -361,16 +370,6 @@ public class BookCollection extends AbstractBookCollection {
 		return new ArrayList<String>(series);
 	}
 
-	public List<String> titles() {
-		synchronized (myBooksByFile) {
-			final List<String> titles = new ArrayList<String>(myBooksByFile.size());
-			for (Book book : myBooksByFile.values()) {
-				titles.add(book.getTitle());
-			}
-			return titles;
-		}
-	}
-
 	public List<String> firstTitleLetters() {
 		synchronized (myBooksByFile) {
 			final TreeSet<String> letters = new TreeSet<String>();
@@ -382,66 +381,6 @@ public class BookCollection extends AbstractBookCollection {
 			}
 			return new ArrayList<String>(letters);
 		}
-	}
-
-	public List<String> titlesForAuthor(Author author, int limit) {
-		if (limit <= 0) {
-			return Collections.emptyList();
-		}
-		final ArrayList<String> titles = new ArrayList<String>(limit);
-		final boolean isNull = Author.NULL.equals(author);
-		synchronized (myBooksByFile) {
-			for (Book b : myBooksByFile.values()) {
-				if (isNull ? b.authors().isEmpty() : b.authors().contains(author)) {
-					titles.add(b.getTitle());
-					if (--limit == 0) {
-						break;
-					}
-				}
-			}
-		}
-		return titles;
-	}
-
-	public List<String> titlesForSeries(String series, int limit) {
-		if (limit <= 0) {
-			return Collections.emptyList();
-		}
-		final ArrayList<String> titles = new ArrayList<String>(limit);
-		synchronized (myBooksByFile) {
-			for (Book b : myBooksByFile.values()) {
-				final SeriesInfo info = b.getSeriesInfo();
-				if (info != null && series.equals(info.Series.getTitle())) {
-					titles.add(b.getTitle());
-					if (--limit == 0) {
-						break;
-					}
-				}
-			}
-		}
-		return titles;
-	}
-
-	public List<String> titlesForSeriesAndAuthor(String series, Author author, int limit) {
-		if (limit <= 0) {
-			return Collections.emptyList();
-		}
-		final boolean isNull = Author.NULL.equals(author);
-		final ArrayList<String> titles = new ArrayList<String>(limit);
-		synchronized (myBooksByFile) {
-			for (Book b : myBooksByFile.values()) {
-				final List<Author> bookAuthors = b.authors();
-				final SeriesInfo info = b.getSeriesInfo();
-				if (info != null && series.equals(info.Series.getTitle())
-					&& (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author))) {
-					titles.add(b.getTitle());
-					if (--limit == 0) {
-						break;
-					}
-				}
-			}
-		}
-		return titles;
 	}
 
 	public List<String> titlesForTag(Tag tag, int limit) {

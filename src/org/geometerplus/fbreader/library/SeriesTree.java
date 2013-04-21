@@ -54,11 +54,7 @@ public final class SeriesTree extends LibraryTree {
 
 	@Override
 	public String getSummary() {
-		if (Author != null) {
-			return MiscUtil.join(Collection.titlesForSeriesAndAuthor(Series.getTitle(), Author, 5), ", ");
-		} else {
-			return MiscUtil.join(Collection.titlesForSeries(Series.getTitle(), 5), ", ");
-		}
+		return MiscUtil.join(Collection.titles(new Query(Filter, 5, 0)), ", ");
 	}
 
 	@Override

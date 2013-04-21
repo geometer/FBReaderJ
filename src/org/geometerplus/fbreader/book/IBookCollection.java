@@ -77,11 +77,8 @@ public interface IBookCollection {
 	boolean hasSeries();
 	List<String> series();
 	List<Tag> tags();
-	List<String> titles();
+	List<String> titles(Query query);
 	List<String> firstTitleLetters();
-	List<String> titlesForAuthor(Author author, int limit);
-	List<String> titlesForSeries(String series, int limit);
-	List<String> titlesForSeriesAndAuthor(String series, Author author, int limit);
 	List<String> titlesForTag(Tag tag, int limit);
 	List<String> titlesForTitlePrefix(String prefix, int limit);
 
