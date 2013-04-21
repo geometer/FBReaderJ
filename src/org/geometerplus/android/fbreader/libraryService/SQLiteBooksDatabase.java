@@ -468,6 +468,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
+	@Override
+	protected List<String> listLabels(long bookId) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT Labels.name FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
+			" WHERE BookLabel.book_id=?",
+			new String[] { String.valueOf(bookId) }
+		);
+		final LinkedList<String> names = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			names.add(cursor.getString(0));
+		}
+		cursor.close();
+		return names;
+	}
+
 	private SQLiteStatement myDeleteBookUidsStatement;
 	protected void deleteAllBookUids(long bookId) {
 		if (myDeleteBookUidsStatement == null) {
@@ -736,38 +752,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	@Override
-	protected List<String> labels() {
-		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT Labels.name FROM Labels" +
-			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
-			" GROUP BY Labels.name",
-			null
-		);
-		final LinkedList<String> names = new LinkedList<String>();
-		while (cursor.moveToNext()) {
-			names.add(cursor.getString(0));
-		}
-		cursor.close();
-		return names;
-	}
-
-	@Override
-	protected List<String> labels(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT Labels.name FROM Labels" +
-			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
-			" WHERE BookLabel.book_id=?",
-			new String[] { String.valueOf(bookId) }
-		);
-		final LinkedList<String> names = new LinkedList<String>();
-		while (cursor.moveToNext()) {
-			names.add(cursor.getString(0));
-		}
-		cursor.close();
-		return names;
-	}
-
 	private SQLiteStatement mySetLabelStatement;
 	@Override
 	protected void setLabel(long bookId, String label) {
@@ -795,21 +779,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myRemoveLabelStatement.bindLong(1, bookId);
 		myRemoveLabelStatement.bindString(2, label);
 		myRemoveLabelStatement.execute();
-	}
-
-	@Override
-	protected List<Long> loadBooksForLabelIds(String label) {
-		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT BookLabel.book_id FROM BookLabel" +
-			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
-			" WHERE Labels.name=?", new String[] { label }
-		);
-		final LinkedList<Long> ids = new LinkedList<Long>();
-		while (cursor.moveToNext()) {
-			ids.add(cursor.getLong(0));
-		}
-		cursor.close();
-		return ids;
 	}
 
 	@Override

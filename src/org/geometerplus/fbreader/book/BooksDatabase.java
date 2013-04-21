@@ -53,6 +53,7 @@ public abstract class BooksDatabase {
 
 	protected abstract List<Author> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
+	protected abstract List<String> listLabels(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	protected abstract List<UID> listUids(long bookId);
 
@@ -81,9 +82,6 @@ public abstract class BooksDatabase {
 	protected abstract List<Long> loadRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
-	protected abstract List<Long> loadBooksForLabelIds(String label);
-	protected abstract List<String> labels();
-	protected abstract List<String> labels(long bookId);
 	protected abstract void setLabel(long bookId, String label);
 	protected abstract void removeLabel(long bookId, String label);
 
