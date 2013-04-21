@@ -230,6 +230,27 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	public boolean hasBooks(Query query) {
+		final List<Book> allBooks;
+		synchronized (myBooksByFile) {
+			allBooks = new ArrayList<Book>(myBooksByFile.values());
+		}
+		final int start = query.Page * query.Limit;
+		if (query.Filter instanceof Filter.Empty) {
+			return allBooks.size() > 0;
+		} else {
+			int count = 0;
+			final List<Book> filtered = new ArrayList<Book>(query.Limit);
+			for (Book b : allBooks) {
+				if (query.Filter.matches(b) && count >= start) {
+					return true;
+				}
+				++count;
+			}
+			return false;
+		}
+	}
+
 	public List<String> titles(Query query) {
 		final List<Book> books = books(query);
 		final List<String> titles = new ArrayList<String>(books.size());
@@ -240,36 +261,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<Book> booksForTag(Tag tag) {
-		return books(new Query(new Filter.ByTag(tag), 1000, 0));
-	}
-
-	public boolean hasBooksForPattern(String pattern) {
-		if (pattern == null || pattern.length() == 0) {
-			return false;
-		}
-		pattern = pattern.toLowerCase();
-
-		for (Book b : books(new Query(new Filter.Empty(), 1000, 0))) {
-			if (b.matches(pattern)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public List<Book> booksForPattern(String pattern) {
-		if (pattern == null || pattern.length() == 0) {
-			return Collections.emptyList();
-		}
-		pattern = pattern.toLowerCase();
-
-		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books(new Query(new Filter.Empty(), 1000, 0))) {
-			if (b.matches(pattern)) {
-				filtered.add(b);
-			}
-		}
-		return filtered;
+		return books(new Query(new Filter.ByTag(tag), 1000));
 	}
 
 	public List<Book> recentBooks() {
@@ -363,7 +355,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public List<String> titlesForTag(Tag tag, int limit) {
-		return titles(new Query(new Filter.ByTag(tag), 1000, 0));
+		return titles(new Query(new Filter.ByTag(tag), limit));
 	}
 
 	public Book getRecentBook(int index) {

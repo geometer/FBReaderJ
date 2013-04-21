@@ -52,12 +52,11 @@ public interface IBookCollection {
 	int size();
 
 	List<Book> books(Query query);
+	boolean hasBooks(Query query);
+	List<String> titles(Query query);
 
 	List<Book> booksForLabel(String label);
 	List<Book> booksForTag(Tag tag);
-	List<Book> booksForPattern(String pattern);
-
-	boolean hasBooksForPattern(String pattern);
 
 	List<String> labels();
 	List<String> labels(Book book);
@@ -76,7 +75,6 @@ public interface IBookCollection {
 	boolean hasSeries();
 	List<String> series();
 	List<Tag> tags();
-	List<String> titles(Query query);
 	List<String> firstTitleLetters();
 	List<String> titlesForTag(Tag tag, int limit);
 

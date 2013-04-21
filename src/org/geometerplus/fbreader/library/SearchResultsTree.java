@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.BookEvent;
+import org.geometerplus.fbreader.book.*;
 
 public class SearchResultsTree extends FirstLevelTree {
 	public final String Pattern;
@@ -43,7 +42,7 @@ public class SearchResultsTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.booksForPattern(Pattern)) {
+		for (Book book : Collection.books(new Query(new Filter.ByPattern(Pattern), 1000))) {
 			createBookWithAuthorsSubTree(book);
 		}
 	}

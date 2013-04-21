@@ -142,16 +142,12 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.books(SerializerUtil.deserializeQuery(query)));
 		}
 
+		public boolean hasBooks(String query) {
+			return myCollection.hasBooks(SerializerUtil.deserializeQuery(query));
+		}
+
 		public List<String> booksForTag(String tag) {
 			return SerializerUtil.serializeBookList(myCollection.booksForTag(Util.stringToTag(tag)));
-		}
-
-		public boolean hasBooksForPattern(String pattern) {
-			return myCollection.hasBooksForPattern(pattern);
-		}
-
-		public List<String> booksForPattern(String pattern) {
-			return SerializerUtil.serializeBookList(myCollection.booksForPattern(pattern));
 		}
 
 		public List<String> recentBooks() {

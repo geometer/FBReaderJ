@@ -8,16 +8,15 @@ import java.util.List;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 interface LibraryInterface {
-	void reset(in List<String> bookDirectories, boolean force);
+	void reset(in List<String> bookDirectories, in boolean force);
 
 	String status();
 
 	int size();
-	List<String> books(String query);
-	List<String> booksForLabel(String label);
+	List<String> books(in String query);
+	boolean hasBooks(in String query);
+	List<String> booksForLabel(in String label);
 	List<String> booksForTag(in String tag);
-	boolean hasBooksForPattern(in String pattern);
-	List<String> booksForPattern(in String pattern);
 	List<String> recentBooks();
 
 	String getBookByFile(in String file);
@@ -29,9 +28,9 @@ interface LibraryInterface {
 	boolean hasSeries();
 	List<String> series();
 	List<String> tags();
-	List<String> titles(String query);
+	List<String> titles(in String query);
 	List<String> firstTitleLetters();
-	List<String> titlesForTag(in String tag, int limit);
+	List<String> titlesForTag(in String tag, in int limit);
 
 	List<String> labels();
 	List<String> labelsForBook(in String book);

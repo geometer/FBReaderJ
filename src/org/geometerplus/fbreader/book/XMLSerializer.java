@@ -527,7 +527,7 @@ class XMLSerializer extends AbstractSerializer {
 		@Override
 		public void endDocument() {
 			if (myFilter != null) {
-				myQuery = new Query(myFilter, 1000, 0);
+				myQuery = new Query(myFilter, 1000);
 			}
 		}
 

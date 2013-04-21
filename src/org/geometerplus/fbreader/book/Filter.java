@@ -79,12 +79,11 @@ public abstract class Filter {
 		public final String Pattern;
 
 		public ByPattern(String pattern) {
-			Pattern = pattern;
+			Pattern = pattern != null ? pattern.toLowerCase() : "";
 		}
 
 		public boolean matches(Book book) {
-			// TODO: implement
-			return true;
+			return book != null && !"".equals(Pattern) && book.matches(Pattern);
 		}
 	}
 

@@ -24,9 +24,17 @@ public class Query {
 	final int Limit;
 	final int Page;
 
-	public Query(Filter filter, int limit, int page) {
+	public Query(Filter filter, int limit) {
+		this(filter, limit, 0);
+	}
+
+	private Query(Filter filter, int limit, int page) {
 		Filter = filter;
 		Limit = limit;
 		Page = page;
+	}
+
+	public Query next() {
+		return new Query(Filter, Limit, Page + 1);
 	}
 }

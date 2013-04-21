@@ -38,7 +38,7 @@ abstract class FilteredTree extends LibraryTree {
 
 	@Override
 	public final String getSummary() {
-		return MiscUtil.join(Collection.titles(new Query(myFilter, 5, 0)), ", ");
+		return MiscUtil.join(Collection.titles(new Query(myFilter, 5)), ", ");
 	}
 
 	@Override
@@ -54,7 +54,7 @@ abstract class FilteredTree extends LibraryTree {
 	@Override
 	public final void waitForOpening() {
 		clear();
-		for (Book book : Collection.books(new Query(myFilter, 1000, 0))) {
+		for (Book book : Collection.books(new Query(myFilter, 1000))) {
 			createSubTree(book);
 		}
 	}
