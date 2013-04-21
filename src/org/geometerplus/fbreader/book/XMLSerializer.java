@@ -110,9 +110,6 @@ class XMLSerializer extends AbstractSerializer {
 		try {
 			final QueryDeserializer deserializer = new QueryDeserializer();
 			Xml.parse(xml, deserializer);
-			System.err.println("XML: " + xml);
-			System.err.println("FILTER: " + deserializer.getQuery().Filter);
-			System.err.println("QUERY: " + serialize(deserializer.getQuery()));
 			return deserializer.getQuery();
 		} catch (SAXException e) {
 			System.err.println(xml);
@@ -555,7 +552,6 @@ class XMLSerializer extends AbstractSerializer {
 						throw new SAXException("XML parsing error");
 					}
 					myStateStack.add(State.READ_QUERY);
-					// TODO: read query params
 				} else {
 					throw new SAXException("Unexpected tag " + localName);
 				}
@@ -592,12 +588,15 @@ class XMLSerializer extends AbstractSerializer {
 						// to keep a door to add new filters in a future
 						myFilter = new Filter.Empty();
 					}
+					if (!myFilterStack.isEmpty() && myFilterStack.getLast() == null) {
+						myFilterStack.set(myFilterStack.size() - 1, myFilter);
+					}
 					myStateStack.add(State.READ_FILTER_SIMPLE);
 				} else if ("and".equals(localName)) {
-					// TODO: implement
+					myFilterStack.add(null);
 					myStateStack.add(State.READ_FILTER_AND);
 				} else if ("or".equals(localName)) {
-					// TODO: implement
+					myFilterStack.add(null);
 					myStateStack.add(State.READ_FILTER_OR);
 				} else {
 					throw new SAXException("Unexpected tag " + localName);
@@ -613,13 +612,12 @@ class XMLSerializer extends AbstractSerializer {
 			}
 			switch (myStateStack.removeLast()) {
 				case READ_QUERY:
-					// TODO: implement
 					break;
 				case READ_FILTER_AND:
-					// TODO: implement
+					myFilter = new Filter.And(myFilterStack.removeLast(), myFilter);
 					break;
 				case READ_FILTER_OR:
-					// TODO: implement
+					myFilter = new Filter.Or(myFilterStack.removeLast(), myFilter);
 					break;
 				case READ_FILTER_SIMPLE:
 					break;
