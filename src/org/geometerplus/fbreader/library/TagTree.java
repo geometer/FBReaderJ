@@ -21,31 +21,24 @@ package org.geometerplus.fbreader.library;
 
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.util.MiscUtil;
-
 import org.geometerplus.fbreader.book.*;
 
-public final class TagTree extends LibraryTree {
+public final class TagTree extends FilteredTree {
 	public final Tag Tag;
 
 	TagTree(IBookCollection collection, Tag tag) {
-		super(collection);
+		super(collection, new Filter.ByTag(tag));
 		Tag = tag;
 	}
 
 	TagTree(LibraryTree parent, Tag tag, int position) {
-		super(parent, position);
+		super(parent, new Filter.ByTag(tag), position);
 		Tag = tag;
 	}
 
 	@Override
 	public String getName() {
 		return Tag.NULL.equals(Tag) ? resource().getResource("booksWithNoTags").getValue() : Tag.Name;
-	}
-
-	@Override
-	public String getSummary() {
-		return MiscUtil.join(Collection.titlesForTag(Tag, 5), ", ");
 	}
 
 	@Override
@@ -76,11 +69,6 @@ public final class TagTree extends LibraryTree {
 	}
 
 	@Override
-	public Status getOpeningStatus() {
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
-	}
-
-	@Override
 	public void waitForOpening() {
 		clear();
 		if (!Tag.NULL.equals(Tag)) {
@@ -90,9 +78,7 @@ public final class TagTree extends LibraryTree {
 				}
 			}
 		}
-		for (Book book : Collection.booksForTag(Tag)) {
-			createBookWithAuthorsSubTree(book);
-		}
+		createBookSubTrees();
 	}
 
 	@Override
@@ -140,4 +126,9 @@ public final class TagTree extends LibraryTree {
 				return super.onBookEvent(event, book);
 		}
 	}
+
+	@Override
+	protected boolean createSubTree(Book book) {
+		return createBookWithAuthorsSubTree(book);
+	} 
 }

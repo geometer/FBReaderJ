@@ -138,38 +138,12 @@ public class LibraryService extends Service {
 			return myCollection.size();
 		}
 
-		public List<String> books() {
-			return SerializerUtil.serializeBookList(myCollection.books());
+		public List<String> books(String query) {
+			return SerializerUtil.serializeBookList(myCollection.books(SerializerUtil.deserializeQuery(query)));
 		}
 
-		public List<String> booksForAuthor(String author) {
-			return SerializerUtil.serializeBookList(myCollection.booksForAuthor(Util.stringToAuthor(author)));
-		}
-
-		public List<String> booksForTag(String tag) {
-			return SerializerUtil.serializeBookList(myCollection.booksForTag(Util.stringToTag(tag)));
-		}
-
-		public List<String> booksForSeries(String series) {
-			return SerializerUtil.serializeBookList(myCollection.booksForSeries(series));
-		}
-
-		public List<String> booksForSeriesAndAuthor(String series, String author) {
-			return SerializerUtil.serializeBookList(
-				myCollection.booksForSeriesAndAuthor(series, Util.stringToAuthor(author))
-			);
-		}
-
-		public List<String> booksForTitlePrefix(String prefix) {
-			return SerializerUtil.serializeBookList(myCollection.booksForTitlePrefix(prefix));
-		}
-
-		public boolean hasBooksForPattern(String pattern) {
-			return myCollection.hasBooksForPattern(pattern);
-		}
-
-		public List<String> booksForPattern(String pattern) {
-			return SerializerUtil.serializeBookList(myCollection.booksForPattern(pattern));
+		public boolean hasBooks(String query) {
+			return myCollection.hasBooks(SerializerUtil.deserializeQuery(query));
 		}
 
 		public List<String> recentBooks() {
@@ -222,32 +196,12 @@ public class LibraryService extends Service {
 			return strings;
 		}
 
-		public List<String> titles() {
-			return myCollection.titles();
+		public List<String> titles(String query) {
+			return myCollection.titles(SerializerUtil.deserializeQuery(query));
 		}
 
 		public List<String> firstTitleLetters() {
 			return myCollection.firstTitleLetters();
-		}
-
-		public List<String> titlesForAuthor(String author, int limit) {
-			return myCollection.titlesForAuthor(Util.stringToAuthor(author), limit);
-		}
-
-		public List<String> titlesForSeries(String series, int limit) {
-			return myCollection.titlesForSeries(series, limit);
-		}
-
-		public List<String> titlesForSeriesAndAuthor(String series, String author, int limit) {
-			return myCollection.titlesForSeriesAndAuthor(series, Util.stringToAuthor(author), limit);
-		}
-
-		public List<String> titlesForTag(String tag, int limit) {
-			return myCollection.titlesForTag(Util.stringToTag(tag), limit);
-		}
-
-		public List<String> titlesForTitlePrefix(String prefix, int limit) {
-			return myCollection.titlesForTitlePrefix(prefix, limit);
 		}
 
 		public boolean saveBook(String book, boolean force) {
