@@ -49,7 +49,7 @@ abstract class FilteredTree extends LibraryTree {
 	}
 
 	@Override
-	public final Status getOpeningStatus() {
+	public Status getOpeningStatus() {
 		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
 	}
 

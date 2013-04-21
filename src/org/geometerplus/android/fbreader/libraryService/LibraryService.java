@@ -150,10 +150,6 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.recentBooks());
 		}
 
-		public List<String> booksForLabel(String label) {
-			return SerializerUtil.serializeBookList(myCollection.booksForLabel(label));
-		}
-
 		public String getRecentBook(int index) {
 			return SerializerUtil.serialize(myCollection.getRecentBook(index));
 		}
@@ -218,18 +214,6 @@ public class LibraryService extends Service {
 
 		public List<String> labels() {
 			return myCollection.labels();
-		}
-
-		public List<String> labelsForBook(String book) {
-			return myCollection.labels(SerializerUtil.deserializeBook(book));
-		}
-
-		public void setLabel(String book, String label) {
-			myCollection.setLabel(SerializerUtil.deserializeBook(book), label);
-		}
-
-		public void removeLabel(String book, String label) {
-			myCollection.removeLabel(SerializerUtil.deserializeBook(book), label);
 		}
 
 		public TextPosition getStoredPosition(long bookId) {
