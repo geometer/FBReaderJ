@@ -15,7 +15,7 @@ interface LibraryInterface {
 	int size();
 	List<String> books(in String query);
 	boolean hasBooks(in String query);
-	List<String> booksForLabel(in String label);
+
 	List<String> recentBooks();
 
 	String getBookByFile(in String file);
@@ -27,13 +27,9 @@ interface LibraryInterface {
 	boolean hasSeries();
 	List<String> series();
 	List<String> tags();
+	List<String> labels();
 	List<String> titles(in String query);
 	List<String> firstTitleLetters();
-
-	List<String> labels();
-	List<String> labelsForBook(in String book);
-	void setLabel(in String book, in String label);
-	void removeLabel(in String book, in String label);
 
 	boolean saveBook(in String book, in boolean force);
 	void removeBook(in String book, in boolean deleteFromDisk);
