@@ -19,13 +19,22 @@
 
 package org.geometerplus.fbreader.book;
 
-abstract class AbstractSerializer {
-	public abstract String serialize(Query query);
-	public abstract Query deserializeQuery(String data);
+public class Query {
+	final Filter Filter;
+	final int Limit;
+	final int Page;
 
-	public abstract String serialize(Book book);
-	public abstract Book deserializeBook(String data);
+	public Query(Filter filter, int limit) {
+		this(filter, limit, 0);
+	}
 
-	public abstract String serialize(Bookmark bookmark);
-	public abstract Bookmark deserializeBookmark(String data);
+	Query(Filter filter, int limit, int page) {
+		Filter = filter;
+		Limit = limit;
+		Page = page;
+	}
+
+	public Query next() {
+		return new Query(Filter, Limit, Page + 1);
+	}
 }
