@@ -138,26 +138,12 @@ public class LibraryService extends Service {
 			return myCollection.size();
 		}
 
-		public List<String> books() {
-			return SerializerUtil.serializeBookList(myCollection.books());
-		}
-
-		public List<String> booksForAuthor(String author) {
-			return SerializerUtil.serializeBookList(myCollection.booksForAuthor(Util.stringToAuthor(author)));
+		public List<String> books(String query) {
+			return SerializerUtil.serializeBookList(myCollection.books(SerializerUtil.deserializeQuery(query)));
 		}
 
 		public List<String> booksForTag(String tag) {
 			return SerializerUtil.serializeBookList(myCollection.booksForTag(Util.stringToTag(tag)));
-		}
-
-		public List<String> booksForSeries(String series) {
-			return SerializerUtil.serializeBookList(myCollection.booksForSeries(series));
-		}
-
-		public List<String> booksForSeriesAndAuthor(String series, String author) {
-			return SerializerUtil.serializeBookList(
-				myCollection.booksForSeriesAndAuthor(series, Util.stringToAuthor(author))
-			);
 		}
 
 		public List<String> booksForTitlePrefix(String prefix) {

@@ -19,8 +19,15 @@
 
 package org.geometerplus.fbreader.book;
 
-public class Filter {
+import java.util.List;
+
+public abstract class Filter {
+	public abstract boolean matches(Book book);
+
 	public final static class Empty extends Filter {
+		public boolean matches(Book book) {
+			return true;
+		}
 	}
 
 	public final static class ByBook extends Filter {
@@ -33,6 +40,11 @@ public class Filter {
 		public ByBook(Book book) {
 			this(book.getId());
 		}
+
+		public boolean matches(Book book) {
+			// TODO: implement
+			return true;
+		}
 	}
 
 	public final static class ByAuthor extends Filter {
@@ -40,6 +52,12 @@ public class Filter {
 
 		public ByAuthor(Author author) {
 			Author = author;
+		}
+
+		public boolean matches(Book book) {
+			final List<Author> bookAuthors = book.authors();
+			return
+				Author.NULL.equals(Author) && bookAuthors.isEmpty() || bookAuthors.contains(Author);
 		}
 	}
 
@@ -49,6 +67,11 @@ public class Filter {
 		public ByPattern(String pattern) {
 			Pattern = pattern;
 		}
+
+		public boolean matches(Book book) {
+			// TODO: implement
+			return true;
+		}
 	}
 
 	public final static class ByTitlePrefix extends Filter {
@@ -56,6 +79,11 @@ public class Filter {
 
 		public ByTitlePrefix(String prefix) {
 			Prefix = prefix;
+		}
+
+		public boolean matches(Book book) {
+			// TODO: implement
+			return true;
 		}
 	}
 
@@ -65,9 +93,18 @@ public class Filter {
 		public BySeries(Series series) {
 			Series = series;
 		}
+
+		public boolean matches(Book book) {
+			final SeriesInfo info = book.getSeriesInfo();
+			return info != null && Series.equals(info.Series);
+		}
 	}
 
 	public final static class HasBookmark extends Filter {
+		public boolean matches(Book book) {
+			// TODO: implement
+			return true;
+		}
 	}
 
 	public final static class And extends Filter {
@@ -78,6 +115,10 @@ public class Filter {
 			First = first;
 			Second = second;
 		}
+
+		public boolean matches(Book book) {
+			return First.matches(book) && Second.matches(book);
+		}
 	}
 
 	public final static class Or extends Filter {
@@ -87,6 +128,10 @@ public class Filter {
 		public Or(Filter first, Filter second) {
 			First = first;
 			Second = second;
+		}
+
+		public boolean matches(Book book) {
+			return First.matches(book) || Second.matches(book);
 		}
 	}
 }

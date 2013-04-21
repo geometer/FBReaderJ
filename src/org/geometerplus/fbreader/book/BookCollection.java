@@ -204,55 +204,38 @@ public class BookCollection extends AbstractBookCollection {
 		return myStatus;
 	}
 
-	public List<Book> books() {
+	public List<Book> books(Query query) {
+		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
-			return new ArrayList<Book>(myBooksByFile.values());
+			allBooks = new ArrayList<Book>(myBooksByFile.values());
 		}
-	}
-
-	public List<Book> booksForAuthor(Author author) {
-		final boolean isNull = Author.NULL.equals(author);
-		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books()) {
-			final List<Author> bookAuthors = b.authors();
-			if (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author)) {
-				filtered.add(b);
+		final int start = query.Page * query.Limit;
+		final int end = start + query.Limit;
+		if (query.Filter instanceof Filter.Empty) {
+			return allBooks.subList(start, end);
+		} else {
+			int count = 0;
+			final LinkedList<Book> filtered = new LinkedList<Book>();
+			for (Book b : allBooks) {
+				if (query.Filter.matches(b)) {
+					if (count >= start) {
+						filtered.add(b);
+					}
+					if (++count == end) {
+						break;
+					}
+				}
 			}
+			return filtered;
 		}
-		return filtered;
 	}
 
 	public List<Book> booksForTag(Tag tag) {
 		final boolean isNull = Tag.NULL.equals(tag);
 		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books()) {
+		for (Book b : books(new Query(new Filter.Empty(), 1000, 0))) {
 			final List<Tag> bookTags = b.tags();
 			if (isNull && bookTags.isEmpty() || bookTags.contains(tag)) {
-				filtered.add(b);
-			}
-		}
-		return filtered;
-	}
-
-	public List<Book> booksForSeries(String series) {
-		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books()) {
-			final SeriesInfo info = b.getSeriesInfo();
-			if (info != null && series.equals(info.Series.getTitle())) {
-				filtered.add(b);
-			}
-		}
-		return filtered;
-	}
-
-	public List<Book> booksForSeriesAndAuthor(String series, Author author) {
-		final boolean isNull = Author.NULL.equals(author);
-		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books()) {
-			final List<Author> bookAuthors = b.authors();
-			final SeriesInfo info = b.getSeriesInfo();
-			if (info != null && series.equals(info.Series.getTitle())
-				&& (isNull && bookAuthors.isEmpty() || bookAuthors.contains(author))) {
 				filtered.add(b);
 			}
 		}
@@ -264,7 +247,7 @@ public class BookCollection extends AbstractBookCollection {
 			return Collections.emptyList();
 		}
 		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books()) {
+		for (Book b : books(new Query(new Filter.Empty(), 1000, 0))) {
 			if (b != null && prefix.equals(b.firstTitleLetter())) {
 				filtered.add(b);
 			}
@@ -278,7 +261,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 		pattern = pattern.toLowerCase();
 
-		for (Book b : books()) {
+		for (Book b : books(new Query(new Filter.Empty(), 1000, 0))) {
 			if (b.matches(pattern)) {
 				return true;
 			}
@@ -293,7 +276,7 @@ public class BookCollection extends AbstractBookCollection {
 		pattern = pattern.toLowerCase();
 
 		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books()) {
+		for (Book b : books(new Query(new Filter.Empty(), 1000, 0))) {
 			if (b.matches(pattern)) {
 				filtered.add(b);
 			}

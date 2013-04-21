@@ -85,7 +85,7 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.booksForAuthor(Author)) {
+		for (Book book : Collection.books(new Query(new Filter.ByAuthor(Author), 1000, 0))) {
 			createBookSubTree(book);
 		}
 	}

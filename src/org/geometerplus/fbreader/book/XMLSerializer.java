@@ -511,9 +511,10 @@ class XMLSerializer extends AbstractSerializer {
 		private LinkedList<State> myStateStack = new LinkedList<State>();
 		private LinkedList<Filter> myFilterStack = new LinkedList<Filter>();
 		private Filter myFilter;
+		private Query myQuery;
 
 		public Query getQuery() {
-			return null;
+			return myQuery;
 		}
 
 		@Override
@@ -523,6 +524,9 @@ class XMLSerializer extends AbstractSerializer {
 
 		@Override
 		public void endDocument() {
+			if (myFilter != null) {
+				myQuery = new Query(myFilter, 1000, 0);
+			}
 		}
 
 		@Override
@@ -557,7 +561,9 @@ class XMLSerializer extends AbstractSerializer {
 					} else if ("has-bookmark".equals(type)) {
 						myFilter = new Filter.HasBookmark();
 					} else {
-						throw new SAXException("Unexpected filter type: " + type);
+						// we create empty filter for all other types
+						// to keep a door to add new filters in a future
+						myFilter = new Filter.Empty();
 					}
 					myStateStack.add(State.READ_FILTER_SIMPLE);
 				} else if ("and".equals(localName)) {
