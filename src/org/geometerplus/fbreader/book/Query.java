@@ -28,7 +28,7 @@ public class Query {
 		this(filter, limit, 0);
 	}
 
-	private Query(Filter filter, int limit, int page) {
+	Query(Filter filter, int limit, int page) {
 		Filter = filter;
 		Limit = limit;
 		Page = page;

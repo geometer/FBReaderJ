@@ -78,9 +78,7 @@ public final class TagTree extends FilteredTree {
 				}
 			}
 		}
-		for (Book book : Collection.books(new Query(myFilter, 1000))) {
-			createBookWithAuthorsSubTree(book);
-		}
+		createBookSubTrees();
 	}
 
 	@Override

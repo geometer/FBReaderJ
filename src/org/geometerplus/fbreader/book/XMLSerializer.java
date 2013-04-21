@@ -524,6 +524,8 @@ class XMLSerializer extends AbstractSerializer {
 		private LinkedList<State> myStateStack = new LinkedList<State>();
 		private LinkedList<Filter> myFilterStack = new LinkedList<Filter>();
 		private Filter myFilter;
+		private int myLimit = -1;
+		private int myPage = -1;
 		private Query myQuery;
 
 		public Query getQuery() {
@@ -537,8 +539,8 @@ class XMLSerializer extends AbstractSerializer {
 
 		@Override
 		public void endDocument() {
-			if (myFilter != null) {
-				myQuery = new Query(myFilter, 1000);
+			if (myFilter != null && myLimit > 0 && myPage >= 0) {
+				myQuery = new Query(myFilter, myLimit, myPage);
 			}
 		}
 
@@ -546,6 +548,12 @@ class XMLSerializer extends AbstractSerializer {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if (myStateStack.isEmpty()) {
 				if ("query".equals(localName)) {
+					try {
+						myLimit = Integer.parseInt(attributes.getValue("limit"));
+						myPage = Integer.parseInt(attributes.getValue("page"));
+					} catch (Exception e) {
+						throw new SAXException("XML parsing error");
+					}
 					myStateStack.add(State.READ_QUERY);
 					// TODO: read query params
 				} else {

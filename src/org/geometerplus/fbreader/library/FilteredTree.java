@@ -19,12 +19,14 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.book.*;
 
 abstract class FilteredTree extends LibraryTree {
-	final Filter myFilter;
+	private final Filter myFilter;
 
 	FilteredTree(IBookCollection collection, Filter filter) {
 		super(collection);
@@ -51,12 +53,22 @@ abstract class FilteredTree extends LibraryTree {
 		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
 	}
 
+	protected final void createBookSubTrees() {
+		for (Query query = new Query(myFilter, 20); ; query = query.next()) {
+			final List<Book> books = Collection.books(query);
+			if (books.isEmpty()) {
+				break;
+			}
+			for (Book b : books) {
+				createSubTree(b);
+			}
+		}
+	}
+
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (Book book : Collection.books(new Query(myFilter, 1000))) {
-			createSubTree(book);
-		}
+		createBookSubTrees();
 	}
 
 	@Override
