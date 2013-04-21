@@ -264,10 +264,6 @@ public class BookCollection extends AbstractBookCollection {
 		return books(myDatabase.loadRecentBookIds());
 	}
 
-	public List<Book> booksForLabel(String label) {
-		return books(myDatabase.loadBooksForLabelIds(label));
-	}
-
 	private List<Book> books(List<Long> ids) {
 		final List<Book> bookList = new ArrayList<Book>(ids.size());
 		for (long id : ids) {
@@ -311,6 +307,10 @@ public class BookCollection extends AbstractBookCollection {
 			}
 		}
 		return new ArrayList<Tag>(tags);
+	}
+
+	public List<String> labels() {
+		return myDatabase.labels();
 	}
 
 	public boolean hasSeries() {
@@ -381,27 +381,6 @@ public class BookCollection extends AbstractBookCollection {
 		final List<Long> ids = myDatabase.loadRecentBookIds();
 		ids.remove(book.getId());
 		myDatabase.saveRecentBookIds(ids);
-	}
-
-	public List<String> labels() {
-		return myDatabase.labels();
-	}
-
-	public List<String> labels(Book book) {
-		if (book == null) {
-			return Collections.<String>emptyList();
-		}
-		return myDatabase.labels(book.getId());
-	}
-
-	public void setLabel(Book book, String label) {
-		myDatabase.setLabel(book.getId(), label);
-		fireBookEvent(BookEvent.Updated, book);
-	}
-
-	public void removeLabel(Book book, String label) {
-		myDatabase.removeLabel(book.getId(), label);
-		fireBookEvent(BookEvent.Updated, book);
 	}
 
 	private void setStatus(Status status) {
