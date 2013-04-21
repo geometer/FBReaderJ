@@ -56,7 +56,6 @@ public interface IBookCollection {
 	List<String> titles(Query query);
 
 	List<Book> booksForLabel(String label);
-	List<Book> booksForTag(Tag tag);
 
 	List<String> labels();
 	List<String> labels(Book book);
@@ -76,7 +75,6 @@ public interface IBookCollection {
 	List<String> series();
 	List<Tag> tags();
 	List<String> firstTitleLetters();
-	List<String> titlesForTag(Tag tag, int limit);
 
 	boolean saveBook(Book book, boolean force);
 	void removeBook(Book book, boolean deleteFromDisk);

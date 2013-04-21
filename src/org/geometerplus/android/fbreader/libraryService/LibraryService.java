@@ -146,10 +146,6 @@ public class LibraryService extends Service {
 			return myCollection.hasBooks(SerializerUtil.deserializeQuery(query));
 		}
 
-		public List<String> booksForTag(String tag) {
-			return SerializerUtil.serializeBookList(myCollection.booksForTag(Util.stringToTag(tag)));
-		}
-
 		public List<String> recentBooks() {
 			return SerializerUtil.serializeBookList(myCollection.recentBooks());
 		}
@@ -206,10 +202,6 @@ public class LibraryService extends Service {
 
 		public List<String> firstTitleLetters() {
 			return myCollection.firstTitleLetters();
-		}
-
-		public List<String> titlesForTag(String tag, int limit) {
-			return myCollection.titlesForTag(Util.stringToTag(tag), limit);
 		}
 
 		public boolean saveBook(String book, boolean force) {

@@ -59,11 +59,6 @@ class XMLSerializer extends AbstractSerializer {
 			serialize(buffer, ((Filter.Or)filter).First);
 			serialize(buffer, ((Filter.Or)filter).Second);
 			closeTag(buffer, "or");
-		} else if (filter instanceof Filter.ByBook) {
-			appendTag(buffer, "filter", true,
-				"type", "book",
-				"id", String.valueOf(((Filter.ByBook)filter).Id)
-			);
 		} else if (filter instanceof Filter.ByAuthor) {
 			final Author author = ((Filter.ByAuthor)filter).Author;
 			appendTag(buffer, "filter", true,
@@ -71,6 +66,21 @@ class XMLSerializer extends AbstractSerializer {
 				"displayName", author.DisplayName,
 				"sorkKey", author.SortKey
 			);
+		} else if (filter instanceof Filter.ByTag) {
+			final LinkedList<String> lst = new LinkedList<String>();
+			for (Tag t = ((Filter.ByTag)filter).Tag; t != null; t = t.Parent) {
+				lst.add(0, t.Name);
+			}
+			final String[] params = new String[lst.size() * 2 + 2];
+			int index = 0;
+			params[index++] = "type";
+			params[index++] = "tag";
+			int num = 0;
+			for (String name : lst) {
+				params[index++] = "name" + num++;
+				params[index++] = name;
+			}
+			appendTag(buffer, "filter", true, params);
 		} else if (filter instanceof Filter.BySeries) {
 			appendTag(buffer, "filter", true,
 				"type", "series",
@@ -102,6 +112,7 @@ class XMLSerializer extends AbstractSerializer {
 			Xml.parse(xml, deserializer);
 			System.err.println("XML: " + xml);
 			System.err.println("FILTER: " + deserializer.getQuery().Filter);
+			System.err.println("QUERY: " + serialize(deserializer.getQuery()));
 			return deserializer.getQuery();
 		} catch (SAXException e) {
 			System.err.println(xml);
@@ -545,13 +556,19 @@ class XMLSerializer extends AbstractSerializer {
 					final String type = attributes.getValue("type");
 					if ("empty".equals(type)) {
 						myFilter = new Filter.Empty();
-					} else if ("book".equals(type)) {
-						myFilter = new Filter.ByBook(Long.parseLong(attributes.getValue("id")));
 					} else if ("author".equals(type)) {
 						myFilter = new Filter.ByAuthor(new Author(
 							attributes.getValue("displayName"),
 							attributes.getValue("sorkKey")
 						));
+					} else if ("tag".equals(type)) {
+						final LinkedList<String> names = new LinkedList<String>();
+						int num = 0;
+						String n;
+						while ((n = attributes.getValue("name" + num++)) != null) {
+							names.add(n);
+						}
+						myFilter = new Filter.ByTag(Tag.getTag(names.toArray(new String[names.size()])));
 					} else if ("series".equals(type)) {
 						myFilter = new Filter.BySeries(new Series(
 							attributes.getValue("title")

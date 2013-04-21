@@ -30,23 +30,6 @@ public abstract class Filter {
 		}
 	}
 
-	public final static class ByBook extends Filter {
-		public final long Id;
-
-		public ByBook(long id) {
-			Id = id;
-		}
-
-		public ByBook(Book book) {
-			this(book.getId());
-		}
-
-		public boolean matches(Book book) {
-			// TODO: implement
-			return true;
-		}
-	}
-
 	public final static class ByAuthor extends Filter {
 		public final Author Author;
 

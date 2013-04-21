@@ -155,19 +155,6 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Book> booksForTag(Tag tag) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeBookList(
-				myInterface.booksForTag(Util.tagToString(tag))
-			);
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
-	}
-
 	public synchronized List<Book> recentBooks() {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -304,17 +291,6 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 		try {
 			return myInterface.firstTitleLetters();
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
-	}
-
-	public synchronized List<String> titlesForTag(Tag tag, int limit) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return myInterface.titlesForTag(Util.tagToString(tag), limit);
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}

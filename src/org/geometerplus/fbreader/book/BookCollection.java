@@ -260,10 +260,6 @@ public class BookCollection extends AbstractBookCollection {
 		return titles;
 	}
 
-	public List<Book> booksForTag(Tag tag) {
-		return books(new Query(new Filter.ByTag(tag), 1000));
-	}
-
 	public List<Book> recentBooks() {
 		return books(myDatabase.loadRecentBookIds());
 	}
@@ -352,10 +348,6 @@ public class BookCollection extends AbstractBookCollection {
 			}
 			return new ArrayList<String>(letters);
 		}
-	}
-
-	public List<String> titlesForTag(Tag tag, int limit) {
-		return titles(new Query(new Filter.ByTag(tag), limit));
 	}
 
 	public Book getRecentBook(int index) {

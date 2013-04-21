@@ -16,7 +16,6 @@ interface LibraryInterface {
 	List<String> books(in String query);
 	boolean hasBooks(in String query);
 	List<String> booksForLabel(in String label);
-	List<String> booksForTag(in String tag);
 	List<String> recentBooks();
 
 	String getBookByFile(in String file);
@@ -30,7 +29,6 @@ interface LibraryInterface {
 	List<String> tags();
 	List<String> titles(in String query);
 	List<String> firstTitleLetters();
-	List<String> titlesForTag(in String tag, in int limit);
 
 	List<String> labels();
 	List<String> labelsForBook(in String book);

@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.fbreader.book.*;
 
 abstract class FilteredTree extends LibraryTree {
-	private final Filter myFilter;
+	final Filter myFilter;
 
 	FilteredTree(IBookCollection collection, Filter filter) {
 		super(collection);
@@ -42,7 +42,7 @@ abstract class FilteredTree extends LibraryTree {
 	}
 
 	@Override
-	public final boolean containsBook(Book book) {
+	public boolean containsBook(Book book) {
 		return book != null && myFilter.matches(book);
 	}
 
@@ -52,7 +52,7 @@ abstract class FilteredTree extends LibraryTree {
 	}
 
 	@Override
-	public final void waitForOpening() {
+	public void waitForOpening() {
 		clear();
 		for (Book book : Collection.books(new Query(myFilter, 1000))) {
 			createSubTree(book);
@@ -60,7 +60,7 @@ abstract class FilteredTree extends LibraryTree {
 	}
 
 	@Override
-	public final boolean onBookEvent(BookEvent event, Book book) {
+	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
 				return containsBook(book) && createSubTree(book);
