@@ -146,10 +146,6 @@ public class LibraryService extends Service {
 			return SerializerUtil.serializeBookList(myCollection.booksForTag(Util.stringToTag(tag)));
 		}
 
-		public List<String> booksForTitlePrefix(String prefix) {
-			return SerializerUtil.serializeBookList(myCollection.booksForTitlePrefix(prefix));
-		}
-
 		public boolean hasBooksForPattern(String pattern) {
 			return myCollection.hasBooksForPattern(pattern);
 		}
@@ -218,10 +214,6 @@ public class LibraryService extends Service {
 
 		public List<String> titlesForTag(String tag, int limit) {
 			return myCollection.titlesForTag(Util.stringToTag(tag), limit);
-		}
-
-		public List<String> titlesForTitlePrefix(String prefix, int limit) {
-			return myCollection.titlesForTitlePrefix(prefix, limit);
 		}
 
 		public boolean saveBook(String book, boolean force) {

@@ -70,6 +70,7 @@ public class AuthorTree extends FilteredTree {
 		}
 	}
 
+	@Override
 	protected boolean createSubTree(Book book) {
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
 		if (seriesInfo != null) {

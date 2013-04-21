@@ -251,19 +251,6 @@ public class BookCollection extends AbstractBookCollection {
 		return filtered;
 	}
 
-	public List<Book> booksForTitlePrefix(String prefix) {
-		if (prefix == null) {
-			return Collections.emptyList();
-		}
-		final LinkedList<Book> filtered = new LinkedList<Book>();
-		for (Book b : books(new Query(new Filter.Empty(), 1000, 0))) {
-			if (b != null && prefix.equals(b.firstTitleLetter())) {
-				filtered.add(b);
-			}
-		}
-		return filtered;
-	}
-
 	public boolean hasBooksForPattern(String pattern) {
 		if (pattern == null || pattern.length() == 0) {
 			return false;

@@ -78,12 +78,11 @@ public abstract class Filter {
 		public final String Prefix;
 
 		public ByTitlePrefix(String prefix) {
-			Prefix = prefix;
+			Prefix = prefix != null ? prefix : "";
 		}
 
 		public boolean matches(Book book) {
-			// TODO: implement
-			return true;
+			return book != null && Prefix.equals(book.firstTitleLetter());
 		}
 	}
 

@@ -56,6 +56,7 @@ public final class SeriesTree extends FilteredTree {
 		return Series.getSortKey();
 	}
 
+	@Override
 	protected boolean createSubTree(Book book) {
 		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
 		int position = Collections.binarySearch(subTrees(), temp);

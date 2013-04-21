@@ -84,7 +84,7 @@ class XMLSerializer extends AbstractSerializer {
 		} else if (filter instanceof Filter.ByTitlePrefix) {
 			appendTag(buffer, "filter", true,
 				"type", "title-prefix",
-				"prefix", ((Filter.ByPattern)filter).Pattern
+				"prefix", ((Filter.ByTitlePrefix)filter).Prefix
 			);
 		} else if (filter instanceof Filter.HasBookmark) {
 			appendTag(buffer, "filter", true,
@@ -100,6 +100,8 @@ class XMLSerializer extends AbstractSerializer {
 		try {
 			final QueryDeserializer deserializer = new QueryDeserializer();
 			Xml.parse(xml, deserializer);
+			System.err.println("XML: " + xml);
+			System.err.println("FILTER: " + deserializer.getQuery().Filter);
 			return deserializer.getQuery();
 		} catch (SAXException e) {
 			System.err.println(xml);
