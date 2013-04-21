@@ -19,47 +19,49 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.fbreader.book.*;
 
-public class SearchResultsTree extends FirstLevelTree {
+public class SearchResultsTree extends FilteredTree {
 	public final String Pattern;
+	private final String myId;
+	private final ZLResource myResource;
 
 	SearchResultsTree(RootTree root, String id, String pattern) {
-		super(root, 0, id);
+		super(root, new Filter.ByPattern(pattern), 0);
+		myId = id;
+		myResource = resource().getResource(myId);
 		Pattern = pattern != null ? pattern : "";
 	}
 
 	@Override
+	public String getName() {
+		return myResource.getValue();
+	}
+
+	@Override
+	public String getTreeTitle() {
+		return getSummary();
+	}
+
+	@Override
+	protected String getStringId() {
+		return myId;
+	}
+
+	@Override
+	public boolean isSelectable() {
+		return false;
+	}
+
+	@Override
 	public String getSummary() {
-		return super.getSummary().replace("%s", Pattern);
+		return myResource.getResource("summary").getValue().replace("%s", Pattern);
 	}
 
 	@Override
-	public Status getOpeningStatus() {
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
-	}
-
-	@Override
-	public void waitForOpening() {
-		clear();
-		for (Book book : Collection.books(new Query(new Filter.ByPattern(Pattern), 1000))) {
-			createBookWithAuthorsSubTree(book);
-		}
-	}
-
-	@Override
-	public boolean onBookEvent(BookEvent event, Book book) {
-		switch (event) {
-			case Added:
-				return book.matches(Pattern) && createBookWithAuthorsSubTree(book);
-			case Updated:
-			{
-				boolean changed = removeBook(book);
-				changed |= book.matches(Pattern) && createBookWithAuthorsSubTree(book);
-				return changed;
-			}
-			default:
-				return super.onBookEvent(event, book);
-		}
+	protected boolean createSubTree(Book book) {
+		return createBookWithAuthorsSubTree(book);
 	}
 }

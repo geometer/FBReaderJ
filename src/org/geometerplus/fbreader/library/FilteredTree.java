@@ -39,7 +39,7 @@ abstract class FilteredTree extends LibraryTree {
 	}
 
 	@Override
-	public final String getSummary() {
+	public String getSummary() {
 		return MiscUtil.join(Collection.titles(new Query(myFilter, 5)), ", ");
 	}
 

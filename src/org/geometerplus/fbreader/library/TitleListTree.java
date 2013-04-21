@@ -52,8 +52,14 @@ public class TitleListTree extends FirstLevelTree {
 				createTitleSubTree(l);
 			}
 		} else {
-			for (Book b : Collection.books(new Query(new Filter.Empty(), 1000))) {
-				createBookWithAuthorsSubTree(b);
+			for (Query query = new Query(new Filter.Empty(), 20); ; query = query.next()) {
+				final List<Book> books = Collection.books(query);
+				if (books.isEmpty()) {
+					break;
+				}
+				for (Book b : books) {
+					createBookWithAuthorsSubTree(b);
+				}
 			}
 		}
 	}
