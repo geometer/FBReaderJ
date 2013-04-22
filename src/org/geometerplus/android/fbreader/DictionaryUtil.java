@@ -119,6 +119,40 @@ public abstract class DictionaryUtil {
 		}
 	}
 
+	private static class BitKnightsInfoReader extends ZLXMLReaderAdapter {
+		private final Context mContext;
+		private int mCounter;
+
+		BitKnightsInfoReader(Context context) {
+			mContext = context;
+		}
+
+		@Override
+		public boolean dontCacheAttributeValues() {
+			return true;
+		}
+
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			if ("dictionary".equals(tag)) {
+				final PackageInfo info = new PackageInfo(
+					"BK" + mCounter ++,
+					attributes.getValue("package"),
+					"com.bitknights.dict.ShareTranslateActivity",
+					attributes.getValue("title"),
+					Intent.ACTION_VIEW,
+					null,
+					attributes.getValue("pattern")
+				);
+				if (PackageUtil.canBeStarted(mContext, getDictionaryIntent(info, "test"), false)) {
+					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
+				}
+			}
+
+			return false;
+		}
+	}
+
 	private interface ColorDict3 {
 		String ACTION = "colordict.intent.action.SEARCH";
 		String QUERY = "EXTRA_QUERY";
@@ -138,6 +172,7 @@ public abstract class DictionaryUtil {
 				public void run() {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new ParagonInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/paragon.xml"));
+					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);
