@@ -612,12 +612,24 @@ public class BookCollection extends AbstractBookCollection {
 	public void saveBookmark(Bookmark bookmark) {
 		if (bookmark != null) {
 			bookmark.setId(myDatabase.saveBookmark(bookmark));
+			if (bookmark.IsVisible) {
+				final Book book = getBookById(bookmark.getBookId());
+				if (book != null) {
+					book.HasBookmark = true;
+				}
+			}
 		}
 	}
 
 	public void deleteBookmark(Bookmark bookmark) {
 		if (bookmark != null && bookmark.getId() != -1) {
 			myDatabase.deleteBookmark(bookmark);
+			if (bookmark.IsVisible) {
+				final Book book = getBookById(bookmark.getBookId());
+				if (book != null) {
+					book.HasBookmark = myDatabase.hasVisibleBookmark(bookmark.getBookId());
+				}
+			}
 		}
 	}
 

@@ -208,6 +208,11 @@ class XMLSerializer extends AbstractSerializer {
 				appendTagWithContent(buffer, "calibre:series_index", seriesInfo.Index);
 			}
 		}
+
+		if (book.HasBookmark) {
+			appendTag(buffer, "has-bookmark", true);
+		}
+
 		// TODO: serialize description (?)
 		// TODO: serialize cover (?)
 
@@ -382,6 +387,7 @@ class XMLSerializer extends AbstractSerializer {
 		private final StringBuilder myAuthorName = new StringBuilder();
 		private final StringBuilder mySeriesTitle = new StringBuilder();
 		private final StringBuilder mySeriesIndex = new StringBuilder();
+		private boolean myHasBookmark;
 
 		private Book myBook;
 
@@ -405,6 +411,7 @@ class XMLSerializer extends AbstractSerializer {
 			myAuthors.clear();
 			myTags.clear();
 			myLabels.clear();
+			myHasBookmark = false;
 
 			myState = State.READ_NOTHING;
 		}
@@ -434,6 +441,7 @@ class XMLSerializer extends AbstractSerializer {
 				myBook.addUid(uid);
 			}
 			myBook.setSeriesInfoWithNoCheck(string(mySeriesTitle), string(mySeriesIndex));
+			myBook.HasBookmark = myHasBookmark;
 		}
 
 		@Override
@@ -475,6 +483,8 @@ class XMLSerializer extends AbstractSerializer {
 						myState = State.READ_SERIES_TITLE;
 					} else if ("series_index".equals(localName) && XMLNamespaces.CalibreMetadata.equals(uri)) {
 						myState = State.READ_SERIES_INDEX;
+					} else if ("has-bookmark".equals(localName)) {
+						myHasBookmark = true;
 					} else if ("link".equals(localName)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
