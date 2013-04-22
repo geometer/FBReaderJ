@@ -50,6 +50,8 @@ public class Book extends TitledEntity {
 	private volatile SeriesInfo mySeriesInfo;
 	private volatile List<UID> myUids;
 
+	public volatile boolean HasBookmark;
+
 	private volatile boolean myIsSaved;
 
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
@@ -146,6 +148,8 @@ public class Book extends TitledEntity {
 		myLabels = database.listLabels(myId);
 		mySeriesInfo = database.getSeriesInfo(myId);
 		myUids = database.listUids(myId);
+		HasBookmark = database.hasVisibleBookmark(myId);
+		System.err.println(myId + ": " + getTitle() + " :: " + HasBookmark);
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
 			try {
