@@ -56,6 +56,7 @@ public abstract class BooksDatabase {
 	protected abstract List<String> listLabels(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	protected abstract List<UID> listUids(long bookId);
+	protected abstract boolean hasVisibleBookmark(long bookId);
 
 	protected abstract Long bookIdByUid(UID uid);
 

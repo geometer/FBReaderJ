@@ -222,7 +222,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null
 		);
 		while (cursor.moveToNext()) {
-			Book book = booksById.get(cursor.getLong(0));
+			final Book book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				Author author = authorById.get(cursor.getLong(1));
 				if (author != null) {
@@ -234,7 +234,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 		cursor = myDatabase.rawQuery("SELECT book_id,tag_id FROM BookTag", null);
 		while (cursor.moveToNext()) {
-			Book book = booksById.get(cursor.getLong(0));
+			final Book book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				addTag(book, getTagById(cursor.getLong(1)));
 			}
@@ -254,7 +254,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,series_id,book_index FROM BookSeries", null
 		);
 		while (cursor.moveToNext()) {
-			Book book = booksById.get(cursor.getLong(0));
+			final Book book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				final String series = seriesById.get(cursor.getLong(1));
 				if (series != null) {
@@ -263,6 +263,43 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 		}
 		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id,type,uid FROM BookUid", null
+		);
+		while (cursor.moveToNext()) {
+			final Book book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				book.addUid(cursor.getString(1), cursor.getString(2));
+			}
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT BookLabel.book_id,Labels.name FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id",
+			null
+		);
+		while (cursor.moveToNext()) {
+			final Book book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				book.addLabel(cursor.getString(1));
+			}
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Bookmarks WHERE visible = 1 GROUP by book_id",
+			null
+		);
+		while (cursor.moveToNext()) {
+			final Book book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				book.HasBookmark = true;
+			}
+		}
+		cursor.close();
+
 		return booksByFileId;
 	}
 
@@ -779,6 +816,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myRemoveLabelStatement.bindLong(1, bookId);
 		myRemoveLabelStatement.bindString(2, label);
 		myRemoveLabelStatement.execute();
+	}
+
+	@Override
+	protected boolean hasVisibleBookmark(long bookId) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT bookmark_id FROM Bookmarks WHERE book_id = " + bookId +
+			" AND visible = 1 LIMIT 1", null
+		);
+		final boolean result = cursor.moveToNext();
+		cursor.close();
+		return result;
 	}
 
 	@Override
