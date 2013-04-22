@@ -86,6 +86,7 @@ public class Book extends TitledEntity {
 		myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
 		myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
 		mySeriesInfo = book.mySeriesInfo;
+		HasBookmark = book.HasBookmark;
 	}
 
 	public void reloadInfoFromFile() {
