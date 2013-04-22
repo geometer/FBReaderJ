@@ -124,8 +124,41 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
+	public String serialize(BookmarkQuery query) {
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(buffer, "query", false,
+			"visible", String.valueOf(query.Visible),
+			"limit", String.valueOf(query.Limit),
+			"page", String.valueOf(query.Page)
+		);
+		if (query.Book != null) {
+			serialize(buffer, query.Book);
+		}
+		closeTag(buffer, "query");
+		return buffer.toString();
+	}
+
+	@Override
+	public BookmarkQuery deserializeBookmarkQuery(String xml) {
+		try {
+			final BookmarkQueryDeserializer deserializer = new BookmarkQueryDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getQuery();
+		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
 	public String serialize(Book book) {
 		final StringBuilder buffer = new StringBuilder();
+		serialize(buffer, book);
+		return buffer.toString();
+	}
+
+	private void serialize(StringBuilder buffer, Book book) {
 		appendTag(
 			buffer, "entry", false,
 			"xmlns:dc", XMLNamespaces.DublinCore,
@@ -187,7 +220,6 @@ class XMLSerializer extends AbstractSerializer {
 		);
 
 		closeTag(buffer, "entry");
-		return buffer.toString();
 	}
 
 	@Override
@@ -571,7 +603,7 @@ class XMLSerializer extends AbstractSerializer {
 						myLimit = Integer.parseInt(attributes.getValue("limit"));
 						myPage = Integer.parseInt(attributes.getValue("page"));
 					} catch (Exception e) {
-						throw new SAXException("XML parsing error");
+						throw new SAXException("XML parsing error", e);
 					}
 					myStateStack.add(State.READ_QUERY);
 				} else {
@@ -646,6 +678,57 @@ class XMLSerializer extends AbstractSerializer {
 				case READ_FILTER_SIMPLE:
 					break;
 			}
+		}
+	}
+
+	private static final class BookmarkQueryDeserializer extends DefaultHandler {
+		private boolean myVisible;
+		private int myLimit;
+		private int myPage;
+		private final BookDeserializer myBookDeserializer = new BookDeserializer();
+		private BookmarkQuery myQuery;
+
+		BookmarkQuery getQuery() {
+			return myQuery;
+		}
+
+		@Override
+		public void startDocument() {
+			myQuery = null;
+			myBookDeserializer.startDocument();
+		}
+
+		@Override
+		public void endDocument() {
+			myBookDeserializer.endDocument();
+			myQuery = new BookmarkQuery(myBookDeserializer.getBook(), myVisible, myLimit, myPage);
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if ("query".equals(localName)) {
+				try {
+					myVisible = Boolean.parseBoolean(attributes.getValue("visible"));
+					myLimit = Integer.parseInt(attributes.getValue("limit"));
+					myPage = Integer.parseInt(attributes.getValue("page"));
+				} catch (Exception e) {
+					throw new SAXException("XML parsing error", e);
+				}
+			} else {
+				myBookDeserializer.startElement(uri, localName, qName, attributes);
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			if (!"query".equals(localName)) {
+				myBookDeserializer.endElement(uri, localName, qName);
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length) {
+			myBookDeserializer.characters(ch, start, length);
 		}
 	}
 

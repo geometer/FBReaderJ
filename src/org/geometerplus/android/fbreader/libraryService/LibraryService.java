@@ -246,19 +246,9 @@ public class LibraryService extends Service {
 			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
 		}
 
-		public List<String> invisibleBookmarks(String book) {
-			return SerializerUtil.serializeBookmarkList(
-				myCollection.invisibleBookmarks(SerializerUtil.deserializeBook(book))
-			);
-		}
-
-		public List<String> bookmarks(long fromId, int limitCount) {
-			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(fromId, limitCount));
-		}
-
-		public List<String> bookmarksForBook(String book, long fromId, int limitCount) {
-			return SerializerUtil.serializeBookmarkList(myCollection.bookmarksForBook(
-				SerializerUtil.deserializeBook(book), fromId, limitCount
+		public List<String> bookmarks(String query) {
+			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(
+				SerializerUtil.deserializeBookmarkQuery(query)
 			));
 		}
 

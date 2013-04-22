@@ -605,18 +605,8 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<Bookmark> bookmarks(long fromId, int limitCount) {
-		return myDatabase.loadVisibleBookmarks(fromId, limitCount);
-	}
-
-	public List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount) {
-		return myDatabase.loadVisibleBookmarks(book.getId(), fromId, limitCount);
-	}
-
-	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = myDatabase.loadInvisibleBookmarks(book.getId());
-		Collections.sort(list, new Bookmark.ByTimeComparator());
-		return list;
+	public List<Bookmark> bookmarks(BookmarkQuery query) {
+		return myDatabase.loadBookmarks(query);
 	}
 
 	public void saveBookmark(Bookmark bookmark) {
