@@ -8,9 +8,11 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.7.9 (Apr ??, 2013) =====
+===== 1.7.9 (Apr 22, 2013) =====
 * Fixed Ukrainian hyphenations
 * Fixed missing paragraph before new section issue (in some book formats)
+* Fixed library/bookmarks start
+* Georgian in language list in book info dialog
 
 ===== 1.7.8 (Mar 24, 2013) =====
 * Fixed library scanning: all books are visible in the library
