@@ -565,7 +565,7 @@ public final class FBReader extends Activity {
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 
 		final int fullScreenFlag =
-				zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
 			startActivity(new Intent(this, getClass()));
@@ -597,14 +597,14 @@ public final class FBReader extends Activity {
 		}
 
 		sendOrderedBroadcast(
-				new Intent(PluginApi.ACTION_REGISTER),
-				null,
-				myPluginInfoReceiver,
-				null,
-				RESULT_OK,
-				null,
-				null
-				);
+			new Intent(PluginApi.ACTION_REGISTER),
+			null,
+			myPluginInfoReceiver,
+			null,
+			RESULT_OK,
+			null,
+			null
+		);
 	}
 
 	private class TipRunner extends Thread {
