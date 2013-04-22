@@ -210,12 +210,12 @@ public final class FBReader extends Activity {
 
 	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
 		context.startActivity(
-				new Intent(context, FBReader.class)
+			new Intent(context, FBReader.class)
 				.setAction(ACTION_OPEN_BOOK)
 				.putExtra(BOOK_KEY, SerializerUtil.serialize(book))
 				.putExtra(BOOKMARK_KEY, SerializerUtil.serialize(bookmark))
 				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-				);
+		);
 	}
 
 	private static ZLAndroidLibrary getZLibrary() {
@@ -229,6 +229,7 @@ public final class FBReader extends Activity {
 	private ZLAndroidWidget myMainView;
 
 	private int myFullScreenFlag;
+	private String myLanguage;
 
 	private boolean myIsPaused = false;
 	private AlertDialog myDialogToShow = null;
@@ -238,7 +239,7 @@ public final class FBReader extends Activity {
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
-			new LinkedList<PluginApi.ActionInfo>();
+		new LinkedList<PluginApi.ActionInfo>();
 	private final BroadcastReceiver myPluginInfoReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -253,9 +254,9 @@ public final class FBReader extends Activity {
 					index = 0;
 					for (PluginApi.ActionInfo info : myPluginActions) {
 						myFBReaderApp.addAction(
-								PLUGIN_ACTION_PREFIX + index++,
-								new RunPluginAction(FBReader.this, myFBReaderApp, info.getId())
-								);
+							PLUGIN_ACTION_PREFIX + index++,
+							new RunPluginAction(FBReader.this, myFBReaderApp, info.getId())
+						);
 					}
 				}
 			}
@@ -274,7 +275,7 @@ public final class FBReader extends Activity {
 			Log.d("bookmark", "null");
 		}
 		final Bookmark bookmark =
-				SerializerUtil.deserializeBookmark(intent.getStringExtra(BOOKMARK_KEY));
+			SerializerUtil.deserializeBookmark(intent.getStringExtra(BOOKMARK_KEY));
 		if (bookmark == null) {
 			Log.d("bookmark", "null!!!!1111");
 		}
@@ -329,6 +330,8 @@ public final class FBReader extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
+		myLanguage = ZLResource.LanguageOption.getValue();
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 		myRootView = (RelativeLayout)findViewById(R.id.root_view);
@@ -362,10 +365,10 @@ public final class FBReader extends Activity {
 		myNeedToSkipPlugin = true;
 
 		myFullScreenFlag =
-				getZLibrary().ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			getZLibrary().ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		getWindow().setFlags(
-				WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
-				);
+			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
+		);
 
 		if (myFBReaderApp.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(myFBReaderApp);
@@ -472,7 +475,7 @@ public final class FBReader extends Activity {
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
 		} else if (Intent.ACTION_VIEW.equals(action)
-				&& data != null && "fbreader-action".equals(data.getScheme())) {
+				   && data != null && "fbreader-action".equals(data.getScheme())) {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
 			myNeedToOpenFile = true;
@@ -566,7 +569,8 @@ public final class FBReader extends Activity {
 
 		final int fullScreenFlag =
 			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
-		if (fullScreenFlag != myFullScreenFlag) {
+		if (fullScreenFlag != myFullScreenFlag ||
+			!myLanguage.equals(ZLResource.LanguageOption.getValue())) {
 			finish();
 			startActivity(new Intent(this, getClass()));
 		}
