@@ -204,7 +204,7 @@ public class BookCollection extends AbstractBookCollection {
 		return myStatus;
 	}
 
-	public List<Book> books(Query query) {
+	public List<Book> books(BookQuery query) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
 			allBooks = new ArrayList<Book>(myBooksByFile.values());
@@ -243,7 +243,7 @@ public class BookCollection extends AbstractBookCollection {
 		return false;
 	}
 
-	public List<String> titles(Query query) {
+	public List<String> titles(BookQuery query) {
 		final List<Book> books = books(query);
 		final List<String> titles = new ArrayList<String>(books.size());
 		for (Book b : books) {
@@ -622,18 +622,8 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<Bookmark> bookmarks(long fromId, int limitCount) {
-		return myDatabase.loadVisibleBookmarks(fromId, limitCount);
-	}
-
-	public List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount) {
-		return myDatabase.loadVisibleBookmarks(book.getId(), fromId, limitCount);
-	}
-
-	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = myDatabase.loadInvisibleBookmarks(book.getId());
-		Collections.sort(list, new Bookmark.ByTimeComparator());
-		return list;
+	public List<Bookmark> bookmarks(BookmarkQuery query) {
+		return myDatabase.loadBookmarks(query);
 	}
 
 	public void saveBookmark(Bookmark bookmark) {
