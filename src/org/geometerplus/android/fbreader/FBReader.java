@@ -878,9 +878,7 @@ public final class FBReader extends Activity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
+	private void setupMenu(Menu menu) {
 		fillMenu(menu, MenuItemData.getRoot());
 		synchronized (myPluginActions) {
 			int index = 0;
@@ -897,6 +895,13 @@ public final class FBReader extends Activity {
 
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.refresh();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+
+		setupMenu(menu);
 
 		return true;
 	}

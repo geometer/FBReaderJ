@@ -136,13 +136,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		) {
 			@Override
 			protected void init() {
-				setInitialValue(ZLResource.LanguageOption.getValue());
+				setInitialValue(ZLResource.getLanguageOption().getValue());
 			}
 
 			@Override
 			protected void setLanguage(String code) {
-				if (!code.equals(ZLResource.LanguageOption.getValue())) {
-					ZLResource.LanguageOption.setValue(code);
+				final ZLStringOption languageOption = ZLResource.getLanguageOption();
+				if (!code.equals(languageOption.getValue())) {
+					languageOption.setValue(code);
+					finish();
 					startActivity(new Intent(
 						Intent.ACTION_VIEW, Uri.parse("fbreader-action:preferences#appearance")
 					));
