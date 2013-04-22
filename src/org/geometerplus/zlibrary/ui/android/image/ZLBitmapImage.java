@@ -24,7 +24,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import android.graphics.Bitmap;
 
 public class ZLBitmapImage implements ZLImage {
-
 	private Bitmap myBitmap = null;
 	
 	public ZLBitmapImage(Bitmap b) {
@@ -39,5 +38,4 @@ public class ZLBitmapImage implements ZLImage {
 	public String getURI() {
 		return null;
 	}
-
 }
