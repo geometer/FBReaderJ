@@ -229,6 +229,7 @@ public final class FBReader extends Activity {
 	private ZLAndroidWidget myMainView;
 
 	private int myFullScreenFlag;
+	private String myLanguage;
 
 	private boolean myIsPaused = false;
 	private AlertDialog myDialogToShow = null;
@@ -328,6 +329,8 @@ public final class FBReader extends Activity {
 		super.onCreate(icicle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+
+		myLanguage = ZLResource.LanguageOption.getValue();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
@@ -566,7 +569,8 @@ public final class FBReader extends Activity {
 
 		final int fullScreenFlag =
 			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
-		if (fullScreenFlag != myFullScreenFlag) {
+		if (fullScreenFlag != myFullScreenFlag ||
+			!myLanguage.equals(ZLResource.LanguageOption.getValue())) {
 			finish();
 			startActivity(new Intent(this, getClass()));
 		}
