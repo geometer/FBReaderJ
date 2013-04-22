@@ -909,10 +909,10 @@ public final class FBReader extends Activity {
 			for (PluginApi.ActionInfo info : myPluginActions) {
 				if (info instanceof PluginApi.MenuActionInfo) {
 					addMenuItem(
-							menu,
-							PLUGIN_ACTION_PREFIX + index++,
-							((PluginApi.MenuActionInfo)info).MenuItemName
-							);
+						menu,
+						PLUGIN_ACTION_PREFIX + index++,
+						((PluginApi.MenuActionInfo)info).MenuItemName
+					);
 				}
 			}
 		}
@@ -938,19 +938,19 @@ public final class FBReader extends Activity {
 		final String text = fbView.getSelectedText();
 
 		final Bookmark bookmark = new Bookmark(
-				myFBReaderApp.Model.Book,
-				fbView.getModel().getId(),
-				fbView.getSelectionStartPosition(),
-				text,
-				true
-				);
+			myFBReaderApp.Model.Book,
+			fbView.getModel().getId(),
+			fbView.getSelectionStartPosition(),
+			text,
+			true
+		);
 		myFBReaderApp.Collection.saveBookmark(bookmark);
 		fbView.clearSelection();
 
 		UIUtil.showMessageText(
-				this,
-				ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
-				);
+			this,
+			ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
+		);
 	}
 
 	@Override
@@ -987,8 +987,8 @@ public final class FBReader extends Activity {
 				if (myWakeLockToCreate) {
 					myWakeLockToCreate = false;
 					myWakeLock =
-							((PowerManager)getSystemService(POWER_SERVICE)).
-							newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
+						((PowerManager)getSystemService(POWER_SERVICE))
+							.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
 					myWakeLock.acquire();
 				}
 			}
