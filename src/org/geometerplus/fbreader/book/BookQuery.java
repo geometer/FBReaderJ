@@ -19,22 +19,22 @@
 
 package org.geometerplus.fbreader.book;
 
-public class Query {
+public class BookQuery {
 	public final Filter Filter;
 	public final int Limit;
 	public final int Page;
 
-	public Query(Filter filter, int limit) {
+	public BookQuery(Filter filter, int limit) {
 		this(filter, limit, 0);
 	}
 
-	Query(Filter filter, int limit, int page) {
+	BookQuery(Filter filter, int limit, int page) {
 		Filter = filter;
 		Limit = limit;
 		Page = page;
 	}
 
-	public Query next() {
-		return new Query(Filter, Limit, Page + 1);
+	public BookQuery next() {
+		return new BookQuery(Filter, Limit, Page + 1);
 	}
 }

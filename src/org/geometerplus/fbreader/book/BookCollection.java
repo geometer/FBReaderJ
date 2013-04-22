@@ -204,7 +204,7 @@ public class BookCollection extends AbstractBookCollection {
 		return myStatus;
 	}
 
-	public List<Book> books(Query query) {
+	public List<Book> books(BookQuery query) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
 			allBooks = new ArrayList<Book>(myBooksByFile.values());
@@ -243,7 +243,7 @@ public class BookCollection extends AbstractBookCollection {
 		return false;
 	}
 
-	public List<String> titles(Query query) {
+	public List<String> titles(BookQuery query) {
 		final List<Book> books = books(query);
 		final List<String> titles = new ArrayList<String>(books.size());
 		for (Book b : books) {

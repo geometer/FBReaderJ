@@ -139,11 +139,13 @@ public class LibraryService extends Service {
 		}
 
 		public List<String> books(String query) {
-			return SerializerUtil.serializeBookList(myCollection.books(SerializerUtil.deserializeQuery(query)));
+			return SerializerUtil.serializeBookList(
+				myCollection.books(SerializerUtil.deserializeBookQuery(query))
+			);
 		}
 
 		public boolean hasBooks(String query) {
-			return myCollection.hasBooks(SerializerUtil.deserializeQuery(query).Filter);
+			return myCollection.hasBooks(SerializerUtil.deserializeBookQuery(query).Filter);
 		}
 
 		public List<String> recentBooks() {
@@ -193,7 +195,7 @@ public class LibraryService extends Service {
 		}
 
 		public List<String> titles(String query) {
-			return myCollection.titles(SerializerUtil.deserializeQuery(query));
+			return myCollection.titles(SerializerUtil.deserializeBookQuery(query));
 		}
 
 		public List<String> firstTitleLetters() {

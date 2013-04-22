@@ -133,7 +133,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Book> books(Query query) {
+	public synchronized List<Book> books(BookQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
@@ -149,7 +149,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return false;
 		}
 		try {
-			return myInterface.hasBooks(SerializerUtil.serialize(new Query(filter, 1)));
+			return myInterface.hasBooks(SerializerUtil.serialize(new BookQuery(filter, 1)));
 		} catch (RemoteException e) {
 			return false;
 		}
@@ -263,7 +263,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<String> titles(Query query) {
+	public synchronized List<String> titles(BookQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}

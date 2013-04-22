@@ -20,8 +20,8 @@
 package org.geometerplus.fbreader.book;
 
 abstract class AbstractSerializer {
-	public abstract String serialize(Query query);
-	public abstract Query deserializeQuery(String data);
+	public abstract String serialize(BookQuery query);
+	public abstract BookQuery deserializeBookQuery(String data);
 
 	public abstract String serialize(Book book);
 	public abstract Book deserializeBook(String data);

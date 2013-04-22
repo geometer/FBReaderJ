@@ -33,7 +33,7 @@ import android.util.Xml;
 
 class XMLSerializer extends AbstractSerializer {
 	@Override
-	public String serialize(Query query) {
+	public String serialize(BookQuery query) {
 		final StringBuilder buffer = new StringBuilder();
 		appendTag(buffer, "query", false,
 			"limit", String.valueOf(query.Limit),
@@ -111,9 +111,9 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public Query deserializeQuery(String xml) {
+	public BookQuery deserializeBookQuery(String xml) {
 		try {
-			final QueryDeserializer deserializer = new QueryDeserializer();
+			final BookQueryDeserializer deserializer = new BookQueryDeserializer();
 			Xml.parse(xml, deserializer);
 			return deserializer.getQuery();
 		} catch (SAXException e) {
@@ -532,7 +532,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
-	private static final class QueryDeserializer extends DefaultHandler {
+	private static final class BookQueryDeserializer extends DefaultHandler {
 		private static enum State {
 			READ_QUERY,
 			READ_FILTER_AND,
@@ -545,9 +545,9 @@ class XMLSerializer extends AbstractSerializer {
 		private Filter myFilter;
 		private int myLimit = -1;
 		private int myPage = -1;
-		private Query myQuery;
+		private BookQuery myQuery;
 
-		public Query getQuery() {
+		public BookQuery getQuery() {
 			return myQuery;
 		}
 
@@ -559,7 +559,7 @@ class XMLSerializer extends AbstractSerializer {
 		@Override
 		public void endDocument() {
 			if (myFilter != null && myLimit > 0 && myPage >= 0) {
-				myQuery = new Query(myFilter, myLimit, myPage);
+				myQuery = new BookQuery(myFilter, myLimit, myPage);
 			}
 		}
 

@@ -27,12 +27,12 @@ public abstract class SerializerUtil {
 
 	private static final AbstractSerializer defaultSerializer = new XMLSerializer();
 
-	public static String serialize(Query query) {
+	public static String serialize(BookQuery query) {
 		return query != null ? defaultSerializer.serialize(query) : null;
 	}
 
-	public static Query deserializeQuery(String xml) {
-		return xml != null ? defaultSerializer.deserializeQuery(xml) : null;
+	public static BookQuery deserializeBookQuery(String xml) {
+		return xml != null ? defaultSerializer.deserializeBookQuery(xml) : null;
 	}
 
 	public static String serialize(Book book) {

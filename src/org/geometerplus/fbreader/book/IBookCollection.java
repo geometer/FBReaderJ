@@ -51,9 +51,9 @@ public interface IBookCollection {
 
 	int size();
 
-	List<Book> books(Query query);
+	List<Book> books(BookQuery query);
 	boolean hasBooks(Filter filter);
-	List<String> titles(Query query);
+	List<String> titles(BookQuery query);
 
 	List<Book> recentBooks();
 	Book getRecentBook(int index);
