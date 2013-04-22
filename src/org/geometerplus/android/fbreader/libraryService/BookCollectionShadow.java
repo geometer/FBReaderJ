@@ -144,12 +144,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized boolean hasBooks(Query query) {
+	public synchronized boolean hasBooks(Filter filter) {
 		if (myInterface == null) {
 			return false;
 		}
 		try {
-			return myInterface.hasBooks(SerializerUtil.serialize(query));
+			return myInterface.hasBooks(SerializerUtil.serialize(new Query(filter, 1)));
 		} catch (RemoteException e) {
 			return false;
 		}

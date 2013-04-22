@@ -230,25 +230,17 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public boolean hasBooks(Query query) {
+	public boolean hasBooks(Filter filter) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
 			allBooks = new ArrayList<Book>(myBooksByFile.values());
 		}
-		final int start = query.Page * query.Limit;
-		if (query.Filter instanceof Filter.Empty) {
-			return allBooks.size() > 0;
-		} else {
-			int count = 0;
-			final List<Book> filtered = new ArrayList<Book>(query.Limit);
-			for (Book b : allBooks) {
-				if (query.Filter.matches(b) && count >= start) {
-					return true;
-				}
-				++count;
+		for (Book b : allBooks) {
+			if (filter.matches(b)) {
+				return true;
 			}
-			return false;
 		}
+		return false;
 	}
 
 	public List<String> titles(Query query) {

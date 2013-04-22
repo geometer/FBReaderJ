@@ -143,7 +143,7 @@ public class LibraryService extends Service {
 		}
 
 		public boolean hasBooks(String query) {
-			return myCollection.hasBooks(SerializerUtil.deserializeQuery(query));
+			return myCollection.hasBooks(SerializerUtil.deserializeQuery(query).Filter);
 		}
 
 		public List<String> recentBooks() {

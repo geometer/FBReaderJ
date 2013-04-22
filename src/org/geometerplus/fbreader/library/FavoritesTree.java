@@ -58,10 +58,9 @@ public class FavoritesTree extends FilteredTree {
 
 	@Override
 	public Status getOpeningStatus() {
-		if (!Collection.labels().contains(Book.FAVORITE_LABEL)) {
-			return Status.CANNOT_OPEN;
-		}
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+		return Collection.hasBooks(new Filter.ByLabel(Book.FAVORITE_LABEL))
+			? Status.ALWAYS_RELOAD_BEFORE_OPENING
+			: Status.CANNOT_OPEN;
 	}
 
 	@Override

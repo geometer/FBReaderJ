@@ -52,7 +52,7 @@ public interface IBookCollection {
 	int size();
 
 	List<Book> books(Query query);
-	boolean hasBooks(Query query);
+	boolean hasBooks(Filter filter);
 	List<String> titles(Query query);
 
 	List<Book> recentBooks();
