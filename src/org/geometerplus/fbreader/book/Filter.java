@@ -109,8 +109,7 @@ public abstract class Filter {
 
 	public final static class HasBookmark extends Filter {
 		public boolean matches(Book book) {
-			// TODO: implement
-			return true;
+			return book != null && book.HasBookmark;
 		}
 	}
 
