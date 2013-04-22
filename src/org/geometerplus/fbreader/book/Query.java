@@ -20,9 +20,9 @@
 package org.geometerplus.fbreader.book;
 
 public class Query {
-	final Filter Filter;
-	final int Limit;
-	final int Page;
+	public final Filter Filter;
+	public final int Limit;
+	public final int Page;
 
 	public Query(Filter filter, int limit) {
 		this(filter, limit, 0);
