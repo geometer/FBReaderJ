@@ -29,9 +29,6 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 abstract public class ZLResource {
 	public final String Name;
 
-	public static final ZLStringOption LanguageOption =
-		new ZLStringOption("LookNFeel", "Language", Language.SYSTEM_CODE);
-
 	private static final List<Language> ourLanguages = new LinkedList<Language>();
 	public static List<Language> languages() {
 		if (ourLanguages.isEmpty()) {
@@ -50,6 +47,10 @@ abstract public class ZLResource {
 		allLanguages.add(new Language(Language.SYSTEM_CODE));
 		allLanguages.addAll(ourLanguages);
 		return allLanguages;
+	}
+
+	public static ZLStringOption getLanguageOption() {
+		return new ZLStringOption("LookNFeel", "Language", Language.SYSTEM_CODE);
 	}
 
 	public static ZLResource resource(String key) {
