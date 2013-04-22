@@ -89,7 +89,7 @@ public final class FBReader extends Activity {
 	private ZLAndroidWidget myMainView;
 
 	private int myFullScreenFlag;
-	private String myLanguage;
+	private String myMenuLanguage;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -172,8 +172,6 @@ public final class FBReader extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
-		myLanguage = ZLResource.LanguageOption.getValue();
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 		myRootView = (RelativeLayout)findViewById(R.id.root_view);
@@ -251,6 +249,9 @@ public final class FBReader extends Activity {
 		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
+
+		setupMenu(menu);
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -344,8 +345,7 @@ public final class FBReader extends Activity {
 
 		final int fullScreenFlag =
 			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
-		if (fullScreenFlag != myFullScreenFlag ||
-			!myLanguage.equals(ZLResource.LanguageOption.getValue())) {
+		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
 			startActivity(new Intent(this, getClass()));
 		}
@@ -579,9 +579,14 @@ public final class FBReader extends Activity {
 		application.myMainWindow.addMenuItem(menu, actionId, null, null);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
+	private void setupMenu(Menu menu) {
+		final String menuLanguage = ZLResource.getLanguageOption().getValue();
+		if (menuLanguage.equals(myMenuLanguage)) {
+			return;
+		}
+		myMenuLanguage = menuLanguage;
+
+		menu.clear();
 		addMenuItem(menu, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library);
 		addMenuItem(menu, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary);
 		addMenuItem(menu, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc);
@@ -619,6 +624,13 @@ public final class FBReader extends Activity {
 
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.refresh();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+
+		setupMenu(menu);
 
 		return true;
 	}

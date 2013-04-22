@@ -24,8 +24,7 @@ import android.net.Uri;
 import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.style.*;
@@ -92,13 +91,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		) {
 			@Override
 			protected void init() {
-				setInitialValue(ZLResource.LanguageOption.getValue());
+				setInitialValue(ZLResource.getLanguageOption().getValue());
 			}
 
 			@Override
 			protected void setLanguage(String code) {
-				if (!code.equals(ZLResource.LanguageOption.getValue())) {
-					ZLResource.LanguageOption.setValue(code);
+				final ZLStringOption languageOption = ZLResource.getLanguageOption();
+				if (!code.equals(languageOption.getValue())) {
+					languageOption.setValue(code);
+					finish();
 					startActivity(new Intent(
 						Intent.ACTION_VIEW, Uri.parse("fbreader-action:preferences#appearance")
 					));
