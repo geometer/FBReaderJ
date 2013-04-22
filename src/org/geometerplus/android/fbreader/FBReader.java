@@ -887,10 +887,10 @@ public final class FBReader extends Activity {
 			for (PluginApi.ActionInfo info : myPluginActions) {
 				if (info instanceof PluginApi.MenuActionInfo) {
 					addMenuItem(
-							menu,
-							PLUGIN_ACTION_PREFIX + index++,
-							((PluginApi.MenuActionInfo)info).MenuItemName
-							);
+						menu,
+						PLUGIN_ACTION_PREFIX + index++,
+						((PluginApi.MenuActionInfo)info).MenuItemName
+					);
 				}
 			}
 		}
@@ -1029,8 +1029,8 @@ public final class FBReader extends Activity {
 				if (myWakeLockToCreate) {
 					myWakeLockToCreate = false;
 					myWakeLock =
-						((PowerManager)getSystemService(POWER_SERVICE)).
-							newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
+						((PowerManager)getSystemService(POWER_SERVICE))
+							.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
 					myWakeLock.acquire();
 				}
 			}
