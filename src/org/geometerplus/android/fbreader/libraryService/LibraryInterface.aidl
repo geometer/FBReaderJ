@@ -42,9 +42,7 @@ interface LibraryInterface {
 	boolean isHyperlinkVisited(in String book, in String linkId);
 	void markHyperlinkAsVisited(in String book, in String linkId);
 
-	List<String> invisibleBookmarks(in String book);
-	List<String> bookmarks(in long fromId, in int limitCount);
-	List<String> bookmarksForBook(in String book, in long fromId, in int limitCount);
+	List<String> bookmarks(in String query);
 	String saveBookmark(in String bookmark);
 	void deleteBookmark(in String bookmark);
 }

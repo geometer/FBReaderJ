@@ -782,77 +782,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Bookmark> loadInvisibleBookmarks(long bookId) {
-		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
-		Cursor cursor = myDatabase.rawQuery(
-			"SELECT bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,bm.model_id,bm.paragraph,bm.word,bm.char FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id WHERE bm.book_id = ? AND bm.visible = 0", new String[] { String.valueOf(bookId) }
-		);
-		while (cursor.moveToNext()) {
-			list.add(createBookmark(
-				cursor.getLong(0),
-				cursor.getLong(1),
-				cursor.getString(2),
-				cursor.getString(3),
-				SQLiteUtil.getDate(cursor, 4),
-				SQLiteUtil.getDate(cursor, 5),
-				SQLiteUtil.getDate(cursor, 6),
-				(int)cursor.getLong(7),
-				cursor.getString(8),
-				(int)cursor.getLong(9),
-				(int)cursor.getLong(10),
-				(int)cursor.getLong(11),
-				false
-			));
+	protected List<Bookmark> loadBookmarks(BookmarkQuery query) {
+		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
+		final StringBuilder sql = new StringBuilder("SELECT")
+			.append(" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,")
+			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
+			.append("bm.model_id,bm.paragraph,bm.word,bm.char")
+			.append(" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id")
+			.append(" WHERE");
+		if (query.Book != null) {
+			sql.append(" b.book_id = " + query.Book.getId() +" AND");
 		}
-		cursor.close();
-		return list;
-	}
-
-	@Override
-	protected List<Bookmark> loadVisibleBookmarks(long fromId, int limitCount) {
-		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
-		Cursor cursor = myDatabase.rawQuery("SELECT" +
-			" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text," +
-			"bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter," +
-			"bm.model_id,bm.paragraph,bm.word,bm.char" +
-			" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id" +
-			" WHERE bm.bookmark_id >= ? AND bm.visible = 1 ORDER BY bm.bookmark_id LIMIT ?",
-			new String[] { String.valueOf(fromId), String.valueOf(limitCount) }
-		);
-		while (cursor.moveToNext()) {
-			list.add(createBookmark(
-				cursor.getLong(0),
-				cursor.getLong(1),
-				cursor.getString(2),
-				cursor.getString(3),
-				SQLiteUtil.getDate(cursor, 4),
-				SQLiteUtil.getDate(cursor, 5),
-				SQLiteUtil.getDate(cursor, 6),
-				(int)cursor.getLong(7),
-				cursor.getString(8),
-				(int)cursor.getLong(9),
-				(int)cursor.getLong(10),
-				(int)cursor.getLong(11),
-				true
-			));
-		}
-		cursor.close();
-		return list;
-	}
-
-
-	@Override
-	protected List<Bookmark> loadVisibleBookmarks(long bookId, long fromId, int limitCount) {
-		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
-		Cursor cursor = myDatabase.rawQuery("SELECT" +
-			" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text," +
-			"bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter," +
-			"bm.model_id,bm.paragraph,bm.word,bm.char" +
-			" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id" +
-			" WHERE b.book_id = ? AND bm.bookmark_id >= ? AND bm.visible = 1" +
-			" ORDER BY bm.bookmark_id LIMIT ?",
-			new String[] { String.valueOf(bookId), String.valueOf(fromId), String.valueOf(limitCount) }
-		);
+		sql
+			.append(" bm.visible = " + (query.Visible ? 1 : 0))
+			.append(" ORDER BY bm.bookmark_id")
+			.append(" LIMIT " + query.Limit * query.Page + "," + query.Limit);
+		Cursor cursor = myDatabase.rawQuery(sql.toString(), null);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
 				cursor.getLong(0),
