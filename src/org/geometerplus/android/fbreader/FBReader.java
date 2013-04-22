@@ -741,8 +741,8 @@ public final class FBReader extends Activity {
 				if (myWakeLockToCreate) {
 					myWakeLockToCreate = false;
 					myWakeLock =
-						((PowerManager)getSystemService(POWER_SERVICE)).
-							newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
+						((PowerManager)getSystemService(POWER_SERVICE))
+							.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
 					myWakeLock.acquire();
 				}
 			}
