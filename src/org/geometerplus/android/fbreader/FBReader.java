@@ -229,7 +229,7 @@ public final class FBReader extends Activity {
 	private ZLAndroidWidget myMainView;
 
 	private int myFullScreenFlag;
-	private String myLanguage;
+	private String myMenuLanguage;
 
 	private boolean myIsPaused = false;
 	private AlertDialog myDialogToShow = null;
@@ -329,8 +329,6 @@ public final class FBReader extends Activity {
 		super.onCreate(icicle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
-
-		myLanguage = ZLResource.LanguageOption.getValue();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
@@ -433,6 +431,9 @@ public final class FBReader extends Activity {
 		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
+
+		setupMenu(menu);
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -569,8 +570,7 @@ public final class FBReader extends Activity {
 
 		final int fullScreenFlag =
 			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
-		if (fullScreenFlag != myFullScreenFlag ||
-			!myLanguage.equals(ZLResource.LanguageOption.getValue())) {
+		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
 			startActivity(new Intent(this, getClass()));
 		}
@@ -887,7 +887,6 @@ public final class FBReader extends Activity {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.addMenuItem(menu, actionId, null, null);
 	}
-
 	
 	private void fillMenu(Menu menu, MenuItemData source) {
 		for (MenuItemData el : source.Children) {
