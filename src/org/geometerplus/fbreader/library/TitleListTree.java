@@ -52,7 +52,7 @@ public class TitleListTree extends FirstLevelTree {
 				createTitleSubTree(l);
 			}
 		} else {
-			for (Query query = new Query(new Filter.Empty(), 20); ; query = query.next()) {
+			for (BookQuery query = new BookQuery(new Filter.Empty(), 20); ; query = query.next()) {
 				final List<Book> books = Collection.books(query);
 				if (books.isEmpty()) {
 					break;
