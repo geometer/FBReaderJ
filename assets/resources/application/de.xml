@@ -52,6 +52,8 @@
 		<node name="deleteBook" value="Buch löschen"/>
 		<node name="addToFavorites" value="Buch zu den Favoriten hinzufügen"/>
 		<node name="removeFromFavorites" value="Buch aus der Favoritenliste löschen"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader Netzwerk-Bibliothek">
 		<node name="byAuthor" value="Nach Autoren gruppiert">

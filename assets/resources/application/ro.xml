@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Stergere cartea"/>
 		<node name="addToFavorites" value="Adauga la favorite"/>
 		<node name="removeFromFavorites" value="Sterge din favorite"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Reteaua de biblioteci Online">
 		<node name="byAuthor" value="Dupa autor">

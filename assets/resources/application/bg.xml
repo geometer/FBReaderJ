@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Изтрий книгата"/>
 		<node name="addToFavorites" value="Добави в избрани"/>
 		<node name="removeFromFavorites" value="Премахни от избрани"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: мрежова библиотека">
 		<node name="byAuthor" value="Автор">
