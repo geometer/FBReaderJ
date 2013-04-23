@@ -157,6 +157,10 @@ public final class FBReaderApp extends ZLApplication {
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					openBookInternal(book, bookmark, false);
+					if (book != null) {
+						book.addLabel(Book.READ_LABEL);
+						Collection.saveBook(book, false);
+					}
 				}
 			}, postAction);
 		}
@@ -236,6 +240,8 @@ public final class FBReaderApp extends ZLApplication {
 			if (book == null) {
 				return;
 			}
+			book.addLabel(Book.READ_LABEL);
+			Collection.saveBook(book, false);
 		}
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
