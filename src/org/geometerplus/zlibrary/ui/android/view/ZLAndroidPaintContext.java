@@ -23,11 +23,13 @@ import java.util.*;
 
 import android.graphics.*;
 
+import org.geometerplus.fbreader.fbreader.ColorProfile;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
@@ -301,7 +303,14 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void drawImage(int x, int y, ZLImageData imageData, Size maxSize, ScalingType scaling) {
 		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
 		if (bitmap != null && !bitmap.isRecycled()) {
+			String prof = new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
+			if (ColorProfile.DAY.equals(prof)) {
+				myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
+			} else {
+				myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+			}
 			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myFillPaint);
+			myFillPaint.setXfermode(new Xfermode());
 		}
 	}
 
