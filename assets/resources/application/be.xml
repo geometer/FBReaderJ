@@ -722,6 +722,10 @@
 			<node name="authorize" value="Упаўнаважыцца"/>
 			<node name="resetPosition" value="Скінуць пазыцыю"/>
 			<node name="sendReport" value="Даслаць справаздачу"/>
+			<node name="addToFavorites" value="Дадаць да ўпадабанага"/>
+			<node name="removeFromFavorites" value="Прыбраць з упадабанага"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Усталяваць убудову"/>

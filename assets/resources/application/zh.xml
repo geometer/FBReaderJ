@@ -706,6 +706,10 @@
 			<node name="authorize" value="授权"/>
 			<node name="resetPosition" value="重置位置"/>
 			<node name="sendReport" value="发送报告"/>
+			<node name="addToFavorites" value="收藏到我的超爱"/>
+			<node name="removeFromFavorites" value="从收藏列表中移除"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件"/>

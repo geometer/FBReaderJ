@@ -716,6 +716,10 @@
 			<node name="authorize" value="Onay"/>
 			<node name="resetPosition" value="POzisyonu sıfırla"/>
 			<node name="sendReport" value="Rapor gönder"/>
+			<node name="addToFavorites" value="Favorilere ekle"/>
+			<node name="removeFromFavorites" value="Favorilerden çıkar"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Eklenti kur"/>
