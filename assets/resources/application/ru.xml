@@ -51,6 +51,8 @@
 		<node name="deleteBook" value="Удалить книгу"/>
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
+		<node name="markAsRead" value="Пометить как прочтённое"/>
+		<node name="markAsUnread" value="Пометить как непрочтённое"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
 		<node name="byAuthor" value="По авторам">
