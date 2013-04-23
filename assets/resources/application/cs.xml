@@ -725,6 +725,10 @@
 			<node name="authorize" value="Authorizovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
 			<node name="sendReport" value="Odeslat zprávu"/>
+			<node name="addToFavorites" value="Přidat do oblíbených"/>
+			<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>

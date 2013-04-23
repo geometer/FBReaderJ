@@ -720,6 +720,10 @@
 			<node name="authorize" value="Autorizar"/>
 			<node name="resetPosition" value="Restablecer posición"/>
 			<node name="sendReport" value="Enviar reporte"/>
+			<node name="addToFavorites" value="Agregar a favoritos"/>
+			<node name="removeFromFavorites" value="Quitar de favoritos"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar plugin"/>
