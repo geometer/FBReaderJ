@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Slett bok"/>
 		<node name="addToFavorites" value="Legg til i favoritter"/>
 		<node name="removeFromFavorites" value="Fjern fra favoritter"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader nettverksbibliotek">
 		<node name="byAuthor" value="Etter forfatter">
