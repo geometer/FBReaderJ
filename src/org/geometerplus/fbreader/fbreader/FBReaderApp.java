@@ -178,6 +178,8 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		System.err.println("4");
 		final Book bookToOpen = tempBook;
+		bookToOpen.addLabel(Book.READ_LABEL);
+		Collection.saveBook(bookToOpen, false);
 		final FormatPlugin p = PluginCollection.Instance().getPlugin(bookToOpen.File);
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
