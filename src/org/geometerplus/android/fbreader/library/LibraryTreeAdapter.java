@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.library;
 
 import android.graphics.Bitmap;
+import android.text.Html;
 import android.view.*;
 import android.widget.*;
 
@@ -28,6 +29,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.book.Book;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 import org.geometerplus.android.fbreader.covers.CoverManager;
@@ -43,8 +45,23 @@ class LibraryTreeAdapter extends TreeAdapter {
 		final View view = (convertView != null) ? convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
-		((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSummary());
+		final boolean unread =
+			tree.getBook() != null && !tree.getBook().labels().contains(Book.READ_LABEL);
+
+		final TextView nameView = (TextView)view.findViewById(R.id.library_tree_item_name);
+		if (unread) {
+			nameView.setText(Html.fromHtml("<b>" + tree.getName()));
+		} else {
+			nameView.setText(tree.getName());
+		}
+		
+		final TextView summaryView = (TextView)view.findViewById(R.id.library_tree_item_childrenlist);
+		if (unread) {
+			summaryView.setText(Html.fromHtml("<b>" + tree.getSummary()));
+		} else {
+			summaryView.setText(tree.getSummary());
+		}
+
 		return view;
 	}
 

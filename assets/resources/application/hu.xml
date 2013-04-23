@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Könyv törlése"/>
 		<node name="addToFavorites" value="Hozzáadás a kedvencekhez"/>
 		<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader internetes könyvtár">
 		<node name="byAuthor" value="Szerző">

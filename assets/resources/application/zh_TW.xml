@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="刪除書藉"/>
 		<node name="addToFavorites" value="收藏"/>
 		<node name="removeFromFavorites" value="從收藏中移除"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="作者">

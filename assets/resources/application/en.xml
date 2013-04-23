@@ -51,6 +51,8 @@
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
+		<node name="markAsRead" value="Mark as read"/>
+		<node name="markAsUnread" value="Mark as unread"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
 		<node name="byAuthor" value="By author">
