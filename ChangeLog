@@ -16,6 +16,7 @@
 * Fixed interface language swithcing (change language immediately in menu, library, etc.)
 * Added "add/remove book to/from favorites" items in BookInfoActivity menu
 * Smaller font size in list activities
+* Read/unread book marks
 
 ===== 1.7.8 (Mar 24, 2013) =====
 * Fixed library scanning: all books are visible in the library
