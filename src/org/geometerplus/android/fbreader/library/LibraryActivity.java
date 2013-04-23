@@ -184,7 +184,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	private static final int SHARE_BOOK_ITEM_ID = 2;
 	private static final int ADD_TO_FAVORITES_ITEM_ID = 3;
 	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 4;
-	private static final int DELETE_BOOK_ITEM_ID = 5;
+	private static final int MARK_AS_READ_ITEM_ID = 5;
+	private static final int MARK_AS_UNREAD_ITEM_ID = 6;
+	private static final int DELETE_BOOK_ITEM_ID = 7;
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -207,6 +209,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
+		}
+		if (book.labels().contains(Book.READ_LABEL)) {
+			menu.add(0, MARK_AS_UNREAD_ITEM_ID, 0, resource.getResource("markAsUnread").getValue());
+		} else {
+			menu.add(0, MARK_AS_READ_ITEM_ID, 0, resource.getResource("markAsRead").getValue());
 		}
 		if (BookUtil.canRemoveBookFile(book)) {
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
@@ -245,6 +252,16 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 					getListAdapter().replaceAll(getCurrentTree().subTrees());
 					getListView().invalidateViews();
 				}
+				return true;
+			case MARK_AS_READ_ITEM_ID:
+				book.addLabel(Book.READ_LABEL);
+				myRootTree.Collection.saveBook(book, false);
+				getListView().invalidateViews();
+				return true;
+			case MARK_AS_UNREAD_ITEM_ID:
+				book.removeLabel(Book.READ_LABEL);
+				myRootTree.Collection.saveBook(book, false);
+				getListView().invalidateViews();
 				return true;
 			case DELETE_BOOK_ITEM_ID:
 				tryToDeleteBook(book);
