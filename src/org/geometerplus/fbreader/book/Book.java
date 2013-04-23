@@ -43,6 +43,7 @@ import org.geometerplus.fbreader.sort.TitledEntity;
 
 public class Book extends TitledEntity {
 	public static final String FAVORITE_LABEL = "favorite";
+	public static final String READ_LABEL = "read";
 
 	public final ZLFile File;
 
@@ -189,7 +190,6 @@ public class Book extends TitledEntity {
 		mySeriesInfo = database.getSeriesInfo(myId);
 		myUids = database.listUids(myId);
 		HasBookmark = database.hasVisibleBookmark(myId);
-		System.err.println(myId + ": " + getTitle() + " :: " + HasBookmark);
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
 			try {

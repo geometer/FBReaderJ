@@ -709,6 +709,10 @@
 			<node name="authorize" value="Hitelesítés"/>
 			<node name="resetPosition" value="Pozíció nullázása"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Hozzáadás a kedvencekhez"/>
+			<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Bővítmény telepítése"/>

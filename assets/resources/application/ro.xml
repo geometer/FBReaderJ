@@ -709,6 +709,10 @@
 			<node name="authorize" value="Autorizeaza"/>
 			<node name="resetPosition" value="Reseteaza pozitia"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Adauga la favorite"/>
+			<node name="removeFromFavorites" value="Sterge din favorite"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
