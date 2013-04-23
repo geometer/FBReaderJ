@@ -728,6 +728,10 @@
 			<node name="authorize" value="Авторизоваться"/>
 			<node name="resetPosition" value="Назад"/>
 			<node name="sendReport" value="Отправить сообщение"/>
+			<node name="addToFavorites" value="Добавить в избранное"/>
+			<node name="removeFromFavorites" value="Убрать из избранного"/>
+			<node name="markAsRead" value="Пометить как прочтённое"/>
+			<node name="markAsUnread" value="Пометить как непрочтённое"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>

@@ -716,6 +716,10 @@
 			<node name="authorize" value="Одобри"/>
 			<node name="resetPosition" value="Поништи положај"/>
 			<node name="sendReport" value="Пошаљи извештај"/>
+			<node name="addToFavorites" value="Додај у омиљене"/>
+			<node name="removeFromFavorites" value="Уклони из омиљених"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Инсталирање додатка"/>
