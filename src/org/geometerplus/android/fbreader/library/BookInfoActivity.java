@@ -347,13 +347,11 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		} else {
 			addMenuItem(menu, ADD_TO_FAVORITES, "addToFavorites", false);
 		}
-		/*
 		if (myBook.labels().contains(Book.READ_LABEL)) {
 			addMenuItem(menu, MARK_AS_UNREAD, "markAsUnread", false);
 		} else {
 			addMenuItem(menu, MARK_AS_READ, "markAsRead", false);
 		}
-		*/
 		return true;
 	}
 
