@@ -40,7 +40,7 @@ abstract class FilteredTree extends LibraryTree {
 
 	@Override
 	public String getSummary() {
-		return MiscUtil.join(Collection.titles(new Query(myFilter, 5)), ", ");
+		return MiscUtil.join(Collection.titles(new BookQuery(myFilter, 5)), ", ");
 	}
 
 	@Override
@@ -49,12 +49,12 @@ abstract class FilteredTree extends LibraryTree {
 	}
 
 	@Override
-	public final Status getOpeningStatus() {
+	public Status getOpeningStatus() {
 		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
 	}
 
 	protected final void createBookSubTrees() {
-		for (Query query = new Query(myFilter, 20); ; query = query.next()) {
+		for (BookQuery query = new BookQuery(myFilter, 20); ; query = query.next()) {
 			final List<Book> books = Collection.books(query);
 			if (books.isEmpty()) {
 				break;

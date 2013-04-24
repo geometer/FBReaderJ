@@ -17,25 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.image;
+package org.geometerplus.fbreader.book;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
+public final class BookQuery {
+	public final Filter Filter;
+	public final int Limit;
+	public final int Page;
 
-import android.graphics.Bitmap;
-
-public class ZLBitmapImage implements ZLImage {
-	private Bitmap myBitmap = null;
-	
-	public ZLBitmapImage(Bitmap b) {
-		myBitmap = b;
+	public BookQuery(Filter filter, int limit) {
+		this(filter, limit, 0);
 	}
-	
-	public Bitmap getBitmap() {
-		return myBitmap;
+
+	BookQuery(Filter filter, int limit, int page) {
+		Filter = filter;
+		Limit = limit;
+		Page = page;
 	}
-	
-	@Override
-	public String getURI() {
-		return null;
+
+	public BookQuery next() {
+		return new BookQuery(Filter, Limit, Page + 1);
 	}
 }

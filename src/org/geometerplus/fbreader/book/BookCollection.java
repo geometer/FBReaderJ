@@ -204,7 +204,7 @@ public class BookCollection extends AbstractBookCollection {
 		return myStatus;
 	}
 
-	public List<Book> books(Query query) {
+	public List<Book> books(BookQuery query) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
 			allBooks = new ArrayList<Book>(myBooksByFile.values());
@@ -230,28 +230,20 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public boolean hasBooks(Query query) {
+	public boolean hasBooks(Filter filter) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
 			allBooks = new ArrayList<Book>(myBooksByFile.values());
 		}
-		final int start = query.Page * query.Limit;
-		if (query.Filter instanceof Filter.Empty) {
-			return allBooks.size() > 0;
-		} else {
-			int count = 0;
-			final List<Book> filtered = new ArrayList<Book>(query.Limit);
-			for (Book b : allBooks) {
-				if (query.Filter.matches(b) && count >= start) {
-					return true;
-				}
-				++count;
+		for (Book b : allBooks) {
+			if (filter.matches(b)) {
+				return true;
 			}
-			return false;
 		}
+		return false;
 	}
 
-	public List<String> titles(Query query) {
+	public List<String> titles(BookQuery query) {
 		final List<Book> books = books(query);
 		final List<String> titles = new ArrayList<String>(books.size());
 		for (Book b : books) {
@@ -262,10 +254,6 @@ public class BookCollection extends AbstractBookCollection {
 
 	public List<Book> recentBooks() {
 		return books(myDatabase.loadRecentBookIds());
-	}
-
-	public List<Book> booksForLabel(String label) {
-		return books(myDatabase.loadBooksForLabelIds(label));
 	}
 
 	private List<Book> books(List<Long> ids) {
@@ -311,6 +299,16 @@ public class BookCollection extends AbstractBookCollection {
 			}
 		}
 		return new ArrayList<Tag>(tags);
+	}
+
+	public List<String> labels() {
+		final Set<String> labels = new HashSet<String>();
+		synchronized (myBooksByFile) {
+			for (Book book : myBooksByFile.values()) {
+				labels.addAll(book.labels());
+			}
+		}
+		return new ArrayList<String>(labels);
 	}
 
 	public boolean hasSeries() {
@@ -381,27 +379,6 @@ public class BookCollection extends AbstractBookCollection {
 		final List<Long> ids = myDatabase.loadRecentBookIds();
 		ids.remove(book.getId());
 		myDatabase.saveRecentBookIds(ids);
-	}
-
-	public List<String> labels() {
-		return myDatabase.labels();
-	}
-
-	public List<String> labels(Book book) {
-		if (book == null) {
-			return Collections.<String>emptyList();
-		}
-		return myDatabase.labels(book.getId());
-	}
-
-	public void setLabel(Book book, String label) {
-		myDatabase.setLabel(book.getId(), label);
-		fireBookEvent(BookEvent.Updated, book);
-	}
-
-	public void removeLabel(Book book, String label) {
-		myDatabase.removeLabel(book.getId(), label);
-		fireBookEvent(BookEvent.Updated, book);
 	}
 
 	private void setStatus(Status status) {
@@ -645,29 +622,31 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public List<Bookmark> bookmarks(long fromId, int limitCount) {
-		return myDatabase.loadVisibleBookmarks(fromId, limitCount);
-	}
-
-	public List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount) {
-		return myDatabase.loadVisibleBookmarks(book.getId(), fromId, limitCount);
-	}
-
-	public List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = myDatabase.loadInvisibleBookmarks(book.getId());
-		Collections.sort(list, new Bookmark.ByTimeComparator());
-		return list;
+	public List<Bookmark> bookmarks(BookmarkQuery query) {
+		return myDatabase.loadBookmarks(query);
 	}
 
 	public void saveBookmark(Bookmark bookmark) {
 		if (bookmark != null) {
 			bookmark.setId(myDatabase.saveBookmark(bookmark));
+			if (bookmark.IsVisible) {
+				final Book book = getBookById(bookmark.getBookId());
+				if (book != null) {
+					book.HasBookmark = true;
+				}
+			}
 		}
 	}
 
 	public void deleteBookmark(Bookmark bookmark) {
 		if (bookmark != null && bookmark.getId() != -1) {
 			myDatabase.deleteBookmark(bookmark);
+			if (bookmark.IsVisible) {
+				final Book book = getBookById(bookmark.getBookId());
+				if (book != null) {
+					book.HasBookmark = myDatabase.hasVisibleBookmark(bookmark.getBookId());
+				}
+			}
 		}
 	}
 

@@ -65,6 +65,4 @@ public class MenuItemData {
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.DECREASE_FONT, null));
 		return root;
 	}
-	
-	
 }

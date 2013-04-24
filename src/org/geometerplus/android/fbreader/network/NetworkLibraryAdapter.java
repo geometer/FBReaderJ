@@ -50,7 +50,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			throw new IllegalArgumentException("tree == null");
 		}
 		if (view == null) {
-			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
+			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 			if (myCoverManager == null) {
 				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 				final int coverHeight = view.getMeasuredHeight();
@@ -59,11 +59,11 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			}
 		}
 
-		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
-		setSubviewText(view, R.id.network_tree_item_childrenlist, tree.getSummary());
-		setupCover((ImageView)view.findViewById(R.id.network_tree_item_icon), tree);
+		setSubviewText(view, R.id.library_tree_item_name, tree.getName());
+		setSubviewText(view, R.id.library_tree_item_childrenlist, tree.getSummary());
+		setupCover((ImageView)view.findViewById(R.id.library_tree_item_icon), tree);
 
-		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
+		final ImageView statusView = (ImageView)view.findViewById(R.id.library_tree_item_status);
 		final int status = (tree instanceof NetworkBookTree)
 			? NetworkBookActions.getBookStatus(
 				((NetworkBookTree)tree).Book,

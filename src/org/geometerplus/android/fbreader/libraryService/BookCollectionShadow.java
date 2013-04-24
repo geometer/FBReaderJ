@@ -133,7 +133,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Book> books(Query query) {
+	public synchronized List<Book> books(BookQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
@@ -144,12 +144,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized boolean hasBooks(Query query) {
+	public synchronized boolean hasBooks(Filter filter) {
 		if (myInterface == null) {
 			return false;
 		}
 		try {
-			return myInterface.hasBooks(SerializerUtil.serialize(query));
+			return myInterface.hasBooks(SerializerUtil.serialize(new BookQuery(filter, 1)));
 		} catch (RemoteException e) {
 			return false;
 		}
@@ -161,17 +161,6 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 		try {
 			return SerializerUtil.deserializeBookList(myInterface.recentBooks());
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
-	}
-
-	public synchronized List<Book> booksForLabel(String label) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeBookList(myInterface.booksForLabel(label));
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}
@@ -275,7 +264,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<String> titles(Query query) {
+	public synchronized List<String> titles(BookQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
@@ -345,34 +334,6 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		return Collections.emptyList();
 	}
 
-	public synchronized List<String> labels(Book book) {
-		if (myInterface != null) {
-			try {
-				return myInterface.labelsForBook(SerializerUtil.serialize(book));
-			} catch (RemoteException e) {
-			}
-		}
-		return Collections.emptyList();
-	}
-
-	public synchronized void setLabel(Book book, String label) {
-		if (myInterface != null) {
-			try {
-				myInterface.setLabel(SerializerUtil.serialize(book), label);
-			} catch (RemoteException e) {
-			}
-		}
-	}
-
-	public synchronized void removeLabel(Book book, String label) {
-		if (myInterface != null) {
-			try {
-				myInterface.removeLabel(SerializerUtil.serialize(book), label);
-			} catch (RemoteException e) {
-			}
-		}
-	}
-
 	public synchronized ZLTextPosition getStoredPosition(long bookId) {
 		if (myInterface == null) {
 			return null;
@@ -424,38 +385,14 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized List<Bookmark> invisibleBookmarks(Book book) {
+	public synchronized List<Bookmark> bookmarks(BookmarkQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
 		try {
 			return SerializerUtil.deserializeBookmarkList(
-				myInterface.invisibleBookmarks(SerializerUtil.serialize(book))
+				myInterface.bookmarks(SerializerUtil.serialize(query))
 			);
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
-	}
-
-	public synchronized List<Bookmark> bookmarks(long fromId, int limitCount) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeBookmarkList(myInterface.bookmarks(fromId, limitCount));
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
-	}
-
-	public synchronized List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount) {
-		if (myInterface == null) {
-			return Collections.emptyList();
-		}
-		try {
-			return SerializerUtil.deserializeBookmarkList(myInterface.bookmarksForBook(
-				SerializerUtil.serialize(book), fromId, limitCount
-			));
 		} catch (RemoteException e) {
 			return Collections.emptyList();
 		}

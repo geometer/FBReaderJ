@@ -58,6 +58,18 @@ public abstract class Filter {
 		}
 	}
 
+	public final static class ByLabel extends Filter {
+		public final String Label;
+
+		public ByLabel(String label) {
+			Label = label;
+		}
+
+		public boolean matches(Book book) {
+			return book.labels().contains(Label);
+		}
+	}
+
 	public final static class ByPattern extends Filter {
 		public final String Pattern;
 
@@ -97,8 +109,7 @@ public abstract class Filter {
 
 	public final static class HasBookmark extends Filter {
 		public boolean matches(Book book) {
-			// TODO: implement
-			return true;
+			return book != null && book.HasBookmark;
 		}
 	}
 

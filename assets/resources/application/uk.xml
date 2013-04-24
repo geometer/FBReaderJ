@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Видалити книжку"/>
 		<node name="addToFavorites" value="Додати в улюблені"/>
 		<node name="removeFromFavorites" value="Прибрати з улюблених"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Мережева бібліотека FBReader">
 		<node name="byAuthor" value="За автором">
@@ -709,6 +711,10 @@
 			<node name="authorize" value="Авторизуватись"/>
 			<node name="resetPosition" value="Скинути позицію"/>
 			<node name="sendReport" value="Відправити звіт"/>
+			<node name="addToFavorites" value="Додати в улюблені"/>
+			<node name="removeFromFavorites" value="Прибрати з улюблених"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Встановити plugin"/>

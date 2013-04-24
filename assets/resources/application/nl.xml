@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Boek verwijderen"/>
 		<node name="addToFavorites" value="Toevoegen aan favorieten"/>
 		<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader netwerkbibliotheek">
 		<node name="byAuthor" value="Auteurs">
@@ -719,6 +721,10 @@
 			<node name="authorize" value="Autoriseren"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Verstuur rapport"/>
+			<node name="addToFavorites" value="Toevoegen aan favorieten"/>
+			<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-in installeren"/>

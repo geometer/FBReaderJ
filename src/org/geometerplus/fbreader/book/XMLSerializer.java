@@ -33,7 +33,7 @@ import android.util.Xml;
 
 class XMLSerializer extends AbstractSerializer {
 	@Override
-	public String serialize(Query query) {
+	public String serialize(BookQuery query) {
 		final StringBuilder buffer = new StringBuilder();
 		appendTag(buffer, "query", false,
 			"limit", String.valueOf(query.Limit),
@@ -81,6 +81,11 @@ class XMLSerializer extends AbstractSerializer {
 				params[index++] = name;
 			}
 			appendTag(buffer, "filter", true, params);
+		} else if (filter instanceof Filter.ByLabel) {
+			appendTag(buffer, "filter", true,
+				"type", "label",
+				"name", ((Filter.ByLabel)filter).Label
+			);
 		} else if (filter instanceof Filter.BySeries) {
 			appendTag(buffer, "filter", true,
 				"type", "series",
@@ -106,9 +111,37 @@ class XMLSerializer extends AbstractSerializer {
 	}
 
 	@Override
-	public Query deserializeQuery(String xml) {
+	public BookQuery deserializeBookQuery(String xml) {
 		try {
-			final QueryDeserializer deserializer = new QueryDeserializer();
+			final BookQueryDeserializer deserializer = new BookQueryDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getQuery();
+		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String serialize(BookmarkQuery query) {
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(buffer, "query", false,
+			"visible", String.valueOf(query.Visible),
+			"limit", String.valueOf(query.Limit),
+			"page", String.valueOf(query.Page)
+		);
+		if (query.Book != null) {
+			serialize(buffer, query.Book);
+		}
+		closeTag(buffer, "query");
+		return buffer.toString();
+	}
+
+	@Override
+	public BookmarkQuery deserializeBookmarkQuery(String xml) {
+		try {
+			final BookmarkQueryDeserializer deserializer = new BookmarkQueryDeserializer();
 			Xml.parse(xml, deserializer);
 			return deserializer.getQuery();
 		} catch (SAXException e) {
@@ -121,6 +154,11 @@ class XMLSerializer extends AbstractSerializer {
 	@Override
 	public String serialize(Book book) {
 		final StringBuilder buffer = new StringBuilder();
+		serialize(buffer, book);
+		return buffer.toString();
+	}
+
+	private void serialize(StringBuilder buffer, Book book) {
 		appendTag(
 			buffer, "entry", false,
 			"xmlns:dc", XMLNamespaces.DublinCore,
@@ -156,6 +194,13 @@ class XMLSerializer extends AbstractSerializer {
 			);
 		}
 
+		for (String label : book.labels()) {
+			appendTag(
+				buffer, "label", true,
+				"name", label
+			);
+		}
+
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
 		if (seriesInfo != null) {
 			appendTagWithContent(buffer, "calibre:series", seriesInfo.Series.getTitle());
@@ -163,6 +208,11 @@ class XMLSerializer extends AbstractSerializer {
 				appendTagWithContent(buffer, "calibre:series_index", seriesInfo.Index);
 			}
 		}
+
+		if (book.HasBookmark) {
+			appendTag(buffer, "has-bookmark", true);
+		}
+
 		// TODO: serialize description (?)
 		// TODO: serialize cover (?)
 
@@ -175,7 +225,6 @@ class XMLSerializer extends AbstractSerializer {
 		);
 
 		closeTag(buffer, "entry");
-		return buffer.toString();
 	}
 
 	@Override
@@ -333,10 +382,12 @@ class XMLSerializer extends AbstractSerializer {
 		private final ArrayList<UID> myUidList = new ArrayList<UID>();
 		private final ArrayList<Author> myAuthors = new ArrayList<Author>();
 		private final ArrayList<Tag> myTags = new ArrayList<Tag>();
+		private final ArrayList<String> myLabels = new ArrayList<String>();
 		private final StringBuilder myAuthorSortKey = new StringBuilder();
 		private final StringBuilder myAuthorName = new StringBuilder();
 		private final StringBuilder mySeriesTitle = new StringBuilder();
 		private final StringBuilder mySeriesIndex = new StringBuilder();
+		private boolean myHasBookmark;
 
 		private Book myBook;
 
@@ -359,6 +410,8 @@ class XMLSerializer extends AbstractSerializer {
 			myUidList.clear();
 			myAuthors.clear();
 			myTags.clear();
+			myLabels.clear();
+			myHasBookmark = false;
 
 			myState = State.READ_NOTHING;
 		}
@@ -381,10 +434,14 @@ class XMLSerializer extends AbstractSerializer {
 			for (Tag tag : myTags) {
 				myBook.addTagWithNoCheck(tag);
 			}
+			for (String label : myLabels) {
+				myBook.addLabelWithNoCheck(label);
+			}
 			for (UID uid : myUidList) {
 				myBook.addUid(uid);
 			}
 			myBook.setSeriesInfoWithNoCheck(string(mySeriesTitle), string(mySeriesIndex));
+			myBook.HasBookmark = myHasBookmark;
 		}
 
 		@Override
@@ -417,10 +474,17 @@ class XMLSerializer extends AbstractSerializer {
 						if (term != null) {
 							myTags.add(Tag.getTag(term.split("/")));
 						}
+					} else if ("label".equals(localName)) {
+						final String name = attributes.getValue("name");
+						if (name != null) {
+							myLabels.add(name);
+						}
 					} else if ("series".equals(localName) && XMLNamespaces.CalibreMetadata.equals(uri)) {
 						myState = State.READ_SERIES_TITLE;
 					} else if ("series_index".equals(localName) && XMLNamespaces.CalibreMetadata.equals(uri)) {
 						myState = State.READ_SERIES_INDEX;
+					} else if ("has-bookmark".equals(localName)) {
+						myHasBookmark = true;
 					} else if ("link".equals(localName)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
@@ -510,7 +574,7 @@ class XMLSerializer extends AbstractSerializer {
 		}
 	}
 
-	private static final class QueryDeserializer extends DefaultHandler {
+	private static final class BookQueryDeserializer extends DefaultHandler {
 		private static enum State {
 			READ_QUERY,
 			READ_FILTER_AND,
@@ -523,9 +587,9 @@ class XMLSerializer extends AbstractSerializer {
 		private Filter myFilter;
 		private int myLimit = -1;
 		private int myPage = -1;
-		private Query myQuery;
+		private BookQuery myQuery;
 
-		public Query getQuery() {
+		public BookQuery getQuery() {
 			return myQuery;
 		}
 
@@ -537,7 +601,7 @@ class XMLSerializer extends AbstractSerializer {
 		@Override
 		public void endDocument() {
 			if (myFilter != null && myLimit > 0 && myPage >= 0) {
-				myQuery = new Query(myFilter, myLimit, myPage);
+				myQuery = new BookQuery(myFilter, myLimit, myPage);
 			}
 		}
 
@@ -549,7 +613,7 @@ class XMLSerializer extends AbstractSerializer {
 						myLimit = Integer.parseInt(attributes.getValue("limit"));
 						myPage = Integer.parseInt(attributes.getValue("page"));
 					} catch (Exception e) {
-						throw new SAXException("XML parsing error");
+						throw new SAXException("XML parsing error", e);
 					}
 					myStateStack.add(State.READ_QUERY);
 				} else {
@@ -573,6 +637,8 @@ class XMLSerializer extends AbstractSerializer {
 							names.add(n);
 						}
 						myFilter = new Filter.ByTag(Tag.getTag(names.toArray(new String[names.size()])));
+					} else if ("label".equals(type)) {
+						myFilter = new Filter.ByLabel(attributes.getValue("name"));
 					} else if ("series".equals(type)) {
 						myFilter = new Filter.BySeries(new Series(
 							attributes.getValue("title")
@@ -622,6 +688,57 @@ class XMLSerializer extends AbstractSerializer {
 				case READ_FILTER_SIMPLE:
 					break;
 			}
+		}
+	}
+
+	private static final class BookmarkQueryDeserializer extends DefaultHandler {
+		private boolean myVisible;
+		private int myLimit;
+		private int myPage;
+		private final BookDeserializer myBookDeserializer = new BookDeserializer();
+		private BookmarkQuery myQuery;
+
+		BookmarkQuery getQuery() {
+			return myQuery;
+		}
+
+		@Override
+		public void startDocument() {
+			myQuery = null;
+			myBookDeserializer.startDocument();
+		}
+
+		@Override
+		public void endDocument() {
+			myBookDeserializer.endDocument();
+			myQuery = new BookmarkQuery(myBookDeserializer.getBook(), myVisible, myLimit, myPage);
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if ("query".equals(localName)) {
+				try {
+					myVisible = Boolean.parseBoolean(attributes.getValue("visible"));
+					myLimit = Integer.parseInt(attributes.getValue("limit"));
+					myPage = Integer.parseInt(attributes.getValue("page"));
+				} catch (Exception e) {
+					throw new SAXException("XML parsing error", e);
+				}
+			} else {
+				myBookDeserializer.startElement(uri, localName, qName, attributes);
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			if (!"query".equals(localName)) {
+				myBookDeserializer.endElement(uri, localName, qName);
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length) {
+			myBookDeserializer.characters(ch, start, length);
 		}
 	}
 

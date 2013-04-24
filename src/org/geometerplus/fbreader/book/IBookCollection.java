@@ -51,16 +51,9 @@ public interface IBookCollection {
 
 	int size();
 
-	List<Book> books(Query query);
-	boolean hasBooks(Query query);
-	List<String> titles(Query query);
-
-	List<Book> booksForLabel(String label);
-
-	List<String> labels();
-	List<String> labels(Book book);
-	void setLabel(Book book, String label);
-	void removeLabel(Book book, String label);
+	List<Book> books(BookQuery query);
+	boolean hasBooks(Filter filter);
+	List<String> titles(BookQuery query);
 
 	List<Book> recentBooks();
 	Book getRecentBook(int index);
@@ -71,6 +64,7 @@ public interface IBookCollection {
 	Book getBookById(long id);
 	Book getBookByUid(UID uid);
 
+	List<String> labels();
 	List<Author> authors();
 	boolean hasSeries();
 	List<String> series();
@@ -86,9 +80,7 @@ public interface IBookCollection {
 	boolean isHyperlinkVisited(Book book, String linkId);
 	void markHyperlinkAsVisited(Book book, String linkId);
 
-	List<Bookmark> bookmarks(long fromId, int limitCount);
-	List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount);
-	List<Bookmark> invisibleBookmarks(Book book);
+	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);
 }

@@ -29,7 +29,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
 			android:singleLine="false"
-			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:gravity="center_vertical|left"
 		/>
 		<TextView

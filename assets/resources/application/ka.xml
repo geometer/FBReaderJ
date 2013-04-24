@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="წიგნის წაშლა"/>
 		<node name="addToFavorites" value="რჩეულებში დამატება"/>
 		<node name="removeFromFavorites" value="რჩეულებიდან წაშლა"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: ქსელური ბიბლიოთეკა">
 		<node name="byAuthor" value="ავტორებით">
@@ -721,6 +723,10 @@
 			<node name="authorize" value="ავტორიზაცია"/>
 			<node name="resetPosition" value="უკან"/>
 			<node name="sendReport" value="შეტყობინების გაგზავნა"/>
+			<node name="addToFavorites" value="რჩეულებში დამატება"/>
+			<node name="removeFromFavorites" value="რჩეულებიდან წაშლა"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="დანამატების დაინსტალირება"/>

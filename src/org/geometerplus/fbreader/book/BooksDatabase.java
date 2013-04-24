@@ -53,8 +53,10 @@ public abstract class BooksDatabase {
 
 	protected abstract List<Author> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
+	protected abstract List<String> listLabels(long bookId);
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	protected abstract List<UID> listUids(long bookId);
+	protected abstract boolean hasVisibleBookmark(long bookId);
 
 	protected abstract Long bookIdByUid(UID uid);
 
@@ -81,9 +83,6 @@ public abstract class BooksDatabase {
 	protected abstract List<Long> loadRecentBookIds();
 	protected abstract void saveRecentBookIds(final List<Long> ids);
 
-	protected abstract List<Long> loadBooksForLabelIds(String label);
-	protected abstract List<String> labels();
-	protected abstract List<String> labels(long bookId);
 	protected abstract void setLabel(long bookId, String label);
 	protected abstract void removeLabel(long bookId, String label);
 
@@ -91,9 +90,7 @@ public abstract class BooksDatabase {
 		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex, isVisible);
 	}
 
-	protected abstract List<Bookmark> loadInvisibleBookmarks(long bookId);
-	protected abstract List<Bookmark> loadVisibleBookmarks(long fromId, int limitCount);
-	protected abstract List<Bookmark> loadVisibleBookmarks(long bookId, long fromId, int limitCount);
+	protected abstract List<Bookmark> loadBookmarks(BookmarkQuery query);
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 

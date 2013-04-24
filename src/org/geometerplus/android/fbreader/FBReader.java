@@ -210,12 +210,12 @@ public final class FBReader extends Activity {
 
 	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
 		context.startActivity(
-				new Intent(context, FBReader.class)
+			new Intent(context, FBReader.class)
 				.setAction(ACTION_OPEN_BOOK)
 				.putExtra(BOOK_KEY, SerializerUtil.serialize(book))
 				.putExtra(BOOKMARK_KEY, SerializerUtil.serialize(bookmark))
 				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-				);
+		);
 	}
 
 	private static ZLAndroidLibrary getZLibrary() {
@@ -229,6 +229,7 @@ public final class FBReader extends Activity {
 	private ZLAndroidWidget myMainView;
 
 	private int myFullScreenFlag;
+	private String myMenuLanguage;
 
 	private boolean myIsPaused = false;
 	private AlertDialog myDialogToShow = null;
@@ -238,7 +239,7 @@ public final class FBReader extends Activity {
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
-			new LinkedList<PluginApi.ActionInfo>();
+		new LinkedList<PluginApi.ActionInfo>();
 	private final BroadcastReceiver myPluginInfoReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -253,9 +254,9 @@ public final class FBReader extends Activity {
 					index = 0;
 					for (PluginApi.ActionInfo info : myPluginActions) {
 						myFBReaderApp.addAction(
-								PLUGIN_ACTION_PREFIX + index++,
-								new RunPluginAction(FBReader.this, myFBReaderApp, info.getId())
-								);
+							PLUGIN_ACTION_PREFIX + index++,
+							new RunPluginAction(FBReader.this, myFBReaderApp, info.getId())
+						);
 					}
 				}
 			}
@@ -274,7 +275,7 @@ public final class FBReader extends Activity {
 			Log.d("bookmark", "null");
 		}
 		final Bookmark bookmark =
-				SerializerUtil.deserializeBookmark(intent.getStringExtra(BOOKMARK_KEY));
+			SerializerUtil.deserializeBookmark(intent.getStringExtra(BOOKMARK_KEY));
 		if (bookmark == null) {
 			Log.d("bookmark", "null!!!!1111");
 		}
@@ -362,10 +363,10 @@ public final class FBReader extends Activity {
 		myNeedToSkipPlugin = true;
 
 		myFullScreenFlag =
-				getZLibrary().ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			getZLibrary().ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		getWindow().setFlags(
-				WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
-				);
+			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
+		);
 
 		if (myFBReaderApp.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(myFBReaderApp);
@@ -430,6 +431,9 @@ public final class FBReader extends Activity {
 		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
+
+		setupMenu(menu);
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -472,7 +476,7 @@ public final class FBReader extends Activity {
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
 		} else if (Intent.ACTION_VIEW.equals(action)
-				&& data != null && "fbreader-action".equals(data.getScheme())) {
+				   && data != null && "fbreader-action".equals(data.getScheme())) {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
 			myNeedToOpenFile = true;
@@ -565,7 +569,7 @@ public final class FBReader extends Activity {
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 
 		final int fullScreenFlag =
-				zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
 			startActivity(new Intent(this, getClass()));
@@ -597,14 +601,14 @@ public final class FBReader extends Activity {
 		}
 
 		sendOrderedBroadcast(
-				new Intent(PluginApi.ACTION_REGISTER),
-				null,
-				myPluginInfoReceiver,
-				null,
-				RESULT_OK,
-				null,
-				null
-				);
+			new Intent(PluginApi.ACTION_REGISTER),
+			null,
+			myPluginInfoReceiver,
+			null,
+			RESULT_OK,
+			null,
+			null
+		);
 	}
 
 	private class TipRunner extends Thread {
@@ -883,7 +887,6 @@ public final class FBReader extends Activity {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.addMenuItem(menu, actionId, null, null);
 	}
-
 	
 	private void fillMenu(Menu menu, MenuItemData source) {
 		for (MenuItemData el : source.Children) {
@@ -896,25 +899,37 @@ public final class FBReader extends Activity {
 		}
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
+	private void setupMenu(Menu menu) {
+		final String menuLanguage = ZLResource.getLanguageOption().getValue();
+		if (menuLanguage.equals(myMenuLanguage)) {
+			return;
+		}
+		myMenuLanguage = menuLanguage;
+
+		menu.clear();
 		fillMenu(menu, MenuItemData.getRoot());
 		synchronized (myPluginActions) {
 			int index = 0;
 			for (PluginApi.ActionInfo info : myPluginActions) {
 				if (info instanceof PluginApi.MenuActionInfo) {
 					addMenuItem(
-							menu,
-							PLUGIN_ACTION_PREFIX + index++,
-							((PluginApi.MenuActionInfo)info).MenuItemName
-							);
+						menu,
+						PLUGIN_ACTION_PREFIX + index++,
+						((PluginApi.MenuActionInfo)info).MenuItemName
+					);
 				}
 			}
 		}
 
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.refresh();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+
+		setupMenu(menu);
 
 		return true;
 	}
@@ -934,19 +949,19 @@ public final class FBReader extends Activity {
 		final String text = fbView.getSelectedText();
 
 		final Bookmark bookmark = new Bookmark(
-				myFBReaderApp.Model.Book,
-				fbView.getModel().getId(),
-				fbView.getSelectionStartPosition(),
-				text,
-				true
-				);
+			myFBReaderApp.Model.Book,
+			fbView.getModel().getId(),
+			fbView.getSelectionStartPosition(),
+			text,
+			true
+		);
 		myFBReaderApp.Collection.saveBookmark(bookmark);
 		fbView.clearSelection();
 
 		UIUtil.showMessageText(
-				this,
-				ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
-				);
+			this,
+			ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
+		);
 	}
 
 	@Override
@@ -983,8 +998,8 @@ public final class FBReader extends Activity {
 				if (myWakeLockToCreate) {
 					myWakeLockToCreate = false;
 					myWakeLock =
-							((PowerManager)getSystemService(POWER_SERVICE)).
-							newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
+						((PowerManager)getSystemService(POWER_SERVICE))
+							.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "FBReader");
 					myWakeLock.acquire();
 				}
 			}
