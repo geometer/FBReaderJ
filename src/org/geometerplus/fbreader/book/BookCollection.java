@@ -210,9 +210,12 @@ public class BookCollection extends AbstractBookCollection {
 			allBooks = new ArrayList<Book>(myBooksByFile.values());
 		}
 		final int start = query.Page * query.Limit;
+		if (start >= allBooks.size()) {
+			return Collections.emptyList();
+		}
 		final int end = start + query.Limit;
 		if (query.Filter instanceof Filter.Empty) {
-			return allBooks.subList(start, end);
+			return allBooks.subList(start, Math.min(end, allBooks.size()));
 		} else {
 			int count = 0;
 			final List<Book> filtered = new ArrayList<Book>(query.Limit);
