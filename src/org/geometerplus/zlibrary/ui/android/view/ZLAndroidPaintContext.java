@@ -303,11 +303,14 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void drawImage(int x, int y, ZLImageData imageData, Size maxSize, ScalingType scaling) {
 		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
 		if (bitmap != null && !bitmap.isRecycled()) {
-			String prof = new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
-			if (ColorProfile.DAY.equals(prof)) {
-				myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
-			} else {
-				myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+			boolean use = new ZLBooleanOption("Colors", "ImagesBackground", true).getValue();
+			if (use) {
+				String prof = new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
+				if (ColorProfile.DAY.equals(prof)) {
+					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
+				} else {
+					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+				}
 			}
 			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myFillPaint);
 			myFillPaint.setXfermode(new Xfermode());

@@ -365,6 +365,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
 		);
 		bgPreferences.setEnabled("".equals(profile.WallpaperOption.getValue()));
+		colorsScreen.addOption(new ZLBooleanOption("Colors", "ImagesBackground", true), "imagesBackground");
 		/*
 		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
 		*/
