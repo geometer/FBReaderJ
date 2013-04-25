@@ -34,10 +34,11 @@ public abstract class FileType {
 	public abstract boolean acceptsFile(ZLFile file);
 	public abstract boolean acceptsExtension(String ext);
 
-	public abstract String extension(MimeType mimeType);
 	public abstract List<MimeType> mimeTypes();
 	public abstract MimeType mimeType(ZLFile file);
-	public MimeType simplifiedMimeType(ZLFile file) {
+	public MimeType rawMimeType(ZLFile file) {
 		return mimeType(file);
 	}
+
+	public abstract String defaultExtension(MimeType mime);
 }

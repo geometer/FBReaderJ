@@ -62,7 +62,7 @@ public class BookUrlInfo extends UrlInfo {
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
 	public static String makeBookFileName(String url, FileType fileType, MimeType mimeType, Type resolvedReferenceType) {
-		return makeBookFileName(url, fileType.extension(mimeType), resolvedReferenceType);
+		return makeBookFileName(url, fileType.defaultExtension(mimeType), resolvedReferenceType);
 	}
 	public static String makeBookFileName(String url, String extension, Type resolvedReferenceType) {
 		final Uri uri = Uri.parse(url);

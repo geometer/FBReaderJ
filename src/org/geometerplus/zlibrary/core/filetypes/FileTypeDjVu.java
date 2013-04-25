@@ -40,11 +40,6 @@ class FileTypeDjVu extends FileType {
 	}
 
 	@Override
-	public String extension(MimeType mimeType) {
-		return "djvu";
-	}
-
-	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_DJVU;
 	}
@@ -52,5 +47,10 @@ class FileTypeDjVu extends FileType {
 	@Override
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? MimeType.IMAGE_VND_DJVU : MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return "djvu";
 	}
 }

@@ -67,7 +67,7 @@ abstract class FileTypePalm extends FileType {
 	}
 
 	@Override
-	public String extension(MimeType mimeType) {
+	public String defaultExtension(MimeType mime) {
 		return "pdb";
 	}
 }
