@@ -34,7 +34,6 @@ interface LibraryInterface {
 	boolean saveBook(in String book, in boolean force);
 	void removeBook(in String book, in boolean deleteFromDisk);
 	void addBookToRecentList(in String book);
-	void removeBookFromRecentList(in String book);
 
 	TextPosition getStoredPosition(in long bookId);
 	void storePosition(in long bookId, in TextPosition position);

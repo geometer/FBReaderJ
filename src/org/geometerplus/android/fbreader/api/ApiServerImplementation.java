@@ -251,6 +251,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			case SAVE_BOOKMARK:
 				saveBookmark(((ApiObject.String)parameters[0]).Value);
 				return ApiObject.Void.Instance;
+			case ADD_BOOK_TO_RECENT:
+				addBookToRecent(((ApiObject.String)parameters[0]).Value);
+				return ApiObject.Void.Instance;
 			case GET_MENU_TEXT:
 				return ApiObject.envelope(getMenuText(((ApiObject.String)parameters[0]).Value));
 			case GET_MENU_ICON:
@@ -658,6 +661,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			@Override
 			public void run() {
 				myCollection.saveBookmark(SerializerUtil.deserializeBookmark(s));
+			}
+		});
+	}
+	
+	public void addBookToRecent(final String s) {
+		myCollection.bindToService(myContext, new Runnable() {
+			@Override
+			public void run() {
+				myCollection.addBookToRecentList(SerializerUtil.deserializeBook(s));
 			}
 		});
 	}
