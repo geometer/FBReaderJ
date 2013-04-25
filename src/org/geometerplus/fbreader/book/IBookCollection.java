@@ -58,7 +58,6 @@ public interface IBookCollection {
 	List<Book> recentBooks();
 	Book getRecentBook(int index);
 	void addBookToRecentList(Book book);
-	void removeBookFromRecentList(Book book);
 
 	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
