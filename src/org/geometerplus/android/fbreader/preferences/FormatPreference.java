@@ -112,7 +112,7 @@ class FormatPreference extends ListPreference {
 		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<String> values = new ArrayList<String>();
 		//FIXME: is it right way to obtain extension?
-		String extension = FileTypeCollection.Instance.typeById(myFormat).extension(FileTypeCollection.Instance.typeById(myFormat).mimeTypes().get(0));
+		String extension = FileTypeCollection.Instance.typeById(myFormat).defaultExtension(FileTypeCollection.Instance.typeById(myFormat).mimeTypes().get(0));
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setData(Uri.parse("file:///sdcard/fgsfds." + extension));
 		myPaths.add("org.geometerplus.zlibrary.ui.android");

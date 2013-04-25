@@ -45,11 +45,6 @@ class SimpleFileType extends FileType {
 	}
 
 	@Override
-	public String extension(MimeType mimeType) {
-		return myExtension;
-	}
-
-	@Override
 	public List<MimeType> mimeTypes() {
 		return myMimeTypes;
 	}
@@ -57,6 +52,11 @@ class SimpleFileType extends FileType {
 	@Override
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? myMimeTypes.get(0) : MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return myExtension;
 	}
 
 	@Override

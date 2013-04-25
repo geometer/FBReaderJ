@@ -43,11 +43,6 @@ class FileTypeEpub extends FileType {
 	}
 
 	@Override
-	public String extension(MimeType mimeType) {
-		return "epub";
-	}
-
-	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_EPUB;
 	}
@@ -63,12 +58,17 @@ class FileTypeEpub extends FileType {
 	}
 
 	@Override
-	public MimeType simplifiedMimeType(ZLFile file) {
+	public MimeType rawMimeType(ZLFile file) {
 		final String extension = file.getExtension();
 		if ("epub".equalsIgnoreCase(extension)) {
 			return MimeType.APP_ZIP;
 		}
 		// TODO: process other extensions (?)
 		return MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return "epub";
 	}
 }

@@ -216,7 +216,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 					return BookUrlInfo.Format.NONE;
 				}
 				if (ft.mimeTypes().contains(mime)) {
-					return ft.extension(mime);
+					return ft.defaultExtension(mime);
 				}
 			}
 		}
