@@ -72,14 +72,6 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		mySetValueStatement = myDatabase.compileStatement("INSERT OR REPLACE INTO config (groupName, name, value) VALUES (?, ?, ?)");
 		myUnsetValueStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ? AND name = ?");
 		myDeleteGroupStatement = myDatabase.compileStatement("DELETE FROM config WHERE groupName = ?");
-
-		
-		final Cursor cursor = myDatabase.rawQuery("SELECT groupName,name FROM config", null);
-		while (cursor.moveToNext()) {
-			System.out.println(cursor.getString(0) + " = " + cursor.getString(1));
-		}
-		cursor.close();
-		
 	}
 
 	@Override
