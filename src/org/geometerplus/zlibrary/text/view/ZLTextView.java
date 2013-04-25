@@ -52,7 +52,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private int myOverlappingValue;
 
 	private ZLTextPage myPreviousPage = new ZLTextPage();
-	ZLTextPage myCurrentPage = new ZLTextPage();
+	private ZLTextPage myCurrentPage = new ZLTextPage();
 	private ZLTextPage myNextPage = new ZLTextPage();
 
 	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
@@ -269,7 +269,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	protected void moveSelectionCursorTo(ZLTextSelectionCursor cursor, int x, int y) {
 		y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
 		mySelection.setCursorInMovement(cursor, x, y);
-		mySelection.expandTo(x, y);
+		mySelection.expandTo(myCurrentPage, x, y);
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
