@@ -405,7 +405,6 @@ public final class FBReader extends Activity {
 				myCancelCalled = true;
 			} else if ("android.fbreader.action.PLUGIN_CRASH".equals(getIntent().getAction())) {
 				Log.d("fbj", "crash in oncreate");
-				long bookid = getIntent().getLongExtra("BOOKID", -1);
 				myNeedToSkipPlugin = true;
 				myFBReaderApp.Model = null;
 				getCollection().bindToService(this, new Runnable() {
