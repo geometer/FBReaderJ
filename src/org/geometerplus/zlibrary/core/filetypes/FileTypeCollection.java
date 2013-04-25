@@ -73,9 +73,9 @@ public class FileTypeCollection {
 		return MimeType.UNKNOWN;
 	}
 
-	public MimeType simplifiedMimeType(ZLFile file) {
+	public MimeType rawMimeType(ZLFile file) {
 		for (FileType type : types()) {
-			final MimeType mime = type.simplifiedMimeType(file);
+			final MimeType mime = type.rawMimeType(file);
 			if (mime != MimeType.NULL) {
 				return mime;
 			}
