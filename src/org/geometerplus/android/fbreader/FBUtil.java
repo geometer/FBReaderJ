@@ -43,7 +43,7 @@ public abstract class FBUtil {
 				Html.fromHtml(ZLResource.resource("sharing").getResource("sharedFrom").getValue());
 			activity.startActivity(
 				new Intent(Intent.ACTION_SEND)
-					.setType(FileTypeCollection.Instance.simplifiedMimeType(file).Name)
+					.setType(FileTypeCollection.Instance.rawMimeType(file).Name)
 					.putExtra(Intent.EXTRA_SUBJECT, book.getTitle())
 					.putExtra(Intent.EXTRA_TEXT, sharedFrom)
 					.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file.javaFile()))

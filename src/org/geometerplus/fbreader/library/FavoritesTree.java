@@ -19,19 +19,48 @@
 
 package org.geometerplus.fbreader.library;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.fbreader.book.*;
 
-public class FavoritesTree extends FirstLevelTree {
+public class FavoritesTree extends FilteredTree {
+	private final ZLResource myResource;
+
 	FavoritesTree(RootTree root) {
-		super(root, ROOT_FAVORITES);
+		super(root, new Filter.ByLabel(Book.FAVORITE_LABEL), -1);
+		myResource = resource().getResource(ROOT_FAVORITES);
+	}
+
+	@Override
+	public String getName() {
+		return myResource.getValue();
+	}
+
+	@Override
+	public String getTreeTitle() {
+		return getSummary();
+	}
+
+	@Override
+	public String getSummary() {
+		return myResource.getResource("summary").getValue();
+	}
+
+	@Override
+	protected String getStringId() {
+		return ROOT_FAVORITES;
+	}
+
+	@Override
+	public boolean isSelectable() {
+		return false;
 	}
 
 	@Override
 	public Status getOpeningStatus() {
-		if (!Collection.labels().contains(Book.FAVORITE_LABEL)) {
-			return Status.CANNOT_OPEN;
-		}
-		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+		return Collection.hasBooks(new Filter.ByLabel(Book.FAVORITE_LABEL))
+			? Status.ALWAYS_RELOAD_BEFORE_OPENING
+			: Status.CANNOT_OPEN;
 	}
 
 	@Override
@@ -41,26 +70,7 @@ public class FavoritesTree extends FirstLevelTree {
 	}
 
 	@Override
-	public void waitForOpening() {
-		clear();
-		for (Book book : Collection.booksForLabel(Book.FAVORITE_LABEL)) {
-			createBookWithAuthorsSubTree(book);
-		}
-	}
-
-	public boolean onBookEvent(BookEvent event, Book book) {
-		switch (event) {
-			case Added:
-				return Collection.labels(book).contains(Book.FAVORITE_LABEL) && createBookWithAuthorsSubTree(book);
-			case Updated:
-			{
-				boolean changed = removeBook(book);
-				changed |= Collection.labels(book).contains(Book.FAVORITE_LABEL) && createBookWithAuthorsSubTree(book);
-				return changed;
-			}
-			case Removed:
-			default:
-				return super.onBookEvent(event, book);
-		}
+	protected boolean createSubTree(Book book) {
+		return createBookWithAuthorsSubTree(book);
 	}
 }

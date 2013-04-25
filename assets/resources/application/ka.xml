@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="წიგნის წაშლა"/>
 		<node name="addToFavorites" value="რჩეულებში დამატება"/>
 		<node name="removeFromFavorites" value="რჩეულებიდან წაშლა"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: ქსელური ბიბლიოთეკა">
 		<node name="byAuthor" value="ავტორებით">
@@ -287,7 +289,7 @@
 		</node>
 		<node name="appearance" value="გარეგნობა">
 			<node name="summary" value="ეკრანი, სტატუს ბარი, ღილაკების განათება"/>
-			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="language" value="ინტერფეისის ენა"/>
 			<node name="screenOrientation" value="ეკრანის ორიენტაცია">
 				<node name="system" value="სისტემური"/>
 				<node name="sensor" value="დამოკიდებულია მოწყობილობის ორიენტაციაზე"/>
@@ -721,6 +723,10 @@
 			<node name="authorize" value="ავტორიზაცია"/>
 			<node name="resetPosition" value="უკან"/>
 			<node name="sendReport" value="შეტყობინების გაგზავნა"/>
+			<node name="addToFavorites" value="რჩეულებში დამატება"/>
+			<node name="removeFromFavorites" value="რჩეულებიდან წაშლა"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="დანამატების დაინსტალირება"/>

@@ -50,20 +50,10 @@ public interface IBookCollection {
 	Status status();
 
 	int size();
-	List<Book> books();
-	List<Book> booksForLabel(String label);
-	List<Book> booksForAuthor(Author author);
-	List<Book> booksForTag(Tag tag);
-	List<Book> booksForSeries(String series);
-	List<Book> booksForSeriesAndAuthor(String series, Author author);
-	List<Book> booksForTitlePrefix(String prefix);
-	boolean hasBooksForPattern(String pattern);
-	List<Book> booksForPattern(String pattern);
 
-	List<String> labels();
-	List<String> labels(Book book);
-	void setLabel(Book book, String label);
-	void removeLabel(Book book, String label);
+	List<Book> books(BookQuery query);
+	boolean hasBooks(Filter filter);
+	List<String> titles(BookQuery query);
 
 	List<Book> recentBooks();
 	Book getRecentBook(int index);
@@ -73,17 +63,12 @@ public interface IBookCollection {
 	Book getBookById(long id);
 	Book getBookByUid(UID uid);
 
+	List<String> labels();
 	List<Author> authors();
 	boolean hasSeries();
 	List<String> series();
 	List<Tag> tags();
-	List<String> titles();
 	List<String> firstTitleLetters();
-	List<String> titlesForAuthor(Author author, int limit);
-	List<String> titlesForSeries(String series, int limit);
-	List<String> titlesForSeriesAndAuthor(String series, Author author, int limit);
-	List<String> titlesForTag(Tag tag, int limit);
-	List<String> titlesForTitlePrefix(String prefix, int limit);
 
 	boolean saveBook(Book book, boolean force);
 	void removeBook(Book book, boolean deleteFromDisk);
@@ -94,9 +79,7 @@ public interface IBookCollection {
 	boolean isHyperlinkVisited(Book book, String linkId);
 	void markHyperlinkAsVisited(Book book, String linkId);
 
-	List<Bookmark> bookmarks(long fromId, int limitCount);
-	List<Bookmark> bookmarksForBook(Book book, long fromId, int limitCount);
-	List<Bookmark> invisibleBookmarks(Book book);
+	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);
 }

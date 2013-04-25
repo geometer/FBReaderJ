@@ -138,46 +138,18 @@ public class LibraryService extends Service {
 			return myCollection.size();
 		}
 
-		public List<String> books() {
-			return SerializerUtil.serializeBookList(myCollection.books());
-		}
-
-		public List<String> booksForAuthor(String author) {
-			return SerializerUtil.serializeBookList(myCollection.booksForAuthor(Util.stringToAuthor(author)));
-		}
-
-		public List<String> booksForTag(String tag) {
-			return SerializerUtil.serializeBookList(myCollection.booksForTag(Util.stringToTag(tag)));
-		}
-
-		public List<String> booksForSeries(String series) {
-			return SerializerUtil.serializeBookList(myCollection.booksForSeries(series));
-		}
-
-		public List<String> booksForSeriesAndAuthor(String series, String author) {
+		public List<String> books(String query) {
 			return SerializerUtil.serializeBookList(
-				myCollection.booksForSeriesAndAuthor(series, Util.stringToAuthor(author))
+				myCollection.books(SerializerUtil.deserializeBookQuery(query))
 			);
 		}
 
-		public List<String> booksForTitlePrefix(String prefix) {
-			return SerializerUtil.serializeBookList(myCollection.booksForTitlePrefix(prefix));
-		}
-
-		public boolean hasBooksForPattern(String pattern) {
-			return myCollection.hasBooksForPattern(pattern);
-		}
-
-		public List<String> booksForPattern(String pattern) {
-			return SerializerUtil.serializeBookList(myCollection.booksForPattern(pattern));
+		public boolean hasBooks(String query) {
+			return myCollection.hasBooks(SerializerUtil.deserializeBookQuery(query).Filter);
 		}
 
 		public List<String> recentBooks() {
 			return SerializerUtil.serializeBookList(myCollection.recentBooks());
-		}
-
-		public List<String> booksForLabel(String label) {
-			return SerializerUtil.serializeBookList(myCollection.booksForLabel(label));
 		}
 
 		public String getRecentBook(int index) {
@@ -222,32 +194,12 @@ public class LibraryService extends Service {
 			return strings;
 		}
 
-		public List<String> titles() {
-			return myCollection.titles();
+		public List<String> titles(String query) {
+			return myCollection.titles(SerializerUtil.deserializeBookQuery(query));
 		}
 
 		public List<String> firstTitleLetters() {
 			return myCollection.firstTitleLetters();
-		}
-
-		public List<String> titlesForAuthor(String author, int limit) {
-			return myCollection.titlesForAuthor(Util.stringToAuthor(author), limit);
-		}
-
-		public List<String> titlesForSeries(String series, int limit) {
-			return myCollection.titlesForSeries(series, limit);
-		}
-
-		public List<String> titlesForSeriesAndAuthor(String series, String author, int limit) {
-			return myCollection.titlesForSeriesAndAuthor(series, Util.stringToAuthor(author), limit);
-		}
-
-		public List<String> titlesForTag(String tag, int limit) {
-			return myCollection.titlesForTag(Util.stringToTag(tag), limit);
-		}
-
-		public List<String> titlesForTitlePrefix(String prefix, int limit) {
-			return myCollection.titlesForTitlePrefix(prefix, limit);
 		}
 
 		public boolean saveBook(String book, boolean force) {
@@ -264,18 +216,6 @@ public class LibraryService extends Service {
 
 		public List<String> labels() {
 			return myCollection.labels();
-		}
-
-		public List<String> labelsForBook(String book) {
-			return myCollection.labels(SerializerUtil.deserializeBook(book));
-		}
-
-		public void setLabel(String book, String label) {
-			myCollection.setLabel(SerializerUtil.deserializeBook(book), label);
-		}
-
-		public void removeLabel(String book, String label) {
-			myCollection.removeLabel(SerializerUtil.deserializeBook(book), label);
 		}
 
 		public TextPosition getStoredPosition(long bookId) {
@@ -306,19 +246,9 @@ public class LibraryService extends Service {
 			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
 		}
 
-		public List<String> invisibleBookmarks(String book) {
-			return SerializerUtil.serializeBookmarkList(
-				myCollection.invisibleBookmarks(SerializerUtil.deserializeBook(book))
-			);
-		}
-
-		public List<String> bookmarks(long fromId, int limitCount) {
-			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(fromId, limitCount));
-		}
-
-		public List<String> bookmarksForBook(String book, long fromId, int limitCount) {
-			return SerializerUtil.serializeBookmarkList(myCollection.bookmarksForBook(
-				SerializerUtil.deserializeBook(book), fromId, limitCount
+		public List<String> bookmarks(String query) {
+			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(
+				SerializerUtil.deserializeBookmarkQuery(query)
 			));
 		}
 

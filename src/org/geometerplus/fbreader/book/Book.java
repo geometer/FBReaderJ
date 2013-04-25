@@ -37,6 +37,7 @@ import org.geometerplus.fbreader.sort.TitledEntity;
 
 public class Book extends TitledEntity {
 	public static final String FAVORITE_LABEL = "favorite";
+	public static final String READ_LABEL = "read";
 
 	public final ZLFile File;
 
@@ -46,8 +47,11 @@ public class Book extends TitledEntity {
 	private volatile String myLanguage;
 	private volatile List<Author> myAuthors;
 	private volatile List<Tag> myTags;
+	private volatile List<String> myLabels;
 	private volatile SeriesInfo mySeriesInfo;
 	private volatile List<UID> myUids;
+
+	public volatile boolean HasBookmark;
 
 	private volatile boolean myIsSaved;
 
@@ -81,7 +85,9 @@ public class Book extends TitledEntity {
 		myLanguage = book.myLanguage;
 		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
 		myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
+		myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
 		mySeriesInfo = book.mySeriesInfo;
+		HasBookmark = book.HasBookmark;
 	}
 
 	public void reloadInfoFromFile() {
@@ -114,6 +120,7 @@ public class Book extends TitledEntity {
 		setTitle(null);
 		myAuthors = null;
 		myTags = null;
+		myLabels = null;
 		mySeriesInfo = null;
 		myUids = null;
 
@@ -140,8 +147,10 @@ public class Book extends TitledEntity {
 	void loadLists(BooksDatabase database) {
 		myAuthors = database.listAuthors(myId);
 		myTags = database.listTags(myId);
+		myLabels = database.listLabels(myId);
 		mySeriesInfo = database.getSeriesInfo(myId);
 		myUids = database.listUids(myId);
+		HasBookmark = database.hasVisibleBookmark(myId);
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
 			try {
@@ -324,6 +333,33 @@ public class Book extends TitledEntity {
 		addTag(Tag.getTag(null, tagName));
 	}
 
+	public List<String> labels() {
+		return myLabels != null ? Collections.unmodifiableList(myLabels) : Collections.<String>emptyList();
+	}
+
+	void addLabelWithNoCheck(String label) {
+		if (myLabels == null) {
+			myLabels = new ArrayList<String>();
+		}
+		myLabels.add(label);
+	}
+
+	public void addLabel(String label) {
+		if (myLabels == null) {
+			myLabels = new ArrayList<String>();
+		}
+		if (!myLabels.contains(label)) {
+			myLabels.add(label);
+			myIsSaved = false;
+		}
+	}
+
+	public void removeLabel(String label) {
+		if (myLabels != null && myLabels.remove(label)) {
+			myIsSaved = false;
+		}
+	}
+
 	public List<UID> uids() {
 		return myUids != null ? Collections.unmodifiableList(myUids) : Collections.<UID>emptyList();
 	}
@@ -414,6 +450,17 @@ public class Book extends TitledEntity {
 				for (Tag tag : tags()) {
 					database.saveBookTagInfo(myId, tag);
 				}
+				final List<String> labelsInDb = database.listLabels(myId);
+				for (String label : labelsInDb) {
+					if (myLabels == null || !myLabels.contains(label)) {
+						database.removeLabel(myId, label);
+					}
+				}
+				if (myLabels != null) {
+					for (String label : myLabels) {
+						database.setLabel(myId, label);
+					}
+				}
 				database.saveBookSeriesInfo(myId, mySeriesInfo);
 				database.deleteAllBookUids(myId);
 				for (UID uid : uids()) {
@@ -484,5 +531,15 @@ public class Book extends TitledEntity {
 			return false;
 		}
 		return File.equals(((Book)o).File);
+	}
+
+	@Override
+	public String toString() {
+		return new StringBuilder("Book[")
+			.append(File.getPath())
+			.append(", ")
+			.append(myId)
+			.append("]")
+			.toString();
 	}
 }

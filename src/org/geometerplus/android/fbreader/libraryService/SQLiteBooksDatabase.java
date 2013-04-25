@@ -222,7 +222,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,author_id FROM BookAuthor ORDER BY author_index", null
 		);
 		while (cursor.moveToNext()) {
-			Book book = booksById.get(cursor.getLong(0));
+			final Book book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				Author author = authorById.get(cursor.getLong(1));
 				if (author != null) {
@@ -234,7 +234,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 		cursor = myDatabase.rawQuery("SELECT book_id,tag_id FROM BookTag", null);
 		while (cursor.moveToNext()) {
-			Book book = booksById.get(cursor.getLong(0));
+			final Book book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				addTag(book, getTagById(cursor.getLong(1)));
 			}
@@ -254,7 +254,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT book_id,series_id,book_index FROM BookSeries", null
 		);
 		while (cursor.moveToNext()) {
-			Book book = booksById.get(cursor.getLong(0));
+			final Book book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				final String series = seriesById.get(cursor.getLong(1));
 				if (series != null) {
@@ -263,6 +263,43 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 		}
 		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id,type,uid FROM BookUid", null
+		);
+		while (cursor.moveToNext()) {
+			final Book book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				book.addUid(cursor.getString(1), cursor.getString(2));
+			}
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT BookLabel.book_id,Labels.name FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id",
+			null
+		);
+		while (cursor.moveToNext()) {
+			final Book book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				book.addLabel(cursor.getString(1));
+			}
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Bookmarks WHERE visible = 1 GROUP by book_id",
+			null
+		);
+		while (cursor.moveToNext()) {
+			final Book book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				book.HasBookmark = true;
+			}
+		}
+		cursor.close();
+
 		return booksByFileId;
 	}
 
@@ -466,6 +503,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		} while (cursor.moveToNext());
 		cursor.close();
 		return list;
+	}
+
+	@Override
+	protected List<String> listLabels(long bookId) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT Labels.name FROM Labels" +
+			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
+			" WHERE BookLabel.book_id=?",
+			new String[] { String.valueOf(bookId) }
+		);
+		final LinkedList<String> names = new LinkedList<String>();
+		while (cursor.moveToNext()) {
+			names.add(cursor.getString(0));
+		}
+		cursor.close();
+		return names;
 	}
 
 	private SQLiteStatement myDeleteBookUidsStatement;
@@ -736,38 +789,6 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	@Override
-	protected List<String> labels() {
-		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT Labels.name FROM Labels" +
-			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
-			" GROUP BY Labels.name",
-			null
-		);
-		final LinkedList<String> names = new LinkedList<String>();
-		while (cursor.moveToNext()) {
-			names.add(cursor.getString(0));
-		}
-		cursor.close();
-		return names;
-	}
-
-	@Override
-	protected List<String> labels(long bookId) {
-		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT Labels.name FROM Labels" +
-			" INNER JOIN BookLabel ON BookLabel.label_id=Labels.label_id" +
-			" WHERE BookLabel.book_id=?",
-			new String[] { String.valueOf(bookId) }
-		);
-		final LinkedList<String> names = new LinkedList<String>();
-		while (cursor.moveToNext()) {
-			names.add(cursor.getString(0));
-		}
-		cursor.close();
-		return names;
-	}
-
 	private SQLiteStatement mySetLabelStatement;
 	@Override
 	protected void setLabel(long bookId, String label) {
@@ -798,92 +819,33 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected List<Long> loadBooksForLabelIds(String label) {
+	protected boolean hasVisibleBookmark(long bookId) {
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT BookLabel.book_id FROM BookLabel" +
-			" INNER JOIN Labels ON BookLabel.label_id=Labels.label_id" +
-			" WHERE Labels.name=?", new String[] { label }
+			"SELECT bookmark_id FROM Bookmarks WHERE book_id = " + bookId +
+			" AND visible = 1 LIMIT 1", null
 		);
-		final LinkedList<Long> ids = new LinkedList<Long>();
-		while (cursor.moveToNext()) {
-			ids.add(cursor.getLong(0));
-		}
+		final boolean result = cursor.moveToNext();
 		cursor.close();
-		return ids;
+		return result;
 	}
 
 	@Override
-	protected List<Bookmark> loadInvisibleBookmarks(long bookId) {
-		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
-		Cursor cursor = myDatabase.rawQuery(
-			"SELECT bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,bm.model_id,bm.paragraph,bm.word,bm.char FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id WHERE bm.book_id = ? AND bm.visible = 0", new String[] { String.valueOf(bookId) }
-		);
-		while (cursor.moveToNext()) {
-			list.add(createBookmark(
-				cursor.getLong(0),
-				cursor.getLong(1),
-				cursor.getString(2),
-				cursor.getString(3),
-				SQLiteUtil.getDate(cursor, 4),
-				SQLiteUtil.getDate(cursor, 5),
-				SQLiteUtil.getDate(cursor, 6),
-				(int)cursor.getLong(7),
-				cursor.getString(8),
-				(int)cursor.getLong(9),
-				(int)cursor.getLong(10),
-				(int)cursor.getLong(11),
-				false
-			));
+	protected List<Bookmark> loadBookmarks(BookmarkQuery query) {
+		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
+		final StringBuilder sql = new StringBuilder("SELECT")
+			.append(" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,")
+			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
+			.append("bm.model_id,bm.paragraph,bm.word,bm.char")
+			.append(" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id")
+			.append(" WHERE");
+		if (query.Book != null) {
+			sql.append(" b.book_id = " + query.Book.getId() +" AND");
 		}
-		cursor.close();
-		return list;
-	}
-
-	@Override
-	protected List<Bookmark> loadVisibleBookmarks(long fromId, int limitCount) {
-		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
-		Cursor cursor = myDatabase.rawQuery("SELECT" +
-			" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text," +
-			"bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter," +
-			"bm.model_id,bm.paragraph,bm.word,bm.char" +
-			" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id" +
-			" WHERE bm.bookmark_id >= ? AND bm.visible = 1 ORDER BY bm.bookmark_id LIMIT ?",
-			new String[] { String.valueOf(fromId), String.valueOf(limitCount) }
-		);
-		while (cursor.moveToNext()) {
-			list.add(createBookmark(
-				cursor.getLong(0),
-				cursor.getLong(1),
-				cursor.getString(2),
-				cursor.getString(3),
-				SQLiteUtil.getDate(cursor, 4),
-				SQLiteUtil.getDate(cursor, 5),
-				SQLiteUtil.getDate(cursor, 6),
-				(int)cursor.getLong(7),
-				cursor.getString(8),
-				(int)cursor.getLong(9),
-				(int)cursor.getLong(10),
-				(int)cursor.getLong(11),
-				true
-			));
-		}
-		cursor.close();
-		return list;
-	}
-
-
-	@Override
-	protected List<Bookmark> loadVisibleBookmarks(long bookId, long fromId, int limitCount) {
-		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
-		Cursor cursor = myDatabase.rawQuery("SELECT" +
-			" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text," +
-			"bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter," +
-			"bm.model_id,bm.paragraph,bm.word,bm.char" +
-			" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id" +
-			" WHERE b.book_id = ? AND bm.bookmark_id >= ? AND bm.visible = 1" +
-			" ORDER BY bm.bookmark_id LIMIT ?",
-			new String[] { String.valueOf(bookId), String.valueOf(fromId), String.valueOf(limitCount) }
-		);
+		sql
+			.append(" bm.visible = " + (query.Visible ? 1 : 0))
+			.append(" ORDER BY bm.bookmark_id")
+			.append(" LIMIT " + query.Limit * query.Page + "," + query.Limit);
+		Cursor cursor = myDatabase.rawQuery(sql.toString(), null);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
 				cursor.getLong(0),

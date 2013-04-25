@@ -52,6 +52,8 @@
 		<node name="deleteBook" value="Esborrar llibre"/>
 		<node name="addToFavorites" value="Afegir a favorits"/>
 		<node name="removeFromFavorites" value="Treure de favorits"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Biblioteca en xarxa de FBReader">
 		<node name="byAuthor" value="Per autor">
@@ -720,6 +722,10 @@
 			<node name="authorize" value="Autoritza"/>
 			<node name="resetPosition" value="Restableix posició"/>
 			<node name="sendReport" value="Envia informe"/>
+			<node name="addToFavorites" value="Afegir a favorits"/>
+			<node name="removeFromFavorites" value="Treure de favorits"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar plugin" toBeTranslated="true"/>

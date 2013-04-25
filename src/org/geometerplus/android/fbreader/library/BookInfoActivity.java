@@ -297,6 +297,10 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private static final int EDIT_INFO = 2;
 	private static final int SHARE_BOOK = 3;
 	private static final int RELOAD_INFO = 4;
+	private static final int ADD_TO_FAVORITES = 5;
+	private static final int REMOVE_FROM_FAVORITES = 6;
+	private static final int MARK_AS_READ = 7;
+	private static final int MARK_AS_UNREAD = 8;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -305,6 +309,16 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		addMenuItem(menu, EDIT_INFO, "editInfo", true);
 		addMenuItem(menu, SHARE_BOOK, "shareBook", false);
 		addMenuItem(menu, RELOAD_INFO, "reloadInfo", false);
+		if (myBook.labels().contains(Book.FAVORITE_LABEL)) {
+			addMenuItem(menu, REMOVE_FROM_FAVORITES, "removeFromFavorites", false);
+		} else {
+			addMenuItem(menu, ADD_TO_FAVORITES, "addToFavorites", false);
+		}
+		if (myBook.labels().contains(Book.READ_LABEL)) {
+			addMenuItem(menu, MARK_AS_UNREAD, "markAsUnread", false);
+		} else {
+			addMenuItem(menu, MARK_AS_READ, "markAsRead", false);
+		}
 		return true;
 	}
 
@@ -342,7 +356,35 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				if (myBook != null) {
 					myBook.reloadInfoFromFile();
 					setupBookInfo(myBook);
-					setResult(FBReader.RESULT_REPAINT);
+					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+				}
+				return true;
+			case ADD_TO_FAVORITES:
+				if (myBook != null) {
+					myBook.addLabel(Book.FAVORITE_LABEL);
+					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					invalidateOptionsMenu();
+				}
+				return true;
+			case REMOVE_FROM_FAVORITES:
+				if (myBook != null) {
+					myBook.removeLabel(Book.FAVORITE_LABEL);
+					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					invalidateOptionsMenu();
+				}
+				return true;
+			case MARK_AS_READ:
+				if (myBook != null) {
+					myBook.addLabel(Book.READ_LABEL);
+					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					invalidateOptionsMenu();
+				}
+				return true;
+			case MARK_AS_UNREAD:
+				if (myBook != null) {
+					myBook.removeLabel(Book.READ_LABEL);
+					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					invalidateOptionsMenu();
 				}
 				return true;
 			default:
