@@ -23,6 +23,7 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 abstract class FileTypePalm extends FileType {
 	private static String palmFileType(final ZLFile file) {
@@ -62,10 +63,8 @@ abstract class FileTypePalm extends FileType {
 			myPalmId.equals(palmFileType(file));
 	}
 
-	/*
 	@Override
-	public String extension() {
+	public String defaultExtension(MimeType mime) {
 		return "pdb";
 	}
-	*/
 }
