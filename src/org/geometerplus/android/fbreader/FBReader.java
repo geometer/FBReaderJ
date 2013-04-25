@@ -174,21 +174,14 @@ public final class FBReader extends Activity {
 			//			LaunchIntent.setData(uri);
 			LaunchIntent.putExtra(BOOKMARK_KEY, bookmark);
 			LaunchIntent.putExtra(BOOK_KEY, book);
+			LaunchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			Log.d("fbj", book);
 			try {
 				startActivity(LaunchIntent);
+				overridePendingTransition(0,0);
 				return;
 			} catch (ActivityNotFoundException e) {
 			}
-			//			FileType ft = FileTypeCollection.Instance.typeForFile(f);
-			//			for (MimeType type : ft.mimeTypes()) {
-			//				LaunchIntent.setDataAndType(uri, type.Name);
-			//				try {
-			//					startActivity(LaunchIntent);
-			//					return;
-			//				} catch (ActivityNotFoundException e) {
-			//				}
-			//			}
 			showErrorDialog("noPlugin", appData, bookToOpen.getId());
 			return;
 		}
@@ -412,8 +405,6 @@ public final class FBReader extends Activity {
 				myCancelCalled = true;
 			} else if ("android.fbreader.action.PLUGIN_CRASH".equals(getIntent().getAction())) {
 				Log.d("fbj", "crash in oncreate");
-				long bookid = getIntent().getLongExtra("BOOKID", -1);
-				myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
 				myNeedToSkipPlugin = true;
 				myFBReaderApp.Model = null;
 				getCollection().bindToService(this, new Runnable() {
@@ -513,7 +504,6 @@ public final class FBReader extends Activity {
 		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(intent.getAction())) {
 			Log.d("fbj", "crash");
 			long bookid = intent.getLongExtra("BOOKID", -1);
-			myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookid));
 			myNeedToSkipPlugin = true;
 			myFBReaderApp.Model = null;
 			getCollection().bindToService(this, new Runnable() {
@@ -935,7 +925,6 @@ public final class FBReader extends Activity {
 	}
 
 	protected void onPluginAbsent(long bookId) {
-		myFBReaderApp.Collection.removeBookFromRecentList(myFBReaderApp.Collection.getBookById(bookId));
 		myFBReaderApp.Model = null;
 		getCollection().bindToService(this, new Runnable() {
 			public void run() {

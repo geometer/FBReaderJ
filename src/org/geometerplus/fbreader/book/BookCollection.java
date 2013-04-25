@@ -378,12 +378,6 @@ public class BookCollection extends AbstractBookCollection {
 		myDatabase.saveRecentBookIds(ids);
 	}
 
-	public void removeBookFromRecentList(Book book) {
-		final List<Long> ids = myDatabase.loadRecentBookIds();
-		ids.remove(book.getId());
-		myDatabase.saveRecentBookIds(ids);
-	}
-
 	private void setStatus(Status status) {
 		myStatus = status;
 		fireBuildEvent(status);
