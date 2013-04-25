@@ -97,12 +97,12 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		}
 	}
 
-	void expandTo(int x, int y) {
+	void expandTo(ZLTextPage page, int x, int y) {
 		if (isEmpty()) {
 			return;
 		}
 
-		final ZLTextElementAreaVector vector = myView.myCurrentPage.TextElementMap;
+		final ZLTextElementAreaVector vector = page.TextElementMap;
 		final ZLTextElementArea firstArea = vector.getFirstArea();
 		final ZLTextElementArea lastArea = vector.getLastArea();
 		if (firstArea != null && y < firstArea.YStart) {
@@ -111,7 +111,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 				myScroller = null;
 			}
 			if (myScroller == null) {
-				myScroller = new Scroller(false, x, y);
+				myScroller = new Scroller(page, false, x, y);
 				return;
 			}
 		} else if (lastArea != null && y + ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2 > lastArea.YEnd) {
@@ -120,7 +120,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 				myScroller = null;
 			}
 			if (myScroller == null) {
-				myScroller = new Scroller(true, x, y);
+				myScroller = new Scroller(page, true, x, y);
 				return;
 			}
 		} else {
@@ -162,13 +162,13 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		}
 
 		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
-			if (hasAPartAfterPage(myView.myCurrentPage)) {
+			if (hasAPartAfterPage(page)) {
 				myView.scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
 			}
 		} else {
-			if (hasAPartBeforePage(myView.myCurrentPage)) {
+			if (hasAPartBeforePage(page)) {
 				myView.scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
@@ -262,10 +262,12 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 	}
 
 	private class Scroller implements Runnable {
+		private final ZLTextPage myPage;
 		private final boolean myScrollForward;
 		private int myX, myY;
 
-		Scroller(boolean forward, int x, int y) {
+		Scroller(ZLTextPage page, boolean forward, int x, int y) {
+			myPage = page;
 			myScrollForward = forward;
 			setXY(x, y);
 			myView.Application.addTimerTask(this, 400);
@@ -283,7 +285,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		public void run() {
 			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
-			expandTo(myX, myY);
+			expandTo(myPage, myX, myY);
 			myView.Application.getViewWidget().reset();
 			myView.Application.getViewWidget().repaint();
 		}
