@@ -184,14 +184,13 @@ public final class FBReaderApp extends ZLApplication {
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
 			System.err.println("5");
-			Collection.addBookToRecentList(bookToOpen);
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
 					if (myExternalFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue())) {
+						Collection.addBookToRecentList(bookToOpen);
 						closeWindow();
 					} else {
-						Collection.removeBookFromRecentList(bookToOpen);
 						openBook(null, null, null);
 					}
 				}
