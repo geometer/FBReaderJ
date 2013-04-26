@@ -147,7 +147,6 @@ public final class MimeType {
 	public static final List<MimeType> TYPES_DJVU = Collections.unmodifiableList(Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU, APP_DJVU));
 	public static final List<MimeType> TYPES_DOC = Collections.unmodifiableList(Arrays.asList(APP_MSWORD, APP_DOC));
 	public static final List<MimeType> TYPES_FB2_ZIP = Collections.singletonList(APP_FB2_ZIP);
-	public static final List<MimeType> TYPES_NULL = Collections.emptyList();
 
 	public final String Name;
 
