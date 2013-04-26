@@ -90,15 +90,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				return ApiObject.envelope(getFBReaderVersion());
 			case GET_OPTION_VALUE:
 				return ApiObject.envelope(getOptionValue(
-						((ApiObject.String)parameters[0]).Value,
-						((ApiObject.String)parameters[1]).Value
-						));
+					((ApiObject.String)parameters[0]).Value,
+					((ApiObject.String)parameters[1]).Value
+				));
 			case SET_OPTION_VALUE:
 				setOptionValue(
-						((ApiObject.String)parameters[0]).Value,
-						((ApiObject.String)parameters[1]).Value,
-						((ApiObject.String)parameters[2]).Value
-						);
+					((ApiObject.String)parameters[0]).Value,
+					((ApiObject.String)parameters[1]).Value,
+					((ApiObject.String)parameters[2]).Value
+				);
 				return ApiObject.Void.Instance;
 			case GET_BOOK_LANGUAGE:
 				if (parameters.length == 0) {
@@ -140,12 +140,12 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				return ApiObject.envelope(getParagraphsNumber());
 			case GET_PARAGRAPH_ELEMENTS_COUNT:
 				return ApiObject.envelope(getParagraphElementsCount(
-						((ApiObject.Integer)parameters[0]).Value
-						));
+					((ApiObject.Integer)parameters[0]).Value
+				));
 			case GET_PARAGRAPH_TEXT:
 				return ApiObject.envelope(getParagraphText(
-						((ApiObject.Integer)parameters[0]).Value
-						));
+					((ApiObject.Integer)parameters[0]).Value
+				));
 			case GET_PAGE_START:
 				return getPageStart();
 			case GET_PAGE_END:
@@ -187,15 +187,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				return ApiObject.Void.Instance;
 			case GET_KEY_ACTION:
 				return ApiObject.envelope(getKeyAction(
-						((ApiObject.Integer)parameters[0]).Value,
-						((ApiObject.Boolean)parameters[1]).Value
-						));
+					((ApiObject.Integer)parameters[0]).Value,
+					((ApiObject.Boolean)parameters[1]).Value
+				));
 			case SET_KEY_ACTION:
 				setKeyAction(
-						((ApiObject.Integer)parameters[0]).Value,
-						((ApiObject.Boolean)parameters[1]).Value,
-						((ApiObject.String)parameters[2]).Value
-						);
+					((ApiObject.Integer)parameters[0]).Value,
+					((ApiObject.Boolean)parameters[1]).Value,
+					((ApiObject.String)parameters[2]).Value
+				);
 				return ApiObject.Void.Instance;
 			case GET_ZONEMAP:
 				return ApiObject.envelope(getZoneMap());
@@ -208,38 +208,38 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				return ApiObject.envelope(getZoneMapWidth(((ApiObject.String)parameters[0]).Value));
 			case GET_TAPZONE_ACTION:
 				return ApiObject.envelope(getTapZoneAction(
-						((ApiObject.String)parameters[0]).Value,
-						((ApiObject.Integer)parameters[1]).Value,
-						((ApiObject.Integer)parameters[2]).Value,
-						((ApiObject.Boolean)parameters[3]).Value
-						));
+					((ApiObject.String)parameters[0]).Value,
+					((ApiObject.Integer)parameters[1]).Value,
+					((ApiObject.Integer)parameters[2]).Value,
+					((ApiObject.Boolean)parameters[3]).Value
+				));
 			case GET_TAPZONE_ACTION_RELATIVE:
 				return ApiObject.envelope(getTapZoneRelativeAction(
-						((ApiObject.String)parameters[0]).Value,
-						((ApiObject.Float)parameters[1]).Value,
-						((ApiObject.Float)parameters[2]).Value,
-						((ApiObject.Boolean)parameters[3]).Value
-						));
+					((ApiObject.String)parameters[0]).Value,
+					((ApiObject.Float)parameters[1]).Value,
+					((ApiObject.Float)parameters[2]).Value,
+					((ApiObject.Boolean)parameters[3]).Value
+				));
 			case SET_TAPZONE_ACTION:
 				setTapZoneAction(
-						((ApiObject.String)parameters[0]).Value,
-						((ApiObject.Integer)parameters[1]).Value,
-						((ApiObject.Integer)parameters[2]).Value,
-						((ApiObject.Boolean)parameters[3]).Value,
-						((ApiObject.String)parameters[4]).Value
-						);
+					((ApiObject.String)parameters[0]).Value,
+					((ApiObject.Integer)parameters[1]).Value,
+					((ApiObject.Integer)parameters[2]).Value,
+					((ApiObject.Boolean)parameters[3]).Value,
+					((ApiObject.String)parameters[4]).Value
+				);
 				return ApiObject.Void.Instance;
 			case CREATE_ZONEMAP:
 				createZoneMap(
-						((ApiObject.String)parameters[0]).Value,
-						((ApiObject.Integer)parameters[1]).Value,
-						((ApiObject.Integer)parameters[2]).Value
-						);
+					((ApiObject.String)parameters[0]).Value,
+					((ApiObject.Integer)parameters[1]).Value,
+					((ApiObject.Integer)parameters[2]).Value
+				);
 				return ApiObject.Void.Instance;
 			case IS_ZONEMAP_CUSTOM:
 				return ApiObject.envelope(isZoneMapCustom(
-						((ApiObject.String)parameters[0]).Value
-						));
+					((ApiObject.String)parameters[0]).Value
+				));
 			case DELETE_ZONEMAP:
 				deleteZoneMap(((ApiObject.String)parameters[0]).Value);
 				return ApiObject.Void.Instance;
@@ -276,8 +276,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				return ApiObject.envelopeStringList(getOptionGroups());
 			case LIST_OPTION_NAMES:
 				return ApiObject.envelopeStringList(getOptionNames(
-						((ApiObject.String)parameters[0]).Value
-						));
+					((ApiObject.String)parameters[0]).Value
+				));
 			case LIST_BOOK_TAGS:
 				return ApiObject.envelopeStringList(getBookTags());
 			case LIST_ACTIONS:
@@ -294,16 +294,16 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				return ApiObject.envelopeStringList(listZoneMaps());
 			case GET_PARAGRAPH_WORDS:
 				return ApiObject.envelopeStringList(getParagraphWords(
-						((ApiObject.Integer)parameters[0]).Value
-						));
+					((ApiObject.Integer)parameters[0]).Value
+				));
 			case GET_PARAGRAPH_WORD_INDICES:
 				return ApiObject.envelopeIntegerList(getParagraphWordIndices(
-						((ApiObject.Integer)parameters[0]).Value
-						));
+					((ApiObject.Integer)parameters[0]).Value
+				));
 			case GET_MENU_CHILDREN:
 				return ApiObject.envelopeStringList(getMenuChildren(
-						((ApiObject.String)parameters[0]).Value
-						));
+					((ApiObject.String)parameters[0]).Value
+				));
 			default:
 				return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 			}
@@ -448,18 +448,18 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	private TextPosition getTextPosition(ZLTextWordCursor cursor) {
 		return new TextPosition(
-				cursor.getParagraphIndex(),
-				cursor.getElementIndex(),
-				cursor.getCharIndex()
-				);
+			cursor.getParagraphIndex(),
+			cursor.getElementIndex(),
+			cursor.getCharIndex()
+		);
 	}
 
 	private ZLTextFixedPosition getZLTextPosition(TextPosition position) {
 		return new ZLTextFixedPosition(
-				position.ParagraphIndex,
-				position.ElementIndex,
-				position.CharIndex
-				);
+			position.ParagraphIndex,
+			position.ElementIndex,
+			position.CharIndex
+		);
 	}
 
 	// manage view
@@ -471,9 +471,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public void highlightArea(TextPosition start, TextPosition end) {
 		getReader().getTextView().highlight(
-				getZLTextPosition(start),
-				getZLTextPosition(end)
-				);
+			getZLTextPosition(start),
+			getZLTextPosition(end)
+		);
 	}
 
 	public void clearHighlighting() {
@@ -621,14 +621,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public String getTapZoneAction(String name, int h, int v, boolean singleTap) {
 		return TapZoneMap.zoneMap(name).getActionByZone(
-				h, v, singleTap ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.doubleTap
-				);
+			h, v, singleTap ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.doubleTap
+		);
 	}
 
 	public String getTapZoneRelativeAction(String name, float h, float v, boolean singleTap) {
 		return TapZoneMap.zoneMap(name).getActionByRelativeZone(
-				h, v, singleTap ? TapZoneMap.Tap.singleTap : TapZoneMap.Tap.doubleTap
-				);
+			h, v, singleTap ? TapZoneMap.Tap.singleTap : TapZoneMap.Tap.doubleTap
+		);
 	}
 
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
