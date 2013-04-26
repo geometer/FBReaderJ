@@ -52,9 +52,9 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
 		context.sendBroadcast(
-				new Intent(ApiClientImplementation.ACTION_API_CALLBACK)
+			new Intent(ApiClientImplementation.ACTION_API_CALLBACK)
 				.putExtra(ApiClientImplementation.EVENT_TYPE, eventType)
-				);
+		);
 	}
 
 	private Context myContext;
