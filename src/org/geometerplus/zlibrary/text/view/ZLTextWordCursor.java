@@ -61,7 +61,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 	}
 
 	public boolean isStartOfText() {
-		return !isNull() && isStartOfParagraph() && myParagraphCursor.isFirst();
+		return isStartOfParagraph() && myParagraphCursor.isFirst();
 	}
 
 	public boolean isEndOfParagraph() {
@@ -71,7 +71,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 	}
 
 	public boolean isEndOfText() {
-		return isNull() || (isEndOfParagraph() && myParagraphCursor.isLast());
+		return isEndOfParagraph() && myParagraphCursor.isLast();
 	}
 
 	@Override
