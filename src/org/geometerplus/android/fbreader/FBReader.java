@@ -23,19 +23,18 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import android.app.*;
-import android.util.Log;
 import android.content.*;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
