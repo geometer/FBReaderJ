@@ -382,13 +382,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	@Override
 	public synchronized void preparePage(ZLPaintContext context, PageIndex pageIndex) {
-		myContext = context;
+		setContext(context);
 		preparePaintInfo(getPage(pageIndex));
 	}
 
 	@Override
 	public synchronized void paint(ZLPaintContext context, PageIndex pageIndex) {
-		myContext = context;
+		setContext(context);
 		final ZLFile wallpaper = getWallpaperFile();
 		if (wallpaper != null) {
 			context.clear(wallpaper, getWallpaperMode());
@@ -561,7 +561,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		float charsPerLine = Math.min(effectiveWidth / charWidth,
 				charsPerParagraph * 1.2f);
 
-		final int strHeight = getWordHeight() + myContext.getDescent();
+		final int strHeight = getWordHeight() + getContext().getDescent();
 		final int effectiveHeight = (int) (textHeight - (getTextStyle().getSpaceBefore()
 				+ getTextStyle().getSpaceAfter()) / charsPerParagraph);
 		final int linesPerPage = effectiveHeight / strHeight;
@@ -626,7 +626,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private final float computeCharWidth(char[] pattern, int length) {
-		return myContext.getStringWidth(pattern, 0, length) / ((float)length);
+		return getContext().getStringWidth(pattern, 0, length) / ((float)length);
 	}
 
 	public static class PagePosition {
@@ -753,13 +753,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					left = selectionStartArea.XStart;
 				}
 				if (selectionEndArea.compareTo(toArea) > 0) {
-					right = getRightLine();
+					right = getLeftMargin() + getTextAreaWidth() - 1;
 					bottom += info.VSpaceAfter;
 				} else {
 					right = selectionEndArea.XEnd;
 				}
-				myContext.setFillColor(color);
-				myContext.fillRectangle(left, top, right, bottom);
+				getContext().setFillColor(color);
+				getContext().fillRectangle(left, top, right, bottom);
 			}
 		}
 	}
@@ -769,7 +769,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		drawBackgroung(mySelection, getSelectedBackgroundColor(), page, info, from, to, y);
 		drawBackgroung(myHighlighting, getHighlightingColor(), page, info, from, to, y);
 
-		final ZLPaintContext context = myContext;
+		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		int index = from;
 		final int endElementIndex = info.EndElementIndex;
@@ -872,7 +872,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int startCharIndex,
 		final int endIndex
 	) {
-		final ZLPaintContext context = myContext;
+		final ZLPaintContext context = getContext();
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
 		if (cachedInfo != null) {
@@ -1059,9 +1059,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private void prepareTextLine(ZLTextPage page, ZLTextLineInfo info, int y) {
-		y = Math.min(y + info.Height, getBottomLine());
+		y = Math.min(y + info.Height, getTopMargin() + getTextAreaHeight() - 1);
 
-		final ZLPaintContext context = myContext;
+		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraphCursor = info.ParagraphCursor;
 
 		setTextStyle(info.StartStyle);
@@ -1215,32 +1215,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private synchronized void preparePaintInfo(ZLTextPage page) {
-		int newWidth = getTextAreaWidth();
-		int newHeight = getTextAreaHeight();
-		if (newWidth != page.OldWidth || newHeight != page.OldHeight) {
-			page.OldWidth = newWidth;
-			page.OldHeight = newHeight;
-			if (page.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
-				page.LineInfos.clear();
-				if (page == myPreviousPage) {
-					if (!page.EndCursor.isNull()) {
-						page.StartCursor.reset();
-						page.PaintState = PaintStateEnum.END_IS_KNOWN;
-					} else if (!page.StartCursor.isNull()) {
-						page.EndCursor.reset();
-						page.PaintState = PaintStateEnum.START_IS_KNOWN;
-					}
-				} else {
-					if (!page.StartCursor.isNull()) {
-						page.EndCursor.reset();
-						page.PaintState = PaintStateEnum.START_IS_KNOWN;
-					} else if (!page.EndCursor.isNull()) {
-						page.StartCursor.reset();
-						page.PaintState = PaintStateEnum.END_IS_KNOWN;
-					}
-				}
-			}
-		}
+		page.setSize(getTextAreaWidth(), getTextAreaHeight(), page == myPreviousPage);
 
 		if (page.PaintState == PaintStateEnum.NOTHING_TO_PAINT || page.PaintState == PaintStateEnum.READY) {
 			return;
@@ -1256,7 +1231,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			default:
 				break;
 			case PaintStateEnum.TO_SCROLL_FORWARD:
-				if (!page.EndCursor.getParagraphCursor().isLast() || !page.EndCursor.isEndOfParagraph()) {
+				if (!page.EndCursor.isEndOfText()) {
 					final ZLTextWordCursor startCursor = new ZLTextWordCursor();
 					switch (myScrollingMode) {
 						case ScrollingMode.NO_OVERLAPPING:
@@ -1271,7 +1246,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 							}
 							break;
 						case ScrollingMode.SCROLL_PERCENTAGE:
-							page.findPercentFromStart(startCursor, getTextAreaHeight(), myOverlappingValue);
+							page.findPercentFromStart(startCursor, myOverlappingValue);
 							break;
 					}
 
@@ -1294,7 +1269,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 			case PaintStateEnum.TO_SCROLL_BACKWARD:
-				if (!page.StartCursor.getParagraphCursor().isFirst() || !page.StartCursor.isStartOfParagraph()) {
+				if (!page.StartCursor.isStartOfText()) {
 					switch (myScrollingMode) {
 						case ScrollingMode.NO_OVERLAPPING:
 							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
@@ -1584,18 +1559,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			case next:
 			{
 				final ZLTextWordCursor cursor = getEndCursor();
-				return
-					cursor != null &&
-					!cursor.isNull() &&
-					(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
+				return cursor != null && !cursor.isNull() && !cursor.isEndOfText();
 			}
 			case previous:
 			{
 				final ZLTextWordCursor cursor = getStartCursor();
-				return
-					cursor != null &&
-					!cursor.isNull() &&
-					(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
+				return cursor != null && !cursor.isNull() && !cursor.isStartOfText();
 			}
 		}
 	}

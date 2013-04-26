@@ -55,14 +55,14 @@ class SetScreenOrientationAction extends FBAndroidAction {
 
 	@Override
 	public ZLBoolean3 isChecked() {
-		return myOptionValue.equals(ZLibrary.Instance().OrientationOption.getValue())
+		return myOptionValue.equals(ZLibrary.Instance().getOrientationOption().getValue())
 			? ZLBoolean3.B3_TRUE : ZLBoolean3.B3_FALSE;
 	}
 
 	@Override
 	protected void run(Object ... params) {
 		setOrientation(BaseActivity, myOptionValue);
-		ZLibrary.Instance().OrientationOption.setValue(myOptionValue);
+		ZLibrary.Instance().getOrientationOption().setValue(myOptionValue);
 		Reader.onRepaintFinished();
 	}
 }

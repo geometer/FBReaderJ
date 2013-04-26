@@ -29,7 +29,6 @@ import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -90,7 +89,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	public void onResume() {
-	  	super.onResume();
+		super.onResume();
 	}
 
 	@Override
@@ -354,7 +353,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		final Thread searcher = new Thread("Library.searchBooks") {
 			public void run() {
 				final SearchResultsTree oldSearchResults = myRootTree.getSearchResultsTree();
-            
+
 				if (oldSearchResults != null && pattern.equals(oldSearchResults.Pattern)) {
 					onSearchEvent(true);
 				} else if (myRootTree.Collection.hasBooks(new Filter.ByPattern(pattern))) {
