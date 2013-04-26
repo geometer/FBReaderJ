@@ -63,7 +63,7 @@ public final class MimeType {
 	public static final MimeType APP_ZIP = get("application/zip");
 	// unofficial, http://en.wikipedia.org/wiki/EPUB
 	public static final MimeType APP_EPUB_ZIP = get("application/epub+zip");
-    // unofficial, used in flibusta catalog
+	// unofficial, used by flibusta catalog
 	public static final MimeType APP_EPUB = get("application/epub");
 	// ???
 	public static final MimeType APP_MOBIPOCKET = get("application/x-mobipocket-ebook");
@@ -81,19 +81,19 @@ public final class MimeType {
 	//public static final MimeType APP_XPDF = get("application/x-pdf");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_RTF = get("application/rtf");
-    // unofficial, used in flibusta catalog
+	// unofficial, used by flibusta catalog
 	public static final MimeType APP_TXT = get("application/txt");
-    // unofficial, used in flibusta catalog
+	// unofficial, used by flibusta catalog
 	public static final MimeType APP_DJVU = get("application/djvu");
-    // unofficial, used in flibusta catalog
+	// unofficial, used by flibusta catalog
 	public static final MimeType APP_HTML = get("application/html");
-    // unofficial, used in flibusta catalog
+	// unofficial, used by flibusta catalog
 	public static final MimeType APP_HTMLHTM = get("application/html+htm");
-    // unofficial, used in flibusta catalog
+	// unofficial, used by flibusta catalog
 	public static final MimeType APP_DOC = get("application/doc");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_MSWORD = get("application/msword");
-    // unofficial, used in data.fbreader.org LitRes catalog
+	// unofficial, used by data.fbreader.org LitRes catalog
 	public static final MimeType APP_FB2_ZIP = get("application/fb2+zip");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_ATOM_XML = get("application/atom+xml");
@@ -102,7 +102,7 @@ public final class MimeType {
 	public static final MimeType APP_RSS_XML = get("application/rss+xml");
 	// ???
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
-    // unofficial, used in data.fbreader.org LitRes catalog
+	// unofficial, used by data.fbreader.org LitRes catalog
 	public static final MimeType APP_LITRES = get("application/litres+xml");
 
 	// MIME types / text
@@ -116,7 +116,7 @@ public final class MimeType {
 	public static final MimeType TEXT_PLAIN = get("text/plain");
 	// http://www.iana.org/assignments/media-types/text/index.html
 	public static final MimeType TEXT_RTF = get("text/rtf");
-	// unofficial, used in Calibre OPDS server
+	// unofficial, used by Calibre OPDS server
 	public static final MimeType TEXT_FB2 = get("text/fb2+xml");
 
 	// MIME images
