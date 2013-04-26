@@ -1231,7 +1231,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			default:
 				break;
 			case PaintStateEnum.TO_SCROLL_FORWARD:
-				if (!page.EndCursor.getParagraphCursor().isLast() || !page.EndCursor.isEndOfParagraph()) {
+				if (!page.EndCursor.isEndOfText()) {
 					final ZLTextWordCursor startCursor = new ZLTextWordCursor();
 					switch (myScrollingMode) {
 						case ScrollingMode.NO_OVERLAPPING:
@@ -1269,7 +1269,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 			case PaintStateEnum.TO_SCROLL_BACKWARD:
-				if (!page.StartCursor.getParagraphCursor().isFirst() || !page.StartCursor.isStartOfParagraph()) {
+				if (!page.StartCursor.isStartOfText()) {
 					switch (myScrollingMode) {
 						case ScrollingMode.NO_OVERLAPPING:
 							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
@@ -1559,18 +1559,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			case next:
 			{
 				final ZLTextWordCursor cursor = getEndCursor();
-				return
-					cursor != null &&
-					!cursor.isNull() &&
-					(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
+				return cursor != null && !cursor.isNull() && !cursor.isEndOfText();
 			}
 			case previous:
 			{
 				final ZLTextWordCursor cursor = getStartCursor();
-				return
-					cursor != null &&
-					!cursor.isNull() &&
-					(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
+				return cursor != null && !cursor.isNull() && !cursor.isStartOfText();
 			}
 		}
 	}
