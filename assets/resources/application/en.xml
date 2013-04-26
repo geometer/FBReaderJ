@@ -539,7 +539,7 @@
 			</node>
 			<node name="backgroundColor" value="Background color"/>
 			<node name="imagesBackground" value="Images Background">
-			    <node name="summaryOn" value="Use background"/>
+				<node name="summaryOn" value="Use background"/>
 				<node name="summaryOff" value="Do not use background"/>
 			</node>
 			<node name="selectionBackground" value="Selection background"/>
@@ -824,7 +824,7 @@
 		</node>
 	</node>
 	<node name="warningMessage">
-	    <node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?"/>
+		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?"/>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually"/>
@@ -881,27 +881,27 @@
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 	</node>
 	<node name="pdfPlugin">
-	    <node name="bookOptions" value="Book Options"/>
-	    <node name="save" value="Save"/>
-	    <node name="crop" value="Crop">
-	        <node name="top" value="Top:"/>
-	        <node name="bottom" value="Bottom:"/>
-	        <node name="right" value="Right:"/>
-	        <node name="left" value="Left:"/>
-	    </node>
-	    <node name="traversal" value="In page traversal">
-	        <node name="x" value="horiz.:"/>
-	        <node name="y" value="vert.:"/>
-	    </node>
+		<node name="bookOptions" value="Book Options"/>
+		<node name="save" value="Save"/>
+		<node name="crop" value="Crop">
+			<node name="top" value="Top:"/>
+			<node name="bottom" value="Bottom:"/>
+			<node name="right" value="Right:"/>
+			<node name="left" value="Left:"/>
+		</node>
+		<node name="traversal" value="In page traversal">
+			<node name="x" value="horiz.:"/>
+			<node name="y" value="vert.:"/>
+		</node>
 		<node name="zoomMode" value="Zoom Mode">
-	        <node name="free" value="Free Zoom"/>
-	        <node name="fixed" value="Fixed Zoom:"/>
-	        <node name="fitPage" value="Fit Page"/>
-	        <node name="fitWidth" value="Fit Width"/>
-	        <node name="fitHeight" value="Fit Height"/>
-	        <node name="screenPercent" value="Screen Percent"/>
-	        <node name="pagePercent" value="Page Percent"/>
-	    </node>
-	     <node name="pageWay" value="Page way around"/>
+			<node name="free" value="Free Zoom"/>
+			<node name="fixed" value="Fixed Zoom:"/>
+			<node name="fitPage" value="Fit Page"/>
+			<node name="fitWidth" value="Fit Width"/>
+			<node name="fitHeight" value="Fit Height"/>
+			<node name="screenPercent" value="Screen Percent"/>
+			<node name="pagePercent" value="Page Percent"/>
+		</node>
+		<node name="pageWay" value="Page way around"/>
 	</node>
 </resources>

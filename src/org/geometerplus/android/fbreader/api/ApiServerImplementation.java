@@ -664,7 +664,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			}
 		});
 	}
-	
+
 	public void addBookToRecent(final String s) {
 		myCollection.bindToService(myContext, new Runnable() {
 			@Override
@@ -691,7 +691,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		MenuItemData cur = root.findByCode(code);
 		return ZLResource.resource("menu").getResource(cur.Code).getValue();
 	}
-	
+
 	public String getMenuType(String code) {
 		MenuItemData root = MenuItemData.getRoot();
 		MenuItemData cur = root.findByCode(code);
@@ -708,8 +708,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		}
 		try{
 			Bitmap bm = BitmapFactory.decodeResource(myContext.getResources(), id);
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-			bm.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object   
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			bm.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object
 			byte[] b = baos.toByteArray();
 			return Base64.encodeToString(b, Base64.DEFAULT);
 		} catch (Exception e) {
@@ -717,5 +717,4 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			return null;
 		}
 	}
-
 }
