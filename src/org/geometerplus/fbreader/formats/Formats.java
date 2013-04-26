@@ -76,6 +76,7 @@ public abstract class Formats {
 		return true;
 	}
 
+	/*
 	public static FileType getExistingFileType(String extension) {
 		for (String s : getPredefinedFormats()) {
 			FileType type = FileTypeCollection.Instance.typeById(s);
@@ -91,15 +92,18 @@ public abstract class Formats {
 		}
 		return null;
 	}
+	*/
 
 	public static boolean addFormat(String filetype) {
 		filetype = filetype.toLowerCase();
 		if (!isValid(filetype)) {
 			return false;
 		}
+		/*
 		if (getExistingFileType(filetype) != null) {
 			return false;
 		}
+		*/
 		ZLStringOption formats = new ZLStringOption("Formats", "ExternalFormats", "");
 		if (formats.getValue().equals("")) {
 			formats.setValue(filetype);

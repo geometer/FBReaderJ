@@ -31,12 +31,8 @@ class FileTypeHtml extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return acceptsExtension(file.getExtension());
-	}
-
-	@Override
-	public boolean acceptsExtension(String ext) {
-		return (ext.toLowerCase()).endsWith("html") || "htm".equals(ext.toLowerCase());
+		final String extension = file.getExtension().toLowerCase();
+		return extension.endsWith("html") || "htm".equals(extension);
 	}
 
 	@Override

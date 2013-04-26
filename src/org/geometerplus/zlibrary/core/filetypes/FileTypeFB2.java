@@ -36,11 +36,6 @@ class FileTypeFB2 extends FileType {
 		return lName.endsWith(".fb2") || lName.endsWith(".fb2.zip");
 	}
 
-	@Override
-	public boolean acceptsExtension(String extension) {
-		return "fb2".equalsIgnoreCase(extension);
-	}
-
 	private final List<MimeType> myMimeTypes = new ArrayList<MimeType>();
 
 	@Override

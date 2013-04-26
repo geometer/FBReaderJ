@@ -34,13 +34,6 @@ class FileTypeMobipocket extends FileTypePalm {
 		return "mobi".equalsIgnoreCase(file.getExtension()) || super.acceptsFile(file);
 	}
 
-	/*
-	@Override
-	public boolean acceptsExtension(String ext) {
-		return "mobi".equalsIgnoreCase(ext);
-	}
-	*/
-
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_MOBIPOCKET;
