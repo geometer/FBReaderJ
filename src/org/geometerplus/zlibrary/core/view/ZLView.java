@@ -23,14 +23,26 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 abstract public class ZLView {
 	public final ZLApplication Application;
-	protected ZLPaintContext myContext = new DummyPaintContext();
+	private ZLPaintContext myViewContext = new DummyPaintContext();
 
 	protected ZLView(ZLApplication application) {
 		Application = application;
 	}
 
+	protected final void setContext(ZLPaintContext context) {
+		myViewContext = context;
+	}
+
 	public final ZLPaintContext getContext() {
-		return myContext;
+		return myViewContext;
+	}
+
+	public final int getContextWidth() {
+		return myViewContext.getWidth();
+	}
+
+	public final int getContextHeight() {
+		return myViewContext.getHeight();
 	}
 
 	abstract public interface FooterArea {

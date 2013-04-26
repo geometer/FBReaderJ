@@ -382,13 +382,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	@Override
 	public synchronized void preparePage(ZLPaintContext context, PageIndex pageIndex) {
-		myContext = context;
+		setContext(context);
 		preparePaintInfo(getPage(pageIndex));
 	}
 
 	@Override
 	public synchronized void paint(ZLPaintContext context, PageIndex pageIndex) {
-		myContext = context;
+		setContext(context);
 		final ZLFile wallpaper = getWallpaperFile();
 		if (wallpaper != null) {
 			context.clear(wallpaper, getWallpaperMode());
@@ -561,7 +561,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		float charsPerLine = Math.min(effectiveWidth / charWidth,
 				charsPerParagraph * 1.2f);
 
-		final int strHeight = getWordHeight() + myContext.getDescent();
+		final int strHeight = getWordHeight() + getContext().getDescent();
 		final int effectiveHeight = (int) (textHeight - (getTextStyle().getSpaceBefore()
 				+ getTextStyle().getSpaceAfter()) / charsPerParagraph);
 		final int linesPerPage = effectiveHeight / strHeight;
@@ -626,7 +626,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private final float computeCharWidth(char[] pattern, int length) {
-		return myContext.getStringWidth(pattern, 0, length) / ((float)length);
+		return getContext().getStringWidth(pattern, 0, length) / ((float)length);
 	}
 
 	public static class PagePosition {
@@ -758,8 +758,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				} else {
 					right = selectionEndArea.XEnd;
 				}
-				myContext.setFillColor(color);
-				myContext.fillRectangle(left, top, right, bottom);
+				getContext().setFillColor(color);
+				getContext().fillRectangle(left, top, right, bottom);
 			}
 		}
 	}
@@ -769,7 +769,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		drawBackgroung(mySelection, getSelectedBackgroundColor(), page, info, from, to, y);
 		drawBackgroung(myHighlighting, getHighlightingColor(), page, info, from, to, y);
 
-		final ZLPaintContext context = myContext;
+		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		int index = from;
 		final int endElementIndex = info.EndElementIndex;
@@ -872,7 +872,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int startCharIndex,
 		final int endIndex
 	) {
-		final ZLPaintContext context = myContext;
+		final ZLPaintContext context = getContext();
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
 		if (cachedInfo != null) {
@@ -1061,7 +1061,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private void prepareTextLine(ZLTextPage page, ZLTextLineInfo info, int y) {
 		y = Math.min(y + info.Height, getTopMargin() + getTextAreaHeight() - 1);
 
-		final ZLPaintContext context = myContext;
+		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraphCursor = info.ParagraphCursor;
 
 		setTextStyle(info.StartStyle);
