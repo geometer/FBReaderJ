@@ -36,12 +36,7 @@ class SimpleFileType extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return acceptsExtension(file.getExtension());
-	}
-
-	@Override
-	public boolean acceptsExtension(String ext) {
-		return myExtension.equalsIgnoreCase(ext);
+		return myExtension.equalsIgnoreCase(file.getExtension());
 	}
 
 	@Override
