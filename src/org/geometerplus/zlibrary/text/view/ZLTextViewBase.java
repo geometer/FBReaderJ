@@ -102,14 +102,6 @@ abstract class ZLTextViewBase extends ZLView {
 		return myContext.getWidth() - getLeftMargin() - getRightMargin();
 	}
 
-	int getBottomLine() {
-		return myContext.getHeight() - getBottomMargin() - 1;
-	}
-
-	int getRightLine() {
-		return myContext.getWidth() - getRightMargin() - 1;
-	}
-
 	final ZLTextStyle getTextStyle() {
 		return myTextStyle;
 	}

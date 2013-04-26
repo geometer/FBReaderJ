@@ -753,7 +753,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					left = selectionStartArea.XStart;
 				}
 				if (selectionEndArea.compareTo(toArea) > 0) {
-					right = getRightLine();
+					right = getLeftMargin() + getTextAreaWidth() - 1;
 					bottom += info.VSpaceAfter;
 				} else {
 					right = selectionEndArea.XEnd;
@@ -1059,7 +1059,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private void prepareTextLine(ZLTextPage page, ZLTextLineInfo info, int y) {
-		y = Math.min(y + info.Height, getBottomLine());
+		y = Math.min(y + info.Height, getTopMargin() + getTextAreaHeight() - 1);
 
 		final ZLPaintContext context = myContext;
 		final ZLTextParagraphCursor paragraphCursor = info.ParagraphCursor;
@@ -1215,32 +1215,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private synchronized void preparePaintInfo(ZLTextPage page) {
-		int newWidth = getTextAreaWidth();
-		int newHeight = getTextAreaHeight();
-		if (newWidth != page.OldWidth || newHeight != page.OldHeight) {
-			page.OldWidth = newWidth;
-			page.OldHeight = newHeight;
-			if (page.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
-				page.LineInfos.clear();
-				if (page == myPreviousPage) {
-					if (!page.EndCursor.isNull()) {
-						page.StartCursor.reset();
-						page.PaintState = PaintStateEnum.END_IS_KNOWN;
-					} else if (!page.StartCursor.isNull()) {
-						page.EndCursor.reset();
-						page.PaintState = PaintStateEnum.START_IS_KNOWN;
-					}
-				} else {
-					if (!page.StartCursor.isNull()) {
-						page.EndCursor.reset();
-						page.PaintState = PaintStateEnum.START_IS_KNOWN;
-					} else if (!page.EndCursor.isNull()) {
-						page.StartCursor.reset();
-						page.PaintState = PaintStateEnum.END_IS_KNOWN;
-					}
-				}
-			}
-		}
+		page.setSize(getTextAreaWidth(), getTextAreaHeight(), page == myPreviousPage);
 
 		if (page.PaintState == PaintStateEnum.NOTHING_TO_PAINT || page.PaintState == PaintStateEnum.READY) {
 			return;
@@ -1271,7 +1246,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 							}
 							break;
 						case ScrollingMode.SCROLL_PERCENTAGE:
-							page.findPercentFromStart(startCursor, getTextAreaHeight(), myOverlappingValue);
+							page.findPercentFromStart(startCursor, myOverlappingValue);
 							break;
 					}
 
