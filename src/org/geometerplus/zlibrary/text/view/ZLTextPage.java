@@ -29,8 +29,37 @@ final class ZLTextPage {
 
 	final ZLTextElementAreaVector TextElementMap = new ZLTextElementAreaVector();
 
-	int OldWidth;
-	int OldHeight;
+	private int myWidth;
+	private int myHeight;
+
+	void setSize(int width, int height, boolean keepEnd) {
+		if (myWidth == width && myHeight == height) {
+			return;
+		}
+		myWidth = width;
+		myHeight = height;
+
+		if (PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
+			LineInfos.clear();
+			if (keepEnd) {
+				if (!EndCursor.isNull()) {
+					StartCursor.reset();
+					PaintState = PaintStateEnum.END_IS_KNOWN;
+				} else if (!StartCursor.isNull()) {
+					EndCursor.reset();
+					PaintState = PaintStateEnum.START_IS_KNOWN;
+				}
+			} else {
+				if (!StartCursor.isNull()) {
+					EndCursor.reset();
+					PaintState = PaintStateEnum.START_IS_KNOWN;
+				} else if (!EndCursor.isNull()) {
+					StartCursor.reset();
+					PaintState = PaintStateEnum.END_IS_KNOWN;
+				}
+			}
+		}
+	}
 
 	void reset() {
 		StartCursor.reset();
@@ -122,12 +151,12 @@ final class ZLTextPage {
 		cursor.moveTo(info.StartElementIndex, info.StartCharIndex);
 	}
 
-	void findPercentFromStart(ZLTextWordCursor cursor, int areaHeight, int percent) {
+	void findPercentFromStart(ZLTextWordCursor cursor, int percent) {
 		if (LineInfos.isEmpty()) {
 			cursor.reset();
 			return;
 		}
-		int height = areaHeight * percent / 100;
+		int height = myHeight * percent / 100;
 		boolean visibleLineOccured = false;
 		ZLTextLineInfo info = null;
 		for (ZLTextLineInfo i : LineInfos) {
