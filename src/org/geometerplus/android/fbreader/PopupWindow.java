@@ -20,8 +20,10 @@
 package org.geometerplus.android.fbreader;
 
 import android.animation.*;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.view.*;
 import android.widget.*;
 
@@ -105,6 +107,7 @@ public class PopupWindow extends LinearLayout {
 			requestLayout();
 		}
 	};
+
 	private void showInternal() {
 		if (myAnimated) {
 			if (myShowHideAnimator != null) {
@@ -132,6 +135,7 @@ public class PopupWindow extends LinearLayout {
 			setVisibility(View.GONE);
 		}
 	};
+
 	public void hide() {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
