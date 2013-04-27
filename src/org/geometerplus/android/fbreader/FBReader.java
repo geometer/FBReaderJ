@@ -851,7 +851,7 @@ public final class FBReader extends Activity {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.addMenuItem(menu, actionId, null, null, false);
 	}
-	
+
 	private void fillMenu(Menu menu, MenuItemData source) {
 		for (MenuItemData el : source.Children) {
 			if (el.Type == MenuItemData.MenuType.ACTION) {
