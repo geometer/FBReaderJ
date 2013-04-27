@@ -43,17 +43,29 @@ public class PopupWindow extends LinearLayout {
 
 		final LayoutInflater inflater =
 			(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(
-			location == Location.Bottom
-				? R.layout.control_panel_bottom : R.layout.control_panel_floating,
-			this,
-			true
-		);
+		final RelativeLayout.LayoutParams p;
+		switch (location) {
+			default:
+			case BottomFlat:
+				inflater.inflate(R.layout.control_panel_bottom, this, true);
+				p = new RelativeLayout.LayoutParams(
+					ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+				);
+				break;
+			case Bottom:
+				inflater.inflate(R.layout.control_panel_bottom, this, true);
+				p = new RelativeLayout.LayoutParams(
+					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+				);
+				break;
+			case Floating:
+				inflater.inflate(R.layout.control_panel_floating, this, true);
+				p = new RelativeLayout.LayoutParams(
+					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+				);
+				break;
+		}
 
-		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-			location == Location.BottomFlat ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
-			RelativeLayout.LayoutParams.WRAP_CONTENT
-		);
 		p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		root.addView(this, p);
