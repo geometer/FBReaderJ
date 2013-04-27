@@ -28,7 +28,7 @@ import android.widget.*;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class PopupWindow extends LinearLayout {
-	public static enum Type {
+	public static enum Location {
 		BottomFlat,
 		Bottom,
 		Floating
@@ -37,7 +37,7 @@ public class PopupWindow extends LinearLayout {
 	private final Activity myActivity;
 	private final boolean myAnimated;
 
-	public PopupWindow(Activity activity, RelativeLayout root, Type type) {
+	public PopupWindow(Activity activity, RelativeLayout root, Location location) {
 		super(activity);
 		myActivity = activity;
 
@@ -46,7 +46,7 @@ public class PopupWindow extends LinearLayout {
 		final LayoutInflater inflater =
 			(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final RelativeLayout.LayoutParams p;
-		switch (type) {
+		switch (location) {
 			default:
 			case BottomFlat:
 				inflater.inflate(R.layout.control_panel_bottom_flat, this, true);
