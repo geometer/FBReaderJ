@@ -109,6 +109,15 @@ public class PopupWindow extends LinearLayout {
 	};
 
 	private void showInternal() {
+		if (myAnimated && android.os.Build.VERSION.SDK_INT >= 11) {
+			showAnimatedInternal();
+		} else {
+			setVisibility(View.VISIBLE);
+		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void showAnimatedInternal() {
 		if (myAnimated) {
 			if (myShowHideAnimator != null) {
 				myShowHideAnimator.end();
