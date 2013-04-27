@@ -7,7 +7,7 @@
 	android:paddingRight="9dip"
 >
 	<TextView
-		android:id="@+id/book_position_text"
+		android:id="@+id/navigation_text"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
@@ -17,7 +17,7 @@
 		android:paddingTop="4px"
 	/>
 	<SeekBar
-		android:id="@+id/book_position_slider"
+		android:id="@+id/navigation_slider"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:paddingTop="4px"
@@ -27,7 +27,7 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:weightSum="1.0"
-		android:layout_below="@id/book_position_slider"
+		android:layout_below="@id/navigation_slider"
 		android:layout_alignParentBottom="true"
 		android:paddingTop="4px"
 	>
