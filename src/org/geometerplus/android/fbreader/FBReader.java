@@ -633,7 +633,7 @@ public final class FBReader extends Activity {
 
 		myStartTimer = true;
 		final int brightnessLevel =
-				getZLibrary().ScreenBrightnessLevelOption().getValue();
+			getZLibrary().ScreenBrightnessLevelOption().getValue();
 		if (brightnessLevel != 0) {
 			setScreenBrightness(brightnessLevel);
 		} else {
@@ -764,7 +764,7 @@ public final class FBReader extends Activity {
 	public void showSelectionPanel() {
 		final ZLTextView view = myFBReaderApp.getTextView();
 		((SelectionPopup)myFBReaderApp.getPopupById(SelectionPopup.ID))
-		.move(view.getSelectionStartY(), view.getSelectionEndY());
+			.move(view.getSelectionStartY(), view.getSelectionEndY());
 		hideBars();
 		myFBReaderApp.showPopup(SelectionPopup.ID);
 	}
@@ -876,7 +876,7 @@ public final class FBReader extends Activity {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.addMenuItem(menu, actionId, null, null);
 	}
-	
+
 	private void fillMenu(Menu menu, MenuItemData source) {
 		for (MenuItemData el : source.Children) {
 			if (el.Type == MenuItemData.MenuType.ACTION) {
@@ -887,7 +887,7 @@ public final class FBReader extends Activity {
 			}
 		}
 	}
-	
+
 	private void setupMenu(Menu menu) {
 		final String menuLanguage = ZLResource.getLanguageOption().getValue();
 		if (menuLanguage.equals(myMenuLanguage)) {
