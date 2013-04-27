@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.animation.*;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -78,6 +79,10 @@ public class PopupWindow extends LinearLayout {
 		root.addView(this, p);
 
 		setVisibility(View.GONE);
+
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			initAnimator();
+		}
 	}
 
 	Activity getActivity() {
@@ -89,6 +94,29 @@ public class PopupWindow extends LinearLayout {
 		return true;
 	}
 
+	private Animator myShowHideAnimator;
+	private Animator.AnimatorListener myEndShowListener;
+	private Animator.AnimatorListener myEndHideListener;
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void initAnimator() {
+		myEndShowListener = new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animator) {
+				myShowHideAnimator = null;
+				requestLayout();
+			}
+		};
+
+		myEndHideListener = new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animator) {
+				myShowHideAnimator = null;
+				setVisibility(View.GONE);
+			}
+		};
+	}
+
 	public void show() {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
@@ -98,7 +126,28 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private void showInternal() {
+		if (myAnimated && android.os.Build.VERSION.SDK_INT >= 11) {
+			showAnimatedInternal();
+		} else {
+			setVisibility(View.VISIBLE);
+		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void showAnimatedInternal() {
+		if (myShowHideAnimator != null) {
+			myShowHideAnimator.end();
+		}
+		if (getVisibility() == View.VISIBLE) {
+			return;
+		}
 		setVisibility(View.VISIBLE);
+		setAlpha(0);
+		final AnimatorSet animator = new AnimatorSet();
+		animator.play(ObjectAnimator.ofFloat(this, "alpha", 1));
+		animator.addListener(myEndShowListener);
+		myShowHideAnimator = animator;
+		animator.start();
 	}
 
 	public void hide() {
@@ -110,7 +159,27 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private void hideInternal() {
-		setVisibility(View.GONE);
+		if (myAnimated && android.os.Build.VERSION.SDK_INT >= 11) {
+			hideAnimatedInternal();
+		} else {
+			setVisibility(View.GONE);
+		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void hideAnimatedInternal() {
+		if (myShowHideAnimator != null) {
+			myShowHideAnimator.end();
+		}
+		if (getVisibility() == View.GONE) {
+			return;
+		}
+		setAlpha(1);
+		final AnimatorSet animator = new AnimatorSet();
+		animator.play(ObjectAnimator.ofFloat(this, "alpha", 0));
+		animator.addListener(myEndHideListener);
+		myShowHideAnimator = animator;
+		animator.start();
 	}
 
 	public void addView(View view) {
