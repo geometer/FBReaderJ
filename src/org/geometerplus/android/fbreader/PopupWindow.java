@@ -34,6 +34,7 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private final Activity myActivity;
+	private final boolean myAnimated;
 
 	public PopupWindow(Activity activity, RelativeLayout root, Location location) {
 		super(activity);
@@ -51,18 +52,21 @@ public class PopupWindow extends LinearLayout {
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
+				myAnimated = true;
 				break;
 			case Bottom:
 				inflater.inflate(R.layout.control_panel_bottom, this, true);
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
+				myAnimated = false;
 				break;
 			case Floating:
 				inflater.inflate(R.layout.control_panel_floating, this, true);
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
+				myAnimated = false;
 				break;
 		}
 
