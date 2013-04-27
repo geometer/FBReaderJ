@@ -82,8 +82,8 @@ final class NavigationPopup extends PopupPanel {
 
 		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
 
-		final SeekBar slider = (SeekBar)layout.findViewById(R.id.book_position_slider);
-		final TextView text = (TextView)layout.findViewById(R.id.book_position_text);
+		final SeekBar slider = (SeekBar)layout.findViewById(R.id.navigation_slider);
+		final TextView text = (TextView)layout.findViewById(R.id.navigation_text);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
@@ -141,8 +141,8 @@ final class NavigationPopup extends PopupPanel {
 	}
 
 	private void setupNavigation(PopupWindow panel) {
-		final SeekBar slider = (SeekBar)panel.findViewById(R.id.book_position_slider);
-		final TextView text = (TextView)panel.findViewById(R.id.book_position_text);
+		final SeekBar slider = (SeekBar)panel.findViewById(R.id.navigation_slider);
+		final TextView text = (TextView)panel.findViewById(R.id.navigation_text);
 
 		final ZLTextView textView = getReader().getTextView();
 		final ZLTextView.PagePosition pagePosition = textView.pagePosition();
