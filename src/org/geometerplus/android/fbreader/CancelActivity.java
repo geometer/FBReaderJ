@@ -28,10 +28,11 @@ import android.widget.*;
 import android.util.Log;
 import android.view.*;
 
-import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.fbreader.book.IBookCollection;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class CancelActivity extends ListActivity {
 	@Override
