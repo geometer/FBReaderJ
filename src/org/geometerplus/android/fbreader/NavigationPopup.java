@@ -78,7 +78,7 @@ final class NavigationPopup extends PopupPanel {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Bottom, true);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Location.BottomFlat);
 
 		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
 
