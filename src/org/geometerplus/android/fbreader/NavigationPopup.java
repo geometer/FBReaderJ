@@ -97,12 +97,12 @@ final class NavigationPopup extends PopupPanel {
 				getReader().getViewWidget().repaint();
 			}
 
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				myIsInProgress = false;
-			}
-
 			public void onStartTrackingTouch(SeekBar seekBar) {
 				myIsInProgress = true;
+			}
+
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				myIsInProgress = false;
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
