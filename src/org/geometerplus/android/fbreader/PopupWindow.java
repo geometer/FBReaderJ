@@ -48,7 +48,8 @@ public class PopupWindow extends LinearLayout {
 		switch (location) {
 			default:
 			case BottomFlat:
-				inflater.inflate(R.layout.control_panel_bottom, this, true);
+				inflater.inflate(R.layout.control_panel_bottom_flat, this, true);
+				setBackgroundColor(FBReader.ACTION_BAR_COLOR);
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
