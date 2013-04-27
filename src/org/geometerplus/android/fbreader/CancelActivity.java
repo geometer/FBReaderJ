@@ -77,7 +77,6 @@ public class CancelActivity extends ListActivity {
 				}
 			});
 		}
-
 	}
 	
 	private void init(List<FBReaderApp.CancelActionDescription> descriptionList) {
