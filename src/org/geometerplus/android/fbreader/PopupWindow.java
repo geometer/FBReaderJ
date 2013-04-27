@@ -166,6 +166,22 @@ public class PopupWindow extends LinearLayout {
 		}
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void hideAnimatedInternal() {
+		if (myShowHideAnimator != null) {
+			myShowHideAnimator.end();
+		}
+		if (getVisibility() == View.GONE) {
+			return;
+		}
+		setAlpha(1);
+		final AnimatorSet animator = new AnimatorSet();
+		animator.play(ObjectAnimator.ofFloat(this, "alpha", 0));
+		animator.addListener(myEndHideListener);
+		myShowHideAnimator = animator;
+		animator.start();
+	}
+
 	public void addView(View view) {
 		((LinearLayout)findViewById(R.id.tools_plate)).addView(view);
 	}
