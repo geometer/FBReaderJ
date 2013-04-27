@@ -60,8 +60,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	private volatile RootTree myRootTree;
 	private Book mySelectedBook;
 
-	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
-	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
+	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
+	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
 
 	public static class PluginMetaInfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
 		private HashMap<String, MetaInfoReader> myServices;
@@ -96,8 +96,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			try {
 				String s = myServices.get(appData).readBitmap(f.getPath());
 				try {
-					byte [] encodeByte=Base64.decode(s,Base64.DEFAULT);
-					Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+					byte [] encodeByte = Base64.decode(s, Base64.DEFAULT);
+					Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 					return new ZLBitmapImage(bitmap);
 				} catch(Exception e){
 					e.getMessage();
@@ -132,7 +132,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (MetaInfoUtil.PMIReader == null) {
 			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-				ServiceConnection servConn=new ServiceConnection() {
+				ServiceConnection servConn = new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {
 						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
 					}
