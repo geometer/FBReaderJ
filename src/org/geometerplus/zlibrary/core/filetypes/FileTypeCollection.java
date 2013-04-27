@@ -51,9 +51,6 @@ public class FileTypeCollection {
 	}
 
 	public FileType typeById(String id) {
-//		if (myTypes.get(id.toLowerCase()) == null) {
-//			addType(new SimpleFileType(id.toLowerCase(), id.toLowerCase(), MimeType.TEXT_PLAIN));
-//		}
 		return myTypes.get(id.toLowerCase());
 	}
 
@@ -63,10 +60,6 @@ public class FileTypeCollection {
 				return type;
 			}
 		}
-//		if (!file.getExtension().equals("") && !file.getExtension().contains("/")) {
-//			addType(new SimpleFileType(file.getExtension().toLowerCase(), file.getExtension().toLowerCase(), MimeType.TEXT_PLAIN));
-//			return myTypes.get(file.getExtension().toLowerCase());
-//		}
 		return null;
 	}
 
