@@ -28,13 +28,14 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public class PopupWindow extends LinearLayout {
 	public static enum Location {
+		BottomFlat,
 		Bottom,
 		Floating
 	}
 
 	private final Activity myActivity;
 
-	public PopupWindow(Activity activity, RelativeLayout root, Location location, boolean fillWidth) {
+	public PopupWindow(Activity activity, RelativeLayout root, Location location) {
 		super(activity);
 		myActivity = activity;
 
@@ -50,7 +51,7 @@ public class PopupWindow extends LinearLayout {
 		);
 
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
+			location == Location.BottomFlat ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
 			RelativeLayout.LayoutParams.WRAP_CONTENT
 		);
 		p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);

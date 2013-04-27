@@ -44,7 +44,7 @@ class SelectionPopup extends ButtonsPopupPanel {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Floating, false);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Floating);
 
 		addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
 		addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
