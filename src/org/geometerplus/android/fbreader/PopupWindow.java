@@ -95,6 +95,27 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private Animator myShowHideAnimator;
+	private Animator.AnimatorListener myEndShowListener;
+	private Animator.AnimatorListener myEndHideListener;
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void initAnimator() {
+		myEndShowListener = new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animator) {
+				myShowHideAnimator = null;
+				requestLayout();
+			}
+		};
+
+		myEndHideListener = new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animator) {
+				myShowHideAnimator = null;
+				setVisibility(View.GONE);
+			}
+		};
+	}
 
 	public void show() {
 		myActivity.runOnUiThread(new Runnable() {
@@ -127,28 +148,6 @@ public class PopupWindow extends LinearLayout {
 		animator.addListener(myEndShowListener);
 		myShowHideAnimator = animator;
 		animator.start();
-	}
-
-	private Animator.AnimatorListener myEndShowListener;
-	private Animator.AnimatorListener myEndHideListener;
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void initAnimator() {
-		myEndShowListener = new AnimatorListenerAdapter() {
-			@Override
-			public void onAnimationEnd(Animator animator) {
-				myShowHideAnimator = null;
-				requestLayout();
-			}
-		};
-
-		myEndHideListener = new AnimatorListenerAdapter() {
-			@Override
-			public void onAnimationEnd(Animator animator) {
-				myShowHideAnimator = null;
-				setVisibility(View.GONE);
-			}
-		};
 	}
 
 	public void hide() {
