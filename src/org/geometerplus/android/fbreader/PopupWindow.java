@@ -19,8 +19,10 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.view.*;
 import android.widget.*;
 
@@ -90,17 +92,25 @@ public class PopupWindow extends LinearLayout {
 	public void show() {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				setVisibility(View.VISIBLE);
+				showInternal();
 			}
 		});
+	}
+
+	private void showInternal() {
+		setVisibility(View.VISIBLE);
 	}
 
 	public void hide() {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				setVisibility(View.GONE);
+				hideInternal();
 			}
 		});
+	}
+
+	private void hideInternal() {
+		setVisibility(View.GONE);
 	}
 
 	public void addView(View view) {
