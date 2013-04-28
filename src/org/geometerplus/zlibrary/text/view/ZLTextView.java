@@ -442,7 +442,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			labels[++index] = page.TextElementMap.size();
 			if (index == page.Column0Height) {
 				y = getTopMargin();
-				x += getTextColumnWidth() + getIntercolumnSpace();
+				x += getTextColumnWidth() + getSpaceBetweenColumns();
 			}
 		}
 
@@ -455,7 +455,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			++index;
 			if (index == page.Column0Height) {
 				y = getTopMargin();
-				x += getTextColumnWidth() + getIntercolumnSpace();
+				x += getTextColumnWidth() + getSpaceBetweenColumns();
 			}
 		}
 
@@ -858,7 +858,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				info = processTextLine(paragraphCursor, info.EndElementIndex, info.EndCharIndex, endIndex);
 				textAreaHeight -= info.Height + info.Descent;
 				if (textAreaHeight < 0 && page.LineInfos.size() > page.Column0Height) {
-					if (columnCounter == 0) {
+					if (columnCounter == 0 && page.twoColumnView()) {
 						++columnCounter;
 						textAreaHeight = getTextAreaHeight();
 						textAreaHeight -= info.Height + info.Descent;
@@ -1238,7 +1238,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private synchronized void preparePaintInfo(ZLTextPage page) {
-		page.setSize(getTextAreaWidth(), getTextAreaHeight(), getTextColumnWidth(), page == myPreviousPage);
+		page.setSize(getTextAreaWidth(), getTextAreaHeight(), twoColumnView(), getTextColumnWidth(), page == myPreviousPage);
 
 		if (page.PaintState == PaintStateEnum.NOTHING_TO_PAINT || page.PaintState == PaintStateEnum.READY) {
 			return;

@@ -64,21 +64,26 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
 		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 
+	public final ZLBooleanOption TwoColumnViewOption;
 	public final ZLIntegerRangeOption LeftMarginOption;
 	public final ZLIntegerRangeOption RightMarginOption;
 	public final ZLIntegerRangeOption TopMarginOption;
 	public final ZLIntegerRangeOption BottomMarginOption;
-	public final ZLIntegerRangeOption IntercolumnSpaceOption;
+	public final ZLIntegerRangeOption SpaceBetweenColumnsOption;
 	{
 		final int dpi = ZLibrary.Instance().getDisplayDPI();
 		final int x = ZLibrary.Instance().getPixelWidth();
 		final int y = ZLibrary.Instance().getPixelHeight();
+		TwoColumnViewOption = new ZLBooleanOption(
+			"Options", "TwoColumnView",
+			x * x + y * y >= 50 * dpi * dpi
+		);
 		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
 		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
 		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
 		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
-		IntercolumnSpaceOption = new ZLIntegerRangeOption("Options", "IntercolumnSpace", 0, 100, 3 * horMargin);
+		SpaceBetweenColumnsOption = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 100, 3 * horMargin);
 	}
 
 	public final ZLIntegerRangeOption ScrollbarTypeOption =

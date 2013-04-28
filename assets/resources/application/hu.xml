@@ -303,6 +303,10 @@
 				<node name="summaryOn" value="Megvilágítás kikapcsolása olvasás közben (nem minden eszköznél működik)"/>
 				<node name="summaryOff" value="Ne próbálja kikapcsolni a gombok háttérvilágítását"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Fényerő beállítása">
 				<node name="summaryOn" value="Felfelé/lefelé csúsztatás a képernyő bal oldalán"/>
 				<node name="summaryOff" value="Kikapcsolva"/>
@@ -535,6 +539,7 @@
 			<node name="right" value="Jobb margó"/>
 			<node name="top" value="Felső margó"/>
 			<node name="bottom" value="Alsó margó"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Gördítősáv">
 			<node name="summary" value="A gördítősáv és a lábléc beállításai"/>

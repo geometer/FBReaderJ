@@ -353,8 +353,13 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public int getIntercolumnSpace() {
-		return myReader.IntercolumnSpaceOption.getValue();
+	public int getSpaceBetweenColumns() {
+		return myReader.SpaceBetweenColumnsOption.getValue();
+	}
+
+	@Override
+	public boolean twoColumnView() {
+		return getContextHeight() <= getContextWidth() && myReader.TwoColumnViewOption.getValue();
 	}
 
 	@Override

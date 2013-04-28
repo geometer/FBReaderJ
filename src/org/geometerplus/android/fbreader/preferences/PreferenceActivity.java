@@ -109,6 +109,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
+			fbReader.TwoColumnViewOption,
+			appearanceScreen.Resource,
+			"twoColumnView"
+		));
+		appearanceScreen.addPreference(new ZLBooleanPreference(
+			this,
 			fbReader.AllowScreenBrightnessAdjustmentOption,
 			appearanceScreen.Resource,
 			"allowScreenBrightnessAdjustment"
@@ -340,6 +346,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("bottom"),
 			fbReader.BottomMarginOption
+		));
+		marginsScreen.addPreference(new ZLIntegerRangePreference(
+			this, marginsScreen.Resource.getResource("spaceBetweenColumns"),
+			fbReader.SpaceBetweenColumnsOption
 		));
 
 		final Screen statusLineScreen = createPreferenceScreen("scrollBar");
