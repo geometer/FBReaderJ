@@ -557,7 +557,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private synchronized float computeCharsPerPage() {
 		setTextStyle(ZLTextStyleCollection.Instance().getBaseStyle());
 
-		final int textWidth = getTextAreaWidth();
+		final int textWidth = getTextColumnWidth();
 		final int textHeight = getTextAreaHeight();
 
 		final int num = myModel.getParagraphsNumber();
@@ -880,7 +880,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					}
 				}
 			}
-		} while (result.isEndOfParagraph() && result.nextParagraph() && !result.getParagraphCursor().isEndOfSection() && textAreaHeight >= 0);
+		} while (result.isEndOfParagraph() && result.nextParagraph() && textAreaHeight >= 0 &&
+				 (!result.getParagraphCursor().isEndOfSection() ||
+				  (page.twoColumnView() && page.LineInfos.size() == page.Column0Height)
+				 )
+				);
 		resetTextStyle();
 	}
 
