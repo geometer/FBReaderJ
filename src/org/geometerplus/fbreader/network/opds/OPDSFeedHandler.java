@@ -19,20 +19,25 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import java.util.LinkedList;
+
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.TopUpItem;
 import org.geometerplus.fbreader.network.atom.ATOMId;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
-import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
+import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 import org.geometerplus.fbreader.network.litres.LitResAuthorsItem;
 import org.geometerplus.fbreader.network.litres.LitResBooksFeedItem;
 import org.geometerplus.fbreader.network.litres.LitResCatalogByGenresItem;
 import org.geometerplus.fbreader.network.litres.LitresNetworkLink;
+import org.geometerplus.fbreader.network.litres.genre.LitResGenre;
+import org.geometerplus.fbreader.network.litres.genre.LitResGenreMap;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -293,21 +298,19 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		String litresType = mime.getParameter(TYPE);
 		
 		if (REL_BOOKSHELF.equals(rel)) {
-			/*return new LitResBookshelfItem(
+			return new LitResBookshelfItem(
 					link,
 					title,
 				annotation,
 				urlMap
-			);*/
-			return null;
+			);
 		} else if (REL_RECOMMENDATIONS.equals(rel)) {
-			/*return new LitResRecommendationsItem(
+			return new LitResRecommendationsItem(
 					link,
 					title,
 				annotation,
 				urlMap
-			);*/
-			return null;
+			);
 		} else if (REL_TOPUP.equals(rel)) {
 			return new TopUpItem(link, urlMap);
 		}
@@ -329,13 +332,21 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 						urlMap,
 						sort
 						);
-			} else if (litresType.equals(MimeType.APP_LITRES_XML_GENRES.getParameter(TYPE))) {	
-				return new LitResCatalogByGenresItem(
-						litresLink,
-						title,
-						annotation,
-						urlMap
-						);
+			} else if (litresType.equals(MimeType.APP_LITRES_XML_GENRES.getParameter(TYPE))) {
+				try {
+					LinkedList<LitResGenre> tree = LitResGenreMap.Instance().genresTree();
+					return new LitResCatalogByGenresItem(
+							tree,
+							litresLink,
+							title,
+							annotation,
+							urlMap
+							);
+				} catch (ZLNetworkException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
 			} else if (litresType.equals(MimeType.APP_LITRES_XML_AUTHORS.getParameter(TYPE))) {
 				return new LitResAuthorsItem(
 						litresLink,

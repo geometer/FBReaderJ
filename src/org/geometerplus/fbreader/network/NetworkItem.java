@@ -29,7 +29,7 @@ public abstract class NetworkItem {
 	public final CharSequence Title;
 
 	private CharSequence mySummary;
-	private final UrlInfoCollection<UrlInfo> myURLs;
+	protected final UrlInfoCollection<UrlInfo> myURLs;
 
 	/**
 	 * Creates new NetworkItem instance.

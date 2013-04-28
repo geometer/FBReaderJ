@@ -17,12 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.authentication.litres;
+package org.geometerplus.fbreader.network.litres.genre;
 
 import java.util.LinkedList;
 
-class LitResGenre {
-	public String Id;
-	public String Title;
-	public LinkedList<LitResGenre> Children;
+public class LitResGenre {
+	public String Id = "'";
+	public String Title = "";
+	public LinkedList<LitResGenre> Children = new LinkedList<LitResGenre>();
+	
+	public LitResGenre(final String id, final String title) {
+		Id = id;
+		Title = title;
+	}
 }

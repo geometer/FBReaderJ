@@ -1,13 +1,14 @@
-package org.geometerplus.fbreader.network.litres;
+package org.geometerplus.fbreader.network.litres.readers;
 
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 
-import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
+import org.geometerplus.fbreader.network.atom.ATOMId;
 import org.geometerplus.fbreader.network.atom.FormattedBuffer;
-import org.geometerplus.fbreader.network.opds.OPDSBookItem;
-import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
+import org.geometerplus.fbreader.network.litres.LitresBookItem;
+import org.geometerplus.fbreader.network.litres.LitresFeedMetadata;
+import org.geometerplus.fbreader.network.litres.genre.LitResGenre;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
@@ -15,10 +16,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-class LitresXMLReader extends ZLXMLReaderAdapter {
-
-	public final List<NetworkBookItem> Books = new LinkedList<NetworkBookItem>();
-
+public class LitresXMLReader extends ZLXMLReaderAdapter {
 	private int myIndex;
 
 	private String myBookId;
@@ -29,13 +27,16 @@ class LitresXMLReader extends ZLXMLReaderAdapter {
 	private int myIndexInSeries;
 
 	private CharSequence mySummary;
-
+	
 	private final UrlInfoCollection<UrlInfo> myUrls = new UrlInfoCollection<UrlInfo>();
-
+	private LinkedList<LitResGenre> myGenresTree;
+	private Map<String, LitResGenre> myGenresMap;
+	private Map<LitResGenre, String> myGenresTitles;
+	
 	private String myAuthorFirstName;
 	private String myAuthorMiddleName;
 	private String myAuthorLastName;
-	private LinkedList<OPDSBookItem.AuthorData> myAuthors = new LinkedList<OPDSBookItem.AuthorData>();
+	//private LinkedList<OPDSBookItem.AuthorData> myAuthors = new LinkedList<OPDSBookItem.AuthorData>();
 
 	private LinkedList<String> myTags = new LinkedList<String>();
 	
@@ -55,29 +56,32 @@ class LitresXMLReader extends ZLXMLReaderAdapter {
 	private static final int DATE = 13;
 	private static final int LANGUAGE = 14;
 
-	private static final String TAG_CATALOG = "catalit-fb2-books";
-	private static final String TAG_BOOK = "fb2-book";
-	private static final String TAG_TEXT_DESCRIPTION = "text_description";
-	private static final String TAG_HIDDEN = "hidden";
-	private static final String TAG_TITLE_INFO = "title-info";
-	private static final String TAG_GENRE = "genre";
-	private static final String TAG_AUTHOR = "author";
-	private static final String TAG_FIRST_NAME = "first-name";
-	private static final String TAG_MIDDLE_NAME = "middle-name";
-	private static final String TAG_LAST_NAME = "last-name";
-	private static final String TAG_BOOK_TITLE = "book-title";
-	private static final String TAG_ANNOTATION = "annotation";
-	private static final String TAG_DATE = "date";
-	private static final String TAG_SEQUENCE = "sequence";
-	private static final String TAG_LANGUAGE = "lang";
+	protected static final String TAG_CATALOG = "catalit-fb2-books";
+	protected static final String TAG_BOOK = "fb2-book";
+	protected static final String TAG_TEXT_DESCRIPTION = "text_description";
+	protected static final String TAG_HIDDEN = "hidden";
+	protected static final String TAG_TITLE_INFO = "title-info";
+	protected static final String TAG_GENRE = "genre";
+	protected static final String TAG_AUTHOR = "author";
+	protected static final String TAG_FIRST_NAME = "first-name";
+	protected static final String TAG_MIDDLE_NAME = "middle-name";
+	protected static final String TAG_LAST_NAME = "last-name";
+	protected static final String TAG_BOOK_TITLE = "book-title";
+	protected static final String TAG_ANNOTATION = "annotation";
+	protected static final String TAG_DATE = "date";
+	protected static final String TAG_SEQUENCE = "sequence";
+	protected static final String TAG_LANGUAGE = "lang";
 
 	private int myState = START;
 	private final StringBuilder myBuffer = new StringBuilder();
 	private FormattedBuffer myAnnotationBuffer = new FormattedBuffer(FormattedBuffer.Type.XHtml);
-	private ATOMFeedHandler<LitresFeedMetadata,LitresEntry> myHandler;
+	private ATOMFeedHandler<LitresFeedMetadata,LitresEntry> myHandler = null;
 	private LitresEntry myEntry;
 	
-	public LitresXMLReader(ATOMFeedHandler<LitresFeedMetadata,LitresEntry> handler, boolean readEntryNotFeed) {
+	public LitresXMLReader() {
+	}
+	
+	public void setHandler(ATOMFeedHandler<LitresFeedMetadata,LitresEntry> handler) {
 		myHandler = handler;
 	}
 	
@@ -93,6 +97,8 @@ class LitresXMLReader extends ZLXMLReaderAdapter {
 				break;
 			case CATALOG:
 				if (TAG_BOOK == tag) {
+					myEntry = new LitresEntry(new ZLStringMap());
+					
 					myBookId = attributes.getValue("hub_id");
 					myUrls.addInfo(new UrlInfo(
 						UrlInfo.Type.Image, attributes.getValue("cover_preview"), MimeType.IMAGE_AUTO
@@ -105,7 +111,7 @@ class LitresXMLReader extends ZLXMLReaderAdapter {
 						MimeType.APP_FB2_ZIP
 					));
 					myState = BOOK;
-					myEntry = new LitresEntry(new ZLStringMap());
+					
 				}
 				break;
 			case BOOK:
@@ -189,7 +195,19 @@ class LitresXMLReader extends ZLXMLReaderAdapter {
 						MimeType.APP_ATOM_XML_ENTRY
 					));
 					
-					myHandler.processFeedEntry(myEntry);
+					if(myEntry != null){
+						myEntry.Summary = mySummary;
+						ATOMId myId = new ATOMId();
+						myId.Uri = myBookId;
+						myEntry.Id = myId;
+						myEntry.myUrls = myUrls;
+						myEntry.SeriesTitle = mySeriesTitle;
+						myEntry.SeriesIndex = myIndexInSeries;
+					}
+					
+					if(myHandler != null){
+						myHandler.processFeedEntry(myEntry);
+					}
 					
 					/*Books.add(new OPDSBookItem(
 						Link,
@@ -209,7 +227,7 @@ class LitresXMLReader extends ZLXMLReaderAdapter {
 					myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = null;
 					mySummary = null;
 					myIndexInSeries = 0;
-					myAuthors.clear();
+					//myAuthors.clear();
 					myTags.clear();
 					myUrls.clear();
 					myState = CATALOG;
@@ -242,7 +260,8 @@ class LitresXMLReader extends ZLXMLReaderAdapter {
 					if (myAuthorLastName != null) {
 						displayName.append(myAuthorLastName).append(" ");
 					}
-					myAuthors.add(new OPDSBookItem.AuthorData(displayName.toString().trim(), myAuthorLastName));
+					myEntry.myAuthors.add(new LitresBookItem.AuthorData(displayName.toString().trim(), myAuthorLastName));
+					//myAuthors.add(new OPDSBookItem.AuthorData(displayName.toString().trim(), myAuthorLastName));
 					myAuthorFirstName = null;
 					myAuthorMiddleName = null;
 					myAuthorLastName = null;
@@ -271,11 +290,14 @@ class LitresXMLReader extends ZLXMLReaderAdapter {
 			case GENRE:
 				if (TAG_GENRE == tag) {
 					myState = TITLE_INFO;
+					System.out.println("GENRE: "+myBuffer);
+					myEntry.myGenre = myBuffer.toString();
 				}
 				break;
 			case BOOK_TITLE:
 				if (TAG_BOOK_TITLE == tag) {
 					myTitle = myBuffer.toString();
+					myEntry.Title = myBuffer.toString();
 					myState = TITLE_INFO;
 				}
 				break;

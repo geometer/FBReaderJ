@@ -23,6 +23,7 @@ import java.io.*;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 	private Map<String,String> myNamespaceMap = Collections.emptyMap();
@@ -159,5 +160,9 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 
 	public List<String> externalDTDs() {
 		return Collections.emptyList();
+	}
+
+	public ZLNetworkException getException() {
+		return null;
 	}
 }

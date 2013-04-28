@@ -19,21 +19,22 @@
 
 package org.geometerplus.fbreader.network.authentication.litres;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public class LitResNetworkRequest extends ZLNetworkRequest {
-	public final LitResAuthenticationXMLReader Reader;
+	public final ZLXMLReaderAdapter Reader;
 
 	static String clean(String url) {
 		final int index = url.indexOf('?');
 		return index != -1 ? url.substring(0, index) : url;
 	}
 
-	public LitResNetworkRequest(String url, LitResAuthenticationXMLReader reader) {
+	public LitResNetworkRequest(String url, ZLXMLReaderAdapter reader) {
 		super(clean(url));
 		final int index = url.indexOf('?');
 		if (index != -1) {

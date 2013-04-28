@@ -1,16 +1,26 @@
 package org.geometerplus.fbreader.network.litres;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
+import org.geometerplus.fbreader.network.litres.readers.LitresEntry;
+import org.geometerplus.fbreader.network.opds.OPDSBookItem;
+import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,LitresEntry> {
-	
-	
+	public List<NetworkBookItem> Books = new LinkedList<NetworkBookItem>();
+	protected LitresCatalogItem.State myResult;
+	protected int myIndex = 0;
 	LitresFeedHandler(LitresCatalogItem.State result){
 		if (!(result.Link instanceof LitresNetworkLink)) {
 			throw new IllegalArgumentException("Parameter `result` has invalid `Link` field value: result.Link must be an instance of LitresNetworkLink class.");
 		}
+		myResult = result;
 	}
 	
 	@Override
@@ -28,8 +38,16 @@ public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,Lit
 
 	@Override
 	public boolean processFeedEntry(LitresEntry entry) {
-		// TODO Auto-generated method stub
-		System.out.println(">>> [LitresFeedHandler] processFeedEntry");
+		System.out.println("[LitresFeedHandler] processFeedEntry");
+		boolean hasBookLink = true;
+		String myBaseURL = "";
+		NetworkItem item = null;
+		if (hasBookLink) {
+			item = new LitresBookItem(myResult.Link, entry, myBaseURL, myIndex++);
+		}
+		if (item != null) {
+			myResult.Loader.onNewItem(item);
+		}
 		return false;
 	}
 

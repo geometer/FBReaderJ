@@ -8,6 +8,7 @@ import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.litres.readers.LitresXMLReader;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
@@ -23,7 +24,7 @@ public class LitresNetworkLink extends AbstractNetworkLink {
 		super(id, siteName, title, summary, language, infos);
 	}
 	
-	ZLNetworkRequest createNetworkData(String url, MimeType mime, final LitresCatalogItem.State result) {
+	ZLNetworkRequest createNetworkData(String url, final MimeType mime, final LitresCatalogItem.State result) {
 		if (url == null) {
 			return null;
 		}
@@ -39,10 +40,21 @@ public class LitresNetworkLink extends AbstractNetworkLink {
 					return;
 				}
 				
-				System.out.println("[LitresNetworkLink] createNetworkData instance LitresXMLReader");
-				new LitresXMLReader(
-					new LitresFeedHandler(result), false
-				).read(inputStream);
+				String litresType = mime.getParameter("type");
+				LitresFeedHandler handler = null;
+				LitresXMLReader reader = new LitresXMLReader();
+				if(litresType != null){
+					if (litresType.equals(MimeType.APP_LITRES_XML_GENRES.getParameter("type"))) {	
+						handler = new LitresGenreFeedHandler(result);
+					}else{
+						handler = new LitresFeedHandler(result);
+					}
+				}else{
+					handler = new LitresFeedHandler(result);
+				}
+				
+				reader.setHandler(handler);
+				reader.read(inputStream);
 
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
 					// reset state to load current page from the beginning
