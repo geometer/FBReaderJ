@@ -940,7 +940,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int newHeight = info.Height;
 		int newDescent = info.Descent;
 		//int maxWidth = (getTextAreaWidth() - getTextStyle().getRightIndent()) / 2;
-		int maxWidth = getTextColumnWidth();
+		int maxWidth = getTextColumnWidth();// - getTextStyle().getRightIndent();
 		boolean wordOccurred = false;
 		boolean isVisible = false;
 		int lastSpaceWidth = 0;
@@ -1094,7 +1094,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		boolean changeStyle = true;
 		x += info.LeftIndent;
 
-		final int maxWidth = getTextAreaWidth() / 2;
+		final int maxWidth = getTextColumnWidth();
 		switch (getTextStyle().getAlignment()) {
 			case ZLTextAlignmentType.ALIGN_RIGHT:
 				x += maxWidth - getTextStyle().getRightIndent() - info.Width;
