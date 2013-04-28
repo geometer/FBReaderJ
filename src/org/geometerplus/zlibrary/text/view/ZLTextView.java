@@ -755,7 +755,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					left = selectionStartArea.XStart;
 				}
 				if (selectionEndArea.compareTo(toArea) > 0) {
-					right = x + getTextAreaWidth() - 1;
+					right = x + getTextColumnWidth() - 1;
 					bottom += info.VSpaceAfter;
 				} else {
 					right = selectionEndArea.XEnd;
@@ -918,7 +918,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int newWidth = info.Width;
 		int newHeight = info.Height;
 		int newDescent = info.Descent;
-		int maxWidth = getTextAreaWidth();
+		int maxWidth = getTextColumnWidth();
 		boolean wordOccurred = false;
 		boolean isVisible = false;
 		int lastSpaceWidth = 0;
@@ -1072,7 +1072,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		boolean changeStyle = true;
 		x += info.LeftIndent;
 
-		final int maxWidth = getTextAreaWidth();
+		final int maxWidth = getTextColumnWidth();
 		switch (getTextStyle().getAlignment()) {
 			case ZLTextAlignmentType.ALIGN_RIGHT:
 				x += maxWidth - getTextStyle().getRightIndent() - info.Width;
