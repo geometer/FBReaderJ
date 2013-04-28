@@ -939,8 +939,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int newWidth = info.Width;
 		int newHeight = info.Height;
 		int newDescent = info.Descent;
-		//int maxWidth = (getTextAreaWidth() - getTextStyle().getRightIndent()) / 2;
-		int maxWidth = getTextColumnWidth();// - getTextStyle().getRightIndent();
+		int maxWidth = getTextColumnWidth();
 		boolean wordOccurred = false;
 		boolean isVisible = false;
 		int lastSpaceWidth = 0;

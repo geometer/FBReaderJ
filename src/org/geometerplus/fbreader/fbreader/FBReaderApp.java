@@ -78,7 +78,7 @@ public final class FBReaderApp extends ZLApplication {
 		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
 		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
 		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
-		IntercolumnSpaceOption = new ZLIntegerRangeOption("Options", "IntercolumnSpace", 0, 100, 4 * horMargin);
+		IntercolumnSpaceOption = new ZLIntegerRangeOption("Options", "IntercolumnSpace", 0, 100, 3 * horMargin);
 	}
 
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
