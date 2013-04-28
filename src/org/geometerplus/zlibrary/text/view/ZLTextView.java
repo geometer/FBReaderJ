@@ -1215,7 +1215,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private synchronized void preparePaintInfo(ZLTextPage page) {
-		page.setSize(getTextAreaWidth(), getTextAreaHeight(), page == myPreviousPage);
+		page.setSize(getTextAreaWidth(), getTextAreaHeight(), getTextColumnWidth(), page == myPreviousPage);
 
 		if (page.PaintState == PaintStateEnum.NOTHING_TO_PAINT || page.PaintState == PaintStateEnum.READY) {
 			return;
