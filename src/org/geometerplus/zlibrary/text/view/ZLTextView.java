@@ -446,14 +446,16 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 		}
 
+		x = getLeftMargin();
 		y = getTopMargin();
 		index = 0;
 		for (ZLTextLineInfo info : lineInfos) {
-			drawTextLine(page, info, labels[index], labels[index + 1], y);
+			drawTextLine(page, info, labels[index], labels[index + 1], x, y);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			++index;
 			if (index == page.Column0Height) {
 				y = getTopMargin();
+				x += getTextColumnWidth() + getIntercolumnSpace();
 			}
 		}
 
@@ -742,7 +744,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private void drawBackgroung(
 		ZLTextAbstractHighlighting highligting, ZLColor color,
-		ZLTextPage page, ZLTextLineInfo info, int from, int to, int y
+		ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y
 	) {
 		if (!highligting.isEmpty() && from != to) {
 			final ZLTextElementArea fromArea = page.TextElementMap.get(from);
@@ -756,12 +758,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final int top = y + 1;
 				int left, right, bottom = y + info.Height + info.Descent;
 				if (selectionStartArea.compareTo(fromArea) < 0) {
-					left = getLeftMargin();
+					left = x;
 				} else {
 					left = selectionStartArea.XStart;
 				}
 				if (selectionEndArea.compareTo(toArea) > 0) {
-					right = getLeftMargin() + getTextAreaWidth() - 1;
+					right = x + getTextColumnWidth() - 1;
 					bottom += info.VSpaceAfter;
 				} else {
 					right = selectionEndArea.XEnd;
@@ -773,9 +775,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private static final char[] SPACE = new char[] { ' ' };
-	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
-		drawBackgroung(mySelection, getSelectedBackgroundColor(), page, info, from, to, y);
-		drawBackgroung(myHighlighting, getHighlightingColor(), page, info, from, to, y);
+	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y) {
+		drawBackgroung(mySelection, getSelectedBackgroundColor(), page, info, from, to, x, y);
+		drawBackgroung(myHighlighting, getHighlightingColor(), page, info, from, to, x, y);
 
 		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
