@@ -102,6 +102,10 @@ abstract class ZLTextViewBase extends ZLView {
 		return getContextWidth() - getLeftMargin() - getRightMargin();
 	}
 
+	int getTextColumnWidth() {
+		return getTextAreaWidth();
+	}
+
 	final ZLTextStyle getTextStyle() {
 		return myTextStyle;
 	}
