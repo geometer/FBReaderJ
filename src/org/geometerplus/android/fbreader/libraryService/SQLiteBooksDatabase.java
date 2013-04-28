@@ -607,7 +607,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			myInsertBookSeriesStatement.bindLong(2, seriesId);
 			SQLiteUtil.bindString(
 				myInsertBookSeriesStatement, 3,
-				seriesInfo.Index != null ? seriesInfo.Index.toString() : null
+				seriesInfo.Index != null ? seriesInfo.Index.toPlainString() : null
 			);
 			myInsertBookSeriesStatement.execute();
 		}
