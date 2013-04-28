@@ -433,10 +433,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		final ArrayList<ZLTextLineInfo> lineInfos = page.LineInfos;
 		final int[] labels = new int[lineInfos.size() + 1];
+		int x = getLeftMargin();
 		int y = getTopMargin();
 		int index = 0;
 		for (ZLTextLineInfo info : lineInfos) {
-			prepareTextLine(page, info, y);
+			prepareTextLine(page, info, x, y);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			labels[++index] = page.TextElementMap.size();
 		}
@@ -1056,7 +1057,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return info;
 	}
 
-	private void prepareTextLine(ZLTextPage page, ZLTextLineInfo info, int y) {
+	private void prepareTextLine(ZLTextPage page, ZLTextLineInfo info, int x, int y) {
 		y = Math.min(y + info.Height, getTopMargin() + getTextAreaHeight() - 1);
 
 		final ZLPaintContext context = getContext();
@@ -1068,8 +1069,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final boolean endOfParagraph = info.isEndOfParagraph();
 		boolean wordOccurred = false;
 		boolean changeStyle = true;
+		x += info.LeftIndent;
 
-		int x = getLeftMargin() + info.LeftIndent;
 		final int maxWidth = getTextAreaWidth();
 		switch (getTextStyle().getAlignment()) {
 			case ZLTextAlignmentType.ALIGN_RIGHT:
