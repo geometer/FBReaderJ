@@ -32,17 +32,19 @@ final class ZLTextPage {
 
 	private int myWidth;
 	private int myHeight;
+	private int myColumnWidth;
 
-	void setSize(int width, int height, boolean keepEnd) {
-		if (myWidth == width && myHeight == height) {
+	void setSize(int width, int height, int columnWidth, boolean keepEndNotStart) {
+		if (myWidth == width && myHeight == height && myColumnWidth == columnWidth) {
 			return;
 		}
 		myWidth = width;
 		myHeight = height;
+		myColumnWidth = columnWidth;
 
 		if (PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
 			LineInfos.clear();
-			if (keepEnd) {
+			if (keepEndNotStart) {
 				if (!EndCursor.isNull()) {
 					StartCursor.reset();
 					PaintState = PaintStateEnum.END_IS_KNOWN;
