@@ -81,6 +81,7 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract int getRightMargin();
 	public abstract int getTopMargin();
 	public abstract int getBottomMargin();
+	public abstract int getIntercolumnSpace();
 
 	public abstract ZLFile getWallpaperFile();
 	public abstract ZLPaintContext.WallpaperMode getWallpaperMode();
@@ -100,6 +101,10 @@ abstract class ZLTextViewBase extends ZLView {
 
 	int getTextAreaWidth() {
 		return getContextWidth() - getLeftMargin() - getRightMargin();
+	}
+
+	int getTextColumnWidth() {
+		return (getContextWidth() - getLeftMargin() - getRightMargin() - getIntercolumnSpace()) / 2;
 	}
 
 	final ZLTextStyle getTextStyle() {

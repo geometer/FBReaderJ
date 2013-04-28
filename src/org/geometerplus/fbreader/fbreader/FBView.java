@@ -353,6 +353,11 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
+	public int getIntercolumnSpace() {
+		return myReader.IntercolumnSpaceOption.getValue();
+	}
+
+	@Override
 	public ZLFile getWallpaperFile() {
 		final String filePath = myReader.getColorProfile().WallpaperOption.getValue();
 		if ("".equals(filePath)) {

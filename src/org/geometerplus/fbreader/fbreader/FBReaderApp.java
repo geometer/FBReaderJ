@@ -68,6 +68,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLIntegerRangeOption RightMarginOption;
 	public final ZLIntegerRangeOption TopMarginOption;
 	public final ZLIntegerRangeOption BottomMarginOption;
+	public final ZLIntegerRangeOption IntercolumnSpaceOption;
 	{
 		final int dpi = ZLibrary.Instance().getDisplayDPI();
 		final int x = ZLibrary.Instance().getPixelWidth();
@@ -77,6 +78,7 @@ public final class FBReaderApp extends ZLApplication {
 		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
 		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
 		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
+		IntercolumnSpaceOption = new ZLIntegerRangeOption("Options", "IntercolumnSpace", 0, 100, 4 * horMargin);
 	}
 
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
