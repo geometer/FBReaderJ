@@ -835,7 +835,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		result.setCursor(start);
 		int textAreaHeight = getTextAreaHeight();
 		page.LineInfos.clear();
-		int counter = 0;
 		do {
 			resetTextStyle();
 			final ZLTextParagraphCursor paragraphCursor = result.getParagraphCursor();
@@ -846,7 +845,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			while (info.EndElementIndex != endIndex) {
 				info = processTextLine(paragraphCursor, info.EndElementIndex, info.EndCharIndex, endIndex);
 				textAreaHeight -= info.Height + info.Descent;
-				if (textAreaHeight < 0 && counter > 0) {
+				if (textAreaHeight < 0 && page.LineInfos.size() > 0) {
 					break;
 				}
 				textAreaHeight -= info.VSpaceAfter;
@@ -855,9 +854,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				if (textAreaHeight < 0) {
 					break;
 				}
-				counter++;
 			}
-		} while (result.isEndOfParagraph() && result.nextParagraph() && !result.getParagraphCursor().isEndOfSection() && (textAreaHeight >= 0));
+		} while (result.isEndOfParagraph() && result.nextParagraph() && !result.getParagraphCursor().isEndOfSection() && textAreaHeight >= 0);
 		resetTextStyle();
 	}
 
