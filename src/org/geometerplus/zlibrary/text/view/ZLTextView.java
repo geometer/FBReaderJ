@@ -878,7 +878,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					}
 				}
 			}
-		} while (result.isEndOfParagraph() && result.nextParagraph() && !result.getParagraphCursor().isEndOfSection() && (textAreaHeight >= 0));
+		} while (result.isEndOfParagraph() && result.nextParagraph() && !result.getParagraphCursor().isEndOfSection() && textAreaHeight >= 0);
 		resetTextStyle();
 	}
 
