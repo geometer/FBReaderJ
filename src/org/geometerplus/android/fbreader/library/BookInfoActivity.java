@@ -243,7 +243,7 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Series.getTitle());
 		String seriesIndexString = null;
 		if (series != null && series.Index != null) {
-			seriesIndexString = series.Index.toString();
+			seriesIndexString = series.Index.toPlainString();
 		}
 		setupInfoPair(R.id.book_series_index, "indexInSeries", seriesIndexString);
 
