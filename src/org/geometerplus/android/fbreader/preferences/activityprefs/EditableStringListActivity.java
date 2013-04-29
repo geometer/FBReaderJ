@@ -64,7 +64,7 @@ public class EditableStringListActivity extends BaseStringListActivity {
 			text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
-    					if (hasFocus) {
+					if (hasFocus) {
 						text.setAdapter(new ArrayAdapter<String>(myActivity,
 							android.R.layout.simple_dropdown_item_1line, myActivity.Suggestions
 						));

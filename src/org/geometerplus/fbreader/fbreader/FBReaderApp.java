@@ -78,10 +78,12 @@ public final class FBReaderApp extends ZLApplication {
 	final static int y = ZLibrary.Instance().getPixelHeight();
 	final static int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
 	
+	public final static ZLBooleanOption TwoColumnViewOption = new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 50 * dpi * dpi);
 	public final static ZLIntegerRangeOption LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 	public final static ZLIntegerRangeOption RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
 	public final static ZLIntegerRangeOption TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
 	public final static ZLIntegerRangeOption BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
+	public final static ZLIntegerRangeOption SpaceBetweenColumnsOption = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
 
 	public final static ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
@@ -158,7 +160,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
 		System.err.println("openbook");
-		if (Model != null  && Model.isValid()) {
+		if (Model != null && Model.isValid()) {
 			System.err.println("1");
 			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;

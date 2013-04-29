@@ -72,7 +72,7 @@ public class BooksDirectoryActivity extends BaseStringListActivity {
 			text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
-    					if (hasFocus) {
+					if (hasFocus) {
 						text.setAdapter(new ArrayAdapter<String>(myActivity,
 							android.R.layout.simple_dropdown_item_1line, myActivity.Suggestions
 						));
@@ -86,8 +86,8 @@ public class BooksDirectoryActivity extends BaseStringListActivity {
 			if (position == 0) {
 				final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_unlockbutton);
 				final String message = ZLResource.resource("warningMessage").getResource("mainBookDirEditing").getValue();
-				final String yes =  ZLResource.resource("dialog").getResource("button").getResource("yes").getValue();
-				final String no =  ZLResource.resource("dialog").getResource("button").getResource("no").getValue();
+				final String yes = ZLResource.resource("dialog").getResource("button").getResource("yes").getValue();
+				final String no = ZLResource.resource("dialog").getResource("button").getResource("no").getValue();
 				button.setOnClickListener(
 					new View.OnClickListener() {
 						public void onClick(View v) {

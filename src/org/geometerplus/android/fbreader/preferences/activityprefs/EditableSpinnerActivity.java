@@ -100,7 +100,7 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 			notifyDataSetChanged();
 			myActivity.enableButtons();
 		}
-		
+
 		protected void showDialog(int pos, final int id) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(myActivity);
 			String[] suggs = new String[myActivity.Suggestions.size()];
@@ -114,8 +114,8 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 				}
 			}
 			Log.d("spinner", Integer.toString(pos));
-			builder.setSingleChoiceItems(suggs, pos, 
-            	new DialogInterface.OnClickListener() {
+			builder.setSingleChoiceItems(suggs, pos,
+				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						onItemSelected(which, id);
 						dialog.dismiss();
@@ -123,7 +123,7 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 				});
 			final Dialog dialog = builder.create();
 			dialog.show();
-			
+
 		}
 	}
 }

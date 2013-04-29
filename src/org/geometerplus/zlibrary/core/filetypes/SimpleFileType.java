@@ -36,17 +36,7 @@ class SimpleFileType extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return acceptsExtension(file.getExtension());
-	}
-
-	@Override
-	public boolean acceptsExtension(String ext) {
-		return myExtension.equalsIgnoreCase(ext);
-	}
-
-	@Override
-	public String extension(MimeType mimeType) {
-		return myExtension;
+		return myExtension.equalsIgnoreCase(file.getExtension());
 	}
 
 	@Override
@@ -57,6 +47,11 @@ class SimpleFileType extends FileType {
 	@Override
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? myMimeTypes.get(0) : MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return myExtension;
 	}
 
 	@Override

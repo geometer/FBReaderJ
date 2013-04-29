@@ -59,12 +59,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	private volatile RootTree myRootTree;
 	private Book mySelectedBook;
-	
-	private HashMap<String, MetaInfoReader> myServices=new HashMap<String, MetaInfoReader>();
-	private HashMap<String, ServiceConnection> myServConns=new HashMap<String, ServiceConnection>();
-	
+
+	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
+	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
+
 	public static class PluginMetaInfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
-		
 		private HashMap<String, MetaInfoReader> myServices;
 
 		public PluginMetaInfoReaderImpl(HashMap<String, MetaInfoReader> services) {
@@ -96,14 +95,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			}
 			try {
 				String s = myServices.get(appData).readBitmap(f.getPath());
-				try{
-			         byte [] encodeByte=Base64.decode(s,Base64.DEFAULT);
-			         Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-			         return new ZLBitmapImage(bitmap);
-			       }catch(Exception e){
-			         e.getMessage();
-			         return null;
-			       }
+				try {
+					byte [] encodeByte = Base64.decode(s, Base64.DEFAULT);
+					Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+					return new ZLBitmapImage(bitmap);
+				} catch(Exception e){
+					e.getMessage();
+					return null;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
@@ -129,11 +128,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
-		
+
 		if (MetaInfoUtil.PMIReader == null) {
 			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-				ServiceConnection servConn=new ServiceConnection() {
+				ServiceConnection servConn = new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {
 						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
 					}
@@ -170,7 +169,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	public void onResume() {
-	  	super.onResume();
+		super.onResume();
 	}
 
 	@Override
@@ -439,7 +438,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		final Thread searcher = new Thread("Library.searchBooks") {
 			public void run() {
 				final SearchResultsTree oldSearchResults = myRootTree.getSearchResultsTree();
-            
+
 				if (oldSearchResults != null && pattern.equals(oldSearchResults.Pattern)) {
 					onSearchEvent(true);
 				} else if (myRootTree.Collection.hasBooks(new Filter.ByPattern(pattern))) {

@@ -31,17 +31,8 @@ class FileTypeHtml extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return acceptsExtension(file.getExtension());
-	}
-
-	@Override
-	public boolean acceptsExtension(String ext) {
-		return (ext.toLowerCase()).endsWith("html") || "htm".equals(ext.toLowerCase());
-	}
-
-	@Override
-	public String extension(MimeType mimeType) {
-		return "html";
+		final String extension = file.getExtension().toLowerCase();
+		return extension.endsWith("html") || "htm".equals(extension);
 	}
 
 	@Override
@@ -52,5 +43,10 @@ class FileTypeHtml extends FileType {
 	@Override
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? MimeType.TEXT_HTML : MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return "html";
 	}
 }

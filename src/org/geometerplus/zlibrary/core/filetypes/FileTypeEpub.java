@@ -31,20 +31,11 @@ class FileTypeEpub extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return acceptsExtension(file.getExtension());
-	}
-
-	@Override
-	public boolean acceptsExtension(String extension) {
+		final String extension = file.getExtension();
 		return
 			"epub".equalsIgnoreCase(extension) ||
 			"oebzip".equalsIgnoreCase(extension) ||
 			"opf".equalsIgnoreCase(extension);
-	}
-
-	@Override
-	public String extension(MimeType mimeType) {
-		return "epub";
 	}
 
 	@Override
@@ -63,12 +54,17 @@ class FileTypeEpub extends FileType {
 	}
 
 	@Override
-	public MimeType simplifiedMimeType(ZLFile file) {
+	public MimeType rawMimeType(ZLFile file) {
 		final String extension = file.getExtension();
 		if ("epub".equalsIgnoreCase(extension)) {
 			return MimeType.APP_ZIP;
 		}
 		// TODO: process other extensions (?)
 		return MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return "epub";
 	}
 }

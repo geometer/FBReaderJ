@@ -36,16 +36,6 @@ class FileTypeFB2 extends FileType {
 		return lName.endsWith(".fb2") || lName.endsWith(".fb2.zip");
 	}
 
-	@Override
-	public boolean acceptsExtension(String extension) {
-		return "fb2".equalsIgnoreCase(extension);
-	}
-
-	@Override
-	public String extension(MimeType mimeType) {
-		return MimeType.TYPES_FB2_ZIP.contains(mimeType) ? "fb2.zip" : "fb2";
-	}
-
 	private final List<MimeType> myMimeTypes = new ArrayList<MimeType>();
 
 	@Override
@@ -70,7 +60,7 @@ class FileTypeFB2 extends FileType {
 	}
 
 	@Override
-	public MimeType simplifiedMimeType(ZLFile file) {
+	public MimeType rawMimeType(ZLFile file) {
 		final String lName = file.getShortName().toLowerCase();
 		if (lName.endsWith(".fb2")) {
 			return MimeType.TEXT_XML;
@@ -79,5 +69,16 @@ class FileTypeFB2 extends FileType {
 		} else {
 			return MimeType.NULL;
 		}
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		if (MimeType.TEXT_FB2.equals(mime) || MimeType.TEXT_XML.equals(mime)) {
+			return "fb2";
+		}
+		if (MimeType.APP_FB2_ZIP.equals(mime) || MimeType.APP_ZIP.equals(mime)) {
+			return "fb2.zip";
+		}
+		return "fb2";
 	}
 }

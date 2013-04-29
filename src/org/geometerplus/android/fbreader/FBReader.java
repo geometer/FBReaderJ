@@ -23,19 +23,18 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import android.app.*;
-import android.util.Log;
 import android.content.*;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
@@ -634,7 +633,7 @@ public final class FBReader extends Activity {
 
 		myStartTimer = true;
 		final int brightnessLevel =
-				getZLibrary().ScreenBrightnessLevelOption().getValue();
+			getZLibrary().ScreenBrightnessLevelOption().getValue();
 		if (brightnessLevel != 0) {
 			setScreenBrightness(brightnessLevel);
 		} else {
@@ -765,7 +764,7 @@ public final class FBReader extends Activity {
 	public void showSelectionPanel() {
 		final ZLTextView view = myFBReaderApp.getTextView();
 		((SelectionPopup)myFBReaderApp.getPopupById(SelectionPopup.ID))
-		.move(view.getSelectionStartY(), view.getSelectionEndY());
+			.move(view.getSelectionStartY(), view.getSelectionEndY());
 		hideBars();
 		myFBReaderApp.showPopup(SelectionPopup.ID);
 	}
@@ -877,7 +876,7 @@ public final class FBReader extends Activity {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.addMenuItem(menu, actionId, null, null);
 	}
-	
+
 	private void fillMenu(Menu menu, MenuItemData source) {
 		for (MenuItemData el : source.Children) {
 			if (el.Type == MenuItemData.MenuType.ACTION) {
@@ -888,7 +887,7 @@ public final class FBReader extends Activity {
 			}
 		}
 	}
-	
+
 	private void setupMenu(Menu menu) {
 		final String menuLanguage = ZLResource.getLanguageOption().getValue();
 		if (menuLanguage.equals(myMenuLanguage)) {

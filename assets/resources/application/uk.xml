@@ -38,6 +38,9 @@
 		<node name="fileTreeLibrary" value="Бібліотека FBReader">
 			<node name="summary" value="Бібліотека книг FBReader"/>
 		</node>
+		<node name="fileTreeAddLibrary" value="FBReader additional library" toBeTranslated="true">
+			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="localSearch" value="Пошук"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
@@ -268,6 +271,7 @@
 	<node name="Preferences">
 		<node name="directories" value="Теки">
 			<node name="summary" value="Теки для пошуку файлів"/>
+			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
 			<node name="bookPath" value="Теки з книжками"/>
 			<node name="fontPath" value="Теки зі шрифтами"/>
 			<node name="wallpaperPath" value="Теки зі шпалерами"/>
@@ -305,6 +309,10 @@
 			<node name="disableButtonLights" value="Підсвічування апаратник клавіш">
 				<node name="summaryOn" value="Вимкнути підсвічування (не для всіх пристроїв)"/>
 				<node name="summaryOff" value="Не намагатись вимикати підсвічування"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Керування яскравістю екрану">
 				<node name="summaryOn" value="Жестом догори-донизу в лівій частині екрану"/>
@@ -524,6 +532,10 @@
 				<node name="wood" value="Деревина"/>
 			</node>
 			<node name="backgroundColor" value="Фоновий колір"/>
+			<node name="imagesBackground" value="Images Background" toBeTranslated="true">
+				<node name="summaryOn" value="Use background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not use background" toBeTranslated="true"/>
+			</node>
 			<node name="selectionBackground" value="Фон позначки"/>
 			<node name="selectionForeground" value="Вибраний текст"/>
 			<node name="text" value="Звичайний текст"/>
@@ -538,6 +550,7 @@
 			<node name="right" value="Відступ зправа"/>
 			<node name="top" value="Відступ зверху"/>
 			<node name="bottom" value="Відступ знизу"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Смуга прокрутки">
 			<node name="summary" value="Смуга прокрутки &amp; налаштування підвалу"/>
@@ -690,6 +703,17 @@
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
+		<node name="externalFormats" value="Formats" toBeTranslated="true">
+			<node name="summary" value="Manage file formats" toBeTranslated="true"/>
+			<node name="format">
+				<node name="appNotSet" value="Not chosen" toBeTranslated="true"/>
+				<node name="java" value="FBReader (java)" toBeTranslated="true"/>
+				<node name="native" value="FBReader (native)" toBeTranslated="true"/>
+				<node name="plugin" value="FBReader %s plugin" toBeTranslated="true"/>
+				<node name="delete" value="remove this format" toBeTranslated="true"/>
+				<node name="addNewFormat" value="add new format" toBeTranslated="true"/>
+			</node>
+		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -747,6 +771,7 @@
 			<node name="loadingNetworkBookInfo" value="Завантаження інформації про книгу. Зачекайте, будь ласка……"/>
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка…"/>
 			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка……"/>
+			<node name="extrcact" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутрішня помилка сервера"/>
@@ -793,6 +818,9 @@
 			<node name="more" value="Наступна порада"/>
 		</node>
 	</node>
+	<node name="warningMessage">
+		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
+	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Немає доступу до Android Market. Будь-ласка, встановіть %s вручну"/>
 		<node name="textNotFound" value="У цій книзі нема такого тексту"/>
@@ -806,6 +834,12 @@
 		<node name="emptyCatalog" value="Каталог порожній"/>
 		<node name="emptyBasket" value="На жаль ваш кошик порожній"/>
 		<node name="emptyNetworkSearchResults" value="Відповідних книг не знайдено"/>
+		<node name="externalNotFound" value="Cannot open external application" toBeTranslated="true"/>
+		<node name="appNotFound" value="No suitable application found" toBeTranslated="true"/>
+		<node name="invalidFormat" value="Format is invalid" toBeTranslated="true"/>
+		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
+		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
+		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>
@@ -840,5 +874,29 @@
 		<node name="opfFileNotFound" value="OPF не знайдено в %s"/>
 		<node name="unsupportedFileFormat" value="Формат файлу не підтримується для '%s'"/>
 		<node name="errorParsingRtf" value="Помилка обробки Rtf в: %s"/>
+	</node>
+	<node name="pdfPlugin">
+		<node name="bookOptions" value="Book Options" toBeTranslated="true"/>
+		<node name="save" value="Save" toBeTranslated="true"/>
+		<node name="crop" value="Crop" toBeTranslated="true">
+			<node name="top" value="Top:" toBeTranslated="true"/>
+			<node name="bottom" value="Bottom:" toBeTranslated="true"/>
+			<node name="right" value="Right:" toBeTranslated="true"/>
+			<node name="left" value="Left:" toBeTranslated="true"/>
+		</node>
+		<node name="traversal" value="In page traversal" toBeTranslated="true">
+			<node name="x" value="horiz.:" toBeTranslated="true"/>
+			<node name="y" value="vert.:" toBeTranslated="true"/>
+		</node>
+		<node name="zoomMode" value="Zoom Mode" toBeTranslated="true">
+			<node name="free" value="Free Zoom" toBeTranslated="true"/>
+			<node name="fixed" value="Fixed Zoom:" toBeTranslated="true"/>
+			<node name="fitPage" value="Fit Page" toBeTranslated="true"/>
+			<node name="fitWidth" value="Fit Width" toBeTranslated="true"/>
+			<node name="fitHeight" value="Fit Height" toBeTranslated="true"/>
+			<node name="screenPercent" value="Screen Percent" toBeTranslated="true"/>
+			<node name="pagePercent" value="Page Percent" toBeTranslated="true"/>
+		</node>
+		<node name="pageWay" value="Page way around" toBeTranslated="true"/>
 	</node>
 </resources>

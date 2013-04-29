@@ -111,7 +111,7 @@ public abstract class UIUtil {
 	public static void runWithMessage(final Activity activity, String key, final Runnable action, final Runnable postAction, final boolean minPriority) {
 		final String message =
 			ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
-			activity.runOnUiThread(new Runnable() {
+		activity.runOnUiThread(new Runnable() {
 			public void run() {
 				final ProgressDialog progress = ProgressDialog.show(activity, null, message, true, false);
 
