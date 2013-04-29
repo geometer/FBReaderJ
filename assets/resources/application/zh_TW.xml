@@ -310,6 +310,10 @@
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="調整屏幕亮度">
 				<node name="summaryOn" value="通過於屏幕左方上下拉動調整"/>
 				<node name="summaryOff" value="關閉"/>
@@ -546,6 +550,7 @@
 			<node name="right" value="右邊距"/>
 			<node name="top" value="頂邊距"/>
 			<node name="bottom" value="底邊距"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="滾動條">
 			<node name="summary" value="滾動條及頁尾設定"/>
