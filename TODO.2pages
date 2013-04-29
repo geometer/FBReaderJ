@@ -1,8 +1,3 @@
-* FIRST RELEASE
-** fix end-of-section processing
-** backward scrolling
-
-* OPTIONAL
 ** 3d animation
 ** "half page turning"
 ** footer/header
