@@ -25,20 +25,23 @@ final class ZLTextPage {
 	final ZLTextWordCursor StartCursor = new ZLTextWordCursor();
 	final ZLTextWordCursor EndCursor = new ZLTextWordCursor();
 	final ArrayList<ZLTextLineInfo> LineInfos = new ArrayList<ZLTextLineInfo>();
+	int Column0Height;
 	int PaintState = PaintStateEnum.NOTHING_TO_PAINT;
 
 	final ZLTextElementAreaVector TextElementMap = new ZLTextElementAreaVector();
 
 	private int myWidth;
 	private int myHeight;
+	private boolean myTwoColumnView;
 	private int myColumnWidth;
 
-	void setSize(int width, int height, int columnWidth, boolean keepEndNotStart) {
-		if (myWidth == width && myHeight == height && myColumnWidth == columnWidth) {
+	void setSize(int width, int height, boolean twoColumnView, int columnWidth, boolean keepEndNotStart) {
+		if (myWidth == width && myHeight == height && myTwoColumnView == twoColumnView && myColumnWidth == columnWidth) {
 			return;
 		}
 		myWidth = width;
 		myHeight = height;
+		myTwoColumnView = twoColumnView;
 		myColumnWidth = columnWidth;
 
 		if (PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
@@ -102,6 +105,10 @@ final class ZLTextPage {
 		StartCursor.reset();
 		LineInfos.clear();
 		PaintState = PaintStateEnum.END_IS_KNOWN;
+	}
+
+	boolean twoColumnView() {
+		return myTwoColumnView;
 	}
 
 	boolean isEmptyPage() {
