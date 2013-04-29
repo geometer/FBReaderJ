@@ -94,21 +94,17 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLColor getHighlightingColor();
 
 	ZLPaintContext.Size getTextAreaSize() {
-		return new ZLPaintContext.Size(getTextAreaWidth(), getTextAreaHeight());
+		return new ZLPaintContext.Size(getTextColumnWidth(), getTextAreaHeight());
 	}
 
 	int getTextAreaHeight() {
 		return getContextHeight() - getTopMargin() - getBottomMargin();
 	}
 
-	int getTextAreaWidth() {
-		return getContextWidth() - getLeftMargin() - getRightMargin();
-	}
-
 	int getTextColumnWidth() {
 		return twoColumnView()
-			? (getTextAreaWidth() - getSpaceBetweenColumns()) / 2
-			: getTextAreaWidth();
+			? (getContextWidth() - getLeftMargin() - getSpaceBetweenColumns() - getRightMargin()) / 2
+			: getContextWidth() - getLeftMargin() - getRightMargin();
 	}
 
 	final ZLTextStyle getTextStyle() {
