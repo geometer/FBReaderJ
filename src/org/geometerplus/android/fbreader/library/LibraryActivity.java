@@ -76,12 +76,12 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		}
 
 		@Override
-		public String readMetaInfo(ZLFile f, String appData) {
+		public String readMetaInfo(String book, String appData) {
 			if (myServices.get(appData) == null) {
 				return null;
 			}
 			try {
-				return myServices.get(appData).readMetaInfo(f.getPath());
+				return myServices.get(appData).readMetaInfo(book);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 				return null;

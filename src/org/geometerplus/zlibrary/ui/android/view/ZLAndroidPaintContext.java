@@ -19,17 +19,13 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.*;
-
 import android.graphics.*;
 
-import org.geometerplus.fbreader.fbreader.ColorProfile;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
@@ -300,17 +296,19 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void drawImage(int x, int y, ZLImageData imageData, Size maxSize, ScalingType scaling) {
+	public void drawImage(int x, int y, ZLImageData imageData, Size maxSize, ScalingType scaling, DrawMode drawMode) {
 		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
 		if (bitmap != null && !bitmap.isRecycled()) {
-			boolean use = new ZLBooleanOption("Colors", "ImagesBackground", true).getValue();
-			if (use) {
-				String prof = new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
-				if (ColorProfile.DAY.equals(prof)) {
-					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
-				} else {
-					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
-				}
+			switch (drawMode) {
+			case LIGHTEN:
+				myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+				break;
+			case DARKEN:
+				myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
+				break;
+			case STANDARD:
+			default:
+				break;
 			}
 			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myFillPaint);
 			myFillPaint.setXfermode(new Xfermode());
