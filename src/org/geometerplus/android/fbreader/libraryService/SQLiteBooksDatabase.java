@@ -77,7 +77,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 22;
+		final int currentVersion = 24;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -129,6 +129,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables20();
 			case 21:
 				updateTables21();
+			case 22:
+				updateTables22();
+			case 23:
+				updateTables23();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -1362,5 +1366,21 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"type TEXT NOT NULL," +
 				"uid TEXT NOT NULL," +
 				"CONSTRAINT BookUid_Unique UNIQUE (book_id,type,uid))");
+	}
+
+	private void updateTables22() {
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN end_paragraph INTEGER");
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN end_word INTEGER");
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN end_character INTEGER");
+	}
+
+	private void updateTables23() {
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS HighlightingStyle(" +
+				"style_id INTEGER PRIMARY KEY," +
+				"bg_color INTEGER NOT NULL)");
+		myDatabase.execSQL("INSERT INTO HighlightingStyle (style_id, bg_color) VALUES (1, 127*256*256 + 127*256 + 127)");
+		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1");
+		myDatabase.execSQL("UPDATE Bookmarks SET end_paragraph = LENGTH(bookmark_text)");
 	}
 }
