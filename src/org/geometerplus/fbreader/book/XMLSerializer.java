@@ -26,6 +26,8 @@ import java.text.ParseException;
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -262,12 +264,26 @@ class XMLSerializer extends AbstractSerializer {
 			"access-count", String.valueOf(bookmark.getAccessCount())
 		);
 		appendTag(
-			buffer, "position", true,
+			buffer, "start", true,
 			"model", bookmark.ModelId,
 			"paragraph", String.valueOf(bookmark.getParagraphIndex()),
 			"element", String.valueOf(bookmark.getElementIndex()),
 			"char", String.valueOf(bookmark.getCharIndex())
 		);
+		final ZLTextPosition end = bookmark.getEnd();
+		if (end != null) {
+			appendTag(
+				buffer, "end", true,
+				"paragraph", String.valueOf(end.getParagraphIndex()),
+				"element", String.valueOf(end.getElementIndex()),
+				"char", String.valueOf(end.getCharIndex())
+			);
+		} else {
+			appendTag(
+				buffer, "end", true,
+				"length", String.valueOf(bookmark.getLength())
+			);
+		}
 		closeTag(buffer, "bookmark");
 		return buffer.toString();
 	}
@@ -761,9 +777,12 @@ class XMLSerializer extends AbstractSerializer {
 		private Date myAccessDate;
 		private int myAccessCount;
 		private String myModelId;
-		private int myParagraphIndex;
-		private int myElementIndex;
-		private int myCharIndex;
+		private int myStartParagraphIndex;
+		private int myStartElementIndex;
+		private int myStartCharIndex;
+		private int myEndParagraphIndex;
+		private int myEndElementIndex;
+		private int myEndCharIndex;
 		private boolean myIsVisible;
 
 		public Bookmark getBookmark() {
@@ -783,9 +802,12 @@ class XMLSerializer extends AbstractSerializer {
 			myAccessDate = null;
 			myAccessCount = 0;
 			myModelId = null;
-			myParagraphIndex = 0;
-			myElementIndex = 0;
-			myCharIndex = 0;
+			myStartParagraphIndex = 0;
+			myStartElementIndex = 0;
+			myStartCharIndex = 0;
+			myEndParagraphIndex = -1;
+			myEndElementIndex = -1;
+			myEndCharIndex = -1;
 			myIsVisible = false;
 
 			myState = State.READ_NOTHING;
@@ -799,11 +821,13 @@ class XMLSerializer extends AbstractSerializer {
 			myBookmark = new Bookmark(
 				myId, myBookId, myBookTitle, myText.toString(),
 				myCreationDate, myModificationDate, myAccessDate, myAccessCount,
-				myModelId, myParagraphIndex, myElementIndex, myCharIndex, myIsVisible
+				myModelId,
+				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
+				myEndParagraphIndex, myEndElementIndex, myEndCharIndex,
+				myIsVisible
 			);
 		}
 
-		//appendTagWithContent(buffer, "text", bookmark.getText());
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			switch (myState) {
@@ -838,12 +862,27 @@ class XMLSerializer extends AbstractSerializer {
 						} catch (Exception e) {
 							throw new SAXException("XML parsing error", e);
 						}
-					} else if ("position".equals(localName)) {
+					} else if ("start".equals(localName)) {
 						try {
 							myModelId = attributes.getValue("model");
-							myParagraphIndex = Integer.parseInt(attributes.getValue("paragraph"));
-							myElementIndex = Integer.parseInt(attributes.getValue("element"));
-							myCharIndex = Integer.parseInt(attributes.getValue("char"));
+							myStartParagraphIndex = Integer.parseInt(attributes.getValue("paragraph"));
+							myStartElementIndex = Integer.parseInt(attributes.getValue("element"));
+							myStartCharIndex = Integer.parseInt(attributes.getValue("char"));
+						} catch (Exception e) {
+							throw new SAXException("XML parsing error", e);
+						}
+					} else if ("end".equals(localName)) {
+						try {
+							final String para = attributes.getValue("paragraph");
+							if (para != null) {
+								myEndParagraphIndex = Integer.parseInt(para);
+								myEndElementIndex = Integer.parseInt(attributes.getValue("element"));
+								myEndCharIndex = Integer.parseInt(attributes.getValue("char"));
+							} else {
+								myEndParagraphIndex = Integer.parseInt(attributes.getValue("length"));
+								myEndElementIndex = -1;
+								myEndCharIndex = -1;
+							}
 						} catch (Exception e) {
 							throw new SAXException("XML parsing error", e);
 						}

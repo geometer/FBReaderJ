@@ -839,7 +839,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		final StringBuilder sql = new StringBuilder("SELECT")
 			.append(" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,")
 			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
-			.append("bm.model_id,bm.paragraph,bm.word,bm.char")
+			.append("bm.model_id,bm.paragraph,bm.word,bm.char,")
+			.append("bm.end_paragraph,bm.end_word,bm.end_character,")
 			.append(" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id")
 			.append(" WHERE");
 		if (query.Book != null) {
@@ -864,7 +865,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				(int)cursor.getLong(9),
 				(int)cursor.getLong(10),
 				(int)cursor.getLong(11),
-				true
+				(int)cursor.getLong(12),
+				cursor.isNull(13) ? -1 : (int)cursor.getLong(13),
+				cursor.isNull(14) ? -1 : (int)cursor.getLong(14),
+				query.Visible
 			));
 		}
 		cursor.close();

@@ -86,8 +86,22 @@ public abstract class BooksDatabase {
 	protected abstract void setLabel(long bookId, String label);
 	protected abstract void removeLabel(long bookId, String label);
 
-	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex, boolean isVisible) {
-		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex, isVisible);
+	protected Bookmark createBookmark(
+		long id, long bookId, String bookTitle, String text,
+		Date creationDate, Date modificationDate, Date accessDate, int accessCounter,
+		String modelId,
+		int start_paragraphIndex, int start_wordIndex, int start_charIndex,
+		int end_paragraphIndex, int end_wordIndex, int end_charIndex,
+		boolean isVisible
+	) {
+		return new Bookmark(
+			id, bookId, bookTitle, text,
+			creationDate, modificationDate, accessDate, accessCounter,
+			modelId,
+			start_paragraphIndex, start_wordIndex, start_charIndex,
+			end_paragraphIndex, end_wordIndex, end_charIndex,
+			isVisible
+		);
 	}
 
 	protected abstract List<Bookmark> loadBookmarks(BookmarkQuery query);
