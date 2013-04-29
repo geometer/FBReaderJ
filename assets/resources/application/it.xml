@@ -304,6 +304,10 @@
 				<node name="summaryOn" value="Disabilita pulsanti luce (potrebbe non funzionare per alcuni dispositivi"/>
 				<node name="summaryOff" value="Non tentare di disabilitare i pulsanti luce"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Regolazione della luminosità dello schermo">
 				<node name="summaryOn" value="Trascinando il dito su / giù lungo il lato sinistro dello schermo"/>
 				<node name="summaryOff" value="Disabilitato"/>
@@ -536,6 +540,7 @@
 			<node name="right" value="Margine destro"/>
 			<node name="top" value="Margine superiore"/>
 			<node name="bottom" value="Margine inferiore"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Barra di scorrimento">
 			<node name="summary" value="Impostazioni barra di scorrimento &amp; piè di pagina"/>

@@ -440,6 +440,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			prepareTextLine(page, info, x, y);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			labels[++index] = page.TextElementMap.size();
+			if (index == page.Column0Height) {
+				y = getTopMargin();
+				x += getTextColumnWidth() + getSpaceBetweenColumns();
+			}
 		}
 
 		x = getLeftMargin();
@@ -449,6 +453,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			drawTextLine(page, info, labels[index], labels[index + 1], x, y);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			++index;
+			if (index == page.Column0Height) {
+				y = getTopMargin();
+				x += getTextColumnWidth() + getSpaceBetweenColumns();
+			}
 		}
 
 		final ZLTextRegion selectedElementRegion = getSelectedRegion(page);
@@ -549,7 +557,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private synchronized float computeCharsPerPage() {
 		setTextStyle(ZLTextStyleCollection.Instance().getBaseStyle());
 
-		final int textWidth = getTextAreaWidth();
+		final int textWidth = getTextColumnWidth();
 		final int textHeight = getTextAreaHeight();
 
 		final int num = myModel.getParagraphsNumber();
@@ -837,6 +845,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		result.setCursor(start);
 		int textAreaHeight = getTextAreaHeight();
 		page.LineInfos.clear();
+		page.Column0Height = 0;
+		boolean nextParagraph;
 		do {
 			resetTextStyle();
 			final ZLTextParagraphCursor paragraphCursor = result.getParagraphCursor();
@@ -847,17 +857,38 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			while (info.EndElementIndex != endIndex) {
 				info = processTextLine(paragraphCursor, info.EndElementIndex, info.EndCharIndex, endIndex);
 				textAreaHeight -= info.Height + info.Descent;
-				if (textAreaHeight < 0 && page.LineInfos.size() > 0) {
-					break;
+				if (textAreaHeight < 0 && page.LineInfos.size() > page.Column0Height) {
+					if (page.Column0Height == 0 && page.twoColumnView()) {
+						textAreaHeight = getTextAreaHeight();
+						textAreaHeight -= info.Height + info.Descent;
+						page.Column0Height = page.LineInfos.size();
+					} else {
+						break;
+					}
 				}
 				textAreaHeight -= info.VSpaceAfter;
 				result.moveTo(info.EndElementIndex, info.EndCharIndex);
 				page.LineInfos.add(info);
 				if (textAreaHeight < 0) {
-					break;
+					if (page.Column0Height == 0 && page.twoColumnView()) {
+						textAreaHeight = getTextAreaHeight();
+						page.Column0Height = page.LineInfos.size();
+					} else {
+						break;
+					}
 				}
 			}
-		} while (result.isEndOfParagraph() && result.nextParagraph() && !result.getParagraphCursor().isEndOfSection() && textAreaHeight >= 0);
+			nextParagraph = result.isEndOfParagraph() && result.nextParagraph();
+			if (nextParagraph && result.getParagraphCursor().isEndOfSection()) {
+				if (page.Column0Height == 0 && page.twoColumnView() && !page.LineInfos.isEmpty()) {
+					textAreaHeight = getTextAreaHeight();
+					page.Column0Height = page.LineInfos.size();
+				}
+			}
+		} while (nextParagraph && textAreaHeight >= 0 &&
+				 (!result.getParagraphCursor().isEndOfSection() ||
+				  page.LineInfos.size() == page.Column0Height)
+				);
 		resetTextStyle();
 	}
 
@@ -1215,7 +1246,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private synchronized void preparePaintInfo(ZLTextPage page) {
-		page.setSize(getTextAreaWidth(), getTextAreaHeight(), getTextColumnWidth(), page == myPreviousPage);
+		page.setSize(getTextAreaWidth(), getTextAreaHeight(), twoColumnView(), getTextColumnWidth(), page == myPreviousPage);
 
 		if (page.PaintState == PaintStateEnum.NOTHING_TO_PAINT || page.PaintState == PaintStateEnum.READY) {
 			return;
@@ -1272,7 +1303,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				if (!page.StartCursor.isStartOfText()) {
 					switch (myScrollingMode) {
 						case ScrollingMode.NO_OVERLAPPING:
-							page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+							page.StartCursor.setCursor(findStartOfPrevousPage(page.StartCursor));
 							break;
 						case ScrollingMode.KEEP_LINES:
 						{
@@ -1282,14 +1313,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 								page.findLineFromEnd(endCursor, 1);
 							}
 							if (!endCursor.isNull()) {
-								ZLTextWordCursor startCursor = findStart(endCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight());
+								ZLTextWordCursor startCursor = findStartOfPrevousPage(endCursor);
 								if (startCursor.samePositionAs(page.StartCursor)) {
-									page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+									page.StartCursor.setCursor(findStartOfPrevousPage(page.StartCursor));
 								} else {
 									page.StartCursor.setCursor(startCursor);
 								}
 							} else {
-								page.StartCursor.setCursor(findStart(page.StartCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+								page.StartCursor.setCursor(findStartOfPrevousPage(page.StartCursor));
 							}
 							break;
 						}
@@ -1311,7 +1342,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				buildInfos(page, page.StartCursor, page.EndCursor);
 				break;
 			case PaintStateEnum.END_IS_KNOWN:
-				page.StartCursor.setCursor(findStart(page.EndCursor, SizeUnit.PIXEL_UNIT, getTextAreaHeight()));
+				page.StartCursor.setCursor(findStartOfPrevousPage(page.EndCursor));
 				buildInfos(page, page.StartCursor, page.EndCursor);
 				break;
 		}
@@ -1402,6 +1433,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	private ZLTextWordCursor findStartOfPrevousPage(ZLTextWordCursor end) {
+		if (twoColumnView()) {
+			end = findStart(end, SizeUnit.PIXEL_UNIT, getTextAreaHeight());
+		}
+		end = findStart(end, SizeUnit.PIXEL_UNIT, getTextAreaHeight());
+		return end;
+	}
+
 	private ZLTextWordCursor findStart(ZLTextWordCursor end, int unit, int size) {
 		final ZLTextWordCursor start = new ZLTextWordCursor(end);
 		size -= paragraphSize(start, true, unit);
@@ -1424,7 +1463,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (unit == SizeUnit.PIXEL_UNIT) {
 			boolean sameStart = start.samePositionAs(end);
 			if (!sameStart && start.isEndOfParagraph() && end.isStartOfParagraph()) {
-				ZLTextWordCursor startCopy = start;
+				ZLTextWordCursor startCopy = new ZLTextWordCursor(start);
 				startCopy.nextParagraph();
 				sameStart = startCopy.samePositionAs(end);
 			}

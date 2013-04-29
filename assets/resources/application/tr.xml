@@ -313,6 +313,10 @@
 				<node name="summaryOn" value="Düğme ışıklarını kapat (bazı cihazlarda çalışmamaktadır)"/>
 				<node name="summaryOff" value="Düğme ışıklarına müdahale etme"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ekran parlaklığı ayarı">
 				<node name="summaryOn" value="Parmağınızı ekranın sol yanında yukarı aşağı sürükleyerek parlaklığı ayarlayın"/>
 				<node name="summaryOff" value="Devre dışı"/>
@@ -545,6 +549,7 @@
 			<node name="right" value="Sağ kenar"/>
 			<node name="top" value="Üst kenar"/>
 			<node name="bottom" value="Alt kenar"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="İlerleme göstergesi">
 			<node name="summary" value="Kaydırma Çubuğu  &amp; altbilgi ayarları"/>
