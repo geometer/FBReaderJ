@@ -93,8 +93,16 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 
 	public synchronized void unbind() {
 		if (myContext != null && myInterface != null) {
-			myContext.unregisterReceiver(myReceiver);
-			myContext.unbindService(this);
+			try {
+				myContext.unregisterReceiver(myReceiver);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				myContext.unbindService(this);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			myInterface = null;
 			myContext = null;
 		}
