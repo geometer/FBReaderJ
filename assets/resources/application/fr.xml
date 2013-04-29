@@ -313,6 +313,10 @@
 				<node name="summaryOn" value="Désactive la lumière des boutons (ne fonctionne pas sur certains appareils)"/>
 				<node name="summaryOff" value="Ne pas essayer de désactiver la lumière des boutons"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
 				<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
 				<node name="summaryOff" value="Contrôle désactivé"/>
@@ -549,6 +553,7 @@
 			<node name="right" value="Marge de droite"/>
 			<node name="top" value="Marge du haut"/>
 			<node name="bottom" value="Marge du bas"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Barre de défilement">
 			<node name="summary" value="Configuration de la barre &amp; pied de page"/>

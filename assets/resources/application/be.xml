@@ -326,6 +326,10 @@
 				<node name="summaryOn" value="Выключаць сьвятло кнопак (не працуе на некаторых прыладах)"/>
 				<node name="summaryOff" value="Не спрабаваць выключаць сьвятло кнопак"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Рэґуляваньне яркасьці экрану">
 				<node name="summaryOn" value="Перасоўваньнем пальца ўверх-уніз па левым баку экрану"/>
 				<node name="summaryOff" value="Выключана"/>
@@ -562,6 +566,7 @@
 			<node name="right" value="Правае поле"/>
 			<node name="top" value="Верхняе поле"/>
 			<node name="bottom" value="Ніжняе поле"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Паказальнік праґрэсу">
 			<node name="summary" value="Налады гартача і прыпятка"/>
