@@ -30,19 +30,17 @@ final class ZLTextPage {
 
 	final ZLTextElementAreaVector TextElementMap = new ZLTextElementAreaVector();
 
-	private int myWidth;
+	private int myColumnWidth;
 	private int myHeight;
 	private boolean myTwoColumnView;
-	private int myColumnWidth;
 
-	void setSize(int width, int height, boolean twoColumnView, int columnWidth, boolean keepEndNotStart) {
-		if (myWidth == width && myHeight == height && myTwoColumnView == twoColumnView && myColumnWidth == columnWidth) {
+	void setSize(int columnWidth, int height, boolean twoColumnView, boolean keepEndNotStart) {
+		if (myColumnWidth == columnWidth && myHeight == height && myColumnWidth == columnWidth) {
 			return;
 		}
-		myWidth = width;
+		myColumnWidth = columnWidth;
 		myHeight = height;
 		myTwoColumnView = twoColumnView;
-		myColumnWidth = columnWidth;
 
 		if (PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
 			LineInfos.clear();
@@ -105,6 +103,14 @@ final class ZLTextPage {
 		StartCursor.reset();
 		LineInfos.clear();
 		PaintState = PaintStateEnum.END_IS_KNOWN;
+	}
+
+	int getTextWidth() {
+		return myColumnWidth;
+	}
+
+	int getTextHeight() {
+		return myHeight;
 	}
 
 	boolean twoColumnView() {
