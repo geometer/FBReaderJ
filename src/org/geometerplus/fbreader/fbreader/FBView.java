@@ -395,12 +395,12 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLColor getSelectedBackgroundColor() {
+	public ZLColor getSelectionBackgroundColor() {
 		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
 	}
 
 	@Override
-	public ZLColor getSelectedForegroundColor() {
+	public ZLColor getSelectionForegroundColor() {
 		return myReader.getColorProfile().SelectionForegroundOption.getValue();
 	}
 
@@ -421,7 +421,7 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLColor getHighlightingColor() {
+	public ZLColor getHighlightingBackgroundColor() {
 		return myReader.getColorProfile().HighlightingOption.getValue();
 	}
 
