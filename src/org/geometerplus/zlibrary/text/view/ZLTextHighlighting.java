@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import org.geometerplus.zlibrary.core.util.ZLColor;
+
 interface ZLTextHighlighting {
 	boolean clear();
 
@@ -27,4 +29,6 @@ interface ZLTextHighlighting {
 	ZLTextPosition getEndPosition();
 	ZLTextElementArea getStartArea(ZLTextPage page);
 	ZLTextElementArea getEndArea(ZLTextPage page);
+
+	ZLColor getBackgroundColor();
 }
