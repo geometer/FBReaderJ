@@ -19,7 +19,9 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-class ZLTextSelection implements ZLTextAbstractHighlighting {
+import org.geometerplus.zlibrary.core.util.ZLColor;
+
+class ZLTextSelection implements ZLTextHighlighting {
 	static class Point {
 		int X;
 		int Y;
@@ -259,6 +261,10 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		}
 		final int cmp = myRightMostRegionSoul.compareTo(lastPageArea);
 		return cmp > 0 || (cmp == 0 && !lastPageArea.isLastInElement());
+	}
+
+	public ZLColor getBackgroundColor() {
+		return myView.getSelectionBackgroundColor();
 	}
 
 	private class Scroller implements Runnable {
