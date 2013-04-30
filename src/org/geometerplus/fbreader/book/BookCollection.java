@@ -619,6 +619,7 @@ public class BookCollection extends AbstractBookCollection {
 				final Book book = getBookById(bookmark.getBookId());
 				if (book != null) {
 					book.HasBookmark = true;
+					fireBookEvent(BookEvent.BookmarksUpdated, book);
 				}
 			}
 		}
@@ -631,6 +632,7 @@ public class BookCollection extends AbstractBookCollection {
 				final Book book = getBookById(bookmark.getBookId());
 				if (book != null) {
 					book.HasBookmark = myDatabase.hasVisibleBookmark(bookmark.getBookId());
+					fireBookEvent(BookEvent.BookmarksUpdated, book);
 				}
 			}
 		}
