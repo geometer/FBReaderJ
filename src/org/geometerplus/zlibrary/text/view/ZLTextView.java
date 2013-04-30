@@ -73,6 +73,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public synchronized void setModel(ZLTextModel model) {
 		ZLTextParagraphCursorCache.clear();
 
+		mySelection.clear();
+		myHighlightingsByStart.clear();
+		myHighlightingsByEnd.clear();
+
 		myModel = model;
 		myCurrentPage.reset();
 		myPreviousPage.reset();
