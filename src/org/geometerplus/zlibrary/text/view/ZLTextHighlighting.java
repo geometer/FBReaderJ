@@ -19,41 +19,16 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-class ZLTextHighlighting implements ZLTextAbstractHighlighting {
-	private ZLTextPosition myStartPosition;
-	private ZLTextPosition myEndPosition;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
-	void setup(ZLTextPosition start, ZLTextPosition end) {
-		myStartPosition = new ZLTextFixedPosition(start);
-		myEndPosition = new ZLTextFixedPosition(end);
-	}
+interface ZLTextHighlighting {
+	boolean clear();
 
-	public boolean clear() {
-		if (isEmpty()) {
-			return false;
-		}
-		myStartPosition = null;
-		myEndPosition = null;
-		return true;
-	}
+	boolean isEmpty();
+	ZLTextPosition getStartPosition();
+	ZLTextPosition getEndPosition();
+	ZLTextElementArea getStartArea(ZLTextPage page);
+	ZLTextElementArea getEndArea(ZLTextPage page);
 
-	public boolean isEmpty() {
-		return myStartPosition == null;
-	}
-
-	public ZLTextPosition getStartPosition() {
-		return myStartPosition;
-	}
-
-	public ZLTextPosition getEndPosition() {
-		return myEndPosition;
-	}
-
-	public ZLTextElementArea getStartArea(ZLTextPage page) {
-		return page.TextElementMap.getFirstAfter(myStartPosition);
-	}
-
-	public ZLTextElementArea getEndArea(ZLTextPage page) {
-		return page.TextElementMap.getLastBefore(myEndPosition);
-	}
+	ZLColor getBackgroundColor();
 }

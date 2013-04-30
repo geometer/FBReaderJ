@@ -88,10 +88,10 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLFile getWallpaperFile();
 	public abstract ZLPaintContext.WallpaperMode getWallpaperMode();
 	public abstract ZLColor getBackgroundColor();
-	public abstract ZLColor getSelectedBackgroundColor();
-	public abstract ZLColor getSelectedForegroundColor();
+	public abstract ZLColor getSelectionBackgroundColor();
+	public abstract ZLColor getSelectionForegroundColor();
+	public abstract ZLColor getHighlightingBackgroundColor();
 	public abstract ZLColor getTextColor(ZLTextHyperlink hyperlink);
-	public abstract ZLColor getHighlightingColor();
 
 	ZLPaintContext.Size getTextAreaSize() {
 		return new ZLPaintContext.Size(getTextColumnWidth(), getTextAreaHeight());
@@ -319,7 +319,7 @@ abstract class ZLTextViewBase extends ZLView {
 				}
 
 				if (markStart < length) {
-					context.setFillColor(getHighlightingColor());
+					context.setFillColor(getHighlightingBackgroundColor());
 					int endPos = Math.min(markStart + markLen, length);
 					final int endX = x + context.getStringWidth(str, offset + markStart, endPos - markStart);
 					context.fillRectangle(x, y - context.getStringHeight(), endX - 1, y + context.getDescent());
