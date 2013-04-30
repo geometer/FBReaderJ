@@ -860,7 +860,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				(int)cursor.getLong(9),
 				(int)cursor.getLong(10),
 				(int)cursor.getLong(11),
-				true
+				query.Visible
 			));
 		}
 		cursor.close();
