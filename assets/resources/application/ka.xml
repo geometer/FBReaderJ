@@ -890,28 +890,4 @@
 		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
 		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
 	</node>
-	<node name="pdfPlugin">
-		<node name="bookOptions" value="Book Options" toBeTranslated="true"/>
-		<node name="save" value="Save" toBeTranslated="true"/>
-		<node name="crop" value="Crop" toBeTranslated="true">
-			<node name="top" value="Top:" toBeTranslated="true"/>
-			<node name="bottom" value="Bottom:" toBeTranslated="true"/>
-			<node name="right" value="Right:" toBeTranslated="true"/>
-			<node name="left" value="Left:" toBeTranslated="true"/>
-		</node>
-		<node name="traversal" value="In page traversal" toBeTranslated="true">
-			<node name="x" value="horiz.:" toBeTranslated="true"/>
-			<node name="y" value="vert.:" toBeTranslated="true"/>
-		</node>
-		<node name="zoomMode" value="Zoom Mode" toBeTranslated="true">
-			<node name="free" value="Free Zoom" toBeTranslated="true"/>
-			<node name="fixed" value="Fixed Zoom:" toBeTranslated="true"/>
-			<node name="fitPage" value="Fit Page" toBeTranslated="true"/>
-			<node name="fitWidth" value="Fit Width" toBeTranslated="true"/>
-			<node name="fitHeight" value="Fit Height" toBeTranslated="true"/>
-			<node name="screenPercent" value="Screen Percent" toBeTranslated="true"/>
-			<node name="pagePercent" value="Page Percent" toBeTranslated="true"/>
-		</node>
-		<node name="pageWay" value="Page way around" toBeTranslated="true"/>
-	</node>
 </resources>

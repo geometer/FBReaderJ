@@ -885,28 +885,4 @@
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 	</node>
-	<node name="pdfPlugin">
-		<node name="bookOptions" value="Book Options"/>
-		<node name="save" value="Save"/>
-		<node name="crop" value="Crop">
-			<node name="top" value="Top:"/>
-			<node name="bottom" value="Bottom:"/>
-			<node name="right" value="Right:"/>
-			<node name="left" value="Left:"/>
-		</node>
-		<node name="traversal" value="In page traversal">
-			<node name="x" value="horiz.:"/>
-			<node name="y" value="vert.:"/>
-		</node>
-		<node name="zoomMode" value="Zoom Mode">
-			<node name="free" value="Free Zoom"/>
-			<node name="fixed" value="Fixed Zoom:"/>
-			<node name="fitPage" value="Fit Page"/>
-			<node name="fitWidth" value="Fit Width"/>
-			<node name="fitHeight" value="Fit Height"/>
-			<node name="screenPercent" value="Screen Percent"/>
-			<node name="pagePercent" value="Page Percent"/>
-		</node>
-		<node name="pageWay" value="Page way around"/>
-	</node>
 </resources>
