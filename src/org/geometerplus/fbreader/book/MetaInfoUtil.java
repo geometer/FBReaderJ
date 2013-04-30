@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 public class MetaInfoUtil {
 	
 	public static interface PluginMetaInfoReader {
-		String readMetaInfo(ZLFile f, String appData);
+		String readMetaInfo(String book, String appData);
 		public ZLImage readImage(ZLFile f, String appData);
 	}
 	

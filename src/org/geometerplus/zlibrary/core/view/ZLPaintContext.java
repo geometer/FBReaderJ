@@ -166,7 +166,7 @@ abstract public class ZLPaintContext {
 	}
 
 	abstract public Size imageSize(ZLImageData image, Size maxSize, ScalingType scaling);
-	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling);
+	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling, DrawMode drawMode);
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
@@ -174,4 +174,11 @@ abstract public class ZLPaintContext {
 	abstract public void drawPolygonalLine(int[] xs, int ys[]);
 	abstract public void fillPolygon(int[] xs, int[] ys);
 	abstract public void drawOutline(int[] xs, int ys[]);
+	
+	public enum DrawMode {
+		STANDARD,
+		DARKEN,
+		LIGHTEN
+	}
 }
+

@@ -120,23 +120,8 @@ public class Book extends TitledEntity {
 		readMetaInfo(getPlugin());
 	}
 
-	private static class Reader extends ZLXMLReaderAdapter {
-		public Book book = null;
-		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			try {
-				if ("MetaInfo".equals(tag)) {
-					book.setTitle(attributes.getValue("title"));
-					book.addAuthor(attributes.getValue("author"));
-					book.addTag(attributes.getValue("subject"));
-				}
-			} catch (Throwable e) {
-			}
-			return false;
-		}
-	}
-	
 	private void readMetaInfo(FormatPlugin plugin) throws BookReadingException {
+		String oldxml = SerializerUtil.serialize(this);
 		myEncoding = null;
 		myLanguage = null;
 		setTitle(null);
@@ -152,22 +137,17 @@ public class Book extends TitledEntity {
 		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
 		if (fplugin != null) {
 			try {
-				String meta = MetaInfoUtil.PMIReader.readMetaInfo(File, ((PluginFormatPlugin)fplugin).getPackage());
-				Reader r = new Reader();
-				r.book = this;
-				try {
-					r.read(new ByteArrayInputStream(meta.getBytes("UTF-8")));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				String xml = MetaInfoUtil.PMIReader.readMetaInfo(oldxml, ((PluginFormatPlugin)fplugin).getPackage());
+				Book book = SerializerUtil.deserializeBook(xml);
+				updateFrom(book);
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}
 		} else {
 			plugin.readMetaInfo(this);
-			if (myUids == null || myUids.isEmpty()) {
-				plugin.readUids(this);
-			}
+		}
+		if (myUids == null || myUids.isEmpty()) {
+			plugin.readUids(this);
 		}
 
 		if (isTitleEmpty()) {

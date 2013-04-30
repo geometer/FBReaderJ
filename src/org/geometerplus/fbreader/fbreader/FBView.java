@@ -23,7 +23,10 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext.DrawMode;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
@@ -33,6 +36,9 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
+
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 
 public final class FBView extends ZLTextView {
 	private FBReaderApp myReader;
@@ -634,5 +640,18 @@ public final class FBView extends ZLTextView {
 	@Override
 	public Animation getAnimationType() {
 		return ScrollingPreferences.Instance().AnimationOption.getValue();
+	}
+
+	@Override
+	protected DrawMode getDrawMode() {
+		if (new ZLBooleanOption("Colors", "ImagesBackground", true).getValue()) {
+			String prof = new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
+			if (ColorProfile.DAY.equals(prof)) {
+				return DrawMode.DARKEN;
+			} else {
+				return DrawMode.LIGHTEN;
+			}
+		}
+		return DrawMode.STANDARD;
 	}
 }
