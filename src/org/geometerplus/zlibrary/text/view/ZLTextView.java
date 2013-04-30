@@ -61,13 +61,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private ZLTextRegion.Soul mySelectedRegionSoul;
 	private boolean myHighlightSelectedRegion = true;
 
-	private ZLTextSelection mySelection;
-	private ZLTextHighlighting myHighlighting;
+	private final ZLTextSelection mySelection = new ZLTextSelection(this);
+	private final ZLTextManualHighlighting myHighlighting = new ZLTextManualHighlighting(this);
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
-		mySelection = new ZLTextSelection(this);
-		myHighlighting = new ZLTextHighlighting();
 	}
 
 	public synchronized void setModel(ZLTextModel model) {
@@ -744,14 +742,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private void drawBackgroung(
-		ZLTextAbstractHighlighting highligting, ZLColor color,
+		ZLTextHighlighting highlighting,
 		ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y
 	) {
-		if (!highligting.isEmpty() && from != to) {
+		if (!highlighting.isEmpty() && from != to) {
 			final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 			final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
-			final ZLTextElementArea selectionStartArea = highligting.getStartArea(page);
-			final ZLTextElementArea selectionEndArea = highligting.getEndArea(page);
+			final ZLTextElementArea selectionStartArea = highlighting.getStartArea(page);
+			final ZLTextElementArea selectionEndArea = highlighting.getEndArea(page);
 			if (selectionStartArea != null
 				&& selectionEndArea != null
 				&& selectionStartArea.compareTo(toArea) <= 0
@@ -769,7 +767,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				} else {
 					right = selectionEndArea.XEnd;
 				}
-				getContext().setFillColor(color);
+				getContext().setFillColor(highlighting.getBackgroundColor());
 				getContext().fillRectangle(left, top, right, bottom);
 			}
 		}
@@ -779,8 +777,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y) {
-		drawBackgroung(mySelection, getSelectedBackgroundColor(), page, info, from, to, x, y);
-		drawBackgroung(myHighlighting, getHighlightingColor(), page, info, from, to, x, y);
+		drawBackgroung(mySelection, page, info, from, to, x, y);
+		drawBackgroung(myHighlighting, page, info, from, to, x, y);
 
 		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
@@ -801,7 +799,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					drawWord(
 						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
 						mySelection.isAreaSelected(area)
-							? getSelectedForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+							? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
 					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
@@ -840,7 +838,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalShift(),
 				word, start, len, area.AddHyphenationSign,
 				mySelection.isAreaSelected(area)
-					? getSelectedForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+					? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 			);
 		}
 	}
