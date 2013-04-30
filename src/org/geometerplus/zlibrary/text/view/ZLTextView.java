@@ -61,12 +61,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private boolean myHighlightSelectedRegion = true;
 
 	private ZLTextSelection mySelection;
-	private ZLTextHighlighting myHighlighting;
+	private ZLTextManualHighlighting myHighlighting;
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
 		mySelection = new ZLTextSelection(this);
-		myHighlighting = new ZLTextHighlighting();
+		myHighlighting = new ZLTextManualHighlighting();
 	}
 
 	public synchronized void setModel(ZLTextModel model) {
@@ -743,7 +743,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private void drawBackgroung(
-		ZLTextAbstractHighlighting highligting, ZLColor color,
+		ZLTextHighlighting highligting, ZLColor color,
 		ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y
 	) {
 		if (!highligting.isEmpty() && from != to) {
