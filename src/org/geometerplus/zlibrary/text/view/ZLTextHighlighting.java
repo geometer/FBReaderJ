@@ -21,14 +21,18 @@ package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
-interface ZLTextHighlighting {
-	boolean clear();
+public abstract class ZLTextHighlighting implements Comparable<ZLTextHighlighting> {
+	public abstract boolean isEmpty();
 
-	boolean isEmpty();
-	ZLTextPosition getStartPosition();
-	ZLTextPosition getEndPosition();
-	ZLTextElementArea getStartArea(ZLTextPage page);
-	ZLTextElementArea getEndArea(ZLTextPage page);
+	public abstract ZLTextPosition getStartPosition();
+	public abstract ZLTextPosition getEndPosition();
+	public abstract ZLTextElementArea getStartArea(ZLTextPage page);
+	public abstract ZLTextElementArea getEndArea(ZLTextPage page);
 
-	ZLColor getBackgroundColor();
+	public abstract ZLColor getBackgroundColor();
+
+	public int compareTo(ZLTextHighlighting highlighting) {
+		final int cmp = getStartPosition().compareTo(highlighting.getStartPosition());
+		return cmp != 0 ? cmp : getEndPosition().compareTo(highlighting.getEndPosition());
+	}
 }

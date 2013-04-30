@@ -292,7 +292,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		if (cursor == ZLTextSelectionCursor.Left) {
-			if (mySelection.hasAPartBeforePage(page)) {
+			if (mySelection.hasPartBeforePage(page)) {
 				return null;
 			}
 			final ZLTextElementArea selectionStartArea = mySelection.getStartArea(page);
@@ -300,7 +300,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				return new ZLTextSelection.Point(selectionStartArea.XStart, selectionStartArea.YEnd);
 			}
 		} else {
-			if (mySelection.hasAPartAfterPage(page)) {
+			if (mySelection.hasPartAfterPage(page)) {
 				return null;
 			}
 			final ZLTextElementArea selectionEndArea = mySelection.getEndArea(page);
@@ -1542,7 +1542,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (selectionStartArea != null) {
 			return selectionStartArea.YStart;
 		}
-		if (mySelection.hasAPartBeforePage(myCurrentPage)) {
+		if (mySelection.hasPartBeforePage(myCurrentPage)) {
 			final ZLTextElementArea firstArea = myCurrentPage.TextElementMap.getFirstArea();
 			return firstArea != null ? firstArea.YStart : 0;
 		} else {
@@ -1559,7 +1559,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (selectionEndArea != null) {
 			return selectionEndArea.YEnd;
 		}
-		if (mySelection.hasAPartAfterPage(myCurrentPage)) {
+		if (mySelection.hasPartAfterPage(myCurrentPage)) {
 			final ZLTextElementArea lastArea = myCurrentPage.TextElementMap.getLastArea();
 			return lastArea != null ? lastArea.YEnd : 0;
 		} else {

@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
-class ZLTextManualHighlighting implements ZLTextHighlighting {
+class ZLTextManualHighlighting extends ZLTextHighlighting {
 	private final ZLTextView myView;
 	private ZLTextPosition myStartPosition;
 	private ZLTextPosition myEndPosition;
@@ -44,26 +44,32 @@ class ZLTextManualHighlighting implements ZLTextHighlighting {
 		return true;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return myStartPosition == null;
 	}
 
+	@Override
 	public ZLTextPosition getStartPosition() {
 		return myStartPosition;
 	}
 
+	@Override
 	public ZLTextPosition getEndPosition() {
 		return myEndPosition;
 	}
 
+	@Override
 	public ZLTextElementArea getStartArea(ZLTextPage page) {
 		return page.TextElementMap.getFirstAfter(myStartPosition);
 	}
 
+	@Override
 	public ZLTextElementArea getEndArea(ZLTextPage page) {
 		return page.TextElementMap.getLastBefore(myEndPosition);
 	}
 
+	@Override
 	public ZLColor getBackgroundColor() {
 		return myView.getHighlightingBackgroundColor();
 	}
