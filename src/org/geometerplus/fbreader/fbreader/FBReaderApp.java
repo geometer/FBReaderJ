@@ -272,6 +272,29 @@ public final class FBReaderApp extends ZLApplication {
 			Collection.saveBook(book, false);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
+			for (BookmarkQuery query = new BookmarkQuery(book, 20); ; query = query.next()) {
+				final List<Bookmark> bookmarks = Collection.bookmarks(query);
+				if (bookmarks.isEmpty()) {
+					break;
+				}
+				for (Bookmark b : bookmarks) {
+					if (b.ModelId == null) {
+						ZLTextPosition end = b.getEnd();
+						if (end == null) {
+							// TODO: compute end and save bookmark
+							continue;
+						}
+						BookTextView.addHighlighting(
+							new ZLTextSimpleHighlighting(BookTextView, b, end) {
+								@Override
+								public ZLColor getBackgroundColor() {
+									return new ZLColor(127, 127, 127);
+								}
+							}
+						);
+					}
+				}
+			}
 			BookTextView.gotoPosition(Collection.getStoredPosition(book.getId()));
 			if (bookmark == null) {
 				setView(BookTextView);

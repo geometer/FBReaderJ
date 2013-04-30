@@ -840,7 +840,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			.append(" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,")
 			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
 			.append("bm.model_id,bm.paragraph,bm.word,bm.char,")
-			.append("bm.end_paragraph,bm.end_word,bm.end_character,")
+			.append("bm.end_paragraph,bm.end_word,bm.end_character")
 			.append(" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id")
 			.append(" WHERE");
 		if (query.Book != null) {
@@ -883,14 +883,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		if (bookmark.getId() == -1) {
 			if (myInsertBookmarkStatement == null) {
 				myInsertBookmarkStatement = myDatabase.compileStatement(
-					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,visible) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 				);
 			}
 			statement = myInsertBookmarkStatement;
 		} else {
 			if (myUpdateBookmarkStatement == null) {
 				myUpdateBookmarkStatement = myDatabase.compileStatement(
-					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, visible = ? WHERE bookmark_id = ?"
+					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ? WHERE bookmark_id = ?"
 				);
 			}
 			statement = myUpdateBookmarkStatement;
@@ -906,7 +906,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindLong(8, bookmark.ParagraphIndex);
 		statement.bindLong(9, bookmark.ElementIndex);
 		statement.bindLong(10, bookmark.CharIndex);
-		statement.bindLong(11, bookmark.IsVisible ? 1 : 0);
+		final ZLTextPosition end = bookmark.getEnd();
+		if (end != null) {
+			statement.bindLong(11, end.getParagraphIndex());
+			statement.bindLong(12, end.getElementIndex());
+			statement.bindLong(13, end.getCharIndex());
+		} else {
+			statement.bindLong(11, bookmark.getLength());
+			statement.bindNull(12);
+			statement.bindNull(13);
+		}
+		statement.bindLong(14, bookmark.IsVisible ? 1 : 0);
 
 		if (statement == myInsertBookmarkStatement) {
 			return statement.executeInsert();

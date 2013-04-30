@@ -273,9 +273,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public void highlight(ZLTextPosition start, ZLTextPosition end) {
 		removeManualHighlightings();
-		final ZLTextHighlighting h = new ZLTextManualHighlighting(this, start, end);
+		addHighlighting(new ZLTextManualHighlighting(this, start, end));
+	}
+
+	public final void addHighlighting(ZLTextHighlighting h) {
 		myHighlightingsByStart.add(h);
 		myHighlightingsByEnd.add(h);
+		Application.getViewWidget().reset();
+		Application.getViewWidget().repaint();
+	}
+
+	public final void addHighlightings(Collection<ZLTextHighlighting> hilites) {
+		myHighlightingsByStart.addAll(hilites);
+		myHighlightingsByEnd.addAll(hilites);
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
