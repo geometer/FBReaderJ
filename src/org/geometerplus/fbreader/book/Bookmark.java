@@ -186,12 +186,6 @@ mainLoop:
 		return new Bookmark(book, modelId, startCursor, buffer.Cursor, buffer.Builder.toString(), isVisible);
 	}
 
-	/*
-	public Bookmark(Book book, String modelId, ZLTextWordCursor cursor, int maxLength, boolean isVisible) {
-		this(book, modelId, cursor, createBookmarkText(cursor, maxLength), isVisible);
-	}
-	*/
-
 	public Bookmark(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
 		super(start);
 
