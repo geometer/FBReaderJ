@@ -258,11 +258,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private boolean removeManualHighlightings() {
+	public boolean removeHighlightings(Class<? extends ZLTextHighlighting> type) {
 		boolean result = false;
 		for (Iterator<ZLTextHighlighting> it = myHighlightingsByStart.iterator(); it.hasNext(); ) {
 			final ZLTextHighlighting h = it.next();
-			if (h instanceof ZLTextManualHighlighting) {
+			if (type.isInstance(h)) {
 				it.remove();
 				myHighlightingsByEnd.remove(h);
 				result = true;
@@ -272,7 +272,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void highlight(ZLTextPosition start, ZLTextPosition end) {
-		removeManualHighlightings();
+		removeHighlightings(ZLTextManualHighlighting.class);
 		addHighlighting(new ZLTextManualHighlighting(this, start, end));
 	}
 
@@ -291,7 +291,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearHighlighting() {
-		if (removeManualHighlightings()) {
+		if (removeHighlightings(ZLTextManualHighlighting.class)) {
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();
 		}

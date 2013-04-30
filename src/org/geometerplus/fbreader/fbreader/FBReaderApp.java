@@ -128,6 +128,18 @@ public final class FBReaderApp extends ZLApplication {
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
 
+		collection.addListener(new IBookCollection.Listener() {
+			public void onBookEvent(BookEvent event, Book book) {
+				if (event == BookEvent.BookmarksUpdated &&
+					Model != null && book.equals(Model.Book)) {
+					setBookmarkHighlightings();
+				}
+			}
+
+			public void onBuildEvent(IBookCollection.Status status) {
+			}
+		});
+
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 
@@ -238,6 +250,21 @@ public final class FBReaderApp extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 
+	private void setBookmarkHighlightings() {
+		BookTextView.removeHighlightings(BookmarkHighlighting.class);
+		for (BookmarkQuery query = new BookmarkQuery(Model.Book, 20); ; query = query.next()) {
+			final List<Bookmark> bookmarks = Collection.bookmarks(query);
+			if (bookmarks.isEmpty()) {
+				break;
+			}
+			for (Bookmark b : bookmarks) {
+				if (b.ModelId == null) {
+					BookTextView.addHighlighting(new BookmarkHighlighting(BookTextView, b));
+				}
+			}
+		}
+	}
+
 	synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
 		if (book == null) {
 			book = Collection.getRecentBook(0);
@@ -272,29 +299,7 @@ public final class FBReaderApp extends ZLApplication {
 			Collection.saveBook(book, false);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
-			for (BookmarkQuery query = new BookmarkQuery(book, 20); ; query = query.next()) {
-				final List<Bookmark> bookmarks = Collection.bookmarks(query);
-				if (bookmarks.isEmpty()) {
-					break;
-				}
-				for (Bookmark b : bookmarks) {
-					if (b.ModelId == null) {
-						ZLTextPosition end = b.getEnd();
-						if (end == null) {
-							// TODO: compute end and save bookmark
-							continue;
-						}
-						BookTextView.addHighlighting(
-							new ZLTextSimpleHighlighting(BookTextView, b, end) {
-								@Override
-								public ZLColor getBackgroundColor() {
-									return new ZLColor(127, 127, 127);
-								}
-							}
-						);
-					}
-				}
-			}
+			setBookmarkHighlightings();
 			BookTextView.gotoPosition(Collection.getStoredPosition(book.getId()));
 			if (bookmark == null) {
 				setView(BookTextView);
