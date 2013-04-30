@@ -61,7 +61,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private boolean myHighlightSelectedRegion = true;
 
 	private final ZLTextSelection mySelection = new ZLTextSelection(this);
-	private final ZLTextManualHighlighting myHighlighting = new ZLTextManualHighlighting(this);
+	private final SortedSet<ZLTextHighlighting> myHighlightingsByStart =
+		new TreeSet<ZLTextHighlighting>(ZLTextHighlighting.ByStartComparator);
+	private final SortedSet<ZLTextHighlighting> myHighlightingsByEnd =
+		new TreeSet<ZLTextHighlighting>(ZLTextHighlighting.ByEndComparator);
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
@@ -251,14 +254,30 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	private boolean removeManualHighlightings() {
+		boolean result = false;
+		for (Iterator<ZLTextHighlighting> it = myHighlightingsByStart.iterator(); it.hasNext(); ) {
+			final ZLTextHighlighting h = it.next();
+			if (h instanceof ZLTextManualHighlighting) {
+				it.remove();
+				myHighlightingsByEnd.remove(h);
+				result = true;
+			}
+		}
+		return result;
+	}
+
 	public void highlight(ZLTextPosition start, ZLTextPosition end) {
-		myHighlighting.setup(start, end);
+		removeManualHighlightings();
+		final ZLTextHighlighting h = new ZLTextManualHighlighting(this, start, end);
+		myHighlightingsByStart.add(h);
+		myHighlightingsByEnd.add(h);
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
 
 	public void clearHighlighting() {
-		if (myHighlighting.clear()) {
+		if (removeManualHighlightings()) {
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();
 		}
@@ -775,7 +794,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y) {
 		drawBackgroung(mySelection, page, info, from, to, x, y);
-		drawBackgroung(myHighlighting, page, info, from, to, x, y);
+		for (ZLTextHighlighting h : myHighlightingsByStart) {
+			drawBackgroung(h, page, info, from, to, x, y);
+		}
 
 		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;

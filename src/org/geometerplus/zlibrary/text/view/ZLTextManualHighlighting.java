@@ -23,30 +23,18 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 
 class ZLTextManualHighlighting extends ZLTextHighlighting {
 	private final ZLTextView myView;
-	private ZLTextPosition myStartPosition;
-	private ZLTextPosition myEndPosition;
+	private final ZLTextPosition myStartPosition;
+	private final ZLTextPosition myEndPosition;
 
-	ZLTextManualHighlighting(ZLTextView view) {
+	ZLTextManualHighlighting(ZLTextView view, ZLTextPosition start, ZLTextPosition end) {
 		myView = view;
-	}
-
-	void setup(ZLTextPosition start, ZLTextPosition end) {
 		myStartPosition = new ZLTextFixedPosition(start);
 		myEndPosition = new ZLTextFixedPosition(end);
 	}
 
-	public boolean clear() {
-		if (isEmpty()) {
-			return false;
-		}
-		myStartPosition = null;
-		myEndPosition = null;
-		return true;
-	}
-
 	@Override
 	public boolean isEmpty() {
-		return myStartPosition == null;
+		return false;
 	}
 
 	@Override

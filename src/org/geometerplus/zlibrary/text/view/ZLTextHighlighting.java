@@ -19,9 +19,11 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import java.util.Comparator;
+
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
-public abstract class ZLTextHighlighting implements Comparable<ZLTextHighlighting> {
+public abstract class ZLTextHighlighting {
 	public abstract boolean isEmpty();
 
 	public abstract ZLTextPosition getStartPosition();
@@ -31,8 +33,19 @@ public abstract class ZLTextHighlighting implements Comparable<ZLTextHighlightin
 
 	public abstract ZLColor getBackgroundColor();
 
-	public int compareTo(ZLTextHighlighting highlighting) {
-		final int cmp = getStartPosition().compareTo(highlighting.getStartPosition());
-		return cmp != 0 ? cmp : getEndPosition().compareTo(highlighting.getEndPosition());
-	}
+	public static final Comparator<ZLTextHighlighting> ByStartComparator =
+		new Comparator<ZLTextHighlighting>() {
+			public int compare(ZLTextHighlighting h0, ZLTextHighlighting h1) {
+				final int cmp = h0.getStartPosition().compareTo(h1.getStartPosition());
+				return cmp != 0 ? cmp : h0.getEndPosition().compareTo(h1.getEndPosition());
+			}
+		};
+
+	public static final Comparator<ZLTextHighlighting> ByEndComparator =
+		new Comparator<ZLTextHighlighting>() {
+			public int compare(ZLTextHighlighting h0, ZLTextHighlighting h1) {
+				final int cmp = h0.getEndPosition().compareTo(h1.getEndPosition());
+				return cmp != 0 ? cmp : h0.getStartPosition().compareTo(h1.getStartPosition());
+			}
+		};
 }
