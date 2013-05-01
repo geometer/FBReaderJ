@@ -161,8 +161,4 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 	public List<String> externalDTDs() {
 		return Collections.emptyList();
 	}
-
-	public ZLNetworkException getException() {
-		return null;
-	}
 }

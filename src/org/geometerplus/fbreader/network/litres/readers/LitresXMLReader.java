@@ -6,6 +6,7 @@ import java.util.Map;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 import org.geometerplus.fbreader.network.atom.ATOMId;
 import org.geometerplus.fbreader.network.atom.FormattedBuffer;
+import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationXMLReader;
 import org.geometerplus.fbreader.network.litres.LitresBookItem;
 import org.geometerplus.fbreader.network.litres.LitresFeedMetadata;
 import org.geometerplus.fbreader.network.litres.genre.LitResGenre;
@@ -14,9 +15,8 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-public class LitresXMLReader extends ZLXMLReaderAdapter {
+public class LitresXMLReader extends LitResAuthenticationXMLReader {
 	private int myIndex;
 
 	private String myBookId;
@@ -79,6 +79,7 @@ public class LitresXMLReader extends ZLXMLReaderAdapter {
 	private LitresEntry myEntry;
 	
 	public LitresXMLReader() {
+		super("");
 	}
 	
 	public void setHandler(ATOMFeedHandler<LitresFeedMetadata,LitresEntry> handler) {

@@ -27,14 +27,14 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public class LitResNetworkRequest extends ZLNetworkRequest {
-	public final ZLXMLReaderAdapter Reader;
+	public final LitResAuthenticationXMLReader Reader;
 
 	static String clean(String url) {
 		final int index = url.indexOf('?');
 		return index != -1 ? url.substring(0, index) : url;
 	}
 
-	public LitResNetworkRequest(String url, ZLXMLReaderAdapter reader) {
+	public LitResNetworkRequest(String url, LitResAuthenticationXMLReader reader) {
 		super(clean(url));
 		final int index = url.indexOf('?');
 		if (index != -1) {

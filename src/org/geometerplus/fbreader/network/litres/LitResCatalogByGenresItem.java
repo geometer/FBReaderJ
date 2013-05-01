@@ -4,9 +4,6 @@ import java.util.LinkedList;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.litres.LitresCatalogItem.State;
 import org.geometerplus.fbreader.network.litres.genre.LitResGenre;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
@@ -15,10 +12,10 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 public class LitResCatalogByGenresItem extends LitresCatalogItem {
-	LinkedList<LitResGenre> myTree;
+	LinkedList<LitResGenre> myGenres;
 	public LitResCatalogByGenresItem(LinkedList<LitResGenre> tree, INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
 		super(link, title, summary, urls);
-		myTree = tree;
+		myGenres = tree;
 	}
 
 	@Override
@@ -27,8 +24,8 @@ public class LitResCatalogByGenresItem extends LitresCatalogItem {
 		myLoadingState = litresLink.createOperationData(loader);
 	
 		NetworkCatalogItem item = null;
-		System.out.println("================== TREE: "+myTree.size());
-		for (LitResGenre genre : myTree) {
+		System.out.println("================== GENRES: "+myGenres.size());
+		for (LitResGenre genre : myGenres) {
 			System.out.println(">> "+genre.Title+", "+genre.Children.isEmpty());
 			UrlInfoCollection<UrlInfo> urlByType = new UrlInfoCollection<UrlInfo>();
 			

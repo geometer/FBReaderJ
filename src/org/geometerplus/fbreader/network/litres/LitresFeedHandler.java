@@ -7,9 +7,10 @@ import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
+import org.geometerplus.fbreader.network.litres.genre.LitResGenre;
+import org.geometerplus.fbreader.network.litres.genre.LitResGenreMap;
 import org.geometerplus.fbreader.network.litres.readers.LitresEntry;
-import org.geometerplus.fbreader.network.opds.OPDSBookItem;
-import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,LitresEntry> {
