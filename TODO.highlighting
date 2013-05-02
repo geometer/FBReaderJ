@@ -1,7 +1,8 @@
 DONE highlight bookmarks
 * show highlights in footnote view
 DONE don't draw all bookmarks, filter by position
-* restore end position for old bookmarks
+DONE restore end position for old bookmarks
+	** save restored position
 DONE save bookmark style
 * change style (color) for bookmarks: user interface
 DONE watch bookmark changes

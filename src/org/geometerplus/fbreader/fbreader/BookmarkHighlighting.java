@@ -29,6 +29,10 @@ public final class BookmarkHighlighting extends ZLTextSimpleHighlighting {
 	final IBookCollection myCollection;
 	final Bookmark myBookmark;
 
+	private static ZLTextPosition startPosition(Bookmark bookmark) {
+		return new ZLTextFixedPosition(bookmark.getParagraphIndex(), bookmark.getElementIndex(), 0);
+	}
+
 	private static ZLTextPosition endPosition(Bookmark bookmark) {
 		final ZLTextPosition end = bookmark.getEnd();
 		if (end != null) {
@@ -39,7 +43,7 @@ public final class BookmarkHighlighting extends ZLTextSimpleHighlighting {
 	}
 
 	BookmarkHighlighting(ZLTextView view, IBookCollection collection, Bookmark bookmark) {
-		super(view, bookmark, endPosition(bookmark));
+		super(view, startPosition(bookmark), endPosition(bookmark));
 		myCollection = collection;
 		myBookmark = bookmark;
 	}
