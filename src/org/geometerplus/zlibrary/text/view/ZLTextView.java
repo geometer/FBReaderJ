@@ -61,10 +61,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private boolean myHighlightSelectedRegion = true;
 
 	private final ZLTextSelection mySelection = new ZLTextSelection(this);
-	private final SortedSet<ZLTextHighlighting> myHighlightingsByStart =
-		new TreeSet<ZLTextHighlighting>(ZLTextHighlighting.ByStartComparator);
-	private final SortedSet<ZLTextHighlighting> myHighlightingsByEnd =
-		new TreeSet<ZLTextHighlighting>(ZLTextHighlighting.ByEndComparator);
+	private final SortedSet<ZLTextHighlighting> myHighlightings = new TreeSet<ZLTextHighlighting>();
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
@@ -74,8 +71,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		ZLTextParagraphCursorCache.clear();
 
 		mySelection.clear();
-		myHighlightingsByStart.clear();
-		myHighlightingsByEnd.clear();
+		myHighlightings.clear();
 
 		myModel = model;
 		myCurrentPage.reset();
@@ -260,11 +256,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public boolean removeHighlightings(Class<? extends ZLTextHighlighting> type) {
 		boolean result = false;
-		for (Iterator<ZLTextHighlighting> it = myHighlightingsByStart.iterator(); it.hasNext(); ) {
+		for (Iterator<ZLTextHighlighting> it = myHighlightings.iterator(); it.hasNext(); ) {
 			final ZLTextHighlighting h = it.next();
 			if (type.isInstance(h)) {
 				it.remove();
-				myHighlightingsByEnd.remove(h);
 				result = true;
 			}
 		}
@@ -277,15 +272,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public final void addHighlighting(ZLTextHighlighting h) {
-		myHighlightingsByStart.add(h);
-		myHighlightingsByEnd.add(h);
+		myHighlightings.add(h);
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
 
 	public final void addHighlightings(Collection<ZLTextHighlighting> hilites) {
-		myHighlightingsByStart.addAll(hilites);
-		myHighlightingsByEnd.addAll(hilites);
+		myHighlightings.addAll(hilites);
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
@@ -481,7 +474,20 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		y = getTopMargin();
 		index = 0;
 		for (ZLTextLineInfo info : lineInfos) {
-			drawTextLine(page, info, labels[index], labels[index + 1], x, y);
+			drawHighlightings(page, info, labels[index], labels[index + 1], x, y);
+			y += info.Height + info.Descent + info.VSpaceAfter;
+			++index;
+			if (index == page.Column0Height) {
+				y = getTopMargin();
+				x += page.getTextWidth() + getSpaceBetweenColumns();
+			}
+		}
+
+		x = getLeftMargin();
+		y = getTopMargin();
+		index = 0;
+		for (ZLTextLineInfo info : lineInfos) {
+			drawTextLine(page, info, labels[index], labels[index + 1]);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			++index;
 			if (index == page.Column0Height) {
@@ -773,45 +779,56 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		preparePaintInfo();
 	}
 
-	private void drawBackgroung(
-		ZLTextHighlighting highlighting,
-		ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y
-	) {
-		if (!highlighting.isEmpty() && from != to) {
-			final ZLTextElementArea fromArea = page.TextElementMap.get(from);
-			final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
-			final ZLTextElementArea selectionStartArea = highlighting.getStartArea(page);
-			final ZLTextElementArea selectionEndArea = highlighting.getEndArea(page);
-			if (selectionStartArea != null
-				&& selectionEndArea != null
-				&& selectionStartArea.compareTo(toArea) <= 0
-				&& selectionEndArea.compareTo(fromArea) >= 0) {
-				final int top = y + 1;
-				int left, right, bottom = y + info.Height + info.Descent;
-				if (selectionStartArea.compareTo(fromArea) < 0) {
-					left = x;
-				} else {
-					left = selectionStartArea.XStart;
-				}
-				if (selectionEndArea.compareTo(toArea) > 0) {
-					right = x + page.getTextWidth() - 1;
-					bottom += info.VSpaceAfter;
-				} else {
-					right = selectionEndArea.XEnd;
-				}
-				getContext().setFillColor(highlighting.getBackgroundColor());
-				getContext().fillRectangle(left, top, right, bottom);
+	private void drawHighlightings(ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y) {
+		if (from == to) {
+			return;
+		}
+
+		final LinkedList<ZLTextHighlighting> hilites = new LinkedList<ZLTextHighlighting>();
+		if (mySelection.intersects(page)) {
+			hilites.add(mySelection);
+		}
+		for (ZLTextHighlighting h : myHighlightings) {
+			if (h.intersects(page)) {
+				hilites.add(h);
 			}
+		}
+		if (hilites.isEmpty()) {
+			return;
+		}
+	
+		final ZLTextElementArea fromArea = page.TextElementMap.get(from);
+		final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
+		for (ZLTextHighlighting h : hilites) {
+			final ZLTextElementArea selectionStartArea = h.getStartArea(page);
+			if (selectionStartArea == null || selectionStartArea.compareTo(toArea) > 0) {
+				continue;
+			}
+			final ZLTextElementArea selectionEndArea = h.getEndArea(page);
+			if (selectionEndArea == null || selectionEndArea.compareTo(fromArea) < 0) {
+				continue;
+			}
+
+			final int top = y + 1;
+			int left, right, bottom = y + info.Height + info.Descent;
+			if (selectionStartArea.compareTo(fromArea) < 0) {
+				left = x;
+			} else {
+				left = selectionStartArea.XStart;
+			}
+			if (selectionEndArea.compareTo(toArea) > 0) {
+				right = x + page.getTextWidth() - 1;
+				bottom += info.VSpaceAfter;
+			} else {
+				right = selectionEndArea.XEnd;
+			}
+			getContext().setFillColor(h.getBackgroundColor());
+			getContext().fillRectangle(left, top, right, bottom);
 		}
 	}
 
 	private static final char[] SPACE = new char[] { ' ' };
-	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int x, int y) {
-		drawBackgroung(mySelection, page, info, from, to, x, y);
-		for (ZLTextHighlighting h : myHighlightingsByStart) {
-			drawBackgroung(h, page, info, from, to, x, y);
-		}
-
+	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to) {
 		final ZLPaintContext context = getContext();
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		int index = from;
