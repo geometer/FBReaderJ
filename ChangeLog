@@ -1,6 +1,7 @@
 ===== 1.8 (May ??, 2013) =====
 
 * 2 column text view (in horizontal mode, optional, enabled by default on devices with diagonal > 7")
+* Fixed ePub books scanning
 * Fixed series index representation: 10 instead 1E+1
 
 ===== 1.7.9 (Apr 23, 2013) =====
