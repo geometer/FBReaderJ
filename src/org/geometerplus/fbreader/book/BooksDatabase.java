@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.book;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -109,6 +110,11 @@ public abstract class BooksDatabase {
 	protected abstract List<Bookmark> loadBookmarks(BookmarkQuery query);
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
+
+	protected HighlightingStyle createStyle(int id, int color) {
+		return new HighlightingStyle(id, new ZLColor(color));
+	}
+	protected abstract List<HighlightingStyle> loadStyles();
 
 	protected abstract ZLTextPosition getStoredPosition(long bookId);
 	protected abstract void storePosition(long bookId, ZLTextPosition position);

@@ -19,19 +19,17 @@
 
 package org.geometerplus.fbreader.book;
 
-abstract class AbstractSerializer {
-	public abstract String serialize(BookQuery query);
-	public abstract BookQuery deserializeBookQuery(String data);
+import java.util.Map;
+import java.util.HashMap;
 
-	public abstract String serialize(BookmarkQuery query);
-	public abstract BookmarkQuery deserializeBookmarkQuery(String data);
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
-	public abstract String serialize(Book book);
-	public abstract Book deserializeBook(String data);
+public class HighlightingStyle {
+	public final int Id;
+	public final ZLColor BackgroundColor;
 
-	public abstract String serialize(Bookmark bookmark);
-	public abstract Bookmark deserializeBookmark(String data);
-
-	public abstract String serialize(HighlightingStyle style);
-	public abstract HighlightingStyle deserializeStyle(String data);
+	HighlightingStyle(int id, ZLColor bgColor) {
+		Id = id;
+		BackgroundColor = bgColor;
+	}
 }

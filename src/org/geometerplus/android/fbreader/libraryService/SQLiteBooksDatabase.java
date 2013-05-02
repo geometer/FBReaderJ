@@ -878,6 +878,18 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
+	@Override
+	protected List<HighlightingStyle> loadStyles() {
+		final LinkedList<HighlightingStyle> list = new LinkedList<HighlightingStyle>();
+		final String sql = "SELECT style_id,bg_color FROM HighlightingStyle";
+		final Cursor cursor = myDatabase.rawQuery(sql, null);
+		while (cursor.moveToNext()) {
+			list.add(createStyle((int)cursor.getLong(0), (int)cursor.getLong(1)));
+		}
+		cursor.close();
+		return list;
+	}
+
 	private SQLiteStatement myInsertBookmarkStatement;
 	private SQLiteStatement myUpdateBookmarkStatement;
 	@Override
@@ -1397,9 +1409,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"style_id INTEGER PRIMARY KEY," +
 				"name TEXT," +
 				"bg_color INTEGER NOT NULL)");
-		myDatabase.execSQL("INSERT INTO HighlightingStyle (style_id, name, bg_color) VALUES (1, 'default', 136*256*256 + 138*256 + 133)"); // #888a85
-		myDatabase.execSQL("INSERT INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, 'orange', 245*256*256 + 121*256 + 0)"); // #f57900
-		myDatabase.execSQL("INSERT INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, 'blue', 114*160*256 + 159*256 + 207)"); // #729fcf
+		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (1, 'default', 136*256*256 + 138*256 + 133)"); // #888a85
+		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, 'orange', 245*256*256 + 121*256 + 0)"); // #f57900
+		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, 'blue', 114*160*256 + 159*256 + 207)"); // #729fcf
 		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1");
 		myDatabase.execSQL("UPDATE Bookmarks SET end_paragraph = LENGTH(bookmark_text)");
 	}

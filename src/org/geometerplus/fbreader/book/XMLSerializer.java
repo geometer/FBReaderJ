@@ -25,6 +25,7 @@ import java.text.ParseException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -298,6 +299,32 @@ class XMLSerializer extends AbstractSerializer {
 			final BookmarkDeserializer deserializer = new BookmarkDeserializer();
 			Xml.parse(xml, deserializer);
 			return deserializer.getBookmark();
+		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String serialize(HighlightingStyle style) {
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(buffer, "style", false,
+			"id", String.valueOf(style.Id)
+		);
+		appendTag(buffer, "bg-color", true,
+			"value", String.valueOf(style.BackgroundColor.getIntValue())
+		);
+		closeTag(buffer, "style");
+		return buffer.toString();
+	}
+
+	@Override
+	public HighlightingStyle deserializeStyle(String xml) {
+		try {
+			final StyleDeserializer deserializer = new StyleDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getStyle();
 		} catch (SAXException e) {
 			System.err.println(xml);
 			e.printStackTrace();
@@ -927,6 +954,47 @@ class XMLSerializer extends AbstractSerializer {
 		public void characters(char[] ch, int start, int length) {
 			if (myState == State.READ_TEXT) {
 				myText.append(ch, start, length);
+			}
+		}
+	}
+
+	private static final class StyleDeserializer extends DefaultHandler {
+		private HighlightingStyle myStyle;
+
+		private int myId = -1;
+		private int myColor;
+
+		public HighlightingStyle getStyle() {
+			return myStyle;
+		}
+
+		@Override
+		public void startDocument() {
+			myStyle = null;
+			myId = -1;
+		}
+
+		@Override
+		public void endDocument() {
+			if (myId != -1) {
+				myStyle = new HighlightingStyle(myId, new ZLColor(myColor));
+			}
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if ("style".equals(localName)) {
+				try {
+					myId = Integer.parseInt(attributes.getValue("id"));
+				} catch (Exception e) {
+					throw new SAXException("XML parsing error", e);
+				}
+			} else if ("bg-color".equals(localName)) {
+				try {
+					myColor = Integer.parseInt(attributes.getValue("value"));
+				} catch (Exception e) {
+					throw new SAXException("XML parsing error", e);
+				}
 			}
 		}
 	}

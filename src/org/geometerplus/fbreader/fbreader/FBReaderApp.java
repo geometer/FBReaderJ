@@ -259,7 +259,7 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			for (Bookmark b : bookmarks) {
 				if (b.ModelId == null) {
-					BookTextView.addHighlighting(new BookmarkHighlighting(BookTextView, b));
+					BookTextView.addHighlighting(new BookmarkHighlighting(BookTextView, Collection, b));
 				}
 			}
 		}
