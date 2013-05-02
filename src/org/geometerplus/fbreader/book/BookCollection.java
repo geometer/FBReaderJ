@@ -602,7 +602,10 @@ public class BookCollection extends AbstractBookCollection {
 			// ignore
 		}
 
-		if (file.isArchive()) {
+		final Book book = getBookByFile(file);
+		if (book != null) {
+			newBooks.add(book);
+		} else if (file.isArchive()) {
 			for (ZLFile entry : fileInfos.archiveEntries(file)) {
 				collectBooks(
 					entry, fileInfos,
@@ -610,11 +613,6 @@ public class BookCollection extends AbstractBookCollection {
 					newBooks,
 					doReadMetaInfo
 				);
-			}
-		} else {
-			final Book book = getBookByFile(file);
-			if (book != null) {
-				newBooks.add(book);
 			}
 		}
 	}
