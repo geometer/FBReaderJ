@@ -41,6 +41,6 @@ public final class BookmarkHighlighting extends ZLTextSimpleHighlighting {
 
 	@Override
 	public ZLColor getBackgroundColor() {
-		return new ZLColor(127, 127, 127);
+		return new ZLColor(0x888A85);
 	}
 }

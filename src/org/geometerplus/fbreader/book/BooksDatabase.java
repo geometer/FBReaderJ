@@ -92,7 +92,8 @@ public abstract class BooksDatabase {
 		String modelId,
 		int start_paragraphIndex, int start_wordIndex, int start_charIndex,
 		int end_paragraphIndex, int end_wordIndex, int end_charIndex,
-		boolean isVisible
+		boolean isVisible,
+		int styleId
 	) {
 		return new Bookmark(
 			id, bookId, bookTitle, text,
@@ -100,7 +101,8 @@ public abstract class BooksDatabase {
 			modelId,
 			start_paragraphIndex, start_wordIndex, start_charIndex,
 			end_paragraphIndex, end_wordIndex, end_charIndex,
-			isVisible
+			isVisible,
+			styleId
 		);
 	}
 

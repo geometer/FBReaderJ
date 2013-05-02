@@ -840,8 +840,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			.append(" bm.bookmark_id,bm.book_id,b.title,bm.bookmark_text,")
 			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
 			.append("bm.model_id,bm.paragraph,bm.word,bm.char,")
-			.append("bm.end_paragraph,bm.end_word,bm.end_character")
-			.append(" FROM Bookmarks AS bm INNER JOIN Books AS b ON b.book_id = bm.book_id")
+			.append("bm.end_paragraph,bm.end_word,bm.end_character,")
+			.append("bm.style_id")
+			.append(" FROM Bookmarks AS bm")
+			.append(" INNER JOIN Books AS b ON b.book_id = bm.book_id")
 			.append(" WHERE");
 		if (query.Book != null) {
 			sql.append(" b.book_id = " + query.Book.getId() +" AND");
@@ -868,7 +870,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				(int)cursor.getLong(12),
 				cursor.isNull(13) ? -1 : (int)cursor.getLong(13),
 				cursor.isNull(14) ? -1 : (int)cursor.getLong(14),
-				query.Visible
+				query.Visible,
+				(int)cursor.getLong(15)
 			));
 		}
 		cursor.close();
@@ -1392,8 +1395,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS HighlightingStyle(" +
 				"style_id INTEGER PRIMARY KEY," +
+				"name TEXT," +
 				"bg_color INTEGER NOT NULL)");
-		myDatabase.execSQL("INSERT INTO HighlightingStyle (style_id, bg_color) VALUES (1, 127*256*256 + 127*256 + 127)");
+		myDatabase.execSQL("INSERT INTO HighlightingStyle (style_id, name, bg_color) VALUES (1, 'default', 136*256*256 + 138*256 + 133)"); // #888a85
+		myDatabase.execSQL("INSERT INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, 'orange', 245*256*256 + 121*256 + 0)"); // #f57900
+		myDatabase.execSQL("INSERT INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, 'blue', 114*160*256 + 159*256 + 207)"); // #729fcf
 		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1");
 		myDatabase.execSQL("UPDATE Bookmarks SET end_paragraph = LENGTH(bookmark_text)");
 	}

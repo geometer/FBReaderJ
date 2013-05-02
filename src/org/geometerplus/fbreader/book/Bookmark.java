@@ -42,6 +42,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	private Date myLatestDate;
 	private ZLTextFixedPosition myEnd;
 	private int myLength;
+	private int myStyleId;
 
 	public final String ModelId;
 	public final boolean IsVisible;
@@ -52,7 +53,8 @@ public final class Bookmark extends ZLTextFixedPosition {
 		String modelId,
 		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
 		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
-		boolean isVisible
+		boolean isVisible,
+		int styleId
 	) {
 		super(start_paragraphIndex, start_elementIndex, start_charIndex);
 
@@ -78,6 +80,8 @@ public final class Bookmark extends ZLTextFixedPosition {
 		} else {
 			myLength = end_paragraphIndex;
 		}
+
+		myStyleId = styleId;
 	}
 
 	private static class Buffer {
@@ -197,6 +201,7 @@ mainLoop:
 		ModelId = modelId;
 		IsVisible = isVisible;
 		myEnd = new ZLTextFixedPosition(end);
+		myStyleId = 1;
 	}
 
 	public long getId() {
@@ -205,6 +210,10 @@ mainLoop:
 
 	public long getBookId() {
 		return myBookId;
+	}
+
+	public int getStyleId() {
+		return myStyleId;
 	}
 
 	public String getText() {

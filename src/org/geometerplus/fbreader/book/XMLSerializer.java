@@ -284,6 +284,10 @@ class XMLSerializer extends AbstractSerializer {
 				"length", String.valueOf(bookmark.getLength())
 			);
 		}
+		appendTag(
+			buffer, "style", true,
+			"id", String.valueOf(bookmark.getStyleId())
+		);
 		closeTag(buffer, "bookmark");
 		return buffer.toString();
 	}
@@ -784,6 +788,7 @@ class XMLSerializer extends AbstractSerializer {
 		private int myEndElementIndex;
 		private int myEndCharIndex;
 		private boolean myIsVisible;
+		private int myStyle;
 
 		public Bookmark getBookmark() {
 			return myState == State.READ_NOTHING ? myBookmark : null;
@@ -809,6 +814,7 @@ class XMLSerializer extends AbstractSerializer {
 			myEndElementIndex = -1;
 			myEndCharIndex = -1;
 			myIsVisible = false;
+			myStyle = 1;
 
 			myState = State.READ_NOTHING;
 		}
@@ -824,7 +830,8 @@ class XMLSerializer extends AbstractSerializer {
 				myModelId,
 				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
 				myEndParagraphIndex, myEndElementIndex, myEndCharIndex,
-				myIsVisible
+				myIsVisible,
+				myStyle
 			);
 		}
 
@@ -883,6 +890,12 @@ class XMLSerializer extends AbstractSerializer {
 								myEndElementIndex = -1;
 								myEndCharIndex = -1;
 							}
+						} catch (Exception e) {
+							throw new SAXException("XML parsing error", e);
+						}
+					} else if ("style".equals(localName)) {
+						try {
+							myStyle = Integer.parseInt(attributes.getValue("id"));
 						} catch (Exception e) {
 							throw new SAXException("XML parsing error", e);
 						}
