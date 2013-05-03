@@ -1,4 +1,3 @@
-* repaint highlighting immediately after adding
 DONE highlight bookmarks
 * show highlights in footnote view
 DONE don't draw all bookmarks, filter by position

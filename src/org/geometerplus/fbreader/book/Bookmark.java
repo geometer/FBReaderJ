@@ -201,6 +201,7 @@ mainLoop:
 		if (cursor.isNull()) {
 			return;
 		}
+		cursor = new ZLTextWordCursor(cursor);
 		cursor.moveTo(this);
 
 		ZLTextWord word = null;
