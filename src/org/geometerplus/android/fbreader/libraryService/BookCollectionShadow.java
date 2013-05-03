@@ -417,6 +417,28 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public HighlightingStyle getHighlightingStyle(int styleId) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return SerializerUtil.deserializeStyle(myInterface.getHighlightingStyle(styleId));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
+	public List<HighlightingStyle> highlightingStyles() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeStyleList(myInterface.highlightingStyles());
+		} catch (RemoteException e) {
+			return Collections.emptyList();
+		}
+	}
+
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = LibraryInterface.Stub.asInterface(service);

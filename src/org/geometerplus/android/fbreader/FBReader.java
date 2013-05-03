@@ -940,6 +940,7 @@ public final class FBReader extends Activity {
 			myFBReaderApp.Model.Book,
 			fbView.getModel().getId(),
 			fbView.getSelectionStartPosition(),
+			fbView.getSelectionEndPosition(),
 			text,
 			true
 		);
