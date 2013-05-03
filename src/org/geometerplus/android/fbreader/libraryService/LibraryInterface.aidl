@@ -44,4 +44,7 @@ interface LibraryInterface {
 	List<String> bookmarks(in String query);
 	String saveBookmark(in String bookmark);
 	void deleteBookmark(in String bookmark);
+
+	String getHighlightingStyle(in int styleId);
+	List<String> highlightingStyles();
 }
