@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
-class ZLTextSelection implements ZLTextHighlighting {
+class ZLTextSelection extends ZLTextHighlighting {
 	static class Point {
 		int X;
 		int Y;
@@ -47,6 +47,7 @@ class ZLTextSelection implements ZLTextHighlighting {
 		myView = view;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return myLeftMostRegionSoul == null;
 	}
@@ -164,13 +165,13 @@ class ZLTextSelection implements ZLTextHighlighting {
 		}
 
 		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
-			if (hasAPartAfterPage(page)) {
+			if (hasPartAfterPage(page)) {
 				myView.scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
 			}
 		} else {
-			if (hasAPartBeforePage(page)) {
+			if (hasPartBeforePage(page)) {
 				myView.scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
@@ -185,6 +186,7 @@ class ZLTextSelection implements ZLTextHighlighting {
 			&& myRightMostRegionSoul.compareTo(area) >= 0;
 	}
 
+	@Override
 	public ZLTextPosition getStartPosition() {
 		if (isEmpty()) {
 			return null;
@@ -196,17 +198,22 @@ class ZLTextSelection implements ZLTextHighlighting {
 		);
 	}
 
+	@Override
 	public ZLTextPosition getEndPosition() {
 		if (isEmpty()) {
 			return null;
 		}
+		final ZLTextParagraphCursor cursor =
+			ZLTextParagraphCursor.cursor(myView.getModel(), myRightMostRegionSoul.ParagraphIndex);
+		final ZLTextElement element = cursor.getElement(myRightMostRegionSoul.EndElementIndex);
 		return new ZLTextFixedPosition(
 			myRightMostRegionSoul.ParagraphIndex,
 			myRightMostRegionSoul.EndElementIndex,
-			0
+			element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0
 		);
 	}
 
+	@Override
 	public ZLTextElementArea getStartArea(ZLTextPage page) {
 		if (isEmpty()) {
 			return null;
@@ -223,6 +230,7 @@ class ZLTextSelection implements ZLTextHighlighting {
 		return null;
 	}
 
+	@Override
 	public ZLTextElementArea getEndArea(ZLTextPage page) {
 		if (isEmpty()) {
 			return null;
@@ -239,7 +247,7 @@ class ZLTextSelection implements ZLTextHighlighting {
 		return null;
 	}
 
-	boolean hasAPartBeforePage(ZLTextPage page) {
+	boolean hasPartBeforePage(ZLTextPage page) {
 		if (isEmpty()) {
 			return false;
 		}
@@ -251,7 +259,7 @@ class ZLTextSelection implements ZLTextHighlighting {
 		return cmp < 0 || (cmp == 0 && !firstPageArea.isFirstInElement());
 	}
 
-	boolean hasAPartAfterPage(ZLTextPage page) {
+	boolean hasPartAfterPage(ZLTextPage page) {
 		if (isEmpty()) {
 			return false;
 		}
@@ -263,6 +271,7 @@ class ZLTextSelection implements ZLTextHighlighting {
 		return cmp > 0 || (cmp == 0 && !lastPageArea.isLastInElement());
 	}
 
+	@Override
 	public ZLColor getBackgroundColor() {
 		return myView.getSelectionBackgroundColor();
 	}

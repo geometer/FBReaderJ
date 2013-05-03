@@ -261,6 +261,14 @@ public class LibraryService extends Service {
 		public void deleteBookmark(String serialized) {
 			myCollection.deleteBookmark(SerializerUtil.deserializeBookmark(serialized));
 		}
+
+		public String getHighlightingStyle(int styleId) {
+			return SerializerUtil.serialize(myCollection.getHighlightingStyle(styleId));
+		}
+
+		public List<String> highlightingStyles() {
+			return SerializerUtil.serializeStyleList(myCollection.highlightingStyles());
+		}
 	}
 
 	private volatile LibraryImplementation myLibrary;

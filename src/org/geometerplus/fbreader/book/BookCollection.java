@@ -43,6 +43,9 @@ public class BookCollection extends AbstractBookCollection {
 
 	private volatile Status myStatus = Status.NotStarted;
 
+	private final Map<Integer,HighlightingStyle> myStyles =
+		Collections.synchronizedMap(new TreeMap<Integer,HighlightingStyle>());
+
 	public BookCollection(BooksDatabase db, List<String> bookDirectories) {
 		myDatabase = db;
 		BookDirectories = Collections.unmodifiableList(new ArrayList<String>(bookDirectories));
@@ -617,6 +620,7 @@ public class BookCollection extends AbstractBookCollection {
 				final Book book = getBookById(bookmark.getBookId());
 				if (book != null) {
 					book.HasBookmark = true;
+					fireBookEvent(BookEvent.BookmarksUpdated, book);
 				}
 			}
 		}
@@ -629,6 +633,7 @@ public class BookCollection extends AbstractBookCollection {
 				final Book book = getBookById(bookmark.getBookId());
 				if (book != null) {
 					book.HasBookmark = myDatabase.hasVisibleBookmark(bookmark.getBookId());
+					fireBookEvent(BookEvent.BookmarksUpdated, book);
 				}
 			}
 		}
@@ -650,5 +655,23 @@ public class BookCollection extends AbstractBookCollection {
 
 	public void markHyperlinkAsVisited(Book book, String linkId) {
 		book.markHyperlinkAsVisited(myDatabase, linkId);
+	}
+
+	private synchronized void initStylesTable() {
+		if (myStyles.isEmpty()) {
+			for (HighlightingStyle style : myDatabase.loadStyles()) {
+				myStyles.put(style.Id, style);
+			}
+		}
+	}
+
+	public HighlightingStyle getHighlightingStyle(int styleId) {
+		initStylesTable();
+		return myStyles.get(styleId);
+	}
+
+	public List<HighlightingStyle> highlightingStyles() {
+		initStylesTable();
+		return new ArrayList<HighlightingStyle>(myStyles.values());
 	}
 }

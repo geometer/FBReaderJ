@@ -168,6 +168,11 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 		}
 	}
 
+	public void moveTo(ZLTextPosition position) {
+		moveToParagraph(position.getParagraphIndex());
+		moveTo(position.getElementIndex(), position.getCharIndex());
+	}
+
 	public void moveTo(int wordIndex, int charIndex) {
 		if (!isNull()) {
 			if (wordIndex == 0 && charIndex == 0) {
