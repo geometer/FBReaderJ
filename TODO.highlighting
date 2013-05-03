@@ -1,5 +1,5 @@
 DONE highlight bookmarks
-* show highlights in footnote view
+DONE show highlights in footnote view
 DONE don't draw all bookmarks, filter by position
 DONE restore end position for old bookmarks
 	** save restored position
