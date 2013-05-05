@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.animation.*;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -37,7 +36,6 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private final Activity myActivity;
-	private final boolean myAnimated;
 
 	public PopupWindow(Activity activity, RelativeLayout root, Location location) {
 		super(activity);
@@ -56,21 +54,18 @@ public class PopupWindow extends LinearLayout {
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
-				myAnimated = true;
 				break;
 			case Bottom:
 				inflater.inflate(R.layout.control_panel_bottom, this, true);
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
-				myAnimated = false;
 				break;
 			case Floating:
 				inflater.inflate(R.layout.control_panel_floating, this, true);
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
-				myAnimated = false;
 				break;
 		}
 
@@ -79,10 +74,6 @@ public class PopupWindow extends LinearLayout {
 		root.addView(this, p);
 
 		setVisibility(View.GONE);
-
-		if (android.os.Build.VERSION.SDK_INT >= 11) {
-			initAnimator();
-		}
 	}
 
 	Activity getActivity() {
@@ -94,29 +85,6 @@ public class PopupWindow extends LinearLayout {
 		return true;
 	}
 
-	private Animator myShowHideAnimator;
-	private Animator.AnimatorListener myEndShowListener;
-	private Animator.AnimatorListener myEndHideListener;
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void initAnimator() {
-		myEndShowListener = new AnimatorListenerAdapter() {
-			@Override
-			public void onAnimationEnd(Animator animator) {
-				myShowHideAnimator = null;
-				requestLayout();
-			}
-		};
-
-		myEndHideListener = new AnimatorListenerAdapter() {
-			@Override
-			public void onAnimationEnd(Animator animator) {
-				myShowHideAnimator = null;
-				setVisibility(View.GONE);
-			}
-		};
-	}
-
 	public void show() {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
@@ -126,28 +94,7 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private void showInternal() {
-		if (myAnimated && android.os.Build.VERSION.SDK_INT >= 11) {
-			showAnimatedInternal();
-		} else {
-			setVisibility(View.VISIBLE);
-		}
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void showAnimatedInternal() {
-		if (myShowHideAnimator != null) {
-			myShowHideAnimator.end();
-		}
-		if (getVisibility() == View.VISIBLE) {
-			return;
-		}
 		setVisibility(View.VISIBLE);
-		setAlpha(0);
-		final AnimatorSet animator = new AnimatorSet();
-		animator.play(ObjectAnimator.ofFloat(this, "alpha", 1));
-		animator.addListener(myEndShowListener);
-		myShowHideAnimator = animator;
-		animator.start();
 	}
 
 	public void hide() {
@@ -159,27 +106,7 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private void hideInternal() {
-		if (myAnimated && android.os.Build.VERSION.SDK_INT >= 11) {
-			hideAnimatedInternal();
-		} else {
-			setVisibility(View.GONE);
-		}
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void hideAnimatedInternal() {
-		if (myShowHideAnimator != null) {
-			myShowHideAnimator.end();
-		}
-		if (getVisibility() == View.GONE) {
-			return;
-		}
-		setAlpha(1);
-		final AnimatorSet animator = new AnimatorSet();
-		animator.play(ObjectAnimator.ofFloat(this, "alpha", 0));
-		animator.addListener(myEndHideListener);
-		myShowHideAnimator = animator;
-		animator.start();
+		setVisibility(View.GONE);
 	}
 
 	public void addView(View view) {

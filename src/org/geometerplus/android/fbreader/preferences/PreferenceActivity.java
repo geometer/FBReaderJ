@@ -79,9 +79,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				myCollection.reset(false);
 			}
 		});
-		if (AndroidFontUtil.areExternalFontsSupported()) {
-			directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
-		}
 		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
