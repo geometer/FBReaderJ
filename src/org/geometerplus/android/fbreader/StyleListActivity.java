@@ -19,6 +19,9 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,34 +30,63 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.book.*;
+
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+
 public class StyleListActivity extends ListActivity {
-	static final String LIST_SIZE = "listSize";
-	static final String ITEM_TITLE = "title";
-	static final String ITEM_SUMMARY = "summary";
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+	private Bookmark myBookmark;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		final ActionListAdapter adapter = new ActionListAdapter(getIntent());
-		setListAdapter(adapter);
-		getListView().setOnItemClickListener(adapter);
-		setResult(-1);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				myBookmark = SerializerUtil.deserializeBookmark(
+					getIntent().getStringExtra(FBReader.BOOKMARK_KEY)
+				);
+				if (myBookmark == null) {
+					finish();
+					return;
+				}
+				final List<HighlightingStyle> styles = myCollection.highlightingStyles();
+				if (styles.isEmpty()) {
+					finish();
+					return;
+				}
+				final ActionListAdapter adapter = new ActionListAdapter(styles);
+				setListAdapter(adapter);
+				getListView().setOnItemClickListener(adapter);
+			}
+		});
+	}
+
+	@Override
+	protected void onDestroy() {
+		myCollection.unbind();
+		super.onDestroy();
 	}
 
 	private class ActionListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
-		private final Intent myIntent;
+		private final List<HighlightingStyle> myStyles;
 
-		ActionListAdapter(Intent intent) {
-			myIntent = intent;
+		ActionListAdapter(List<HighlightingStyle> styles) {
+			myStyles = new ArrayList<HighlightingStyle>(styles);
 		}
 
 		public final int getCount() {
-			return myIntent.getIntExtra(LIST_SIZE, 0);
+			return myStyles.size();
 		}
 
-		public final Integer getItem(int position) {
-			return position;
+		public final HighlightingStyle getItem(int position) {
+			return myStyles.get(position);
 		}
 
 		public final long getItemId(int position) {
@@ -64,30 +96,21 @@ public class StyleListActivity extends ListActivity {
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final View view = convertView != null
 				? convertView
-				: LayoutInflater.from(parent.getContext()).inflate(R.layout.cancel_item, parent, false);
-			final TextView titleView = (TextView)view.findViewById(R.id.cancel_item_title);
-			final TextView summaryView = (TextView)view.findViewById(R.id.cancel_item_summary);
-			final String title = myIntent.getStringExtra(ITEM_TITLE + position);
-			final String summary = myIntent.getStringExtra(ITEM_SUMMARY + position);
+				: LayoutInflater.from(parent.getContext()).inflate(R.layout.style_item, parent, false);
+			final TextView titleView = (TextView)view.findViewById(R.id.style_item_title);
+			final String title = "Style " + getItem(position).Id;
 			titleView.setText(title);
-			if (summary != null) {
-				summaryView.setVisibility(View.VISIBLE);
-				summaryView.setText(summary);
-				titleView.setLayoutParams(new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-				));
-			} else {
-				summaryView.setVisibility(View.GONE);
-				titleView.setLayoutParams(new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT
-				));
-			}
 			return view;
 		}
 
-		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			setResult((int)id + 1);
-			finish();
+		public final void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+			myCollection.bindToService(StyleListActivity.this, new Runnable() {
+				public void run() {
+					myBookmark.setStyleId(getItem(position).Id);
+					myCollection.saveBookmark(myBookmark);
+					finish();
+				}
+			});
 		}
 	}
 }

@@ -898,14 +898,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		if (bookmark.getId() == -1) {
 			if (myInsertBookmarkStatement == null) {
 				myInsertBookmarkStatement = myDatabase.compileStatement(
-					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 				);
 			}
 			statement = myInsertBookmarkStatement;
 		} else {
 			if (myUpdateBookmarkStatement == null) {
 				myUpdateBookmarkStatement = myDatabase.compileStatement(
-					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ? WHERE bookmark_id = ?"
+					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ?, style_id = ? WHERE bookmark_id = ?"
 				);
 			}
 			statement = myUpdateBookmarkStatement;
@@ -932,12 +932,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			statement.bindNull(13);
 		}
 		statement.bindLong(14, bookmark.IsVisible ? 1 : 0);
+		statement.bindLong(15, bookmark.getStyleId());
 
 		if (statement == myInsertBookmarkStatement) {
 			return statement.executeInsert();
 		} else {
 			final long id = bookmark.getId();
-			statement.bindLong(12, id);
+			statement.bindLong(16, id);
 			statement.execute();
 			return id;
 		}
