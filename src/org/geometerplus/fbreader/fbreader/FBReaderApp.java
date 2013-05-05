@@ -258,6 +258,24 @@ public final class FBReaderApp extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 
+	public Bookmark addSelectionBookmark() {
+		final FBView fbView = getTextView();
+		final String text = fbView.getSelectedText();
+
+		final Bookmark bookmark = new Bookmark(
+			Model.Book,
+			fbView.getModel().getId(),
+			fbView.getSelectionStartPosition(),
+			fbView.getSelectionEndPosition(),
+			text,
+			true
+		);
+		Collection.saveBookmark(bookmark);
+		fbView.clearSelection();
+
+		return bookmark;
+	}
+
 	private void setBookmarkHighlightings(ZLTextView view, String modelId) {
 		view.removeHighlightings(BookmarkHighlighting.class);
 		for (BookmarkQuery query = new BookmarkQuery(Model.Book, 20); ; query = query.next()) {

@@ -226,6 +226,9 @@
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Стиль %s"/>
+	</node>
 	<node name="selection" value="Пометка">
 		<node name="copyToClipboard" value="Скопировать в буфер"/>
 		<node name="openInDictionary" value="Посмотреть в словаре"/>

@@ -212,6 +212,9 @@
 		<node name="forward" value="Avanti"/>
 		<node name="close" value="Chiudi FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Selezione">
 		<node name="copyToClipboard" value="Copia negli Appunti"/>
 		<node name="openInDictionary" value="Apri nel Dizionario"/>

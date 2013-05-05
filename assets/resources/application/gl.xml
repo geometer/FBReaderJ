@@ -211,6 +211,9 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Selección">
 		<node name="copyToClipboard" value="Copiar no portapapeis"/>
 		<node name="openInDictionary" value="Abrir no dicionario"/>

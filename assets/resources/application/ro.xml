@@ -211,6 +211,9 @@
 		<node name="forward" value="Înainte"/>
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Copiati în clipboard"/>
 		<node name="openInDictionary" value="Open in dictionar"/>
