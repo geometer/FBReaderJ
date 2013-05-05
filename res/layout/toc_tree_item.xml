@@ -4,7 +4,7 @@
 	android:layout_height="wrap_content"
 	android:minHeight="?android:attr/listPreferredItemHeight"
 	android:paddingLeft="5dip"
-	android:paddingRight="8dp"
+	android:paddingRight="8dip"
 	android:orientation="horizontal"
 >
 	<ImageView

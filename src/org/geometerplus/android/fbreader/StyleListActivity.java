@@ -25,10 +25,14 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.widget.*;
 import android.view.*;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 import org.geometerplus.fbreader.book.*;
 
@@ -97,9 +101,17 @@ public class StyleListActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.style_item, parent, false);
+			final HighlightingStyle style = getItem(position);
+
+			final ImageView colorView = (ImageView)view.findViewById(R.id.style_item_color);
+			colorView.setImageDrawable(new ColorDrawable(ZLAndroidColorUtil.rgb(style.BackgroundColor)));
+
 			final TextView titleView = (TextView)view.findViewById(R.id.style_item_title);
-			final String title = "Style " + getItem(position).Id;
+			String title = ZLResource.resource("highlightingStyleMenu")
+				.getResource("style").getValue();
+			title = title.replace("%s", String.valueOf(style.Id));
 			titleView.setText(title);
+
 			return view;
 		}
 

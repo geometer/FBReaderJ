@@ -211,6 +211,9 @@
 		<node name="forward" value="Előre"/>
 		<node name="close" value="FBReader bezárása"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Kijelölés">
 		<node name="copyToClipboard" value="Vágólapra másol"/>
 		<node name="openInDictionary" value="Megnyitás szótárban"/>
