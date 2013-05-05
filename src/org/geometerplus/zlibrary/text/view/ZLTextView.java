@@ -1530,16 +1530,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myCurrentPage.TextElementMap.binarySearch(x, y);
 	}
 
-	@Override
-	public boolean onFingerMove(int x, int y) {
-		return false;
-	}
-
-	@Override
-	public boolean onFingerRelease(int x, int y) {
-		return false;
-	}
-
 	public void hideSelectedRegionBorder() {
 		myHighlightSelectedRegion = false;
 		Application.getViewWidget().reset();
