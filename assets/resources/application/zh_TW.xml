@@ -216,6 +216,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="刪除書籤"/>
 	</node>
 	<node name="selection" value="選擇">
 		<node name="copyToClipboard" value="複製"/>

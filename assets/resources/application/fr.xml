@@ -219,6 +219,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Supprimer le marque-page"/>
 	</node>
 	<node name="selection" value="Sélection">
 		<node name="copyToClipboard" value="Copier dans le presse-papiers"/>

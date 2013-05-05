@@ -26,8 +26,8 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.book.*;
 
 public final class BookmarkHighlighting extends ZLTextSimpleHighlighting {
-	final IBookCollection myCollection;
-	final Bookmark myBookmark;
+	final IBookCollection Collection;
+	final Bookmark Bookmark;
 
 	private static ZLTextPosition startPosition(Bookmark bookmark) {
 		return new ZLTextFixedPosition(bookmark.getParagraphIndex(), bookmark.getElementIndex(), 0);
@@ -44,13 +44,13 @@ public final class BookmarkHighlighting extends ZLTextSimpleHighlighting {
 
 	BookmarkHighlighting(ZLTextView view, IBookCollection collection, Bookmark bookmark) {
 		super(view, startPosition(bookmark), endPosition(bookmark));
-		myCollection = collection;
-		myBookmark = bookmark;
+		Collection = collection;
+		Bookmark = bookmark;
 	}
 
 	@Override
 	public ZLColor getBackgroundColor() {
-		final HighlightingStyle bmStyle = myCollection.getHighlightingStyle(myBookmark.getStyleId());
+		final HighlightingStyle bmStyle = Collection.getHighlightingStyle(Bookmark.getStyleId());
 		return bmStyle != null ? bmStyle.BackgroundColor : new ZLColor(255, 255, 255);
 	}
 }
