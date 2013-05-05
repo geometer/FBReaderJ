@@ -228,6 +228,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Deletar marcador"/>
 	</node>
 	<node name="selection" value="Seleção">
 		<node name="copyToClipboard" value="Copiar para o clipboard"/>

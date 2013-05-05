@@ -220,6 +220,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Lesezeichen löschen"/>
 	</node>
 	<node name="selection" value="Auswahl">
 		<node name="copyToClipboard" value="In die Zwischenablage kopieren"/>

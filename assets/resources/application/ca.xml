@@ -230,6 +230,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Esborra punt de llibre"/>
 	</node>
 	<node name="selection" value="Selección" toBeTranslated="true">
 		<node name="copyToClipboard" value="Copiar al portapapeles" toBeTranslated="true"/>

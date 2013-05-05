@@ -231,6 +231,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Премахни отбелязването"/>
 	</node>
 	<node name="selection" value="Етикет">
 		<node name="copyToClipboard" value="Копирай в буфера"/>
