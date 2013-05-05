@@ -143,6 +143,38 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	public synchronized void gotoHighlighting(ZLTextHighlighting highlighting) {
+		myPreviousPage.reset();
+		myNextPage.reset();
+		boolean doRepaint = false;
+		if (myCurrentPage.StartCursor.isNull()) {
+			doRepaint = true;
+			preparePaintInfo(myCurrentPage);
+		}
+		if (myCurrentPage.StartCursor.isNull()) {
+			return;
+		}
+		if (!highlighting.intersects(myCurrentPage)) {
+			gotoPosition(highlighting.getStartPosition().getParagraphIndex(), 0, 0);
+			preparePaintInfo(myCurrentPage);
+		}
+		if (myCurrentPage.EndCursor.isNull()) {
+			preparePaintInfo(myCurrentPage);
+		}
+		while (!highlighting.intersects(myCurrentPage)) {
+			doRepaint = true;
+			scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			preparePaintInfo(myCurrentPage);
+		}
+		if (doRepaint) {
+			if (myCurrentPage.StartCursor.isNull()) {
+				preparePaintInfo(myCurrentPage);
+			}
+			Application.getViewWidget().reset();
+			Application.getViewWidget().repaint();
+		}
+	}
+
 	public synchronized int search(final String text, boolean ignoreCase, boolean wholeText, boolean backward, boolean thisSectionOnly) {
 		if (text.length() == 0) {
 			return 0;
