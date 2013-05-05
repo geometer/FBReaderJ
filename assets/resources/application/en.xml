@@ -223,6 +223,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s"/>
+		<node name="deleteBookmark" value="Delete bookmark"/>
 	</node>
 	<node name="selection" value="Selection">
 		<node name="copyToClipboard" value="Copy to clipboard"/>

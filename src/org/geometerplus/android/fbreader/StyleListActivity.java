@@ -39,7 +39,10 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class StyleListActivity extends ListActivity {
+	static final String EXISTING_BOOKMARK_KEY = "existing.bookmark";
+
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+	private boolean myExistingBookmark;
 	private Bookmark myBookmark;
 
 	@Override
@@ -53,6 +56,7 @@ public class StyleListActivity extends ListActivity {
 		super.onStart();
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
+				myExistingBookmark = getIntent().getBooleanExtra(EXISTING_BOOKMARK_KEY, false);
 				myBookmark = SerializerUtil.deserializeBookmark(
 					getIntent().getStringExtra(FBReader.BOOKMARK_KEY)
 				);
@@ -86,11 +90,11 @@ public class StyleListActivity extends ListActivity {
 		}
 
 		public final int getCount() {
-			return myStyles.size();
+			return myExistingBookmark ? myStyles.size() + 1 : myStyles.size();
 		}
 
 		public final HighlightingStyle getItem(int position) {
-			return myStyles.get(position);
+			return position < myStyles.size() ? myStyles.get(position) : null;
 		}
 
 		public final long getItemId(int position) {
@@ -104,22 +108,37 @@ public class StyleListActivity extends ListActivity {
 			final HighlightingStyle style = getItem(position);
 
 			final ImageView colorView = (ImageView)view.findViewById(R.id.style_item_color);
-			colorView.setImageDrawable(new ColorDrawable(ZLAndroidColorUtil.rgb(style.BackgroundColor)));
-
 			final TextView titleView = (TextView)view.findViewById(R.id.style_item_title);
-			String title = ZLResource.resource("highlightingStyleMenu")
-				.getResource("style").getValue();
-			title = title.replace("%s", String.valueOf(style.Id));
-			titleView.setText(title);
+
+			if (style != null) {
+				colorView.setVisibility(View.VISIBLE);
+				colorView.setImageDrawable(new ColorDrawable(ZLAndroidColorUtil.rgb(style.BackgroundColor)));
+				titleView.setText(
+					ZLResource.resource("highlightingStyleMenu")
+						.getResource("style").getValue()
+						.replace("%s", String.valueOf(style.Id))
+				);
+			} else {
+				colorView.setVisibility(View.GONE);
+				titleView.setText(
+					ZLResource.resource("highlightingStyleMenu")
+						.getResource("deleteBookmark").getValue()
+				);
+			}
 
 			return view;
 		}
 
-		public final void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			final HighlightingStyle style = getItem(position);
 			myCollection.bindToService(StyleListActivity.this, new Runnable() {
 				public void run() {
-					myBookmark.setStyleId(getItem(position).Id);
-					myCollection.saveBookmark(myBookmark);
+					if (style != null) {
+						myBookmark.setStyleId(style.Id);
+						myCollection.saveBookmark(myBookmark);
+					} else {
+						myCollection.deleteBookmark(myBookmark);
+					}
 					finish();
 				}
 			});

@@ -228,6 +228,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="სანიშნის წაშლა"/>
 	</node>
 	<node name="selection" value="ნიშნული">
 		<node name="copyToClipboard" value="ბუფერში დაკოპირება"/>

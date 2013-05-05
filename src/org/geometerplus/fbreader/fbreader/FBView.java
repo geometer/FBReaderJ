@@ -81,6 +81,15 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		final ZLTextHighlighting highlighting = findHighlighting(x, y, MAX_SELECTION_DISTANCE);
+		if (highlighting instanceof BookmarkHighlighting) {
+			myReader.runAction(
+				ActionCode.SELECTION_BOOKMARK,
+				((BookmarkHighlighting)highlighting).Bookmark
+			);
+			return true;
+		}
+
 		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, getContextWidth(), getContextHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap

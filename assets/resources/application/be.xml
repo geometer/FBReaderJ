@@ -229,6 +229,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Выдаліць закладку"/>
 	</node>
 	<node name="selection" value="Вылучэньне">
 		<node name="copyToClipboard" value="Скапіяваць у кішэню"/>

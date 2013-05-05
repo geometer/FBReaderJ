@@ -79,6 +79,21 @@ public final class ZLTextRegion {
 			}
 			return 0;
 		}
+
+		public final int compareTo(ZLTextPosition position) {
+			final int ppi = position.getParagraphIndex();
+			if (ParagraphIndex != ppi) {
+				return ParagraphIndex < ppi ? -1 : 1;
+			}
+			final int pei = position.getElementIndex();
+			if (EndElementIndex < pei) {
+				return -1;
+			}
+			if (StartElementIndex > pei) {
+				return 1;
+			}
+			return 0;
+		}
 	}
 
 	public static interface Filter {

@@ -223,6 +223,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Yer imini sil"/>
 	</node>
 	<node name="selection" value="Seçenekler">
 		<node name="copyToClipboard" value="Panoya kopyala"/>
