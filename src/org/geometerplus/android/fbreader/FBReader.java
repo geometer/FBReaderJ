@@ -700,27 +700,6 @@ public final class FBReader extends Activity {
 		}
 	}
 
-	void addSelectionBookmark() {
-		final FBView fbView = myFBReaderApp.getTextView();
-		final String text = fbView.getSelectedText();
-
-		final Bookmark bookmark = new Bookmark(
-			myFBReaderApp.Model.Book,
-			fbView.getModel().getId(),
-			fbView.getSelectionStartPosition(),
-			fbView.getSelectionEndPosition(),
-			text,
-			true
-		);
-		myFBReaderApp.Collection.saveBookmark(bookmark);
-		fbView.clearSelection();
-
-		UIUtil.showMessageText(
-			this,
-			ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
-		);
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		return (myMainView != null && myMainView.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);
