@@ -261,6 +261,10 @@ mainLoop:
 		return myStyleId;
 	}
 
+	public void setStyleId(int styleId) {
+		myStyleId = styleId;
+	}
+
 	public String getText() {
 		return myText;
 	}

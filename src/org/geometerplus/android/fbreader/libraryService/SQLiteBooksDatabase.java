@@ -77,7 +77,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 24;
+		final int currentVersion = 25;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -133,6 +133,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables22();
 			case 23:
 				updateTables23();
+			case 24:
+				updateTables24();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -898,14 +900,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		if (bookmark.getId() == -1) {
 			if (myInsertBookmarkStatement == null) {
 				myInsertBookmarkStatement = myDatabase.compileStatement(
-					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 				);
 			}
 			statement = myInsertBookmarkStatement;
 		} else {
 			if (myUpdateBookmarkStatement == null) {
 				myUpdateBookmarkStatement = myDatabase.compileStatement(
-					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ? WHERE bookmark_id = ?"
+					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ?, style_id = ? WHERE bookmark_id = ?"
 				);
 			}
 			statement = myUpdateBookmarkStatement;
@@ -932,12 +934,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			statement.bindNull(13);
 		}
 		statement.bindLong(14, bookmark.IsVisible ? 1 : 0);
+		statement.bindLong(15, bookmark.getStyleId());
 
 		if (statement == myInsertBookmarkStatement) {
 			return statement.executeInsert();
 		} else {
 			final long id = bookmark.getId();
-			statement.bindLong(12, id);
+			statement.bindLong(16, id);
 			statement.execute();
 			return id;
 		}
@@ -1409,10 +1412,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"style_id INTEGER PRIMARY KEY," +
 				"name TEXT," +
 				"bg_color INTEGER NOT NULL)");
-		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (1, 'default', 136*256*256 + 138*256 + 133)"); // #888a85
-		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, 'orange', 245*256*256 + 121*256 + 0)"); // #f57900
-		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, 'blue', 114*160*256 + 159*256 + 207)"); // #729fcf
 		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1");
 		myDatabase.execSQL("UPDATE Bookmarks SET end_paragraph = LENGTH(bookmark_text)");
+	}
+
+	private void updateTables24() {
+		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (1, '', 136*256*256 + 138*256 + 133)"); // #888a85
+		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, '', 245*256*256 + 121*256 + 0)"); // #f57900
+		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, '', 114*256*256 + 159*256 + 207)"); // #729fcf
 	}
 }

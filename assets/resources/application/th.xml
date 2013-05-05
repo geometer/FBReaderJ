@@ -214,6 +214,9 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="ปิด FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="เลือก">
 		<node name="copyToClipboard" value="คัดลอกไปที่คลิปบอร์ด"/>
 		<node name="openInDictionary" value="เปิดในพจนานุกรม"/>

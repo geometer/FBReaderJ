@@ -224,6 +224,9 @@
 		<node name="forward" value="Volgende"/>
 		<node name="close" value="FBReader afsluiten"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Kopieer naar klembord"/>
 		<node name="openInDictionary" value="Openen in woordenboek"/>

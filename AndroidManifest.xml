@@ -122,6 +122,7 @@
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.StyleListActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.image.ImageViewActivity" android:process=":imageView" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<service android:name="org.geometerplus.android.fbreader.libraryService.LibraryService" android:launchMode="singleTask" android:process=":libraryService">
 			<intent-filter>
