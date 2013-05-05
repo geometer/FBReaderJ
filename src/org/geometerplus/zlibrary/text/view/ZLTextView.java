@@ -1530,16 +1530,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myCurrentPage.TextElementMap.binarySearch(x, y);
 	}
 
-	@Override
-	public boolean onFingerMove(int x, int y) {
-		return false;
-	}
-
-	@Override
-	public boolean onFingerRelease(int x, int y) {
-		return false;
-	}
-
 	public void hideSelectedRegionBorder() {
 		myHighlightSelectedRegion = false;
 		Application.getViewWidget().reset();
@@ -1551,6 +1541,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public ZLTextRegion getSelectedRegion() {
 		return getSelectedRegion(myCurrentPage);
+	}
+
+	protected ZLTextHighlighting findHighlighting(int x, int y, int maxDistance) {
+		final ZLTextRegion region = findRegion(x, y, maxDistance, ZLTextRegion.AnyRegionFilter);
+		if (region == null) {
+			return null;
+		}
+		for (ZLTextHighlighting h : myHighlightings) {
+			if (h.intersects(region)) {
+				return h;
+			}
+		}
+		return null;
 	}
 
 	protected ZLTextRegion findRegion(int x, int y, ZLTextRegion.Filter filter) {

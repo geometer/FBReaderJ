@@ -39,6 +39,14 @@ public abstract class ZLTextHighlighting implements Comparable<ZLTextHighlightin
 			page.EndCursor.compareTo(getStartPosition()) > 0;
 	}
 
+	boolean intersects(ZLTextRegion region) {
+		final ZLTextRegion.Soul soul = region.getSoul();
+		return
+			!isEmpty() &&
+			soul.compareTo(getStartPosition()) >= 0 &&
+			soul.compareTo(getEndPosition()) <= 0;
+	}
+
 	public int compareTo(ZLTextHighlighting highlighting) {
 		final int cmp = getStartPosition().compareTo(highlighting.getStartPosition());
 		return cmp != 0 ? cmp : getEndPosition().compareTo(highlighting.getEndPosition());

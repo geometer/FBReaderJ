@@ -213,6 +213,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Xoa đánh dấu"/>
 	</node>
 	<node name="selection" value="Lựa chọn">
 		<node name="copyToClipboard" value="Chép vào Clipboard"/>
