@@ -472,11 +472,15 @@ public final class FBReaderApp extends ZLApplication {
 		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			addInvisibleBookmark();
-			BookTextView.gotoPosition(bookmark);
+			BookTextView.gotoHighlighting(
+				new BookmarkHighlighting(BookTextView, Collection, bookmark)
+			);
 			setView(BookTextView);
 		} else {
 			setFootnoteModel(modelId);
-			FootnoteView.gotoPosition(bookmark);
+			FootnoteView.gotoHighlighting(
+				new BookmarkHighlighting(FootnoteView, Collection, bookmark)
+			);
 			setView(FootnoteView);
 		}
 		getViewWidget().repaint();
