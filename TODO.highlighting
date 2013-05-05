@@ -1,4 +1,4 @@
-* re-implement go to bookmark operation
+DONE re-implement go to bookmark operation
 DONE highlight bookmarks
 DONE show highlights in footnote view
 DONE don't draw all bookmarks, filter by position
