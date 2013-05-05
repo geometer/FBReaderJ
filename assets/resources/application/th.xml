@@ -213,6 +213,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="ลบบุ๊คมาร์ค"/>
 	</node>
 	<node name="selection" value="เลือก">
 		<node name="copyToClipboard" value="คัดลอกไปที่คลิปบอร์ด"/>

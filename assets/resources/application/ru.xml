@@ -228,6 +228,7 @@
 	</node>
 	<node name="highlightingStyleMenu">
 		<node name="style" value="Стиль %s"/>
+		<node name="deleteBookmark" value="Стереть закладку"/>
 	</node>
 	<node name="selection" value="Пометка">
 		<node name="copyToClipboard" value="Скопировать в буфер"/>
