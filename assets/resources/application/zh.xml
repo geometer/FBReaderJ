@@ -214,6 +214,9 @@
 		<node name="forward" value="前进"/>
 		<node name="close" value="关闭FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="选择">
 		<node name="copyToClipboard" value="复制到剪贴板"/>
 		<node name="openInDictionary" value="打开字典"/>

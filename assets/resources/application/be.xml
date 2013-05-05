@@ -230,6 +230,9 @@
 		<node name="forward" value="Наперад"/>
 		<node name="close" value="Зачыніць FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Вылучэньне">
 		<node name="copyToClipboard" value="Скапіяваць у кішэню"/>
 		<node name="openInDictionary" value="Адчыніць у слоўніку"/>

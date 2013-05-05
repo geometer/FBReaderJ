@@ -229,6 +229,9 @@
 		<node name="forward" value="წინ"/>
 		<node name="close" value="FBReader დახურვა"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="ნიშნული">
 		<node name="copyToClipboard" value="ბუფერში დაკოპირება"/>
 		<node name="openInDictionary" value="ლექსიკონში ნახვა"/>
