@@ -8,6 +8,9 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
+===== 1.8.1 (May 06, 2013) =====
+* Fixed ConcurrentModificationException in ZLTextView
+
 ===== 1.8 (May 06, 2013) =====
 
 * 2 column text view (in horizontal mode, optional, enabled by default on devices with diagonal > 7")
