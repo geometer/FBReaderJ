@@ -61,7 +61,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private boolean myHighlightSelectedRegion = true;
 
 	private final ZLTextSelection mySelection = new ZLTextSelection(this);
-	private final SortedSet<ZLTextHighlighting> myHighlightings = new TreeSet<ZLTextHighlighting>();
+	private final Set<ZLTextHighlighting> myHighlightings =
+		Collections.synchronizedSet(new TreeSet<ZLTextHighlighting>());
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
@@ -288,11 +289,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public boolean removeHighlightings(Class<? extends ZLTextHighlighting> type) {
 		boolean result = false;
-		for (Iterator<ZLTextHighlighting> it = myHighlightings.iterator(); it.hasNext(); ) {
-			final ZLTextHighlighting h = it.next();
-			if (type.isInstance(h)) {
-				it.remove();
-				result = true;
+		synchronized (myHighlightings) {
+			for (Iterator<ZLTextHighlighting> it = myHighlightings.iterator(); it.hasNext(); ) {
+				final ZLTextHighlighting h = it.next();
+				if (type.isInstance(h)) {
+					it.remove();
+					result = true;
+				}
 			}
 		}
 		return result;
@@ -820,9 +823,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (mySelection.intersects(page)) {
 			hilites.add(mySelection);
 		}
-		for (ZLTextHighlighting h : myHighlightings) {
-			if (h.intersects(page)) {
-				hilites.add(h);
+		synchronized (myHighlightings) {
+			for (ZLTextHighlighting h : myHighlightings) {
+				if (h.intersects(page)) {
+					hilites.add(h);
+				}
 			}
 		}
 		if (hilites.isEmpty()) {
@@ -1580,9 +1585,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (region == null) {
 			return null;
 		}
-		for (ZLTextHighlighting h : myHighlightings) {
-			if (h.intersects(region)) {
-				return h;
+		synchronized (myHighlightings) {
+			for (ZLTextHighlighting h : myHighlightings) {
+				if (h.intersects(region)) {
+					return h;
+				}
 			}
 		}
 		return null;
