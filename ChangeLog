@@ -8,6 +8,10 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
+===== 1.8.2 (May ??, 2013) =====
+* Updated Czech localization (by Marek Pavelka)
+* Bitknights dictionaries support (by Norbert Kenderesi)
+
 ===== 1.8.1 (May 06, 2013) =====
 * Fixed ConcurrentModificationException in ZLTextView
 
