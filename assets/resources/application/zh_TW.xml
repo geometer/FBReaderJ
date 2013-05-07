@@ -214,6 +214,10 @@
 		<node name="forward" value="前進"/>
 		<node name="close" value="開閉 FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="刪除書籤"/>
+	</node>
 	<node name="selection" value="選擇">
 		<node name="copyToClipboard" value="複製"/>
 		<node name="openInDictionary" value="查詢字典"/>
@@ -874,29 +878,5 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
-	</node>
-	<node name="pdfPlugin">
-		<node name="bookOptions" value="Book Options" toBeTranslated="true"/>
-		<node name="save" value="Save" toBeTranslated="true"/>
-		<node name="crop" value="Crop" toBeTranslated="true">
-			<node name="top" value="Top:" toBeTranslated="true"/>
-			<node name="bottom" value="Bottom:" toBeTranslated="true"/>
-			<node name="right" value="Right:" toBeTranslated="true"/>
-			<node name="left" value="Left:" toBeTranslated="true"/>
-		</node>
-		<node name="traversal" value="In page traversal" toBeTranslated="true">
-			<node name="x" value="horiz.:" toBeTranslated="true"/>
-			<node name="y" value="vert.:" toBeTranslated="true"/>
-		</node>
-		<node name="zoomMode" value="Zoom Mode" toBeTranslated="true">
-			<node name="free" value="Free Zoom" toBeTranslated="true"/>
-			<node name="fixed" value="Fixed Zoom:" toBeTranslated="true"/>
-			<node name="fitPage" value="Fit Page" toBeTranslated="true"/>
-			<node name="fitWidth" value="Fit Width" toBeTranslated="true"/>
-			<node name="fitHeight" value="Fit Height" toBeTranslated="true"/>
-			<node name="screenPercent" value="Screen Percent" toBeTranslated="true"/>
-			<node name="pagePercent" value="Page Percent" toBeTranslated="true"/>
-		</node>
-		<node name="pageWay" value="Page way around" toBeTranslated="true"/>
 	</node>
 </resources>

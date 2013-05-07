@@ -233,6 +233,10 @@
 		<node name="forward" value="Vpřed"/>
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Styl %s"/>
+		<node name="deleteBookmark" value="Odstranit záložku"/>
+	</node>
 	<node name="selection" value="Výběr">
 		<node name="copyToClipboard" value="Kopírovat do schránky"/>
 		<node name="openInDictionary" value="Otevřít ve slovníku"/>
@@ -329,9 +333,9 @@
 				<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
 				<node name="summaryOff" value="Nezakazovat tlačítka osvětlení"/>
 			</node>
-			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
-				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
-				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			<node name="twoColumnView" value="Dvousloupcové zobrazení">
+				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
+				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
@@ -569,7 +573,7 @@
 			<node name="right" value="Pravý okraj"/>
 			<node name="top" value="Horní okraj"/>
 			<node name="bottom" value="Dolní okraj"/>
-			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
+			<node name="spaceBetweenColumns" value="Mezera mezi sloupci"/>
 		</node>
 		<node name="scrollBar" value="Posuvník">
 			<node name="summary" value="Nastavení posuvníku"/>
@@ -893,29 +897,5 @@
 		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
 		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
 		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
-	</node>
-	<node name="pdfPlugin">
-		<node name="bookOptions" value="Book Options" toBeTranslated="true"/>
-		<node name="save" value="Save" toBeTranslated="true"/>
-		<node name="crop" value="Crop" toBeTranslated="true">
-			<node name="top" value="Top:" toBeTranslated="true"/>
-			<node name="bottom" value="Bottom:" toBeTranslated="true"/>
-			<node name="right" value="Right:" toBeTranslated="true"/>
-			<node name="left" value="Left:" toBeTranslated="true"/>
-		</node>
-		<node name="traversal" value="In page traversal" toBeTranslated="true">
-			<node name="x" value="horiz.:" toBeTranslated="true"/>
-			<node name="y" value="vert.:" toBeTranslated="true"/>
-		</node>
-		<node name="zoomMode" value="Zoom Mode" toBeTranslated="true">
-			<node name="free" value="Free Zoom" toBeTranslated="true"/>
-			<node name="fixed" value="Fixed Zoom:" toBeTranslated="true"/>
-			<node name="fitPage" value="Fit Page" toBeTranslated="true"/>
-			<node name="fitWidth" value="Fit Width" toBeTranslated="true"/>
-			<node name="fitHeight" value="Fit Height" toBeTranslated="true"/>
-			<node name="screenPercent" value="Screen Percent" toBeTranslated="true"/>
-			<node name="pagePercent" value="Page Percent" toBeTranslated="true"/>
-		</node>
-		<node name="pageWay" value="Page way around" toBeTranslated="true"/>
 	</node>
 </resources>

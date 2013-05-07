@@ -19,12 +19,15 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-interface ZLTextAbstractHighlighting {
-	boolean clear();
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
-	boolean isEmpty();
-	ZLTextPosition getStartPosition();
-	ZLTextPosition getEndPosition();
-	ZLTextElementArea getStartArea(ZLTextPage page);
-	ZLTextElementArea getEndArea(ZLTextPage page);
+class ZLTextManualHighlighting extends ZLTextSimpleHighlighting {
+	ZLTextManualHighlighting(ZLTextView view, ZLTextPosition start, ZLTextPosition end) {
+		super(view, start, end);
+	}
+
+	@Override
+	public ZLColor getBackgroundColor() {
+		return View.getHighlightingBackgroundColor();
+	}
 }
