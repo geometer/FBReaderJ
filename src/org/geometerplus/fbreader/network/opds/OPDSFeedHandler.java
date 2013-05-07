@@ -29,11 +29,12 @@ import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
 import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 import org.geometerplus.fbreader.network.litres.LitResAuthorsItem;
-import org.geometerplus.fbreader.network.litres.LitResBooksFeedItem;
-import org.geometerplus.fbreader.network.litres.LitResCatalogByGenresItem;
+import org.geometerplus.fbreader.network.litres.LitresBooksFeedItem;
+import org.geometerplus.fbreader.network.litres.LitresCatalogByGenresItem;
 import org.geometerplus.fbreader.network.litres.LitresNetworkLink;
-import org.geometerplus.fbreader.network.litres.genre.LitResGenre;
-import org.geometerplus.fbreader.network.litres.genre.LitResGenreMap;
+import org.geometerplus.fbreader.network.litres.LitresPredefinedNetworkLink;
+import org.geometerplus.fbreader.network.litres.genre.LitresGenre;
+import org.geometerplus.fbreader.network.litres.genre.LitresGenreMap;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
@@ -266,9 +267,9 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		} else {
 			annotation = null;
 		}
-
+		
 		if (litresMime != null) {
-			return createLitresCatalogItem(litresMime, litresRel, opdsLink, entry.Title, annotation, urlMap);
+			return createLitresCatalogItem(entry.Id.Uri, litresMime, litresRel, opdsLink, entry.Title, annotation, urlMap);
 		} else {
 			return new OPDSCatalogItem(
 				opdsLink,
@@ -279,12 +280,13 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		}
 	}
 	
-	public NetworkItem createLitresCatalogItem(final MimeType mime, final String rel,
+	public NetworkItem createLitresCatalogItem(String id, final MimeType mime, final String rel,
 			final OPDSNetworkLink link, CharSequence title,
 			CharSequence annotation, final UrlInfoCollection<UrlInfo> urlMap){
 		
-		LitresNetworkLink litresLink = new LitresNetworkLink(
+		LitresNetworkLink litresLink = new LitresPredefinedNetworkLink(
 				link.getId(),
+				id,
 				link.getSiteName(),
 				link.getTitle(),
 				link.getSummary(),
@@ -325,7 +327,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 					flags &= ~NetworkCatalogItem.FLAG_SHOW_AUTHOR;
 				}
 				boolean sort = mime.getParameter("sort") != NO;
-				return new LitResBooksFeedItem(
+				return new LitresBooksFeedItem(
 						litresLink,
 						title,
 						annotation,
@@ -334,8 +336,8 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 						);
 			} else if (litresType.equals(MimeType.APP_LITRES_XML_GENRES.getParameter(TYPE))) {
 				try {
-					LinkedList<LitResGenre> tree = LitResGenreMap.Instance().genresTree();
-					return new LitResCatalogByGenresItem(
+					LinkedList<LitresGenre> tree = LitresGenreMap.Instance().genresTree();
+					return new LitresCatalogByGenresItem(
 							tree,
 							litresLink,
 							title,

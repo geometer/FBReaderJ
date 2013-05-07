@@ -29,16 +29,16 @@ import org.geometerplus.fbreader.network.litres.readers.LitresGenreXMLReader;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
-public class LitResGenreMap {
-	private static LitResGenreMap ourInstance;
+public class LitresGenreMap {
+	private static LitresGenreMap ourInstance;
 	boolean myInitialized;
-	LinkedList<LitResGenre> myGenresTree = new LinkedList<LitResGenre>();
-	Map<String, LitResGenre> myGenresMap = new HashMap<String, LitResGenre>();;
-	Map<LitResGenre, String> myGenresTitles = new HashMap<LitResGenre, String>();
+	LinkedList<LitresGenre> myGenresTree = new LinkedList<LitresGenre>();
+	Map<String, LitresGenre> myGenresMap = new HashMap<String, LitresGenre>();;
+	Map<LitresGenre, String> myGenresTitles = new HashMap<LitresGenre, String>();
 	
-	public static LitResGenreMap Instance() {
+	public static LitresGenreMap Instance() {
 		if (ourInstance == null) {
-			ourInstance = new LitResGenreMap();
+			ourInstance = new LitresGenreMap();
 		}
 		return ourInstance;
 	}
@@ -49,21 +49,21 @@ public class LitResGenreMap {
 		}
 	}
 	
-	private LitResGenreMap() {
+	private LitresGenreMap() {
 	}
 	
 
-	public Map<String, LitResGenre> genresMap() throws ZLNetworkException {
+	public Map<String, LitresGenre> genresMap() throws ZLNetworkException {
 		validateGenres();
 		return myGenresMap;
 	}
 
-	public LinkedList<LitResGenre> genresTree() throws ZLNetworkException {
+	public LinkedList<LitresGenre> genresTree() throws ZLNetworkException {
 		validateGenres();
 		return myGenresTree;
 	}
 
-	public Map<LitResGenre, String> genresTitles() throws ZLNetworkException {
+	public Map<LitresGenre, String> genresTitles() throws ZLNetworkException {
 		validateGenres();
 		return myGenresTitles;
 	}
@@ -99,11 +99,11 @@ public class LitResGenreMap {
 		return true;
 	}
 	
-	void buildGenresTitles(final LinkedList<LitResGenre> genres, final String titlePrefix) {
-		for(LitResGenre genre : genres){
-			String title = titlePrefix.equals("") ? (genre.Title) : (titlePrefix + "/" + genre.Title);
-			if (genre.Id.equals("")) {
-				buildGenresTitles(genre.Children, title);
+	void buildGenresTitles(final LinkedList<LitresGenre> genres, final String titlePrefix) {
+		for(LitresGenre genre : genres){
+			String title = titlePrefix.equals("") ? (genre.getTitle()) : (titlePrefix + "/" + genre.getTitle());
+			if (genre.getId().equals("")) {
+				buildGenresTitles(genre.getChildren(), title);
 			} else {
 				myGenresTitles.put(genre, title);
 			}

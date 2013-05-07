@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
 package org.geometerplus.fbreader.network.litres;
 
 import java.io.IOException;
@@ -10,16 +29,17 @@ import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.litres.readers.LitresXMLReader;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-public class LitresNetworkLink extends AbstractNetworkLink {
+public abstract class LitresNetworkLink extends AbstractNetworkLink {
 	private NetworkAuthenticationManager myAuthenticationManager;
 	
-	public LitresNetworkLink(int id, String siteName, String title, String summary, String language,
+	protected LitresNetworkLink(int id, String siteName, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, siteName, title, summary, language, infos);
 	}
@@ -32,7 +52,6 @@ public class LitresNetworkLink extends AbstractNetworkLink {
 		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
 		library.startLoading(catalogItem);
 		url = rewriteUrl(url, false);
-		System.out.println("[LitresNetworkLink] createNetworkData url "+url);
 		return new ZLNetworkRequest(url, mime, null, false) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
@@ -77,28 +96,22 @@ public class LitresNetworkLink extends AbstractNetworkLink {
 	}
 	
 	@Override
-	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ZLNetworkRequest simpleSearchRequest(String pattern,
-			NetworkOperationData data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		// TODO Auto-generated method stub
-		return null;
+		return createNetworkData(data.ResumeURI, MimeType.APP_ATOM_XML, (LitresCatalogItem.State)data);
 	}
 
 	@Override
 	public NetworkCatalogItem libraryItem() {
-		// TODO Auto-generated method stub
-		return null;
+		final UrlInfoCollection<UrlInfo> urlMap = new UrlInfoCollection<UrlInfo>();
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Thumbnail));
+		return new LitresCatalogItem(
+			this,
+			getTitle(),
+			getSummary(),
+			urlMap
+		);
 	}
 
 	public final void setAuthenticationManager(NetworkAuthenticationManager mgr) {
@@ -112,7 +125,6 @@ public class LitresNetworkLink extends AbstractNetworkLink {
 
 	@Override
 	public String rewriteUrl(String url, boolean isUrlExternal) {
-		// TODO Auto-generated method stub
 		return url;
 	}
 

@@ -21,13 +21,31 @@ package org.geometerplus.fbreader.network.litres.genre;
 
 import java.util.LinkedList;
 
-public class LitResGenre {
-	public String Id = "'";
-	public String Title = "";
-	public LinkedList<LitResGenre> Children = new LinkedList<LitResGenre>();
+public class LitresGenre {
+	private String Id = "'";
+	private String Title = "";
+	private LinkedList<LitresGenre> Children = new LinkedList<LitresGenre>();
+	private boolean parentFlag = false;
 	
-	public LitResGenre(final String id, final String title) {
+	public LitresGenre(final String id, final String title, final boolean isParent) {
 		Id = id;
 		Title = title;
+		parentFlag = isParent;
+	}
+	
+	public String getId(){
+		return Id;
+	}
+	
+	public String getTitle(){
+		return Title;
+	}
+	
+	public boolean isParent(){
+		return parentFlag;
+	}
+	
+	public LinkedList<LitresGenre> getChildren(){
+		return Children;
 	}
 }

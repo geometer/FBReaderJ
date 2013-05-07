@@ -9,7 +9,7 @@ import org.geometerplus.fbreader.network.atom.FormattedBuffer;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationXMLReader;
 import org.geometerplus.fbreader.network.litres.LitresBookItem;
 import org.geometerplus.fbreader.network.litres.LitresFeedMetadata;
-import org.geometerplus.fbreader.network.litres.genre.LitResGenre;
+import org.geometerplus.fbreader.network.litres.genre.LitresGenre;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
@@ -29,9 +29,9 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 	private CharSequence mySummary;
 	
 	private final UrlInfoCollection<UrlInfo> myUrls = new UrlInfoCollection<UrlInfo>();
-	private LinkedList<LitResGenre> myGenresTree;
-	private Map<String, LitResGenre> myGenresMap;
-	private Map<LitResGenre, String> myGenresTitles;
+	private LinkedList<LitresGenre> myGenresTree;
+	private Map<String, LitresGenre> myGenresMap;
+	private Map<LitresGenre, String> myGenresTitles;
 	
 	private String myAuthorFirstName;
 	private String myAuthorMiddleName;
