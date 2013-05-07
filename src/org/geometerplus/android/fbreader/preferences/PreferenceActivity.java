@@ -373,7 +373,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
 		);
 		bgPreferences.setEnabled("".equals(profile.WallpaperOption.getValue()));
-		colorsScreen.addOption(new ZLBooleanOption("Colors", "ImagesBackground", true), "imagesBackground");
 		/*
 		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
 		*/
@@ -543,6 +542,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(FBReaderApp.ImageTappingActionOption, "tappingAction");
 		imagesScreen.addOption(FBReaderApp.FitImagesToScreenOption, "fitImagesToScreen");
 		imagesScreen.addOption(FBReaderApp.ImageViewBackgroundOption, "backgroundColor");
+		imagesScreen.addOption(new ZLBooleanOption("Colors", "ImagesBackground", true), "imagesBackground");
 
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
 		cancelMenuScreen.addOption(FBReaderApp.ShowLibraryInCancelMenuOption, "library");

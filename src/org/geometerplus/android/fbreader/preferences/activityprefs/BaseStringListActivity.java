@@ -196,6 +196,9 @@ public abstract class BaseStringListActivity extends ListActivity {
 		}
 		
 		public String getFullData() {
+			if (mySubData == null || "".equals(mySubData)) {
+				return myData;
+			}
 			return myData + Divider + mySubData;
 		}
 		
