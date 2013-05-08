@@ -105,7 +105,7 @@ class EncodingPreference extends ZLStringListPreference {
 		}
 
 		final List<Encoding> encodings =
-				new ArrayList<Encoding>(plugin.supportedEncodings().encodings());
+			new ArrayList<Encoding>(plugin.supportedEncodings().encodings());
 		Collections.sort(encodings, new Comparator<Encoding>() {
 			public int compare(Encoding e1, Encoding e2) {
 				return e1.DisplayName.compareTo(e2.DisplayName);
@@ -154,7 +154,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private TagListPreference myTagListPreference;
 
 	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
-			new HashMap<Integer,ZLActivityPreference>();
+		new HashMap<Integer,ZLActivityPreference>();
 
 	public EditBookInfoActivity() {
 		super("BookInfo");
