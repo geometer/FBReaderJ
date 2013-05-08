@@ -124,35 +124,12 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	//
 	// show BookInfoActivity
 	//
-	private static final int BOOK_INFO_REQUEST = 1;
-
 	private void showBookInfo(Book book) {
-		OrientationUtil.startActivityForResult(
+		OrientationUtil.startActivity(
 			this,
 			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book)),
-			BOOK_INFO_REQUEST
+				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book))
 		);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
-		if (requestCode == BOOK_INFO_REQUEST) {
-			final Book book = BookInfoActivity.bookByIntent(intent);
-			((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
-				public void run() {
-					if (book != null) {
-						myRootTree.Collection.saveBook(book, true);
-						if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
-							getListAdapter().replaceAll(getCurrentTree().subTrees(), true);
-							getListView().invalidateViews();
-						}
-					}
-				}
-			});
-		} else {
-			super.onActivityResult(requestCode, returnCode, intent);
-		}
 	}
 
 	//

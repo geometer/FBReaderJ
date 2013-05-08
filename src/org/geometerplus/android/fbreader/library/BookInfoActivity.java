@@ -49,17 +49,18 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
-public class BookInfoActivity extends Activity {
+public class BookInfoActivity extends Activity implements IBookCollection.Listener {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String FROM_READING_MODE_KEY = "fbreader.from.reading.mode";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private Book myBook;
-	private int myResult;
 	private boolean myDontReloadBook;
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -73,9 +74,6 @@ public class BookInfoActivity extends Activity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
-
-		myResult = FBReader.RESULT_DO_NOTHING;
-		setResult(myResult, getIntent());
 	}
 
 	@Override
@@ -105,11 +103,10 @@ public class BookInfoActivity extends Activity {
 		});
 		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
 			public void onClick(View view) {
-				OrientationUtil.startActivityForResult(
+				OrientationUtil.startActivity(
 					BookInfoActivity.this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook)),
-					1
+						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
 				);
 			}
 		});
@@ -119,8 +116,11 @@ public class BookInfoActivity extends Activity {
 					myBook.reloadInfoFromFile();
 					setupBookInfo(myBook);
 					myDontReloadBook = false;
-					myResult = FBReader.RESULT_REPAINT;
-					setResult(myResult, intentByBook(myBook));
+					myCollection.bindToService(BookInfoActivity.this, new Runnable() {
+						public void run() {
+							myCollection.saveBook(myBook, false);
+						}
+					});
 				}
 			}
 		});
@@ -128,11 +128,22 @@ public class BookInfoActivity extends Activity {
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
+
+		myCollection.bindToService(this, null);
+		myCollection.addListener(this);
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
 		OrientationUtil.setOrientation(this, intent);
+	}
+
+	@Override
+	protected void onDestroy() {
+		myCollection.removeListener(this);
+		myCollection.unbind();
+
+		super.onDestroy();
 	}
 
 	public static Intent intentByBook(Book book) {
@@ -142,19 +153,6 @@ public class BookInfoActivity extends Activity {
 	public static Book bookByIntent(Intent intent) {
 		return intent != null ?
 			SerializerUtil.deserializeBook(intent.getStringExtra(FBReader.BOOK_KEY)) : null;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		final Book book = bookByIntent(data);
-		if (book != null) {
-			myBook = book;
-			setupBookInfo(book);
-			myDontReloadBook = false;
-		}
-
-		myResult = FBReader.RESULT_REPAINT;
-		setResult(myResult, data);
 	}
 
 	private Button findButton(int buttonId) {
@@ -326,5 +324,16 @@ public class BookInfoActivity extends Activity {
 			return null;
 		}
 		return DateFormat.getDateTimeInstance().format(new Date(date));
+	}
+
+	public void onBookEvent(BookEvent event, Book book) {
+		if (event == BookEvent.Updated && book.equals(myBook)) {
+			myBook.updateFrom(book);
+			setupBookInfo(book);
+			myDontReloadBook = false;
+		}
+	}
+
+	public void onBuildEvent(IBookCollection.Status status) {
 	}
 }

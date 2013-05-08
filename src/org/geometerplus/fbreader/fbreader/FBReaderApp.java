@@ -133,14 +133,20 @@ public final class FBReaderApp extends ZLApplication {
 
 		collection.addListener(new IBookCollection.Listener() {
 			public void onBookEvent(BookEvent event, Book book) {
-				if (event == BookEvent.BookmarksUpdated &&
-					Model != null && book.equals(Model.Book)) {
-					if (BookTextView.getModel() != null) { 
-						setBookmarkHighlightings(BookTextView, null);
-					}
-					if (FootnoteView.getModel() != null && myFootnoteModelId != null) { 
-						setBookmarkHighlightings(FootnoteView, myFootnoteModelId);
-					}
+				switch (event) {
+					case BookmarksUpdated:
+						if (Model != null && book.equals(Model.Book)) {
+							if (BookTextView.getModel() != null) { 
+								setBookmarkHighlightings(BookTextView, null);
+							}
+							if (FootnoteView.getModel() != null && myFootnoteModelId != null) { 
+								setBookmarkHighlightings(FootnoteView, myFootnoteModelId);
+							}
+						}
+						break;
+					case Updated:
+						onBookUpdated(book);
+						break;
 				}
 			}
 
@@ -603,5 +609,24 @@ public final class FBReaderApp extends ZLApplication {
 			treeToSelect = tree;
 		}
 		return treeToSelect;
+	}
+
+	public void onBookUpdated(Book book) {
+		if (Model == null || Model.Book == null || !Model.Book.equals(book)) {
+			return;
+		}
+
+		final String newEncoding = book.getEncodingNoDetection();
+		final String oldEncoding = Model.Book.getEncodingNoDetection();
+
+		Model.Book.updateFrom(book);
+
+		if (newEncoding != null && !newEncoding.equals(oldEncoding)) {
+			reloadBook();
+		} else {
+			ZLTextHyphenator.Instance().load(Model.Book.getLanguage());
+			clearTextCaches();
+			getViewWidget().repaint();
+		}
 	}
 }

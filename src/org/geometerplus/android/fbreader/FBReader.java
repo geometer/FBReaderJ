@@ -65,8 +65,7 @@ public final class FBReader extends Activity {
 	static final int ACTION_BAR_COLOR = Color.DKGRAY;
 
 	public static final int REQUEST_PREFERENCES = 1;
-	public static final int REQUEST_BOOK_INFO = 2;
-	public static final int REQUEST_CANCEL_MENU = 3;
+	public static final int REQUEST_CANCEL_MENU = 2;
 
 	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
@@ -515,37 +514,18 @@ public final class FBReader extends Activity {
 
 	private void onPreferencesUpdate(Book book) {
 		AndroidFontUtil.clearFontCache();
-
-		final BookModel model = myFBReaderApp.Model;
-		if (book == null || model == null || model.Book == null) {
-			return;
-		}
-
-		final String newEncoding = book.getEncodingNoDetection();
-		final String oldEncoding = model.Book.getEncodingNoDetection();
-
-		model.Book.updateFrom(book);
-
-		if (newEncoding != null && !newEncoding.equals(oldEncoding)) {
-			myFBReaderApp.reloadBook();
-		} else {
-			ZLTextHyphenator.Instance().load(model.Book.getLanguage());
-			myFBReaderApp.clearTextCaches();
-			myFBReaderApp.getViewWidget().repaint();
-		}
+		myFBReaderApp.onBookUpdated(book);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
-			case REQUEST_BOOK_INFO:
 				if (resultCode != RESULT_DO_NOTHING) {
 					final Book book = BookInfoActivity.bookByIntent(data);
 					if (book != null) {
 						getCollection().bindToService(this, new Runnable() {
 							public void run() {
-								myFBReaderApp.Collection.saveBook(book, true);
 								onPreferencesUpdate(book);
 							}
 						});
