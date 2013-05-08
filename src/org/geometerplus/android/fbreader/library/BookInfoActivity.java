@@ -50,9 +50,10 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
-public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener {
+public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener, IBookCollection.Listener {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String FROM_READING_MODE_KEY = "fbreader.from.reading.mode";
@@ -60,6 +61,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private Book myBook;
 	private boolean myDontReloadBook;
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -77,8 +79,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			bar.setDisplayShowTitleEnabled(false);
 		}
 		setContentView(R.layout.book_info);
-
-		setResult(FBReader.RESULT_DO_NOTHING, intent);
 	}
 
 	@Override
@@ -100,11 +100,22 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
+
+		myCollection.bindToService(this, null);
+		myCollection.addListener(this);
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
 		OrientationUtil.setOrientation(this, intent);
+	}
+
+	@Override
+	protected void onDestroy() {
+		myCollection.removeListener(this);
+		myCollection.unbind();
+
+		super.onDestroy();
 	}
 
 	public static Intent intentByBook(Book book) {
@@ -114,18 +125,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	public static Book bookByIntent(Intent intent) {
 		return intent != null ?
 			SerializerUtil.deserializeBook(intent.getStringExtra(FBReader.BOOK_KEY)) : null;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		final Book book = bookByIntent(data);
-		if (book != null) {
-			myBook = book;
-			setupBookInfo(book);
-			myDontReloadBook = false;
-		}
-
-		setResult(FBReader.RESULT_REPAINT, data);
 	}
 
 	private Button findButton(int buttonId) {
@@ -341,11 +340,10 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				}
 				return true;
 			case EDIT_INFO:
-				OrientationUtil.startActivityForResult(
+				OrientationUtil.startActivity(
 					this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook)),
-					1
+						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
 				);
 				return true;
 			case SHARE_BOOK:
@@ -355,39 +353,58 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				if (myBook != null) {
 					myBook.reloadInfoFromFile();
 					setupBookInfo(myBook);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 				}
 				return true;
 			case ADD_TO_FAVORITES:
 				if (myBook != null) {
 					myBook.addLabel(Book.FAVORITE_LABEL);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 					invalidateOptionsMenu();
 				}
 				return true;
 			case REMOVE_FROM_FAVORITES:
 				if (myBook != null) {
 					myBook.removeLabel(Book.FAVORITE_LABEL);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 					invalidateOptionsMenu();
 				}
 				return true;
 			case MARK_AS_READ:
 				if (myBook != null) {
 					myBook.addLabel(Book.READ_LABEL);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 					invalidateOptionsMenu();
 				}
 				return true;
 			case MARK_AS_UNREAD:
 				if (myBook != null) {
 					myBook.removeLabel(Book.READ_LABEL);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 					invalidateOptionsMenu();
 				}
 				return true;
 			default:
 				return true;
 		}
+	}
+
+	public void onBookEvent(BookEvent event, Book book) {
+		if (event == BookEvent.Updated && book.equals(myBook)) {
+			myBook.updateFrom(book);
+			setupBookInfo(book);
+			myDontReloadBook = false;
+		}
+	}
+
+	public void onBuildEvent(IBookCollection.Status status) {
+	}
+
+	private void saveBook() {
+		myCollection.bindToService(BookInfoActivity.this, new Runnable() {
+			public void run() {
+				myCollection.saveBook(myBook, false);
+			}
+		});
 	}
 }
