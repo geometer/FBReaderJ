@@ -54,7 +54,7 @@ class BookTitlePreference extends ZLStringPreference {
 	protected void setValue(String value) {
 		super.setValue(value);
 		myBook.setTitle(value);
-		((EditBookInfoActivity)getContext()).updateResult();
+		((EditBookInfoActivity)getContext()).saveBook();
 	}
 }
 
@@ -86,7 +86,7 @@ class BookLanguagePreference extends LanguagePreference {
 	@Override
 	protected void setLanguage(String code) {
 		myBook.setLanguage(code.length() > 0 ? code : null);
-		((EditBookInfoActivity)getContext()).updateResult();
+		((EditBookInfoActivity)getContext()).saveBook();
 	}
 }
 
@@ -139,7 +139,7 @@ class EncodingPreference extends ZLStringListPreference {
 			final String value = getValue();
 			if (!value.equalsIgnoreCase(myBook.getEncoding())) {
 				myBook.setEncoding(value);
-				((EditBookInfoActivity)getContext()).updateResult();
+				((EditBookInfoActivity)getContext()).saveBook();
 			}
 		}
 	}
@@ -233,7 +233,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		if (resultCode == RESULT_OK) {
 			p.setValue(data);
 		}
-		updateResult();
+		saveBook();
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
 				myAuthorListPreference.setAuthors(myCollection.authors());
@@ -242,8 +242,12 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		});
 	}
 
-	void updateResult() {
-		setResult(FBReader.RESULT_REPAINT, BookInfoActivity.intentByBook(myBook));
+	void saveBook() {
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				myCollection.saveBook(myBook, false);
+			}
+		});
 	}
 
 	@Override

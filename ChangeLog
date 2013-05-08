@@ -11,6 +11,7 @@
 ===== 1.8.2 (May ??, 2013) =====
 * Updated Czech localization (by Marek Pavelka)
 * Bitknights dictionaries support (by Norbert Kenderesi)
+* Fixed book info saving for BookInfoActivity/EditBookInfoActivity (service mechanism is used instead of Activity.setResult())
 
 ===== 1.8.1 (May 06, 2013) =====
 * Fixed ConcurrentModificationException in ZLTextView
