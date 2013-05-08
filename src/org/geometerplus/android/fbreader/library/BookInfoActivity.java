@@ -323,7 +323,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		return DateFormat.getDateTimeInstance().format(new Date(date));
 	}
 
-<<<<<<< HEAD
 	private static final int OPEN_BOOK = 1;
 	private static final int EDIT_INFO = 2;
 	private static final int SHARE_BOOK = 3;
@@ -373,11 +372,10 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				}
 				return true;
 			case EDIT_INFO:
-				OrientationUtil.startActivityForResult(
+				OrientationUtil.startActivity(
 					this,
 					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook)),
-					1
+						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
 				);
 				return true;
 			case SHARE_BOOK:
@@ -387,34 +385,34 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				if (myBook != null) {
 					myBook.reloadInfoFromFile();
 					setupBookInfo(myBook);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 				}
 				return true;
 			case ADD_TO_FAVORITES:
 				if (myBook != null) {
 					myBook.addLabel(Book.FAVORITE_LABEL);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 					invalidateOptionsMenu();
 				}
 				return true;
 			case REMOVE_FROM_FAVORITES:
 				if (myBook != null) {
 					myBook.removeLabel(Book.FAVORITE_LABEL);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 					invalidateOptionsMenu();
 				}
 				return true;
 			case MARK_AS_READ:
 				if (myBook != null) {
 					myBook.addLabel(Book.READ_LABEL);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 					invalidateOptionsMenu();
 				}
 				return true;
 			case MARK_AS_UNREAD:
 				if (myBook != null) {
 					myBook.removeLabel(Book.READ_LABEL);
-					setResult(FBReader.RESULT_REPAINT, intentByBook(myBook));
+					saveBook();
 					invalidateOptionsMenu();
 				}
 				return true;
@@ -432,5 +430,13 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	}
 
 	public void onBuildEvent(IBookCollection.Status status) {
+	}
+
+	private void saveBook() {
+		myCollection.bindToService(BookInfoActivity.this, new Runnable() {
+			public void run() {
+				myCollection.saveBook(myBook, false);
+			}
+		});
 	}
 }
