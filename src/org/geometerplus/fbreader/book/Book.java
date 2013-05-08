@@ -127,7 +127,6 @@ public class Book extends TitledEntity {
 		setTitle(null);
 		myAuthors = null;
 		myTags = null;
-		myLabels = null;
 		mySeriesInfo = null;
 		myUids = null;
 

@@ -51,10 +51,11 @@ import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.library.LibraryActivity.PluginMetaInfoReaderImpl;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
-public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener {
+public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener, IBookCollection.Listener {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String FROM_READING_MODE_KEY = "fbreader.from.reading.mode";
@@ -65,6 +66,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	
 	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
 	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
+
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -82,7 +85,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		}
 		setContentView(R.layout.book_info);
 
-		setResult(FBReader.RESULT_DO_NOTHING, getIntent());
 		if (MetaInfoUtil.PMIReader == null) {
 			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
@@ -123,11 +125,29 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
 		root.requestLayout();
+
+		myCollection.bindToService(this, null);
+		myCollection.addListener(this);
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
 		OrientationUtil.setOrientation(this, intent);
+	}
+
+	@Override
+	protected void onDestroy() {
+		myCollection.removeListener(this);
+		myCollection.unbind();
+
+		for (String pack : myServConns.keySet()) {
+			if (myServConns.get(pack) != null) {
+				unbindService(myServConns.get(pack));
+				myServConns.remove(pack);
+			}
+		}
+
+		super.onDestroy();
 	}
 
 	public static Intent intentByBook(Book book) {
@@ -137,18 +157,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	public static Book bookByIntent(Intent intent) {
 		return intent != null ?
 			SerializerUtil.deserializeBook(intent.getStringExtra(FBReader.BOOK_KEY)) : null;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		final Book book = bookByIntent(data);
-		if (book != null) {
-			myBook = book;
-			setupBookInfo(book);
-			myDontReloadBook = false;
-		}
-
-		setResult(FBReader.RESULT_REPAINT, data);
 	}
 
 	private Button findButton(int buttonId) {
@@ -308,17 +316,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		return myResource.getResource("sizeInKiloBytes").getValue().replaceAll("%s", value);
 	}
 
-	@Override
-	protected void onDestroy() {
-		for (String pack : myServConns.keySet()) {
-			if (myServConns.get(pack) != null) {
-				unbindService(myServConns.get(pack));
-				myServConns.remove(pack);
-			}
-		}
-		super.onDestroy();
-	}
-
 	private String formatDate(long date) {
 		if (date == 0) {
 			return null;
@@ -326,6 +323,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		return DateFormat.getDateTimeInstance().format(new Date(date));
 	}
 
+<<<<<<< HEAD
 	private static final int OPEN_BOOK = 1;
 	private static final int EDIT_INFO = 2;
 	private static final int SHARE_BOOK = 3;
@@ -423,5 +421,16 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			default:
 				return true;
 		}
+	}
+
+	public void onBookEvent(BookEvent event, Book book) {
+		if (event == BookEvent.Updated && book.equals(myBook)) {
+			myBook.updateFrom(book);
+			setupBookInfo(book);
+			myDontReloadBook = false;
+		}
+	}
+
+	public void onBuildEvent(IBookCollection.Status status) {
 	}
 }
