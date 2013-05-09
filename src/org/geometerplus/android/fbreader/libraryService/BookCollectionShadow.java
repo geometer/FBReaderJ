@@ -93,8 +93,16 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 
 	public synchronized void unbind() {
 		if (myContext != null && myInterface != null) {
-			myContext.unregisterReceiver(myReceiver);
-			myContext.unbindService(this);
+			try {
+				myContext.unregisterReceiver(myReceiver);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				myContext.unbindService(this);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			myInterface = null;
 			myContext = null;
 		}
@@ -405,6 +413,28 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 				myInterface.deleteBookmark(SerializerUtil.serialize(bookmark));
 			} catch (RemoteException e) {
 			}
+		}
+	}
+
+	public HighlightingStyle getHighlightingStyle(int styleId) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return SerializerUtil.deserializeStyle(myInterface.getHighlightingStyle(styleId));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
+	public List<HighlightingStyle> highlightingStyles() {
+		if (myInterface == null) {
+			return Collections.emptyList();
+		}
+		try {
+			return SerializerUtil.deserializeStyleList(myInterface.highlightingStyles());
+		} catch (RemoteException e) {
+			return Collections.emptyList();
 		}
 	}
 

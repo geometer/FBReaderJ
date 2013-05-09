@@ -81,6 +81,15 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		final ZLTextHighlighting highlighting = findHighlighting(x, y, MAX_SELECTION_DISTANCE);
+		if (highlighting instanceof BookmarkHighlighting) {
+			myReader.runAction(
+				ActionCode.SELECTION_BOOKMARK,
+				((BookmarkHighlighting)highlighting).Bookmark
+			);
+			return true;
+		}
+
 		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, getContextWidth(), getContextHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
@@ -353,6 +362,16 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
+	public int getSpaceBetweenColumns() {
+		return myReader.SpaceBetweenColumnsOption.getValue();
+	}
+
+	@Override
+	public boolean twoColumnView() {
+		return getContextHeight() <= getContextWidth() && myReader.TwoColumnViewOption.getValue();
+	}
+
+	@Override
 	public ZLFile getWallpaperFile() {
 		final String filePath = myReader.getColorProfile().WallpaperOption.getValue();
 		if ("".equals(filePath)) {
@@ -379,12 +398,12 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLColor getSelectedBackgroundColor() {
+	public ZLColor getSelectionBackgroundColor() {
 		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
 	}
 
 	@Override
-	public ZLColor getSelectedForegroundColor() {
+	public ZLColor getSelectionForegroundColor() {
 		return myReader.getColorProfile().SelectionForegroundOption.getValue();
 	}
 
@@ -405,7 +424,7 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLColor getHighlightingColor() {
+	public ZLColor getHighlightingBackgroundColor() {
 		return myReader.getColorProfile().HighlightingOption.getValue();
 	}
 

@@ -25,6 +25,9 @@ import java.text.ParseException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLColor;
+
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -205,7 +208,7 @@ class XMLSerializer extends AbstractSerializer {
 		if (seriesInfo != null) {
 			appendTagWithContent(buffer, "calibre:series", seriesInfo.Series.getTitle());
 			if (seriesInfo.Index != null) {
-				appendTagWithContent(buffer, "calibre:series_index", seriesInfo.Index);
+				appendTagWithContent(buffer, "calibre:series_index", seriesInfo.Index.toPlainString());
 			}
 		}
 
@@ -262,11 +265,29 @@ class XMLSerializer extends AbstractSerializer {
 			"access-count", String.valueOf(bookmark.getAccessCount())
 		);
 		appendTag(
-			buffer, "position", true,
+			buffer, "start", true,
 			"model", bookmark.ModelId,
 			"paragraph", String.valueOf(bookmark.getParagraphIndex()),
 			"element", String.valueOf(bookmark.getElementIndex()),
 			"char", String.valueOf(bookmark.getCharIndex())
+		);
+		final ZLTextPosition end = bookmark.getEnd();
+		if (end != null) {
+			appendTag(
+				buffer, "end", true,
+				"paragraph", String.valueOf(end.getParagraphIndex()),
+				"element", String.valueOf(end.getElementIndex()),
+				"char", String.valueOf(end.getCharIndex())
+			);
+		} else {
+			appendTag(
+				buffer, "end", true,
+				"length", String.valueOf(bookmark.getLength())
+			);
+		}
+		appendTag(
+			buffer, "style", true,
+			"id", String.valueOf(bookmark.getStyleId())
 		);
 		closeTag(buffer, "bookmark");
 		return buffer.toString();
@@ -278,6 +299,32 @@ class XMLSerializer extends AbstractSerializer {
 			final BookmarkDeserializer deserializer = new BookmarkDeserializer();
 			Xml.parse(xml, deserializer);
 			return deserializer.getBookmark();
+		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String serialize(HighlightingStyle style) {
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(buffer, "style", false,
+			"id", String.valueOf(style.Id)
+		);
+		appendTag(buffer, "bg-color", true,
+			"value", String.valueOf(style.BackgroundColor.getIntValue())
+		);
+		closeTag(buffer, "style");
+		return buffer.toString();
+	}
+
+	@Override
+	public HighlightingStyle deserializeStyle(String xml) {
+		try {
+			final StyleDeserializer deserializer = new StyleDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getStyle();
 		} catch (SAXException e) {
 			System.err.println(xml);
 			e.printStackTrace();
@@ -761,10 +808,14 @@ class XMLSerializer extends AbstractSerializer {
 		private Date myAccessDate;
 		private int myAccessCount;
 		private String myModelId;
-		private int myParagraphIndex;
-		private int myElementIndex;
-		private int myCharIndex;
+		private int myStartParagraphIndex;
+		private int myStartElementIndex;
+		private int myStartCharIndex;
+		private int myEndParagraphIndex;
+		private int myEndElementIndex;
+		private int myEndCharIndex;
 		private boolean myIsVisible;
+		private int myStyle;
 
 		public Bookmark getBookmark() {
 			return myState == State.READ_NOTHING ? myBookmark : null;
@@ -783,10 +834,14 @@ class XMLSerializer extends AbstractSerializer {
 			myAccessDate = null;
 			myAccessCount = 0;
 			myModelId = null;
-			myParagraphIndex = 0;
-			myElementIndex = 0;
-			myCharIndex = 0;
+			myStartParagraphIndex = 0;
+			myStartElementIndex = 0;
+			myStartCharIndex = 0;
+			myEndParagraphIndex = -1;
+			myEndElementIndex = -1;
+			myEndCharIndex = -1;
 			myIsVisible = false;
+			myStyle = 1;
 
 			myState = State.READ_NOTHING;
 		}
@@ -799,11 +854,14 @@ class XMLSerializer extends AbstractSerializer {
 			myBookmark = new Bookmark(
 				myId, myBookId, myBookTitle, myText.toString(),
 				myCreationDate, myModificationDate, myAccessDate, myAccessCount,
-				myModelId, myParagraphIndex, myElementIndex, myCharIndex, myIsVisible
+				myModelId,
+				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
+				myEndParagraphIndex, myEndElementIndex, myEndCharIndex,
+				myIsVisible,
+				myStyle
 			);
 		}
 
-		//appendTagWithContent(buffer, "text", bookmark.getText());
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			switch (myState) {
@@ -838,12 +896,33 @@ class XMLSerializer extends AbstractSerializer {
 						} catch (Exception e) {
 							throw new SAXException("XML parsing error", e);
 						}
-					} else if ("position".equals(localName)) {
+					} else if ("start".equals(localName)) {
 						try {
 							myModelId = attributes.getValue("model");
-							myParagraphIndex = Integer.parseInt(attributes.getValue("paragraph"));
-							myElementIndex = Integer.parseInt(attributes.getValue("element"));
-							myCharIndex = Integer.parseInt(attributes.getValue("char"));
+							myStartParagraphIndex = Integer.parseInt(attributes.getValue("paragraph"));
+							myStartElementIndex = Integer.parseInt(attributes.getValue("element"));
+							myStartCharIndex = Integer.parseInt(attributes.getValue("char"));
+						} catch (Exception e) {
+							throw new SAXException("XML parsing error", e);
+						}
+					} else if ("end".equals(localName)) {
+						try {
+							final String para = attributes.getValue("paragraph");
+							if (para != null) {
+								myEndParagraphIndex = Integer.parseInt(para);
+								myEndElementIndex = Integer.parseInt(attributes.getValue("element"));
+								myEndCharIndex = Integer.parseInt(attributes.getValue("char"));
+							} else {
+								myEndParagraphIndex = Integer.parseInt(attributes.getValue("length"));
+								myEndElementIndex = -1;
+								myEndCharIndex = -1;
+							}
+						} catch (Exception e) {
+							throw new SAXException("XML parsing error", e);
+						}
+					} else if ("style".equals(localName)) {
+						try {
+							myStyle = Integer.parseInt(attributes.getValue("id"));
 						} catch (Exception e) {
 							throw new SAXException("XML parsing error", e);
 						}
@@ -875,6 +954,47 @@ class XMLSerializer extends AbstractSerializer {
 		public void characters(char[] ch, int start, int length) {
 			if (myState == State.READ_TEXT) {
 				myText.append(ch, start, length);
+			}
+		}
+	}
+
+	private static final class StyleDeserializer extends DefaultHandler {
+		private HighlightingStyle myStyle;
+
+		private int myId = -1;
+		private int myColor;
+
+		public HighlightingStyle getStyle() {
+			return myStyle;
+		}
+
+		@Override
+		public void startDocument() {
+			myStyle = null;
+			myId = -1;
+		}
+
+		@Override
+		public void endDocument() {
+			if (myId != -1) {
+				myStyle = new HighlightingStyle(myId, new ZLColor(myColor));
+			}
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if ("style".equals(localName)) {
+				try {
+					myId = Integer.parseInt(attributes.getValue("id"));
+				} catch (Exception e) {
+					throw new SAXException("XML parsing error", e);
+				}
+			} else if ("bg-color".equals(localName)) {
+				try {
+					myColor = Integer.parseInt(attributes.getValue("value"));
+				} catch (Exception e) {
+					throw new SAXException("XML parsing error", e);
+				}
 			}
 		}
 	}

@@ -271,7 +271,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		footer.paint(context);
-		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - footer.getHeight(), myPaint);
+		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - myHDiff - footer.getHeight(), myPaint);
 	}
 
 	private void onDrawStatic(final Canvas canvas) {

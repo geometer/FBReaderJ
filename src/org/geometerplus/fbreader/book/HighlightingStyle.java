@@ -19,9 +19,17 @@
 
 package org.geometerplus.fbreader.book;
 
-public enum BookEvent {
-	Added,
-	Updated,
-	Removed,
-	BookmarksUpdated
+import java.util.Map;
+import java.util.HashMap;
+
+import org.geometerplus.zlibrary.core.util.ZLColor;
+
+public class HighlightingStyle {
+	public final int Id;
+	public final ZLColor BackgroundColor;
+
+	HighlightingStyle(int id, ZLColor bgColor) {
+		Id = id;
+		BackgroundColor = bgColor;
+	}
 }

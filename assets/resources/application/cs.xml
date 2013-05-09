@@ -230,6 +230,10 @@
 		<node name="forward" value="Vpřed"/>
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Styl %s"/>
+		<node name="deleteBookmark" value="Odstranit záložku"/>
+	</node>
 	<node name="selection" value="Výběr">
 		<node name="copyToClipboard" value="Kopírovat do schránky"/>
 		<node name="openInDictionary" value="Otevřít ve slovníku"/>
@@ -321,6 +325,10 @@
 			<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
 				<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
 				<node name="summaryOff" value="Nezakazovat tlačítka osvětlení"/>
+			</node>
+			<node name="twoColumnView" value="Dvousloupcové zobrazení">
+				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
+				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
@@ -554,6 +562,7 @@
 			<node name="right" value="Pravý okraj"/>
 			<node name="top" value="Horní okraj"/>
 			<node name="bottom" value="Dolní okraj"/>
+			<node name="spaceBetweenColumns" value="Mezera mezi sloupci"/>
 		</node>
 		<node name="scrollBar" value="Posuvník">
 			<node name="summary" value="Nastavení posuvníku"/>

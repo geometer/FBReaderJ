@@ -211,6 +211,10 @@
 		<node name="forward" value="Înainte"/>
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Sterge marcaj"/>
+	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Copiati în clipboard"/>
 		<node name="openInDictionary" value="Open in dictionar"/>
@@ -302,6 +306,10 @@
 			<node name="disableButtonLights" value="Dezactiveaza lumina butoanelor hardware în timpul lecturii">
 				<node name="summaryOn" value="Dezactiveaza lumina butonului (nu functioneaza pentru unele dispozitive)"/>
 				<node name="summaryOff" value="Nu dezactivati lumina butonului"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
 				<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
@@ -535,6 +543,7 @@
 			<node name="right" value="Marginea din dreapta"/>
 			<node name="top" value="Marginea de sus"/>
 			<node name="bottom" value="Marginea de jos"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Indicator de progres">
 			<node name="summary" value="Setarile scrollbar &amp; subsol"/>

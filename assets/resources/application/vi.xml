@@ -211,6 +211,10 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Xoa đánh dấu"/>
+	</node>
 	<node name="selection" value="Lựa chọn">
 		<node name="copyToClipboard" value="Chép vào Clipboard"/>
 		<node name="openInDictionary" value="Mở trong Từ điển"/>
@@ -302,6 +306,10 @@
 			<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
 				<node name="summaryOn" value="Bằng việc rê ngón tay lên/xuống dọc cạnh trái màn hình"/>
@@ -535,6 +543,7 @@
 			<node name="right" value="Lề Phải"/>
 			<node name="top" value="Lề Trên"/>
 			<node name="bottom" value="Lề Dưới"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Thanh cuộn">
 			<node name="summary" value="Thiết lập thanh cuộn &amp; cuối trang"/>

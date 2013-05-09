@@ -221,6 +221,10 @@
 		<node name="forward" value="Напред"/>
 		<node name="close" value="Затвори FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Обриши обележивач"/>
+	</node>
 	<node name="selection" value="Одабир">
 		<node name="copyToClipboard" value="Умножи"/>
 		<node name="openInDictionary" value="Отвори у речнику"/>
@@ -312,6 +316,10 @@
 			<node name="disableButtonLights" value="Осветљење дугмади при читању">
 				<node name="summaryOn" value="Онемогућава осветљење дугмади (не ради на неким уређајима)."/>
 				<node name="summaryOff" value="Омогућава осветљење дугмади."/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Прилагоди осветљење екрана">
 				<node name="summaryOn" value="Превлачењем прста нагоре/надоле дуж леве стране екрана."/>
@@ -545,6 +553,7 @@
 			<node name="right" value="Десна маргина"/>
 			<node name="top" value="Горња маргина"/>
 			<node name="bottom" value="Доња маргина"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Показатељ напретка">
 			<node name="summary" value="Подешавања клизача и подножја."/>

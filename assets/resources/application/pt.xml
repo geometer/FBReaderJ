@@ -223,6 +223,10 @@
 		<node name="forward" value="Adiantar"/>
 		<node name="close" value="Feche o FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Deletar marcador"/>
+	</node>
 	<node name="selection" value="Seleção">
 		<node name="copyToClipboard" value="Copiar para o clipboard"/>
 		<node name="openInDictionary" value="Abrir em dicionário"/>
@@ -314,6 +318,10 @@
 			<node name="disableButtonLights" value="Desativar luzes das teclas durante a leitura">
 				<node name="summaryOn" value="Desativar luzes das teclas (não funciona em alguns dispositivos)"/>
 				<node name="summaryOff" value="Não tente desabilitar as luzes das teclas"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ajuste de brilho da tela">
 				<node name="summaryOn" value="Arrastando dedo para cima/para baixo ao longo do lado esquerdo da tela"/>
@@ -547,6 +555,7 @@
 			<node name="right" value="Margem direita"/>
 			<node name="top" value="Margem superior"/>
 			<node name="bottom" value="Margem inferior"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Indicador de progresso">
 			<node name="summary" value="Configurações de barra de rolagem &amp; rodapé"/>

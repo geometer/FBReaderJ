@@ -221,6 +221,10 @@
 		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s"/>
+		<node name="deleteBookmark" value="Delete bookmark"/>
+	</node>
 	<node name="selection" value="Selection">
 		<node name="copyToClipboard" value="Copy to clipboard"/>
 		<node name="openInDictionary" value="Open in dictionary"/>
@@ -312,6 +316,10 @@
 			<node name="disableButtonLights" value="Disable buttons light during reading">
 				<node name="summaryOn" value="Disable button lights (does not work for some devices)"/>
 				<node name="summaryOff" value="Don't try to disable button lights"/>
+			</node>
+			<node name="twoColumnView" value="Two column view">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally"/>
+				<node name="summaryOff" value="Always display text in one column"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
 				<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
@@ -545,6 +553,7 @@
 			<node name="right" value="Right margin"/>
 			<node name="top" value="Top margin"/>
 			<node name="bottom" value="Bottom margin"/>
+			<node name="spaceBetweenColumns" value="Space between columns"/>
 		</node>
 		<node name="scrollBar" value="Progress indicator">
 			<node name="summary" value="Scrollbar &amp; footer settings"/>

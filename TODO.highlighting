@@ -1,0 +1,13 @@
+DONE re-implement go to bookmark operation
+DONE highlight bookmarks
+DONE show highlights in footnote view
+DONE don't draw all bookmarks, filter by position
+DONE restore end position for old bookmarks
+	** save restored position
+DONE save bookmark style
+DONE change style (color) for bookmarks: user interface
+	** edit styles
+	** add/remove styles
+	DONE menu on bookmark tap
+DONE watch bookmark changes
+DONE fix selection bookmark range
