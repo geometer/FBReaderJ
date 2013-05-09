@@ -546,10 +546,6 @@
 				<node name="wood" value="Wood"/>
 			</node>
 			<node name="backgroundColor" value="Background color"/>
-			<node name="imagesBackground" value="Images Background">
-				<node name="summaryOn" value="Use background"/>
-				<node name="summaryOff" value="Do not use background"/>
-			</node>
 			<node name="selectionBackground" value="Selection background"/>
 			<node name="selectionForeground" value="Selected text"/>
 			<node name="text" value="Regular text"/>
@@ -665,6 +661,10 @@
 				<node name="none" value="None"/>
 				<node name="covers" value="Covers only"/>
 				<node name="all" value="All"/>
+			</node>
+			<node name="imagesBackground" value="Images Background">
+				<node name="summaryOn" value="Use background"/>
+				<node name="summaryOff" value="Do not use background"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Cancel menu">

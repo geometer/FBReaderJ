@@ -551,10 +551,6 @@
 				<node name="wood" value="Дерево"/>
 			</node>
 			<node name="backgroundColor" value="Цвет фона"/>
-			<node name="imagesBackground" value="Фон изображений">
-				<node name="summaryOn" value="Использовать фон"/>
-				<node name="summaryOff" value="Не использовать фон"/>
-			</node>
 			<node name="selectionBackground" value="Фон пометки"/>
 			<node name="selectionForeground" value="Текст пометки"/>
 			<node name="text" value="Обычный текст"/>
@@ -670,6 +666,10 @@
 				<node name="none" value="Никогда"/>
 				<node name="covers" value="Только обложки"/>
 				<node name="all" value="Все картинки"/>
+			</node>
+			<node name="imagesBackground" value="Фон изображений">
+				<node name="summaryOn" value="Использовать фон"/>
+				<node name="summaryOff" value="Не использовать фон"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Меню выхода из программы">
