@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Kitabı sil"/>
 		<node name="addToFavorites" value="Favorilere ekle"/>
 		<node name="removeFromFavorites" value="Favorilerden çıkar"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader ağ kitaplığı">
 		<node name="byAuthor" value="Yazarlar">
@@ -219,6 +221,10 @@
 		<node name="forward" value="İleri"/>
 		<node name="close" value="FBReader\'i kapat"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Yer imini sil"/>
+	</node>
 	<node name="selection" value="Seçenekler">
 		<node name="copyToClipboard" value="Panoya kopyala"/>
 		<node name="openInDictionary" value="Sözlükte bul"/>
@@ -310,6 +316,10 @@
 			<node name="disableButtonLights" value="Okuma sırasında düğmeler devredışı kalsın">
 				<node name="summaryOn" value="Düğme ışıklarını kapat (bazı cihazlarda çalışmamaktadır)"/>
 				<node name="summaryOff" value="Düğme ışıklarına müdahale etme"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ekran parlaklığı ayarı">
 				<node name="summaryOn" value="Parmağınızı ekranın sol yanında yukarı aşağı sürükleyerek parlaklığı ayarlayın"/>
@@ -543,6 +553,7 @@
 			<node name="right" value="Sağ kenar"/>
 			<node name="top" value="Üst kenar"/>
 			<node name="bottom" value="Alt kenar"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="İlerleme göstergesi">
 			<node name="summary" value="Kaydırma Çubuğu  &amp; altbilgi ayarları"/>
@@ -716,6 +727,10 @@
 			<node name="authorize" value="Onay"/>
 			<node name="resetPosition" value="POzisyonu sıfırla"/>
 			<node name="sendReport" value="Rapor gönder"/>
+			<node name="addToFavorites" value="Favorilere ekle"/>
+			<node name="removeFromFavorites" value="Favorilerden çıkar"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Eklenti kur"/>

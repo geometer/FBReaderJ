@@ -19,7 +19,9 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-class ZLTextSelection implements ZLTextAbstractHighlighting {
+import org.geometerplus.zlibrary.core.util.ZLColor;
+
+class ZLTextSelection extends ZLTextHighlighting {
 	static class Point {
 		int X;
 		int Y;
@@ -45,6 +47,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		myView = view;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return myLeftMostRegionSoul == null;
 	}
@@ -97,12 +100,12 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		}
 	}
 
-	void expandTo(int x, int y) {
+	void expandTo(ZLTextPage page, int x, int y) {
 		if (isEmpty()) {
 			return;
 		}
 
-		final ZLTextElementAreaVector vector = myView.myCurrentPage.TextElementMap;
+		final ZLTextElementAreaVector vector = page.TextElementMap;
 		final ZLTextElementArea firstArea = vector.getFirstArea();
 		final ZLTextElementArea lastArea = vector.getLastArea();
 		if (firstArea != null && y < firstArea.YStart) {
@@ -111,7 +114,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 				myScroller = null;
 			}
 			if (myScroller == null) {
-				myScroller = new Scroller(false, x, y);
+				myScroller = new Scroller(page, false, x, y);
 				return;
 			}
 		} else if (lastArea != null && y + ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2 > lastArea.YEnd) {
@@ -120,7 +123,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 				myScroller = null;
 			}
 			if (myScroller == null) {
-				myScroller = new Scroller(true, x, y);
+				myScroller = new Scroller(page, true, x, y);
 				return;
 			}
 		} else {
@@ -162,13 +165,13 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		}
 
 		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
-			if (hasAPartAfterPage(myView.myCurrentPage)) {
+			if (hasPartAfterPage(page)) {
 				myView.scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
 			}
 		} else {
-			if (hasAPartBeforePage(myView.myCurrentPage)) {
+			if (hasPartBeforePage(page)) {
 				myView.scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
@@ -183,6 +186,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 			&& myRightMostRegionSoul.compareTo(area) >= 0;
 	}
 
+	@Override
 	public ZLTextPosition getStartPosition() {
 		if (isEmpty()) {
 			return null;
@@ -194,17 +198,22 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		);
 	}
 
+	@Override
 	public ZLTextPosition getEndPosition() {
 		if (isEmpty()) {
 			return null;
 		}
+		final ZLTextParagraphCursor cursor =
+			ZLTextParagraphCursor.cursor(myView.getModel(), myRightMostRegionSoul.ParagraphIndex);
+		final ZLTextElement element = cursor.getElement(myRightMostRegionSoul.EndElementIndex);
 		return new ZLTextFixedPosition(
 			myRightMostRegionSoul.ParagraphIndex,
 			myRightMostRegionSoul.EndElementIndex,
-			0
+			element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0
 		);
 	}
 
+	@Override
 	public ZLTextElementArea getStartArea(ZLTextPage page) {
 		if (isEmpty()) {
 			return null;
@@ -221,6 +230,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		return null;
 	}
 
+	@Override
 	public ZLTextElementArea getEndArea(ZLTextPage page) {
 		if (isEmpty()) {
 			return null;
@@ -237,7 +247,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		return null;
 	}
 
-	boolean hasAPartBeforePage(ZLTextPage page) {
+	boolean hasPartBeforePage(ZLTextPage page) {
 		if (isEmpty()) {
 			return false;
 		}
@@ -249,7 +259,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		return cmp < 0 || (cmp == 0 && !firstPageArea.isFirstInElement());
 	}
 
-	boolean hasAPartAfterPage(ZLTextPage page) {
+	boolean hasPartAfterPage(ZLTextPage page) {
 		if (isEmpty()) {
 			return false;
 		}
@@ -261,11 +271,18 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		return cmp > 0 || (cmp == 0 && !lastPageArea.isLastInElement());
 	}
 
+	@Override
+	public ZLColor getBackgroundColor() {
+		return myView.getSelectionBackgroundColor();
+	}
+
 	private class Scroller implements Runnable {
+		private final ZLTextPage myPage;
 		private final boolean myScrollForward;
 		private int myX, myY;
 
-		Scroller(boolean forward, int x, int y) {
+		Scroller(ZLTextPage page, boolean forward, int x, int y) {
+			myPage = page;
 			myScrollForward = forward;
 			setXY(x, y);
 			myView.Application.addTimerTask(this, 400);
@@ -283,7 +300,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		public void run() {
 			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
-			expandTo(myX, myY);
+			expandTo(myPage, myX, myY);
 			myView.Application.getViewWidget().reset();
 			myView.Application.getViewWidget().repaint();
 		}

@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="删除本书"/>
 		<node name="addToFavorites" value="收藏到我的超爱"/>
 		<node name="removeFromFavorites" value="从收藏列表中移除"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader 网络书库">
 		<node name="byAuthor" value="作者">
@@ -209,6 +211,10 @@
 		<node name="forward" value="前进"/>
 		<node name="close" value="关闭FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="删除书签"/>
+	</node>
 	<node name="selection" value="选择">
 		<node name="copyToClipboard" value="复制到剪贴板"/>
 		<node name="openInDictionary" value="打开字典"/>
@@ -300,6 +306,10 @@
 			<node name="disableButtonLights" value="阅读时禁用系统按键发亮">
 				<node name="summaryOn" value="禁用设备系统按键发亮 (对某些设备无效)"/>
 				<node name="summaryOff" value="不要尝试禁用系统按键发亮"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="屏幕亮度调整">
 				<node name="summaryOn" value="通过在屏幕左侧上下滑动手指来调整"/>
@@ -533,6 +543,7 @@
 			<node name="right" value="右边距"/>
 			<node name="top" value="顶边距"/>
 			<node name="bottom" value="底边距"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="滚动条">
 			<node name="summary" value="滚动条 &amp; 页脚设定"/>
@@ -706,6 +717,10 @@
 			<node name="authorize" value="授权"/>
 			<node name="resetPosition" value="重置位置"/>
 			<node name="sendReport" value="发送报告"/>
+			<node name="addToFavorites" value="收藏到我的超爱"/>
+			<node name="removeFromFavorites" value="从收藏列表中移除"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件"/>

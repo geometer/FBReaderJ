@@ -17,24 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.util;
+package org.geometerplus.fbreader.book;
 
-public abstract class ZLCharacterUtil {
-	public static boolean isLetter(char ch) {
-		return
-			(('a' <= ch) && (ch <= 'z')) ||
-			(('A' <= ch) && (ch <= 'Z')) ||
-			// ' is "letter" (in French, for example)
-			(ch == '\'') ||
-			// ^ is "letter" (in Esperanto)
-			(ch == '^') ||
-			// latin1
-			((0xC0 <= ch) && (ch <= 0xFF) && (ch != 0xD7) && (ch != 0xF7)) ||
-			// extended latin1
-			((0x100 <= ch) && (ch <= 0x178)) ||
-			// cyrillic
-			((0x410 <= ch) && (ch <= 0x44F)) ||
-			// cyrillic YO & yo
-			(ch == 0x401) || (ch == 0x451);
+public final class BookQuery {
+	public final Filter Filter;
+	public final int Limit;
+	public final int Page;
+
+	public BookQuery(Filter filter, int limit) {
+		this(filter, limit, 0);
+	}
+
+	BookQuery(Filter filter, int limit, int page) {
+		Filter = filter;
+		Limit = limit;
+		Page = page;
+	}
+
+	public BookQuery next() {
+		return new BookQuery(Filter, Limit, Page + 1);
 	}
 }

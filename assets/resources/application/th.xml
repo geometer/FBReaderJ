@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="ลบหนังสือ"/>
 		<node name="addToFavorites" value="เพิ่มเป็นหนังสือเล่มโปรด"/>
 		<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="ชื่อผู้แต่ง ">
@@ -209,6 +211,10 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="ปิด FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="ลบบุ๊คมาร์ค"/>
+	</node>
 	<node name="selection" value="เลือก">
 		<node name="copyToClipboard" value="คัดลอกไปที่คลิปบอร์ด"/>
 		<node name="openInDictionary" value="เปิดในพจนานุกรม"/>
@@ -300,6 +306,10 @@
 			<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="การปรับความสว่างหน้าจอ">
 				<node name="summaryOn" value="ลากนิ้วขึ้นลงด้านซ้ายของหน้าจอ"/>
@@ -533,6 +543,7 @@
 			<node name="right" value="ขอบขวา"/>
 			<node name="top" value="ขอบบน"/>
 			<node name="bottom" value="ขอบล่าง"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="แถบเลื่อน">
 			<node name="summary" value="แถบเลื่อน &amp; การตั้งค่าข้อความท้ายหน้า"/>
@@ -706,6 +717,10 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="เพิ่มเป็นหนังสือเล่มโปรด"/>
+			<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="ติดตั้งปลั๊กอิน"/>

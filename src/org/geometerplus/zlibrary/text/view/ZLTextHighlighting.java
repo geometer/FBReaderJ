@@ -19,41 +19,36 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-class ZLTextHighlighting implements ZLTextAbstractHighlighting {
-	private ZLTextPosition myStartPosition;
-	private ZLTextPosition myEndPosition;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
-	void setup(ZLTextPosition start, ZLTextPosition end) {
-		myStartPosition = new ZLTextFixedPosition(start);
-		myEndPosition = new ZLTextFixedPosition(end);
+public abstract class ZLTextHighlighting implements Comparable<ZLTextHighlighting> {
+	public abstract boolean isEmpty();
+
+	public abstract ZLTextPosition getStartPosition();
+	public abstract ZLTextPosition getEndPosition();
+	public abstract ZLTextElementArea getStartArea(ZLTextPage page);
+	public abstract ZLTextElementArea getEndArea(ZLTextPage page);
+
+	public abstract ZLColor getBackgroundColor();
+
+	boolean intersects(ZLTextPage page) {
+		return
+			!isEmpty() &&
+			!page.StartCursor.isNull() && !page.EndCursor.isNull() &&
+			page.StartCursor.compareTo(getEndPosition()) < 0 &&
+			page.EndCursor.compareTo(getStartPosition()) > 0;
 	}
 
-	public boolean clear() {
-		if (isEmpty()) {
-			return false;
-		}
-		myStartPosition = null;
-		myEndPosition = null;
-		return true;
+	boolean intersects(ZLTextRegion region) {
+		final ZLTextRegion.Soul soul = region.getSoul();
+		return
+			!isEmpty() &&
+			soul.compareTo(getStartPosition()) >= 0 &&
+			soul.compareTo(getEndPosition()) <= 0;
 	}
 
-	public boolean isEmpty() {
-		return myStartPosition == null;
-	}
-
-	public ZLTextPosition getStartPosition() {
-		return myStartPosition;
-	}
-
-	public ZLTextPosition getEndPosition() {
-		return myEndPosition;
-	}
-
-	public ZLTextElementArea getStartArea(ZLTextPage page) {
-		return page.TextElementMap.getFirstAfter(myStartPosition);
-	}
-
-	public ZLTextElementArea getEndArea(ZLTextPage page) {
-		return page.TextElementMap.getLastBefore(myEndPosition);
+	public int compareTo(ZLTextHighlighting highlighting) {
+		final int cmp = getStartPosition().compareTo(highlighting.getStartPosition());
+		return cmp != 0 ? cmp : getEndPosition().compareTo(highlighting.getEndPosition());
 	}
 }

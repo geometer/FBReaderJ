@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Boek verwijderen"/>
 		<node name="addToFavorites" value="Toevoegen aan favorieten"/>
 		<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader netwerkbibliotheek">
 		<node name="byAuthor" value="Auteurs">
@@ -219,6 +221,10 @@
 		<node name="forward" value="Volgende"/>
 		<node name="close" value="FBReader afsluiten"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
+	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Kopieer naar klembord"/>
 		<node name="openInDictionary" value="Openen in woordenboek"/>
@@ -310,6 +316,10 @@
 			<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
 				<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
@@ -543,6 +553,7 @@
 			<node name="right" value="Rechtermarge"/>
 			<node name="top" value="Bovenmarge"/>
 			<node name="bottom" value="Ondermarge"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Schuifbalk">
 			<node name="summary" value="Schuif- en onderbalkinstellingen"/>
@@ -716,6 +727,10 @@
 			<node name="authorize" value="Autoriseren"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Verstuur rapport"/>
+			<node name="addToFavorites" value="Toevoegen aan favorieten"/>
+			<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-in installeren"/>

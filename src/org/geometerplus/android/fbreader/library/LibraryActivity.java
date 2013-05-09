@@ -29,9 +29,7 @@ import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -90,7 +88,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	public void onResume() {
-	  	super.onResume();
+		super.onResume();
 	}
 
 	@Override
@@ -125,35 +123,12 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	//
 	// show BookInfoActivity
 	//
-	private static final int BOOK_INFO_REQUEST = 1;
-
 	private void showBookInfo(Book book) {
-		OrientationUtil.startActivityForResult(
+		OrientationUtil.startActivity(
 			this,
 			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book)),
-			BOOK_INFO_REQUEST
+				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book))
 		);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
-		if (requestCode == BOOK_INFO_REQUEST) {
-			final Book book = BookInfoActivity.bookByIntent(intent);
-			((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
-				public void run() {
-					if (book != null) {
-						myRootTree.Collection.saveBook(book, true);
-						if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
-							getListAdapter().replaceAll(getCurrentTree().subTrees(), true);
-							getListView().invalidateViews();
-						}
-					}
-				}
-			});
-		} else {
-			super.onActivityResult(requestCode, returnCode, intent);
-		}
 	}
 
 	//
@@ -183,7 +158,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	private static final int SHARE_BOOK_ITEM_ID = 2;
 	private static final int ADD_TO_FAVORITES_ITEM_ID = 3;
 	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 4;
-	private static final int DELETE_BOOK_ITEM_ID = 5;
+	private static final int MARK_AS_READ_ITEM_ID = 5;
+	private static final int MARK_AS_UNREAD_ITEM_ID = 6;
+	private static final int DELETE_BOOK_ITEM_ID = 7;
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -202,10 +179,15 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (book.File.getPhysicalFile() != null) {
 			menu.add(0, SHARE_BOOK_ITEM_ID, 0, resource.getResource("shareBook").getValue());
 		}
-		if (myRootTree.Collection.labels(book).contains(Book.FAVORITE_LABEL)) {
+		if (book.labels().contains(Book.FAVORITE_LABEL)) {
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
+		}
+		if (book.labels().contains(Book.READ_LABEL)) {
+			menu.add(0, MARK_AS_UNREAD_ITEM_ID, 0, resource.getResource("markAsUnread").getValue());
+		} else {
+			menu.add(0, MARK_AS_READ_ITEM_ID, 0, resource.getResource("markAsRead").getValue());
 		}
 		if (BookUtil.canRemoveBookFile(book)) {
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
@@ -234,14 +216,26 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				FBUtil.shareBook(this, book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
-				myRootTree.Collection.setLabel(book, Book.FAVORITE_LABEL);
+				book.addLabel(Book.FAVORITE_LABEL);
+				myRootTree.Collection.saveBook(book, false);
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
-				myRootTree.Collection.removeLabel(book, Book.FAVORITE_LABEL);
+				book.removeLabel(Book.FAVORITE_LABEL);
+				myRootTree.Collection.saveBook(book, false);
 				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
 					getListAdapter().replaceAll(getCurrentTree().subTrees());
 					getListView().invalidateViews();
 				}
+				return true;
+			case MARK_AS_READ_ITEM_ID:
+				book.addLabel(Book.READ_LABEL);
+				myRootTree.Collection.saveBook(book, false);
+				getListView().invalidateViews();
+				return true;
+			case MARK_AS_UNREAD_ITEM_ID:
+				book.removeLabel(Book.READ_LABEL);
+				myRootTree.Collection.saveBook(book, false);
+				getListView().invalidateViews();
 				return true;
 			case DELETE_BOOK_ITEM_ID:
 				tryToDeleteBook(book);
@@ -335,10 +329,10 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		final Thread searcher = new Thread("Library.searchBooks") {
 			public void run() {
 				final SearchResultsTree oldSearchResults = myRootTree.getSearchResultsTree();
-            
+
 				if (oldSearchResults != null && pattern.equals(oldSearchResults.Pattern)) {
 					onSearchEvent(true);
-				} else if (myRootTree.Collection.hasBooksForPattern(pattern)) {
+				} else if (myRootTree.Collection.hasBooks(new Filter.ByPattern(pattern))) {
 					if (oldSearchResults != null) {
 						oldSearchResults.removeSelf();
 					}

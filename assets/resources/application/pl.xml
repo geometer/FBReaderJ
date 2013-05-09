@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Usuń książkę"/>
 		<node name="addToFavorites" value="Dodaj do ulubionych"/>
 		<node name="removeFromFavorites" value="Usuń z ulubionych"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Sieciowa biblioteka FBReadera">
 		<node name="byAuthor" value="Po autorze">
@@ -209,6 +211,10 @@
 		<node name="forward" value="Do przodu"/>
 		<node name="close" value="Zamknij FBReadera"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Usuń zakładkę"/>
+	</node>
 	<node name="selection" value="Zaznaczenie">
 		<node name="copyToClipboard" value="Skopiuj do schowka"/>
 		<node name="openInDictionary" value="Sprawdź w słowniku"/>
@@ -300,6 +306,10 @@
 			<node name="disableButtonLights" value="Wyłącz podświetlenie przycisków podczas czytania">
 				<node name="summaryOn" value="Wyłącz podświetlenie przycisków (nie wszystkie urządzenia respektują to ustawienie)"/>
 				<node name="summaryOff" value="Nie próbuj wyłączyć podświetlenia przycisków"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Dostosowywanie jasności">
 				<node name="summaryOn" value="Przesuwając palcem w górę/dół wzdłuż lewej krawędzi ekranu"/>
@@ -533,6 +543,7 @@
 			<node name="right" value="Prawy margines"/>
 			<node name="top" value="Górny margines"/>
 			<node name="bottom" value="Dolny margines"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Pasek postępu">
 			<node name="summary" value="Ustawienia paska postępu i przewijania"/>
@@ -706,6 +717,10 @@
 			<node name="authorize" value="Autoryzuj"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Dodaj do ulubionych"/>
+			<node name="removeFromFavorites" value="Usuń z ulubionych"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Zainstaluj plugin"/>

@@ -89,25 +89,20 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		public void run() {
 			long id = 0;
 			if (myBook != null) {
-				while (true) {
-					final List<Bookmark> thisBookBookmarks =
-						myCollection.bookmarksForBook(myBook, id, 20);
+				for (BookmarkQuery query = new BookmarkQuery(myBook, 20); ; query = query.next()) {
+					final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
 					if (thisBookBookmarks.isEmpty()) {
 						break;
-					} else {
-						id = thisBookBookmarks.get(thisBookBookmarks.size() - 1).getId() + 1;
 					}
 					myThisBookAdapter.addAll(thisBookBookmarks);
 					myAllBooksAdapter.addAll(thisBookBookmarks);
 				}
 			}
 			id = 0;
-			while (true) {
-				final List<Bookmark> allBookmarks = myCollection.bookmarks(id, 20);
+			for (BookmarkQuery query = new BookmarkQuery(20); ; query = query.next()) {
+				final List<Bookmark> allBookmarks = myCollection.bookmarks(query);
 				if (allBookmarks.isEmpty()) {
 					break;
-				} else {
-					id = allBookmarks.get(allBookmarks.size() - 1).getId() + 1;
 				}
 				myAllBooksAdapter.addAll(allBookmarks);
 			}

@@ -51,6 +51,8 @@
 		<node name="deleteBook" value="Supprimer ce livre"/>
 		<node name="addToFavorites" value="Ajouter aux favoris"/>
 		<node name="removeFromFavorites" value="Supprimer des favoris"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Librairie réseau">
 		<node name="byAuthor" value="Par auteur">
@@ -212,6 +214,10 @@
 		<node name="forward" value="Suivant"/>
 		<node name="close" value="Fermer FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Supprimer le marque-page"/>
+	</node>
 	<node name="selection" value="Sélection">
 		<node name="copyToClipboard" value="Copier dans le presse-papiers"/>
 		<node name="openInDictionary" value="Ouvrir dans le dictionnaire"/>
@@ -303,6 +309,10 @@
 			<node name="disableButtonLights" value="Désactiver la lumière des boutons physiques pendant la lecture">
 				<node name="summaryOn" value="Désactive la lumière des boutons (ne fonctionne pas sur certains appareils)"/>
 				<node name="summaryOff" value="Ne pas essayer de désactiver la lumière des boutons"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
 				<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
@@ -536,6 +546,7 @@
 			<node name="right" value="Marge de droite"/>
 			<node name="top" value="Marge du haut"/>
 			<node name="bottom" value="Marge du bas"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Barre de défilement">
 			<node name="summary" value="Configuration de la barre &amp; pied de page"/>
@@ -709,6 +720,10 @@
 			<node name="authorize" value="Autoriser"/>
 			<node name="resetPosition" value="Réinitialiser position"/>
 			<node name="sendReport" value="Envoyer un rapport"/>
+			<node name="addToFavorites" value="Ajouter aux favoris"/>
+			<node name="removeFromFavorites" value="Supprimer des favoris"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Installer plugin"/>

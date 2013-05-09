@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Удалить книгу"/>
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
+		<node name="markAsRead" value="Пометить как прочтённое"/>
+		<node name="markAsUnread" value="Пометить как непрочтённое"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
 		<node name="byAuthor" value="По авторам">
@@ -224,6 +226,10 @@
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Стиль %s"/>
+		<node name="deleteBookmark" value="Стереть закладку"/>
+	</node>
 	<node name="selection" value="Пометка">
 		<node name="copyToClipboard" value="Скопировать в буфер"/>
 		<node name="openInDictionary" value="Посмотреть в словаре"/>
@@ -315,6 +321,10 @@
 			<node name="disableButtonLights" value="Выключать подсветку кнопок во время чтения">
 				<node name="summaryOn" value="Выключать подсветку (работает не на всех устройствах)"/>
 				<node name="summaryOff" value="Не пытаться выключать подсветку"/>
+			</node>
+			<node name="twoColumnView" value="Текст в две колонки">
+				<node name="summaryOn" value="Показывать текст в две колонки, когда экран горизонтален"/>
+				<node name="summaryOff" value="Всегда показывать текст в одну колонку"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
 				<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
@@ -548,6 +558,7 @@
 			<node name="right" value="Отступ справа"/>
 			<node name="top" value="Отступ сверху"/>
 			<node name="bottom" value="Отступ снизу"/>
+			<node name="spaceBetweenColumns" value="Расстояние между колонками"/>
 		</node>
 		<node name="scrollBar" value="Полоса прокрутки">
 			<node name="summary" value="Индикатор количества прочитанного"/>
@@ -721,6 +732,10 @@
 			<node name="authorize" value="Авторизоваться"/>
 			<node name="resetPosition" value="Назад"/>
 			<node name="sendReport" value="Отправить сообщение"/>
+			<node name="addToFavorites" value="Добавить в избранное"/>
+			<node name="removeFromFavorites" value="Убрать из избранного"/>
+			<node name="markAsRead" value="Пометить как прочтённое"/>
+			<node name="markAsUnread" value="Пометить как непрочтённое"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>

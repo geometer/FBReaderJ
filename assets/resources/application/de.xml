@@ -52,6 +52,8 @@
 		<node name="deleteBook" value="Buch löschen"/>
 		<node name="addToFavorites" value="Buch zu den Favoriten hinzufügen"/>
 		<node name="removeFromFavorites" value="Buch aus der Favoritenliste löschen"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader Netzwerk-Bibliothek">
 		<node name="byAuthor" value="Nach Autoren gruppiert">
@@ -213,6 +215,10 @@
 		<node name="forward" value="Vorwärts"/>
 		<node name="close" value="FBReader schließen"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Lesezeichen löschen"/>
+	</node>
 	<node name="selection" value="Auswahl">
 		<node name="copyToClipboard" value="In die Zwischenablage kopieren"/>
 		<node name="openInDictionary" value="Im Wörterbuch nachschlagen"/>
@@ -304,6 +310,10 @@
 			<node name="disableButtonLights" value="Beleuchtung der Hardware-Tasten während des Lesens abschalten">
 				<node name="summaryOn" value="Tastenbeleuchtung abschalten (Funktioniert auf einigen Geräten nicht)"/>
 				<node name="summaryOff" value="Tastenbeleuchtung nicht abschalten"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung">
 				<node name="summaryOn" value="Mit dem Finger durch hoch/runter-schieben am linken Bildschirmrand."/>
@@ -537,6 +547,7 @@
 			<node name="right" value="Rechter Rand"/>
 			<node name="top" value="Oberer Rand"/>
 			<node name="bottom" value="Unterer Rand"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Bildlaufleiste">
 			<node name="summary" value="Einstellungen für Bildlaufleiste (Scrollbar) &amp; Fußleiste."/>
@@ -718,6 +729,10 @@
 			<node name="authorize" value="Autorisieren"/>
 			<node name="resetPosition" value="Position zurücksetzen"/>
 			<node name="sendReport" value="Report senden"/>
+			<node name="addToFavorites" value="Buch zu den Favoriten hinzufügen"/>
+			<node name="removeFromFavorites" value="Buch aus der Favoritenliste löschen"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-In installieren"/>

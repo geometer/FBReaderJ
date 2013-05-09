@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Изтрий книгата"/>
 		<node name="addToFavorites" value="Добави в избрани"/>
 		<node name="removeFromFavorites" value="Премахни от избрани"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: мрежова библиотека">
 		<node name="byAuthor" value="Автор">
@@ -224,6 +226,10 @@
 		<node name="forward" value="Напред"/>
 		<node name="close" value="Затвори FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Премахни отбелязването"/>
+	</node>
 	<node name="selection" value="Етикет">
 		<node name="copyToClipboard" value="Копирай в буфера"/>
 		<node name="openInDictionary" value="Отвори в речника"/>
@@ -315,6 +321,10 @@
 			<node name="disableButtonLights" value="Изключване на светещите бутони по време на четене">
 				<node name="summaryOn" value="Изключване на светещите бутони (не работи на всички устройства)"/>
 				<node name="summaryOff" value="Не изключвай светещите бутони"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Настройка на яркостта на екрана">
 				<node name="summaryOn" value="С приплъзване нагоре/надолу по левия край на екрана"/>
@@ -548,6 +558,7 @@
 			<node name="right" value="Дясна граница"/>
 			<node name="top" value="Горна граница"/>
 			<node name="bottom" value="Долна граница"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Скрол бар">
 			<node name="summary" value="Индикатор на прочетените страници"/>
@@ -721,6 +732,10 @@
 			<node name="authorize" value="Оторизация"/>
 			<node name="resetPosition" value="Назад"/>
 			<node name="sendReport" value="Изпрати съобщение"/>
+			<node name="addToFavorites" value="Добави в избрани"/>
+			<node name="removeFromFavorites" value="Премахни от избрани"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Инсталиране на програма"/>

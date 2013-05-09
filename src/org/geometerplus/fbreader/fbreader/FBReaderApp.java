@@ -26,9 +26,11 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
@@ -64,19 +66,26 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
 		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 
+	public final ZLBooleanOption TwoColumnViewOption;
 	public final ZLIntegerRangeOption LeftMarginOption;
 	public final ZLIntegerRangeOption RightMarginOption;
 	public final ZLIntegerRangeOption TopMarginOption;
 	public final ZLIntegerRangeOption BottomMarginOption;
+	public final ZLIntegerRangeOption SpaceBetweenColumnsOption;
 	{
 		final int dpi = ZLibrary.Instance().getDisplayDPI();
 		final int x = ZLibrary.Instance().getPixelWidth();
 		final int y = ZLibrary.Instance().getPixelHeight();
+		TwoColumnViewOption = new ZLBooleanOption(
+			"Options", "TwoColumnView",
+			x * x + y * y >= 50 * dpi * dpi
+		);
 		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
 		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
 		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
 		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 20);
+		SpaceBetweenColumnsOption = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
 	}
 
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
@@ -110,6 +119,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
+	private String myFootnoteModelId;
 
 	public volatile BookModel Model;
 
@@ -120,6 +130,29 @@ public final class FBReaderApp extends ZLApplication {
 
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
+
+		collection.addListener(new IBookCollection.Listener() {
+			public void onBookEvent(BookEvent event, Book book) {
+				switch (event) {
+					case BookmarksUpdated:
+						if (Model != null && book.equals(Model.Book)) {
+							if (BookTextView.getModel() != null) { 
+								setBookmarkHighlightings(BookTextView, null);
+							}
+							if (FootnoteView.getModel() != null && myFootnoteModelId != null) { 
+								setBookmarkHighlightings(FootnoteView, myFootnoteModelId);
+							}
+						}
+						break;
+					case Updated:
+						onBookUpdated(book);
+						break;
+				}
+			}
+
+			public void onBuildEvent(IBookCollection.Status status) {
+			}
+		});
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
@@ -157,6 +190,10 @@ public final class FBReaderApp extends ZLApplication {
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					openBookInternal(book, bookmark, false);
+					if (book != null) {
+						book.addLabel(Book.READ_LABEL);
+						Collection.saveBook(book, false);
+					}
 				}
 			}, postAction);
 		}
@@ -213,7 +250,7 @@ public final class FBReaderApp extends ZLApplication {
 					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
 					setView(BookTextView);
 				} else {
-					FootnoteView.setModel(Model.getFootnoteModel(label.ModelId));
+					setFootnoteModel(label.ModelId);
 					setView(FootnoteView);
 					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
 				}
@@ -227,6 +264,51 @@ public final class FBReaderApp extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 
+	public Bookmark addSelectionBookmark() {
+		final FBView fbView = getTextView();
+		final String text = fbView.getSelectedText();
+
+		final Bookmark bookmark = new Bookmark(
+			Model.Book,
+			fbView.getModel().getId(),
+			fbView.getSelectionStartPosition(),
+			fbView.getSelectionEndPosition(),
+			text,
+			true
+		);
+		Collection.saveBookmark(bookmark);
+		fbView.clearSelection();
+
+		return bookmark;
+	}
+
+	private void setBookmarkHighlightings(ZLTextView view, String modelId) {
+		view.removeHighlightings(BookmarkHighlighting.class);
+		for (BookmarkQuery query = new BookmarkQuery(Model.Book, 20); ; query = query.next()) {
+			final List<Bookmark> bookmarks = Collection.bookmarks(query);
+			if (bookmarks.isEmpty()) {
+				break;
+			}
+			for (Bookmark b : bookmarks) {
+				if (b.getEnd() == null) {
+					b.findEnd(view);
+				}
+				if (MiscUtil.equals(modelId, b.ModelId)) {
+					view.addHighlighting(new BookmarkHighlighting(view, Collection, b));
+				}
+			}
+		}
+	}
+
+	private void setFootnoteModel(String modelId) {
+		final ZLTextModel model = Model.getFootnoteModel(modelId);
+		FootnoteView.setModel(model);
+		if (model != null) {
+			myFootnoteModelId = modelId;
+			setBookmarkHighlightings(FootnoteView, modelId);
+		}
+	}
+
 	synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
 		if (book == null) {
 			book = Collection.getRecentBook(0);
@@ -236,6 +318,8 @@ public final class FBReaderApp extends ZLApplication {
 			if (book == null) {
 				return;
 			}
+			book.addLabel(Book.READ_LABEL);
+			Collection.saveBook(book, false);
 		}
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
@@ -259,6 +343,7 @@ public final class FBReaderApp extends ZLApplication {
 			Collection.saveBook(book, false);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
+			setBookmarkHighlightings(BookTextView, null);
 			BookTextView.gotoPosition(Collection.getStoredPosition(book.getId()));
 			if (bookmark == null) {
 				setView(BookTextView);
@@ -285,6 +370,14 @@ public final class FBReaderApp extends ZLApplication {
 		getViewWidget().repaint();
 	}
 
+	private List<Bookmark> invisibleBookmarks() {
+		final List<Bookmark> bookmarks = Collection.bookmarks(
+			new BookmarkQuery(Model.Book, false, 10)
+		);
+		Collections.sort(bookmarks, new Bookmark.ByTimeComparator());
+		return bookmarks;
+	}
+
 	public boolean jumpBack() {
 		try {
 			if (getTextView() != BookTextView) {
@@ -303,7 +396,7 @@ public final class FBReaderApp extends ZLApplication {
 				return false;
 			}
 
-			final List<Bookmark> bookmarks = Collection.invisibleBookmarks(Model.Book);
+			final List<Bookmark> bookmarks = invisibleBookmarks();
 			if (bookmarks.isEmpty()) {
 				return false;
 			}
@@ -321,11 +414,15 @@ public final class FBReaderApp extends ZLApplication {
 		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			addInvisibleBookmark();
-			BookTextView.gotoPosition(bookmark);
+			BookTextView.gotoHighlighting(
+				new BookmarkHighlighting(BookTextView, Collection, bookmark)
+			);
 			setView(BookTextView);
 		} else {
-			FootnoteView.setModel(Model.getFootnoteModel(modelId));
-			FootnoteView.gotoPosition(bookmark);
+			setFootnoteModel(modelId);
+			FootnoteView.gotoHighlighting(
+				new BookmarkHighlighting(FootnoteView, Collection, bookmark)
+			);
 			setView(FootnoteView);
 		}
 		getViewWidget().repaint();
@@ -400,7 +497,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		if (ShowPositionsInCancelMenuOption.getValue()) {
 			if (Model != null && Model.Book != null) {
-				for (Bookmark bookmark : Collection.invisibleBookmarks(Model.Book)) {
+				for (Bookmark bookmark : invisibleBookmarks()) {
 					myCancelActionsList.add(new BookmarkDescription(bookmark));
 				}
 			}
@@ -442,13 +539,13 @@ public final class FBReaderApp extends ZLApplication {
 
 	private synchronized void updateInvisibleBookmarksList(Bookmark b) {
 		if (Model != null && Model.Book != null && b != null) {
-			for (Bookmark bm : Collection.invisibleBookmarks(Model.Book)) {
+			for (Bookmark bm : invisibleBookmarks()) {
 				if (b.equals(bm)) {
 					Collection.deleteBookmark(bm);
 				}
 			}
 			Collection.saveBookmark(b);
-			final List<Bookmark> bookmarks = Collection.invisibleBookmarks(Model.Book);
+			final List<Bookmark> bookmarks = invisibleBookmarks();
 			for (int i = 3; i < bookmarks.size(); ++i) {
 				Collection.deleteBookmark(bookmarks.get(i));
 			}
@@ -457,7 +554,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void addInvisibleBookmark(ZLTextWordCursor cursor) {
 		if (cursor != null && Model != null && Model.Book != null && getTextView() == BookTextView) {
-			updateInvisibleBookmarksList(new Bookmark(
+			updateInvisibleBookmarksList(Bookmark.createBookmark(
 				Model.Book,
 				getTextView().getModel().getId(),
 				cursor,
@@ -481,7 +578,7 @@ public final class FBReaderApp extends ZLApplication {
 			return null;
 		}
 
-		return new Bookmark(
+		return Bookmark.createBookmark(
 			Model.Book,
 			view.getModel().getId(),
 			cursor,
@@ -512,5 +609,24 @@ public final class FBReaderApp extends ZLApplication {
 			treeToSelect = tree;
 		}
 		return treeToSelect;
+	}
+
+	public void onBookUpdated(Book book) {
+		if (Model == null || Model.Book == null || !Model.Book.equals(book)) {
+			return;
+		}
+
+		final String newEncoding = book.getEncodingNoDetection();
+		final String oldEncoding = Model.Book.getEncodingNoDetection();
+
+		Model.Book.updateFrom(book);
+
+		if (newEncoding != null && !newEncoding.equals(oldEncoding)) {
+			reloadBook();
+		} else {
+			ZLTextHyphenator.Instance().load(Model.Book.getLanguage());
+			clearTextCaches();
+			getViewWidget().repaint();
+		}
 	}
 }

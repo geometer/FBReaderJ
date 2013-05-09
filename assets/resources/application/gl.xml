@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Eliminar libro"/>
 		<node name="addToFavorites" value="Engadir a preferidos"/>
 		<node name="removeFromFavorites" value="Retirar de preferidos"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Por autor">
@@ -209,6 +211,10 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Eliminar marcador"/>
+	</node>
 	<node name="selection" value="Selección">
 		<node name="copyToClipboard" value="Copiar no portapapeis"/>
 		<node name="openInDictionary" value="Abrir no dicionario"/>
@@ -300,6 +306,10 @@
 			<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Axuste do brillo da pantalla">
 				<node name="summaryOn" value="Ao arrastrar o dedo cara arriba/abaixo no bordo esquerdo da pantalla"/>
@@ -533,6 +543,7 @@
 			<node name="right" value="Marxe dereita"/>
 			<node name="top" value="Marxe superior"/>
 			<node name="bottom" value="Marxe inferior"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Barra de desprazamento">
 			<node name="summary" value="Barra de desprazamento e preferencias dos rodapés"/>
@@ -706,6 +717,10 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Engadir a preferidos"/>
+			<node name="removeFromFavorites" value="Retirar de preferidos"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar complemento"/>

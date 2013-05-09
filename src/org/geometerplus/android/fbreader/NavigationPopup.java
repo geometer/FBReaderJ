@@ -76,7 +76,7 @@ final class NavigationPopup {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Type.BottomFlat);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Location.BottomFlat);
 
 		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
 

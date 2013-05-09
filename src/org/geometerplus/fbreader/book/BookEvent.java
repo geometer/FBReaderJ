@@ -22,5 +22,6 @@ package org.geometerplus.fbreader.book;
 public enum BookEvent {
 	Added,
 	Updated,
-	Removed
+	Removed,
+	BookmarksUpdated
 }

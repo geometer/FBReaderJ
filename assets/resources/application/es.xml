@@ -52,6 +52,8 @@
 		<node name="deleteBook" value="Borrar libro"/>
 		<node name="addToFavorites" value="Agregar a favoritos"/>
 		<node name="removeFromFavorites" value="Quitar de favoritos"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Biblioteca en red de FBReader">
 		<node name="byAuthor" value="Por autor">
@@ -223,6 +225,10 @@
 		<node name="forward" value="Adelante"/>
 		<node name="close" value="Cerrar FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Borrar marcador"/>
+	</node>
 	<node name="selection" value="Selección">
 		<node name="copyToClipboard" value="Copiar al portapapeles"/>
 		<node name="openInDictionary" value="Abrir en diccionario"/>
@@ -314,6 +320,10 @@
 			<node name="disableButtonLights" value="Deshabilitar luz de botones físicos durante la lectura">
 				<node name="summaryOn" value="Deshabilitar luz de botones (no funciona para algunos dispositivos)"/>
 				<node name="summaryOff" value="No intentar deshabilitar luz de botones"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ajuste de brillo de la pantalla">
 				<node name="summaryOn" value="Al arrastrar el dedo arriba/abajo en el borde izquierdo de la pantalla"/>
@@ -547,6 +557,7 @@
 			<node name="right" value="Margen derecho"/>
 			<node name="top" value="Margen superior"/>
 			<node name="bottom" value="Margen inferior"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Indicador de progreso">
 			<node name="summary" value="Preferencias de barra de desplazamiento y pie de página"/>
@@ -720,6 +731,10 @@
 			<node name="authorize" value="Autorizar"/>
 			<node name="resetPosition" value="Restablecer posición"/>
 			<node name="sendReport" value="Enviar reporte"/>
+			<node name="addToFavorites" value="Agregar a favoritos"/>
+			<node name="removeFromFavorites" value="Quitar de favoritos"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar plugin"/>

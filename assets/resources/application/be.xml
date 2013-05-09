@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Выдаліць кнігу"/>
 		<node name="addToFavorites" value="Дадаць да ўпадабанага"/>
 		<node name="removeFromFavorites" value="Прыбраць з упадабанага"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Сеткавая бібліятэка FBReader">
 		<node name="byAuthor" value="Па аўтары">
@@ -225,6 +227,10 @@
 		<node name="forward" value="Наперад"/>
 		<node name="close" value="Зачыніць FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Выдаліць закладку"/>
+	</node>
 	<node name="selection" value="Вылучэньне">
 		<node name="copyToClipboard" value="Скапіяваць у кішэню"/>
 		<node name="openInDictionary" value="Адчыніць у слоўніку"/>
@@ -316,6 +322,10 @@
 			<node name="disableButtonLights" value="Выключаць сьвятло кнопак падчас чытаньня">
 				<node name="summaryOn" value="Выключаць сьвятло кнопак (не працуе на некаторых прыладах)"/>
 				<node name="summaryOff" value="Не спрабаваць выключаць сьвятло кнопак"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Рэґуляваньне яркасьці экрану">
 				<node name="summaryOn" value="Перасоўваньнем пальца ўверх-уніз па левым баку экрану"/>
@@ -549,6 +559,7 @@
 			<node name="right" value="Правае поле"/>
 			<node name="top" value="Верхняе поле"/>
 			<node name="bottom" value="Ніжняе поле"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Паказальнік праґрэсу">
 			<node name="summary" value="Налады гартача і прыпятка"/>
@@ -722,6 +733,10 @@
 			<node name="authorize" value="Упаўнаважыцца"/>
 			<node name="resetPosition" value="Скінуць пазыцыю"/>
 			<node name="sendReport" value="Даслаць справаздачу"/>
+			<node name="addToFavorites" value="Дадаць да ўпадабанага"/>
+			<node name="removeFromFavorites" value="Прыбраць з упадабанага"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Усталяваць убудову"/>

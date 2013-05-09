@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Slett bok"/>
 		<node name="addToFavorites" value="Legg til i favoritter"/>
 		<node name="removeFromFavorites" value="Fjern fra favoritter"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader nettverksbibliotek">
 		<node name="byAuthor" value="Etter forfatter">
@@ -219,6 +221,10 @@
 		<node name="forward" value="Fram"/>
 		<node name="close" value="Lukk FBReader"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Slett bokmerke"/>
+	</node>
 	<node name="selection" value="Utvalg">
 		<node name="copyToClipboard" value="Kopier til utklippstavle"/>
 		<node name="openInDictionary" value="Åpne i ordbok"/>
@@ -310,6 +316,10 @@
 			<node name="disableButtonLights" value="Skru av knappelys under lesing">
 				<node name="summaryOn" value="Skru av knappelys (virker ikke på alle enheter)"/>
 				<node name="summaryOff" value="Ikke prøv å skru av knappelys"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Juster skjermens lysstyrke">
 				<node name="summaryOn" value="Ved å dra fingeren opp/ned langs venstre side av skjermen"/>
@@ -543,6 +553,7 @@
 			<node name="right" value="Høyre marg"/>
 			<node name="top" value="Toppmarg"/>
 			<node name="bottom" value="Bunnmarg"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Fremgangsindikator">
 			<node name="summary" value="Innstillinger for rullefelt og bunntekst"/>
@@ -716,6 +727,10 @@
 			<node name="authorize" value="Autoriser"/>
 			<node name="resetPosition" value="Tilbakestill posisjon"/>
 			<node name="sendReport" value="Send rapport"/>
+			<node name="addToFavorites" value="Legg til i favoritter"/>
+			<node name="removeFromFavorites" value="Fjern fra favoritter"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Installer tillegg"/>

@@ -56,7 +56,7 @@ public abstract class ZLTextHyphenator {
 		pattern[0] = ' ';
 		for (int i = 0, j = word.Offset; i < len; ++i, ++j) {
 			char character = data[j];
-			if (ZLCharacterUtil.isLetter(character)) {
+			if (character == '\'' || character == '^' || Character.isLetter(character)) {
 				isLetter[i] = true;
 				pattern[i + 1] = Character.toLowerCase(character);
 			} else {

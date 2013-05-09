@@ -48,6 +48,8 @@
 		<node name="deleteBook" value="Könyv törlése"/>
 		<node name="addToFavorites" value="Hozzáadás a kedvencekhez"/>
 		<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader internetes könyvtár">
 		<node name="byAuthor" value="Szerző">
@@ -209,6 +211,10 @@
 		<node name="forward" value="Előre"/>
 		<node name="close" value="FBReader bezárása"/>
 	</node>
+	<node name="highlightingStyleMenu">
+		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Könyvelző törlése"/>
+	</node>
 	<node name="selection" value="Kijelölés">
 		<node name="copyToClipboard" value="Vágólapra másol"/>
 		<node name="openInDictionary" value="Megnyitás szótárban"/>
@@ -300,6 +306,10 @@
 			<node name="disableButtonLights" value="Gombok megvilágításának kikapcsolása">
 				<node name="summaryOn" value="Megvilágítás kikapcsolása olvasás közben (nem minden eszköznél működik)"/>
 				<node name="summaryOff" value="Ne próbálja kikapcsolni a gombok háttérvilágítását"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Fényerő beállítása">
 				<node name="summaryOn" value="Felfelé/lefelé csúsztatás a képernyő bal oldalán"/>
@@ -533,6 +543,7 @@
 			<node name="right" value="Jobb margó"/>
 			<node name="top" value="Felső margó"/>
 			<node name="bottom" value="Alsó margó"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Gördítősáv">
 			<node name="summary" value="A gördítősáv és a lábléc beállításai"/>
@@ -706,6 +717,10 @@
 			<node name="authorize" value="Hitelesítés"/>
 			<node name="resetPosition" value="Pozíció nullázása"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Hozzáadás a kedvencekhez"/>
+			<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Bővítmény telepítése"/>
