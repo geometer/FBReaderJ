@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 abstract class FileTypePalm extends FileType {
-	private static String palmFileType(final ZLFile file) {
+	protected static String palmFileType(final ZLFile file) {
 		// TODO: use database instead of option (?)
 		final ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");
 		String palmType = palmTypeOption.getValue();
