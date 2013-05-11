@@ -1,5 +1,6 @@
 ===== 1.8.2 (May ??, 2013) =====
 * Updated Czech localization (by Marek Pavelka)
+* Updated Dutch localization (by Frank Fesevur)
 * Bitknights dictionaries support (by Norbert Kenderesi)
 * Fixed book info saving for BookInfoActivity/EditBookInfoActivity (service mechanism is used instead of Activity.setResult())
 
