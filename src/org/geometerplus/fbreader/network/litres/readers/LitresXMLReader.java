@@ -10,10 +10,8 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticat
 import org.geometerplus.fbreader.network.litres.LitresBookItem;
 import org.geometerplus.fbreader.network.litres.LitresFeedMetadata;
 import org.geometerplus.fbreader.network.litres.genre.LitresGenre;
-import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class LitresXMLReader extends LitResAuthenticationXMLReader {
@@ -25,7 +23,7 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 	//private String myDate;
 	private String mySeriesTitle;
 	private int myIndexInSeries;
-
+	
 	private CharSequence mySummary;
 	
 	private final UrlInfoCollection<UrlInfo> myUrls = new UrlInfoCollection<UrlInfo>();
@@ -76,7 +74,7 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 	private final StringBuilder myBuffer = new StringBuilder();
 	private FormattedBuffer myAnnotationBuffer = new FormattedBuffer(FormattedBuffer.Type.XHtml);
 	private ATOMFeedHandler<LitresFeedMetadata,LitresEntry> myHandler = null;
-	private LitresEntry myEntry;
+	private LitresBookEntry myEntry;
 	
 	public LitresXMLReader() {
 		super("");
@@ -89,7 +87,7 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.intern();
-
+		
 		switch (myState) {
 			case START:
 				if (TAG_CATALOG == tag) {
@@ -98,21 +96,10 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 				break;
 			case CATALOG:
 				if (TAG_BOOK == tag) {
-					myEntry = new LitresEntry(new ZLStringMap());
-					
+					myEntry = new LitresBookEntry(attributes);
 					myBookId = attributes.getValue("hub_id");
-					myUrls.addInfo(new UrlInfo(
-						UrlInfo.Type.Image, attributes.getValue("cover_preview"), MimeType.IMAGE_AUTO
-					));
-
-					myUrls.addInfo(new BookUrlInfo(
-						UrlInfo.Type.BookConditional,
-						BookUrlInfo.Format.FB2_ZIP,
-						"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
-						MimeType.APP_FB2_ZIP
-					));
-					myState = BOOK;
 					
+					myState = BOOK;
 				}
 				break;
 			case BOOK:
@@ -190,18 +177,13 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 				break;
 			case BOOK:
 				if (TAG_BOOK == tag) {
-					myUrls.addInfo(new UrlInfo(
-						UrlInfo.Type.SingleEntry,
-						"http://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId,
-						MimeType.APP_ATOM_XML_ENTRY
-					));
 					
 					if(myEntry != null){
 						myEntry.Summary = mySummary;
 						ATOMId myId = new ATOMId();
 						myId.Uri = myBookId;
 						myEntry.Id = myId;
-						myEntry.myUrls = myUrls;
+						myEntry.addUrls(myUrls);
 						myEntry.SeriesTitle = mySeriesTitle;
 						myEntry.SeriesIndex = myIndexInSeries;
 					}
@@ -210,25 +192,9 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 						myHandler.processFeedEntry(myEntry);
 					}
 					
-					/*Books.add(new OPDSBookItem(
-						Link,
-						myBookId,
-						myIndex++,
-						myTitle,
-						mySummary,
-						//myLanguage,
-						//myDate,
-						myAuthors,
-						myTags,
-						mySeriesTitle,
-						myIndexInSeries,
-						myUrls
-					));*/
-
 					myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = null;
 					mySummary = null;
 					myIndexInSeries = 0;
-					//myAuthors.clear();
 					myTags.clear();
 					myUrls.clear();
 					myState = CATALOG;
@@ -262,7 +228,6 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 						displayName.append(myAuthorLastName).append(" ");
 					}
 					myEntry.myAuthors.add(new LitresBookItem.AuthorData(displayName.toString().trim(), myAuthorLastName));
-					//myAuthors.add(new OPDSBookItem.AuthorData(displayName.toString().trim(), myAuthorLastName));
 					myAuthorFirstName = null;
 					myAuthorMiddleName = null;
 					myAuthorLastName = null;
@@ -283,7 +248,6 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 				break;
 			case LAST_NAME:
 				if (TAG_LAST_NAME == tag) {
-					System.out.println("[LitresXMLReader] LAST_NAME: "+myBuffer);
 					myAuthorLastName = myBuffer.toString();
 					myState = AUTHOR;
 				}
@@ -291,7 +255,6 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 			case GENRE:
 				if (TAG_GENRE == tag) {
 					myState = TITLE_INFO;
-					System.out.println("GENRE: "+myBuffer);
 					myEntry.myGenre = myBuffer.toString();
 				}
 				break;

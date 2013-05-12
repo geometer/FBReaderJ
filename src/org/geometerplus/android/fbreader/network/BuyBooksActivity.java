@@ -53,7 +53,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		if (trees.isEmpty()) {
 			return;
 		}
-
+		System.out.println("[BuyBooksActivity] run() 1");
 		final Intent intent = new Intent(activity, BuyBooksActivity.class);
 		final ArrayList<NetworkTree.Key> keys =
 			new ArrayList<NetworkTree.Key>(trees.size());
@@ -62,6 +62,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		}
 		intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, keys);
 		activity.startActivity(intent);
+		System.out.println("[BuyBooksActivity] run() 2");
 	}
 
 	private NetworkLibrary myLibrary;

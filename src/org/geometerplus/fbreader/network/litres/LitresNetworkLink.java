@@ -127,5 +127,26 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 	public String rewriteUrl(String url, boolean isUrlExternal) {
 		return url;
 	}
+	
+	// rel and type must be either null or interned String objects.
+	String relation(String rel, MimeType type) {
+		/*if (myRelationAliases == null) {
+			return rel;
+		}
+		RelationAlias alias = new RelationAlias(rel, type.Name);
+		String mapped = myRelationAliases.get(alias);
+		if (mapped != null) {
+			return mapped;
+		}
+		if (type != null) {
+			alias = new RelationAlias(rel, null);
+			mapped = myRelationAliases.get(alias);
+			if (mapped != null) {
+				return mapped;
+			}
+		}
+		return rel;*/
+		return "";
+	}
 
 }

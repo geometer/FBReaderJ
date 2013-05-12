@@ -19,9 +19,8 @@
 
 package org.geometerplus.fbreader.network.litres;
 
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
-
 import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 public class LitresUtil {
 	static String LITRES_API_URL = "://robot.litres.ru/";
@@ -60,20 +59,20 @@ public class LitresUtil {
 	}
 
 	public static String generateTrialUrl(String bookId) {
-		int len = bookId.length();
-		if (len < 8) {
-			//bookId = std::string(8 - len, '0') + bookId;
-		}
-		String query = "static/trials/%s/%s/%s/%s.fb2.zip";
-		//query = ZLStringUtil.printf(query, bookId.substr(0,2));
-		//query = ZLStringUtil.printf(query, bookId.substr(2,2));
-		//query = ZLStringUtil.printf(query, bookId.substr(4,2));
-		//query = ZLStringUtil.printf(query, bookId);
+		do{
+			bookId = "0"+bookId;
+		}while(bookId.length() < 8);
+
+		char[] bookIdArr = bookId.toCharArray();
+		String query = "static/trials/"+bookIdArr[0]+bookIdArr[1]+"/"+
+										bookIdArr[2]+bookIdArr[3]+"/"+
+										bookIdArr[4]+bookIdArr[5]+"/"+
+										bookId+".fb2.zip";
 		return url(false, query);
 	}
 
-	public static String generatePurchaseUrl(final INetworkLink link, final String bookId) {
-		String query = url(link, true, "pages/purchase_book/?");
+	public static String generatePurchaseUrl(final String bookId) {
+		String query = url(true, "pages/purchase_book/?");
 		query = ZLNetworkUtil.appendParameter(query, "art", bookId);
 		return query;
 	}

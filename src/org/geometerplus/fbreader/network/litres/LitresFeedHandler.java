@@ -26,12 +26,8 @@ import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
+import org.geometerplus.fbreader.network.litres.readers.LitresBookEntry;
 import org.geometerplus.fbreader.network.litres.readers.LitresEntry;
-import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
-import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,LitresEntry> {
@@ -66,7 +62,9 @@ public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,Lit
 		NetworkItem item = null;
 		myResult.LoadedIds.add(entry.Id.Uri);
 		if (hasBookLink) {
-			item = new LitresBookItem(myResult.Link, entry, myBaseURL, myIndex++);
+			if (entry instanceof LitresBookEntry) {
+				item = new LitresBookItem(myResult.Link, (LitresBookEntry)entry, myBaseURL, myIndex++);
+			}
 		}
 		if (item != null) {
 			myResult.Loader.onNewItem(item);
@@ -87,7 +85,7 @@ public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,Lit
 	}
 
 	@Override
-	public LitresEntry createEntry(ZLStringMap attributes) {
+	public LitresBookEntry createEntry(ZLStringMap attributes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
