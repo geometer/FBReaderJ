@@ -71,16 +71,17 @@ public class LitresXMLReader extends LitResAuthenticationXMLReader {
 	protected static final String TAG_LANGUAGE = "lang";
 
 	private int myState = START;
-	private final StringBuilder myBuffer = new StringBuilder();
+	protected final StringBuilder myBuffer = new StringBuilder();
 	private FormattedBuffer myAnnotationBuffer = new FormattedBuffer(FormattedBuffer.Type.XHtml);
-	private ATOMFeedHandler<LitresFeedMetadata,LitresEntry> myHandler = null;
-	private LitresBookEntry myEntry;
+	protected ATOMFeedHandler<LitresFeedMetadata,LitresEntry> myHandler = null;
+	protected LitresBookEntry myEntry;
 	
 	public LitresXMLReader() {
 		super("");
 	}
 	
 	public void setHandler(ATOMFeedHandler<LitresFeedMetadata,LitresEntry> handler) {
+		System.out.println("SET HANDLER");
 		myHandler = handler;
 	}
 	

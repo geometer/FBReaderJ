@@ -103,4 +103,10 @@ public class LitresUtil {
 		query = ZLNetworkUtil.appendParameter(query, "person", authorId);
 		return query;
 	}
+	
+	public static String generateBooksByAuthorSearchUrl(final String lastName) {
+		String query = url(false, "pages/catalit_persons/?");
+		query = ZLNetworkUtil.appendParameter(query, "search_last_name", lastName+"%");
+		return query;
+	}
 }

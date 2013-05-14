@@ -26,8 +26,12 @@ import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
+import org.geometerplus.fbreader.network.litres.readers.LitresAuthorEntry;
 import org.geometerplus.fbreader.network.litres.readers.LitresBookEntry;
 import org.geometerplus.fbreader.network.litres.readers.LitresEntry;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,LitresEntry> {
@@ -57,15 +61,20 @@ public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,Lit
 
 	@Override
 	public boolean processFeedEntry(LitresEntry entry) {
-		boolean hasBookLink = true;
 		String myBaseURL = "";
 		NetworkItem item = null;
 		myResult.LoadedIds.add(entry.Id.Uri);
-		if (hasBookLink) {
-			if (entry instanceof LitresBookEntry) {
-				item = new LitresBookItem(myResult.Link, (LitresBookEntry)entry, myBaseURL, myIndex++);
-			}
+		
+		if (entry instanceof LitresBookEntry) {
+			item = new LitresBookItem(myResult.Link, (LitresBookEntry)entry, myBaseURL, myIndex++);
 		}
+		if (entry instanceof LitresAuthorEntry) {
+			LitresAuthorEntry authorEntry = (LitresAuthorEntry)entry;
+			UrlInfoCollection<UrlInfo> urlByType = new UrlInfoCollection<UrlInfo>();
+			urlByType.addInfo(new UrlInfo(UrlInfo.Type.Catalog, LitresUtil.generateBooksByAuthorUrl(authorEntry.Id.Uri), MimeType.APP_LITRES_XML));
+			item = new LitresBooksFeedItem(myResult.Link, authorEntry.authorData.lastName+" "+authorEntry.authorData.firstName, "", urlByType, true);
+		}
+
 		if (item != null) {
 			myResult.Loader.onNewItem(item);
 		}
