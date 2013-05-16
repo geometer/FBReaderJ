@@ -3,131 +3,105 @@
 	<dictionary
 		title="BK Brazilian/Portuguese English Dictionary"
 		package="com.bitknights.dict.engbra"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Bulgarian English Dictionary"
 		package="com.bitknights.dict.engbul"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Croatian English Dictionary"
 		package="com.bitknights.dict.engcro"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Czech English Dictionary"
 		package="com.bitknights.dict.engcze"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Danish English Dictionary"
 		package="com.bitknights.dict.engdan"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Dutch English Dictionary"
 		package="com.bitknights.dict.engdut"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Esperanto English Dictionary"
 		package="com.bitknights.dict.engesp"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Finnish English Dictionary"
 		package="com.bitknights.dict.engfin"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK French English Dictionary"
 		package="com.bitknights.dict.engfre"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK German English Dictionary"
 		package="com.bitknights.dict.engger"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Greek English Dictionary"
 		package="com.bitknights.dict.enggre"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Hungarian English Dictionary"
 		package="com.bitknights.dict.enghun"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Italian English Dictionary"
 		package="com.bitknights.dict.engita"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Latin English Dictionary"
 		package="com.bitknights.dict.englat"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Polish English Dictionary"
 		package="com.bitknights.dict.engpol"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Romanian English Dictionary"
 		package="com.bitknights.dict.engrom"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Russian English Dictionary"
 		package="com.bitknights.dict.engrus"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Slovak English Dictionary"
 		package="com.bitknights.dict.engslo"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Spanish English Dictionary"
 		package="com.bitknights.dict.engspa"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Swedish English Dictionary"
 		package="com.bitknights.dict.engswe"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Turkish English Dictionary"
 		package="com.bitknights.dict.engtur"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Ukraine English Dictionary"
 		package="com.bitknights.dict.engukr"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK French Italian Dictionary"
 		package="com.bitknights.dict.freita"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK German Hungarian Dictionary"
 		package="com.bitknights.dict.gerhun"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Spanish French Dictionary"
 		package="com.bitknights.dict.spafre"
-		pattern="%s"
 	/>
 	<dictionary
 		title="BK Spanish Italian Dictionary"
 		package="com.bitknights.dict.spaita"
-		pattern="%s"
 	/>
 </dictionaries>
