@@ -142,7 +142,7 @@ public abstract class DictionaryUtil {
 					attributes.getValue("title"),
 					Intent.ACTION_VIEW,
 					null,
-					attributes.getValue("pattern")
+					"%s"
 				);
 				if (PackageUtil.canBeStarted(mContext, getDictionaryIntent(info, "test"), false)) {
 					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
