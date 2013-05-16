@@ -33,6 +33,8 @@ import org.geometerplus.fbreader.network.litres.LitresBooksFeedItem;
 import org.geometerplus.fbreader.network.litres.LitresCatalogByGenresItem;
 import org.geometerplus.fbreader.network.litres.LitresNetworkLink;
 import org.geometerplus.fbreader.network.litres.LitresPredefinedNetworkLink;
+import org.geometerplus.fbreader.network.litres.author.LitresAuthor;
+import org.geometerplus.fbreader.network.litres.author.LitresAuthorsMap;
 import org.geometerplus.fbreader.network.litres.genre.LitresGenre;
 import org.geometerplus.fbreader.network.litres.genre.LitresGenreMap;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
@@ -215,9 +217,23 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		String litresRel = null;
 		MimeType litresMime = null;
 		for (ATOMLink link : entry.Links) {
-			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
-			final MimeType mime = MimeType.get(link.getType());
+			//final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
+			//final MimeType mime = MimeType.get(link.getType());
+			MimeType mime;   
+			String href;
+			
+			//Hack by udmv. Remove it.
+			String a = new String("authors.php5");
+			if(entry.Id.Uri.equals(a)){
+				href = ZLNetworkUtil.url(myBaseURL, link.getHref());
+				mime = MimeType.APP_LITRES_XML_AUTHORS;
+			}else{
+				href = ZLNetworkUtil.url(myBaseURL, link.getHref());
+				mime = MimeType.get(link.getType());
+			}
+			
 			final String rel = opdsLink.relation(link.getRel(), mime);
+			System.out.println(entry.Id.Uri+" Catalog: "+href+", "+entry.Title+", "+mime.toString());
 			if (MimeType.IMAGE_PNG.weakEquals(mime) || MimeType.IMAGE_JPEG.weakEquals(mime)) {
 				if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href, mime));
@@ -350,11 +366,12 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 				}
 				
 			} else if (litresType.equals(MimeType.APP_LITRES_XML_AUTHORS.getParameter(TYPE))) {
+				LinkedList<LitresAuthor> tree = LitresAuthorsMap.Instance().authorsTree();
 				return new LitResAuthorsItem(
 						litresLink,
 						title,
 						annotation,
-						urlMap
+						urlMap, tree
 						);
 			} 
 		}

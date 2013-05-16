@@ -126,11 +126,13 @@ public abstract class NetworkBookActions {
 			}
 		}
 		if (book.getStatus() == NetworkBookItem.Status.CanBePurchased) {
+			System.out.println(">>> [getContextMenuActions] 1");
 			final BookBuyUrlInfo reference = book.buyInfo();
 			final int id = reference.InfoType == UrlInfo.Type.BookBuy
 				? ActionCode.BUY_DIRECTLY : ActionCode.BUY_IN_BROWSER;
 			final String priceString = reference.Price != null ? String.valueOf(reference.Price) : "";
 			actions.add(new NBAction(activity, id, "buy", priceString, true));
+			System.out.println(">>> [getContextMenuActions] 2");
 			final BasketItem basketItem = book.Link.getBasketItem();
 			if (basketItem != null) {
 				if (basketItem.contains(book)) {

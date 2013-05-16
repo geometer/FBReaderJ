@@ -27,6 +27,7 @@ import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.litres.readers.LitresAuthorsXMLReader;
 import org.geometerplus.fbreader.network.litres.readers.LitresXMLReader;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
@@ -63,8 +64,9 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 				LitresFeedHandler handler = null;
 				LitresXMLReader reader = new LitresXMLReader();
 				if(litresType != null){
-					if (litresType.equals(MimeType.APP_LITRES_XML_GENRES.getParameter("type"))) {	
-						handler = new LitresGenreFeedHandler(result);
+					if(litresType.equals(MimeType.APP_LITRES_XML_AUTHORS.getParameter("type"))){
+						reader = new LitresAuthorsXMLReader();
+						handler = new LitresFeedHandler(result);
 					}else{
 						handler = new LitresFeedHandler(result);
 					}
@@ -126,6 +128,27 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 	@Override
 	public String rewriteUrl(String url, boolean isUrlExternal) {
 		return url;
+	}
+	
+	// rel and type must be either null or interned String objects.
+	String relation(String rel, MimeType type) {
+		/*if (myRelationAliases == null) {
+			return rel;
+		}
+		RelationAlias alias = new RelationAlias(rel, type.Name);
+		String mapped = myRelationAliases.get(alias);
+		if (mapped != null) {
+			return mapped;
+		}
+		if (type != null) {
+			alias = new RelationAlias(rel, null);
+			mapped = myRelationAliases.get(alias);
+			if (mapped != null) {
+				return mapped;
+			}
+		}
+		return rel;*/
+		return "";
 	}
 
 }

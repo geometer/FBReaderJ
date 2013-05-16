@@ -25,7 +25,8 @@ import java.util.List;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.atom.ATOMCategory;
-import org.geometerplus.fbreader.network.litres.readers.LitresEntry;
+import org.geometerplus.fbreader.network.litres.readers.LitresBookEntry;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class LitresBookItem extends NetworkBookItem {
@@ -38,17 +39,17 @@ public class LitresBookItem extends NetworkBookItem {
 				indexInSeries, urls);
 	}
 	
-	protected LitresBookItem(INetworkLink link, LitresEntry entry, String baseUrl, int index) {
+	protected LitresBookItem(INetworkLink link, LitresBookEntry entry, String baseUrl, int index) {
 		this(
 			link, entry.Id.Uri, index,
 			entry.Title, getAnnotation(entry),
 			entry.myAuthors, getTags(entry),
 			entry.SeriesTitle, entry.SeriesIndex,
-			entry.myUrls
+			getUrls((LitresNetworkLink)link, entry)
 		);
 	}
 	 
-	private static List<String> getTags(LitresEntry entry) {
+	private static List<String> getTags(LitresBookEntry entry) {
 			final LinkedList<String> tags = new LinkedList<String>();
 			for (ATOMCategory category : entry.Categories) {
 				String label = category.getLabel();
@@ -62,7 +63,7 @@ public class LitresBookItem extends NetworkBookItem {
 			return tags;
 	}
 	 
-	private static CharSequence getAnnotation(LitresEntry entry) {
+	private static CharSequence getAnnotation(LitresBookEntry entry) {
 			if (entry.Content != null) {
 				return entry.Content;
 			}
@@ -70,5 +71,9 @@ public class LitresBookItem extends NetworkBookItem {
 				return entry.Summary;
 			}
 			return null;
+	}
+	
+	private static UrlInfoCollection<UrlInfo> getUrls(LitresNetworkLink networkLink, LitresBookEntry entry) {
+		return entry.getUrls();
 	}
 }
