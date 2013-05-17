@@ -38,7 +38,6 @@ public class LitresBooksFeedItem extends LitresCatalogItem {
 		myLoadingState = litresLink.createOperationData(loader);
 		UrlInfo info = myURLs.getInfo(UrlInfo.Type.Catalog);
 		if(info != null)
-		System.out.println("!! [LitResBooksFeedItem] loadChildren by "+ info.Url);
 		doLoadChildren(
 				litresLink.createNetworkData(info.Url, MimeType.APP_LITRES_XML, myLoadingState)
 		);

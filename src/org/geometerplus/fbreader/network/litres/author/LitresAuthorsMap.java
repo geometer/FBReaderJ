@@ -30,15 +30,10 @@ public class LitresAuthorsMap {
 	
 	private void buildInitAuthors(){
 		LitresAuthor e = new LitresAuthor();
-		//TODO: Refactor
-		for(char alphabet = 'Z'; alphabet >= 'A';alphabet--){
-			char rr[] = {alphabet};
-			e = new LitresAuthor(new String(rr));
-			myAuthorsTree.push(e);
-		}
-		for(char alphabet2 = 'Я'; alphabet2 >= 'А';alphabet2--){
-			char rr[] = {alphabet2};
-			e = new LitresAuthor(new String(rr));
+		for(char letter = 'Я'; letter >= 'А';letter--){
+			//char letterCh[] = {letter};
+			e = new LitresAuthor(new String(new char []{letter}));
+			e.description = "Авторы на букву "+e.lastName;
 			myAuthorsTree.push(e);
 		}
 	}

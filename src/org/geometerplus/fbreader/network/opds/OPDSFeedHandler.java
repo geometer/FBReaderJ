@@ -223,8 +223,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			String href;
 			
 			//Hack by udmv. Remove it.
-			String a = new String("authors.php5");
-			if(entry.Id.Uri.equals(a)){
+			if(entry.Id.Uri.equals(new String("authors.php5"))){
 				href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				mime = MimeType.APP_LITRES_XML_AUTHORS;
 			}else{

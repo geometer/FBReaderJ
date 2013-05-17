@@ -104,9 +104,16 @@ public class LitresUtil {
 		return query;
 	}
 	
-	public static String generateBooksByAuthorSearchUrl(final String lastName) {
+	public static String generateAuthorSearchUrl(final String lastName) {
 		String query = url(false, "pages/catalit_persons/?");
 		query = ZLNetworkUtil.appendParameter(query, "search_last_name", lastName+"%");
+		return query;
+	}
+	
+	public static String generateAuthorsRatingUrl() {
+		String query = url(false, "pages/catalit_persons/?");
+		query = ZLNetworkUtil.appendParameter(query, "rating", "1");
+		query = ZLNetworkUtil.appendParameter(query, "rating_period", "2");
 		return query;
 	}
 }

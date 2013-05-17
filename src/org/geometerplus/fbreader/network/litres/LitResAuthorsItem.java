@@ -23,10 +23,17 @@ public class LitResAuthorsItem extends LitresCatalogItem {
 	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 		if(initAuthorsTree != null){
 			NetworkCatalogItem item = null;
+			
+			UrlInfoCollection<UrlInfo> urlByType = new UrlInfoCollection<UrlInfo>();
+			urlByType.addInfo(new UrlInfo(UrlInfo.Type.Catalog, LitresUtil.generateAuthorsRatingUrl(), MimeType.APP_LITRES_XML_AUTHORS));
+			item = new LitResAuthorsItem(Link, "Популярные авторы", "50 наиболее популярных авторов за последнюю неделю", urlByType, null);
+			if (item != null) {
+				loader.onNewItem(item);
+			}
 			for(LitresAuthor author : initAuthorsTree){
-				UrlInfoCollection<UrlInfo> urlByType = new UrlInfoCollection<UrlInfo>();
-				urlByType.addInfo(new UrlInfo(UrlInfo.Type.Catalog, LitresUtil.generateBooksByAuthorSearchUrl(author.lastName), MimeType.APP_LITRES_XML_AUTHORS));
-				item = new LitResAuthorsItem(Link, author.lastName, "", urlByType, null);
+				urlByType = new UrlInfoCollection<UrlInfo>();
+				urlByType.addInfo(new UrlInfo(UrlInfo.Type.Catalog, LitresUtil.generateAuthorSearchUrl(author.lastName), MimeType.APP_LITRES_XML_AUTHORS));
+				item = new LitResAuthorsItem(Link, author.lastName, author.description, urlByType, null);
 				if (item != null) {
 					loader.onNewItem(item);
 				}
@@ -37,7 +44,6 @@ public class LitResAuthorsItem extends LitresCatalogItem {
 			myLoadingState = litresLink.createOperationData(loader);
 			UrlInfo info = myURLs.getInfo(UrlInfo.Type.Catalog);
 			if(info != null){
-				System.out.println("!! [LitResAuthorsItem] loadChildren by "+ info.Url);
 				doLoadChildren(
 					litresLink.createNetworkData(info.Url, MimeType.APP_LITRES_XML_AUTHORS, myLoadingState)
 				);

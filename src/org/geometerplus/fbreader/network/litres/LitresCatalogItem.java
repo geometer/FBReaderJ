@@ -26,6 +26,7 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -65,10 +66,10 @@ public class LitresCatalogItem extends NetworkURLCatalogItem {
 		final LitresNetworkLink litresLink = (LitresNetworkLink)Link;
 
 		myLoadingState = litresLink.createOperationData(loader);
-		String url = LitresUtil.generateBooksByGenreUrl("0");
-		System.out.println("!! [LitresCatalogItem] loadChildren by ID: "+getStringId());
+		UrlInfo info = myURLs.getInfo(UrlInfo.Type.Catalog);
+		if(info != null)
 		doLoadChildren(
-				litresLink.createNetworkData(url, MimeType.APP_LITRES_XML, myLoadingState)
+				litresLink.createNetworkData(info.Url, MimeType.APP_LITRES_XML, myLoadingState)
 		);
 	}
 

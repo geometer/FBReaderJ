@@ -61,22 +61,23 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 				}
 				
 				String litresType = mime.getParameter("type");
-				LitresFeedHandler handler = null;
-				LitresXMLReader reader = new LitresXMLReader();
+				LitresFeedHandler handler = new LitresFeedHandler(result);
+				LitresXMLReader reader = null;
 				if(litresType != null){
 					if(litresType.equals(MimeType.APP_LITRES_XML_AUTHORS.getParameter("type"))){
 						reader = new LitresAuthorsXMLReader();
-						handler = new LitresFeedHandler(result);
 					}else{
-						handler = new LitresFeedHandler(result);
+						reader = new LitresXMLReader();
 					}
 				}else{
-					handler = new LitresFeedHandler(result);
+					reader = new LitresXMLReader();
 				}
 				
-				reader.setHandler(handler);
-				reader.read(inputStream);
-
+				if(reader != null){
+					reader.setHandler(handler);
+					reader.read(inputStream);
+				}
+				
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
 					// reset state to load current page from the beginning
 					result.LastLoadedId = null;
