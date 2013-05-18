@@ -52,7 +52,7 @@
 		<node name="hu" value="Húngaro"/>
 		<node name="id" value="Indonesio"/>
 		<node name="it" value="Italiano"/>
-		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="ka" value="Georgiano" />
 		<node name="lt" value="Lituano"/>
 		<node name="nl" value="Holandés"/>
 		<node name="nb" value="Noruego"/>
@@ -69,7 +69,7 @@
 		<node name="zh" value="Chino"/>
 		<node name="other" value="Otro"/>
 		<node name="multi" value="Multilingüe"/>
-		<node name="system" value="System" toBeTranslated="true"/>
+		<node name="system" value="Sistema"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="encendido"/>
