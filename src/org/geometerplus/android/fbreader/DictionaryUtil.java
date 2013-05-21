@@ -142,7 +142,7 @@ public abstract class DictionaryUtil {
 					attributes.getValue("title"),
 					Intent.ACTION_VIEW,
 					null,
-					attributes.getValue("pattern")
+					"%s"
 				);
 				if (PackageUtil.canBeStarted(mContext, getDictionaryIntent(info, "test"), false)) {
 					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
@@ -171,8 +171,8 @@ public abstract class DictionaryUtil {
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
-					new ParagonInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/paragon.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
+					new ParagonInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/paragon.xml"));
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);

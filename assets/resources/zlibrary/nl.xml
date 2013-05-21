@@ -33,7 +33,7 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabisch"/>
-		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="bg" value="Bulgaars"/>
 		<node name="cs" value="Tsjechisch"/>
 		<node name="de" value="Duits"/>
 		<node name="de-traditional" value="Duits (traditionele spelling)"/>
@@ -48,7 +48,7 @@
 		<node name="hu" value="Hongaars"/>
 		<node name="id" value="Indonesisch"/>
 		<node name="it" value="Italiaans"/>
-		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="ka" value="Georgisch"/>
 		<node name="lt" value="Litouws"/>
 		<node name="nl" value="Nederlands"/>
 		<node name="nb" value="Noors"/>
@@ -65,7 +65,7 @@
 		<node name="zh" value="Chinees"/>
 		<node name="other" value="Anders"/>
 		<node name="multi" value="Meertalig"/>
-		<node name="system" value="System" toBeTranslated="true"/>
+		<node name="system" value="Systeem"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="aan"/>
