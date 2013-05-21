@@ -38,6 +38,7 @@ import android.widget.ListView;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -89,7 +90,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		@TargetApi(8)
 		@Override
-		public ZLImage readImage(ZLFile f, String appData) {
+		public ZLSingleImage readImage(ZLFile f, String appData) {
 			if (myServices.get(appData) == null) {
 				return null;
 			}
