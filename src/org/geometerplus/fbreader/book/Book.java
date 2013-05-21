@@ -539,7 +539,7 @@ public class Book extends TitledEntity {
 			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
 			if (plugin != null) {
 				try {
-					image = MetaInfoUtil.PMIReader.readImage(File, ((PluginFormatPlugin)plugin).getPackage());
+					image = new PluginImage(File, ((PluginFormatPlugin)plugin).getPackage());
 					if (image != null) {
 						myCover = new WeakReference<ZLImage>(image);
 					}

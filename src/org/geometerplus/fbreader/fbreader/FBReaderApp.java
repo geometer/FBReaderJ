@@ -43,8 +43,6 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
-import android.util.Log;
-
 public final class FBReaderApp extends ZLApplication {
 	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
 		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);

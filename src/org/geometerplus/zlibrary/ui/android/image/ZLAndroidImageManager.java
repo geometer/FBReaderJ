@@ -19,25 +19,24 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
+import org.geometerplus.fbreader.formats.PluginImage;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.*;
 
 public final class ZLAndroidImageManager extends ZLImageManager {
 	@Override
 	public ZLAndroidImageData getImageData(ZLImage image) {
-		if (image instanceof ZLSingleImage) {
+		if (image instanceof PluginImage) {
+			final ZLBitmapImage bitmapImage = (ZLBitmapImage)(((PluginImage)image).getRealImage());
+			return new BitmapImageData(bitmapImage);
+		} else if (image instanceof ZLSingleImage) {
 			final ZLSingleImage singleImage = (ZLSingleImage)image;
 			if (MimeType.IMAGE_PALM.equals(singleImage.mimeType())) {
 				return null;
 			}
 			return new InputStreamImageData(singleImage);
-		} else if (image instanceof ZLBitmapImage) {
-			final ZLBitmapImage bitmapImage = (ZLBitmapImage)image;
-			return new BitmapImageData(bitmapImage);
-		} else {
-			//TODO
-			return null;
 		}
+		return null;
 	}
 
 	private ZLAndroidImageLoader myLoader;
