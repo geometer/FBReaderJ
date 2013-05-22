@@ -36,6 +36,7 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 		myNameAttribute = nameAttribute;
 	}
 
+	@Override
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		String fileName = reader.getAttributeValue(xmlattributes, myNamespace, myNameAttribute);
 		if (fileName != null) {
@@ -57,6 +58,7 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 		}
 	}
 
+	@Override
 	protected void doAtEnd(XHTMLReader reader) {
 	}
 }

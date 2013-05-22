@@ -21,31 +21,36 @@ package org.geometerplus.fbreader.network.atom;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.geometerplus.fbreader.network.atom.*;
-
 public abstract class AbstractATOMFeedHandler implements ATOMFeedHandler {
+	@Override
 	public void processFeedStart() {
 	}
 
+	@Override
 	public void processFeedEnd() {
 	}
 
+	@Override
 	public boolean processFeedMetadata(ATOMFeedMetadata feed, boolean beforeEntries) {
 		return false;
 	}
 
+	@Override
 	public boolean processFeedEntry(ATOMEntry entry) {
 		return false;
 	}
 
+	@Override
 	public ATOMFeedMetadata createFeed(ZLStringMap attributes) {
 		return new ATOMFeedMetadata(attributes);
 	}
 
+	@Override
 	public ATOMEntry createEntry(ZLStringMap attributes) {
 		return new ATOMEntry(attributes);
 	}
 
+	@Override
 	public ATOMLink createLink(ZLStringMap attributes) {
 		return new ATOMLink(attributes);
 	}

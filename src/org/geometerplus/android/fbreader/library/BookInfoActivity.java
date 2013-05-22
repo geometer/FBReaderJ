@@ -28,7 +28,6 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -37,6 +36,7 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageManager;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.language.Language;
@@ -171,7 +171,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			}
 		}
 		final ZLAndroidImageData data =
-			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
+			((ZLAndroidImageManager)ZLImageManager.Instance()).getImageData(image);
 		if (data == null) {
 			return;
 		}
@@ -330,6 +330,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		item.setOnMenuItemClickListener(this);
 	}
 
+	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
 			case OPEN_BOOK:
@@ -389,6 +390,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		}
 	}
 
+	@Override
 	public void onBookEvent(BookEvent event, Book book) {
 		if (event == BookEvent.Updated && book.equals(myBook)) {
 			myBook.updateFrom(book);
@@ -397,11 +399,13 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		}
 	}
 
+	@Override
 	public void onBuildEvent(IBookCollection.Status status) {
 	}
 
 	private void saveBook() {
 		myCollection.bindToService(BookInfoActivity.this, new Runnable() {
+			@Override
 			public void run() {
 				myCollection.saveBook(myBook, false);
 			}

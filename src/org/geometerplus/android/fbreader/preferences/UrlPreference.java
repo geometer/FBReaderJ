@@ -38,6 +38,7 @@ class UrlPreference extends Preference implements Preference.OnPreferenceClickLi
 		setOnPreferenceClickListener(this);
 	}
 
+	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		try {
 			getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(myUrl)));

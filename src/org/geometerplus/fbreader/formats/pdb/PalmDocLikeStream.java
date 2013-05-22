@@ -40,6 +40,7 @@ abstract class PalmDocLikeStream extends PdbStream {
 		myFileSize = file.size();
 	}
 
+	@Override
 	protected final boolean fillBuffer() {
 		while (myBufferOffset == myBufferLength) {
 			if (myRecordIndex + 1 > myMaxRecordIndex) {

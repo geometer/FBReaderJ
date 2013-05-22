@@ -55,6 +55,7 @@ final class ZLMutableString {
 		myLength = 0;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		final ZLMutableString container = (ZLMutableString)o;
 		final int len = myLength;
@@ -71,6 +72,7 @@ final class ZLMutableString {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		final int len = myLength;
 		final char[] data = myData;
@@ -89,6 +91,7 @@ final class ZLMutableString {
 		return code;
 	}
 
+	@Override
 	public String toString() {
 		return new String(myData, 0, myLength).intern();
 	}

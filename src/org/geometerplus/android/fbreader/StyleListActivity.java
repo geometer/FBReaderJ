@@ -23,9 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.*;
 import android.view.*;
@@ -55,6 +53,7 @@ public class StyleListActivity extends ListActivity {
 	protected void onStart() {
 		super.onStart();
 		myCollection.bindToService(this, new Runnable() {
+			@Override
 			public void run() {
 				myExistingBookmark = getIntent().getBooleanExtra(EXISTING_BOOKMARK_KEY, false);
 				myBookmark = SerializerUtil.deserializeBookmark(
@@ -89,18 +88,22 @@ public class StyleListActivity extends ListActivity {
 			myStyles = new ArrayList<HighlightingStyle>(styles);
 		}
 
+		@Override
 		public final int getCount() {
 			return myExistingBookmark ? myStyles.size() + 1 : myStyles.size();
 		}
 
+		@Override
 		public final HighlightingStyle getItem(int position) {
 			return position < myStyles.size() ? myStyles.get(position) : null;
 		}
 
+		@Override
 		public final long getItemId(int position) {
 			return position;
 		}
 
+		@Override
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final View view = convertView != null
 				? convertView
@@ -129,9 +132,11 @@ public class StyleListActivity extends ListActivity {
 			return view;
 		}
 
+		@Override
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final HighlightingStyle style = getItem(position);
 			myCollection.bindToService(StyleListActivity.this, new Runnable() {
+				@Override
 				public void run() {
 					if (style != null) {
 						myBookmark.setStyleId(style.Id);

@@ -30,12 +30,14 @@ class XHTMLTagControlAction extends XHTMLTagAction {
 		myControl = control;
 	}
 
+	@Override
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.pushKind(myControl);
 		modelReader.addControl(myControl, true);
 	}
 
+	@Override
 	protected void doAtEnd(XHTMLReader reader) {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.addControl(myControl, false);

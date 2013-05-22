@@ -51,10 +51,12 @@ public class BookCollection extends AbstractBookCollection {
 		BookDirectories = Collections.unmodifiableList(new ArrayList<String>(bookDirectories));
 	}
 
+	@Override
 	public int size() {
 		return myBooksByFile.size();
 	}
 
+	@Override
 	public Book getBookByFile(ZLFile bookFile) {
 		if (bookFile == null) {
 			return null;
@@ -108,6 +110,7 @@ public class BookCollection extends AbstractBookCollection {
 		return book;
 	}
 
+	@Override
 	public Book getBookById(long id) {
 		Book book = myBooksById.get(id);
 		if (book != null) {
@@ -149,6 +152,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	@Override
 	public Book getBookByUid(UID uid) {
 		for (Book book : myBooksById.values()) {
 			if (book.matchesUid(uid)) {
@@ -177,6 +181,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	@Override
 	public synchronized boolean saveBook(Book book, boolean force) {
 		if (book == null) {
 			return false;
@@ -187,6 +192,7 @@ public class BookCollection extends AbstractBookCollection {
 		return result;
 	}
 
+	@Override
 	public void removeBook(Book book, boolean deleteFromDisk) {
 		synchronized (myBooksByFile) {
 			myBooksByFile.remove(book.File);
@@ -203,10 +209,12 @@ public class BookCollection extends AbstractBookCollection {
 		fireBookEvent(BookEvent.Removed, book);
 	}
 
+	@Override
 	public Status status() {
 		return myStatus;
 	}
 
+	@Override
 	public List<Book> books(BookQuery query) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
@@ -236,6 +244,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	@Override
 	public boolean hasBooks(Filter filter) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
@@ -249,6 +258,7 @@ public class BookCollection extends AbstractBookCollection {
 		return false;
 	}
 
+	@Override
 	public List<String> titles(BookQuery query) {
 		final List<Book> books = books(query);
 		final List<String> titles = new ArrayList<String>(books.size());
@@ -258,6 +268,7 @@ public class BookCollection extends AbstractBookCollection {
 		return titles;
 	}
 
+	@Override
 	public List<Book> recentBooks() {
 		return books(myDatabase.loadRecentBookIds());
 	}
@@ -273,6 +284,7 @@ public class BookCollection extends AbstractBookCollection {
 		return bookList;
 	}
 
+	@Override
 	public List<Author> authors() {
 		final Set<Author> authors = new TreeSet<Author>();
 		synchronized (myBooksByFile) {
@@ -288,6 +300,7 @@ public class BookCollection extends AbstractBookCollection {
 		return new ArrayList<Author>(authors);
 	}
 
+	@Override
 	public List<Tag> tags() {
 		final Set<Tag> tags = new HashSet<Tag>();
 		synchronized (myBooksByFile) {
@@ -307,6 +320,7 @@ public class BookCollection extends AbstractBookCollection {
 		return new ArrayList<Tag>(tags);
 	}
 
+	@Override
 	public List<String> labels() {
 		final Set<String> labels = new HashSet<String>();
 		synchronized (myBooksByFile) {
@@ -317,6 +331,7 @@ public class BookCollection extends AbstractBookCollection {
 		return new ArrayList<String>(labels);
 	}
 
+	@Override
 	public boolean hasSeries() {
 		synchronized (myBooksByFile) {
 			for (Book book : myBooksByFile.values()) {
@@ -328,6 +343,7 @@ public class BookCollection extends AbstractBookCollection {
 		return false;
 	}
 
+	@Override
 	public List<String> series() {
 		final Set<String> series = new TreeSet<String>();
 		synchronized (myBooksByFile) {
@@ -341,6 +357,7 @@ public class BookCollection extends AbstractBookCollection {
 		return new ArrayList<String>(series);
 	}
 
+	@Override
 	public List<String> firstTitleLetters() {
 		synchronized (myBooksByFile) {
 			final TreeSet<String> letters = new TreeSet<String>();
@@ -354,11 +371,13 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	@Override
 	public Book getRecentBook(int index) {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
 	}
 
+	@Override
 	public void addBookToRecentList(Book book) {
 		final List<Long> ids = myDatabase.loadRecentBookIds();
 		final Long bookId = book.getId();
@@ -382,6 +401,7 @@ public class BookCollection extends AbstractBookCollection {
 		setStatus(Status.Started);
 
 		final Thread builder = new Thread("Library.build") {
+			@Override
 			public void run() {
 				try {
 					build();
@@ -530,6 +550,7 @@ public class BookCollection extends AbstractBookCollection {
 		fileInfos.save();
 
 		myDatabase.executeAsTransaction(new Runnable() {
+			@Override
 			public void run() {
 				for (Book book : newBooks) {
 					saveBook(book, false);
@@ -609,10 +630,12 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	@Override
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
 		return myDatabase.loadBookmarks(query);
 	}
 
+	@Override
 	public void saveBookmark(Bookmark bookmark) {
 		if (bookmark != null) {
 			bookmark.setId(myDatabase.saveBookmark(bookmark));
@@ -626,6 +649,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	@Override
 	public void deleteBookmark(Bookmark bookmark) {
 		if (bookmark != null && bookmark.getId() != -1) {
 			myDatabase.deleteBookmark(bookmark);
@@ -639,20 +663,24 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	@Override
 	public ZLTextPosition getStoredPosition(long bookId) {
 		return myDatabase.getStoredPosition(bookId);
 	}
 
+	@Override
 	public void storePosition(long bookId, ZLTextPosition position) {
 		if (bookId != -1) {
 			myDatabase.storePosition(bookId, position);
 		}
 	}
 
+	@Override
 	public boolean isHyperlinkVisited(Book book, String linkId) {
 		return book.isHyperlinkVisited(myDatabase, linkId);
 	}
 
+	@Override
 	public void markHyperlinkAsVisited(Book book, String linkId) {
 		book.markHyperlinkAsVisited(myDatabase, linkId);
 	}
@@ -665,11 +693,13 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	@Override
 	public HighlightingStyle getHighlightingStyle(int styleId) {
 		initStylesTable();
 		return myStyles.get(styleId);
 	}
 
+	@Override
 	public List<HighlightingStyle> highlightingStyles() {
 		initStylesTable();
 		return new ArrayList<HighlightingStyle>(myStyles.values());

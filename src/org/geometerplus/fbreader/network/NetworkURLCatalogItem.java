@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 

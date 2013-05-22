@@ -80,6 +80,7 @@ class ZLColorPreference extends DialogPreference {
 		myPreviewDrawable.setColor(ZLAndroidColorUtil.rgb(color));
 
 		final SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
+			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				myPreviewDrawable.setColor(Color.rgb(
 					myRedSlider.getProgress(),
@@ -89,9 +90,11 @@ class ZLColorPreference extends DialogPreference {
 				myPreviewDrawable.invalidateSelf();
 			}
 
+			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 			}
 
+			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				myPreviewDrawable.setColor(Color.rgb(
 					myRedSlider.getProgress(),

@@ -70,6 +70,7 @@ public final class ZLByteBuffer {
 		myStringValue = null;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		final ZLByteBuffer container = (ZLByteBuffer)o;
 		final int len = myLength;
@@ -86,6 +87,7 @@ public final class ZLByteBuffer {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		final int len = myLength;
 		final byte[] data = myData;
@@ -126,6 +128,7 @@ public final class ZLByteBuffer {
 		}
 		return myStringValue;
 	}
+	@Override
 	public String toString() {
 		if (myStringValue == null) {
 			myStringValue = new String(myData, 0, myLength);

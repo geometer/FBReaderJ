@@ -30,6 +30,7 @@ class XHTMLTagParagraphWithControlAction extends XHTMLTagAction {
 		myControl = control;
 	}
 
+	@Override
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		final BookReader modelReader = reader.getModelReader();
 		switch (myControl) {
@@ -46,6 +47,7 @@ class XHTMLTagParagraphWithControlAction extends XHTMLTagAction {
 		modelReader.beginParagraph();
 	}
 
+	@Override
 	protected void doAtEnd(XHTMLReader reader) {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.endParagraph();

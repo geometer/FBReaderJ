@@ -168,6 +168,7 @@ public class FileTree extends LibraryTree {
 	}
 
 	private static final Comparator<ZLFile> ourFileComparator = new Comparator<ZLFile>() {
+		@Override
 		public int compare(ZLFile file0, ZLFile file1) {
 			final boolean isDir = file0.isDirectory();
 			if (isDir != file1.isDirectory()) {

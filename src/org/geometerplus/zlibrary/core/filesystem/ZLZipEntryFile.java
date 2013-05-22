@@ -47,6 +47,7 @@ final class ZLZipEntryFile extends ZLArchiveEntryFile {
 			ZipFile zf = file.isCached() ? ourZipFileMap.get(file) : null;
 			if (zf == null) {
 				zf = new ZipFile(new ZipFile.InputStreamHolder() {
+					@Override
 					public InputStream getInputStream() throws IOException {
 						return file.getInputStream();
 					}

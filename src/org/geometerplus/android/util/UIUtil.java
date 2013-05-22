@@ -52,6 +52,7 @@ public abstract class UIUtil {
 		}
 		try {
 			ourProgressHandler = new Handler() {
+				@Override
 				public void handleMessage(Message message) {
 					try {
 						synchronized (ourMonitor) {
@@ -92,6 +93,7 @@ public abstract class UIUtil {
 		}
 		final ProgressDialog currentProgress = ourProgress;
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				while ((ourProgress == currentProgress) && !ourTaskQueue.isEmpty()) {
 					Pair p = ourTaskQueue.poll();
@@ -112,13 +114,16 @@ public abstract class UIUtil {
 		final String message =
 			ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
 		activity.runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				final ProgressDialog progress = ProgressDialog.show(activity, null, message, true, false);
 
 				final Thread runner = new Thread() {
+					@Override
 					public void run() {
 						action.run();
 						activity.runOnUiThread(new Runnable() {
+							@Override
 							public void run() {
 								try {
 									progress.dismiss();

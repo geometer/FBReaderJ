@@ -60,6 +60,7 @@ abstract class ButtonsPopupPanel extends PopupPanel implements View.OnClickListe
 		}
 	}
 
+	@Override
 	public void onClick(View view) {
 		final ActionButton button = (ActionButton)view;
 		Application.runAction(button.ActionId);

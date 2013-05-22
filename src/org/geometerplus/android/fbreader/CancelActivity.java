@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
+import android.view.ViewGroup.LayoutParams;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -49,18 +50,22 @@ public class CancelActivity extends ListActivity {
 			myIntent = intent;
 		}
 
+		@Override
 		public final int getCount() {
 			return myIntent.getIntExtra(LIST_SIZE, 0);
 		}
 
+		@Override
 		public final Integer getItem(int position) {
 			return position;
 		}
 
+		@Override
 		public final long getItemId(int position) {
 			return position;
 		}
 
+		@Override
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final View view = convertView != null
 				? convertView
@@ -74,17 +79,18 @@ public class CancelActivity extends ListActivity {
 				summaryView.setVisibility(View.VISIBLE);
 				summaryView.setText(summary);
 				titleView.setLayoutParams(new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT
 				));
 			} else {
 				summaryView.setVisibility(View.GONE);
 				titleView.setLayoutParams(new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT
+					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT
 				));
 			}
 			return view;
 		}
 
+		@Override
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			setResult((int)id + 1);
 			finish();

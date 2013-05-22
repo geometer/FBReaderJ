@@ -39,10 +39,12 @@ abstract class CachedCharStorageBase implements CharStorage {
 		return myDirectoryName + index + myFileExtension;
 	}
 
+	@Override
 	public int size() {
 		return myArray.size();
 	}
 
+	@Override
 	public char[] block(int index) {
 		char[] block = myArray.get(index).get();
 		if (block == null) {

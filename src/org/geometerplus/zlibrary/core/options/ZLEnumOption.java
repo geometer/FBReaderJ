@@ -34,7 +34,7 @@ public final class ZLEnumOption<T extends Enum<T>> extends ZLOption {
 			final String value = getConfigValue(null);
 			if (value != null) {
 				try {
-					myValue = T.valueOf(myDefaultValue.getDeclaringClass(), value);
+					myValue = Enum.valueOf(myDefaultValue.getDeclaringClass(), value);
 				} catch (Throwable t) {
 				}
 			}

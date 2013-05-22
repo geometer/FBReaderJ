@@ -34,11 +34,13 @@ class ZLTextParagraphCursorCache {
 			myIndex = index;
 		}
 
+		@Override
 		public boolean equals(Object o) {
 			Key k = (Key)o;
 			return (myModel == k.myModel) && (myIndex == k.myIndex);
 		}
 
+		@Override
 		public int hashCode() {
 			return myModel.hashCode() + myIndex;
 		}

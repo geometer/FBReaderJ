@@ -24,12 +24,14 @@ import java.util.*;
 public abstract class AbstractBookCollection implements IBookCollection {
 	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
 
+	@Override
 	public void addListener(Listener listener) {
 		if (!myListeners.contains(listener)) {
 			myListeners.add(listener);
 		}
 	}
 
+	@Override
 	public void removeListener(Listener listener) {
 		myListeners.remove(listener);
 	}

@@ -29,14 +29,17 @@ final class SimpleCharStorage implements CharStorage {
 		myBlockSize = blockSize;
 	}
 
+	@Override
 	public int size() {
 		return myArray.size();
 	}
 
+	@Override
 	public char[] block(int index) {
 		return myArray.get(index);
 	}
 
+	@Override
 	public char[] createNewBlock(int minimumLength) {
 		int blockSize = myBlockSize;
 		if (minimumLength > blockSize) {
@@ -47,6 +50,7 @@ final class SimpleCharStorage implements CharStorage {
 		return block;
 	}
 
+	@Override
 	public void freezeLastBlock() {
 	}
 

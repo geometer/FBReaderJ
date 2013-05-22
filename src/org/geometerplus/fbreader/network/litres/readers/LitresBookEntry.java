@@ -20,7 +20,7 @@ public class LitresBookEntry extends LitresEntry {
 	public String myBookId;
 	public String myGenre;
 	public LinkedList<LitresBookItem.AuthorData> myAuthors = new LinkedList<LitresBookItem.AuthorData>();
-	LitresBookEntry(ZLStringMap source){
+	public LitresBookEntry(ZLStringMap source){
 		super(source);
 		processAttr(source);
 	}

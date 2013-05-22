@@ -36,14 +36,17 @@ public class ZLTextFixedPosition extends ZLTextPosition {
 		CharIndex = position.getCharIndex();
 	}
 
+	@Override
 	public final int getParagraphIndex() {
 		return ParagraphIndex;
 	}
 
+	@Override
 	public final int getElementIndex() {
 		return ElementIndex;
 	}
 
+	@Override
 	public final int getCharIndex() {
 		return CharIndex;
 	}

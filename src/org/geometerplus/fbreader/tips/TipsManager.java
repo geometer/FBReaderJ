@@ -153,6 +153,7 @@ public class TipsManager {
 
 		new File(Paths.networkCacheDirectory() + "/tips").mkdirs();
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					ZLNetworkManager.Instance().downloadToFile(

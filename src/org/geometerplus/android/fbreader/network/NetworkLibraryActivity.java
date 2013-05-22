@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
@@ -146,6 +145,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Connection.bindToService(this, new Runnable() {
+			@Override
 			public void run() {
 				getListView().invalidateViews();
 			}
@@ -339,8 +339,10 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	}
 
 	// method from NetworkLibrary.ChangeListener
+	@Override
 	public void onLibraryChanged(final NetworkLibrary.ChangeListener.Code code, final Object[] params) {
 		runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				switch (code) {
 					default:
@@ -395,6 +397,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	private void showInitLibraryDialog(String error) {
 		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					Util.initLibrary(NetworkLibraryActivity.this);
@@ -414,6 +417,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			.setPositiveButton(buttonResource.getResource("tryAgain").getValue(), listener)
 			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
 			.setOnCancelListener(new DialogInterface.OnCancelListener() {
+				@Override
 				public void onCancel(DialogInterface dialog) {
 					listener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
 				}
@@ -432,6 +436,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 					break;
 				case B3_UNDEFINED:
 					Util.runAuthenticationDialog(this, tree.getLink(), new Runnable() {
+						@Override
 						public void run() {
 							if (catalogTree.getVisibility() != ZLBoolean3.B3_TRUE) {
 								return;
@@ -448,6 +453,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		}
 	}
 
+	@Override
 	public void onScroll(AbsListView view, int firstVisible, int visibleCount, int totalCount) {
 		if (firstVisible + visibleCount + 1 >= totalCount) {
 			final NetworkTree tree = getCurrentTree();
@@ -457,6 +463,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		}
 	}
 
+	@Override
 	public void onScrollStateChanged(AbsListView view, int state) {
 	}
 }

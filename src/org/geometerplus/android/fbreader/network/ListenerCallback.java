@@ -41,6 +41,7 @@ public class ListenerCallback extends BroadcastReceiver implements UserRegistrat
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
 				if (mgr instanceof LitResAuthenticationManager) {
 					new Thread(new Runnable() {
+						@Override
 						public void run() {
 							try {
 								processSignup((LitResAuthenticationManager)mgr, intent);

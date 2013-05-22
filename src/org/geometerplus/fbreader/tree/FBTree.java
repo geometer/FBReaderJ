@@ -158,6 +158,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return 0;
 	}
 
+	@Override
 	public int compareTo(FBTree tree) {
 		final String key0 = getSortKey();
 		final String key1 = tree.getSortKey();

@@ -70,16 +70,20 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 		}
 	}
 
+	@Override
 	public void startDocumentHandler() {
 	}
 
+	@Override
 	public void endDocumentHandler() {
 	}
 
+	@Override
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
 
+	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (length == 0) {
 			return;
@@ -92,6 +96,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 		}
 	}
 
+	@Override
 	public void characterDataHandlerFinal(char[] ch, int start, int length) {
 		if (length == 0) {
 			return;
@@ -104,6 +109,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 		}
 	}
 
+	@Override
 	public boolean endElementHandler(String tagName) {
 		if (myFootnoteIdDepth > 0) {
 			--myFootnoteIdDepth;
@@ -219,6 +225,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
 		String id = attributes.getValue("id");
 		if (myFootnoteIdDepth > 0) {
@@ -418,14 +425,17 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public boolean processNamespaces() {
 		return true;
 	}
 
+	@Override
 	public void collectExternalEntities(HashMap<String,char[]> entityMap) {
 		entityMap.put("FBReaderVersion", ZLibrary.Instance().getVersionName().toCharArray());
 	}
 
+	@Override
 	public List<String> externalDTDs() {
 		return Collections.emptyList();
 	}

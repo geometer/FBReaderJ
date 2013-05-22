@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.covers;
 
-import java.util.*;
 import java.util.concurrent.Future;
 
 import android.widget.ImageView;
@@ -70,6 +69,7 @@ class CoverHolder {
 			}
 		}
 
+		@Override
 		public void run() {
 			synchronized (CoverHolder.this) {
 				try {
@@ -113,6 +113,7 @@ class CoverHolder {
 			}
 		}
 
+		@Override
 		public void run() {
 			synchronized (CoverHolder.this) {
 				if (coverBitmapRunnable != this) {

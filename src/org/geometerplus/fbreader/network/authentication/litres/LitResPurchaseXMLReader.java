@@ -40,7 +40,7 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		if (TAG_AUTHORIZATION_FAILED == tag) {
-			setException(new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED));
+			setException(new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED));
 		} else {
 			Account = attributes.getValue("account");
 			BookId = attributes.getValue("art");
@@ -58,7 +58,7 @@ class LitResPurchaseXMLReader extends LitResAuthenticationXMLReader {
 					setException(new ZLNetworkException(NetworkException.ERROR_INTERNAL));
 				}
 			} else {
-				setException(new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, HostName));
+				setException(new ZLNetworkException(ZLNetworkException.ERROR_SOMETHING_WRONG, HostName));
 			}
 		}
 		return true;

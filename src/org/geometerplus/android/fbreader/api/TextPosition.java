@@ -33,11 +33,13 @@ public final class TextPosition extends ApiObject {
 
 	public static final Parcelable.Creator<TextPosition> CREATOR =
 		new Parcelable.Creator<TextPosition>() {
+			@Override
 			public TextPosition createFromParcel(Parcel parcel) {
 				parcel.readInt();
 				return new TextPosition(parcel.readInt(), parcel.readInt(), parcel.readInt());
 			}
 
+			@Override
 			public TextPosition[] newArray(int size) {
 				return new TextPosition[size];
 			}

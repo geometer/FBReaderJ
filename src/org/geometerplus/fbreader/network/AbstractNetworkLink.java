@@ -54,26 +54,32 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		myInfos = new UrlInfoCollection<UrlInfoWithDate>(infos);
 	}
 
+	@Override
 	public int getId() {
 		return myId;
 	}
 
+	@Override
 	public void setId(int id) {
 		myId = id;
 	}
 
+	@Override
 	public final String getSiteName() {
 		return mySiteName;
 	}
 
+	@Override
 	public final String getTitle() {
 		return myTitle;
 	}
 
+	@Override
 	public final String getSummary() {
 		return mySummary;
 	}
 
+	@Override
 	public final String getLanguage() {
 		return myLanguage;
 	}
@@ -82,15 +88,18 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return new UrlInfoCollection<UrlInfoWithDate>(myInfos);
 	}
 
+	@Override
 	public final String getUrl(UrlInfo.Type type) {
 		return getUrlInfo(type).Url;
 	}
 
+	@Override
 	public final UrlInfoWithDate getUrlInfo(UrlInfo.Type type) {
 		final UrlInfoWithDate info = myInfos.getInfo(type);
 		return info != null ? info : UrlInfoWithDate.NULL;
 	}
 
+	@Override
 	public final Set<UrlInfo.Type> getUrlKeys() {
 		final HashSet<UrlInfo.Type> set = new HashSet<UrlInfo.Type>();
 		for (UrlInfo info : myInfos.getAllInfos()) {
@@ -99,6 +108,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return set;
 	}
 
+	@Override
 	public BasketItem getBasketItem() {
 		return null;
 	}
@@ -107,6 +117,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return null;
 	}
 
+	@Override
 	public NetworkOperationData createOperationData(NetworkItemsLoader listener) {
 		return new NetworkOperationData(this, listener);
 	}
@@ -150,6 +161,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return 2;
 	}
 
+	@Override
 	public int compareTo(INetworkLink link) {
 		int diff = getLanguageOrder(getLanguage()) - getLanguageOrder(link.getLanguage());
 		if (diff != 0) {

@@ -47,6 +47,7 @@ public abstract class ZLTextHighlighting implements Comparable<ZLTextHighlightin
 			soul.compareTo(getEndPosition()) <= 0;
 	}
 
+	@Override
 	public int compareTo(ZLTextHighlighting highlighting) {
 		final int cmp = getStartPosition().compareTo(highlighting.getStartPosition());
 		return cmp != 0 ? cmp : getEndPosition().compareTo(highlighting.getEndPosition());

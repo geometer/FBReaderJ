@@ -83,7 +83,7 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 					if (((ZLTree<?>)subtree).mySize <= index) {
 						index -= ((ZLTree<?>)subtree).mySize;
 					} else {
-						return (T)subtree.getTreeByParagraphNumber(index);
+						return subtree.getTreeByParagraphNumber(index);
 					}
 				}
 			}
@@ -132,12 +132,14 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		}
 	}
 
+	@Override
 	public final TreeIterator iterator() {
 		return new TreeIterator(Integer.MAX_VALUE);
 	}
 
 	public final Iterable<T> allSubTrees(final int maxLevel) {
 		return new Iterable<T>() {
+			@Override
 			public TreeIterator iterator() {
 				return new TreeIterator(maxLevel);
 			}
@@ -153,10 +155,12 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 			myMaxLevel = maxLevel;
 		}
 
+		@Override
 		public boolean hasNext() {
 			return myCurrentElement != null;
 		}
 
+		@Override
 		public T next() {
 			final T element = myCurrentElement;
 			if (element.hasChildren() && element.Level < myMaxLevel) {
@@ -182,6 +186,7 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 			return element;
 		}
 
+		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}

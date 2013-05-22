@@ -50,6 +50,7 @@ public class BookReadingErrorActivity extends Activity implements ErrorKeys {
 		final Button okButton = (Button)buttonView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("sendReport").getValue());
 		okButton.setOnClickListener(new Button.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				final Intent sendIntent = new Intent(Intent.ACTION_SEND);
 				sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "issues@fbreader.org" });
@@ -64,6 +65,7 @@ public class BookReadingErrorActivity extends Activity implements ErrorKeys {
 		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				finish();
 			}

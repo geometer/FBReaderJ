@@ -36,11 +36,13 @@ public class ZLTextMark implements Comparable<ZLTextMark> {
 		Length = mark.Length;
 	}
 
+	@Override
 	public int compareTo(ZLTextMark mark) {
 		final int diff = ParagraphIndex - mark.ParagraphIndex;
 		return diff != 0 ? diff : Offset - mark.Offset;
 	}
 
+	@Override
 	public String toString() {
 		return ParagraphIndex + " " + Offset + " " + Length;
 	}

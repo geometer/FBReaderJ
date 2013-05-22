@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.*;
-
 import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
@@ -160,6 +158,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		return myBackgroundColor;
 	}
 
+	@Override
 	public void fillPolygon(int[] xs, int ys[]) {
 		final Path path = new Path();
 		final int last = xs.length - 1;
@@ -170,6 +169,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myFillPaint);
 	}
 
+	@Override
 	public void drawPolygonalLine(int[] xs, int ys[]) {
 		final Path path = new Path();
 		final int last = xs.length - 1;
@@ -180,6 +180,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myLinePaint);
 	}
 
+	@Override
 	public void drawOutline(int[] xs, int ys[]) {
 		final int last = xs.length - 1;
 		int xStart = (xs[0] + xs[last]) / 2;
@@ -240,9 +241,11 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myFillPaint.setColor(ZLAndroidColorUtil.rgba(color, alpha));
 	}
 
+	@Override
 	public int getWidth() {
 		return myWidth;
 	}
+	@Override
 	public int getHeight() {
 		return myHeight;
 	}

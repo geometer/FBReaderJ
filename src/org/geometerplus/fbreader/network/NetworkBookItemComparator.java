@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 public final class NetworkBookItemComparator implements Comparator<NetworkItem> {
+	@Override
 	public int compare(NetworkItem item0, NetworkItem item1) {
 		final boolean item0isABook = item0 instanceof NetworkBookItem;
 		final boolean item1isABook = item1 instanceof NetworkBookItem;

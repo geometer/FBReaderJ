@@ -44,6 +44,7 @@ public abstract class PdbStream extends InputStream {
 		myBufferOffset = 0;
 	}
 
+	@Override
 	public int read() {
 		if (!fillBuffer()) {
 			return -1;
@@ -51,6 +52,7 @@ public abstract class PdbStream extends InputStream {
 		return myBuffer[myBufferOffset++];
 	}
 
+	@Override
 	public int read(byte[] buffer, int offset, int maxSize) {
 		int realSize = 0;
 		while (realSize < maxSize) {
@@ -69,6 +71,7 @@ public abstract class PdbStream extends InputStream {
 		return (realSize > 0) ? realSize : -1;
 	}
 
+	@Override
 	public void close() throws IOException {
 		if (myBase != null) {
 			myBase.close();

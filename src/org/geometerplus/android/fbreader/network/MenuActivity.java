@@ -54,6 +54,7 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 		getListView().setOnItemClickListener(this);
 	}
 
+	@Override
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		runItem(myInfos.get(position));
 		finish();
@@ -97,18 +98,22 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 	protected abstract void runItem(final PluginApi.MenuActionInfo info);
 
 	private class ActionListAdapter extends BaseAdapter {
+		@Override
 		public final int getCount() {
 			return myInfos.size();
 		}
 
+		@Override
 		public final PluginApi.MenuActionInfo getItem(int position) {
 			return myInfos.get(position);
 		}
 
+		@Override
 		public final long getItemId(int position) {
 			return position;
 		}
 
+		@Override
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			final View view = convertView != null
 				? convertView

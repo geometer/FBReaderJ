@@ -30,6 +30,7 @@ import android.text.method.ScrollingMovementMethod;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class BugReportActivity extends Activity implements ErrorKeys {
+	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.bug_report_view);
@@ -53,6 +54,7 @@ public class BugReportActivity extends Activity implements ErrorKeys {
 
 		findViewById(R.id.send_report).setOnClickListener(
 			new View.OnClickListener() {
+				@Override
 				public void onClick(View view) {
 					Intent sendIntent = new Intent(Intent.ACTION_SEND);
 					sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "exception@geometerplus.com" });
@@ -67,6 +69,7 @@ public class BugReportActivity extends Activity implements ErrorKeys {
 
 		findViewById(R.id.cancel_report).setOnClickListener(
 			new View.OnClickListener() {
+				@Override
 				public void onClick(View view) {
 					finish();
 				}

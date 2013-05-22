@@ -50,6 +50,7 @@ public class NetworkBookItem extends NetworkItem {
 			SortKey = sortKey != null ? sortKey.intern() : DisplayName.toLowerCase().intern();
 		}
 
+		@Override
 		public int compareTo(AuthorData data) {
 			final int key = SortKey.compareTo(data.SortKey);
 			if (key != 0) {

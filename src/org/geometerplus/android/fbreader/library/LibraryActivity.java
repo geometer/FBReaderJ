@@ -28,7 +28,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -68,6 +67,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		getListView().setOnCreateContextMenuListener(this);
 
 		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
+			@Override
 			public void run() {
 				setProgressBarIndeterminateVisibility(!myRootTree.Collection.status().IsCompleted);
 			}
@@ -272,6 +272,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		return item;
 	}
 
+	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
 			case 1:
@@ -297,6 +298,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			myBook = book;
 		}
 
+		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			if (getCurrentTree() instanceof FileTree) {
 				getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), myBook.File));
@@ -327,6 +329,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		BookSearchPatternOption.setValue(pattern);
 
 		final Thread searcher = new Thread("Library.searchBooks") {
+			@Override
 			public void run() {
 				final SearchResultsTree oldSearchResults = myRootTree.getSearchResultsTree();
 
@@ -349,6 +352,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	private void onSearchEvent(final boolean found) {
 		runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				if (found) {
 					openSearchResults();
@@ -359,6 +363,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		});
 	}
 
+	@Override
 	public void onBookEvent(BookEvent event, Book book) {
 		if (getCurrentTree().onBookEvent(event, book)) {
 			getListAdapter().replaceAll(getCurrentTree().subTrees());
@@ -366,6 +371,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		}
 	}
 
+	@Override
 	public void onBuildEvent(IBookCollection.Status status) {
 		setProgressBarIndeterminateVisibility(!status.IsCompleted);
 	}

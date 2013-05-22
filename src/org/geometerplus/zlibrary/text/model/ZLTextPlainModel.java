@@ -83,49 +83,62 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			myDataOffset = myStartEntryOffsets[index];
 		}
 
+		@Override
 		public byte getType() {
 			return myType;
 		}
 
+		@Override
 		public char[] getTextData() {
 			return myTextData;
 		}
+		@Override
 		public int getTextOffset() {
 			return myTextOffset;
 		}
+		@Override
 		public int getTextLength() {
 			return myTextLength;
 		}
 
+		@Override
 		public byte getControlKind() {
 			return myControlKind;
 		}
+		@Override
 		public boolean getControlIsStart() {
 			return myControlIsStart;
 		}
+		@Override
 		public byte getHyperlinkType() {
 			return myHyperlinkType;
 		}
+		@Override
 		public String getHyperlinkId() {
 			return myHyperlinkId;
 		}
 
+		@Override
 		public ZLImageEntry getImageEntry() {
 			return myImageEntry;
 		}
 
+		@Override
 		public ZLTextStyleEntry getStyleEntry() {
 			return myStyleEntry;
 		}
 
+		@Override
 		public short getFixedHSpaceLength() {
 			return myFixedHSpaceLength;
 		}
 
+		@Override
 		public boolean hasNext() {
 			return myCounter < myLength;
 		}
 
+		@Override
 		public void next() {
 			int dataOffset = myDataOffset;
 			char[] data = myStorage.block(myDataIndex);
@@ -145,8 +158,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 				case ZLTextParagraph.Entry.TEXT:
 				{
 					int textLength =
-						(int)data[dataOffset++] +
-						(((int)data[dataOffset++]) << 16);
+						data[dataOffset++] +
+						(data[dataOffset++] << 16);
 					if (textLength > data.length - dataOffset) {
 						textLength = data.length - dataOffset;
 					}
@@ -254,22 +267,27 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		myImageMap = imageMap;
 	}
 
+	@Override
 	public final String getId() {
 		return myId;
 	}
 
+	@Override
 	public final String getLanguage() {
 		return myLanguage;
 	}
 
+	@Override
 	public final ZLTextMark getFirstMark() {
 		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(0);
 	}
 
+	@Override
 	public final ZLTextMark getLastMark() {
 		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
 	}
 
+	@Override
 	public final ZLTextMark getNextMark(ZLTextMark position) {
 		if ((position == null) || (myMarks == null)) {
 			return null;
@@ -286,6 +304,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		return mark;
 	}
 
+	@Override
 	public final ZLTextMark getPreviousMark(ZLTextMark position) {
 		if ((position == null) || (myMarks == null)) {
 			return null;
@@ -302,6 +321,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		return mark;
 	}
 
+	@Override
 	public final int search(final String text, int startIndex, int endIndex, boolean ignoreCase) {
 		int count = 0;
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
@@ -338,18 +358,22 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		return count;
 	}
 
+	@Override
 	public final List<ZLTextMark> getMarks() {
 		return (myMarks != null) ? myMarks : Collections.<ZLTextMark>emptyList();
 	}
 
+	@Override
 	public final void removeAllMarks() {
 		myMarks = null;
 	}
 
+	@Override
 	public final int getParagraphsNumber() {
 		return myParagraphsNumber;
 	}
 
+	@Override
 	public final ZLTextParagraph getParagraph(int index) {
 		final byte kind = myParagraphKinds[index];
 		return (kind == ZLTextParagraph.Kind.TEXT_PARAGRAPH) ?
@@ -357,6 +381,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			new ZLTextSpecialParagraphImpl(kind, this, index);
 	}
 
+	@Override
 	public final int getTextLength(int index) {
 		return myTextSizes[Math.max(Math.min(index, myParagraphsNumber - 1), 0)];
 	}
@@ -379,6 +404,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		return -lowIndex - 1;
 	}
 
+	@Override
 	public final int findParagraphByTextLength(int length) {
 		int index = binarySearch(myTextSizes, myParagraphsNumber, length);
 		if (index >= 0) {

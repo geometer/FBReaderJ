@@ -25,6 +25,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 import org.geometerplus.zlibrary.text.view.*;
@@ -43,7 +44,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	private volatile FBReaderApp myReader;
 	private synchronized FBReaderApp getReader() {
 		if (myReader == null) {
-			myReader = (FBReaderApp)FBReaderApp.Instance();
+			myReader = (FBReaderApp)ZLApplication.Instance();
 		}
 		return myReader;
 	}
@@ -56,6 +57,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return new ApiObject.Error("Exception in method " + method + ": " + e);
 	}
 
+	@Override
 	public ApiObject request(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
@@ -217,6 +219,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		}
 	}
 
+	@Override
 	public List<ApiObject> requestList(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
@@ -260,6 +263,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return Collections.<ApiObject,ApiObject>singletonMap(error, error);
 	}
 
+	@Override
 	public Map<ApiObject,ApiObject> requestMap(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
@@ -272,108 +276,131 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	// information about fbreader
+	@Override
 	public String getFBReaderVersion() {
 		return ZLibrary.Instance().getVersionName();
 	}
 
 	// preferences information
+	@Override
 	public List<String> getOptionGroups() {
 		return ZLConfig.Instance().listGroups();
 	}
 
+	@Override
 	public List<String> getOptionNames(String group) {
 		return ZLConfig.Instance().listNames(group);
 	}
 
+	@Override
 	public String getOptionValue(String group, String name) {
 		return ZLConfig.Instance().getValue(group, name, null);
 	}
 
+	@Override
 	public void setOptionValue(String group, String name, String value) {
 		// TODO: implement
 	}
 
+	@Override
 	public String getBookLanguage() {
 		return getReader().Model.Book.getLanguage();
 	}
 
+	@Override
 	public String getBookTitle() {
 		return getReader().Model.Book.getTitle();
 	}
 
+	@Override
 	public List<String> getBookTags() {
 		// TODO: implement
 		return Collections.emptyList();
 	}
 
+	@Override
 	public String getBookFilePath() {
 		return getReader().Model.Book.File.getPath();
 	}
 
+	@Override
 	public String getBookHash() {
 		final UID uid = BookUtil.createSHA256Uid(getReader().Model.Book.File);
 		return uid != null ? uid.Id : null;
 	}
 
+	@Override
 	public String getBookUniqueId() {
 		// TODO: implement
 		return null;
 	}
 
+	@Override
 	public Date getBookLastTurningTime() {
 		// TODO: implement
 		return null;
 	}
 
+	@Override
 	public String getBookLanguage(long id) {
 		// TODO: implement
 		return null;
 	}
 
+	@Override
 	public String getBookTitle(long id) {
 		// TODO: implement
 		return null;
 	}
 
+	@Override
 	public List<String> getBookTags(long id) {
 		// TODO: implement
 		return Collections.emptyList();
 	}
 
+	@Override
 	public String getBookFilePath(long id) {
 		// TODO: implement
 		return null;
 	}
 
+	@Override
 	public String getBookHash(long id) {
 		// TODO: implement
 		return null;
 	}
 
+	@Override
 	public String getBookUniqueId(long id) {
 		// TODO: implement
 		return null;
 	}
 
+	@Override
 	public Date getBookLastTurningTime(long id) {
 		// TODO: implement
 		return null;
 	}
 
 	// page information
+	@Override
 	public TextPosition getPageStart() {
 		return getTextPosition(getReader().getTextView().getStartCursor());
 	}
 
+	@Override
 	public TextPosition getPageEnd() {
 		return getTextPosition(getReader().getTextView().getEndCursor());
 	}
 
+	@Override
 	public boolean isPageEndOfSection() {
 		final ZLTextWordCursor cursor = getReader().getTextView().getEndCursor();
 		return cursor.isEndOfParagraph() && cursor.getParagraphCursor().isEndOfSection();
 	}
 
+	@Override
 	public boolean isPageEndOfText() {
 		final ZLTextWordCursor cursor = getReader().getTextView().getEndCursor();
 		return cursor.isEndOfParagraph() && cursor.getParagraphCursor().isLast();
@@ -396,12 +423,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	// manage view
+	@Override
 	public void setPageStart(TextPosition position) {
 		getReader().getTextView().gotoPosition(position.ParagraphIndex, position.ElementIndex, position.CharIndex);
 		getReader().getViewWidget().repaint();
 		getReader().storePosition();
 	}
 
+	@Override
 	public void highlightArea(TextPosition start, TextPosition end) {
 		getReader().getTextView().highlight(
 			getZLTextPosition(start),
@@ -409,46 +438,57 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		);
 	}
 
+	@Override
 	public void clearHighlighting() {
 		getReader().getTextView().clearHighlighting();
 	}
 
+	@Override
 	public int getBottomMargin() {
 		return getReader().BottomMarginOption.getValue();
 	}
 
+	@Override
 	public void setBottomMargin(int value) {
 		getReader().BottomMarginOption.setValue(value);
 	}
 
+	@Override
 	public int getTopMargin() {
 		return getReader().TopMarginOption.getValue();
 	}
 
+	@Override
 	public void setTopMargin(int value) {
 		getReader().TopMarginOption.setValue(value);
 	}
 
+	@Override
 	public int getLeftMargin() {
 		return getReader().LeftMarginOption.getValue();
 	}
 
+	@Override
 	public void setLeftMargin(int value) {
 		getReader().LeftMarginOption.setValue(value);
 	}
 
+	@Override
 	public int getRightMargin() {
 		return getReader().RightMarginOption.getValue();
 	}
 
+	@Override
 	public void setRightMargin(int value) {
 		getReader().RightMarginOption.setValue(value);
 	}
 
+	@Override
 	public int getParagraphsNumber() {
 		return getReader().Model.getTextModel().getParagraphsNumber();
 	}
 
+	@Override
 	public int getParagraphElementsCount(int paragraphIndex) {
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(getReader().getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
@@ -456,6 +496,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return cursor.getElementIndex();
 	}
 
+	@Override
 	public String getParagraphText(int paragraphIndex) {
 		final StringBuffer sb = new StringBuffer();
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(getReader().getTextView().getStartCursor());
@@ -471,6 +512,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return sb.toString();
 	}
 
+	@Override
 	public List<String> getParagraphWords(int paragraphIndex) {
 		final ArrayList<String> words = new ArrayList<String>();
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(getReader().getTextView().getStartCursor());
@@ -486,6 +528,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return words;
 	}
 
+	@Override
 	public ArrayList<Integer> getParagraphWordIndices(int paragraphIndex) {
 		final ArrayList<Integer> indices = new ArrayList<Integer>();
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(getReader().getTextView().getStartCursor());
@@ -502,63 +545,77 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	// action control
+	@Override
 	public List<String> listActions() {
 		// TODO: implement
 		return Collections.emptyList();
 	}
 
+	@Override
 	public List<String> listActionNames(List<String> actions) {
 		// TODO: implement
 		return Collections.emptyList();
 	}
 
+	@Override
 	public String getKeyAction(int key, boolean longPress) {
 		// TODO: implement
 		return null;
 	}
 
+	@Override
 	public void setKeyAction(int key, boolean longPress, String action) {
 		// TODO: implement
 	}
 
+	@Override
 	public List<String> listZoneMaps() {
 		return TapZoneMap.zoneMapNames();
 	}
 
+	@Override
 	public String getZoneMap() {
 		return ScrollingPreferences.Instance().TapZoneMapOption.getValue();
 	}
 
+	@Override
 	public void setZoneMap(String name) {
 		ScrollingPreferences.Instance().TapZoneMapOption.setValue(name);
 	}
 
+	@Override
 	public int getZoneMapHeight(String name) {
 		return TapZoneMap.zoneMap(name).getHeight();
 	}
 
+	@Override
 	public int getZoneMapWidth(String name) {
 		return TapZoneMap.zoneMap(name).getWidth();
 	}
 
+	@Override
 	public void createZoneMap(String name, int width, int height) {
 		TapZoneMap.createZoneMap(name, width, height);
 	}
 
+	@Override
 	public boolean isZoneMapCustom(String name) throws ApiException {
 		return TapZoneMap.zoneMap(name).isCustom();
 	}
 
+	@Override
 	public void deleteZoneMap(String name) throws ApiException {
 		TapZoneMap.deleteZoneMap(name);
 	}
 
+	@Override
 	public String getTapZoneAction(String name, int h, int v, boolean singleTap) {
 		return TapZoneMap.zoneMap(name).getActionByZone(
 			h, v, singleTap ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.doubleTap
 		);
 	}
 
+	@Override
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
 		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
 	}

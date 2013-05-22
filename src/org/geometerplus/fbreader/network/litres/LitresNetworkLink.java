@@ -27,6 +27,7 @@ import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.litres.LitResXMLReader;
 import org.geometerplus.fbreader.network.litres.readers.LitresAuthorsXMLReader;
 import org.geometerplus.fbreader.network.litres.readers.LitresXMLReader;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
@@ -62,15 +63,15 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 				
 				String litresType = mime.getParameter("type");
 				LitresFeedHandler handler = new LitresFeedHandler(result);
-				LitresXMLReader reader = null;
+				LitResXMLReader reader = null;
 				if(litresType != null){
 					if(litresType.equals(MimeType.APP_LITRES_XML_AUTHORS.getParameter("type"))){
 						reader = new LitresAuthorsXMLReader();
 					}else{
-						reader = new LitresXMLReader();
+						reader = new LitResXMLReader();
 					}
 				}else{
-					reader = new LitresXMLReader();
+					reader = new LitResXMLReader();
 				}
 				
 				if(reader != null){

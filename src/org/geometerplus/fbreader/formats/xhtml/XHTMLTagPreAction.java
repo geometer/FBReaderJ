@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.fbreader.bookmodel.*;
 
 class XHTMLTagPreAction extends XHTMLTagAction {
+	@Override
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		reader.myPreformatted = true;
 		final BookReader modelReader = reader.getModelReader();
@@ -31,6 +32,7 @@ class XHTMLTagPreAction extends XHTMLTagAction {
 		modelReader.addControl(FBTextKind.CODE, true);
 	}
 
+	@Override
 	protected void doAtEnd(XHTMLReader reader) {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.addControl(FBTextKind.CODE, false);

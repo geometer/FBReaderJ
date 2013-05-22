@@ -287,13 +287,16 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			myUrl = url;
 		}
 
+		@Override
 		public void processFeedStart() {
 		}
 
+		@Override
 		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
 			return false;
 		}
 
+		@Override
 		public void processFeedEnd() {
 		}
 	}
@@ -303,6 +306,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			super(url);
 		}
 
+		@Override
 		public boolean processFeedEntry(OPDSEntry entry) {
 			addUrls(getUrls((OPDSNetworkLink)Link, entry, myUrl));
 			final CharSequence summary = getAnnotation(entry);
@@ -326,6 +330,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			return myBook;
 		}
 
+		@Override
 		public boolean processFeedEntry(OPDSEntry entry) {
 			myBook = new OPDSBookItem((OPDSNetworkLink)myLink, entry, myUrl, 0);
 			return false;

@@ -86,6 +86,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private class Initializer implements Runnable {
+		@Override
 		public void run() {
 			long id = 0;
 			if (myBook != null) {
@@ -107,6 +108,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				myAllBooksAdapter.addAll(allBookmarks);
 			}
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					setProgressBarIndeterminateVisibility(false);
 				}
@@ -119,12 +121,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		super.onStart();
 
 		runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				setProgressBarIndeterminateVisibility(true);
 			}
 		});
 
 		myCollection.bindToService(this, new Runnable() {
+			@Override
 			public void run() {
 				if (myAllBooksAdapter != null) {
 					return;
@@ -209,6 +213,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		getTabHost().setCurrentTabByTag("found");
 	}
 
+	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
 			case 1:
@@ -287,6 +292,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		public void addAll(final List<Bookmark> bookmarks) {
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					synchronized (myBookmarks) {
 						for (Bookmark b : bookmarks) {
@@ -303,6 +309,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		public void add(final Bookmark b) {
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					synchronized (myBookmarks) {
 						final int position = Collections.binarySearch(myBookmarks, b, myComparator);
@@ -317,6 +324,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		public void remove(final Bookmark b) {
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					myBookmarks.remove(b);
 					notifyDataSetChanged();
@@ -326,6 +334,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		public void clear() {
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					myBookmarks.clear();
 					notifyDataSetChanged();
@@ -333,6 +342,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			});
 		}
 
+		@Override
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			if (getItem(position) != null) {
@@ -343,6 +353,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			}
 		}
 
+		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item, parent, false);
@@ -369,18 +380,22 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			return view;
 		}
 
+		@Override
 		public final boolean areAllItemsEnabled() {
 			return true;
 		}
 
+		@Override
 		public final boolean isEnabled(int position) {
 			return true;
 		}
 
+		@Override
 		public final long getItemId(int position) {
 			return position;
 		}
 
+		@Override
 		public final Bookmark getItem(int position) {
 			if (myShowAddBookmarkItem) {
 				--position;
@@ -388,10 +403,12 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			return (position >= 0) ? myBookmarks.get(position) : null;
 		}
 
+		@Override
 		public final int getCount() {
 			return myShowAddBookmarkItem ? myBookmarks.size() + 1 : myBookmarks.size();
 		}
 
+		@Override
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Bookmark bookmark = getItem(position);
 			if (bookmark != null) {

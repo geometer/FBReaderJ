@@ -48,6 +48,7 @@ class ZLAndroidImageLoader {
 			image.sourceType() == ZLLoadableImage.SourceType.DISK
 				? mySinglePool : myPool;
 		pool.execute(new Runnable() {
+			@Override
 			public void run() {
 				image.synchronize();
 				myImageSynchronizedHandler.fireMessage(image.getId());
@@ -58,6 +59,7 @@ class ZLAndroidImageLoader {
 	private static class MinPriorityThreadFactory implements ThreadFactory {
 		private final ThreadFactory myDefaultThreadFactory = Executors.defaultThreadFactory();
 
+		@Override
 		public Thread newThread(Runnable r) {
 			final Thread th = myDefaultThreadFactory.newThread(r);
 			th.setPriority(Thread.MIN_PRIORITY);

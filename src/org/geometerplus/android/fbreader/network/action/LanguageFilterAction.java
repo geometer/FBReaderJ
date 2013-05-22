@@ -26,7 +26,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.core.language.Language;
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -59,6 +58,7 @@ public class LanguageFilterAction extends RootAction {
 
 		final DialogInterface.OnMultiChoiceClickListener listener =
 			new DialogInterface.OnMultiChoiceClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 					checked[which] = isChecked;
 				}
@@ -68,6 +68,7 @@ public class LanguageFilterAction extends RootAction {
 			.setMultiChoiceItems(languageNames, checked, listener)
 			.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
 			.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					final TreeSet<Language> newActiveLanguages = new TreeSet<Language>();
 					for (int i = 0; i < checked.length; ++i) {

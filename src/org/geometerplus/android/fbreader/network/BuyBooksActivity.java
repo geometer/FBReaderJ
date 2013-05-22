@@ -41,8 +41,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.BookBuyUrlInfo;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-
-import org.geometerplus.android.fbreader.network.*;
+import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeListener {
 	public static void run(Activity activity, NetworkBookTree tree) {
@@ -60,7 +59,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		for (NetworkBookTree t : trees) {
 			keys.add(t.getUniqueKey());
 		}
-		intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, keys);
+		intent.putExtra(TreeActivity.TREE_KEY_KEY, keys);
 		activity.startActivity(intent);
 		System.out.println("[BuyBooksActivity] run() 2");
 	}
@@ -81,7 +80,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 		final List<NetworkTree.Key> keys =
 			(List<NetworkTree.Key>)getIntent().getSerializableExtra(
-				NetworkLibraryActivity.TREE_KEY_KEY
+				TreeActivity.TREE_KEY_KEY
 			);
 		if (keys == null || keys.isEmpty()) {
 			finish();
@@ -142,6 +141,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 	private void setupUI(final AuthorizationState state) {
 		runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				setupUIInternal(state);
 			}
@@ -171,11 +171,13 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 				okButton.setText(buttonResource.getResource("authorize").getValue());
 				cancelButton.setText(buttonResource.getResource("cancel").getValue());
 				okButton.setOnClickListener(new View.OnClickListener() {
+					@Override
 					public void onClick(View v) {
 						AuthorizationMenuActivity.runMenu(BuyBooksActivity.this, myLink);
 					}
 				});
 				cancelButton.setOnClickListener(new View.OnClickListener() {
+					@Override
 					public void onClick(View v) {
 						finish();
 					}
@@ -187,11 +189,13 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 					okButton.setText(buttonResource.getResource("refresh").getValue());
 					cancelButton.setText(buttonResource.getResource("cancel").getValue());
 					okButton.setOnClickListener(new View.OnClickListener() {
+						@Override
 						public void onClick(View v) {
 							refreshAccountInformation();
 						}
 					});
 					cancelButton.setOnClickListener(new View.OnClickListener() {
+						@Override
 						public void onClick(View v) {
 							finish();
 						}
@@ -212,22 +216,26 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 					okButton.setText(buttonResource.getResource("pay").getValue());
 					cancelButton.setText(buttonResource.getResource("refresh").getValue());
 					okButton.setOnClickListener(new View.OnClickListener() {
+						@Override
 						public void onClick(View v) {
 							TopupMenuActivity.runMenu(BuyBooksActivity.this, myLink, myCost.subtract(myAccount));
 						}
 					});
 					cancelButton.setOnClickListener(new View.OnClickListener() {
+						@Override
 						public void onClick(View v) {
 							refreshAccountInformation();
 						}
 					});
 				} else {
 					okButton.setOnClickListener(new View.OnClickListener() {
+						@Override
 						public void onClick(View v) {
 							UIUtil.wait("purchaseBook", buyRunnable(), BuyBooksActivity.this);
 						}
 					});
 					cancelButton.setOnClickListener(new View.OnClickListener() {
+						@Override
 						public void onClick(View v) {
 							finish();
 						}
@@ -284,6 +292,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 	private void refreshAccountInformation() {
 		runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				refreshAccountInformationInternal();
 			}
@@ -294,6 +303,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		UIUtil.wait(
 			"updatingAccountInformation",
 			new Runnable() {
+				@Override
 				public void run() {
 					final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 					try {
@@ -314,6 +324,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 						if (updated) {
 							runOnUiThread(new Runnable() {
+								@Override
 								public void run() {
 									setupUI(AuthorizationState.Authorized);
 								}
@@ -333,6 +344,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 	private Runnable buyRunnable() {
 		return new Runnable() {
+			@Override
 			public void run() {
 				try {
 					final NetworkAuthenticationManager mgr = myLink.authenticationManager();
@@ -342,6 +354,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 						}
 						mgr.purchaseBook(b);
 						runOnUiThread(new Runnable() {
+							@Override
 							public void run() {
 								Util.doDownloadBook(BuyBooksActivity.this, b, false);
 							}
@@ -353,6 +366,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 					final ZLResource buttonResource = dialogResource.getResource("button");
 					final ZLResource boxResource = dialogResource.getResource("networkError");
 					runOnUiThread(new Runnable() {
+						@Override
 						public void run() {
 							new AlertDialog.Builder(BuyBooksActivity.this)
 								.setTitle(boxResource.getResource("title").getValue())
@@ -371,6 +385,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	}
 
 	// method from NetworkLibrary.ChangeListener
+	@Override
 	public void onLibraryChanged(final NetworkLibrary.ChangeListener.Code code, final Object[] params) {
 		switch (code) {
 			case SignedIn:
@@ -381,6 +396,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 	private void updateAuthorizationState() {
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				try {

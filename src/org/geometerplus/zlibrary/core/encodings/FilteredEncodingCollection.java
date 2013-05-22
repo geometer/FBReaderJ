@@ -66,10 +66,12 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 		private String myCurrentFamilyName;
 		private Encoding myCurrentEncoding;
 
+		@Override
 		public boolean dontCacheAttributeValues() {
 			return true;
 		}
 
+		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("group".equals(tag)) {
 				myCurrentFamilyName = attributes.getValue("name");

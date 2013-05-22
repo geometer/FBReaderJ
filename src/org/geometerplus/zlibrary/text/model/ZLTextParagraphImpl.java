@@ -28,10 +28,12 @@ class ZLTextParagraphImpl implements ZLTextParagraph {
 		myIndex = index;
 	}
 
+	@Override
 	public EntryIterator iterator() {
 		return myModel.new EntryIteratorImpl(myIndex);
 	}
 
+	@Override
 	public byte getKind() {
 		return Kind.TEXT_PARAGRAPH;
 	}

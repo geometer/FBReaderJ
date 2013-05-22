@@ -54,6 +54,7 @@ public final class ZLTextRegion {
 				EndElementIndex == soul.EndElementIndex;
 		}
 
+		@Override
 		public final int compareTo(Soul soul) {
 			if (ParagraphIndex != soul.ParagraphIndex) {
 				return ParagraphIndex < soul.ParagraphIndex ? -1 : 1;
@@ -101,18 +102,21 @@ public final class ZLTextRegion {
 	}
 
 	public static Filter AnyRegionFilter = new Filter() {
+		@Override
 		public boolean accepts(ZLTextRegion region) {
 			return true;
 		}
 	};
 
 	public static Filter HyperlinkFilter = new Filter() {
+		@Override
 		public boolean accepts(ZLTextRegion region) {
 			return region.getSoul() instanceof ZLTextHyperlinkRegionSoul;
 		}
 	};
 
 	public static Filter ImageOrHyperlinkFilter = new Filter() {
+		@Override
 		public boolean accepts(ZLTextRegion region) {
 			final Soul soul = region.getSoul();
 			return

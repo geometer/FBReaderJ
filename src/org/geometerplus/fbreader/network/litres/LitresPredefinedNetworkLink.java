@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network.litres;
 
 import org.geometerplus.fbreader.network.IPredefinedNetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
-import org.geometerplus.fbreader.network.INetworkLink.Type;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;

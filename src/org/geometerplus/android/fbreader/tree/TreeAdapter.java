@@ -41,6 +41,7 @@ public abstract class TreeAdapter extends BaseAdapter {
 
 	public void remove(final FBTree item) {
 		myActivity.runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				myItems.remove(item);
 				notifyDataSetChanged();
@@ -50,6 +51,7 @@ public abstract class TreeAdapter extends BaseAdapter {
 
 	public void add(final FBTree item) {
 		myActivity.runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				myItems.add(item);
 				notifyDataSetChanged();
@@ -59,6 +61,7 @@ public abstract class TreeAdapter extends BaseAdapter {
 
 	public void add(final int index, final FBTree item) {
 		myActivity.runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				myItems.add(index, item);
 				notifyDataSetChanged();
@@ -72,6 +75,7 @@ public abstract class TreeAdapter extends BaseAdapter {
 
 	public void replaceAll(final Collection<FBTree> items, final boolean force) {
 		myActivity.runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				if (force || !myItems.equals(items)) {
 					synchronized (myItems) {
@@ -84,14 +88,17 @@ public abstract class TreeAdapter extends BaseAdapter {
 		});
 	}
 
+	@Override
 	public int getCount() {
 		return myItems.size();
 	}
 
+	@Override
 	public FBTree getItem(int position) {
 		return myItems.get(position);
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return position;
 	}

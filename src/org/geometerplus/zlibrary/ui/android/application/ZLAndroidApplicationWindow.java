@@ -23,7 +23,6 @@ import java.util.*;
 import java.io.*;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -32,7 +31,7 @@ import android.view.MenuItem;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -47,6 +46,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	private final MenuItem.OnMenuItemClickListener myMenuListener =
 		new MenuItem.OnMenuItemClickListener() {
+			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				getApplication().runAction(myMenuItemMap.get(item));
 				return true;
@@ -69,7 +69,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		if (iconId != null) {
 			menuItem.setIcon(iconId);
 			final FBReader activity =
-				((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+				((ZLAndroidLibrary)ZLibrary.Instance()).getActivity();
 			if (showInActionBar) {
 				menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 			} else {
@@ -102,14 +102,14 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			}
 		}
 		final FBReader activity =
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+			((ZLAndroidLibrary)ZLibrary.Instance()).getActivity();
 		activity.refresh();
 	}
 
 	@Override
 	public void runWithMessage(String key, Runnable action, Runnable postAction) {
 		final Activity activity =
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+			((ZLAndroidLibrary)ZLibrary.Instance()).getActivity();
 		if (activity != null) {
 			UIUtil.runWithMessage(activity, key, action, postAction, false);
 		} else {
@@ -122,7 +122,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		exception.printStackTrace();
 
 		final Activity activity =
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+			((ZLAndroidLibrary)ZLibrary.Instance()).getActivity();
 		final Intent intent = new Intent(
 			"android.fbreader.action.ERROR",
 			new Uri.Builder().scheme(exception.getClass().getSimpleName()).build()
@@ -150,9 +150,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	@Override
 	public void setTitle(final String title) {
 		final Activity activity =
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+			((ZLAndroidLibrary)ZLibrary.Instance()).getActivity();
 		if (activity != null) {
 			activity.runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					activity.setTitle(title);
 				}
@@ -160,15 +161,18 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		}
 	}
 
+	@Override
 	protected ZLViewWidget getViewWidget() {
-		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		return ((ZLAndroidLibrary)ZLibrary.Instance()).getWidget();
 	}
 
+	@Override
 	public void close() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
+		((ZLAndroidLibrary)ZLibrary.Instance()).finish();
 	}
 
 	private int myBatteryLevel;
+	@Override
 	protected int getBatteryLevel() {
 		return myBatteryLevel;
 	}

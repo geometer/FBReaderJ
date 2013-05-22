@@ -42,6 +42,7 @@ public final class FBView extends ZLTextView {
 		myReader = reader;
 	}
 
+	@Override
 	public void setModel(ZLTextModel model) {
 		super.setModel(model);
 		if (myFooter != null) {
@@ -67,6 +68,7 @@ public final class FBView extends ZLTextView {
 		return myZoneMap;
 	}
 
+	@Override
 	public boolean onFingerSingleTap(int x, int y) {
 		if (super.onFingerSingleTap(x, y)) {
 			return true;
@@ -114,6 +116,7 @@ public final class FBView extends ZLTextView {
 		return true;
 	}
 
+	@Override
 	public boolean onFingerPress(int x, int y) {
 		if (super.onFingerPress(x, y)) {
 			return true;
@@ -155,6 +158,7 @@ public final class FBView extends ZLTextView {
 		myReader.getViewWidget().startManualScrolling(x, y, direction);
 	}
 
+	@Override
 	public boolean onFingerMove(int x, int y) {
 		if (super.onFingerMove(x, y)) {
 			return true;
@@ -185,6 +189,7 @@ public final class FBView extends ZLTextView {
 		return true;
 	}
 
+	@Override
 	public boolean onFingerRelease(int x, int y) {
 		if (super.onFingerRelease(x, y)) {
 			return true;
@@ -211,6 +216,7 @@ public final class FBView extends ZLTextView {
 		return true;
 	}
 
+	@Override
 	public boolean onFingerLongPress(int x, int y) {
 		if (super.onFingerLongPress(x, y)) {
 			return true;
@@ -254,6 +260,7 @@ public final class FBView extends ZLTextView {
 		return false;
 	}
 
+	@Override
 	public boolean onFingerMoveAfterLongPress(int x, int y) {
 		if (super.onFingerMoveAfterLongPress(x, y)) {
 			return true;
@@ -288,6 +295,7 @@ public final class FBView extends ZLTextView {
 		return true;
 	}
 
+	@Override
 	public boolean onFingerReleaseAfterLongPress(int x, int y) {
 		if (super.onFingerReleaseAfterLongPress(x, y)) {
 			return true;
@@ -323,6 +331,7 @@ public final class FBView extends ZLTextView {
 		return false;
 	}
 
+	@Override
 	public boolean onTrackballRotated(int diffX, int diffY) {
 		if (diffX == 0 && diffY == 0) {
 			return true;
@@ -430,6 +439,7 @@ public final class FBView extends ZLTextView {
 
 	private class Footer implements FooterArea {
 		private Runnable UpdateTask = new Runnable() {
+			@Override
 			public void run() {
 				myReader.getViewWidget().repaint();
 			}
@@ -437,6 +447,7 @@ public final class FBView extends ZLTextView {
 
 		private ArrayList<TOCTree> myTOCMarks;
 
+		@Override
 		public int getHeight() {
 			return myReader.FooterHeightOption.getValue();
 		}
@@ -474,6 +485,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
+		@Override
 		public synchronized void paint(ZLPaintContext context) {
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {

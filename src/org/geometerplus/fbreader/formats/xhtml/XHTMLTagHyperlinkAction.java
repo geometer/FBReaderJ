@@ -46,6 +46,7 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 		}
 	}
 
+	@Override
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		final BookReader modelReader = reader.getModelReader();
 		final String href = xmlattributes.getValue("href");
@@ -85,6 +86,7 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 		}
 	}
 
+	@Override
 	protected void doAtEnd(XHTMLReader reader) {
 		byte kind = myHyperlinkStack[--myHyperlinkStackSize];
 		if (kind != FBTextKind.REGULAR) {

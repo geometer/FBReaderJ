@@ -119,6 +119,7 @@ public class PopupWindow extends LinearLayout {
 
 	public void show() {
 		myActivity.runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				showInternal();
 			}
@@ -152,6 +153,7 @@ public class PopupWindow extends LinearLayout {
 
 	public void hide() {
 		myActivity.runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				hideInternal();
 			}
@@ -182,6 +184,7 @@ public class PopupWindow extends LinearLayout {
 		animator.start();
 	}
 
+	@Override
 	public void addView(View view) {
 		((LinearLayout)findViewById(R.id.tools_plate)).addView(view);
 	}

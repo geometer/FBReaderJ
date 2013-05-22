@@ -92,6 +92,7 @@ public class LibraryService extends Service {
 			reset(Collections.singletonList(Paths.BooksDirectoryOption().getValue()), true);
 		}
 
+		@Override
 		public void reset(List<String> bookDirectories, boolean force) {
 			if (!force && myCollection != null && bookDirectories.equals(myCollection.BookDirectories)) {
 				return;
@@ -108,6 +109,7 @@ public class LibraryService extends Service {
 			}
 
 			myCollection.addListener(new BookCollection.Listener() {
+				@Override
 				public void onBookEvent(BookEvent event, Book book) {
 					final Intent intent = new Intent(BOOK_EVENT_ACTION);
 					intent.putExtra("type", event.toString());
@@ -115,6 +117,7 @@ public class LibraryService extends Service {
 					sendBroadcast(intent);
 				}
 
+				@Override
 				public void onBuildEvent(BookCollection.Status status) {
 					final Intent intent = new Intent(BUILD_EVENT_ACTION);
 					intent.putExtra("type", status.toString());
@@ -130,44 +133,54 @@ public class LibraryService extends Service {
 			}
 		}
 
+		@Override
 		public String status() {
 			return myCollection.status().toString();
 		}
 
+		@Override
 		public int size() {
 			return myCollection.size();
 		}
 
+		@Override
 		public List<String> books(String query) {
 			return SerializerUtil.serializeBookList(
 				myCollection.books(SerializerUtil.deserializeBookQuery(query))
 			);
 		}
 
+		@Override
 		public boolean hasBooks(String query) {
 			return myCollection.hasBooks(SerializerUtil.deserializeBookQuery(query).Filter);
 		}
 
+		@Override
 		public List<String> recentBooks() {
 			return SerializerUtil.serializeBookList(myCollection.recentBooks());
 		}
 
+		@Override
 		public String getRecentBook(int index) {
 			return SerializerUtil.serialize(myCollection.getRecentBook(index));
 		}
 
+		@Override
 		public String getBookByFile(String file) {
 			return SerializerUtil.serialize(myCollection.getBookByFile(ZLFile.createFileByPath(file)));
 		}
 
+		@Override
 		public String getBookById(long id) {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
 		}
 
+		@Override
 		public String getBookByUid(String type, String id) {
 			return SerializerUtil.serialize(myCollection.getBookByUid(new UID(type, id)));
 		}
 
+		@Override
 		public List<String> authors() {
 			final List<Author> authors = myCollection.authors();
 			final List<String> strings = new ArrayList<String>(authors.size());
@@ -177,14 +190,17 @@ public class LibraryService extends Service {
 			return strings;
 		}
 
+		@Override
 		public boolean hasSeries() {
 			return myCollection.hasSeries();
 		}
 
+		@Override
 		public List<String> series() {
 			return myCollection.series();
 		}
 
+		@Override
 		public List<String> tags() {
 			final List<Tag> tags = myCollection.tags();
 			final List<String> strings = new ArrayList<String>(tags.size());
@@ -194,30 +210,37 @@ public class LibraryService extends Service {
 			return strings;
 		}
 
+		@Override
 		public List<String> titles(String query) {
 			return myCollection.titles(SerializerUtil.deserializeBookQuery(query));
 		}
 
+		@Override
 		public List<String> firstTitleLetters() {
 			return myCollection.firstTitleLetters();
 		}
 
+		@Override
 		public boolean saveBook(String book, boolean force) {
 			return myCollection.saveBook(SerializerUtil.deserializeBook(book), force);
 		}
 
+		@Override
 		public void removeBook(String book, boolean deleteFromDisk) {
 			myCollection.removeBook(SerializerUtil.deserializeBook(book), deleteFromDisk);
 		}
 
+		@Override
 		public void addBookToRecentList(String book) {
 			myCollection.addBookToRecentList(SerializerUtil.deserializeBook(book));
 		}
 
+		@Override
 		public List<String> labels() {
 			return myCollection.labels();
 		}
 
+		@Override
 		public TextPosition getStoredPosition(long bookId) {
 			final ZLTextPosition position = myCollection.getStoredPosition(bookId);
 			if (position == null) {
@@ -229,6 +252,7 @@ public class LibraryService extends Service {
 			);
 		}
 
+		@Override
 		public void storePosition(long bookId, TextPosition position) {
 			if (position == null) {
 				return;
@@ -238,34 +262,41 @@ public class LibraryService extends Service {
 			));
 		}
 
+		@Override
 		public boolean isHyperlinkVisited(String book, String linkId) {
 			return myCollection.isHyperlinkVisited(SerializerUtil.deserializeBook(book), linkId);
 		}
 
+		@Override
 		public void markHyperlinkAsVisited(String book, String linkId) {
 			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
 		}
 
+		@Override
 		public List<String> bookmarks(String query) {
 			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(
 				SerializerUtil.deserializeBookmarkQuery(query)
 			));
 		}
 
+		@Override
 		public String saveBookmark(String serialized) {
 			final Bookmark bookmark = SerializerUtil.deserializeBookmark(serialized);
 			myCollection.saveBookmark(bookmark);
 			return SerializerUtil.serialize(bookmark);
 		}
 
+		@Override
 		public void deleteBookmark(String serialized) {
 			myCollection.deleteBookmark(SerializerUtil.deserializeBookmark(serialized));
 		}
 
+		@Override
 		public String getHighlightingStyle(int styleId) {
 			return SerializerUtil.serialize(myCollection.getHighlightingStyle(styleId));
 		}
 
+		@Override
 		public List<String> highlightingStyles() {
 			return SerializerUtil.serializeStyleList(myCollection.highlightingStyles());
 		}

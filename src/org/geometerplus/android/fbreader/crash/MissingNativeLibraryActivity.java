@@ -27,11 +27,7 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.Paths;
-
 import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.android.fbreader.FBReader;
 
 public class MissingNativeLibraryActivity extends Activity {
 	@Override
@@ -51,6 +47,7 @@ public class MissingNativeLibraryActivity extends Activity {
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new Button.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				finish();
 			}

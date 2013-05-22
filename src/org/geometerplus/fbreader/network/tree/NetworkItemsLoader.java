@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-import java.util.*;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -46,6 +44,7 @@ public abstract class NetworkItemsLoader implements Runnable {
 		return myTree;
 	}
 
+	@Override
 	public final void run() {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 

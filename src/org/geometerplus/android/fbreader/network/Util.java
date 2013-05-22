@@ -19,14 +19,10 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -58,8 +54,9 @@ public abstract class Util implements UserRegistrationConstants {
 		}
 
 		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+			@Override
 			public void run() {
-				if (SQLiteNetworkDatabase.Instance() == null) {
+				if (NetworkDatabase.Instance() == null) {
 					new SQLiteNetworkDatabase(activity.getApplication());
 				}
 

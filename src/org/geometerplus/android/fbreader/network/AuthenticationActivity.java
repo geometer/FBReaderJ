@@ -32,8 +32,6 @@ import android.widget.Button;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -163,6 +161,7 @@ public class AuthenticationActivity extends Activity {
 		myOkButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		myOkButton.setText(buttonResource.getResource("ok").getValue());
 		myOkButton.setOnClickListener(new Button.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				final String username = myUsernameView.getText().toString();
 				final String password = findTextView(R.id.authentication_password).getText().toString();
@@ -177,8 +176,10 @@ public class AuthenticationActivity extends Activity {
 		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				runOnUiThread(new Runnable() {
+					@Override
 					public void run() {
 						if (myLink != null) {
 							final NetworkAuthenticationManager mgr = myLink.authenticationManager();
@@ -219,6 +220,7 @@ public class AuthenticationActivity extends Activity {
 	private void runCustomAuthentication(final String username, final String password) {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 		final Runnable runnable = new Runnable() {
+			@Override
 			public void run() {
 				try {
 					mgr.authorise(username, password);
@@ -235,6 +237,7 @@ public class AuthenticationActivity extends Activity {
 				} catch (final ZLNetworkException e) {
 					mgr.logOut();
 					runOnUiThread(new Runnable() {
+						@Override
 						public void run() {
 							setError(e.getMessage());
 						}
@@ -255,8 +258,10 @@ public class AuthenticationActivity extends Activity {
 		if (myOkButtonUpdater == null) {
 			myOkButtonUpdater = new Timer();
 			myOkButtonUpdater.schedule(new TimerTask() {
+				@Override
 				public void run() {
 					runOnUiThread(new Runnable() {
+						@Override
 						public void run() {
 							myOkButton.setEnabled(myUsernameView.getText().length() > 0);
 						}

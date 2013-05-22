@@ -297,6 +297,7 @@ class ZLTextSelection extends ZLTextHighlighting {
 			myY = y;
 		}
 
+		@Override
 		public void run() {
 			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();

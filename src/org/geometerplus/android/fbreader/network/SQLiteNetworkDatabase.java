@@ -73,6 +73,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		myDatabase.setVersion(currentCodeVersion);
 	}
 
+	@Override
 	protected void executeAsTransaction(Runnable actions) {
 		myDatabase.beginTransaction();
 		try {
@@ -132,6 +133,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	@Override
 	protected synchronized void saveLink(final INetworkLink link) {
 		executeAsTransaction(new Runnable() {
+			@Override
 			public void run() {
 				final SQLiteStatement statement;
 				if (link.getId() == INetworkLink.INVALID_ID) {
@@ -233,6 +235,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			return;
 		}
 		executeAsTransaction(new Runnable() {
+			@Override
 			public void run() {
 				final String stringLinkId = String.valueOf(link.getId());
 				myDatabase.delete("Links", "link_id = ?", new String[] { stringLinkId });
@@ -259,6 +262,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	@Override
 	protected synchronized void setLinkExtras(final INetworkLink link, final Map<String,String> extras) {
 		executeAsTransaction(new Runnable() {
+			@Override
 			public void run() {
 				if (link.getId() == INetworkLink.INVALID_ID) {
 					return;

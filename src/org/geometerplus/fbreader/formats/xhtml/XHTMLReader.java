@@ -33,7 +33,9 @@ import org.geometerplus.fbreader.formats.util.MiscUtil;
 public class XHTMLReader extends ZLXMLReaderAdapter {
 	private static final HashMap<String,XHTMLTagAction> ourTagActions = new HashMap<String,XHTMLTagAction>();
 	private static XHTMLTagAction ourNullAction = new XHTMLTagAction() {
+		@Override
 		protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {}
+		@Override
 		protected void doAtEnd(XHTMLReader reader) {}
 	};
 

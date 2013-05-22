@@ -38,7 +38,7 @@ public final class TagTree extends FilteredTree {
 
 	@Override
 	public String getName() {
-		return Tag.NULL.equals(Tag) ? resource().getResource("booksWithNoTags").getValue() : Tag.Name;
+		return org.geometerplus.fbreader.book.Tag.NULL.equals(Tag) ? resource().getResource("booksWithNoTags").getValue() : Tag.Name;
 	}
 
 	@Override
@@ -46,8 +46,9 @@ public final class TagTree extends FilteredTree {
 		return "@TagTree " + getName();
 	}
 
+	@Override
 	protected String getSortKey() {
-		return Tag.NULL.equals(Tag) ? null : Tag.Name;
+		return org.geometerplus.fbreader.book.Tag.NULL.equals(Tag) ? null : Tag.Name;
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public final class TagTree extends FilteredTree {
 		if (book == null) {
 			return false;
 		}
-		if (Tag.NULL.equals(Tag)) {
+		if (org.geometerplus.fbreader.book.Tag.NULL.equals(Tag)) {
 			return book.tags().isEmpty();
 		}
 		for (Tag t : book.tags()) {
@@ -71,7 +72,7 @@ public final class TagTree extends FilteredTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		if (!Tag.NULL.equals(Tag)) {
+		if (!org.geometerplus.fbreader.book.Tag.NULL.equals(Tag)) {
 			for (Tag t : Collection.tags()) {
 				if (Tag.equals(t.Parent)) {
 					createTagSubTree(t);
@@ -89,7 +90,7 @@ public final class TagTree extends FilteredTree {
 				boolean changed = false;
 				final List<Tag> bookTags = book.tags();
 				if (bookTags.isEmpty()) {
-					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubTree(book);
+					changed &= org.geometerplus.fbreader.book.Tag.NULL.equals(Tag) && createBookWithAuthorsSubTree(book);
 				} else {
 					for (Tag t : bookTags) {
 						if (Tag.equals(t)) {
@@ -110,7 +111,7 @@ public final class TagTree extends FilteredTree {
 				boolean changed = removeBook(book);
 				final List<Tag> bookTags = book.tags();
 				if (bookTags.isEmpty()) {
-					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubTree(book);
+					changed &= org.geometerplus.fbreader.book.Tag.NULL.equals(Tag) && createBookWithAuthorsSubTree(book);
 				} else {
 					for (Tag t : bookTags) {
 						if (Tag.equals(t)) {

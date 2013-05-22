@@ -22,11 +22,13 @@ package org.geometerplus.fbreader.formats.xhtml;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 class XHTMLTagRestartParagraphAction extends XHTMLTagAction {
+	@Override
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		reader.getModelReader().beginParagraph();
 		reader.getModelReader().endParagraph();
 	}
 
+	@Override
 	protected void doAtEnd(XHTMLReader reader) {
 	}
 }

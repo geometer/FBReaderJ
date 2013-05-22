@@ -108,6 +108,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return count;
 	}
 
+	@Override
 	public final int getCount() {
 		return getCount(myTree) - 1;
 	}
@@ -130,6 +131,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		throw new RuntimeException("That's impossible!!!");
 	}
 
+	@Override
 	public final ZLTree<?> getItem(int position) {
 		final int index = indexByPosition(position + 1, myTree) - 1;
 		ZLTree<?> item = myItems[index];
@@ -140,14 +142,17 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		return item;
 	}
 
+	@Override
 	public final boolean areAllItemsEnabled() {
 		return true;
 	}
 
+	@Override
 	public final boolean isEnabled(int position) {
 		return true;
 	}
 
+	@Override
 	public final long getItemId(int position) {
 		return indexByPosition(position + 1, myTree);
 	}
@@ -177,13 +182,16 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		notifyDataSetChanged();
 	}
 
+	@Override
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		runTreeItem(getItem(position));
 	}
 
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 	}
 
+	@Override
 	public abstract View getView(int position, View convertView, ViewGroup parent);
 
 	protected final void setIcon(ImageView imageView, ZLTree<?> tree) {

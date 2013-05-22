@@ -26,6 +26,7 @@ public class Series extends TitledEntity {
 		super(title);
 	}
 
+	@Override
 	public String getLanguage() {
 		// TODO: return real language
 		return "en";

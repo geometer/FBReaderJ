@@ -23,11 +23,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.geometerplus.fbreader.network.authentication.litres.LitResXMLReader;
 import org.geometerplus.fbreader.network.litres.genre.LitresGenre;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 
-public class LitresGenreXMLReader extends LitresXMLReader {
+public class LitresGenreXMLReader extends LitResXMLReader {
 	private LinkedList<LitresGenre> myGenresTree = new LinkedList<LitresGenre>();
 	private Map<String, LitresGenre> myGenresMap = new HashMap<String, LitresGenre>();
 	private LinkedList<LitresGenre> myStack = new LinkedList<LitresGenre>();

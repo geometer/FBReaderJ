@@ -39,6 +39,7 @@ class ZipInputStream extends InputStream {
 		return myDecompressor.read();
 	}
 
+	@Override
 	public void close() throws IOException {
 		if (!myIsClosed) {
 			myIsClosed = true;
@@ -47,6 +48,7 @@ class ZipInputStream extends InputStream {
 		}
 	}
 
+	@Override
 	protected void finalize() throws Throwable {
 		try {
 			close();

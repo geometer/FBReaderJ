@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
 import org.geometerplus.fbreader.network.litres.author.LitresAuthor;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;

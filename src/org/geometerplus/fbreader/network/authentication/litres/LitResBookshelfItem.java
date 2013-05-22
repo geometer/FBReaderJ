@@ -95,6 +95,7 @@ class ByTitleCatalogItem extends SortedCatalogItem {
 	@Override
 	protected Comparator<NetworkItem> getComparator() {
 		return new Comparator<NetworkItem>() {
+			@Override
 			public int compare(NetworkItem item0, NetworkItem item1) {
 				return item0.Title.toString().compareTo(item1.Title.toString());
 			}
@@ -131,6 +132,7 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 	@Override
 	protected Comparator<NetworkItem> getComparator() {
 		return new Comparator<NetworkItem>() {
+			@Override
 			public int compare(NetworkItem item0, NetworkItem item1) {
 				final NetworkBookItem book0 = (NetworkBookItem)item0;
 				final NetworkBookItem book1 = (NetworkBookItem)item1;
@@ -175,7 +177,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 		// TODO: Maybe it's better to call isAuthorised(true) directly
 		// and let exception fly through???
 		if (!mgr.mayBeAuthorised(true)) {
-			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+			throw new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED);
 		}
 		try {
 			if (myForceReload) {

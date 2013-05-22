@@ -109,8 +109,8 @@ public abstract class ATOMDateConstruct extends ATOMCommonAttributes implements 
 			if (!Character.isDigit(ch)) {
 				return false;
 			}
-			num = 10 * num + ((int) (ch - '0'));
-			fnum += fmult * ((int) (ch - '0'));
+			num = 10 * num + (ch - '0');
+			fnum += fmult * (ch - '0');
 			fmult *= 0.1f;
 			if (start == end) {
 				switch (log) {
@@ -294,6 +294,7 @@ public abstract class ATOMDateConstruct extends ATOMCommonAttributes implements 
 		return DAYS_IN_MONTHS[month];
 	}
 
+	@Override
 	public int compareTo(ATOMDateConstruct date) {
 		int dateYear = date.Year;
 		int dateMonth = date.Month;

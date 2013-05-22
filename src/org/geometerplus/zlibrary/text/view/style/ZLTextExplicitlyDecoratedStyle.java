@@ -107,18 +107,22 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		}
 	}
 
+	@Override
 	public int getLeftIndent() {
 		// TODO: implement
 		return Base.getLeftIndent();
 	}
+	@Override
 	public int getRightIndent() {
 		// TODO: implement
 		return Base.getRightIndent();
 	}
+	@Override
 	public int getFirstLineIndentDelta() {
 		// TODO: implement
 		return Base.getFirstLineIndentDelta();
 	}
+	@Override
 	public int getLineSpacePercent() {
 		// TODO: implement
 		return Base.getLineSpacePercent();
@@ -128,14 +132,17 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		// TODO: implement
 		return Base.getVerticalShift();
 	}
+	@Override
 	public int getSpaceBefore() {
 		// TODO: implement
 		return Base.getSpaceBefore();
 	}
+	@Override
 	public int getSpaceAfter() {
 		// TODO: implement
 		return Base.getSpaceAfter();
 	}
+	@Override
 	public byte getAlignment() {
 		if (myEntry instanceof ZLTextCSSStyleEntry &&
 			!ZLTextStyleCollection.Instance().UseCSSTextAlignmentOption.getValue()) {
@@ -147,6 +154,7 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 				: Base.getAlignment();
 	}
 
+	@Override
 	public boolean allowHyphenations() {
 		// TODO: implement
 		return Base.allowHyphenations();

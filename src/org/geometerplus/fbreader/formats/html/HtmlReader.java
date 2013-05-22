@@ -93,18 +93,22 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		return Model.Book.File.getInputStream();
 	}
 
+	@Override
 	public void startDocumentHandler() {
 	}
 
+	@Override
 	public void endDocumentHandler() {
 		unsetCurrentTextModel();
 	}
 
+	@Override
 	public void byteDataHandler(byte[] data, int start, int length) {
 		addByteData(data, start, length);
 	}
 
 	private HashMap<String,char[]> myEntityMap;
+	@Override
 	public void entityDataHandler(String entity) {
 		if (myEntityMap == null) {
 			myEntityMap = new HashMap<String,char[]>(ZLXMLProcessor.getEntityMap(XHTMLReader.xhtmlDTDs()));
@@ -167,6 +171,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 	}
 
+	@Override
 	public final void endElementHandler(String tagName) {
 		endElementHandler(HtmlTag.getTagByName(tagName));
 	}
@@ -229,6 +234,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		}
 	}
 
+	@Override
 	public final void startElementHandler(String tagName, int offset, ZLHtmlAttributeMap attributes) {
 		startElementHandler(HtmlTag.getTagByName(tagName), offset, attributes);
 	}

@@ -110,7 +110,7 @@ public abstract class PackageUtil {
 		String pluginName = pluginData.get("androidPlugin");
 		if (pluginName == null) {
 			final TelephonyManager telephony =
-				(TelephonyManager)activity.getSystemService(Activity.TELEPHONY_SERVICE);
+				(TelephonyManager)activity.getSystemService(Context.TELEPHONY_SERVICE);
 			if (telephony != null &&
 				(telephony.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM ||
 				 telephony.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA)) {
@@ -153,6 +153,7 @@ public abstract class PackageUtil {
 						.setPositiveButton(
 							buttonResource.getResource(positiveButtonKey).getValue(),
 							new DialogInterface.OnClickListener() {
+								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									if (!PackageUtil.installFromMarket(activity, plugin)) {
 										UIUtil.showErrorMessage(activity, "cannotRunAndroidMarket", "plugin");
@@ -163,6 +164,7 @@ public abstract class PackageUtil {
 						.setNegativeButton(
 							buttonResource.getResource("skip").getValue(),
 							new DialogInterface.OnClickListener() {
+								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									doNotInstallOption.setValue(checkBox.isChecked());
 									postRunnable.run();

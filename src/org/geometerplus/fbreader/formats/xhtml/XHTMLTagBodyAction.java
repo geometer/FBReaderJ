@@ -22,10 +22,12 @@ package org.geometerplus.fbreader.formats.xhtml;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 class XHTMLTagBodyAction extends XHTMLTagAction {
+	@Override
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		reader.myInsideBody = true;
 	}
 
+	@Override
 	protected void doAtEnd(XHTMLReader reader) {
 		reader.getModelReader().endParagraph();
 		reader.myInsideBody = false;

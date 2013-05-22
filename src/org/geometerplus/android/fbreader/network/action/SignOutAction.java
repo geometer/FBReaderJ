@@ -47,10 +47,12 @@ public class SignOutAction extends Action {
 	public void run(NetworkTree tree) {
 		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		final Runnable runnable = new Runnable() {
+			@Override
 			public void run() {
 				if (mgr.mayBeAuthorised(false)) {
 					mgr.logOut();
 					myActivity.runOnUiThread(new Runnable() {
+						@Override
 						public void run() {
 							final NetworkLibrary library = NetworkLibrary.Instance();
 							library.invalidateVisibility();

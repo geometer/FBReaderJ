@@ -186,16 +186,19 @@ public abstract class ApiObject implements Parcelable {
 
 	abstract protected int type();
 
+	@Override
 	public int describeContents() {
 		return 0;
 	}
 
+	@Override
 	public void writeToParcel(Parcel parcel, int flags) {
 		parcel.writeInt(type());
 	}
 
 	public static final Parcelable.Creator<ApiObject> CREATOR =
 		new Parcelable.Creator<ApiObject>() {
+			@Override
 			public ApiObject createFromParcel(Parcel parcel) {
 				final int code = parcel.readInt();
 				switch (code) {
@@ -220,6 +223,7 @@ public abstract class ApiObject implements Parcelable {
 				}
 			}
 
+			@Override
 			public ApiObject[] newArray(int size) {
 				return new ApiObject[size];
 			}

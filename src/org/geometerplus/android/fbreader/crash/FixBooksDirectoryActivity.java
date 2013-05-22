@@ -55,6 +55,7 @@ public class FixBooksDirectoryActivity extends Activity {
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new Button.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				Paths.BooksDirectoryOption().setValue(directoryView.getText().toString());
 				startActivity(new Intent(FixBooksDirectoryActivity.this, FBReader.class));
@@ -65,6 +66,7 @@ public class FixBooksDirectoryActivity extends Activity {
 		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				finish();
 			}

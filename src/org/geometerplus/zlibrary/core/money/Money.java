@@ -107,6 +107,7 @@ public class Money implements Comparable<Money>, Serializable {
 		return new Money(Amount.subtract(m.Amount), Currency);
 	}
 
+	@Override
 	public int compareTo(Money m) {
 		if (Amount.equals(ZERO.Amount)) {
 			return m.Amount.equals(ZERO.Amount) ? 0 : -1;

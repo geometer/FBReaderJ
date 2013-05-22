@@ -43,6 +43,7 @@ public final class AndroidFontUtil {
 		if (ourFileSet == null || forceReload) {
 			final HashSet<File> fileSet = new HashSet<File>();
 			final FilenameFilter filter = new FilenameFilter() {
+				@Override
 				public boolean accept(File dir, String name) {
 					if (name.startsWith(".")) {
 						return false;

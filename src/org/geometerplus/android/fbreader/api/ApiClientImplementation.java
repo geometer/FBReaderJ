@@ -74,6 +74,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		myApiListeners.remove(listener);
 	}
 
+	@Override
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
 		myInterface = ApiInterface.Stub.asInterface(service);
 		if (myListener != null) {
@@ -81,6 +82,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		}
 	}
 
+	@Override
 	public synchronized void onServiceDisconnected(ComponentName name) {
 		myInterface = null;
 	}
@@ -207,19 +209,23 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	// information about fbreader
+	@Override
 	public String getFBReaderVersion() throws ApiException {
 		return requestString(GET_FBREADER_VERSION, EMPTY_PARAMETERS);
 	}
 
 	// preferences information
+	@Override
 	public List<String> getOptionGroups() throws ApiException {
 		return requestStringList(LIST_OPTION_GROUPS, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public List<String> getOptionNames(String group) throws ApiException {
 		return requestStringList(LIST_OPTION_NAMES, envelope(group));
 	}
 
+	@Override
 	public String getOptionValue(String group, String name) throws ApiException {
 		return requestString(
 			GET_OPTION_VALUE,
@@ -227,6 +233,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		);
 	}
 
+	@Override
 	public void setOptionValue(String group, String name, String value) throws ApiException {
 		request(
 			SET_OPTION_VALUE,
@@ -234,143 +241,178 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		);
 	}
 
+	@Override
 	public String getBookLanguage() throws ApiException {
 		return requestString(GET_BOOK_LANGUAGE, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public String getBookTitle() throws ApiException {
 		return requestString(GET_BOOK_TITLE, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public List<String> getBookTags() throws ApiException {
 		return requestStringList(LIST_BOOK_TAGS, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public String getBookFilePath() throws ApiException {
 		return requestString(GET_BOOK_FILE_PATH, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public String getBookHash() throws ApiException {
 		return requestString(GET_BOOK_HASH, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public String getBookUniqueId() throws ApiException {
 		return requestString(GET_BOOK_UNIQUE_ID, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public Date getBookLastTurningTime() throws ApiException {
 		return requestDate(GET_BOOK_LAST_TURNING_TIME, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public String getBookLanguage(long id) throws ApiException {
 		return requestString(GET_BOOK_LANGUAGE, envelope(id));
 	}
 
+	@Override
 	public String getBookTitle(long id) throws ApiException {
 		return requestString(GET_BOOK_TITLE, envelope(id));
 	}
 
+	@Override
 	public List<String> getBookTags(long id) throws ApiException {
 		return requestStringList(LIST_BOOK_TAGS, envelope(id));
 	}
 
+	@Override
 	public String getBookFilePath(long id) throws ApiException {
 		return requestString(GET_BOOK_FILE_PATH, envelope(id));
 	}
 
+	@Override
 	public String getBookHash(long id) throws ApiException {
 		return requestString(GET_BOOK_HASH, envelope(id));
 	}
 
+	@Override
 	public String getBookUniqueId(long id) throws ApiException {
 		return requestString(GET_BOOK_UNIQUE_ID, envelope(id));
 	}
 
+	@Override
 	public Date getBookLastTurningTime(long id) throws ApiException {
 		return requestDate(GET_BOOK_LAST_TURNING_TIME, envelope(id));
 	}
 
+	@Override
 	public TextPosition getPageStart() throws ApiException {
 		return requestTextPosition(GET_PAGE_START, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public TextPosition getPageEnd() throws ApiException {
 		return requestTextPosition(GET_PAGE_END, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public boolean isPageEndOfSection() throws ApiException {
 		return requestBoolean(IS_PAGE_END_OF_SECTION, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public boolean isPageEndOfText() throws ApiException {
 		return requestBoolean(IS_PAGE_END_OF_TEXT, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public int getParagraphsNumber() throws ApiException {
 		return requestInt(GET_PARAGRAPHS_NUMBER, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public String getParagraphText(int paragraphIndex) throws ApiException {
 		return requestString(GET_PARAGRAPH_TEXT, envelope(paragraphIndex));
 	}
 
+	@Override
 	public int getParagraphElementsCount(int paragraphIndex) throws ApiException {
 		return requestInt(GET_PARAGRAPH_ELEMENTS_COUNT, envelope(paragraphIndex));
 	}
 
+	@Override
 	public List<String> getParagraphWords(int paragraphIndex) throws ApiException {
 		return requestStringList(GET_PARAGRAPH_WORDS, envelope(paragraphIndex));
 	}
 
+	@Override
 	public List<Integer> getParagraphWordIndices(int paragraphIndex) throws ApiException {
 		return requestIntegerList(GET_PARAGRAPH_WORD_INDICES, envelope(paragraphIndex));
 	}
 
+	@Override
 	public void setPageStart(TextPosition position) throws ApiException {
 		request(SET_PAGE_START, new ApiObject[] { position });
 	}
 
+	@Override
 	public void highlightArea(TextPosition start, TextPosition end) throws ApiException {
 		request(HIGHLIGHT_AREA, new ApiObject[] { start, end });
 	}
 
+	@Override
 	public void clearHighlighting() throws ApiException {
 		request(CLEAR_HIGHLIGHTING, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public int getBottomMargin() throws ApiException {
 		return requestInt(GET_BOTTOM_MARGIN, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public void setBottomMargin(int value) throws ApiException {
 		request(SET_BOTTOM_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
 	}
 
+	@Override
 	public int getTopMargin() throws ApiException {
 		return requestInt(GET_TOP_MARGIN, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public void setTopMargin(int value) throws ApiException {
 		request(SET_TOP_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
 	}
 
+	@Override
 	public int getLeftMargin() throws ApiException {
 		return requestInt(GET_LEFT_MARGIN, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public void setLeftMargin(int value) throws ApiException {
 		request(SET_LEFT_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
 	}
 
+	@Override
 	public int getRightMargin() throws ApiException {
 		return requestInt(GET_RIGHT_MARGIN, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public void setRightMargin(int value) throws ApiException {
 		request(SET_RIGHT_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
 	}
 
 	// action control
+	@Override
 	public String getKeyAction(int key, boolean longPress) throws ApiException {
 		return requestString(GET_KEY_ACTION, new ApiObject[] {
 			ApiObject.envelope(key),
@@ -378,6 +420,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 
+	@Override
 	public void setKeyAction(int key, boolean longPress, String action) throws ApiException {
 		request(SET_KEY_ACTION, new ApiObject[] {
 			ApiObject.envelope(key),
@@ -386,34 +429,42 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 
+	@Override
 	public List<String> listActions() throws ApiException {
 		return requestStringList(LIST_ACTIONS, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public List<String> listActionNames(List<String> actions) throws ApiException {
 		return requestStringList(LIST_ACTION_NAMES, envelope(actions));
 	}
 
+	@Override
 	public List<String> listZoneMaps() throws ApiException {
 		return requestStringList(LIST_ZONEMAPS, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public String getZoneMap() throws ApiException {
 		return requestString(GET_ZONEMAP, EMPTY_PARAMETERS);
 	}
 
+	@Override
 	public void setZoneMap(String name) throws ApiException {
 		request(SET_ZONEMAP, envelope(name));
 	}
 
+	@Override
 	public int getZoneMapHeight(String name) throws ApiException {
 		return requestInt(GET_ZONEMAP_HEIGHT, envelope(name));
 	}
 
+	@Override
 	public int getZoneMapWidth(String name) throws ApiException {
 		return requestInt(GET_ZONEMAP_WIDTH, envelope(name));
 	}
 
+	@Override
 	public void createZoneMap(String name, int width, int height) throws ApiException {
 		request(CREATE_ZONEMAP, new ApiObject[] {
 			ApiObject.envelope(name),
@@ -422,14 +473,17 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 
+	@Override
 	public boolean isZoneMapCustom(String name) throws ApiException {
 		return requestBoolean(IS_ZONEMAP_CUSTOM, envelope(name));
 	}
 
+	@Override
 	public void deleteZoneMap(String name) throws ApiException {
 		request(DELETE_ZONEMAP, envelope(name));
 	}
 
+	@Override
 	public String getTapZoneAction(String name, int h, int v, boolean singleTap) throws ApiException {
 		return requestString(GET_TAPZONE_ACTION, new ApiObject[] {
 			ApiObject.envelope(name),
@@ -439,6 +493,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 
+	@Override
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) throws ApiException {
 		request(SET_TAPZONE_ACTION, new ApiObject[] {
 			ApiObject.envelope(name),

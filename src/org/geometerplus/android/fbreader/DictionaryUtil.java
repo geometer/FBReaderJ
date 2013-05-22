@@ -28,6 +28,7 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
@@ -169,6 +170,7 @@ public abstract class DictionaryUtil {
 	public static void init(final Context context) {
 		if (ourInfos.isEmpty()) {
 			final Thread initThread = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
@@ -303,7 +305,7 @@ public abstract class DictionaryUtil {
 				final int minHeight = Math.min(200, screenHeight * 2 / 3);
 				intent.putExtra(ColorDict3.HEIGHT, Math.max(minHeight, Math.min(maxHeight, space)));
 				intent.putExtra(ColorDict3.GRAVITY, showAtBottom ? Gravity.BOTTOM : Gravity.TOP);
-				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 				intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
 			}
 			activity.startActivity(intent);
@@ -334,6 +336,7 @@ public abstract class DictionaryUtil {
 			.setPositiveButton(
 				buttonResource.getResource("install").getValue(),
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						installDictionary(activity, dictionaryInfo);
 					}

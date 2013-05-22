@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.language.Language;
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -264,6 +263,7 @@ public class NetworkLibrary {
 		}
 
 		final Thread thread = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					myUpdateInProgress = true;
@@ -463,7 +463,7 @@ public class NetworkLibrary {
 
 	public void addCustomLink(ICustomNetworkLink link) {
 		final int id = link.getId();
-		if (id == ICustomNetworkLink.INVALID_ID) {
+		if (id == INetworkLink.INVALID_ID) {
 			myLinks.add(link);
 		} else {
 			synchronized (myLinks) {

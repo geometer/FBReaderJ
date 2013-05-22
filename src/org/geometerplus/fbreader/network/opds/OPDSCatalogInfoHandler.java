@@ -44,6 +44,7 @@ class OPDSCatalogInfoHandler extends AbstractOPDSFeedHandler {
 		myOpensearchDescriptionURLs = opensearchDescriptionURLs;
 	}
 
+	@Override
 	public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
 		Icon = feed.Icon != null ? ZLNetworkUtil.url(myBaseURL, feed.Icon.Uri) : null;
 		Title = feed.Title;
@@ -67,13 +68,16 @@ class OPDSCatalogInfoHandler extends AbstractOPDSFeedHandler {
 		return true;
 	}
 
+	@Override
 	public void processFeedStart() {
 		FeedStarted = true;
 	}
 
+	@Override
 	public void processFeedEnd() {
 	}
 
+	@Override
 	public boolean processFeedEntry(OPDSEntry entry) {
 		return true;
 	}

@@ -1,11 +1,10 @@
 package org.geometerplus.fbreader.network.litres.readers;
 
-import org.geometerplus.fbreader.network.atom.ATOMId;
-import org.geometerplus.fbreader.network.litres.author.LitresAuthor;
+import org.geometerplus.fbreader.network.authentication.litres.LitResXMLReader;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 
-public class LitresAuthorsXMLReader extends LitresXMLReader {
+public class LitresAuthorsXMLReader extends LitResXMLReader {
 	protected static final String TAG_MAIN = "main";
 	protected static final String TAG_SUBJECT = "subject";
 	protected static final String TAG_FIRST_NAME = "first-name";
@@ -17,7 +16,6 @@ public class LitresAuthorsXMLReader extends LitresXMLReader {
 		super();
 	}
 	
-	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if(TAG_SUBJECT == tag){
 			myAuthor = new LitresAuthorEntry(attributes);
@@ -27,7 +25,7 @@ public class LitresAuthorsXMLReader extends LitresXMLReader {
 		}
 		return false;
 	}
-	@Override
+	
 	public boolean endElementHandler(String tag) {
 		if(TAG_FIRST_NAME == tag){
 			myAuthor.authorData.firstName = myBuffer.toString().trim();

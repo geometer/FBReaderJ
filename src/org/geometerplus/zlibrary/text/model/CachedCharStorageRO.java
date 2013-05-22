@@ -28,10 +28,12 @@ public final class CachedCharStorageRO extends CachedCharStorageBase {
 		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));
 	}
 
+	@Override
 	public char[] createNewBlock(int minimumLength) {
 		throw new UnsupportedOperationException("CachedCharStorageRO is a read-only storage.");
 	}
 
+	@Override
 	public void freezeLastBlock() {
 	}
 }

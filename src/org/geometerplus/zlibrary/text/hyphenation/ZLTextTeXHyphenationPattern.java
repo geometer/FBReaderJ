@@ -79,6 +79,7 @@ public final class ZLTextTeXHyphenationPattern {
 		}
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		ZLTextTeXHyphenationPattern pattern = (ZLTextTeXHyphenationPattern)o;
 		int len = myLength;
@@ -95,6 +96,7 @@ public final class ZLTextTeXHyphenationPattern {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		int hash = myHashCode;
 		if (hash == 0) {
@@ -127,12 +129,12 @@ public final class ZLTextTeXHyphenationPattern {
 		final StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < myLength; ++i) {
 			if (myValues != null) {
-				buffer.append((int)myValues[i]);
+				buffer.append(myValues[i]);
 			}
 			buffer.append(mySymbols[i]);
 		}
 		if (myValues != null) {
-			buffer.append((int)myValues[myLength]);
+			buffer.append(myValues[myLength]);
 		}
 		return buffer.toString();
 	}

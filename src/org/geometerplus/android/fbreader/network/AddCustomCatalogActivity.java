@@ -70,6 +70,7 @@ public class AddCustomCatalogActivity extends Activity {
 
 		setupButton(
 			R.id.ok_button, "ok", new View.OnClickListener() {
+				@Override
 				public void onClick(View view) {
 					final InputMethodManager imm =
 						(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -82,6 +83,7 @@ public class AddCustomCatalogActivity extends Activity {
 		);
 		setupButton(
 			R.id.cancel_button, "cancel", new View.OnClickListener() {
+				@Override
 				public void onClick(View view) {
 					finish();
 				}
@@ -182,6 +184,7 @@ public class AddCustomCatalogActivity extends Activity {
 	private void setExtraFieldsVisibility(boolean show) {
 		final int visibility = show ? View.VISIBLE : View.GONE;
 		runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				findViewById(R.id.add_custom_catalog_title_group).setVisibility(visibility);
 				findViewById(R.id.add_custom_catalog_summary_group).setVisibility(visibility);
@@ -213,6 +216,7 @@ public class AddCustomCatalogActivity extends Activity {
 
 	private void setErrorText(final String errorText) {
 		runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				final TextView errorView = (TextView)findViewById(R.id.add_custom_catalog_error);
 				if (errorText != null) {
@@ -245,12 +249,13 @@ public class AddCustomCatalogActivity extends Activity {
 		final UrlInfoCollection<UrlInfoWithDate> infos = new UrlInfoCollection<UrlInfoWithDate>();
 		infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, textUrl, MimeType.APP_ATOM_XML));
 		myLink = new OPDSCustomNetworkLink(
-			ICustomNetworkLink.INVALID_ID, myType, siteName, null, null, null, infos
+			INetworkLink.INVALID_ID, myType, siteName, null, null, null, infos
 		);
 
 		final Runnable loadInfoRunnable = new Runnable() {
 			private String myError;
 
+			@Override
 			public void run() {
 				try {
 					myError = null;
@@ -259,6 +264,7 @@ public class AddCustomCatalogActivity extends Activity {
 					myError = e.getMessage();
 				}
 				runOnUiThread(new Runnable() {
+					@Override
 					public void run() {
 						if (myError == null) {
 							setTextById(R.id.add_custom_catalog_title, myLink.getTitle());

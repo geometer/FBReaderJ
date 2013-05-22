@@ -10,7 +10,6 @@ import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 
 /**

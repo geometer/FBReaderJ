@@ -59,6 +59,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	OEBBookReader(BookModel model) {
 		myModelReader = new BookReader(model);
 		model.setLabelResolver(new BookModel.LabelResolver() {
+			@Override
 			public List<String> getCandidates(String id) {
 				final int index = id.indexOf("#");
 				return index > 0

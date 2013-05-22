@@ -17,6 +17,7 @@ public abstract class PluginApi {
 	public static abstract class PluginInfo extends BroadcastReceiver {
 		public static final String KEY = "actions";
 
+		@Override
 		public void onReceive(Context context, Intent intent) {
 			final List<ActionInfo> newActions = implementedActions(context);
 			if (newActions != null) {
@@ -49,16 +50,19 @@ public abstract class PluginApi {
 			return Uri.parse(myId);
 		}
 
+		@Override
 		public int describeContents() {
 			return 0;
 		}
 
+		@Override
 		public void writeToParcel(Parcel parcel, int flags) {
 			parcel.writeInt(getType());
 			parcel.writeString(myId);
 		}
 
 		public static final Creator<ActionInfo> CREATOR = new Creator<ActionInfo>() {
+			@Override
 			public ActionInfo createFromParcel(Parcel parcel) {
 				switch (parcel.readInt()) {
 					case TYPE_MENU_OBSOLETE:
@@ -78,6 +82,7 @@ public abstract class PluginApi {
 				}
 			}
 
+			@Override
 			public ActionInfo[] newArray(int size) {
 				return new ActionInfo[size];
 			}
@@ -106,6 +111,7 @@ public abstract class PluginApi {
 			parcel.writeInt(Weight);
 		}
 
+		@Override
 		public int compareTo(MenuActionInfo info) {
 			return Weight - info.Weight;
 		}

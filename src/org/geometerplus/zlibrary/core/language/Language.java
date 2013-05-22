@@ -63,6 +63,7 @@ public class Language implements Comparable<Language> {
 		}
 	}
 
+	@Override
 	public int compareTo(Language other) {
 		final int diff = myOrder.compareTo(other.myOrder);
 		return diff != 0 ? diff : mySortKey.compareTo(other.mySortKey);

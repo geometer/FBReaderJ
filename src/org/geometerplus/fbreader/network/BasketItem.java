@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.money.Money;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
-import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 
 public abstract class BasketItem extends NetworkCatalogItem {
 	private long myGeneration = 0;

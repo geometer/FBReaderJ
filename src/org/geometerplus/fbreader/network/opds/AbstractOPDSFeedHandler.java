@@ -24,14 +24,17 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 
 abstract class AbstractOPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
+	@Override
 	public OPDSFeedMetadata createFeed(ZLStringMap attributes) {
 		return new OPDSFeedMetadata(attributes);
 	}
 
+	@Override
 	public OPDSEntry createEntry(ZLStringMap attributes) {
 		return new OPDSEntry(attributes);
 	}
 
+	@Override
 	public OPDSLink createLink(ZLStringMap attributes) {
 		return new OPDSLink(attributes);
 	}

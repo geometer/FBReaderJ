@@ -23,8 +23,6 @@ import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -103,12 +101,14 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		}
 		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				if (!url.startsWith("fbreader-action:")) {
 					nLibrary.initialize();
 				}
 				intent.setData(Uri.parse(nLibrary.rewriteUrl(url, externalUrl)));
 				BaseActivity.runOnUiThread(new Runnable() {
+					@Override
 					public void run() {
 						try {
 							OrientationUtil.startActivity(BaseActivity, intent);

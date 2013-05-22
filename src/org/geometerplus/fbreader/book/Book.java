@@ -28,8 +28,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
@@ -228,6 +226,7 @@ public class Book extends TitledEntity {
 		return myId;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		if (!getTitle().equals(title)) {
 			super.setTitle(title);
@@ -262,6 +261,7 @@ public class Book extends TitledEntity {
 		}
 	}
 
+	@Override
 	public String getLanguage() {
 		return myLanguage;
 	}
@@ -427,6 +427,7 @@ public class Book extends TitledEntity {
 		}
 
 		database.executeAsTransaction(new Runnable() {
+			@Override
 			public void run() {
 				if (myId >= 0) {
 					final FileInfoSet fileInfos = new FileInfoSet(database, File);

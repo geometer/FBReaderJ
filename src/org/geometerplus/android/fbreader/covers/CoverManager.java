@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.covers;
 
-import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -29,6 +28,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageManager;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
@@ -42,6 +42,7 @@ public class CoverManager {
 	private static class MinPriorityThreadFactory implements ThreadFactory {
 		private final ThreadFactory myDefaultThreadFactory = Executors.defaultThreadFactory();
 
+		@Override
 		public Thread newThread(Runnable r) {
 			final Thread th = myDefaultThreadFactory.newThread(r);
 			th.setPriority(Thread.MIN_PRIORITY);
@@ -72,7 +73,7 @@ public class CoverManager {
 	}
 
 	Bitmap getBitmap(ZLImage image) {
-		final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+		final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLImageManager.Instance();
 		final ZLAndroidImageData data = mgr.getImageData(image);
 		if (data == null) {
 			return null;

@@ -47,6 +47,7 @@ class RelationAlias implements Comparable<RelationAlias> {
 			(Type == null ? 0 : Type.hashCode());
 	}
 
+	@Override
 	public int compareTo(RelationAlias r) {
 		if (Alias != r.Alias) {
 			if (Alias == null) {

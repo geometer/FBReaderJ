@@ -47,7 +47,7 @@ class LitResPasswordRecoveryXMLReader extends LitResAuthenticationXMLReader {
 		} else if (TAG_PASSWORD_RECOVERY_OK == tag) {
 			// NOP
 		} else {
-			setException(new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, HostName));
+			setException(new ZLNetworkException(ZLNetworkException.ERROR_SOMETHING_WRONG, HostName));
 		}
 		return true;
 	}

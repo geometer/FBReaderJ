@@ -33,6 +33,7 @@ final class InputStreamImageData extends ZLAndroidImageData {
 		myImage = image;
 	}
 
+	@Override
 	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
 		final InputStream stream = myImage.inputStream();
 		if (stream == null) {

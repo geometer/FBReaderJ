@@ -41,6 +41,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	private Runnable myOnBindAction;
 
 	private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
+		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (!hasListeners()) {
 				return;
@@ -68,6 +69,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return action0;
 		}
 		return new Runnable() {
+			@Override
 			public void run() {
 				action0.run();
 				action1.run();
@@ -85,7 +87,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			context.bindService(
 				new Intent(context, LibraryService.class),
 				this,
-				LibraryService.BIND_AUTO_CREATE
+				Context.BIND_AUTO_CREATE
 			);
 			myContext = context;
 		}
@@ -119,6 +121,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized int size() {
 		if (myInterface == null) {
 			return 0;
@@ -130,6 +133,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized Status status() {
 		if (myInterface == null) {
 			return Status.NotStarted;
@@ -141,6 +145,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized List<Book> books(BookQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -152,6 +157,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized boolean hasBooks(Filter filter) {
 		if (myInterface == null) {
 			return false;
@@ -163,6 +169,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized List<Book> recentBooks() {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -174,6 +181,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized Book getRecentBook(int index) {
 		if (myInterface == null) {
 			return null;
@@ -185,6 +193,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized Book getBookByFile(ZLFile file) {
 		if (myInterface == null) {
 			return null;
@@ -196,6 +205,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized Book getBookById(long id) {
 		if (myInterface == null) {
 			return null;
@@ -207,6 +217,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized Book getBookByUid(UID uid) {
 		if (myInterface == null) {
 			return null;
@@ -218,6 +229,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized List<Author> authors() {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -234,6 +246,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized List<Tag> tags() {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -250,6 +263,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized boolean hasSeries() {
 		if (myInterface != null) {
 			try {
@@ -260,6 +274,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		return false;
 	}
 
+	@Override
 	public synchronized List<String> series() {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -271,6 +286,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized List<String> titles(BookQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -282,6 +298,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized List<String> firstTitleLetters() {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -293,6 +310,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized boolean saveBook(Book book, boolean force) {
 		if (myInterface == null) {
 			return false;
@@ -304,6 +322,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized void removeBook(Book book, boolean deleteFromDisk) {
 		if (myInterface != null) {
 			try {
@@ -313,6 +332,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized void addBookToRecentList(Book book) {
 		if (myInterface != null) {
 			try {
@@ -322,6 +342,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized List<String> labels() {
 		if (myInterface != null) {
 			try {
@@ -332,6 +353,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		return Collections.emptyList();
 	}
 
+	@Override
 	public synchronized ZLTextPosition getStoredPosition(long bookId) {
 		if (myInterface == null) {
 			return null;
@@ -351,6 +373,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized void storePosition(long bookId, ZLTextPosition position) {
 		if (position != null && myInterface != null) {
 			try {
@@ -362,6 +385,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized boolean isHyperlinkVisited(Book book, String linkId) {
 		if (myInterface == null) {
 			return false;
@@ -374,6 +398,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized void markHyperlinkAsVisited(Book book, String linkId) {
 		if (myInterface != null) {
 			try {
@@ -383,6 +408,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized List<Bookmark> bookmarks(BookmarkQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -396,6 +422,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized void saveBookmark(Bookmark bookmark) {
 		if (myInterface != null) {
 			try {
@@ -407,6 +434,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public synchronized void deleteBookmark(Bookmark bookmark) {
 		if (myInterface != null) {
 			try {
@@ -416,6 +444,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public HighlightingStyle getHighlightingStyle(int styleId) {
 		if (myInterface == null) {
 			return null;
@@ -427,6 +456,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
 	public List<HighlightingStyle> highlightingStyles() {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -439,6 +469,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	// method from ServiceConnection interface
+	@Override
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = LibraryInterface.Stub.asInterface(service);
 		if (myOnBindAction != null) {
@@ -452,6 +483,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	// method from ServiceConnection interface
+	@Override
 	public synchronized void onServiceDisconnected(ComponentName name) {
 	}
 }

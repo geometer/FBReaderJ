@@ -147,6 +147,7 @@ public final class NetworkImage extends ZLLoadableImage {
 		return Url;
 	}
 
+	@Override
 	public String getURI() {
 		// TODO: implement
 		return null;

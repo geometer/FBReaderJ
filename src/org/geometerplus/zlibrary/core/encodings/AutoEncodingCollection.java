@@ -25,14 +25,17 @@ import java.util.Collections;
 public final class AutoEncodingCollection extends EncodingCollection {
 	private final Encoding myEncoding = new Encoding(null, "auto", "auto");
 
+	@Override
 	public List<Encoding> encodings() {
 		return Collections.singletonList(myEncoding);
 	}
 
+	@Override
 	public Encoding getEncoding(String alias) {
 		return myEncoding;
 	}
 
+	@Override
 	public Encoding getEncoding(int code) {
 		return myEncoding;
 	}

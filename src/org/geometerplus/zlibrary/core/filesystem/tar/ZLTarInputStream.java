@@ -47,6 +47,7 @@ class ZLTarInputStream extends InputStream {
 		throw new IOException("Item " + fileName + " not found in tar archive");
 	}
 
+	@Override
 	public int read() throws IOException {
 		return myBase.read();
 	}

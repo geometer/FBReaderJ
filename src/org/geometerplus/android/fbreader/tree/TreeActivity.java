@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 
@@ -74,6 +73,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		OrientationUtil.setOrientation(this, intent);
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					init(intent);
 				}
@@ -126,11 +126,13 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 					UIUtil.runWithMessage(
 						TreeActivity.this, messageKey,
 						new Runnable() {
+							@Override
 							public void run() {
 								tree.waitForOpening();
 							}
 						},
 						new Runnable() {
+							@Override
 							public void run() {
 								openTreeInternal(tree, treeToSelect, storeInHistory);
 							}
@@ -164,6 +166,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		if (index != -1) {
 			setSelection(index);
 			getListView().post(new Runnable() {
+				@Override
 				public void run() {
 					setSelection(index);
 				}

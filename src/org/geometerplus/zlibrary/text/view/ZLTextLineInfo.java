@@ -57,6 +57,7 @@ final class ZLTextLineInfo {
 		return EndElementIndex == ParagraphCursorLength;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		ZLTextLineInfo info = (ZLTextLineInfo)o;
 		return
@@ -65,6 +66,7 @@ final class ZLTextLineInfo {
 			(StartCharIndex == info.StartCharIndex);
 	}
 
+	@Override
 	public int hashCode() {
 		return ParagraphCursor.hashCode() + StartElementIndex + 239 * StartCharIndex;
 	}

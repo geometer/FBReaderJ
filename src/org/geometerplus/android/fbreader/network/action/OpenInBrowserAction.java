@@ -62,6 +62,7 @@ public class OpenInBrowserAction extends CatalogAction {
 			.setMessage(message)
 			.setIcon(0)
 			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Util.openInBrowser(myActivity, url);
 				}

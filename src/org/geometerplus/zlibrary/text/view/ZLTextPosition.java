@@ -31,6 +31,7 @@ public abstract class ZLTextPosition implements Comparable<ZLTextPosition> {
 			getCharIndex() == position.getCharIndex();
 	}
 
+	@Override
 	public int compareTo(ZLTextPosition position) {
 		final int p0 = getParagraphIndex();
 		final int p1 = position.getParagraphIndex();

@@ -52,6 +52,7 @@ abstract class FB2TagManager {
 			myLanguage = ("ru".equals(language)) ? "ru" : "en";
 		}
 
+		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ((tag == "subgenre") || (tag == "genre-alt")) {
 				final String id = attributes.getValue("value");
@@ -70,6 +71,7 @@ abstract class FB2TagManager {
 			return false;
 		}
 
+		@Override
 		public boolean endElementHandler(String tag) {
 			if (tag == "genre") {
 				myCategoryTag = null;

@@ -48,6 +48,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myParagraphKinds = ZLArrayUtils.createCopy(myParagraphKinds, size, size << 1);
 	}
 
+	@Override
 	public void createParagraph(byte kind) {
 		final int index = myParagraphsNumber++;
 		int[] startEntryIndices = myStartEntryIndices;
@@ -78,10 +79,12 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		return block;
 	}
 
+	@Override
 	public void addText(char[] text) {
 		addText(text, 0, text.length);
 	}
 
+	@Override
 	public void addText(char[] text, int offset, int length) {
 		char[] block = getDataBlock(3 + length);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -94,6 +97,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myTextSizes[myParagraphsNumber - 1] += length;
 	}
 
+	@Override
 	public void addImage(String id, short vOffset, boolean isCover) {
 		final int len = id.length();
 		final char[] block = getDataBlock(4 + len);
@@ -108,6 +112,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myBlockOffset = blockOffset;
 	}
 
+	@Override
 	public void addControl(byte textKind, boolean isStart) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -119,6 +124,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[myBlockOffset++] = (char)kind;
 	}
 
+	@Override
 	public void addHyperlinkControl(byte textKind, byte hyperlinkType, String label) {
 		final short labelLength = (short)label.length();
 		final char[] block = getDataBlock(3 + labelLength);
@@ -131,6 +137,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myBlockOffset = blockOffset + labelLength;
 	}
 
+	@Override
 	public void addStyleEntry(ZLTextStyleEntry entry) {
 		// TODO: implement
 		/*
@@ -154,6 +161,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		*/
 	}
 
+	@Override
 	public void addFixedHSpace(short length) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -161,12 +169,14 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[myBlockOffset++] = (char)length;
 	}
 
+	@Override
 	public void addBidiReset() {
 		final char[] block = getDataBlock(1);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.RESET_BIDI;
 	}
 
+	@Override
 	public void stopReading() {
 		/*
 		if (myCurrentDataBlock != null) {

@@ -24,7 +24,6 @@ import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public class LitResNetworkRequest extends ZLNetworkRequest {
 	public final LitResAuthenticationXMLReader Reader;

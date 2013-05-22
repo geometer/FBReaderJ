@@ -23,7 +23,6 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
@@ -132,6 +131,7 @@ public final class FBReaderApp extends ZLApplication {
 		Collection = collection;
 
 		collection.addListener(new IBookCollection.Listener() {
+			@Override
 			public void onBookEvent(BookEvent event, Book book) {
 				switch (event) {
 					case BookmarksUpdated:
@@ -150,6 +150,7 @@ public final class FBReaderApp extends ZLApplication {
 				}
 			}
 
+			@Override
 			public void onBuildEvent(IBookCollection.Status status) {
 			}
 		});
@@ -188,6 +189,7 @@ public final class FBReaderApp extends ZLApplication {
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
 		if (book != null || Model == null) {
 			runWithMessage("loadingBook", new Runnable() {
+				@Override
 				public void run() {
 					openBookInternal(book, bookmark, false);
 					if (book != null) {
@@ -202,6 +204,7 @@ public final class FBReaderApp extends ZLApplication {
 	public void reloadBook() {
 		if (Model != null && Model.Book != null) {
 			runWithMessage("loadingBook", new Runnable() {
+				@Override
 				public void run() {
 					openBookInternal(Model.Book, null, true);
 				}
@@ -227,6 +230,7 @@ public final class FBReaderApp extends ZLApplication {
 		myColorProfile = null;
 	}
 
+	@Override
 	public ZLKeyBindings keyBindings() {
 		return myBindings;
 	}
@@ -432,6 +436,7 @@ public final class FBReaderApp extends ZLApplication {
 		setView(BookTextView);
 	}
 
+	@Override
 	public void onWindowClosing() {
 		storePosition();
 	}

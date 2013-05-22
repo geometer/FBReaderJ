@@ -23,7 +23,6 @@ import java.io.*;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 	private Map<String,String> myNamespaceMap = Collections.emptyMap();
@@ -62,35 +61,44 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 		ZLXMLProcessor.read(this, reader, 65536);
 	}
 
+	@Override
 	public boolean dontCacheAttributeValues() {
 		return false;
 	}
 
+	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		return false;
 	}
 
+	@Override
 	public boolean endElementHandler(String tag) {
 		return false;
 	}
 
+	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
 	}
 
+	@Override
 	public void characterDataHandlerFinal(char[] ch, int start, int length) {
 		characterDataHandler(ch, start, length);
 	}
 
+	@Override
 	public void startDocumentHandler() {
 	}
 
+	@Override
 	public void endDocumentHandler() {
 	}
 
+	@Override
 	public boolean processNamespaces() {
 		return false;
 	}
 
+	@Override
 	public void namespaceMapChangedHandler(Map<String,String> namespaces) {
 		myNamespaceMap = namespaces != null ? namespaces : Collections.<String,String>emptyMap();
 	}
@@ -155,9 +163,11 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 		return null;
 	}
 
+	@Override
 	public void collectExternalEntities(HashMap<String,char[]> entityMap) {
 	}
 
+	@Override
 	public List<String> externalDTDs() {
 		return Collections.emptyList();
 	}

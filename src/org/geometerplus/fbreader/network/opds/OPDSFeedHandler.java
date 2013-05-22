@@ -75,10 +75,12 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		}
 	}
 
+	@Override
 	public void processFeedStart() {
 		myData.ResumeURI = myBaseURL;
 	}
 
+	@Override
 	public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
 		
 		if (beforeEntries) {
@@ -91,9 +93,9 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 				}
 			}
 			if ("series".equals(feed.ViewType)) {
-				myCatalog.setFlags(myCatalog.getFlags() & ~OPDSCatalogItem.FLAGS_GROUP);
+				myCatalog.setFlags(myCatalog.getFlags() & ~NetworkCatalogItem.FLAGS_GROUP);
 			} else if ("authors".equals(feed.ViewType)) {
-				myCatalog.setFlags(myCatalog.getFlags() & ~OPDSCatalogItem.FLAG_SHOW_AUTHOR);
+				myCatalog.setFlags(myCatalog.getFlags() & ~NetworkCatalogItem.FLAG_SHOW_AUTHOR);
 			}
 		} else {
 			final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
@@ -108,6 +110,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		return false;
 	}
 
+	@Override
 	public void processFeedEnd() {
 		if (mySkipUntilId != null) {
 			// Last loaded element was not found => resume error => DO NOT RESUME
@@ -156,6 +159,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		return id;
 	}
 
+	@Override
 	public boolean processFeedEntry(OPDSEntry entry) {
 		
 		if (myItemsToLoad >= 0) {

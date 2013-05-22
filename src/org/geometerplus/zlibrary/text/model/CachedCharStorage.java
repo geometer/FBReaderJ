@@ -31,6 +31,7 @@ public final class CachedCharStorage extends CachedCharStorageBase {
 		new File(directoryName).mkdirs();
 	}
 
+	@Override
 	public char[] createNewBlock(int minimumLength) {
 		int blockSize = myBlockSize;
 		if (minimumLength > blockSize) {
@@ -41,6 +42,7 @@ public final class CachedCharStorage extends CachedCharStorageBase {
 		return block;
 	}
 
+	@Override
 	public void freezeLastBlock() {
 		int index = myArray.size() - 1;
 		if (index >= 0) {

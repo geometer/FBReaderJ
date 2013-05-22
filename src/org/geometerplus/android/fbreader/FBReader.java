@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.lang.reflect.*;
 import java.util.*;
 
 import android.app.*;
@@ -34,13 +33,10 @@ import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
-
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.library.*;
@@ -83,7 +79,7 @@ public final class FBReader extends Activity {
 	}
 
 	private static ZLAndroidLibrary getZLibrary() {
-		return (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		return (ZLAndroidLibrary)ZLibrary.Instance();
 	}
 
 	private FBReaderApp myFBReaderApp;
@@ -163,8 +159,10 @@ public final class FBReader extends Activity {
 
 	private Runnable getPostponedInitAction() {
 		return new Runnable() {
+			@Override
 			public void run() {
 				runOnUiThread(new Runnable() {
+					@Override
 					public void run() {
 						new TipRunner().start();
 						DictionaryUtil.init(FBReader.this);
@@ -195,7 +193,7 @@ public final class FBReader extends Activity {
 
 		zlibrary.setActivity(this);
 
-		myFBReaderApp = (FBReaderApp)FBReaderApp.Instance();
+		myFBReaderApp = (FBReaderApp)ZLApplication.Instance();
 		if (myFBReaderApp == null) {
 			myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
 		}
@@ -222,6 +220,7 @@ public final class FBReader extends Activity {
 		}
 		final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
 		titleView.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View view) {
 				myFBReaderApp.runAction(ActionCode.SHOW_BOOK_INFO);
 			}
@@ -286,6 +285,7 @@ public final class FBReader extends Activity {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
 			getCollection().bindToService(this, new Runnable() {
+				@Override
 				public void run() {
 					openBook(intent, null, true);
 				}
@@ -293,12 +293,14 @@ public final class FBReader extends Activity {
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
+				@Override
 				public void run() {
 					final TextSearchPopup popup = (TextSearchPopup)myFBReaderApp.getPopupById(TextSearchPopup.ID);
 					popup.initPosition();
 					myFBReaderApp.TextSearchPatternOption.setValue(pattern);
 					if (myFBReaderApp.getTextView().search(pattern, true, false, false, false) != 0) {
 						runOnUiThread(new Runnable() {
+							@Override
 							public void run() {
 								myFBReaderApp.showPopup(popup.getId());
 								hideBars();
@@ -306,6 +308,7 @@ public final class FBReader extends Activity {
 						});
 					} else {
 						runOnUiThread(new Runnable() {
+							@Override
 							public void run() {
 								UIUtil.showErrorMessage(FBReader.this, "textNotFound");
 								popup.StartPosition = null;
@@ -325,8 +328,10 @@ public final class FBReader extends Activity {
 		super.onStart();
 
 		getCollection().bindToService(this, new Runnable() {
+			@Override
 			public void run() {
 				new Thread() {
+					@Override
 					public void run() {
 						openBook(getIntent(), getPostponedInitAction(), false);
 						myFBReaderApp.getViewWidget().repaint();
@@ -390,6 +395,7 @@ public final class FBReader extends Activity {
 			setPriority(MIN_PRIORITY);
 		}
 
+		@Override
 		public void run() {
 			final TipsManager manager = TipsManager.Instance();
 			switch (manager.requiredAction()) {
@@ -437,6 +443,7 @@ public final class FBReader extends Activity {
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
 
 		getCollection().bindToService(this, new Runnable() {
+			@Override
 			public void run() {
 				final BookModel model = myFBReaderApp.Model;
 				if (model == null || model.Book == null) {
@@ -487,6 +494,7 @@ public final class FBReader extends Activity {
 		myFBReaderApp.hideActivePopup();
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 		manager.setOnCancelListener(new SearchManager.OnCancelListener() {
+			@Override
 			public void onCancel() {
 				if (popup != null) {
 					myFBReaderApp.showPopup(popup.getId());
@@ -527,6 +535,7 @@ public final class FBReader extends Activity {
 					final Book book = BookInfoActivity.bookByIntent(data);
 					if (book != null) {
 						getCollection().bindToService(this, new Runnable() {
+							@Override
 							public void run() {
 								onPreferencesUpdate(book);
 							}
@@ -736,6 +745,7 @@ public final class FBReader extends Activity {
 	}
 
 	private BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
+		@Override
 		public void onReceive(Context context, Intent intent) {
 			final int level = intent.getIntExtra("level", 100);
 			final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();

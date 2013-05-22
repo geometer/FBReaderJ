@@ -110,6 +110,7 @@ public class PluginCollection {
 	private native NativeFormatPlugin[] nativePlugins();
 	private native void free();
 
+	@Override
 	protected void finalize() throws Throwable {
 		free();
 		super.finalize();

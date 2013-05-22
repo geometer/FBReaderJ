@@ -57,6 +57,7 @@ public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 		return -1;
 	}
 
+	@Override
 	public String getURI() {
 		try {
 			decode();

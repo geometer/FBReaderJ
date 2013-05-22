@@ -25,8 +25,6 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
@@ -41,6 +39,7 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 	public void readModel(BookModel model) throws BookReadingException {
 		super.readModel(model);
 		model.setLabelResolver(new BookModel.LabelResolver() {
+			@Override
 			public List<String> getCandidates(String id) {
 				final int index = id.indexOf("#");
 				return index > 0

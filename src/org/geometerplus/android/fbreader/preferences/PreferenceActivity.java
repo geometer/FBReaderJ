@@ -24,7 +24,9 @@ import android.net.Uri;
 import android.view.KeyEvent;
 import android.os.Build;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -67,14 +69,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
 
-		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
+		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addPreference(new ZLStringOptionPreference(
 			this, Paths.BooksDirectoryOption(), directoriesScreen.Resource, "books"
 		) {
+			@Override
 			protected void setValue(String value) {
 				super.setValue(value);
 				myCollection.reset(false);
@@ -427,8 +430,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
 					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
 				} else {
-					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, FBReaderApp.NoAction);
-					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, FBReaderApp.NoAction);
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ZLApplication.NoAction);
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ZLApplication.NoAction);
 				}
 				volumeKeysPreferences.setEnabled(isChecked());
 			}
@@ -509,7 +512,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, false), backKeyActions
 		));
 		final String[] backKeyLongPressActions =
-			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
+			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, ZLApplication.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions

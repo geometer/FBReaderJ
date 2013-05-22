@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader;
 
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
@@ -59,8 +60,8 @@ class SelectionPopup extends ButtonsPopupPanel {
 		}
 
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-			RelativeLayout.LayoutParams.WRAP_CONTENT,
-			RelativeLayout.LayoutParams.WRAP_CONTENT
+			LayoutParams.WRAP_CONTENT,
+			LayoutParams.WRAP_CONTENT
 		);
 		layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 

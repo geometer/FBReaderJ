@@ -310,6 +310,7 @@ mainLoop:
 	}
 
 	public static class ByTimeComparator implements Comparator<Bookmark> {
+		@Override
 		public int compare(Bookmark bm0, Bookmark bm1) {
 			final Date date0 = bm0.getDate(DateType.Latest);
 			final Date date1 = bm1.getDate(DateType.Latest);

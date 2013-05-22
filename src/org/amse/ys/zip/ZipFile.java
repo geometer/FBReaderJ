@@ -15,6 +15,7 @@ public final class ZipFile {
 			myFilePath = filePath;
 		}
 
+		@Override
 		public InputStream getInputStream() throws IOException {
 			return new FileInputStream(myFilePath);
 		}

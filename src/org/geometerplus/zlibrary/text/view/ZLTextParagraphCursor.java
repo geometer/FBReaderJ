@@ -43,13 +43,13 @@ public final class ZLTextParagraphCursor {
 			final ZLTextMark mark = new ZLTextMark(paragraphIndex, 0, 0);
 			int i;
 			for (i = 0; i < myMarks.size(); i++) {
-				if (((ZLTextMark)myMarks.get(i)).compareTo(mark) >= 0) {
+				if (myMarks.get(i).compareTo(mark) >= 0) {
 					break;
 				}
 			}
 			myFirstMark = i;
 			myLastMark = myFirstMark;
-			for (; (myLastMark != myMarks.size()) && (((ZLTextMark)myMarks.get(myLastMark)).ParagraphIndex == paragraphIndex); myLastMark++);
+			for (; (myLastMark != myMarks.size()) && (myMarks.get(myLastMark).ParagraphIndex == paragraphIndex); myLastMark++);
 			myOffset = 0;
 		}
 
@@ -180,7 +180,7 @@ public final class ZLTextParagraphCursor {
 		private final void addWord(char[] data, int offset, int len, int paragraphOffset, ZLTextHyperlink hyperlink) {
 			ZLTextWord word = new ZLTextWord(data, offset, len, paragraphOffset);
 			for (int i = myFirstMark; i < myLastMark; ++i) {
-				final ZLTextMark mark = (ZLTextMark)myMarks.get(i);
+				final ZLTextMark mark = myMarks.get(i);
 				if ((mark.Offset < paragraphOffset + len) && (mark.Offset + mark.Length > paragraphOffset)) {
 					word.addMark(mark.Offset - paragraphOffset, mark.Length);
 				}

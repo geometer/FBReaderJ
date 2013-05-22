@@ -59,6 +59,7 @@ public class ZLNetworkManager {
 			myScope = scope;
 		}
 
+		@Override
 		public boolean equals(Object obj) {
 			if (this == obj) {
 				return true;
@@ -81,6 +82,7 @@ public class ZLNetworkManager {
 				MiscUtil.equals(myScope.getRealm(), scope.getRealm());
 		}
 
+		@Override
 		public int hashCode() {
 			if (myScope == null) {
 				return 0;
@@ -216,6 +218,7 @@ public class ZLNetworkManager {
 	private final CookieStore myCookieStore = new CookieStore() {
 		private HashMap<Key,Cookie> myCookies;
 
+		@Override
 		public synchronized void addCookie(Cookie cookie) {
 			if (myCookies == null) {
 				getCookies();
@@ -227,6 +230,7 @@ public class ZLNetworkManager {
 			}
 		}
 
+		@Override
 		public synchronized void clear() {
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
@@ -237,6 +241,7 @@ public class ZLNetworkManager {
 			}
 		}
 
+		@Override
 		public synchronized boolean clearExpired(Date date) {
 			myCookies = null;
 
@@ -249,6 +254,7 @@ public class ZLNetworkManager {
 			return false;
 		}
 
+		@Override
 		public synchronized List<Cookie> getCookies() {
 			if (myCookies == null) {
 				myCookies = new HashMap<Key,Cookie>();
@@ -436,6 +442,7 @@ public class ZLNetworkManager {
 
 	public final void downloadToFile(String url, final File outFile, final int bufferSize) throws ZLNetworkException {
 		perform(new ZLNetworkRequest(url) {
+			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				OutputStream outStream = new FileOutputStream(outFile);
 				try {

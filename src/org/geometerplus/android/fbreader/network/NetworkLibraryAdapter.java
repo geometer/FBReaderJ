@@ -44,6 +44,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		((TextView)view.findViewById(resourceId)).setText(text);
 	}
 
+	@Override
 	public View getView(int position, View view, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		if (tree == null) {

@@ -49,6 +49,7 @@ public class BookDownloaderServiceConnection implements ServiceConnection {
 		}
 	}
 
+	@Override
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
 		myInterface = BookDownloaderInterface.Stub.asInterface(service);
 		if (myAction != null) {
@@ -57,6 +58,7 @@ public class BookDownloaderServiceConnection implements ServiceConnection {
 		}
 	}
 
+	@Override
 	public synchronized void onServiceDisconnected(ComponentName name) {
 		myInterface = null;
 	}

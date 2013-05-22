@@ -23,8 +23,6 @@ import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
-import org.geometerplus.zlibrary.core.util.MimeType;
-
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -56,6 +54,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	private native boolean readMetaInfoNative(Book book);
 
+	@Override
 	synchronized public void readUids(Book book) throws BookReadingException {
 		readUidsNative(book);
 		if (book.uids().isEmpty()) {

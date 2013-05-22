@@ -38,7 +38,7 @@ public class AuthorTree extends FilteredTree {
 
 	@Override
 	public String getName() {
-		return Author.NULL.equals(Author)
+		return org.geometerplus.fbreader.book.Author.NULL.equals(Author)
 			? resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
 	}
 
@@ -49,7 +49,7 @@ public class AuthorTree extends FilteredTree {
 
 	@Override
 	protected String getSortKey() {
-		if (Author.NULL.equals(Author)) {
+		if (org.geometerplus.fbreader.book.Author.NULL.equals(Author)) {
 			return null;
 		}
 		return new StringBuilder()

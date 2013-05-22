@@ -47,44 +47,53 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 		myType = type;
 	}
 
+	@Override
 	public Type getType() {
 		return myType;
 	}
 
+	@Override
 	public boolean hasChanges() {
 		return myHasChanges;
 	}
 
+	@Override
 	public void resetChanges() {
 		myHasChanges = false;
 	}
 
+	@Override
 	public final void setSiteName(String name) {
 		myHasChanges = myHasChanges || !MiscUtil.equals(mySiteName, name);
 		mySiteName = name;
 	}
 
+	@Override
 	public final void setSummary(String summary) {
 		myHasChanges = myHasChanges || !MiscUtil.equals(mySummary, summary);
 		mySummary = summary;
 	}
 
+	@Override
 	public final void setTitle(String title) {
 		myHasChanges = myHasChanges || !MiscUtil.equals(myTitle, title);
 		myTitle = title;
 	}
 
+	@Override
 	public final void setUrl(UrlInfo.Type type, String url, MimeType mime) {
 		myInfos.removeAllInfos(type);
 		myInfos.addInfo(new UrlInfoWithDate(type, url, mime));
 		myHasChanges = true;
 	}
 
+	@Override
 	public final void removeUrl(UrlInfo.Type type) {
 		myHasChanges = myHasChanges || myInfos.getInfo(type) != null;
 		myInfos.removeAllInfos(type);
 	}
 
+	@Override
 	public boolean isObsolete(long milliSeconds) {
 		final long old = System.currentTimeMillis() - milliSeconds;
 
@@ -101,6 +110,7 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 		return false;
 	}
 
+	@Override
 	public void reloadInfo(final boolean urlsOnly, boolean quietly) throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());

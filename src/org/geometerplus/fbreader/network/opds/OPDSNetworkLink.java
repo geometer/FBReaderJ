@@ -121,6 +121,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		return new OPDSCatalogItem.State(this, loader);
 	}
 
+	@Override
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
 		final UrlInfo info = getUrlInfo(UrlInfo.Type.Search);
 		if (info == null || info.Url == null) {
@@ -133,10 +134,12 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		return createNetworkData(info.Url.replace("%s", pattern), info.Mime, (OPDSCatalogItem.State)data);
 	}
 
+	@Override
 	public ZLNetworkRequest resume(NetworkOperationData data) {
 		return createNetworkData(data.ResumeURI, MimeType.APP_ATOM_XML, (OPDSCatalogItem.State)data);
 	}
 
+	@Override
 	public NetworkCatalogItem libraryItem() {
 		final UrlInfoCollection<UrlInfo> urlMap = new UrlInfoCollection<UrlInfo>();
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
@@ -148,15 +151,17 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 			getSummary(),
 			urlMap,
 			OPDSCatalogItem.Accessibility.ALWAYS,
-			OPDSCatalogItem.FLAGS_DEFAULT | OPDSCatalogItem.FLAG_ADD_SEARCH_ITEM,
+			NetworkCatalogItem.FLAGS_DEFAULT | NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM,
 			myExtraData
 		);
 	}
 
+	@Override
 	public NetworkAuthenticationManager authenticationManager() {
 		return myAuthenticationManager;
 	}
 
+	@Override
 	public String rewriteUrl(String url, boolean isUrlExternal) {
 		final int apply = isUrlExternal
 			? URLRewritingRule.APPLY_EXTERNAL : URLRewritingRule.APPLY_INTERNAL;

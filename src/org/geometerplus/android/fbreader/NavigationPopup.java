@@ -95,12 +95,15 @@ final class NavigationPopup {
 				myFBReader.getViewWidget().repaint();
 			}
 
+			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 			}
 
+			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 			}
 
+			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (fromUser) {
 					final int page = progress + 1;
@@ -113,6 +116,7 @@ final class NavigationPopup {
 
 		myResetButton = (Button)layout.findViewById(R.id.navigation_reset_button);
 		myResetButton.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				if (myStartPosition != null) {
 					myFBReader.getTextView().gotoPosition(myStartPosition);

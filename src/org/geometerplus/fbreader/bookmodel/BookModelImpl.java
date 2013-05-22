@@ -44,11 +44,11 @@ abstract class BookModelImpl extends BookModel {
 		for (int i = 0; i < size; ++i) {
 			final char[] block = myInternalHyperlinks.block(i);
 			for (int offset = 0; offset < block.length; ) {
-				final int labelLength = (int)block[offset++];
+				final int labelLength = block[offset++];
 				if (labelLength == 0) {
 					break;
 				}
-				final int idLength = (int)block[offset + labelLength];
+				final int idLength = block[offset + labelLength];
 				if ((labelLength != len) || !id.equals(new String(block, offset, labelLength))) {
 					offset += labelLength + idLength + 3;
 					continue;
@@ -56,7 +56,7 @@ abstract class BookModelImpl extends BookModel {
 				offset += labelLength + 1;
 				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
 				offset += idLength;
-				final int paragraphNumber = (int)block[offset] + (((int)block[offset + 1]) << 16);
+				final int paragraphNumber = block[offset] + (block[offset + 1] << 16);
 				return new Label(modelId, paragraphNumber);
 			}
 		}

@@ -41,6 +41,7 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 		myTocDecoder = createDecoder();
 	}
 
+	@Override
 	public InputStream getInputStream() throws IOException {
 		myMobipocketStream = new MobipocketStream(Model.Book.File);
 		return myMobipocketStream;

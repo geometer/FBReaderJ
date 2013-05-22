@@ -89,6 +89,7 @@ public class ZLFileImage extends ZLSingleImage {
 		this(mimeType, file, ENCODING_NONE, 0, (int)file.size());
 	}
 
+	@Override
 	public String getURI() {
 		String result = SCHEME + "://" + myFile.getPath() + "\000" + myEncoding + "\000" + myOffsets.length;
 		for (int offset : myOffsets) {
