@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 public class LitresCatalogItem extends NetworkURLCatalogItem {
 	static class State extends NetworkOperationData {
 		public String LastLoadedId;
+		public boolean loadFinished;
 		public final HashSet<String> LoadedIds = new HashSet<String>();
 
 		public State(LitresNetworkLink link, NetworkItemsLoader loader) {
@@ -59,6 +60,7 @@ public class LitresCatalogItem extends NetworkURLCatalogItem {
 			throw e;
 		}
 	}
+	
 	@Override
 	public void loadChildren(NetworkItemsLoader loader)
 			throws ZLNetworkException {
@@ -69,7 +71,7 @@ public class LitresCatalogItem extends NetworkURLCatalogItem {
 		UrlInfo info = myURLs.getInfo(UrlInfo.Type.Catalog);
 		if(info != null)
 		doLoadChildren(
-				litresLink.createNetworkData(info.Url, MimeType.APP_LITRES_XML, myLoadingState)
+				litresLink.createNetworkData(info.Url, MimeType.APP_LITRES_XML, myLoadingState, null)
 		);
 	}
 

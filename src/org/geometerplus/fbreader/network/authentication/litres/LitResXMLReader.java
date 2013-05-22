@@ -126,16 +126,6 @@ public class LitResXMLReader extends LitResAuthenticationXMLReader {
 				if (TAG_BOOK == tag) {
 					myEntry = new LitresBookEntry(attributes);
 					myBookId = attributes.getValue("hub_id");
-					/*myUrls.addInfo(new UrlInfo(
-						UrlInfo.Type.Image, attributes.getValue("cover_preview"), MimeType.IMAGE_AUTO
-					));
-
-					myUrls.addInfo(new BookUrlInfo(
-						UrlInfo.Type.BookConditional,
-						BookUrlInfo.Format.FB2_ZIP,
-						"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
-						MimeType.APP_FB2_ZIP
-					));*/
 					myState = BOOK;
 				}
 				break;
