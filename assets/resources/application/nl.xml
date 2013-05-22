@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011. Last update 28-Nov-2012. -->
+<!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011. Last update 11-May-2013. -->
 <resources>
 	<node name="library" value="FBReader bibliotheek">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -48,8 +48,8 @@
 		<node name="deleteBook" value="Boek verwijderen"/>
 		<node name="addToFavorites" value="Toevoegen aan favorieten"/>
 		<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
-		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="markAsRead" value="Markeer als gelezen"/>
+		<node name="markAsUnread" value="Markeer als ongelezen"/>
 	</node>
 	<node name="networkLibrary" value="FBReader netwerkbibliotheek">
 		<node name="byAuthor" value="Auteurs">
@@ -65,7 +65,7 @@
 			<node name="summary" value="Boeken gesorteerd op series"/>
 		</node>
 		<node name="search" value="Zoeken">
-			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summary" value="Zoeken naar boeken in %s"/>
 			<node name="summaryAllCatalogs" value="Zoeken naar boeken in catalogi"/>
 			<node name="summaryInProgress" value="Bezig met zoeken"/>
 		</node>
@@ -90,9 +90,9 @@
 		<node name="buyAllBooks" value="Koop alle boeken"/>
 		<node name="openInBrowser" value="Openen in de browser"/>
 		<node name="stopLoading" value="Stop loading" toBeTranslated="true"/>
-		<node name="stopSearching" value="Stop searching" toBeTranslated="true"/>
-		<node name="signIn" value="Sign in" toBeTranslated="true"/>
-		<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
+		<node name="stopSearching" value="Stop met zoeken"/>
+		<node name="signIn" value="Aanmelden"/>
+		<node name="signOut" value="Afmelden (%s)"/>
 		<node name="topup" value="Top up account (currently: %s)" toBeTranslated="true"/>
 		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open pagina in de browser"/>
@@ -133,9 +133,9 @@
 		<node name="menu">
 			<node name="networkSearch" value="Zoeken op het netwerk"/>
 			<node name="reload" value="Vernieuwen"/>
-			<node name="signIn" value="Sign in" toBeTranslated="true"/>
-			<node name="signUp" value="Sign up" toBeTranslated="true"/>
-			<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
+			<node name="signIn" value="Aanmelden"/>
+			<node name="signUp" value="Inschrijven"/>
+			<node name="signOut" value="Afmelden (%s)"/>
 			<node name="topup" value="Top up account" toBeTranslated="true"/>
 			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 			<node name="refreshCatalogsList" value="Catalogi vernieuwen"/>
@@ -151,7 +151,7 @@
 		<node name="confirmSeveralBooks" value="Weet je zeker dat je %s boeken wilt kopen?"/>
 		<node name="alreadyBought" value="Boek is al aangescahft"/>
 		<node name="notAuthorized" value="Autorisatie vereist"/>
-		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Kan accountstatus niet laden"/>
 		<node name="unsufficientFunds" value="Deze aankoop kost %0 en je hebt maar %1"/>
 		<node name="zeroFunds" value="Deze aankoop kost %0"/>
 	</node>
@@ -222,7 +222,7 @@
 		<node name="close" value="FBReader afsluiten"/>
 	</node>
 	<node name="highlightingStyleMenu">
-		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="style" value="Stijl %s"/>
 		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
 	</node>
 	<node name="selection" value="Selectie">
@@ -288,7 +288,7 @@
 		</node>
 		<node name="appearance" value="Weergave">
 			<node name="summary" value="Draaien, statusbalk"/>
-			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="language" value="Interfacetaal"/>
 			<node name="screenOrientation" value="Schermorientatie">
 				<node name="system" value="Systeem"/>
 				<node name="sensor" value="Afhankelijk van stand apparaat"/>
@@ -305,21 +305,21 @@
 				<node name="summaryOn" value="Toon statusbalk tijdens lezen"/>
 				<node name="summaryOff" value="Verberg statusbalk tijdens lezen"/>
 			</node>
-			<node name="showActionBar" value="Show action bar" toBeTranslated="true">
-				<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
-				<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
+			<node name="showActionBar" value="Toon actiebalk">
+				<node name="summaryOn" value="Toon actiebalk tijdens lezen"/>
+				<node name="summaryOff" value="Verberg actiebalk tijdens lezen"/>
 			</node>
-			<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
-				<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+			<node name="showStatusBarWhenMenuIsActive" value="Toon statusbalk als menu actief is">
+				<node name="summaryOn" value="Toon statusbalk als menu actief wordt"/>
+				<node name="summaryOff" value="Verberg statusbalk als menu actief wordt"/>
 			</node>
 			<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
 			</node>
-			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
-				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
-				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			<node name="twoColumnView" value="Twee kolommen">
+				<node name="summaryOn" value="Toon tekst in twee kolommen als apparaat horizontaal wordt gehouden"/>
+				<node name="summaryOff" value="Toon tekst altijd in 1 kolom"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
 				<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
@@ -445,7 +445,7 @@
 				<node name="Verse" value="Vers">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Preformatted text" value="Preformatted text" toBeTranslated="true">
+				<node name="Preformatted text" value="Voorgeformateerde tekst">
 					<node name="summary" value=""/>
 				</node>
 				<node name="Image" value="Afbeelding">
@@ -493,7 +493,7 @@
 				<node name="Definition" value="Definitie">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Definition Description" value="Definition Description" toBeTranslated="true">
+				<node name="Definition Description" value="Definitiebeschrijving">
 					<node name="summary" value=""/>
 				</node>
 				<node name="Header 1" value="Koptekst 1">
@@ -553,14 +553,14 @@
 			<node name="right" value="Rechtermarge"/>
 			<node name="top" value="Bovenmarge"/>
 			<node name="bottom" value="Ondermarge"/>
-			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
+			<node name="spaceBetweenColumns" value="Ruimte tussen kolommen"/>
 		</node>
 		<node name="scrollBar" value="Schuifbalk">
 			<node name="summary" value="Schuif- en onderbalkinstellingen"/>
 			<node name="scrollbarType" value="Type schuifbalk">
 				<node name="hide" value="Verbergen"/>
-				<node name="show" value="Vertical slider" toBeTranslated="true"/>
-				<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
+				<node name="show" value="Verticale schuifbalk"/>
+				<node name="showAsProgress" value="Verticale voortgangsbalk"/>
 				<node name="showAsFooter" value="Horizontale onderbalk"/>
 			</node>
 			<node name="footerHeight" value="Hoogte onderbalk"/>
@@ -722,15 +722,15 @@
 			<node name="reloadInfo" value="Vernieuwen"/>
 			<node name="shareBook" value="Delen"/>
 			<node name="topup" value="Top up" toBeTranslated="true"/>
-			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="pay" value="Betalen"/>
 			<node name="refresh" value="Vernieuwen"/>
 			<node name="authorize" value="Autoriseren"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Verstuur rapport"/>
 			<node name="addToFavorites" value="Toevoegen aan favorieten"/>
 			<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+			<node name="markAsRead" value="Markeer als gelezen"/>
+			<node name="markAsUnread" value="Markeer als ongelezen"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-in installeren"/>
@@ -818,7 +818,7 @@
 		<node name="dictionaryIsNotInstalled" value="Woordenboek is niet geïnstalleerd"/>
 		<node name="permissionDenied" value="Toegang geweigerd"/>
 		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="Er zijn geen boeken in de serie, sorry"/>
 		<node name="emptyCatalog" value="Catalogus is leeg"/>
 		<node name="emptyBasket" value="Je mandje is leeg, sorry"/>
 		<node name="emptyNetworkSearchResults" value="Geen boeken gevonden, sorry"/>
