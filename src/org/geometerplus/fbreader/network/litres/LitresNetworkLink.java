@@ -46,7 +46,7 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 		super(id, siteName, title, summary, language, infos);
 	}
 	
-	ZLNetworkRequest createNetworkData(String url, final MimeType mime, final LitresCatalogItem.State result) {
+	ZLNetworkRequest createNetworkData(String url, final MimeType mime, final LitresCatalogItem.State result, final LitresFeedHandler extHandler) {
 		if (url == null) {
 			return null;
 		}
@@ -56,17 +56,31 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 		url = rewriteUrl(url, false);
 		return new ZLNetworkRequest(url, mime, null, false) {
 			@Override
+			public void doBefore() {
+				System.out.println("STARTED!");
+				result.loadFinished = false;
+			}
+			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				if (result.Loader.confirmInterruption()) {
 					return;
 				}
 				
 				String litresType = mime.getParameter("type");
-				LitresFeedHandler handler = new LitresFeedHandler(result);
+				LitresFeedHandler handler;
+				if(extHandler != null){
+					handler = extHandler;
+				}else{
+					handler = new LitresFeedHandler(result);
+				}
+				
 				LitResXMLReader reader = null;
 				if(litresType != null){
 					if(litresType.equals(MimeType.APP_LITRES_XML_AUTHORS.getParameter("type"))){
 						reader = new LitresAuthorsXMLReader();
+					}else if(litresType.equals(MimeType.APP_LITRES_XML_RECOMMEND.getParameter("type"))){
+						handler = new LitresRecommendFeedHandler(result);
+						reader = new LitResXMLReader();
 					}else{
 						reader = new LitResXMLReader();
 					}
@@ -82,14 +96,18 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
 					// reset state to load current page from the beginning
 					result.LastLoadedId = null;
+					System.out.println("FINISHED 3!");
 				} else {
 					result.Loader.getTree().confirmAllItems();
+					System.out.println("FINISHED 2!");
 				}
 			}
 
 			@Override
 			public void doAfter(boolean success) {
 				library.stopLoading(catalogItem);
+				System.out.println("FINISHED!");
+				result.loadFinished = true;
 			}
 		};
 	}
@@ -101,7 +119,7 @@ public abstract class LitresNetworkLink extends AbstractNetworkLink {
 	
 	@Override
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		return createNetworkData(data.ResumeURI, MimeType.APP_ATOM_XML, (LitresCatalogItem.State)data);
+		return createNetworkData(data.ResumeURI, MimeType.APP_ATOM_XML, (LitresCatalogItem.State)data, null);
 	}
 
 	@Override

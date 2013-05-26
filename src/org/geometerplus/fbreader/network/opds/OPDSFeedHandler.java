@@ -27,12 +27,12 @@ import org.geometerplus.fbreader.network.TopUpItem;
 import org.geometerplus.fbreader.network.atom.ATOMId;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
-import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 import org.geometerplus.fbreader.network.litres.LitResAuthorsItem;
 import org.geometerplus.fbreader.network.litres.LitresBooksFeedItem;
 import org.geometerplus.fbreader.network.litres.LitresCatalogByGenresItem;
 import org.geometerplus.fbreader.network.litres.LitresNetworkLink;
 import org.geometerplus.fbreader.network.litres.LitresPredefinedNetworkLink;
+import org.geometerplus.fbreader.network.litres.LitresRecommendCatalogItem;
 import org.geometerplus.fbreader.network.litres.author.LitresAuthor;
 import org.geometerplus.fbreader.network.litres.author.LitresAuthorsMap;
 import org.geometerplus.fbreader.network.litres.genre.LitresGenre;
@@ -40,7 +40,6 @@ import org.geometerplus.fbreader.network.litres.genre.LitresGenreMap;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -230,6 +229,9 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			if(entry.Id.Uri.equals(new String("authors.php5"))){
 				href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				mime = MimeType.APP_LITRES_XML_AUTHORS;
+			}else if(entry.Id.Uri.equals(new String("recommend.php5"))){
+				href = ZLNetworkUtil.url(myBaseURL, link.getHref());
+				mime = MimeType.APP_LITRES_XML_RECOMMEND;
 			}else{
 				href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				mime = MimeType.get(link.getType());
@@ -325,14 +327,14 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 				annotation,
 				urlMap
 			);
-		} else if (REL_RECOMMENDATIONS.equals(rel)) {
+		} /*else if (REL_RECOMMENDATIONS.equals(rel)) {
 			return new LitResRecommendationsItem(
 					link,
 					title,
 				annotation,
 				urlMap
 			);
-		} else if (REL_TOPUP.equals(rel)) {
+		} */else if (REL_TOPUP.equals(rel)) {
 			return new TopUpItem(link, urlMap);
 		}
 		
@@ -353,21 +355,20 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 						urlMap,
 						sort
 						);
+			} else if(litresType.equals(MimeType.APP_LITRES_XML_RECOMMEND.getParameter(TYPE))){
+				return new LitresRecommendCatalogItem(litresLink,
+						title,
+						annotation,
+						urlMap);
 			} else if (litresType.equals(MimeType.APP_LITRES_XML_GENRES.getParameter(TYPE))) {
-				try {
-					LinkedList<LitresGenre> tree = LitresGenreMap.Instance().genresTree();
-					return new LitresCatalogByGenresItem(
-							tree,
-							litresLink,
-							title,
-							annotation,
-							urlMap
-							);
-				} catch (ZLNetworkException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				LinkedList<LitresGenre> tree = LitresGenreMap.Instance().genresTree();
+				return new LitresCatalogByGenresItem(
+						tree,
+						litresLink,
+						title,
+						annotation,
+						urlMap
+						);
 			} else if (litresType.equals(MimeType.APP_LITRES_XML_AUTHORS.getParameter(TYPE))) {
 				LinkedList<LitresAuthor> tree = LitresAuthorsMap.Instance().authorsTree();
 				return new LitResAuthorsItem(

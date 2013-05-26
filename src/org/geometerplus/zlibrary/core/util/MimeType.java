@@ -99,6 +99,7 @@ public final class MimeType {
     // unofficial, used in data.fbreader.org LitRes catalog
 	public static final MimeType APP_LITRES_XML = get("application/litres+xml");
 	public static final MimeType APP_LITRES_XML_BOOKS = get("application/litres+xml;type=books");
+	public static final MimeType APP_LITRES_XML_RECOMMEND = get("application/litres+xml;type=recommend");
 	public static final MimeType APP_LITRES_XML_AUTHORS = get("application/litres+xml;type=authors");
 	public static final MimeType APP_LITRES_XML_GENRES = get("application/litres+xml;type=genres");
 

@@ -53,23 +53,23 @@ public class LitresGenreMap {
 	}
 	
 
-	public Map<String, LitresGenre> genresMap() throws ZLNetworkException {
+	public Map<String, LitresGenre> genresMap(){
 		validateGenres();
 		return myGenresMap;
 	}
 
-	public LinkedList<LitresGenre> genresTree() throws ZLNetworkException {
+	public LinkedList<LitresGenre> genresTree(){
 		validateGenres();
 		return myGenresTree;
 	}
 
-	public Map<LitresGenre, String> genresTitles() throws ZLNetworkException {
+	public Map<LitresGenre, String> genresTitles(){
 		validateGenres();
 		return myGenresTitles;
 	}
 	
 
-	private void validateGenres() throws ZLNetworkException {
+	private void validateGenres(){
 		if (!myInitialized) {
 			if (loadGenres()) {
 				buildGenresTitles(myGenresTree, "");
@@ -78,8 +78,7 @@ public class LitresGenreMap {
 		}
 	}
 	
-	boolean loadGenres() throws ZLNetworkException {
-		
+	boolean loadGenres(){
 		final String url = LitresUtil.url("pages/catalit_genres/");
 		
 		myGenresTree.clear();
@@ -93,7 +92,8 @@ public class LitresGenreMap {
 			myGenresTree = xmlReader.getGenresTree();
 			myGenresMap = xmlReader.getGenresMap();
 		} catch (ZLNetworkException e) {
-			throw e;
+			//throw e;
+			e.printStackTrace();
 		}
 		
 		return true;

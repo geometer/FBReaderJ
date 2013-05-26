@@ -44,7 +44,7 @@ public class LitResAuthorsItem extends LitresCatalogItem {
 			UrlInfo info = myURLs.getInfo(UrlInfo.Type.Catalog);
 			if(info != null){
 				doLoadChildren(
-					litresLink.createNetworkData(info.Url, MimeType.APP_LITRES_XML_AUTHORS, myLoadingState)
+					litresLink.createNetworkData(info.Url, MimeType.APP_LITRES_XML_AUTHORS, myLoadingState, null)
 				);
 			}
 		}

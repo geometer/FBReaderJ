@@ -86,6 +86,10 @@ public class LitresFeedHandler implements ATOMFeedHandler<LitresFeedMetadata,Lit
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void processItems() {
+		
+	}
 
 	@Override
 	public LitresFeedMetadata createFeed(ZLStringMap attributes) {
