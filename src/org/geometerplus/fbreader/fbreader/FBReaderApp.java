@@ -77,11 +77,9 @@ public final class FBReaderApp extends ZLApplication {
 		final int dpi = ZLibrary.Instance().getDisplayDPI();
 		final int x = ZLibrary.Instance().getPixelWidth();
 		final int y = ZLibrary.Instance().getPixelHeight();
-		TwoColumnViewOption = new ZLBooleanOption(
-			"Options", "TwoColumnView",
-			x * x + y * y >= 50 * dpi * dpi
-		);
 		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
+
+		TwoColumnViewOption = new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 50 * dpi * dpi);
 		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
 		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
