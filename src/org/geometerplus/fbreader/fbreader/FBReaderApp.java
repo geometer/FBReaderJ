@@ -37,7 +37,6 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.*;
@@ -73,22 +72,31 @@ public final class FBReaderApp extends ZLApplication {
 	public final static ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
 		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 
-	final static int dpi = ZLibrary.Instance().getDisplayDPI();
-	final static int x = ZLibrary.Instance().getPixelWidth();
-	final static int y = ZLibrary.Instance().getPixelHeight();
-	final static int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
-	
-	public final static ZLBooleanOption TwoColumnViewOption = new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 50 * dpi * dpi);
-	public final static ZLIntegerRangeOption LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
-	public final static ZLIntegerRangeOption RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
-	public final static ZLIntegerRangeOption TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
-	public final static ZLIntegerRangeOption BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
-	public final static ZLIntegerRangeOption SpaceBetweenColumnsOption = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
+	public final static ZLBooleanOption TwoColumnViewOption;
+	public final static ZLIntegerRangeOption LeftMarginOption;
+	public final static ZLIntegerRangeOption RightMarginOption;
+	public final static ZLIntegerRangeOption TopMarginOption;
+	public final static ZLIntegerRangeOption BottomMarginOption;
+	public final static ZLIntegerRangeOption SpaceBetweenColumnsOption;
+	public final static ZLIntegerRangeOption FooterHeightOption;
+
+	static {
+		final int dpi = ZLibrary.Instance().getDisplayDPI();
+		final int x = ZLibrary.Instance().getPixelWidth();
+		final int y = ZLibrary.Instance().getPixelHeight();
+		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
+
+		TwoColumnViewOption = new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 50 * dpi * dpi);
+		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
+		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
+		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
+		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
+		SpaceBetweenColumnsOption = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
+		FooterHeightOption = new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
+	}
 
 	public final static ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-	public final static ZLIntegerRangeOption FooterHeightOption =
-		new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
 	public final static ZLBooleanOption FooterShowTOCMarksOption =
 		new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
 	public final static ZLBooleanOption FooterShowClockOption =
