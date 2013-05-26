@@ -26,7 +26,7 @@ final class BitmapImageData extends ZLAndroidImageData {
 	private final Bitmap myBitmap;
 
 	BitmapImageData(ZLBitmapImage image) {
-		myBitmap = image.getBitmap();
+		myBitmap = image != null ? image.getBitmap() : null;
 	}
 
 	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
