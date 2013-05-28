@@ -56,10 +56,10 @@ public final class FBView extends ZLTextView {
 	private TapZoneMap myZoneMap;
 
 	private TapZoneMap getZoneMap() {
-		final ScrollingPreferences prefs = ScrollingPreferences.Instance();
+		final ScrollingPreferences prefs = myReader.ScrollingPreferences;
 		String id = prefs.TapZoneMapOption.getValue();
 		if ("".equals(id)) {
-			id = ScrollingPreferences.Instance().HorizontalOption.getValue() ? "right_to_left" : "up";
+			id = prefs.HorizontalOption.getValue() ? "right_to_left" : "up";
 		}
 		if (myZoneMap == null || !id.equals(myZoneMap.Name)) {
 			myZoneMap = TapZoneMap.zoneMap(id);
@@ -139,7 +139,7 @@ public final class FBView extends ZLTextView {
 
 	private boolean isFlickScrollingEnabled() {
 		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			ScrollingPreferences.Instance().FingerScrollingOption.getValue();
+			myReader.ScrollingPreferences.FingerScrollingOption.getValue();
 		return
 			fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
 			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
@@ -150,7 +150,7 @@ public final class FBView extends ZLTextView {
 			return;
 		}
 
-		final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
+		final boolean horizontal = myReader.ScrollingPreferences.HorizontalOption.getValue();
 		final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
 		myReader.getViewWidget().startManualScrolling(x, y, direction);
 	}
@@ -203,7 +203,7 @@ public final class FBView extends ZLTextView {
 
 		if (isFlickScrollingEnabled()) {
 			myReader.getViewWidget().startAnimatedScrolling(
-				x, y, ScrollingPreferences.Instance().AnimationSpeedOption.getValue()
+				x, y, myReader.ScrollingPreferences.AnimationSpeedOption.getValue()
 			);
 			return true;
 		}
@@ -642,6 +642,6 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Animation getAnimationType() {
-		return ScrollingPreferences.Instance().AnimationOption.getValue();
+		return myReader.ScrollingPreferences.AnimationOption.getValue();
 	}
 }
