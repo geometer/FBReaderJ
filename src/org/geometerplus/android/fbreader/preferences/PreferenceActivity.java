@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
@@ -404,12 +405,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 		*/
 
-		final ScrollingPreferences scrollingPreferences = fbReader.ScrollingPreferences;
+		final PageTurningOptions pageTurningOptions = fbReader.PageTurningOptions;
 
 		final ZLKeyBindings keyBindings = fbReader.keyBindings();
 
 		final Screen scrollingScreen = createPreferenceScreen("scrolling");
-		scrollingScreen.addOption(scrollingPreferences.FingerScrollingOption, "fingerScrolling");
+		scrollingScreen.addOption(pageTurningOptions.FingerScrollingOption, "fingerScrolling");
 		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
 
 		final ZLPreferenceSet volumeKeysPreferences = new ZLPreferenceSet();
@@ -456,14 +457,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}));
 		volumeKeysPreferences.setEnabled(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
 
-		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
+		scrollingScreen.addOption(pageTurningOptions.AnimationOption, "animation");
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
 			this,
 			scrollingScreen.Resource,
 			"animationSpeed",
-			scrollingPreferences.AnimationSpeedOption
+			pageTurningOptions.AnimationSpeedOption
 		));
-		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
+		scrollingScreen.addOption(pageTurningOptions.HorizontalOption, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
 		try {

@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
+import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 
 public final class FBView extends ZLTextView {
 	private FBReaderApp myReader;
@@ -56,7 +57,7 @@ public final class FBView extends ZLTextView {
 	private TapZoneMap myZoneMap;
 
 	private TapZoneMap getZoneMap() {
-		final ScrollingPreferences prefs = myReader.ScrollingPreferences;
+		final PageTurningOptions prefs = myReader.PageTurningOptions;
 		String id = prefs.TapZoneMapOption.getValue();
 		if ("".equals(id)) {
 			id = prefs.HorizontalOption.getValue() ? "right_to_left" : "up";
@@ -138,11 +139,11 @@ public final class FBView extends ZLTextView {
 	}
 
 	private boolean isFlickScrollingEnabled() {
-		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			myReader.ScrollingPreferences.FingerScrollingOption.getValue();
+		final PageTurningOptions.FingerScrolling fingerScrolling =
+			myReader.PageTurningOptions.FingerScrollingOption.getValue();
 		return
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
+			fingerScrolling == PageTurningOptions.FingerScrolling.byFlick ||
+			fingerScrolling == PageTurningOptions.FingerScrolling.byTapAndFlick;
 	}
 
 	private void startManualScrolling(int x, int y) {
@@ -150,7 +151,7 @@ public final class FBView extends ZLTextView {
 			return;
 		}
 
-		final boolean horizontal = myReader.ScrollingPreferences.HorizontalOption.getValue();
+		final boolean horizontal = myReader.PageTurningOptions.HorizontalOption.getValue();
 		final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
 		myReader.getViewWidget().startManualScrolling(x, y, direction);
 	}
@@ -203,7 +204,7 @@ public final class FBView extends ZLTextView {
 
 		if (isFlickScrollingEnabled()) {
 			myReader.getViewWidget().startAnimatedScrolling(
-				x, y, myReader.ScrollingPreferences.AnimationSpeedOption.getValue()
+				x, y, myReader.PageTurningOptions.AnimationSpeedOption.getValue()
 			);
 			return true;
 		}
@@ -642,6 +643,6 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Animation getAnimationType() {
-		return myReader.ScrollingPreferences.AnimationOption.getValue();
+		return myReader.PageTurningOptions.AnimationOption.getValue();
 	}
 }

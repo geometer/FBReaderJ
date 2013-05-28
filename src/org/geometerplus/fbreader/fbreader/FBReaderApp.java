@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
+import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -113,7 +114,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "positions", true);
 
-	public final ScrollingPreferences ScrollingPreferences = new ScrollingPreferences();
+	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
 
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
