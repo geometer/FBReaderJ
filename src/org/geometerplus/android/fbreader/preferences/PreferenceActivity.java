@@ -404,7 +404,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 		*/
 
-		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
+		final ScrollingPreferences scrollingPreferences = fbReader.ScrollingPreferences;
 
 		final ZLKeyBindings keyBindings = fbReader.keyBindings();
 
