@@ -369,19 +369,20 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
+		final FooterOptions footerOptions = fbReader.FooterOptions;
 		footerPreferences.add(statusLineScreen.addPreference(new ZLIntegerRangePreference(
 			this, statusLineScreen.Resource.getResource("footerHeight"),
 			fbReader.FooterHeightOption
 		)));
 		footerPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerColor"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterOptions.ShowTOCMarks, "tocMarks"));
+		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowTOCMarks, "tocMarks"));
 
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterOptions.ShowClock, "showClock"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterOptions.ShowBattery, "showBattery"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterOptions.ShowProgress, "showProgress"));
+		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
+		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowBattery, "showBattery"));
+		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowProgress, "showProgress"));
 		footerPreferences.add(statusLineScreen.addPreference(new FontOption(
 			this, statusLineScreen.Resource, "font",
-			fbReader.FooterOptions.Font, false
+			footerOptions.Font, false
 		)));
 		footerPreferences.setEnabled(
 			fbReader.ScrollbarTypeOption.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER
