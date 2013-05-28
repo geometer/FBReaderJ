@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
+
 class TurnPageAction extends FBAction {
 	private final boolean myForward;
 
@@ -29,16 +31,16 @@ class TurnPageAction extends FBAction {
 
 	@Override
 	public boolean isEnabled() {
-		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			Reader.ScrollingPreferences.FingerScrollingOption.getValue();
+		final PageTurningOptions.FingerScrolling fingerScrolling =
+			Reader.PageTurningOptions.FingerScrollingOption.getValue();
 		return
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTap ||
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
+			fingerScrolling == PageTurningOptions.FingerScrolling.byTap ||
+			fingerScrolling == PageTurningOptions.FingerScrolling.byTapAndFlick;
 	}
 
 	@Override
 	protected void run(Object ... params) {
-		final ScrollingPreferences preferences = Reader.ScrollingPreferences;
+		final PageTurningOptions preferences = Reader.PageTurningOptions;
 		if (params.length == 2 && params[0] instanceof Integer && params[1] instanceof Integer) {
 			final int x = (Integer)params[0];
 			final int y = (Integer)params[1];
