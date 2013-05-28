@@ -23,12 +23,6 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 public class ScrollingPreferences {
-	private static ScrollingPreferences ourInstance;
-
-	public static ScrollingPreferences Instance() {
-		return (ourInstance != null) ? ourInstance : new ScrollingPreferences();
-	}
-
 	public static enum FingerScrolling {
 		byTap, byFlick, byTapAndFlick
 	}
@@ -44,8 +38,4 @@ public class ScrollingPreferences {
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
 	public final ZLStringOption TapZoneMapOption =
 		new ZLStringOption("Scrolling", "TapZoneMap", "");
-
-	private ScrollingPreferences() {
-		ourInstance = this;
-	}
 }
