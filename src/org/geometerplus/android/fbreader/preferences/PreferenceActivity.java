@@ -423,12 +423,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
+		final FooterOptions footerOptions = FBReaderApp.FooterOptions;
 		footerPreferences.add(statusLineScreen.addPreference(new ZLIntegerRangePreference(
 			this, statusLineScreen.Resource.getResource("footerHeight"),
 			FBReaderApp.FooterHeightOption
 		)));
 		footerPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerColor"));
-		final FooterOptions footerOptions = FBReaderApp.FooterOptions;
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowTOCMarks, "tocMarks"));
 
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
