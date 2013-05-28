@@ -122,6 +122,8 @@ public final class FBReaderApp extends ZLApplication {
 
 	private final static ZLKeyBindings ourBindings = ZLKeyBindings.get("Keys");
 
+	public final static ScrollingPreferences ScrollingPreferences = new ScrollingPreferences();
+
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
 	private String myFootnoteModelId;
