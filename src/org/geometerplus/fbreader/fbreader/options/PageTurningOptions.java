@@ -17,12 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
-public class ScrollingPreferences {
+public class PageTurningOptions {
 	public static enum FingerScrolling {
 		byTap, byFlick, byTapAndFlick
 	}

@@ -27,9 +27,6 @@ import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.application.*;
-import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
@@ -40,7 +37,7 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.zlibrary.core.filetypes.*;
+import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
 	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -121,8 +118,7 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("CancelMenu", "positions", true);
 
 	private final static ZLKeyBindings ourBindings = ZLKeyBindings.get("Keys");
-
-	public final static ScrollingPreferences ScrollingPreferences = new ScrollingPreferences();
+	public final static PageTurningOptions PageTurningOptions = new PageTurningOptions();
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
