@@ -94,31 +94,15 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final static ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-	public final static ZLBooleanOption FooterShowTOCMarksOption =
-		new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
-	public final static ZLBooleanOption FooterShowClockOption =
-		new ZLBooleanOption("Options", "ShowClockInFooter", true);
-	public final static ZLBooleanOption FooterShowBatteryOption =
-		new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-	public final static ZLBooleanOption FooterShowProgressOption =
-		new ZLBooleanOption("Options", "ShowProgressInFooter", true);
-	public final static ZLStringOption FooterFontOption =
-		new ZLStringOption("Options", "FooterFont", "Droid Sans");
 
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
-	public final static ZLBooleanOption ShowLibraryInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "library", true);
-	public final static ZLBooleanOption ShowNetworkLibraryInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "networkLibrary", true);
-	public final static ZLBooleanOption ShowPreviousBookInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "previousBook", false);
-	public final static ZLBooleanOption ShowPositionsInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "positions", true);
 
 	private final static ZLKeyBindings ourBindings = ZLKeyBindings.get("Keys");
 	public final static PageTurningOptions PageTurningOptions = new PageTurningOptions();
+	public final static FooterOptions FooterOptions = new FooterOptions();
+	public final static CancelMenuOptions CancelMenuOptions = new CancelMenuOptions();
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
@@ -549,17 +533,17 @@ public final class FBReaderApp extends ZLApplication {
 	
 	public List<CancelActionDescription> getCancelActionsList(IBookCollection Collection) {
 		myCancelActionsList.clear();
-		if (ShowLibraryInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowLibraryItem.getValue()) {
 			myCancelActionsList.add(new CancelActionDescription(
 				CancelActionType.library, null
 			));
 		}
-		if (ShowNetworkLibraryInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowNetworkLibraryItem.getValue()) {
 			myCancelActionsList.add(new CancelActionDescription(
 				CancelActionType.networkLibrary, null
 			));
 		}
-		if (ShowPreviousBookInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowPreviousBookItem.getValue()) {
 			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
 				myCancelActionsList.add(new CancelActionDescription(
@@ -567,7 +551,7 @@ public final class FBReaderApp extends ZLApplication {
 				));
 			}
 		}
-		if (ShowPositionsInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowPositionItems.getValue()) {
 			if (Model != null && Model.Book != null) {
 				for (Bookmark bookmark : invisibleBookmarks()) {
 					myCancelActionsList.add(new BookmarkDescription(bookmark));
@@ -582,17 +566,17 @@ public final class FBReaderApp extends ZLApplication {
 	
 	public static List<CancelActionDescription> getStaticCancelActionsList(IBookCollection Collection) {
 		ArrayList<CancelActionDescription> cancelActionsList = new ArrayList<CancelActionDescription>();
-		if (ShowLibraryInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowLibraryItem.getValue()) {
 			cancelActionsList.add(new CancelActionDescription(
 				CancelActionType.library, null
 			));
 		}
-		if (ShowNetworkLibraryInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowNetworkLibraryItem.getValue()) {
 			cancelActionsList.add(new CancelActionDescription(
 				CancelActionType.networkLibrary, null
 			));
 		}
-		if (ShowPreviousBookInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowPreviousBookItem.getValue()) {
 			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
 				cancelActionsList.add(new CancelActionDescription(
