@@ -29,10 +29,8 @@ class TurnPageAction extends FBAction {
 
 	@Override
 	public boolean isEnabled() {
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-
 		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			preferences.FingerScrollingOption.getValue();
+			Reader.ScrollingPreferences.FingerScrollingOption.getValue();
 		return
 			fingerScrolling == ScrollingPreferences.FingerScrolling.byTap ||
 			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
@@ -40,7 +38,7 @@ class TurnPageAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+		final ScrollingPreferences preferences = Reader.ScrollingPreferences;
 		if (params.length == 2 && params[0] instanceof Integer && params[1] instanceof Integer) {
 			final int x = (Integer)params[0];
 			final int y = (Integer)params[1];
