@@ -19,23 +19,15 @@
 
 package org.geometerplus.fbreader.fbreader.options;
 
-import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
-public class PageTurningOptions {
-	public static enum FingerScrollingType {
-		byTap, byFlick, byTapAndFlick
-	}
-	public final ZLEnumOption<FingerScrollingType> FingerScrolling =
-		new ZLEnumOption<FingerScrollingType>("Scrolling", "Finger", FingerScrollingType.byTapAndFlick);
-
-	public final ZLEnumOption<ZLView.Animation> Animation =
-		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
-	public final ZLIntegerRangeOption AnimationSpeed =
-		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, 4);
-
-	public final ZLBooleanOption Horizontal =
-		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public final ZLStringOption TapZoneMap =
-		new ZLStringOption("Scrolling", "TapZoneMap", "");
+public class CancelMenuOptions {
+	public final ZLBooleanOption ShowLibraryItem =
+		new ZLBooleanOption("CancelMenu", "library", true);
+	public final ZLBooleanOption ShowNetworkLibraryItem =
+		new ZLBooleanOption("CancelMenu", "networkLibrary", true);
+	public final ZLBooleanOption ShowPreviousBookItem =
+		new ZLBooleanOption("CancelMenu", "previousBook", false);
+	public final ZLBooleanOption ShowPositionItems =
+		new ZLBooleanOption("CancelMenu", "positions", true);
 }
