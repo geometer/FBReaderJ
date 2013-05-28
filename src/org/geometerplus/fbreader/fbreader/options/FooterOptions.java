@@ -20,22 +20,19 @@
 package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.view.ZLView;
 
-public class PageTurningOptions {
-	public static enum FingerScrollingType {
-		byTap, byFlick, byTapAndFlick
+public class FooterOptions {
+	public final ZLBooleanOption ShowTOCMarks;
+	public final ZLBooleanOption ShowClock;
+	public final ZLBooleanOption ShowBattery;
+	public final ZLBooleanOption ShowProgress;
+	public final ZLStringOption Font;
+
+	public FooterOptions() {
+		ShowTOCMarks = new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
+		ShowClock = new ZLBooleanOption("Options", "ShowClockInFooter", true);
+		ShowBattery = new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
+		ShowProgress = new ZLBooleanOption("Options", "ShowProgressInFooter", true);
+		Font = new ZLStringOption("Options", "FooterFont", "Droid Sans");
 	}
-	public final ZLEnumOption<FingerScrollingType> FingerScrolling =
-		new ZLEnumOption<FingerScrollingType>("Scrolling", "Finger", FingerScrollingType.byTapAndFlick);
-
-	public final ZLEnumOption<ZLView.Animation> Animation =
-		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
-	public final ZLIntegerRangeOption AnimationSpeed =
-		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, 8);
-
-	public final ZLBooleanOption Horizontal =
-		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public final ZLStringOption TapZoneMap =
-		new ZLStringOption("Scrolling", "TapZoneMap", "");
 }

@@ -91,30 +91,13 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-	public final ZLBooleanOption FooterShowTOCMarksOption =
-		new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
-	public final ZLBooleanOption FooterShowClockOption =
-		new ZLBooleanOption("Options", "ShowClockInFooter", true);
-	public final ZLBooleanOption FooterShowBatteryOption =
-		new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-	public final ZLBooleanOption FooterShowProgressOption =
-		new ZLBooleanOption("Options", "ShowProgressInFooter", true);
-	public final ZLStringOption FooterFontOption =
-		new ZLStringOption("Options", "FooterFont", "Droid Sans");
 
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
-	public final ZLBooleanOption ShowLibraryInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "library", true);
-	public final ZLBooleanOption ShowNetworkLibraryInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "networkLibrary", true);
-	public final ZLBooleanOption ShowPreviousBookInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "previousBook", false);
-	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "positions", true);
-
 	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
+	public final FooterOptions FooterOptions = new FooterOptions();
+	public final CancelMenuOptions CancelMenuOptions = new CancelMenuOptions();
 
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
@@ -478,17 +461,17 @@ public final class FBReaderApp extends ZLApplication {
 
 	public List<CancelActionDescription> getCancelActionsList() {
 		myCancelActionsList.clear();
-		if (ShowLibraryInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowLibraryItem.getValue()) {
 			myCancelActionsList.add(new CancelActionDescription(
 				CancelActionType.library, null
 			));
 		}
-		if (ShowNetworkLibraryInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowNetworkLibraryItem.getValue()) {
 			myCancelActionsList.add(new CancelActionDescription(
 				CancelActionType.networkLibrary, null
 			));
 		}
-		if (ShowPreviousBookInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowPreviousBookItem.getValue()) {
 			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
 				myCancelActionsList.add(new CancelActionDescription(
@@ -496,7 +479,7 @@ public final class FBReaderApp extends ZLApplication {
 				));
 			}
 		}
-		if (ShowPositionsInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowPositionItems.getValue()) {
 			if (Model != null && Model.Book != null) {
 				for (Bookmark bookmark : invisibleBookmarks()) {
 					myCancelActionsList.add(new BookmarkDescription(bookmark));
