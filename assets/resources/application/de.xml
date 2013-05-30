@@ -389,6 +389,7 @@
 			<node name="lineSpacing" value="Zeilenabstand">
 				<node name="unchanged" value="&lt;unverändert&gt;"/>
 			</node>
+			<node name="decimalMark" value=","/>
 			<node name="alignment" value="Ausrichtung">
 				<node name="left" value="Links"/>
 				<node name="right" value="Rechts"/>

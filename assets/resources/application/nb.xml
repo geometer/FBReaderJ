@@ -395,6 +395,7 @@
 			<node name="lineSpacing" value="Linjeavstand">
 				<node name="unchanged" value="&lt;uforandret&gt;"/>
 			</node>
+			<node name="decimalMark" value=","/>
 			<node name="alignment" value="Justering">
 				<node name="left" value="Venstre"/>
 				<node name="right" value="Høyre"/>

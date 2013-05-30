@@ -385,6 +385,7 @@
 			<node name="lineSpacing" value="行间距">
 				<node name="unchanged" value="&lt;不变&gt;"/>
 			</node>
+			<node name="decimalMark" value="."/>
 			<node name="alignment" value="对齐">
 				<node name="left" value="左"/>
 				<node name="right" value="右"/>

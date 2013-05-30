@@ -385,6 +385,8 @@
 			<node name="lineSpacing" value="Interlinia">
 				<node name="unchanged" value="&lt;bez zmian&gt;"/>
 			</node>
+			<node name="decimalMark" value=","/>
+			<node name="spaceBefore" value="Odstęp przed"/>
 			<node name="alignment" value="Wyrównanie">
 				<node name="left" value="Do lewej"/>
 				<node name="right" value="Do prawej"/>

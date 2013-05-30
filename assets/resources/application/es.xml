@@ -400,6 +400,8 @@
 			<node name="lineSpacing" value="Interlineado">
 				<node name="unchanged" value="&lt;sin cambios&gt;"/>
 			</node>
+			<!-- decimalMark is ',' in Spain, Argentina etc. and '.' in Peru, Mexico etc. -->
+			<node name="decimalMark" value=","/>
 			<node name="alignment" value="Alineación">
 				<node name="left" value="Izquierda"/>
 				<node name="right" value="Derecha"/>

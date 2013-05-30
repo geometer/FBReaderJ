@@ -385,6 +385,7 @@
 			<node name="lineSpacing" value="Sorköz">
 				<node name="unchanged" value="&lt;változatlan&gt;"/>
 			</node>
+			<node name="decimalMark" value=","/>
 			<node name="alignment" value="Igazítás">
 				<node name="left" value="Balra"/>
 				<node name="right" value="Jobbra"/>
