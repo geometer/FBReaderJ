@@ -1,6 +1,8 @@
 package org.geometerplus.fbreader.book;
 
 import org.geometerplus.zlibrary.text.view.ZLTextElement;
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.view.ZLTextWord;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
@@ -108,4 +110,47 @@ mainLoop:
 		}
 		return new Bookmark(book, modelId, startCursor, buffer.Cursor, buffer.Builder.toString(), isVisible);
 	}
+	
+
+	public static void findEnd(ZLTextView view, Bookmark bookmark) {
+		if (bookmark.myEnd != null) {
+			return;
+		}
+		ZLTextWordCursor cursor = view.getStartCursor();
+		if (cursor.isNull()) {
+			cursor = view.getEndCursor();
+		}
+		if (cursor.isNull()) {
+			return;
+		}
+		cursor = new ZLTextWordCursor(cursor);
+		cursor.moveTo(bookmark);
+
+		ZLTextWord word = null;
+mainLoop:
+		for (int count = bookmark.myLength; count > 0; cursor.nextWord()) {
+			while (cursor.isEndOfParagraph()) {
+				if (!cursor.nextParagraph()) {
+					break mainLoop;
+				}
+			}
+			final ZLTextElement element = cursor.getElement();
+			if (element instanceof ZLTextWord) {
+				if (word != null) {
+					--count;
+				}
+				word = (ZLTextWord)element;
+				System.err.println(new String(word.Data, word.Offset, word.Length));
+				count -= word.Length;
+			}
+		}
+		if (word != null) {
+			bookmark.myEnd = new ZLTextFixedPosition(
+				cursor.getParagraphIndex(),
+				cursor.getElementIndex(),
+				word.Length
+			);
+		}
+	}
+
 }

@@ -32,7 +32,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	}
 
 	private long myId;
-	private final long myBookId;
+	private long myBookId;
 	private final String myBookTitle;
 	private String myText;
 	private final Date myCreationDate;
@@ -40,8 +40,8 @@ public final class Bookmark extends ZLTextFixedPosition {
 	private Date myAccessDate;
 	private int myAccessCount;
 	private Date myLatestDate;
-	private ZLTextFixedPosition myEnd;
-	private int myLength;
+	ZLTextFixedPosition myEnd;
+	int myLength;
 	private int myStyleId;
 
 	public final String ModelId;
@@ -82,47 +82,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		}
 
 		myStyleId = styleId;
-	}
-
-	public void findEnd(ZLTextView view) {
-		if (myEnd != null) {
-			return;
-		}
-		ZLTextWordCursor cursor = view.getStartCursor();
-		if (cursor.isNull()) {
-			cursor = view.getEndCursor();
-		}
-		if (cursor.isNull()) {
-			return;
-		}
-		cursor = new ZLTextWordCursor(cursor);
-		cursor.moveTo(this);
-
-		ZLTextWord word = null;
-mainLoop:
-		for (int count = myLength; count > 0; cursor.nextWord()) {
-			while (cursor.isEndOfParagraph()) {
-				if (!cursor.nextParagraph()) {
-					break mainLoop;
-				}
-			}
-			final ZLTextElement element = cursor.getElement();
-			if (element instanceof ZLTextWord) {
-				if (word != null) {
-					--count;
-				}
-				word = (ZLTextWord)element;
-				System.err.println(new String(word.Data, word.Offset, word.Length));
-				count -= word.Length;
-			}
-		}
-		if (word != null) {
-			myEnd = new ZLTextFixedPosition(
-				cursor.getParagraphIndex(),
-				cursor.getElementIndex(),
-				word.Length
-			);
-		}
 	}
 
 	public Bookmark(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
@@ -214,7 +173,7 @@ mainLoop:
 		}
 	}
 
-	void setId(long id) {
+	public void setId(long id) {
 		myId = id;
 	}
 
@@ -223,5 +182,9 @@ mainLoop:
 		if (other != null) {
 			myId = other.myId;
 		}
+	}
+
+	public void setBookId(long id) {
+		myBookId = id;
 	}
 }

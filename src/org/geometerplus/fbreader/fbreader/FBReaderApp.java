@@ -289,7 +289,7 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			for (Bookmark b : bookmarks) {
 				if (b.getEnd() == null) {
-					b.findEnd(view);
+					Buffer.findEnd(view, b);
 				}
 				if (MiscUtil.equals(modelId, b.ModelId)) {
 					view.addHighlighting(new BookmarkHighlighting(view, Collection, b));
