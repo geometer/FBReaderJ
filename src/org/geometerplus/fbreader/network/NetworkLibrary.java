@@ -99,6 +99,16 @@ public class NetworkLibrary {
 		}
 		return new ArrayList<String>(languageSet);
 	}
+	
+	public List<String> linkIds() {
+		final TreeSet<String> idSet = new TreeSet<String>();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				idSet.add(link.getUrl(UrlInfo.Type.Catalog));
+			}
+		}
+		return new ArrayList<String>(idSet);
+	}
 
 	private ZLStringListOption myActiveLanguageCodesOption;
 	private ZLStringListOption activeLanguageCodesOption() {
@@ -117,7 +127,7 @@ public class NetworkLibrary {
 	public List<String> activeLanguageCodes() {
 		return activeLanguageCodesOption().getValue();
 	}
-
+	
 	public void setActiveLanguageCodes(Collection<String> codes) {
 		final TreeSet<String> allCodes = new TreeSet<String>();
 		allCodes.addAll(ZLibrary.Instance().defaultLanguageCodes());
@@ -137,14 +147,59 @@ public class NetworkLibrary {
 		activeLanguageCodesOption().setValue(codesList);
 		invalidateChildren();
 	}
+	
+	private ZLStringListOption myActiveIdsOption;
+	private ZLStringListOption activeIdsOption() {
+ 		if (myActiveIdsOption == null) {
+ 			myActiveIdsOption =
+				new ZLStringListOption(
+					"Options",
+					"ActiveIds",
+					ZLibrary.Instance().defaultIds(),
+					","
+				);
+		}
+		return myActiveIdsOption;
+	}
+	
+	public List<String> activeIds() {
+		return activeIdsOption().getValue();
+	}
+
+	public void setActiveIds(Collection<String> ids) {
+		final TreeSet<String> allCodes = new TreeSet<String>();
+		allCodes.addAll(ZLibrary.Instance().defaultIds());
+		allCodes.removeAll(linkIds());
+		allCodes.addAll(ids);
+
+		// sort ids
+		//final TreeSet<Language> languages = new TreeSet<Language>();
+		//for (String code : allCodes) {
+		//	languages.add(new Language(code));
+		//}
+		//final ArrayList<String> codesList = new ArrayList<String>(languages.size());
+		final ArrayList<String> codesList = new ArrayList<String>(allCodes.size());
+		for (String l : allCodes) {
+			codesList.add(l);
+		}
+
+		activeIdsOption().setValue(codesList);
+		invalidateChildren();
+	}
+	
+	public List<INetworkLink> getAllLinks() {
+		return myLinks;
+	}
 
 	List<INetworkLink> activeLinks() {
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
 		final Collection<String> codes = activeLanguageCodes();
+		final Collection<String> ids = activeIds();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
 				if (link instanceof ICustomNetworkLink ||
-					codes.contains(link.getLanguage())) {
+					//codes.contains(link.getLanguage()) ||
+					ids.contains(link.getUrl(UrlInfo.Type.Catalog))) {
 					filteredList.add(link);
 				}
 			}
@@ -226,7 +281,7 @@ public class NetworkLibrary {
 		}
 
 		synchronize();
-
+		
 		myIsInitialized = true;
 		fireModelChangedEvent(ChangeListener.Code.InitializationFinished);
 	}
