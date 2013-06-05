@@ -16,29 +16,39 @@ import android.app.Activity;
 import android.content.Intent;
 
 public class NetworkLibraryFilterAction extends RootAction {
-
+	
 	public NetworkLibraryFilterAction(Activity activity) {
 		super(activity, ActionCode.LIBRARY_FILTER, "libraryFilter", true);
 	}
 
 	@Override
 	public void run(NetworkTree tree) {
-		final List<String> ids = new ArrayList<String>();
-		
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		System.out.println("[NetworkLibraryFilterAction] Library links: "+library.getAllLinks().size());
-		for(INetworkLink link : library.getAllLinks()){
-			System.out.println("[NetworkLibraryFilterAction] link: "+link.getUrl(UrlInfo.Type.Catalog)+": "+link.getTitle());
-			ids.add(link.getUrl(UrlInfo.Type.Catalog));
-		}
+				
+		final List<String> activeIds = library.activeIds();
+		ArrayList<String> ids = new ArrayList<String>();
+		ids.addAll(activeIds);
 		
-		//ids.add("http://www.feedbooks.com/catalog.atom");
-		library.setActiveIds(ids);
-		library.synchronize();
+		final ArrayList<String> allids = new ArrayList<String>();
+		boolean found = false;
+		for(String id : library.linkIds()){
+			for(String aid : activeIds){
+				if(id.equals(aid)){
+					found = true;
+					break;
+				}
+			}
+			if(!found){
+				allids.add(id);
+			}
+			found = false;
+		}
 		
 		OrientationUtil.startActivity(
 				myActivity,
 				new Intent(myActivity.getApplicationContext(), NetworkLibraryFilterActivity.class)
+				.putStringArrayListExtra(NetworkLibraryFilterActivity.IDS_LIST, ids)
+				.putStringArrayListExtra(NetworkLibraryFilterActivity.ALL_IDS_LIST, allids)
 			);
 	}
 

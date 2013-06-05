@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-	<TextView
-			android:id="@+id/network_book_info_title_test"
-			style="?android:attr/listSeparatorTextViewStyle"
-		/>
+	
+	<ListView android:id="@+id/selectedList"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content" />
+	
 </LinearLayout>
