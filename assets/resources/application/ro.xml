@@ -211,9 +211,18 @@
 		<node name="forward" value="Înainte"/>
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
 	<node name="highlightingStyleMenu">
-		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Sterge marcaj"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
 	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Copiati în clipboard"/>
