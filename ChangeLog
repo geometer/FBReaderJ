@@ -1,4 +1,5 @@
 ===== 1.8.2 (Jun ??, 2013) =====
+* Editable highlighting styles
 * New color picker dialog (AmbilWarna library http://code.google.com/p/android-color-picker/ is used)
 * Updated Spanish loading (by Diego Bernardi, sponsored by Panacea Supplies)
 * Updated Czech localization (by Marek Pavelka)
