@@ -674,4 +674,10 @@ public class BookCollection extends AbstractBookCollection {
 		initStylesTable();
 		return new ArrayList<HighlightingStyle>(myStyles.values());
 	}
+
+	public void saveHighlightingStyle(HighlightingStyle style) {
+		myStyles.put(style.Id, style);
+		myDatabase.saveStyle(style);
+		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
+	}
 }

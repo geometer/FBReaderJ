@@ -28,10 +28,11 @@ import android.database.sqlite.SQLiteStatement;
 import android.database.SQLException;
 import android.database.Cursor;
 
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
@@ -883,13 +884,32 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected List<HighlightingStyle> loadStyles() {
 		final LinkedList<HighlightingStyle> list = new LinkedList<HighlightingStyle>();
-		final String sql = "SELECT style_id,bg_color FROM HighlightingStyle";
+		final String sql = "SELECT style_id,name,bg_color FROM HighlightingStyle";
 		final Cursor cursor = myDatabase.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
-			list.add(createStyle((int)cursor.getLong(0), (int)cursor.getLong(1)));
+			list.add(createStyle(
+				(int)cursor.getLong(0),
+				cursor.getString(1),
+				(int)cursor.getLong(2)
+			));
 		}
 		cursor.close();
 		return list;
+	}
+
+	private SQLiteStatement myInsertStyleStatement;
+	protected void saveStyle(HighlightingStyle style) {
+		if (myInsertStyleStatement == null) {
+			myInsertStyleStatement = myDatabase.compileStatement(
+				"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color) VALUES (?,?,?)"
+			);
+		}
+		myInsertStyleStatement.bindLong(1, style.Id);
+		final String name = style.getName();
+		myInsertStyleStatement.bindString(2, name != null ? name : "");
+		final ZLColor bgColor = style.getBackgroundColor();
+		myInsertStyleStatement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
+		myInsertStyleStatement.executeInsert();
 	}
 
 	private SQLiteStatement myInsertBookmarkStatement;
@@ -1410,7 +1430,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS HighlightingStyle(" +
 				"style_id INTEGER PRIMARY KEY," +
-				"name TEXT," +
+				"name TEXT NOT NULL," +
 				"bg_color INTEGER NOT NULL)");
 		myDatabase.execSQL("ALTER TABLE Bookmarks ADD COLUMN style_id INTEGER NOT NULL REFERENCES HighlightingStyle(style_id) DEFAULT 1");
 		myDatabase.execSQL("UPDATE Bookmarks SET end_paragraph = LENGTH(bookmark_text)");
