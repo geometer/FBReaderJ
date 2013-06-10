@@ -9,12 +9,13 @@
 	android:paddingBottom="10dip"
 	android:orientation="horizontal"
 >
-	<ImageView
+	<yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView 
 		android:id="@+id/style_item_color"
-		android:layout_width="wrap_content"
-		android:layout_height="fill_parent"
-		android:minHeight="?android:attr/listPreferredItemHeight"
-		android:minWidth="?android:attr/listPreferredItemHeight"
+		android:layout_width="24dp"
+		android:layout_height="24dp"
+		android:layout_gravity="center_vertical|left"
+		android:focusable="false"
+		android:clickable="false"
 	/>
 	<TextView
 		android:id="@+id/style_item_title"
@@ -28,5 +29,13 @@
 	<View
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
+		android:layout_weight="3"
+	/>
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:id="@+id/style_item_edit_button"
+		android:focusable="false"
+		android:focusableInTouchMode="false"
 	/>
 </LinearLayout>

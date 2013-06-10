@@ -40,7 +40,7 @@ public final class ZLColor {
 		Blue = (short)(intValue & 0xFF);
 	}
 
-	public int getIntValue() {
+	public int intValue() {
 		return (Red << 16) + (Green << 8) + Blue;
 	}
 
@@ -60,7 +60,7 @@ public final class ZLColor {
 
 	@Override
 	public int hashCode() {
-		return getIntValue();
+		return intValue();
 	}
 
 	@Override

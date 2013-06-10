@@ -269,6 +269,10 @@ public class LibraryService extends Service {
 		public List<String> highlightingStyles() {
 			return SerializerUtil.serializeStyleList(myCollection.highlightingStyles());
 		}
+
+		public void saveHighlightingStyle(String style) {
+			myCollection.saveHighlightingStyle(SerializerUtil.deserializeStyle(style));
+		}
 	}
 
 	private volatile LibraryImplementation myLibrary;

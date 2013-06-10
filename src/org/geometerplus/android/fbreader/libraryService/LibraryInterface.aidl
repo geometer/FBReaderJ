@@ -47,4 +47,5 @@ interface LibraryInterface {
 
 	String getHighlightingStyle(in int styleId);
 	List<String> highlightingStyles();
+	void saveHighlightingStyle(in String style);
 }
