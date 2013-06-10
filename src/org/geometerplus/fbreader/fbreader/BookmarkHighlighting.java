@@ -51,6 +51,6 @@ public final class BookmarkHighlighting extends ZLTextSimpleHighlighting {
 	@Override
 	public ZLColor getBackgroundColor() {
 		final HighlightingStyle bmStyle = Collection.getHighlightingStyle(Bookmark.getStyleId());
-		return bmStyle != null ? bmStyle.BackgroundColor : new ZLColor(255, 255, 255);
+		return bmStyle != null ? bmStyle.getBackgroundColor() : null;
 	}
 }

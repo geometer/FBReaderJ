@@ -224,9 +224,18 @@
 		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
+	<node name="style" value="Style %s"/>
 	<node name="highlightingStyleMenu">
-		<node name="style" value="Style %s"/>
+		<node name="editStyle" value="Edit style…"/>
 		<node name="deleteBookmark" value="Delete bookmark"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name"/>
+		<node name="invisible" value="Invisible">
+			<node name="summaryOn" value="Do not highlight bookmarks"/>
+			<node name="summaryOff" value="Highlight bookmarks"/>
+		</node>
+		<node name="bgColor" value="Background color"/>
 	</node>
 	<node name="selection" value="Selection">
 		<node name="copyToClipboard" value="Copy to clipboard"/>

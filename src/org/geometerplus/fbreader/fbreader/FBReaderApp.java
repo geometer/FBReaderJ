@@ -121,8 +121,9 @@ public final class FBReaderApp extends ZLApplication {
 		collection.addListener(new IBookCollection.Listener() {
 			public void onBookEvent(BookEvent event, Book book) {
 				switch (event) {
+					case BookmarkStyleChanged:
 					case BookmarksUpdated:
-						if (Model != null && book.equals(Model.Book)) {
+						if (Model != null && (book == null || book.equals(Model.Book))) {
 							if (BookTextView.getModel() != null) { 
 								setBookmarkHighlightings(BookTextView, null);
 							}
