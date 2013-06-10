@@ -46,7 +46,6 @@
 		android:layout_width="@dimen/ambilwarna_hsvWidth"
 		android:layout_height="@dimen/ambilwarna_hsvHeight"
 		android:layout_toRightOf="@id/ambilwarna_state"
-		android:layerType="software"
 	/>
 	<!-- needed because i can't get parent keeping its bottom layout
 	and its wrap_content height. This view will serve as a bottom spacer. -->

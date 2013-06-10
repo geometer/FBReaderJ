@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ambilwarna_dialogView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:layout_gravity="center" >
 
     <RelativeLayout
@@ -18,8 +18,7 @@
         <yuku.ambilwarna.AmbilWarnaKotak
             android:id="@+id/ambilwarna_viewSatBri"
             android:layout_width="@dimen/ambilwarna_hsvWidth"
-            android:layout_height="@dimen/ambilwarna_hsvHeight"
-            android:layerType="software" />
+            android:layout_height="@dimen/ambilwarna_hsvHeight" />
 
         <ImageView
             android:id="@+id/ambilwarna_viewHue"
