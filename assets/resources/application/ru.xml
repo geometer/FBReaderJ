@@ -226,9 +226,18 @@
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
+	<node name="style" value="Стиль №%s"/>
 	<node name="highlightingStyleMenu">
-		<node name="style" value="Стиль %s"/>
+		<node name="editStyle" value="Изменить…"/>
 		<node name="deleteBookmark" value="Стереть закладку"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Название стиля"/>
+		<node name="invisible" value="Невидимый">
+			<node name="summaryOn" value="Не выделять закладки"/>
+			<node name="summaryOff" value="Выделять закладки цветом"/>
+		</node>
+		<node name="bgColor" value="Цвет фона"/>
 	</node>
 	<node name="selection" value="Пометка">
 		<node name="copyToClipboard" value="Скопировать в буфер"/>

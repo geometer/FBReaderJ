@@ -226,9 +226,18 @@
 		<node name="forward" value="წინ"/>
 		<node name="close" value="FBReader დახურვა"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
 	<node name="highlightingStyleMenu">
-		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="სანიშნის წაშლა"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
 	</node>
 	<node name="selection" value="ნიშნული">
 		<node name="copyToClipboard" value="ბუფერში დაკოპირება"/>
