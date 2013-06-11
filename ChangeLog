@@ -14,6 +14,7 @@
 ===== 1.8.2 (Jun ??, 2013) =====
 * Editable highlighting styles
 * Bookmarks with no highlighting
+* Two-column view in horizontal mode is enabled by default for 7" devices
 * New color picker dialog (AmbilWarna library http://code.google.com/p/android-color-picker/ is used)
 * Updated Spanish loading (by Diego Bernardi, sponsored by Panacea Supplies)
 * Updated Czech localization (by Marek Pavelka)
