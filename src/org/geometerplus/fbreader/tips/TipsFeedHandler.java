@@ -21,8 +21,6 @@ package org.geometerplus.fbreader.tips;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
 import org.geometerplus.fbreader.network.atom.*;
 
 class TipsFeedHandler extends AbstractATOMFeedHandler {
