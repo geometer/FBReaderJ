@@ -22,11 +22,9 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext.DrawMode;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
@@ -869,7 +867,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 	
-	protected abstract DrawMode getDrawMode();
+	protected abstract ZLPaintContext.DrawMode getDrawMode();
 
 	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to) {
