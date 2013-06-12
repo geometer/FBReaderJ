@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
-import java.util.ArrayList;
-
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.book.Book;

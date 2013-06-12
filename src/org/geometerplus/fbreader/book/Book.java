@@ -34,8 +34,6 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
@@ -254,6 +252,7 @@ public class Book extends TitledEntity {
 		return myId;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		if (!getTitle().equals(title)) {
 			super.setTitle(title);
@@ -288,6 +287,7 @@ public class Book extends TitledEntity {
 		}
 	}
 
+	@Override
 	public String getLanguage() {
 		return myLanguage;
 	}
