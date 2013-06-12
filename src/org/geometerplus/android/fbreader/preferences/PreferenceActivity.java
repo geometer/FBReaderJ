@@ -19,6 +19,9 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.view.KeyEvent;
@@ -71,6 +74,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		final ColorProfile profile = fbReader.getColorProfile();
+		// TODO: use user-defined locale, not the default one,
+		// or set user-defined locale as default
+		final String decimalSeparator =
+			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addPreference(new ZLStringOptionPreference(
@@ -178,7 +185,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final String[] spacings = new String[spaceOption.MaxValue - spaceOption.MinValue + 1];
 		for (int i = 0; i < spacings.length; ++i) {
 			final int val = spaceOption.MinValue + i;
-			spacings[i] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
+			spacings[i] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
 		}
 		textScreen.addPreference(new ZLChoicePreference(
 			this, textScreen.Resource, "lineSpacing",
@@ -297,7 +304,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				for (int j = 1; j < spacingValues.length; ++j) {
 					final int val = 4 + j;
 					spacingValues[j] = 10 * val;
-					spacingKeys[j] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
+					spacingKeys[j] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
 				}
 				formatScreen.addPreference(new ZLIntegerChoicePreference(
 					this, textScreen.Resource, "lineSpacing",
