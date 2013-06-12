@@ -206,6 +206,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		getTabHost().setCurrentTabByTag("found");
 	}
 
+	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
 			case 1:
@@ -340,6 +341,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			}
 		}
 
+		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item, parent, false);
@@ -366,18 +368,22 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			return view;
 		}
 
+		@Override
 		public final boolean areAllItemsEnabled() {
 			return true;
 		}
 
+		@Override
 		public final boolean isEnabled(int position) {
 			return true;
 		}
 
+		@Override
 		public final long getItemId(int position) {
 			return position;
 		}
 
+		@Override
 		public final Bookmark getItem(int position) {
 			if (myShowAddBookmarkItem) {
 				--position;
@@ -385,6 +391,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			return (position >= 0) ? myBookmarks.get(position) : null;
 		}
 
+		@Override
 		public final int getCount() {
 			return myShowAddBookmarkItem ? myBookmarks.size() + 1 : myBookmarks.size();
 		}
