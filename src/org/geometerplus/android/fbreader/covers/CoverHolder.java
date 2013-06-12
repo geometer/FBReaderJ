@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.covers;
 
-import java.util.*;
 import java.util.concurrent.Future;
 
 import android.widget.ImageView;
