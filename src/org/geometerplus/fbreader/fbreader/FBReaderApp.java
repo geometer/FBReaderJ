@@ -22,8 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.*;
-import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.filetypes.*;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -203,7 +202,7 @@ public final class FBReaderApp extends ZLApplication {
 			System.err.println("5");
 			runWithMessage("extract", new Runnable() {
 				public void run() {
-					ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
+					final ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
 					if (myExternalFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue())) {
 						Collection.addBookToRecentList(bookToOpen);
 						closeWindow();
@@ -233,7 +232,7 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
-					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
+					final ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
 					System.err.println(SerializerUtil.serialize(bm));
 					myPluginFileOpener.openFile(((PluginFormatPlugin)p).getPackage(), SerializerUtil.serialize(bm), SerializerUtil.serialize(bookToOpen));
 				}
