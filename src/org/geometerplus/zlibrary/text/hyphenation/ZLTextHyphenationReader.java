@@ -35,6 +35,7 @@ final class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 		myHyphenator = hyphenator;
 	}
 
+	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if (PATTERN.equals(tag)) {
 			myReadPattern = true;
@@ -42,6 +43,7 @@ final class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public boolean endElementHandler(String tag) {
 		if (PATTERN.equals(tag)) {
 			myReadPattern = false;
@@ -54,6 +56,7 @@ final class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (myReadPattern) {
 			char[] buffer = myBuffer;
