@@ -22,53 +22,28 @@ package org.geometerplus.android.fbreader.network;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geometerplus.android.fbreader.network.action.Action;
-import org.geometerplus.android.fbreader.network.action.ActionCode;
-import org.geometerplus.android.fbreader.network.action.AddCustomCatalogAction;
-import org.geometerplus.android.fbreader.network.action.BuyBasketBooksAction;
-import org.geometerplus.android.fbreader.network.action.ClearBasketAction;
-import org.geometerplus.android.fbreader.network.action.EditCustomCatalogAction;
-import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
-import org.geometerplus.android.fbreader.network.action.NetworkLibraryFilterAction;
-import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
-import org.geometerplus.android.fbreader.network.action.OpenInBrowserAction;
-import org.geometerplus.android.fbreader.network.action.RefreshRootCatalogAction;
-import org.geometerplus.android.fbreader.network.action.ReloadCatalogAction;
-import org.geometerplus.android.fbreader.network.action.RemoveCustomCatalogAction;
-import org.geometerplus.android.fbreader.network.action.RunSearchAction;
-import org.geometerplus.android.fbreader.network.action.ShowBookInfoAction;
-import org.geometerplus.android.fbreader.network.action.SignInAction;
-import org.geometerplus.android.fbreader.network.action.SignOutAction;
-import org.geometerplus.android.fbreader.network.action.SignUpAction;
-import org.geometerplus.android.fbreader.network.action.TopupAction;
-import org.geometerplus.android.fbreader.tree.TreeActivity;
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
-import org.geometerplus.fbreader.network.tree.NetworkSeriesTree;
-import org.geometerplus.fbreader.network.tree.RootTree;
-import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.*;
+import android.widget.*;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
+
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.tree.FBTree;
+
+import org.geometerplus.android.fbreader.network.action.*;
+import org.geometerplus.android.fbreader.tree.TreeActivity;
+
+import org.geometerplus.android.util.UIUtil;
 
 public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
