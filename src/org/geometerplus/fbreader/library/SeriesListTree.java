@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.geometerplus.fbreader.book.*;
 
