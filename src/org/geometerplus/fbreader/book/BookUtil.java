@@ -29,7 +29,6 @@ import java.util.Locale;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class BookUtil {
