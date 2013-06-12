@@ -67,7 +67,7 @@ final class FB2Tag {
 
 	static {
 		ourTagByName.put("unknown", UNKNOWN);
-		ourUnknownTag = (Byte)ourTagByName.get("unknown");
+		ourUnknownTag = ourTagByName.get("unknown");
 		ourTagByName.put("p", P);
 		ourTagByName.put("v", V);
 		ourTagByName.put("subtitle", SUBTITLE);
@@ -111,7 +111,7 @@ final class FB2Tag {
 		Byte num = tagByName.get(name);
 		if (num == null) {
 			final String upperCaseName = name.toLowerCase().intern();
-			num = (Byte)tagByName.get(upperCaseName);
+			num = tagByName.get(upperCaseName);
 			if (num == null) {
 				num = ourUnknownTag;
 				tagByName.put(upperCaseName, num);
