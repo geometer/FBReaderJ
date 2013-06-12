@@ -25,8 +25,6 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.widget.*;
 import android.view.*;
 
