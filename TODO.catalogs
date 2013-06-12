@@ -10,9 +10,15 @@
 ** "Library filter" => "More catalogs"
 ** NetworkLibraryFilterActivity => MoreCatalogsActivity
 ** make a separate branch for catalogs + master
+** copyrights in all files
 
 * MID-TERM
 ** litres catalog use litres-api
 
 * LONG-TERM
 ** re-order catalog function
+
+* PLUGIN
+** self-service kiosk: update instruction
+** gift coupon activation
+** mobile operators topup
