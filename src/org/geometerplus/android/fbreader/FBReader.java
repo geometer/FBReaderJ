@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import android.app.*;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
