@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.fbreader.FBReader;
@@ -37,6 +38,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
+
 import org.geometerplus.android.fbreader.network.*;
 
 public abstract class NetworkBookActions {
