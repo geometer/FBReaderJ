@@ -7,8 +7,8 @@
 ** extract litres API to a separate branch
 ** add RSS catalog
 ** hardcoded strings ("Active/Inactive catalogs", may be some else?) => en.xml
-** "Library filter" => "More catalogs"
-** NetworkLibraryFilterActivity => MoreCatalogsActivity
+** "Library filter" => "All catalogs"
+** NetworkLibraryFilterActivity => AllCatalogsActivity
 ** make a separate branch for catalogs + master
 ** copyrights in all files
 
