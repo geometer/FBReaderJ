@@ -71,7 +71,7 @@ public final class HtmlTag {
 
 	static {
 		ourTagByName.put("unknown", UNKNOWN);
-		ourUnknownTag = (Byte)ourTagByName.get("unknown");
+		ourUnknownTag = ourTagByName.get("unknown");
 		ourTagByName.put("html", HTML);
 		ourTagByName.put("head", HEAD);
 		ourTagByName.put("body", BODY);
@@ -114,7 +114,7 @@ public final class HtmlTag {
 		Byte num = tagByName.get(name);
 		if (num == null) {
 			final String lowerCaseName = name.toLowerCase().intern();
-			num = (Byte)tagByName.get(lowerCaseName);
+			num = tagByName.get(lowerCaseName);
 			if (num == null) {
 				num = ourUnknownTag;
 				tagByName.put(lowerCaseName, num);
