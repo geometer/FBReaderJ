@@ -19,13 +19,9 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-
 import android.app.Activity;
 import android.content.*;
 import android.net.Uri;
-import android.view.*;
-import android.widget.*;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
