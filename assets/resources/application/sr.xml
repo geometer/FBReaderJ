@@ -404,6 +404,7 @@
 			<node name="lineSpacing" value="Размак између редова">
 				<node name="unchanged" value="&lt;непромењено&gt;"/>
 			</node>
+			<node name="decimalMark" value=","/>
 			<node name="alignment" value="Поравнање">
 				<node name="left" value="Лево"/>
 				<node name="right" value="Десно"/>

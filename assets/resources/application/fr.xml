@@ -397,6 +397,7 @@
 			<node name="lineSpacing" value="Espacement de lignes">
 				<node name="unchanged" value="&lt;inchangé&gt;"/>
 			</node>
+			<node name="decimalMark" value=","/>
 			<node name="alignment" value="Alignement">
 				<node name="left" value="Gauche"/>
 				<node name="right" value="Droite"/>

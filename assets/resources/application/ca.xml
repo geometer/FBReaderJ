@@ -408,6 +408,7 @@
 			<node name="lineSpacing" value="Interliniat">
 				<node name="unchanged" value="&lt;sense canvis&gt;"/>
 			</node>
+			<node name="decimalMark" value=","/>
 			<node name="alignment" value="Aliniació">
 				<node name="left" value="Esquerra"/>
 				<node name="right" value="Dreta"/>

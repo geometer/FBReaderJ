@@ -404,6 +404,7 @@
 			<node name="lineSpacing" value="Regelafstand">
 				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
 			</node>
+			<node name="decimalMark" value=","/>
 			<node name="alignment" value="Uitlijning">
 				<node name="left" value="Links"/>
 				<node name="right" value="Rechts"/>

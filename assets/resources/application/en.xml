@@ -404,6 +404,7 @@
 			<node name="lineSpacing" value="Line Spacing">
 				<node name="unchanged" value="&lt;unchanged&gt;"/>
 			</node>
+			<node name="decimalMark" value="."/>
 			<node name="alignment" value="Alignment">
 				<node name="left" value="Left"/>
 				<node name="right" value="Right"/>

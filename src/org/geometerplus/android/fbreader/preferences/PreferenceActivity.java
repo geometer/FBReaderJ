@@ -169,9 +169,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		final ZLIntegerRangeOption spaceOption = baseStyle.LineSpaceOption;
 		final String[] spacings = new String[spaceOption.MaxValue - spaceOption.MinValue + 1];
+		final String decimalMark = textScreen.Resource.getResource("decimalMark").getValue();
 		for (int i = 0; i < spacings.length; ++i) {
 			final int val = spaceOption.MinValue + i;
-			spacings[i] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
+			spacings[i] = (char)(val / 10 + '0') + decimalMark + (char)(val % 10 + '0');
 		}
 		textScreen.addPreference(new ZLChoicePreference(
 			this, textScreen.Resource, "lineSpacing",
@@ -285,12 +286,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				final ZLIntegerOption spacePercentOption = fullDecoration.LineSpacePercentOption;
 				final int[] spacingValues = new int[17];
 				final String[] spacingKeys = new String[17];
+				final String decimalMarker = textScreen.Resource.getResource("decimalMark").getValue();
 				spacingValues[0] = -1;
 				spacingKeys[0] = "unchanged";
 				for (int j = 1; j < spacingValues.length; ++j) {
 					final int val = 4 + j;
 					spacingValues[j] = 10 * val;
-					spacingKeys[j] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
+					spacingKeys[j] = (char)(val / 10 + '0') + decimalMarker + (char)(val % 10 + '0');
 				}
 				formatScreen.addPreference(new ZLIntegerChoicePreference(
 					this, textScreen.Resource, "lineSpacing",
