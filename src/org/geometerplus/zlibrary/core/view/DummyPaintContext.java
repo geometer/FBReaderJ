@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.core.view;
 
-import java.util.*;
-
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
