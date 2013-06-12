@@ -1,4 +1,4 @@
-===== 1.8.2 (Jun ??, 2013) =====
+===== 1.8.2 (Jun 13, 2013) =====
 * Editable highlighting styles
 * Bookmarks with no highlighting
 * Two-column view in horizontal mode is enabled by default for 7" devices
@@ -8,6 +8,7 @@
 * Updated Dutch localization (by Frank Fesevur)
 * Bitknights dictionaries support (by Norbert Kenderesi)
 * Support for new Paragon Software dictionaries (by Paragon Software)
+* Fixed decimal point separator in preferences (idea by Dennis Sheil)
 * Fixed book info saving for BookInfoActivity/EditBookInfoActivity (service mechanism is used instead of Activity.setResult())
 
 ===== 1.8.1 (May 06, 2013) =====
