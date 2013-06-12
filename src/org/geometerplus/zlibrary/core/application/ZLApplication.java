@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
@@ -241,6 +240,7 @@ public abstract class ZLApplication {
 			myRunnable = runnable;
 		}
 
+		@Override
 		public void run() {
 			myRunnable.run();
 		}
