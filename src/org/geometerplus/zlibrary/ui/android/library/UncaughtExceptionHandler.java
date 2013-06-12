@@ -35,6 +35,7 @@ public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExcept
 		myContext = context;
 	}
 
+	@Override
 	public void uncaughtException(Thread thread, Throwable exception) {
 		final StringWriter stackTrace = new StringWriter();
 		exception.printStackTrace(new PrintWriter(stackTrace));
