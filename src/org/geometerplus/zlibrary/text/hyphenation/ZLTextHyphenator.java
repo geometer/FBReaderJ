@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.text.hyphenation;
 
 import java.util.List;
-import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
