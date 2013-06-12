@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.preferences;
 
 import java.util.HashMap;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.*;
 import android.content.Intent;
