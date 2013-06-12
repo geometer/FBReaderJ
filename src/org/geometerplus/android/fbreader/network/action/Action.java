@@ -23,9 +23,6 @@ import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-
-import org.geometerplus.android.fbreader.network.Util;
 
 public abstract class Action {
 	public final int Code;
