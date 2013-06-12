@@ -21,18 +21,14 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.LinkedList;
 
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.TopUpItem;
+import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.ATOMId;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
-import org.geometerplus.fbreader.network.litres.LitResAuthorsItem;
-import org.geometerplus.fbreader.network.litres.LitresBooksFeedItem;
-import org.geometerplus.fbreader.network.litres.LitresCatalogByGenresItem;
-import org.geometerplus.fbreader.network.litres.LitresNetworkLink;
-import org.geometerplus.fbreader.network.litres.LitresPredefinedNetworkLink;
-import org.geometerplus.fbreader.network.litres.LitresRecommendCatalogItem;
+import org.geometerplus.fbreader.network.litres.*;
 import org.geometerplus.fbreader.network.litres.author.LitresAuthor;
 import org.geometerplus.fbreader.network.litres.author.LitresAuthorsMap;
 import org.geometerplus.fbreader.network.litres.genre.LitresGenre;
@@ -40,8 +36,6 @@ import org.geometerplus.fbreader.network.litres.genre.LitresGenreMap;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
-import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	private final NetworkCatalogItem myCatalog;

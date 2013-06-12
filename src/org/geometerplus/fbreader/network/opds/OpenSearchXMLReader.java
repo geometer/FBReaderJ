@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network.opds;
 
 import java.util.List;
+
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
