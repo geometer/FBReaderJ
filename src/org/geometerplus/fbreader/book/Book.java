@@ -252,6 +252,7 @@ public class Book extends TitledEntity {
 		return myId;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		if (!getTitle().equals(title)) {
 			super.setTitle(title);
@@ -286,6 +287,7 @@ public class Book extends TitledEntity {
 		}
 	}
 
+	@Override
 	public String getLanguage() {
 		return myLanguage;
 	}
