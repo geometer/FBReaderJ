@@ -6,6 +6,9 @@
 ** order catalogs alphabetically
 ** extract litres API to a separate branch
 ** add RSS catalog
+** hardcoded strings ("Active/Inactive catalogs", may be some else?) => en.xml
+** "Library filter" => "More catalogs"
+** NetworkLibraryFilterActivity => MoreCatalogsActivity
 ** make a separate branch for catalogs + master
 
 * MID-TERM
