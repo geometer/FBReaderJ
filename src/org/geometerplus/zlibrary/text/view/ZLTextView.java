@@ -557,6 +557,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public abstract int scrollbarType();
 
+	@Override
 	public final boolean isScrollbarShown() {
 		return scrollbarType() == SCROLLBAR_SHOW || scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS;
 	}
