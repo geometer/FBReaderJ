@@ -43,6 +43,7 @@ class SimpleContainer extends ViewGroup {
 		addView(myEditText);
 	}
 
+	@Override
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 		final int buttonHeight = Math.max(54, Math.max(myOkButton.getHeight(), myCancelButton.getHeight()));
 		myEditText.layout(left + 8, top + 8, right - 8, bottom - buttonHeight - 16);
