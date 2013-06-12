@@ -42,8 +42,6 @@ import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.BookBuyUrlInfo;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-import org.geometerplus.android.fbreader.network.*;
-
 public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeListener {
 	public static void run(Activity activity, NetworkBookTree tree) {
 		run(activity, Collections.singletonList(tree));
