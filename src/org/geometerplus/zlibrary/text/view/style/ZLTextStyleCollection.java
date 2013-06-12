@@ -69,6 +69,7 @@ public class ZLTextStyleCollection {
 		private final int myDpi = ZLibrary.Instance().getDisplayDPI();
 		private ZLTextStyleCollection myCollection;
 
+		@Override
 		public boolean dontCacheAttributeValues() {
 			return true;
 		}
@@ -105,6 +106,7 @@ public class ZLTextStyleCollection {
 			myCollection = collection;
 		}
 
+		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			final String BASE = "base";
 			final String STYLE = "style";
