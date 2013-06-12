@@ -22,6 +22,7 @@ final class MyBufferedInputStream extends InputStream {
 		this(streamHolder, 1 << 10);
 	}
 
+	@Override
 	public int available() throws IOException {
 		return (myFileInputStream.available() + myBytesReady);
 	}
@@ -30,6 +31,7 @@ final class MyBufferedInputStream extends InputStream {
 		return myCurrentPosition;
 	}
 
+	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
 		int ready = (len < myBytesReady) ? len : myBytesReady;
 		if (ready > 0) {
@@ -49,6 +51,7 @@ final class MyBufferedInputStream extends InputStream {
 		return (ready > 0) ? ready : -1;
 	}
 
+	@Override
 	public int read() throws IOException {
 		myCurrentPosition++;
 		if (myBytesReady <= 0) {
@@ -149,6 +152,7 @@ final class MyBufferedInputStream extends InputStream {
 	}
 	*/
 
+	@Override
 	public void close() throws IOException {
 		myFileInputStream.close();
 		myBytesReady = 0;
