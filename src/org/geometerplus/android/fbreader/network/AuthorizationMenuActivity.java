@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network;
 import android.app.Activity;
 import android.content.*;
 import android.net.Uri;
+
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
