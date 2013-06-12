@@ -21,8 +21,6 @@ package org.geometerplus.fbreader.network.atom;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.geometerplus.fbreader.network.atom.*;
-
 public abstract class AbstractATOMFeedHandler implements ATOMFeedHandler {
 	public void processFeedStart() {
 	}

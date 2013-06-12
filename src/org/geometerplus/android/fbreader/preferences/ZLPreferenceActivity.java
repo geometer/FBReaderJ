@@ -19,10 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.*;
 import android.content.Intent;
@@ -103,7 +101,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 	}
 
 	public Preference addPreference(Preference preference) {
-		myScreen.addPreference((Preference)preference);
+		myScreen.addPreference(preference);
 		return preference;
 	}
 

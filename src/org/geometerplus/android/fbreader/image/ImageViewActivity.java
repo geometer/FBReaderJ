@@ -27,9 +27,7 @@ import android.os.Bundle;
 import android.util.FloatMath;
 import android.view.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;

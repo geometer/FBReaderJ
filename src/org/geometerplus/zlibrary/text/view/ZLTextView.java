@@ -22,10 +22,9 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
@@ -558,6 +557,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public abstract int scrollbarType();
 
+	@Override
 	public final boolean isScrollbarShown() {
 		return scrollbarType() == SCROLLBAR_SHOW || scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS;
 	}

@@ -19,28 +19,29 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
-import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.tree.FBTree;
 
-import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.fbreader.network.action.*;
+import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 import org.geometerplus.android.util.UIUtil;
 

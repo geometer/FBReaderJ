@@ -25,8 +25,6 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
