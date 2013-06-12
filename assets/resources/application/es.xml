@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Spanish FBReaderJ resources, by Antonio Trueba, updated by Francisco Alvarado -->
 <!-- CHANGELOG
+	19-09-2013: Updated (Diego Bernardi, sponsored by Panacea Supplies)
 	11-07-2012: Update release as per FBReader v1.6.5 (Francisco Alvarado)
 	07-30-2011: First complete release as per FBReader v. 1.1.9 (Antonio Trueba)
 -->
@@ -44,7 +45,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Buscar"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="rescan" value="Escanear nuevamente"/>
 		</node>
 		<node name="openBook" value="Abrir libro"/>
 		<node name="showBookInfo" value="Información del libro"/>
@@ -52,8 +53,8 @@
 		<node name="deleteBook" value="Borrar libro"/>
 		<node name="addToFavorites" value="Agregar a favoritos"/>
 		<node name="removeFromFavorites" value="Quitar de favoritos"/>
-		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="markAsRead" value="Marcar como leído"/>
+		<node name="markAsUnread" value="Marcar como no leído"/>
 	</node>
 	<node name="networkLibrary" value="Biblioteca en red de FBReader">
 		<node name="byAuthor" value="Por autor">
@@ -225,9 +226,18 @@
 		<node name="forward" value="Adelante"/>
 		<node name="close" value="Cerrar FBReader"/>
 	</node>
+	<node name="style" value="Estilo %s"/>
 	<node name="highlightingStyleMenu">
-		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Borrar marcador"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
 	</node>
 	<node name="selection" value="Selección">
 		<node name="copyToClipboard" value="Copiar al portapapeles"/>
@@ -292,7 +302,7 @@
 		</node>
 		<node name="appearance" value="Apariencia">
 			<node name="summary" value="Ajustes de pantalla, barra de estado, luz de botones"/>
-			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="language" value="Lenguaje de la interfaz"/>
 			<node name="screenOrientation" value="Orientación de la pantalla">
 				<node name="system" value="Sistema"/>
 				<node name="sensor" value="Sensible a la orientación del dispositivo"/>
@@ -321,9 +331,9 @@
 				<node name="summaryOn" value="Deshabilitar luz de botones (no funciona para algunos dispositivos)"/>
 				<node name="summaryOff" value="No intentar deshabilitar luz de botones"/>
 			</node>
-			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
-				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
-				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			<node name="twoColumnView" value="Vista de dos columnas">
+				<node name="summaryOn" value="Mostrar el texto en dos columnas cuando el dispositivo se sostiene horizontalmente"/>
+				<node name="summaryOff" value="Mostrar siempre el texto en una sola columna"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ajuste de brillo de la pantalla">
 				<node name="summaryOn" value="Al arrastrar el dedo arriba/abajo en el borde izquierdo de la pantalla"/>
@@ -557,7 +567,7 @@
 			<node name="right" value="Margen derecho"/>
 			<node name="top" value="Margen superior"/>
 			<node name="bottom" value="Margen inferior"/>
-			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
+			<node name="spaceBetweenColumns" value="Espacio entre columnas"/>
 		</node>
 		<node name="scrollBar" value="Indicador de progreso">
 			<node name="summary" value="Preferencias de barra de desplazamiento y pie de página"/>
@@ -733,8 +743,8 @@
 			<node name="sendReport" value="Enviar reporte"/>
 			<node name="addToFavorites" value="Agregar a favoritos"/>
 			<node name="removeFromFavorites" value="Quitar de favoritos"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+			<node name="markAsRead" value="Marcar como leído"/>
+			<node name="markAsUnread" value="Marcar como no leído"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar plugin"/>
@@ -822,7 +832,7 @@
 		<node name="dictionaryIsNotInstalled" value="Lamentablemente, el diccionario no está instalado"/>
 		<node name="permissionDenied" value="Lamentablemente, se ha negado el permiso"/>
 		<node name="noFavorites" value="Lamentablemente, su lista de favoritos está vacía"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="Lamentablemente, no hay colecciones de libros"/>
 		<node name="emptyCatalog" value="Lamentablemente, el catálogo está vacío"/>
 		<node name="emptyBasket" value="Lamentablemente, su cesta está vacía"/>
 		<node name="emptyNetworkSearchResults" value="Lamentablemente, no se encontraron libros"/>

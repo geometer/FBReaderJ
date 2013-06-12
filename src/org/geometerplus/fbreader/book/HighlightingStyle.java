@@ -19,17 +19,41 @@
 
 package org.geometerplus.fbreader.book;
 
-import java.util.Map;
-import java.util.HashMap;
-
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 public class HighlightingStyle {
 	public final int Id;
-	public final ZLColor BackgroundColor;
 
-	HighlightingStyle(int id, ZLColor bgColor) {
+	private String myName;
+	private ZLColor myBackgroundColor;
+
+	HighlightingStyle(int id, String name, ZLColor bgColor) {
 		Id = id;
-		BackgroundColor = bgColor;
+		myName = name;
+		myBackgroundColor = bgColor;
+	}
+
+	private String defaultName() {
+		return ZLResource.resource("style").getValue().replace("%s", String.valueOf(Id));
+	}
+
+	public String getName() {
+		if (myName == null || "".equals(myName)) {
+			return defaultName();
+		}
+		return myName;
+	}
+
+	public void setName(String name) {
+		myName = defaultName().equals(name) ? "" : name;
+	}
+
+	public ZLColor getBackgroundColor() {
+		return myBackgroundColor;
+	}
+
+	public void setBackgroundColor(ZLColor bgColor) {
+		myBackgroundColor = bgColor;
 	}
 }

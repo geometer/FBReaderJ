@@ -27,6 +27,7 @@ import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
+import org.geometerplus.android.fbreader.style.StyleListActivity;
 import org.geometerplus.android.util.UIUtil;
 
 public class SelectionBookmarkAction extends FBAndroidAction {

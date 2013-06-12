@@ -17,35 +17,25 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
-public class ScrollingPreferences {
-	private static ScrollingPreferences ourInstance;
-
-	public static ScrollingPreferences Instance() {
-		return (ourInstance != null) ? ourInstance : new ScrollingPreferences();
-	}
-
-	public static enum FingerScrolling {
+public class PageTurningOptions {
+	public static enum FingerScrollingType {
 		byTap, byFlick, byTapAndFlick
 	}
-	public final ZLEnumOption<FingerScrolling> FingerScrollingOption =
-		new ZLEnumOption<FingerScrolling>("Scrolling", "Finger", FingerScrolling.byTapAndFlick);
+	public final ZLEnumOption<FingerScrollingType> FingerScrolling =
+		new ZLEnumOption<FingerScrollingType>("Scrolling", "Finger", FingerScrollingType.byTapAndFlick);
 
-	public final ZLEnumOption<ZLView.Animation> AnimationOption =
+	public final ZLEnumOption<ZLView.Animation> Animation =
 		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
-	public final ZLIntegerRangeOption AnimationSpeedOption =
+	public final ZLIntegerRangeOption AnimationSpeed =
 		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, 8);
 
-	public final ZLBooleanOption HorizontalOption =
+	public final ZLBooleanOption Horizontal =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public final ZLStringOption TapZoneMapOption =
+	public final ZLStringOption TapZoneMap =
 		new ZLStringOption("Scrolling", "TapZoneMap", "");
-
-	private ScrollingPreferences() {
-		ourInstance = this;
-	}
 }

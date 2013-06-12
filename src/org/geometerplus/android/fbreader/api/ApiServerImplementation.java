@@ -526,11 +526,11 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getZoneMap() {
-		return ScrollingPreferences.Instance().TapZoneMapOption.getValue();
+		return getReader().PageTurningOptions.TapZoneMap.getValue();
 	}
 
 	public void setZoneMap(String name) {
-		ScrollingPreferences.Instance().TapZoneMapOption.setValue(name);
+		getReader().PageTurningOptions.TapZoneMap.setValue(name);
 	}
 
 	public int getZoneMapHeight(String name) {

@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
+import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -72,48 +73,31 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLIntegerRangeOption TopMarginOption;
 	public final ZLIntegerRangeOption BottomMarginOption;
 	public final ZLIntegerRangeOption SpaceBetweenColumnsOption;
+	public final ZLIntegerRangeOption FooterHeightOption;
 	{
 		final int dpi = ZLibrary.Instance().getDisplayDPI();
 		final int x = ZLibrary.Instance().getPixelWidth();
 		final int y = ZLibrary.Instance().getPixelHeight();
-		TwoColumnViewOption = new ZLBooleanOption(
-			"Options", "TwoColumnView",
-			x * x + y * y >= 50 * dpi * dpi
-		);
 		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
+
+		TwoColumnViewOption = new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 48 * dpi * dpi);
 		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
 		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
 		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 20);
 		SpaceBetweenColumnsOption = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
+		FooterHeightOption = new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
 	}
 
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-	public final ZLIntegerRangeOption FooterHeightOption =
-		new ZLIntegerRangeOption("Options", "FooterHeight", 8, 20, 9);
-	public final ZLBooleanOption FooterShowTOCMarksOption =
-		new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
-	public final ZLBooleanOption FooterShowClockOption =
-		new ZLBooleanOption("Options", "ShowClockInFooter", true);
-	public final ZLBooleanOption FooterShowBatteryOption =
-		new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-	public final ZLBooleanOption FooterShowProgressOption =
-		new ZLBooleanOption("Options", "ShowProgressInFooter", true);
-	public final ZLStringOption FooterFontOption =
-		new ZLStringOption("Options", "FooterFont", "Droid Sans");
 
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
-	public final ZLBooleanOption ShowLibraryInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "library", true);
-	public final ZLBooleanOption ShowNetworkLibraryInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "networkLibrary", true);
-	public final ZLBooleanOption ShowPreviousBookInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "previousBook", false);
-	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "positions", true);
+	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
+	public final FooterOptions FooterOptions = new FooterOptions();
+	public final CancelMenuOptions CancelMenuOptions = new CancelMenuOptions();
 
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
@@ -134,8 +118,9 @@ public final class FBReaderApp extends ZLApplication {
 		collection.addListener(new IBookCollection.Listener() {
 			public void onBookEvent(BookEvent event, Book book) {
 				switch (event) {
+					case BookmarkStyleChanged:
 					case BookmarksUpdated:
-						if (Model != null && book.equals(Model.Book)) {
+						if (Model != null && (book == null || book.equals(Model.Book))) {
 							if (BookTextView.getModel() != null) { 
 								setBookmarkHighlightings(BookTextView, null);
 							}
@@ -477,17 +462,17 @@ public final class FBReaderApp extends ZLApplication {
 
 	public List<CancelActionDescription> getCancelActionsList() {
 		myCancelActionsList.clear();
-		if (ShowLibraryInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowLibraryItem.getValue()) {
 			myCancelActionsList.add(new CancelActionDescription(
 				CancelActionType.library, null
 			));
 		}
-		if (ShowNetworkLibraryInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowNetworkLibraryItem.getValue()) {
 			myCancelActionsList.add(new CancelActionDescription(
 				CancelActionType.networkLibrary, null
 			));
 		}
-		if (ShowPreviousBookInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowPreviousBookItem.getValue()) {
 			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
 				myCancelActionsList.add(new CancelActionDescription(
@@ -495,7 +480,7 @@ public final class FBReaderApp extends ZLApplication {
 				));
 			}
 		}
-		if (ShowPositionsInCancelMenuOption.getValue()) {
+		if (CancelMenuOptions.ShowPositionItems.getValue()) {
 			if (Model != null && Model.Book != null) {
 				for (Bookmark bookmark : invisibleBookmarks()) {
 					myCancelActionsList.add(new BookmarkDescription(bookmark));

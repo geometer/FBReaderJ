@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
+
 class TurnPageAction extends FBAction {
 	private final boolean myForward;
 
@@ -29,34 +31,32 @@ class TurnPageAction extends FBAction {
 
 	@Override
 	public boolean isEnabled() {
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-
-		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			preferences.FingerScrollingOption.getValue();
+		final PageTurningOptions.FingerScrollingType fingerScrolling =
+			Reader.PageTurningOptions.FingerScrolling.getValue();
 		return
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTap ||
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
+			fingerScrolling == PageTurningOptions.FingerScrollingType.byTap ||
+			fingerScrolling == PageTurningOptions.FingerScrollingType.byTapAndFlick;
 	}
 
 	@Override
 	protected void run(Object ... params) {
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+		final PageTurningOptions preferences = Reader.PageTurningOptions;
 		if (params.length == 2 && params[0] instanceof Integer && params[1] instanceof Integer) {
 			final int x = (Integer)params[0];
 			final int y = (Integer)params[1];
 			Reader.getViewWidget().startAnimatedScrolling(
 				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 				x, y,
-				preferences.HorizontalOption.getValue()
+				preferences.Horizontal.getValue()
 					? FBView.Direction.rightToLeft : FBView.Direction.up,
-				preferences.AnimationSpeedOption.getValue()
+				preferences.AnimationSpeed.getValue()
 			);
 		} else {
 			Reader.getViewWidget().startAnimatedScrolling(
 				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
-				preferences.HorizontalOption.getValue()
+				preferences.Horizontal.getValue()
 					? FBView.Direction.rightToLeft : FBView.Direction.up,
-				preferences.AnimationSpeedOption.getValue()
+				preferences.AnimationSpeed.getValue()
 			);
 		}
 	}
