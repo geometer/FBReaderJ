@@ -71,14 +71,6 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 	}
 
 	@Override
-	public void startDocumentHandler() {
-	}
-
-	@Override
-	public void endDocumentHandler() {
-	}
-
-	@Override
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
