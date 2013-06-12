@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
-import org.geometerplus.zlibrary.core.image.*;
-
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.Paths;

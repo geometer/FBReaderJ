@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
-import java.util.*;
 import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
