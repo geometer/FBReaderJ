@@ -3,7 +3,7 @@
 * Bookmarks with no highlighting
 * Two-column view in horizontal mode is enabled by default for 7" devices
 * New color picker dialog (AmbilWarna library http://code.google.com/p/android-color-picker/ is used)
-* Updated Spanish loading (by Diego Bernardi, sponsored by Panacea Supplies)
+* Updated Spanish localization (by Diego Bernardi, sponsored by Panacea Supplies)
 * Updated Czech localization (by Marek Pavelka)
 * Updated Dutch localization (by Frank Fesevur)
 * Bitknights dictionaries support (by Norbert Kenderesi)
