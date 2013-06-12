@@ -225,9 +225,18 @@
 		<node name="forward" value="Avant"/>
 		<node name="close" value="Tancar FBReader"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
 	<node name="highlightingStyleMenu">
-		<node name="style" value="Style %s" toBeTranslated="true"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Esborra punt de llibre"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
 	</node>
 	<node name="selection" value="Selección" toBeTranslated="true">
 		<node name="copyToClipboard" value="Copiar al portapapeles" toBeTranslated="true"/>

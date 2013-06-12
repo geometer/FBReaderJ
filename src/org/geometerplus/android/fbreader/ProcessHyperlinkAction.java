@@ -75,7 +75,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					intent.setData(Uri.parse(url));
 					intent.putExtra(
 						ImageViewActivity.BACKGROUND_COLOR_KEY,
-						Reader.ImageViewBackgroundOption.getValue().getIntValue()
+						Reader.ImageViewBackgroundOption.getValue().intValue()
 					);
 					OrientationUtil.startActivity(BaseActivity, intent);
 				} catch (Exception e) {

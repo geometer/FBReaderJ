@@ -445,7 +445,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public HighlightingStyle getHighlightingStyle(int styleId) {
+	public synchronized HighlightingStyle getHighlightingStyle(int styleId) {
 		if (myInterface == null) {
 			return null;
 		}
@@ -457,7 +457,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public List<HighlightingStyle> highlightingStyles() {
+	public synchronized List<HighlightingStyle> highlightingStyles() {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
@@ -465,6 +465,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return SerializerUtil.deserializeStyleList(myInterface.highlightingStyles());
 		} catch (RemoteException e) {
 			return Collections.emptyList();
+		}
+	}
+
+	@Override
+	public synchronized void saveHighlightingStyle(HighlightingStyle style) {
+		if (myInterface != null) {
+			try {
+				myInterface.saveHighlightingStyle(SerializerUtil.serialize(style));
+			} catch (RemoteException e) {
+				// ignore
+			}
 		}
 	}
 

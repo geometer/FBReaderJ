@@ -22,8 +22,10 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -835,6 +837,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 		final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
 		for (ZLTextHighlighting h : hilites) {
+			final ZLColor bgColor = h.getBackgroundColor();
+			if (bgColor == null) {
+				continue;
+			}
 			final ZLTextElementArea selectionStartArea = h.getStartArea(page);
 			if (selectionStartArea == null || selectionStartArea.compareTo(toArea) > 0) {
 				continue;
@@ -857,7 +863,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			} else {
 				right = selectionEndArea.XEnd;
 			}
-			getContext().setFillColor(h.getBackgroundColor());
+			getContext().setFillColor(bgColor);
 			getContext().fillRectangle(left, top, right, bottom);
 		}
 	}
@@ -1585,7 +1591,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		synchronized (myHighlightings) {
 			for (ZLTextHighlighting h : myHighlightings) {
-				if (h.intersects(region)) {
+				if (h.getBackgroundColor() != null && h.intersects(region)) {
 					return h;
 				}
 			}

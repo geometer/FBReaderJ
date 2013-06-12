@@ -309,13 +309,12 @@ class XMLSerializer extends AbstractSerializer {
 	@Override
 	public String serialize(HighlightingStyle style) {
 		final StringBuilder buffer = new StringBuilder();
-		appendTag(buffer, "style", false,
-			"id", String.valueOf(style.Id)
+		final ZLColor bgColor = style.getBackgroundColor();
+		appendTag(buffer, "style", true,
+			"id", String.valueOf(style.Id),
+			"name", style.getName(),
+			"bg-color", bgColor != null ? String.valueOf(bgColor.intValue()) : "-1"
 		);
-		appendTag(buffer, "bg-color", true,
-			"value", String.valueOf(style.BackgroundColor.getIntValue())
-		);
-		closeTag(buffer, "style");
 		return buffer.toString();
 	}
 
@@ -961,9 +960,6 @@ class XMLSerializer extends AbstractSerializer {
 	private static final class StyleDeserializer extends DefaultHandler {
 		private HighlightingStyle myStyle;
 
-		private int myId = -1;
-		private int myColor;
-
 		public HighlightingStyle getStyle() {
 			return myStyle;
 		}
@@ -971,29 +967,22 @@ class XMLSerializer extends AbstractSerializer {
 		@Override
 		public void startDocument() {
 			myStyle = null;
-			myId = -1;
-		}
-
-		@Override
-		public void endDocument() {
-			if (myId != -1) {
-				myStyle = new HighlightingStyle(myId, new ZLColor(myColor));
-			}
 		}
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if ("style".equals(localName)) {
 				try {
-					myId = Integer.parseInt(attributes.getValue("id"));
+					final int id = Integer.parseInt(attributes.getValue("id"));
+					if (id != -1) {
+						final int rgb = Integer.parseInt(attributes.getValue("bg-color"));
+						final ZLColor color = rgb != -1 ? new ZLColor(rgb) : null;
+						myStyle = new HighlightingStyle(
+							id, attributes.getValue("name"), color
+						);
+					}
 				} catch (Exception e) {
-					throw new SAXException("XML parsing error", e);
-				}
-			} else if ("bg-color".equals(localName)) {
-				try {
-					myColor = Integer.parseInt(attributes.getValue("value"));
-				} catch (Exception e) {
-					throw new SAXException("XML parsing error", e);
+					// ignore
 				}
 			}
 		}

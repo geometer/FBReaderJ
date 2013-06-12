@@ -63,7 +63,7 @@ public class ImageViewActivity extends Activity {
 		final Intent intent = getIntent();
 
 		myBgColor = new ZLColor(
-			intent.getIntExtra(BACKGROUND_COLOR_KEY, new ZLColor(127, 127, 127).getIntValue())
+			intent.getIntExtra(BACKGROUND_COLOR_KEY, new ZLColor(127, 127, 127).intValue())
 		);
 
 		final Uri uri = intent.getData();

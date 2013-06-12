@@ -1,3 +1,15 @@
-* check recently added catalogs are not lost (and are visible) after update
-* newly added catalog is not checked in filter activity
-* use language filter to detect visible catalogs on first start
+* SHORT-TERM (1.8.3)
+** check recently added catalogs are not lost (and are visible) after update
+** newly added catalog is not checked in filter activity
+** use language filter to detect visible catalogs on first start
+** add catalog icons
+** order catalogs alphabetically
+** extract litres API to a separate branch
+** add RSS catalog
+** make a separate branch for catalogs + master
+
+* MID-TERM
+** litres catalog use litres-api
+
+* LONG-TERM
+** re-order catalog function
