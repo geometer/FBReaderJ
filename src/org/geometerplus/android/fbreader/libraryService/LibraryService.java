@@ -22,9 +22,8 @@ package org.geometerplus.android.fbreader.libraryService;
 import java.util.*;
 
 import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.os.FileObserver;
+import android.content.*;
+import android.os.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -33,12 +32,19 @@ import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
+import org.geometerplus.android.fbreader.library.LibraryActivity.PluginMetaInfoReaderImpl;
+import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library-service.book-event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library-service.build-event";
+	
+	
+	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
+	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
 
 	private static final class Observer extends FileObserver {
 		private static final int MASK =
@@ -295,11 +301,35 @@ public class LibraryService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		if (MetaInfoUtil.PMIReader == null) {
+			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
+			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
+				ServiceConnection servConn = new ServiceConnection() {
+					public void onServiceConnected(ComponentName className, IBinder binder) {
+						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
+					}
+
+					public void onServiceDisconnected(ComponentName className) {
+						myServices.remove(pack);
+					}
+				};
+				myServConns.put(pack, servConn);
+				Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
+				i.setPackage(pack);
+				bindService(i, servConn, Context.BIND_AUTO_CREATE);
+			}
+		}
 		myLibrary = new LibraryImplementation();
 	}
 
 	@Override
 	public void onDestroy() {
+		for (String pack : myServConns.keySet()) {
+			if (myServConns.get(pack) != null) {
+				unbindService(myServConns.get(pack));
+				myServConns.remove(pack);
+			}
+		}
 		if (myLibrary != null) {
 			myLibrary.deactivate();
 			myLibrary = null;
