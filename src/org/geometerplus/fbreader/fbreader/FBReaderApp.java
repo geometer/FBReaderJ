@@ -216,7 +216,6 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		if (p.type() == FormatPlugin.Type.PLUGIN) {
 			System.err.println("6");
-//			Collection.addBookToRecentList(bookToOpen);
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
@@ -231,11 +230,21 @@ public final class FBReaderApp extends ZLApplication {
 				}
 				bm = new Bookmark(bookToOpen, "", pos, pos, "", false);
 			}
+			final ArrayList<String> bms = new ArrayList<String>();
+			for (BookmarkQuery query = new BookmarkQuery(bookToOpen, 20); ; query = query.next()) {
+				final List<Bookmark> bookmarks = Collection.bookmarks(query);
+				if (bookmarks.isEmpty()) {
+					break;
+				}
+				for (Bookmark b : bookmarks) {
+					bms.add(SerializerUtil.serialize(b));
+				}
+			}
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					final ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
 					System.err.println(SerializerUtil.serialize(bm));
-					myPluginFileOpener.openFile(((PluginFormatPlugin)p).getPackage(), SerializerUtil.serialize(bm), SerializerUtil.serialize(bookToOpen));
+					myPluginFileOpener.openFile(((PluginFormatPlugin)p).getPackage(), SerializerUtil.serialize(bm), SerializerUtil.serialize(bookToOpen), bms);
 				}
 			}, postAction);
 			return;

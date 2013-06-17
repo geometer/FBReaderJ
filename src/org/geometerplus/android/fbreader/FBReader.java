@@ -159,7 +159,7 @@ public final class FBReader extends Activity {
 			});
 		}
 
-		public void openFile(String appData, String bookmark, String book) {
+		public void openFile(String appData, String bookmark, String book, ArrayList<String> allBookmarks) {
 			Book bookToOpen = SerializerUtil.deserializeBook(book);
 			ZLFile f = bookToOpen.File;
 			if (f == null) {
@@ -172,6 +172,7 @@ public final class FBReader extends Activity {
 			//			LaunchIntent.setData(uri);
 			LaunchIntent.putExtra(BOOKMARK_KEY, bookmark);
 			LaunchIntent.putExtra(BOOK_KEY, book);
+			LaunchIntent.putStringArrayListExtra("BOOKMARKS", allBookmarks);
 			LaunchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			Log.d("fbj", book);
 			try {
