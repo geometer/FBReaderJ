@@ -56,4 +56,6 @@ public interface ActionCode {
 	int ADD_BOOK_TO_BASKET = 61;
 	int REMOVE_BOOK_FROM_BASKET = 62;
 	int OPEN_BASKET = 63;
+	
+	int LIBRARY_FILTER = 64;
 }

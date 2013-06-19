@@ -191,7 +191,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myOptionsMenuActions.add(new RunSearchAction(this, false));
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
 		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
-		myOptionsMenuActions.add(new LanguageFilterAction(this));
+		myOptionsMenuActions.add(new AllCatalogsAction(this));
 		myOptionsMenuActions.add(new ReloadCatalogAction(this));
 		myOptionsMenuActions.add(new SignInAction(this));
 		myOptionsMenuActions.add(new SignUpAction(this));
