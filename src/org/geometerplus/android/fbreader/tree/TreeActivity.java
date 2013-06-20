@@ -158,6 +158,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		setTitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
 			selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();
+			
 		final int index = adapter.getIndex(selectedTree);
 		if (index != -1) {
 			setSelection(index);

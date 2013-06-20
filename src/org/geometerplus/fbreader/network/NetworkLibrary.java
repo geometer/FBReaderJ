@@ -263,6 +263,19 @@ public class NetworkLibrary {
 		}
 		return null;
 	}
+	
+	public NetworkTree getCatalogTreeByUrlAll(String url) {
+		for (FBTree tree : getRootAllTree().subTrees()) {
+			if (tree instanceof NetworkCatalogRootTree) {
+				final String cUrl =
+					((NetworkCatalogTree)tree).getLink().getUrlInfo(UrlInfo.Type.Catalog).Url;
+				if (url.equals(cUrl)) {
+					return (NetworkTree)tree;
+				}
+			}
+		}
+		return null;
+	}
 
 	public INetworkLink getLinkBySiteName(String siteName) {
 		synchronized (myLinks) {
@@ -275,6 +288,7 @@ public class NetworkLibrary {
 		return null;
 	}
 
+	private final RootTree myRootAllTree = new RootTree("@AllRoot", false);
 	private final RootTree myRootTree = new RootTree("@Root", false);
 	private final RootTree myFakeRootTree = new RootTree("@FakeRoot", true);
 
@@ -415,6 +429,23 @@ public class NetworkLibrary {
 	public void invalidateVisibility() {
 		myUpdateVisibility = true;
 	}
+	
+	private void makeUpToDateRootAll() {
+		myRootAllTree.clear();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				int index = 0;
+				for (FBTree t : myRootAllTree.subTrees()) {
+					final INetworkLink l = ((NetworkTree)t).getLink();
+					if (l != null && link.compareTo(l) <= 0) {
+						break;
+					}
+					++index;
+				}
+				new NetworkCatalogRootTree(myRootAllTree, link, index);
+			}
+		}
+	}
 
 	private void makeUpToDate() {
 		updateActiveIds();
@@ -422,7 +453,7 @@ public class NetworkLibrary {
 		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
 
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
-
+		
 		// we do remove sum tree items:
 		for (FBTree t : myRootTree.subTrees()) {
 			if (t instanceof NetworkCatalogTree) {
@@ -459,10 +490,12 @@ public class NetworkLibrary {
 				if (l != null && link.compareTo(l) <= 0) {
 					break;
 				}
+				
 				++index;
 			}
 			new NetworkCatalogRootTree(myRootTree, link, index);
 		}
+		
 		// we do add non-catalog items
 		new SearchCatalogTree(myRootTree, mySearchItem, 0);
 		new AddCustomCatalogItemTree(myRootTree);
@@ -501,6 +534,7 @@ public class NetworkLibrary {
 		if (myChildrenAreInvalid) {
 			myChildrenAreInvalid = false;
 			makeUpToDate();
+			makeUpToDateRootAll();
 		}
 		if (myUpdateVisibility) {
 			myUpdateVisibility = false;
@@ -510,6 +544,10 @@ public class NetworkLibrary {
 
 	public NetworkTree getRootTree() {
 		return myRootTree;
+	}
+	
+	public NetworkTree getRootAllTree() {
+		return myRootAllTree;
 	}
 
 	public NetworkBookTree getFakeBookTree(NetworkBookItem book) {
