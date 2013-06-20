@@ -36,7 +36,7 @@ public abstract class ZLApplication {
 	}
 	
 	public interface PluginFileOpener {
-		public void openFile(String appData, String book, String bookmark, ArrayList<String> allBookmarks);
+		public void openFile(String appData, String book, String bookmark);
 	}
 
 	protected ExternalFileOpener myExternalFileOpener;
