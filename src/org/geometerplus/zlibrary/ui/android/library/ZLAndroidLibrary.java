@@ -214,7 +214,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public List<String> defaultIds() {
 		final TreeSet<String> set = new TreeSet<String>();
-		set.add("http://data.fbreader.org/catalogs/litres4/index.php5");
+		set.add("http://data.fbreader.org/catalogs/litres2/index.php5");
 		return new ArrayList<String>(set);
 	}
 

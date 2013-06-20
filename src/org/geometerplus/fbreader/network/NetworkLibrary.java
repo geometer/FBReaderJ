@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -89,7 +90,7 @@ public class NetworkLibrary {
 
 	private final Map<String,WeakReference<ZLImage>> myImageMap =
 		Collections.synchronizedMap(new HashMap<String,WeakReference<ZLImage>>());
-
+	
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
 		synchronized (myLinks) {
@@ -115,7 +116,12 @@ public class NetworkLibrary {
 	}
 
 	public List<String> activeLanguageCodes() {
-		return activeLanguageCodesOption().getValue();
+		//if(isFirstLaunch){
+		//	isFirstLaunch = false;
+			return activeLanguageCodesOption().getValue();
+		//}else{
+		//	return new ArrayList<String>();
+		//}
 	}
 
 	public void setActiveLanguageCodes(Collection<String> codes) {
@@ -148,6 +154,19 @@ public class NetworkLibrary {
 		return new ArrayList<String>(idSet);
 	}
 	
+	private ZLBooleanOption firstLaunchOption;
+	private ZLBooleanOption myFirstLaunchOption() {
+ 		if (firstLaunchOption == null) {
+ 			firstLaunchOption =
+				new ZLBooleanOption(
+					"Options",
+					"firstLaunch",
+					true
+				);
+		}
+		return firstLaunchOption;
+	}
+	
 	private ZLStringListOption myActiveIdsOption;
 	private ZLStringListOption activeIdsOption() {
  		if (myActiveIdsOption == null) {
@@ -165,19 +184,36 @@ public class NetworkLibrary {
 	public List<String> activeIds() {
 		return activeIdsOption().getValue();
 	}
-
+	
+	public void setActiveOneId(String id){
+		List<String> ids = activeIdsOption().getValue();
+		final ArrayList<String> codesList = new ArrayList<String>();
+		codesList.addAll(ids);
+		codesList.add(id);
+		activeIdsOption().setValue(codesList);
+		invalidateChildren();
+	}
+	
 	public void setActiveIds(Collection<String> ids) {
 		final TreeSet<String> allCodes = new TreeSet<String>();
-		allCodes.addAll(ZLibrary.Instance().defaultIds());
+		
+		//add default catalog ids which are matched to link ids
+		boolean found = false;
+		for(String did : ZLibrary.Instance().defaultIds()){
+			for(String id : linkIds()){
+				if(did.equals(id)){
+					found = true;
+					break;
+				}
+			}
+			if(found){
+				allCodes.add(did);
+			}
+			found = false;
+		}
 		allCodes.removeAll(linkIds());
 		allCodes.addAll(ids);
 
-		// sort ids
-		//final TreeSet<Language> languages = new TreeSet<Language>();
-		//for (String code : allCodes) {
-		//	languages.add(new Language(code));
-		//}
-		//final ArrayList<String> codesList = new ArrayList<String>(languages.size());
 		final ArrayList<String> codesList = new ArrayList<String>(allCodes.size());
 		for (String l : allCodes) {
 			codesList.add(l);
@@ -188,12 +224,12 @@ public class NetworkLibrary {
 	}
 
 	List<INetworkLink> activeLinks() {
+		
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
-		final Collection<String> codes = activeLanguageCodes();
+		final Collection<String> ids = activeIds();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (link instanceof ICustomNetworkLink ||
-					codes.contains(link.getLanguage())) {
+				if (ids.contains(link.getUrl(UrlInfo.Type.Catalog))) {
 					filteredList.add(link);
 				}
 			}
@@ -381,6 +417,8 @@ public class NetworkLibrary {
 	}
 
 	private void makeUpToDate() {
+		updateActiveIds();
+		
 		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
 
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
@@ -430,6 +468,24 @@ public class NetworkLibrary {
 		new AddCustomCatalogItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
+	}
+	
+	private void updateActiveIds(){
+		if(!myFirstLaunchOption().getValue()) return;
+		
+		ArrayList<String> ids = new ArrayList<String>();
+		final Collection<String> codes = activeLanguageCodes();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (link instanceof ICustomNetworkLink ||
+					codes.contains(link.getLanguage())) {
+					ids.add(link.getUrl(UrlInfo.Type.Catalog));
+				}
+			}
+		}
+		setActiveIds(ids);
+	
+		myFirstLaunchOption().setValue(false);
 	}
 
 	private void updateVisibility() {
@@ -525,6 +581,7 @@ public class NetworkLibrary {
 			}
 		}
 		NetworkDatabase.Instance().saveLink(link);
+		setActiveOneId(link.getUrl(UrlInfo.Type.Catalog));
 		invalidateChildren();
 	}
 

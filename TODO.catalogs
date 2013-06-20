@@ -1,7 +1,7 @@
 * SHORT-TERM (1.8.3)
-** check recently added catalogs are not lost (and are visible) after update
-** newly added catalog is not checked in filter activity
-** use language filter to detect visible catalogs on first start
++ check recently added catalogs are not lost (and are visible) after update
++ newly added catalog is not checked in filter activity
++ use language filter to detect visible catalogs on first start
 ** add catalog icons
 ** order catalogs alphabetically
 + extract litres API to a separate branch

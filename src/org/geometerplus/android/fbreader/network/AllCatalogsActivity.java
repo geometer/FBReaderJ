@@ -154,11 +154,11 @@ public class AllCatalogsActivity extends Activity {
 		    			tt.setText(item.getId());
 		    		}
 		    	}else{
-		    		//if (v == null) {
-				       	LayoutInflater vi;
-				        vi = LayoutInflater.from(getContext());
-				        v = vi.inflate(R.layout.checkbox_item, null);
-				    //}
+		    		
+				    LayoutInflater vi;
+				    vi = LayoutInflater.from(getContext());
+				    v = vi.inflate(R.layout.checkbox_item, null);
+				    
 		    		INetworkLink link = library.getLinkByUrl(item.getId());
 		    		if(link != null){
 		    			TextView tt = (TextView) v.findViewById(R.id.title);
