@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import org.sarah.zlibrary.ui.android.R;
 
 public class MissingNativeLibraryActivity extends Activity {
 	@Override

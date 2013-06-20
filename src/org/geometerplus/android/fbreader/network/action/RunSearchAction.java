@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import org.sarah.zlibrary.ui.android.R;
 
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 

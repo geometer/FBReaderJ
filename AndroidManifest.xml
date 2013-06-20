@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		package="org.geometerplus.zlibrary.ui.android"
+		package="org.sarah.zlibrary.ui.android"
 		android:versionCode="108021"
 		android:versionName="1.8.2"
 		android:installLocation="auto"
@@ -23,7 +23,7 @@
 				<data android:scheme="BookReadingException"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".error.BugReportActivity" android:label="FBReader crash" android:theme="@style/FBReader.Activity" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="org.geometerplus.zlibrary.ui.android.error.BugReportActivity" android:label="FBReader crash" android:theme="@style/FBReader.Activity" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@style/FBReader.Dialog" android:process=":crash" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CRASH"/>

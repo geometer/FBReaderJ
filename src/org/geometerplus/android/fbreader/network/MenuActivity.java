@@ -28,7 +28,7 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import org.sarah.zlibrary.ui.android.R;
 
 import org.geometerplus.android.fbreader.api.PluginApi;
 
