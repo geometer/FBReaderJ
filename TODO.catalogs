@@ -5,12 +5,12 @@
  + add catalog icons
  + order catalogs alphabetically
  + extract litres API to a separate branch
-** add RSS catalog
+ + add RSS catalog
  + hardcoded strings ("Active/Inactive catalogs", may be some else?) => en.xml
  + "Library filter" => "All catalogs"
  + NetworkLibraryFilterActivity => AllCatalogsActivity
 ** make a separate branch for catalogs + master
-** copyrights in all files
+ + copyrights in all files
 
 * MID-TERM
 ** litres catalog use litres-api
