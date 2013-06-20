@@ -130,6 +130,10 @@
 			<node name="title" value="Add catalog"/>
 			<node name="editUrl" value="Enter URL manually"/>
 		</node>
+		<node name="allCatalogs">
+			<node name="active" value="Active catalogs"/>
+			<node name="inactive" value="Inactive catalogs"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Search"/>
 			<node name="reload" value="Reload"/>

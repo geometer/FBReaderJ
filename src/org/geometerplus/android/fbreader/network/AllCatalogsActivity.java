@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -45,12 +46,12 @@ public class AllCatalogsActivity extends Activity {
 		super.onStart();
 		
 		ArrayList<CheckItem> idItems = new ArrayList<CheckItem>();
-		idItems.add(new CheckSection("Selected"));
+		idItems.add(new CheckSection(getLabelByKey("active")));
 		for(String i : ids){
 			idItems.add(new CheckItem(i, true));
 		}
 		if(allids.size() > 0){
-			idItems.add(new CheckSection("Unselected"));
+			idItems.add(new CheckSection(getLabelByKey("inactive")));
 			for(String i : allids){
 				idItems.add(new CheckItem(i, false));
 			}
@@ -60,6 +61,10 @@ public class AllCatalogsActivity extends Activity {
 		myAdapter = new CheckListAdapter(this, R.layout.checkbox_item, idItems);
 		selectedList.setAdapter(myAdapter);
 
+	}
+	
+	private String getLabelByKey(String keyName) {
+		return NetworkLibrary.resource().getResource("allCatalogs").getResource(keyName).getValue();
 	}
 	
 	@Override
@@ -75,12 +80,11 @@ public class AllCatalogsActivity extends Activity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		System.out.println("Exit!");
+	
 		ArrayList<String> ids = new ArrayList<String>();
 		ArrayList<CheckItem> items = myAdapter.getItems();
 		for(CheckItem item : items){
 			if(!item.isSection() && item.isChecked()){
-				System.out.println(">> "+item.getId()+", "+item.isChecked());
 				ids.add(item.getId());
 			}
 			
