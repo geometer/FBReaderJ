@@ -17,6 +17,9 @@
 		<node name="byTag" value="By tag">
 			<node name="summary" value="Books sorted by tag"/>
 		</node>
+		<node name="new" value="New">
+			<node name="summary" value="Newly added books"/>
+		</node>
 		<node name="recent" value="Recent">
 			<node name="summary" value="Recently opened books"/>
 		</node>
@@ -287,6 +290,7 @@
 		<node name="authors" value="Author(s)"/>
 		<node name="tags" value="Tag(s)"/>
 		<node name="series" value="Series"/>
+		<node name="indexInSeries" value="Series index"/>
 	</node>
 	<node name="Preferences">
 		<node name="directories" value="Directories">

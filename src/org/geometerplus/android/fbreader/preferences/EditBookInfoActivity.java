@@ -30,10 +30,13 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
+import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.SeriesInfo;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
+import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
@@ -50,6 +53,79 @@ class BookTitlePreference extends ZLStringPreference {
 	protected void setValue(String value) {
 		super.setValue(value);
 		myBook.setTitle(value);
+		((EditBookInfoActivity)getContext()).saveBook();
+	}
+}
+
+class BookAuthorsPreference extends ZLStringPreference {
+	private final Book myBook;
+
+	BookAuthorsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context, rootResource, resourceKey);
+		myBook = book;
+		final StringBuilder buffer = new StringBuilder();
+		final List<Author> authors = myBook.authors();
+		for (Author a : authors) {
+			if (buffer.length() > 0) {
+				buffer.append(", ");
+			}
+			buffer.append(a.DisplayName);
+		}
+		super.setValue(buffer.toString());
+	}
+}
+
+class BookSeriesPreference extends ZLStringPreference {
+	private final Book myBook;
+	private final SeriesInfo series;
+
+	BookSeriesPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context, rootResource, resourceKey);
+		myBook = book;
+		series = myBook.getSeriesInfo();
+		String title = "";
+		if(series != null){
+			title = series.Series.getTitle();
+		}
+		super.setValue(title);
+	}
+	
+	@Override
+	protected void setValue(String value) {
+		super.setValue(value);
+		String seriesIndexString = null;
+		if(series != null && series.Index != null){
+			seriesIndexString = series.Index.toString();
+		}
+		myBook.setSeriesInfo(value, seriesIndexString);
+		((EditBookInfoActivity)getContext()).saveBook();
+	}
+}
+
+class BookSeriesIndexPreference extends ZLStringPreference {
+	private final Book myBook;
+	private final SeriesInfo series;
+	private String title;
+
+	BookSeriesIndexPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context, rootResource, resourceKey);
+		myBook = book;
+		series = myBook.getSeriesInfo();
+		String seriesIndexString = null;
+		if (series != null && series.Index != null) {
+			seriesIndexString = series.Index.toString();
+		}
+		super.setValue(seriesIndexString);
+	}
+	
+	@Override
+	protected void setValue(String value) {
+		super.setValue(value);
+		String title = "";
+		if(series != null){
+			title = series.Series.getTitle();
+		}
+		myBook.setSeriesInfo(title, value);
 		((EditBookInfoActivity)getContext()).saveBook();
 	}
 }
@@ -182,6 +258,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				myInitialized = true;
 
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
+				addPreference(new BookAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
+				addPreference(new BookSeriesPreference(EditBookInfoActivity.this, Resource, "series", myBook));
+				addPreference(new BookSeriesIndexPreference(EditBookInfoActivity.this, Resource, "indexInSeries", myBook));
+				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "tags", myBook));
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
 			}
