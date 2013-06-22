@@ -33,6 +33,9 @@ class CatalogExpander extends NetworkItemsLoader {
 		super(tree);
 		myCheckAuthentication = checkAuthentication;
 		myResumeNotLoad = resumeNotLoad;
+		if(!myResumeNotLoad) {
+			NetworkLibrary.Instance().catalogBusy();
+		}
 	}
 
 	@Override
@@ -53,9 +56,11 @@ class CatalogExpander extends NetworkItemsLoader {
 	@Override
 	public void doLoading() throws ZLNetworkException {
 		if (myResumeNotLoad) {
+			NetworkLibrary.Instance().checkCatalogLoad();
 			getTree().Item.resumeLoading(this);
 		} else {
 			getTree().Item.loadChildren(this);
+			NetworkLibrary.Instance().catalogDone();
 		}
 	}
 
