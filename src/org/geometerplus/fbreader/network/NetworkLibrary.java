@@ -59,6 +59,7 @@ public class NetworkLibrary {
 	}
 
 	private static NetworkLibrary ourInstance;
+	private static boolean catalogFree;
 
 	public static NetworkLibrary Instance() {
 		if (ourInstance == null) {
@@ -73,6 +74,24 @@ public class NetworkLibrary {
 
 	public interface OnNewLinkListener {
 		void onNewLink(INetworkLink link);
+	}
+
+	public synchronized void catalogBusy() {
+		catalogFree = false;
+	}
+
+	public synchronized void catalogDone() {
+		catalogFree = true;
+		notifyAll();
+	}
+
+	public synchronized void checkCatalogLoad() {
+		while(!catalogFree) {
+			try {
+				wait();
+			} catch(InterruptedException ie) {
+			} 
+		}
 	}
 
 	public final ZLStringOption NetworkSearchPatternOption =
