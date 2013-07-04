@@ -20,15 +20,26 @@
 package org.geometerplus.fbreader.book;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
+
+import android.graphics.Bitmap;
+import android.os.Environment;
 
 public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
@@ -679,5 +690,60 @@ public class BookCollection extends AbstractBookCollection {
 		myStyles.put(style.Id, style);
 		myDatabase.saveStyle(style);
 		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
+	}
+	
+	@Override
+	public void saveCovers() {
+		for (BookQuery query = new BookQuery(new Filter.Empty(), 20); ; query = query.next()) {
+			final List<Book> partOfBooks = books(query);
+			if (partOfBooks.isEmpty()) {
+				break;
+			}
+			for (Book b : partOfBooks) {
+				saveCover(b);
+			}
+		}
+	}
+
+	private void saveCover(Book b) {
+		final ZLImage image = BookUtil.getCover(b);
+
+		if (image == null) {
+			return;
+		}
+		if (image instanceof ZLLoadableImage) {
+			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
+			if (!loadableImage.isSynchronized()) {
+				loadableImage.synchronize();
+			}
+		}
+		final ZLAndroidImageData data =
+			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
+		if (data == null) {
+			return;
+		}
+
+		final Bitmap coverBitmap = data.getFullSizeBitmap();
+		if (coverBitmap == null) {
+			return;
+		}
+		
+		String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+		
+		File myPath = new File(extStorageDirectory, "/FBReaderJ/Covers");
+		myPath.mkdirs();
+
+		OutputStream outStream = null;
+		File file = new File(myPath, b.getId() + ".PNG");
+			try {
+				outStream = new FileOutputStream(file);
+				coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+				outStream.flush();
+				outStream.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 }

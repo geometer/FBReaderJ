@@ -86,4 +86,6 @@ public interface IBookCollection {
 	HighlightingStyle getHighlightingStyle(int styleId);
 	List<HighlightingStyle> highlightingStyles();
 	void saveHighlightingStyle(HighlightingStyle style);
+	
+	void saveCovers();
 }

@@ -464,4 +464,16 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	// method from ServiceConnection interface
 	public synchronized void onServiceDisconnected(ComponentName name) {
 	}
+	
+	@Override
+	public synchronized void saveCovers() {
+		if (myInterface == null) {
+			return;
+		}
+		try {
+			myInterface.saveCovers();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
 }
