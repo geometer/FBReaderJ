@@ -5,6 +5,7 @@
 		<node name="bg" value="Български"/>
 		<node name="ca" value="Català"/>
 		<node name="cs" value="Česky"/>
+		<node name="da" value="Dansk"/>
 		<node name="de" value="Deutsch"/>
 		<node name="en" value="English"/>
 		<node name="es" value="Español"/>
