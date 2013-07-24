@@ -216,7 +216,6 @@ public final class FBReaderApp extends ZLApplication {
 		}
 		if (p.type() == FormatPlugin.Type.PLUGIN) {
 			System.err.println("6");
-//			Collection.addBookToRecentList(bookToOpen);
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
