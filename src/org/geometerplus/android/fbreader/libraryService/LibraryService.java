@@ -25,7 +25,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.FileObserver;
-import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -276,7 +275,7 @@ public class LibraryService extends Service {
 		}
 
 		@Override
-		public boolean saveCover(String book, String url) throws RemoteException {
+		public boolean saveCover(String book, String url) {
 			return myCollection.saveCover(SerializerUtil.deserializeBook(book), url);
 		}
 	}
