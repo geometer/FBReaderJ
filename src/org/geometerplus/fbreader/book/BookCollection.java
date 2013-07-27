@@ -720,16 +720,18 @@ public class BookCollection extends AbstractBookCollection {
 
 		OutputStream outStream = null;
 		File file = new File(myPath, book.getId() + ".PNG");
-			try {
-				outStream = new FileOutputStream(file);
-				coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-				outStream.flush();
-				outStream.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			outStream = new FileOutputStream(file);
+			coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+			outStream.flush();
+			outStream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 		return true;
 	}
 }

@@ -471,8 +471,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return false;
 		}
 		try {
-			myInterface.saveCover(SerializerUtil.serialize(book), url);
-			return true;
+			return myInterface.saveCover(SerializerUtil.serialize(book), url);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return false;
