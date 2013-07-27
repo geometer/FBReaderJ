@@ -41,6 +41,8 @@ interface LibraryInterface {
 	boolean isHyperlinkVisited(in String book, in String linkId);
 	void markHyperlinkAsVisited(in String book, in String linkId);
 
+	boolean saveCover(in String book, in String url);
+
 	List<String> bookmarks(in String query);
 	String saveBookmark(in String bookmark);
 	void deleteBookmark(in String bookmark);
@@ -48,6 +50,4 @@ interface LibraryInterface {
 	String getHighlightingStyle(in int styleId);
 	List<String> highlightingStyles();
 	void saveHighlightingStyle(in String style);
-	
-	boolean saveCover(in String book, in String url);
 }

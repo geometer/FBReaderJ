@@ -245,6 +245,11 @@ public class LibraryService extends Service {
 		public void markHyperlinkAsVisited(String book, String linkId) {
 			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
 		}
+		
+		@Override
+		public boolean saveCover(String book, String url) {
+			return myCollection.saveCover(SerializerUtil.deserializeBook(book), url);
+		}
 
 		public List<String> bookmarks(String query) {
 			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(
@@ -272,11 +277,6 @@ public class LibraryService extends Service {
 
 		public void saveHighlightingStyle(String style) {
 			myCollection.saveHighlightingStyle(SerializerUtil.deserializeStyle(style));
-		}
-
-		@Override
-		public boolean saveCover(String book, String url) {
-			return myCollection.saveCover(SerializerUtil.deserializeBook(book), url);
 		}
 	}
 

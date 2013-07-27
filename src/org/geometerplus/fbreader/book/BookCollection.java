@@ -614,6 +614,55 @@ public class BookCollection extends AbstractBookCollection {
 			}
 		}
 	}
+	
+	@Override
+	public boolean saveCover(Book book, String url) {
+		if (getBookById(book.getId()) == null) {
+			return false;
+		}
+		
+		final ZLImage image = BookUtil.getCover(book);
+
+		if (image == null) {
+			return false;
+		}
+		if (image instanceof ZLLoadableImage) {
+			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
+			if (!loadableImage.isSynchronized()) {
+				loadableImage.synchronize();
+			}
+		}
+		final ZLAndroidImageData data =
+			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
+		if (data == null) {
+			return false;
+		}
+
+		final Bitmap coverBitmap = data.getFullSizeBitmap();
+		if (coverBitmap == null) {
+			return false;
+		}
+
+		OutputStream outputStream = null;
+		final File file = new File(url);
+		final File parent = file.getParentFile();
+		parent.mkdirs();
+		try {
+			outputStream = new FileOutputStream(file);
+			coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+			outputStream.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				outputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
 		return myDatabase.loadBookmarks(query);
@@ -685,54 +734,5 @@ public class BookCollection extends AbstractBookCollection {
 		myStyles.put(style.Id, style);
 		myDatabase.saveStyle(style);
 		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
-	}
-	
-	@Override
-	public boolean saveCover(Book book, String url) {
-		if (getBookById(book.getId()) == null) {
-			return false;
-		}
-		
-		final ZLImage image = BookUtil.getCover(book);
-
-		if (image == null) {
-			return false;
-		}
-		if (image instanceof ZLLoadableImage) {
-			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
-			if (!loadableImage.isSynchronized()) {
-				loadableImage.synchronize();
-			}
-		}
-		final ZLAndroidImageData data =
-			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
-		if (data == null) {
-			return false;
-		}
-
-		final Bitmap coverBitmap = data.getFullSizeBitmap();
-		if (coverBitmap == null) {
-			return false;
-		}
-
-		OutputStream outputStream = null;
-		final File file = new File(url);
-		final File parent = file.getParentFile();
-		parent.mkdirs();
-		try {
-			outputStream = new FileOutputStream(file);
-			coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-			outputStream.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				outputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return true;
 	}
 }

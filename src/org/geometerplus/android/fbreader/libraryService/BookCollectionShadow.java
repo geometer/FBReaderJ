@@ -383,6 +383,19 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	@Override
+	public synchronized boolean saveCover(Book book, String url) {
+		if (myInterface == null) {
+			return false;
+		}
+		try {
+			return myInterface.saveCover(SerializerUtil.serialize(book), url);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public synchronized List<Bookmark> bookmarks(BookmarkQuery query) {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -463,18 +476,5 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 
 	// method from ServiceConnection interface
 	public synchronized void onServiceDisconnected(ComponentName name) {
-	}
-	
-	@Override
-	public synchronized boolean saveCover(Book book, String url) {
-		if (myInterface == null) {
-			return false;
-		}
-		try {
-			return myInterface.saveCover(SerializerUtil.serialize(book), url);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return false;
-		}
 	}
 }
