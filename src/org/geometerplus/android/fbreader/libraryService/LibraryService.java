@@ -277,8 +277,7 @@ public class LibraryService extends Service {
 
 		@Override
 		public boolean saveCover(String book, String url) throws RemoteException {
-			myCollection.saveCover(SerializerUtil.deserializeBook(book), url);
-			return true;
+			return myCollection.saveCover(SerializerUtil.deserializeBook(book), url);
 		}
 	}
 
