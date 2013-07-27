@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 import android.app.Service;

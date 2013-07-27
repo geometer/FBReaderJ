@@ -24,7 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -40,7 +39,6 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
 import android.graphics.Bitmap;
-import android.os.Environment;
 
 public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
