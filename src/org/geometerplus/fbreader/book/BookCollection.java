@@ -714,12 +714,11 @@ public class BookCollection extends AbstractBookCollection {
 		if (coverBitmap == null) {
 			return false;
 		}
-		
-		File myPath = new File(url);
-		myPath.mkdirs();
 
 		OutputStream outStream = null;
-		File file = new File(myPath, book.getId() + ".PNG");
+		File file = new File(url);
+		File parent = file.getParentFile();
+		parent.mkdirs();
 		try {
 			outStream = new FileOutputStream(file);
 			coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
