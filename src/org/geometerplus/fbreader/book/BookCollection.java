@@ -715,21 +715,23 @@ public class BookCollection extends AbstractBookCollection {
 			return false;
 		}
 
-		OutputStream outStream = null;
-		File file = new File(url);
-		File parent = file.getParentFile();
+		OutputStream outputStream = null;
+		final File file = new File(url);
+		final File parent = file.getParentFile();
 		parent.mkdirs();
 		try {
-			outStream = new FileOutputStream(file);
-			coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-			outStream.flush();
-			outStream.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
+			outputStream = new FileOutputStream(file);
+			coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+			outputStream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
+		} finally {
+			try {
+				outputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return true;
 	}
