@@ -19,12 +19,15 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.FileObserver;
+import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -273,9 +276,11 @@ public class LibraryService extends Service {
 		public void saveHighlightingStyle(String style) {
 			myCollection.saveHighlightingStyle(SerializerUtil.deserializeStyle(style));
 		}
-		
-		public void saveCovers() {
-			myCollection.saveCovers();
+
+		@Override
+		public boolean saveCover(String book, String url) throws RemoteException {
+			myCollection.saveCover(SerializerUtil.deserializeBook(book), url);
+			return true;
 		}
 	}
 

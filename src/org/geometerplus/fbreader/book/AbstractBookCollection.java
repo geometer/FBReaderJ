@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.book;
 
+import java.net.URL;
 import java.util.*;
 
 public abstract class AbstractBookCollection implements IBookCollection {

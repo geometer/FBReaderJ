@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -693,23 +694,11 @@ public class BookCollection extends AbstractBookCollection {
 	}
 	
 	@Override
-	public void saveCovers() {
-		for (BookQuery query = new BookQuery(new Filter.Empty(), 20); ; query = query.next()) {
-			final List<Book> partOfBooks = books(query);
-			if (partOfBooks.isEmpty()) {
-				break;
-			}
-			for (Book b : partOfBooks) {
-				saveCover(b);
-			}
-		}
-	}
-
-	private void saveCover(Book b) {
-		final ZLImage image = BookUtil.getCover(b);
+	public boolean saveCover(Book book, String url) {
+		final ZLImage image = BookUtil.getCover(book);
 
 		if (image == null) {
-			return;
+			return false;
 		}
 		if (image instanceof ZLLoadableImage) {
 			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
@@ -720,21 +709,19 @@ public class BookCollection extends AbstractBookCollection {
 		final ZLAndroidImageData data =
 			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
 		if (data == null) {
-			return;
+			return false;
 		}
 
 		final Bitmap coverBitmap = data.getFullSizeBitmap();
 		if (coverBitmap == null) {
-			return;
+			return false;
 		}
 		
-		String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-		
-		File myPath = new File(extStorageDirectory, "/FBReaderJ/Covers");
+		File myPath = new File(url);
 		myPath.mkdirs();
 
 		OutputStream outStream = null;
-		File file = new File(myPath, b.getId() + ".PNG");
+		File file = new File(myPath, book.getId() + ".PNG");
 			try {
 				outStream = new FileOutputStream(file);
 				coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
@@ -745,5 +732,6 @@ public class BookCollection extends AbstractBookCollection {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		return true;
 	}
 }

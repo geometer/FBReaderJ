@@ -49,5 +49,5 @@ interface LibraryInterface {
 	List<String> highlightingStyles();
 	void saveHighlightingStyle(in String style);
 	
-	void saveCovers();
+	boolean saveCover(in String book, in String url);
 }

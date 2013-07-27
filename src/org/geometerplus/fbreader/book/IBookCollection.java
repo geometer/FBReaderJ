@@ -20,7 +20,7 @@
 package org.geometerplus.fbreader.book;
 
 import java.util.List;
-
+import java.net.URL;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -87,5 +87,5 @@ public interface IBookCollection {
 	List<HighlightingStyle> highlightingStyles();
 	void saveHighlightingStyle(HighlightingStyle style);
 	
-	void saveCovers();
+	boolean saveCover(Book book, String url);
 }

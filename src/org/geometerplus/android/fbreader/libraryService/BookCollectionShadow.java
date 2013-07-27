@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.net.URL;
 import java.util.*;
 
 import android.content.*;
@@ -466,14 +467,16 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 	
 	@Override
-	public synchronized void saveCovers() {
+	public synchronized boolean saveCover(Book book, String url) {
 		if (myInterface == null) {
-			return;
+			return false;
 		}
 		try {
-			myInterface.saveCovers();
+			myInterface.saveCover(SerializerUtil.serialize(book), url);
+			return true;
 		} catch (RemoteException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 }
