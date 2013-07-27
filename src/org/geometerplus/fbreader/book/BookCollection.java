@@ -19,11 +19,7 @@
 
 package org.geometerplus.fbreader.book;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -693,6 +689,10 @@ public class BookCollection extends AbstractBookCollection {
 	
 	@Override
 	public boolean saveCover(Book book, String url) {
+		if (getBookById(book.getId()) == null) {
+			return false;
+		}
+		
 		final ZLImage image = BookUtil.getCover(book);
 
 		if (image == null) {
