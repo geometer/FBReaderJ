@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -617,15 +618,16 @@ public class BookCollection extends AbstractBookCollection {
 	
 	@Override
 	public boolean saveCover(Book book, String url) {
+		
 		if (getBookById(book.getId()) == null) {
 			return false;
 		}
 		
 		final ZLImage image = BookUtil.getCover(book);
-
 		if (image == null) {
 			return false;
 		}
+		
 		if (image instanceof ZLLoadableImage) {
 			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
 			if (!loadableImage.isSynchronized()) {
@@ -638,8 +640,8 @@ public class BookCollection extends AbstractBookCollection {
 			return false;
 		}
 
-		final Bitmap coverBitmap = data.getFullSizeBitmap();
-		if (coverBitmap == null) {
+		final InputStream inputStream = ((ZLSingleImage)image).inputStream();
+		if (inputStream == null) {
 			return false;
 		}
 
@@ -649,16 +651,28 @@ public class BookCollection extends AbstractBookCollection {
 		parent.mkdirs();
 		try {
 			outputStream = new FileOutputStream(file);
-			coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-			outputStream.flush();
+			int read = 0;
+			byte[] bytes = new byte[1024];
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		} finally {
-			try {
-				outputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return true;
