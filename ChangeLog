@@ -11,6 +11,11 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
+===== 1.9 (Jul ??, 2013) =====
+* Updated French localization by Mathias Monnerville
+* Danish translation done by Jens Kaestel, sponsored by Panacea Supplies
+* Hyphenation patterns imported by Dennis Sheil of Panacea Supplies
+
 ===== 1.8.2 (Jun 13, 2013) =====
 * Editable highlighting styles
 * Bookmarks with no highlighting
