@@ -757,6 +757,7 @@
 			<node name="refresh" value="Refresh"/>
 			<node name="authorize" value="Authorize"/>
 			<node name="resetPosition" value="Reset position"/>
+			<node name="enterPosition" value="Enter page number"/>
 			<node name="sendReport" value="Send report"/>
 			<node name="addToFavorites" value="Add to favorites"/>
 			<node name="removeFromFavorites" value="Remove from favorites"/>
