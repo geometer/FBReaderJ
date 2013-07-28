@@ -34,18 +34,29 @@
 		<LinearLayout
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_weight="0.25"
+			android:layout_weight="0.1"
 		/>
 		<Button
 			android:id="@+id/navigation_reset_button"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_weight="0.5"
+			android:layout_weight="0.35"
 		/>
 		<LinearLayout
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_weight="0.25"
+			android:layout_weight="0.1"
+		/>
+		<Button
+			android:id="@+id/navigation_enter_button"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.35"
+		/>
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.1"
 		/>
 	</LinearLayout>
 </LinearLayout>
