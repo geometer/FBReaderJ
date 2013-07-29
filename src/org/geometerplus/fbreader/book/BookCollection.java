@@ -27,13 +27,9 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
-
-import android.graphics.Bitmap;
 
 public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
@@ -622,12 +618,6 @@ public class BookCollection extends AbstractBookCollection {
 
 		final ZLImage image = BookUtil.getCover(book);
 		if (image == null) {
-			return false;
-		}
-
-		final ZLAndroidImageData data =
-			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
-		if (data == null) {
 			return false;
 		}
 
