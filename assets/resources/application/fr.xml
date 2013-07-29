@@ -529,7 +529,7 @@
 			</node>
 		</node>
 		<node name="css" value="CSS" toBeTranslated="true">
-            <node name="summary" value="Appliquer/ignorer les styles définis dans le CSS" toBeTranslated="true"/>
+			<node name="summary" value="Appliquer/ignorer les styles définis dans le CSS" toBeTranslated="true"/>
 			<node name="fontSize" value="Taille de la police" toBeTranslated="true">
 				<node name="summaryOn" value="Appliquer la taille de police définie dans le CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignorer la taille de police définie dans le CSS" toBeTranslated="true"/>

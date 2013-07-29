@@ -224,9 +224,18 @@
 		<node name="forward" value="Frem"/>
 		<node name="close" value="Luk FB-Læser"/>
 	</node>
+	<node name="style" value="Stil %s"/>
 	<node name="highlightingStyleMenu">
-		<node name="style" value="Stil %s"/>
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Slet Bogmærke"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
 	</node>
 	<node name="selection" value="Valg">
 		<node name="copyToClipboard" value="Kopier til udklipsholder"/>
@@ -785,7 +794,7 @@
 			<node name="loadingNetworkBookInfo" value="Indlæser bogoplysninger. Vent venligst..."/>
 			<node name="updatingCatalogsList" value="Opdaterer katalogliste. Vent venligst..."/>
 			<node name="updatingAccountInformation" value="Opdaterer konto-oplysninger Vent venligst..."/>
-			<node name="extrcact" value="Forbereder fil til ekstern app. Vent venligst..."/>		
+			<node name="extrcact" value="Forbereder fil til ekstern app. Vent venligst..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Intern serverfejl"/>
