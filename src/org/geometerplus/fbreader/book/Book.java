@@ -197,6 +197,14 @@ public class Book extends TitledEntity {
 		addAuthor(name, "");
 	}
 
+	public void replaceAuthorsWithList(String authorList){
+		removeAllAuthors();
+		String[] authors = authorList.split(";");
+		for(int i = 0; i < authors.length; i++){
+			addAuthor(authors[i].trim());
+		}
+	}
+	
 	public void addAuthor(String name, String sortKey) {
 		String strippedName = name;
 		strippedName.trim();
@@ -313,6 +321,14 @@ public class Book extends TitledEntity {
 		if (myTags != null) {
 			myTags = null;
 			myIsSaved = false;
+		}
+	}
+	
+	public void replaceTagsWithList(String tagList){
+		removeAllTags();
+		String[] tags = tagList.split(",");
+		for(int i = 0; i < tags.length; i++){
+			addTag(tags[i].trim());
 		}
 	}
 

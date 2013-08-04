@@ -324,10 +324,11 @@ mainLoop:
 		public int compare(Bookmark bm0, Bookmark bm1) {
 			final int par0 = bm0.getEnd().getParagraphIndex();
 			final int par1 = bm1.getEnd().getParagraphIndex();
-			if (par0 == 0) {
-				return par1 == 0 ? 0 : -1;
+			if (par0 == par1) {
+				return 0;
 			}
-			return par1 == 0 ? 1 : -1;
+			return par1 < par0 ? 1 : -1;
+			//return -1;
 		}
 	}
 

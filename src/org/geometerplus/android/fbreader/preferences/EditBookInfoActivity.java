@@ -33,10 +33,10 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.SeriesInfo;
+import org.geometerplus.fbreader.book.Tag;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
@@ -67,11 +67,42 @@ class BookAuthorsPreference extends ZLStringPreference {
 		final List<Author> authors = myBook.authors();
 		for (Author a : authors) {
 			if (buffer.length() > 0) {
-				buffer.append(", ");
+				buffer.append("; ");
 			}
 			buffer.append(a.DisplayName);
 		}
 		super.setValue(buffer.toString());
+	}
+	@Override
+	protected void setValue(String value) {
+		super.setValue(value);
+		myBook.replaceAuthorsWithList(value);
+		((EditBookInfoActivity)getContext()).saveBook();
+	}
+}
+
+class BookTagsPreference extends ZLStringPreference {
+	private final Book myBook;
+
+	BookTagsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context, rootResource, resourceKey);
+		myBook = book;
+		final StringBuilder buffer = new StringBuilder();
+		final List<Tag> tags = myBook.tags();
+		for (Tag t : tags) {
+			if (buffer.length() > 0) {
+				buffer.append(", ");
+			}
+			buffer.append(t.Name);
+		}
+		super.setValue(buffer.toString());
+	}
+	@Override
+	protected void setValue(String value) {
+		super.setValue(value);
+		myBook.removeAllTags();
+		myBook.replaceTagsWithList(value);
+		((EditBookInfoActivity)getContext()).saveBook();
 	}
 }
 
@@ -261,7 +292,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				addPreference(new BookAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
 				addPreference(new BookSeriesPreference(EditBookInfoActivity.this, Resource, "series", myBook));
 				addPreference(new BookSeriesIndexPreference(EditBookInfoActivity.this, Resource, "indexInSeries", myBook));
-				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "tags", myBook));
+				addPreference(new BookTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
 			}
