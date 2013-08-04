@@ -77,6 +77,7 @@ class BookAuthorsPreference extends ZLStringPreference {
 	protected void setValue(String value) {
 		super.setValue(value);
 		myBook.replaceAuthorsWithList(value);
+		
 		((EditBookInfoActivity)getContext()).saveBook();
 	}
 }
@@ -100,9 +101,9 @@ class BookTagsPreference extends ZLStringPreference {
 	@Override
 	protected void setValue(String value) {
 		super.setValue(value);
-		myBook.removeAllTags();
 		myBook.replaceTagsWithList(value);
-		((EditBookInfoActivity)getContext()).saveBook();
+		EditBookInfoActivity vari = (EditBookInfoActivity)getContext();
+		(vari).saveBook();
 	}
 }
 
@@ -124,7 +125,7 @@ class BookSeriesPreference extends ZLStringPreference {
 	@Override
 	protected void setValue(String value) {
 		super.setValue(value);
-		String seriesIndexString = null;
+		String seriesIndexString = "1";
 		if(series != null && series.Index != null){
 			seriesIndexString = series.Index.toString();
 		}
@@ -136,7 +137,6 @@ class BookSeriesPreference extends ZLStringPreference {
 class BookSeriesIndexPreference extends ZLStringPreference {
 	private final Book myBook;
 	private final SeriesInfo series;
-	private String title;
 
 	BookSeriesIndexPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context, rootResource, resourceKey);
@@ -152,7 +152,7 @@ class BookSeriesIndexPreference extends ZLStringPreference {
 	@Override
 	protected void setValue(String value) {
 		super.setValue(value);
-		String title = "";
+		String title = "Unknown";
 		if(series != null){
 			title = series.Series.getTitle();
 		}
@@ -261,7 +261,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	void saveBook() {
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				myCollection.saveBook(myBook, false);
+				myCollection.saveBook(myBook, true);
 			}
 		});
 	}

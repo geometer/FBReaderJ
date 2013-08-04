@@ -325,6 +325,7 @@ public class Book extends TitledEntity {
 	}
 	
 	public void replaceTagsWithList(String tagList){
+		//android.os.Debug.waitForDebugger();
 		removeAllTags();
 		String[] tags = tagList.split(",");
 		for(int i = 0; i < tags.length; i++){
@@ -438,6 +439,7 @@ public class Book extends TitledEntity {
 	}
 
 	boolean save(final BooksDatabase database, boolean force) {
+		//android.os.Debug.waitForDebugger();
 		if (!force && myId != -1 && myIsSaved) {
 			return false;
 		}
