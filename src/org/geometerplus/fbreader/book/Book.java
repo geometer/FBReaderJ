@@ -35,6 +35,7 @@ import org.geometerplus.fbreader.sort.TitledEntity;
 
 public class Book extends TitledEntity {
 	public static final String FAVORITE_LABEL = "favorite";
+	public static final String UNREAD_LABEL = "unread";
 	public static final String READ_LABEL = "read";
 
 	public final ZLFile File;

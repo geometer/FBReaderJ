@@ -26,6 +26,9 @@
 		<node name="favorites" value="Favorites">
 			<node name="summary" value="My selected books"/>
 		</node>
+		<node name="unread" value="Unread">
+			<node name="summary" value="My unread books"/>
+		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
@@ -831,6 +834,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
+		<node name="noUnread" value="Your unread list is empty, sorry"/>
 		<node name="noSeries" value="There are no books in series, sorry"/>
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>

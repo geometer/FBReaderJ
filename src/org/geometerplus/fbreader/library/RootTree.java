@@ -26,6 +26,7 @@ public class RootTree extends LibraryTree {
 		super(collection);
 
 		new FavoritesTree(this);
+		new UnreadTree(this);
 		new RecentBooksTree(this);
 		new AuthorListTree(this);
 		new TitleListTree(this);
