@@ -452,6 +452,7 @@ public class Book extends TitledEntity {
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, getTitle());
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, getTitle());
+					addLabel(UNREAD_LABEL);
 					if (myId != -1 && myVisitedHyperlinks != null) {
 						for (String linkId : myVisitedHyperlinks) {
 							database.addVisitedHyperlink(myId, linkId);
