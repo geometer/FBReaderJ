@@ -38,9 +38,6 @@
 		<node name="fileTreeLibrary" value="FB-læser bibliotek">
 			<node name="summary" value="FB-Læser bogbibliotek"/>
 		</node>
-		<node name="fileTreeAddLibrary" value="Ekstra FB-læser bibliotek">
-			<node name="summary" value="FB-Læser bogbibliotek"/>
-		</node>
 		<node name="menu">
 			<node name="localSearch" value="Søg"/>
 			<node name="rescan" value="Scan igen"/>
@@ -53,6 +50,9 @@
 		<node name="removeFromFavorites" value="Fjern fra foretrukne"/>
 		<node name="markAsRead" value="Marker som læst"/>
 		<node name="markAsUnread" value="Marker som ikke læst"/>
+		<node name="fileTreeAddLibrary" value="Ekstra FB-læser bibliotek">
+			<node name="summary" value="FB-Læser bogbibliotek"/>
+		</node>
 	</node>
 	<node name="networkLibrary" value="FB-Læser netværksbibliotek">
 		<node name="byAuthor" value="Efter forfatter">
@@ -294,13 +294,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Biblioteker">
 			<node name="summary" value="Biblioteker for filsøgning"/>
+			<node name="books" value="Bogbibliotek"/>
+			<node name="fonts" value="Skrifttype-bibliotek"/>
+			<node name="wallpapers" value="Tapet-bibliotek"/>
 			<node name="temp" value="Katalog for midlertidige filer"/>
 			<node name="bookPath" value="Bogbiblioteker"/>
 			<node name="fontPath" value="Skrifttype-biblioteker"/>
 			<node name="wallpaperPath" value="Tapet-biblioteker"/>
-			<node name="books" value="Bogbibliotek"/>
-			<node name="fonts" value="Skrifttype-bibliotek"/>
-			<node name="wallpapers" value="Tapet-bibliotek"/>
 		</node>
 		<node name="appearance" value="Fremtoning">
 			<node name="summary" value="Vis indstillinger, statuslinje, knaplys"/>
@@ -841,9 +841,6 @@
 			<node name="more" value="Næste tip"/>
 		</node>
 	</node>
-	<node name="warningMessage">
-		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>
-	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Kan ikke få adgang til Android Market. Installer venligst %s manuelt"/>
 		<node name="textNotFound" value="Der er desværre ingen passende tekst i bogen"/>
@@ -897,5 +894,8 @@
 		<node name="opfFileNotFound" value="OPF blev ikke fundet i %s"/>
 		<node name="unsupportedFileFormat" value="Filformatet understøttes ikke for '%s'"/>
 		<node name="errorParsingRtf" value="RTF-parsingfejl i: %s"/>
+	</node>
+	<node name="warningMessage">
+		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>
 	</node>
 </resources>
