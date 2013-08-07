@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- English FBReaderJ resources, by Geometer Plus -->
+<resources>
+	<node name="library" value="کتابخانه اف بی ریدر">
+		<node name="unknownAuthor" value="نویسنده نامشخص"/>
+		<node name="booksWithNoTags" value="کتابهای بدون برچسب"/>
+		<node name="demo" value="ساده"/>
+		<node name="byAuthor" value="بر اساس نویسنده">
+			<node name="summary" value="کتابها بر اساس نویسنده دسته بندی شده"/>
+		</node>
+		<node name="byTitle" value="بر اساس عنوان">
+			<node name="summary" value="کتابها بر اساس عنوان دسته بندی شده"/>
+		</node>
+		<node name="bySeries" value="بر اساس ردیف">
+			<node name="summary" value="کتابها بر اساس ردیف دسته بندی شده"/>
+		</node>
+		<node name="byTag" value="بر اساس برچسب">
+			<node name="summary" value="کتابها بر اساس برچسب دسته بندی شده"/>
+		</node>
+		<node name="recent" value="اخیر">
+			<node name="summary" value="آخرین کتابهای باز شده"/>
+		</node>
+		<node name="favorites" value="علاقه مندی ها">
+			<node name="summary" value="کتابهای منتخب من"/>
+		</node>
+		<node name="found" value="پیدا شد">
+			<node name="summary" value="نتایج جستجو برای: %s"/>
+		</node>
+		<node name="fileTree" value="فایل ها">
+			<node name="summary" value="مرور فایل سیستم"/>
+		</node>
+		<node name="fileTreeRoot" value="دستگاه">
+			<node name="summary" value="تمامی فایل های سیستم دستگاه"/>
+		</node>
+		<node name="fileTreeCard" value="کارت حافظه">
+			<node name="summary" value="کارت حافظه وارد شد"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader کتابخانه">
+			<node name="summary" value="پوشه کتابهای اف بی ریدر"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="جستجو"/>
+			<node name="rescan" value="اسکن مجدد"/>
+		</node>
+		<node name="openBook" value="باز کردن کتاب"/>
+		<node name="showBookInfo" value="اطلاعات کتاب"/>
+		<node name="shareBook" value="اشتراک گذاری کتاب"/>
+		<node name="deleteBook" value="حذف کتاب"/>
+		<node name="addToFavorites" value="افزودن به علاقه مندیها"/>
+		<node name="removeFromFavorites" value="حذف از علاقه مندیها"/>
+		<node name="markAsRead" value="علامت گذاری بعنوان خوانده شده"/>
+		<node name="markAsUnread" value="علامت گذاری بعنوان خوانده نشده"/>
+	</node>
+	<node name="networkLibrary" value="شبکه کتابخانه اف بی ریدر">
+		<node name="byAuthor" value="بر اساس نویسنده">
+			<node name="summary" value="کتابها بر اساس نویسنده دسته بندی شده"/>
+		</node>
+		<node name="byTitle" value="بر اساس عنوان">
+			<node name="summary" value="کتابها بر اساس عنوان دسته بندی شده"/>
+		</node>
+		<node name="byDate" value="بر اساس تاریخ">
+			<node name="summary" value="کتابها بر اساس زمان خرید دسته بندی شده"/>
+		</node>
+		<node name="bySeries" value="بر اساس ردیف">
+			<node name="summary" value="کتابها بر اساس ردیف دسته بندی شده"/>
+		</node>
+		<node name="search" value="جستجو">
+			<node name="summary" value="جستجوی کتابها در %s"/>
+			<node name="summaryAllCatalogs" value="جستجوی کتابها در تمام کاتالوگها"/>
+			<node name="summaryInProgress" value="درحال جستجو"/>
+		</node>
+		<node name="found" value="پیدا شد">
+			<node name="summary" value="نتایج جستوجو برای: %s"/>
+		</node>
+		<node name="openCatalog" value="باز کردن کاتالوگ"/>
+		<node name="networkSearch" value="جستوجو"/>
+		<node name="showResults" value="نتایج را نشان بده"/>
+		<node name="showBooks" value="کتابها را نشان بده"/>
+		<node name="download" value="دانلود"/>
+		<node name="read" value="خواندن کپی محلی"/>
+		<node name="delete" value="حذف کپی محلی"/>
+		<node name="readDemo" value="خواندن نمونه"/>
+		<node name="deleteDemo" value="حذف نمونه"/>
+		<node name="downloadDemo" value="دانلود نمونه"/>
+		<node name="buy" value="خرید (%s)"/>
+		<node name="addToBasket" value="افزودن به سبد"/>
+		<node name="removeFromBasket" value="حذف کردن از سبد"/>
+		<node name="openBasket" value="بازکردن سبد"/>
+		<node name="clearBasket" value="خالی کردن سبد"/>
+		<node name="buyAllBooks" value="خرید همه کتابها"/>
+		<node name="openInBrowser" value="باز کردن در مرورگر"/>
+		<node name="stopLoading" value="توقف بارگیری"/>
+		<node name="stopSearching" value="توقف جستجو"/>
+		<node name="signIn" value="ورود"/>
+		<node name="signOut" value="خروج (%s)"/>
+		<node name="topup" value="Top up account (currently: %s)"/>
+		<node name="topupTitle" value="Top up account"/>
+		<node name="topupViaBrowser" value="بازکردن صفحه در مرورگر"/>
+		<node name="authorizationMenuTitle" value="انتخاب عمل"/>
+		<node name="topupSummary" value="الان: %s"/>
+		<node name="basket" value="سبد"/>
+		<node name="basketSummaryEmpty" value="هیچ کتابی نیست"/>
+		<node name="basketSummaryCountOnly" value="%0 کتابها">
+			<node condition="value 1" value="%0 کتابها"/>
+		</node>
+		<node name="basketSummary" value="%0 books (%1)">
+			<node condition="value 1" value="%0 کتاب (%1)"/>
+		</node>
+		<node name="alreadyDownloading" value="کتاب درحال دانلود است"/>
+		<node name="alreadyDownloadingDemo" value="نمونه دانلود شد"/>
+		<node name="stoppingCatalogLoading" value="توفق بارگذاری"/>
+		<node name="stoppingNetworkSearch" value="توفق جستجو"/>
+		<node name="editCustomCatalog" value="ویرایش کاتالوگ"/>
+		<node name="removeCustomCatalog" value="حذف کاتالوگ"/>
+		<node name="addCustomCatalog" value="افزودن کاتالوگ"/>
+		<node name="addCustomCatalogSummary" value="افزودن کاتالوگ OPDS به صورت دستی"/>
+		<node name="confirmQuestions">
+			<node name="read" value="آیا میخواهید کپی محلی را بخوانید؟"/>
+			<node name="download" value="ایا میخواهید این کتاب را دانلود کنید؟"/>
+			<node name="readDemo" value="آیا میخواهید نمونه را بخوانید؟"/>
+			<node name="downloadDemo" value="آیا میخواهید نمونه را دانلود کنید؟"/>
+			<node name="buy" value="آیا مخواهید این کتاب را بخرید؟ (%s)"/>
+			<node name="openInBrowser" value="آیا میخواهید این کاتالوگ را در مرورگر باز کنید؟"/>
+		</node>
+		<node name="downloadingCatalogs" value="درحال دنلود کاتالوگ ها"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="درحال جستجوی کتابها در شبکه"/>
+		<!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="افزودن کاتالوگ"/>
+			<node name="editUrl" value="آدرس را دستی وارد کنید"/>
+		</node>
+		<node name="menu">
+			<node name="networkSearch" value="جستجو"/>
+			<node name="reload" value="بارگذاری مجدد"/>
+			<node name="signIn" value="ورود"/>
+			<node name="signUp" value="ثبت نام"/>
+			<node name="signOut" value="خروج (%s)"/>
+			<node name="topup" value="Top up account"/>
+			<node name="addCustomCatalog" value="افزودن کاتالوگ"/>
+			<node name="refreshCatalogsList" value="بروزرسانی کاتالوگها"/>
+			<node name="languages" value="فیلتر زبان"/>
+			<node name="clearBasket" value="خالی کردن سبد"/>
+			<node name="buyAllBooks" value="خرید همه کتابها"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="خرید کتاب"/>
+		<node name="titleSeveralBooks" value="خرید کتابها"/>
+		<node name="confirm" value="آیا واقع میخواهید  “%s” را خریداری کنید؟"/>
+		<node name="confirmSeveralBooks" value="آیا واقعا میخواهید کتابهای %s را خریداری کنید"/>
+		<node name="alreadyBought" value="کتابها خریداری شدند"/>
+		<node name="notAuthorized" value="مجوز نیاز است"/>
+		<node name="noAccountInformation" value="مشخصات حساب بارگذاری نمیشود"/>
+		<node name="unsufficientFunds" value="هزینه این خرید %0 است و شما %1 دارید"/>
+		<node name="zeroFunds" value="این خرید %0 است"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="اطلاعات کتاب"/>
+		<node name="fileInfo" value="اطلاعات فایل"/>
+		<node name="description" value="توضیحات"/>
+		<node name="noDescription" value="توضیحات در دسترس نیست."/>
+		<node name="annotation" value="یادداشت"/>
+		<node name="title" value="عنوان:"/>
+		<node name="authors" value="نویسندگان:">
+			<node condition="value 1" value="نویسنده:"/>
+		</node>
+		<node name="series" value="ردیف:"/>
+		<node name="indexInSeries" value="شاخص در ردیفها:"/>
+		<node name="tags" value="برچسبها:">
+			<node condition="value 1" value="برچسب:"/>
+		</node>
+		<node name="language" value="زبان:"/>
+		<node name="name" value="نام:"/>
+		<node name="type" value="نوع:"/>
+		<node name="size" value="سایز:"/>
+		<node name="time" value="آخرین تغییر:"/>
+		<node name="sizeInBytes" value="%s bytes">
+			<node condition="value 1" value="%s byte"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="کاتالوگ:"/>
+		<node name="extraLinks" value="لینکهای مرتبط"/>
+		<node name="menu">
+			<node name="edit" value="ویرایش"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Book has been downloaded"/>
+		<node name="tickerError" value="مشکل هنگام دانلود کتاب"/>
+		<node name="contentSuccess" value="دانلود کامل شد"/>
+		<node name="contentError" value="دانلود ناموفق"/>
+		<node name="downloadingStarted" value="دانلود کتاب آغاز شد"/>
+		<node name="alreadyDownloading" value="کتاب  دانلود شده است"/>
+		<node name="cannotCreateDirectory" value="قادر به ایجاد پوشه %s نیست"/>
+		<node name="cannotCreateFile" value="قادر به ایجاد فایل %s نیست"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="کسترش شاخه"/>
+		<node name="collapseTree" value="بستن شاخه"/>
+		<node name="readText" value="خواندن متن کتاب"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="این کتاب"/>
+		<node name="allBooks" value="همه کتابها"/>
+		<node name="found" value="پیدا شد"/>
+		<node name="new" value="آدرس جدید"/>
+		<node name="open" value="بازکردن"/>
+		<node name="edit" value="ویرایش آدرس"/>
+		<node name="delete" value="حذف آدرس"/>
+		<node name="menu">
+			<node name="search" value="جستجو"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="بازکردن کتابخانه"/>
+		<node name="networkLibrary" value="بازکردن کتابخانه شبکه"/>
+		<node name="previousBook" value="بازکردن کتاب قبلی"/>
+		<node name="returnTo" value="برگرد به ..."/>
+		<node name="back" value="عقب"/>
+		<node name="forward" value="جلو"/>
+		<node name="close" value="بستن اف بی ریدر"/>
+	</node>
+	<node name="style" value="سبک %s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="حذف آدرس"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
+	<node name="selection" value="انتخاب">
+		<node name="copyToClipboard" value="کپی به کلیپ بورد"/>
+		<node name="openInDictionary" value="بازکردن در پوشه"/>
+		<node name="quoteFrom" value="نقل قول از %s"/>
+		<node name="textInBuffer" value="به کلیپ بورد کپی شد: %s"/>
+		<node name="bookmarkCreated" value="آدرس ایجاد شد:%s"/>
+		<node name="clearSelection" value="پاک کردن"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="به اشتراک گذتری شده توسط &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="تنظیمات"/>
+		<node name="bookInfo" value="اطلاعات کتاب"/>
+		<node name="library" value="کتابخانه"/>
+		<node name="toc" value="TOC"/>
+		<node name="day" value="روز"/>
+		<node name="night" value="شب"/>
+		<node name="networkLibrary" value="کتابخانه شبکه"/>
+		<node name="navigate" value="هدایت کردن">
+			<node name="toc" value="فهرست مطالب"/>
+			<node name="gotoHome" value="برو به ابتدای سند"/>
+			<node name="gotoPageNumber" value="برو به صفحه..."/>
+			<node name="gotoSectionStart" value="برو به ابتدای متن"/>
+			<node name="gotoSectionEnd" value="برو به انتهای متن"/>
+			<node name="nextTOCSection" value="برو به فهرست"/>
+			<node name="previousTOCSection" value="برو به فهرست قبلی"/>
+			<node name="undo" value="برگرد"/>
+			<node name="redo" value="برو جلو"/>
+		</node>
+		<node name="shareBook" value="اشتراک گذاری کتاب"/>
+		<node name="search" value="جستجو"/>
+		<node name="rotate" value="چرخش صفحه"/>
+		<node name="screenOrientation" value="جهت گیری صفحه"/>
+		<node name="screenOrientationSystem" value="سیستم"/>
+		<node name="screenOrientationSensor" value="حساسیت جهت گیری دستگاه"/>
+		<node name="screenOrientationPortrait" value="عمودی"/>
+		<node name="screenOrientationLandscape" value="افقی"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape"/>
+		<node name="increaseFont" value="بزرگنمایی"/>
+		<node name="decreaseFont" value="کوچکنمایی"/>
+		<node name="toggleFullscreen" value="تمام صفحه"/>
+		<node name="bookmarks" value="آدرس ها"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="نام فایل"/>
+		<node name="title" value="عنوان"/>
+		<node name="language" value="زبان"/>
+		<node name="encoding" value="رمزگذاری"/>
+		<node name="authors" value="نویسندگان"/>
+		<node name="tags" value="برچسب ها"/>
+		<node name="series" value="ردیف ها"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="پوشه ها">
+			<node name="summary" value="پوشه های جستجوی فایل ها"/>
+			<node name="books" value="پوشه کتابها"/>
+			<node name="fonts" value="پوشه فونتها"/>
+			<node name="wallpapers" value="پوشه تصاویر"/>
+		</node>
+		<node name="appearance" value="نمایش">
+			<node name="summary" value="تنظیمات نمایش, نوار وضعیت, نور کلیدها"/>
+			<node name="language" value="زبان رابط کاربری"/>
+			<node name="screenOrientation" value="جهت گیری صفحه">
+				<node name="system" value="سیستم"/>
+				<node name="sensor" value="حساسیت جهت گیری دستگاه"/>
+				<node name="portrait" value="عمودی"/>
+				<node name="landscape" value="افقی"/>
+				<node name="reversePortrait" value="پرتره معكوس"/>
+				<node name="reverseLandscape" value="چشم انداز معكوس"/>
+			</node>
+			<node name="autoOrientation" value="چرخش خودکار">
+				<node name="summaryOn" value="صفحه نمایش با حرکت دستگاه چرخش میکند"/>
+				<node name="summaryOff" value="صفحه نمایش با حرکت دستگاه چرخش میکند"/>
+			</node>
+			<node name="showStatusBar" value="نمایش نوار وضعیت">
+				<node name="summaryOn" value="نمایش نوار وضعیت در حالت خواندن"/>
+				<node name="summaryOff" value="عدم نمایش نوار وضعیت در حالت خواندن"/>
+			</node>
+			<node name="showActionBar" value="نمایش نوار اقدامات">
+				<node name="summaryOn" value="نمایش نوار اقدامات در حالت خواندن"/>
+				<node name="summaryOff" value="عدم نمایش نوار اقدامات در حالت خواندن"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="نمایش نوار وضعیت هنگام فعالیت منو">
+				<node name="summaryOn" value="نمایش نوار وضعیت هنگامی که منو فعال میشود"/>
+				<node name="summaryOff" value="عدم نمایش نوار وضعیت هنگامی که منو فعال میشود"/>
+			</node>
+			<node name="disableButtonLights" value="غیرفعال کردن نور کلیدها هنگام خواندن">
+				<node name="summaryOn" value="غیرفعال کردن نور کلیدها &quot; در بعضی از دستگاه ها عمل نمیکند&quot;"/>
+				<node name="summaryOff" value="برای غیر فعال کردن نور کلیدها تلاش نکنید"/>
+			</node>
+			<node name="twoColumnView" value="نمایش دوستونه">
+				<node name="summaryOn" value="هنگامی که دستگاه افقی نگه داشته شده متن را دوستونه نشان بده"/>
+				<node name="summaryOff" value="هميشه متن در يك ستون نشان داده شود"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="تنظيم روشنايي صفحه نمايش ">
+				<node name="summaryOn" value="كشيدن انگشت به بالا/پائين گوشه چپ صفحه نمايش "/>
+				<node name="summaryOff" value="غير فعال"/>
+			</node>
+			<node name="dontTurnScreenOff" value="صفحه نمايش به خواب نرود">
+				<node name="0" value="هميشه"/>
+				<node name="25" value="وقتي سطح باتري كمتر از 25 درصد باشد"/>
+				<node name="50" value="وقتي سطح باتري كمتر از 50 درصد باشد"/>
+				<node name="100" value="هرگز"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="در حين شارژ صفحه نمايش به خواب نرود">
+				<node name="summaryOn" value="وقتي دستگاه در حالت خواب است صفحه نمايش به خواب نرود"/>
+				<node name="summaryOff" value="حتی در حالت شارژ هم صفحه نمایش خاموش باشد"/>
+			</node>
+		</node>
+		<node name="text" value="متن">
+			<node name="summary" value="فونت، فاصله گذاري و ..."/>
+			<node name="fontProperties" value="مشخصات فونت">
+				<node name="summary" value="تنظيمات نرمي فونت"/>
+				<node name="antiAlias" value="خوش نما نويسي">
+					<node name="summaryOn" value="خوش نما نويسي فعال است"/>
+					<node name="summaryOff" value="خوش نما نويسي  غير فعال است"/>
+				</node>
+				<node name="deviceKerning" value="تنظيم فاصله دستگاه">
+					<node name="summaryOn" value="تنظيم فاصله دستگاه فعال است"/>
+					<node name="summaryOff" value="تنظيم فاصله دستگاه غيرفعال است"/>
+				</node>
+				<node name="dithering" value="لرزشي">
+					<node name="summaryOn" value="لرزش رنگ فعال است"/>
+					<node name="summaryOff" value="لرزش رنگ غيرفعال است"/>
+				</node>
+				<node name="hinting" value="اشاره">
+					<node name="summaryOn" value="فونت اشاره فعال است"/>
+					<node name="summaryOff" value="فونت اشاره غيرفعال است"/>
+				</node>
+				<node name="subpixel" value="هموارسازي ساب پيكسل">
+					<node name="summaryOn" value="هموارسازي ساب پيكسل فعال است"/>
+					<node name="summaryOff" value="هموار سازي ساب پيكسل غير فعال است"/>
+				</node>
+			</node>
+			<node name="font" value="خانواده فونت">
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="fontSize" value="سايز فونت"/>
+			<node name="fontSizeDifference" value="تفاوت سايز فونت"/>
+			<node name="fontStyle" value="سبك فونت">
+				<node name="regular" value="عادي"/>
+				<node name="bold" value="برجسته"/>
+				<node name="italic" value="حروف كج"/>
+				<node name="boldItalic" value="حروف كج برجسته"/>
+			</node>
+			<node name="bold" value="برجسته">
+				<node name="summaryOn" value="برجسته"/>
+				<node name="summaryOff" value="عادي"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="italic" value="حروف كج">
+				<node name="summaryOn" value="حروف كج"/>
+				<node name="summaryOff" value="عادي"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="underlined" value="زيرخط كشيده">
+				<node name="summaryOn" value="زير خط  كشيده"/>
+				<node name="summaryOff" value="عادي"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="strikedThrough" value="حذف شده">
+				<node name="summaryOn" value="حذف شده"/>
+				<node name="summaryOff" value="عادي"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="lineSpacing" value="فاصله گذاري خطوط">
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="alignment" value="هم ترازي">
+				<node name="left" value="چپ"/>
+				<node name="right" value="راست"/>
+				<node name="center" value="مركز"/>
+				<node name="justify" value="فاصله بندي كردن"/>
+				<node name="unchanged" value="&lt;تغيير نيافته&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="فاصله گذاري خودكار">
+				<node name="summaryOn" value="فاصله گذاري خودكار كلمات"/>
+				<node name="summaryOff" value="عدم فاصله گذاري خودكار كلمات"/>
+			</node>
+			<node name="allowHyphenations" value="بگذار فاصله گذاري ها انجام شود">
+				<node name="summaryOn" value="كلمات را فاصله گذاري كن"/>
+				<node name="summaryOff" value="كلمات را فاصله گذاري نكن"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="تو بردن خط اول"/>
+			<node name="spaceBefore" value="قبل فاصله"/>
+			<node name="spaceAfter" value="بعد فاصله"/>
+			<node name="leftIndent" value="تو بردن سمت چپ"/>
+			<node name="rightIndent" value="تو بردن سمت راست"/>
+			<node name="more" value="سبك هاي بيشتر">
+				<node name="summary" value="تنظیمات جداگانه برای عناوین، نوشته ها، و غیره"/>
+				<node name="Regular Paragraph" value="پاراگراف عادي">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="عنوان">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="بخش عنوان">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="عنوان شعر">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="عنوان فرعي">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="حاشيه نويسي">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="سرنوشته">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="بند شعر">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="نظم">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="متن تنظيم نشده">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="تصوير">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="اتخاذ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="نويسنده">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="تاريخ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="هايپرلينك داخلي">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="زيرنگاشت">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="تاكيد">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="قوي">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="زيرنويس">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="بالا نويس">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="رمز">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="حذف از طريق">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="حروف كج">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="برجسته">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="تعريف">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="توضيح تعريف">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="سربرگ 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="سربرگ 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="سربرگ 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="سربرگ 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="سربرگ 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="سربرگ 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="هايپرلينك خارجي">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="اجرا / رد مقادير تعريف شده در CSS"/>
+			<node name="fontSize" value="اندازه فونت">
+				<node name="summaryOn" value="اجراي اندازه فونت تعريف شده در CSS "/>
+				<node name="summaryOff" value="رد اندازه فونت تعريف شده در CSS"/>
+			</node>
+			<node name="textAlignment" value="هم ترازي متن ">
+				<node name="summaryOn" value="اجراي هم ترازي متن تعريف شده در CSS"/>
+				<node name="summaryOff" value="رد هم ترازي متن تعريف شده در CSS"/>
+			</node>
+		</node>
+		<node name="colors" value="رنگ ها &amp; والپيپر">
+			<node name="summary" value="تنظيمات رنگ"/>
+			<node name="background" value="زمينه ">
+				<node name="solidColor" value="رنگ يكپارچه"/>
+				<node name="leather" value="چرمي"/>
+				<node name="sepia" value="قرمز قهوه اي"/>
+				<node name="wood" value="درختي"/>
+			</node>
+			<node name="backgroundColor" value="رنگ زمينه "/>
+			<node name="selectionBackground" value="انتخاب زمينه"/>
+			<node name="selectionForeground" value="متن انتخاب شده"/>
+			<node name="text" value="متن عادي"/>
+			<node name="hyperlink" value="متن هايپرلينك"/>
+			<node name="hyperlinkVisited" value="متن هايپرلينك بازديد شده"/>
+			<node name="highlighting" value="نتايج جستجوي زمينه"/>
+			<node name="footer" value="زيربرگ"/>
+		</node>
+		<node name="margins" value="حاشيه ها">
+			<node name="summary" value="حاشيه هاي متن"/>
+			<node name="left" value="حاشيه سمت چپ"/>
+			<node name="right" value="حاشيه سمت راست"/>
+			<node name="top" value="حاشيه راس"/>
+			<node name="bottom" value="حاشيه كف"/>
+			<node name="spaceBetweenColumns" value="فضاي بين ستون ها "/>
+		</node>
+		<node name="scrollBar" value="نشانگر پيشرفت">
+			<node name="summary" value="تنظيمات زير برگ &amp; اسكرول بار"/>
+			<node name="scrollbarType" value="نوع نوار اسكرول">
+				<node name="hide" value="پنهان"/>
+				<node name="show" value="لغزنده عمودي"/>
+				<node name="showAsProgress" value="نوار پيشرفت عمودي"/>
+				<node name="showAsFooter" value="زير برگ افقي"/>
+			</node>
+			<node name="footerHeight" value="ارتفاع زيربرگ"/>
+			<node name="footerColor" value="رنگ زيربرگ"/>
+			<node name="tocMarks" value="نمايش علائم TOC">
+				<node name="summaryOn" value="نمايش علائم در نوار زيربرگ TOC"/>
+				<node name="summaryOff" value="عدم نمايش علائم در نوار زيربرگTOC"/>
+			</node>
+			<node name="showProgress" value="نمايش شماره صفحه">
+				<node name="summaryOn" value="نمايش شماره صفحه در زيربرگ"/>
+				<node name="summaryOff" value="عدم نمايش شماره صفحه در زيربرگ"/>
+			</node>
+			<node name="showBattery" value="نمايش سطح باتري">
+				<node name="summaryOn" value="نمايش سطح باتري در زيربرگ"/>
+				<node name="summaryOff" value="عدم نمايش سطح باتري در زيربرگ"/>
+			</node>
+			<node name="showClock" value="نمايش ساعت">
+				<node name="summaryOn" value="نمايش ساعت در زيربرگ"/>
+				<node name="summaryOff" value="عدم نمايش ساعت در زيربرگ"/>
+			</node>
+			<node name="font" value="خانواده فونت"/>
+		</node>
+		<node name="scrolling" value="تغيير صفحه">
+			<node name="summary" value="چگونگي تغيير صفحه"/>
+			<node name="fingerScrolling" value="لمس نمايش تغيير صفحه">
+				<node name="byTap" value="تغيير صفحه بر اساس ضربه انگشت"/>
+				<node name="byFlick" value="تغيير صفحه بر اساس لمس انگشت"/>
+				<node name="byTapAndFlick" value="تغيير صفحه بر اساس ضربه يا لمس انگشت"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="تشخيص دو بار  ضربه">
+				<node name="summaryOn" value="دو بارضربه براي اجراي جهت يابي گفتگو/ منو"/>
+				<node name="summaryOff" value="رد دوبار ضربه"/>
+			</node>
+			<node name="volumeKeys" value="تغيير صفحه با كليدهاي جلد">
+				<node name="summaryOn" value="از كليدهاي جلد براي تغيير صفحه استفاده كنيد"/>
+				<node name="summaryOff" value="كليدهاي جلد را براي صدا نگه داريد"/>
+			</node>
+			<node name="invertVolumeKeys" value="معكوس كردن جهت كليدهاي جلد">
+				<node name="summaryOn" value="كليد بلندي (كمي) صدا براي تغيير به صفحه ي قبل (بعد)"/>
+				<node name="summaryOff" value="كليد كمي (بلندي)‌صدا براي تغيير به صفحه ي بعد (قبل)"/>
+			</node>
+			<node name="animation" value="انيميشن">
+				<node name="none" value="تغيير صفحه بدون انيميشن"/>
+				<node name="curl" value="چرخش انيميشن"/>
+				<node name="slide" value="اسلايد انيميشن"/>
+				<node name="shift" value="تغيير انيميشن"/>
+			</node>
+			<node name="animationSpeed" value="سرعت انيميشن">
+				<node name="fast" value="تند"/>
+				<node name="slow" value="آرام"/>
+			</node>
+			<node name="horizontal" value="حركت افقي">
+				<node name="summaryOn" value="حركت افقي صفحات"/>
+				<node name="summaryOff" value="حركت عمودي صفحات"/>
+			</node>
+		</node>
+		<node name="tapZones" value="مناطق ضربه">
+			<node name="summary" value="اقدام ضربه انگشت"/>
+			<node name="tapZonesScheme" value="طرح مناطق ضربه">
+				<node name="left_to_right" value="حركت چپ به راست صفحه"/>
+				<node name="right_to_left" value="حركت راست به چپ صفحه"/>
+				<node name="up" value="حركت پائين به بالاي صفحه"/>
+				<node name="down" value="حركت بالا به پائين صفحه"/>
+				<node name="custom" value="سفارشي..."/>
+			</node>
+		</node>
+		<node name="dictionary" value="ديكشنري">
+			<node name="summary" value="تنظيمات ديكشنري"/>
+			<node name="dictionary" value="ديكشنري"/>
+			<node name="translator" value="مترجم"/>
+			<node name="tappingAction" value="اقدام ضربه طولاني">
+				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
+				<node name="selectSingleWord" value="ضربه طولاني كلمه منفردي را انتخاب مي كند"/>
+				<node name="startSelecting" value="ضربه طولاني شروع به انتخاب مي كند"/>
+				<node name="openDictionary" value="ضربه طولاني كلمه منفردي را انتخاب مي كند، ديكشنري را باز مي كند"/>
+			</node>
+			<node name="navigateOverAllWords" value="هدايت تمامي كلمات">
+				<node name="summaryOn" value="كليد هدايت تمامي كلمات را بازديد مي كند"/>
+				<node name="summaryOff" value="كليد هدايت تنها هايپرلينك را بازديد مي كند"/>
+			</node>
+		</node>
+		<node name="images" value="تصاوير">
+			<node name="summary" value="گزينه هاي نمايش تصوير"/>
+			<node name="backgroundColor" value="رنگ زمينه براي مشاهده تصوير"/>
+			<node name="tappingAction" value="اقدام ضربه طولاني">
+				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
+				<node name="selectImage" value="ضربه طولاني تصوير را انتخاب مي كند"/>
+				<node name="openImageView" value="ضربه طولاني نمايش تصوير را باز مي كند"/>
+			</node>
+			<node name="fitImagesToScreen" value="تناسب تصاوير با صفحه نمايش">
+				<node name="none" value="هيچكدام"/>
+				<node name="covers" value="تنها پوشش ها"/>
+				<node name="all" value="همه"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="لغو منو">
+			<node name="summary" value="ليست اقدام دكمه برگشت"/>
+			<node name="library" value="كتابخانه">
+				<node name="summaryOn" value="نمايش آيتم &quot;بازكردن كتابخانه&quot; "/>
+				<node name="summaryOff" value="عدم نمايش &quot;بازكردن كتابخانه&quot; "/>
+			</node>
+			<node name="networkLibrary" value="شبكه كتابخانه">
+				<node name="summaryOn" value="نمايش آيتم &quot; بازكردن شبكه كتابخانه&quot;"/>
+				<node name="summaryOff" value="عدم نمايش آيتم &quot;بازكردن شبكه كتابخانه&quot;"/>
+			</node>
+			<node name="previousBook" value="كتاب قبلي">
+				<node name="summaryOn" value="نمايش آيتم &quot;بازگشت به كتاب قبلي&quot;"/>
+				<node name="summaryOff" value="عدم نمايش آيتم &quot;بازگشت به كتاب قبلي&quot;"/>
+			</node>
+			<node name="positions" value="سه وضعيت اخير">
+				<node name="summaryOn" value="نمايش آيتم سه وضعيت اخير در كتاب"/>
+				<node name="summaryOff" value="عدم نمايش ايتم سه وضعيت اخير در كتاب"/>
+			</node>
+			<node name="backKeyAction" value="اقدام كليد برگشت">
+				<node name="exit" value="بستن اف بي ريدر"/>
+				<node name="goBack" value="هدايت به عقب"/>
+				<node name="cancelMenu" value="نمايش منوي لغو"/>
+			</node>
+			<node name="backKeyLongPressAction" value="اقدام كليد برگشت فشار طولاني">
+				<node name="exit" value="بستن اف بي ريدر"/>
+				<node name="goBack" value="هدايت به عقب"/>
+				<node name="cancelMenu" value="نمايش منوي لغو"/>
+				<node name="none" value="هيچ اقدام"/>
+			</node>
+		</node>
+		<node name="tips" value="رئوس">
+			<node name="summary" value="تنظيمات روزانه رئوس"/>
+			<node name="showTips" value="نمايش رئوس">
+				<node name="summaryOn" value="نمايش روزانه رئوس"/>
+				<node name="summaryOff" value="عدم نمايش"/>
+			</node>
+		</node>
+		<node name="about" value="درباره اف بي ريدر">
+			<node name="summary" value="اطلاعات نسخه،‌ارتباط"/>
+			<node name="version" value="نسخه"/>
+			<node name="site" value="بازديد وب سايت ما">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="ايميلي به ما بفرستيد">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="در توييتر مارا دنبال كنيد">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="نصب"/>
+			<node name="update" value="بروزرساني"/>
+			<node name="skip" value="پريدن"/>
+			<node name="buy" value="خريد"/>
+			<node name="buyAndDownload" value="خريد و دانلود"/>
+			<node name="continue" value="ادامه"/>
+			<node name="editUrl" value="ويرايش URL"/>
+			<node name="tryAgain" value="تلاش مجدد"/>
+			<node name="openBook" value="خواندن"/>
+			<node name="editInfo" value="ويرايش"/>
+			<node name="reloadInfo" value="بارگذاري مجدد"/>
+			<node name="shareBook" value="اشتراك گذاري"/>
+			<node name="topup" value="آپ بالا"/>
+			<node name="pay" value="پرداخت"/>
+			<node name="refresh" value="بازآوري"/>
+			<node name="authorize" value="اجازه"/>
+			<node name="resetPosition" value="وضعيت تنظيم مجدد"/>
+			<node name="sendReport" value="ارسال گزارش"/>
+			<node name="addToFavorites" value="افزودن به علاقندي"/>
+			<node name="removeFromFavorites" value="پاك كردن از علاقمندي"/>
+			<node name="markAsRead" value="علامت بعنوان خوانده شده"/>
+			<node name="markAsUnread" value="علامت بعنوان خوانده نشده "/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="نصب پلاگين"/>
+			<node name="updateTitle" value="برورساني پلاگين"/>
+			<node name="dontAskAgain" value="مجدد سوال نپرس"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="نصب ديكشنري"/>
+			<node name="message" value="مايل به نصب %s هستيد؟"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="فايل كتاب بصورت برگشت ناپذير حذف خواهد شد. مطمئن هستيد؟"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="فايل در ديسك موجود است. مجددا دانلود شود؟"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="دانلود كتاب %s"/>
+			<node name="search" value="در حال جستجو. لطفاً صبر كنيد..."/>
+			<node name="loadInfo" value="درحال بارگذاري اطلاعات. لطفاً صبر كنيد..."/>
+			<node name="loadingBook" value="در حال بازكردن كتاب. لطفاً صبر كنيد..."/>
+			<node name="loadingBookList" value="درحال بازكردن كتابخانه. لطفاً صبر كنيد"/>
+			<node name="creatingBooksDatabase" value="درحال ايجاد پايگاه داده كتابها. لطفاً‌صبر كنيد..."/>
+			<node name="updatingBooksDatabase" value="در حال آپديت پايگاه داده كتابها. لطفاً صبر كنيد..."/>
+			<node name="loadingNetworkLibrary" value="در حال بازكردن كتابخانه. لطفاً صبر كنيد..."/>
+			<node name="authentication" value="در حال تاييد. لطفاً صبر كنيد..."/>
+			<node name="signOut" value="در حال خروج. لطفاً صبر كنيد..."/>
+			<node name="purchaseBook" value="خريد كتاب. لطفاً‌صبر كنيد..."/>
+			<node name="loadingCatalogInfo" value="در حال بارگذاري اطلاعات كاتالوگ. لطفاً صبر كنيد..."/>
+			<node name="loadingNetworkBookInfo" value="در حال بارگذاري اطلاعات كتاب. لطفاً صبر كنيد..."/>
+			<node name="updatingCatalogsList" value="در حال آپديت ليست كاتالوگ. لطفاً صبر كنيد..."/>
+			<node name="updatingAccountInformation" value="در حال آپديت اطلاعات كاربري. لطفاً صبر كنيد..."/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="خطاي سرور داخلي"/>
+			<node name="purchaseNotEnoughMoney" value="عدم حافظه كافي"/>
+			<node name="purchaseMissingBook" value="از دست دادن كتاب"/>
+			<node name="purchaseAlreadyPurchased" value="قبلا خريداري شده"/>
+			<node name="bookNotPurchased" value="كتاب خريداري نشده "/>
+			<node name="downloadLimitExceeded" value="دانلود بيش از حد مجاز"/>
+			<node name="noUserEmail" value="هيچ كاربري با ايميل مشخص شده ثبت نام نكرده است"/>
+			<node name="unsupportedOperation" value="اجراي غيرقابل پشتيباني"/>
+			<node name="notAnOPDS" value="اين كاتالوگ OPDS نيست"/>
+			<node name="noRequiredInformation" value="اطلاعات مورد نياز در كاتالوگ مشخص نشده"/>
+			<node name="cacheDirectoryError" value="عدم توانايي در ايجاد فهرست راهنماي مخفي"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="تاييد"/>
+			<node name="unencryptedWarning" value="رمز عبورتان مخفي فرستاده خواهد شد"/>
+			<node name="login" value="نام كاربري"/>
+			<node name="password" value="رمز عبور"/>
+			<node name="loginIsEmpty" value="نام كاربردي نبايد خالي باشد"/>
+			<node name="register" value="ثبت نام"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="اف بي ريدر: افزودن كاتالوگ سفارشي"/>
+			<node name="catalogTitle" value="عنوان"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="خلاصه"/>
+			<node name="catalogTitleExample" value="بعنوان مثال: كاتالوگ پروژه ي گوتنبرگ"/>
+			<node name="catalogUrlExample" value="بعنوان مثال http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="بعنوان مثال: دامنه كتاب هاي عمومي"/>
+			<node name="titleIsEmpty" value="عنوان نبايد خالي باشد"/>
+			<node name="urlIsEmpty" value="URL نبايد خالي باشد"/>
+			<node name="invalidUrl" value="URL نامعتبر"/>
+			<node name="titleAlreadyExists" value="عنوان مشخص شده قبلاً استفاده شده است"/>
+			<node name="siteAlreadyExists" value="سايت مشخص شده قبلا استفاده شده است"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="فيلتر زبان"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="راس روز"/>
+			<node name="initializationText" value="تمايل داريد رئوس روزانه اف بي ريدر را بخوانيد؟ رئوس جدي از سايت اف بي ريدر دانلود مي شود. ترافيك شبكه مورد انتظار 1-2 كيلوبايت در هفته است. فعال سازي رئوس؟"/>
+			<node name="dontShowAgain" value="عدم نمايش مجدد"/>
+			<node name="more" value="راس بعدي"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="عدم قابليت دسترسي به بازار آندرويد. لطفا %s را بصورت دستي نصب كنيد"/>
+		<node name="textNotFound" value="متاسفانه متن مناسبي در كتاب موجود نيست"/>
+		<node name="bookNotFound" value="متاسفانه كتاب مناسبي در كتابخانه موجود نيست"/>
+		<node name="bookmarkNotFound" value="متاسفانه بوكمارك هاي مناسبي موجود نيست"/>
+		<node name="cannotOpenBook" value="متاسفانه در حال حاضر قادر به بازكردن كتاب نيست"/>
+		<node name="dictionaryIsNotInstalled" value="متاسفانه ديكشنري نصب نشد"/>
+		<node name="permissionDenied" value="متاسفانه اجازه رد شد"/>
+		<node name="noFavorites" value="متاسفانه ليست علاقمندي شما خالي است"/>
+		<node name="noSeries" value="متاسفانه كتابي در رديف ها نيست"/>
+		<node name="emptyCatalog" value="متاسفانه كاتالوگ خالي است"/>
+		<node name="emptyBasket" value="متاسفانه سبدشما خالي است"/>
+		<node name="emptyNetworkSearchResults" value="متاسفانه كتابي يافت نشد"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="مرورگر"/>
+		<node name="defaultBrowser" value="مرورگر پيش فرض"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="خطاي نامشخص"/>
+		<node name="unsupportedCompressionMethod" value="روش فشرده سازي پشتيباني نشده"/>
+		<node name="encryptedFile" value="فايل محافظت شده DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="مشکل اف بی ریدر"/>
+			<node name="text" value="پوشه کش اف بی ریدر برای ویرایش قابل دسترسی نیست. ممکن است شما کارت حافظه را وارد نکرده باشید. لطفا این مشکل را حل کنید یا یک پوشه دیگر در پائین وارد کنید "/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="خطای اف بی ریدر"/>
+			<node name="text" value="اف بی ریدر نمیتواند کتابخانه محلی را بارگذاری کند. ممکن است نصب نشده باشد. اگر مشکل حل نشد برنامه را دوباره نصب کنید"/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="مشکل اف بی ریدر"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="هنگام خواندن '%s' خطایی رخ داده است"/>
+		<node name="errorReadingZip" value="درهنگام استخراج '%s' خطایی رخ داده است"/>
+		<node name="pluginNotFound" value="پلاگینی وجود ندارد برای '%s'"/>
+		<node name="unknownPluginType" value="نوع پلاگین ناشناخته است: %s"/>
+		<node name="fileNotFound" value="فایل پیدا نشد: %s"/>
+		<node name="opfFileNotFound" value="OPF در %s پیدا نشد"/>
+		<node name="unsupportedFileFormat" value="فرمت فایل پشتیبانی نمیشود برای '%s'"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+	</node>
+</resources>

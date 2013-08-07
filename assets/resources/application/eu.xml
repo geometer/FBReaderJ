@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Basque FBReaderJ resources, by Bixerdo for librezale.org -->
+<resources>
+	<node name="library" value="FBReader Liburutegia">
+		<node name="unknownAuthor" value="Egile ezezaguna"/>
+		<node name="booksWithNoTags" value="Etiketa gabeko liburuak"/>
+		<node name="demo" value="lagina"/>
+		<node name="byAuthor" value="Egileagatik">
+			<node name="summary" value="Egileagatik sailkatutako liburuak"/>
+		</node>
+		<node name="byTitle" value="Izenburuagatik">
+			<node name="summary" value="Izenburuagatik sailkatutako liburuak"/>
+		</node>
+		<node name="bySeries" value="Sailagatik">
+			<node name="summary" value="Sailagatik sailkatutako liburuak"/>
+		</node>
+		<node name="byTag" value="Etiketagatik">
+			<node name="summary" value="Etiketagatik sailkatutako liburuak"/>
+		</node>
+		<node name="recent" value="Azkenak">
+			<node name="summary" value="Oraintsu zabaldutako liburuak"/>
+		</node>
+		<node name="favorites" value="Gogokoak">
+			<node name="summary" value="Aukeratutako nire liburuak"/>
+		</node>
+		<node name="found" value="Aurkituta">
+			<node name="summary" value="%s bilaketaren emaitzak"/>
+		</node>
+		<node name="fileTree" value="Fitxategi zuhaitza">
+			<node name="summary" value="Fitxategi-sistema arakatu"/>
+		</node>
+		<node name="fileTreeRoot" value="Gailua">
+			<node name="summary" value="Gailuaren fitxategi-sistema osoa"/>
+		</node>
+		<node name="fileTreeCard" value="Memoria txartela">
+			<node name="summary" value="Gailuan txertaturiko memoria txartela"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader liburutegia">
+			<node name="summary" value="FBReadereko liburuen direktorioa"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="Bilatu"/>
+			<node name="rescan" value="Berreskaneatu"/>
+		</node>
+		<node name="openBook" value="Zabaldu liburua"/>
+		<node name="showBookInfo" value="Liburuaren infoa"/>
+		<node name="shareBook" value="Partekatu liburua"/>
+		<node name="deleteBook" value="Ezabatu liburua"/>
+		<node name="addToFavorites" value="Gehitu gogokoetara"/>
+		<node name="removeFromFavorites" value="Kendu gogokoetatik"/>
+		<node name="markAsRead" value="Markatu irakurria bezala"/>
+		<node name="markAsUnread" value="Markatu irakurri gabea bezala"/>
+	</node>
+	<node name="networkLibrary" value="FBReadereko sare-liburutegia">
+		<node name="byAuthor" value="Egileagatik">
+			<node name="summary" value="Egileagatik sailkatutako liburuak"/>
+		</node>
+		<node name="byTitle" value="Izenburuagatik">
+			<node name="summary" value="Izenburuagatik sailkatutako liburuak"/>
+		</node>
+		<node name="byDate" value="Datagatik">
+			<node name="summary" value="Datagatik sailkatutako liburuak"/>
+		</node>
+		<node name="bySeries" value="Sailagatik">
+			<node name="summary" value="Sailagatik sailkatutako liburuak"/>
+		</node>
+		<node name="search" value="Bilaketa">
+			<node name="summary" value="Bilatu liburuak %s -(e)n"/>
+			<node name="summaryAllCatalogs" value="Bilatu liburuak katalogo guztietan"/>
+			<node name="summaryInProgress" value="Bilaketa abiarazten"/>
+		</node>
+		<node name="found" value="Aurkituta">
+			<node name="summary" value="%s bilaketaren emaitzak"/>
+		</node>
+		<node name="openCatalog" value="Zabaldu katalogoa"/>
+		<node name="networkSearch" value="Bilatu"/>
+		<node name="showResults" value="Erakutsi emaitzak"/>
+		<node name="showBooks" value="Erakutsi liburuak"/>
+		<node name="download" value="Deskargatu"/>
+		<node name="read" value="Irakurri kopia lokala"/>
+		<node name="delete" value="Ezabatu kopia lokala"/>
+		<node name="readDemo" value="Irakurri lagina"/>
+		<node name="deleteDemo" value="Ezabatu lagina"/>
+		<node name="downloadDemo" value="Deskargatu lagina"/>
+		<node name="buy" value="(%s) erosi"/>
+		<node name="addToBasket" value="Gehitu saskira"/>
+		<node name="removeFromBasket" value="Ezabatu saskitik"/>
+		<node name="openBasket" value="Ireki saskia"/>
+		<node name="clearBasket" value="Hutsitu saskia"/>
+		<node name="buyAllBooks" value="Erosi liburu guztiak"/>
+		<node name="openInBrowser" value="Ireki nabigatzailean"/>
+		<node name="stopLoading" value="Gelditu karga"/>
+		<node name="stopSearching" value="Gelditu bilaketa"/>
+		<node name="signIn" value="Sartu"/>
+		<node name="signOut" value="Irten (%s)"/>
+		<node name="topup" value="Kontua bete (unekoa: %s)"/>
+		<node name="topupTitle" value="Kontua bete"/>
+		<node name="topupViaBrowser" value="Ireki orria nabigatzailean"/>
+		<node name="authorizationMenuTitle" value="Aukeratu ekintza"/>
+		<node name="topupSummary" value="Unekoa: %s"/>
+		<node name="basket" value="Saskia"/>
+		<node name="basketSummaryEmpty" value="Ez dago libururik"/>
+		<node name="basketSummaryCountOnly" value="%0 liburu">
+			<node condition="value 1" value="Liburu %0"/>
+		</node>
+		<node name="basketSummary" value="%0 liburu (%1)">
+			<node condition="value 1" value="Liburu %0 (%1)"/>
+		</node>
+		<node name="alreadyDownloading" value="Liburua deskargatzen ari da"/>
+		<node name="alreadyDownloadingDemo" value="Lagina deskargatzen ari da"/>
+		<node name="stoppingCatalogLoading" value="Karga gelditzen"/>
+		<node name="stoppingNetworkSearch" value="Bilaketa gelditzen"/>
+		<node name="editCustomCatalog" value="Aldatu katalogoa"/>
+		<node name="removeCustomCatalog" value="Kendu katalogoa"/>
+		<node name="addCustomCatalog" value="Gehitu katalogoa"/>
+		<node name="addCustomCatalogSummary" value="Eskuz gehitu pertsonalizatutako OPDS motako katalogoa"/>
+		<node name="confirmQuestions">
+			<node name="read" value="Kopia lokala irakurri nahi duzu?"/>
+			<node name="download" value="Liburu hau deskargatu nahi duzu?"/>
+			<node name="readDemo" value="Lagina irakurri nahi duzu?"/>
+			<node name="downloadDemo" value="Lagina deskargatu nahi duzu?"/>
+			<node name="buy" value="Liburu hau erosi nahi duzu? (%s)"/>
+			<node name="openInBrowser" value="Katalogo hau nabigatzailean ireki nahi duzu?"/>
+		</node>
+		<node name="downloadingCatalogs" value="Katalogoak deskargatzen"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Liburuak sarean bilatzen"/>
+		<!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Gehitu katalogoa"/>
+			<node name="editUrl" value="Idatzi URL helbidea"/>
+		</node>
+		<node name="menu">
+			<node name="networkSearch" value="Bilatu"/>
+			<node name="reload" value="Birkargatu"/>
+			<node name="signIn" value="Sartu"/>
+			<node name="signUp" value="Izena eman"/>
+			<node name="signOut" value="Irten (%s)"/>
+			<node name="topup" value="Bete kontua"/>
+			<node name="addCustomCatalog" value="Gehitu katalogoa"/>
+			<node name="refreshCatalogsList" value="Freskatu katalogoak"/>
+			<node name="languages" value="Hizkuntza iragazkia"/>
+			<node name="clearBasket" value="Hutsitu saskia"/>
+			<node name="buyAllBooks" value="Liburu guztiak erosi"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Erosi liburua"/>
+		<node name="titleSeveralBooks" value="Erosi liburuak"/>
+		<node name="confirm" value="Ziur erosi nahi duzula &#10;“%s”?"/>
+		<node name="confirmSeveralBooks" value="Ziur erosi nahi dituzula %s liburuak?"/>
+		<node name="alreadyBought" value="Dagoeneko erosita dago liburua"/>
+		<node name="notAuthorized" value="Baimena behar duzu"/>
+		<node name="noAccountInformation" value="Ezin izan da kontuaren egoera kargatu"/>
+		<node name="unsufficientFunds" value="Erosketa honen kostua %0 da eta %1 baino ez duzu kontuan"/>
+		<node name="zeroFunds" value="Eroskera honen kostua %0 da"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Liburuaren infoa"/>
+		<node name="fileInfo" value="Fitxategiaren infoa"/>
+		<node name="description" value="Deskribapena"/>
+		<node name="noDescription" value="Ez dago deskribapenik eskuragarri."/>
+		<node name="annotation" value="Oharra"/>
+		<node name="title" value="Izenburua:"/>
+		<node name="authors" value="Egileak:">
+			<node condition="value 1" value="Egilea:"/>
+		</node>
+		<node name="series" value="Saila:"/>
+		<node name="indexInSeries" value="Sailaren adierazlea:"/>
+		<node name="tags" value="Etiketak:">
+			<node condition="value 1" value="Etiketa:"/>
+		</node>
+		<node name="language" value="Hizkuntza:"/>
+		<node name="name" value="Izena:"/>
+		<node name="type" value="Mota:"/>
+		<node name="size" value="Tamaina:"/>
+		<node name="time" value="Azken aldaketa:"/>
+		<node name="sizeInBytes" value="%s byte">
+			<node condition="value 1" value="byte %s"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="Katalogoa:"/>
+		<node name="extraLinks" value="Erlazionatutako loturak"/>
+		<node name="menu">
+			<node name="edit" value="Aldatu"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Liburua deskargatu da"/>
+		<node name="tickerError" value="Errorea liburua deskargatzerakoan"/>
+		<node name="contentSuccess" value="Deskarga osatua"/>
+		<node name="contentError" value="Huts egin du deskargak"/>
+		<node name="downloadingStarted" value="Liburua deskargatzen hasi da"/>
+		<node name="alreadyDownloading" value="Liburua deskargatzen ari da"/>
+		<node name="cannotCreateDirectory" value="Ezin izan da %s direktorioa sortu"/>
+		<node name="cannotCreateFile" value="Ezin izan da %s fitxategia sortu"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Zabaldu zuhaitza"/>
+		<node name="collapseTree" value="Tolestu zuhaitza"/>
+		<node name="readText" value="Irakurri liburuko testua"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Liburu hau"/>
+		<node name="allBooks" value="Liburu guztiak"/>
+		<node name="found" value="Aurkituta"/>
+		<node name="new" value="Laster-marka berria"/>
+		<node name="open" value="Ireki"/>
+		<node name="edit" value="Aldatu laster-marka"/>
+		<node name="delete" value="Ezabatu laster-marka"/>
+		<node name="menu">
+			<node name="search" value="Bilatu"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="Ireki liburutegia"/>
+		<node name="networkLibrary" value="Ireki sareko liburutegia"/>
+		<node name="previousBook" value="Ireki aurreko liburua"/>
+		<node name="returnTo" value="Itzuli hona …"/>
+		<node name="back" value="Atzera"/>
+		<node name="forward" value="Aurrera"/>
+		<node name="close" value="Itxi FBReader"/>
+	</node>
+	<node name="style" value="Estiloa %s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Ezabatu laster-marka"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
+	<node name="selection" value="Selección">
+		<node name="copyToClipboard" value="Kopiatu paperontzira"/>
+		<node name="openInDictionary" value="Ireki hiztegian"/>
+		<node name="quoteFrom" value="Honen zita: %s"/>
+		<node name="textInBuffer" value="&#10;%s paperontzira kopiatuta"/>
+		<node name="bookmarkCreated" value="Sortutako laster-marka:&#10;%s"/>
+		<node name="clearSelection" value="Garbitu"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="&lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt; (e)tik partekatua"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="Hobespenak"/>
+		<node name="bookInfo" value="Liburuaren infoa"/>
+		<node name="library" value="Liburutegia"/>
+		<node name="toc" value="Aurk"/>
+		<node name="day" value="Eguna"/>
+		<node name="night" value="Gaua"/>
+		<node name="networkLibrary" value="Sareko liburutegia"/>
+		<node name="navigate" value="Nabigatu">
+			<node name="toc" value="Aurkibidea"/>
+			<node name="gotoHome" value="Joan Dokumentuaren Hasierara"/>
+			<node name="gotoPageNumber" value="Joan Orrira…"/>
+			<node name="gotoSectionStart" value="Joan Testu Atalaren Hasierara"/>
+			<node name="gotoSectionEnd" value="Joan Testu Atalaren Bukaerara"/>
+			<node name="nextTOCSection" value="Joan Aurkibidearen Hurrengo Elementura"/>
+			<node name="previousTOCSection" value="Joan Aurkibidearen Aurreko Elementura"/>
+			<node name="undo" value="Desegin"/>
+			<node name="redo" value="Berregin"/>
+		</node>
+		<node name="shareBook" value="Partekatu liburua"/>
+		<node name="search" value="Bilatu"/>
+		<node name="rotate" value="Biratu pantaila"/>
+		<node name="screenOrientation" value="Pantailaren orientazioa"/>
+		<node name="screenOrientationSystem" value="Sistema"/>
+		<node name="screenOrientationSensor" value="Gailuaren orientazioaren araberakoa"/>
+		<node name="screenOrientationPortrait" value="Bertikala"/>
+		<node name="screenOrientationLandscape" value="Horizontala"/>
+		<node name="screenOrientationReversePortrait" value="Alderantzizko bertikala"/>
+		<node name="screenOrientationReverseLandscape" value="Alderantzizko horizontala"/>
+		<node name="increaseFont" value="Handitu letra-tipoa"/>
+		<node name="decreaseFont" value="Txikitu letra-tipoa"/>
+		<node name="toggleFullscreen" value="Pantaila osoan"/>
+		<node name="bookmarks" value="Laster-markak"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Fitxategiaren izena"/>
+		<node name="title" value="Izenburua"/>
+		<node name="language" value="Hizkuntza"/>
+		<node name="encoding" value="Kodeketa"/>
+		<node name="authors" value="Egilea(k)"/>
+		<node name="tags" value="Etiketa(k)"/>
+		<node name="series" value="Saila"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Direktorioak">
+			<node name="summary" value="Fitxategiak bilatzeko direktorioak"/>
+			<node name="books" value="Liburu direktorioa"/>
+			<node name="fonts" value="Letra-tipoen direktorioa"/>
+			<node name="wallpapers" value="Atzeko irudien direktorioa"/>
+		</node>
+		<node name="appearance" value="Itxura">
+			<node name="summary" value="Pantaila ezarpenak, egoera barra, botoien argiak"/>
+			<node name="language" value="Interfazearen hizkuntza"/>
+			<node name="screenOrientation" value="Pantailaren orientazioa">
+				<node name="system" value="Sistema"/>
+				<node name="sensor" value="Gailuaren orientazioaren araberakoa"/>
+				<node name="portrait" value="Bertikala"/>
+				<node name="landscape" value="Horizontala"/>
+				<node name="reversePortrait" value="Alderantzizko bertikala"/>
+				<node name="reverseLandscape" value="Alderantzizko horizontala"/>
+			</node>
+			<node name="autoOrientation" value="Biraketa automatikoa">
+				<node name="summaryOn" value="Erabiltzaileak gailua mugitzerakoan pantailak biratu egingo du"/>
+				<node name="summaryOff" value="Erabiltzaileak gailua mugitzerakoan pantailak ez du biratuko"/>
+			</node>
+			<node name="showStatusBar" value="Erakutsi egoera barra">
+				<node name="summaryOn" value="Erakutsi egoera barra irakurri moduan dagoenean"/>
+				<node name="summaryOff" value="Gorde egoera barra irakurri moduan dagoenean"/>
+			</node>
+			<node name="showActionBar" value="Erakutsi ekintza barra">
+				<node name="summaryOn" value="Erakutsi ekintza barra irakurri moduan dagoenean"/>
+				<node name="summaryOff" value="Gorde egoera barra irakurri moduan dagoenean"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Erakutsi egoera barra menua piztuta dagoenean">
+				<node name="summaryOn" value="Erakutsi egoera barra menua pizterakoan"/>
+				<node name="summaryOff" value="Gorde egoera barra menua pizterakoan"/>
+			</node>
+			<node name="disableButtonLights" value="Ezgaitu botoien argia irakurtzerakoan">
+				<node name="summaryOn" value="Ezgaitu botoien argiak (gailu batzuetan ez du balio)"/>
+				<node name="summaryOff" value="Ez saiatu botoien argiak ezgaitzen"/>
+			</node>
+			<node name="twoColumnView" value="Zutabe biko bista">
+				<node name="summaryOn" value="Testua zutabe bitan aurkeztu gailua horizontalean eusterakoan"/>
+				<node name="summaryOff" value="Testua beti zutabe bakarrean aurkeztu"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Pantailaren distira doitu">
+				<node name="summaryOn" value="Hatza pantailaren ezkerraldean gora/behera arrastatu"/>
+				<node name="summaryOff" value="Ezgaituta"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Eragotzi pantaila esekitzea">
+				<node name="0" value="Beti"/>
+				<node name="25" value="Bateriaren karga ehuneko 25ekoa baino gehiago den bitartean"/>
+				<node name="50" value="Bateriaren karga ehuneko 50ekoa baino gehiago den bitartean"/>
+				<node name="100" value="Inoiz ez"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Eragotzi pantaila esekitzea kargatzerakoan">
+				<node name="summaryOn" value="Pantaila esekitzea eragotzi gailua kargatzen baldin badago"/>
+				<node name="summaryOff" value="Pantaila eseki gailua kargatzen baldin badago ere"/>
+			</node>
+		</node>
+		<node name="text" value="Testua">
+			<node name="summary" value="Letra-tipoa, puntuazioa, etab."/>
+			<node name="fontProperties" value="Letra-tipoaren propietateak">
+				<node name="summary" value="Letra-tipoa leuntzeko aukerak"/>
+				<node name="antiAlias" value="Antialiasing (Pixelak leundu)">
+					<node name="summaryOn" value="Antialiasing-a gaituta dago"/>
+					<node name="summaryOff" value="Antialiasing-a ezgaituta dago"/>
+				</node>
+				<node name="deviceKerning" value="Karaktere-tartea">
+					<node name="summaryOn" value="Karaktere-tartea gaituta dago"/>
+					<node name="summaryOff" value="Karaktere-tartea ezgaituta dago"/>
+				</node>
+				<node name="dithering" value="Lausotzea">
+					<node name="summaryOn" value="Kolore lausotzea gaituta dago"/>
+					<node name="summaryOff" value="Kolore lausotzea ezgaituta dago"/>
+				</node>
+				<node name="hinting" value="Optimizazioa">
+					<node name="summaryOn" value="Optimizazioa gaituta dago"/>
+					<node name="summaryOff" value="Optimizazioa ezgaituta dago"/>
+				</node>
+				<node name="subpixel" value="Subpixelak leundu">
+					<node name="summaryOn" value="Subpixelak leuntzea gaituta dago"/>
+					<node name="summaryOff" value="Subpixelak leuntzea ezgaituta dago"/>
+				</node>
+			</node>
+			<node name="font" value="Letra-tipoaren familia">
+				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			</node>
+			<node name="fontSize" value="Letra-tipoaren tamaina"/>
+			<node name="fontSizeDifference" value="Letra-tipoen tamaina ezberdintasuna"/>
+			<node name="fontStyle" value="Letra-tipo estiloa">
+				<node name="regular" value="Normala"/>
+				<node name="bold" value="Lodia"/>
+				<node name="italic" value="Etzana"/>
+				<node name="boldItalic" value="Lodia etzana"/>
+			</node>
+			<node name="bold" value="Lodia">
+				<node name="summaryOn" value="lodia"/>
+				<node name="summaryOff" value="normala"/>
+				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			</node>
+			<node name="italic" value="Etzana">
+				<node name="summaryOn" value="etzana"/>
+				<node name="summaryOff" value="normala"/>
+				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			</node>
+			<node name="underlined" value="Azpimarratua">
+				<node name="summaryOn" value="azpimarratua"/>
+				<node name="summaryOff" value="normala"/>
+				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Marratua">
+				<node name="summaryOn" value="marratua"/>
+				<node name="summaryOff" value="normala"/>
+				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Lerro arteko tartea">
+				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			</node>
+			<node name="alignment" value="Lerrokatzea">
+				<node name="left" value="Ezkerrera"/>
+				<node name="right" value="Eskumara"/>
+				<node name="center" value="Erdira"/>
+				<node name="justify" value="Justifikatua"/>
+				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Bereizi hitzak automatikoki">
+				<node name="summaryOn" value="Bereizi hitzak automatikoki"/>
+				<node name="summaryOff" value="Ez bereizi hitzak automatikoki"/>
+			</node>
+			<node name="allowHyphenations" value="Bereizi hitzak">
+				<node name="summaryOn" value="Bereizi hitzak"/>
+				<node name="summaryOff" value="Ez bereizi hitzak"/>
+				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Lehenengo lerroko koska"/>
+			<node name="spaceBefore" value="Hutsunea lehenago"/>
+			<node name="spaceAfter" value="Hutsunea ostean"/>
+			<node name="leftIndent" value="Koska ezkerrera"/>
+			<node name="rightIndent" value="Koska eskumara"/>
+			<node name="more" value="Estilo gehiago">
+				<node name="summary" value="Izenburu, epigrafe, eta abarren hobespen bereziak"/>
+				<node name="Regular Paragraph" value="Paragrafo arrunta">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Izenburua">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Atal izenburua">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Poema izenburua">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Azpizenburua">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Oharra">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Epigrafea">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Ahapaldia">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Bertsoa">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Formateaturiko testua">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="irudia">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Aipamena">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Egilea">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Data">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Barne lotura">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Oin-oharra">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Enfasia">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Enfasi lodia">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Azpindizea">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Goi-indizea">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Kodea">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Marratua">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Etzana">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Lodia">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Definizioa">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Definizioaren deskribapena">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Goiburua 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Goiburua 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Goiburua 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Goiburua 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Goiburua 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Goiburua 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Kanpo lotura">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="CSSetan zehaztutako balioak aplikatu/baztertu"/>
+			<node name="fontSize" value="Letra-tipoaren tamaina">
+				<node name="summaryOn" value="Aplikatu CSSetan zehaztutako letra-tipoaren tamaina"/>
+				<node name="summaryOff" value="Baztertu CSSetan zehaztutako letra-tipoaren tamaina"/>
+			</node>
+			<node name="textAlignment" value="Lerrokatzea">
+				<node name="summaryOn" value="Aplikatu CSSetan zehaztutako testu-lerrokatzea"/>
+				<node name="summaryOff" value="Baztertu CSSetan zehaztutako testu-lerrokatzea"/>
+			</node>
+		</node>
+		<node name="colors" value="Koloreak eta atzeko irudiak">
+			<node name="summary" value="Kolore ezarpenak"/>
+			<node name="background" value="Atzeko planoa">
+				<node name="solidColor" value="Kolore betea"/>
+				<node name="leather" value="Larrua"/>
+				<node name="sepia" value="Sepia"/>
+				<node name="wood" value="Zura"/>
+			</node>
+			<node name="backgroundColor" value="Atzeko planoko kolorea"/>
+			<node name="selectionBackground" value="Hautaketaren atzeko planoa"/>
+			<node name="selectionForeground" value="Hautatutako testua"/>
+			<node name="text" value="Testu normala"/>
+			<node name="hyperlink" value="Lotura testua"/>
+			<node name="hyperlinkVisited" value="Bisitatutako lotura testua"/>
+			<node name="highlighting" value="Bilaketaren emaitzaren atzeko planoa"/>
+			<node name="footer" value="Oin-oharra"/>
+		</node>
+		<node name="margins" value="Marjinak">
+			<node name="summary" value="Testuaren marjinak"/>
+			<node name="left" value="Ezkerreko marjina"/>
+			<node name="right" value="Eskumako marjina"/>
+			<node name="top" value="Goiko marjina"/>
+			<node name="bottom" value="Beheko marjina"/>
+			<node name="spaceBetweenColumns" value="Zutabeen arteko tartea"/>
+		</node>
+		<node name="scrollBar" value="Aurrerapen-barra">
+			<node name="summary" value="Aurrerapen adierazlearen eta oin-oharren hobespenak"/>
+			<node name="scrollbarType" value="Aurrerapen-barra mota">
+				<node name="hide" value="Gorde"/>
+				<node name="show" value="Irristari bertikala"/>
+				<node name="showAsProgress" value="Aurrerapen-barra bertikala"/>
+				<node name="showAsFooter" value="Oin-ohar horizontala"/>
+			</node>
+			<node name="footerHeight" value="Oin-oharraren altuera"/>
+			<node name="footerColor" value="Oin-oharraren kolorea"/>
+			<node name="tocMarks" value="Erakutsi aurkibidearen laster-markak">
+				<node name="summaryOn" value="Erakutsi aurkibidearen laster-markak oin-barran"/>
+				<node name="summaryOff" value="Ez erakutsi aurkibidearen laster-markak oin-barran"/>
+			</node>
+			<node name="showProgress" value="Erakutsi orri zenbakia">
+				<node name="summaryOn" value="Erakutsi orri zenbakia oinean"/>
+				<node name="summaryOff" value="Ez erakutsi orri zenbakia oinean"/>
+			</node>
+			<node name="showBattery" value="Erakutsi bateriaren karga">
+				<node name="summaryOn" value="Erakutsi bateriaren karga oinean"/>
+				<node name="summaryOff" value="Ez erakutsi bateriaren karga oinean"/>
+			</node>
+			<node name="showClock" value="Erakutsi erlojua">
+				<node name="summaryOn" value="Erakutsi erlojua oinean"/>
+				<node name="summaryOff" value="Ez erakutsi erlojua oinean"/>
+			</node>
+			<node name="font" value="Letra-tipoaren familia"/>
+		</node>
+		<node name="scrolling" value="Orriak pasatzea">
+			<node name="summary" value="Nola pasatu orriak"/>
+			<node name="fingerScrolling" value="Ukimen-pantailetan orriak pasatzea">
+				<node name="byTap" value="Hatz kolpetxoarekin pasatu orriak"/>
+				<node name="byFlick" value="Hatza arrastatuz pasatu orriak"/>
+				<node name="byTapAndFlick" value="Hatz kolpetxoarekin edo arrastatuz pasatu orriak"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Kolpetxo bikoitza antzeman">
+				<node name="summaryOn" value="Kolpetxo bikoitza elkarrizketetara/menura joateko"/>
+				<node name="summaryOff" value="Baztertu kolpetxo bikoitza"/>
+			</node>
+			<node name="volumeKeys" value="Bolumenaren botoiekin pasatu orriak">
+				<node name="summaryOn" value="Erabili bolumenaren botoiak orriak pasatzeko"/>
+				<node name="summaryOff" value="Mantendu bolumenaren orriak soinurako baino ez"/>
+			</node>
+			<node name="invertVolumeKeys" value="Alderantzikatu bolumenaren botoien noranzkoa">
+				<node name="summaryOn" value="Ozenago botoia atzera joateko eta baxuago botoia aurrera joateko"/>
+				<node name="summaryOff" value="Baxuago botoia atzera joateko eta ozenago botoia aurrera joateko"/>
+			</node>
+			<node name="animation" value="Animazioa">
+				<node name="none" value="Pasatu orriak animaziorik gabe"/>
+				<node name="curl" value="Orria kizkurtu"/>
+				<node name="slide" value="Orria irristatu"/>
+				<node name="shift" value="Orria altzatu"/>
+			</node>
+			<node name="animationSpeed" value="Animazioaren abiadura">
+				<node name="fast" value="azkar"/>
+				<node name="slow" value="motel"/>
+			</node>
+			<node name="horizontal" value="Mugimendu horizontala">
+				<node name="summaryOn" value="Mugitu orriak horizontalki"/>
+				<node name="summaryOff" value="Mugitu orriak bertikalki"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Kolpetxo guneak">
+			<node name="summary" value="Ekintzak hatz kolpetxoekin"/>
+			<node name="tapZonesScheme" value="Kolpetxo guneen eskema">
+				<node name="left_to_right" value="Ezkerretik eskumara mugitu orriak"/>
+				<node name="right_to_left" value="Eskumatik ezkerrera mugitu orriak"/>
+				<node name="up" value="Behetik gora mugitu orriak"/>
+				<node name="down" value="Goitik behera mugitu orriak"/>
+				<node name="custom" value="Pertsonalizatua…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Hiztegia">
+			<node name="summary" value="Hiztegiaren ezarpenak"/>
+			<node name="dictionary" value="Hiztegia"/>
+			<node name="translator" value="Itzultzailea"/>
+			<node name="tappingAction" value="Kolpetxo luzatuaren  ekintzak">
+				<node name="doNothing" value="Kolpetxo luzatuak ez du ezer egiten"/>
+				<node name="selectSingleWord" value="Kolpetxo luzatuak hitz soila hautatzen du"/>
+				<node name="startSelecting" value="Kolpetxo luzatuak hautaketa hasten du"/>
+				<node name="openDictionary" value="Kolpetxo luzatuak hitz soila hautatzen du, askatzerakoan hiztegia zabaltzen du"/>
+			</node>
+			<node name="navigateOverAllWords" value="Nabigatu hitzen artean">
+				<node name="summaryOn" value="Nabigazio teklak hitz guztiak bisitatzen ditu"/>
+				<node name="summaryOff" value="Nabigazio teklak loturak baino ez ditu bisitatzen"/>
+			</node>
+		</node>
+		<node name="images" value="Irudiak">
+			<node name="summary" value="Irudiak bistaratzeko aukerak"/>
+			<node name="backgroundColor" value="Irudiaren atzeko planoaren kolorea"/>
+			<node name="tappingAction" value="Kolpetxo luzatuaren  ekintzak">
+				<node name="doNothing" value="Kolpetxo luzatuak ez du ezer egiten"/>
+				<node name="selectImage" value="Kolpetxo luzatuak irudia hautatzen du"/>
+				<node name="openImageView" value="Kolpetxo luzatuak irudia bistaratzen du"/>
+			</node>
+			<node name="fitImagesToScreen" value="Doitu irudiak pantailara">
+				<node name="none" value="Bat ere ez"/>
+				<node name="covers" value="Azalak baino ez"/>
+				<node name="all" value="Denak"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Utzi menua">
+			<node name="summary" value="Atzera botoiaren ekintza zerrenda"/>
+			<node name="library" value="Liburutegia">
+				<node name="summaryOn" value="Erakutsi 'ireki liburutegia' elementua"/>
+				<node name="summaryOff" value="Ez erakutsi 'ireki liburutegia' elementua"/>
+			</node>
+			<node name="networkLibrary" value="Sareko liburutegia">
+				<node name="summaryOn" value="Erakutsi 'ireki sareko liburutegia' elementua"/>
+				<node name="summaryOff" value="Ez erakutsi 'ireki sareko liburutegia' elementua'"/>
+			</node>
+			<node name="previousBook" value="Aurreko liburua">
+				<node name="summaryOn" value="Erakutsi 'itzuli aurreko liburura' elementua"/>
+				<node name="summaryOff" value="Ez erakutsi 'itzuli aurreko liburura' elementua"/>
+			</node>
+			<node name="positions" value="Azkeneko 3 posizioak">
+				<node name="summaryOn" value="Erakutsi liburuaren azkeneko 3 posizioen elementuak"/>
+				<node name="summaryOff" value="Ez erakutsi liburuaren azkeneko 3 posizioen elementuak"/>
+			</node>
+			<node name="backKeyAction" value="    Atzera botoiaren ekintzak">
+				<node name="exit" value="Itxi FBReader"/>
+				<node name="goBack" value="Nabigatu atzera"/>
+				<node name="cancelMenu" value="Erakutsi utzi menua"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Atzera botoiaren kolpetxo luzatuaren ekintzak">
+				<node name="exit" value="Itxi FBReader"/>
+				<node name="goBack" value="Nabigatu atzera"/>
+				<node name="cancelMenu" value="Erakutsi utzi menua"/>
+				<node name="none" value="Ez egin ezer"/>
+			</node>
+		</node>
+		<node name="tips" value="Aholkuak">
+			<node name="summary" value="Eguneko aholkuaren ezarpenak"/>
+			<node name="showTips" value="Erakutsi aholkuak">
+				<node name="summaryOn" value="Erakutsi eguneko aholkua"/>
+				<node name="summaryOff" value="Ez erakutsi"/>
+			</node>
+		</node>
+		<node name="about" value="FBReader-i buruz">
+			<node name="summary" value="Bertsioaren infoa, kontaktuak"/>
+			<node name="version" value="Bertsioa"/>
+			<node name="site" value="Webgunea bisitatu">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Bidali posta elektronikoa">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="Twitter-en jarraitu">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="Instalatu"/>
+			<node name="update" value="Eguneratu"/>
+			<node name="skip" value="Saltatu"/>
+			<node name="buy" value="Erosi"/>
+			<node name="buyAndDownload" value="Erosi eta deskargatu"/>
+			<node name="continue" value="Jarraitu"/>
+			<node name="editUrl" value="URL-a aldatu"/>
+			<node name="tryAgain" value="Saiatu berriro"/>
+			<node name="openBook" value="Irakurri"/>
+			<node name="editInfo" value="Aldatu"/>
+			<node name="reloadInfo" value="Birkargatu"/>
+			<node name="shareBook" value="Partekatu"/>
+			<node name="topup" value="Bete kontua"/>
+			<node name="pay" value="Ordaindu"/>
+			<node name="refresh" value="Freskatu"/>
+			<node name="authorize" value="Baimendu"/>
+			<node name="resetPosition" value="Berrezarri posizioa"/>
+			<node name="sendReport" value="Bidali txostena"/>
+			<node name="addToFavorites" value="Gehitu gogokoetara"/>
+			<node name="removeFromFavorites" value="Kendu gogokoetatik"/>
+			<node name="markAsRead" value="Markatu irakurria bezala"/>
+			<node name="markAsUnread" value="Markatu ez irakurria bezala"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="Instalatu gehigarria"/>
+			<node name="updateTitle" value="Eguneratu gehigarria"/>
+			<node name="dontAskAgain" value="Ez berriro itaundu"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="Instalatu hiztegia"/>
+			<node name="message" value="Nahi al duzu %s instalatu?"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="Liburuaren fitxategia behin betiko ezabatuko da. Ziur zaude?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="Fitxategia dagoeneko badago. Berriro deskargatu?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="Deskargatzen liburua %s"/>
+			<node name="search" value="Bilatzen. Itxaron, mesedez…"/>
+			<node name="loadInfo" value="Informazioa kargatzen. Itxaron mesedez…"/>
+			<node name="loadingBook" value="Liburua irekitzen. Itxaron mesedez…"/>
+			<node name="loadingBookList" value="Liburutegia irekitzen. Itxaron mesedez…"/>
+			<node name="creatingBooksDatabase" value="Liburuen datu-basea sortzen. Itxaron mesedez…"/>
+			<node name="updatingBooksDatabase" value="Liburuen datu-basea eguneratzen. Itxaron mesedez…"/>
+			<node name="loadingNetworkLibrary" value="Sareko liburutegia irekitzen. Itxaron mesedez…"/>
+			<node name="authentication" value="Egiaztatzen. Itxaron mesedez…"/>
+			<node name="signOut" value="Irtetzen. Itxaron mesedez…"/>
+			<node name="purchaseBook" value="Liburua erosten. Itxaron mesedez…"/>
+			<node name="loadingCatalogInfo" value="Katalogoaren informazioa kargatzen. Itxaron mesedez…"/>
+			<node name="loadingNetworkBookInfo" value="Liburuaren informazioa kargatzen. Itxaron mesedez…"/>
+			<node name="updatingCatalogsList" value="Katalogoen zerrenda eguneratzen. Itxaron mesedez…"/>
+			<node name="updatingAccountInformation" value="Kontuaren informazioa eguneratzen. Itxaron mesedez…"/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Zerbitzariaren barneko errorea"/>
+			<node name="purchaseNotEnoughMoney" value="Ez dago diru nahikorik"/>
+			<node name="purchaseMissingBook" value="Ezin izan da liburua aurkitu"/>
+			<node name="purchaseAlreadyPurchased" value="Dagoeneko erosita"/>
+			<node name="bookNotPurchased" value="Ez da liburua erosi"/>
+			<node name="downloadLimitExceeded" value="Deskarga muga gaindituta"/>
+			<node name="noUserEmail" value="Ez dago helbide elektroniko horrekin izena eman&#10; duen erabiltzailerik"/>
+			<node name="unsupportedOperation" value="Onartu gabeko eragiketa"/>
+			<node name="notAnOPDS" value="Hau ez da OPDS motako katalogo bat"/>
+			<node name="noRequiredInformation" value="Eskatutako informazioa ez dago katalogoan zehaztuta"/>
+			<node name="cacheDirectoryError" value="Ezin izan da cacheko direktorioa sortu"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Egiaztatzea"/>
+			<node name="unencryptedWarning" value="Pasahitza zifratu gabe bidaliko da"/>
+			<node name="login" value="Erabiltzailea"/>
+			<node name="password" value="Pasahitza"/>
+			<node name="loginIsEmpty" value="Erabiltzaile izenak ezin du hutsik egon"/>
+			<node name="register" value="Izena eman"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FBReader: Gehitu katalogo pertsonalizatua"/>
+			<node name="catalogTitle" value="Izenburua"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Laburpena"/>
+			<node name="catalogTitleExample" value="Adb.ez.: Gutenberg proiektuaren katalogoa"/>
+			<node name="catalogUrlExample" value="Adb.ez.: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="Adb.ez.: Domeinu publikoan dauden liburuak"/>
+			<node name="titleIsEmpty" value="Izenburuak ezin du hutsik egon"/>
+			<node name="urlIsEmpty" value="URL-ak ezin du hutsik egon"/>
+			<node name="invalidUrl" value="Baliogabeko URL-a"/>
+			<node name="titleAlreadyExists" value="Zehaztutako izenburua badago erabilita"/>
+			<node name="siteAlreadyExists" value="Zehaztutako kokapena badago erabilita"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Hizkuntza iragazkia"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="Eguneko aholkua"/>
+			<node name="initializationText" value="FBReader-en eguneko aholkua irakurri nahi? Aholku berriak FBReader-en webgunetik deskargatuko dira, asteko 1-2 kbren neurrira.&#10;&#10;Gaitu aholkuak?"/>
+			<node name="dontShowAgain" value="Ez berriro erakutsi"/>
+			<node name="more" value="Hurrengo aholkua"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Ezin izan da Google Play-ra sartu. %s eskuz instalatu, mesedez"/>
+		<node name="textNotFound" value="Ez dago bat egiten duen testurik liburuan, barkatu"/>
+		<node name="bookNotFound" value="Ez dago bat egiten duen libururik liburutegian, barkatu"/>
+		<node name="bookmarkNotFound" value="Ez dago bat egiten duen laster-markarik, barkatu"/>
+		<node name="cannotOpenBook" value="Ezin da liburua une honetan ireki, barkatu"/>
+		<node name="dictionaryIsNotInstalled" value="Ez dago hiztegia instalaturik, barkatu"/>
+		<node name="permissionDenied" value="Baimena ezeztatu egin da, barkatu"/>
+		<node name="noFavorites" value="Zure gogokoen zerrenda hutsik dago, barkatu"/>
+		<node name="noSeries" value="Ez dago libururik sailetan, barkatu"/>
+		<node name="emptyCatalog" value="Katalogoa hutsik dago, barkatu"/>
+		<node name="emptyBasket" value="Saskia hutsik dago, barkatu"/>
+		<node name="emptyNetworkSearchResults" value="Ez da libururik aurkitu, barkatu"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Nabigatzailea"/>
+		<node name="defaultBrowser" value="Lehenetsitako nabigatzailea"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Errore ezezaguna"/>
+		<node name="unsupportedCompressionMethod" value="Onartu gabeko konpresio metodoa"/>
+		<node name="encryptedFile" value="DRM-arekin giltzatutako fitxategia"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader arazoa"/>
+			<node name="text" value="Ezin izan da FBReader-en cache direktorioan idatzi. Baliteke memoria txartela txertatzea edo desmuntatzea ahaztu izana. Berriro saiatu edo beste direktorio izenen bat zehaztu, mesedez."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader arazoa"/>
+			<node name="text" value="FBReader-ek ezin izan du bertako liburutegia kargatu. Baliteke egoki kargatuta ez izatea. Arazoa jarraitu ezkero saiatu FBReader berriro instalatzen, mesedez."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader arazoa"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Errorea gertatu da '%s' (r)ren irakurketa bitartean"/>
+		<node name="errorReadingZip" value="Errorea gertatu da '%s' (r)en erauzketa bitartean"/>
+		<node name="pluginNotFound" value="Ez dago gehigarririk '%s' (r)entzat"/>
+		<node name="unknownPluginType" value="Gehigarri mota ezezaguna: %s"/>
+		<node name="fileNotFound" value="Aurkitzen ez den fitxategia: %s"/>
+		<node name="opfFileNotFound" value="Ez da OPF aurkitzen %s (e)n"/>
+		<node name="unsupportedFileFormat" value="Ez da onartzen  '%s' (r)en fitxategi formatua"/>
+		<node name="errorParsingRtf" value="RTF prozesatzerakoan hemen: %s"/>
+	</node>
+</resources>
