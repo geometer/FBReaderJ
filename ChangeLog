@@ -1,7 +1,9 @@
-===== 1.9 (Jul ??, 2013) =====
+===== 1.9 (Aug ??, 2013) =====
+* Danish localization done by Jens Kaestel, sponsored by Panacea Supplies
+* Danish hyphenation patterns imported by Dennis Sheil of Panacea Supplies
+* Persian localization by ...
+* Basque localization by ...
 * Updated French localization by Mathias Monnerville
-* Danish translation done by Jens Kaestel, sponsored by Panacea Supplies
-* Hyphenation patterns imported by Dennis Sheil of Panacea Supplies
 
 ===== 1.8.2 (Jun 13, 2013) =====
 * Editable highlighting styles
