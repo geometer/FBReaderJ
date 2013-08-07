@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-import org.sarah.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.*;
 

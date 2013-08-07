@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.sarah.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.R;
 
 class SelectionPopup extends ButtonsPopupPanel {
 	final static String ID = "SelectionPopup";

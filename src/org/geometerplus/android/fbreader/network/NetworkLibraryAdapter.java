@@ -23,7 +23,7 @@ import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.sarah.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;

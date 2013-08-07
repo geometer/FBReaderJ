@@ -25,7 +25,7 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.sarah.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.book.Book;

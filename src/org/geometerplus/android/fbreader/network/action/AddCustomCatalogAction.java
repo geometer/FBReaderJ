@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 
 import org.geometerplus.android.fbreader.network.AddCatalogMenuActivity;
 
-import org.sarah.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.R;
 
 public class AddCustomCatalogAction extends Action {
 	public AddCustomCatalogAction(Activity activity) {
