@@ -46,7 +46,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile Book myBook;
 
-	private final Comparator<Bookmark> myComparator = new Bookmark.ByTimeComparator();
+	private final Comparator<Bookmark> myComparator = new Bookmark.ByPlaceComparator();
 
 	private volatile BookmarksAdapter myThisBookAdapter;
 	private volatile BookmarksAdapter myAllBooksAdapter;

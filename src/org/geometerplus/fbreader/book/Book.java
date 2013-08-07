@@ -35,6 +35,7 @@ import org.geometerplus.fbreader.sort.TitledEntity;
 
 public class Book extends TitledEntity {
 	public static final String FAVORITE_LABEL = "favorite";
+	public static final String UNREAD_LABEL = "unread";
 	public static final String READ_LABEL = "read";
 
 	public final ZLFile File;
@@ -197,6 +198,14 @@ public class Book extends TitledEntity {
 		addAuthor(name, "");
 	}
 
+	public void replaceAuthorsWithList(String authorList){
+		removeAllAuthors();
+		String[] authors = authorList.split(";");
+		for(int i = 0; i < authors.length; i++){
+			addAuthor(authors[i].trim());
+		}
+	}
+	
 	public void addAuthor(String name, String sortKey) {
 		String strippedName = name;
 		strippedName.trim();
@@ -315,6 +324,15 @@ public class Book extends TitledEntity {
 			myIsSaved = false;
 		}
 	}
+	
+	public void replaceTagsWithList(String tagList){
+		//android.os.Debug.waitForDebugger();
+		removeAllTags();
+		String[] tags = tagList.split(",");
+		for(int i = 0; i < tags.length; i++){
+			addTag(tags[i].trim());
+		}
+	}
 
 	public void addTag(Tag tag) {
 		if (tag != null) {
@@ -422,6 +440,7 @@ public class Book extends TitledEntity {
 	}
 
 	boolean save(final BooksDatabase database, boolean force) {
+		//android.os.Debug.waitForDebugger();
 		if (!force && myId != -1 && myIsSaved) {
 			return false;
 		}
@@ -433,6 +452,7 @@ public class Book extends TitledEntity {
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, getTitle());
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, getTitle());
+					addLabel(UNREAD_LABEL);
 					if (myId != -1 && myVisitedHyperlinks != null) {
 						for (String linkId : myVisitedHyperlinks) {
 							database.addVisitedHyperlink(myId, linkId);

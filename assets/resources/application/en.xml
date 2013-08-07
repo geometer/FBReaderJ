@@ -17,11 +17,17 @@
 		<node name="byTag" value="By tag">
 			<node name="summary" value="Books sorted by tag"/>
 		</node>
+		<node name="new" value="New">
+			<node name="summary" value="Newly added books"/>
+		</node>
 		<node name="recent" value="Recent">
 			<node name="summary" value="Recently opened books"/>
 		</node>
 		<node name="favorites" value="Favorites">
 			<node name="summary" value="My selected books"/>
+		</node>
+		<node name="unread" value="Unread">
+			<node name="summary" value="My unread books"/>
 		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
@@ -287,6 +293,7 @@
 		<node name="authors" value="Author(s)"/>
 		<node name="tags" value="Tag(s)"/>
 		<node name="series" value="Series"/>
+		<node name="indexInSeries" value="Series index"/>
 	</node>
 	<node name="Preferences">
 		<node name="directories" value="Directories">
@@ -827,6 +834,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
+		<node name="noUnread" value="Your unread list is empty, sorry"/>
 		<node name="noSeries" value="There are no books in series, sorry"/>
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>

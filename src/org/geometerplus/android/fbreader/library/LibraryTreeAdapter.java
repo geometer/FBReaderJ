@@ -93,6 +93,8 @@ class LibraryTreeAdapter extends TreeAdapter {
 			return R.drawable.ic_list_library_book;
 		} else if (tree instanceof FavoritesTree) {
 			return R.drawable.ic_list_library_favorites;
+		} else if (tree instanceof UnreadTree) {
+			return R.drawable.ic_list_library_books;
 		} else if (tree instanceof RecentBooksTree) {
 			return R.drawable.ic_list_library_recent;
 		} else if (tree instanceof AuthorListTree) {

@@ -319,6 +319,18 @@ mainLoop:
 			return date1 == null ? 1 : date1.compareTo(date0);
 		}
 	}
+	
+	public static class ByPlaceComparator implements Comparator<Bookmark> {
+		public int compare(Bookmark bm0, Bookmark bm1) {
+			final int par0 = bm0.getEnd().getParagraphIndex();
+			final int par1 = bm1.getEnd().getParagraphIndex();
+			if (par0 == par1) {
+				return 0;
+			}
+			return par1 < par0 ? 1 : -1;
+			//return -1;
+		}
+	}
 
 	void setId(long id) {
 		myId = id;

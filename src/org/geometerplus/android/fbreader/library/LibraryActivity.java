@@ -227,12 +227,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				}
 				return true;
 			case MARK_AS_READ_ITEM_ID:
+				book.removeLabel(Book.UNREAD_LABEL);
 				book.addLabel(Book.READ_LABEL);
 				myRootTree.Collection.saveBook(book, false);
 				getListView().invalidateViews();
 				return true;
 			case MARK_AS_UNREAD_ITEM_ID:
 				book.removeLabel(Book.READ_LABEL);
+				book.addLabel(Book.UNREAD_LABEL);
 				myRootTree.Collection.saveBook(book, false);
 				getListView().invalidateViews();
 				return true;
