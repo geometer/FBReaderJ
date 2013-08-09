@@ -43,7 +43,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Recherche locale"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="rescan" value="Chercher à nouveau" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Ouvrir ce livre"/>
 		<node name="showBookInfo" value="Info livre"/>
@@ -51,8 +51,8 @@
 		<node name="deleteBook" value="Supprimer ce livre"/>
 		<node name="addToFavorites" value="Ajouter aux favoris"/>
 		<node name="removeFromFavorites" value="Supprimer des favoris"/>
-		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="markAsRead" value="Marquer comme lu" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Marquer comme non lu" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Librairie réseau">
 		<node name="byAuthor" value="Par auteur">
@@ -216,16 +216,16 @@
 	</node>
 	<node name="style" value="Style %s" toBeTranslated="true"/>
 	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="editStyle" value="Editer style..." toBeTranslated="true"/>
 		<node name="deleteBookmark" value="Supprimer le marque-page"/>
 	</node>
 	<node name="editStyle">
-		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="name" value="Nom du style" toBeTranslated="true"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
-			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
-			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOn" value="Ne pas mettre les signets en évidence" toBeTranslated="true"/>
+			<node name="summaryOff" value="Mettre les signets en évidence" toBeTranslated="true"/>
 		</node>
-		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+		<node name="bgColor" value="Couleur de fond" toBeTranslated="true"/>
 	</node>
 	<node name="selection" value="Sélection">
 		<node name="copyToClipboard" value="Copier dans le presse-papiers"/>
@@ -290,7 +290,7 @@
 		</node>
 		<node name="appearance" value="Apparence">
 			<node name="summary" value="Rotation, barre de statut"/>
-			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="language" value="Interface du langage" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Orientation de l'écran">
 				<node name="system" value="Système"/>
 				<node name="sensor" value="Détectée par les capteurs"/>
@@ -319,9 +319,9 @@
 				<node name="summaryOn" value="Désactive la lumière des boutons (ne fonctionne pas sur certains appareils)"/>
 				<node name="summaryOff" value="Ne pas essayer de désactiver la lumière des boutons"/>
 			</node>
-			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
-				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
-				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			<node name="twoColumnView" value="Affichage deux colonnes" toBeTranslated="true">
+				<node name="summaryOn" value="Afficher le contenu sur deux colonnes en mode paysage" toBeTranslated="true"/>
+				<node name="summaryOff" value="N'afficher le contenu que dans une seule colonne" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
 				<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
@@ -522,14 +522,14 @@
 			</node>
 		</node>
 		<node name="css" value="CSS" toBeTranslated="true">
-			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
-			<node name="fontSize" value="Font size" toBeTranslated="true">
-				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			<node name="summary" value="Appliquer/ignorer les styles définis dans le CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Taille de la police" toBeTranslated="true">
+				<node name="summaryOn" value="Appliquer la taille de police définie dans le CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignorer la taille de police définie dans le CSS" toBeTranslated="true"/>
 			</node>
-			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
-				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			<node name="textAlignment" value="Alignement du texte" toBeTranslated="true">
+				<node name="summaryOn" value="Appliquer l'alignement du texte défini dans le CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignorer l'alignement du texte défini dans le CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Couleurs &amp; fonds d'écran">
@@ -555,7 +555,7 @@
 			<node name="right" value="Marge de droite"/>
 			<node name="top" value="Marge du haut"/>
 			<node name="bottom" value="Marge du bas"/>
-			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
+			<node name="spaceBetweenColumns" value="Espace entre les colonnes" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Barre de défilement">
 			<node name="summary" value="Configuration de la barre &amp; pied de page"/>
@@ -652,10 +652,10 @@
 				<node name="selectImage" value="Un appui long selectionne l'image"/>
 				<node name="openImageView" value="Un appui long affiche l'image seule"/>
 			</node>
-			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
-				<node name="none" value="None" toBeTranslated="true"/>
-				<node name="covers" value="Covers only" toBeTranslated="true"/>
-				<node name="all" value="All" toBeTranslated="true"/>
+			<node name="fitImagesToScreen" value="Adapter les images à l'écran" toBeTranslated="true">
+				<node name="none" value="Aucune" toBeTranslated="true"/>
+				<node name="covers" value="Couverture uniquement" toBeTranslated="true"/>
+				<node name="all" value="Toutes" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Bouton retour">
@@ -731,8 +731,8 @@
 			<node name="sendReport" value="Envoyer un rapport"/>
 			<node name="addToFavorites" value="Ajouter aux favoris"/>
 			<node name="removeFromFavorites" value="Supprimer des favoris"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+			<node name="markAsRead" value="Marquer comme lu" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Marquer comme non lu" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Installer plugin"/>
@@ -820,7 +820,7 @@
 		<node name="dictionaryIsNotInstalled" value="Désolé mais le dictionnaire n'est pas installé"/>
 		<node name="permissionDenied" value="Désolé, accès refusé"/>
 		<node name="noFavorites" value="Votre liste de favoris est vide"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="Aucun livre appartenant à une série, désolé" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Le catalogue est vide"/>
 		<node name="emptyBasket" value="Votre panier est vide, désolé"/>
 		<node name="emptyNetworkSearchResults" value="Aucun livre correspondant trouvé"/>

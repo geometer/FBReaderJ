@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- English FBReaderJ resources, by Geometer Plus -->
+<resources>
+	<node name="library" value="FB-Læser bibliotek">
+		<node name="unknownAuthor" value="Ukendt forfatter"/>
+		<node name="booksWithNoTags" value="Bøger uden mærker"/>
+		<node name="demo" value="prøve"/>
+		<node name="byAuthor" value="Efter forfatter">
+			<node name="summary" value="Bøger sorteret efter forfatter"/>
+		</node>
+		<node name="byTitle" value="Efter titel">
+			<node name="summary" value="Bøger sorteret efter titel"/>
+		</node>
+		<node name="bySeries" value="Efter serie">
+			<node name="summary" value="Bøger sorteret efter serie"/>
+		</node>
+		<node name="byTag" value="Efter mærke">
+			<node name="summary" value="Bøger sorteret efter mærke"/>
+		</node>
+		<node name="recent" value="Nylig">
+			<node name="summary" value="Nyligt åbnede bøger"/>
+		</node>
+		<node name="favorites" value="Foretrukne">
+			<node name="summary" value="Mine udvalgte bøger"/>
+		</node>
+		<node name="found" value="Fundet">
+			<node name="summary" value="Søgeresultater for: %s"/>
+		</node>
+		<node name="fileTree" value="Filtræ">
+			<node name="summary" value="Gennemse filsystem"/>
+		</node>
+		<node name="fileTreeRoot" value="Enhed">
+			<node name="summary" value="Hele enhedens filsystem"/>
+		</node>
+		<node name="fileTreeCard" value="Hukommelseskort">
+			<node name="summary" value="Hukommelseskort indsat i enheden"/>
+		</node>
+		<node name="fileTreeLibrary" value="FB-læser bibliotek">
+			<node name="summary" value="FB-Læser bogbibliotek"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="Søg"/>
+			<node name="rescan" value="Scan igen"/>
+		</node>
+		<node name="openBook" value="Åbn bog"/>
+		<node name="showBookInfo" value="Bogoplysninger"/>
+		<node name="shareBook" value="Dele bog"/>
+		<node name="deleteBook" value="Slet bog"/>
+		<node name="addToFavorites" value="Føj til Foretrukne"/>
+		<node name="removeFromFavorites" value="Fjern fra foretrukne"/>
+		<node name="markAsRead" value="Marker som læst"/>
+		<node name="markAsUnread" value="Marker som ikke læst"/>
+		<node name="fileTreeAddLibrary" value="Ekstra FB-læser bibliotek">
+			<node name="summary" value="FB-Læser bogbibliotek"/>
+		</node>
+	</node>
+	<node name="networkLibrary" value="FB-Læser netværksbibliotek">
+		<node name="byAuthor" value="Efter forfatter">
+			<node name="summary" value="Bøger sorteret efter forfatter"/>
+		</node>
+		<node name="byTitle" value="Efter titel">
+			<node name="summary" value="Bøger sorteret efter titel"/>
+		</node>
+		<node name="byDate" value="Efter dato">
+			<node name="summary" value="Bøger sorteret efter købsdato"/>
+		</node>
+		<node name="bySeries" value="Efter serie">
+			<node name="summary" value="Bøger sorteret efter serie"/>
+		</node>
+		<node name="search" value="Søg">
+			<node name="summary" value="Søg efter bøger om %s"/>
+			<node name="summaryAllCatalogs" value="Søg efter bøger i alle kataloger"/>
+			<node name="summaryInProgress" value="Søgning i gang"/>
+		</node>
+		<node name="found" value="Fundet">
+			<node name="summary" value="Søgeresultater for: %s"/>
+		</node>
+		<node name="openCatalog" value="Åbn katalog"/>
+		<node name="networkSearch" value="Søg"/>
+		<node name="showResults" value="Vis resultater"/>
+		<node name="showBooks" value="Vis bøger"/>
+		<node name="download" value="Overføre"/>
+		<node name="read" value="Læs lokal kopi"/>
+		<node name="delete" value="Slet lokal kopi"/>
+		<node name="readDemo" value="Læs prøven"/>
+		<node name="deleteDemo" value="Slet prøve"/>
+		<node name="downloadDemo" value="Overfør prøve"/>
+		<node name="buy" value="Køb (%s)"/>
+		<node name="addToBasket" value="Læg i kurv"/>
+		<node name="removeFromBasket" value="Fjern fra kurv"/>
+		<node name="openBasket" value="Åbn kurv"/>
+		<node name="clearBasket" value="Tøm kurv"/>
+		<node name="buyAllBooks" value="Køb alle bøger"/>
+		<node name="openInBrowser" value="Åbn i browser"/>
+		<node name="stopLoading" value="Stop indlæsning"/>
+		<node name="stopSearching" value="Stop søgning"/>
+		<node name="signIn" value="Log på"/>
+		<node name="signOut" value="Log ud (%s)"/>
+		<node name="topup" value="Tank din konto op (i øjeblikket: %s)"/>
+		<node name="topupTitle" value="Tank din konto op"/>
+		<node name="topupViaBrowser" value="Åbn siden i browser"/>
+		<node name="authorizationMenuTitle" value="Vælg handling"/>
+		<node name="topupSummary" value="I øjeblikket: %s"/>
+		<node name="basket" value="Kurv"/>
+		<node name="basketSummaryEmpty" value="Ingen bøger"/>
+		<node name="basketSummaryCountOnly" value="%0 bøger">
+			<node condition="value 1" value="%0 bog"/>
+		</node>
+		<node name="basketSummary" value="%0 bøger (%1)">
+			<node condition="value 1" value="%0 bog (%1)"/>
+		</node>
+		<node name="alreadyDownloading" value="Bogen overføres"/>
+		<node name="alreadyDownloadingDemo" value="Prøven overføres"/>
+		<node name="stoppingCatalogLoading" value="Stopper indlæsning"/>
+		<node name="stoppingNetworkSearch" value="Stopper søgning"/>
+		<node name="editCustomCatalog" value="Rediger katalog"/>
+		<node name="removeCustomCatalog" value="Fjern katalog"/>
+		<node name="addCustomCatalog" value="Tilføj katalog"/>
+		<node name="addCustomCatalogSummary" value="Tilføj brugerdefineret OPDS katalog manuelt"/>
+		<node name="confirmQuestions">
+			<node name="read" value="Vil du læse lokal kopi?"/>
+			<node name="download" value="Vil du overføre denne bog?"/>
+			<node name="readDemo" value="Vil du læse prøven?"/>
+			<node name="downloadDemo" value="Vil du overføre prøve?"/>
+			<node name="buy" value="Vil du købe denne bog? (%s)"/>
+			<node name="openInBrowser" value="Vil du åbne dette katalog i browser?"/>
+		</node>
+		<node name="downloadingCatalogs" value="Overfør kataloger"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Søg efter bøger på nettet"/>
+		<!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Tilføj katalog"/>
+			<node name="editUrl" value="Indtast URL manuelt"/>
+		</node>
+		<node name="menu">
+			<node name="networkSearch" value="Søg"/>
+			<node name="reload" value="Genindlæs"/>
+			<node name="signIn" value="Log på"/>
+			<node name="signUp" value="Tilmeld dig"/>
+			<node name="signOut" value="Log ud (%s)"/>
+			<node name="topup" value="Tank din konto op"/>
+			<node name="addCustomCatalog" value="Tilføj katalog"/>
+			<node name="refreshCatalogsList" value="Opdater kataloger"/>
+			<node name="languages" value="Sprogfilter"/>
+			<node name="clearBasket" value="Tøm kurv"/>
+			<node name="buyAllBooks" value="Køb alle bøger"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Køb bogen"/>
+		<node name="titleSeveralBooks" value="Køb bøgerne"/>
+		<node name="confirm" value="Er du sikker på du vil købe &#10;“%s”?"/>
+		<node name="confirmSeveralBooks" value="Er du sikker på du vil købe %s bøger?"/>
+		<node name="alreadyBought" value="Bogen er allerede købt"/>
+		<node name="notAuthorized" value="Godkendelse påkrævet"/>
+		<node name="noAccountInformation" value="Kan ikke indlæse kontostatus"/>
+		<node name="unsufficientFunds" value="Dette køb koster %0 og du har kun %1"/>
+		<node name="zeroFunds" value="Dette køb koster %0"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Bogoplysninger"/>
+		<node name="fileInfo" value="Filoplysninger"/>
+		<node name="description" value="Beskrivelse"/>
+		<node name="noDescription" value="Ingen tilgængelig beskrivelse."/>
+		<node name="annotation" value="Kommentar"/>
+		<node name="title" value="Titel:"/>
+		<node name="authors" value="Forfattere:">
+			<node condition="value 1" value="Forfatter:"/>
+		</node>
+		<node name="series" value="Serie:"/>
+		<node name="indexInSeries" value="Indeks i serien:"/>
+		<node name="tags" value="Mærker:">
+			<node condition="value 1" value="Mærke:"/>
+		</node>
+		<node name="language" value="Sprog:"/>
+		<node name="name" value="Navn:"/>
+		<node name="type" value="Type:"/>
+		<node name="size" value="Størrelse:"/>
+		<node name="time" value="Senest ændret:"/>
+		<node name="sizeInBytes" value="%s bytes">
+			<node condition="value 1" value="%s byte"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="Katalog:"/>
+		<node name="extraLinks" value="Relaterede links"/>
+		<node name="menu">
+			<node name="edit" value="Rediger"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Bogen er blevet overført"/>
+		<node name="tickerError" value="Overførselsfejl for bog"/>
+		<node name="contentSuccess" value="Overførslen er færdig"/>
+		<node name="contentError" value="Overførsel mislykkedes"/>
+		<node name="downloadingStarted" value="Overførsel af bog er begyndt"/>
+		<node name="alreadyDownloading" value="Bogen overføres allerede"/>
+		<node name="cannotCreateDirectory" value="Kan ikke oprette biblioteket %s"/>
+		<node name="cannotCreateFile" value="Kan ikke oprette filen %s"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Fold træ ud"/>
+		<node name="collapseTree" value="Fold træ ind"/>
+		<node name="readText" value="Læs bogens tekst"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Denne bog"/>
+		<node name="allBooks" value="Alle bøger"/>
+		<node name="found" value="Fundet"/>
+		<node name="new" value="Nyt bogmærke"/>
+		<node name="open" value="Åbn"/>
+		<node name="edit" value="Rediger bogmærke"/>
+		<node name="delete" value="Slet Bogmærke"/>
+		<node name="menu">
+			<node name="search" value="Søg"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="Åbn bibliotek"/>
+		<node name="networkLibrary" value="Åbn netværksbibliotek"/>
+		<node name="previousBook" value="Åbn forrige bog"/>
+		<node name="returnTo" value="Tilbage til …"/>
+		<node name="back" value="Tilbage"/>
+		<node name="forward" value="Frem"/>
+		<node name="close" value="Luk FB-Læser"/>
+	</node>
+	<node name="style" value="Stil %s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Slet Bogmærke"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
+	<node name="selection" value="Valg">
+		<node name="copyToClipboard" value="Kopier til udklipsholder"/>
+		<node name="openInDictionary" value="Åbn i ordbog"/>
+		<node name="quoteFrom" value="Citat fra %s"/>
+		<node name="textInBuffer" value="Kopieret til udklipsholder:&#10;%s"/>
+		<node name="bookmarkCreated" value="Bogmærke oprettet:&#10;%s"/>
+		<node name="clearSelection" value="Slet"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Fælles fra FB-Læser&#10;  "/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="Indstillinger"/>
+		<node name="bookInfo" value="Bogoplysninger"/>
+		<node name="library" value="Bibliotek"/>
+		<node name="toc" value="Indholdsfortegnelse"/>
+		<node name="day" value="Dag"/>
+		<node name="night" value="Nat"/>
+		<node name="networkLibrary" value="Netværksbibliotek"/>
+		<node name="navigate" value="Navigere">
+			<node name="toc" value="Indholdsfortegnelse"/>
+			<node name="gotoHome" value="Gå til starten af dokumentet"/>
+			<node name="gotoPageNumber" value="Gå til side...."/>
+			<node name="gotoSectionStart" value="Gå til starten af tekstafsnittet"/>
+			<node name="gotoSectionEnd" value="Gå til slutningen af tekstafsnittet"/>
+			<node name="nextTOCSection" value="Gå til næste punkt i indholdsfortegnelse"/>
+			<node name="previousTOCSection" value="Gå til forrige punkt i indholdsfortegnelse"/>
+			<node name="undo" value="Gå tilbage"/>
+			<node name="redo" value="Gå fremad"/>
+		</node>
+		<node name="shareBook" value="Dele bog"/>
+		<node name="search" value="Søg"/>
+		<node name="rotate" value="Rotere skærmen"/>
+		<node name="screenOrientation" value="Skærmretning"/>
+		<node name="screenOrientationSystem" value="System"/>
+		<node name="screenOrientationSensor" value="Retningsfølsom enhed"/>
+		<node name="screenOrientationPortrait" value="Stående"/>
+		<node name="screenOrientationLandscape" value="Liggende"/>
+		<node name="screenOrientationReversePortrait" value="Omvendt stående"/>
+		<node name="screenOrientationReverseLandscape" value="Omvendt liggende"/>
+		<node name="increaseFont" value="Zoom ind"/>
+		<node name="decreaseFont" value="Zoom ud"/>
+		<node name="toggleFullscreen" value="Fuld skærm"/>
+		<node name="bookmarks" value="Bogmærker"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Filnavn"/>
+		<node name="title" value="Titel"/>
+		<node name="language" value="Sprog"/>
+		<node name="encoding" value="Kodning"/>
+		<node name="authors" value="Forfatter(e)"/>
+		<node name="tags" value="Mærke(r)"/>
+		<node name="series" value="Serie"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Biblioteker">
+			<node name="summary" value="Biblioteker for filsøgning"/>
+			<node name="books" value="Bogbibliotek"/>
+			<node name="fonts" value="Skrifttype-bibliotek"/>
+			<node name="wallpapers" value="Tapet-bibliotek"/>
+			<node name="temp" value="Katalog for midlertidige filer"/>
+			<node name="bookPath" value="Bogbiblioteker"/>
+			<node name="fontPath" value="Skrifttype-biblioteker"/>
+			<node name="wallpaperPath" value="Tapet-biblioteker"/>
+		</node>
+		<node name="appearance" value="Fremtoning">
+			<node name="summary" value="Vis indstillinger, statuslinje, knaplys"/>
+			<node name="language" value="Grænsefladesprog"/>
+			<node name="screenOrientation" value="Skærmretning">
+				<node name="system" value="System"/>
+				<node name="sensor" value="Retningsfølsom enhed"/>
+				<node name="portrait" value="Stående"/>
+				<node name="landscape" value="Liggende"/>
+				<node name="reversePortrait" value="Omvendt stående"/>
+				<node name="reverseLandscape" value="Omvendt liggende"/>
+			</node>
+			<node name="autoOrientation" value="Auto-rotation">
+				<node name="summaryOn" value="Skærmbilledet vil rotere, når brugeren bevæger enheden"/>
+				<node name="summaryOff" value="Skærmbilledet vil ikke rotere, når brugeren bevæger enheden"/>
+			</node>
+			<node name="showStatusBar" value="Vis statusbjælke">
+				<node name="summaryOn" value="Vis statusbjælke i læseindstilling"/>
+				<node name="summaryOff" value="Skjul statusbjælke i læseindstilling"/>
+			</node>
+			<node name="showActionBar" value="Vis handlingsbjælke">
+				<node name="summaryOn" value="Vis handlingsbjælke i læseindstilling"/>
+				<node name="summaryOff" value="Skjul handlingsbjælke i læseindstilling"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Viser statusbjælke, når menuen er aktiv">
+				<node name="summaryOn" value="Viser statusbjælke, når menuen bliver aktiv"/>
+				<node name="summaryOff" value="Vis ikke statusbjælke, når menuen er aktiv"/>
+			</node>
+			<node name="disableButtonLights" value="Sluk lys i knapper under læsning">
+				<node name="summaryOn" value="Sluk knaplys (virker ikke for nogle enheder)"/>
+				<node name="summaryOff" value="Forsøg ikke at slukke knaplys"/>
+			</node>
+			<node name="twoColumnView" value="Visning i to kolonner">
+				<node name="summaryOn" value="Vis tekst i to kolonner, når enheden holdes vandret"/>
+				<node name="summaryOff" value="Vis altid tekst i en kolonne"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Justering af skærmens lysstyrke">
+				<node name="summaryOn" value="Ved at trække fingeren op/ned langs venstre side af skærmen"/>
+				<node name="summaryOff" value="Deaktiveret"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Forhindre at skærm går i dvale">
+				<node name="0" value="Altid"/>
+				<node name="25" value="Når batteriniveauet er højere end 25 %%"/>
+				<node name="50" value="Når batteriniveauet er højere end 50 %%"/>
+				<node name="100" value="Aldrig"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Forhindre at skærm går i dvale under opladning">
+				<node name="summaryOn" value="Undgå at skærmen slukkes, hvis enheden lades op"/>
+				<node name="summaryOff" value="Sluk skærmen selvom enheden lades op"/>
+			</node>
+		</node>
+		<node name="text" value="Tekst">
+			<node name="summary" value="Skrifttype, bindestreg, osv."/>
+			<node name="fontProperties" value="Skrifttype-egenskaber">
+				<node name="summary" value="Skriftudglatningsindstillinger"/>
+				<node name="antiAlias" value="Kantudjævning">
+					<node name="summaryOn" value="Kantudjævning er aktiveret"/>
+					<node name="summaryOff" value="Kantudjævning er deaktiveret"/>
+				</node>
+				<node name="deviceKerning" value="Enhedens kerning">
+					<node name="summaryOn" value="Kerning er aktiveret"/>
+					<node name="summaryOff" value="Kerning er deaktiveret"/>
+				</node>
+				<node name="dithering" value="Farveudjævning">
+					<node name="summaryOn" value="Farveudjævning er aktiveret"/>
+					<node name="summaryOff" value="Farveudjævning er deaktiveret"/>
+				</node>
+				<node name="hinting" value="Hinting">
+					<node name="summaryOn" value="Hinting er aktiveret"/>
+					<node name="summaryOff" value="Hinting er deaktiveret"/>
+				</node>
+				<node name="subpixel" value="Sub-pixel udjævning">
+					<node name="summaryOn" value="Sub-pixel udjævning er aktiveret"/>
+					<node name="summaryOff" value="Sub-pixel udjævning er deaktiveret"/>
+				</node>
+			</node>
+			<node name="font" value="Skrifttype-familie">
+				<node name="unchanged" value="&lt;uændret&gt;"/>
+			</node>
+			<node name="fontSize" value="Skriftstørrelse"/>
+			<node name="fontSizeDifference" value="Forskel i skriftstørrelse"/>
+			<node name="fontStyle" value="Skrifttype-stil">
+				<node name="regular" value="Almindelig"/>
+				<node name="bold" value="Fed"/>
+				<node name="italic" value="Kursiv"/>
+				<node name="boldItalic" value="Fed kursiv"/>
+			</node>
+			<node name="bold" value="Fed">
+				<node name="summaryOn" value="fed"/>
+				<node name="summaryOff" value="almindelig"/>
+				<node name="unchanged" value="&lt;uændret&gt;"/>
+			</node>
+			<node name="italic" value="Kursiv">
+				<node name="summaryOn" value="kursiv"/>
+				<node name="summaryOff" value="almindelig"/>
+				<node name="unchanged" value="&lt;uændret&gt;"/>
+			</node>
+			<node name="underlined" value="Understreget">
+				<node name="summaryOn" value="understreget"/>
+				<node name="summaryOff" value="almindelig"/>
+				<node name="unchanged" value="&lt;uændret&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Gennemstregede">
+				<node name="summaryOn" value="gennemstregede"/>
+				<node name="summaryOff" value="almindelig"/>
+				<node name="unchanged" value="&lt;uændret&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Linjeafstand">
+				<node name="unchanged" value="&lt;uændret&gt;"/>
+			</node>
+			<node name="alignment" value="Justering">
+				<node name="left" value="Venstre"/>
+				<node name="right" value="Højre"/>
+				<node name="center" value="Center"/>
+				<node name="justify" value="Margenjustering"/>
+				<node name="unchanged" value="&lt;uændret&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Auto-bindestreg">
+				<node name="summaryOn" value="Indsæt bindestreg automatisk"/>
+				<node name="summaryOff" value="Indsæt ikke bindestreg automatisk"/>
+			</node>
+			<node name="allowHyphenations" value="Tillad bindestreg">
+				<node name="summaryOn" value="Indsæt bindestreg"/>
+				<node name="summaryOff" value="Indsæt ikke bindestreg automatisk"/>
+				<node name="unchanged" value="&lt;uændret&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Første linje indrykket"/>
+			<node name="spaceBefore" value="Afstand før"/>
+			<node name="spaceAfter" value="Afstand efter"/>
+			<node name="leftIndent" value="Venstreindrykning"/>
+			<node name="rightIndent" value="Højre-indrykning"/>
+			<node name="more" value="Næste tip">
+				<node name="summary" value="Separate indstillinger for titler, epigrafer osv."/>
+				<node name="Regular Paragraph" value="Almindelig paragraf">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Titel">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Afsnitstitel">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Titel på digt">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Undertitel">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Kommentar">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Epigraf">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Stanza">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Vers">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Pre-formateret tekst">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Billede">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Henvis">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Forfatter">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Dato">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Internt hyperlink">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Fodnote">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Vægt">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Stærk">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Sænket skrift">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Hævet skrift">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Kode">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Gennemstreget">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Kursiv">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Fed">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Definition">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Definitionsbeskrivelse">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Sidehoved 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Sidehoved 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Sidehoved 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Sidehoved 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Sidehoved 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Sidehoved 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Eksternt hyperlink">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="Brug/ignorer værdier defineret i CSS"/>
+			<node name="fontSize" value="Skriftstørrelse">
+				<node name="summaryOn" value="Brug skriftstørrelse defineret i CSS"/>
+				<node name="summaryOff" value="Ignorer skriftstørrelse defineret i CSS"/>
+			</node>
+			<node name="textAlignment" value="Tekstjustering">
+				<node name="summaryOn" value="Brug tekstjustering defineret i CSS"/>
+				<node name="summaryOff" value="Ignorer tekstjustering defineret i CSS"/>
+			</node>
+		</node>
+		<node name="colors" value="Farver og tapeter">
+			<node name="summary" value="Farveindstillinger"/>
+			<node name="background" value="Baggrund">
+				<node name="solidColor" value="Kraftig farve"/>
+				<node name="leather" value="Læder"/>
+				<node name="sepia" value="Sepia"/>
+				<node name="wood" value="Træ"/>
+			</node>
+			<node name="backgroundColor" value="Baggrundsfarve"/>
+			<node name="selectionBackground" value="Baggrund for valgt"/>
+			<node name="selectionForeground" value="Valgt tekst"/>
+			<node name="text" value="Almindelig tekst"/>
+			<node name="hyperlink" value="Hyperlink-tekst"/>
+			<node name="hyperlinkVisited" value="Besøgt hyperlink-tekst"/>
+			<node name="highlighting" value="Søgeresultat-baggrund"/>
+			<node name="footer" value="Sidefod"/>
+		</node>
+		<node name="margins" value="Margener">
+			<node name="summary" value="Tekstmargener"/>
+			<node name="left" value="Venstre margen"/>
+			<node name="right" value="Højre margen"/>
+			<node name="top" value="Topmargen"/>
+			<node name="bottom" value="Bundmargen"/>
+			<node name="spaceBetweenColumns" value="Afstand mellem kolonner"/>
+		</node>
+		<node name="scrollBar" value="Fremgangsindikator">
+			<node name="summary" value="Indstillinger for rullepanel og sidefod"/>
+			<node name="scrollbarType" value="Type rullepanel">
+				<node name="hide" value="Skjul"/>
+				<node name="show" value="Lodret skyder"/>
+				<node name="showAsProgress" value="Lodret fremgangsbjælke"/>
+				<node name="showAsFooter" value="Vandret sidefod"/>
+			</node>
+			<node name="footerHeight" value="Sidefodens højde"/>
+			<node name="footerColor" value="Sidefodens farve"/>
+			<node name="tocMarks" value="Vis indholdsfortegnelse-mærker">
+				<node name="summaryOn" value="Vis indholdsfortegnelse-mærker i sidefoden"/>
+				<node name="summaryOff" value="Vis ikke indholdsfortegnelse-mærker i sidefoden"/>
+			</node>
+			<node name="showProgress" value="Vis sidetal">
+				<node name="summaryOn" value="Vis sidetal i sidefoden"/>
+				<node name="summaryOff" value="Vis ikke sidetal i sidefoden"/>
+			</node>
+			<node name="showBattery" value="Vis batteriniveau">
+				<node name="summaryOn" value="Vis batteriniveau i sidefoden"/>
+				<node name="summaryOff" value="Vis ikke batteriniveau i sidefoden"/>
+			</node>
+			<node name="showClock" value="Vis ur">
+				<node name="summaryOn" value="Vis uret i sidefoden"/>
+				<node name="summaryOff" value="Vis ikke uret i sidefoden"/>
+			</node>
+			<node name="font" value="Skrifttype-familie"/>
+		</node>
+		<node name="scrolling" value="Bladren">
+			<node name="summary" value="Sådan bladrer du"/>
+			<node name="fingerScrolling" value="Bladren med berøringsskærm">
+				<node name="byTap" value="Tast med fingeren for at bladre"/>
+				<node name="byFlick" value="Fej med fingeren for at bladre"/>
+				<node name="byTapAndFlick" value="Tast eller fej med fingeren for at bladre"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Dobbeltast registrering">
+				<node name="summaryOn" value="Dobbeltast for adgang til dialogen/menuen Navigation"/>
+				<node name="summaryOff" value="Ignorer dobbeltast"/>
+			</node>
+			<node name="volumeKeys" value="Bladre med lydstyrketasterne">
+				<node name="summaryOn" value="Brug lydstyrkeknapperne til at bladre"/>
+				<node name="summaryOff" value="Brug kun lydstyrke-tasterne til lyd"/>
+			</node>
+			<node name="invertVolumeKeys" value="Vend lydstyrketasternes retning">
+				<node name="summaryOn" value="Tasten Højere (Lavere) skifter til forrige (næste) side"/>
+				<node name="summaryOff" value="Tasten Lavere (Højere) skifter til næste (forrige) side"/>
+			</node>
+			<node name="animation" value="Animation">
+				<node name="none" value="Bladre uden animation"/>
+				<node name="curl" value="Bladre-animation"/>
+				<node name="slide" value="Glide-animation"/>
+				<node name="shift" value="Skift animation"/>
+			</node>
+			<node name="animationSpeed" value="Animationshastighed">
+				<node name="fast" value="hurtig"/>
+				<node name="slow" value="langsom"/>
+			</node>
+			<node name="horizontal" value="Vandret siderulning">
+				<node name="summaryOn" value="Rul siderne vandret"/>
+				<node name="summaryOff" value="Rul siderne lodret"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Tastzoner">
+			<node name="summary" value="Handlinger ved tryk med finger"/>
+			<node name="tapZonesScheme" value="Tastzone-system">
+				<node name="left_to_right" value="Siderulning mod højre"/>
+				<node name="right_to_left" value="Siderulning mod venstre"/>
+				<node name="up" value="Siderulning opad"/>
+				<node name="down" value="Siderulning nedad"/>
+				<node name="custom" value="Brugerdefineret..."/>
+			</node>
+		</node>
+		<node name="dictionary" value="Ordbog">
+			<node name="summary" value="Ordbogsindstillinger"/>
+			<node name="dictionary" value="Ordbog"/>
+			<node name="translator" value="Oversætter"/>
+			<node name="tappingAction" value="Handling for langt tryk">
+				<node name="doNothing" value="Langt tast har ingen virkning"/>
+				<node name="selectSingleWord" value="Et langt tryk vælger et enkelt ord"/>
+				<node name="startSelecting" value="Et langt tryk starter valg"/>
+				<node name="openDictionary" value="Et langt tryk vælger et enkelt ord, slip åbner ordbogen"/>
+			</node>
+			<node name="navigateOverAllWords" value="Navigere over alle ord">
+				<node name="summaryOn" value="Navigering med tast stopper ved alle ord"/>
+				<node name="summaryOff" value="Navigering med tast stopper kun ved hyperlinks"/>
+			</node>
+		</node>
+		<node name="images" value="Billeder">
+			<node name="summary" value="Billedvisningsindstillinger"/>
+			<node name="backgroundColor" value="Baggrundsfarve for billedvisning"/>
+			<node name="tappingAction" value="Handling for langt tryk">
+				<node name="doNothing" value="Langt tast har ingen virkning"/>
+				<node name="selectImage" value="Et langt tryk vælger billedet"/>
+				<node name="openImageView" value="Et langt tryk åbner billedvisning"/>
+			</node>
+			<node name="fitImagesToScreen" value="Tilpas billeder til skærmen">
+				<node name="none" value="Ingen"/>
+				<node name="covers" value="Omfatter kun"/>
+				<node name="all" value="Alle"/>
+			</node>
+			<node name="imagesBackground" value="Billedebaggrund">
+				<node name="summaryOn" value="Brug baggrund"/>
+				<node name="summaryOff" value="Brug ikke baggrund"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Annulleringsmenu">
+			<node name="summary" value="Handlingsliste for knappen Tilbage"/>
+			<node name="library" value="Bibliotek">
+				<node name="summaryOn" value="Vis punktet 'åbent netværksbibliotek'"/>
+				<node name="summaryOff" value="Vis ikke punktet 'åbent netværksbibliotek'"/>
+			</node>
+			<node name="networkLibrary" value="Netværksbibliotek">
+				<node name="summaryOn" value="Vis punktet 'åbent netværksbibliotek'"/>
+				<node name="summaryOff" value="Vis ikke punktet 'åbent netværksbibliotek'"/>
+			</node>
+			<node name="previousBook" value="Forrige bog">
+				<node name="summaryOn" value="Vis punktet 'tilbage til forrige bog'"/>
+				<node name="summaryOff" value="Vis ikke punktet 'tilbage til forrige bog'"/>
+			</node>
+			<node name="positions" value="Sidste 3 stillinger">
+				<node name="summaryOn" value="Vis punkter for de 3 sidste pladser i bogen"/>
+				<node name="summaryOff" value="Vis ikke punkter for de 3 sidste pladser i bogen"/>
+			</node>
+			<node name="backKeyAction" value="Handling for tilbage-tast">
+				<node name="exit" value="Luk FB-Læser"/>
+				<node name="goBack" value="Naviger tilbage"/>
+				<node name="cancelMenu" value="Vis annulleringsmenu"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Handling for langt tryk på tilbage-tast">
+				<node name="exit" value="Luk FB-Læser"/>
+				<node name="goBack" value="Naviger tilbage"/>
+				<node name="cancelMenu" value="Vis annulleringsmenu"/>
+				<node name="none" value="Ingen handling"/>
+			</node>
+		</node>
+		<node name="tips" value="Tips">
+			<node name="summary" value="Indstillinger for daglige tips"/>
+			<node name="showTips" value="Vis tips">
+				<node name="summaryOn" value="Vis dagens tip"/>
+				<node name="summaryOff" value="Vis ikke"/>
+			</node>
+		</node>
+		<node name="about" value="Om FB-Læser">
+			<node name="summary" value="Versionsoplysninger, kontakter"/>
+			<node name="version" value="Version"/>
+			<node name="site" value="Besøg vores websted">
+				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+			</node>
+			<node name="email" value="Send os en e-mail">
+				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="Følg os på Twitter">
+				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+			</node>
+		</node>
+		<node name="externalFormats" value="Formater">
+			<node name="summary" value="Håndtere filformater"/>
+			<node name="format" value="">
+				<node name="appNotSet" value="Ikke valgt"/>
+				<node name="java" value="FB-Læser (java)"/>
+				<node name="native" value="FB-Læser (oprindelig)"/>
+				<node name="plugin" value="FB-Læser %s plugin"/>
+				<node name="delete" value="Fjern dette format"/>
+				<node name="addNewFormat" value="Tilføj nyt format"/>
+			</node>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="Installer"/>
+			<node name="update" value="Opdater"/>
+			<node name="skip" value="Spring over"/>
+			<node name="buy" value="Køb"/>
+			<node name="buyAndDownload" value="Køb og overfør"/>
+			<node name="continue" value="Fortsæt"/>
+			<node name="editUrl" value="Rediger URL"/>
+			<node name="tryAgain" value="Prøv igen"/>
+			<node name="openBook" value="Læs"/>
+			<node name="editInfo" value="Rediger"/>
+			<node name="reloadInfo" value="Genindlæs"/>
+			<node name="shareBook" value="Dele"/>
+			<node name="topup" value="Tank op"/>
+			<node name="pay" value="Betal"/>
+			<node name="refresh" value="Opdater"/>
+			<node name="authorize" value="Godkend"/>
+			<node name="resetPosition" value="Nulstil stilling"/>
+			<node name="sendReport" value="Send rapport"/>
+			<node name="addToFavorites" value="Føj til Foretrukne"/>
+			<node name="removeFromFavorites" value="Fjern fra foretrukne"/>
+			<node name="markAsRead" value="Marker som læst"/>
+			<node name="markAsUnread" value="Marker som ikke læst"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="Installer plug-in"/>
+			<node name="updateTitle" value="Opdater plug-in"/>
+			<node name="dontAskAgain" value="Spørg ikke igen"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="Installer ordbog"/>
+			<node name="message" value="Vil du installere %s?"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="Bogfilen vil fjernes uigenkaldeligt. Er du sikker?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="Filen findes allerede. Overfør igen?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="Overfør bog %s"/>
+			<node name="search" value="Søger. Vent venligst..."/>
+			<node name="loadInfo" value="Indlæser oplysninger. Vent venligst..."/>
+			<node name="loadingBook" value="Åbner bog. Vent venligst..."/>
+			<node name="loadingBookList" value="Åbner bibliotek. Vent venligst..."/>
+			<node name="creatingBooksDatabase" value="Opretter bogdatabase. Vent venligst..."/>
+			<node name="updatingBooksDatabase" value="Opdaterer bogdatabase. Vent venligst..."/>
+			<node name="loadingNetworkLibrary" value="Åbner bibliotek. Vent venligst..."/>
+			<node name="authentication" value="Godkendelse. Vent venligst..."/>
+			<node name="signOut" value="Logger ud. Vent venligst..."/>
+			<node name="purchaseBook" value="Køb bogen. Vent venligst..."/>
+			<node name="loadingCatalogInfo" value="Indlæser katalogoplysninger. Vent venligst..."/>
+			<node name="loadingNetworkBookInfo" value="Indlæser bogoplysninger. Vent venligst..."/>
+			<node name="updatingCatalogsList" value="Opdaterer katalogliste. Vent venligst..."/>
+			<node name="updatingAccountInformation" value="Opdaterer konto-oplysninger Vent venligst..."/>
+			<node name="extrcact" value="Forbereder fil til ekstern app. Vent venligst..."/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Intern serverfejl"/>
+			<node name="purchaseNotEnoughMoney" value="Ikke penge nok"/>
+			<node name="purchaseMissingBook" value="Bogen mangler"/>
+			<node name="purchaseAlreadyPurchased" value="Allerede købt"/>
+			<node name="bookNotPurchased" value="Bogen blev ikke købt"/>
+			<node name="downloadLimitExceeded" value="Overførselsgrænse overskredet"/>
+			<node name="noUserEmail" value="Ingen bruger er registreret&#10;med angivne e-mail-adresse"/>
+			<node name="unsupportedOperation" value="Funktion understøttes ikke"/>
+			<node name="notAnOPDS" value="Dette er ikke et OPDS katalog"/>
+			<node name="noRequiredInformation" value="Obligatoriske oplysninger er ikke specificeret i kataloget"/>
+			<node name="cacheDirectoryError" value="Kan ikke oprette cache-mappe"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Godkendelse"/>
+			<node name="unencryptedWarning" value="Din adgangskode vil blive sendt uden kryptering"/>
+			<node name="login" value="Brugernavn"/>
+			<node name="password" value="Adgangskode"/>
+			<node name="loginIsEmpty" value="Brugernavn må ikke være blankt"/>
+			<node name="register" value="Tilmeld dig"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FB-Læser: tilføj brugerdefineret katalog"/>
+			<node name="catalogTitle" value="Titel"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Oversigt"/>
+			<node name="catalogTitleExample" value="F.eks.: Projekt Gutenberg katalog"/>
+			<node name="catalogUrlExample" value="F.eks.: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="F.eks.: Offentligt tilgængelige bøger"/>
+			<node name="titleIsEmpty" value="Titel må ikke være blank"/>
+			<node name="urlIsEmpty" value="URL må ikke være blank"/>
+			<node name="invalidUrl" value="Ugyldig URL"/>
+			<node name="titleAlreadyExists" value="Angivne titel er allerede i brug"/>
+			<node name="siteAlreadyExists" value="Angivet sted er allerede i brug"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Sprogfilter"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="Dagens tip"/>
+			<node name="initializationText" value="Vil du gerne læse FB-Læser daglige tips? Nye tips vil blive hentet fra FB-Læser's websted. Forventet netværkstrafik er 1-2 kilobyte pr uge.&#10;&#10;Vil du aktivere tips?"/>
+			<node name="dontShowAgain" value="Vis ikke igen"/>
+			<node name="more" value="Næste tip"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Kan ikke få adgang til Android Market. Installer venligst %s manuelt"/>
+		<node name="textNotFound" value="Der er desværre ingen passende tekst i bogen"/>
+		<node name="bookNotFound" value="Der er desværre ingen egnede bøger i biblioteket"/>
+		<node name="bookmarkNotFound" value="Der er desværre ingen egnede bogmærker"/>
+		<node name="cannotOpenBook" value="Kan desværre ikke åbne denne bog i øjeblikket"/>
+		<node name="dictionaryIsNotInstalled" value="Ordbogen er desværre ikke installeret"/>
+		<node name="permissionDenied" value="Tilladelse desværre nægtet"/>
+		<node name="noFavorites" value="Din liste over foretrukne er desværre tom"/>
+		<node name="noSeries" value="Der er desværre ingen bøger i serien"/>
+		<node name="emptyCatalog" value="Kataloget er desværre tomt"/>
+		<node name="emptyBasket" value="Din kurv er desværre tom"/>
+		<node name="emptyNetworkSearchResults" value="Fandt desværre ingen bøger"/>
+		<node name="externalNotFound" value="Kan ikke åbne eksternt program"/>
+		<node name="appNotFound" value="Der blev ikke fundet et egnet program"/>
+		<node name="invalidFormat" value="Formatet er ugyldigt"/>
+		<node name="formatExists" value="Filtypen understøttes allerede af %s"/>
+		<node name="unzipFailed" value="Det mislykkedes at udpakke bogen til ekstern brug"/>
+		<node name="noPlugin" value="Installer plugin for at læse denne filtype"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Browser"/>
+		<node name="defaultBrowser" value="Standardbrowser"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Ukendt fejl"/>
+		<node name="unsupportedCompressionMethod" value="Ikke-understøttet kompressionsmetode"/>
+		<node name="encryptedFile" value="DRM-beskyttet fil"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FB-Læser problem"/>
+			<node name="text" value="FB-Læser's cache-mappe er ikke tilgængelig for indlæsning Måske har du glemt at indsætte eller udtage dit hukommelseskort. Løs problemet el ler angiv et andet mappenavn nedenfor."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FB-Læser problem"/>
+			<node name="text" value="FB-Læser kan ikke indlæse eget bibliotek. Måske er det ikke korrekt installeret. Hvis problemet fortsætter, bedes du prøve at geninstallere FB-Læser."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FB-Læser problem"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Der opstod en fejl under indlæsning af '%s'"/>
+		<node name="errorReadingZip" value="Der opstod en fejl under udpakning af '%s'"/>
+		<node name="pluginNotFound" value="Ingen plugin for '%s'"/>
+		<node name="unknownPluginType" value="Ukendt plugin-type  %s"/>
+		<node name="fileNotFound" value="Filen blev ikke fundet: %s"/>
+		<node name="opfFileNotFound" value="OPF blev ikke fundet i %s"/>
+		<node name="unsupportedFileFormat" value="Filformatet understøttes ikke for '%s'"/>
+		<node name="errorParsingRtf" value="RTF-parsingfejl i: %s"/>
+	</node>
+	<node name="warningMessage">
+		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>
+	</node>
+</resources>
