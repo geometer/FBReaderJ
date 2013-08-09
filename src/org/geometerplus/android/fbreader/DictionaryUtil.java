@@ -173,6 +173,7 @@ public abstract class DictionaryUtil {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
 					new ParagonInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/paragon.xml"));
+                    //TODO: find dictionaries with OpenDictionaryAPI
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);
@@ -277,7 +278,7 @@ public abstract class DictionaryUtil {
 	}
 
 	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
-		if (singleWord) {
+        if (singleWord) {
 			int start = 0;
 			int end = text.length();
 			for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
@@ -288,6 +289,7 @@ public abstract class DictionaryUtil {
 			text = text.substring(start, end);
 		}
 
+        //TODO: support for OpenDictionaryAPI
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
 		final Intent intent = getDictionaryIntent(info, text);
 		try {
