@@ -65,6 +65,7 @@ public:
 	bool readFile(const ZLFile &file, const std::string &referenceName);
 	const std::string &fileAlias(const std::string &fileName) const;
 	const std::string normalizedReference(const std::string &reference) const;
+	void setMarkFirstImageAsCover();
 
 private:
 	XHTMLTagAction *getAction(const std::string &tag);
@@ -104,6 +105,7 @@ private:
 		READ_BODY
 	} myReadState;
 	int myBodyCounter;
+	bool myMarkNextImageAsCover;
 
 	friend class XHTMLTagAction;
 	friend class XHTMLTagStyleAction;
@@ -113,6 +115,7 @@ private:
 	friend class XHTMLTagParagraphAction;
 	friend class XHTMLTagBodyAction;
 	friend class XHTMLTagRestartParagraphAction;
+	friend class XHTMLTagImageAction;
 };
 
 #endif /* __XHTMLREADER_H__ */
