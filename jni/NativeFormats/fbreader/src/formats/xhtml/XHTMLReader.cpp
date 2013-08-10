@@ -218,8 +218,9 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 		return;
 	}
 
-	ZLLogger::Instance().println("CSS", "style file: " + reader.myPathPrefix + MiscUtil::decodeHtmlURL(href));
-	shared_ptr<ZLInputStream> cssStream = ZLFile(reader.myPathPrefix + MiscUtil::decodeHtmlURL(href)).inputStream();
+	const std::string cssFilePath = reader.myPathPrefix + MiscUtil::decodeHtmlURL(href);
+	ZLLogger::Instance().println("CSS", "style file: " + cssFilePath);
+	shared_ptr<ZLInputStream> cssStream = ZLFile(cssFilePath).inputStream();
 	if (cssStream.isNull()) {
 		return;
 	}
@@ -307,8 +308,9 @@ void XHTMLTagImageAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 		endParagraph(reader);
 	}
 	const std::string imageName = imageFile.name(false);
-	bookReader(reader).addImageReference(imageName, 0, false);
+	bookReader(reader).addImageReference(imageName, 0, reader.myMarkNextImageAsCover);
 	bookReader(reader).addImage(imageName, new ZLFileImage(imageFile, "", 0));
+	reader.myMarkNextImageAsCover = false;
 	if (flag) {
 		beginParagraph(reader);
 	}
@@ -516,6 +518,11 @@ void XHTMLReader::fillTagTable() {
 }
 
 XHTMLReader::XHTMLReader(BookReader &modelReader) : myModelReader(modelReader) {
+	myMarkNextImageAsCover = false;
+}
+
+void XHTMLReader::setMarkFirstImageAsCover() {
+	myMarkNextImageAsCover = true;
 }
 
 bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName) {
@@ -588,7 +595,6 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseString(style);
 		myModelReader.addStyleEntry(*entry);
 		myStyleEntryStack.push_back(entry);
-	} else {
 	}
 	myCSSStack.push_back(myStyleEntryStack.size() - sizeBefore);
 }
