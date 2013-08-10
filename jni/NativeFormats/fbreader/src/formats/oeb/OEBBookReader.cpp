@@ -109,38 +109,14 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 					if (title != 0) {
 						myGuideTOC.push_back(std::make_pair(std::string(title), reference));
 					}
-					if (type != 0) {
-						if (COVER == type) {
-							ZLFile imageFile(myFilePrefix + reference);
-							myCoverFileName = imageFile.path();
-							const std::map<std::string,std::string>::const_iterator it =
-								myHrefToMediatype.find(reference);
-							const std::string mimeType =
-								it != myHrefToMediatype.end() ? it->second : std::string();
-							shared_ptr<const ZLImage> image;
-							if (ZLStringUtil::stringStartsWith(mimeType, "image/")) {
-								image = new ZLFileImage(imageFile, "", 0);
-							} else {
-								image = XHTMLImageFinder().readImage(imageFile);
-							}
-							if (!image.isNull()) {
-								const std::string imageName = imageFile.name(false);
-								myModelReader.setMainTextModel();
-								myModelReader.addImageReference(imageName, (short)0, true);
-								myModelReader.addImage(imageName, image);
-								myModelReader.insertEndOfSectionParagraph();
-							} else {
-								myCoverFileName.erase();
-							}
-						} else if (COVER_IMAGE == type) {
-							ZLFile imageFile(myFilePrefix + reference);
-							myCoverFileName = imageFile.path();
-							const std::string imageName = imageFile.name(false);
-							myModelReader.setMainTextModel();
-							myModelReader.addImageReference(imageName, 0, true);
-							myModelReader.addImage(imageName, new ZLFileImage(imageFile, "", 0));
-							myModelReader.insertEndOfSectionParagraph();
-						}
+					if ((type != 0) && (COVER == type || COVER_IMAGE == type)) {
+						ZLFile imageFile(myFilePrefix + reference);
+						myCoverFileName = imageFile.path();
+						myCoverFileType = type;
+						const std::map<std::string,std::string>::const_iterator it =
+							myHrefToMediatype.find(reference);
+						myCoverMimeType =
+							it != myHrefToMediatype.end() ? it->second : std::string();
 					}
 				}
 			}
@@ -154,6 +130,34 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 				}
 			}
 			break;
+	}
+}
+
+void OEBBookReader::addCoverImage() {
+	if (COVER == myCoverFileType) {
+		ZLFile imageFile(myCoverFileName);
+		shared_ptr<const ZLImage> image;
+		if (ZLStringUtil::stringStartsWith(myCoverMimeType, "image/")) {
+			image = new ZLFileImage(imageFile, "", 0);
+		} else {
+			image = XHTMLImageFinder().readImage(imageFile);
+		}
+		if (!image.isNull()) {
+			const std::string imageName = imageFile.name(false);
+			myModelReader.setMainTextModel();
+			myModelReader.addImageReference(imageName, (short)0, true);
+			myModelReader.addImage(imageName, image);
+			myModelReader.insertEndOfSectionParagraph();
+		} else {
+			myCoverFileName.erase();
+		}
+	} else if (COVER_IMAGE == myCoverFileType) {
+		ZLFile imageFile(myCoverFileName);
+		const std::string imageName = imageFile.name(false);
+		myModelReader.setMainTextModel();
+		myModelReader.addImageReference(imageName, 0, true);
+		myModelReader.addImage(imageName, new ZLFileImage(imageFile, "", 0));
+		myModelReader.insertEndOfSectionParagraph();
 	}
 }
 
@@ -193,6 +197,8 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myHtmlFileNames.clear();
 	myNCXTOCFileName.erase();
 	myCoverFileName.erase();
+	myCoverFileType.erase();
+	myCoverMimeType.erase();
 	myTourTOC.clear();
 	myGuideTOC.clear();
 	myState = READ_NONE;
@@ -208,10 +214,13 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	bool firstFile = true;
 	for (std::vector<std::string>::const_iterator it = myHtmlFileNames.begin(); it != myHtmlFileNames.end(); ++it) {
 		const ZLFile xhtmlFile(myFilePrefix + *it);
-		if (firstFile && myCoverFileName == xhtmlFile.path()) {
-			continue;
-		}
-		if (!firstFile) {
+		if (firstFile) {
+			if (myCoverFileName == xhtmlFile.path()) {
+				xhtmlReader.setMarkFirstImageAsCover();
+			} else {
+				addCoverImage();
+			}
+		} else {
 			myModelReader.insertEndOfSectionParagraph();
 		}
 		xhtmlReader.readFile(xhtmlFile, *it);

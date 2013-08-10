@@ -32,6 +32,7 @@ public:
 	static const std::string DublinCoreLegacy;
 	static const std::string DublinCoreTerms;
 	static const std::string XLink;
+	static const std::string XHTML;
 	static const std::string OpenPackagingFormat;
 	static const std::string Atom;
 	static const std::string OpenSearch;
