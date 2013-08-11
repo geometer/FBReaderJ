@@ -44,6 +44,7 @@ private:
 	const std::vector<std::string> &externalDTDs() const;
 
 	void generateTOC(const XHTMLReader &xhtmlReader);
+	bool coverIsSingleImage() const;
 	void addCoverImage();
 
 private:
