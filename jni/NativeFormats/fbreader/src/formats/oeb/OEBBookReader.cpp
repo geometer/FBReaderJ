@@ -109,7 +109,7 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 					if (title != 0) {
 						myGuideTOC.push_back(std::make_pair(std::string(title), reference));
 					}
-					if ((type != 0) && (COVER == type || COVER_IMAGE == type)) {
+					if (type != 0 && (COVER == type || COVER_IMAGE == type)) {
 						ZLFile imageFile(myFilePrefix + reference);
 						myCoverFileName = imageFile.path();
 						myCoverFileType = type;
@@ -133,30 +133,23 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 	}
 }
 
+bool OEBBookReader::coverIsSingleImage() const {
+	return 
+		COVER_IMAGE == myCoverFileType ||
+		(COVER == myCoverFileType &&
+			ZLStringUtil::stringStartsWith(myCoverMimeType, "image/"));
+}
+
 void OEBBookReader::addCoverImage() {
-	if (COVER == myCoverFileType) {
-		ZLFile imageFile(myCoverFileName);
-		shared_ptr<const ZLImage> image;
-		if (ZLStringUtil::stringStartsWith(myCoverMimeType, "image/")) {
-			image = new ZLFileImage(imageFile, "", 0);
-		} else {
-			image = XHTMLImageFinder().readImage(imageFile);
-		}
-		if (!image.isNull()) {
-			const std::string imageName = imageFile.name(false);
-			myModelReader.setMainTextModel();
-			myModelReader.addImageReference(imageName, (short)0, true);
-			myModelReader.addImage(imageName, image);
-			myModelReader.insertEndOfSectionParagraph();
-		} else {
-			myCoverFileName.erase();
-		}
-	} else if (COVER_IMAGE == myCoverFileType) {
-		ZLFile imageFile(myCoverFileName);
+	ZLFile imageFile(myCoverFileName);
+	shared_ptr<const ZLImage> image = coverIsSingleImage()
+		? new ZLFileImage(imageFile, "", 0) : XHTMLImageFinder().readImage(imageFile);
+
+	if (!image.isNull()) {
 		const std::string imageName = imageFile.name(false);
 		myModelReader.setMainTextModel();
-		myModelReader.addImageReference(imageName, 0, true);
-		myModelReader.addImage(imageName, new ZLFileImage(imageFile, "", 0));
+		myModelReader.addImageReference(imageName, (short)0, true);
+		myModelReader.addImage(imageName, image);
 		myModelReader.insertEndOfSectionParagraph();
 	}
 }
@@ -211,11 +204,14 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myModelReader.pushKind(REGULAR);
 
 	XHTMLReader xhtmlReader(myModelReader);
-	bool firstFile = true;
 	for (std::vector<std::string>::const_iterator it = myHtmlFileNames.begin(); it != myHtmlFileNames.end(); ++it) {
 		const ZLFile xhtmlFile(myFilePrefix + *it);
-		if (firstFile) {
+		if (it == myHtmlFileNames.begin()) {
 			if (myCoverFileName == xhtmlFile.path()) {
+				if (coverIsSingleImage()) {
+					addCoverImage();
+					continue;
+				}
 				xhtmlReader.setMarkFirstImageAsCover();
 			} else {
 				addCoverImage();
@@ -224,7 +220,6 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 			myModelReader.insertEndOfSectionParagraph();
 		}
 		xhtmlReader.readFile(xhtmlFile, *it);
-		firstFile = false;
 	}
 
 	generateTOC(xhtmlReader);
