@@ -86,42 +86,6 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	private static class ParagonInfoReader extends ZLXMLReaderAdapter {
-		private final Context myContext;
-		private int myCounter;
-
-		ParagonInfoReader(Context context) {
-			myContext = context;
-		}
-
-		@Override
-		public boolean dontCacheAttributeValues() {
-			return true;
-		}
-
-		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if ("dictionary".equals(tag)) {
-				final String id = attributes.getValue("id");
-				final String title = attributes.getValue("title");
-
-				final PackageInfo info = new PackageInfo(
-					String.valueOf(++myCounter),
-					attributes.getValue("package"),
-					".Start",
-					attributes.getValue("title"),
-					Intent.ACTION_VIEW,
-					null,
-					attributes.getValue("pattern")
-				);
-				if (PackageUtil.canBeStarted(myContext, getDictionaryIntent(info, "test"), false)) {
-					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
-				}
-			}
-			return false;
-		}
-	}
-
 	private static class BitKnightsInfoReader extends ZLXMLReaderAdapter {
 		private final Context mContext;
 		private int mCounter;
@@ -218,7 +182,6 @@ public abstract class DictionaryUtil {
 				public void run() {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
-					new ParagonInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/paragon.xml"));
                     OpenDictionaryAPIInfoReader.read(api);
 				}
 			});
