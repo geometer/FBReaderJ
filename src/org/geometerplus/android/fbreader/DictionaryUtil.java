@@ -41,6 +41,9 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
+import com.paragon.open.dictionary.api.Dictionary;
+import com.paragon.open.dictionary.api.OpenDictionaryAPI;
+
 public abstract class DictionaryUtil {
 	private static int FLAG_INSTALLED_ONLY = 1;
 	private static int FLAG_SHOW_AS_DICTIONARY = 2;
@@ -70,14 +73,14 @@ public abstract class DictionaryUtil {
 					flags |= FLAG_INSTALLED_ONLY;
 				}
 				ourInfos.put(new PackageInfo(
-					id,
-					attributes.getValue("package"),
-					attributes.getValue("class"),
-					title != null ? title : id,
-					attributes.getValue("action"),
-					attributes.getValue("dataKey"),
-					attributes.getValue("pattern")
-				), flags);
+                        id,
+                        attributes.getValue("package"),
+                        attributes.getValue("class"),
+                        title != null ? title : id,
+                        attributes.getValue("action"),
+                        attributes.getValue("dataKey"),
+                        attributes.getValue("pattern")
+                ), flags);
 			}
 			return false;
 		}
@@ -166,14 +169,45 @@ public abstract class DictionaryUtil {
 		String FULLSCREEN = "EXTRA_FULLSCREEN";
 	}
 
+    private static class OpenDictionaryAPIInfoReader {
+        static void read(OpenDictionaryAPI api) {
+            if (api.getDictionaries().isEmpty()) {
+                return;
+            }
+
+            SortedSet<Dictionary> dictionariesTreeSet = new TreeSet<Dictionary>(new Comparator<Dictionary>() {
+                @Override
+                public int compare(Dictionary lhs, Dictionary rhs) {
+                    return lhs.toString().compareTo(rhs.toString());
+                }
+            });
+
+            dictionariesTreeSet.addAll(new ArrayList<Dictionary>(api.getDictionaries()));
+
+            for (Dictionary dict : dictionariesTreeSet) {
+                final PackageInfo info = new PackageInfo(
+                        dict.getUID(),
+                        dict.getApplicationPackageName(),
+                        ".Start",
+                        dict.getName(),
+                        Intent.ACTION_VIEW,
+                        null,
+                        "%s"
+                );
+                ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY);
+            }
+        }
+    }
+
 	public static void init(final Context context) {
 		if (ourInfos.isEmpty()) {
+            final OpenDictionaryAPI api = new OpenDictionaryAPI(context);
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
 					new ParagonInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/paragon.xml"));
-                    //TODO: find dictionaries with OpenDictionaryAPI
+                    OpenDictionaryAPIInfoReader.read(api);
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);

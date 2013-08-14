@@ -15,11 +15,6 @@
         <option name="LIBRARY_PROJECT" value="true" />
       </configuration>
     </facet>
-    <facet type="android" name="Android2">
-      <configuration>
-        <option name="LIBRARY_PROJECT" value="true" />
-      </configuration>
-    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/bin/classes" />
