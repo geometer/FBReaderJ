@@ -169,6 +169,26 @@ public abstract class DictionaryUtil {
 		String FULLSCREEN = "EXTRA_FULLSCREEN";
 	}
 
+    private static class OpenDictionaryPackageInfo extends PackageInfo {
+        private final Dictionary myDictionary;
+
+        OpenDictionaryPackageInfo(Dictionary dictionary) {
+            super(dictionary.getUID(),
+                 dictionary.getApplicationPackageName(),
+                 ".Start",
+                 dictionary.getName(),
+                 null,
+                 null,
+                 "%s");
+            myDictionary = dictionary;
+        }
+
+        void openTextInDictionary(String text)
+        {
+            myDictionary.showTranslation(text);
+        }
+    }
+
     private static class OpenDictionaryAPIInfoReader {
         static void read(OpenDictionaryAPI api) {
             if (api.getDictionaries().isEmpty()) {
@@ -185,15 +205,7 @@ public abstract class DictionaryUtil {
             dictionariesTreeSet.addAll(new ArrayList<Dictionary>(api.getDictionaries()));
 
             for (Dictionary dict : dictionariesTreeSet) {
-                final PackageInfo info = new PackageInfo(
-                        dict.getUID(),
-                        dict.getApplicationPackageName(),
-                        ".Start",
-                        dict.getName(),
-                        Intent.ACTION_VIEW,
-                        null,
-                        "%s"
-                );
+                final PackageInfo info = new OpenDictionaryPackageInfo(dict);
                 ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY);
             }
         }
@@ -323,8 +335,15 @@ public abstract class DictionaryUtil {
 			text = text.substring(start, end);
 		}
 
-        //TODO: support for OpenDictionaryAPI
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
+
+        if (info instanceof OpenDictionaryPackageInfo)
+        {
+            final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
+            openDictionary.openTextInDictionary(text);
+            return;
+        }
+
 		final Intent intent = getDictionaryIntent(info, text);
 		try {
 			if ("ColorDict".equals(info.Id)) {
