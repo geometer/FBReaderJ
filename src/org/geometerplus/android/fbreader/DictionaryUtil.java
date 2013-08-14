@@ -27,6 +27,11 @@ import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 
+import android.view.MotionEvent;
+import android.view.View;
+import android.webkit.WebView;
+import com.paragon.open.dictionary.api.*;
+import com.paragon.open.dictionary.api.Dictionary;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -40,9 +45,6 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
-
-import com.paragon.open.dictionary.api.Dictionary;
-import com.paragon.open.dictionary.api.OpenDictionaryAPI;
 
 public abstract class DictionaryUtil {
 	private static int FLAG_INSTALLED_ONLY = 1;
@@ -150,6 +152,50 @@ public abstract class DictionaryUtil {
         void openTextInDictionary(String text)
         {
             myDictionary.showTranslation(text);
+        }
+
+        void showTranslation(Activity activity, String text)
+        {
+            final WebView webView = new WebView(activity);
+            final DisplayMetrics metrics = new DisplayMetrics();
+            activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            final android.widget.PopupWindow frame = new android.widget.PopupWindow(webView, metrics.widthPixels, metrics.heightPixels / 3);
+            frame.showAtLocation(activity.getCurrentFocus(), Gravity.BOTTOM, 0, metrics.heightPixels / 2);
+            activity.getCurrentFocus().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    frame.dismiss();
+                }
+            });
+            activity.getCurrentFocus().setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    frame.dismiss();
+                    return false;
+                }
+            });
+
+            myDictionary.getTranslationAsText(text, TranslateMode.SHORT, TranslateFormat.HTML, new Dictionary.TranslateAsTextListener() {
+                @Override
+                public void onComplete(String s, TranslateMode translateMode) {
+                    webView.loadData(s, "text/html", "UTF-8");
+                }
+
+                @Override
+                public void onWordNotFound(ArrayList<String> strings) {
+                    frame.dismiss();
+                }
+
+                @Override
+                public void onError(com.paragon.open.dictionary.api.Error error) {
+                    frame.dismiss();
+                }
+
+                @Override
+                public void onIPCError(String s) {
+                    frame.dismiss();
+                }
+            });
         }
     }
 
@@ -303,7 +349,8 @@ public abstract class DictionaryUtil {
         if (info instanceof OpenDictionaryPackageInfo)
         {
             final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
-            openDictionary.openTextInDictionary(text);
+            //openDictionary.openTextInDictionary(text);
+            openDictionary.showTranslation(activity, text);
             return;
         }
 
