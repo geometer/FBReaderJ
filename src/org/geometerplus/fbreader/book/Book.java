@@ -55,6 +55,8 @@ public class Book extends TitledEntity {
 
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
 	private WeakReference<ZLImage> myCover;
+	
+	private RationalNumber myProgress;
 
 	Book(long id, ZLFile file, String title, String encoding, String language) {
 		super(title);
@@ -540,5 +542,13 @@ public class Book extends TitledEntity {
 			.append(myId)
 			.append("]")
 			.toString();
+	}
+	
+	public void setProgress(long numerator, long denominator) {
+		myProgress = new RationalNumber(numerator, denominator);
+	}
+	
+	public RationalNumber getProgress() {
+		return myProgress;
 	}
 }
