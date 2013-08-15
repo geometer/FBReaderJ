@@ -78,7 +78,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 25;
+		final int currentVersion = 26;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -136,6 +136,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables23();
 			case 24:
 				updateTables24();
+			case 25:
+				updateTables25();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -1042,7 +1044,33 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 		return links;
 	}
+	
+	private SQLiteStatement myPositionStatement;
+	@Override
+	protected void savePosition(long bookId, long numerator, long denominator) {
+		if (myPositionStatement == null) {
+			myPositionStatement = myDatabase.compileStatement(
+				"INSERT OR REPLACE INTO Positions (book_id,numerator,denominator) VALUES (?,?,?)"
+			);
+		}
+		myStorePositionStatement.bindLong(1, bookId);
+		myStorePositionStatement.bindLong(2, numerator);
+		myStorePositionStatement.bindLong(3, denominator);
+		myStorePositionStatement.execute();
+	}
 
+	@Override
+	protected float loadPosition(long bookId) {
+		float position = 0;
+		Cursor cursor = myDatabase.rawQuery(
+			"SELECT numerator,denominator FROM Positions WHERE book_id = " + bookId, null
+		);
+		if (cursor.moveToNext()) {
+			position = cursor.getLong(0)/cursor.getLong(1);
+		}
+		cursor.close();
+		return position;
+	}
 
 	private void createTables() {
 		myDatabase.execSQL(
@@ -1440,5 +1468,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (1, '', 136*256*256 + 138*256 + 133)"); // #888a85
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, '', 245*256*256 + 121*256 + 0)"); // #f57900
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, '', 114*256*256 + 159*256 + 207)"); // #729fcf
+	}
+	
+	private void updateTables25() {
+		myDatabase.execSQL(
+				"CREATE TABLE IF NOT EXISTS Positions(" +
+					"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
+					"numerator INTEGER," +
+					"denominator INTEGER NOT NULL)");
 	}
 }
