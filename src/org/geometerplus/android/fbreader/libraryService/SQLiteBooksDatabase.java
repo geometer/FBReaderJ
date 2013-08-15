@@ -1047,29 +1047,31 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	
 	private SQLiteStatement myPositionStatement;
 	@Override
-	protected void savePosition(long bookId, long numerator, long denominator) {
+	protected void savePosition(long bookId, RationalNumber progress) {
 		if (myPositionStatement == null) {
 			myPositionStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO Positions (book_id,numerator,denominator) VALUES (?,?,?)"
+				"INSERT OR REPLACE INTO BookReadingProgress (book_id,numerator,denominator) VALUES (?,?,?)"
 			);
 		}
 		myStorePositionStatement.bindLong(1, bookId);
-		myStorePositionStatement.bindLong(2, numerator);
-		myStorePositionStatement.bindLong(3, denominator);
+		myStorePositionStatement.bindLong(2, progress.getNumerator());
+		myStorePositionStatement.bindLong(3, progress.getDenominator());
 		myStorePositionStatement.execute();
 	}
 
 	@Override
-	protected float loadPosition(long bookId) {
-		float position = 0;
+	protected RationalNumber loadPosition(long bookId) {
+		RationalNumber progress;
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT numerator,denominator FROM Positions WHERE book_id = " + bookId, null
+			"SELECT numerator,denominator FROM BookReadingProgress WHERE book_id = " + bookId, null
 		);
 		if (cursor.moveToNext()) {
-			position = cursor.getLong(0)/cursor.getLong(1);
+			progress = new RationalNumber(cursor.getLong(0), cursor.getLong(1));
+		} else {
+			progress = new RationalNumber(0, 1);
 		}
 		cursor.close();
-		return position;
+		return progress;
 	}
 
 	private void createTables() {
@@ -1472,9 +1474,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	
 	private void updateTables25() {
 		myDatabase.execSQL(
-				"CREATE TABLE IF NOT EXISTS Positions(" +
-					"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
-					"numerator INTEGER NOT NULL," +
-					"denominator INTEGER NOT NULL)");
+			"CREATE TABLE IF NOT EXISTS BookReadingProgress(" +
+				"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"numerator INTEGER NOT NULL," +
+				"denominator INTEGER NOT NULL)");
 	}
 }
