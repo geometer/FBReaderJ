@@ -1474,7 +1474,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL(
 				"CREATE TABLE IF NOT EXISTS Positions(" +
 					"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
-					"numerator INTEGER," +
+					"numerator INTEGER NOT NULL," +
 					"denominator INTEGER NOT NULL)");
 	}
 }
