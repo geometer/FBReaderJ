@@ -1054,8 +1054,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			);
 		}
 		myStorePositionStatement.bindLong(1, bookId);
-		myStorePositionStatement.bindLong(2, progress.getNumerator());
-		myStorePositionStatement.bindLong(3, progress.getDenominator());
+		myStorePositionStatement.bindLong(2, progress.Numerator);
+		myStorePositionStatement.bindLong(3, progress.Denominator);
 		myStorePositionStatement.execute();
 	}
 
