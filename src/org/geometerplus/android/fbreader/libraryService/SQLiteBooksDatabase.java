@@ -1061,8 +1061,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	@Override
 	protected RationalNumber loadPosition(long bookId) {
-		RationalNumber progress;
-		Cursor cursor = myDatabase.rawQuery(
+		final RationalNumber progress;
+		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT numerator,denominator FROM BookReadingProgress WHERE book_id = " + bookId, null
 		);
 		if (cursor.moveToNext()) {
