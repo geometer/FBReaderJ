@@ -10,7 +10,8 @@
             android:layout_height="wrap_content"
             android:text="Dicitonary Title"
             android:id="@+id/dictionary_title_label" android:layout_row="0" android:layout_column="0" android:layout_gravity="center_vertical|fill_horizontal|left"
-            android:textSize="26dp" android:textStyle="bold" android:textColor="#d5d5d5"/>
+            android:textSize="26dp" android:textStyle="bold" android:textColor="#d5d5d5"
+            android:layout_marginLeft="6dp"/>
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,5 +21,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/dictionary_article_view" android:layout_row="1" android:layout_column="0" android:layout_columnSpan="2"
-            android:layout_gravity="center|fill"/>
+            android:layout_gravity="center|fill" android:layout_marginBottom="4dp"/>
 </GridLayout>
