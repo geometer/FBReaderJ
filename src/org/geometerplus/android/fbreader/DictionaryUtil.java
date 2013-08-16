@@ -24,12 +24,17 @@ import java.util.*;
 import android.app.*;
 import android.content.*;
 import android.net.Uri;
+import android.renderscript.RSTextureView;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageButton;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import com.paragon.open.dictionary.api.*;
 import com.paragon.open.dictionary.api.Dictionary;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -41,6 +46,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.android.util.UIUtil;
@@ -154,12 +160,29 @@ public abstract class DictionaryUtil {
             myDictionary.showTranslation(text);
         }
 
-        void showTranslation(Activity activity, String text)
+        void showTranslation(Activity activity, final String text)
         {
-            final WebView webView = new WebView(activity);
+            //TODO: add scroll
+            final ScrollView scroller = new ScrollView(activity.getApplicationContext());
+
             final DisplayMetrics metrics = new DisplayMetrics();
             activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            final android.widget.PopupWindow frame = new android.widget.PopupWindow(webView, metrics.widthPixels, metrics.heightPixels / 3);
+            final android.widget.PopupWindow frame = new android.widget.PopupWindow(scroller, metrics.widthPixels, metrics.heightPixels / 3);
+
+            final View root = activity.getLayoutInflater().inflate(R.layout.dictionary_flyout, scroller);
+            final TextView titleLabel = (TextView)root.findViewById(R.id.dictionary_title_label);
+            titleLabel.setText(Title);
+
+            final ImageButton openDictionary = (ImageButton)root.findViewById(R.id.dictionary_open_button);
+            openDictionary.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openTextInDictionary(text);
+                }
+            });
+
+            final WebView webView = (WebView)root.findViewById(R.id.dictionary_article_view);
+
             frame.showAtLocation(activity.getCurrentFocus(), Gravity.BOTTOM, 0, metrics.heightPixels / 2);
             activity.getCurrentFocus().setOnClickListener(new View.OnClickListener() {
                 @Override
