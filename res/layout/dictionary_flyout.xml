@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:columnCount="2" android:rowCount="2"
+            android:background="#3c3f41">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dicitonary Title"
+            android:id="@+id/dictionary_title_label" android:layout_row="0" android:layout_column="0" android:layout_gravity="center_vertical|fill_horizontal|left"
+            android:textSize="26dp" android:textStyle="bold" android:textColor="#d5d5d5"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dictionary_open_button" android:layout_row="0" android:layout_column="1"
+            android:layout_gravity="center_vertical|right" android:src="@android:drawable/ic_menu_view"/>
+    <WebView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dictionary_article_view" android:layout_row="1" android:layout_column="0" android:layout_columnSpan="2"
+            android:layout_gravity="center|fill"/>
+</GridLayout>
