@@ -122,4 +122,7 @@ public abstract class BooksDatabase {
 
 	protected abstract Collection<String> loadVisitedHyperlinks(long bookId);
 	protected abstract void addVisitedHyperlink(long bookId, String hyperlinkId);
+	
+	protected abstract void savePosition(long bookId, RationalNumber progress);
+	protected abstract RationalNumber loadPosition(long bookId);
 }
