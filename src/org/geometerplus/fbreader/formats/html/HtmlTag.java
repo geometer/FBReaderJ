@@ -57,14 +57,16 @@ public final class HtmlTag {
 	public static final byte EM = 31;
 	public static final byte DFN = 32;
 	public static final byte CITE = 33;
+	public static final byte FONT = 34;
 
-	public static final byte HR = 34;
+	public static final byte HR = 35;
 
 	// mobipocket specific tags
-	public static final byte REFERENCE = 35;
-	public static final byte GUIDE = 36;
+	public static final byte REFERENCE = 36;
+	public static final byte GUIDE = 37;
+	public static final byte MBP_PAGEBREAK = 38;
 
-	public static final byte TAG_NUMBER = 37;
+	public static final byte TAG_NUMBER = 39;
 
 	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(256, 0.2f);
 	private static final Byte ourUnknownTag;
@@ -76,6 +78,7 @@ public final class HtmlTag {
 		ourTagByName.put("head", HEAD);
 		ourTagByName.put("body", BODY);
 		ourTagByName.put("title", TITLE);
+		ourTagByName.put("div", DIV);
 		ourTagByName.put("p", P);
 		ourTagByName.put("h1", H1);
 		ourTagByName.put("h2", H2);
@@ -104,9 +107,11 @@ public final class HtmlTag {
 		ourTagByName.put("em", EM);
 		ourTagByName.put("def", DFN);
 		ourTagByName.put("cite", CITE);
+		ourTagByName.put("font", FONT);
 		ourTagByName.put("hr", HR);
 		ourTagByName.put("guide", GUIDE);
 		ourTagByName.put("reference", REFERENCE);
+		ourTagByName.put("mbp:pagebreak", MBP_PAGEBREAK);
 	}
 
 	public static byte getTagByName(String name) {
