@@ -177,6 +177,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			case HtmlTag.SELECT:
 			case HtmlTag.STYLE:
 			case HtmlTag.P:
+			case HtmlTag.DIV:
 				startNewParagraph();
 				break;
 
@@ -215,6 +216,10 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				closeControl(myStyleTable[tag]);
 				break;
 
+			case HtmlTag.FONT:
+				// TODO: implement
+				break;
+
 			case HtmlTag.OL:
 				myOrderedListIsStarted = false;
 				myOLCounter = 0;
@@ -245,6 +250,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 
 			case HtmlTag.P:
+			case HtmlTag.DIV:
 				if (mySectionStarted) {
 					mySectionStarted = false;
 				} else if (myInsideTitle) {
@@ -300,6 +306,10 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			case HtmlTag.DFN:
 			case HtmlTag.I:
 				openControl(myStyleTable[tag]);
+				break;
+
+			case HtmlTag.FONT:
+				// TODO: implement
 				break;
 
 			case HtmlTag.H1:
