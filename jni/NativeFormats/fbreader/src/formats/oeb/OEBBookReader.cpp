@@ -19,6 +19,7 @@
 
 #include <algorithm>
 
+//#include <ZLLogger.h>
 #include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
 #include <ZLFile.h>
@@ -203,6 +204,7 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myModelReader.setMainTextModel();
 	myModelReader.pushKind(REGULAR);
 
+	//ZLLogger::Instance().registerClass("oeb");
 	XHTMLReader xhtmlReader(myModelReader);
 	for (std::vector<std::string>::const_iterator it = myHtmlFileNames.begin(); it != myHtmlFileNames.end(); ++it) {
 		const ZLFile xhtmlFile(myFilePrefix + *it);
@@ -219,7 +221,12 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 		} else {
 			myModelReader.insertEndOfSectionParagraph();
 		}
+		//ZLLogger::Instance().println("oeb", "start " + xhtmlFile.path());
 		xhtmlReader.readFile(xhtmlFile, *it);
+		//ZLLogger::Instance().println("oeb", "end " + xhtmlFile.path());
+		//std::string debug = "para count = ";
+		//ZLStringUtil::appendNumber(debug, myModelReader.model().bookTextModel()->paragraphsNumber());
+		//ZLLogger::Instance().println("oeb", debug);
 	}
 
 	generateTOC(xhtmlReader);
