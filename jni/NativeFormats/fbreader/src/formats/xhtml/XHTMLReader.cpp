@@ -303,16 +303,21 @@ void XHTMLTagImageAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 		return;
 	}
 
-	bool flag = bookReader(reader).paragraphIsOpen();
-	if (flag) {
-		endParagraph(reader);
+	const bool flagParagraphIsOpen = bookReader(reader).paragraphIsOpen();
+	if (flagParagraphIsOpen) {
+		if (reader.myCurrentParagraphIsEmpty) {
+			bookReader(reader).addControl(IMAGE, true);
+		} else {
+			endParagraph(reader);
+		}
 	}
 	const std::string imageName = imageFile.name(false);
 	bookReader(reader).addImageReference(imageName, 0, reader.myMarkNextImageAsCover);
 	bookReader(reader).addImage(imageName, new ZLFileImage(imageFile, "", 0));
 	reader.myMarkNextImageAsCover = false;
-	if (flag) {
-		beginParagraph(reader);
+	if (flagParagraphIsOpen && reader.myCurrentParagraphIsEmpty) {
+		bookReader(reader).addControl(IMAGE, false);
+		endParagraph(reader);
 	}
 }
 
