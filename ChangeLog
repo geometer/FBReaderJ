@@ -1,4 +1,5 @@
 ===== 1.9 (Aug ??, 2013) =====
+* mobi: added support for <div> & <mbp:pagebreak> tags
 * ePub: fixed reading of files generated from LibreOffice
 * Danish localization done by Jens Kaestel, sponsored by Panacea Supplies
 * Danish hyphenation patterns imported by Dennis Sheil of Panacea Supplies
