@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.*;
 
 import android.app.*;
@@ -185,7 +187,23 @@ public abstract class DictionaryUtil {
             myDictionary.showTranslation(text);
         }
 
-        void showTranslation(Activity activity, final String text, int selectionTop, int selectionBottom) {
+        String saveArticle(String data, Context context) {
+            final String filename = "open_dictionary_article.html";
+            final FileOutputStream outputStream;
+
+            try {
+                outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+                outputStream.write(data.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+
+            return "file://" + context.getFilesDir().getAbsolutePath() + "/" + filename;
+        }
+
+        void showTranslation(final Activity activity, final String text, int selectionTop, int selectionBottom) {
             if (!myDictionary.isTranslationAsTextSupported())
                 openTextInDictionary(text);
 
@@ -224,7 +242,11 @@ public abstract class DictionaryUtil {
             myDictionary.getTranslationAsText(text, TranslateMode.SHORT, TranslateFormat.HTML, new Dictionary.TranslateAsTextListener() {
                 @Override
                 public void onComplete(String s, TranslateMode translateMode) {
-                    articleView.loadData(s, "text/html", "UTF-8");
+                    final String url = saveArticle(s, activity.getApplicationContext());
+                    if (url == null || url.isEmpty())
+                        openTextInDictionary(text);
+                    else
+                        articleView.loadUrl(url);
                 }
 
                 @Override
