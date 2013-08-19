@@ -3,7 +3,7 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" android:columnCount="2" android:rowCount="2"
-            android:background="#3c3f41">
+            android:background="#3c3f41" style="@style/FBReader.Dialog">
 
     <TextView
             android:layout_width="wrap_content"
@@ -21,5 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/dictionary_article_view" android:layout_row="1" android:layout_column="0" android:layout_columnSpan="2"
-            android:layout_gravity="center|fill" android:layout_marginBottom="4dp"/>
+            android:layout_gravity="center|fill"
+            android:longClickable="false"
+            />
 </GridLayout>

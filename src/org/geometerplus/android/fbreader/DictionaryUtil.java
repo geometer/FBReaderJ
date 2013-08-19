@@ -19,22 +19,14 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.*;
 
 import android.app.*;
 import android.content.*;
 import android.net.Uri;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 
-import android.view.MotionEvent;
-import android.view.View;
-import android.webkit.WebView;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import com.paragon.dictionary.fbreader.OpenDictionaryFlyout;
 import com.paragon.open.dictionary.api.*;
 import com.paragon.open.dictionary.api.Dictionary;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -46,7 +38,6 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
-import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.android.util.UIUtil;
@@ -142,129 +133,17 @@ public abstract class DictionaryUtil {
 	}
 
     private static class OpenDictionaryPackageInfo extends PackageInfo {
-        private final Dictionary myDictionary;
+        final OpenDictionaryFlyout myFlyout;
 
         OpenDictionaryPackageInfo(Dictionary dictionary) {
             super(dictionary.getUID(),
-                 dictionary.getApplicationPackageName(),
-                 ".Start",
-                 dictionary.getName(),
-                 null,
-                 null,
-                 "%s");
-            myDictionary = dictionary;
-        }
-
-        private static android.widget.PopupWindow popupFrame = null;
-        private static WebView articleView = null;
-        private static View root = null;
-        private static TextView titleLabel = null;
-        private static ImageButton openDictionaryButton = null;
-
-        private static android.widget.PopupWindow createPopup(Activity activity) {
-            final FrameLayout layout = new FrameLayout(activity.getApplicationContext());
-
-            final DisplayMetrics metrics = new DisplayMetrics();
-            activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            android.widget.PopupWindow frame = new android.widget.PopupWindow(layout, metrics.widthPixels, metrics.heightPixels / 3);
-            root = activity.getLayoutInflater().inflate(R.layout.dictionary_flyout, layout);
-            articleView = (WebView)root.findViewById(R.id.dictionary_article_view);
-            titleLabel = (TextView)root.findViewById(R.id.dictionary_title_label);
-            openDictionaryButton = (ImageButton)root.findViewById(R.id.dictionary_open_button);
-            return frame;
-        }
-
-        private static void showFrame(Activity activity, int selectionTop, int selectionBottom) {
-            final DisplayMetrics metrics = new DisplayMetrics();
-            activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            PopupFrameMetric frameMetrics = new PopupFrameMetric(metrics, selectionTop, selectionBottom);
-            popupFrame.setHeight(frameMetrics.height);
-            popupFrame.setWidth(metrics.widthPixels);
-            popupFrame.showAtLocation(activity.getCurrentFocus(), frameMetrics.gravity | Gravity.CENTER_HORIZONTAL, 0, 0);
-        }
-
-        void openTextInDictionary(String text) {
-            myDictionary.showTranslation(text);
-        }
-
-        String saveArticle(String data, Context context) {
-            final String filename = "open_dictionary_article.html";
-            final FileOutputStream outputStream;
-
-            try {
-                outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
-                outputStream.write(data.getBytes());
-                outputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-
-            return "file://" + context.getFilesDir().getAbsolutePath() + "/" + filename;
-        }
-
-        void showTranslation(final Activity activity, final String text, int selectionTop, int selectionBottom) {
-            if (!myDictionary.isTranslationAsTextSupported())
-                openTextInDictionary(text);
-
-            if (popupFrame == null)
-                popupFrame = createPopup(activity);
-
-            titleLabel.setText(Title);
-            openDictionaryButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openTextInDictionary(text);
-                    popupFrame.dismiss();
-                }
-            });
-
-            activity.getCurrentFocus().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    popupFrame.dismiss();
-                }
-            });
-            activity.getCurrentFocus().setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (popupFrame.isShowing()) {
-                        popupFrame.dismiss();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            articleView.loadData("", "text/text", "UTF-8");
-            showFrame(activity, selectionTop, selectionBottom);
-
-            myDictionary.getTranslationAsText(text, TranslateMode.SHORT, TranslateFormat.HTML, new Dictionary.TranslateAsTextListener() {
-                @Override
-                public void onComplete(String s, TranslateMode translateMode) {
-                    final String url = saveArticle(s, activity.getApplicationContext());
-                    if (url == null || url.isEmpty())
-                        openTextInDictionary(text);
-                    else
-                        articleView.loadUrl(url);
-                }
-
-                @Override
-                public void onWordNotFound(ArrayList<String> similarWords) {
-                    popupFrame.dismiss();
-                    openTextInDictionary(text);
-                }
-
-                @Override
-                public void onError(com.paragon.open.dictionary.api.Error error) {
-                    popupFrame.dismiss();
-                }
-
-                @Override
-                public void onIPCError(String s) {
-                    popupFrame.dismiss();
-                }
-            });
+                  dictionary.getApplicationPackageName(),
+                  ".Start",
+                  dictionary.getName(),
+                  null,
+                  null,
+                  "%s");
+            myFlyout = new OpenDictionaryFlyout(dictionary);
         }
     }
 
@@ -401,7 +280,7 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-    private static class PopupFrameMetric {
+    public static class PopupFrameMetric {
         public final int height;
         public final int gravity;
         public final int top;
@@ -432,21 +311,22 @@ public abstract class DictionaryUtil {
 			text = text.substring(start, end);
 		}
 
+        final DisplayMetrics metrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        final PopupFrameMetric frameMetrics = new PopupFrameMetric(metrics, selectionTop, selectionBottom);
+
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
 
         if (info instanceof OpenDictionaryPackageInfo)
         {
             final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
-            openDictionary.showTranslation(activity, text, selectionTop, selectionBottom);
+            openDictionary.myFlyout.showTranslation(activity, text, frameMetrics);
             return;
         }
 
 		final Intent intent = getDictionaryIntent(info, text);
 		try {
 			if ("ColorDict".equals(info.Id)) {
-				final DisplayMetrics metrics = new DisplayMetrics();
-				activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                PopupFrameMetric frameMetrics = new PopupFrameMetric(metrics, selectionTop, selectionBottom);
 				intent.putExtra(ColorDict3.HEIGHT, frameMetrics.height);
 				intent.putExtra(ColorDict3.GRAVITY, frameMetrics.gravity);
 				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
