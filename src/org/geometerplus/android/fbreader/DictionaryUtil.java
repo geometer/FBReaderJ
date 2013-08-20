@@ -290,9 +290,9 @@ public abstract class DictionaryUtil {
             final int topSpace = selectionTop;
             final int bottomSpace = metrics.heightPixels - selectionBottom;
             final boolean showAtBottom = bottomSpace >= topSpace;
-            final int space = (showAtBottom ? bottomSpace : topSpace) - 20;
-            final int maxHeight = Math.min(400, screenHeight * 2 / 3);
-            final int minHeight = Math.min(200, screenHeight * 2 / 3);
+            final int space = (showAtBottom ? bottomSpace : topSpace) - metrics.densityDpi / 12;
+            final int maxHeight = Math.min(metrics.densityDpi * 20 / 12, screenHeight * 2 / 3);
+            final int minHeight = Math.min(metrics.densityDpi * 10 / 12, screenHeight * 2 / 3);
             height = Math.max(minHeight, Math.min(maxHeight, space));
             gravity = showAtBottom ? android.view.Gravity.BOTTOM : android.view.Gravity.TOP;
             top = showAtBottom ? metrics.heightPixels - height : 0;
