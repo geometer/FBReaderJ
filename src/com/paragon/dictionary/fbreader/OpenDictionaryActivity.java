@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -87,6 +88,7 @@ public class OpenDictionaryActivity extends Activity {
         myArticleView.loadData("", "text/text", "UTF-8");
         if (ourDictionary != null) {
             myTitleLabel.setText(ourDictionary.getName());
+            Log.d("FBReader", "OpenDictionaryActivity: get translation as text");
             ourDictionary.getTranslationAsText(myQuery, TranslateMode.SHORT, TranslateFormat.HTML, new Dictionary.TranslateAsTextListener() {
                 @Override
                 public void onComplete(String s, TranslateMode translateMode) {
@@ -95,22 +97,27 @@ public class OpenDictionaryActivity extends Activity {
                         openTextInDictionary(myQuery);
                     else
                         myArticleView.loadUrl(url);
+                    Log.d("FBReader", "OpenDictionaryActivity: translation ready");
                 }
 
                 @Override
                 public void onWordNotFound(ArrayList<String> similarWords) {
                     finish();
                     openTextInDictionary(myQuery);
+                    Log.d("FBReader", "OpenDictionaryActivity: word not found");
                 }
 
                 @Override
                 public void onError(com.paragon.open.dictionary.api.Error error) {
                     finish();
+                    Log.e("FBReader", error.getName());
+                    Log.e("FBReader", error.getMessage());
                 }
 
                 @Override
                 public void onIPCError(String s) {
                     finish();
+                    Log.e("FBReader", s);
                 }
             });
         }

@@ -22,6 +22,7 @@ package com.paragon.dictionary.fbreader;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import com.paragon.open.dictionary.api.*;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 
@@ -34,6 +35,7 @@ public class OpenDictionaryFlyout {
     }
 
     public void showTranslation(final Activity activity, final String text, DictionaryUtil.PopupFrameMetric frameMetrics) {
+        Log.d("FBReader", "OpenDictionaryFlyout:showTranslation");
         if (!myDictionary.isTranslationAsTextSupported())
             myDictionary.showTranslation(text);
         else

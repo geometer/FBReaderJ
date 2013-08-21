@@ -26,6 +26,7 @@ import android.content.*;
 import android.net.Uri;
 import android.util.DisplayMetrics;
 
+import android.util.Log;
 import com.paragon.dictionary.fbreader.OpenDictionaryFlyout;
 import com.paragon.open.dictionary.api.*;
 import com.paragon.open.dictionary.api.Dictionary;
@@ -300,6 +301,7 @@ public abstract class DictionaryUtil {
     }
 
 	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
+        Log.d("FBReader", "DictionaryUtil:openTextInDictionary");
         if (singleWord) {
 			int start = 0;
 			int end = text.length();
@@ -319,6 +321,7 @@ public abstract class DictionaryUtil {
 
         if (info instanceof OpenDictionaryPackageInfo)
         {
+            Log.d("FBReader", "DictionaryUtil - work with Open Dictionary API");
             final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
             openDictionary.myFlyout.showTranslation(activity, text, frameMetrics);
             return;
