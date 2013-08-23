@@ -19,6 +19,7 @@
 
 #include <algorithm>
 
+//#include <ZLLogger.h>
 #include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
 #include <ZLFile.h>
@@ -109,38 +110,14 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 					if (title != 0) {
 						myGuideTOC.push_back(std::make_pair(std::string(title), reference));
 					}
-					if (type != 0) {
-						if (COVER == type) {
-							ZLFile imageFile(myFilePrefix + reference);
-							myCoverFileName = imageFile.path();
-							const std::map<std::string,std::string>::const_iterator it =
-								myHrefToMediatype.find(reference);
-							const std::string mimeType =
-								it != myHrefToMediatype.end() ? it->second : std::string();
-							shared_ptr<const ZLImage> image;
-							if (ZLStringUtil::stringStartsWith(mimeType, "image/")) {
-								image = new ZLFileImage(imageFile, "", 0);
-							} else {
-								image = XHTMLImageFinder().readImage(imageFile);
-							}
-							if (!image.isNull()) {
-								const std::string imageName = imageFile.name(false);
-								myModelReader.setMainTextModel();
-								myModelReader.addImageReference(imageName, (short)0, true);
-								myModelReader.addImage(imageName, image);
-								myModelReader.insertEndOfSectionParagraph();
-							} else {
-								myCoverFileName.erase();
-							}
-						} else if (COVER_IMAGE == type) {
-							ZLFile imageFile(myFilePrefix + reference);
-							myCoverFileName = imageFile.path();
-							const std::string imageName = imageFile.name(false);
-							myModelReader.setMainTextModel();
-							myModelReader.addImageReference(imageName, 0, true);
-							myModelReader.addImage(imageName, new ZLFileImage(imageFile, "", 0));
-							myModelReader.insertEndOfSectionParagraph();
-						}
+					if (type != 0 && (COVER == type || COVER_IMAGE == type)) {
+						ZLFile imageFile(myFilePrefix + reference);
+						myCoverFileName = imageFile.path();
+						myCoverFileType = type;
+						const std::map<std::string,std::string>::const_iterator it =
+							myHrefToMediatype.find(reference);
+						myCoverMimeType =
+							it != myHrefToMediatype.end() ? it->second : std::string();
 					}
 				}
 			}
@@ -154,6 +131,27 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 				}
 			}
 			break;
+	}
+}
+
+bool OEBBookReader::coverIsSingleImage() const {
+	return 
+		COVER_IMAGE == myCoverFileType ||
+		(COVER == myCoverFileType &&
+			ZLStringUtil::stringStartsWith(myCoverMimeType, "image/"));
+}
+
+void OEBBookReader::addCoverImage() {
+	ZLFile imageFile(myCoverFileName);
+	shared_ptr<const ZLImage> image = coverIsSingleImage()
+		? new ZLFileImage(imageFile, "", 0) : XHTMLImageFinder().readImage(imageFile);
+
+	if (!image.isNull()) {
+		const std::string imageName = imageFile.name(false);
+		myModelReader.setMainTextModel();
+		myModelReader.addImageReference(imageName, (short)0, true);
+		myModelReader.addImage(imageName, image);
+		myModelReader.insertEndOfSectionParagraph();
 	}
 }
 
@@ -193,6 +191,8 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myHtmlFileNames.clear();
 	myNCXTOCFileName.erase();
 	myCoverFileName.erase();
+	myCoverFileType.erase();
+	myCoverMimeType.erase();
 	myTourTOC.clear();
 	myGuideTOC.clear();
 	myState = READ_NONE;
@@ -204,18 +204,29 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myModelReader.setMainTextModel();
 	myModelReader.pushKind(REGULAR);
 
+	//ZLLogger::Instance().registerClass("oeb");
 	XHTMLReader xhtmlReader(myModelReader);
-	bool firstFile = true;
 	for (std::vector<std::string>::const_iterator it = myHtmlFileNames.begin(); it != myHtmlFileNames.end(); ++it) {
 		const ZLFile xhtmlFile(myFilePrefix + *it);
-		if (firstFile && myCoverFileName == xhtmlFile.path()) {
-			continue;
-		}
-		if (!firstFile) {
+		if (it == myHtmlFileNames.begin()) {
+			if (myCoverFileName == xhtmlFile.path()) {
+				if (coverIsSingleImage()) {
+					addCoverImage();
+					continue;
+				}
+				xhtmlReader.setMarkFirstImageAsCover();
+			} else {
+				addCoverImage();
+			}
+		} else {
 			myModelReader.insertEndOfSectionParagraph();
 		}
+		//ZLLogger::Instance().println("oeb", "start " + xhtmlFile.path());
 		xhtmlReader.readFile(xhtmlFile, *it);
-		firstFile = false;
+		//ZLLogger::Instance().println("oeb", "end " + xhtmlFile.path());
+		//std::string debug = "para count = ";
+		//ZLStringUtil::appendNumber(debug, myModelReader.model().bookTextModel()->paragraphsNumber());
+		//ZLLogger::Instance().println("oeb", debug);
 	}
 
 	generateTOC(xhtmlReader);
