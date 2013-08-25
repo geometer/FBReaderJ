@@ -167,12 +167,6 @@ public class NetworkLibrary {
 		return firstLaunchOption;
 	}
 
-	private List<String> defaultIds() {
-		final TreeSet<String> set = new TreeSet<String>();
-		set.add("http://data.fbreader.org/catalogs/litres2/index.php5");
-		return new ArrayList<String>(set);
-	}
-
 	private ZLStringListOption myActiveIdsOption;
 	private ZLStringListOption activeIdsOption() {
  		if (myActiveIdsOption == null) {
@@ -180,7 +174,7 @@ public class NetworkLibrary {
 				new ZLStringListOption(
 					"Options",
 					"ActiveIds",
-					ZLibrary.Instance().defaultIds(),
+					"",
 					","
 				);
 		}
@@ -203,21 +197,6 @@ public class NetworkLibrary {
 	public void setActiveIds(Collection<String> ids) {
 		final TreeSet<String> allCodes = new TreeSet<String>();
 		
-		//add default catalog ids which are matched to link ids
-		boolean found = false;
-		for(String did : ZLibrary.Instance().defaultIds()){
-			for(String id : linkIds()){
-				if(did.equals(id)){
-					found = true;
-					break;
-				}
-			}
-			if(found){
-				allCodes.add(did);
-			}
-			found = false;
-		}
-		allCodes.removeAll(linkIds());
 		allCodes.addAll(ids);
 
 		final ArrayList<String> codesList = new ArrayList<String>(allCodes.size());
