@@ -80,9 +80,11 @@ public class OpenDictionaryActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        myQuery = getIntent().getExtras().getString(OPEN_DICTIONARY_QUERY_KEY, "");
-        myHeight = getIntent().getExtras().getInt(OPEN_DICTIONARY_HEIGHT_KEY, -1);
-        myGravity = getIntent().getExtras().getInt(OPEN_DICTIONARY_GRAVITY_KEY, android.view.Gravity.BOTTOM);
+        myQuery = getIntent().getStringExtra(OPEN_DICTIONARY_QUERY_KEY);
+        if (myQuery == null)
+            myQuery = "";
+        myHeight = getIntent().getIntExtra(OPEN_DICTIONARY_HEIGHT_KEY, -1);
+        myGravity = getIntent().getIntExtra(OPEN_DICTIONARY_GRAVITY_KEY, android.view.Gravity.BOTTOM);
         setViewSize(myHeight, myGravity);
 
         myArticleView.loadData("", "text/text", "UTF-8");
