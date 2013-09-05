@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component jdk="Android 4.2.2 Platform" jdk_type="Android SDK">
-	<exclude-output/>
-	<contentEntry url="file://$MODULE_DIR$"/>
-	<lib name="open-dictionary-api-1.2.1.jar" scope="COMPILE">
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/open-dictionary-api-1.2.1.jar!/"/>
-	</lib>
-</component>
