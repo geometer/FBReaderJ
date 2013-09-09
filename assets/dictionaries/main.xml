@@ -35,6 +35,11 @@
 		pattern="%s"
 		list="always"
 	/>
+	<dictionaryNotTranslator
+		id="ABBYY Lingvo"
+		package="com.abbyy.mobile.lingvo.market"
+		list="always"
+	/>
 	<dictionary
 		id="Lingo Quiz Lite"
 		package="mnm.lite.lingoquiz"

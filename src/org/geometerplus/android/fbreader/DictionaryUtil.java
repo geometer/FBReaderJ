@@ -27,6 +27,8 @@ import android.net.Uri;
 import android.util.DisplayMetrics;
 
 import android.util.Log;
+
+import com.abbyy.mobile.lingvo.api.MinicardContract;
 import com.paragon.dictionary.fbreader.OpenDictionaryFlyout;
 import com.paragon.open.dictionary.api.*;
 import com.paragon.open.dictionary.api.Dictionary;
@@ -64,11 +66,11 @@ public abstract class DictionaryUtil {
 
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if ("dictionary".equals(tag)) {
+			if ("dictionary".equals(tag) || "dictionaryNotTranslator".equals(tag)) {
 				final String id = attributes.getValue("id");
 				final String title = attributes.getValue("title");
 
-				int flags = FLAG_SHOW_AS_DICTIONARY | FLAG_SHOW_AS_TRANSLATOR;
+				int flags = "dictionary".equals(tag) ? (FLAG_SHOW_AS_DICTIONARY | FLAG_SHOW_AS_TRANSLATOR) : FLAG_SHOW_AS_DICTIONARY;
 				if (!"always".equals(attributes.getValue("list"))) {
 					flags |= FLAG_INSTALLED_ONLY;
 				}
@@ -300,7 +302,7 @@ public abstract class DictionaryUtil {
         }
     }
 
-	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
+	public static void openTextInDictionary(final Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
         Log.d("FBReader", "DictionaryUtil:openTextInDictionary");
         if (singleWord) {
 			int start = 0;
@@ -326,6 +328,23 @@ public abstract class DictionaryUtil {
             openDictionary.myFlyout.showTranslation(activity, text, frameMetrics);
             return;
         }
+        
+        if ("ABBYY Lingvo".equals(info.Id)) {
+        	final Intent intent = new Intent(MinicardContract.MINICARD_ACTION);
+        	intent.putExtra( MinicardContract.EXTRA_TEXT, text);
+        	intent.putExtra( MinicardContract.EXTRA_GRAVITY, frameMetrics.gravity);
+        	intent.putExtra( MinicardContract.EXTRA_HEIGHT, frameMetrics.height);
+        	intent.putExtra( MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
+        	intent.putExtra( MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
+        	intent.putExtra( MinicardContract.EXTRA_LIGHT_THEME, true);
+        	
+        	try {
+        		activity.startActivity(intent);
+        	} catch (ActivityNotFoundException e) {
+        		DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord, true);
+    		}
+        	return;
+		}
 
 		final Intent intent = getDictionaryIntent(info, text);
 		try {
@@ -337,7 +356,7 @@ public abstract class DictionaryUtil {
 			}
 			activity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord);
+			DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord, false);
 		}
 	}
 
@@ -347,8 +366,8 @@ public abstract class DictionaryUtil {
 		);
 	}
 
-	public static void installDictionaryIfNotInstalled(final Activity activity, boolean singleWord) {
-		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test", singleWord), false)) {
+	public static void installDictionaryIfNotInstalled(final Activity activity, boolean singleWord, boolean forceNotCheck) {
+		if ((!forceNotCheck) &&  PackageUtil.canBeStarted(activity, getDictionaryIntent("test", singleWord), false)) {
 			return;
 		}
 		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo(singleWord);
