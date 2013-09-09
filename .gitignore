@@ -10,6 +10,9 @@ obj/
 epubs/
 mappings/
 READY/
+.idea/*
+*.eml
+*.iml
 .classpath
 .settings
 *.so

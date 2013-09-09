@@ -3,4 +3,8 @@
 	</style>
   <style name="FBReader.Dialog" parent="android:Theme.Dialog">
 	</style>
+  <style name="FBReader.Transparent" parent="android:Theme.NoTitleBar">
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@drawable/theme_transparent</item>
+  </style>
 </resources>
