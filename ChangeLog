@@ -1,5 +1,5 @@
 ===== 1.9 (Sep ??, 2013) =====
-* Dictionary support: fixed ColorDict 3 support
+* Dictionary support: fixed ColorDict 3 integration
 * mobi: added support for <div> & <mbp:pagebreak> tags
 * ePub: fixed reading of files generated from LibreOffice
 * ePub: no empty paragraphs before/after the cover
