@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-===== 2.0 beta 10 (Jun ??, 2013) =====
+===== 2.0 beta 10 (Sep ??, 2013) =====
 * All changes for 1.8.2
 
 ===== 2.0 beta 8 (Feb 23, 2013) =====
@@ -12,7 +11,8 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.9 (Aug ??, 2013) =====
+===== 1.9 (Sep ??, 2013) =====
+* Dictionary support: fixed ColorDict 3 support
 * mobi: added support for <div> & <mbp:pagebreak> tags
 * ePub: fixed reading of files generated from LibreOffice
 * ePub: no empty paragraphs before/after the cover
