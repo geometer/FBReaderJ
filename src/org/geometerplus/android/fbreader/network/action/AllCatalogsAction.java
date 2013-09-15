@@ -34,7 +34,7 @@ import org.geometerplus.android.fbreader.network.AllCatalogsActivity;
 public class AllCatalogsAction extends RootAction {
 	
 	public AllCatalogsAction(Activity activity) {
-		super(activity, ActionCode.LIBRARY_FILTER, "allCatalogs", R.drawable.ic_menu_networklibrary);
+		super(activity, ActionCode.SHOW_CATALOGS_FILTER, "allCatalogs", R.drawable.ic_menu_filter);
 	}
 
 	@Override
