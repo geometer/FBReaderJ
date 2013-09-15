@@ -34,7 +34,7 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 
 public class AllCatalogsActivity extends Activity {
 	final NetworkLibrary myLibrary = NetworkLibrary.Instance();
-	CheckListAdapter myAdapter;
+	CatalogsListAdapter myAdapter;
 	ArrayList<String> myIds = new ArrayList<String>();
 	ArrayList<String> myInactiveIds = new ArrayList<String>();
 
@@ -59,7 +59,7 @@ public class AllCatalogsActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 
-		final ArrayList<CheckItem> idItems = new ArrayList<CheckItem>();
+		final ArrayList<Item> idItems = new ArrayList<Item>();
 
 		if (myIds.size() > 0) {
 			idItems.add(new SectionItem(getLabelByKey("active")));
@@ -79,8 +79,8 @@ public class AllCatalogsActivity extends Activity {
 			idItems.addAll(items);
 		}
 
-		ListView selectedList = (ListView) findViewById(R.id.selectedList);
-		myAdapter = new CheckListAdapter(this, R.layout.checkbox_item, idItems, this);
+		final ListView selectedList = (ListView)findViewById(R.id.selectedList);
+		myAdapter = new CatalogsListAdapter(R.layout.checkbox_item, idItems);
 		selectedList.setAdapter(myAdapter);
 	}
 
@@ -103,9 +103,12 @@ public class AllCatalogsActivity extends Activity {
 		super.onStop();
 		if (myIsChanged) {
 			final ArrayList<String> ids = new ArrayList<String>();
-			for (CheckItem item : myAdapter.getItems()) {
-				if (item instanceof CatalogItem && ((CatalogItem)item).IsChecked) {
-					ids.add(item.Id);
+			for (Item item : myAdapter.getItems()) {
+				if (item instanceof CatalogItem) {
+					final CatalogItem catalogItem = (CatalogItem)item;
+					if (catalogItem.IsChecked) {
+						ids.add(catalogItem.Id);
+					}
 				}
 			}
 			myLibrary.setActiveIds(ids);
@@ -113,26 +116,24 @@ public class AllCatalogsActivity extends Activity {
 		}
 	}
 
-	private static abstract class CheckItem {
+	private static interface Item {
+	}
+
+	private static class SectionItem implements Item {
+		private final String Title;
+
+		public SectionItem(String title) {
+			Title = title;
+		}
+	}
+
+	private static class CatalogItem implements Item, Comparable<CatalogItem> {
 		private final String Id;
-
-		public CheckItem(String id) {
-			Id = id;
-		}
-	}
-
-	private static class SectionItem extends CheckItem {
-		public SectionItem(String id) {
-			super(id);
-		}
-	}
-
-	private static class CatalogItem extends CheckItem implements Comparable<CatalogItem> {
 		private final NetworkTree Tree;
 		private boolean IsChecked;
 
 		public CatalogItem(String id, boolean checked, NetworkTree tree) {
-			super(id);
+			Id = id;
 			IsChecked = checked;
 			Tree = tree;
 		}
@@ -151,38 +152,36 @@ public class AllCatalogsActivity extends Activity {
 		}
 	}
 
-	private class CheckListAdapter extends ArrayAdapter<CheckItem> {
-		Activity myActivity;
+	private class CatalogsListAdapter extends ArrayAdapter<Item> {
 		private CoverManager myCoverManager;
-		private ArrayList<CheckItem> items = new ArrayList<CheckItem>();
+		private ArrayList<Item> items = new ArrayList<Item>();
 
-		public CheckListAdapter(Context context, int textViewResourceId, List<CheckItem> objects, Activity activity) {
-			super(context, textViewResourceId, objects);
-			myActivity = activity;
+		public CatalogsListAdapter(int textViewResourceId, List<Item> objects) {
+			super(AllCatalogsActivity.this, textViewResourceId, objects);
 			items.addAll(objects);
 		}
 
-		public ArrayList<CheckItem> getItems() {
+		public ArrayList<Item> getItems() {
 			return items;
 		}
 
 		@Override
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			View v = convertView;
-			final CheckItem item = this.getItem(position);
+			final Item item = this.getItem(position);
 
 			if (item instanceof SectionItem) {
 				v = LayoutInflater.from(getContext()).inflate(R.layout.checkbox_section, null);
-				TextView tt = (TextView) v.findViewById(R.id.title);
+				TextView tt = (TextView)v.findViewById(R.id.title);
 				if (tt != null) {
-					tt.setText(item.Id);
+					tt.setText(((SectionItem)item).Title);
 				}
 			} else /* if (item instanceof CatalogItem) */ {
 				final CatalogItem catalogItem = (CatalogItem)item;
 				if (myCoverManager == null) {
 					v.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 					final int coverHeight = v.getMeasuredHeight();
-					myCoverManager = new CoverManager(myActivity, coverHeight * 15 / 12, coverHeight);
+					myCoverManager = new CoverManager(AllCatalogsActivity.this, coverHeight * 15 / 12, coverHeight);
 					v.requestLayout();
 				}
 
