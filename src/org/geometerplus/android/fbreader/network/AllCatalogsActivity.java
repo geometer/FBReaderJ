@@ -21,7 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.android.fbreader.covers.CoverManager;
 
-public class AllCatalogsActivity extends Activity {
+public class AllCatalogsActivity extends ListActivity {
 	final NetworkLibrary myLibrary = NetworkLibrary.Instance();
 	private ArrayList<Item> myAllItems = new ArrayList<Item>();
 	ArrayList<String> myIds = new ArrayList<String>();
@@ -46,8 +46,6 @@ public class AllCatalogsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		setContentView(R.layout.network_library_filter);
 
 		Intent intent = getIntent();
 		myIds = intent.getStringArrayListExtra(IDS_LIST);
@@ -78,8 +76,7 @@ public class AllCatalogsActivity extends Activity {
 			myAllItems.addAll(cItems);
 		}
 
-		final ListView selectedList = (ListView)findViewById(R.id.selectedList);
-		selectedList.setAdapter(new CatalogsListAdapter());
+		setListAdapter(new CatalogsListAdapter());
 	}
 
 	@Override
