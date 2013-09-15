@@ -34,7 +34,7 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 
 public class AllCatalogsActivity extends Activity {
 	final NetworkLibrary myLibrary = NetworkLibrary.Instance();
-	CatalogsListAdapter myAdapter;
+	private ArrayList<Item> myAllItems = new ArrayList<Item>();
 	ArrayList<String> myIds = new ArrayList<String>();
 	ArrayList<String> myInactiveIds = new ArrayList<String>();
 
@@ -58,29 +58,28 @@ public class AllCatalogsActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 
-		final ArrayList<Item> idItems = new ArrayList<Item>();
+		myAllItems.clear();
 
 		if (myIds.size() > 0) {
-			idItems.add(new SectionItem(getLabelByKey("active")));
-			final TreeSet<CatalogItem> items = new TreeSet<CatalogItem>();
+			myAllItems.add(new SectionItem(getLabelByKey("active")));
+			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myIds) {
-				items.add(new CatalogItem(id, true, myLibrary.getCatalogTreeByUrlAll(id)));
+				cItems.add(new CatalogItem(id, true, myLibrary.getCatalogTreeByUrlAll(id)));
 			}
-			idItems.addAll(items);
+			myAllItems.addAll(cItems);
 		}
 
 		if (myInactiveIds.size() > 0) {
-			idItems.add(new SectionItem(getLabelByKey("inactive")));
-			final TreeSet<CatalogItem> items = new TreeSet<CatalogItem>();
+			myAllItems.add(new SectionItem(getLabelByKey("inactive")));
+			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myInactiveIds) {
-				items.add(new CatalogItem(id, false, myLibrary.getCatalogTreeByUrlAll(id)));
+				cItems.add(new CatalogItem(id, false, myLibrary.getCatalogTreeByUrlAll(id)));
 			}
-			idItems.addAll(items);
+			myAllItems.addAll(cItems);
 		}
 
 		final ListView selectedList = (ListView)findViewById(R.id.selectedList);
-		myAdapter = new CatalogsListAdapter(R.layout.checkbox_item, idItems);
-		selectedList.setAdapter(myAdapter);
+		selectedList.setAdapter(new CatalogsListAdapter(R.layout.checkbox_item));
 	}
 
 	private String getLabelByKey(String keyName) {
@@ -102,7 +101,7 @@ public class AllCatalogsActivity extends Activity {
 		super.onStop();
 		if (myIsChanged) {
 			final ArrayList<String> ids = new ArrayList<String>();
-			for (Item item : myAdapter.getItems()) {
+			for (Item item : myAllItems) {
 				if (item instanceof CatalogItem) {
 					final CatalogItem catalogItem = (CatalogItem)item;
 					if (catalogItem.IsChecked) {
@@ -153,21 +152,15 @@ public class AllCatalogsActivity extends Activity {
 
 	private class CatalogsListAdapter extends ArrayAdapter<Item> {
 		private CoverManager myCoverManager;
-		private ArrayList<Item> items = new ArrayList<Item>();
 
-		public CatalogsListAdapter(int textViewResourceId, List<Item> objects) {
-			super(AllCatalogsActivity.this, textViewResourceId, objects);
-			items.addAll(objects);
-		}
-
-		public ArrayList<Item> getItems() {
-			return items;
+		public CatalogsListAdapter(int textViewResourceId) {
+			super(AllCatalogsActivity.this, textViewResourceId, myAllItems);
 		}
 
 		@Override
 		public View getView(int position, View convertView, final ViewGroup parent) {
 			View v = convertView;
-			final Item item = this.getItem(position);
+			final Item item = getItem(position);
 
 			if (item instanceof SectionItem) {
 				v = LayoutInflater.from(getContext()).inflate(R.layout.checkbox_section, null);
