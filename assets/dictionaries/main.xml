@@ -3,6 +3,8 @@
 	<dictionary
 		id="ColorDict"
 		title="ColorDict 3"
+		package="com.socialnmobile.colordict"
+		class=".activity.Main"
 		action="colordict.intent.action.SEARCH"
 		dataKey="EXTRA_QUERY"
 		pattern="%s"
