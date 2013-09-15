@@ -52,7 +52,6 @@ public class AllCatalogsActivity extends Activity {
 		Intent intent = getIntent();
 		myIds = intent.getStringArrayListExtra(IDS_LIST);
 		myInactiveIds = intent.getStringArrayListExtra(INACTIVE_IDS_LIST);
-
 	}
 
 	@Override
