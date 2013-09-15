@@ -475,12 +475,10 @@ public class NetworkLibrary {
 				if (l != null && link.compareTo(l) <= 0) {
 					break;
 				}
-
 				++index;
 			}
 			new NetworkCatalogRootTree(myRootTree, link, index);
 		}
-
 		// we do add non-catalog items
 		new SearchCatalogTree(myRootTree, mySearchItem, 0);
 		new AddCustomCatalogItemTree(myRootTree);
