@@ -61,7 +61,7 @@ public class AllCatalogsActivity extends Activity {
 		myAllItems.clear();
 
 		if (myIds.size() > 0) {
-			myAllItems.add(new SectionItem(getLabelByKey("active")));
+			myAllItems.add(new SectionItem("active"));
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myIds) {
 				cItems.add(new CatalogItem(id, true, myLibrary.getCatalogTreeByUrlAll(id)));
@@ -70,7 +70,7 @@ public class AllCatalogsActivity extends Activity {
 		}
 
 		if (myInactiveIds.size() > 0) {
-			myAllItems.add(new SectionItem(getLabelByKey("inactive")));
+			myAllItems.add(new SectionItem("inactive"));
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myInactiveIds) {
 				cItems.add(new CatalogItem(id, false, myLibrary.getCatalogTreeByUrlAll(id)));
@@ -80,10 +80,6 @@ public class AllCatalogsActivity extends Activity {
 
 		final ListView selectedList = (ListView)findViewById(R.id.selectedList);
 		selectedList.setAdapter(new CatalogsListAdapter());
-	}
-
-	private String getLabelByKey(String keyName) {
-		return NetworkLibrary.resource().getResource("allCatalogs").getResource(keyName).getValue();
 	}
 
 	@Override
@@ -120,8 +116,8 @@ public class AllCatalogsActivity extends Activity {
 	private static class SectionItem implements Item {
 		private final String Title;
 
-		public SectionItem(String title) {
-			Title = title;
+		public SectionItem(String key) {
+			Title = NetworkLibrary.resource().getResource("allCatalogs").getResource(key).getValue();
 		}
 	}
 
@@ -165,7 +161,7 @@ public class AllCatalogsActivity extends Activity {
 			if (convertView != null && item.getClass().equals(convertView.getTag())) {
 				view = convertView;
 			} else {
-				view = LayoutInflater.from(getContext()).inflate(
+				view = getLayoutInflater().inflate(
 					item instanceof SectionItem
 						? R.layout.checkbox_section : R.layout.checkbox_item,
 					null
