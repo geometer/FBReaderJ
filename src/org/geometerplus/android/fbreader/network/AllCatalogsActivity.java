@@ -79,7 +79,7 @@ public class AllCatalogsActivity extends Activity {
 		}
 
 		final ListView selectedList = (ListView)findViewById(R.id.selectedList);
-		selectedList.setAdapter(new CatalogsListAdapter(R.layout.checkbox_item));
+		selectedList.setAdapter(new CatalogsListAdapter());
 	}
 
 	private String getLabelByKey(String keyName) {
@@ -153,42 +153,48 @@ public class AllCatalogsActivity extends Activity {
 	private class CatalogsListAdapter extends ArrayAdapter<Item> {
 		private CoverManager myCoverManager;
 
-		public CatalogsListAdapter(int textViewResourceId) {
-			super(AllCatalogsActivity.this, textViewResourceId, myAllItems);
+		public CatalogsListAdapter() {
+			super(AllCatalogsActivity.this, R.layout.checkbox_item, myAllItems);
 		}
 
 		@Override
 		public View getView(int position, View convertView, final ViewGroup parent) {
-			View v = convertView;
 			final Item item = getItem(position);
 
+			final View view;
+			if (convertView != null && item.getClass().equals(convertView.getTag())) {
+				view = convertView;
+			} else {
+				view = LayoutInflater.from(getContext()).inflate(
+					item instanceof SectionItem
+						? R.layout.checkbox_section : R.layout.checkbox_item,
+					null
+				);
+				view.setTag(item.getClass());
+			}
+
 			if (item instanceof SectionItem) {
-				v = LayoutInflater.from(getContext()).inflate(R.layout.checkbox_section, null);
-				TextView tt = (TextView)v.findViewById(R.id.title);
-				if (tt != null) {
-					tt.setText(((SectionItem)item).Title);
-				}
+				((TextView)view.findViewById(R.id.title)).setText(((SectionItem)item).Title);
 			} else /* if (item instanceof CatalogItem) */ {
 				final CatalogItem catalogItem = (CatalogItem)item;
+
 				if (myCoverManager == null) {
-					v.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-					final int coverHeight = v.getMeasuredHeight();
+					view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+					final int coverHeight = view.getMeasuredHeight();
 					myCoverManager = new CoverManager(AllCatalogsActivity.this, coverHeight * 15 / 12, coverHeight);
-					v.requestLayout();
+					view.requestLayout();
 				}
 
-				v = LayoutInflater.from(getContext()).inflate(R.layout.checkbox_item, null);
-
 				final INetworkLink link = catalogItem.Tree.getLink();
-				((TextView)v.findViewById(R.id.title)).setText(link.getTitle());
-				((TextView)v.findViewById(R.id.subtitle)).setText(link.getSummary());
+				((TextView)view.findViewById(R.id.title)).setText(link.getTitle());
+				((TextView)view.findViewById(R.id.subtitle)).setText(link.getSummary());
 
-				final ImageView coverView = (ImageView)v.findViewById(R.id.icon);
+				final ImageView coverView = (ImageView)view.findViewById(R.id.icon);
 				if (!myCoverManager.trySetCoverImage(coverView, catalogItem.Tree)) {
 					coverView.setImageResource(R.drawable.ic_list_library_books);
 				}
 
-				final CheckBox checkBox = (CheckBox)v.findViewById(R.id.check_item);
+				final CheckBox checkBox = (CheckBox)view.findViewById(R.id.check_item);
 				checkBox.setChecked(catalogItem.IsChecked);
 				checkBox.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
@@ -197,7 +203,7 @@ public class AllCatalogsActivity extends Activity {
 					}
 				});
 			}
-			return v;
+			return view;
 		}
 	}
 }
