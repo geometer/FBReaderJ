@@ -116,12 +116,7 @@ public class NetworkLibrary {
 	}
 
 	public List<String> activeLanguageCodes() {
-		//if(isFirstLaunch){
-		//	isFirstLaunch = false;
-			return activeLanguageCodesOption().getValue();
-		//}else{
-		//	return new ArrayList<String>();
-		//}
+		return activeLanguageCodesOption().getValue();
 	}
 
 	public void setActiveLanguageCodes(Collection<String> codes) {
