@@ -61,11 +61,11 @@ public class OpenDictionaryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.dictionary_flyout);
+        setContentView(R.layout.opendictionary_flyout);
 
-        myArticleView = (WebView) findViewById(R.id.dictionary_article_view);
-        myTitleLabel = (TextView) findViewById(R.id.dictionary_title_label);
-        myOpenDictionaryButton = (ImageButton) findViewById(R.id.dictionary_open_button);
+        myArticleView = (WebView) findViewById(R.id.opendictionary_article_view);
+        myTitleLabel = (TextView) findViewById(R.id.opendictionary_title_label);
+        myOpenDictionaryButton = (ImageButton) findViewById(R.id.opendictionary_open_button);
 
         myOpenDictionaryButton.setOnClickListener(new View.OnClickListener() {
             @Override

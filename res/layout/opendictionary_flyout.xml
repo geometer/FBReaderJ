@@ -17,7 +17,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Dicitonary Title"
-			android:id="@+id/dictionary_title_label" android:layout_row="0" android:layout_column="0" android:layout_gravity="center_vertical|left"
+			android:id="@+id/opendictionary_title_label" android:layout_row="0" android:layout_column="0" android:layout_gravity="center_vertical|left"
 			android:textSize="18dp" android:textStyle="bold" android:textColor="#d5d5d5"
 			android:layout_marginLeft="8dp" android:ellipsize="end" android:singleLine="true"
 			android:layout_weight="1"
@@ -25,7 +25,7 @@
 		<ImageButton
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/dictionary_open_button" android:layout_row="0" android:layout_column="1"
+			android:id="@+id/opendictionary_open_button" android:layout_row="0" android:layout_column="1"
 			android:layout_gravity="center_vertical|right" android:src="@android:drawable/ic_menu_view"
 			android:layout_weight="0"
 		/>
@@ -37,7 +37,7 @@
 		<WebView
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:id="@+id/dictionary_article_view" android:layout_column="0" android:layout_span="2"
+			android:id="@+id/opendictionary_article_view" android:layout_column="0" android:layout_span="2"
 			android:longClickable="false"
 			android:paddingBottom="12dp" android:paddingRight="4dp" android:paddingLeft="4dp"
 			android:background="#3c3f41" android:layout_weight="1"
