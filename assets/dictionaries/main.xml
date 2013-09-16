@@ -37,9 +37,10 @@
 		pattern="%s"
 		list="always"
 	/>
-	<dictionaryNotTranslator
+	<dictionary
 		id="ABBYY Lingvo"
 		package="com.abbyy.mobile.lingvo.market"
+		role="dictionary"
 		list="always"
 	/>
 	<dictionary

@@ -78,22 +78,29 @@ public abstract class DictionaryUtil {
 
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if ("dictionary".equals(tag) || "dictionaryNotTranslator".equals(tag)) {
+			if ("dictionary".equals(tag)) {
 				final String id = attributes.getValue("id");
 				final String title = attributes.getValue("title");
-
-				int flags = "dictionary".equals(tag) ? (FLAG_SHOW_AS_DICTIONARY | FLAG_SHOW_AS_TRANSLATOR) : FLAG_SHOW_AS_DICTIONARY;
+				final String role = attributes.getValue("role");
+				int flags;
+				if ("dictionary".equals(role)) {
+					flags = FLAG_SHOW_AS_DICTIONARY;
+				} else if ("translator".equals(role)) {
+					flags = FLAG_SHOW_AS_TRANSLATOR;
+				} else {
+					flags = FLAG_SHOW_AS_DICTIONARY | FLAG_SHOW_AS_TRANSLATOR;
+				}
 				if (!"always".equals(attributes.getValue("list"))) {
 					flags |= FLAG_INSTALLED_ONLY;
 				}
 				ourInfos.put(new PackageInfo(
-                        id,
-                        attributes.getValue("package"),
-                        attributes.getValue("class"),
-                        title != null ? title : id,
-                        attributes.getValue("action"),
-                        attributes.getValue("dataKey"),
-                        attributes.getValue("pattern")
+					id,
+					attributes.getValue("package"),
+					attributes.getValue("class"),
+					title != null ? title : id,
+					attributes.getValue("action"),
+					attributes.getValue("dataKey"),
+					attributes.getValue("pattern")
                 ), flags);
 			}
 			return false;
