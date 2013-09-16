@@ -18,7 +18,6 @@
  * 02110-1301, USA.
  */
 
-
 package com.paragon.dictionary.fbreader;
 
 import android.app.Activity;
