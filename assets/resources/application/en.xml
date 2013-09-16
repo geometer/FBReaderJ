@@ -650,6 +650,7 @@
 				<node name="summaryOn" value="Key navigation visits all words"/>
 				<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
 			</node>
+			<node name="codeSelect" value="Enter language code to translate to. For example: EN for English. Leave this field blank to see translation to all languages."/>
 		</node>
 		<node name="images" value="Images">
 			<node name="summary" value="Image displaying options"/>

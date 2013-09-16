@@ -53,6 +53,18 @@ public abstract class DictionaryUtil {
 
 	private static ZLStringOption ourSingleWordTranslatorOption;
 	private static ZLStringOption ourMultiWordTranslatorOption;
+	
+	//TODO: maybe langcodes for translator and dictionary could be different
+	private static ZLStringOption ourPreferredLanguageOption = new ZLStringOption("Dictionary", "LangCode", "");
+
+	
+	public static void setPreferredLanguageCode(String code) {
+		ourPreferredLanguageOption.setValue(code);
+	}
+	
+	public static String getPreferredLanguageCode() {
+		return ourPreferredLanguageOption.getValue();
+	}
 
 	// Map: dictionary info -> mode if package is not installed
 	private static Map<PackageInfo,Integer> ourInfos =
@@ -323,7 +335,7 @@ public abstract class DictionaryUtil {
 
         if (info instanceof OpenDictionaryPackageInfo)
         {
-            Log.d("FBReader", "DictionaryUtil - work with Open Dictionary API");
+            Log.d("FBReader", "DictionaryUtil - work with Open Dictionary API :" + text);
             final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
             openDictionary.myFlyout.showTranslation(activity, text, frameMetrics);
             return;
@@ -331,12 +343,17 @@ public abstract class DictionaryUtil {
         
         if ("ABBYY Lingvo".equals(info.Id)) {
         	final Intent intent = new Intent(MinicardContract.MINICARD_ACTION);
-        	intent.putExtra( MinicardContract.EXTRA_TEXT, text);
-        	intent.putExtra( MinicardContract.EXTRA_GRAVITY, frameMetrics.gravity);
-        	intent.putExtra( MinicardContract.EXTRA_HEIGHT, frameMetrics.height);
-        	intent.putExtra( MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
-        	intent.putExtra( MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
-        	intent.putExtra( MinicardContract.EXTRA_LIGHT_THEME, true);
+        	intent.putExtra(MinicardContract.EXTRA_TEXT, text);
+        	intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.gravity);
+        	intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.height);
+        	intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
+        	intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
+        	intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
+        	if (ourPreferredLanguageOption.getValue() == null || ourPreferredLanguageOption.getValue().equals("")) {
+        		
+        	} else {
+        		intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, ourPreferredLanguageOption.getValue());
+        	}
         	
         	try {
         		activity.startActivity(intent);
