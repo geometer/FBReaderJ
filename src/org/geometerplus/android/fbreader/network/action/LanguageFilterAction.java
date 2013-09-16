@@ -35,7 +35,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 
 public class LanguageFilterAction extends RootAction {
 	public LanguageFilterAction(Activity activity) {
-		super(activity, ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages);
+		super(activity, ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_filter);
 	}
 
 	@Override

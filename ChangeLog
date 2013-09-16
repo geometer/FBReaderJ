@@ -1,4 +1,7 @@
-===== 1.9 (Aug ??, 2013) =====
+===== 1.9 (Sep ??, 2013) =====
+* Dictionary support: added OpenDictionary support (code provided by Paragon Software), better integration with SlovoEd dictionaries
+* Dictionary support: fixed ColorDict 3 integration
+* Dictionary support: added Lingvo integration
 * mobi: added support for <div> & <mbp:pagebreak> tags
 * ePub: fixed reading of files generated from LibreOffice
 * ePub: no empty paragraphs before/after the cover

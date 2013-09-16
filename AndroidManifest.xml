@@ -3,7 +3,7 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
 		android:versionCode="108021"
-		android:versionName="1.8.3.4"
+		android:versionName="1.8.2"
 		android:installLocation="auto"
 >
 	<uses-sdk
@@ -245,6 +245,6 @@
 			</intent-filter>
 		</receiver>
 		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name="com.paragon.dictionary.fbreader.OpenDictionaryActivity" android:theme="@style/FBReader.Transparent" android:configChanges="orientation|keyboardHidden|screenSize"/>
-    </application>
+		<activity android:name="com.paragon.dictionary.fbreader.OpenDictionaryActivity" android:theme="@style/FBReader.Transparent" android:configChanges="orientation|keyboardHidden|screenSize"/>
+	</application>
 </manifest>
