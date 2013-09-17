@@ -25,7 +25,6 @@ import android.app.*;
 import android.content.*;
 import android.net.Uri;
 import android.util.DisplayMetrics;
-
 import android.util.Log;
 
 import com.abbyy.mobile.lingvo.api.MinicardContract;
@@ -156,17 +155,19 @@ public abstract class DictionaryUtil {
 	}
 
 	private static class OpenDictionaryPackageInfo extends PackageInfo {
-		final OpenDictionaryFlyout myFlyout;
+		final OpenDictionaryFlyout Flyout;
 
 		OpenDictionaryPackageInfo(Dictionary dictionary) {
-			super(dictionary.getUID(),
-				  dictionary.getApplicationPackageName(),
-				  ".Start",
-				  dictionary.getName(),
-				  null,
-				  null,
-				  "%s");
-			myFlyout = new OpenDictionaryFlyout(dictionary);
+			super(
+				dictionary.getUID(),
+				dictionary.getApplicationPackageName(),
+				".Start",
+				dictionary.getName(),
+				null,
+				null,
+				"%s"
+			);
+			Flyout = new OpenDictionaryFlyout(dictionary);
 		}
 	}
 
@@ -309,7 +310,6 @@ public abstract class DictionaryUtil {
 	public static class PopupFrameMetric {
 		public final int Height;
 		public final int Gravity;
-		public final int Top;
 
 		PopupFrameMetric(DisplayMetrics metrics, int selectionTop, int selectionBottom) {
 			final int screenHeight = metrics.heightPixels;
@@ -319,13 +319,13 @@ public abstract class DictionaryUtil {
 			final int space = (showAtBottom ? bottomSpace : topSpace) - metrics.densityDpi / 12;
 			final int maxHeight = Math.min(metrics.densityDpi * 20 / 12, screenHeight * 2 / 3);
 			final int minHeight = Math.min(metrics.densityDpi * 10 / 12, screenHeight * 2 / 3);
+
 			Height = Math.max(minHeight, Math.min(maxHeight, space));
 			Gravity = showAtBottom ? android.view.Gravity.BOTTOM : android.view.Gravity.TOP;
-			Top = showAtBottom ? metrics.heightPixels - Height : 0;
 		}
 	}
 
-	public static void openTextInDictionary(final Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
+	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
 		Log.d("FBReader", "DictionaryUtil:openTextInDictionary");
 		if (singleWord) {
 			int start = 0;
@@ -348,7 +348,7 @@ public abstract class DictionaryUtil {
 		if (info instanceof OpenDictionaryPackageInfo) {
 			Log.d("FBReader", "DictionaryUtil - work with Open Dictionary API :" + text);
 			final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
-			openDictionary.myFlyout.showTranslation(activity, text, frameMetrics);
+			openDictionary.Flyout.showTranslation(activity, text, frameMetrics);
 			return;
 		}
 		
