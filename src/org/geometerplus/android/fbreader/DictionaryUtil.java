@@ -90,6 +90,28 @@ public abstract class DictionaryUtil {
 			IntentKey = intentKey;
 			IntentDataPattern = intentDataPattern;
 		}
+
+		Intent getDictionaryIntent(String text) {
+			final Intent intent = new Intent(IntentAction);
+			if (PackageName != null) {
+				if (ClassName != null) {
+					String cls = ClassName;
+					if (cls.startsWith(".")) {
+						cls = PackageName + cls;
+					}
+					intent.setComponent(new ComponentName(
+						PackageName, cls
+					));
+				}
+			}
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			text = IntentDataPattern.replace("%s", text);
+			if (IntentKey != null) {
+				return intent.putExtra(IntentKey, text);
+			} else {
+				return intent.setData(Uri.parse(text));
+			}
+		}
 	}
 
 	private static class InfoReader extends ZLXMLReaderAdapter {
@@ -154,7 +176,7 @@ public abstract class DictionaryUtil {
 					null,
 					"%s"
 				);
-				if (PackageUtil.canBeStarted(myContext, getDictionaryIntent(info, "test"), false)) {
+				if (PackageUtil.canBeStarted(myContext, info.getDictionaryIntent("test"), false)) {
 					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
 				}
 			}
@@ -252,7 +274,7 @@ public abstract class DictionaryUtil {
 					installedPackages.contains(info.PackageName)) {
 					list.add(info);
 				} else if (!notInstalledPackages.contains(info.PackageName)) {
-					if (PackageUtil.canBeStarted(context, getDictionaryIntent(info, "test"), false)) {
+					if (PackageUtil.canBeStarted(context, info.getDictionaryIntent("test"), false)) {
 						list.add(info);
 						installedPackages.add(info.PackageName);
 					} else {
@@ -303,32 +325,6 @@ public abstract class DictionaryUtil {
 		return firstInfo();
 	}
 
-	private static Intent getDictionaryIntent(String text, boolean singleWord) {
-		return getDictionaryIntent(getCurrentDictionaryInfo(singleWord), text);
-	}
-
-	public static Intent getDictionaryIntent(PackageInfo dictionaryInfo, String text) {
-		final Intent intent = new Intent(dictionaryInfo.IntentAction);
-		if (dictionaryInfo.PackageName != null) {
-			String cls = dictionaryInfo.ClassName;
-			if (cls != null) {
-				if (cls.startsWith(".")) {
-					cls = dictionaryInfo.PackageName + cls;
-				}
-				intent.setComponent(new ComponentName(
-					dictionaryInfo.PackageName, cls
-				));
-			}
-		}
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		text = dictionaryInfo.IntentDataPattern.replace("%s", text);
-		if (dictionaryInfo.IntentKey != null) {
-			return intent.putExtra(dictionaryInfo.IntentKey, text);
-		} else {
-			return intent.setData(Uri.parse(text));
-		}
-	}
-
 	public static class PopupFrameMetric {
 		public final int Height;
 		public final int Gravity;
@@ -374,7 +370,7 @@ public abstract class DictionaryUtil {
 			return;
 		}
 		
-		final Intent intent = getDictionaryIntent(info, text);
+		final Intent intent = info.getDictionaryIntent(text);
 		try {
 			if ("ABBYY Lingvo".equals(info.Id)) {
 				intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
@@ -405,7 +401,8 @@ public abstract class DictionaryUtil {
 	}
 
 	public static void installDictionaryIfNotInstalled(final Activity activity, boolean singleWord) {
-		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test", singleWord), false)) {
+		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
+		if (PackageUtil.canBeStarted(activity, info.getDictionaryIntent("test"), false)) {
 			return;
 		}
 		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo(singleWord);
