@@ -867,4 +867,7 @@
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 	</node>
+	<node name="language-self">
+	    <node name="all" value="All languages"/>
+	</node>
 </resources>
