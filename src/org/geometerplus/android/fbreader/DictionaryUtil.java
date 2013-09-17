@@ -288,12 +288,14 @@ public abstract class DictionaryUtil {
 		final Intent intent = new Intent(dictionaryInfo.IntentAction);
 		if (dictionaryInfo.PackageName != null) {
 			String cls = dictionaryInfo.ClassName;
-			if (cls != null && cls.startsWith(".")) {
-				cls = dictionaryInfo.PackageName + cls;
+			if (cls != null) {
+				if (cls.startsWith(".")) {
+					cls = dictionaryInfo.PackageName + cls;
+				}
+				intent.setComponent(new ComponentName(
+					dictionaryInfo.PackageName, cls
+				));
 			}
-			intent.setComponent(new ComponentName(
-				dictionaryInfo.PackageName, cls
-			));
 		}
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		text = dictionaryInfo.IntentDataPattern.replace("%s", text);
@@ -349,30 +351,27 @@ public abstract class DictionaryUtil {
 			return;
 		}
 		
-		if ("ABBYY Lingvo".equals(info.Id)) {
-			final Intent intent = new Intent(MinicardContract.MINICARD_ACTION);
-			intent.putExtra(MinicardContract.EXTRA_TEXT, text);
-			intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.gravity);
-			intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.height);
-			intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
-			intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
-			intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
-			final String preferredLanguage = ourPreferredLanguageOption.getValue();
-			if (preferredLanguage != null && !"".equals(preferredLanguage)) {
-				intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
-			}
-			
-			try {
-				activity.startActivity(intent);
-			} catch (ActivityNotFoundException e) {
-				DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord, true);
-			}
-			return;
-		}
-
 		final Intent intent = getDictionaryIntent(info, text);
+
 		try {
-			if ("ColorDict".equals(info.Id)) {
+			if ("ABBYY Lingvo".equals(info.Id)) {
+				intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.gravity);
+				intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.height);
+				intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
+				intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
+				intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
+				final String preferredLanguage = ourPreferredLanguageOption.getValue();
+				if (preferredLanguage != null && !"".equals(preferredLanguage)) {
+					intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
+				}
+				
+				try {
+					activity.startActivity(intent);
+				} catch (ActivityNotFoundException e) {
+					installDictionaryIfNotInstalled(activity, singleWord);
+				}
+				return;
+			} else if ("ColorDict".equals(info.Id)) {
 				intent.putExtra(ColorDict3.HEIGHT, frameMetrics.height);
 				intent.putExtra(ColorDict3.GRAVITY, frameMetrics.gravity);
 				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
@@ -380,7 +379,7 @@ public abstract class DictionaryUtil {
 			}
 			activity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord, false);
+			installDictionaryIfNotInstalled(activity, singleWord);
 		}
 	}
 
@@ -390,8 +389,8 @@ public abstract class DictionaryUtil {
 		);
 	}
 
-	public static void installDictionaryIfNotInstalled(final Activity activity, boolean singleWord, boolean forceNotCheck) {
-		if ((!forceNotCheck) &&  PackageUtil.canBeStarted(activity, getDictionaryIntent("test", singleWord), false)) {
+	public static void installDictionaryIfNotInstalled(final Activity activity, boolean singleWord) {
+		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test", singleWord), false)) {
 			return;
 		}
 		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo(singleWord);
