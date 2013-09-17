@@ -70,6 +70,28 @@ public abstract class DictionaryUtil {
 	private static Map<PackageInfo,Integer> ourInfos =
 		Collections.synchronizedMap(new LinkedHashMap<PackageInfo,Integer>());
 
+	public static class PackageInfo {
+		public final String Id;
+		public final String PackageName;
+		public final String ClassName;
+		public final String Title;
+
+		public final String IntentAction;
+		public final String IntentKey;
+		public final String IntentDataPattern;
+
+		PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern) {
+			Id = id;
+			PackageName = packageName;
+			ClassName = className;
+			Title = title;
+
+			IntentAction = intentAction;
+			IntentKey = intentKey;
+			IntentDataPattern = intentDataPattern;
+		}
+	}
+
 	private static class InfoReader extends ZLXMLReaderAdapter {
 		@Override
 		public boolean dontCacheAttributeValues() {
