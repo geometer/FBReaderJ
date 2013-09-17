@@ -1,3 +1,7 @@
+* ISSUES:
+** do not use NetworkLibrary instance in AllCatalogsActivity, send result via intent
+** do not use myChanged state flag in AllCatalogsActivity, use setResult immediately
+
 * SHORT-TERM (1.8.3)
  + check recently added catalogs are not lost (and are visible) after update
  + newly added catalog is not checked in filter activity

@@ -47,7 +47,7 @@ public class AllCatalogsActivity extends ListActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		Intent intent = getIntent();
+		final Intent intent = getIntent();
 		myIds = intent.getStringArrayListExtra(IDS_LIST);
 		myInactiveIds = intent.getStringArrayListExtra(INACTIVE_IDS_LIST);
 	}
@@ -193,6 +193,7 @@ public class AllCatalogsActivity extends ListActivity {
 					public void onClick(View v) {
 						catalogItem.IsChecked = checkBox.isChecked();
 						myIsChanged = true;
+						setResult(... Intent)
 					}
 				});
 			}
