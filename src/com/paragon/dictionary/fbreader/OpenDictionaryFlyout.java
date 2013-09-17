@@ -40,14 +40,16 @@ public class OpenDictionaryFlyout {
 		myPackageName = dictionary.getApplicationPackageName();
 	}
 
-	private Dictionary getDictionary(final Context context ) {
-		if (myPackageName == null)
+	private Dictionary getDictionary(final Context context) {
+		if (myPackageName == null) {
 			return null;
+		}
 		final OpenDictionaryAPI api = new OpenDictionaryAPI(context);
 		HashSet<Dictionary> dictionaries = api.getDictionaries(myDirection);
 		for (Dictionary dictionary : dictionaries) {
-			if (myPackageName.equalsIgnoreCase(dictionary.getApplicationPackageName()))
+			if (myPackageName.equalsIgnoreCase(dictionary.getApplicationPackageName())) {
 				return dictionary;
+			}
 		}
 		Log.e("FBReader", "OpenDictionaryFlyout:getDictionary - Dictionary with direction [" +
 				myDirection.toString() + "] and package name [" + myPackageName + "] not found");
