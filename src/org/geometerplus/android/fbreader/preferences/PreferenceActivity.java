@@ -20,13 +20,14 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import java.text.DecimalFormatSymbols;
-import java.util.Locale;
+import java.util.*;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -65,7 +66,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		super.onStop();
 	}
-
+	
 	@Override
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
@@ -468,6 +469,22 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(pageTurningOptions.Horizontal, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
+		
+//		final ZLStringPreference langCodePref = new ZLStringOptionPreference(this, DictionaryUtil.PreferredLanguageOption, dictionaryScreen.Resource, "langCode");
+	
+		ArrayList<String> codes = new ArrayList<String>();
+		
+		for (Language l : ZLResource.languages()) {
+			if (!"system".equals(l.Code)) {
+				codes.add(l.Code);
+			}
+		}
+		Collections.sort(codes);
+		codes.add(0, DictionaryUtil.AnyLanguage);
+		String[] array = codes.toArray(new String[codes.size()]);
+		final ZLStringChoicePreference langCodePref = new ZLStringChoicePreference(this, dictionaryScreen.Resource, "langCode", DictionaryUtil.PreferredLanguageOption, array);
+		
+		
 		try {
 			dictionaryScreen.addPreference(new DictionaryPreference(
 				this,
@@ -475,7 +492,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				"dictionary",
 				DictionaryUtil.singleWordTranslatorOption(),
 				DictionaryUtil.dictionaryInfos(this, true)
-			));
+			) {
+				@Override
+				protected void onDialogClosed(boolean result) {
+					super.onDialogClosed(result);
+					langCodePref.setEnabled(DictionaryUtil.IdsToAskCode.contains(DictionaryUtil.singleWordTranslatorOption().getValue()));
+				}
+			});
 			dictionaryScreen.addPreference(new DictionaryPreference(
 				this,
 				dictionaryScreen.Resource,
@@ -493,6 +516,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			"navigateOverAllWords"
 		));
 		dictionaryScreen.addOption(fbReader.WordTappingActionOption, "tappingAction");
+		dictionaryScreen.addPreference(langCodePref);
+		langCodePref.setEnabled(DictionaryUtil.IdsToAskCode.contains(DictionaryUtil.singleWordTranslatorOption().getValue()));
 
 		final Screen imagesScreen = createPreferenceScreen("images");
 		imagesScreen.addOption(fbReader.ImageTappingActionOption, "tappingAction");

@@ -640,6 +640,7 @@
 			<node name="summary" value="Dictionary settings"/>
 			<node name="dictionary" value="Dictionary"/>
 			<node name="translator" value="Translator"/>
+			<node name="langCode" value="Select language to translate to"/>
 			<node name="tappingAction" value="Long tapping action">
 				<node name="doNothing" value="Long tapping does nothing"/>
 				<node name="selectSingleWord" value="Long tapping selects single word"/>
@@ -650,7 +651,6 @@
 				<node name="summaryOn" value="Key navigation visits all words"/>
 				<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
 			</node>
-			<node name="codeSelect" value="Enter language code to translate to. For example: EN for English. Leave this field blank to see translation to all languages."/>
 		</node>
 		<node name="images" value="Images">
 			<node name="summary" value="Image displaying options"/>

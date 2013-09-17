@@ -55,16 +55,13 @@ public abstract class DictionaryUtil {
 	private static ZLStringOption ourMultiWordTranslatorOption;
 	
 	//TODO: maybe langcodes for translator and dictionary could be different
-	private static ZLStringOption ourPreferredLanguageOption = new ZLStringOption("Dictionary", "LangCode", "");
+	public static final ZLStringOption PreferredLanguageOption = new ZLStringOption("Dictionary", "LangCode", "");
+	
+	public static  final String AnyLanguage = "<any language>";
+	
+	public final static List<String> IdsToAskCode = Collections.<String>unmodifiableList(Arrays.<String>asList("ABBYY Lingvo"));
 
-	
-	public static void setPreferredLanguageCode(String code) {
-		ourPreferredLanguageOption.setValue(code);
-	}
-	
-	public static String getPreferredLanguageCode() {
-		return ourPreferredLanguageOption.getValue();
-	}
+
 
 	// Map: dictionary info -> mode if package is not installed
 	private static Map<PackageInfo,Integer> ourInfos =
@@ -379,8 +376,8 @@ public abstract class DictionaryUtil {
 				intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
 				intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
 				intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
-				final String preferredLanguage = ourPreferredLanguageOption.getValue();
-				if (preferredLanguage != null && !"".equals(preferredLanguage)) {
+				final String preferredLanguage = PreferredLanguageOption.getValue();
+				if (preferredLanguage != null && !"".equals(preferredLanguage) && !AnyLanguage.equals(preferredLanguage)) {
 					intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
 				}
 			} else if ("ColorDict".equals(info.Id)) {

@@ -21,10 +21,7 @@ package org.geometerplus.android.fbreader.preferences;
 
 import java.util.*;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.widget.EditText;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -34,8 +31,6 @@ import org.geometerplus.android.fbreader.DictionaryUtil;
 class DictionaryPreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;
 	
-	private final static List<String> ourIdsToAskCode = Collections.<String>unmodifiableList(Arrays.<String>asList("ABBYY Lingvo"));
-
 	DictionaryPreference(Context context, ZLResource resource, String resourceKey, ZLStringOption dictionaryOption, List<DictionaryUtil.PackageInfo> infos) {
 		super(context, resource, resourceKey);
 
@@ -58,22 +53,5 @@ class DictionaryPreference extends ZLStringListPreference {
 	protected void onDialogClosed(boolean result) {
 		super.onDialogClosed(result);
 		myOption.setValue(getValue());
-		if (ourIdsToAskCode.contains(getValue())) {
-			final EditText codeTxt = new EditText(getContext());
-			String code = DictionaryUtil.getPreferredLanguageCode();
-			if (code != null) {
-				codeTxt.setText(code);
-			}
-			new AlertDialog.Builder(getContext())
-			//FIXME: raw access to resource - not beautiful
-			.setMessage(ZLResource.resource("Preferences").getResource("dictionary").getResource("codeSelect").getValue())
-			.setView(codeTxt)
-			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface arg0, int arg1) {
-					String code = codeTxt.getText().toString();
-					DictionaryUtil.setPreferredLanguageCode(code);
-				}
-			}).show();
-		}
 	}
 }
