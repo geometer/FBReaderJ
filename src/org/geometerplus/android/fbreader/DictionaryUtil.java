@@ -307,9 +307,9 @@ public abstract class DictionaryUtil {
 	}
 
 	public static class PopupFrameMetric {
-		public final int height;
-		public final int gravity;
-		public final int top;
+		public final int Height;
+		public final int Gravity;
+		public final int Top;
 
 		PopupFrameMetric(DisplayMetrics metrics, int selectionTop, int selectionBottom) {
 			final int screenHeight = metrics.heightPixels;
@@ -319,9 +319,9 @@ public abstract class DictionaryUtil {
 			final int space = (showAtBottom ? bottomSpace : topSpace) - metrics.densityDpi / 12;
 			final int maxHeight = Math.min(metrics.densityDpi * 20 / 12, screenHeight * 2 / 3);
 			final int minHeight = Math.min(metrics.densityDpi * 10 / 12, screenHeight * 2 / 3);
-			height = Math.max(minHeight, Math.min(maxHeight, space));
-			gravity = showAtBottom ? android.view.Gravity.BOTTOM : android.view.Gravity.TOP;
-			top = showAtBottom ? metrics.heightPixels - height : 0;
+			Height = Math.max(minHeight, Math.min(maxHeight, space));
+			Gravity = showAtBottom ? android.view.Gravity.BOTTOM : android.view.Gravity.TOP;
+			Top = showAtBottom ? metrics.heightPixels - Height : 0;
 		}
 	}
 
@@ -340,7 +340,8 @@ public abstract class DictionaryUtil {
 
 		final DisplayMetrics metrics = new DisplayMetrics();
 		activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		final PopupFrameMetric frameMetrics = new PopupFrameMetric(metrics, selectionTop, selectionBottom);
+		final PopupFrameMetric frameMetrics =
+			new PopupFrameMetric(metrics, selectionTop, selectionBottom);
 
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
 
@@ -352,11 +353,10 @@ public abstract class DictionaryUtil {
 		}
 		
 		final Intent intent = getDictionaryIntent(info, text);
-
 		try {
 			if ("ABBYY Lingvo".equals(info.Id)) {
-				intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.gravity);
-				intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.height);
+				intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
+				intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.Height);
 				intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
 				intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
 				intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
@@ -364,16 +364,9 @@ public abstract class DictionaryUtil {
 				if (preferredLanguage != null && !"".equals(preferredLanguage)) {
 					intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
 				}
-				
-				try {
-					activity.startActivity(intent);
-				} catch (ActivityNotFoundException e) {
-					installDictionaryIfNotInstalled(activity, singleWord);
-				}
-				return;
 			} else if ("ColorDict".equals(info.Id)) {
-				intent.putExtra(ColorDict3.HEIGHT, frameMetrics.height);
-				intent.putExtra(ColorDict3.GRAVITY, frameMetrics.gravity);
+				intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
+				intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
 				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 				intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
 			}

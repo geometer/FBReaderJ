@@ -68,8 +68,8 @@ public class OpenDictionaryFlyout {
 			OpenDictionaryActivity.setDictionary(dictionary);
 			Intent intent = new Intent(activity, OpenDictionaryActivity.class);
 			intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_QUERY_KEY, text);
-			intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_HEIGHT_KEY, frameMetrics.height);
-			intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_GRAVITY_KEY, frameMetrics.gravity);
+			intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_HEIGHT_KEY, frameMetrics.Height);
+			intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_GRAVITY_KEY, frameMetrics.Gravity);
 			activity.startActivity(intent);
 		}
 	}
