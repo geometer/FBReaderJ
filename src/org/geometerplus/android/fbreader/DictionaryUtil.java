@@ -53,6 +53,28 @@ public abstract class DictionaryUtil {
 	private static Map<PackageInfo,Integer> ourInfos =
 		Collections.synchronizedMap(new LinkedHashMap<PackageInfo,Integer>());
 
+	public static class PackageInfo {
+		public final String Id;
+		public final String PackageName;
+		public final String ClassName;
+		public final String Title;
+
+		public final String IntentAction;
+		public final String IntentKey;
+		public final String IntentDataPattern;
+
+		PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern) {
+			Id = id;
+			PackageName = packageName;
+			ClassName = className;
+			Title = title;
+
+			IntentAction = intentAction;
+			IntentKey = intentKey;
+			IntentDataPattern = intentDataPattern;
+		}
+	}
+
 	private static class InfoReader extends ZLXMLReaderAdapter {
 		@Override
 		public boolean dontCacheAttributeValues() {
@@ -120,11 +142,11 @@ public abstract class DictionaryUtil {
 	}
 
 	private static class BitKnightsInfoReader extends ZLXMLReaderAdapter {
-		private final Context mContext;
-		private int mCounter;
+		private final Context myContext;
+		private int myCounter;
 
 		BitKnightsInfoReader(Context context) {
-			mContext = context;
+			myContext = context;
 		}
 
 		@Override
@@ -136,7 +158,7 @@ public abstract class DictionaryUtil {
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("dictionary".equals(tag)) {
 				final PackageInfo info = new PackageInfo(
-					"BK" + mCounter ++,
+					"BK" + myCounter ++,
 					attributes.getValue("package"),
 					"com.bitknights.dict.ShareTranslateActivity",
 					attributes.getValue("title"),
@@ -144,7 +166,7 @@ public abstract class DictionaryUtil {
 					null,
 					"%s"
 				);
-				if (PackageUtil.canBeStarted(mContext, getDictionaryIntent(info, "test"), false)) {
+				if (PackageUtil.canBeStarted(myContext, getDictionaryIntent(info, "test"), false)) {
 					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
 				}
 			}
