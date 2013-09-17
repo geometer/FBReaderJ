@@ -241,11 +241,12 @@ public abstract class DictionaryUtil {
 
 	public static void init(final Context context) {
 		if (ourInfos.isEmpty()) {
+			final OpenDictionaryAPI api = new OpenDictionaryAPI(context);
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
-					OpenDictionaryAPIInfoReader.read(new OpenDictionaryAPI(context));
+					OpenDictionaryAPIInfoReader.read(api);
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);
