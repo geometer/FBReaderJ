@@ -31,24 +31,24 @@ import android.widget.*;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.android.fbreader.covers.CoverManager;
+import org.geometerplus.android.fbreader.FBReader;
 
 public class AllCatalogsActivity extends ListActivity {
 	final NetworkLibrary myLibrary = NetworkLibrary.Instance();
 	private ArrayList<Item> myAllItems = new ArrayList<Item>();
+	private ArrayList<Item> mySelectedItems = new ArrayList<Item>();
 	ArrayList<String> myIds = new ArrayList<String>();
 	ArrayList<String> myInactiveIds = new ArrayList<String>();
+	Intent returnIntent = new Intent();
 
-	public final static String IDS_LIST = "org.geometerplus.android.fbreader.network.IDS_LIST";
 	public final static String INACTIVE_IDS_LIST = "org.geometerplus.android.fbreader.network.INACTIVE_IDS_LIST";
-
-	private boolean myIsChanged = false;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		Intent intent = getIntent();
-		myIds = intent.getStringArrayListExtra(IDS_LIST);
+		myIds = intent.getStringArrayListExtra(FBReader.CATALOGS_ID_LIST);
 		myInactiveIds = intent.getStringArrayListExtra(INACTIVE_IDS_LIST);
 	}
 
@@ -65,6 +65,7 @@ public class AllCatalogsActivity extends ListActivity {
 				cItems.add(new CatalogItem(id, true, myLibrary.getCatalogTreeByUrlAll(id)));
 			}
 			myAllItems.addAll(cItems);
+			mySelectedItems.addAll(cItems);
 		}
 
 		if (myInactiveIds.size() > 0) {
@@ -92,19 +93,6 @@ public class AllCatalogsActivity extends ListActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		if (myIsChanged) {
-			final ArrayList<String> ids = new ArrayList<String>();
-			for (Item item : myAllItems) {
-				if (item instanceof CatalogItem) {
-					final CatalogItem catalogItem = (CatalogItem)item;
-					if (catalogItem.IsChecked) {
-						ids.add(catalogItem.Id);
-					}
-				}
-			}
-			myLibrary.setActiveIds(ids);
-			myLibrary.synchronize();
-		}
 	}
 
 	private static interface Item {
@@ -140,6 +128,28 @@ public class AllCatalogsActivity extends ListActivity {
 		@Override
 		public int compareTo(CatalogItem another) {
 			return getTitleLower().compareTo(another.getTitleLower());
+		}
+	}
+
+	private void setResultIds(Item item){
+		if(item != null && item instanceof CatalogItem){
+			CatalogItem catalogItem = (CatalogItem)item;
+			if(catalogItem.IsChecked){
+				mySelectedItems.add(catalogItem);
+			}else{
+				mySelectedItems.remove(catalogItem);
+			}
+			final ArrayList<String> ids = new ArrayList<String>();
+			for (Item selectedItem : mySelectedItems) {
+				if (selectedItem instanceof CatalogItem) {
+					final CatalogItem ci = (CatalogItem)selectedItem;
+					if (ci.IsChecked) {
+						ids.add(ci.Id);
+					}
+				}
+			}
+			returnIntent.putStringArrayListExtra(FBReader.CATALOGS_ID_LIST, ids);
+			setResult(RESULT_OK, returnIntent);
 		}
 	}
 
@@ -192,7 +202,7 @@ public class AllCatalogsActivity extends ListActivity {
 				checkBox.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						catalogItem.IsChecked = checkBox.isChecked();
-						myIsChanged = true;
+						setResultIds(catalogItem);
 					}
 				});
 			}

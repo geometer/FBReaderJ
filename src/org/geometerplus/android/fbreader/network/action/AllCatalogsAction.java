@@ -30,6 +30,7 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.network.AllCatalogsActivity;
+import org.geometerplus.android.fbreader.FBReader;
 
 public class AllCatalogsAction extends RootAction {
 
@@ -45,11 +46,12 @@ public class AllCatalogsAction extends RootAction {
 		final ArrayList<String> inactiveIds = new ArrayList<String>(library.linkIds());
 		inactiveIds.removeAll(ids);
 
-		OrientationUtil.startActivity(
+		OrientationUtil.startActivityForResult(
 			myActivity,
 			new Intent(myActivity.getApplicationContext(), AllCatalogsActivity.class)
-			  .putStringArrayListExtra(AllCatalogsActivity.IDS_LIST, ids)
-			  .putStringArrayListExtra(AllCatalogsActivity.INACTIVE_IDS_LIST, inactiveIds)
+			  .putStringArrayListExtra(FBReader.CATALOGS_ID_LIST, ids)
+			  .putStringArrayListExtra(AllCatalogsActivity.INACTIVE_IDS_LIST, inactiveIds),
+			  FBReader.REQUEST_ALL_CATALOGS
 		);
 	}
 }

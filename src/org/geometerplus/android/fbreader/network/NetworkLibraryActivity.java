@@ -42,6 +42,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.network.action.*;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
+import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -151,6 +152,15 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				getListView().invalidateViews();
 			}
 		});
+		if(data != null){
+			if(requestCode == FBReader.REQUEST_ALL_CATALOGS){
+				if(resultCode == RESULT_OK){
+					ArrayList<String> myIds = data.getStringArrayListExtra(FBReader.CATALOGS_ID_LIST);
+					NetworkLibrary.Instance().setActiveIds(myIds);
+					NetworkLibrary.Instance().synchronize();
+				}
+			}
+		}
 	}
 
 	@Override
