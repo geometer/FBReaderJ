@@ -34,7 +34,6 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 import org.geometerplus.android.fbreader.FBReader;
 
 public class AllCatalogsActivity extends ListActivity {
-	final NetworkLibrary myLibrary = NetworkLibrary.Instance();
 	private ArrayList<Item> myAllItems = new ArrayList<Item>();
 	private ArrayList<Item> mySelectedItems = new ArrayList<Item>();
 	ArrayList<String> myIds = new ArrayList<String>();
@@ -62,7 +61,7 @@ public class AllCatalogsActivity extends ListActivity {
 			myAllItems.add(new SectionItem("active"));
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myIds) {
-				cItems.add(new CatalogItem(id, true, myLibrary.getCatalogTreeByUrlAll(id)));
+				cItems.add(new CatalogItem(id, true, NetworkLibrary.Instance().getCatalogTreeByUrlAll(id)));
 			}
 			myAllItems.addAll(cItems);
 			mySelectedItems.addAll(cItems);
@@ -72,7 +71,7 @@ public class AllCatalogsActivity extends ListActivity {
 			myAllItems.add(new SectionItem("inactive"));
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myInactiveIds) {
-				cItems.add(new CatalogItem(id, false, myLibrary.getCatalogTreeByUrlAll(id)));
+				cItems.add(new CatalogItem(id, false, NetworkLibrary.Instance().getCatalogTreeByUrlAll(id)));
 			}
 			myAllItems.addAll(cItems);
 		}
@@ -131,11 +130,19 @@ public class AllCatalogsActivity extends ListActivity {
 		}
 	}
 
-	private void setResultIds(Item item){
+	private void setResultIds(Item item, int index){
 		if(item != null && item instanceof CatalogItem){
 			CatalogItem catalogItem = (CatalogItem)item;
 			if(catalogItem.IsChecked){
-				mySelectedItems.add(catalogItem);
+				int insertIndex = index <=0 ?0:(index-1);
+				if(mySelectedItems.contains(catalogItem)){
+					mySelectedItems.remove(catalogItem);
+				}
+				if(insertIndex > 0){
+					mySelectedItems.add(insertIndex, catalogItem);
+				}else{
+					mySelectedItems.add(catalogItem);
+				}
 			}else{
 				mySelectedItems.remove(catalogItem);
 			}
@@ -202,7 +209,7 @@ public class AllCatalogsActivity extends ListActivity {
 				checkBox.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						catalogItem.IsChecked = checkBox.isChecked();
-						setResultIds(catalogItem);
+						setResultIds(catalogItem, 0);
 					}
 				});
 			}
