@@ -209,38 +209,32 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	private static class OpenDictionaryAPIInfoReader {
-		static void read(OpenDictionaryAPI api) {
-			final Set<Dictionary> dictionaries = api.getDictionaries(); 
-			if (dictionaries.isEmpty()) {
-				return;
-			}
-
-			final SortedSet<Dictionary> dictionariesTreeSet =
-				new TreeSet<Dictionary>(new Comparator<Dictionary>() {
-					@Override
-					public int compare(Dictionary lhs, Dictionary rhs) {
-						return lhs.toString().compareTo(rhs.toString());
-					}
+	private static void collectOpenDictionaries(Context context) {
+		final SortedSet<Dictionary> dictionariesTreeSet =
+			new TreeSet<Dictionary>(new Comparator<Dictionary>() {
+				@Override
+				public int compare(Dictionary lhs, Dictionary rhs) {
+					return lhs.toString().compareTo(rhs.toString());
 				}
-			);
-			dictionariesTreeSet.addAll(dictionaries);
-
-			for (Dictionary dict : dictionariesTreeSet) {
-				final PackageInfo info = new OpenDictionaryPackageInfo(dict);
-				ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY);
 			}
+		);
+		dictionariesTreeSet.addAll(
+			new OpenDictionaryAPI(context).getDictionaries()
+		); 
+
+		for (Dictionary dict : dictionariesTreeSet) {
+			final PackageInfo info = new OpenDictionaryPackageInfo(dict);
+			ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY);
 		}
 	}
 
 	public static void init(final Context context) {
 		if (ourInfos.isEmpty()) {
-			final OpenDictionaryAPI api = new OpenDictionaryAPI(context);
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
-					OpenDictionaryAPIInfoReader.read(api);
+					collectOpenDictionaries(context);
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);
