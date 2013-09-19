@@ -194,7 +194,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			appearanceScreen.Resource,
 			"dontTurnScreenOffDuringCharging"
 		));
-		*/
+		 */
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
 		}
@@ -285,8 +285,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				continue;
 			}
 			ZLTextFullStyleDecoration fullDecoration =
-				decoration instanceof ZLTextFullStyleDecoration ?
-					(ZLTextFullStyleDecoration)decoration : null;
+				decoration instanceof ZLTextFullStyleDecoration
+					? (ZLTextFullStyleDecoration)decoration : null;
 
 			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.getName());
 			formatScreen.addPreference(new FontOption(
@@ -388,7 +388,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		bgPreferences.setEnabled("".equals(profile.WallpaperOption.getValue()));
 		/*
 		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
-		*/
+		 */
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
@@ -463,7 +463,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				this, fbreader, colorProfileScreen, key, ColorProfilePreference.createTitle(resource, key)
 			));
 		}
-		*/
+		 */
 
 		final PageTurningOptions pageTurningOptions = FBReaderApp.PageTurningOptions;
 
