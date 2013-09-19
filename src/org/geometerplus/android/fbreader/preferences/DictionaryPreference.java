@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.*;
+import java.util.List;
 
 import android.content.Context;
 
@@ -30,7 +30,7 @@ import org.geometerplus.android.fbreader.DictionaryUtil;
 
 class DictionaryPreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;
-	
+
 	DictionaryPreference(Context context, ZLResource resource, String resourceKey, ZLStringOption dictionaryOption, List<DictionaryUtil.PackageInfo> infos) {
 		super(context, resource, resourceKey);
 

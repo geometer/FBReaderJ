@@ -46,7 +46,6 @@
 		dataKey="com.abbyy.mobile.lingvo.intent.extra.TEXT"
 		pattern="%s"
 		role="dictionary"
-		list="always"
 	/>
 	<dictionary
 		id="Lingo Quiz Lite"
