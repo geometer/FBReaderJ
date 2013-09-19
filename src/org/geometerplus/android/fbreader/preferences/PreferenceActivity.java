@@ -108,27 +108,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					languageOption.setValue(code);
 					finish();
 					startActivity(new Intent(
-							Intent.ACTION_VIEW, Uri.parse("fbreader-action:preferences#appearance")
-							));
+						Intent.ACTION_VIEW, Uri.parse("fbreader-action:preferences#appearance")
+					));
 				}
 			}
 		});
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
-				this, appearanceScreen.Resource, "screenOrientation",
-				androidLibrary.getOrientationOption(), androidLibrary.allOrientations()
-				));
+			this, appearanceScreen.Resource, "screenOrientation",
+			androidLibrary.getOrientationOption(), androidLibrary.allOrientations()
+		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
-				this,
-				fbReader.TwoColumnViewOption,
-				appearanceScreen.Resource,
-				"twoColumnView"
-				));
+			this,
+			fbReader.TwoColumnViewOption,
+			appearanceScreen.Resource,
+			"twoColumnView"
+		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
-				this,
-				fbReader.AllowScreenBrightnessAdjustmentOption,
-				appearanceScreen.Resource,
-				"allowScreenBrightnessAdjustment"
-				) {
+			this,
+			fbReader.AllowScreenBrightnessAdjustmentOption,
+			appearanceScreen.Resource,
+			"allowScreenBrightnessAdjustment"
+		) {
 			private final int myLevel = androidLibrary.ScreenBrightnessLevelOption.getValue();
 
 			@Override
@@ -138,11 +138,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 		appearanceScreen.addPreference(new BatteryLevelToTurnScreenOffPreference(
-				this,
-				androidLibrary.BatteryLevelToTurnScreenOffOption,
-				appearanceScreen.Resource,
-				"dontTurnScreenOff"
-				));
+			this,
+			androidLibrary.BatteryLevelToTurnScreenOffOption,
+			appearanceScreen.Resource,
+			"dontTurnScreenOff"
+		));
 		/*
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
@@ -183,47 +183,47 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			spacings[i] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
 		}
 		textScreen.addPreference(new ZLChoicePreference(
-				this, textScreen.Resource, "lineSpacing",
-				spaceOption, spacings
-				));
+			this, textScreen.Resource, "lineSpacing",
+			spaceOption, spacings
+		));
 		final String[] alignments = { "left", "right", "center", "justify" };
 		textScreen.addPreference(new ZLChoicePreference(
-				this, textScreen.Resource, "alignment",
-				baseStyle.AlignmentOption, alignments
-				));
+			this, textScreen.Resource, "alignment",
+			baseStyle.AlignmentOption, alignments
+		));
 		textScreen.addOption(baseStyle.AutoHyphenationOption, "autoHyphenations");
 
 		final Screen moreStylesScreen = textScreen.createPreferenceScreen("more");
 
 		byte styles[] = {
-				FBTextKind.REGULAR,
-				FBTextKind.TITLE,
-				FBTextKind.SECTION_TITLE,
-				FBTextKind.SUBTITLE,
-				FBTextKind.H1,
-				FBTextKind.H2,
-				FBTextKind.H3,
-				FBTextKind.H4,
-				FBTextKind.H5,
-				FBTextKind.H6,
-				FBTextKind.ANNOTATION,
-				FBTextKind.EPIGRAPH,
-				FBTextKind.AUTHOR,
-				FBTextKind.POEM_TITLE,
-				FBTextKind.STANZA,
-				FBTextKind.VERSE,
-				FBTextKind.CITE,
-				FBTextKind.INTERNAL_HYPERLINK,
-				FBTextKind.EXTERNAL_HYPERLINK,
-				FBTextKind.FOOTNOTE,
-				FBTextKind.ITALIC,
-				FBTextKind.EMPHASIS,
-				FBTextKind.BOLD,
-				FBTextKind.STRONG,
-				FBTextKind.DEFINITION,
-				FBTextKind.DEFINITION_DESCRIPTION,
-				FBTextKind.PREFORMATTED,
-				FBTextKind.CODE
+			FBTextKind.REGULAR,
+			FBTextKind.TITLE,
+			FBTextKind.SECTION_TITLE,
+			FBTextKind.SUBTITLE,
+			FBTextKind.H1,
+			FBTextKind.H2,
+			FBTextKind.H3,
+			FBTextKind.H4,
+			FBTextKind.H5,
+			FBTextKind.H6,
+			FBTextKind.ANNOTATION,
+			FBTextKind.EPIGRAPH,
+			FBTextKind.AUTHOR,
+			FBTextKind.POEM_TITLE,
+			FBTextKind.STANZA,
+			FBTextKind.VERSE,
+			FBTextKind.CITE,
+			FBTextKind.INTERNAL_HYPERLINK,
+			FBTextKind.EXTERNAL_HYPERLINK,
+			FBTextKind.FOOTNOTE,
+			FBTextKind.ITALIC,
+			FBTextKind.EMPHASIS,
+			FBTextKind.BOLD,
+			FBTextKind.STRONG,
+			FBTextKind.DEFINITION,
+			FBTextKind.DEFINITION_DESCRIPTION,
+			FBTextKind.PREFORMATTED,
+			FBTextKind.CODE
 		};
 		for (int i = 0; i < styles.length; ++i) {
 			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
@@ -501,15 +501,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		};
 
-
 		try {
 			dictionaryScreen.addPreference(new DictionaryPreference(
-					this,
-					dictionaryScreen.Resource,
-					"dictionary",
-					DictionaryUtil.singleWordTranslatorOption(),
-					DictionaryUtil.dictionaryInfos(this, true)
-					) {
+				this,
+				dictionaryScreen.Resource,
+				"dictionary",
+				DictionaryUtil.singleWordTranslatorOption(),
+				DictionaryUtil.dictionaryInfos(this, true)
+			) {
 				@Override
 				protected void onDialogClosed(boolean result) {
 					super.onDialogClosed(result);
@@ -517,12 +516,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			});
 			dictionaryScreen.addPreference(new DictionaryPreference(
-					this,
-					dictionaryScreen.Resource,
-					"translator",
-					DictionaryUtil.multiWordTranslatorOption(),
-					DictionaryUtil.dictionaryInfos(this, false)
-					));
+				this,
+				dictionaryScreen.Resource,
+				"translator",
+				DictionaryUtil.multiWordTranslatorOption(),
+				DictionaryUtil.dictionaryInfos(this, false)
+			));
 		} catch (Exception e) {
 			// ignore: dictionary lists are not initialized yet
 		}
