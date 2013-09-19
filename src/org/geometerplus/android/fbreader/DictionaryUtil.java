@@ -25,11 +25,13 @@ import android.app.*;
 import android.content.*;
 import android.net.Uri;
 import android.util.DisplayMetrics;
-
 import android.util.Log;
+
+import com.abbyy.mobile.lingvo.api.MinicardContract;
 import com.paragon.dictionary.fbreader.OpenDictionaryFlyout;
-import com.paragon.open.dictionary.api.*;
 import com.paragon.open.dictionary.api.Dictionary;
+import com.paragon.open.dictionary.api.OpenDictionaryAPI;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -51,6 +53,13 @@ public abstract class DictionaryUtil {
 
 	private static ZLStringOption ourSingleWordTranslatorOption;
 	private static ZLStringOption ourMultiWordTranslatorOption;
+	
+	//TODO: maybe langcodes for translator and dictionary could be different
+	public static final ZLStringOption PreferredLanguageOption = new ZLStringOption("Dictionary", "LangCode", "");
+	
+	public static  final String AnyLanguage = "<any language>";
+	
+	public final static List<String> IdsToAskCode = Collections.<String>unmodifiableList(Arrays.<String>asList("ABBYY Lingvo"));
 
 	// Map: dictionary info -> mode if package is not installed
 	private static Map<PackageInfo,Integer> ourInfos =
@@ -111,8 +120,15 @@ public abstract class DictionaryUtil {
 			if ("dictionary".equals(tag)) {
 				final String id = attributes.getValue("id");
 				final String title = attributes.getValue("title");
-
-				int flags = FLAG_SHOW_AS_DICTIONARY | FLAG_SHOW_AS_TRANSLATOR;
+				final String role = attributes.getValue("role");
+				int flags;
+				if ("dictionary".equals(role)) {
+					flags = FLAG_SHOW_AS_DICTIONARY;
+				} else if ("translator".equals(role)) {
+					flags = FLAG_SHOW_AS_TRANSLATOR;
+				} else {
+					flags = FLAG_SHOW_AS_DICTIONARY | FLAG_SHOW_AS_TRANSLATOR;
+				}
 				if (!"always".equals(attributes.getValue("list"))) {
 					flags |= FLAG_INSTALLED_ONLY;
 				}
@@ -177,51 +193,55 @@ public abstract class DictionaryUtil {
 		String FULLSCREEN = "EXTRA_FULLSCREEN";
 	}
 
-    private static class OpenDictionaryPackageInfo extends PackageInfo {
-        final OpenDictionaryFlyout myFlyout;
+	private static class OpenDictionaryPackageInfo extends PackageInfo {
+		final OpenDictionaryFlyout Flyout;
 
-        OpenDictionaryPackageInfo(Dictionary dictionary) {
-            super(dictionary.getUID(),
-                  dictionary.getApplicationPackageName(),
-                  ".Start",
-                  dictionary.getName(),
-                  null,
-                  null,
-                  "%s");
-            myFlyout = new OpenDictionaryFlyout(dictionary);
-        }
-    }
+		OpenDictionaryPackageInfo(Dictionary dictionary) {
+			super(
+				dictionary.getUID(),
+				dictionary.getApplicationPackageName(),
+				".Start",
+				dictionary.getName(),
+				null,
+				null,
+				"%s"
+			);
+			Flyout = new OpenDictionaryFlyout(dictionary);
+		}
+	}
 
-    private static class OpenDictionaryAPIInfoReader {
-        static void read(OpenDictionaryAPI api) {
-            if (api.getDictionaries().isEmpty()) {
-                return;
-            }
+	private static class OpenDictionaryAPIInfoReader {
+		static void read(OpenDictionaryAPI api) {
+			final Set<Dictionary> dictionaries = api.getDictionaries(); 
+			if (dictionaries.isEmpty()) {
+				return;
+			}
 
-            SortedSet<Dictionary> dictionariesTreeSet = new TreeSet<Dictionary>(new Comparator<Dictionary>() {
-                @Override
-                public int compare(Dictionary lhs, Dictionary rhs) {
-                    return lhs.toString().compareTo(rhs.toString());
-                }
-            });
+			final SortedSet<Dictionary> dictionariesTreeSet =
+				new TreeSet<Dictionary>(new Comparator<Dictionary>() {
+					@Override
+					public int compare(Dictionary lhs, Dictionary rhs) {
+						return lhs.toString().compareTo(rhs.toString());
+					}
+				}
+			);
+			dictionariesTreeSet.addAll(dictionaries);
 
-            dictionariesTreeSet.addAll(new ArrayList<Dictionary>(api.getDictionaries()));
-
-            for (Dictionary dict : dictionariesTreeSet) {
-                final PackageInfo info = new OpenDictionaryPackageInfo(dict);
-                ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY);
-            }
-        }
-    }
+			for (Dictionary dict : dictionariesTreeSet) {
+				final PackageInfo info = new OpenDictionaryPackageInfo(dict);
+				ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY);
+			}
+		}
+	}
 
 	public static void init(final Context context) {
 		if (ourInfos.isEmpty()) {
-            final OpenDictionaryAPI api = new OpenDictionaryAPI(context);
+			final OpenDictionaryAPI api = new OpenDictionaryAPI(context);
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
-                    OpenDictionaryAPIInfoReader.read(api);
+					OpenDictionaryAPIInfoReader.read(api);
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);
@@ -301,28 +321,27 @@ public abstract class DictionaryUtil {
 		return firstInfo();
 	}
 
-    public static class PopupFrameMetric {
-        public final int height;
-        public final int gravity;
-        public final int top;
+	public static class PopupFrameMetric {
+		public final int Height;
+		public final int Gravity;
 
-        PopupFrameMetric(DisplayMetrics metrics, int selectionTop, int selectionBottom) {
-            final int screenHeight = metrics.heightPixels;
-            final int topSpace = selectionTop;
-            final int bottomSpace = metrics.heightPixels - selectionBottom;
-            final boolean showAtBottom = bottomSpace >= topSpace;
-            final int space = (showAtBottom ? bottomSpace : topSpace) - metrics.densityDpi / 12;
-            final int maxHeight = Math.min(metrics.densityDpi * 20 / 12, screenHeight * 2 / 3);
-            final int minHeight = Math.min(metrics.densityDpi * 10 / 12, screenHeight * 2 / 3);
-            height = Math.max(minHeight, Math.min(maxHeight, space));
-            gravity = showAtBottom ? android.view.Gravity.BOTTOM : android.view.Gravity.TOP;
-            top = showAtBottom ? metrics.heightPixels - height : 0;
-        }
-    }
+		PopupFrameMetric(DisplayMetrics metrics, int selectionTop, int selectionBottom) {
+			final int screenHeight = metrics.heightPixels;
+			final int topSpace = selectionTop;
+			final int bottomSpace = metrics.heightPixels - selectionBottom;
+			final boolean showAtBottom = bottomSpace >= topSpace;
+			final int space = (showAtBottom ? bottomSpace : topSpace) - metrics.densityDpi / 12;
+			final int maxHeight = Math.min(metrics.densityDpi * 20 / 12, screenHeight * 2 / 3);
+			final int minHeight = Math.min(metrics.densityDpi * 10 / 12, screenHeight * 2 / 3);
+
+			Height = Math.max(minHeight, Math.min(maxHeight, space));
+			Gravity = showAtBottom ? android.view.Gravity.BOTTOM : android.view.Gravity.TOP;
+		}
+	}
 
 	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
-        Log.d("FBReader", "DictionaryUtil:openTextInDictionary");
-        if (singleWord) {
+		Log.d("FBReader", "DictionaryUtil:openTextInDictionary");
+		if (singleWord) {
 			int start = 0;
 			int end = text.length();
 			for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
@@ -333,31 +352,41 @@ public abstract class DictionaryUtil {
 			text = text.substring(start, end);
 		}
 
-        final DisplayMetrics metrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        final PopupFrameMetric frameMetrics = new PopupFrameMetric(metrics, selectionTop, selectionBottom);
+		final DisplayMetrics metrics = new DisplayMetrics();
+		activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		final PopupFrameMetric frameMetrics =
+			new PopupFrameMetric(metrics, selectionTop, selectionBottom);
 
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
 
-        if (info instanceof OpenDictionaryPackageInfo)
-        {
-            Log.d("FBReader", "DictionaryUtil - work with Open Dictionary API");
-            final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
-            openDictionary.myFlyout.showTranslation(activity, text, frameMetrics);
-            return;
-        }
-
+		if (info instanceof OpenDictionaryPackageInfo) {
+			Log.d("FBReader", "DictionaryUtil - work with Open Dictionary API :" + text);
+			final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
+			openDictionary.Flyout.showTranslation(activity, text, frameMetrics);
+			return;
+		}
+		
 		final Intent intent = info.getDictionaryIntent(text);
 		try {
-			if ("ColorDict".equals(info.Id)) {
-				intent.putExtra(ColorDict3.HEIGHT, frameMetrics.height);
-				intent.putExtra(ColorDict3.GRAVITY, frameMetrics.gravity);
+			if ("ABBYY Lingvo".equals(info.Id)) {
+				intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
+				intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.Height);
+				intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
+				intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
+				intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
+				final String preferredLanguage = PreferredLanguageOption.getValue();
+				if (preferredLanguage != null && !"".equals(preferredLanguage) && !AnyLanguage.equals(preferredLanguage)) {
+					intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
+				}
+			} else if ("ColorDict".equals(info.Id)) {
+				intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
+				intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
 				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 				intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
 			}
 			activity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord);
+			installDictionaryIfNotInstalled(activity, singleWord);
 		}
 	}
 

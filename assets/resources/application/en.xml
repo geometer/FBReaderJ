@@ -640,6 +640,7 @@
 			<node name="summary" value="Dictionary settings"/>
 			<node name="dictionary" value="Dictionary"/>
 			<node name="translator" value="Translator"/>
+			<node name="langCode" value="Select language to translate to"/>
 			<node name="tappingAction" value="Long tapping action">
 				<node name="doNothing" value="Long tapping does nothing"/>
 				<node name="selectSingleWord" value="Long tapping selects single word"/>
@@ -865,5 +866,8 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+	</node>
+	<node name="language-self">
+	    <node name="all" value="All languages"/>
 	</node>
 </resources>

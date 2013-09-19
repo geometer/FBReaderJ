@@ -20,56 +20,59 @@
 
 package com.paragon.dictionary.fbreader;
 
+import java.util.HashSet;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
 import com.paragon.open.dictionary.api.*;
+
 import org.geometerplus.android.fbreader.DictionaryUtil;
 
-import java.util.HashSet;
-
-
 public class OpenDictionaryFlyout {
-    private final Direction myDirection;
-    private final String myPackageName;
+	private final Direction myDirection;
+	private final String myPackageName;
 
-    public OpenDictionaryFlyout(Dictionary dictionary) {
-        myDirection = dictionary.getDirection();
-        myPackageName = dictionary.getApplicationPackageName();
-    }
+	public OpenDictionaryFlyout(Dictionary dictionary) {
+		myDirection = dictionary.getDirection();
+		myPackageName = dictionary.getApplicationPackageName();
+	}
 
-    private Dictionary getDictionary(final Context context ) {
-        if (myPackageName == null)
-            return null;
-        final OpenDictionaryAPI api = new OpenDictionaryAPI(context);
-        HashSet<Dictionary> dictionaries = api.getDictionaries(myDirection);
-        for (Dictionary dictionary : dictionaries) {
-            if (myPackageName.equalsIgnoreCase(dictionary.getApplicationPackageName()))
-                return dictionary;
-        }
-        Log.e("FBReader", "OpenDictionaryFlyout:getDictionary - Dictionary with direction [" +
-                myDirection.toString() + "] and package name [" + myPackageName + "] not found");
-        return null;
-    }
+	private Dictionary getDictionary(final Context context) {
+		if (myPackageName == null) {
+			return null;
+		}
+		final OpenDictionaryAPI api = new OpenDictionaryAPI(context);
+		HashSet<Dictionary> dictionaries = api.getDictionaries(myDirection);
+		for (Dictionary dictionary : dictionaries) {
+			if (myPackageName.equalsIgnoreCase(dictionary.getApplicationPackageName())) {
+				return dictionary;
+			}
+		}
+		Log.e("FBReader", "OpenDictionaryFlyout:getDictionary - Dictionary with direction [" +
+				myDirection.toString() + "] and package name [" + myPackageName + "] not found");
+		return null;
+	}
 
-    public void showTranslation(final Activity activity, final String text, DictionaryUtil.PopupFrameMetric frameMetrics) {
-        Log.d("FBReader", "OpenDictionaryFlyout:showTranslation");
-        final Dictionary dictionary = getDictionary(activity);
-        if (dictionary == null) {
-            Log.e("FBReader", "OpenDictionaryFlyout:showTranslation - null dictionary received");
-            return;
-        }
+	public void showTranslation(final Activity activity, final String text, DictionaryUtil.PopupFrameMetric frameMetrics) {
+		Log.d("FBReader", "OpenDictionaryFlyout:showTranslation");
+		final Dictionary dictionary = getDictionary(activity);
+		if (dictionary == null) {
+			Log.e("FBReader", "OpenDictionaryFlyout:showTranslation - null dictionary received");
+			return;
+		}
 
-        if (!dictionary.isTranslationAsTextSupported()) {
-            dictionary.showTranslation(text);
-        } else {
-            OpenDictionaryActivity.setDictionary(dictionary);
-            Intent intent = new Intent(activity, OpenDictionaryActivity.class);
-            intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_QUERY_KEY, text);
-            intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_HEIGHT_KEY, frameMetrics.height);
-            intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_GRAVITY_KEY, frameMetrics.gravity);
-            activity.startActivity(intent);
-        }
-    }
+		if (!dictionary.isTranslationAsTextSupported()) {
+			dictionary.showTranslation(text);
+		} else {
+			OpenDictionaryActivity.setDictionary(dictionary);
+			Intent intent = new Intent(activity, OpenDictionaryActivity.class);
+			intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_QUERY_KEY, text);
+			intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_HEIGHT_KEY, frameMetrics.Height);
+			intent.putExtra(OpenDictionaryActivity.OPEN_DICTIONARY_GRAVITY_KEY, frameMetrics.Gravity);
+			activity.startActivity(intent);
+		}
+	}
 }
