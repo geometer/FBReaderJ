@@ -484,7 +484,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		codes.add(0, DictionaryUtil.AnyLanguage);
 		String[] array = codes.toArray(new String[codes.size()]);
 		final ZLStringChoicePreference langCodePref = new ZLStringChoicePreference(this, dictionaryScreen.Resource, "langCode", DictionaryUtil.PreferredLanguageOption, array) {
-
 			@Override
 			protected void setList(String[] values) {
 				String[] texts = new String[values.length];
