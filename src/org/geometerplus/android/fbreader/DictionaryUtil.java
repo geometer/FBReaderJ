@@ -53,6 +53,50 @@ public abstract class DictionaryUtil {
 	private static Map<PackageInfo,Integer> ourInfos =
 		Collections.synchronizedMap(new LinkedHashMap<PackageInfo,Integer>());
 
+	public static class PackageInfo {
+		public final String Id;
+		public final String PackageName;
+		public final String ClassName;
+		public final String Title;
+
+		public final String IntentAction;
+		public final String IntentKey;
+		public final String IntentDataPattern;
+
+		PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern) {
+			Id = id;
+			PackageName = packageName;
+			ClassName = className;
+			Title = title;
+
+			IntentAction = intentAction;
+			IntentKey = intentKey;
+			IntentDataPattern = intentDataPattern;
+		}
+
+		Intent getDictionaryIntent(String text) {
+			final Intent intent = new Intent(IntentAction);
+			if (PackageName != null) {
+				if (ClassName != null) {
+					String cls = ClassName;
+					if (cls.startsWith(".")) {
+						cls = PackageName + cls;
+					}
+					intent.setComponent(new ComponentName(
+						PackageName, cls
+					));
+				}
+			}
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			text = IntentDataPattern.replace("%s", text);
+			if (IntentKey != null) {
+				return intent.putExtra(IntentKey, text);
+			} else {
+				return intent.setData(Uri.parse(text));
+			}
+		}
+	}
+
 	private static class InfoReader extends ZLXMLReaderAdapter {
 		@Override
 		public boolean dontCacheAttributeValues() {
@@ -111,7 +155,7 @@ public abstract class DictionaryUtil {
 					null,
 					attributes.getValue("pattern")
 				);
-				if (PackageUtil.canBeStarted(myContext, getDictionaryIntent(info, "test"), false)) {
+				if (PackageUtil.canBeStarted(myContext, info.getDictionaryIntent("test"), false)) {
 					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
 				}
 			}
@@ -120,11 +164,11 @@ public abstract class DictionaryUtil {
 	}
 
 	private static class BitKnightsInfoReader extends ZLXMLReaderAdapter {
-		private final Context mContext;
-		private int mCounter;
+		private final Context myContext;
+		private int myCounter;
 
 		BitKnightsInfoReader(Context context) {
-			mContext = context;
+			myContext = context;
 		}
 
 		@Override
@@ -136,7 +180,7 @@ public abstract class DictionaryUtil {
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("dictionary".equals(tag)) {
 				final PackageInfo info = new PackageInfo(
-					"BK" + mCounter ++,
+					"BK" + myCounter ++,
 					attributes.getValue("package"),
 					"com.bitknights.dict.ShareTranslateActivity",
 					attributes.getValue("title"),
@@ -144,7 +188,7 @@ public abstract class DictionaryUtil {
 					null,
 					"%s"
 				);
-				if (PackageUtil.canBeStarted(mContext, getDictionaryIntent(info, "test"), false)) {
+				if (PackageUtil.canBeStarted(myContext, info.getDictionaryIntent("test"), false)) {
 					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
 				}
 			}
@@ -201,7 +245,7 @@ public abstract class DictionaryUtil {
 					installedPackages.contains(info.PackageName)) {
 					list.add(info);
 				} else if (!notInstalledPackages.contains(info.PackageName)) {
-					if (PackageUtil.canBeStarted(context, getDictionaryIntent(info, "test"), false)) {
+					if (PackageUtil.canBeStarted(context, info.getDictionaryIntent("test"), false)) {
 						list.add(info);
 						installedPackages.add(info.PackageName);
 					} else {
@@ -252,30 +296,6 @@ public abstract class DictionaryUtil {
 		return firstInfo();
 	}
 
-	private static Intent getDictionaryIntent(String text, boolean singleWord) {
-		return getDictionaryIntent(getCurrentDictionaryInfo(singleWord), text);
-	}
-
-	public static Intent getDictionaryIntent(PackageInfo dictionaryInfo, String text) {
-		final Intent intent = new Intent(dictionaryInfo.IntentAction);
-		if (dictionaryInfo.PackageName != null) {
-			String cls = dictionaryInfo.ClassName;
-			if (cls != null && cls.startsWith(".")) {
-				cls = dictionaryInfo.PackageName + cls;
-			}
-			intent.setComponent(new ComponentName(
-				dictionaryInfo.PackageName, cls
-			));
-		}
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		text = dictionaryInfo.IntentDataPattern.replace("%s", text);
-		if (dictionaryInfo.IntentKey != null) {
-			return intent.putExtra(dictionaryInfo.IntentKey, text);
-		} else {
-			return intent.setData(Uri.parse(text));
-		}
-	}
-
 	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
 		if (singleWord) {
 			int start = 0;
@@ -289,7 +309,7 @@ public abstract class DictionaryUtil {
 		}
 
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
-		final Intent intent = getDictionaryIntent(info, text);
+		final Intent intent = info.getDictionaryIntent(text);
 		try {
 			if ("ColorDict".equals(info.Id)) {
 				final DisplayMetrics metrics = new DisplayMetrics();
@@ -319,7 +339,8 @@ public abstract class DictionaryUtil {
 	}
 
 	public static void installDictionaryIfNotInstalled(final Activity activity, boolean singleWord) {
-		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test", singleWord), false)) {
+		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
+		if (PackageUtil.canBeStarted(activity, info.getDictionaryIntent("test"), false)) {
 			return;
 		}
 		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo(singleWord);

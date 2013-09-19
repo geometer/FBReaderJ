@@ -47,7 +47,7 @@ public class AllCatalogsActivity extends ListActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		Intent intent = getIntent();
+		final Intent intent = getIntent();
 		myIds = intent.getStringArrayListExtra(FBReader.CATALOGS_ID_LIST);
 		myInactiveIds = intent.getStringArrayListExtra(INACTIVE_IDS_LIST);
 	}
