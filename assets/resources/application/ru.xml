@@ -134,6 +134,11 @@
 			<node name="title" value="Добавление каталога"/>
 			<node name="editUrl" value="Ввести адрес вручную"/>
 		</node>
+		<node name="allCatalogs" value="Менеджер каталогов">
+			<node name="active" value="Активные каталоги"/>
+			<node name="inactive" value="Неактивные каталоги"/>
+			<node name="summary" value="Управление отображением OPDS каталогов"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>
 			<node name="reload" value="Обновить"/>

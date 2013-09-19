@@ -25,6 +25,8 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 
+import org.geometerplus.fbreader.network.tree.RootTree;
+import org.geometerplus.fbreader.network.tree.AllCatalogsItemTree;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -37,7 +39,10 @@ public class AllCatalogsAction extends RootAction {
 	public AllCatalogsAction(Activity activity) {
 		super(activity, ActionCode.SHOW_CATALOGS_FILTER, "allCatalogs", R.drawable.ic_menu_filter);
 	}
-
+	@Override
+	public boolean isVisible(NetworkTree tree) {
+		return tree instanceof RootTree || tree instanceof AllCatalogsItemTree;
+	}
 	@Override
 	public void run(NetworkTree tree) {
 		final NetworkLibrary library = NetworkLibrary.Instance();

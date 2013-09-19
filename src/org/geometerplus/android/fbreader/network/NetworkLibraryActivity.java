@@ -232,6 +232,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myListClickActions.add(new AddCustomCatalogAction(this));
 		myListClickActions.add(new TopupAction(this));
 		myListClickActions.add(new ShowBookInfoAction(this));
+		myListClickActions.add(new AllCatalogsAction(this));
 	}
 
 	private List<? extends Action> getContextMenuActions(NetworkTree tree) {
