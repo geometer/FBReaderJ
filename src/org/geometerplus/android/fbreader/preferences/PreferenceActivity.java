@@ -78,12 +78,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		// TODO: use user-defined locale, not the default one,
 		// or set user-defined locale as default
 		final String decimalSeparator =
-				String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
+			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addPreference(new ZLStringOptionPreference(
-				this, Paths.BooksDirectoryOption(), directoriesScreen.Resource, "books"
-				) {
+			this, Paths.BooksDirectoryOption(), directoriesScreen.Resource, "books"
+		) {
 			protected void setValue(String value) {
 				super.setValue(value);
 				myCollection.reset(false);
@@ -94,8 +94,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
-				this, appearanceScreen.Resource, "language", ZLResource.languages()
-				) {
+			this, appearanceScreen.Resource, "language", ZLResource.languages()
+		) {
 			@Override
 			protected void init() {
 				setInitialValue(ZLResource.getLanguageOption().getValue());
@@ -528,11 +528,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			// ignore: dictionary lists are not initialized yet
 		}
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
-				this,
-				fbReader.NavigateAllWordsOption,
-				dictionaryScreen.Resource,
-				"navigateOverAllWords"
-				));
+			this,
+			fbReader.NavigateAllWordsOption,
+			dictionaryScreen.Resource,
+			"navigateOverAllWords"
+		));
 		dictionaryScreen.addOption(fbReader.WordTappingActionOption, "tappingAction");
 		dictionaryScreen.addPreference(langCodePref);
 		langCodePref.setEnabled(DictionaryUtil.IdsToAskCode.contains(DictionaryUtil.singleWordTranslatorOption().getValue()));
@@ -551,25 +551,25 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final String[] backKeyActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
-				this, cancelMenuScreen.Resource, "backKeyAction",
-				keyBindings.getOption(KeyEvent.KEYCODE_BACK, false), backKeyActions
-				));
+			this, cancelMenuScreen.Resource, "backKeyAction",
+			keyBindings.getOption(KeyEvent.KEYCODE_BACK, false), backKeyActions
+		));
 		final String[] backKeyLongPressActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
-				this, cancelMenuScreen.Resource, "backKeyLongPressAction",
-				keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
-				));
+			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
+			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
+		));
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
 		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
 
 		final Screen aboutScreen = createPreferenceScreen("about");
 		aboutScreen.addPreference(new InfoPreference(
-				this,
-				aboutScreen.Resource.getResource("version").getValue(),
-				androidLibrary.getFullVersionName()
-				));
+			this,
+			aboutScreen.Resource.getResource("version").getValue(),
+			androidLibrary.getFullVersionName()
+		));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "site"));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "email"));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "twitter"));
