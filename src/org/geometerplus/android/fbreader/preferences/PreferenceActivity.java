@@ -481,14 +481,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		}
 		Collections.sort(codes);
-		codes.add(0, DictionaryUtil.AnyLanguage);
+		codes.add(0, Language.ANY_CODE);
 		String[] array = codes.toArray(new String[codes.size()]);
 		final ZLStringChoicePreference langCodePref = new ZLStringChoicePreference(this, dictionaryScreen.Resource, "langCode", DictionaryUtil.PreferredLanguageOption, array) {
 			@Override
 			protected void setList(String[] values) {
 				String[] texts = new String[values.length];
 				for (int i = 0; i < values.length; ++i) {
-					if (DictionaryUtil.AnyLanguage.equals(values[i])) {
+					if (Language.ANY_CODE.equals(values[i])) {
 						texts[i] = ZLResource.resource("language-self").getResource("all").getValue();
 					} else {
 						final ZLResource resource = ZLResource.resource("language-self").getResource(values[i]);

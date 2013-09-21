@@ -32,6 +32,7 @@ import com.paragon.open.dictionary.api.Dictionary;
 import com.paragon.open.dictionary.api.OpenDictionaryAPI;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
@@ -55,8 +56,6 @@ public abstract class DictionaryUtil {
 	
 	//TODO: maybe langcodes for translator and dictionary could be different
 	public static final ZLStringOption PreferredLanguageOption = new ZLStringOption("Dictionary", "LangCode", "");
-	
-	public static  final String AnyLanguage = "<any language>";
 	
 	public final static List<String> IdsToAskCode = Collections.<String>unmodifiableList(Arrays.<String>asList("ABBYY Lingvo"));
 
@@ -126,7 +125,7 @@ public abstract class DictionaryUtil {
 					intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
 					intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
 					final String preferredLanguage = PreferredLanguageOption.getValue();
-					if (preferredLanguage != null && !"".equals(preferredLanguage) && !AnyLanguage.equals(preferredLanguage)) {
+					if (preferredLanguage != null && !"".equals(preferredLanguage) && !Language.ANY_CODE.equals(preferredLanguage)) {
 						intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
 					}
 				} else if ("ColorDict".equals(Id)) {
