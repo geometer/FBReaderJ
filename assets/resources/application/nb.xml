@@ -130,6 +130,11 @@
 			<node name="title" value="Legg til katalog"/>
 			<node name="editUrl" value="Skriv URL manuelt"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Søk"/>
 			<node name="reload" value="Last på nytt"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="Legg til katalog"/>
 			<node name="refreshCatalogsList" value="Oppdater katalogene"/>
 			<node name="languages" value="Språkfilter"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Tøm kurv"/>
 			<node name="buyAllBooks" value="Kjøp alle bøkene"/>
 		</node>

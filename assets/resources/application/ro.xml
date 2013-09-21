@@ -126,6 +126,11 @@
 			<node name="title" value="Adauga Catalog"/>
 			<node name="editUrl" value="Editeaza URL manual"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Reteaua de cautare"/>
 			<node name="reload" value="Reîncarca"/>
@@ -136,6 +141,7 @@
 			<node name="addCustomCatalog" value="Adauga catalog"/>
 			<node name="refreshCatalogsList" value="Reîmprospatare cataloage"/>
 			<node name="languages" value="Filtru limba"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clar cos"/>
 			<node name="buyAllBooks" value="Cumpara toate cartile"/>
 		</node>

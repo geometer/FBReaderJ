@@ -134,6 +134,11 @@
 			<node name="title" value="Afegir catàleg"/>
 			<node name="editUrl" value="Escriviu la URL"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Cerca"/>
 			<node name="reload" value="Recarregar"/>
@@ -144,6 +149,7 @@
 			<node name="addCustomCatalog" value="Afegir catàleg"/>
 			<node name="refreshCatalogsList" value="Recarregar catàlegs"/>
 			<node name="languages" value="Filtre d'idioma"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Buidar cistella"/>
 			<node name="buyAllBooks" value="Comprar tots els llibres"/>
 		</node>
