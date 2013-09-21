@@ -129,6 +129,11 @@
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="網絡搜尋"/>
 			<node name="reload" value="重新載入"/>
@@ -139,6 +144,7 @@
 			<node name="addCustomCatalog" value="新增目錄"/>
 			<node name="refreshCatalogsList" value="重新整理目錄"/>
 			<node name="languages" value="語言篩選"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="清空購物籃"/>
 			<node name="buyAllBooks" value="購買全部書藉"/>
 		</node>
