@@ -62,6 +62,7 @@
 		<node name="uk" value="Ukrainsk"/>
 		<node name="vi" value="Vietnamesisk"/>
 		<node name="zh" value="Kinesisk"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Andre"/>
 		<node name="multi" value="Flersproget"/>
 		<node name="system" value="System"/>

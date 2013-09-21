@@ -63,6 +63,7 @@
 		<node name="uk" value="ยูเครน"/>
 		<node name="vi" value="เวียดนาม"/>
 		<node name="zh" value="จีน"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="อื่นๆ"/>
 		<node name="multi" value="หลายภาษา"/>
 		<node name="system" value="System" toBeTranslated="true"/>
