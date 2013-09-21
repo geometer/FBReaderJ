@@ -130,6 +130,11 @@
 			<node name="title" value="Gehitu katalogoa"/>
 			<node name="editUrl" value="Idatzi URL helbidea"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Bilatu"/>
 			<node name="reload" value="Birkargatu"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="Gehitu katalogoa"/>
 			<node name="refreshCatalogsList" value="Freskatu katalogoak"/>
 			<node name="languages" value="Hizkuntza iragazkia"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Hutsitu saskia"/>
 			<node name="buyAllBooks" value="Liburu guztiak erosi"/>
 		</node>

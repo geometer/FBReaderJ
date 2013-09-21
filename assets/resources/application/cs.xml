@@ -139,6 +139,11 @@
 			<node name="title" value="Přidat katalog"/>
 			<node name="editUrl" value="Zadat adresu ručně"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
@@ -149,6 +154,7 @@
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
 			<node name="languages" value="Filtr jazyků"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Vymazat košík"/>
 			<node name="buyAllBooks" value="Zakoupit všechny knihy"/>
 		</node>
