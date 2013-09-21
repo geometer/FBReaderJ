@@ -134,6 +134,11 @@
 			<node name="title" value="Добавление каталога"/>
 			<node name="editUrl" value="Ввести адрес вручную"/>
 		</node>
+		<node name="manageCatalogs" value="Управление каталогами">
+			<node name="summary" value="Настроить список библиотек и магазинов"/>
+			<node name="enabled" value="Включены"/>
+			<node name="disabled" value="Выключены"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>
 			<node name="reload" value="Обновить"/>
@@ -144,6 +149,7 @@
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
 			<node name="languages" value="Фильтр по языку"/>
+			<node name="manageCatalogs" value="Управление каталогами"/>
 			<node name="clearBasket" value="Очистить корзину"/>
 			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
