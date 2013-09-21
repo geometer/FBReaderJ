@@ -53,7 +53,7 @@
 		<node name="hu" value="Húngaro"/>
 		<node name="id" value="Indonesio"/>
 		<node name="it" value="Italiano"/>
-		<node name="ka" value="Georgiano" />
+		<node name="ka" value="Georgiano"/>
 		<node name="lt" value="Lituano"/>
 		<node name="nl" value="Holandés"/>
 		<node name="nb" value="Noruego"/>
@@ -68,6 +68,7 @@
 		<node name="uk" value="Ucraniano"/>
 		<node name="vi" value="Vietnamita"/>
 		<node name="zh" value="Chino"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Otro"/>
 		<node name="multi" value="Multilingüe"/>
 		<node name="system" value="Sistema"/>

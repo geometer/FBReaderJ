@@ -63,6 +63,7 @@
 		<node name="uk" value="Oekraïens"/>
 		<node name="vi" value="Vietnamees"/>
 		<node name="zh" value="Chinees"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Anders"/>
 		<node name="multi" value="Meertalig"/>
 		<node name="system" value="Systeem"/>
