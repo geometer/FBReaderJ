@@ -85,12 +85,12 @@
 		<delete dir="bin" />
 		<delete dir="res/drawable" />
 		<delete dir="out" />
-		<delete dir="obj" />
 		<echo message="DONE (Deleting temporary files)" />
 	</target>
 
 	<target name="distclean" depends="clean">
 		<echo message="Deleting native libraries..." />
+		<delete dir="obj" />
 		<delete dir="libs/armeabi" />
 		<delete dir="libs/armeabi-v7a" />
 		<delete dir="libs/x86" />
