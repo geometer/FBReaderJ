@@ -63,6 +63,7 @@
 		<node name="uk" value="Tiếng Ukraina"/>
 		<node name="vi" value="Tiếng Việt"/>
 		<node name="zh" value="Tiếng Tàu"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Khác"/>
 		<node name="multi" value="Multilanguage" toBeTranslated="true"/>
 		<node name="system" value="System" toBeTranslated="true"/>
