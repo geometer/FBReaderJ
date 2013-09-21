@@ -126,6 +126,11 @@
 			<node name="title" value="添加书库"/>
 			<node name="editUrl" value="手动输入URL"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="网络搜索"/>
 			<node name="reload" value="重新加载"/>
@@ -136,6 +141,7 @@
 			<node name="addCustomCatalog" value="添加书库"/>
 			<node name="refreshCatalogsList" value="刷新书库"/>
 			<node name="languages" value="语言过滤"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="清空购物篮"/>
 			<node name="buyAllBooks" value="购买所有图书"/>
 		</node>
