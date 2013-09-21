@@ -134,10 +134,10 @@
 			<node name="title" value="Добавление каталога"/>
 			<node name="editUrl" value="Ввести адрес вручную"/>
 		</node>
-		<node name="allCatalogs" value="Менеджер каталогов">
-			<node name="active" value="Активные каталоги"/>
-			<node name="inactive" value="Неактивные каталоги"/>
-			<node name="summary" value="Управление отображением OPDS каталогов"/>
+		<node name="manageCatalogs" value="Управление каталогами">
+			<node name="summary" value="Настройка списка библиотек и магазинов"/>
+			<node name="enabled" value="Включены"/>
+			<node name="disabled" value="Выключены"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>

@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.android.fbreader.covers.CoverManager;
 import org.geometerplus.android.fbreader.FBReader;
 
-public class AllCatalogsActivity extends ListActivity {
+public class CatalogManagerActivity extends ListActivity {
 	private ArrayList<Item> myAllItems = new ArrayList<Item>();
 	private ArrayList<Item> mySelectedItems = new ArrayList<Item>();
 	ArrayList<String> myIds = new ArrayList<String>();
@@ -101,7 +101,7 @@ public class AllCatalogsActivity extends ListActivity {
 		private final String Title;
 
 		public SectionItem(String key) {
-			Title = NetworkLibrary.resource().getResource("allCatalogs").getResource(key).getValue();
+			Title = NetworkLibrary.resource().getResource("manageCatalogs").getResource(key).getValue();
 		}
 	}
 
@@ -164,7 +164,7 @@ public class AllCatalogsActivity extends ListActivity {
 		private CoverManager myCoverManager;
 
 		public CatalogsListAdapter() {
-			super(AllCatalogsActivity.this, R.layout.checkbox_item, myAllItems);
+			super(CatalogManagerActivity.this, R.layout.checkbox_item, myAllItems);
 		}
 
 		@Override
@@ -191,7 +191,7 @@ public class AllCatalogsActivity extends ListActivity {
 				if (myCoverManager == null) {
 					view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 					final int coverHeight = view.getMeasuredHeight();
-					myCoverManager = new CoverManager(AllCatalogsActivity.this, coverHeight * 15 / 12, coverHeight);
+					myCoverManager = new CoverManager(CatalogManagerActivity.this, coverHeight * 15 / 12, coverHeight);
 					view.requestLayout();
 				}
 

@@ -53,7 +53,7 @@ public abstract class DictionaryUtil {
 	private static Map<PackageInfo,Integer> ourInfos =
 		Collections.synchronizedMap(new LinkedHashMap<PackageInfo,Integer>());
 
-	public static class PackageInfo {
+	public class PackageInfo {
 		public final String Id;
 		public final String PackageName;
 		public final String ClassName;
@@ -93,6 +93,30 @@ public abstract class DictionaryUtil {
 				return intent.putExtra(IntentKey, text);
 			} else {
 				return intent.setData(Uri.parse(text));
+			}
+		}
+
+		void open(String text) {
+			final Intent intent = info.getDictionaryIntent(text);
+			try {
+				if ("ColorDict".equals(Id)) {
+					final DisplayMetrics metrics = new DisplayMetrics();
+					activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+					final int screenHeight = metrics.heightPixels;
+					final int topSpace = selectionTop;
+					final int bottomSpace = metrics.heightPixels - selectionBottom;
+					final boolean showAtBottom = bottomSpace >= topSpace;
+					final int space = (showAtBottom ? bottomSpace : topSpace) - 20;
+					final int maxHeight = Math.min(400, screenHeight * 2 / 3);
+					final int minHeight = Math.min(200, screenHeight * 2 / 3);
+					intent.putExtra(ColorDict3.HEIGHT, Math.max(minHeight, Math.min(maxHeight, space)));
+					intent.putExtra(ColorDict3.GRAVITY, showAtBottom ? Gravity.BOTTOM : Gravity.TOP);
+					final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+					intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
+				}
+				activity.startActivity(intent);
+			} catch (ActivityNotFoundException e) {
+				DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord);
 			}
 		}
 	}
@@ -309,27 +333,7 @@ public abstract class DictionaryUtil {
 		}
 
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
-		final Intent intent = info.getDictionaryIntent(text);
-		try {
-			if ("ColorDict".equals(info.Id)) {
-				final DisplayMetrics metrics = new DisplayMetrics();
-				activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-				final int screenHeight = metrics.heightPixels;
-				final int topSpace = selectionTop;
-				final int bottomSpace = metrics.heightPixels - selectionBottom;
-				final boolean showAtBottom = bottomSpace >= topSpace;
-				final int space = (showAtBottom ? bottomSpace : topSpace) - 20;
-				final int maxHeight = Math.min(400, screenHeight * 2 / 3);
-				final int minHeight = Math.min(200, screenHeight * 2 / 3);
-				intent.putExtra(ColorDict3.HEIGHT, Math.max(minHeight, Math.min(maxHeight, space)));
-				intent.putExtra(ColorDict3.GRAVITY, showAtBottom ? Gravity.BOTTOM : Gravity.TOP);
-				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-				intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
-			}
-			activity.startActivity(intent);
-		} catch (ActivityNotFoundException e) {
-			DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord);
-		}
+		info.open(text);
 	}
 
 	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) {

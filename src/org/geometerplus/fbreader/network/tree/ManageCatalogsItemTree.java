@@ -21,23 +21,23 @@ package org.geometerplus.fbreader.network.tree;
 
 import org.geometerplus.fbreader.network.*;
 
-public class AllCatalogsItemTree extends NetworkTree {
-	public AllCatalogsItemTree(NetworkTree parent) {
+public class ManageCatalogsItemTree extends NetworkTree {
+	public ManageCatalogsItemTree(NetworkTree parent) {
 		super(parent);
 	}
 
 	@Override
 	public String getName() {
-		return NetworkLibrary.resource().getResource("allCatalogs").getValue();
+		return NetworkLibrary.resource().getResource("manageCatalogs").getValue();
 	}
 
 	@Override
 	public String getSummary() {
-		return NetworkLibrary.resource().getResource("allCatalogs").getResource("summary").getValue();
+		return NetworkLibrary.resource().getResource("manageCatalogs").getResource("summary").getValue();
 	}
 
 	@Override
 	protected String getStringId() {
-		return "@All Catalogs";
+		return "@ManageCatalogs";
 	}
 }

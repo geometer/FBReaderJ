@@ -94,7 +94,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			coverView.setImageResource(R.drawable.ic_list_library_basket);
 		} else if (tree instanceof AddCustomCatalogItemTree) {
 			coverView.setImageResource(R.drawable.ic_list_plus);
-		} else if (tree instanceof AllCatalogsItemTree) {
+		} else if (tree instanceof ManageCatalogsItemTree) {
 			coverView.setImageResource(R.drawable.ic_menu_filter);
 		} else {
 			coverView.setImageResource(R.drawable.ic_list_library_books);
