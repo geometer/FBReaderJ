@@ -3,8 +3,6 @@ build.properties
 local.properties
 bin/
 gen/
-res/drawable/
-res/raw/
 scripts/resources/*.diff
 obj/
 epubs/
