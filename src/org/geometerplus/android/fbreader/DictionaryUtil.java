@@ -377,7 +377,7 @@ public abstract class DictionaryUtil {
 			}
 			activity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			installDictionaryIfNotInstalled(activity, singleWord);
+			installDictionaryIfNotInstalled(activity, info);
 		}
 	}
 
@@ -387,25 +387,23 @@ public abstract class DictionaryUtil {
 		);
 	}
 
-	public static void installDictionaryIfNotInstalled(final Activity activity, boolean singleWord) {
-		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
+	public static void installDictionaryIfNotInstalled(final Activity activity, final PackageInfo info) {
 		if (PackageUtil.canBeStarted(activity, info.getDictionaryIntent("test"), false)) {
 			return;
 		}
-		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo(singleWord);
 
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 		final ZLResource installResource = dialogResource.getResource("installDictionary");
 		new AlertDialog.Builder(activity)
 			.setTitle(installResource.getResource("title").getValue())
-			.setMessage(installResource.getResource("message").getValue().replace("%s", dictionaryInfo.Title))
+			.setMessage(installResource.getResource("message").getValue().replace("%s", info.Title))
 			.setIcon(0)
 			.setPositiveButton(
 				buttonResource.getResource("install").getValue(),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						installDictionary(activity, dictionaryInfo);
+						installDictionary(activity, info);
 					}
 				}
 			)
