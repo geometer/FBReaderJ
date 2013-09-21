@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.language;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class Language implements Comparable<Language> {
+	public static final String ANY_CODE = "any";
 	public static final String OTHER_CODE = "other";
 	public static final String MULTI_CODE = "multi";
 	public static final String SYSTEM_CODE = "system";
@@ -45,7 +46,7 @@ public class Language implements Comparable<Language> {
 		Code = code;
 		Name = name;
 		mySortKey = name.toLowerCase();
-		if (SYSTEM_CODE.equals(code)) {
+		if (SYSTEM_CODE.equals(code) || ANY_CODE.equals(code)) {
 			myOrder = Order.Before;
 		} else if (MULTI_CODE.equals(code) || OTHER_CODE.equals(code)) {
 			myOrder = Order.After;
