@@ -92,7 +92,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
-			this, appearanceScreen.Resource, "language", ZLResource.languages()
+			this, appearanceScreen.Resource, "language", ZLResource.interfaceLanguages()
 		) {
 			@Override
 			protected void init() {
