@@ -24,7 +24,6 @@ import java.util.*;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
@@ -473,31 +472,19 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		//		final ZLStringPreference langCodePref = new ZLStringOptionPreference(this, DictionaryUtil.PreferredLanguageOption, dictionaryScreen.Resource, "langCode");
 
-		ArrayList<String> codes = new ArrayList<String>();
+		final ArrayList<Language> languages = new ArrayList<Language>(ZLResource.languages());
+		//languages.remove(Language.SYSTEM_CODE);
+		//languages.add(0, Language.ANY_CODE);
 
-		for (Language l : ZLResource.languages()) {
-			if (!"system".equals(l.Code)) {
-				codes.add(l.Code);
-			}
-		}
-		Collections.sort(codes);
-		codes.add(0, Language.ANY_CODE);
-		String[] array = codes.toArray(new String[codes.size()]);
-		final ZLStringChoicePreference langCodePref = new ZLStringChoicePreference(this, dictionaryScreen.Resource, "langCode", DictionaryUtil.PreferredLanguageOption, array) {
+		final LanguagePreference langCodePref = new LanguagePreference(this, dictionaryScreen.Resource, "langCode", languages) {
 			@Override
-			protected void setList(String[] values) {
-				String[] texts = new String[values.length];
-				for (int i = 0; i < values.length; ++i) {
-					if (Language.ANY_CODE.equals(values[i])) {
-						texts[i] = ZLResource.resource("language-self").getResource("all").getValue();
-					} else {
-						final ZLResource resource = ZLResource.resource("language-self").getResource(values[i]);
-						texts[i] = resource.hasValue() ? resource.getValue() : values[i];
-						Log.d("WTF", values[i]);
-						Log.d("WTF", texts[i]);
-					}
-				}
-				setLists(values, texts);
+			protected void init() {
+				setInitialValue(DictionaryUtil.PreferredLanguageOption.getValue());
+			}
+
+			@Override
+			protected void setLanguage(String code) {
+				DictionaryUtil.PreferredLanguageOption.setValue(code);
 			}
 		};
 
