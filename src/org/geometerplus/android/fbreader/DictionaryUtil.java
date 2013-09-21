@@ -64,7 +64,7 @@ public abstract class DictionaryUtil {
 	private static Map<PackageInfo,Integer> ourInfos =
 		Collections.synchronizedMap(new LinkedHashMap<PackageInfo,Integer>());
 
-	public static class PackageInfo {
+	public static abstract class PackageInfo {
 		public final String Id;
 		public final String PackageName;
 		public final String ClassName;
@@ -85,7 +85,7 @@ public abstract class DictionaryUtil {
 			IntentDataPattern = intentDataPattern;
 		}
 
-		Intent getDictionaryIntent(String text) {
+		final Intent getDictionaryIntent(String text) {
 			final Intent intent = new Intent(IntentAction);
 			if (PackageName != null) {
 				if (ClassName != null) {
@@ -105,6 +105,62 @@ public abstract class DictionaryUtil {
 			} else {
 				return intent.setData(Uri.parse(text));
 			}
+		}
+
+		abstract void open(String text, Activity context, PopupFrameMetric frameMetrics);
+	}
+
+	private static class PlainPackageInfo extends PackageInfo {
+		PlainPackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern) {
+			super(id, packageName, className, title, intentAction, intentKey, intentDataPattern);
+		}
+
+		@Override
+		void open(String text, Activity context, PopupFrameMetric frameMetrics) {
+			final Intent intent = getDictionaryIntent(text);
+			try {
+				if ("ABBYY Lingvo".equals(Id)) {
+					intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
+					intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.Height);
+					intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
+					intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
+					intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
+					final String preferredLanguage = PreferredLanguageOption.getValue();
+					if (preferredLanguage != null && !"".equals(preferredLanguage) && !AnyLanguage.equals(preferredLanguage)) {
+						intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
+					}
+				} else if ("ColorDict".equals(Id)) {
+					intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
+					intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
+					final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+					intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
+				}
+				context.startActivity(intent);
+			} catch (ActivityNotFoundException e) {
+				installDictionaryIfNotInstalled(context, this);
+			}
+		}
+	}
+
+	private static class OpenDictionaryPackageInfo extends PackageInfo {
+		final OpenDictionaryFlyout Flyout;
+
+		OpenDictionaryPackageInfo(Dictionary dictionary) {
+			super(
+				dictionary.getUID(),
+				dictionary.getApplicationPackageName(),
+				".Start",
+				dictionary.getName(),
+				null,
+				null,
+				"%s"
+			);
+			Flyout = new OpenDictionaryFlyout(dictionary);
+		}
+
+		@Override
+		void open(String text, Activity context, PopupFrameMetric frameMetrics) {
+			Flyout.showTranslation(context, text, frameMetrics);
 		}
 	}
 
@@ -131,7 +187,7 @@ public abstract class DictionaryUtil {
 				if (!"always".equals(attributes.getValue("list"))) {
 					flags |= FLAG_INSTALLED_ONLY;
 				}
-				ourInfos.put(new PackageInfo(
+				ourInfos.put(new PlainPackageInfo(
 					id,
 					attributes.getValue("package"),
 					attributes.getValue("class"),
@@ -161,7 +217,7 @@ public abstract class DictionaryUtil {
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("dictionary".equals(tag)) {
-				final PackageInfo info = new PackageInfo(
+				final PackageInfo info = new PlainPackageInfo(
 					"BK" + myCounter ++,
 					attributes.getValue("package"),
 					"com.bitknights.dict.ShareTranslateActivity",
@@ -190,23 +246,6 @@ public abstract class DictionaryUtil {
 		String MARGIN_BOTTOM = "EXTRA_MARGIN_BOTTOM";
 		String MARGIN_RIGHT = "EXTRA_MARGIN_RIGHT";
 		String FULLSCREEN = "EXTRA_FULLSCREEN";
-	}
-
-	private static class OpenDictionaryPackageInfo extends PackageInfo {
-		final OpenDictionaryFlyout Flyout;
-
-		OpenDictionaryPackageInfo(Dictionary dictionary) {
-			super(
-				dictionary.getUID(),
-				dictionary.getApplicationPackageName(),
-				".Start",
-				dictionary.getName(),
-				null,
-				null,
-				"%s"
-			);
-			Flyout = new OpenDictionaryFlyout(dictionary);
-		}
 	}
 
 	private static void collectOpenDictionaries(Context context) {
@@ -349,36 +388,7 @@ public abstract class DictionaryUtil {
 		final PopupFrameMetric frameMetrics =
 			new PopupFrameMetric(metrics, selectionTop, selectionBottom);
 
-		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
-
-		if (info instanceof OpenDictionaryPackageInfo) {
-			final OpenDictionaryPackageInfo openDictionary = (OpenDictionaryPackageInfo)info;
-			openDictionary.Flyout.showTranslation(activity, text, frameMetrics);
-			return;
-		}
-		
-		final Intent intent = info.getDictionaryIntent(text);
-		try {
-			if ("ABBYY Lingvo".equals(info.Id)) {
-				intent.putExtra(MinicardContract.EXTRA_GRAVITY, frameMetrics.Gravity);
-				intent.putExtra(MinicardContract.EXTRA_HEIGHT, frameMetrics.Height);
-				intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
-				intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
-				intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
-				final String preferredLanguage = PreferredLanguageOption.getValue();
-				if (preferredLanguage != null && !"".equals(preferredLanguage) && !AnyLanguage.equals(preferredLanguage)) {
-					intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
-				}
-			} else if ("ColorDict".equals(info.Id)) {
-				intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
-				intent.putExtra(ColorDict3.GRAVITY, frameMetrics.Gravity);
-				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-				intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
-			}
-			activity.startActivity(intent);
-		} catch (ActivityNotFoundException e) {
-			installDictionaryIfNotInstalled(activity, info);
-		}
+		getCurrentDictionaryInfo(singleWord).open(text, activity, frameMetrics);
 	}
 
 	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) {
