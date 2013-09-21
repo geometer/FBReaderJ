@@ -126,6 +126,11 @@
 			<node name="title" value="Új katalógus"/>
 			<node name="editUrl" value="URL megadása"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Internetes keresés"/>
 			<node name="reload" value="Újratöltés"/>
@@ -136,6 +141,7 @@
 			<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
 			<node name="refreshCatalogsList" value="Katalógusok frissítése"/>
 			<node name="languages" value="Nyelvi szűrő"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Kosár kiürítése"/>
 			<node name="buyAllBooks" value="összes könyv megvásárlása"/>
 		</node>

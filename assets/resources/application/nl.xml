@@ -130,6 +130,11 @@
 			<node name="title" value="Catalog toevoegen"/>
 			<node name="editUrl" value="Geef URL handmatig op"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Zoeken op het netwerk"/>
 			<node name="reload" value="Vernieuwen"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 			<node name="refreshCatalogsList" value="Catalogi vernieuwen"/>
 			<node name="languages" value="Taalfilter"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Leeg mandje"/>
 			<node name="buyAllBooks" value="Koop alle boeken"/>
 		</node>

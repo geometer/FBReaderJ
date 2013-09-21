@@ -130,6 +130,11 @@
 			<node name="title" value="Katalog hinzufügen"/>
 			<node name="editUrl" value="URL eingeben"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Netzwerksuche"/>
 			<node name="reload" value="Neu laden"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="Katalog hinzufügen"/>
 			<node name="refreshCatalogsList" value="Liste der Kataloge aktualisieren"/>
 			<node name="languages" value="Sprachfilter"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Warenkorn leeren"/>
 			<node name="buyAllBooks" value="Alle Bücher kaufen"/>
 		</node>
