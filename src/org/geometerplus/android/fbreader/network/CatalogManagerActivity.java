@@ -164,7 +164,7 @@ public class CatalogManagerActivity extends ListActivity {
 		private CoverManager myCoverManager;
 
 		public CatalogsListAdapter() {
-			super(CatalogManagerActivity.this, R.layout.checkbox_item, myAllItems);
+			super(CatalogManagerActivity.this, R.layout.catalog_manager_item, myAllItems);
 		}
 
 		@Override
@@ -177,14 +177,15 @@ public class CatalogManagerActivity extends ListActivity {
 			} else {
 				view = getLayoutInflater().inflate(
 					item instanceof SectionItem
-						? R.layout.checkbox_section : R.layout.checkbox_item,
+						? R.layout.catalog_manager_section_head : R.layout.catalog_manager_item,
 					null
 				);
 				view.setTag(item.getClass());
 			}
 
 			if (item instanceof SectionItem) {
-				((TextView)view.findViewById(R.id.title)).setText(((SectionItem)item).Title);
+				((TextView)view.findViewById(R.id.catalog_manager_section_head_title))
+					.setText(((SectionItem)item).Title);
 			} else /* if (item instanceof CatalogItem) */ {
 				final CatalogItem catalogItem = (CatalogItem)item;
 
@@ -196,15 +197,15 @@ public class CatalogManagerActivity extends ListActivity {
 				}
 
 				final INetworkLink link = catalogItem.Tree.getLink();
-				((TextView)view.findViewById(R.id.title)).setText(link.getTitle());
-				((TextView)view.findViewById(R.id.subtitle)).setText(link.getSummary());
+				((TextView)view.findViewById(R.id.catalog_manager_item_title)).setText(link.getTitle());
+				((TextView)view.findViewById(R.id.catalog_manager_item_subtitle)).setText(link.getSummary());
 
-				final ImageView coverView = (ImageView)view.findViewById(R.id.icon);
+				final ImageView coverView = (ImageView)view.findViewById(R.id.catalog_manager_item_icon);
 				if (!myCoverManager.trySetCoverImage(coverView, catalogItem.Tree)) {
 					coverView.setImageResource(R.drawable.ic_list_library_books);
 				}
 
-				final CheckBox checkBox = (CheckBox)view.findViewById(R.id.check_item);
+				final CheckBox checkBox = (CheckBox)view.findViewById(R.id.catalog_manager_item_checkbox);
 				checkBox.setChecked(catalogItem.IsChecked);
 				checkBox.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {

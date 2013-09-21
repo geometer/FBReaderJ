@@ -9,14 +9,14 @@
 	android:paddingBottom="6dp"
 >
 	<CheckBox
-		android:id="@+id/check_item"
+		android:id="@+id/catalog_manager_item_checkbox"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="8dp"
 		android:text=""
 	/>
 	<ImageView
-		android:id="@+id/icon"
+		android:id="@+id/catalog_manager_item_icon"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
 		android:adjustViewBounds="false"
@@ -29,7 +29,7 @@
 		android:orientation="vertical"
 	>
 		<TextView
-			android:id="@+id/title"
+			android:id="@+id/catalog_manager_item_title"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:singleLine="true"
@@ -38,7 +38,7 @@
 			android:marqueeRepeatLimit="marquee_forever"
 		/>
 		<TextView
-			android:id="@+id/subtitle"
+			android:id="@+id/catalog_manager_item_subtitle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="5dip"
