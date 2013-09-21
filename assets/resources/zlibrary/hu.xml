@@ -63,6 +63,7 @@
 		<node name="uk" value="Ukrán"/>
 		<node name="vi" value="Vietnami"/>
 		<node name="zh" value="Kínai"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Egyéb"/>
 		<node name="multi" value="Többnyelvű"/>
 		<node name="system" value="System" toBeTranslated="true"/>
