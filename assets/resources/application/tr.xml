@@ -130,6 +130,11 @@
 			<node name="title" value="Katalog ekle"/>
 			<node name="editUrl" value="URL yaz"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Ara"/>
 			<node name="reload" value="Yenile"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="Katalog ekle"/>
 			<node name="refreshCatalogsList" value="Katalogları yenile"/>
 			<node name="languages" value="Dil süzgeci"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Sepeti temizle"/>
 			<node name="buyAllBooks" value="Tüm kitapları satın al"/>
 		</node>

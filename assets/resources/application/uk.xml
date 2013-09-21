@@ -126,6 +126,11 @@
 			<node name="title" value="Додати каталог"/>
 			<node name="editUrl" value="Ввести URL вручну"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Пошук в мережі"/>
 			<node name="reload" value="Оновити"/>
@@ -136,6 +141,7 @@
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
 			<node name="languages" value="Мовний фільтр"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Очистити кошик"/>
 			<node name="buyAllBooks" value="Купити всі книжки"/>
 		</node>

@@ -130,6 +130,11 @@
 			<node name="title" value="Додавање каталога"/>
 			<node name="editUrl" value="Ручно унесите адресу."/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Претражи"/>
 			<node name="reload" value="Освежи"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="Додај каталог"/>
 			<node name="refreshCatalogsList" value="Освежи каталоге"/>
 			<node name="languages" value="Језички филтер"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Очисти корпу"/>
 			<node name="buyAllBooks" value="Купи све књиге"/>
 		</node>

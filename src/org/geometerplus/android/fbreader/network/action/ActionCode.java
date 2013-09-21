@@ -39,6 +39,7 @@ public interface ActionCode {
 	int CUSTOM_CATALOG_ADD = 31;
 	int CUSTOM_CATALOG_EDIT = 32;
 	int CUSTOM_CATALOG_REMOVE = 33;
+	int MANAGE_CATALOGS = 34;
 
 	int BASKET_CLEAR = 41;
 	int BASKET_BUY_ALL_BOOKS = 42;

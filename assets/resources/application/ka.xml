@@ -134,6 +134,11 @@
 			<node name="title" value="კატალოგის დამატება"/>
 			<node name="editUrl" value="Url მისამართის ხელით შეყვანა"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="ქსელში ძებნა"/>
 			<node name="reload" value="განახლება"/>
@@ -144,6 +149,7 @@
 			<node name="addCustomCatalog" value="კატალოგის დამატება"/>
 			<node name="refreshCatalogsList" value="კატალოგის განახლება"/>
 			<node name="languages" value="ენების მიხედვით გაფილტვრა"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="კალათის გასუფთავება"/>
 			<node name="buyAllBooks" value="ყველა წიგნის ყიდვა"/>
 		</node>
