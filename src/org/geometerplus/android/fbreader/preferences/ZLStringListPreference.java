@@ -34,7 +34,7 @@ abstract class ZLStringListPreference extends ListPreference {
 		setTitle(myResource.getValue());
 	}
 
-	protected void setList(String[] values) {
+	protected final void setList(String[] values) {
 		String[] texts = new String[values.length];
 		for (int i = 0; i < values.length; ++i) {
 			final ZLResource resource = myResource.getResource(values[i]);
