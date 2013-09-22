@@ -47,7 +47,7 @@
 		<node name="hu" value="Hungariera"/>
 		<node name="id" value="Indonesiera"/>
 		<node name="it" value="Italiera"/>
-		<node name="ka" value="Georgiera" />
+		<node name="ka" value="Georgiera"/>
 		<node name="lt" value="Lituaniera"/>
 		<node name="nl" value="Nederlandera"/>
 		<node name="nb" value="Norvegiera"/>
@@ -62,6 +62,7 @@
 		<node name="uk" value="Ukrainera"/>
 		<node name="vi" value="Vietnamera"/>
 		<node name="zh" value="Txinera"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Besteren bat"/>
 		<node name="multi" value="Eleaniztuna"/>
 		<node name="system" value="Sistema"/>

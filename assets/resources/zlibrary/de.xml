@@ -65,6 +65,7 @@
 		<node name="uk" value="Ukrainisch"/>
 		<node name="vi" value="Vietnamesisch"/>
 		<node name="zh" value="Chinesisch"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Andere"/>
 		<node name="multi" value="Mehrsprachig"/>
 		<node name="system" value="System" toBeTranslated="true"/>
