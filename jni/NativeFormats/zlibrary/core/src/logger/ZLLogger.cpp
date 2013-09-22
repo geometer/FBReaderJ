@@ -45,10 +45,10 @@ void ZLLogger::print(const std::string &className, const std::string &message) c
 		m.replace(index, 1, "%%");
 	}
 	if (className == DEFAULT_CLASS) {
-		__android_log_print(ANDROID_LOG_WARN, "ZLLogger", m.c_str());
+		__android_log_print(ANDROID_LOG_WARN, "ZLLogger", "%s", m.c_str());
 	} else {
 		if (myRegisteredClasses.find(className) != myRegisteredClasses.end()) {
-			__android_log_print(ANDROID_LOG_WARN, className.c_str(), m.c_str());
+			__android_log_print(ANDROID_LOG_WARN, className.c_str(), "%s", m.c_str());
 		}
 	}
 }
