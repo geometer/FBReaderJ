@@ -53,11 +53,9 @@ public abstract class DictionaryUtil {
 
 	private static ZLStringOption ourSingleWordTranslatorOption;
 	private static ZLStringOption ourMultiWordTranslatorOption;
-	
-	//TODO: maybe langcodes for translator and dictionary could be different
-	public static final ZLStringOption PreferredLanguageOption = new ZLStringOption("Dictionary", "LangCode", "");
-	
-	public final static List<String> IdsToAskCode = Collections.<String>unmodifiableList(Arrays.<String>asList("ABBYY Lingvo"));
+
+	// TODO: use StringListOption instead
+	public static final ZLStringOption TargetLanguageOption = new ZLStringOption("Dictionary", "TargetLanguage", Language.ANY_CODE);
 
 	// Map: dictionary info -> mode if package is not installed
 	private static Map<PackageInfo,Integer> ourInfos =
@@ -73,7 +71,9 @@ public abstract class DictionaryUtil {
 		public final String IntentKey;
 		public final String IntentDataPattern;
 
-		PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern) {
+		public final boolean SupportsTargetLanguageSetting;
+
+		PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern, boolean supportsTargetLanguageSetting) {
 			Id = id;
 			PackageName = packageName;
 			ClassName = className;
@@ -82,6 +82,8 @@ public abstract class DictionaryUtil {
 			IntentAction = intentAction;
 			IntentKey = intentKey;
 			IntentDataPattern = intentDataPattern;
+
+			SupportsTargetLanguageSetting = supportsTargetLanguageSetting;
 		}
 
 		final Intent getDictionaryIntent(String text) {
@@ -110,8 +112,8 @@ public abstract class DictionaryUtil {
 	}
 
 	private static class PlainPackageInfo extends PackageInfo {
-		PlainPackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern) {
-			super(id, packageName, className, title, intentAction, intentKey, intentDataPattern);
+		PlainPackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern, boolean supportsTargetLanguageSetting) {
+			super(id, packageName, className, title, intentAction, intentKey, intentDataPattern, supportsTargetLanguageSetting);
 		}
 
 		@Override
@@ -124,9 +126,9 @@ public abstract class DictionaryUtil {
 					intent.putExtra(MinicardContract.EXTRA_FORCE_LEMMATIZATION, true);
 					intent.putExtra(MinicardContract.EXTRA_TRANSLATE_VARIANTS, true);
 					intent.putExtra(MinicardContract.EXTRA_LIGHT_THEME, true);
-					final String preferredLanguage = PreferredLanguageOption.getValue();
-					if (preferredLanguage != null && !"".equals(preferredLanguage) && !Language.ANY_CODE.equals(preferredLanguage)) {
-						intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, preferredLanguage);
+					final String targetLanguage = TargetLanguageOption.getValue();
+					if (!Language.ANY_CODE.equals(targetLanguage)) {
+						intent.putExtra(MinicardContract.EXTRA_LANGUAGE_TO, targetLanguage);
 					}
 				} else if ("ColorDict".equals(Id)) {
 					intent.putExtra(ColorDict3.HEIGHT, frameMetrics.Height);
@@ -152,7 +154,8 @@ public abstract class DictionaryUtil {
 				dictionary.getName(),
 				null,
 				null,
-				"%s"
+				"%s",
+				false
 			);
 			Flyout = new OpenDictionaryFlyout(dictionary);
 		}
@@ -193,7 +196,8 @@ public abstract class DictionaryUtil {
 					title != null ? title : id,
 					attributes.getValue("action"),
 					attributes.getValue("dataKey"),
-					attributes.getValue("pattern")
+					attributes.getValue("pattern"),
+					"true".equals(attributes.getValue("supportsTargetLanguage"))
 				), flags);
 			}
 			return false;
@@ -223,7 +227,8 @@ public abstract class DictionaryUtil {
 					attributes.getValue("title"),
 					Intent.ACTION_VIEW,
 					null,
-					"%s"
+					"%s",
+					false
 				);
 				if (PackageUtil.canBeStarted(myContext, info.getDictionaryIntent("test"), false)) {
 					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
@@ -258,7 +263,7 @@ public abstract class DictionaryUtil {
 		);
 		dictionariesTreeSet.addAll(
 			new OpenDictionaryAPI(context).getDictionaries()
-		); 
+		);
 
 		for (Dictionary dict : dictionariesTreeSet) {
 			final PackageInfo info = new OpenDictionaryPackageInfo(dict);
@@ -338,7 +343,7 @@ public abstract class DictionaryUtil {
 		return ourMultiWordTranslatorOption;
 	}
 
-	private static PackageInfo getCurrentDictionaryInfo(boolean singleWord) {
+	public static PackageInfo getCurrentDictionaryInfo(boolean singleWord) {
 		final ZLStringOption option = singleWord
 			? singleWordTranslatorOption() : multiWordTranslatorOption();
 		final String id = option.getValue();

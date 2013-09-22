@@ -646,7 +646,7 @@
 			<node name="summary" value="Dictionary settings"/>
 			<node name="dictionary" value="Dictionary"/>
 			<node name="translator" value="Translator"/>
-			<node name="langCode" value="Select language to translate to"/>
+			<node name="targetLanguage" value="Language to translate to"/>
 			<node name="tappingAction" value="Long tapping action">
 				<node name="doNothing" value="Long tapping does nothing"/>
 				<node name="selectSingleWord" value="Long tapping selects single word"/>

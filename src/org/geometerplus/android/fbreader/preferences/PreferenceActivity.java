@@ -470,21 +470,24 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
 
-		//		final ZLStringPreference langCodePref = new ZLStringOptionPreference(this, DictionaryUtil.PreferredLanguageOption, dictionaryScreen.Resource, "langCode");
-
-		final ArrayList<Language> languages = new ArrayList<Language>(ZLResource.languages());
-		//languages.remove(Language.SYSTEM_CODE);
-		//languages.add(0, Language.ANY_CODE);
-
-		final LanguagePreference langCodePref = new LanguagePreference(this, dictionaryScreen.Resource, "langCode", languages) {
+		final List<String> langCodes = ZLResource.languageCodes();
+		final ArrayList<Language> languages = new ArrayList<Language>(langCodes.size() + 1);
+		for (String code : langCodes) {
+			languages.add(new Language(code));
+		}
+		Collections.sort(languages);
+		languages.add(0, new Language(Language.ANY_CODE));
+		final LanguagePreference targetLanguagePreference = new LanguagePreference(
+			this, dictionaryScreen.Resource, "targetLanguage", languages
+		) {
 			@Override
 			protected void init() {
-				setInitialValue(DictionaryUtil.PreferredLanguageOption.getValue());
+				setInitialValue(DictionaryUtil.TargetLanguageOption.getValue());
 			}
 
 			@Override
 			protected void setLanguage(String code) {
-				DictionaryUtil.PreferredLanguageOption.setValue(code);
+				DictionaryUtil.TargetLanguageOption.setValue(code);
 			}
 		};
 
@@ -499,7 +502,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				@Override
 				protected void onDialogClosed(boolean result) {
 					super.onDialogClosed(result);
-					langCodePref.setEnabled(DictionaryUtil.IdsToAskCode.contains(DictionaryUtil.singleWordTranslatorOption().getValue()));
+					targetLanguagePreference.setEnabled(
+						DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
+					);
 				}
 			});
 			dictionaryScreen.addPreference(new DictionaryPreference(
@@ -519,8 +524,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			"navigateOverAllWords"
 		));
 		dictionaryScreen.addOption(fbReader.WordTappingActionOption, "tappingAction");
-		dictionaryScreen.addPreference(langCodePref);
-		langCodePref.setEnabled(DictionaryUtil.IdsToAskCode.contains(DictionaryUtil.singleWordTranslatorOption().getValue()));
+		dictionaryScreen.addPreference(targetLanguagePreference);
+		targetLanguagePreference.setEnabled(
+			DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
+		);
 
 		final Screen imagesScreen = createPreferenceScreen("images");
 		imagesScreen.addOption(fbReader.ImageTappingActionOption, "tappingAction");
