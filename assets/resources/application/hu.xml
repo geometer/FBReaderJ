@@ -647,6 +647,9 @@
 			<node name="summary" value="Szótár beállításai"/>
 			<node name="dictionary" value="Szótár"/>
 			<node name="translator" value="Fordító"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Hosszú érintés">
 				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
 				<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>

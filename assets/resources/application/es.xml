@@ -662,6 +662,9 @@
 			<node name="summary" value="Ajustes del diccionario"/>
 			<node name="dictionary" value="Diccionario"/>
 			<node name="translator" value="Traductor"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Acción de toque prolongado">
 				<node name="doNothing" value="Toque prolongado no hace nada"/>
 				<node name="selectSingleWord" value="Toque prolongado selecciona una palabra"/>

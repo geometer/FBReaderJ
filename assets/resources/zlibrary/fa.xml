@@ -32,14 +32,19 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="عربی"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="بلغاری"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="چک"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="آلمانی"/>
 		<node name="de-traditional" value="آلمانی سنتی"/>
 		<node name="el" value="یونانی"/>
 		<node name="en" value="انگلیسی"/>
 		<node name="eo" value="زبان بین المللی"/>
 		<node name="es" value="اسپانیایی"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="فارسی"/>
 		<node name="fi" value="فنلاندی"/>
 		<node name="fr" value="فرانسوی"/>
 		<node name="gl" value="گالیسی"/>
@@ -55,6 +60,7 @@
 		<node name="pt" value="پرتقالی"/>
 		<node name="ro" value="رومانیایی"/>
 		<node name="ru" value="روسی"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="سوئدی"/>
 		<node name="ta" value="تمیل"/>
 		<node name="th" value="تایلندی"/>
@@ -62,6 +68,7 @@
 		<node name="uk" value="اکراینی"/>
 		<node name="vi" value="ویتنامی"/>
 		<node name="zh" value="چینی"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
 		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="دیگر"/>
 		<node name="multi" value="چند زبانه"/>

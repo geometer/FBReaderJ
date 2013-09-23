@@ -657,6 +657,9 @@
 			<node name="summary" value="Sözlük ayarları"/>
 			<node name="dictionary" value="Sözlük"/>
 			<node name="translator" value="Çevirmen"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectSingleWord" value="Uzun dokunma bir kelime seçsin"/>
