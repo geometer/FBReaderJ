@@ -34,11 +34,10 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 import org.geometerplus.android.fbreader.FBReader;
 
 public class CatalogManagerActivity extends ListActivity {
-	private ArrayList<Item> myAllItems = new ArrayList<Item>();
-	private ArrayList<Item> mySelectedItems = new ArrayList<Item>();
-	ArrayList<String> myIds = new ArrayList<String>();
-	ArrayList<String> myInactiveIds = new ArrayList<String>();
-	Intent returnIntent = new Intent();
+	private final List<Item> myAllItems = new ArrayList<Item>();
+	private final List<Item> mySelectedItems = new ArrayList<Item>();
+	private List<String> myIds = new ArrayList<String>();
+	private List<String> myInactiveIds = new ArrayList<String>();
 
 	public final static String INACTIVE_IDS_LIST = "org.geometerplus.android.fbreader.network.INACTIVE_IDS_LIST";
 
@@ -155,8 +154,7 @@ public class CatalogManagerActivity extends ListActivity {
 					}
 				}
 			}
-			returnIntent.putStringArrayListExtra(FBReader.CATALOGS_ID_LIST, ids);
-			setResult(RESULT_OK, returnIntent);
+			setResult(RESULT_OK, new Intent().putStringArrayListExtra(FBReader.CATALOGS_ID_LIST, ids));
 		}
 	}
 
