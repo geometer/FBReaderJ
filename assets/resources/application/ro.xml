@@ -636,6 +636,9 @@
 			<node name="summary" value="Setari dictionar "/>
 			<node name="dictionary" value="Dictionar"/>
 			<node name="translator" value="Traducator"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Atingere lunga pentru actiune">
 				<node name="doNothing" value="Apasând lung nu face nimic"/>
 				<node name="selectSingleWord" value="Apasând lung selecteaza un singur cuvânt"/>
