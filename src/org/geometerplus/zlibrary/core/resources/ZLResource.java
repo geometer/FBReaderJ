@@ -51,7 +51,7 @@ abstract public class ZLResource {
 		final List<Language> allLanguages = new LinkedList<Language>();
 		final ZLResource resource = ZLResource.resource("language-self");
 		for (String c : languageCodes()) {
-			allLanguages.add(new Language(c, resource.getResource(c).getValue()));
+			allLanguages.add(new Language(c, resource));
 		}
 		Collections.sort(allLanguages);
 		allLanguages.add(0, new Language(Language.SYSTEM_CODE));

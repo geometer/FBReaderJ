@@ -651,6 +651,9 @@
 			<node name="summary" value="Настройки словаря"/>
 			<node name="dictionary" value="Словарь"/>
 			<node name="translator" value="Переводчик"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
 				<node name="selectSingleWord" value="Выделять одно слово"/>
