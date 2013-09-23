@@ -646,6 +646,9 @@
 			<node name="summary" value="تنظيمات ديكشنري"/>
 			<node name="dictionary" value="ديكشنري"/>
 			<node name="translator" value="مترجم"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="اقدام ضربه طولاني">
 				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
 				<node name="selectSingleWord" value="ضربه طولاني كلمه منفردي را انتخاب مي كند"/>

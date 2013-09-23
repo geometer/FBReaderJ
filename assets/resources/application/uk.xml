@@ -636,6 +636,9 @@
 			<node name="summary" value="Налаштування словника"/>
 			<node name="dictionary" value="Словник"/>
 			<node name="translator" value="Перекладач"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Дія при довгому натисканні">
 				<node name="doNothing" value="Довге натискання нічого не робить"/>
 				<node name="selectSingleWord" value="Довге натискання вибирає слово"/>
