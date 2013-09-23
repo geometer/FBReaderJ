@@ -663,6 +663,9 @@
 			<node name="summary" value="Налады слоўніку"/>
 			<node name="dictionary" value="Слоўнік"/>
 			<node name="translator" value="Перакладнік"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Дзеяньне доўгага дотыку">
 				<node name="doNothing" value="Доўгі дотык нічога ня робіць"/>
 				<node name="selectSingleWord" value="Доўгі дотык вылучае адно слова"/>

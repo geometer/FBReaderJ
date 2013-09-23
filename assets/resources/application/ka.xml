@@ -662,6 +662,9 @@
 			<node name="summary" value="ლექსიკონის პარამეტრები"/>
 			<node name="dictionary" value="ლექსიკონი"/>
 			<node name="translator" value="თარჯიმანი"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="ეკრანზე ხანგრძლივი დაჭერის ქმედება">
 				<node name="doNothing" value="არაფრის გაკეთება"/>
 				<node name="selectSingleWord" value="ერთი სიტყვის გამოყოფა"/>

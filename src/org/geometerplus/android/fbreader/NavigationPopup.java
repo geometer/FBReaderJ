@@ -133,8 +133,8 @@ final class NavigationPopup {
 				final EditText input = new EditText(myWindow.getActivity());
 				input.setInputType(InputType.TYPE_CLASS_NUMBER);
 				input.setFilters(new InputFilter[]{ 
-						new InputFilterMinMax(0, myFBReader.getTextView().pagePosition().Total)
-						});
+					new InputFilterMinMax(0, myFBReader.getTextView().pagePosition().Total)
+				});
 				input.setText(Integer.toString(myFBReader.getTextView().pagePosition().Current));
 				builder.setView(input);
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { 

@@ -657,6 +657,9 @@
 			<node name="summary" value="Woordenboek instellingen"/>
 			<node name="dictionary" value="Woordenboek"/>
 			<node name="translator" value="Vertaler"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
 				<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
