@@ -476,7 +476,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			languages.add(new Language(code));
 		}
 		Collections.sort(languages);
-		languages.add(0, new Language(Language.ANY_CODE));
+		languages.add(0, new Language(
+			Language.ANY_CODE, dictionaryScreen.Resource.getResource("targetLanguage")
+		));
 		final LanguagePreference targetLanguagePreference = new LanguagePreference(
 			this, dictionaryScreen.Resource, "targetLanguage", languages
 		) {

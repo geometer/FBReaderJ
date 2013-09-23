@@ -648,6 +648,9 @@
 			<node name="summary" value="Configurações de dicionário"/>
 			<node name="dictionary" value="Dicionário"/>
 			<node name="translator" value="Tradutor"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Ação de tocar o dedo de forma contínua">
 				<node name="doNothing" value="Desabiltar a forma contínua"/>
 				<node name="selectSingleWord" value="A forma contínua seleciona uma palavra única"/>

@@ -651,6 +651,9 @@
 			<node name="summary" value="Настройки на речника"/>
 			<node name="dictionary" value="Речник"/>
 			<node name="translator" value="Преводач"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Действие при продължителен натиск по екрана">
 				<node name="doNothing" value="Не се извършва действие"/>
 				<node name="selectSingleWord" value="Селектиране на една дума"/>
