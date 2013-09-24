@@ -50,6 +50,7 @@
 		<node name="gl" value="Galiziera"/>
 		<node name="he" value="Hebreera"/>
 		<node name="hu" value="Hungariera"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Indonesiera"/>
 		<node name="it" value="Italiera"/>
 		<node name="ka" value="Georgiera"/>
