@@ -647,6 +647,9 @@
 			<node name="summary" value="设置字典及其对应操作"/>
 			<node name="dictionary" value="字典"/>
 			<node name="translator" value="译者"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="长按动作设定">
 				<node name="doNothing" value="长按不做任何事"/>
 				<node name="selectSingleWord" value="长按选择词语"/>

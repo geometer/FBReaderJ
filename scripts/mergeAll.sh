@@ -1,8 +1,5 @@
 #!/bin/sh
 
-git checkout android-1.5
-git merge master
-
 git checkout ice-cream-sandwich
 git merge master
 

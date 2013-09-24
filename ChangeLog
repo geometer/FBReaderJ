@@ -12,7 +12,9 @@
 * PDF plugin integration
 
 ===== 1.9 (Sep ??, 2013) =====
+* Dictionary support: added OpenDictionary support (code provided by Paragon Software), better integration with SlovoEd dictionaries
 * Dictionary support: fixed ColorDict 3 integration
+* Dictionary support: added Lingvo integration
 * mobi: added support for <div> & <mbp:pagebreak> tags
 * ePub: fixed reading of files generated from LibreOffice
 * ePub: no empty paragraphs before/after the cover
@@ -20,6 +22,7 @@
 * Danish hyphenation patterns imported by Dennis Sheil of Panacea Supplies
 * Added Persian localization by HYIPEDU Team
 * Added Basque localization by Ibon Idoiaga Basaras from http://librezale.org
+* Added Armenian localization by Yavruhrat, Marat Yavrumyan, Ruben Tarumian
 * Updated French localization by Mathias Monnerville
 * Current reading progress is saved in books db
 

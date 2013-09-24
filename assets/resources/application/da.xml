@@ -653,6 +653,9 @@
 			<node name="summary" value="Ordbogsindstillinger"/>
 			<node name="dictionary" value="Ordbog"/>
 			<node name="translator" value="Oversætter"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Handling for langt tryk">
 				<node name="doNothing" value="Langt tast har ingen virkning"/>
 				<node name="selectSingleWord" value="Et langt tryk vælger et enkelt ord"/>

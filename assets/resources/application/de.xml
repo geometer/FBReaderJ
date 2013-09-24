@@ -659,6 +659,9 @@
 			<node name="summary" value="Wörterbucheinstellungen"/>
 			<node name="dictionary" value="Wörterbuch"/>
 			<node name="translator" value="Übersetzer"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Aktion beim langen Antippen">
 				<node name="doNothing" value="Langes Antippen bewirkt nichts"/>
 				<node name="selectSingleWord" value="Langes Antippen selektiert ein einzelnes Wort."/>
