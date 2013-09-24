@@ -51,6 +51,7 @@
 		<node name="gl" value="加里西亚语"/>
 		<node name="he" value="希伯来语"/>
 		<node name="hu" value="匈牙利语"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="印度语"/>
 		<node name="it" value="意大利语"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>

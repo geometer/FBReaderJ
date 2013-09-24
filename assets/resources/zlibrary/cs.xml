@@ -51,6 +51,7 @@
 		<node name="gl" value="Haličsky"/>
 		<node name="he" value="Hebrejsky"/>
 		<node name="hu" value="Maďarsky"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Indonésky"/>
 		<node name="it" value="Italsky"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
