@@ -132,20 +132,20 @@ public class CatalogManagerActivity extends ListActivity {
 		}
 	}
 
-	private void setResultIds(Item item, int index){
-		if(item != null && item instanceof CatalogItem){
+	private void setResultIds(Item item, int index) {
+		if (item != null && item instanceof CatalogItem) {
 			CatalogItem catalogItem = (CatalogItem)item;
-			if(catalogItem.IsChecked){
+			if (catalogItem.IsChecked) {
 				int insertIndex = index <= 0 ? -1 : (index-1);
-				if(mySelectedItems.contains(catalogItem)){
+				if (mySelectedItems.contains(catalogItem)) {
 					mySelectedItems.remove(catalogItem);
 				}
-				if(insertIndex >= 0){
+				if (insertIndex >= 0) {
 					mySelectedItems.add(insertIndex, catalogItem);
-				}else{
+				} else {
 					mySelectedItems.add(catalogItem);
 				}
-			}else{
+			} else {
 				mySelectedItems.remove(catalogItem);
 			}
 			final ArrayList<String> ids = new ArrayList<String>();
