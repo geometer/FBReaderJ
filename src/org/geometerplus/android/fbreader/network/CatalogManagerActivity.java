@@ -57,7 +57,7 @@ public class CatalogManagerActivity extends ListActivity {
 		myAllItems.clear();
 
 		if (myIds.size() > 0) {
-			myAllItems.add(new SectionItem("active"));
+			myAllItems.add(new SectionItem("enabled"));
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myIds) {
 				final NetworkTree tree = NetworkLibrary.Instance().getCatalogTreeByUrlAll(id);
@@ -70,7 +70,7 @@ public class CatalogManagerActivity extends ListActivity {
 		}
 
 		if (myInactiveIds.size() > 0) {
-			myAllItems.add(new SectionItem("inactive"));
+			myAllItems.add(new SectionItem("disabled"));
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myInactiveIds) {
 				cItems.add(new CatalogItem(id, false, NetworkLibrary.Instance().getCatalogTreeByUrlAll(id)));
