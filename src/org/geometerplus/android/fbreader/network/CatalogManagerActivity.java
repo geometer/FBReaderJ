@@ -60,7 +60,10 @@ public class CatalogManagerActivity extends ListActivity {
 			myAllItems.add(new SectionItem("active"));
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : myIds) {
-				cItems.add(new CatalogItem(id, true, NetworkLibrary.Instance().getCatalogTreeByUrlAll(id)));
+				final NetworkTree tree = NetworkLibrary.Instance().getCatalogTreeByUrlAll(id);
+				if (tree != null) {
+					cItems.add(new CatalogItem(id, true, tree));
+				}
 			}
 			myAllItems.addAll(cItems);
 			mySelectedItems.addAll(cItems);
