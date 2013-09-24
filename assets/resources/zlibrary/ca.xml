@@ -54,6 +54,7 @@
 		<node name="gl" value="Gallego" toBeTranslated="true"/>
 		<node name="he" value="Hebreo" toBeTranslated="true"/>
 		<node name="hu" value="Húngaro" toBeTranslated="true"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Indonesio" toBeTranslated="true"/>
 		<node name="it" value="Italiano" toBeTranslated="true"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
