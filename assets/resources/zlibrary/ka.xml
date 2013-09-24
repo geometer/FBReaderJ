@@ -50,6 +50,7 @@
 		<node name="gl" value="გალიციური"/>
 		<node name="he" value="ივრითი"/>
 		<node name="hu" value="უნგრული"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="ინდონეზიური"/>
 		<node name="it" value="იტალიური"/>
 		<node name="ka" value="ქართული"/>

@@ -51,6 +51,7 @@
 		<node name="gl" value="Ґалісійская мова"/>
 		<node name="he" value="Іўрыт мова"/>
 		<node name="hu" value="Вуґорская мова"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Інданэзійская мова"/>
 		<node name="it" value="Італійская мова"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>

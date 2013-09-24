@@ -50,6 +50,7 @@
 		<node name="gl" value="галски"/>
 		<node name="he" value="иврит"/>
 		<node name="hu" value="унгаски"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="индонезийски"/>
 		<node name="it" value="италиански"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
