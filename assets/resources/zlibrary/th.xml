@@ -51,6 +51,7 @@
 		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="ฮีบรู"/>
 		<node name="hu" value="ฮังการี"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="อินโดนีเซีย"/>
 		<node name="it" value="อิตาลี"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
