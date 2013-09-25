@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.*;
 import android.content.*;
 import android.net.Uri;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 
 import com.abbyy.mobile.lingvo.api.MinicardContract;
@@ -275,9 +276,13 @@ public abstract class DictionaryUtil {
 		if (ourInfos.isEmpty()) {
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
+					Looper.prepare();
+
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
 					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
 					collectOpenDictionaries(context);
+
+					Looper.loop();
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);
@@ -375,7 +380,8 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
+	public static void openTextInDictionary(final Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
+		final String textToTranslate;
 		if (singleWord) {
 			int start = 0;
 			int end = text.length();
@@ -384,7 +390,9 @@ public abstract class DictionaryUtil {
 			if (start == end) {
 				return;
 			}
-			text = text.substring(start, end);
+			textToTranslate = text.substring(start, end);
+		} else {
+			textToTranslate = text;
 		}
 
 		final DisplayMetrics metrics = new DisplayMetrics();
@@ -392,7 +400,12 @@ public abstract class DictionaryUtil {
 		final PopupFrameMetric frameMetrics =
 			new PopupFrameMetric(metrics, selectionTop, selectionBottom);
 
-		getCurrentDictionaryInfo(singleWord).open(text, activity, frameMetrics);
+		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
+		activity.runOnUiThread(new Runnable() {
+			public void run() {
+				info.open(textToTranslate, activity, frameMetrics);
+			}
+		});
 	}
 
 	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) {
