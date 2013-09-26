@@ -1046,22 +1046,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return links;
 	}
 	
-	private SQLiteStatement myPositionStatement;
+	private SQLiteStatement mySaveProgessStatement;
 	@Override
-	protected void savePosition(long bookId, RationalNumber progress) {
-		if (myPositionStatement == null) {
-			myPositionStatement = myDatabase.compileStatement(
+	protected void saveProgress(long bookId, RationalNumber progress) {
+		if (mySaveProgessStatement == null) {
+			mySaveProgessStatement = myDatabase.compileStatement(
 				"INSERT OR REPLACE INTO BookReadingProgress (book_id,numerator,denominator) VALUES (?,?,?)"
 			);
 		}
-		myStorePositionStatement.bindLong(1, bookId);
-		myStorePositionStatement.bindLong(2, progress.Numerator);
-		myStorePositionStatement.bindLong(3, progress.Denominator);
-		myStorePositionStatement.execute();
+		mySaveProgessStatement.bindLong(1, bookId);
+		mySaveProgessStatement.bindLong(2, progress.Numerator);
+		mySaveProgessStatement.bindLong(3, progress.Denominator);
+		mySaveProgessStatement.execute();
 	}
 
 	@Override
-	protected RationalNumber loadPosition(long bookId) {
+	protected RationalNumber loadProgress(long bookId) {
 		final RationalNumber progress;
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT numerator,denominator FROM BookReadingProgress WHERE book_id = " + bookId, null
