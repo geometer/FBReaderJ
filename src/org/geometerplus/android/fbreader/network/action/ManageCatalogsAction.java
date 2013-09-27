@@ -32,7 +32,7 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.network.CatalogManagerActivity;
-import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class ManageCatalogsAction extends RootAction {
 
@@ -54,9 +54,9 @@ public class ManageCatalogsAction extends RootAction {
 		OrientationUtil.startActivityForResult(
 			myActivity,
 			new Intent(myActivity.getApplicationContext(), CatalogManagerActivity.class)
-			  .putStringArrayListExtra(FBReader.CATALOGS_ID_LIST, ids)
+			  .putStringArrayListExtra(NetworkLibraryActivity.CATALOG_IDS_KEY, ids)
 			  .putStringArrayListExtra(CatalogManagerActivity.INACTIVE_IDS_LIST, inactiveIds),
-			  FBReader.REQUEST_ALL_CATALOGS
+			  NetworkLibraryActivity.REQUEST_MANAGE_CATALOGS
 		);
 	}
 }
