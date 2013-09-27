@@ -49,7 +49,8 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
 	public static final int REQUEST_MANAGE_CATALOGS = 1;
-	public static final String CATALOG_IDS_KEY = "android.fbreader.data.catalog_ids";
+	public static final String ENABLED_CATALOG_IDS_KEY = "android.fbreader.data.enabled_catalogs";
+	public static final String DISABLED_CATALOG_IDS_KEY = "android.fbreader.data.disabled_catalogs";
 
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
@@ -155,7 +156,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			}
 		});
 		if (requestCode == REQUEST_MANAGE_CATALOGS && resultCode == RESULT_OK && data != null) {
-			final ArrayList<String> myIds = data.getStringArrayListExtra(CATALOG_IDS_KEY);
+			final ArrayList<String> myIds = data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
 			NetworkLibrary.Instance().setActiveIds(myIds);
 			NetworkLibrary.Instance().synchronize();
 		}
