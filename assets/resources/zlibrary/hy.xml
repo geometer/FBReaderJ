@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Armenian zlibrary resources, by Yavruhrat, Marat Yavrumyan, Ruben Tarumian-->
+<!-- Armenian zlibrary resources, by Yavruhrat -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -7,7 +7,7 @@
 			<node name="cancel" value="Չեղարկել"/>
 			<node name="yes" value="Այո"/>
 			<node name="no" value="Ոչ"/>
-			<node name="apply" value="Կիրառել"/>
+			<node name="apply" value="Գործադրել"/>
 		</node>
 		<node name="networkError">
 			<node name="title" value="Սխալ՝ ցանցի հետ աշխատելիս"/>
@@ -19,7 +19,7 @@
 			<node name="couldntConnectToNetworkMessage" value="Չհաջողվեց կապ հաստատել ցանցի հետ"/>
 			<node name="couldntConnectMessage" value="Չհաջողվեց կապ հաստատել %s կայքի հետ"/>
 			<node name="couldntResolveHostMessage" value="%s կայքը չգտնվեց"/>
-			<node name="authenticationFailed" value="Հեղինականացման սխալ"/>
+			<node name="authenticationFailed" value="Հեղինակացման սխալ"/>
 			<node name="unsupportedProtocol" value="Անհայտ հաղորդակարգ"/>
 			<node name="invalidURL" value="Սխալ URL"/>
 			<node name="hostCantBeReached" value="%s կայքն անհասանելի է"/>
@@ -33,25 +33,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="արաբերեն"/>
-		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="be" value="բելառուսերեն"/>
 		<node name="bg" value="բուլղարերեն"/>
-		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="ca" value="կատալոներեն"/>
 		<node name="cs" value="չեխերեն"/>
-		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="da" value="դանիերեն"/>
 		<node name="de" value="գերմաներեն"/>
-		<node name="de-traditional" value="գերմաներեն (հին ուղղագրություն)"/>
+		<node name="de-traditional" value="գերմաներեն (հին ուղղագրությամբ)"/>
 		<node name="el" value="հունարեն"/>
 		<node name="en" value="անգլերեն"/>
 		<node name="eo" value="էսպերանտո"/>
 		<node name="es" value="իսպաներեն"/>
-		<node name="eu" value="Basque" toBeTranslated="true"/>
-		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="eu" value="բասկերեն"/>
+		<node name="fa" value="պարսկերեն"/>
 		<node name="fi" value="ֆիններեն"/>
 		<node name="fr" value="ֆրանսերեն"/>
 		<node name="gl" value="գալիսերեն"/>
 		<node name="he" value="եբրայերեն"/>
 		<node name="hu" value="հունգարերեն"/>
-		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="hy" value="հայերեն"/>
 		<node name="id" value="ինդոնեզերեն (կավի)"/>
 		<node name="it" value="իտալերեն"/>
 		<node name="ka" value="վրացերեն"/>
@@ -62,7 +62,7 @@
 		<node name="pt" value="պորտուգալերեն"/>
 		<node name="ro" value="ռումիներեն"/>
 		<node name="ru" value="ռուսերեն"/>
-		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sr" value="սերբերեն"/>
 		<node name="sv" value="շվեդերեն"/>
 		<node name="ta" value="թամիլերեն"/>
 		<node name="th" value="թայ"/>
@@ -70,8 +70,8 @@
 		<node name="uk" value="ուկրաիներեն"/>
 		<node name="vi" value="վիետնամերեն"/>
 		<node name="zh" value="չինարեն"/>
-		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
-		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="zh_TW" value="չինարեն (ավանդական)"/>
+		<node name="any" value="ցանկացած"/>
 		<node name="other" value="այլ"/>
 		<node name="multi" value="բազմալեզու"/>
 		<node name="system" value="Համապատասխանեցնել համակարգին"/>
