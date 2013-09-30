@@ -4,7 +4,6 @@
 		id="ColorDict"
 		title="ColorDict&#160;3"
 		package="com.socialnmobile.colordict"
-		class=".activity.Main"
 		action="colordict.intent.action.SEARCH"
 		dataKey="EXTRA_QUERY"
 		pattern="%s"
