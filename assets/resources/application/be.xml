@@ -255,7 +255,7 @@
 		<node name="clearSelection" value="Ачысьціць"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Абагулена праз &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Абагулена праз &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Налады"/>
@@ -290,6 +290,7 @@
 		<node name="decreaseFont" value="Падаліць"/>
 		<node name="toggleFullscreen" value="Поўны экран"/>
 		<node name="bookmarks" value="Закладкі"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Назва файла"/>
@@ -721,7 +722,7 @@
 			<node name="summary" value="Вэрсія й кантакты"/>
 			<node name="version" value="Вэрсія"/>
 			<node name="site" value="Наведаць наш сайт">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Даслаць нам ліст">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -880,5 +881,8 @@
 		<node name="opfFileNotFound" value="OPF ня знойдзены ў %s"/>
 		<node name="unsupportedFileFormat" value="Фармат файла не падтрымліваецца для '%s'"/>
 		<node name="errorParsingRtf" value="Памылка разбору rtf у: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

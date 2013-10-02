@@ -249,7 +249,7 @@
 		<node name="clearSelection" value="Sil"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Ayarlar"/>
@@ -284,6 +284,7 @@
 		<node name="decreaseFont" value="Küçült"/>
 		<node name="toggleFullscreen" value="Tam ekran"/>
 		<node name="bookmarks" value="Yer imleri"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Dosya adı"/>
@@ -715,7 +716,7 @@
 			<node name="summary" value="Version info, contacts"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Visit our website">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -874,5 +875,8 @@
 		<node name="opfFileNotFound" value="OPF %s\'de bulunamadı"/>
 		<node name="unsupportedFileFormat" value="'%s' dosya türü desteklenmiyor"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>
