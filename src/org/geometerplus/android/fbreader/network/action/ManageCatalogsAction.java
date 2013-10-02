@@ -35,14 +35,15 @@ import org.geometerplus.android.fbreader.network.CatalogManagerActivity;
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class ManageCatalogsAction extends RootAction {
-
 	public ManageCatalogsAction(Activity activity) {
 		super(activity, ActionCode.MANAGE_CATALOGS, "manageCatalogs", R.drawable.ic_menu_filter);
 	}
+
 	@Override
 	public boolean isVisible(NetworkTree tree) {
 		return tree instanceof RootTree || tree instanceof ManageCatalogsItemTree;
 	}
+
 	@Override
 	public void run(NetworkTree tree) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
@@ -54,9 +55,9 @@ public class ManageCatalogsAction extends RootAction {
 		OrientationUtil.startActivityForResult(
 			myActivity,
 			new Intent(myActivity.getApplicationContext(), CatalogManagerActivity.class)
-			  .putStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY, ids)
-			  .putStringArrayListExtra(NetworkLibraryActivity.DISABLED_CATALOG_IDS_KEY, inactiveIds),
-			  NetworkLibraryActivity.REQUEST_MANAGE_CATALOGS
+				.putStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY, ids)
+				.putStringArrayListExtra(NetworkLibraryActivity.DISABLED_CATALOG_IDS_KEY, inactiveIds),
+			NetworkLibraryActivity.REQUEST_MANAGE_CATALOGS
 		);
 	}
 }
