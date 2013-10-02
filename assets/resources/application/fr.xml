@@ -245,7 +245,7 @@
 		<node name="clearSelection" value="Effacer"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Partagé depuis l'application &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt; pour Android"/>
+		<node name="sharedFrom" value="Partagé depuis l'application &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; pour Android"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Paramètres"/>
@@ -280,6 +280,7 @@
 		<node name="decreaseFont" value="Diminuer la taille"/>
 		<node name="toggleFullscreen" value="Plein écran"/>
 		<node name="bookmarks" value="Marque-pages"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nom du fichier"/>
@@ -719,7 +720,7 @@
 			<node name="summary" value="Numéro de version, contact"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Site web">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Contact">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -899,5 +900,8 @@
 		<node name="opfFileNotFound" value="OPF non trouvé dans %s"/>
 		<node name="unsupportedFileFormat" value="Format de fichier non supporté '%s'"/>
 		<node name="errorParsingRtf" value="Rtf: erreur de paring dans: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>
