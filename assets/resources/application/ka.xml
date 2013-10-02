@@ -254,7 +254,7 @@
 		<node name="clearSelection" value="ნიშნულის მოხსნა"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;http://www.fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
+		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="პარამეტრები"/>
@@ -289,6 +289,7 @@
 		<node name="decreaseFont" value="შრიფტის შემცირება"/>
 		<node name="toggleFullscreen" value="მთლიან ეკრანზე"/>
 		<node name="bookmarks" value="სანიშნეები"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="ფაილი"/>
@@ -720,7 +721,7 @@
 			<node name="summary" value="ვერსია, კონტაქტები"/>
 			<node name="version" value="ვერსია"/>
 			<node name="site" value="ჩვენი ვებ-გვერდი">
-				<node name="url" value="http://www.fbreader.ru/"/>
+				<node name="url" value="http://fbreader.ru/"/>
 			</node>
 			<node name="email" value="მოგვწერეთ წერილი">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -879,5 +880,8 @@
 		<node name="opfFileNotFound" value="არ მოიძებნა OPF %s-ში"/>
 		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
 		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

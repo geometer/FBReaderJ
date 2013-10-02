@@ -249,7 +249,7 @@
 		<node name="clearSelection" value="Очисти"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Поделио &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;."/>
+		<node name="sharedFrom" value="Поделио &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;."/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Подешавања"/>
@@ -284,6 +284,7 @@
 		<node name="decreaseFont" value="Умањи"/>
 		<node name="toggleFullscreen" value="Цео екран"/>
 		<node name="bookmarks" value="Обележивачи"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Име датотеке"/>
@@ -715,7 +716,7 @@
 			<node name="summary" value="Подаци о верзији и контакт."/>
 			<node name="version" value="Верзија"/>
 			<node name="site" value="Посетите наш сајт">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Пошаљите нам поруку">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -874,5 +875,8 @@
 		<node name="opfFileNotFound" value="Не могу да пронађем OPF у „%s“."/>
 		<node name="unsupportedFileFormat" value="Формат датотеке није подржан за „%s“."/>
 		<node name="errorParsingRtf" value="Грешка при рашчлањивању RTF-а у: %s."/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>
