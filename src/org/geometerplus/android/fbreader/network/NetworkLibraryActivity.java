@@ -48,6 +48,10 @@ import org.geometerplus.android.util.UIUtil;
 public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
+	public static final int REQUEST_MANAGE_CATALOGS = 1;
+	public static final String ENABLED_CATALOG_IDS_KEY = "android.fbreader.data.enabled_catalogs";
+	public static final String DISABLED_CATALOG_IDS_KEY = "android.fbreader.data.disabled_catalogs";
+
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
@@ -151,6 +155,11 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				getListView().invalidateViews();
 			}
 		});
+		if (requestCode == REQUEST_MANAGE_CATALOGS && resultCode == RESULT_OK && data != null) {
+			final ArrayList<String> myIds = data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
+			NetworkLibrary.Instance().setActiveIds(myIds);
+			NetworkLibrary.Instance().synchronize();
+		}
 	}
 
 	@Override
@@ -191,7 +200,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myOptionsMenuActions.add(new RunSearchAction(this, false));
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
 		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
-		myOptionsMenuActions.add(new LanguageFilterAction(this));
+		myOptionsMenuActions.add(new ManageCatalogsAction(this));
 		myOptionsMenuActions.add(new ReloadCatalogAction(this));
 		myOptionsMenuActions.add(new SignInAction(this));
 		myOptionsMenuActions.add(new SignUpAction(this));
@@ -222,6 +231,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myListClickActions.add(new AddCustomCatalogAction(this));
 		myListClickActions.add(new TopupAction(this));
 		myListClickActions.add(new ShowBookInfoAction(this));
+		myListClickActions.add(new ManageCatalogsAction(this));
 	}
 
 	private List<? extends Action> getContextMenuActions(NetworkTree tree) {
