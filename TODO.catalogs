@@ -1,0 +1,28 @@
+* ISSUES:
+** do not use NetworkLibrary instance in AllCatalogsActivity, send result via intent
+** do not use myChanged state flag in AllCatalogsActivity, use setResult immediately
+
+* SHORT-TERM (1.8.3)
+ + check recently added catalogs are not lost (and are visible) after update
+ + newly added catalog is not checked in filter activity
+ + use language filter to detect visible catalogs on first start
+ + add catalog icons
+ + order catalogs alphabetically
+ + extract litres API to a separate branch
+ + add RSS catalog
+ + hardcoded strings ("Active/Inactive catalogs", may be some else?) => en.xml
+ + "Library filter" => "All catalogs"
+ + NetworkLibraryFilterActivity => AllCatalogsActivity
+ + make a separate branch for catalogs + master
+ + copyrights in all files
+
+* MID-TERM
+** litres catalog use litres-api
+
+* LONG-TERM
+** re-order catalog function
+
+* PLUGIN
+** self-service kiosk: update instruction
+** gift coupon activation
+** mobile operators topup
