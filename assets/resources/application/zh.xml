@@ -239,7 +239,7 @@
 		<node name="clearSelection" value="清除"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="共享自 &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt; "/>
+		<node name="sharedFrom" value="共享自 &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; "/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="阅读相关设置"/>
@@ -274,6 +274,7 @@
 		<node name="decreaseFont" value="字体缩小"/>
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="我的书签"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="文件"/>
@@ -705,7 +706,7 @@
 			<node name="summary" value="版本信息, 联系人"/>
 			<node name="version" value="版本"/>
 			<node name="site" value="访问我们的网站">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="给我们发送邮件">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -864,5 +865,8 @@
 		<node name="opfFileNotFound" value="在 %s 文件夹未找到 OPF  "/>
 		<node name="unsupportedFileFormat" value="文件格式 '%s' 不支持"/>
 		<node name="errorParsingRtf" value="Rtf解析错误: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>
