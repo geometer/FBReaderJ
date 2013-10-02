@@ -12,6 +12,7 @@
 * Added Armenian localization by Yavruhrat, Marat Yavrumyan, Ruben Tarumian
 * Updated French localization by Mathias Monnerville
 * Current reading progress is saved in books db
+* Help item in the main menu (opens F.A.Q. page on the site)
 
 ===== 1.8.2 (Jun 13, 2013) =====
 * Editable highlighting styles
