@@ -261,7 +261,7 @@
 		<node name="clearSelection" value="Vymazat"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Nastavení"/>
@@ -296,6 +296,7 @@
 		<node name="decreaseFont" value="Zmenšit"/>
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Název souboru"/>
@@ -735,7 +736,7 @@
 			<node name="summary" value="Informace o verzi, kontakty"/>
 			<node name="version" value="Verze"/>
 			<node name="site" value="Navštivte naši webovou stránku">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Pošlete nám e-mail">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -915,5 +916,8 @@
 		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
 		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
 		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

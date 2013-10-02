@@ -249,7 +249,7 @@
 		<node name="clearSelection" value="Garbitu"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="&lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt; (e)tik partekatua"/>
+		<node name="sharedFrom" value="&lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; (e)tik partekatua"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Hobespenak"/>
@@ -284,6 +284,7 @@
 		<node name="decreaseFont" value="Txikitu letra-tipoa"/>
 		<node name="toggleFullscreen" value="Pantaila osoan"/>
 		<node name="bookmarks" value="Laster-markak"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Fitxategiaren izena"/>
@@ -715,7 +716,7 @@
 			<node name="summary" value="Bertsioaren infoa, kontaktuak"/>
 			<node name="version" value="Bertsioa"/>
 			<node name="site" value="Webgunea bisitatu">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Bidali posta elektronikoa">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -874,5 +875,8 @@
 		<node name="opfFileNotFound" value="Ez da OPF aurkitzen %s (e)n"/>
 		<node name="unsupportedFileFormat" value="Ez da onartzen  '%s' (r)en fitxategi formatua"/>
 		<node name="errorParsingRtf" value="RTF prozesatzerakoan hemen: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

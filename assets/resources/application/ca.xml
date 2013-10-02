@@ -256,7 +256,7 @@
 		<node name="clearSelection" value="Neteja"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Preferències"/>
@@ -291,6 +291,7 @@
 		<node name="decreaseFont" value="Disminuir lletra"/>
 		<node name="toggleFullscreen" value="Pantalla completa"/>
 		<node name="bookmarks" value="Punts de llibre"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nom del fitxer"/>
@@ -730,7 +731,7 @@
 			<node name="summary" value="Informació de versió, contactes"/>
 			<node name="version" value="Versió"/>
 			<node name="site" value="Visiteu el nostre web">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Envieu-nos un correu electrònic">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -910,5 +911,8 @@
 		<node name="opfFileNotFound" value="OPF no se encuentra en %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Error de análisis RTF en: %s" toBeTranslated="true"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

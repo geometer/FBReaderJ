@@ -252,7 +252,7 @@
 		<node name="clearSelection" value="Tøm"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Delt fra &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Delt fra &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Innstillinger"/>
@@ -287,6 +287,7 @@
 		<node name="decreaseFont" value="Zoom ut"/>
 		<node name="toggleFullscreen" value="Full skjerm"/>
 		<node name="bookmarks" value="Bokmerker"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Filnavn"/>
@@ -726,7 +727,7 @@
 			<node name="summary" value="Versjonsinfo, kontakter"/>
 			<node name="version" value="Versjon"/>
 			<node name="site" value="Besøk nettstedet vårt">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send oss en e-post">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -906,5 +907,8 @@
 		<node name="opfFileNotFound" value="OPF er ikke funnet i %s"/>
 		<node name="unsupportedFileFormat" value="Filformatet er ikke støttet for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf analysingsfeil i: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

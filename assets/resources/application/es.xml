@@ -257,7 +257,7 @@
 		<node name="clearSelection" value="Limpiar"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Ajustes"/>
@@ -292,6 +292,7 @@
 		<node name="decreaseFont" value="Disminuír fuente"/>
 		<node name="toggleFullscreen" value="Pantalla completa"/>
 		<node name="bookmarks" value="Marcadores"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nombre de archivo"/>
@@ -731,7 +732,7 @@
 			<node name="summary" value="Información de versión, contactos"/>
 			<node name="version" value="Versión"/>
 			<node name="site" value="Visite nuestro sitio web">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Envíenos un correo electrónico">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -911,5 +912,8 @@
 		<node name="opfFileNotFound" value="OPF no se encuentra en %s"/>
 		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'"/>
 		<node name="errorParsingRtf" value="Error de análisis RTF en: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

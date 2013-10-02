@@ -63,6 +63,7 @@ public class MenuItemData {
 		root.Children.add(orient);
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.INCREASE_FONT, null));
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.DECREASE_FONT, null));
+		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.OPEN_WEB_HELP, null));
 		return root;
 	}
 }
