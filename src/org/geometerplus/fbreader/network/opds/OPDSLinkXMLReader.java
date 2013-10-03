@@ -29,6 +29,7 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
+import org.geometerplus.fbreader.network.rss.RSSNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
@@ -95,11 +96,13 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Image, href, mime));
 					}
 				} else if (rel == null) {
-					if (MimeType.APP_ATOM_XML.weakEquals(mime)) {
+					if (MimeType.APP_ATOM_XML.weakEquals(mime)
+						|| MimeType.APP_RSS_XML.weakEquals(mime)) {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href, mime));
 					}
 				} else if (rel == "search") {
-					if (MimeType.APP_ATOM_XML.weakEquals(mime) || MimeType.TEXT_HTML.weakEquals(mime)) {
+					if (MimeType.APP_ATOM_XML.weakEquals(mime)
+						|| MimeType.TEXT_HTML.weakEquals(mime)) {
 						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href, mime);
 						if (descr.isValid()) {
 							// TODO: Why do we use '%s'? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
@@ -163,6 +166,15 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 					);
 				}
 				return opdsLink;
+			} else if (MimeType.APP_RSS_XML.weakEquals(catalogInfo.Mime)) {
+				return new RSSNetworkLink(
+					OPDSNetworkLink.INVALID_ID,
+					siteName,
+					titleString,
+					summaryString,
+					language,
+					infos
+				);
 			} else {
 				return null;
 			}
