@@ -19,6 +19,7 @@
 * mobi: added support for <div> & <mbp:pagebreak> tags
 * ePub: fixed reading of files generated from LibreOffice
 * ePub: no empty paragraphs before/after the cover
+* RTF: added unicode symbols (\u command) support
 * Danish localization done by Jens Kaestel, sponsored by Panacea Supplies
 * Danish hyphenation patterns imported by Dennis Sheil of Panacea Supplies
 * Added Persian localization by HYIPEDU Team

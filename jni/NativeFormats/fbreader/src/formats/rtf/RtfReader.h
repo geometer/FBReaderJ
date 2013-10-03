@@ -82,6 +82,7 @@ private:
 	bool parseDocument();
 	void processKeyword(const std::string &keyword, int *parameter = 0);
 	void processCharData(const char *data, std::size_t len, bool convert = true);
+	void processUnicodeCharacter(int character);
 
 protected:
 	struct RtfReaderState {
