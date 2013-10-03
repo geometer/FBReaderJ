@@ -171,7 +171,7 @@ public class CatalogManagerActivity extends ListActivity {
 				if (myCoverManager == null) {
 					view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 					final int coverHeight = view.getMeasuredHeight();
-					myCoverManager = new CoverManager(CatalogManagerActivity.this, coverHeight * 15 / 12, coverHeight);
+					myCoverManager = new CoverManager(CatalogManagerActivity.this, coverHeight * 15 / 22, coverHeight);
 					view.requestLayout();
 				}
 
