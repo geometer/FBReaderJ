@@ -138,29 +138,34 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			final String titleString = title.toString();
 			final String summaryString = summary != null ? summary.toString() : null;
 
-			OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
-				OPDSNetworkLink.INVALID_ID,
-				id,
-				siteName,
-				titleString,
-				summaryString,
-				language,
-				infos
-			);
+			final UrlInfo catalogInfo = infos.getInfo(UrlInfo.Type.Catalog);
 
-			opdsLink.setRelationAliases(myRelationAliases);
-			opdsLink.setUrlRewritingRules(myUrlRewritingRules);
-			opdsLink.setExtraData(myExtraData);
-
-			if (myAuthenticationType == "litres") {
-				opdsLink.setAuthenticationManager(
-					NetworkAuthenticationManager.createManager(
-						opdsLink, LitResAuthenticationManager.class
-					)
+			if (MimeType.APP_ATOM_XML.weakEquals(catalogInfo.Mime)) {
+				final OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
+					OPDSNetworkLink.INVALID_ID,
+					id,
+					siteName,
+					titleString,
+					summaryString,
+					language,
+					infos
 				);
-			}
 
-			return opdsLink;
+				opdsLink.setRelationAliases(myRelationAliases);
+				opdsLink.setUrlRewritingRules(myUrlRewritingRules);
+				opdsLink.setExtraData(myExtraData);
+
+				if (myAuthenticationType == "litres") {
+					opdsLink.setAuthenticationManager(
+						NetworkAuthenticationManager.createManager(
+							opdsLink, LitResAuthenticationManager.class
+						)
+					);
+				}
+				return opdsLink;
+			} else {
+				return null;
+			}
 		}
 
 		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
