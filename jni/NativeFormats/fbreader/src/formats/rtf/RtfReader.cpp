@@ -374,8 +374,9 @@ bool RtfReader::parseDocument() {
 							myBinaryDataSize = parameter;
 							parserState = READ_BINARY_DATA;
 						} else if (keyword == "u") {
+							// TODO: implement commands of form "\ucL\uN" (insert symbol N + skip L bytes)
 							processUnicodeCharacter(parameter);
-							readNextChar = true;
+							readNextChar &= *ptr != '\\';
 							parserState = READ_NORMAL_DATA;
 						} else {
 							processKeyword(keyword, &parameter);
