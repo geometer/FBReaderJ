@@ -149,19 +149,6 @@ public class NetworkLibrary {
 		return new ArrayList<String>(idSet);
 	}
 
-	private ZLBooleanOption myFirstLaunchOption;
-	private ZLBooleanOption firstLaunchOption() {
-		if (myFirstLaunchOption == null) {
-			myFirstLaunchOption =
-				new ZLBooleanOption(
-					"Options",
-					"firstLaunch",
-					true
-				);
-		}
-		return myFirstLaunchOption;
-	}
-
 	private ZLStringListOption myActiveIdsOption;
 	private ZLStringListOption activeIdsOption() {
 		if (myActiveIdsOption == null) {
@@ -428,7 +415,7 @@ public class NetworkLibrary {
 	}
 
 	private void makeUpToDate() {
-		updateActiveIds();
+		firstTimeComputeActiveIds();
 
 		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
 
@@ -482,10 +469,17 @@ public class NetworkLibrary {
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
-	private void updateActiveIds(){
-		if(!firstLaunchOption().getValue()) return;
+	private void firstTimeComputeActiveIds() {
+		final ZLBooleanOption firstLaunchOption = new ZLBooleanOption(
+			"Options",
+			"firstLaunch",
+			true
+		);
+		if (!firstLaunchOption.getValue()) {
+			return;
+		}
 
-		ArrayList<String> ids = new ArrayList<String>();
+		final ArrayList<String> ids = new ArrayList<String>();
 		final Collection<String> codes = activeLanguageCodes();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
@@ -497,7 +491,7 @@ public class NetworkLibrary {
 		}
 		setActiveIds(ids);
 
-		firstLaunchOption().setValue(false);
+		firstLaunchOption.setValue(false);
 	}
 
 	private void updateVisibility() {
