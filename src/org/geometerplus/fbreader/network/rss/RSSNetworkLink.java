@@ -33,13 +33,17 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
-public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetworkLink {
-	
+public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNetworkLink {
+	private final String myPredefinedId;
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	
-	public RSSNetworkLink(int id, String siteName, String title, String summary,
-			String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+	public RSSNetworkLink(
+		int id, String predefinedId,
+		String siteName, String title, String summary,
+		String language, UrlInfoCollection<UrlInfoWithDate> infos
+	) {
 		super(id, siteName, title, summary, language, infos);
+		myPredefinedId = predefinedId;
 	}
 	
 	ZLNetworkRequest createNetworkData(String url, MimeType mime, final RSSCatalogItem.State result) {
@@ -87,20 +91,22 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return Type.Predefined;
+	}
+
+	@Override
+	public String getPredefinedId() {
+		return myPredefinedId;
 	}
 
 	@Override
 	public ZLNetworkRequest simpleSearchRequest(String pattern,
 			NetworkOperationData data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -122,7 +128,6 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 
 	@Override
 	public NetworkAuthenticationManager authenticationManager() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
