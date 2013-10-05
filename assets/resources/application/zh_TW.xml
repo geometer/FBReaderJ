@@ -126,6 +126,11 @@
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="網絡搜尋"/>
 			<node name="reload" value="重新載入"/>
@@ -136,6 +141,7 @@
 			<node name="addCustomCatalog" value="新增目錄"/>
 			<node name="refreshCatalogsList" value="重新整理目錄"/>
 			<node name="languages" value="語言篩選"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="清空購物籃"/>
 			<node name="buyAllBooks" value="購買全部書藉"/>
 		</node>
@@ -233,7 +239,7 @@
 		<node name="clearSelection" value="清空"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="設定"/>
@@ -268,6 +274,7 @@
 		<node name="decreaseFont" value="縮小"/>
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="書籤"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="檔名"/>
@@ -630,6 +637,9 @@
 			<node name="summary" value="字典設定"/>
 			<node name="dictionary" value="字典"/>
 			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="長按動作">
 				<node name="doNothing" value="長按不做任何動作"/>
 				<node name="selectSingleWord" value="長按選字"/>
@@ -696,7 +706,7 @@
 			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
 			<node name="version" value="Version" toBeTranslated="true"/>
 			<node name="site" value="Visit our website" toBeTranslated="true">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
 				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
@@ -855,5 +865,8 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

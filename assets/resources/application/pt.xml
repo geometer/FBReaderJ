@@ -132,6 +132,11 @@
 			<node name="title" value="Adicionar catálogo"/>
 			<node name="editUrl" value="Digite a URL manualmente"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Pesquise"/>
 			<node name="reload" value="Recarregue"/>
@@ -142,6 +147,7 @@
 			<node name="addCustomCatalog" value="Adicionar catálogo"/>
 			<node name="refreshCatalogsList" value="Atualizar catálogos"/>
 			<node name="languages" value="Filtro de idioma"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Limpe a cesta"/>
 			<node name="buyAllBooks" value="Compre todos os livros"/>
 		</node>
@@ -245,7 +251,7 @@
 		<node name="clearSelection" value="Limpar"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Configurações"/>
@@ -280,6 +286,7 @@
 		<node name="decreaseFont" value="Diminuir o zoom"/>
 		<node name="toggleFullscreen" value="Tela inteira"/>
 		<node name="bookmarks" value="Favoritos"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nome do arquivo"/>
@@ -642,6 +649,9 @@
 			<node name="summary" value="Configurações de dicionário"/>
 			<node name="dictionary" value="Dicionário"/>
 			<node name="translator" value="Tradutor"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Ação de tocar o dedo de forma contínua">
 				<node name="doNothing" value="Desabiltar a forma contínua"/>
 				<node name="selectSingleWord" value="A forma contínua seleciona uma palavra única"/>
@@ -867,5 +877,8 @@
 		<node name="opfFileNotFound" value="OPF não foi encontrado em %s"/>
 		<node name="unsupportedFileFormat" value="Formato de arquivo não é suportado para '%s'"/>
 		<node name="errorParsingRtf" value="Erro de análise Rtf em: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

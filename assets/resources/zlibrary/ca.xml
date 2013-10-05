@@ -36,19 +36,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Árabe" toBeTranslated="true"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="Búlgaro" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="Checo" toBeTranslated="true"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="Alemán" toBeTranslated="true"/>
 		<node name="de-traditional" value="Alemán (ortografía tradicional)" toBeTranslated="true"/>
 		<node name="el" value="Griego" toBeTranslated="true"/>
 		<node name="en" value="Inglés" toBeTranslated="true"/>
 		<node name="eo" value="Esperanto" toBeTranslated="true"/>
 		<node name="es" value="Español" toBeTranslated="true"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="Finlandés" toBeTranslated="true"/>
 		<node name="fr" value="Francés" toBeTranslated="true"/>
 		<node name="gl" value="Gallego" toBeTranslated="true"/>
 		<node name="he" value="Hebreo" toBeTranslated="true"/>
 		<node name="hu" value="Húngaro" toBeTranslated="true"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Indonesio" toBeTranslated="true"/>
 		<node name="it" value="Italiano" toBeTranslated="true"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
@@ -59,6 +65,7 @@
 		<node name="pt" value="Portugués" toBeTranslated="true"/>
 		<node name="ro" value="Rumano" toBeTranslated="true"/>
 		<node name="ru" value="Ruso" toBeTranslated="true"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="Sueco" toBeTranslated="true"/>
 		<node name="ta" value="Tamil" toBeTranslated="true"/>
 		<node name="th" value="Tailandés" toBeTranslated="true"/>
@@ -66,6 +73,8 @@
 		<node name="uk" value="Ucraniano" toBeTranslated="true"/>
 		<node name="vi" value="Vietnamita" toBeTranslated="true"/>
 		<node name="zh" value="Chino" toBeTranslated="true"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Otro" toBeTranslated="true"/>
 		<node name="multi" value="Multilingüe" toBeTranslated="true"/>
 		<node name="system" value="System" toBeTranslated="true"/>

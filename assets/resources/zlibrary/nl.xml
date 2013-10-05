@@ -33,19 +33,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabisch"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="Bulgaars"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="Tsjechisch"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="Duits"/>
 		<node name="de-traditional" value="Duits (traditionele spelling)"/>
 		<node name="el" value="Grieks"/>
 		<node name="en" value="Engels"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spaans"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="Fins"/>
 		<node name="fr" value="Frans"/>
 		<node name="gl" value="Galicisch"/>
 		<node name="he" value="Hebreeuws"/>
 		<node name="hu" value="Hongaars"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Indonesisch"/>
 		<node name="it" value="Italiaans"/>
 		<node name="ka" value="Georgisch"/>
@@ -56,6 +62,7 @@
 		<node name="pt" value="Portugees"/>
 		<node name="ro" value="Roemeens"/>
 		<node name="ru" value="Russisch"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="Zweeds"/>
 		<node name="ta" value="Tamil"/>
 		<node name="th" value="Thais"/>
@@ -63,6 +70,8 @@
 		<node name="uk" value="Oekraïens"/>
 		<node name="vi" value="Vietnamees"/>
 		<node name="zh" value="Chinees"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Anders"/>
 		<node name="multi" value="Meertalig"/>
 		<node name="system" value="Systeem"/>

@@ -22,6 +22,7 @@
 
 #include <ZLFile.h>
 #include <ZLInputStream.h>
+#include <ZLUnicodeUtil.h>
 
 #include "RtfReader.h"
 
@@ -340,7 +341,7 @@ bool RtfReader::parseDocument() {
 					break;
 				case READ_KEYWORD:
 					if (!isalpha(*ptr)) {
-						if ((ptr == dataStart) && (keyword.empty())) {
+						if (ptr == dataStart && keyword.empty()) {
 							if (*ptr == '\'') {
 								parserState = READ_HEX_SYMBOL;
 							} else {
@@ -351,7 +352,7 @@ bool RtfReader::parseDocument() {
 							dataStart = ptr + 1;
 						} else {
 							keyword.append(dataStart, ptr - dataStart);
-							if ((*ptr == '-') || isdigit(*ptr)) {
+							if (*ptr == '-' || isdigit(*ptr)) {
 								dataStart = ptr;
 								parserState = READ_KEYWORD_PARAMETER;
 							} else {
@@ -369,9 +370,14 @@ bool RtfReader::parseDocument() {
 						int parameter = atoi(parameterString.c_str());
 						parameterString.erase();
 						readNextChar = *ptr == ' ';
-						if ((keyword == "bin") && (parameter > 0)) {
+						if (keyword == "bin" && parameter > 0) {
 							myBinaryDataSize = parameter;
 							parserState = READ_BINARY_DATA;
+						} else if (keyword == "u") {
+							// TODO: implement commands of form "\ucL\uN" (insert symbol N + skip L bytes)
+							processUnicodeCharacter(parameter);
+							readNextChar &= *ptr != '\\';
+							parserState = READ_NORMAL_DATA;
 						} else {
 							processKeyword(keyword, &parameter);
 							parserState = READ_NORMAL_DATA;
@@ -422,6 +428,12 @@ void RtfReader::processKeyword(const std::string &keyword, int *parameter) {
 	}
 
 	it->second->run(*this, parameter);
+}
+
+void RtfReader::processUnicodeCharacter(int character) {
+	static char buffer[8];
+	const int len = ZLUnicodeUtil::ucs4ToUtf8(buffer, character);
+	processCharData(buffer, len, false);
 }
 
 void RtfReader::processCharData(const char *data, std::size_t len, bool convert) {

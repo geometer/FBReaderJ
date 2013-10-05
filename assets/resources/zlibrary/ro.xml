@@ -32,19 +32,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Araba"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="Ceha"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="Germana"/>
 		<node name="de-traditional" value="Germana (ortografia traditionala)"/>
 		<node name="el" value="Greaca"/>
 		<node name="en" value="Engleza"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spaniola"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="Finlandeza"/>
 		<node name="fr" value="Franceza"/>
 		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="Ebraica"/>
 		<node name="hu" value="Ungara"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Indoneziana"/>
 		<node name="it" value="Italiana"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
@@ -55,6 +61,7 @@
 		<node name="pt" value="Portugheza"/>
 		<node name="ro" value="Romana"/>
 		<node name="ru" value="Rusa"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="Suedeza"/>
 		<node name="ta" value="Tamil" toBeTranslated="true"/>
 		<node name="th" value="Tailandeza"/>
@@ -62,6 +69,8 @@
 		<node name="uk" value="Ucrainiana"/>
 		<node name="vi" value="Vietnameza"/>
 		<node name="zh" value="Chineza"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Altele"/>
 		<node name="multi" value="Multi limba"/>
 		<node name="system" value="System" toBeTranslated="true"/>

@@ -33,19 +33,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="อารบิค"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="เชค"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="เยอรมัน"/>
 		<node name="de-traditional" value="เยอรมัน (เทรดิชัน ออโทกราฟี)"/>
 		<node name="el" value="กรีก"/>
 		<node name="en" value="อังกฤษ"/>
 		<node name="eo" value="เอสเพอรานโท"/>
 		<node name="es" value="เสปน"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="ฟินแลนด์"/>
 		<node name="fr" value="ฝรั่งเศส"/>
 		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="ฮีบรู"/>
 		<node name="hu" value="ฮังการี"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="อินโดนีเซีย"/>
 		<node name="it" value="อิตาลี"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
@@ -56,6 +62,7 @@
 		<node name="pt" value="โปรตุเกส"/>
 		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="รัสเซีย"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="สวีเดน"/>
 		<node name="ta" value="Tamil" toBeTranslated="true"/>
 		<node name="th" value="ไทย"/>
@@ -63,6 +70,8 @@
 		<node name="uk" value="ยูเครน"/>
 		<node name="vi" value="เวียดนาม"/>
 		<node name="zh" value="จีน"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="อื่นๆ"/>
 		<node name="multi" value="หลายภาษา"/>
 		<node name="system" value="System" toBeTranslated="true"/>

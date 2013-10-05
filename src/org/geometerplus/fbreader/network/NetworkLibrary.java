@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -138,13 +139,77 @@ public class NetworkLibrary {
 		invalidateChildren();
 	}
 
-	List<INetworkLink> activeLinks() {
-		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
-		final Collection<String> codes = activeLanguageCodes();
+	public List<String> linkIds() {
+		final TreeSet<String> idSet = new TreeSet<String>();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (link instanceof ICustomNetworkLink ||
-					codes.contains(link.getLanguage())) {
+				idSet.add(link.getUrl(UrlInfo.Type.Catalog));
+			}
+		}
+		return new ArrayList<String>(idSet);
+	}
+
+	private ZLBooleanOption firstLaunchOption;
+	private ZLBooleanOption myFirstLaunchOption() {
+ 		if (firstLaunchOption == null) {
+ 			firstLaunchOption =
+				new ZLBooleanOption(
+					"Options",
+					"firstLaunch",
+					true
+				);
+		}
+		return firstLaunchOption;
+	}
+
+	private ZLStringListOption myActiveIdsOption;
+	private ZLStringListOption activeIdsOption() {
+ 		if (myActiveIdsOption == null) {
+ 			myActiveIdsOption =
+				new ZLStringListOption(
+					"Options",
+					"ActiveIds",
+					"",
+					","
+				);
+		}
+		return myActiveIdsOption;
+	}
+
+	public List<String> activeIds() {
+		return activeIdsOption().getValue();
+	}
+
+	public void setActiveOneId(String id){
+		List<String> ids = activeIdsOption().getValue();
+		final ArrayList<String> codesList = new ArrayList<String>();
+		codesList.addAll(ids);
+		codesList.add(id);
+		activeIdsOption().setValue(codesList);
+		invalidateChildren();
+	}
+
+	public void setActiveIds(Collection<String> ids) {
+		final TreeSet<String> allCodes = new TreeSet<String>();
+
+		allCodes.addAll(ids);
+
+		final ArrayList<String> codesList = new ArrayList<String>(allCodes.size());
+		for (String l : allCodes) {
+			codesList.add(l);
+		}
+
+		activeIdsOption().setValue(codesList);
+		invalidateChildren();
+	}
+
+	List<INetworkLink> activeLinks() {
+
+		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
+		final Collection<String> ids = activeIds();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (ids.contains(link.getUrl(UrlInfo.Type.Catalog))) {
 					filteredList.add(link);
 				}
 			}
@@ -179,6 +244,19 @@ public class NetworkLibrary {
 		return null;
 	}
 
+	public NetworkTree getCatalogTreeByUrlAll(String url) {
+		for (FBTree tree : getRootAllTree().subTrees()) {
+			if (tree instanceof NetworkCatalogRootTree) {
+				final String cUrl =
+					((NetworkCatalogTree)tree).getLink().getUrlInfo(UrlInfo.Type.Catalog).Url;
+				if (url.equals(cUrl)) {
+					return (NetworkTree)tree;
+				}
+			}
+		}
+		return null;
+	}
+
 	public INetworkLink getLinkBySiteName(String siteName) {
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
@@ -190,6 +268,7 @@ public class NetworkLibrary {
 		return null;
 	}
 
+	private final RootTree myRootAllTree = new RootTree("@AllRoot", false);
 	private final RootTree myRootTree = new RootTree("@Root", false);
 	private final RootTree myFakeRootTree = new RootTree("@FakeRoot", true);
 
@@ -331,7 +410,26 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
+	private void makeUpToDateRootAll() {
+		myRootAllTree.clear();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				int index = 0;
+				for (FBTree t : myRootAllTree.subTrees()) {
+					final INetworkLink l = ((NetworkTree)t).getLink();
+					if (l != null && link.compareTo(l) <= 0) {
+						break;
+					}
+					++index;
+				}
+				new NetworkCatalogRootTree(myRootAllTree, link, index);
+			}
+		}
+	}
+
 	private void makeUpToDate() {
+		updateActiveIds();
+
 		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
 
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
@@ -379,8 +477,27 @@ public class NetworkLibrary {
 		// we do add non-catalog items
 		new SearchCatalogTree(myRootTree, mySearchItem, 0);
 		new AddCustomCatalogItemTree(myRootTree);
+		new ManageCatalogsItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
+	}
+
+	private void updateActiveIds(){
+		if(!myFirstLaunchOption().getValue()) return;
+
+		ArrayList<String> ids = new ArrayList<String>();
+		final Collection<String> codes = activeLanguageCodes();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (link instanceof ICustomNetworkLink ||
+					codes.contains(link.getLanguage())) {
+					ids.add(link.getUrl(UrlInfo.Type.Catalog));
+				}
+			}
+		}
+		setActiveIds(ids);
+
+		myFirstLaunchOption().setValue(false);
 	}
 
 	private void updateVisibility() {
@@ -396,6 +513,7 @@ public class NetworkLibrary {
 		if (myChildrenAreInvalid) {
 			myChildrenAreInvalid = false;
 			makeUpToDate();
+			makeUpToDateRootAll();
 		}
 		if (myUpdateVisibility) {
 			myUpdateVisibility = false;
@@ -405,6 +523,10 @@ public class NetworkLibrary {
 
 	public NetworkTree getRootTree() {
 		return myRootTree;
+	}
+
+	public NetworkTree getRootAllTree() {
+		return myRootAllTree;
 	}
 
 	public NetworkBookTree getFakeBookTree(NetworkBookItem book) {
@@ -476,6 +598,7 @@ public class NetworkLibrary {
 			}
 		}
 		NetworkDatabase.Instance().saveLink(link);
+		setActiveOneId(link.getUrl(UrlInfo.Type.Catalog));
 		invalidateChildren();
 	}
 

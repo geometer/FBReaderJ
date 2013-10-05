@@ -2,7 +2,8 @@
 <dictionaries>
 	<dictionary
 		id="ColorDict"
-		title="ColorDict 3"
+		title="ColorDict&#160;3"
+		package="com.socialnmobile.colordict"
 		action="colordict.intent.action.SEARCH"
 		dataKey="EXTRA_QUERY"
 		pattern="%s"
@@ -10,7 +11,7 @@
 	/>
 	<dictionary
 		id="ColorDict2"
-		title="ColorDict Old Style"
+		title="ColorDict&#160;Old&#160;Style"
 		package="com.socialnmobile.colordict"
 		class=".activity.Main"
 		action="android.intent.action.SEARCH"
@@ -29,11 +30,22 @@
 	/>
 	<dictionary
 		id="Free Dictionary . org"
+		title="Free&#160;Dictionary&#160;.&#160;org"
 		package="org.freedictionary"
 		class=".MainActivity"
 		action="android.intent.action.VIEW"
 		pattern="%s"
 		list="always"
+	/>
+	<dictionary
+		id="ABBYY Lingvo"
+		title="ABBYY&#160;Lingvo"
+		package="com.abbyy.mobile.lingvo.market"
+		action="com.abbyy.mobile.lingvo.intent.action.TRANSLATE"
+		dataKey="com.abbyy.mobile.lingvo.intent.extra.TEXT"
+		pattern="%s"
+		role="dictionary"
+		supportsTargetLanguage="true"
 	/>
 	<dictionary
 		id="Lingo Quiz Lite"

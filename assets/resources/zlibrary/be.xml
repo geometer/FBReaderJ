@@ -33,19 +33,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Арабская мова"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="Балгарская мова"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="Чэская мова"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="Нямецкая мова"/>
 		<node name="de-traditional" value="Нямецкая мова (традыцыйная артаґрафія)"/>
 		<node name="el" value="Грэцкая мова"/>
 		<node name="en" value="Анґельская мова"/>
 		<node name="eo" value="Эспэранта"/>
 		<node name="es" value="Гішпанская мова"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="Фінская мова"/>
 		<node name="fr" value="Француская мова"/>
 		<node name="gl" value="Ґалісійская мова"/>
 		<node name="he" value="Іўрыт мова"/>
 		<node name="hu" value="Вуґорская мова"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Інданэзійская мова"/>
 		<node name="it" value="Італійская мова"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
@@ -56,6 +62,7 @@
 		<node name="pt" value="Партуґальская мова"/>
 		<node name="ro" value="Румынская мова"/>
 		<node name="ru" value="Расейская мова"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="Швэдзкая мова"/>
 		<node name="ta" value="Тамільская мова"/>
 		<node name="th" value="Тайская мова"/>
@@ -63,6 +70,8 @@
 		<node name="uk" value="Украінская мова"/>
 		<node name="vi" value="Віетнамская мова"/>
 		<node name="zh" value="Кітайская мова"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Іншая мова"/>
 		<node name="multi" value="Некалькі моваў"/>
 		<node name="system" value="System" toBeTranslated="true"/>

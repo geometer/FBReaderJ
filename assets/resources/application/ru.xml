@@ -134,6 +134,11 @@
 			<node name="title" value="Добавление каталога"/>
 			<node name="editUrl" value="Ввести адрес вручную"/>
 		</node>
+		<node name="manageCatalogs" value="Управление каталогами">
+			<node name="summary" value="Настроить список библиотек и магазинов"/>
+			<node name="enabled" value="Включены"/>
+			<node name="disabled" value="Выключены"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>
 			<node name="reload" value="Обновить"/>
@@ -144,6 +149,7 @@
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
 			<node name="languages" value="Фильтр по языку"/>
+			<node name="manageCatalogs" value="Управление каталогами"/>
 			<node name="clearBasket" value="Очистить корзину"/>
 			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
@@ -248,7 +254,7 @@
 		<node name="clearSelection" value="Убрать пометку"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://www.fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Настройки"/>
@@ -283,6 +289,7 @@
 		<node name="decreaseFont" value="Уменьшить шрифт"/>
 		<node name="toggleFullscreen" value="На весь экран"/>
 		<node name="bookmarks" value="Закладки"/>
+		<node name="help" value="Помощь"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Файл"/>
@@ -645,6 +652,9 @@
 			<node name="summary" value="Настройки словаря"/>
 			<node name="dictionary" value="Словарь"/>
 			<node name="translator" value="Переводчик"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
 				<node name="selectSingleWord" value="Выделять одно слово"/>
@@ -711,7 +721,7 @@
 			<node name="summary" value="Версия, контакты"/>
 			<node name="version" value="Версия"/>
 			<node name="site" value="Наш веб-сайт">
-				<node name="url" value="http://www.fbreader.ru/"/>
+				<node name="url" value="http://fbreader.ru/"/>
 			</node>
 			<node name="email" value="Отправьте нам письмо">
 				<node name="url" value="mailto:contact@geometerplus.com"/>

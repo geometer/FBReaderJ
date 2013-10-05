@@ -33,19 +33,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Tiếng Ả Rập"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="Tiếng Séc"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="Tiếng Đức"/>
 		<node name="de-traditional" value="Tiếng Đức (truyền thống)"/>
 		<node name="el" value="Tiếng Hy Lạp"/>
 		<node name="en" value="Tiếng Anh"/>
 		<node name="eo" value="Quốc tế ngữ"/>
 		<node name="es" value="Tiếng Tây Ban Nha "/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="Tiếng Phần Lan"/>
 		<node name="fr" value="Tiếng Pháp"/>
 		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="Tiếng Do Thái"/>
 		<node name="hu" value="Tiếng Hungari"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Tiếng Inđônêxia"/>
 		<node name="it" value="Tiếng Ý"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
@@ -56,6 +62,7 @@
 		<node name="pt" value="Tiếng Bồ Đào Nha"/>
 		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="Tiếng Nga"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="Tiếng Thụy Điển"/>
 		<node name="ta" value="Tamil" toBeTranslated="true"/>
 		<node name="th" value="Thai" toBeTranslated="true"/>
@@ -63,6 +70,8 @@
 		<node name="uk" value="Tiếng Ukraina"/>
 		<node name="vi" value="Tiếng Việt"/>
 		<node name="zh" value="Tiếng Tàu"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Khác"/>
 		<node name="multi" value="Multilanguage" toBeTranslated="true"/>
 		<node name="system" value="System" toBeTranslated="true"/>

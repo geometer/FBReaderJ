@@ -130,6 +130,11 @@
 			<node name="title" value="افزودن کاتالوگ"/>
 			<node name="editUrl" value="آدرس را دستی وارد کنید"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="جستجو"/>
 			<node name="reload" value="بارگذاری مجدد"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="افزودن کاتالوگ"/>
 			<node name="refreshCatalogsList" value="بروزرسانی کاتالوگها"/>
 			<node name="languages" value="فیلتر زبان"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="خالی کردن سبد"/>
 			<node name="buyAllBooks" value="خرید همه کتابها"/>
 		</node>
@@ -243,7 +249,7 @@
 		<node name="clearSelection" value="پاک کردن"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="به اشتراک گذتری شده توسط &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="به اشتراک گذتری شده توسط &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="تنظیمات"/>
@@ -278,6 +284,7 @@
 		<node name="decreaseFont" value="کوچکنمایی"/>
 		<node name="toggleFullscreen" value="تمام صفحه"/>
 		<node name="bookmarks" value="آدرس ها"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="نام فایل"/>
@@ -640,6 +647,9 @@
 			<node name="summary" value="تنظيمات ديكشنري"/>
 			<node name="dictionary" value="ديكشنري"/>
 			<node name="translator" value="مترجم"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="اقدام ضربه طولاني">
 				<node name="doNothing" value="ضربه طولاني اقدامي نمي كند"/>
 				<node name="selectSingleWord" value="ضربه طولاني كلمه منفردي را انتخاب مي كند"/>
@@ -706,7 +716,7 @@
 			<node name="summary" value="اطلاعات نسخه،‌ارتباط"/>
 			<node name="version" value="نسخه"/>
 			<node name="site" value="بازديد وب سايت ما">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="ايميلي به ما بفرستيد">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -865,5 +875,8 @@
 		<node name="opfFileNotFound" value="OPF در %s پیدا نشد"/>
 		<node name="unsupportedFileFormat" value="فرمت فایل پشتیبانی نمیشود برای '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

@@ -33,19 +33,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="арапски"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="чешки"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="немачки"/>
 		<node name="de-traditional" value="немачки (традиционални правопис)"/>
 		<node name="el" value="грчки"/>
 		<node name="en" value="енглески"/>
 		<node name="eo" value="есперанто"/>
 		<node name="es" value="шпански"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="фински"/>
 		<node name="fr" value="француски"/>
 		<node name="gl" value="галицијски"/>
 		<node name="he" value="хебрејски"/>
 		<node name="hu" value="мађарски"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="индонезијски"/>
 		<node name="it" value="италијански"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
@@ -56,6 +62,7 @@
 		<node name="pt" value="португалски"/>
 		<node name="ro" value="румунски"/>
 		<node name="ru" value="руски"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="шведски"/>
 		<node name="ta" value="тамилски"/>
 		<node name="th" value="тајландски"/>
@@ -63,6 +70,8 @@
 		<node name="uk" value="украјински"/>
 		<node name="vi" value="вијетнамски"/>
 		<node name="zh" value="кинески"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="други"/>
 		<node name="multi" value="вишејезични"/>
 		<node name="system" value="System" toBeTranslated="true"/>

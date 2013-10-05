@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.book;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -123,6 +124,6 @@ public abstract class BooksDatabase {
 	protected abstract Collection<String> loadVisitedHyperlinks(long bookId);
 	protected abstract void addVisitedHyperlink(long bookId, String hyperlinkId);
 	
-	protected abstract void savePosition(long bookId, RationalNumber progress);
-	protected abstract RationalNumber loadPosition(long bookId);
+	protected abstract void saveProgress(long bookId, RationalNumber progress);
+	protected abstract RationalNumber loadProgress(long bookId);
 }

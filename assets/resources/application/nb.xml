@@ -130,6 +130,11 @@
 			<node name="title" value="Legg til katalog"/>
 			<node name="editUrl" value="Skriv URL manuelt"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Søk"/>
 			<node name="reload" value="Last på nytt"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="Legg til katalog"/>
 			<node name="refreshCatalogsList" value="Oppdater katalogene"/>
 			<node name="languages" value="Språkfilter"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Tøm kurv"/>
 			<node name="buyAllBooks" value="Kjøp alle bøkene"/>
 		</node>
@@ -243,7 +249,7 @@
 		<node name="clearSelection" value="Tøm"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Delt fra &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Delt fra &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Innstillinger"/>
@@ -278,6 +284,7 @@
 		<node name="decreaseFont" value="Zoom ut"/>
 		<node name="toggleFullscreen" value="Full skjerm"/>
 		<node name="bookmarks" value="Bokmerker"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Filnavn"/>
@@ -640,6 +647,9 @@
 			<node name="summary" value="Innstillinger for ordbok"/>
 			<node name="dictionary" value="Ordbok"/>
 			<node name="translator" value="Oversetter"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Handling ved langvarig trykk">
 				<node name="doNothing" value="Langvarig trykk gjør ingenting"/>
 				<node name="selectSingleWord" value="Langvarig trykk velger enkeltord"/>
@@ -706,7 +716,7 @@
 			<node name="summary" value="Versjonsinfo, kontakter"/>
 			<node name="version" value="Versjon"/>
 			<node name="site" value="Besøk nettstedet vårt">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send oss en e-post">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -865,5 +875,8 @@
 		<node name="opfFileNotFound" value="OPF er ikke funnet i %s"/>
 		<node name="unsupportedFileFormat" value="Filformatet er ikke støttet for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf analysingsfeil i: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

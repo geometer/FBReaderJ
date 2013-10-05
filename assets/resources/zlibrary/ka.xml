@@ -32,19 +32,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="არაბული"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="ბულგარული"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="ჩეხური"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="გერმანული"/>
 		<node name="de-traditional" value="გერმანული (ძველი ორთოგრაფია)"/>
 		<node name="el" value="ბერძნული"/>
 		<node name="en" value="ინგლისური"/>
 		<node name="eo" value="ესპერანტო"/>
 		<node name="es" value="ესპანური"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="ფინური"/>
 		<node name="fr" value="ფრანგული"/>
 		<node name="gl" value="გალიციური"/>
 		<node name="he" value="ივრითი"/>
 		<node name="hu" value="უნგრული"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="ინდონეზიური"/>
 		<node name="it" value="იტალიური"/>
 		<node name="ka" value="ქართული"/>
@@ -55,6 +61,7 @@
 		<node name="pt" value="პორტუგალიური"/>
 		<node name="ro" value="რუმინული"/>
 		<node name="ru" value="რუსული"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="შვედური"/>
 		<node name="ta" value="ტამილური"/>
 		<node name="th" value="ტაილანდური"/>
@@ -62,6 +69,8 @@
 		<node name="uk" value="უკრაინული"/>
 		<node name="vi" value="ვიეტნამური"/>
 		<node name="zh" value="ჩინური"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="სხვა"/>
 		<node name="multi" value="მრავალენოვანი"/>
 		<node name="system" value="System" toBeTranslated="true"/>

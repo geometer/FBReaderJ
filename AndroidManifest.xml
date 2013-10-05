@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="108022"
-		android:versionName="1.8.2"
+		android:versionCode="109002"
+		android:versionName="1.9"
 		android:installLocation="auto"
 >
 	<uses-sdk
@@ -237,6 +237,7 @@
 				<data android:host="*" android:scheme="litres-book"/>
 			</intent-filter>
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.network.CatalogManagerActivity" android:process=":networkLibrary" android:theme="@style/FBReader.Activity"/>
 		<receiver android:name="org.geometerplus.android.fbreader.network.ListenerCallback" android:process=":networkLibrary">
 			<intent-filter>
 				<action android:name="android.fbreader.action.network.SIGNIN"/>
@@ -244,5 +245,6 @@
 			</intent-filter>
 		</receiver>
 		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="com.paragon.dictionary.fbreader.OpenDictionaryActivity" android:theme="@style/FBReader.Transparent" android:configChanges="orientation|keyboardHidden|screenSize"/>
 	</application>
 </manifest>

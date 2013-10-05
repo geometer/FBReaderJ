@@ -29,23 +29,32 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 abstract public class ZLResource {
 	public final String Name;
 
-	private static final List<Language> ourLanguages = new LinkedList<Language>();
-	public static List<Language> languages() {
-		if (ourLanguages.isEmpty()) {
-			final ZLResource resource = ZLResource.resource("language-self");
-			final ZLFile dir = ZLResourceFile.createResourceFile("resources/application");
-			for (ZLFile file : dir.children()) {
-				final String name = file.getShortName();
-				if (name.endsWith(".xml")) {
-					final String code = name.substring(0, name.length() - 4);
-					ourLanguages.add(new Language(code, resource.getResource(code).getValue()));
+	private static final List<String> ourLanguageCodes = new LinkedList<String>();
+	public static List<String> languageCodes() {
+		synchronized (ourLanguageCodes) {
+			if (ourLanguageCodes.isEmpty()) {
+				final ZLFile dir = ZLResourceFile.createResourceFile("resources/application");
+				final List<ZLFile> children = dir.children();
+				for (ZLFile file : children) {
+					final String name = file.getShortName();
+					final String postfix = ".xml";
+					if (name.endsWith(postfix)) {
+						ourLanguageCodes.add(name.substring(0, name.length() - postfix.length()));
+					}
 				}
 			}
-			Collections.sort(ourLanguages);
 		}
-		final List<Language> allLanguages = new ArrayList<Language>(ourLanguages.size() + 1);
-		allLanguages.add(new Language(Language.SYSTEM_CODE));
-		allLanguages.addAll(ourLanguages);
+		return Collections.unmodifiableList(ourLanguageCodes);
+	}
+
+	public static List<Language> interfaceLanguages() {
+		final List<Language> allLanguages = new LinkedList<Language>();
+		final ZLResource resource = ZLResource.resource("language-self");
+		for (String c : languageCodes()) {
+			allLanguages.add(new Language(c, resource));
+		}
+		Collections.sort(allLanguages);
+		allLanguages.add(0, new Language(Language.SYSTEM_CODE));
 		return allLanguages;
 	}
 

@@ -130,6 +130,11 @@
 			<node name="title" value="Katalog ekle"/>
 			<node name="editUrl" value="URL yaz"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Ara"/>
 			<node name="reload" value="Yenile"/>
@@ -140,6 +145,7 @@
 			<node name="addCustomCatalog" value="Katalog ekle"/>
 			<node name="refreshCatalogsList" value="Katalogları yenile"/>
 			<node name="languages" value="Dil süzgeci"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Sepeti temizle"/>
 			<node name="buyAllBooks" value="Tüm kitapları satın al"/>
 		</node>
@@ -243,7 +249,7 @@
 		<node name="clearSelection" value="Sil"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Ayarlar"/>
@@ -278,6 +284,7 @@
 		<node name="decreaseFont" value="Küçült"/>
 		<node name="toggleFullscreen" value="Tam ekran"/>
 		<node name="bookmarks" value="Yer imleri"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Dosya adı"/>
@@ -640,6 +647,9 @@
 			<node name="summary" value="Sözlük ayarları"/>
 			<node name="dictionary" value="Sözlük"/>
 			<node name="translator" value="Çevirmen"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectSingleWord" value="Uzun dokunma bir kelime seçsin"/>
@@ -706,7 +716,7 @@
 			<node name="summary" value="Version info, contacts"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Visit our website">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -865,5 +875,8 @@
 		<node name="opfFileNotFound" value="OPF %s\'de bulunamadı"/>
 		<node name="unsupportedFileFormat" value="'%s' dosya türü desteklenmiyor"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

@@ -27,6 +27,7 @@ import android.os.Build;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class Language implements Comparable<Language> {
+	public static final String ANY_CODE = "any";
 	public static final String OTHER_CODE = "other";
 	public static final String MULTI_CODE = "multi";
 	public static final String SYSTEM_CODE = "system";
@@ -43,18 +44,20 @@ public class Language implements Comparable<Language> {
 	private final Order myOrder;
 
 	public Language(String code) {
-		this(code, ZLResource.resource("language").getResource(code).getValue());
+		this(code, ZLResource.resource("language"));
 	}
 
-	public Language(String code, String name) {
+	public Language(String code, ZLResource root) {
 		Code = code;
-		Name = name;
+		final ZLResource resource = root.getResource(code);
+		Name = resource.hasValue() ? resource.getValue() : code;
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-			mySortKey = normalize(name);
+			mySortKey = normalize(Name);
 		} else {
-			mySortKey = name.toLowerCase();
+			mySortKey = Name.toLowerCase();
 		}
-		if (SYSTEM_CODE.equals(code)) {
+		if (SYSTEM_CODE.equals(code) || ANY_CODE.equals(code)) {
 			myOrder = Order.Before;
 		} else if (MULTI_CODE.equals(code) || OTHER_CODE.equals(code)) {
 			myOrder = Order.After;

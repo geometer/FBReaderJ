@@ -32,19 +32,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabisk"/>
+		<node name="be" value="Belarusian" toBeTranslated="true"/>
 		<node name="bg" value="Bulgarsk"/>
+		<node name="ca" value="Catalan" toBeTranslated="true"/>
 		<node name="cs" value="Tjekkisk"/>
+		<node name="da" value="Danish" toBeTranslated="true"/>
 		<node name="de" value="Tysk"/>
 		<node name="de-traditional" value="Tysk (traditionel retskrivning)"/>
 		<node name="el" value="Græsk"/>
 		<node name="en" value="Engelsk"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spansk"/>
+		<node name="eu" value="Basque" toBeTranslated="true"/>
+		<node name="fa" value="Persian" toBeTranslated="true"/>
 		<node name="fi" value="Finsk"/>
 		<node name="fr" value="Fransk"/>
 		<node name="gl" value="Galicisk"/>
 		<node name="he" value="Hebraisk"/>
 		<node name="hu" value="Ungarsk"/>
+		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Indonesisk"/>
 		<node name="it" value="Italiensk"/>
 		<node name="ka" value="Georgisk"/>
@@ -55,6 +61,7 @@
 		<node name="pt" value="Portugisisk"/>
 		<node name="ro" value="Rumænsk"/>
 		<node name="ru" value="Russisk"/>
+		<node name="sr" value="Serbian" toBeTranslated="true"/>
 		<node name="sv" value="Svensk"/>
 		<node name="ta" value="Tamil"/>
 		<node name="th" value="Thai"/>
@@ -62,6 +69,8 @@
 		<node name="uk" value="Ukrainsk"/>
 		<node name="vi" value="Vietnamesisk"/>
 		<node name="zh" value="Kinesisk"/>
+		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
+		<node name="any" value="Any" toBeTranslated="true"/>
 		<node name="other" value="Andre"/>
 		<node name="multi" value="Flersproget"/>
 		<node name="system" value="System"/>

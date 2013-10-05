@@ -135,6 +135,11 @@
 			<node name="title" value="Agregar catálogo"/>
 			<node name="editUrl" value="Escriba la URL"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Búsqueda"/>
 			<node name="reload" value="Recargar"/>
@@ -145,6 +150,7 @@
 			<node name="addCustomCatalog" value="Agregar catálogo"/>
 			<node name="refreshCatalogsList" value="Recargar catálogos"/>
 			<node name="languages" value="Filtro de idioma"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Vaciar cesta"/>
 			<node name="buyAllBooks" value="Comprar todos los libros"/>
 		</node>
@@ -248,7 +254,7 @@
 		<node name="clearSelection" value="Limpiar"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Ajustes"/>
@@ -283,6 +289,7 @@
 		<node name="decreaseFont" value="Disminuír fuente"/>
 		<node name="toggleFullscreen" value="Pantalla completa"/>
 		<node name="bookmarks" value="Marcadores"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nombre de archivo"/>
@@ -645,6 +652,9 @@
 			<node name="summary" value="Ajustes del diccionario"/>
 			<node name="dictionary" value="Diccionario"/>
 			<node name="translator" value="Traductor"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Acción de toque prolongado">
 				<node name="doNothing" value="Toque prolongado no hace nada"/>
 				<node name="selectSingleWord" value="Toque prolongado selecciona una palabra"/>
@@ -711,7 +721,7 @@
 			<node name="summary" value="Información de versión, contactos"/>
 			<node name="version" value="Versión"/>
 			<node name="site" value="Visite nuestro sitio web">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Envíenos un correo electrónico">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -870,5 +880,8 @@
 		<node name="opfFileNotFound" value="OPF no se encuentra en %s"/>
 		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'"/>
 		<node name="errorParsingRtf" value="Error de análisis RTF en: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

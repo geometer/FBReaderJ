@@ -55,22 +55,7 @@
 		<echo message="DONE (Checking if native libraries are up-to-date)"/>
 	</target>
 
-	<target name="resources" depends="init, check.native.libraries">
-		<echo message="Cleaning up the 'res/drawable' folder..." />
-		<delete dir="res/drawable/">
-			<files includes="**"/>
-		</delete>
-		<echo message="DONE (Cleaning up the 'res/drawable' folder)" />
-
-		<echo message="Copying icons files to 'res/drawable/' folder..." />
-		<copy todir="res/drawable" verbose="false" overwrite="true" flatten="true">
-			<fileset file="icons/*.png" />
-			<fileset dir="icons/" includes="*/*" />
-		</copy>
-		<echo message="DONE (Copying icons files to 'res/drawable/' folder)" />
-	</target>
-
-  <target name="-pre-build" depends="init, resources, native">
+  <target name="-pre-build" depends="init, native">
   </target>
 <!--
   <target name="-pre-compile">
@@ -83,14 +68,13 @@
 		<echo message="Deleting temporary files..." />
 		<delete dir="gen" />
 		<delete dir="bin" />
-		<delete dir="res/drawable" />
 		<delete dir="out" />
-		<delete dir="obj" />
 		<echo message="DONE (Deleting temporary files)" />
 	</target>
 
 	<target name="distclean" depends="clean">
 		<echo message="Deleting native libraries..." />
+		<delete dir="obj" />
 		<delete dir="libs/armeabi" />
 		<delete dir="libs/armeabi-v7a" />
 		<delete dir="libs/x86" />

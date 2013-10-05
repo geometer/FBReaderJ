@@ -32,19 +32,25 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabic"/>
+		<node name="be" value="Belarusian"/>
 		<node name="bg" value="Bulgarian"/>
+		<node name="ca" value="Catalan"/>
 		<node name="cs" value="Czech"/>
+		<node name="da" value="Danish"/>
 		<node name="de" value="German"/>
 		<node name="de-traditional" value="German (traditional orthography)"/>
 		<node name="el" value="Greek"/>
 		<node name="en" value="English"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spanish"/>
+		<node name="eu" value="Basque"/>
+		<node name="fa" value="Persian"/>
 		<node name="fi" value="Finnish"/>
 		<node name="fr" value="French"/>
 		<node name="gl" value="Galician"/>
 		<node name="he" value="Hebrew"/>
 		<node name="hu" value="Hungarian"/>
+		<node name="hy" value="Armenian"/>
 		<node name="id" value="Indonesian"/>
 		<node name="it" value="Italian"/>
 		<node name="ka" value="Georgian"/>
@@ -55,6 +61,7 @@
 		<node name="pt" value="Portuguese"/>
 		<node name="ro" value="Romanian"/>
 		<node name="ru" value="Russian"/>
+		<node name="sr" value="Serbian"/>
 		<node name="sv" value="Swedish"/>
 		<node name="ta" value="Tamil"/>
 		<node name="th" value="Thai"/>
@@ -62,6 +69,8 @@
 		<node name="uk" value="Ukrainian"/>
 		<node name="vi" value="Vietnamese"/>
 		<node name="zh" value="Chinese"/>
+		<node name="zh_TW" value="Chinese (traditional)"/>
+		<node name="any" value="Any"/>
 		<node name="other" value="Other"/>
 		<node name="multi" value="Multilanguage"/>
 		<node name="system" value="System"/>

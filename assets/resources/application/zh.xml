@@ -126,6 +126,11 @@
 			<node name="title" value="添加书库"/>
 			<node name="editUrl" value="手动输入URL"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="网络搜索"/>
 			<node name="reload" value="重新加载"/>
@@ -136,6 +141,7 @@
 			<node name="addCustomCatalog" value="添加书库"/>
 			<node name="refreshCatalogsList" value="刷新书库"/>
 			<node name="languages" value="语言过滤"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="清空购物篮"/>
 			<node name="buyAllBooks" value="购买所有图书"/>
 		</node>
@@ -233,7 +239,7 @@
 		<node name="clearSelection" value="清除"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="共享自 &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt; "/>
+		<node name="sharedFrom" value="共享自 &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; "/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="阅读相关设置"/>
@@ -268,6 +274,7 @@
 		<node name="decreaseFont" value="字体缩小"/>
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="我的书签"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="文件"/>
@@ -630,6 +637,9 @@
 			<node name="summary" value="设置字典及其对应操作"/>
 			<node name="dictionary" value="字典"/>
 			<node name="translator" value="译者"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="长按动作设定">
 				<node name="doNothing" value="长按不做任何事"/>
 				<node name="selectSingleWord" value="长按选择词语"/>
@@ -696,7 +706,7 @@
 			<node name="summary" value="版本信息, 联系人"/>
 			<node name="version" value="版本"/>
 			<node name="site" value="访问我们的网站">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="给我们发送邮件">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -855,5 +865,8 @@
 		<node name="opfFileNotFound" value="在 %s 文件夹未找到 OPF  "/>
 		<node name="unsupportedFileFormat" value="文件格式 '%s' 不支持"/>
 		<node name="errorParsingRtf" value="Rtf解析错误: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>
