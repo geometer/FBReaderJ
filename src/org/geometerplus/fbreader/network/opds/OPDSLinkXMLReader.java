@@ -125,7 +125,10 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			}
 
 			if (siteName != null && title != null && infos.getInfo(UrlInfo.Type.Catalog) != null) {
-				myLinks.add(link(id, siteName, title, summary, language, infos));
+				final INetworkLink l = link(id, siteName, title, summary, language, infos);
+				if (l != null) {
+					myLinks.add(l);
+				}
 			}
 			return false;
 		}
