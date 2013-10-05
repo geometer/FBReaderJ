@@ -172,6 +172,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			} else if (MimeType.APP_RSS_XML.weakEquals(catalogInfo.Mime)) {
 				return new RSSNetworkLink(
 					OPDSNetworkLink.INVALID_ID,
+					id,
 					siteName,
 					titleString,
 					summaryString,
