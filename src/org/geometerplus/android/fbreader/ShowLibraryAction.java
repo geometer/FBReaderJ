@@ -28,6 +28,11 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.android.fbreader.library.LibraryActivity;
 import org.geometerplus.android.util.PackageUtil;
 
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import java.util.List;
+
 class ShowLibraryAction extends FBAndroidAction {
 	ShowLibraryAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
@@ -41,7 +46,13 @@ class ShowLibraryAction extends FBAndroidAction {
 			new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
 		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
 			try {
-				startLibraryActivity(externalIntent);
+				PackageManager packageManager = BaseActivity.getPackageManager();
+				List<ResolveInfo> activities = packageManager.queryIntentActivities(externalIntent, 0);
+				boolean isIntentSafe = activities.size() > 0;
+				// Start an activity if it's safe
+				if (isIntentSafe) {
+					startLibraryActivity(externalIntent);
+				}
 			} catch (ActivityNotFoundException e) {
 				startLibraryActivity(internalIntent);
 			}
