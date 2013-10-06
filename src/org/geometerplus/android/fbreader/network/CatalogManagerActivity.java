@@ -82,6 +82,39 @@ public class CatalogManagerActivity extends ListActivity {
 		}
 
 		setListAdapter(new CatalogsListAdapter());
+
+		final DragSortListView list = getListView();
+		list.setDropListener(new DragSortListView.DropListener() {
+			@Override
+			public void drop(int from, int to) {
+				to = Math.max(to, 1);
+				if (from == to) {
+					return;
+				}
+				final DragSortListView list = getListView();
+				final CatalogsListAdapter adapter = (CatalogsListAdapter)list.getInputAdapter();
+				final Item item = adapter.getItem(from);
+				if (item instanceof CatalogItem) {
+					adapter.remove(item);
+					adapter.insert(item, to);
+					//adapter.reCheckAll(item, to);
+					list.moveCheckState(from, to);
+					setResultIds(item, to);
+				}
+			}
+		});
+		list.setRemoveListener(new DragSortListView.RemoveListener() {
+			@Override
+			public void remove(int which) {
+				final DragSortListView list = getListView();
+				final CatalogsListAdapter adapter = (CatalogsListAdapter)list.getInputAdapter();
+				final Item item = adapter.getItem(which);
+				if (item instanceof CatalogItem) {
+					adapter.remove(item);
+					list.removeCheckState(which);
+				}
+			}
+		});
 	}
 
 	@Override
