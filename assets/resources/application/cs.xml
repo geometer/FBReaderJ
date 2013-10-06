@@ -75,6 +75,9 @@
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>
 		<node name="networkSearch" value="Hledat"/>
 		<node name="showResults" value="Zobrazit výsledky"/>

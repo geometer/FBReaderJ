@@ -72,6 +72,9 @@
 		<node name="found" value="Aurkituta">
 			<node name="summary" value="%s bilaketaren emaitzak"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Zabaldu katalogoa"/>
 		<node name="networkSearch" value="Bilatu"/>
 		<node name="showResults" value="Erakutsi emaitzak"/>

@@ -75,6 +75,9 @@
 		<node name="found" value="Намерено">
 			<node name="summary" value="Резултати от тъсенето: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Отвори каталога"/>
 		<node name="networkSearch" value="Търси"/>
 		<node name="showResults" value="Покажи резултатите"/>

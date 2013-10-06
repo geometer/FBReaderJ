@@ -75,6 +75,9 @@
 		<node name="found" value="Знайдено">
 			<node name="summary" value="Результати пошуку для: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Відкрити теку"/>
 		<node name="networkSearch" value="Пошук"/>
 		<node name="showResults" value="Показати результати"/>
