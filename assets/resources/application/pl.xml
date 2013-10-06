@@ -75,6 +75,9 @@
 		<node name="found" value="Wyszukane">
 			<node name="summary" value="Wyniki wyszukiwania: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Otwórz katalog"/>
 		<node name="networkSearch" value="Wyszukaj"/>
 		<node name="showResults" value="Pokaż wyniki"/>

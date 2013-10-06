@@ -72,6 +72,9 @@
 		<node name="found" value="پیدا شد">
 			<node name="summary" value="نتایج جستوجو برای: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="باز کردن کاتالوگ"/>
 		<node name="networkSearch" value="جستوجو"/>
 		<node name="showResults" value="نتایج را نشان بده"/>

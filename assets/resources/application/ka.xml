@@ -75,6 +75,9 @@
 		<node name="found" value="ნაპოვნია">
 			<node name="summary" value="ძებნის შედეგები %s-სთვის"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="კატალოგის გახსნა"/>
 		<node name="networkSearch" value="ძებნა"/>
 		<node name="showResults" value="შედეგების ჩვენება"/>
