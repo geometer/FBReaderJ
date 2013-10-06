@@ -167,24 +167,22 @@ public class NetworkLibrary {
 		return activeIdsOption().getValue();
 	}
 
-	public void setActiveOneId(String id){
-		List<String> ids = activeIdsOption().getValue();
-		final ArrayList<String> codesList = new ArrayList<String>();
-		codesList.addAll(ids);
-		codesList.add(id);
-		activeIdsOption().setValue(codesList);
+	public void setActiveSingleId(String id) {
+		final List<String> oldIds = activeIdsOption().getValue();
+		if (oldIds.contains(id)) {
+			return;
+		}
+		final ArrayList<String> newIds = new ArrayList<String>(oldIds.size() + 1);
+		newIds.addAll(oldIds);
+		newIds.add(id);
+		activeIdsOption().setValue(newIds);
 		invalidateChildren();
 	}
 
 	public void setActiveIds(Collection<String> ids) {
-		final TreeSet<String> allCodes = new TreeSet<String>();
+		final TreeSet<String> allCodes = new TreeSet<String>(ids);
 
-		allCodes.addAll(ids);
-
-		final ArrayList<String> codesList = new ArrayList<String>(allCodes.size());
-		for (String l : allCodes) {
-			codesList.add(l);
-		}
+		final ArrayList<String> codesList = new ArrayList<String>(allCodes);
 
 		activeIdsOption().setValue(codesList);
 		invalidateChildren();
@@ -592,7 +590,7 @@ public class NetworkLibrary {
 			}
 		}
 		NetworkDatabase.Instance().saveLink(link);
-		setActiveOneId(link.getUrl(UrlInfo.Type.Catalog));
+		setActiveSingleId(link.getUrl(UrlInfo.Type.Catalog));
 		invalidateChildren();
 	}
 
