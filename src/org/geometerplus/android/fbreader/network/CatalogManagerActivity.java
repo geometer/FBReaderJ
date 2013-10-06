@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
@@ -36,6 +35,12 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 public class CatalogManagerActivity extends ListActivity {
 	private final List<Item> myAllItems = new ArrayList<Item>();
 	private final List<Item> mySelectedItems = new ArrayList<Item>();
+
+	@Override
+	protected void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
+		setContentView(R.layout.catalog_manager_view);
+	}
 
 	@Override
 	protected void onStart() {
