@@ -27,6 +27,8 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import com.mobeta.android.dslv.DragSortListView;
+
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.android.fbreader.FBReader;
@@ -77,6 +79,11 @@ public class CatalogManagerActivity extends ListActivity {
 		}
 
 		setListAdapter(new CatalogsListAdapter());
+	}
+
+	@Override
+	public DragSortListView getListView() {
+		return (DragSortListView)super.getListView();
 	}
 
 	private static interface Item {
