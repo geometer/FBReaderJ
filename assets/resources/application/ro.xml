@@ -72,6 +72,9 @@
 		<node name="found" value="S-au gasit">
 			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Deschide catalogul"/>
 		<node name="networkSearch" value="Cautare"/>
 		<node name="showResults" value="Arata rezultatele"/>

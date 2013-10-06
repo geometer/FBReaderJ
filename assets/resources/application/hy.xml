@@ -72,6 +72,9 @@
 		<node name="found" value="Գտնվել է">
 			<node name="summary" value="%s-ով որոնման արդյունքները"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Բացել գրացուցակը"/>
 		<node name="networkSearch" value="Որոնել"/>
 		<node name="showResults" value="Ցուցադրել արդյունքները"/>

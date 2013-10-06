@@ -72,6 +72,9 @@
 		<node name="found" value="搜索结果">
 			<node name="summary" value="搜索结果: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="打开书库"/>
 		<node name="networkSearch" value="搜索"/>
 		<node name="showResults" value="显示结果"/>

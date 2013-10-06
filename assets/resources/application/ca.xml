@@ -76,6 +76,9 @@
 		<node name="found" value="Trobats">
 			<node name="summary" value="Resultats de la cerca per a: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Obrir catàleg"/>
 		<node name="networkSearch" value="Cercar"/>
 		<node name="showResults" value="Mostrar resultats"/>
