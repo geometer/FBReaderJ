@@ -146,7 +146,6 @@
 			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="افزودن کاتالوگ"/>
 			<node name="refreshCatalogsList" value="بروزرسانی کاتالوگها"/>
-			<node name="languages" value="فیلتر زبان"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="خالی کردن سبد"/>
 			<node name="buyAllBooks" value="خرید همه کتابها"/>

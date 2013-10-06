@@ -145,7 +145,6 @@
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
-			<node name="languages" value="Мовний фільтр"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Очистити кошик"/>
 			<node name="buyAllBooks" value="Купити всі книжки"/>

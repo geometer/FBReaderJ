@@ -145,7 +145,6 @@
 			<node name="topup" value="升級賬戶"/>
 			<node name="addCustomCatalog" value="新增目錄"/>
 			<node name="refreshCatalogsList" value="重新整理目錄"/>
-			<node name="languages" value="語言篩選"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="清空購物籃"/>
 			<node name="buyAllBooks" value="購買全部書藉"/>

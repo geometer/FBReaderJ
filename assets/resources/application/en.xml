@@ -149,7 +149,6 @@
 			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="Add catalog"/>
 			<node name="refreshCatalogsList" value="Refresh catalogs"/>
-			<node name="languages" value="Language filter"/>
 			<node name="manageCatalogs" value="Manage catalogs"/>
 			<node name="clearBasket" value="Clear basket"/>
 			<node name="buyAllBooks" value="Buy all books"/>

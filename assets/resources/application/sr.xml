@@ -149,7 +149,6 @@
 			<node name="topup" value="Попуни налог"/>
 			<node name="addCustomCatalog" value="Додај каталог"/>
 			<node name="refreshCatalogsList" value="Освежи каталоге"/>
-			<node name="languages" value="Језички филтер"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Очисти корпу"/>
 			<node name="buyAllBooks" value="Купи све књиге"/>
