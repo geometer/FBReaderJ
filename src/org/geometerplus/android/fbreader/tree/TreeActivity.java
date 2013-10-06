@@ -1,4 +1,4 @@
-/*
+/*);
  * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -110,6 +110,14 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	// TODO: change to protected
 	public void openTree(final FBTree tree) {
 		openTree(tree, null, true);
+	}
+
+	public void clearHistory() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				myHistory.clear();
+			}
+		});
 	}
 
 	protected void onCurrentTreeChanged() {

@@ -126,11 +126,19 @@ public class NetworkLibrary {
 		return activeIdsOption().getValue();
 	}
 
-	public void setSingleIdActive(String id, boolean active) {
+	public void setLinkActive(INetworkLink link, boolean active) {
+		if (link == null) {
+			return;
+		}
+		final String id = link.getUrl(UrlInfo.Type.Catalog);
+		if (id == null) {
+			return;
+		}
 		final List<String> oldIds = activeIdsOption().getValue();
 		if (oldIds.contains(id) == active) {
 			return;
 		}
+
 		final List<String> newIds;
 		if (active) {
 			newIds = new ArrayList<String>(oldIds.size() + 1);
@@ -425,8 +433,8 @@ public class NetworkLibrary {
 		}
 		// we do add non-catalog items
 		new SearchCatalogTree(myRootTree, mySearchItem, 0);
-		new AddCustomCatalogItemTree(myRootTree);
 		new ManageCatalogsItemTree(myRootTree);
+		new AddCustomCatalogItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
@@ -481,6 +489,7 @@ public class NetworkLibrary {
 			myUpdateVisibility = false;
 			updateVisibility();
 		}
+		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
 	public NetworkTree getRootTree() {
@@ -560,7 +569,7 @@ public class NetworkLibrary {
 			}
 		}
 		NetworkDatabase.Instance().saveLink(link);
-		setSingleIdActive(link.getUrl(UrlInfo.Type.Catalog), true);
+		setLinkActive(link, true);
 		invalidateChildren();
 	}
 
