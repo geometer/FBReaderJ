@@ -121,6 +121,7 @@
 		<node name="removeCustomCatalog" value="Treure catàleg"/>
 		<node name="addCustomCatalog" value="Afegir catàleg"/>
 		<node name="addCustomCatalogSummary" value="Afegir manualment catàleg OPDS personalitzat"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Voleu llegir la còpia local?"/>
 			<node name="download" value="Voleu descarregar aquest llibre?"/>
@@ -143,6 +144,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Cerca"/>
 			<node name="reload" value="Recarregar"/>
 			<node name="signIn" value="Iniciar sessió"/>

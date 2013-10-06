@@ -113,6 +113,7 @@
 		<node name="removeCustomCatalog" value="移除书库"/>
 		<node name="addCustomCatalog" value="增加书库"/>
 		<node name="addCustomCatalogSummary" value="手工添加自有的OPDS书库"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="是否本地阅读"/>
 			<node name="download" value="是否下载本图书?"/>
@@ -135,6 +136,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="网络搜索"/>
 			<node name="reload" value="重新加载"/>
 			<node name="signIn" value="登录"/>

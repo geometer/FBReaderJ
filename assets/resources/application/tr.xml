@@ -117,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Katalogu sil"/>
 		<node name="addCustomCatalog" value="Katalog ekle"/>
 		<node name="addCustomCatalogSummary" value="Özelleştirilmiş OPDS katalogunu elle ekle"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Cihazınızdan bir kitap okumak ister misiniz?"/>
 			<node name="download" value="Bu kitabı indirmek ister misiniz?"/>
@@ -139,6 +140,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Ara"/>
 			<node name="reload" value="Yenile"/>
 			<node name="signIn" value="Giriş"/>

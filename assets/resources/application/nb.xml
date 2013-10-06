@@ -117,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Fjern katalog"/>
 		<node name="addCustomCatalog" value="Legg til katalog"/>
 		<node name="addCustomCatalogSummary" value="Legg til egen OPDS-katalog manuelt"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Ønsker du å lese lokal kopi?"/>
 			<node name="download" value="Ønsker du å laste ned denne boken?"/>
@@ -139,6 +140,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Søk"/>
 			<node name="reload" value="Last på nytt"/>
 			<node name="signIn" value="Logg inn"/>

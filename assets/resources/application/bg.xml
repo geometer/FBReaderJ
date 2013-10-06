@@ -121,6 +121,7 @@
 		<node name="removeCustomCatalog" value="Премахни каталога"/>
 		<node name="addCustomCatalog" value="Добави каталог"/>
 		<node name="addCustomCatalogSummary" value="Добави OPDS каталог ръчно"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Искате ли да прочетете локално копие?"/>
 			<node name="download" value="Искате ли да свалите книгата?"/>
@@ -143,6 +144,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Търсене в межата"/>
 			<node name="reload" value="Обнови"/>
 			<node name="signIn" value="Вход"/>
