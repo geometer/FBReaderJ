@@ -114,6 +114,7 @@
 		<node name="removeCustomCatalog" value="Уклони каталог"/>
 		<node name="addCustomCatalog" value="Додај каталог"/>
 		<node name="addCustomCatalogSummary" value="Додајте прилагођени OPDS каталог."/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Желите ли да прочитате локални примерак?"/>
 			<node name="download" value="Желите ли да преузмете ову књигу?"/>
@@ -136,6 +137,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Претражи"/>
 			<node name="reload" value="Освежи"/>
 			<node name="signIn" value="Пријави ме"/>

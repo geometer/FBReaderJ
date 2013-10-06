@@ -118,6 +118,7 @@
 		<node name="removeCustomCatalog" value="Ջնջել գրացուցակը"/>
 		<node name="addCustomCatalog" value="Հավելել գրացուցակ"/>
 		<node name="addCustomCatalogSummary" value="Ձեռքով ավելացնել OPDS գրացուցակ"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Բացե՞լ պատճենը"/>
 			<node name="download" value="Բեռնե՞լ գիրքը"/>
@@ -140,6 +141,7 @@
 			<node name="disabled" value="Անջատել"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Փնտրել ցանցում"/>
 			<node name="reload" value="Թարմացնել"/>
 			<node name="signIn" value="Մուտք"/>

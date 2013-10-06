@@ -119,6 +119,7 @@
 		<node name="removeCustomCatalog" value="Quitar catálogo"/>
 		<node name="addCustomCatalog" value="Agregar catálogo"/>
 		<node name="addCustomCatalogSummary" value="Agregar manualmente catálogo OPDS personalizado"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="¿Desea leer la copia local?"/>
 			<node name="download" value="¿Desea descargar este libro?"/>
@@ -141,6 +142,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Búsqueda"/>
 			<node name="reload" value="Recargar"/>
 			<node name="signIn" value="Iniciar sesión"/>
