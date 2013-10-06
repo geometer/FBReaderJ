@@ -150,7 +150,6 @@
 			<node name="topup" value="Arrodonir el compte"/>
 			<node name="addCustomCatalog" value="Afegir catàleg"/>
 			<node name="refreshCatalogsList" value="Recarregar catàlegs"/>
-			<node name="languages" value="Filtre d'idioma"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Buidar cistella"/>
 			<node name="buyAllBooks" value="Comprar tots els llibres"/>

@@ -149,7 +149,6 @@
 			<node name="topup" value="Tank din konto op"/>
 			<node name="addCustomCatalog" value="Tilføj katalog"/>
 			<node name="refreshCatalogsList" value="Opdater kataloger"/>
-			<node name="languages" value="Sprogfilter"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Tøm kurv"/>
 			<node name="buyAllBooks" value="Køb alle bøger"/>

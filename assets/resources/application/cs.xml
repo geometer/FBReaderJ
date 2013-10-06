@@ -152,7 +152,6 @@
 			<node name="topup" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
-			<node name="languages" value="Filtr jazyků"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Vymazat košík"/>
 			<node name="buyAllBooks" value="Zakoupit všechny knihy"/>

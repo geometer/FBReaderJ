@@ -142,7 +142,6 @@
 			<node name="topup" value="เติมเงินเข้าบัญชี"/>
 			<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 			<node name="refreshCatalogsList" value="รีเฟรชแคตตาล็อก"/>
-			<node name="languages" value="ตัวกรองภาษา"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>

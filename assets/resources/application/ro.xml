@@ -142,7 +142,6 @@
 			<node name="topup" value="Incarca cont"/>
 			<node name="addCustomCatalog" value="Adauga catalog"/>
 			<node name="refreshCatalogsList" value="Reîmprospatare cataloage"/>
-			<node name="languages" value="Filtru limba"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clar cos"/>
 			<node name="buyAllBooks" value="Cumpara toate cartile"/>
