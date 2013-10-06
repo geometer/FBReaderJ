@@ -113,6 +113,7 @@
 		<node name="removeCustomCatalog" value="Xóa catalo"/>
 		<node name="addCustomCatalog" value="Thêm"/>
 		<node name="addCustomCatalogSummary" value="Thêm tùy chỉnh OPDS bằng tay"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Bạn muốn đọc bản nội bộ?"/>
 			<node name="download" value="Bạn muốn tải về quyển sách này?"/>
@@ -135,6 +136,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Tìm trên mạng"/>
 			<node name="reload" value="Tải lại"/>
 			<node name="signIn" value="Đăng nhập"/>

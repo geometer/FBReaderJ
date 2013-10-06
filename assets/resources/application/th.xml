@@ -113,6 +113,7 @@
 		<node name="removeCustomCatalog" value="ลบแคตตาล็อก"/>
 		<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 		<node name="addCustomCatalogSummary" value="เพิ่ม OPDS แคตตาล็อกที่ด้วยตนเอง"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="คุณต้องการอ่านหนังสือที่คัดลอกไว้หรือไม่?"/>
 			<node name="download" value="คุณต้องการดาวน์โหลดหนังสือหรือไม่?"/>
@@ -135,6 +136,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="ค้นหาในระบบเครือข่าย"/>
 			<node name="reload" value="โหลดใหม่"/>
 			<node name="signIn" value="ลงชื่อเข้าระบบ"/>

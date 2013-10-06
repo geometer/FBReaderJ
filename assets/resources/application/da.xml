@@ -117,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Fjern katalog"/>
 		<node name="addCustomCatalog" value="Tilføj katalog"/>
 		<node name="addCustomCatalogSummary" value="Tilføj brugerdefineret OPDS katalog manuelt"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Vil du læse lokal kopi?"/>
 			<node name="download" value="Vil du overføre denne bog?"/>
@@ -139,6 +140,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Søg"/>
 			<node name="reload" value="Genindlæs"/>
 			<node name="signIn" value="Log på"/>
@@ -904,6 +906,9 @@
 		<node name="opfFileNotFound" value="OPF blev ikke fundet i %s"/>
 		<node name="unsupportedFileFormat" value="Filformatet understøttes ikke for '%s'"/>
 		<node name="errorParsingRtf" value="RTF-parsingfejl i: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page" toBeTranslated="true"/>
 	</node>
 	<node name="warningMessage">
 		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>

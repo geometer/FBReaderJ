@@ -121,6 +121,7 @@
 		<node name="removeCustomCatalog" value="Удалить каталог"/>
 		<node name="addCustomCatalog" value="Добавить каталог"/>
 		<node name="addCustomCatalogSummary" value="Добавить OPDS каталог вручную"/>
+		<node name="disableCatalog" value="Выключить каталог"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Вы хотите открыть локальную копию?"/>
 			<node name="download" value="Вы хотите скачать эту книгу?"/>
@@ -143,6 +144,7 @@
 			<node name="disabled" value="Выключены"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="В начало"/>
 			<node name="networkSearch" value="Искать в сети"/>
 			<node name="reload" value="Обновить"/>
 			<node name="signIn" value="Войти"/>
@@ -659,8 +661,8 @@
 			<node name="summary" value="Настройки словаря"/>
 			<node name="dictionary" value="Словарь"/>
 			<node name="translator" value="Переводчик"/>
-			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
-				<node name="any" value="all languages" toBeTranslated="true"/>
+			<node name="targetLanguage" value="Переводить на">
+				<node name="any" value="все языки"/>
 			</node>
 			<node name="tappingAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
@@ -868,7 +870,7 @@
 		<node name="dictionaryIsNotInstalled" value="Не удалось запустить словарь"/>
 		<node name="permissionDenied" value="Нет доступа к файлам"/>
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="У вас нет книг из серий"/>
 		<node name="emptyCatalog" value="Каталог пуст"/>
 		<node name="emptyBasket" value="В корзине нет книг"/>
 		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги"/>
@@ -912,5 +914,8 @@
 		<node name="opfFileNotFound" value="Не удалось найти OPF в %s"/>
 		<node name="unsupportedFileFormat" value="Не поддерживается формат файла '%s'"/>
 		<node name="errorParsingRtf" value="Ошибка при чтении RTF-файла %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.ru/faq-page"/>
 	</node>
 </resources>

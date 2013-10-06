@@ -123,6 +123,7 @@
 		<node name="removeCustomCatalog" value="Odebrat katalog"/>
 		<node name="addCustomCatalog" value="Přidat katalog"/>
 		<node name="addCustomCatalogSummary" value="Přidat vlastní OPDS katalog ručně"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Chcete číst místní kopii?"/>
 			<node name="download" value="Chcete stáhnout tuto knihu?"/>
@@ -145,6 +146,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
 			<node name="signIn" value="Přihlásit"/>

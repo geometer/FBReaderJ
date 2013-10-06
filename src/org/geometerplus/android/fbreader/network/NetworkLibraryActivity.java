@@ -208,6 +208,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myOptionsMenuActions.add(new TopupAction(this));
 		myOptionsMenuActions.add(new BuyBasketBooksAction(this));
 		myOptionsMenuActions.add(new ClearBasketAction(this));
+		myOptionsMenuActions.add(new OpenRootAction(this));
 	}
 
 	private void fillContextMenuList() {
@@ -219,6 +220,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myContextMenuActions.add(new TopupAction(this));
 		myContextMenuActions.add(new SignInAction(this));
 		myContextMenuActions.add(new EditCustomCatalogAction(this));
+		myContextMenuActions.add(new DisableCatalogAction(this));
 		myContextMenuActions.add(new RemoveCustomCatalogAction(this));
 		myContextMenuActions.add(new BuyBasketBooksAction(this));
 		myContextMenuActions.add(new ClearBasketAction(this));
