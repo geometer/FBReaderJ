@@ -146,7 +146,6 @@
 			<node name="topup" value="Bete kontua"/>
 			<node name="addCustomCatalog" value="Gehitu katalogoa"/>
 			<node name="refreshCatalogsList" value="Freskatu katalogoak"/>
-			<node name="languages" value="Hizkuntza iragazkia"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Hutsitu saskia"/>
 			<node name="buyAllBooks" value="Liburu guztiak erosi"/>

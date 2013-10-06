@@ -150,7 +150,6 @@
 			<node name="topup" value="Համալրել հաշիվը"/>
 			<node name="addCustomCatalog" value="Հավելել գրացուցակ"/>
 			<node name="refreshCatalogsList" value="Թարմացնել գրացուցակները"/>
-			<node name="languages" value="Զտել ըստ լեզվի"/>
 			<node name="manageCatalogs" value="Կառավարել գրացուցակները"/>
 			<node name="clearBasket" value="Դատարկել զամբյուղը"/>
 			<node name="buyAllBooks" value="Գնել բոլոր գրքերը"/>

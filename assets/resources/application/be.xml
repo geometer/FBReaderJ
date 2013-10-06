@@ -153,7 +153,6 @@
 			<node name="topup" value="Папоўніць рахунак"/>
 			<node name="addCustomCatalog" value="Дадаць каталёґ"/>
 			<node name="refreshCatalogsList" value="Абнавіць каталёґі"/>
-			<node name="languages" value="Моўны фільтар"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Ачысьціць кошык"/>
 			<node name="buyAllBooks" value="Купіць усе кнігі"/>

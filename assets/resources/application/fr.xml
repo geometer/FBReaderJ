@@ -148,7 +148,6 @@
 			<node name="topup" value="Recréditer le compte"/>
 			<node name="addCustomCatalog" value="Ajouter catalogue"/>
 			<node name="refreshCatalogsList" value="Rafraîchir"/>
-			<node name="languages" value="Filtrer par langue"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Vider le panier"/>
 			<node name="buyAllBooks" value="Acheter tous les livres"/>

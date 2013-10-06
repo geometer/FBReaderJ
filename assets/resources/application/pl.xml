@@ -145,7 +145,6 @@
 			<node name="topup" value="Doładuj konto"/>
 			<node name="addCustomCatalog" value="Dodaj własny katalog"/>
 			<node name="refreshCatalogsList" value="Odśwież katalogi"/>
-			<node name="languages" value="Filtr języka"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Opróżnij koszyk"/>
 			<node name="buyAllBooks" value="Kup wszystkie książki"/>
