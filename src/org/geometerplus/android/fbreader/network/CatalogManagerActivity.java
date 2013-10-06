@@ -56,7 +56,7 @@ public class CatalogManagerActivity extends ListActivity {
 		final List<String> enabledIds =
 			intent.getStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY);
 		if (enabledIds.size() > 0) {
-			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
+			final List<CatalogItem> cItems = new ArrayList<CatalogItem>();
 			for (String id : enabledIds) {
 				final NetworkTree tree = NetworkLibrary.Instance().getCatalogTreeByUrlAll(id);
 				if (tree != null && tree.getLink() != null) {
@@ -73,7 +73,10 @@ public class CatalogManagerActivity extends ListActivity {
 		if (disabledIds.size() > 0) {
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : disabledIds) {
-				cItems.add(new CatalogItem(id, false, NetworkLibrary.Instance().getCatalogTreeByUrlAll(id)));
+				final NetworkTree tree = NetworkLibrary.Instance().getCatalogTreeByUrlAll(id);
+				if (tree != null && tree.getLink() != null) {
+					cItems.add(new CatalogItem(id, false, tree));
+				}
 			}
 			myAllItems.addAll(cItems);
 		}
@@ -112,7 +115,7 @@ public class CatalogManagerActivity extends ListActivity {
 			return Tree.getLink().getTitle();
 		}
 
-		public String getTitleLower() {
+		private String getTitleLower() {
 			return getTitle().toLowerCase(Locale.getDefault());
 		}
 
