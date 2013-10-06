@@ -33,13 +33,17 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
-public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetworkLink {
-	
+public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNetworkLink {
+	private final String myPredefinedId;
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	
-	public RSSNetworkLink(int id, String siteName, String title, String summary,
-			String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+	public RSSNetworkLink(
+		int id, String predefinedId,
+		String siteName, String title, String summary,
+		String language, UrlInfoCollection<UrlInfoWithDate> infos
+	) {
 		super(id, siteName, title, summary, language, infos);
+		myPredefinedId = predefinedId;
 	}
 	
 	ZLNetworkRequest createNetworkData(String url, MimeType mime, final RSSCatalogItem.State result) {
@@ -87,20 +91,22 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return Type.Predefined;
+	}
+
+	@Override
+	public String getPredefinedId() {
+		return myPredefinedId;
 	}
 
 	@Override
 	public ZLNetworkRequest simpleSearchRequest(String pattern,
 			NetworkOperationData data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -122,78 +128,11 @@ public class RSSNetworkLink extends AbstractNetworkLink implements ICustomNetwor
 
 	@Override
 	public NetworkAuthenticationManager authenticationManager() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String rewriteUrl(String url, boolean isUrlExternal) {
-		/*final int apply = isUrlExternal
-			? URLRewritingRule.APPLY_EXTERNAL : URLRewritingRule.APPLY_INTERNAL;
-		for (URLRewritingRule rule: myUrlRewritingRules) {
-			if ((rule.whereToApply() & apply) != 0) {
-				url = rule.apply(url);
-			}
-		}*/
 		return url;
 	}
-
-	@Override
-	public void setSiteName(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setTitle(String title) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setSummary(String summary) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setUrl(
-			org.geometerplus.fbreader.network.urlInfo.UrlInfo.Type type,
-			String url, MimeType mime) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeUrl(
-			org.geometerplus.fbreader.network.urlInfo.UrlInfo.Type type) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isObsolete(long milliSeconds) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void reloadInfo(boolean urlsOnly, boolean quietly)
-			throws ZLNetworkException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void resetChanges() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
