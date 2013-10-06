@@ -72,6 +72,9 @@
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s"/>
 		</node>
+		<node name="recent" value="История">
+			<node name="summary" value="Недавно посещённые каталоги"/>
+		</node>
 		<node name="openCatalog" value="Открыть каталог"/>
 		<node name="networkSearch" value="Искать"/>
 		<node name="showResults" value="Показать результаты"/>

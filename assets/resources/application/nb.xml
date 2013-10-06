@@ -72,6 +72,9 @@
 		<node name="found" value="Funnet">
 			<node name="summary" value="Søkeresultat for: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Åpne katalog"/>
 		<node name="networkSearch" value="Søk"/>
 		<node name="showResults" value="Vis resultat"/>

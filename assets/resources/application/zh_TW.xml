@@ -72,6 +72,9 @@
 		<node name="found" value="搜尋結果">
 			<node name="summary" value="%s 的搜尋結果"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="打開目錄"/>
 		<node name="networkSearch" value="搜尋"/>
 		<node name="showResults" value="顯示結果"/>
