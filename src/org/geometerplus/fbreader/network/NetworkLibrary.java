@@ -26,9 +26,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -101,44 +99,6 @@ public class NetworkLibrary {
 		return new ArrayList<String>(languageSet);
 	}
 
-	private ZLStringListOption myActiveLanguageCodesOption;
-	private ZLStringListOption activeLanguageCodesOption() {
-		if (myActiveLanguageCodesOption == null) {
-			myActiveLanguageCodesOption =
-				new ZLStringListOption(
-					"Options",
-					"ActiveLanguages",
-					ZLibrary.Instance().defaultLanguageCodes(),
-					","
-				);
-		}
-		return myActiveLanguageCodesOption;
-	}
-
-	public List<String> activeLanguageCodes() {
-		return activeLanguageCodesOption().getValue();
-	}
-
-	public void setActiveLanguageCodes(Collection<String> codes) {
-		final TreeSet<String> allCodes = new TreeSet<String>();
-		allCodes.addAll(ZLibrary.Instance().defaultLanguageCodes());
-		allCodes.removeAll(languageCodes());
-		allCodes.addAll(codes);
-
-		// sort codes
-		final TreeSet<Language> languages = new TreeSet<Language>();
-		for (String code : allCodes) {
-			languages.add(new Language(code));
-		}
-		final ArrayList<String> codesList = new ArrayList<String>(languages.size());
-		for (Language l : languages) {
-			codesList.add(l.Code);
-		}
-
-		activeLanguageCodesOption().setValue(codesList);
-		invalidateChildren();
-	}
-
 	public List<String> linkIds() {
 		final TreeSet<String> idSet = new TreeSet<String>();
 		synchronized (myLinks) {
@@ -152,13 +112,12 @@ public class NetworkLibrary {
 	private ZLStringListOption myActiveIdsOption;
 	private ZLStringListOption activeIdsOption() {
 		if (myActiveIdsOption == null) {
-			myActiveIdsOption =
-				new ZLStringListOption(
-					"Options",
-					"ActiveIds",
-					"",
-					","
-				);
+			myActiveIdsOption = new ZLStringListOption(
+				"Options",
+				"ActiveIds",
+				"",
+				","
+			);
 		}
 		return myActiveIdsOption;
 	}
@@ -167,14 +126,20 @@ public class NetworkLibrary {
 		return activeIdsOption().getValue();
 	}
 
-	public void setActiveSingleId(String id) {
+	public void setSingleIdActive(String id, boolean active) {
 		final List<String> oldIds = activeIdsOption().getValue();
-		if (oldIds.contains(id)) {
+		if (oldIds.contains(id) == active) {
 			return;
 		}
-		final ArrayList<String> newIds = new ArrayList<String>(oldIds.size() + 1);
-		newIds.addAll(oldIds);
-		newIds.add(id);
+		final List<String> newIds;
+		if (active) {
+			newIds = new ArrayList<String>(oldIds.size() + 1);
+			newIds.addAll(oldIds);
+			newIds.add(id);
+		} else {
+			newIds = new ArrayList<String>(oldIds);
+			newIds.remove(id);
+		}
 		activeIdsOption().setValue(newIds);
 		invalidateChildren();
 	}
@@ -189,7 +154,6 @@ public class NetworkLibrary {
 	}
 
 	List<INetworkLink> activeLinks() {
-
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
 		final Collection<String> ids = activeIds();
 		synchronized (myLinks) {
@@ -478,7 +442,13 @@ public class NetworkLibrary {
 		}
 
 		final ArrayList<String> ids = new ArrayList<String>();
-		final Collection<String> codes = activeLanguageCodes();
+		// language codes were saved in this options in versions before 1.9
+		final Collection<String> codes = new ZLStringListOption(
+			"Options",
+			"ActiveLanguages",
+			ZLibrary.Instance().defaultLanguageCodes(),
+			","
+		).getValue();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
 				if (link instanceof ICustomNetworkLink ||
@@ -590,7 +560,7 @@ public class NetworkLibrary {
 			}
 		}
 		NetworkDatabase.Instance().saveLink(link);
-		setActiveSingleId(link.getUrl(UrlInfo.Type.Catalog));
+		setSingleIdActive(link.getUrl(UrlInfo.Type.Catalog), true);
 		invalidateChildren();
 	}
 
@@ -656,7 +626,7 @@ public class NetworkLibrary {
 
 	public ZLImage getImageByUrl(String url, MimeType mimeType) {
 		synchronized (myImageMap) {
-			WeakReference<ZLImage> ref = myImageMap.get(url);
+			final WeakReference<ZLImage> ref = myImageMap.get(url);
 			if (ref != null) {
 				final ZLImage image = ref.get();
 				if (image != null) {
