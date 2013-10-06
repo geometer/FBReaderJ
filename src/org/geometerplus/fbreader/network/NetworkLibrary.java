@@ -153,11 +153,7 @@ public class NetworkLibrary {
 	}
 
 	public void setActiveIds(Collection<String> ids) {
-		final TreeSet<String> allCodes = new TreeSet<String>(ids);
-
-		final ArrayList<String> codesList = new ArrayList<String>(allCodes);
-
-		activeIdsOption().setValue(codesList);
+		activeIdsOption().setValue(new ArrayList<String>(ids));
 		invalidateChildren();
 	}
 
