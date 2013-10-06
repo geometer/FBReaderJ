@@ -146,7 +146,6 @@
 			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="Katalog ekle"/>
 			<node name="refreshCatalogsList" value="Katalogları yenile"/>
-			<node name="languages" value="Dil süzgeci"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Sepeti temizle"/>
 			<node name="buyAllBooks" value="Tüm kitapları satın al"/>

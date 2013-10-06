@@ -150,7 +150,6 @@
 			<node name="topup" value="Пополнить счёт"/>
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
-			<node name="languages" value="Фильтр по языку"/>
 			<node name="manageCatalogs" value="Управление каталогами"/>
 			<node name="clearBasket" value="Очистить корзину"/>
 			<node name="buyAllBooks" value="Купить все книги"/>

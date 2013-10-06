@@ -148,7 +148,6 @@
 			<node name="topup" value="Deposite na conta"/>
 			<node name="addCustomCatalog" value="Adicionar catálogo"/>
 			<node name="refreshCatalogsList" value="Atualizar catálogos"/>
-			<node name="languages" value="Filtro de idioma"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Limpe a cesta"/>
 			<node name="buyAllBooks" value="Compre todos os livros"/>
