@@ -49,7 +49,7 @@ public class TitleListTree extends FirstLevelTree {
 
 		if (myGroupByFirstLetter) {
 			for (String l : letters) {
-				createTitleSubTree(l);
+				createTitleSubtree(l);
 			}
 		} else {
 			for (BookQuery query = new BookQuery(new Filter.Empty(), 20); ; query = query.next()) {
@@ -58,7 +58,7 @@ public class TitleListTree extends FirstLevelTree {
 					break;
 				}
 				for (Book b : books) {
-					createBookWithAuthorsSubTree(b);
+					createBookWithAuthorsSubtree(b);
 				}
 			}
 		}
@@ -72,9 +72,9 @@ public class TitleListTree extends FirstLevelTree {
 		switch (event) {
 			case Added:
 				if (myGroupByFirstLetter) {
-					return createTitleSubTree(book.firstTitleLetter());
+					return createTitleSubtree(book.firstTitleLetter());
 				} else {
-					return createBookWithAuthorsSubTree(book);
+					return createBookWithAuthorsSubtree(book);
 				}
 			case Removed:
 				if (myGroupByFirstLetter) {
@@ -87,21 +87,21 @@ public class TitleListTree extends FirstLevelTree {
 			case Updated:
 				if (myGroupByFirstLetter) {
 					// TODO: remove old tree (?)
-					return createTitleSubTree(book.firstTitleLetter());
+					return createTitleSubtree(book.firstTitleLetter());
 				} else {
 					boolean changed = removeBook(book);
-					changed |= createBookWithAuthorsSubTree(book);
+					changed |= createBookWithAuthorsSubtree(book);
 					return changed;
 				}
 		}
 	}
 
-	private boolean createTitleSubTree(String prefix) {
+	private boolean createTitleSubtree(String prefix) {
 		if (prefix == null) {
 			return false;
 		}
 		final TitleTree temp = new TitleTree(Collection, prefix);
-		int position = Collections.binarySearch(subTrees(), temp);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {

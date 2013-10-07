@@ -49,14 +49,14 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 	}
 
 	@Override
-	public synchronized List<FBTree> subTrees() {
+	public synchronized List<FBTree> subtrees() {
 		final BasketItem basketItem = (BasketItem)Item;
 		final long generation = basketItem.getGeneration();
 		if (generation != myGeneration) {
 			myGeneration = generation;
 			final List<FBTree> toRemove = new ArrayList<FBTree>();
 			final Set<String> idsToAdd = new TreeSet(basketItem.bookIds());
-			for (FBTree t : super.subTrees()) {
+			for (FBTree t : super.subtrees()) {
 				if (!(t instanceof NetworkBookTree)) {
 					continue;
 				}
@@ -77,7 +77,7 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 				}
 			}
 		}
-		return super.subTrees();
+		return super.subtrees();
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 		}
 		final NetworkBookItem bookItem = (NetworkBookItem)i;
 		final String id = bookItem.getStringId();
-		for (FBTree t : subTrees()) {
+		for (FBTree t : subtrees()) {
 			if (t instanceof NetworkBookTree &&
 				id.equals(((NetworkBookTree)t).Book.getStringId())) {
 				return;

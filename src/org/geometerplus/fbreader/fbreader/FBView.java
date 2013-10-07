@@ -473,7 +473,7 @@ public final class FBView extends ZLTextView {
 					}
 				}
 			}
-			for (TOCTree tocItem : toc.allSubTrees(maxLevel)) {
+			for (TOCTree tocItem : toc.allSubtrees(maxLevel)) {
 				myTOCMarks.add(tocItem);
 			}
 		}

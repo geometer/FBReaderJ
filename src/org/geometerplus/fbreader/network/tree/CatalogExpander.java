@@ -72,7 +72,7 @@ class CatalogExpander extends NetworkItemsLoader {
 					);
 				} else {
 					getTree().updateLoadedTime();
-					if (getTree().subTrees().isEmpty()) {
+					if (getTree().subtrees().isEmpty()) {
 						NetworkLibrary.Instance().fireModelChangedEvent(
 							NetworkLibrary.ChangeListener.Code.EmptyCatalog
 						);

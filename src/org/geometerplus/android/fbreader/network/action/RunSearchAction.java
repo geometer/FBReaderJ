@@ -34,7 +34,7 @@ import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 public class RunSearchAction extends Action {
 	public static SearchCatalogTree getSearchTree(FBTree tree) {
 		for (; tree != null; tree = tree.Parent) {
-			for (FBTree t : tree.subTrees()) {
+			for (FBTree t : tree.subtrees()) {
 				if (t instanceof SearchCatalogTree) {
 					return (SearchCatalogTree)t;
 				}

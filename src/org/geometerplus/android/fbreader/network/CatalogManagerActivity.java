@@ -125,40 +125,36 @@ public class CatalogManagerActivity extends ListActivity {
 		}
 	}
 
-	private void setResultIds(Item item, int index) {
-		if (item != null && item instanceof CatalogItem) {
-			CatalogItem catalogItem = (CatalogItem)item;
-			if (catalogItem.IsChecked) {
-				int insertIndex = index <= 0 ? -1 : (index-1);
-				if (mySelectedItems.contains(catalogItem)) {
-					mySelectedItems.remove(catalogItem);
-				}
-				if (insertIndex >= 0) {
-					mySelectedItems.add(insertIndex, catalogItem);
-				} else {
-					mySelectedItems.add(catalogItem);
-				}
-			} else {
-				mySelectedItems.remove(catalogItem);
-			}
-			final ArrayList<String> ids = new ArrayList<String>();
-			for (Item selectedItem : mySelectedItems) {
-				if (selectedItem instanceof CatalogItem) {
-					final CatalogItem ci = (CatalogItem)selectedItem;
-					if (ci.IsChecked) {
-						ids.add(ci.Id);
-					}
-				}
-			}
-			setResult(RESULT_OK, new Intent().putStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY, ids));
-		}
-	}
-
 	private class CatalogsListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
 		private CoverManager myCoverManager;
 
 		public CatalogsListAdapter() {
 			super(CatalogManagerActivity.this, R.layout.catalog_manager_item, myAllItems);
+		}
+
+		private int indexOfDisabledSectionItem() {
+			for (int i = 1; i < getCount(); i++) {
+				if (getItem(i) instanceof SectionItem) {
+					return i;
+				}
+			}
+			// should be impossible
+			return 0;
+		}
+
+		private void setResultIds() {
+			final ArrayList<String> ids = new ArrayList<String>();
+			for (int i = 1; i < getCount(); ++i) {
+				final Item item = getItem(i);
+				if (item instanceof SectionItem) {
+					continue;
+				}
+				final CatalogItem catalogItem = (CatalogItem)item;
+				if (catalogItem.IsChecked) {
+					ids.add(catalogItem.Id);
+				}
+			}
+			setResult(RESULT_OK, new Intent().putStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY, ids));
 		}
 
 		@Override
@@ -204,7 +200,7 @@ public class CatalogManagerActivity extends ListActivity {
 				checkBox.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						catalogItem.IsChecked = checkBox.isChecked();
-						setResultIds(catalogItem, 0);
+						setResultIds();
 					}
 				});
 			}
@@ -221,9 +217,9 @@ public class CatalogManagerActivity extends ListActivity {
 			if (item instanceof CatalogItem) {
 				remove(item);
 				insert(item, to);
-				//reCheckAll(item, to);
+				((CatalogItem)item).IsChecked = to < indexOfDisabledSectionItem();
 				getListView().moveCheckState(from, to);
-				setResultIds(item, to);
+				setResultIds();
 			}
 		}
 

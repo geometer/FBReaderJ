@@ -60,25 +60,25 @@ public class AuthorTree extends FilteredTree {
 			.toString();
 	}
 
-	private SeriesTree getSeriesSubTree(Series series) {
+	private SeriesTree getSeriesSubtree(Series series) {
 		final SeriesTree temp = new SeriesTree(Collection, series, Author);
-		int position = Collections.binarySearch(subTrees(), temp);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
-			return (SeriesTree)subTrees().get(position);
+			return (SeriesTree)subtrees().get(position);
 		} else {
 			return new SeriesTree(this, series, Author, - position - 1);
 		}
 	}
 
 	@Override
-	protected boolean createSubTree(Book book) {
+	protected boolean createSubtree(Book book) {
 		final SeriesInfo seriesInfo = book.getSeriesInfo();
 		if (seriesInfo != null) {
-			return getSeriesSubTree(seriesInfo.Series).createSubTree(book);
+			return getSeriesSubtree(seriesInfo.Series).createSubtree(book);
 		}
 
 		final BookTree temp = new BookTree(Collection, book);
-		int position = Collections.binarySearch(subTrees(), temp);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {

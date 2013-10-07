@@ -61,7 +61,7 @@ public class SearchResultsTree extends FilteredTree {
 	}
 
 	@Override
-	protected boolean createSubTree(Book book) {
-		return createBookWithAuthorsSubTree(book);
+	protected boolean createSubtree(Book book) {
+		return createBookWithAuthorsSubtree(book);
 	}
 }

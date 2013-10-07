@@ -100,13 +100,13 @@ public class NetworkLibrary {
 	}
 
 	public List<String> linkIds() {
-		final TreeSet<String> idSet = new TreeSet<String>();
+		final ArrayList<String> ids = new ArrayList<String>();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				idSet.add(link.getUrl(UrlInfo.Type.Catalog));
+				ids.add(link.getUrl(UrlInfo.Type.Catalog));
 			}
 		}
-		return new ArrayList<String>(idSet);
+		return ids;
 	}
 
 	private ZLStringListOption myActiveIdsOption;
@@ -134,7 +134,7 @@ public class NetworkLibrary {
 		if (id == null) {
 			return;
 		}
-		final List<String> oldIds = activeIdsOption().getValue();
+		final List<String> oldIds = activeIds();
 		if (oldIds.contains(id) == active) {
 			return;
 		}
@@ -158,16 +158,24 @@ public class NetworkLibrary {
 	}
 
 	List<INetworkLink> activeLinks() {
-		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
-		final Collection<String> ids = activeIds();
+		final Map<String,INetworkLink> linksById = new TreeMap<String,INetworkLink>(); 
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (ids.contains(link.getUrl(UrlInfo.Type.Catalog))) {
-					filteredList.add(link);
+				final String id = link.getUrl(UrlInfo.Type.Catalog);
+				if (id != null) {
+					linksById.put(id, link);
 				}
 			}
 		}
-		return filteredList;
+
+		final List<INetworkLink> result = new LinkedList<INetworkLink>();
+		for (String id : activeIds()) {
+			final INetworkLink link = linksById.get(id);
+			if (link != null) {
+				result.add(link);
+			}
+		}
+		return result;
 	}
 
 	public INetworkLink getLinkByUrl(String url) {
@@ -185,7 +193,7 @@ public class NetworkLibrary {
 	}
 
 	public NetworkTree getCatalogTreeByUrl(String url) {
-		for (FBTree tree : getRootTree().subTrees()) {
+		for (FBTree tree : getRootTree().subtrees()) {
 			if (tree instanceof NetworkCatalogRootTree) {
 				final String cUrl =
 					((NetworkCatalogTree)tree).getLink().getUrlInfo(UrlInfo.Type.Catalog).Url;
@@ -198,7 +206,7 @@ public class NetworkLibrary {
 	}
 
 	public NetworkTree getCatalogTreeByUrlAll(String url) {
-		for (FBTree tree : getRootAllTree().subTrees()) {
+		for (FBTree tree : getRootAllTree().subtrees()) {
 			if (tree instanceof NetworkCatalogRootTree) {
 				final String cUrl =
 					((NetworkCatalogTree)tree).getLink().getUrlInfo(UrlInfo.Type.Catalog).Url;
@@ -367,15 +375,13 @@ public class NetworkLibrary {
 		myRootAllTree.clear();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				int index = 0;
-				for (FBTree t : myRootAllTree.subTrees()) {
+				for (FBTree t : myRootAllTree.subtrees()) {
 					final INetworkLink l = ((NetworkTree)t).getLink();
 					if (l != null && link.compareTo(l) <= 0) {
 						break;
 					}
-					++index;
 				}
-				new NetworkCatalogRootTree(myRootAllTree, link, index);
+				new NetworkCatalogRootTree(myRootAllTree, link);
 			}
 		}
 	}
@@ -383,54 +389,46 @@ public class NetworkLibrary {
 	private void makeUpToDate() {
 		firstTimeComputeActiveIds();
 
-		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
-
-		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
-
-		// we do remove sum tree items:
-		for (FBTree t : myRootTree.subTrees()) {
-			if (t instanceof NetworkCatalogTree) {
-				final INetworkLink link = ((NetworkCatalogTree)t).getLink();
+		final Map<INetworkLink,List<NetworkCatalogTree>> linkToTreeMap =
+			new HashMap<INetworkLink,List<NetworkCatalogTree>>();
+		for (FBTree tree : myRootTree.subtrees()) {
+			if (tree instanceof NetworkCatalogTree) {
+				final NetworkCatalogTree nTree = (NetworkCatalogTree)tree;
+				final INetworkLink link = nTree.getLink();
 				if (link != null) {
-					if (!linkSet.contains(link)) {
-						// 1. links not listed in activeLinks list right now
-						toRemove.add(t);
-					} else if (link instanceof ICustomNetworkLink &&
-								((ICustomNetworkLink)link).hasChanges()) {
-						// 2. custom links that were changed
-						toRemove.add(t);
-					} else {
-						linkSet.remove(link);
+					List<NetworkCatalogTree> list = linkToTreeMap.get(link);
+					if (list == null) {
+						list = new LinkedList<NetworkCatalogTree>();
+						linkToTreeMap.put(link, list);
 					}
-				} else {
-					// 3. search item
-					toRemove.add(t);
+					list.add(nTree);
+				}
+			}
+		}
+
+		if (linkToTreeMap.isEmpty()) {
+			new SearchCatalogTree(myRootTree, mySearchItem, 0);
+			new ManageCatalogsItemTree(myRootTree);
+			new AddCustomCatalogItemTree(myRootTree);
+		}
+
+		int index = 1;
+		for (INetworkLink link : activeLinks()) {
+			final List<NetworkCatalogTree> trees = linkToTreeMap.remove(link);
+			if (trees != null) {
+				for (NetworkCatalogTree t : trees) {
+					myRootTree.moveSubtree(t, index++);
 				}
 			} else {
-				// 4. non-catalog nodes
-				toRemove.add(t);
+				new NetworkCatalogRootTree(myRootTree, link, index++);
 			}
-		}
-		for (FBTree tree : toRemove) {
-			tree.removeSelf();
 		}
 
-		// we do add new network catalog items
-		for (INetworkLink link : linkSet) {
-			int index = 0;
-			for (FBTree t : myRootTree.subTrees()) {
-				final INetworkLink l = ((NetworkTree)t).getLink();
-				if (l != null && link.compareTo(l) <= 0) {
-					break;
-				}
-				++index;
+		for (List<NetworkCatalogTree> trees : linkToTreeMap.values()) {
+			for (NetworkCatalogTree t : trees) {
+				t.removeSelf();
 			}
-			new NetworkCatalogRootTree(myRootTree, link, index);
 		}
-		// we do add non-catalog items
-		new SearchCatalogTree(myRootTree, mySearchItem, 0);
-		new ManageCatalogsItemTree(myRootTree);
-		new AddCustomCatalogItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
@@ -467,7 +465,7 @@ public class NetworkLibrary {
 	}
 
 	private void updateVisibility() {
-		for (FBTree tree : myRootTree.subTrees()) {
+		for (FBTree tree : myRootTree.subtrees()) {
 			if (tree instanceof NetworkCatalogTree) {
 				((NetworkCatalogTree)tree).updateVisibility();
 			}
@@ -498,7 +496,7 @@ public class NetworkLibrary {
 
 	public NetworkBookTree getFakeBookTree(NetworkBookItem book) {
 		final String id = book.getStringId();
-		for (FBTree tree : myFakeRootTree.subTrees()) {
+		for (FBTree tree : myFakeRootTree.subtrees()) {
 			if (tree instanceof NetworkBookTree &&
 				id.equals(tree.getUniqueKey().Id)) {
 				return (NetworkBookTree)tree;
@@ -509,7 +507,7 @@ public class NetworkLibrary {
 
 	public BasketCatalogTree getFakeBasketTree(BasketItem item) {
 		final String id = item.getStringId();
-		for (FBTree tree : myFakeRootTree.subTrees()) {
+		for (FBTree tree : myFakeRootTree.subtrees()) {
 			if (tree instanceof BasketCatalogTree &&
 				id.equals(tree.getUniqueKey().Id)) {
 				return (BasketCatalogTree)tree;
@@ -520,7 +518,7 @@ public class NetworkLibrary {
 
 	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {
 		final String id = item.getStringId();
-		for (FBTree tree : myFakeRootTree.subTrees()) {
+		for (FBTree tree : myFakeRootTree.subtrees()) {
 			if (tree instanceof NetworkCatalogTree &&
 				id.equals(tree.getUniqueKey().Id)) {
 				return (NetworkCatalogTree)tree;
@@ -546,7 +544,7 @@ public class NetworkLibrary {
 		if (parentTree == null) {
 			return null;
 		}
-		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
+		return parentTree != null ? (NetworkTree)parentTree.getSubtree(key.Id) : null;
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
