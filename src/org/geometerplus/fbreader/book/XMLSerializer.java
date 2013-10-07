@@ -23,16 +23,17 @@ import java.util.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.ZLColor;
-
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import android.util.Xml;
+
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.util.RationalNumber;
+
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 class XMLSerializer extends AbstractSerializer {
 	@Override
@@ -434,6 +435,7 @@ class XMLSerializer extends AbstractSerializer {
 		private final StringBuilder mySeriesTitle = new StringBuilder();
 		private final StringBuilder mySeriesIndex = new StringBuilder();
 		private boolean myHasBookmark;
+		private RationalNumber myProgress;
 
 		private Book myBook;
 
