@@ -40,6 +40,8 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
+import org.geometerplus.android.util.ViewUtil;
+
 public class StyleListActivity extends ListActivity implements IBookCollection.Listener {
 	public static final String EXISTING_BOOKMARK_KEY = "existing.bookmark";
 
@@ -127,9 +129,10 @@ public class StyleListActivity extends ListActivity implements IBookCollection.L
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.style_item, parent, false);
 			final HighlightingStyle style = getItem(position);
 
-			final AmbilWarnaPrefWidgetView colorView = (AmbilWarnaPrefWidgetView)view.findViewById(R.id.style_item_color);
-			final TextView titleView = (TextView)view.findViewById(R.id.style_item_title);
-			final Button button = (Button)view.findViewById(R.id.style_item_edit_button);
+			final AmbilWarnaPrefWidgetView colorView =
+				(AmbilWarnaPrefWidgetView)ViewUtil.findView(view, R.id.style_item_color);
+			final TextView titleView = ViewUtil.findTextView(view, R.id.style_item_title);
+			final Button button = (Button)ViewUtil.findView(view, R.id.style_item_edit_button);
 
 			final ZLResource resource = ZLResource.resource("highlightingStyleMenu");
 
