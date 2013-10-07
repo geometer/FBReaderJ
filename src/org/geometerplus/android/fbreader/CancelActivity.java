@@ -34,6 +34,8 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
+import org.geometerplus.android.util.ViewUtil;
+
 public class CancelActivity extends ListActivity {
 	@Override
 	protected void onStop() {
@@ -117,8 +119,8 @@ public class CancelActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.cancel_item, parent, false);
-			final TextView titleView = (TextView)view.findViewById(R.id.cancel_item_title);
-			final TextView summaryView = (TextView)view.findViewById(R.id.cancel_item_summary);
+			final TextView titleView = ViewUtil.findTextView(view, R.id.cancel_item_title);
+			final TextView summaryView = ViewUtil.findTextView(view, R.id.cancel_item_summary);
 			final String title = myIntent.getStringExtra(ITEM_TITLE + position);
 			final String summary = myIntent.getStringExtra(ITEM_SUMMARY + position);
 			titleView.setText(title);
