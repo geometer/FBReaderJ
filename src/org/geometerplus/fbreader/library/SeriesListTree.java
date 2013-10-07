@@ -46,7 +46,7 @@ public class SeriesListTree extends FirstLevelTree {
 	public void waitForOpening() {
 		clear();
 		for (String s : Collection.series()) {
-			createSeriesSubTree(s);
+			createSeriesSubtree(s);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class SeriesListTree extends FirstLevelTree {
 				// TODO: remove empty series tree after update (?)
 				final SeriesInfo info = book.getSeriesInfo();
 				// TODO: pass series
-				return info != null && createSeriesSubTree(info.Series.getTitle());
+				return info != null && createSeriesSubtree(info.Series.getTitle());
 			}
 			case Removed:
 				// TODO: remove empty series tree (?)
@@ -69,11 +69,11 @@ public class SeriesListTree extends FirstLevelTree {
 		}
 	}
 
-	private boolean createSeriesSubTree(String seriesTitle) {
+	private boolean createSeriesSubtree(String seriesTitle) {
 		// TODO: pass series as parameter
 		final Series series = new Series(seriesTitle);
 		final SeriesTree temp = new SeriesTree(Collection, series, null);
-		int position = Collections.binarySearch(subTrees(), temp);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {

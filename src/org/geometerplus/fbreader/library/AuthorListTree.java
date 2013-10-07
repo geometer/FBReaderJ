@@ -38,7 +38,7 @@ public class AuthorListTree extends FirstLevelTree {
 	public void waitForOpening() {
 		clear();
 		for (Author a : Collection.authors()) {
-			createAuthorSubTree(a);
+			createAuthorSubtree(a);
 		}
 	}
 
@@ -52,9 +52,9 @@ public class AuthorListTree extends FirstLevelTree {
 				final List<Author> bookAuthors = book.authors();
 				boolean changed = false;
 				if (bookAuthors.isEmpty()) {
-					changed &= createAuthorSubTree(Author.NULL);
+					changed &= createAuthorSubtree(Author.NULL);
 				} else for (Author a : bookAuthors) {
-					changed &= createAuthorSubTree(a);
+					changed &= createAuthorSubtree(a);
 				}
 				return changed;
 			}
@@ -66,9 +66,9 @@ public class AuthorListTree extends FirstLevelTree {
 		}
 	}
 
-	private boolean createAuthorSubTree(Author author) {
+	private boolean createAuthorSubtree(Author author) {
 		final AuthorTree temp = new AuthorTree(Collection, author);
-		int position = Collections.binarySearch(subTrees(), temp);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {

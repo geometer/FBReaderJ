@@ -84,7 +84,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 			if (parent == null) {
 				break;
 			}
-			for (ZLTree<?> sibling : parent.subTrees()) {
+			for (ZLTree<?> sibling : parent.subtrees()) {
 				if (sibling == tree) {
 					break;
 				}
@@ -101,7 +101,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	private int getCount(ZLTree<?> tree) {
 		int count = 1;
 		if (isOpen(tree)) {
-			for (ZLTree<?> subtree : tree.subTrees()) {
+			for (ZLTree<?> subtree : tree.subtrees()) {
 				count += getCount(subtree);
 			}
 		}
@@ -118,7 +118,7 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 		}
 		--position;
 		int index = 1;
-		for (ZLTree<?> subtree : tree.subTrees()) {
+		for (ZLTree<?> subtree : tree.subtrees()) {
 			int count = getCount(subtree);
 			if (count <= position) {
 				position -= count;

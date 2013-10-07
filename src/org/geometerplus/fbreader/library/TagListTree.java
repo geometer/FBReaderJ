@@ -38,7 +38,7 @@ public class TagListTree extends FirstLevelTree {
 		clear();
 		for (Tag t : Collection.tags()) {
 			if (t.Parent == null) {
-				createTagSubTree(t);
+				createTagSubtree(t);
 			}
 		}
 	}
@@ -53,10 +53,10 @@ public class TagListTree extends FirstLevelTree {
 				final List<Tag> bookTags = book.tags();
 				boolean changed = false;
 				if (bookTags.isEmpty()) {
-					changed &= createTagSubTree(Tag.NULL);
+					changed &= createTagSubtree(Tag.NULL);
 				} else for (Tag t : bookTags) {
 					if (t.Parent == null) {
-						changed &= createTagSubTree(t);
+						changed &= createTagSubtree(t);
 					}
 				}
 				return changed;
