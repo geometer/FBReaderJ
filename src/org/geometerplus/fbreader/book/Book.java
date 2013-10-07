@@ -87,6 +87,7 @@ public class Book extends TitledEntity {
 		myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
 		myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
 		mySeriesInfo = book.mySeriesInfo;
+		myProgress = book.myProgress;
 		HasBookmark = book.HasBookmark;
 	}
 
@@ -394,6 +395,10 @@ public class Book extends TitledEntity {
 
 	public boolean matchesUid(UID uid) {
 		return myUids.contains(uid);
+	}
+
+	public RationalNumber getProgress() {
+		return myProgress;
 	}
 
 	public boolean matches(String pattern) {
