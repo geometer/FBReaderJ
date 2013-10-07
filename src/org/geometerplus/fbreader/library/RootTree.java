@@ -42,11 +42,11 @@ public class RootTree extends LibraryTree {
 			return key.Id.equals(getUniqueKey().Id) ? this : null;
 		}
 		final LibraryTree parentTree = getLibraryTree(key.Parent);
-		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
+		return parentTree != null ? (LibraryTree)parentTree.getSubtree(key.Id) : null;
 	}
 
 	public SearchResultsTree getSearchResultsTree() {
-		return (SearchResultsTree)getSubTree(LibraryTree.ROOT_FOUND);
+		return (SearchResultsTree)getSubtree(LibraryTree.ROOT_FOUND);
 	}
 
 	public SearchResultsTree createSearchResultsTree(String pattern) {

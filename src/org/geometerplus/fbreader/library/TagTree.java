@@ -74,11 +74,11 @@ public final class TagTree extends FilteredTree {
 		if (!Tag.NULL.equals(Tag)) {
 			for (Tag t : Collection.tags()) {
 				if (Tag.equals(t.Parent)) {
-					createTagSubTree(t);
+					createTagSubtree(t);
 				}
 			}
 		}
-		createBookSubTrees();
+		createBookSubtrees();
 	}
 
 	@Override
@@ -89,13 +89,13 @@ public final class TagTree extends FilteredTree {
 				boolean changed = false;
 				final List<Tag> bookTags = book.tags();
 				if (bookTags.isEmpty()) {
-					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubTree(book);
+					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubtree(book);
 				} else {
 					for (Tag t : bookTags) {
 						if (Tag.equals(t)) {
-							changed &= createBookWithAuthorsSubTree(book);
+							changed &= createBookWithAuthorsSubtree(book);
 						} else if (Tag.equals(t.Parent)) {
-							changed &= createTagSubTree(t);
+							changed &= createTagSubtree(t);
 						}
 					}
 				}
@@ -110,13 +110,13 @@ public final class TagTree extends FilteredTree {
 				boolean changed = removeBook(book);
 				final List<Tag> bookTags = book.tags();
 				if (bookTags.isEmpty()) {
-					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubTree(book);
+					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubtree(book);
 				} else {
 					for (Tag t : bookTags) {
 						if (Tag.equals(t)) {
-							changed &= createBookWithAuthorsSubTree(book);
+							changed &= createBookWithAuthorsSubtree(book);
 						} else if (Tag.equals(t.Parent)) {
-							changed &= createTagSubTree(t);
+							changed &= createTagSubtree(t);
 						}
 					}
 				}
@@ -128,7 +128,7 @@ public final class TagTree extends FilteredTree {
 	}
 
 	@Override
-	protected boolean createSubTree(Book book) {
-		return createBookWithAuthorsSubTree(book);
+	protected boolean createSubtree(Book book) {
+		return createBookWithAuthorsSubtree(book);
 	} 
 }

@@ -358,7 +358,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				switch (code) {
 					default:
 						updateLoadingProgress();
-						getListAdapter().replaceAll(getCurrentTree().subTrees());
+						getListAdapter().replaceAll(getCurrentTree().subtrees());
 						//getListView().invalidateViews();
 						break;
 					case InitializationFailed:

@@ -57,9 +57,9 @@ public final class SeriesTree extends FilteredTree {
 	}
 
 	@Override
-	protected boolean createSubTree(Book book) {
+	protected boolean createSubtree(Book book) {
 		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
-		int position = Collections.binarySearch(subTrees(), temp);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {

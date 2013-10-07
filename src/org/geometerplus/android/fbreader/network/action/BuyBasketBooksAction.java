@@ -45,7 +45,7 @@ public class BuyBasketBooksAction extends CatalogAction {
 			return false;
 		}
 		final Set<String> bookIds = new HashSet<String>();
-		for (FBTree t : tree.subTrees()) {
+		for (FBTree t : tree.subtrees()) {
 			if (t instanceof NetworkBookTree) {
 				bookIds.add(((NetworkBookTree)t).Book.Id);
 			}
@@ -57,7 +57,7 @@ public class BuyBasketBooksAction extends CatalogAction {
 	@Override
 	public void run(NetworkTree tree) {
 		final ArrayList<NetworkBookTree> bookTrees = new ArrayList<NetworkBookTree>();
-		for (FBTree t : tree.subTrees()) {
+		for (FBTree t : tree.subtrees()) {
 			if (t instanceof NetworkBookTree) {
 				bookTrees.add((NetworkBookTree)t);
 			}

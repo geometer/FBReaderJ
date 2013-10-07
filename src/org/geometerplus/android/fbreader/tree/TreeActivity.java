@@ -162,7 +162,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		// because key might be null
 		myCurrentKey = myCurrentTree.getUniqueKey();
 		final TreeAdapter adapter = getListAdapter();
-		adapter.replaceAll(myCurrentTree.subTrees());
+		adapter.replaceAll(myCurrentTree.subtrees());
 		setTitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
 			selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();

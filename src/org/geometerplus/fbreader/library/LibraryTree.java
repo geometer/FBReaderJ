@@ -69,9 +69,9 @@ public abstract class LibraryTree extends FBTree {
 		return true;
 	}
 
-	boolean createTagSubTree(Tag tag) {
+	boolean createTagSubtree(Tag tag) {
 		final TagTree temp = new TagTree(Collection, tag);
-		int position = Collections.binarySearch(subTrees(), temp);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {
@@ -80,9 +80,9 @@ public abstract class LibraryTree extends FBTree {
 		}
 	}
 
-	boolean createBookWithAuthorsSubTree(Book book) {
+	boolean createBookWithAuthorsSubtree(Book book) {
 		final BookWithAuthorsTree temp = new BookWithAuthorsTree(Collection, book);
-		int position = Collections.binarySearch(subTrees(), temp);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;
 		} else {
