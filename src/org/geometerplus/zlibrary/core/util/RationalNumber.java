@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.core.util;
 
 public class RationalNumber {
 	public static RationalNumber create(long numerator, long denominator) {
-		if (denominator == null) {
+		if (denominator == 0) {
 			return null;
 		}
 		return new RationalNumber(numerator, denominator);
