@@ -99,8 +99,8 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	 */
 	protected abstract String getStringId();
 
-	public FBTree getSubTree(String id) {
-		for (FBTree tree : subTrees()) {
+	public FBTree getSubtree(String id) {
+		for (FBTree tree : subtrees()) {
 			if (id.equals(tree.getStringId())) {
 				return tree;
 			}
@@ -109,7 +109,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	}
 
 	public int indexOf(FBTree tree) {
-		return subTrees().indexOf(tree);
+		return subtrees().indexOf(tree);
 	}
 
 	public abstract String getName();

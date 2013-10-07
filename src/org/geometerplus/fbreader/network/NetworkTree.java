@@ -43,7 +43,7 @@ public abstract class NetworkTree extends FBTree {
 	public String getSummary() {
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
-		for (FBTree subtree : subTrees()) {
+		for (FBTree subtree : subtrees()) {
 			if (count++ > 0) {
 				builder.append(",  ");
 			}
@@ -105,11 +105,11 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 	public void removeTrees(Set<NetworkTree> trees) {
-		if (trees.isEmpty() || subTrees().isEmpty()) {
+		if (trees.isEmpty() || subtrees().isEmpty()) {
 			return;
 		}
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
-		for (FBTree t : subTrees()) {
+		for (FBTree t : subtrees()) {
 			if (trees.contains(t)) {
 				toRemove.add(t);
 				trees.remove(t);
@@ -122,7 +122,7 @@ public abstract class NetworkTree extends FBTree {
 			return;
 		}
 
-		final LinkedList<FBTree> toProcess = new LinkedList<FBTree>(subTrees());
+		final LinkedList<FBTree> toProcess = new LinkedList<FBTree>(subtrees());
 		while (!toProcess.isEmpty()) {
 			((NetworkTree)toProcess.remove(toProcess.size() - 1)).removeTrees(trees);
 		}

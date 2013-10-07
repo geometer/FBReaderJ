@@ -127,7 +127,7 @@ public final class FileInfoSet {
 			return Collections.emptyList();
 		}
 		final LinkedList<ZLFile> entries = new LinkedList<ZLFile>();
-		for (FileInfo child : info.subTrees()) {
+		for (FileInfo child : info.subtrees()) {
 			if (!myInfosToRemove.contains(child)) {
 				entries.add(ZLArchiveEntryFile.createArchiveEntryFile(file, child.Name));
 			}
@@ -187,7 +187,7 @@ public final class FileInfoSet {
 	}
 
 	private void removeChildren(FileInfo info) {
-		for (FileInfo child : info.subTrees()) {
+		for (FileInfo child : info.subtrees()) {
 			if (myInfosToSave.contains(child)) {
 				myInfosToSave.remove(child);
 			} else {

@@ -29,7 +29,7 @@ class NetworkTreeFactory {
 	}
 
 	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkItem item, int position) {
-		final int subtreesSize = parent.subTrees().size();
+		final int subtreesSize = parent.subtrees().size();
 		if (position == -1) {
 			position = subtreesSize;
 		} else if (position < 0 || position > subtreesSize) {
@@ -59,7 +59,7 @@ class NetworkTreeFactory {
 						return new NetworkBookTree(parent, book, position, showAuthors);
 					} else {
 						final NetworkTree previous = position > 0
-							? (NetworkTree)parent.subTrees().get(position - 1) : null;
+							? (NetworkTree)parent.subtrees().get(position - 1) : null;
 						NetworkSeriesTree seriesTree = null;
 						if (previous instanceof NetworkSeriesTree) {
 							seriesTree = (NetworkSeriesTree)previous;
@@ -77,7 +77,7 @@ class NetworkTreeFactory {
 				case NetworkCatalogItem.FLAG_GROUP_MORE_THAN_1_BOOK_BY_SERIES:
 					if (position > 0 && book.SeriesTitle != null) {
 						final NetworkTree previous =
-							(NetworkTree)parent.subTrees().get(position - 1);
+							(NetworkTree)parent.subtrees().get(position - 1);
 						if (previous instanceof NetworkSeriesTree) {
 							final NetworkSeriesTree seriesTree = (NetworkSeriesTree)previous;
 							if (book.SeriesTitle.equals(seriesTree.SeriesTitle)) {
@@ -102,7 +102,7 @@ class NetworkTreeFactory {
 					} else {
 						final NetworkBookItem.AuthorData author = book.Authors.get(0);
 						final NetworkTree previous = position > 0
-							? (NetworkTree)parent.subTrees().get(position - 1) : null;
+							? (NetworkTree)parent.subtrees().get(position - 1) : null;
 						NetworkAuthorTree authorTree = null;
 						if (previous instanceof NetworkAuthorTree) {
 							authorTree = (NetworkAuthorTree)previous;
