@@ -228,6 +228,15 @@ class XMLSerializer extends AbstractSerializer {
 			"rel", "http://opds-spec.org/acquisition"
 		);
 
+		final RationalNumber progress = book.getProgress();
+		if (progress != null) {
+			appendTag(
+				buffer, "progress", true,
+				"numerator", Long.toString(progress.Numerator),
+				"denominator", Long.toString(progress.Denominator)
+			);
+		}
+
 		closeTag(buffer, "entry");
 	}
 
@@ -460,6 +469,7 @@ class XMLSerializer extends AbstractSerializer {
 			myTags.clear();
 			myLabels.clear();
 			myHasBookmark = false;
+			myProgress = null;
 
 			myState = State.READ_NOTHING;
 		}
@@ -536,6 +546,14 @@ class XMLSerializer extends AbstractSerializer {
 					} else if ("link".equals(localName)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
+					} else if ("progress".equals(localName)) {
+						try {
+							myProgress = RationalNumber.create(
+								Long.parseLong(attributes.getValue("numerator")),
+								Long.parseLong(attributes.getValue("denominator"))
+							);
+						} catch (NumberFormatException e) {
+						}
 					} else {
 						throw new SAXException("Unexpected tag " + localName);
 					}
