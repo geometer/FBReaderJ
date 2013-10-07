@@ -30,8 +30,8 @@ import android.util.Xml;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
