@@ -23,6 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
@@ -765,6 +766,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		return new PagePosition(current, total);
+	}
+
+	public final RationalNumber getProgress() {
+		final PagePosition position = pagePosition();
+		return RationalNumber.create(position.Current, position.Total);
 	}
 
 	public final synchronized void gotoPage(int page) {
