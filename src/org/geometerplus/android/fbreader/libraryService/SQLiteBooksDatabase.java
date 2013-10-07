@@ -1067,9 +1067,9 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			"SELECT numerator,denominator FROM BookReadingProgress WHERE book_id = " + bookId, null
 		);
 		if (cursor.moveToNext()) {
-			progress = new RationalNumber(cursor.getLong(0), cursor.getLong(1));
+			progress = RationalNumber.create(cursor.getLong(0), cursor.getLong(1));
 		} else {
-			progress = new RationalNumber(0, 1);
+			progress = null;
 		}
 		cursor.close();
 		return progress;
