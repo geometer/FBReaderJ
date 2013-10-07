@@ -34,6 +34,8 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.covers.CoverManager;
 
+import org.geometerplus.android.util.ViewUtil;
+
 public class CatalogManagerActivity extends ListActivity {
 	private final List<Item> myAllItems = new ArrayList<Item>();
 	private final List<Item> mySelectedItems = new ArrayList<Item>();
@@ -174,8 +176,9 @@ public class CatalogManagerActivity extends ListActivity {
 			}
 
 			if (item instanceof SectionItem) {
-				((TextView)view.findViewById(R.id.catalog_manager_section_head_title))
-					.setText(((SectionItem)item).Title);
+				ViewUtil.setSubviewText(
+					view, R.id.catalog_manager_section_head_title, ((SectionItem)item).Title
+				);
 			} else /* if (item instanceof CatalogItem) */ {
 				final CatalogItem catalogItem = (CatalogItem)item;
 
@@ -187,15 +190,15 @@ public class CatalogManagerActivity extends ListActivity {
 				}
 
 				final INetworkLink link = catalogItem.Tree.getLink();
-				((TextView)view.findViewById(R.id.catalog_manager_item_title)).setText(link.getTitle());
-				((TextView)view.findViewById(R.id.catalog_manager_item_subtitle)).setText(link.getSummary());
+				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_title, link.getTitle());
+				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_subtitle, link.getSummary());
 
-				final ImageView coverView = (ImageView)view.findViewById(R.id.catalog_manager_item_icon);
+				final ImageView coverView = ViewUtil.findImageView(view, R.id.catalog_manager_item_icon);
 				if (!myCoverManager.trySetCoverImage(coverView, catalogItem.Tree)) {
 					coverView.setImageResource(R.drawable.ic_list_library_books);
 				}
 
-				final CheckBox checkBox = (CheckBox)view.findViewById(R.id.catalog_manager_item_checkbox);
+				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.catalog_manager_item_checkbox);
 				checkBox.setChecked(catalogItem.IsChecked);
 				checkBox.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
