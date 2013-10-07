@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
@@ -54,6 +55,7 @@ public class Book extends TitledEntity {
 	private volatile List<String> myLabels;
 	private volatile SeriesInfo mySeriesInfo;
 	private volatile List<UID> myUids;
+	private volatile RationalNumber myProgress;
 
 	public volatile boolean HasBookmark;
 
