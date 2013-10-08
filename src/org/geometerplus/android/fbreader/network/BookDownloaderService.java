@@ -295,7 +295,7 @@ public class BookDownloaderService extends Service {
 				if (length <= 0) {
 					progressHandler.sendEmptyMessage(-1);
 				}
-				OutputStream outStream;
+				final OutputStream outStream;
 				try {
 					outStream = new FileOutputStream(file);
 				} catch (FileNotFoundException ex) {
