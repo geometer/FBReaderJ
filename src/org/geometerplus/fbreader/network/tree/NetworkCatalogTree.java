@@ -81,7 +81,7 @@ public class NetworkCatalogTree extends NetworkTree {
 					mySearchItem = new SingleCatalogSearchItem(link);
 				}
 				myChildrenItems.add(mySearchItem);
-				new SearchCatalogTree(this, mySearchItem, -1);
+				new SearchCatalogTree(this, mySearchItem);
 			}
 		}
 	}

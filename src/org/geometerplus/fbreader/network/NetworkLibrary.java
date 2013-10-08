@@ -407,7 +407,7 @@ public class NetworkLibrary {
 		}
 
 		if (linkToTreeMap.isEmpty()) {
-			new SearchCatalogTree(myRootTree, mySearchItem, 0);
+			new SearchCatalogTree(myRootTree, mySearchItem);
 			new ManageCatalogsItemTree(myRootTree);
 			new AddCustomCatalogItemTree(myRootTree);
 		}
