@@ -459,6 +459,16 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized void rescan(String path) {
+		if (myInterface != null) {
+			try {
+				myInterface.rescan(path);
+			} catch (RemoteException e) {
+				// ignore
+			}
+		}
+	}
+
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = LibraryInterface.Stub.asInterface(service);
