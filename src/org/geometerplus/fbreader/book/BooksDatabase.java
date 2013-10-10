@@ -59,6 +59,7 @@ public abstract class BooksDatabase {
 	protected abstract SeriesInfo getSeriesInfo(long bookId);
 	protected abstract List<UID> listUids(long bookId);
 	protected abstract boolean hasVisibleBookmark(long bookId);
+	protected abstract RationalNumber getProgress(long bookId);
 
 	protected abstract Long bookIdByUid(UID uid);
 
@@ -71,6 +72,7 @@ public abstract class BooksDatabase {
 	protected abstract void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo);
 	protected abstract void deleteAllBookUids(long bookId);
 	protected abstract void saveBookUid(long bookId, UID uid);
+	protected abstract void saveBookProgress(long bookId, RationalNumber progress);
 
 	protected FileInfo createFileInfo(long id, String name, FileInfo parent) {
 		return new FileInfo(name, parent, id);
@@ -123,7 +125,4 @@ public abstract class BooksDatabase {
 
 	protected abstract Collection<String> loadVisitedHyperlinks(long bookId);
 	protected abstract void addVisitedHyperlink(long bookId, String hyperlinkId);
-	
-	protected abstract void saveProgress(long bookId, RationalNumber progress);
-	protected abstract RationalNumber loadProgress(long bookId);
 }
