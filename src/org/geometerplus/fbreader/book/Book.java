@@ -169,6 +169,7 @@ public class Book extends TitledEntity {
 		myLabels = database.listLabels(myId);
 		mySeriesInfo = database.getSeriesInfo(myId);
 		myUids = database.listUids(myId);
+		myProgress = database.getProgress(myId);
 		HasBookmark = database.hasVisibleBookmark(myId);
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
@@ -497,6 +498,9 @@ public class Book extends TitledEntity {
 				database.deleteAllBookUids(myId);
 				for (UID uid : uids()) {
 					database.saveBookUid(myId, uid);
+				}
+				if (myProgress != null) {
+					database.saveBookProgress(myId, myProgress);
 				}
 			}
 		});
