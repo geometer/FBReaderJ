@@ -19,10 +19,13 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Tag;
 
-abstract class Util {
+public abstract class Util {
 	static String authorToString(Author author) {
 		return new StringBuilder(author.DisplayName).append('\000').append(author.SortKey).toString();
 	}
@@ -47,5 +50,9 @@ abstract class Util {
 		} else {
 			return Tag.NULL;
 		}
+	}
+
+	public static List<String> splitDirectories(String value) {
+		return Arrays.asList(value.split(";"));
 	}
 }
