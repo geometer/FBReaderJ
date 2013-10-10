@@ -72,6 +72,9 @@
 		<node name="found" value="Aurkituta">
 			<node name="summary" value="%s bilaketaren emaitzak"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Zabaldu katalogoa"/>
 		<node name="networkSearch" value="Bilatu"/>
 		<node name="showResults" value="Erakutsi emaitzak"/>
@@ -114,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Kendu katalogoa"/>
 		<node name="addCustomCatalog" value="Gehitu katalogoa"/>
 		<node name="addCustomCatalogSummary" value="Eskuz gehitu pertsonalizatutako OPDS motako katalogoa"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Kopia lokala irakurri nahi duzu?"/>
 			<node name="download" value="Liburu hau deskargatu nahi duzu?"/>
@@ -136,6 +140,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Bilatu"/>
 			<node name="reload" value="Birkargatu"/>
 			<node name="signIn" value="Sartu"/>
@@ -144,7 +149,6 @@
 			<node name="topup" value="Bete kontua"/>
 			<node name="addCustomCatalog" value="Gehitu katalogoa"/>
 			<node name="refreshCatalogsList" value="Freskatu katalogoak"/>
-			<node name="languages" value="Hizkuntza iragazkia"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Hutsitu saskia"/>
 			<node name="buyAllBooks" value="Liburu guztiak erosi"/>

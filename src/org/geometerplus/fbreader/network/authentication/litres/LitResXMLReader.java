@@ -110,7 +110,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				if (TAG_BOOK == tag) {
 					myBookId = attributes.getValue("hub_id");
 					myUrls.addInfo(new UrlInfo(
-						UrlInfo.Type.Image, attributes.getValue("cover_preview"), MimeType.IMAGE_AUTO
+						UrlInfo.Type.Image, attributes.getValue("cover"), MimeType.IMAGE_AUTO
 					));
 
 					myUrls.addInfo(new BookUrlInfo(

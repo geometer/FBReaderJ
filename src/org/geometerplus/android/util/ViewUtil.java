@@ -17,21 +17,31 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.util;
+package org.geometerplus.android.util;
 
-public class RationalNumber {
-	public static RationalNumber create(long numerator, long denominator) {
-		if (denominator == 0) {
-			return null;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class ViewUtil {
+	public static View findView(View container, int id) {
+		View view = (View)container.getTag(id);
+		if (view == null) {
+			view = container.findViewById(id);
+			container.setTag(id, view);
 		}
-		return new RationalNumber(numerator, denominator);
+		return view;
 	}
 
-	public final long Numerator;
-	public final long Denominator;
-	
-	private RationalNumber(long numerator, long denominator) {
-		Numerator = numerator;
-		Denominator = denominator;
+	public static TextView findTextView(View container, int id) {
+		return (TextView)findView(container, id);
+	}
+
+	public static ImageView findImageView(View container, int id) {
+		return (ImageView)findView(container, id);
+	}
+
+	public static void setSubviewText(View view, int resourceId, String text) {
+		findTextView(view, resourceId).setText(text);
 	}
 }

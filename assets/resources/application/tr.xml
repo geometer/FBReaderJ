@@ -72,6 +72,9 @@
 		<node name="found" value="Bulunan">
 			<node name="summary" value="%s için arama sonuçları"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Katalog aç"/>
 		<node name="networkSearch" value="Ara"/>
 		<node name="showResults" value="Sonuçları göster"/>
@@ -114,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Katalogu sil"/>
 		<node name="addCustomCatalog" value="Katalog ekle"/>
 		<node name="addCustomCatalogSummary" value="Özelleştirilmiş OPDS katalogunu elle ekle"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Cihazınızdan bir kitap okumak ister misiniz?"/>
 			<node name="download" value="Bu kitabı indirmek ister misiniz?"/>
@@ -136,6 +140,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Ara"/>
 			<node name="reload" value="Yenile"/>
 			<node name="signIn" value="Giriş"/>
@@ -144,7 +149,6 @@
 			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="Katalog ekle"/>
 			<node name="refreshCatalogsList" value="Katalogları yenile"/>
-			<node name="languages" value="Dil süzgeci"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Sepeti temizle"/>
 			<node name="buyAllBooks" value="Tüm kitapları satın al"/>

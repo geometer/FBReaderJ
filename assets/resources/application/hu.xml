@@ -72,6 +72,9 @@
 		<node name="found" value="Találatok">
 			<node name="summary" value="Keresés az eredmények között: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Katalógus megnyitása"/>
 		<node name="networkSearch" value="Keresés"/>
 		<node name="showResults" value="Eredmények"/>
@@ -110,6 +113,7 @@
 		<node name="removeCustomCatalog" value="Katalógus törlése"/>
 		<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
 		<node name="addCustomCatalogSummary" value="OPDS katalógus kézi hozzáadása"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Elolvassa a helyi példányt?"/>
 			<node name="download" value="Letölti a könyvet?"/>
@@ -132,6 +136,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Internetes keresés"/>
 			<node name="reload" value="Újratöltés"/>
 			<node name="signIn" value="Bejelentkezés"/>
@@ -140,7 +145,6 @@
 			<node name="topup" value="Számla feltöltése"/>
 			<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
 			<node name="refreshCatalogsList" value="Katalógusok frissítése"/>
-			<node name="languages" value="Nyelvi szűrő"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Kosár kiürítése"/>
 			<node name="buyAllBooks" value="összes könyv megvásárlása"/>

@@ -72,6 +72,9 @@
 		<node name="found" value="Намерено">
 			<node name="summary" value="Резултати от тъсенето: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Отвори каталога"/>
 		<node name="networkSearch" value="Търси"/>
 		<node name="showResults" value="Покажи резултатите"/>
@@ -118,6 +121,7 @@
 		<node name="removeCustomCatalog" value="Премахни каталога"/>
 		<node name="addCustomCatalog" value="Добави каталог"/>
 		<node name="addCustomCatalogSummary" value="Добави OPDS каталог ръчно"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Искате ли да прочетете локално копие?"/>
 			<node name="download" value="Искате ли да свалите книгата?"/>
@@ -140,6 +144,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Търсене в межата"/>
 			<node name="reload" value="Обнови"/>
 			<node name="signIn" value="Вход"/>
@@ -148,7 +153,6 @@
 			<node name="topup" value="Зареди сметката"/>
 			<node name="addCustomCatalog" value="Добави каталог"/>
 			<node name="refreshCatalogsList" value="Обнови каталозите"/>
-			<node name="languages" value="Език"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Изчисти кошницата"/>
 			<node name="buyAllBooks" value="Купи всички книги"/>

@@ -72,6 +72,9 @@
 		<node name="found" value="Gevonden">
 			<node name="summary" value="Zoekresultaten voor: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Open catalogus"/>
 		<node name="networkSearch" value="Zoeken"/>
 		<node name="showResults" value="Toon resulten"/>
@@ -114,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
 		<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 		<node name="addCustomCatalogSummary" value="Voeg handmatig eigen OPDS-catalogus toe"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Wil je de lokale kopie lezen?"/>
 			<node name="download" value="Wil je dit boek downloaden?"/>
@@ -136,6 +140,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Zoeken op het netwerk"/>
 			<node name="reload" value="Vernieuwen"/>
 			<node name="signIn" value="Aanmelden"/>
@@ -144,7 +149,6 @@
 			<node name="topup" value="Top up account" toBeTranslated="true"/>
 			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 			<node name="refreshCatalogsList" value="Catalogi vernieuwen"/>
-			<node name="languages" value="Taalfilter"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Leeg mandje"/>
 			<node name="buyAllBooks" value="Koop alle boeken"/>

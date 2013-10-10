@@ -33,6 +33,8 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 import org.geometerplus.android.fbreader.covers.CoverManager;
 
+import org.geometerplus.android.util.ViewUtil;
+
 class LibraryTreeAdapter extends TreeAdapter {
 	private CoverManager myCoverManager;
 
@@ -47,14 +49,14 @@ class LibraryTreeAdapter extends TreeAdapter {
 		final boolean unread =
 			tree.getBook() != null && !tree.getBook().labels().contains(Book.READ_LABEL);
 
-		final TextView nameView = (TextView)view.findViewById(R.id.library_tree_item_name);
+		final TextView nameView = ViewUtil.findTextView(view, R.id.library_tree_item_name);
 		if (unread) {
 			nameView.setText(Html.fromHtml("<b>" + tree.getName()));
 		} else {
 			nameView.setText(tree.getName());
 		}
 		
-		final TextView summaryView = (TextView)view.findViewById(R.id.library_tree_item_childrenlist);
+		final TextView summaryView = ViewUtil.findTextView(view, R.id.library_tree_item_childrenlist);
 		if (unread) {
 			summaryView.setText(Html.fromHtml("<b>" + tree.getSummary()));
 		} else {
@@ -80,7 +82,7 @@ class LibraryTreeAdapter extends TreeAdapter {
 			view.requestLayout();
 		}
 
-		final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
+		final ImageView coverView = ViewUtil.findImageView(view, R.id.library_tree_item_icon);
 		if (!myCoverManager.trySetCoverImage(coverView, tree)) {
 			coverView.setImageResource(getCoverResourceId(tree));
 		}

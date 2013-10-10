@@ -81,7 +81,7 @@ public class NetworkCatalogTree extends NetworkTree {
 					mySearchItem = new SingleCatalogSearchItem(link);
 				}
 				myChildrenItems.add(mySearchItem);
-				new SearchCatalogTree(this, mySearchItem, -1);
+				new SearchCatalogTree(this, mySearchItem);
 			}
 		}
 	}
@@ -132,7 +132,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	public void updateVisibility() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
-		ListIterator<FBTree> nodeIterator = subTrees().listIterator();
+		ListIterator<FBTree> nodeIterator = subtrees().listIterator();
 		FBTree currentTree = null;
 		int nodeCount = 0;
 
@@ -185,7 +185,7 @@ public class NetworkCatalogTree extends NetworkTree {
 			final int nextIndex = nodeIterator.nextIndex();
 			if (!processed && NetworkTreeFactory.createNetworkTree(this, currentItem, nodeCount) != null) {
 				++nodeCount;
-				nodeIterator = subTrees().listIterator(nextIndex + 1);
+				nodeIterator = subtrees().listIterator(nextIndex + 1);
 			}
 		}
 
@@ -245,7 +245,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	public synchronized void loadMoreChildren(int currentTotal) {
-		if (currentTotal == subTrees().size()
+		if (currentTotal == subtrees().size()
 			&& myLastTotalChildren < currentTotal
 			&& !NetworkLibrary.Instance().isLoadingInProgress(this)) {
 			myLastTotalChildren = currentTotal;

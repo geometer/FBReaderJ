@@ -72,6 +72,9 @@
 		<node name="found" value="搜尋結果">
 			<node name="summary" value="%s 的搜尋結果"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="打開目錄"/>
 		<node name="networkSearch" value="搜尋"/>
 		<node name="showResults" value="顯示結果"/>
@@ -110,6 +113,7 @@
 		<node name="removeCustomCatalog" value="刪除目錄"/>
 		<node name="addCustomCatalog" value="新增目錄"/>
 		<node name="addCustomCatalogSummary" value="手動新增 OPDS 目錄"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="是否要閱讀書藉的本地存檔嗎?"/>
 			<node name="download" value="是否下載此書?"/>
@@ -132,6 +136,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="網絡搜尋"/>
 			<node name="reload" value="重新載入"/>
 			<node name="signIn" value="登入"/>
@@ -140,7 +145,6 @@
 			<node name="topup" value="升級賬戶"/>
 			<node name="addCustomCatalog" value="新增目錄"/>
 			<node name="refreshCatalogsList" value="重新整理目錄"/>
-			<node name="languages" value="語言篩選"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="清空購物籃"/>
 			<node name="buyAllBooks" value="購買全部書藉"/>

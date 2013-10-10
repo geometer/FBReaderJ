@@ -72,6 +72,9 @@
 		<node name="found" value="S-au gasit">
 			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Deschide catalogul"/>
 		<node name="networkSearch" value="Cautare"/>
 		<node name="showResults" value="Arata rezultatele"/>
@@ -110,6 +113,7 @@
 		<node name="removeCustomCatalog" value="Eliminati catalog"/>
 		<node name="addCustomCatalog" value="Adauga catalog"/>
 		<node name="addCustomCatalogSummary" value="Adauga particularizate catalog OPDS manual"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Doriti sa cititi copia locala?"/>
 			<node name="download" value="Doriti sa descarcati aceasta carte?"/>
@@ -132,6 +136,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Reteaua de cautare"/>
 			<node name="reload" value="Reîncarca"/>
 			<node name="signIn" value="Conectati-va în"/>
@@ -140,7 +145,6 @@
 			<node name="topup" value="Incarca cont"/>
 			<node name="addCustomCatalog" value="Adauga catalog"/>
 			<node name="refreshCatalogsList" value="Reîmprospatare cataloage"/>
-			<node name="languages" value="Filtru limba"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clar cos"/>
 			<node name="buyAllBooks" value="Cumpara toate cartile"/>

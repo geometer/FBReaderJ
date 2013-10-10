@@ -72,6 +72,9 @@
 		<node name="found" value="Funnet">
 			<node name="summary" value="Søkeresultat for: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Åpne katalog"/>
 		<node name="networkSearch" value="Søk"/>
 		<node name="showResults" value="Vis resultat"/>
@@ -114,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Fjern katalog"/>
 		<node name="addCustomCatalog" value="Legg til katalog"/>
 		<node name="addCustomCatalogSummary" value="Legg til egen OPDS-katalog manuelt"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Ønsker du å lese lokal kopi?"/>
 			<node name="download" value="Ønsker du å laste ned denne boken?"/>
@@ -136,6 +140,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Søk"/>
 			<node name="reload" value="Last på nytt"/>
 			<node name="signIn" value="Logg inn"/>
@@ -144,7 +149,6 @@
 			<node name="topup" value="Topp opp konto"/>
 			<node name="addCustomCatalog" value="Legg til katalog"/>
 			<node name="refreshCatalogsList" value="Oppdater katalogene"/>
-			<node name="languages" value="Språkfilter"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Tøm kurv"/>
 			<node name="buyAllBooks" value="Kjøp alle bøkene"/>

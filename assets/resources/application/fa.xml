@@ -72,6 +72,9 @@
 		<node name="found" value="پیدا شد">
 			<node name="summary" value="نتایج جستوجو برای: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="باز کردن کاتالوگ"/>
 		<node name="networkSearch" value="جستوجو"/>
 		<node name="showResults" value="نتایج را نشان بده"/>
@@ -114,6 +117,7 @@
 		<node name="removeCustomCatalog" value="حذف کاتالوگ"/>
 		<node name="addCustomCatalog" value="افزودن کاتالوگ"/>
 		<node name="addCustomCatalogSummary" value="افزودن کاتالوگ OPDS به صورت دستی"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="آیا میخواهید کپی محلی را بخوانید؟"/>
 			<node name="download" value="ایا میخواهید این کتاب را دانلود کنید؟"/>
@@ -136,6 +140,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="جستجو"/>
 			<node name="reload" value="بارگذاری مجدد"/>
 			<node name="signIn" value="ورود"/>
@@ -144,7 +149,6 @@
 			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="افزودن کاتالوگ"/>
 			<node name="refreshCatalogsList" value="بروزرسانی کاتالوگها"/>
-			<node name="languages" value="فیلتر زبان"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="خالی کردن سبد"/>
 			<node name="buyAllBooks" value="خرید همه کتابها"/>

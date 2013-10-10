@@ -22,20 +22,29 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+
+import com.mobeta.android.dslv.DragSortListView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.covers.CoverManager;
 
+import org.geometerplus.android.util.ViewUtil;
+
 public class CatalogManagerActivity extends ListActivity {
 	private final List<Item> myAllItems = new ArrayList<Item>();
 	private final List<Item> mySelectedItems = new ArrayList<Item>();
+
+	@Override
+	protected void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
+		setContentView(R.layout.catalog_manager_view);
+	}
 
 	@Override
 	protected void onStart() {
@@ -49,7 +58,7 @@ public class CatalogManagerActivity extends ListActivity {
 		final List<String> enabledIds =
 			intent.getStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY);
 		if (enabledIds.size() > 0) {
-			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
+			final List<CatalogItem> cItems = new ArrayList<CatalogItem>();
 			for (String id : enabledIds) {
 				final NetworkTree tree = NetworkLibrary.Instance().getCatalogTreeByUrlAll(id);
 				if (tree != null && tree.getLink() != null) {
@@ -66,12 +75,20 @@ public class CatalogManagerActivity extends ListActivity {
 		if (disabledIds.size() > 0) {
 			final TreeSet<CatalogItem> cItems = new TreeSet<CatalogItem>();
 			for (String id : disabledIds) {
-				cItems.add(new CatalogItem(id, false, NetworkLibrary.Instance().getCatalogTreeByUrlAll(id)));
+				final NetworkTree tree = NetworkLibrary.Instance().getCatalogTreeByUrlAll(id);
+				if (tree != null && tree.getLink() != null) {
+					cItems.add(new CatalogItem(id, false, tree));
+				}
 			}
 			myAllItems.addAll(cItems);
 		}
 
 		setListAdapter(new CatalogsListAdapter());
+	}
+
+	@Override
+	public DragSortListView getListView() {
+		return (DragSortListView)super.getListView();
 	}
 
 	private static interface Item {
@@ -100,7 +117,7 @@ public class CatalogManagerActivity extends ListActivity {
 			return Tree.getLink().getTitle();
 		}
 
-		public String getTitleLower() {
+		private String getTitleLower() {
 			return getTitle().toLowerCase(Locale.getDefault());
 		}
 
@@ -110,40 +127,36 @@ public class CatalogManagerActivity extends ListActivity {
 		}
 	}
 
-	private void setResultIds(Item item, int index) {
-		if (item != null && item instanceof CatalogItem) {
-			CatalogItem catalogItem = (CatalogItem)item;
-			if (catalogItem.IsChecked) {
-				int insertIndex = index <= 0 ? -1 : (index-1);
-				if (mySelectedItems.contains(catalogItem)) {
-					mySelectedItems.remove(catalogItem);
-				}
-				if (insertIndex >= 0) {
-					mySelectedItems.add(insertIndex, catalogItem);
-				} else {
-					mySelectedItems.add(catalogItem);
-				}
-			} else {
-				mySelectedItems.remove(catalogItem);
-			}
-			final ArrayList<String> ids = new ArrayList<String>();
-			for (Item selectedItem : mySelectedItems) {
-				if (selectedItem instanceof CatalogItem) {
-					final CatalogItem ci = (CatalogItem)selectedItem;
-					if (ci.IsChecked) {
-						ids.add(ci.Id);
-					}
-				}
-			}
-			setResult(RESULT_OK, new Intent().putStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY, ids));
-		}
-	}
-
-	private class CatalogsListAdapter extends ArrayAdapter<Item> {
+	private class CatalogsListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
 		private CoverManager myCoverManager;
 
 		public CatalogsListAdapter() {
 			super(CatalogManagerActivity.this, R.layout.catalog_manager_item, myAllItems);
+		}
+
+		private int indexOfDisabledSectionItem() {
+			for (int i = 1; i < getCount(); i++) {
+				if (getItem(i) instanceof SectionItem) {
+					return i;
+				}
+			}
+			// should be impossible
+			return 0;
+		}
+
+		private void setResultIds() {
+			final ArrayList<String> ids = new ArrayList<String>();
+			for (int i = 1; i < getCount(); ++i) {
+				final Item item = getItem(i);
+				if (item instanceof SectionItem) {
+					continue;
+				}
+				final CatalogItem catalogItem = (CatalogItem)item;
+				if (catalogItem.IsChecked) {
+					ids.add(catalogItem.Id);
+				}
+			}
+			setResult(RESULT_OK, new Intent().putStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY, ids));
 		}
 
 		@Override
@@ -163,8 +176,9 @@ public class CatalogManagerActivity extends ListActivity {
 			}
 
 			if (item instanceof SectionItem) {
-				((TextView)view.findViewById(R.id.catalog_manager_section_head_title))
-					.setText(((SectionItem)item).Title);
+				ViewUtil.setSubviewText(
+					view, R.id.catalog_manager_section_head_title, ((SectionItem)item).Title
+				);
 			} else /* if (item instanceof CatalogItem) */ {
 				final CatalogItem catalogItem = (CatalogItem)item;
 
@@ -176,24 +190,49 @@ public class CatalogManagerActivity extends ListActivity {
 				}
 
 				final INetworkLink link = catalogItem.Tree.getLink();
-				((TextView)view.findViewById(R.id.catalog_manager_item_title)).setText(link.getTitle());
-				((TextView)view.findViewById(R.id.catalog_manager_item_subtitle)).setText(link.getSummary());
+				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_title, link.getTitle());
+				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_subtitle, link.getSummary());
 
-				final ImageView coverView = (ImageView)view.findViewById(R.id.catalog_manager_item_icon);
+				final ImageView coverView = ViewUtil.findImageView(view, R.id.catalog_manager_item_icon);
 				if (!myCoverManager.trySetCoverImage(coverView, catalogItem.Tree)) {
 					coverView.setImageResource(R.drawable.ic_list_library_books);
 				}
 
-				final CheckBox checkBox = (CheckBox)view.findViewById(R.id.catalog_manager_item_checkbox);
+				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.catalog_manager_item_checkbox);
 				checkBox.setChecked(catalogItem.IsChecked);
 				checkBox.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						catalogItem.IsChecked = checkBox.isChecked();
-						setResultIds(catalogItem, 0);
+						setResultIds();
 					}
 				});
 			}
 			return view;
+		}
+
+		// method from DragSortListView.DropListener
+		public void drop(int from, int to) {
+			to = Math.max(to, 1);
+			if (from == to) {
+				return;
+			}
+			final Item item = getItem(from);
+			if (item instanceof CatalogItem) {
+				remove(item);
+				insert(item, to);
+				((CatalogItem)item).IsChecked = to < indexOfDisabledSectionItem();
+				getListView().moveCheckState(from, to);
+				setResultIds();
+			}
+		}
+
+		// method from DragSortListView.RemoveListener
+		public void remove(int which) {
+			final Item item = getItem(which);
+			if (item instanceof CatalogItem) {
+				remove(item);
+				getListView().removeCheckState(which);
+			}
 		}
 	}
 }

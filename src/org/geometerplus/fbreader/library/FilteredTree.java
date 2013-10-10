@@ -53,14 +53,14 @@ abstract class FilteredTree extends LibraryTree {
 		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
 	}
 
-	protected final void createBookSubTrees() {
+	protected final void createBookSubtrees() {
 		for (BookQuery query = new BookQuery(myFilter, 20); ; query = query.next()) {
 			final List<Book> books = Collection.books(query);
 			if (books.isEmpty()) {
 				break;
 			}
 			for (Book b : books) {
-				createSubTree(b);
+				createSubtree(b);
 			}
 		}
 	}
@@ -68,18 +68,18 @@ abstract class FilteredTree extends LibraryTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		createBookSubTrees();
+		createBookSubtrees();
 	}
 
 	@Override
 	public boolean onBookEvent(BookEvent event, Book book) {
 		switch (event) {
 			case Added:
-				return containsBook(book) && createSubTree(book);
+				return containsBook(book) && createSubtree(book);
 			case Updated:
 			{
 				boolean changed = removeBook(book);
-				changed |= containsBook(book) && createSubTree(book);
+				changed |= containsBook(book) && createSubtree(book);
 				return changed;
 			}
 			case Removed:
@@ -88,5 +88,5 @@ abstract class FilteredTree extends LibraryTree {
 		}
 	}
 
-	protected abstract boolean createSubTree(Book book);
+	protected abstract boolean createSubtree(Book book);
 }

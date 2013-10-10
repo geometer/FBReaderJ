@@ -23,16 +23,17 @@ import java.util.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.ZLColor;
-
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import android.util.Xml;
+
+import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.RationalNumber;
+import org.geometerplus.zlibrary.core.util.ZLColor;
+
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 class XMLSerializer extends AbstractSerializer {
 	@Override
@@ -226,6 +227,15 @@ class XMLSerializer extends AbstractSerializer {
 			"type", "application/epub+zip",
 			"rel", "http://opds-spec.org/acquisition"
 		);
+
+		final RationalNumber progress = book.getProgress();
+		if (progress != null) {
+			appendTag(
+				buffer, "progress", true,
+				"numerator", Long.toString(progress.Numerator),
+				"denominator", Long.toString(progress.Denominator)
+			);
+		}
 
 		closeTag(buffer, "entry");
 	}
@@ -434,6 +444,7 @@ class XMLSerializer extends AbstractSerializer {
 		private final StringBuilder mySeriesTitle = new StringBuilder();
 		private final StringBuilder mySeriesIndex = new StringBuilder();
 		private boolean myHasBookmark;
+		private RationalNumber myProgress;
 
 		private Book myBook;
 
@@ -458,6 +469,7 @@ class XMLSerializer extends AbstractSerializer {
 			myTags.clear();
 			myLabels.clear();
 			myHasBookmark = false;
+			myProgress = null;
 
 			myState = State.READ_NOTHING;
 		}
@@ -534,6 +546,14 @@ class XMLSerializer extends AbstractSerializer {
 					} else if ("link".equals(localName)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
+					} else if ("progress".equals(localName)) {
+						try {
+							myProgress = RationalNumber.create(
+								Long.parseLong(attributes.getValue("numerator")),
+								Long.parseLong(attributes.getValue("denominator"))
+							);
+						} catch (NumberFormatException e) {
+						}
 					} else {
 						throw new SAXException("Unexpected tag " + localName);
 					}

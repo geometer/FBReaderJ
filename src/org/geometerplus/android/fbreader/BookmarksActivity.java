@@ -37,6 +37,7 @@ import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.ViewUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	private static final int OPEN_ITEM_ID = 0;
@@ -348,9 +349,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item, parent, false);
-			final ImageView imageView = (ImageView)view.findViewById(R.id.bookmark_item_icon);
-			final TextView textView = (TextView)view.findViewById(R.id.bookmark_item_text);
-			final TextView bookTitleView = (TextView)view.findViewById(R.id.bookmark_item_booktitle);
+			final ImageView imageView = ViewUtil.findImageView(view, R.id.bookmark_item_icon);
+			final TextView textView = ViewUtil.findTextView(view, R.id.bookmark_item_text);
+			final TextView bookTitleView = ViewUtil.findTextView(view, R.id.bookmark_item_booktitle);
 
 			final Bookmark bookmark = getItem(position);
 			if (bookmark == null) {

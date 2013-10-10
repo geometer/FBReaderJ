@@ -36,6 +36,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
+import org.geometerplus.android.util.ViewUtil;
+
 public class TOCActivity extends ListActivity {
 	private TOCAdapter myAdapter;
 	private ZLTree<?> mySelectedItem;
@@ -123,8 +125,8 @@ public class TOCActivity extends ListActivity {
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.toc_tree_item, parent, false);
 			final TOCTree tree = (TOCTree)getItem(position);
 			view.setBackgroundColor(tree == mySelectedItem ? 0xff808080 : 0);
-			setIcon((ImageView)view.findViewById(R.id.toc_tree_item_icon), tree);
-			((TextView)view.findViewById(R.id.toc_tree_item_text)).setText(tree.getText());
+			setIcon(ViewUtil.findImageView(view, R.id.toc_tree_item_icon), tree);
+			ViewUtil.findTextView(view, R.id.toc_tree_item_text).setText(tree.getText());
 			return view;
 		}
 

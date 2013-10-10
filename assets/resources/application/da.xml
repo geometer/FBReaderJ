@@ -75,6 +75,9 @@
 		<node name="found" value="Fundet">
 			<node name="summary" value="Søgeresultater for: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Åbn katalog"/>
 		<node name="networkSearch" value="Søg"/>
 		<node name="showResults" value="Vis resultater"/>
@@ -117,6 +120,7 @@
 		<node name="removeCustomCatalog" value="Fjern katalog"/>
 		<node name="addCustomCatalog" value="Tilføj katalog"/>
 		<node name="addCustomCatalogSummary" value="Tilføj brugerdefineret OPDS katalog manuelt"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Vil du læse lokal kopi?"/>
 			<node name="download" value="Vil du overføre denne bog?"/>
@@ -139,6 +143,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Søg"/>
 			<node name="reload" value="Genindlæs"/>
 			<node name="signIn" value="Log på"/>
@@ -147,7 +152,6 @@
 			<node name="topup" value="Tank din konto op"/>
 			<node name="addCustomCatalog" value="Tilføj katalog"/>
 			<node name="refreshCatalogsList" value="Opdater kataloger"/>
-			<node name="languages" value="Sprogfilter"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Tøm kurv"/>
 			<node name="buyAllBooks" value="Køb alle bøger"/>
@@ -904,6 +908,9 @@
 		<node name="opfFileNotFound" value="OPF blev ikke fundet i %s"/>
 		<node name="unsupportedFileFormat" value="Filformatet understøttes ikke for '%s'"/>
 		<node name="errorParsingRtf" value="RTF-parsingfejl i: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page" toBeTranslated="true"/>
 	</node>
 	<node name="warningMessage">
 		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>

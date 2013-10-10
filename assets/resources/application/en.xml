@@ -72,6 +72,9 @@
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs">
+			<node name="summary" value="Catalogs you viewed recently"/>
+		</node>
 		<node name="openCatalog" value="Open catalog"/>
 		<node name="networkSearch" value="Search"/>
 		<node name="showResults" value="Show results"/>
@@ -114,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Remove catalog"/>
 		<node name="addCustomCatalog" value="Add catalog"/>
 		<node name="addCustomCatalogSummary" value="Add custom OPDS catalog manually"/>
+		<node name="disableCatalog" value="Disable catalog"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>
@@ -136,6 +140,7 @@
 			<node name="disabled" value="Disabled"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog"/>
 			<node name="networkSearch" value="Search"/>
 			<node name="reload" value="Reload"/>
 			<node name="signIn" value="Sign in"/>
@@ -144,7 +149,6 @@
 			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="Add catalog"/>
 			<node name="refreshCatalogsList" value="Refresh catalogs"/>
-			<node name="languages" value="Language filter"/>
 			<node name="manageCatalogs" value="Manage catalogs"/>
 			<node name="clearBasket" value="Clear basket"/>
 			<node name="buyAllBooks" value="Buy all books"/>

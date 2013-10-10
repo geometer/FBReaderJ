@@ -73,6 +73,9 @@
 		<node name="found" value="Trovato">
 			<node name="summary" value="Cerca risultati per: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Apri catalogo"/>
 		<node name="networkSearch" value="Ricerca"/>
 		<node name="showResults" value="Mostra risultati"/>
@@ -111,6 +114,7 @@
 		<node name="removeCustomCatalog" value="Cancella catalogo"/>
 		<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 		<node name="addCustomCatalogSummary" value="Aggiungi catalogo OPDS personalizzato manualmente"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Vuoi leggere la copia locale?"/>
 			<node name="download" value="Vuoi scaricare questo libro?"/>
@@ -133,6 +137,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Ricerca in rete"/>
 			<node name="reload" value="Ricarica"/>
 			<node name="signIn" value="Entra"/>
@@ -141,7 +146,6 @@
 			<node name="topup" value="Ricarica account"/>
 			<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 			<node name="refreshCatalogsList" value="Aggiorna cataloghi"/>
-			<node name="languages" value="Filtro lingua"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>

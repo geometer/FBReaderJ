@@ -72,6 +72,9 @@
 		<node name="found" value="Գտնվել է">
 			<node name="summary" value="%s-ով որոնման արդյունքները"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Բացել գրացուցակը"/>
 		<node name="networkSearch" value="Որոնել"/>
 		<node name="showResults" value="Ցուցադրել արդյունքները"/>
@@ -118,6 +121,7 @@
 		<node name="removeCustomCatalog" value="Ջնջել գրացուցակը"/>
 		<node name="addCustomCatalog" value="Հավելել գրացուցակ"/>
 		<node name="addCustomCatalogSummary" value="Ձեռքով ավելացնել OPDS գրացուցակ"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Բացե՞լ պատճենը"/>
 			<node name="download" value="Բեռնե՞լ գիրքը"/>
@@ -140,6 +144,7 @@
 			<node name="disabled" value="Անջատել"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Փնտրել ցանցում"/>
 			<node name="reload" value="Թարմացնել"/>
 			<node name="signIn" value="Մուտք"/>
@@ -148,7 +153,6 @@
 			<node name="topup" value="Համալրել հաշիվը"/>
 			<node name="addCustomCatalog" value="Հավելել գրացուցակ"/>
 			<node name="refreshCatalogsList" value="Թարմացնել գրացուցակները"/>
-			<node name="languages" value="Զտել ըստ լեզվի"/>
 			<node name="manageCatalogs" value="Կառավարել գրացուցակները"/>
 			<node name="clearBasket" value="Դատարկել զամբյուղը"/>
 			<node name="buyAllBooks" value="Գնել բոլոր գրքերը"/>

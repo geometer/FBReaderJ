@@ -72,6 +72,9 @@
 		<node name="found" value="搜索结果">
 			<node name="summary" value="搜索结果: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="打开书库"/>
 		<node name="networkSearch" value="搜索"/>
 		<node name="showResults" value="显示结果"/>
@@ -110,6 +113,7 @@
 		<node name="removeCustomCatalog" value="移除书库"/>
 		<node name="addCustomCatalog" value="增加书库"/>
 		<node name="addCustomCatalogSummary" value="手工添加自有的OPDS书库"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="是否本地阅读"/>
 			<node name="download" value="是否下载本图书?"/>
@@ -132,6 +136,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="网络搜索"/>
 			<node name="reload" value="重新加载"/>
 			<node name="signIn" value="登录"/>
@@ -140,7 +145,6 @@
 			<node name="topup" value="重新输入账号"/>
 			<node name="addCustomCatalog" value="添加书库"/>
 			<node name="refreshCatalogsList" value="刷新书库"/>
-			<node name="languages" value="语言过滤"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="清空购物篮"/>
 			<node name="buyAllBooks" value="购买所有图书"/>

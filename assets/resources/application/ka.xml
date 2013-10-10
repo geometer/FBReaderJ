@@ -72,6 +72,9 @@
 		<node name="found" value="ნაპოვნია">
 			<node name="summary" value="ძებნის შედეგები %s-სთვის"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="კატალოგის გახსნა"/>
 		<node name="networkSearch" value="ძებნა"/>
 		<node name="showResults" value="შედეგების ჩვენება"/>
@@ -118,6 +121,7 @@
 		<node name="removeCustomCatalog" value="კატალოგის წაშლა"/>
 		<node name="addCustomCatalog" value="კატალოგის დამატება"/>
 		<node name="addCustomCatalogSummary" value="OPDS კატალოგის დამატება ხელით"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="გნებავთ ლოკალური ასლის გახსნა?"/>
 			<node name="download" value="გნებავთ ამ წიგნის გადმოწერა?"/>
@@ -140,6 +144,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="ქსელში ძებნა"/>
 			<node name="reload" value="განახლება"/>
 			<node name="signIn" value="შესვლა"/>
@@ -148,7 +153,6 @@
 			<node name="topup" value="ანგარიშის შევსება"/>
 			<node name="addCustomCatalog" value="კატალოგის დამატება"/>
 			<node name="refreshCatalogsList" value="კატალოგის განახლება"/>
-			<node name="languages" value="ენების მიხედვით გაფილტვრა"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="კალათის გასუფთავება"/>
 			<node name="buyAllBooks" value="ყველა წიგნის ყიდვა"/>

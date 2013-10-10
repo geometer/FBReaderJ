@@ -25,7 +25,7 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	private int mySize = 1;
 	public final T Parent;
 	public final int Level;
-	private volatile List<T> mySubTrees;
+	private volatile List<T> mySubtrees;
 
 	protected ZLTree() {
 		this(null);
@@ -37,15 +37,15 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 
 	protected ZLTree(T parent, int position) {
 		if (position == -1) {
-			position = parent == null ? 0 : parent.subTrees().size();
+			position = parent == null ? 0 : parent.subtrees().size();
 		}
-		if (parent != null && (position < 0 || position > parent.subTrees().size())) {
-			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + parent.subTrees().size() + "]");
+		if (parent != null && (position < 0 || position > parent.subtrees().size())) {
+			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + parent.subtrees().size() + "]");
 		}
 		Parent = parent;
 		if (parent != null) {
 			Level = parent.Level + 1;
-			parent.addSubTree((T)this, position);
+			parent.addSubtree((T)this, position);
 		} else {
 			Level = 0;
 		}
@@ -56,15 +56,15 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	}
 
 	public final boolean hasChildren() {
-		return mySubTrees != null && !mySubTrees.isEmpty();
+		return mySubtrees != null && !mySubtrees.isEmpty();
 	}
 
-	public List<T> subTrees() {
-		if (mySubTrees == null) {
+	public List<T> subtrees() {
+		if (mySubtrees == null) {
 			return Collections.emptyList();
 		}
-		synchronized (mySubTrees) {
-			return new ArrayList<T>(mySubTrees);
+		synchronized (mySubtrees) {
+			return new ArrayList<T>(mySubtrees);
 		}
 	}
 
@@ -77,9 +77,9 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 			return (T)this;
 		}
 		--index;
-		if (mySubTrees != null) {
-			synchronized (mySubTrees) {
-				for (T subtree : mySubTrees) {
+		if (mySubtrees != null) {
+			synchronized (mySubtrees) {
+				for (T subtree : mySubtrees) {
 					if (((ZLTree<?>)subtree).mySize <= index) {
 						index -= ((ZLTree<?>)subtree).mySize;
 					} else {
@@ -91,43 +91,54 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		throw new RuntimeException("That's impossible!!!");
 	}
 
-	synchronized void addSubTree(T subtree, int position) {
-		if (mySubTrees == null) {
-			mySubTrees = Collections.synchronizedList(new ArrayList<T>());
+	synchronized final void addSubtree(T subtree, int position) {
+		if (mySubtrees == null) {
+			mySubtrees = Collections.synchronizedList(new ArrayList<T>());
 		}
-		final int subTreeSize = subtree.getSize();
-		synchronized (mySubTrees) {
-			final int thisSubTreesSize = mySubTrees.size();
-			while (position < thisSubTreesSize) {
-				subtree = mySubTrees.set(position++, subtree);
+		final int subtreeSize = subtree.getSize();
+		synchronized (mySubtrees) {
+			final int thisSubtreesSize = mySubtrees.size();
+			while (position < thisSubtreesSize) {
+				subtree = mySubtrees.set(position++, subtree);
 			}
-			mySubTrees.add(subtree);
+			mySubtrees.add(subtree);
 			for (ZLTree<?> parent = this; parent != null; parent = parent.Parent) {
-				parent.mySize += subTreeSize;
+				parent.mySize += subtreeSize;
 			}
 		}
 	}
 
+	synchronized public final void moveSubtree(T subtree, int index) {
+		if (mySubtrees == null || !mySubtrees.contains(subtree)) {
+			return;
+		}
+		if (index < 0 || index >= mySubtrees.size()) {
+			return;
+		}
+		mySubtrees.remove(subtree);
+		mySubtrees.add(index, subtree);
+	}
+
 	public void removeSelf() {
-		final int subTreeSize = getSize();
+		final int subtreeSize = getSize();
 		ZLTree<?> parent = Parent;
 		if (parent != null) {
-			parent.mySubTrees.remove(this);
+			parent.mySubtrees.remove(this);
 			for (; parent != null; parent = parent.Parent) {
-				parent.mySize -= subTreeSize;
+				parent.mySize -= subtreeSize;
 			}
 		}
 	}
 
 	public final void clear() {
-		final int subTreesSize = mySize - 1;
-		if (mySubTrees != null) {
-			mySubTrees.clear();
+		final int subtreesSize = mySize - 1;
+		if (mySubtrees != null) {
+			mySubtrees.clear();
 		}
 		mySize = 1;
-		if (subTreesSize > 0) {
+		if (subtreesSize > 0) {
 			for (ZLTree<?> parent = Parent; parent != null; parent = parent.Parent) {
-				parent.mySize -= subTreesSize;
+				parent.mySize -= subtreesSize;
 			}
 		}
 	}
@@ -136,7 +147,7 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		return new TreeIterator(Integer.MAX_VALUE);
 	}
 
-	public final Iterable<T> allSubTrees(final int maxLevel) {
+	public final Iterable<T> allSubtrees(final int maxLevel) {
 		return new Iterable<T>() {
 			public TreeIterator iterator() {
 				return new TreeIterator(maxLevel);
@@ -160,16 +171,16 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		public T next() {
 			final T element = myCurrentElement;
 			if (element.hasChildren() && element.Level < myMaxLevel) {
-				myCurrentElement = (T)((ZLTree<?>)element).mySubTrees.get(0);
+				myCurrentElement = (T)((ZLTree<?>)element).mySubtrees.get(0);
 				myIndexStack.add(0);
 			} else {
 				ZLTree<T> parent = element;
 				while (!myIndexStack.isEmpty()) {
 					final int index = myIndexStack.removeLast() + 1;
 					parent = parent.Parent;
-					synchronized (parent.mySubTrees) {
-						if (parent.mySubTrees.size() > index) {
-							myCurrentElement = parent.mySubTrees.get(index);
+					synchronized (parent.mySubtrees) {
+						if (parent.mySubtrees.size() > index) {
+							myCurrentElement = parent.mySubtrees.get(index);
 							myIndexStack.add(index);
 							break;
 						}

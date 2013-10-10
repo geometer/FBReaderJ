@@ -72,6 +72,9 @@
 		<node name="found" value="ค้นพบ">
 			<node name="summary" value="ผลการค้นหาสำหรับ: %s"/>
 		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="เปิดแคตตาล็อก"/>
 		<node name="networkSearch" value="ค้นหา"/>
 		<node name="showResults" value="แสดงผลการค้นหา"/>
@@ -110,6 +113,7 @@
 		<node name="removeCustomCatalog" value="ลบแคตตาล็อก"/>
 		<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 		<node name="addCustomCatalogSummary" value="เพิ่ม OPDS แคตตาล็อกที่ด้วยตนเอง"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="คุณต้องการอ่านหนังสือที่คัดลอกไว้หรือไม่?"/>
 			<node name="download" value="คุณต้องการดาวน์โหลดหนังสือหรือไม่?"/>
@@ -132,6 +136,7 @@
 			<node name="disabled" value="Disabled" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="ค้นหาในระบบเครือข่าย"/>
 			<node name="reload" value="โหลดใหม่"/>
 			<node name="signIn" value="ลงชื่อเข้าระบบ"/>
@@ -140,7 +145,6 @@
 			<node name="topup" value="เติมเงินเข้าบัญชี"/>
 			<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 			<node name="refreshCatalogsList" value="รีเฟรชแคตตาล็อก"/>
-			<node name="languages" value="ตัวกรองภาษา"/>
 			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>

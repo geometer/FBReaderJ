@@ -33,16 +33,14 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
+import org.geometerplus.android.util.ViewUtil;
+
 class NetworkLibraryAdapter extends TreeAdapter {
 	NetworkLibraryAdapter(NetworkLibraryActivity activity) {
 		super(activity);
 	}
 
 	private CoverManager myCoverManager;
-
-	private void setSubviewText(View view, int resourceId, String text) {
-		((TextView)view.findViewById(resourceId)).setText(text);
-	}
 
 	public View getView(int position, View view, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
@@ -59,11 +57,11 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			}
 		}
 
-		setSubviewText(view, R.id.library_tree_item_name, tree.getName());
-		setSubviewText(view, R.id.library_tree_item_childrenlist, tree.getSummary());
-		setupCover((ImageView)view.findViewById(R.id.library_tree_item_icon), tree);
+		ViewUtil.setSubviewText(view, R.id.library_tree_item_name, tree.getName());
+		ViewUtil.setSubviewText(view, R.id.library_tree_item_childrenlist, tree.getSummary());
+		setupCover(ViewUtil.findImageView(view, R.id.library_tree_item_icon), tree);
 
-		final ImageView statusView = (ImageView)view.findViewById(R.id.library_tree_item_status);
+		final ImageView statusView = ViewUtil.findImageView(view, R.id.library_tree_item_status);
 		final int status = (tree instanceof NetworkBookTree)
 			? NetworkBookActions.getBookStatus(
 				((NetworkBookTree)tree).Book,
