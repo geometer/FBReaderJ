@@ -428,6 +428,15 @@ public class Book extends TitledEntity {
 		return myProgress;
 	}
 
+	public void setProgress(RationalNumber progress) {
+		myProgress = progress;
+		myIsSaved = false;
+	}
+	
+	public void setProgressWithNoCheck(RationalNumber progress) {
+		myProgress = progress;
+	}
+
 	public boolean matches(String pattern) {
 		if (MiscUtil.matchesIgnoreCase(getTitle(), pattern)) {
 			return true;
