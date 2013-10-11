@@ -496,7 +496,7 @@ class XMLSerializer extends AbstractSerializer {
 				myBook.addLabelWithNoCheck(label);
 			}
 			for (UID uid : myUidList) {
-				myBook.addUid(uid);
+				myBook.addUidWithNoCheck(uid);
 			}
 			myBook.setSeriesInfoWithNoCheck(string(mySeriesTitle), string(mySeriesIndex));
 			myBook.HasBookmark = myHasBookmark;
