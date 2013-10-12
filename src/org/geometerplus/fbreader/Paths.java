@@ -35,6 +35,14 @@ public abstract class Paths {
 		return new ZLStringOption("Files", "TempDirectory", cardDirectory() + "/Temp");
 	}
 
+	private static String defaultBookDirectory() {
+		return cardDirectory() + "/Books";
+	}
+
+	public static ZLStringListOption BookPathOption() {
+		return new ZLStringListOption("Files", "BooksDirectory", defaultBookDirectory(), "\n");
+	}
+
 	public static ZLStringListOption FontPathOption() {
 		return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
 	}
@@ -43,13 +51,9 @@ public abstract class Paths {
 		return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
 	}
 
-	public static ZLStringListOption BookPathOption() {
-		return new ZLStringListOption("Files", "BooksDirectory", cardDirectory() + "/Books", "\n");
-	}
-
 	public static String mainBookDirectory() {
 		final List<String> bookPath = BookPathOption().getValue();
-		return bookPath.isEmpty() ? cardDirectory() + "/Books" : bookPath.get(0);
+		return bookPath.isEmpty() ? defaultBookDirectory() : bookPath.get(0);
 	}
 
 	public static String cacheDirectory() {
