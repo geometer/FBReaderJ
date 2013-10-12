@@ -100,6 +100,9 @@ public class FileTree extends LibraryTree {
 	public Book getBook() {
 		if (myBook == null) {
 			myBook = Collection.getBookByFile(myFile);
+			if (myBook == null) {
+				myBook = NULL_BOOK;
+			}
 		}
 		return myBook instanceof Book ? (Book)myBook : null;
 	}

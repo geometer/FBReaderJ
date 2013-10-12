@@ -23,7 +23,6 @@ import java.util.List;
 
 import android.os.Environment;
 
-import org.geometerplus.android.fbreader.libraryService.Util;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
