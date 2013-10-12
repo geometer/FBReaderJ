@@ -21,6 +21,7 @@ package org.geometerplus.fbreader;
 
 import android.os.Environment;
 
+import org.geometerplus.android.fbreader.libraryService.Util;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public abstract class Paths {
@@ -41,7 +42,7 @@ public abstract class Paths {
 	}
 
 	public static String mainBookDirectory() {
-		return BooksDirectoryOption().getValue();
+		return Util.splitDirectories(BooksDirectoryOption().getValue()).get(0);
 	}
 
 	public static String cacheDirectory() {

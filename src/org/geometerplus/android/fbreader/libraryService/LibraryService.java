@@ -89,7 +89,7 @@ public class LibraryService extends Service {
 
 		LibraryImplementation() {
 			myDatabase = SQLiteBooksDatabase.Instance(LibraryService.this);
-			reset(Collections.singletonList(Paths.BooksDirectoryOption().getValue()), true);
+			reset(Util.splitDirectories(Paths.BooksDirectoryOption().getValue()), true);
 		}
 
 		public void reset(List<String> bookDirectories, boolean force) {
