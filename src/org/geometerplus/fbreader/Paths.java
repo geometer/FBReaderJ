@@ -39,12 +39,12 @@ public abstract class Paths {
 		return new ZLStringListOption("Files", "BooksDirectory", defaultBookDirectory(), "\n");
 	}
 
-	public static ZLStringOption FontsDirectoryOption() {
-		return new ZLStringOption("Files", "FontsDirectory", cardDirectory() + "/Fonts");
+	public static ZLStringListOption FontPathOption() {
+		return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
 	}
 
-	public static ZLStringOption WallpapersDirectoryOption() {
-		return new ZLStringOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers");
+	public static ZLStringListOption WallpaperPathOption() {
+		return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
 	}
 
 	public static String mainBookDirectory() {
