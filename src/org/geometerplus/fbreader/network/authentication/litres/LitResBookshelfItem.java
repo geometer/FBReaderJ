@@ -184,7 +184,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 		} finally {
 			myForceReload = true;
 			// TODO: implement asynchronous loading
-			ArrayList<NetworkItem> children =
+			final ArrayList<NetworkItem> children =
 				new ArrayList<NetworkItem>(mgr.purchasedBooks());
 			if (children.size() <= 5) {
 				Collections.sort(children, new NetworkBookItemComparator());
