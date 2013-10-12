@@ -38,9 +38,6 @@
 		<node name="fileTreeLibrary" value="ბიბლიოთეკა FBReader">
 			<node name="summary" value="წიგნების კატალოგის დათვალიერება"/>
 		</node>
-		<node name="fileTreeAddLibrary" value="FBReader additional library" toBeTranslated="true">
-			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
-		</node>
 		<node name="menu">
 			<node name="localSearch" value="ძებნა"/>
 			<node name="rescan" value="გადასკანერება"/>

@@ -38,9 +38,6 @@
 		<node name="fileTreeLibrary" value="FBReader mappa">
 			<node name="summary" value="Az FBReader e-könyvek mappája"/>
 		</node>
-		<node name="fileTreeAddLibrary" value="FBReader additional library" toBeTranslated="true">
-			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
-		</node>
 		<node name="menu">
 			<node name="localSearch" value="Helyi keresés"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>

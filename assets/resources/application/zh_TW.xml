@@ -38,9 +38,6 @@
 		<node name="fileTreeLibrary" value="FBReader 書目">
 			<node name="summary" value="FBReader 書藉目錄"/>
 		</node>
-		<node name="fileTreeAddLibrary" value="FBReader additional library" toBeTranslated="true">
-			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
-		</node>
 		<node name="menu">
 			<node name="localSearch" value="本地搜尋"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
