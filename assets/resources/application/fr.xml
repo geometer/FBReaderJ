@@ -41,9 +41,6 @@
 		<node name="fileTreeLibrary" value="Bibliothèque FBReader">
 			<node name="summary" value="Répertoire des livres FBReader"/>
 		</node>
-		<node name="fileTreeAddLibrary" value="FBReader additional library" toBeTranslated="true">
-			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
-		</node>
 		<node name="menu">
 			<node name="localSearch" value="Recherche locale"/>
 			<node name="rescan" value="Chercher à nouveau" toBeTranslated="true"/>

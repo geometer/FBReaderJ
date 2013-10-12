@@ -38,9 +38,6 @@
 		<node name="fileTreeLibrary" value="Knihovna FBReaderu">
 			<node name="summary" value="Adresář s knihami pro FBReader"/>
 		</node>
-		<node name="fileTreeAddLibrary" value="FBReader additional library" toBeTranslated="true">
-			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
-		</node>
 		<node name="menu">
 			<node name="localSearch" value="Místní hledání"/>
 			<node name="rescan" value="Prohledat znovu"/>

@@ -50,9 +50,6 @@
 		<node name="removeFromFavorites" value="Fjern fra foretrukne"/>
 		<node name="markAsRead" value="Marker som læst"/>
 		<node name="markAsUnread" value="Marker som ikke læst"/>
-		<node name="fileTreeAddLibrary" value="Ekstra FB-læser bibliotek">
-			<node name="summary" value="FB-Læser bogbibliotek"/>
-		</node>
 	</node>
 	<node name="networkLibrary" value="FB-Læser netværksbibliotek">
 		<node name="byAuthor" value="Efter forfatter">

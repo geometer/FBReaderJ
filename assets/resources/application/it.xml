@@ -39,9 +39,6 @@
 		<node name="fileTreeLibrary" value="Libreria di FBReader">
 			<node name="summary" value="Cartella dei libri di FBReader"/>
 		</node>
-		<node name="fileTreeAddLibrary" value="FBReader additional library" toBeTranslated="true">
-			<node name="summary" value="FBReader books directory" toBeTranslated="true"/>
-		</node>
 		<node name="menu">
 			<node name="localSearch" value="Ricerca locale"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>

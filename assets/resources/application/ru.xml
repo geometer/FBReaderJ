@@ -38,9 +38,6 @@
 		<node name="fileTreeLibrary" value="Библиотека FBReader">
 			<node name="summary" value="Просмотр каталога с книгами"/>
 		</node>
-		<node name="fileTreeAddLibrary" value="Дополнительная библиотека">
-			<node name="summary" value="Просмотр каталога с книгами"/>
-		</node>
 		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
 			<node name="rescan" value="Пересканировать"/>
