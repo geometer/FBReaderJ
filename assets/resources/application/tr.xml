@@ -73,7 +73,7 @@
 			<node name="summary" value="%s için arama sonuçları"/>
 		</node>
 		<node name="recent" value="Recent catalogs" toBeTranslated="true">
-			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Katalog aç"/>
 		<node name="networkSearch" value="Ara"/>
