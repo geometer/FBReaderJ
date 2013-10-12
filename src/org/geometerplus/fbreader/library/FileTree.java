@@ -93,15 +93,15 @@ public class FileTree extends LibraryTree {
 		return myFile;
 	}
 
+	private Object myBook;
 	private static final Object NULL_BOOK = new Object();
-	private Object myBook = NULL_BOOK;
 
 	@Override
 	public Book getBook() {
-		if (myBook == NULL_BOOK) {
+		if (myBook == null) {
 			myBook = Collection.getBookByFile(myFile);
 		}
-		return (Book)myBook;
+		return myBook instanceof Book ? (Book)myBook : null;
 	}
 
 	@Override
