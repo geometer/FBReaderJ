@@ -41,6 +41,7 @@ public abstract class LibraryTree extends FBTree {
 	static final String ROOT_BY_SERIES = "bySeries";
 	static final String ROOT_BY_TAG = "byTag";
 	static final String ROOT_FILE_TREE = "fileTree";
+	static final String NODE_LIBRARY_DIRECTORY = "fileTreeLibrary";
 
 	protected LibraryTree(IBookCollection collection) {
 		super();

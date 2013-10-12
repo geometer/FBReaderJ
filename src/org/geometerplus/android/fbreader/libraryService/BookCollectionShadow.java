@@ -112,7 +112,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		if (myInterface != null) {
 			try {
 				myInterface.reset(
-					Collections.singletonList(Paths.BooksDirectoryOption().getValue()), force
+					Util.splitDirectories(Paths.BooksDirectoryOption().getValue()), force
 				);
 			} catch (RemoteException e) {
 			}
