@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.crash;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
@@ -60,9 +61,11 @@ public class FixBooksDirectoryActivity extends Activity {
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				final ZLStringListOption pathOption = Paths.BookPathOption();
-				final List<String> path = pathOption.getValue();
-				path.set(0, directoryView.getText().toString());
-				pathOption.setValue(path);
+				final List<String> bookPath = new LinkedList<String>(pathOption.getValue());
+				final String newDirectory = directoryView.getText().toString();
+				bookPath.remove(newDirectory);
+				bookPath.add(0, newDirectory);
+				pathOption.setValue(bookPath);
 				startActivity(new Intent(FixBooksDirectoryActivity.this, FBReader.class));
 				finish();
 			}
