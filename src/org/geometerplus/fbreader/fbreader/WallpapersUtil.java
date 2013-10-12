@@ -19,8 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -32,10 +32,10 @@ public abstract class WallpapersUtil {
 	}
 
 	public static List<ZLFile> externalWallpaperFiles() {
-		ArrayList<ZLFile> result = new ArrayList<ZLFile>();
-		for (String path : Paths.WallpaperPathOption().getValue()) {
-			result.addAll(ZLFile.createFileByPath(path).children());
+		final List<ZLFile> files = new ArrayList<ZLFile>();
+		for (String dir : Paths.WallpaperPathOption().getValue()) {
+			files.addAll(ZLFile.createFileByPath(dir).children());
 		}
-		return result;
+		return files;
 	}
 }
