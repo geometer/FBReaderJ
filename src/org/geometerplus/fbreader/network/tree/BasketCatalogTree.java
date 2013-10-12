@@ -22,15 +22,13 @@ package org.geometerplus.fbreader.network.tree;
 import java.util.*;
 
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkBookItem;
-import org.geometerplus.fbreader.network.BasketItem;
+import org.geometerplus.fbreader.network.*;
 
 public class BasketCatalogTree extends NetworkCatalogTree {
 	private long myGeneration = -1;
 
 	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
-		super(parent, item, position);
+		super(parent, parent.getLink(), item, position);
 		if (!item.bookIds().isEmpty()) {
 			startItemsLoader(false, false);
 		}

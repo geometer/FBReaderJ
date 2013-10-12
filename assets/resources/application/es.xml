@@ -78,7 +78,7 @@
 			<node name="summary" value="Resultados de la búsqueda para: %s"/>
 		</node>
 		<node name="recent" value="Recent catalogs" toBeTranslated="true">
-			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Abrir catálogo"/>
 		<node name="networkSearch" value="Buscar"/>

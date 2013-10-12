@@ -73,7 +73,7 @@
 			<node name="summary" value="Search results for: %s"/>
 		</node>
 		<node name="recent" value="Recent catalogs">
-			<node name="summary" value="Catalogs you viewed recently"/>
+			<node name="summary" value="Catalogs you visited recently"/>
 		</node>
 		<node name="openCatalog" value="Open catalog"/>
 		<node name="networkSearch" value="Search"/>
