@@ -27,8 +27,7 @@ import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
-import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
@@ -491,6 +490,8 @@ public final class FBReaderApp extends ZLApplication {
 	public void storePosition() {
 		if (Model != null && Model.isValid() && Model.Book != null && BookTextView != null) {
 			Collection.storePosition(Model.Book.getId(), BookTextView.getStartCursor());
+			Model.Book.setProgress(BookTextView.getProgress());
+			Collection.saveBook(Model.Book, false);
 		}
 	}
 
