@@ -41,7 +41,7 @@ class NetworkTreeFactory {
 			if (catalogItem.getVisibility() == ZLBoolean3.B3_FALSE) {
 				return null;
 			}
-			return new NetworkCatalogTree(parent, catalogItem, position);
+			return new NetworkCatalogTree(parent, parent.getLink(), catalogItem, position);
 		} else if (item instanceof NetworkBookItem) {
 			if (position != subtreesSize) {
 				throw new RuntimeException("Unable to insert NetworkBookItem to the middle of the catalog");
