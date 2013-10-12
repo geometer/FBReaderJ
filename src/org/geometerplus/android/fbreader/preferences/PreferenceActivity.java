@@ -89,8 +89,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				myCollection.reset(false);
 			}
 		});
-		directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
-		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
+		directoriesScreen.addPreference(new ZLStringListOptionPreference(
+			this, Paths.FontPathOption(), directoriesScreen.Resource, "fonts"
+		));
+		directoriesScreen.addPreference(new ZLStringListOptionPreference(
+			this, Paths.WallpaperPathOption(), directoriesScreen.Resource, "wallpapers"
+		));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
