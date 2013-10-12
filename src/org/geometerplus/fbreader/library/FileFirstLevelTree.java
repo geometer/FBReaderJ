@@ -30,27 +30,14 @@ import org.geometerplus.android.fbreader.libraryService.Util;
 public class FileFirstLevelTree extends FirstLevelTree {
 	FileFirstLevelTree(RootTree root) {
 		super(root, ROOT_FILE_TREE);
-		List<String> directories = Util.splitDirectories(Paths.BooksDirectoryOption().getValue());
-		if (directories.size() == 1)
-			addChild(directories.get(0), NODE_LIBRARY_DIRECTORY);
-		else {
-			FirstLevelTree libraryGroup = new FirstLevelTree(this, NODE_LIBRARY_DIRECTORY);
-			for (String d : directories) {
-				final ZLFile file = ZLFile.createFileByPath(d);
-				if (file != null) {
-					new FileTree(
-						libraryGroup,
-						file,
-						file.getShortName(),
-						file.getPath());
-				}
-			}
+		for (String dir : Paths.BookPathOption().getValue()) {
+			addChild(dir, "fileTreeLibrary", dir);
 		}
-		addChild("/", "fileTreeRoot");
-		addChild(Paths.cardDirectory(), "fileTreeCard");
+		addChild("/", "fileTreeRoot", null);
+		addChild(Paths.cardDirectory(), "fileTreeCard", null);
 	}
 
-	private void addChild(String path, String resourceKey) {
+	private void addChild(String path, String resourceKey, String summary) {
 		final ZLFile file = ZLFile.createFileByPath(path);
 		if (file != null) {
 			final ZLResource resource = resource().getResource(resourceKey);
@@ -58,7 +45,7 @@ public class FileFirstLevelTree extends FirstLevelTree {
 				this,
 				file,
 				resource.getValue(),
-				resource.getResource("summary").getValue()
+				summary != null ? summary : resource.getResource("summary").getValue()
 			);
 		}
 	}
