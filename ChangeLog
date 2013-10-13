@@ -1,4 +1,4 @@
-===== 1.9 (Oct ??, 2013) =====
+===== 1.9 (Oct 14, 2013) =====
 * Dictionary support
 	** added OpenDictionary support (code provided by Paragon Software), better integration with SlovoEd dictionaries
 	** fixed ColorDict 3 integration
