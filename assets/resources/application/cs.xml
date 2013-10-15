@@ -72,8 +72,8 @@
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
-		<node name="recent" value="Recent catalogs" toBeTranslated="true">
-			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
+		<node name="recent" value="Nedávné katalogy">
+			<node name="summary" value="Nedávno navštívené katalogy"/>
 		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>
 		<node name="networkSearch" value="Hledat"/>
@@ -123,7 +123,7 @@
 		<node name="removeCustomCatalog" value="Odebrat katalog"/>
 		<node name="addCustomCatalog" value="Přidat katalog"/>
 		<node name="addCustomCatalogSummary" value="Přidat vlastní OPDS katalog ručně"/>
-		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
+		<node name="disableCatalog" value="Zakázat katalog"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Chcete číst místní kopii?"/>
 			<node name="download" value="Chcete stáhnout tuto knihu?"/>
@@ -140,13 +140,13 @@
 			<node name="title" value="Přidat katalog"/>
 			<node name="editUrl" value="Zadat adresu ručně"/>
 		</node>
-		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
-			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
-			<node name="enabled" value="Enabled" toBeTranslated="true"/>
-			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		<node name="manageCatalogs" value="Spravovat katalogy">
+			<node name="summary" value="Konfigurovat váš seznam katalogů"/>
+			<node name="enabled" value="Povoleno"/>
+			<node name="disabled" value="Zakázáno"/>
 		</node>
 		<node name="menu">
-			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
+			<node name="openRoot" value="Kořenový katalog"/>
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
 			<node name="signIn" value="Přihlásit"/>
@@ -155,7 +155,7 @@
 			<node name="topup" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
-			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
+			<node name="manageCatalogs" value="Spravovat katalogy"/>
 			<node name="clearBasket" value="Vymazat košík"/>
 			<node name="buyAllBooks" value="Zakoupit všechny knihy"/>
 		</node>
@@ -242,16 +242,16 @@
 	</node>
 	<node name="style" value="Styl %s"/>
 	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="editStyle" value="Upravit styl…"/>
 		<node name="deleteBookmark" value="Odstranit záložku"/>
 	</node>
 	<node name="editStyle">
-		<node name="name" value="Style name" toBeTranslated="true"/>
-		<node name="invisible" value="Invisible" toBeTranslated="true">
-			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
-			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		<node name="name" value="Název stylu"/>
+		<node name="invisible" value="Skrytý">
+			<node name="summaryOn" value="Nezvýrazňovat záložky"/>
+			<node name="summaryOff" value="Zvýraznit záložky"/>
 		</node>
-		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+		<node name="bgColor" value="Barva pozadí"/>
 	</node>
 	<node name="selection" value="Výběr">
 		<node name="copyToClipboard" value="Kopírovat do schránky"/>
@@ -297,7 +297,7 @@
 		<node name="decreaseFont" value="Zmenšit"/>
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
-		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="help" value="Nápověda"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Název souboru"/>
@@ -668,8 +668,8 @@
 			<node name="summary" value="Nastavení slovníku"/>
 			<node name="dictionary" value="Slovník"/>
 			<node name="translator" value="Překladač"/>
-			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
-				<node name="any" value="all languages" toBeTranslated="true"/>
+			<node name="targetLanguage" value="Přeložit do">
+				<node name="any" value="všechny jazyky"/>
 			</node>
 			<node name="tappingAction" value="Dlouhé klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>

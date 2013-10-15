@@ -11,6 +11,9 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
+===== 1.9.1 (Oct ??, 2013) =====
+* Updated Czech localization (by Marek Pavelka)
+
 ===== 1.9 (Oct 14, 2013) =====
 * Dictionary support
 	** added OpenDictionary support (code provided by Paragon Software), better integration with SlovoEd dictionaries
