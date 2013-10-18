@@ -178,6 +178,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			case HtmlTag.STYLE:
 			case HtmlTag.P:
 			case HtmlTag.DIV:
+			case HtmlTag.BLOCKQUOTE:
 				startNewParagraph();
 				break;
 
@@ -251,6 +252,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 
 			case HtmlTag.P:
 			case HtmlTag.DIV:
+			case HtmlTag.BLOCKQUOTE:
 				if (mySectionStarted) {
 					mySectionStarted = false;
 				} else if (myInsideTitle) {

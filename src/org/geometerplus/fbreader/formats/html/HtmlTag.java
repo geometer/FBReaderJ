@@ -49,24 +49,25 @@ public final class HtmlTag {
 	public static final byte TR = 24;
 	public static final byte STYLE = 25;
 
-	public static final byte S = 26;
-	public static final byte SUB = 27;
-	public static final byte SUP = 28;
-	public static final byte PRE = 29;
-	public static final byte CODE = 30;
-	public static final byte EM = 31;
-	public static final byte DFN = 32;
-	public static final byte CITE = 33;
-	public static final byte FONT = 34;
+	public static final byte BLOCKQUOTE = 26;
+	public static final byte S = 27;
+	public static final byte SUB = 28;
+	public static final byte SUP = 29;
+	public static final byte PRE = 30;
+	public static final byte CODE = 31;
+	public static final byte EM = 32;
+	public static final byte DFN = 33;
+	public static final byte CITE = 34;
+	public static final byte FONT = 35;
 
-	public static final byte HR = 35;
+	public static final byte HR = 36;
 
 	// mobipocket specific tags
-	public static final byte REFERENCE = 36;
-	public static final byte GUIDE = 37;
-	public static final byte MBP_PAGEBREAK = 38;
+	public static final byte REFERENCE = 37;
+	public static final byte GUIDE = 38;
+	public static final byte MBP_PAGEBREAK = 39;
 
-	public static final byte TAG_NUMBER = 39;
+	public static final byte TAG_NUMBER = 40;
 
 	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(256, 0.2f);
 	private static final Byte ourUnknownTag;
@@ -99,6 +100,7 @@ public final class HtmlTag {
 		ourTagByName.put("select", SELECT);
 		ourTagByName.put("tr", TR);
 		ourTagByName.put("style", STYLE);
+		ourTagByName.put("blockquote", BLOCKQUOTE);
 		ourTagByName.put("s", S);
 		ourTagByName.put("sub", SUB);
 		ourTagByName.put("sup", SUP);
