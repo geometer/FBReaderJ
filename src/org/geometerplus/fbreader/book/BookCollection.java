@@ -381,6 +381,7 @@ public class BookCollection extends AbstractBookCollection {
 			ids.remove(12);
 		}
 		myDatabase.saveRecentBookIds(ids);
+		fireBookEvent(BookEvent.CurrentBookChanged, book);
 	}
 
 	private void setStatus(Status status) {
