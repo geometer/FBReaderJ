@@ -1440,11 +1440,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 			case PaintStateEnum.START_IS_KNOWN:
-				buildInfos(page, page.StartCursor, page.EndCursor);
+				if (!page.StartCursor.isNull()) {
+					buildInfos(page, page.StartCursor, page.EndCursor);
+				}
 				break;
 			case PaintStateEnum.END_IS_KNOWN:
-				page.StartCursor.setCursor(findStartOfPrevousPage(page, page.EndCursor));
-				buildInfos(page, page.StartCursor, page.EndCursor);
+				if (!page.EndCursor.isNull()) {
+					page.StartCursor.setCursor(findStartOfPrevousPage(page, page.EndCursor));
+					buildInfos(page, page.StartCursor, page.EndCursor);
+				}
 				break;
 		}
 		page.PaintState = PaintStateEnum.READY;
