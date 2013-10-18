@@ -25,6 +25,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.RationalNumber;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -172,8 +173,19 @@ public class BookCollection extends AbstractBookCollection {
 				myBooksById.put(book.getId(), book);
 				fireBookEvent(BookEvent.Added, book);
 			} else if (force) {
+				final RationalNumber existingProgress = existing.getProgress();
+				final RationalNumber bookProgress = book.getProgress();
 				existing.updateFrom(book);
 				fireBookEvent(BookEvent.Updated, existing);
+				if (bookProgress == null) {
+					return;
+				}
+				if (existingProgress != null) {
+					if (existingProgress.equals(bookProgress)) {
+						return;
+					}
+				}
+				fireBookEvent(BookEvent.ProgressUpdated, existing);
 			}
 		}
 	}
