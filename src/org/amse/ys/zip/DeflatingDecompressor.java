@@ -132,7 +132,7 @@ class DeflatingDecompressor extends Decompressor {
 			}
 			final long result = inflate(myInflatorId, myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
 			if (result <= 0) {
-				final StringBuffer extraInfo = new StringBuffer()
+				final StringBuilder extraInfo = new StringBuilder()
 					.append(myStream.offset()).append(":")
 					.append(myInBufferOffset).append(":")
 					.append(myInBufferLength).append(":")
