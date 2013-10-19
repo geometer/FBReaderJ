@@ -62,7 +62,7 @@ final class FB2Tag {
 	public static final byte DESCRIPTION = 35;
 
 
-	private static final HashMap<String, Byte> ourTagByName = new HashMap<String, Byte>(256, 0.2f);
+	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(256, 0.2f);
 	private static final Byte ourUnknownTag;
 
 	static {

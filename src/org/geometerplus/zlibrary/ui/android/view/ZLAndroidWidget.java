@@ -21,12 +21,12 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.content.Context;
 import android.graphics.*;
-import android.view.*;
 import android.util.AttributeSet;
+import android.view.*;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.android.fbreader.FBReader;
 
