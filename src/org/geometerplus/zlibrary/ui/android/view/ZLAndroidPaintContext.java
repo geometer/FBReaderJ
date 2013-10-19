@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import java.util.*;
-
 import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
