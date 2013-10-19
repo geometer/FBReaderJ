@@ -365,13 +365,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
-		final WallpaperPreference wp = new WallpaperPreference(this, profile, colorsScreen.Resource, "background") {
-				@Override
-				protected void onDialogClosed(boolean result) {
-					super.onDialogClosed(result);
-					bgPreferences.setEnabled("".equals(getValue()));
-				}
-			};
+		final WallpaperPreference wp = new WallpaperPreference(
+			this, profile, colorsScreen.Resource, "background"
+		) {
+			@Override
+			protected void onDialogClosed(boolean result) {
+				super.onDialogClosed(result);
+				bgPreferences.setEnabled("".equals(getValue()));
+			}
+		};
 
 		colorsScreen.addPreference(wp);
 		wallpaperDirPreference.setBoundPref(wp);
