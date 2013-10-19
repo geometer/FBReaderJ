@@ -53,7 +53,7 @@ public abstract class ApiObject implements Parcelable {
 			parcel.writeInt(Value);
 		}
 	}
-	
+
 	static class Float extends ApiObject {
 		final float Value;
 
