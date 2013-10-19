@@ -224,7 +224,7 @@ final class ZLXMLParser {
 		final ZLMutableString attributeValue = myAttributeValue;
 		final boolean dontCacheAttributeValues = xmlReader.dontCacheAttributeValues();
 		final ZLMutableString entityName = myEntityName;
-		final Map<ZLMutableString,String> strings = new HashMap<ZLMutableString, String>();
+		final Map<ZLMutableString,String> strings = new HashMap<ZLMutableString,String>();
 		final ZLStringMap attributes = new ZLStringMap();
 		String[] tagStack = new String[10];
 		int tagStackSize = 0;
