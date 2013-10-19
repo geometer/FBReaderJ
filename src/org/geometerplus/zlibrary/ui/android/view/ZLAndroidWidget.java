@@ -322,7 +322,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			case MotionEvent.ACTION_UP:
 				if (myPendingDoubleTap) {
 					view.onFingerDoubleTap(x, y);
-				} if (myLongClickPerformed) {
+				} else if (myLongClickPerformed) {
 					view.onFingerReleaseAfterLongPress(x, y);
 				} else {
 					if (myPendingLongClickRunnable != null) {
