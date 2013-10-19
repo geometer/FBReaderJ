@@ -261,7 +261,8 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
 
-			case HtmlTag.A:{
+			case HtmlTag.A:
+			{
 				String ref = attributes.getStringValue(myHrefAttribute, myAttributeDecoder);
 				if ((ref != null) && (ref.length() != 0)) {
 					if (ref.charAt(0) == '#') {
@@ -280,7 +281,8 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 			}
 
-			case HtmlTag.IMG: {
+			case HtmlTag.IMG:
+			{
 				/*
 				String ref = attributes.getStringValue(mySrcAttribute, myAttributeDecoder);
 				if ((ref != null) && (ref.length() != 0)) {
