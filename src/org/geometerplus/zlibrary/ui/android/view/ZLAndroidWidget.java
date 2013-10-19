@@ -21,12 +21,12 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.content.Context;
 import android.graphics.*;
-import android.view.*;
 import android.util.AttributeSet;
+import android.view.*;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 
@@ -56,7 +56,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setFocusableInTouchMode(true);
 		setDrawingCacheEnabled(false);
 		setOnLongClickListener(this);
-	  	setLayerType(LAYER_TYPE_SOFTWARE, null);
+		setLayerType(LAYER_TYPE_SOFTWARE, null);
 	}
 
 	@Override
