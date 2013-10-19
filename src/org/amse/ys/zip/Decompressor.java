@@ -11,6 +11,7 @@ public abstract class Decompressor {
 	 * byte b[] -- target buffer for bytes; might be null
 	 */
 	public abstract int read(byte b[], int off, int len) throws IOException;
+
 	public abstract int read() throws IOException;
 
 	protected Decompressor() {
@@ -28,22 +29,22 @@ public abstract class Decompressor {
 
 	static Decompressor init(MyBufferedInputStream is, LocalFileHeader header) throws IOException {
 		switch (header.CompressionMethod) {
-		case 0:
-			return new NoCompressionDecompressor(is, header);
-		case 8:
-			synchronized (ourDeflators) {
-				if (!ourDeflators.isEmpty()) {
-					DeflatingDecompressor decompressor = ourDeflators.poll();
-					decompressor.reset(is, header);
-					return decompressor;
+			case 0:
+				return new NoCompressionDecompressor(is, header);
+			case 8:
+				synchronized (ourDeflators) {
+					if (!ourDeflators.isEmpty()) {
+						DeflatingDecompressor decompressor = ourDeflators.poll();
+						decompressor.reset(is, header);
+						return decompressor;
+					}
 				}
-			}
-			return new DeflatingDecompressor(is, header);
-		default:
-			throw new ZipException("Unsupported method of compression");
+				return new DeflatingDecompressor(is, header);
+			default:
+				throw new ZipException("Unsupported method of compression");
 		}
 	}
-	
+
 	public int available() throws IOException {
 		return -1;
 	}
