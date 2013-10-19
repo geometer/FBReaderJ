@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticat
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public abstract class NetworkAuthenticationManager {
-	private static final HashMap<String, NetworkAuthenticationManager> ourManagers = new HashMap<String, NetworkAuthenticationManager>();
+	private static final HashMap<String,NetworkAuthenticationManager> ourManagers = new HashMap<String,NetworkAuthenticationManager>();
 
 	public static NetworkAuthenticationManager createManager(INetworkLink link, Class<? extends NetworkAuthenticationManager> managerClass) {
 		NetworkAuthenticationManager mgr = ourManagers.get(link.getSiteName());

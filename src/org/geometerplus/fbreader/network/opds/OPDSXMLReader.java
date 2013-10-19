@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.atom.*;
 
-public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
+public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
 	public static final String KEY_PRICE = "price";
 
 	private DCDate myDCIssued;

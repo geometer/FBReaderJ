@@ -38,7 +38,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 		private String myAuthenticationType;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
-		private final HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
+		private final HashMap<RelationAlias,String> myRelationAliases = new HashMap<RelationAlias,String>();
 		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>(); 
 		List<INetworkLink> links() {
 			return myLinks;
