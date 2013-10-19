@@ -30,7 +30,7 @@ public class NetworkAuthorTree extends NetworkTree {
 	public final NetworkBookItem.AuthorData Author;
 
 	private int myBooksNumber;
-	private HashMap<String, Integer> mySeriesMap;
+	private HashMap<String,Integer> mySeriesMap;
 
 	NetworkAuthorTree(NetworkTree parent, NetworkBookItem.AuthorData author) {
 		super(parent);
@@ -60,7 +60,7 @@ public class NetworkAuthorTree extends NetworkTree {
 
 	private void setSeriesIndex(String seriesName, int index) {
 		if (mySeriesMap == null) {
-			mySeriesMap = new HashMap<String, Integer>();
+			mySeriesMap = new HashMap<String,Integer>();
 		}
 		mySeriesMap.put(seriesName, Integer.valueOf(index));
 	}
