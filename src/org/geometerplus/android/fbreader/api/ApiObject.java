@@ -176,10 +176,6 @@ public abstract class ApiObject implements Parcelable {
 		return new Float(value);
 	}
 
-	static ApiObject envelope(float value) {
-		return new Float(value);
-	}
-
 	static ApiObject envelope(long value) {
 		return new Long(value);
 	}
