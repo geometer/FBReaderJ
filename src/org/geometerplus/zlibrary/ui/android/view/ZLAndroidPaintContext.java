@@ -300,15 +300,15 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
 		if (bitmap != null && !bitmap.isRecycled()) {
 			switch (drawMode) {
-			case LIGHTEN:
-				myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
-				break;
-			case DARKEN:
-				myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
-				break;
-			case STANDARD:
-			default:
-				break;
+				case LIGHTEN:
+					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+					break;
+				case DARKEN:
+					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
+					break;
+				case STANDARD:
+				default:
+					break;
 			}
 			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myFillPaint);
 			myFillPaint.setXfermode(new Xfermode());
