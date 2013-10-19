@@ -19,8 +19,8 @@ public abstract class ApiObject implements Parcelable {
 		int BOOLEAN = 3;
 		int DATE = 4;
 		int LONG = 5;
-		int TEXT_POSITION = 10;
 		int FLOAT = 6;
+		int TEXT_POSITION = 10;
 	}
 
 	static class Void extends ApiObject {
