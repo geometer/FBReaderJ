@@ -32,7 +32,7 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 			}
 			return new InputStreamImageData(singleImage);
 		} else {
-			//TODO
+			// TODO
 			return null;
 		}
 	}
