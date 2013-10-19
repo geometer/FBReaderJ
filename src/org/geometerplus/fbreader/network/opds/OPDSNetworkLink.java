@@ -46,9 +46,9 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		super(id, siteName, title, summary, language, infos);
 	}
 
-	final void setRelationAliases(Map<RelationAlias, String> relationAliases) {
+	final void setRelationAliases(Map<RelationAlias,String> relationAliases) {
 		if (relationAliases != null && relationAliases.size() > 0) {
-			myRelationAliases = new TreeMap<RelationAlias, String>(relationAliases);
+			myRelationAliases = new TreeMap<RelationAlias,String>(relationAliases);
 		} else {
 			myRelationAliases = null;
 		}
