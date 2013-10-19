@@ -35,8 +35,10 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 				return null;
 			}
 			return new InputStreamImageData(singleImage);
+		} else {
+			// TODO
+			return null;
 		}
-		return null;
 	}
 
 	private ZLAndroidImageLoader myLoader;
