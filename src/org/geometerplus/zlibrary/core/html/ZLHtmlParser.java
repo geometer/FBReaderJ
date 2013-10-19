@@ -106,7 +106,6 @@ mainSwitchLabel:
 									startPosition = i + 1;
 									break;
 								case '!':
-								{
 									switch (buffer[++i]) {
 										case '-':
 											state = COMMENT_MINUS;
@@ -116,7 +115,6 @@ mainSwitchLabel:
 											state = COMMENT;
 											break;
 									}
-								}
 								case '?':
 									state = COMMENT;
 									break;
@@ -183,7 +181,7 @@ mainSwitchLabel:
 										state = TEXT;
 										tagName.append(buffer, startPosition, i - startPosition);
 										{
-											ZLByteBuffer stringTagName = unique(strings, tagName);
+											final ZLByteBuffer stringTagName = unique(strings, tagName);
 											processStartTag(htmlReader, stringTagName, offset, attributes);
 											if (stringTagName.equalsToLCString("script")) {
 												scriptOpened = true;
@@ -217,10 +215,9 @@ mainSwitchLabel:
 										tagName.append(buffer, startPosition, i - startPosition);
 										break mainSwitchLabel;
 									case '>':
-
 											tagName.append(buffer, startPosition, i - startPosition);
 											{
-												ZLByteBuffer stringTagName = unique(strings, tagName);
+												final ZLByteBuffer stringTagName = unique(strings, tagName);
 												processEndTag(htmlReader, stringTagName);
 												if (scriptOpened) {
 												}
@@ -240,18 +237,18 @@ mainSwitchLabel:
 						case WS_AFTER_START_TAG_NAME:
 							switch (buffer[++i]) {
 								case '>':
-									{
-										ZLByteBuffer stringTagName = unique(strings, tagName);
-										processStartTag(htmlReader, stringTagName, offset, attributes);
-										if (stringTagName.equalsToLCString("script")) {
-											scriptOpened = true;
-											state = SCRIPT;
-											break mainSwitchLabel;
-										}
+								{
+									final ZLByteBuffer stringTagName = unique(strings, tagName);
+									processStartTag(htmlReader, stringTagName, offset, attributes);
+									if (stringTagName.equalsToLCString("script")) {
+										scriptOpened = true;
+										state = SCRIPT;
+										break mainSwitchLabel;
 									}
 									state = TEXT;
 									startPosition = i + 1;
 									break;
+								}
 								case '/':
 									state = SLASH;
 									break;
