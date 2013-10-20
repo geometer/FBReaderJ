@@ -147,20 +147,24 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	@Override
 	public void reset() {
 		myBitmapManager.reset();
 	}
 
+	@Override
 	public void repaint() {
 		postInvalidate();
 	}
 
+	@Override
 	public void startManualScrolling(int x, int y, ZLView.Direction direction) {
 		final AnimationProvider animator = getAnimationProvider();
 		animator.setup(direction, getWidth(), getMainAreaHeight());
 		animator.startManualScrolling(x, y);
 	}
 
+	@Override
 	public void scrollManuallyTo(int x, int y) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		final AnimationProvider animator = getAnimationProvider();
@@ -170,6 +174,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	@Override
 	public void startAnimatedScrolling(ZLView.PageIndex pageIndex, int x, int y, ZLView.Direction direction, int speed) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (pageIndex == ZLView.PageIndex.current || !view.canScroll(pageIndex)) {
@@ -183,6 +188,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	@Override
 	public void startAnimatedScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (pageIndex == ZLView.PageIndex.current || !view.canScroll(pageIndex)) {
@@ -196,6 +202,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	@Override
 	public void startAnimatedScrolling(int x, int y, int speed) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		final AnimationProvider animator = getAnimationProvider();
@@ -278,8 +285,8 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		return true;
 	}
 
-
 	private class LongClickRunnable implements Runnable {
+		@Override
 		public void run() {
 			if (performLongClick()) {
 				myLongClickPerformed = true;
@@ -299,6 +306,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	private class ShortClickRunnable implements Runnable {
+		@Override
 		public void run() {
 			final ZLView view = ZLApplication.Instance().getCurrentView();
 			view.onFingerSingleTap(myPressedX, myPressedY);
@@ -394,6 +402,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		return true;
 	}
 
+	@Override
 	public boolean onLongClick(View v) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		return view.onFingerLongPress(myPressedX, myPressedY);
@@ -402,6 +411,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	private int myKeyUnderTracking = -1;
 	private long myTrackingStartTime;
 
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		final ZLApplication application = ZLApplication.Instance();
 
@@ -426,6 +436,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (myKeyUnderTracking != -1) {
 			if (myKeyUnderTracking == keyCode) {
@@ -443,6 +454,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	@Override
 	protected int computeVerticalScrollExtent() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (!view.isScrollbarShown()) {
@@ -459,6 +471,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	@Override
 	protected int computeVerticalScrollOffset() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (!view.isScrollbarShown()) {
@@ -475,6 +488,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
+	@Override
 	protected int computeVerticalScrollRange() {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (!view.isScrollbarShown()) {
