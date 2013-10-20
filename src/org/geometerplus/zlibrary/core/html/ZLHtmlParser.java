@@ -317,21 +317,21 @@ mainSwitchLabel:
 						case WAIT_ATTRIBUTE_VALUE:
 							while (true) {
 								switch (buffer[++i]) {
-									case ' ' :
+									case ' ':
 										break;
-									case '\t' :
+									case '\t':
 										break;
-									case '\n' :
+									case '\n':
 										break;
 									case '\'':
 										state = S_ATTRIBUTE_VALUE;
 										startPosition = i + 1;
 										break mainSwitchLabel;
-									case '"' :
+									case '"':
 										state = D_ATTRIBUTE_VALUE;
 										startPosition = i + 1;
 										break mainSwitchLabel;
-									default :
+									default:
 										state = DEFAULT_ATTRIBUTE_VALUE;
 										startPosition = i;
 										break mainSwitchLabel;
