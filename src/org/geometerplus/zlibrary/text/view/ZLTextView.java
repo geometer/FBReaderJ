@@ -839,7 +839,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (hilites.isEmpty()) {
 			return;
 		}
-	
+
 		final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 		final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
 		for (ZLTextHighlighting h : hilites) {
@@ -1122,7 +1122,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
-					for(; hyphenationPosition > currentCharIndex; hyphenationPosition--) {
+					for (; hyphenationPosition > currentCharIndex; hyphenationPosition--) {
 						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
 							subwordWidth = getWordWidth(
 								word,
@@ -1138,7 +1138,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					if (hyphenationPosition == currentCharIndex && info.EndElementIndex == startIndex) {
 						hyphenationPosition = word.Length == currentCharIndex + 1 ? word.Length : word.Length - 1;
 						subwordWidth = getWordWidth(word, currentCharIndex, word.Length - currentCharIndex, false);
-						for(; hyphenationPosition > currentCharIndex + 1; hyphenationPosition--) {
+						for (; hyphenationPosition > currentCharIndex + 1; hyphenationPosition--) {
 							subwordWidth = getWordWidth(
 								word,
 								currentCharIndex,
