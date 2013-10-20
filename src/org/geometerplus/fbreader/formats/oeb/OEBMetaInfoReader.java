@@ -34,7 +34,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 
 	private String mySeriesTitle = "";
 	private String mySeriesIndex = null;
-	
+
 	private final ArrayList<String> myAuthorList = new ArrayList<String>();
 	private final ArrayList<String> myAuthorList2 = new ArrayList<String>();
 

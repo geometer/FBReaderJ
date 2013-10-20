@@ -50,7 +50,7 @@ class ZLTarHeader {
 		if (stream.skip(24) != 24) {
 			return false;
 		}
-	
+
 		final byte[] fileSizeString = new byte[12];
 		if (stream.read(fileSizeString) != 12) {
 			return false;
@@ -64,7 +64,7 @@ class ZLTarHeader {
 			Size *= 8;
 			Size += digit - (byte)'0';
 		}
-	
+
 		if (stream.skip(20) != 20) {
 			return false;
 		}
@@ -76,7 +76,7 @@ class ZLTarHeader {
 		IsRegularFile = (linkFlag == 0) || (linkFlag == (byte)'0');
 
 		stream.skip(355);
-	
+
 		if (((linkFlag == (byte)'L') ||
 				 (linkFlag == (byte)'K')) && (Name == "././@LongLink") && (Size < 10240)) {
 			final byte[] nameBuffer = new byte[Size - 1];

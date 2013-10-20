@@ -38,7 +38,7 @@ public final class ZLTextRegion {
 		final boolean accepts(ZLTextElementArea area) {
 			return compareTo(area) == 0;
 		}
-	
+
 		@Override
 		public final boolean equals(Object other) {
 			if (other == this) {

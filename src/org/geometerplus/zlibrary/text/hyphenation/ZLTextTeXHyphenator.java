@@ -100,7 +100,7 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 				}
 			}
 		}
- 
+
 		for (int i = 0; i < length - 1; i++) {
 			mask[i] = (values[i + 1] % 2) == 1;
 		}

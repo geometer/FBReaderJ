@@ -23,7 +23,7 @@ import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 public abstract class ZLOption {
 	public static final String PLATFORM_GROUP = "PlatformOptions";
-	
+
 	private final String myGroup;
 	private final String myOptionName;
 	protected boolean myIsSynchronized;
