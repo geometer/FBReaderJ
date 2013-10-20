@@ -70,7 +70,7 @@ class ZLAndroidImageLoader {
 	private final ExecutorService myPool = Executors.newFixedThreadPool(IMAGE_LOADING_THREADS_NUMBER, new MinPriorityThreadFactory());
 	private final ExecutorService mySinglePool = Executors.newFixedThreadPool(1, new MinPriorityThreadFactory());
 
-	private final HashMap<String, LinkedList<Runnable>> myOnImageSyncRunnables = new HashMap<String, LinkedList<Runnable>>();
+	private final HashMap<String,LinkedList<Runnable>> myOnImageSyncRunnables = new HashMap<String,LinkedList<Runnable>>();
 
 	private class ImageSynchronizedHandler extends Handler {
 		@Override
