@@ -50,21 +50,21 @@ public class ATOMEntry extends ATOMCommonAttributes {
 			.append(",\nAuthors:[\n");
 
 		boolean first = true;
-		for (ATOMAuthor author: Authors) {
+		for (ATOMAuthor author : Authors) {
 			if (!first) buf.append(",\n");
 			first = false;
 			buf.append(author.toString());
 		}
 		buf.append("],\nCategories:[\n");
 		first = true;
-		for (ATOMCategory category: Categories) {
+		for (ATOMCategory category : Categories) {
 			if (!first) buf.append(",\n");
 			first = false;
 			buf.append(category.toString());
 		}
 		buf.append("],\nLinks:[\n");
 		first = true;
-		for (ATOMLink link: Links) {
+		for (ATOMLink link : Links) {
 			if (!first) buf.append(",\n");
 			first = false;
 			buf.append(link.toString());

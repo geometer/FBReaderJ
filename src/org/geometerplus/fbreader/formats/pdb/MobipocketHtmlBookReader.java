@@ -191,7 +191,7 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 
 	@Override
 	public void endDocumentHandler() {
-		for (Integer entry: myFileposReferences) {
+		for (Integer entry : myFileposReferences) {
 			final SortedMap<Integer,Integer> subMap =
 				myPositionToParagraph.tailMap(entry);
 			if (subMap.isEmpty()) {
