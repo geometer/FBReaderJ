@@ -75,9 +75,9 @@ class ZLAndroidImageLoader {
 	private class ImageSynchronizedHandler extends Handler {
 		@Override
 		public void handleMessage(Message message) {
-			final String imageUrl = (String) message.obj;
+			final String imageUrl = (String)message.obj;
 			final LinkedList<Runnable> runables = myOnImageSyncRunnables.remove(imageUrl);
-			for (Runnable runnable: runables) {
+			for (Runnable runnable : runables) {
 				runnable.run();
 			}
 		}
