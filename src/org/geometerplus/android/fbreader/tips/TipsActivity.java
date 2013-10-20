@@ -93,7 +93,7 @@ public class TipsActivity extends Activity {
 					finish();
 				}
 			});
-        
+
 			final Button nextTipButton =
 				(Button)findViewById(R.id.tip_buttons).findViewById(R.id.cancel_button);
 			nextTipButton.setText(resource.getResource("more").getValue());
@@ -103,7 +103,7 @@ public class TipsActivity extends Activity {
 					showTip(nextTipButton);
 				}
 			});
-        
+
 			showTip(nextTipButton);
 		}
 	}

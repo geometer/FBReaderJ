@@ -35,29 +35,29 @@ public class TapZoneMap {
 		ourPredefinedMaps.add("left_to_right");
 		ourPredefinedMaps.add("down");
 		ourPredefinedMaps.add("up");
-	    ourMapsOption = new ZLStringListOption("TapZones", "List", ourPredefinedMaps, "\000");
+		ourMapsOption = new ZLStringListOption("TapZones", "List", ourPredefinedMaps, "\000");
 	}
 	private static final Map<String,TapZoneMap> ourMaps = new HashMap<String,TapZoneMap>();
 
 	public static List<String> zoneMapNames() {
-	  	return ourMapsOption.getValue();
+		return ourMapsOption.getValue();
 	}
 
 	public static TapZoneMap zoneMap(String name) {
-	    TapZoneMap map = ourMaps.get(name);
+		TapZoneMap map = ourMaps.get(name);
 		if (map == null) {
-		    map = new TapZoneMap(name);
+			map = new TapZoneMap(name);
 			ourMaps.put(name, map);
-	    }
+		}
 		return map;
 	}
 
 	public static TapZoneMap createZoneMap(String name, int width, int height) {
 		if (ourMapsOption.getValue().contains(name)) {
-		    return null;
+			return null;
 		}
 
-	    final TapZoneMap map = zoneMap(name);
+		final TapZoneMap map = zoneMap(name);
 		map.myWidth.setValue(width);
 		map.myHeight.setValue(height);
 		final List<String> lst = new LinkedList<String>(ourMapsOption.getValue());
@@ -68,10 +68,10 @@ public class TapZoneMap {
 
 	public static void deleteZoneMap(String name) {
 		if (ourPredefinedMaps.contains(name)) {
-		  	return;
+			return;
 		}
 
-	  	ourMaps.remove(name);
+		ourMaps.remove(name);
 
 		final List<String> lst = new LinkedList<String>(ourMapsOption.getValue());
 		lst.remove(name);
@@ -84,15 +84,15 @@ public class TapZoneMap {
 		doubleTap
 	};
 
-    public final String Name;
-    private final String myOptionGroupName;
+	public final String Name;
+	private final String myOptionGroupName;
 	private ZLIntegerRangeOption myHeight;
 	private ZLIntegerRangeOption myWidth;
 	private final HashMap<Zone,ZLStringOption> myZoneMap = new HashMap<Zone,ZLStringOption>();
 	private final HashMap<Zone,ZLStringOption> myZoneMap2 = new HashMap<Zone,ZLStringOption>();
 
 	private TapZoneMap(String name) {
-        Name = name;
+		Name = name;
 		myOptionGroupName = "TapZones:" + name;
 		myHeight = new ZLIntegerRangeOption(myOptionGroupName, "Height", 2, 5, 3);
 		myWidth = new ZLIntegerRangeOption(myOptionGroupName, "Width", 2, 5, 3);
@@ -103,15 +103,15 @@ public class TapZoneMap {
 	}
 
 	public boolean isCustom() {
-	  	return !ourPredefinedMaps.contains(Name);
+		return !ourPredefinedMaps.contains(Name);
 	}
 
 	public int getHeight() {
-	  	return myHeight.getValue();
+		return myHeight.getValue();
 	}
 
 	public int getWidth() {
-	  	return myWidth.getValue();
+		return myWidth.getValue();
 	}
 
 	public String getActionByCoordinates(int x, int y, int width, int height, Tap tap) {
@@ -126,40 +126,40 @@ public class TapZoneMap {
 		return option != null ? option.getValue() : null;
 	}
 
-    private ZLStringOption getOptionByZone(Zone zone, Tap tap) {
+	private ZLStringOption getOptionByZone(Zone zone, Tap tap) {
 		switch (tap) {
-            default:
-                return null;
+			default:
+				return null;
 			case singleTap:
-            {
+			{
 				final ZLStringOption option = myZoneMap.get(zone);
-                return option != null ? option : myZoneMap2.get(zone);
-            }
+				return option != null ? option : myZoneMap2.get(zone);
+			}
 			case singleNotDoubleTap:
 				return myZoneMap.get(zone);
 			case doubleTap:
 				return myZoneMap2.get(zone);
 		}
-    }
+	}
 
-    private ZLStringOption createOptionForZone(Zone zone, boolean singleTap, String action) {
-        return new ZLStringOption(
-            myOptionGroupName,
+	private ZLStringOption createOptionForZone(Zone zone, boolean singleTap, String action) {
+		return new ZLStringOption(
+			myOptionGroupName,
 			(singleTap ? "Action" : "Action2") + ":" + zone.HIndex + ":" + zone.VIndex,
-            action
-        );
-    }
+			action
+		);
+	}
 
-    public void setActionForZone(int h, int v, boolean singleTap, String action) {
+	public void setActionForZone(int h, int v, boolean singleTap, String action) {
 		final Zone zone = new Zone(h, v);
-	    final HashMap<Zone,ZLStringOption> map = singleTap ? myZoneMap : myZoneMap2;
-        ZLStringOption option = map.get(zone);
-        if (option == null) {
-            option = createOptionForZone(zone, singleTap, null);
-            map.put(zone, option);
-        }
-        option.setValue(action);
-    }
+		final HashMap<Zone,ZLStringOption> map = singleTap ? myZoneMap : myZoneMap2;
+		ZLStringOption option = map.get(zone);
+		if (option == null) {
+			option = createOptionForZone(zone, singleTap, null);
+			map.put(zone, option);
+		}
+		option.setValue(action);
+	}
 
 	private static class Zone {
 		int HIndex;
@@ -202,9 +202,9 @@ public class TapZoneMap {
 			try {
 				if ("zone".equals(tag)) {
 					final Zone zone = new Zone(
-                        Integer.parseInt(attributes.getValue("x")),
-					    Integer.parseInt(attributes.getValue("y"))
-                    );
+						Integer.parseInt(attributes.getValue("x")),
+						Integer.parseInt(attributes.getValue("y"))
+					);
 					final String action = attributes.getValue("action");
 					final String action2 = attributes.getValue("action2");
 					if (action != null) {
