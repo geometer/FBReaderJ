@@ -436,27 +436,27 @@ mainSwitchLabel:
 						case WS_AFTER_START_TAG_NAME:
 							switch (buffer[++i]) {
 								case '>':
-									{
-										String stringTagName = convertToString(strings, tagName);
-										if (tagStackSize == tagStack.length) {
-											tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
-										}
-										tagStack[tagStackSize++] = stringTagName;
-										if (processNamespaces) {
-											if (currentNamespaceMap != null) {
-												oldNamespaceMap = currentNamespaceMap;
-											}
-											namespaceMapStack.add(currentNamespaceMap);
-										}
-										if (processStartTag(xmlReader, stringTagName, attributes, currentNamespaceMap)) {
-											streamReader.close();
-											return;
-										}
-										currentNamespaceMap = null;
+								{
+									String stringTagName = convertToString(strings, tagName);
+									if (tagStackSize == tagStack.length) {
+										tagStack = ZLArrayUtils.createCopy(tagStack, tagStackSize, tagStackSize << 1);
 									}
+									tagStack[tagStackSize++] = stringTagName;
+									if (processNamespaces) {
+										if (currentNamespaceMap != null) {
+											oldNamespaceMap = currentNamespaceMap;
+										}
+										namespaceMapStack.add(currentNamespaceMap);
+									}
+									if (processStartTag(xmlReader, stringTagName, attributes, currentNamespaceMap)) {
+										streamReader.close();
+										return;
+									}
+									currentNamespaceMap = null;
 									state = TEXT;
 									startPosition = i + 1;
 									break;
+								}
 								case '/':
 									state = SLASH;
 									if (processFullTag(xmlReader, convertToString(strings, tagName), attributes)) {
