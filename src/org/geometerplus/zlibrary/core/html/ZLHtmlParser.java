@@ -142,7 +142,7 @@ mainSwitchLabel:
 									case '-':
 										minusCounter++;
 										break;
-									default :
+									default:
 										minusCounter = 0;
 										break;
 								}
@@ -155,7 +155,7 @@ mainSwitchLabel:
 							}
 						}
 
-						case COMMENT :
+						case COMMENT:
 							while (true) {
 								switch (buffer[++i]) {
 									case '>':
@@ -270,12 +270,11 @@ mainSwitchLabel:
 						case WS_AFTER_END_TAG_NAME:
 							switch (buffer[++i]) {
 								case '>':
-									{
-										ZLByteBuffer stringTagName = unique(strings, tagName);
-										processEndTag(htmlReader, stringTagName);
-										if (stringTagName.equalsToLCString("script")) {
-											scriptOpened = false;
-										}
+								{
+									ZLByteBuffer stringTagName = unique(strings, tagName);
+									processEndTag(htmlReader, stringTagName);
+									if (stringTagName.equalsToLCString("script")) {
+										scriptOpened = false;
 									}
 									if (scriptOpened) {
 										state = SCRIPT;
@@ -284,6 +283,7 @@ mainSwitchLabel:
 										startPosition = i + 1;
 									}
 									break;
+								}
 							}
 							break;
 
@@ -402,7 +402,7 @@ mainSwitchLabel:
 										state = TEXT;
 										startPosition = i + 1;
 										break mainSwitchLabel;
-									default :
+									default:
 										state = DEFAULT_ATTRIBUTE_VALUE;
 										break mainSwitchLabel;
 								}
