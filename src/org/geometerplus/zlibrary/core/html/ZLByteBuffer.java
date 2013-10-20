@@ -107,7 +107,7 @@ public final class ZLByteBuffer {
 	public boolean equalsToLCString(String lcPattern) {
 		return (myLength == lcPattern.length()) &&
 				lcPattern.equals(new String(myData, 0, myLength).toLowerCase());
-	} 
+	}
 
 	private static final Object myConverterLock = new Object();
 	private static char[] myConverterBuffer = new char[20];

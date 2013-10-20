@@ -68,7 +68,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		final MenuItem menuItem = menu.add(name);
 		if (iconId != null) {
 			menuItem.setIcon(iconId);
-			final ZLAndroidActivity activity = 
+			final ZLAndroidActivity activity =
 				((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 			if (showInActionBar) {
 				menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -101,14 +101,14 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 					break;
 			}
 		}
-		final ZLAndroidActivity activity = 
+		final ZLAndroidActivity activity =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		activity.refresh();
 	}
-	
+
 	@Override
 	public void runWithMessage(String key, Runnable action, Runnable postAction) {
-		final Activity activity = 
+		final Activity activity =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		if (activity != null) {
 			UIUtil.runWithMessage(activity, key, action, postAction, false);
@@ -121,7 +121,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	protected void processException(Exception exception) {
 		exception.printStackTrace();
 
-		final Activity activity = 
+		final Activity activity =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		final Intent intent = new Intent(
 			"android.fbreader.action.ERROR",
@@ -149,7 +149,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	@Override
 	public void setTitle(final String title) {
-		final Activity activity = 
+		final Activity activity =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		if (activity != null) {
 			activity.runOnUiThread(new Runnable() {

@@ -177,7 +177,7 @@ final class ZLXMLParser {
 		return value;
 	}
 
-	private static HashMap<List<String>,HashMap<String,char[]>> ourDTDMaps = 
+	private static HashMap<List<String>,HashMap<String,char[]>> ourDTDMaps =
 		new HashMap<List<String>,HashMap<String,char[]>>();
 
 	static synchronized HashMap<String,char[]> getDTDMap(List<String> dtdList) throws IOException {

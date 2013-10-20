@@ -126,7 +126,7 @@ class ZLColorPreference extends DialogPreference {
 		//colorView.setImageResource(R.drawable.fbreader);
 		final Drawable drawable = new ColorDrawable(0x00FF00);
 		colorView.setImageDrawable(drawable);
-		
+
 		super.onBindView(view);
 	}
 	*/
@@ -161,18 +161,18 @@ class ZLColorPreference extends DialogPreference {
 		protected void onBoundsChange(Rect bounds) {
 			myBase.setBounds(bounds);
 		}
-		
+
 		@Override
 		protected boolean onStateChange(int[] state) {
 			invalidateSelf();
 			return false;
 		}
-		
+
 		@Override
 		public boolean isStateful() {
 			return true;
 		}
-		
+
 		@Override
 		protected boolean onLevelChange(int level) {
 			if (level < 4000) {
@@ -182,7 +182,7 @@ class ZLColorPreference extends DialogPreference {
 			}
 			return myBase.setLevel(level);
 		}
-		
+
 		@Override
 		public void draw(Canvas canvas) {
 			myBase.draw(canvas);

@@ -111,7 +111,7 @@ public class SQLiteCookieDatabase extends CookieDatabase {
 			myInsertStatement.bindLong(6, c.isSecure() ? 1 : 0);
 			final long id = myInsertStatement.executeInsert();
 			myDeletePortsStatement.bindLong(1, id);
-			myDeletePortsStatement.execute();		
+			myDeletePortsStatement.execute();
 			if (c.getPorts() != null) {
 				myInsertPortsStatement.bindLong(1, id);
 				for (int port : c.getPorts()) {

@@ -166,7 +166,7 @@ public abstract class ZLApplication {
 
 	public final boolean hasActionForKey(int key, boolean longPress) {
 		final String actionId = keyBindings().getBinding(key, longPress);
-		return actionId != null && !NoAction.equals(actionId);	
+		return actionId != null && !NoAction.equals(actionId);
 	}
 
 	public final boolean runActionByKey(int key, boolean longPress) {
@@ -297,7 +297,7 @@ public abstract class ZLApplication {
 				addTimerTaskInternal(runnable, periodMilliseconds);
 			}
 		}
-	}	
+	}
 
 	public final void removeTimerTask(Runnable runnable) {
 		synchronized (myTimerLock) {

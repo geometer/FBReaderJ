@@ -39,7 +39,7 @@ class WallpaperPreference extends ZLStringListPreference {
 		myOption = profile.WallpaperOption;
 		final List<ZLFile> predefined = WallpapersUtil.predefinedWallpaperFiles();
 		final List<ZLFile> external = WallpapersUtil.externalWallpaperFiles();
-		
+
 		final int size = 1 + predefined.size() + external.size();
 		final String[] values = new String[size];
 		final String[] texts = new String[size];

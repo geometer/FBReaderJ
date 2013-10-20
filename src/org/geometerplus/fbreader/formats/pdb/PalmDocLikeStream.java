@@ -79,7 +79,7 @@ abstract class PalmDocLikeStream extends PdbStream {
 			}
 			myBufferOffset = 0;
 		}
-		
+
 		return true;
 	}
 }

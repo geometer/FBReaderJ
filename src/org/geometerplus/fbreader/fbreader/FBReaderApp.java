@@ -159,7 +159,7 @@ public final class FBReaderApp extends ZLApplication {
 			}, postAction);
 		}
 	}
- 
+
 	public void reloadBook() {
 		if (Model != null && Model.Book != null) {
 			Model.Book.reloadInfoFromDatabase();
@@ -390,7 +390,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	private static class BookmarkDescription extends CancelActionDescription {
 		final Bookmark Bookmark;
-		
+
 		BookmarkDescription(Bookmark b) {
 			super(CancelActionType.returnTo, b.getText());
 			Bookmark = b;
@@ -518,7 +518,7 @@ public final class FBReaderApp extends ZLApplication {
 			return null;
 		}
 
-		int index = cursor.getParagraphIndex();	
+		int index = cursor.getParagraphIndex();
 		if (cursor.isEndOfParagraph()) {
 			++index;
 		}

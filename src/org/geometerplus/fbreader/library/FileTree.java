@@ -171,7 +171,7 @@ public class FileTree extends LibraryTree {
 			final boolean isDir = file0.isDirectory();
 			if (isDir != file1.isDirectory()) {
 				return isDir ? -1 : 1;
-			} 
+			}
 			return file0.getShortName().compareToIgnoreCase(file1.getShortName());
 		}
 	};

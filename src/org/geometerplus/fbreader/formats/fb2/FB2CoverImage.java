@@ -110,7 +110,7 @@ class FB2CoverImage extends ZLImageProxy {
 					return true;
 				}
 				break;
-			}	
+			}
 			return false;
 		}
 

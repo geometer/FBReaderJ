@@ -62,7 +62,7 @@ public class ZLTTFInfoDetector {
 
 		final byte[] subtable = new byte[12];
 		myPosition += myStream.read(subtable);
-		
+
 		final int numTables = getInt16(subtable, 4);
 		final byte[] tables = new byte[16 * numTables];
 		myPosition += myStream.read(tables);
@@ -157,7 +157,7 @@ public class ZLTTFInfoDetector {
 			buffer = readTable(nameInfo);
 		} catch (Throwable e) {
 			return null;
-		} 
+		}
 		if (getInt16(buffer, 0) != 0) {
 			throw new IOException("Name table format is invalid");
 		}

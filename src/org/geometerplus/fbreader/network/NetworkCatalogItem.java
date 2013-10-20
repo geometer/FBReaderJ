@@ -67,7 +67,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	 * @param summary       description of this library item. Can be <code>null</code>.
 	 * @param urls          collection of item-related URLs. Can be <code>null</code>.
 	 * @param accessibility value defines when this library item will be accessible
-	 *                      in the network library view. 
+	 *                      in the network library view.
 	 * @param flags         describes how to show book items inside this catalog
 	 */
 	public NetworkCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Accessibility accessibility, int flags) {
@@ -135,10 +135,10 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	/**
 	 * Performs all necessary operations with NetworkOperationData and NetworkRequest
 	 * to complete loading children items.
-	 * 
+	 *
 	 * @param data Network operation data instance
 	 * @param networkRequest initial network request
-	 *  
+	 *
 	 * @throws ZLNetworkException when network operation couldn't be completed
 	 */
 	protected final void doLoadChildren(NetworkOperationData data, ZLNetworkRequest networkRequest) throws ZLNetworkException {
