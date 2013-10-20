@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 	private Map<String,String> myNamespaceMap = Collections.emptyMap();
 
- 	public boolean readQuietly(ZLFile file) {
+	public boolean readQuietly(ZLFile file) {
 		try {
 			read(file);
 			return true;
