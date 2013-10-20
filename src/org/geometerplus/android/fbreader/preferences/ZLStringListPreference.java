@@ -51,7 +51,7 @@ abstract class ZLStringListPreference extends ListPreference {
 
 	protected final boolean setInitialValue(String value) {
 		int index = 0;
-		boolean found = false;;
+		boolean found = false;
 		final CharSequence[] entryValues = getEntryValues();
 		if (value != null) {
 			for (int i = 0; i < entryValues.length; ++i) {
