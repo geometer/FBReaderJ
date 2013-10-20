@@ -52,7 +52,7 @@ public abstract class MiscUtil {
 				|| !map1.keySet().containsAll(map2.keySet())) {
 			return false;
 		}
-		for (KeyT key: map1.keySet()) {
+		for (KeyT key : map1.keySet()) {
 			final ValueT value1 = map1.get(key);
 			final ValueT value2 = map2.get(key);
 			if (!equals(value1, value2)) {
