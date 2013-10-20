@@ -85,7 +85,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 
 	@Override
 	public void onResume() {
-	  	super.onResume();
+		super.onResume();
 		setProgressBarIndeterminateVisibility(!myLibrary.isUpToDate());
 	}
 

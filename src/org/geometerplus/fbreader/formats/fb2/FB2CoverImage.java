@@ -68,27 +68,27 @@ class FB2CoverImage extends ZLImageProxy {
 		@Override
 		public boolean startElementHandler(String tagName, ZLStringMap attributes) {
 			switch (FB2Tag.getTagByName(tagName)) {
-			case FB2Tag.COVERPAGE:
-				myReadCoverPage = true;
-				break;
-			case FB2Tag.IMAGE:
-				if (myReadCoverPage) {
-					final String href = getAttributeValue(attributes, XMLNamespaces.XLink, "href");
-					if (href != null && href.length() > 1 && href.charAt(0) == '#') {
-						myImageReference = href.substring(1);
+				case FB2Tag.COVERPAGE:
+					myReadCoverPage = true;
+					break;
+				case FB2Tag.IMAGE:
+					if (myReadCoverPage) {
+						final String href = getAttributeValue(attributes, XMLNamespaces.XLink, "href");
+						if (href != null && href.length() > 1 && href.charAt(0) == '#') {
+							myImageReference = href.substring(1);
+						}
 					}
-				}
-				break;
-			case FB2Tag.BINARY:
-				if (myImageReference != null) {
-					final String id = attributes.getValue("id");
-					final String contentType = attributes.getValue("content-type");
-					if (id != null && contentType != null && myImageReference.equals(id)) {
-						// FIXME: make different Base64EncodedImage constructor to use another cache for covers
-						myImage = new Base64EncodedImage(contentType != null ? MimeType.get(contentType) : MimeType.IMAGE_AUTO, "-cover");
+					break;
+				case FB2Tag.BINARY:
+					if (myImageReference != null) {
+						final String id = attributes.getValue("id");
+						final String contentType = attributes.getValue("content-type");
+						if (id != null && contentType != null && myImageReference.equals(id)) {
+							// FIXME: make different Base64EncodedImage constructor to use another cache for covers
+							myImage = new Base64EncodedImage(contentType != null ? MimeType.get(contentType) : MimeType.IMAGE_AUTO, "-cover");
+						}
 					}
-				}
-				break;
+					break;
 			}
 			return false;
 		}
@@ -96,20 +96,20 @@ class FB2CoverImage extends ZLImageProxy {
 		@Override
 		public boolean endElementHandler(String tag) {
 			switch (FB2Tag.getTagByName(tag)) {
-			case FB2Tag.COVERPAGE:
-				myReadCoverPage = false;
-				break;
-			case FB2Tag.DESCRIPTION:
-				if (myImageReference == null) {
-					return true;
-				}
-				break;
-			case FB2Tag.BINARY:
-				if (myImage != null) {
-					myImage.close();
-					return true;
-				}
-				break;
+				case FB2Tag.COVERPAGE:
+					myReadCoverPage = false;
+					break;
+				case FB2Tag.DESCRIPTION:
+					if (myImageReference == null) {
+						return true;
+					}
+					break;
+				case FB2Tag.BINARY:
+					if (myImage != null) {
+						myImage.close();
+						return true;
+					}
+					break;
 			}
 			return false;
 		}
