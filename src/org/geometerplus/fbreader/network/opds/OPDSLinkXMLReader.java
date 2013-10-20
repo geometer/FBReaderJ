@@ -83,7 +83,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 			final UrlInfoCollection<UrlInfoWithDate> infos =
 				new UrlInfoCollection<UrlInfoWithDate>();
-			for (ATOMLink link: entry.Links) {
+			for (ATOMLink link : entry.Links) {
 				final String href = link.getHref();
 				final MimeType mime = MimeType.get(link.getType());
 				final String rel = link.getRel();
