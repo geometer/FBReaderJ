@@ -410,7 +410,7 @@ public class ZLNetworkManager {
 		}
 		HashSet<String> errors = new HashSet<String>();
 		// TODO: implement concurrent execution !!!
-		for (ZLNetworkRequest r: requests) {
+		for (ZLNetworkRequest r : requests) {
 			try {
 				perform(r);
 			} catch (ZLNetworkException e) {

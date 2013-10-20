@@ -160,7 +160,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	public String rewriteUrl(String url, boolean isUrlExternal) {
 		final int apply = isUrlExternal
 			? URLRewritingRule.APPLY_EXTERNAL : URLRewritingRule.APPLY_INTERNAL;
-		for (URLRewritingRule rule: myUrlRewritingRules) {
+		for (URLRewritingRule rule : myUrlRewritingRules) {
 			if ((rule.whereToApply() & apply) != 0) {
 				url = rule.apply(url);
 			}
