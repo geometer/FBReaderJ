@@ -42,11 +42,11 @@ public class ZLFileImage extends ZLSingleImage {
 				lengths[i] = Integer.parseInt(data[3 + count + i]);
 			}
 			return new ZLFileImage(
-					MimeType.IMAGE_AUTO,
-					ZLFile.createFileByPath(data[0]),
-					data[1],
-					offsets,
-					lengths
+				MimeType.IMAGE_AUTO,
+				ZLFile.createFileByPath(data[0]),
+				data[1],
+				offsets,
+				lengths
 			);
 		} catch (Exception e) {
 			e.printStackTrace();
