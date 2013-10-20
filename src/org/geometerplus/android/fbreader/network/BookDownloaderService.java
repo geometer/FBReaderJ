@@ -60,7 +60,6 @@ public class BookDownloaderService extends Service {
 		int ALL = 0x0003;
 	}
 
-
 	private Set<String> myDownloadingURLs = Collections.synchronizedSet(new HashSet<String>());
 	private Set<Integer> myOngoingNotifications = new HashSet<Integer>();
 
@@ -92,7 +91,7 @@ public class BookDownloaderService extends Service {
 	@Override
 	public void onDestroy() {
 		final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		for (int notificationId: myOngoingNotifications) {
+		for (int notificationId : myOngoingNotifications) {
 			notificationManager.cancel(notificationId);
 		}
 		myOngoingNotifications.clear();
@@ -252,7 +251,7 @@ public class BookDownloaderService extends Service {
 		final int notificationId = NetworkNotifications.Instance().getBookDownloadingId();
 		final Notification progressNotification = createDownloadProgressNotification(title);
 
-		final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		final NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		myOngoingNotifications.add(Integer.valueOf(notificationId));
 		notificationManager.notify(notificationId, progressNotification);
 
