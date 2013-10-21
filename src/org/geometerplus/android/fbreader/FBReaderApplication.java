@@ -19,7 +19,21 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.Context;
+
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 public class FBReaderApplication extends ZLAndroidApplication {
+	private static Context sContext;
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		sContext = this;
+	}
+
+	// YOTA changes
+	public static Context getAppContext() {
+		return sContext;
+	}
 }

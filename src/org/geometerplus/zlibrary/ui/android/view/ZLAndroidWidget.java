@@ -105,7 +105,14 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			onDrawInScrolling(canvas);
 		} else {
 			onDrawStatic(canvas);
-			ZLApplication.Instance().onRepaintFinished();
+			try {
+				ZLApplication.Instance().onRepaintFinished();
+			} catch (Exception ignored) {
+				// YOTA changes
+				// ignored calling from wrong UI thread exception - menu update
+				// in window
+				// called from service when p2b is active
+			}
 		}
 	}
 
@@ -298,6 +305,31 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 				view.preparePage(context, ZLView.PageIndex.next);
 			}
 		}.start();
+	}
+
+	// YOTA changes
+	public Bitmap getBSBitmap() {
+		return myBitmapManager.getBitmap(ZLView.PageIndex.current);
+	}
+
+	public Bitmap getBSBitmapNext() {
+		return myBitmapManager.getBitmap(ZLView.PageIndex.next);
+	}
+
+	public Bitmap getBSBitmapPrev() {
+		return myBitmapManager.getBitmap(ZLView.PageIndex.previous);
+	}
+
+	public void nextPageStatic() {
+		myBitmapManager.shift(true);
+		ZLApplication.Instance().getCurrentView().onScrollingFinished(ZLView.PageIndex.next);
+		ZLApplication.Instance().onRepaintFinished();
+	}
+
+	public void prevPageStatic() {
+		myBitmapManager.shift(false);
+		ZLApplication.Instance().getCurrentView().onScrollingFinished(ZLView.PageIndex.previous);
+		ZLApplication.Instance().onRepaintFinished();
 	}
 
 	@Override

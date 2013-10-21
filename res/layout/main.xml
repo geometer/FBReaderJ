@@ -14,4 +14,38 @@
 		android:scrollbarAlwaysDrawVerticalTrack="true"
 		android:fadeScrollbars="false"
 	/>
+	<LinearLayout
+		android:id="@+id/bs_active"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:background="#282828"
+		android:clickable="true"
+		android:gravity="center"
+		android:visibility="gone"
+		android:orientation="vertical"
+	>
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/p2b_arrow"
+		/>
+		<TextView
+			android:id="@+id/p2b_message"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="20dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="20dp"
+			android:gravity="center"
+			android:textColor="#fff"
+			android:textSize="17dp"
+		/>
+		<Button
+			android:id="@+id/btn_cancel"
+			android:layout_width="150dp"
+			android:layout_height="wrap_content"
+			android:text="@android:string/cancel"
+		/>
+	</LinearLayout>
 </RelativeLayout>

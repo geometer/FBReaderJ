@@ -560,6 +560,9 @@ public final class FBReader extends Activity {
 
 	private void setupMenu(Menu menu) {
 		addMenuItem(menu, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library);
+		// YOTA changes start
+		addMenuItem(menu, ActionCode.PUT_TO_BACK, R.drawable.ic_menu_p2b);
+		// YOTA changes end
 		addMenuItem(menu, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary);
 		addMenuItem(menu, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc);
 		addMenuItem(menu, ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks);
