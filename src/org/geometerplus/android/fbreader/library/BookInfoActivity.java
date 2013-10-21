@@ -363,6 +363,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		item.setOnMenuItemClickListener(this);
 	}
 
+	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
 			case OPEN_BOOK:
