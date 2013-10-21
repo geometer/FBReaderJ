@@ -23,8 +23,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.res.AssetFileDescriptor;
@@ -32,23 +35,44 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.yotadevices.fbreader.FBReaderYotaService;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
+import org.geometerplus.android.fbreader.FBReaderApplication;
+
 public final class ZLAndroidLibrary extends ZLibrary {
+	public static boolean isServiceRunning(Context context, String name) {
+		ActivityManager manager = (ActivityManager)context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+			if (name.equals(service.service.getClassName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
 	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", true);
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
+
+	private boolean mIsDrawOnBack = false;
+
+	private View mP2BView;
 
 	private Boolean myIsKindleFire = null;
 	public boolean isKindleFire() {
@@ -66,7 +90,9 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	private ZLAndroidActivity myActivity;
+
 	private final Application myApplication;
+
 	private ZLAndroidWidget myWidget;
 
 	ZLAndroidLibrary(Application application) {
@@ -75,6 +101,33 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	void setActivity(ZLAndroidActivity activity) {
 		myActivity = activity;
+		mP2BView = myActivity.findViewById(R.id.bs_active);
+		TextView textView = (TextView)myActivity.findViewById(R.id.p2b_message);
+		if (textView != null) {
+			textView.setText(ZLResource.resource("dialog").getResource("p2b").getResource("message").getValue());
+		}
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		Button cancelBtn = (Button)myActivity.findViewById(R.id.btn_cancel);
+		if (cancelBtn != null) {
+			cancelBtn.setText(buttonResource.getResource("cancel").getValue());
+			cancelBtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (mIsDrawOnBack) {
+						mIsDrawOnBack = false;
+//						Intent serviceIntent = new Intent(FBReaderApplication.getAppContext(), FBReaderYotaService.class);
+//						serviceIntent.setAction(FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_DISABLE);
+//						FBReaderApplication.getAppContext().startService(serviceIntent);
+					}
+				}
+			});
+		}
+		if (isServiceRunning(FBReaderApplication.getAppContext(), "com.yotadevices.apps.fbreader.FBReaderYotaService")) {
+			mIsDrawOnBack = true;
+			if (mP2BView != null) {
+				mP2BView.setVisibility(View.VISIBLE);
+			}
+		}
 		myWidget = null;
 	}
 
@@ -93,6 +146,31 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
 		}
 		return myWidget;
+	}
+
+	public void setViewWidget(ZLAndroidWidget widget) {
+		mIsDrawOnBack = true;
+		if (mP2BView != null) {
+			mP2BView.setVisibility(View.VISIBLE);
+		}
+		myWidget = widget;
+	}
+
+	public boolean isDrawOnBack() {
+		return mIsDrawOnBack;
+	}
+
+	public void resetViewWidget() {
+		mIsDrawOnBack = false;
+		myWidget = null;
+		if (mP2BView != null) {
+			mP2BView.setVisibility(View.GONE);
+		}
+		if (myActivity != null) {
+			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
+			myWidget.reset();
+			myWidget.repaint();
+		}
 	}
 
 	@Override
@@ -149,11 +227,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public int getDisplayDPI() {
 		if (myMetrics == null) {
-			if (myActivity == null) {
-				return 0;
-			}
-			myMetrics = new DisplayMetrics();
-			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
+			myMetrics = FBReaderApplication.getAppContext().getResources().getDisplayMetrics();
 		}
 		return (int)(160 * myMetrics.density);
 	}
@@ -161,11 +235,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public int getPixelWidth() {
 		if (myMetrics == null) {
-			if (myActivity == null) {
-				return 0;
-			}
-			myMetrics = new DisplayMetrics();
-			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
+			myMetrics = FBReaderApplication.getAppContext().getResources().getDisplayMetrics();
 		}
 		return myMetrics.widthPixels;
 	}
@@ -173,11 +243,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public int getPixelHeight() {
 		if (myMetrics == null) {
-			if (myActivity == null) {
-				return 0;
-			}
-			myMetrics = new DisplayMetrics();
-			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
+			myMetrics = FBReaderApplication.getAppContext().getResources().getDisplayMetrics();
 		}
 		return myMetrics.heightPixels;
 	}
@@ -289,6 +355,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 
 		private long mySize = -1;
+
 		@Override
 		public long size() {
 			if (mySize == -1) {

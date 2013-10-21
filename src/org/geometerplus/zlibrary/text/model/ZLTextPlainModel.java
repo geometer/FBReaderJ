@@ -143,19 +143,11 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			++dataOffset;
 			switch (type) {
 				case ZLTextParagraph.Entry.TEXT:
-				{
-					int textLength =
-						(int)data[dataOffset++] +
-						(((int)data[dataOffset++]) << 16);
-					if (textLength > data.length - dataOffset) {
-						textLength = data.length - dataOffset;
-					}
-					myTextLength = textLength;
+					myTextLength = (int)data[dataOffset++] + (((int)data[dataOffset++]) << 16);
 					myTextData = data;
 					myTextOffset = dataOffset;
-					dataOffset += textLength;
+					dataOffset += myTextLength;
 					break;
-				}
 				case ZLTextParagraph.Entry.CONTROL:
 				{
 					short kind = (short)data[dataOffset++];

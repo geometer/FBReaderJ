@@ -233,6 +233,9 @@
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
 		<node name="library" value="Library"/>
+		<!-- YOTA changes start -->
+		<node name="p2b" value="Put to back"/>
+		<!-- YOTA changes end -->
 		<node name="toc" value="TOC"/>
 		<node name="day" value="Day"/>
 		<node name="night" value="Night"/>
@@ -779,6 +782,9 @@
 			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
+		</node>
+		<node name="p2b">
+			<node name="message" value="Your book is being moved to the back screen. Turn your device over to continue reading."/>
 		</node>
 	</node>
 	<node name="errorMessage">

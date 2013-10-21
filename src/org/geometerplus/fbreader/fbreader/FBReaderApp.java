@@ -84,7 +84,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
 	public final ZLIntegerRangeOption FooterHeightOption =
-		new ZLIntegerRangeOption("Options", "FooterHeight", 8, 20, 9);
+		new ZLIntegerRangeOption("Options", "FooterHeight", 8, 20, 15);
 	public final ZLBooleanOption FooterShowTOCMarksOption =
 		new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
 	public final ZLBooleanOption FooterShowClockOption =
@@ -111,11 +111,13 @@ public final class FBReaderApp extends ZLApplication {
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
 	public final FBView BookTextView;
+
 	public final FBView FootnoteView;
 
 	public volatile BookModel Model;
 
 	private ZLTextPosition myJumpEndPosition;
+
 	private Date myJumpTimeStamp;
 
 	public FBReaderApp() {

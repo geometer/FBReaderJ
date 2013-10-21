@@ -21,6 +21,9 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
+import org.geometerplus.android.fbreader.FBReaderApplication;
+import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLView;
@@ -29,6 +32,16 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 public abstract class ZLApplication {
 	public static ZLApplication Instance() {
 		return ourInstance;
+	}
+
+	private static ZLViewWidget sZLViewWidget;
+
+	public static void createInstance(ZLViewWidget widget) {
+		sZLViewWidget = widget;
+		if (SQLiteBooksDatabase.Instance() == null) {
+			new SQLiteBooksDatabase(FBReaderApplication.getAppContext(), "READER");
+		}
+		ourInstance = new FBReaderApp();
 	}
 
 	private static ZLApplication ourInstance;
@@ -93,7 +106,7 @@ public abstract class ZLApplication {
 	}
 
 	public final ZLViewWidget getViewWidget() {
-		return myWindow != null ? myWindow.getViewWidget() : null;
+		return myWindow != null ? myWindow.getViewWidget() : sZLViewWidget;
 	}
 
 	public final void onRepaintFinished() {
