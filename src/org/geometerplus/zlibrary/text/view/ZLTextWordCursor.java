@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 	}
 
 	public boolean isStartOfText() {
-		return !isNull() && isStartOfParagraph() && myParagraphCursor.isFirst();
+		return isStartOfParagraph() && myParagraphCursor.isFirst();
 	}
 
 	public boolean isEndOfParagraph() {
@@ -71,7 +71,7 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 	}
 
 	public boolean isEndOfText() {
-		return isNull() || (isEndOfParagraph() && myParagraphCursor.isLast());
+		return isEndOfParagraph() && myParagraphCursor.isLast();
 	}
 
 	@Override
@@ -166,6 +166,11 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 			myParagraphCursor = ZLTextParagraphCursor.cursor(model, paragraphIndex);
 			moveToParagraphStart();
 		}
+	}
+
+	public void moveTo(ZLTextPosition position) {
+		moveToParagraph(position.getParagraphIndex());
+		moveTo(position.getElementIndex(), position.getCharIndex());
 	}
 
 	public void moveTo(int wordIndex, int charIndex) {

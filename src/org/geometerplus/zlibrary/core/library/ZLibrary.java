@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.core.library;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -28,7 +28,7 @@ public abstract class ZLibrary {
 	public static ZLibrary Instance() {
 		return ourImplementation;
 	}
-		
+
 	private static ZLibrary ourImplementation;
 
 	public static final String SCREEN_ORIENTATION_SYSTEM = "system";
@@ -38,7 +38,9 @@ public abstract class ZLibrary {
 	public static final String SCREEN_ORIENTATION_REVERSE_PORTRAIT = "reversePortrait";
 	public static final String SCREEN_ORIENTATION_REVERSE_LANDSCAPE = "reverseLandscape";
 
-	public final ZLStringOption OrientationOption = new ZLStringOption("LookNFeel", "Orientation", "system");
+	public final ZLStringOption getOrientationOption() {
+		return new ZLStringOption("LookNFeel", "Orientation", "system");
+	}
 
 	protected ZLibrary() {
 		ourImplementation = this;
@@ -55,7 +57,7 @@ public abstract class ZLibrary {
 	abstract public int getDisplayDPI();
 	abstract public int getPixelWidth();
 	abstract public int getPixelHeight();
-	abstract public Collection<String> defaultLanguageCodes();
+	abstract public List<String> defaultLanguageCodes();
 
 	abstract public boolean supportsAllOrientations();
 	public String[] allOrientations() {

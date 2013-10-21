@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
@@ -141,7 +141,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	}
 
 	private static int getLanguageOrder(String language) {
-		if (ZLLanguageUtil.MULTI_LANGUAGE_CODE.equals(language)) {
+		if (Language.MULTI_CODE.equals(language)) {
 			return 1;
 		}
 		if (language.equals(Locale.getDefault().getLanguage())) {

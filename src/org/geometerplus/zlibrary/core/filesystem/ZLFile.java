@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ public abstract class ZLFile {
 		int	TAR = 0x0200;
 		int	ARCHIVE = 0xff00;
 	};
-	
+
 	private String myExtension;
 	private String myShortName;
 	protected int myArchiveType;
@@ -72,7 +72,7 @@ public abstract class ZLFile {
 		}
 		myArchiveType = archiveType;
 	}
-	
+
 	public static ZLFile createFile(ZLFile parent, String name) {
 		ZLFile file = null;
 		if (parent == null) {
@@ -101,6 +101,13 @@ public abstract class ZLFile {
 			}
 		}
 		return file;
+	}
+
+	public static ZLFile createFileByUrl(String url) {
+		if (url == null || !url.startsWith("file://")) {
+			return null;
+		}
+		return createFileByPath(url.substring("file://".length()));
 	}
 
 	public static ZLFile createFileByPath(String path) {
@@ -135,14 +142,18 @@ public abstract class ZLFile {
 	public abstract ZLPhysicalFile getPhysicalFile();
 	public abstract InputStream getInputStream() throws IOException;
 
+	public String getUrl() {
+		return "file://" + getPath();
+	}
+
 	public boolean isReadable() {
 		return true;
 	}
 
 	public final boolean isCompressed() {
-		return (0 != (myArchiveType & ArchiveType.COMPRESSED)); 
+		return (0 != (myArchiveType & ArchiveType.COMPRESSED));
 	}
-	
+
 	public final boolean isArchive() {
 		return (0 != (myArchiveType & ArchiveType.ARCHIVE));
 	}

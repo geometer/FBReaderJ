@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ public:
 
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
-	void characterDataHandler(const char *text, size_t len);
+	void characterDataHandler(const char *text, std::size_t len);
 	bool processNamespaces() const;
 	const std::vector<std::string> &externalDTDs() const;
 
@@ -53,8 +53,10 @@ private:
 		READ_TITLE,
 		READ_SUBJECT,
 		READ_LANGUAGE,
+		READ_IDENTIFIER,
 	} myReadState;
 
+	std::string myIdentifierScheme;
 	std::string myBuffer;
 	std::vector<std::string> myAuthorList;
 	std::vector<std::string> myAuthorList2;

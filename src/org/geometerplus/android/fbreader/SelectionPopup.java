@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ class SelectionPopup extends ButtonsPopupPanel {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Type.Floating);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Floating);
 
 		addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
 		addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);

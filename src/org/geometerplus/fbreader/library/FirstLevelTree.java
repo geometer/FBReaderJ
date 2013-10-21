@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,20 +21,20 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class FirstLevelTree extends LibraryTree {
+abstract class FirstLevelTree extends LibraryTree {
 	private final String myId;
 	private final ZLResource myResource;
 
 	FirstLevelTree(RootTree root, int position, String id) {
 		super(root, position);
 		myId = id;
-		myResource = LibraryUtil.resource().getResource(myId);
+		myResource = resource().getResource(myId);
 	}
 
 	FirstLevelTree(RootTree root, String id) {
 		super(root);
 		myId = id;
-		myResource = LibraryUtil.resource().getResource(myId);
+		myResource = resource().getResource(myId);
 	}
 
 	@Override

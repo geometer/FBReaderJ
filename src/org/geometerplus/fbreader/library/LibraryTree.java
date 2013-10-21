@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,19 +21,40 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
-	protected LibraryTree() {
+	public static ZLResource resource() {
+		return ZLResource.resource("library");
+	}
+
+	public final IBookCollection Collection;
+
+	static final String ROOT_FOUND = "found";
+	static final String ROOT_FAVORITES = "favorites";
+	static final String ROOT_RECENT = "recent";
+	static final String ROOT_BY_AUTHOR = "byAuthor";
+	static final String ROOT_BY_TITLE = "byTitle";
+	static final String ROOT_BY_SERIES = "bySeries";
+	static final String ROOT_BY_TAG = "byTag";
+	static final String ROOT_FILE_TREE = "fileTree";
+
+	protected LibraryTree(IBookCollection collection) {
 		super();
+		Collection = collection;
 	}
 
 	protected LibraryTree(LibraryTree parent) {
 		super(parent);
+		Collection = parent.Collection;
 	}
 
 	protected LibraryTree(LibraryTree parent, int position) {
 		super(parent, position);
+		Collection = parent.Collection;
 	}
 
 	public Book getBook() {
@@ -48,57 +69,29 @@ public abstract class LibraryTree extends FBTree {
 		return true;
 	}
 
-	TagTree getTagSubTree(Tag tag) {
-		final TagTree temp = new TagTree(tag);
-		int position = Collections.binarySearch(subTrees(), temp);
+	boolean createTagSubtree(Tag tag) {
+		final TagTree temp = new TagTree(Collection, tag);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
-			return (TagTree)subTrees().get(position);
+			return false;
 		} else {
-			return new TagTree(this, tag, - position - 1);
+			new TagTree(this, tag, - position - 1);
+			return true;
 		}
 	}
 
-	TitleTree getTitleSubTree(String title) {
-		final TitleTree temp = new TitleTree(title);
-		int position = Collections.binarySearch(subTrees(), temp);
+	boolean createBookWithAuthorsSubtree(Book book) {
+		final BookWithAuthorsTree temp = new BookWithAuthorsTree(Collection, book);
+		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
-			return (TitleTree)subTrees().get(position);
+			return false;
 		} else {
-			return new TitleTree(this, title, - position - 1);
+			new BookWithAuthorsTree(this, book, - position - 1);
+			return true;
 		}
 	}
 
-	AuthorTree getAuthorSubTree(Author author) {
-		final AuthorTree temp = new AuthorTree(author);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (AuthorTree)subTrees().get(position);
-		} else {
-			return new AuthorTree(this, author, - position - 1);
-		}
-	}
-
-	BookTree getBookSubTree(Book book, boolean showAuthors) {
-		final BookTree temp = new BookTree(book, showAuthors);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (BookTree)subTrees().get(position);
-		} else {
-			return new BookTree(this, book, showAuthors, - position - 1);
-		}
-	}
-
-	SeriesTree getSeriesSubTree(String series) {
-		final SeriesTree temp = new SeriesTree(series);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (SeriesTree)subTrees().get(position);
-		} else {
-			return new SeriesTree(this, series, - position - 1);
-		}
-	}
-
-	public boolean removeBook(Book book, boolean recursively) {
+	public boolean removeBook(Book book) {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 		for (FBTree tree : this) {
 			if (tree instanceof BookTree && ((BookTree)tree).Book.equals(book)) {
@@ -107,14 +100,32 @@ public abstract class LibraryTree extends FBTree {
 		}
 		for (FBTree tree : toRemove) {
 			tree.removeSelf();
-			FBTree parent = tree.Parent;
-			if (recursively) {
-				for (; parent != null && !parent.hasChildren(); parent = parent.Parent) {
-					parent.removeSelf();
-				}
-			}
 		}
 		return !toRemove.isEmpty();
+	}
+
+	public boolean onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			default:
+			case Added:
+				return false;
+			case Removed:
+				return removeBook(book);
+			case Updated:
+			{
+				boolean changed = false;
+				for (FBTree tree : this) {
+					if (tree instanceof BookTree) {
+						final Book b = ((BookTree)tree).Book;
+						if (b.equals(book)) {
+							b.updateFrom(book);
+							changed = true;
+						}
+					}
+				}
+				return changed;
+			}
+		}
 	}
 
 	@Override

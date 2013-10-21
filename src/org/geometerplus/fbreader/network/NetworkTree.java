@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,22 @@ public abstract class NetworkTree extends FBTree {
 
 	protected NetworkTree(NetworkTree parent, int position) {
 		super(parent, position);
+	}
+
+	@Override
+	public String getSummary() {
+		StringBuilder builder = new StringBuilder();
+		int count = 0;
+		for (FBTree subtree : subtrees()) {
+			if (count++ > 0) {
+				builder.append(",  ");
+			}
+			builder.append(subtree.getName());
+			if (count == 5) {
+				break;
+			}
+		}
+		return builder.toString();
 	}
 
 	public INetworkLink getLink() {
@@ -89,11 +105,11 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 	public void removeTrees(Set<NetworkTree> trees) {
-		if (trees.isEmpty() || subTrees().isEmpty()) {
+		if (trees.isEmpty() || subtrees().isEmpty()) {
 			return;
 		}
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
-		for (FBTree t : subTrees()) {
+		for (FBTree t : subtrees()) {
 			if (trees.contains(t)) {
 				toRemove.add(t);
 				trees.remove(t);
@@ -106,7 +122,7 @@ public abstract class NetworkTree extends FBTree {
 			return;
 		}
 
-		final LinkedList<FBTree> toProcess = new LinkedList<FBTree>(subTrees());
+		final LinkedList<FBTree> toProcess = new LinkedList<FBTree>(subtrees());
 		while (!toProcess.isEmpty()) {
 			((NetworkTree)toProcess.remove(toProcess.size() - 1)).removeTrees(trees);
 		}

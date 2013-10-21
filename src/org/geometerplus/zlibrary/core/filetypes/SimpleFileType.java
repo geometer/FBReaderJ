@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,13 +39,6 @@ class SimpleFileType extends FileType {
 		return myExtension.equalsIgnoreCase(file.getExtension());
 	}
 
-	/*
-	@Override
-	public String extension() {
-		return myExtension;
-	}
-	*/
-
 	@Override
 	public List<MimeType> mimeTypes() {
 		return myMimeTypes;
@@ -54,5 +47,15 @@ class SimpleFileType extends FileType {
 	@Override
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? myMimeTypes.get(0) : MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return myExtension;
+	}
+
+	@Override
+	public String toString() {
+		return "SimpleFileType [" + Id + "]";
 	}
 }

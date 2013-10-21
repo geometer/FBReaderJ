@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -140,7 +140,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		}
 		final char[] block = getDataBlock(len);
 		++myParagraphLengths[myParagraphsNumber - 1];
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.STYLE;
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.STYLE; // CSS or OTHER
 		block[myBlockOffset++] = (char)entry.getMask();
 		if (entry.isLeftIndentSupported()) {
 			block[myBlockOffset++] = (char)entry.getLeftIndent();

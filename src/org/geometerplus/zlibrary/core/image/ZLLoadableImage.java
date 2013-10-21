@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,4 +49,12 @@ public abstract class ZLLoadableImage extends ZLSingleImage {
 	public abstract void synchronize();
 	public abstract void synchronizeFast();
 	public abstract String getId();
+	
+	@Override
+	public boolean saveToFile(String url) {
+		if (!isSynchronized()) {
+			synchronize();
+		}
+		return super.saveToFile(url);
+	}
 }

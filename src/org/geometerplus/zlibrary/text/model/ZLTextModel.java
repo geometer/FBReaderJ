@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,6 @@ public interface ZLTextModel {
 	// text length for paragraphs from 0 to index
 	int getTextLength(int index);
 	int findParagraphByTextLength(int length);
-	
+
 	int search(final String text, int startIndex, int endIndex, boolean ignoreCase);
 }

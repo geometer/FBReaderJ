@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,16 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.*;
 import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.android.fbreader.OrientationUtil;
 
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
 	public static String SCREEN_KEY = "screen";
@@ -101,7 +101,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 	}
 
 	public Preference addPreference(Preference preference) {
-		myScreen.addPreference((Preference)preference);
+		myScreen.addPreference(preference);
 		return preference;
 	}
 
@@ -132,5 +132,16 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		init(intent);
 		final Screen screen = myScreenMap.get(intent.getStringExtra(SCREEN_KEY));
 		setPreferenceScreen(screen != null ? screen.myScreen : myScreen);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 	}
 }

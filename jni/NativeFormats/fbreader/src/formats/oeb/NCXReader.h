@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,10 +32,10 @@ class NCXReader : public ZLXMLReader {
 public:
 	struct NavPoint {
 		NavPoint();
-		NavPoint(int order, size_t level);
+		NavPoint(int order, std::size_t level);
 
 		int Order;
-		size_t Level;
+		std::size_t Level;
 		std::string Text;
 		std::string ContentHRef;
 	};
@@ -47,7 +47,7 @@ public:
 private:
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
-	void characterDataHandler(const char *text, size_t len);
+	void characterDataHandler(const char *text, std::size_t len);
 	const std::vector<std::string> &externalDTDs() const;
 
 private:

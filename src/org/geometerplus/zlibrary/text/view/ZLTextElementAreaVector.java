@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,9 @@ final class ZLTextElementAreaVector {
 	}
 
 	ZLTextElementArea getFirstAfter(ZLTextPosition position) {
+		if (position == null) {
+			return null;
+		}
 		synchronized (myAreas) {
 			for (ZLTextElementArea area : myAreas) {
 				if (position.compareTo(area) <= 0) {
@@ -93,6 +96,9 @@ final class ZLTextElementAreaVector {
 	}
 
 	ZLTextElementArea getLastBefore(ZLTextPosition position) {
+		if (position == null) {
+			return null;
+		}
 		synchronized (myAreas) {
 			for (int i = myAreas.size() - 1; i >= 0; --i) {
 				final ZLTextElementArea area = myAreas.get(i);

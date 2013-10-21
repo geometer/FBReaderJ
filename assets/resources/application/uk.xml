@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Пошук"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Читати книжку"/>
 		<node name="showBookInfo" value="Деталі про книгу"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Видалити книжку"/>
 		<node name="addToFavorites" value="Додати в улюблені"/>
 		<node name="removeFromFavorites" value="Прибрати з улюблених"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Мережева бібліотека FBReader">
 		<node name="byAuthor" value="За автором">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="Знайдено">
 			<node name="summary" value="Результати пошуку для: %s"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Відкрити теку"/>
 		<node name="networkSearch" value="Пошук"/>
@@ -107,6 +113,7 @@
 		<node name="removeCustomCatalog" value="Видалити теку"/>
 		<node name="addCustomCatalog" value="Додати теку"/>
 		<node name="addCustomCatalogSummary" value="Додати OPDS каталог вручну"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Бажаєте відкрити локальну копію?"/>
 			<node name="download" value="Ви хочете завантажити цю книгу?"/>
@@ -123,7 +130,13 @@
 			<node name="title" value="Додати каталог"/>
 			<node name="editUrl" value="Ввести URL вручну"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Пошук в мережі"/>
 			<node name="reload" value="Оновити"/>
 			<node name="signIn" value="Увійти"/>
@@ -132,7 +145,7 @@
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
-			<node name="languages" value="Мовний фільтр"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Очистити кошик"/>
 			<node name="buyAllBooks" value="Купити всі книжки"/>
 		</node>
@@ -208,6 +221,19 @@
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрити FBReader"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Стерти закладку"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Позначка">
 		<node name="copyToClipboard" value="Скопіювати до буфера"/>
 		<node name="openInDictionary" value="Подивитись в словнику"/>
@@ -217,7 +243,7 @@
 		<node name="clearSelection" value="Прибрати позначку"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Поширено з &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Поширено з &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Налаштування"/>
@@ -252,6 +278,7 @@
 		<node name="decreaseFont" value="Зменшити шрифт"/>
 		<node name="toggleFullscreen" value="На весь екран"/>
 		<node name="bookmarks" value="Закладки"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Файл"/>
@@ -271,6 +298,7 @@
 		</node>
 		<node name="appearance" value="Зовнішній вигляд">
 			<node name="summary" value="Орієнтація, панель стану"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Орієнтація екрану">
 				<node name="system" value="Системна"/>
 				<node name="sensor" value="Залежна від положення пристрою"/>
@@ -298,6 +326,10 @@
 			<node name="disableButtonLights" value="Підсвічування апаратник клавіш">
 				<node name="summaryOn" value="Вимкнути підсвічування (не для всіх пристроїв)"/>
 				<node name="summaryOff" value="Не намагатись вимикати підсвічування"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Керування яскравістю екрану">
 				<node name="summaryOn" value="Жестом догори-донизу в лівій частині екрану"/>
@@ -497,6 +529,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="colors" value="Кольори &amp; шпалери">
 			<node name="summary" value="Налаштування кольору"/>
 			<node name="background" value="Фон">
@@ -520,6 +563,7 @@
 			<node name="right" value="Відступ зправа"/>
 			<node name="top" value="Відступ зверху"/>
 			<node name="bottom" value="Відступ знизу"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Смуга прокрутки">
 			<node name="summary" value="Смуга прокрутки &amp; налаштування підвалу"/>
@@ -597,6 +641,9 @@
 			<node name="summary" value="Налаштування словника"/>
 			<node name="dictionary" value="Словник"/>
 			<node name="translator" value="Перекладач"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Дія при довгому натисканні">
 				<node name="doNothing" value="Довге натискання нічого не робить"/>
 				<node name="selectSingleWord" value="Довге натискання вибирає слово"/>
@@ -663,7 +710,7 @@
 			<node name="summary" value="Інформація про версію, контакти"/>
 			<node name="version" value="Версія"/>
 			<node name="site" value="Зайти на наш вебсайт">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Відпратити нам email">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -693,6 +740,10 @@
 			<node name="authorize" value="Авторизуватись"/>
 			<node name="resetPosition" value="Скинути позицію"/>
 			<node name="sendReport" value="Відправити звіт"/>
+			<node name="addToFavorites" value="Додати в улюблені"/>
+			<node name="removeFromFavorites" value="Прибрати з улюблених"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Встановити plugin"/>
@@ -780,6 +831,7 @@
 		<node name="dictionaryIsNotInstalled" value="На жаль словник не встановлено"/>
 		<node name="permissionDenied" value="Немає доступу, на жаль"/>
 		<node name="noFavorites" value="Ваш список улюблених порожній"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Каталог порожній"/>
 		<node name="emptyBasket" value="На жаль ваш кошик порожній"/>
 		<node name="emptyNetworkSearchResults" value="Відповідних книг не знайдено"/>
@@ -817,5 +869,8 @@
 		<node name="opfFileNotFound" value="OPF не знайдено в %s"/>
 		<node name="unsupportedFileFormat" value="Формат файлу не підтримується для '%s'"/>
 		<node name="errorParsingRtf" value="Помилка обробки Rtf в: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

@@ -171,6 +171,18 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return stringList;
 	}
 
+	private List<Integer> requestIntegerList(int method, ApiObject[] params) throws ApiException {
+		final List<ApiObject> list = requestList(method, params);
+		final ArrayList<Integer> intList = new ArrayList<Integer>(list.size());
+		for (ApiObject object : list) {
+			if (!(object instanceof ApiObject.Integer)) {
+				throw new ApiException("Cannot cast an element returned from method " + method + " to Integer");
+			}
+			intList.add(((ApiObject.Integer)object).Value);
+		}
+		return intList;
+	}
+
 	private static final ApiObject[] EMPTY_PARAMETERS = new ApiObject[0];
 
 	private static ApiObject[] envelope(String value) {
@@ -189,7 +201,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		final ApiObject[] objects = new ApiObject[value.size()];
 		int index = 0;
 		for (String s : value) {
-		    objects[index++] = ApiObject.envelope(s);
+			objects[index++] = ApiObject.envelope(s);
 		}
 		return objects;
 	}
@@ -302,8 +314,16 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestString(GET_PARAGRAPH_TEXT, envelope(paragraphIndex));
 	}
 
-	public int getElementsNumber(int paragraphIndex) throws ApiException {
-		return requestInt(GET_ELEMENTS_NUMBER, envelope(paragraphIndex));
+	public int getParagraphElementsCount(int paragraphIndex) throws ApiException {
+		return requestInt(GET_PARAGRAPH_ELEMENTS_COUNT, envelope(paragraphIndex));
+	}
+
+	public List<String> getParagraphWords(int paragraphIndex) throws ApiException {
+		return requestStringList(GET_PARAGRAPH_WORDS, envelope(paragraphIndex));
+	}
+
+	public List<Integer> getParagraphWordIndices(int paragraphIndex) throws ApiException {
+		return requestIntegerList(GET_PARAGRAPH_WORD_INDICES, envelope(paragraphIndex));
 	}
 
 	public void setPageStart(TextPosition position) throws ApiException {
@@ -316,6 +336,38 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	public void clearHighlighting() throws ApiException {
 		request(CLEAR_HIGHLIGHTING, EMPTY_PARAMETERS);
+	}
+
+	public int getBottomMargin() throws ApiException {
+		return requestInt(GET_BOTTOM_MARGIN, EMPTY_PARAMETERS);
+	}
+
+	public void setBottomMargin(int value) throws ApiException {
+		request(SET_BOTTOM_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
+	}
+
+	public int getTopMargin() throws ApiException {
+		return requestInt(GET_TOP_MARGIN, EMPTY_PARAMETERS);
+	}
+
+	public void setTopMargin(int value) throws ApiException {
+		request(SET_TOP_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
+	}
+
+	public int getLeftMargin() throws ApiException {
+		return requestInt(GET_LEFT_MARGIN, EMPTY_PARAMETERS);
+	}
+
+	public void setLeftMargin(int value) throws ApiException {
+		request(SET_LEFT_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
+	}
+
+	public int getRightMargin() throws ApiException {
+		return requestInt(GET_RIGHT_MARGIN, EMPTY_PARAMETERS);
+	}
+
+	public void setRightMargin(int value) throws ApiException {
+		request(SET_RIGHT_MARGIN, new ApiObject[] { ApiObject.envelope(value) });
 	}
 
 	// action control
@@ -335,23 +387,23 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public List<String> listActions() throws ApiException {
-	  	return requestStringList(LIST_ACTIONS, EMPTY_PARAMETERS);
+		return requestStringList(LIST_ACTIONS, EMPTY_PARAMETERS);
 	}
 
 	public List<String> listActionNames(List<String> actions) throws ApiException {
-	  	return requestStringList(LIST_ACTION_NAMES, envelope(actions));
+		return requestStringList(LIST_ACTION_NAMES, envelope(actions));
 	}
 
 	public List<String> listZoneMaps() throws ApiException {
-	  	return requestStringList(LIST_ZONEMAPS, EMPTY_PARAMETERS);
+		return requestStringList(LIST_ZONEMAPS, EMPTY_PARAMETERS);
 	}
 
 	public String getZoneMap() throws ApiException {
-	  	return requestString(GET_ZONEMAP, EMPTY_PARAMETERS);
+		return requestString(GET_ZONEMAP, EMPTY_PARAMETERS);
 	}
 
 	public void setZoneMap(String name) throws ApiException {
-	  	request(SET_ZONEMAP, envelope(name));
+		request(SET_ZONEMAP, envelope(name));
 	}
 
 	public int getZoneMapHeight(String name) throws ApiException {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.NetworkBookItem;
@@ -109,13 +110,14 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				if (TAG_BOOK == tag) {
 					myBookId = attributes.getValue("hub_id");
 					myUrls.addInfo(new UrlInfo(
-						UrlInfo.Type.Image, attributes.getValue("cover_preview")
+						UrlInfo.Type.Image, attributes.getValue("cover"), MimeType.IMAGE_AUTO
 					));
-        
+
 					myUrls.addInfo(new BookUrlInfo(
 						UrlInfo.Type.BookConditional,
 						BookUrlInfo.Format.FB2_ZIP,
-						"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId
+						"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
+						MimeType.APP_FB2_ZIP
 					));
 					myState = BOOK;
 				}
@@ -195,9 +197,10 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				break;
 			case BOOK:
 				if (TAG_BOOK == tag) {
-					myUrls.addInfo(new UrlInfo(	
+					myUrls.addInfo(new UrlInfo(
 						UrlInfo.Type.SingleEntry,
-						"http://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId
+						"http://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId,
+						MimeType.APP_ATOM_XML_ENTRY
 					));
 					Books.add(new OPDSBookItem(
 						Link,
@@ -213,7 +216,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 						myIndexInSeries,
 						myUrls
 					));
-        
+
 					myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = null;
 					mySummary = null;
 					myIndexInSeries = 0;
@@ -282,7 +285,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 							LitResGenreMap::Instance().genresMap();
 						const std::map<shared_ptr<LitResGenre>,std::string> &genresTitles =
 							LitResGenreMap::Instance().genresTitles();
-        
+
 						std::map<std::string, shared_ptr<LitResGenre> >::const_iterator it = genresMap.find(myBuffer);
 						if (it != genresMap.end()) {
 							std::map<shared_ptr<LitResGenre>, std::string>::const_iterator jt = genresTitles.find(it->second);

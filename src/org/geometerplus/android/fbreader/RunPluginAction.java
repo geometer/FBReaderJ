@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,9 @@ class RunPluginAction extends FBAndroidAction {
 	protected void run(Object ... params) {
 		BaseActivity.hideBars();
 		try {
-			BaseActivity.startActivity(new Intent("android.fbreader.action.plugin.RUN", myUri));
+			OrientationUtil.startActivity(
+				BaseActivity, new Intent("android.fbreader.action.plugin.RUN", myUri)
+			);
 		} catch (ActivityNotFoundException e) {
 		}
 	}

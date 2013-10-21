@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,10 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
-import org.geometerplus.zlibrary.core.image.*;
-
 import org.geometerplus.zlibrary.text.model.*;
 
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.book.Book;
 
 public class JavaBookModel extends BookModelImpl {
 	public final ZLTextModel BookTextModel;

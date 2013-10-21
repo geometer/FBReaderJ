@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ abstract public class ZLPaintContext {
 
 	abstract public int getWidth();
 	abstract public int getHeight();
-	
+
 	public final int getStringWidth(String string) {
 		return getStringWidth(string.toCharArray(), 0, string.length());
 	}

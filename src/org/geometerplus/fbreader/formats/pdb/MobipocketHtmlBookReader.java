@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,6 +129,9 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 				super.startElementHandler(tag, offset, attributes);
 				break;
 			}
+			case HtmlTag.MBP_PAGEBREAK:
+				insertEndOfSectionParagraph();
+				break;
 			default:
 				super.startElementHandler(tag, offset, attributes);
 				break;
@@ -166,7 +169,7 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 		if (myCurrentTocPosition != -1) {
 			myTocBuffer.append(data, start, length);
 		}
-		super.addByteData(data, start, length);
+		super.byteDataHandler(data, start, length);
 	}
 
 	@Override

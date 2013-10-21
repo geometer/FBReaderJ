@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,11 +33,12 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 
 	public FB2AnnotationReader() {
 	}
-	
+
+	@Override
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
-	
+
 	public String readAnnotation(ZLFile file) {
 		myReadState = READ_NOTHING;
 		myBuffer.delete(0, myBuffer.length());
@@ -53,6 +54,7 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 		return null;
 	}
 
+	@Override
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
 		switch (FB2Tag.getTagByName(tagName)) {
 			case FB2Tag.BODY:
@@ -69,7 +71,8 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 		}
 		return false;
 	}
-	
+
+	@Override
 	public boolean endElementHandler(String tag) {
 		if (myReadState != READ_ANNOTATION) {
 			return false;
@@ -87,7 +90,8 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 		}
 		return false;
 	}
-	
+
+	@Override
 	public void characterDataHandler(char[] data, int start, int length) {
 		if (myReadState == READ_ANNOTATION) {
 			myBuffer.append(new String(data, start, length).trim());

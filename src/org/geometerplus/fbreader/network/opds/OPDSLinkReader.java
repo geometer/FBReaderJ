@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
 
 public class OPDSLinkReader {
-	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.7.xml";
+	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-2.0.xml";
 	static final String FILE_NAME = "fbreader_catalogs-"
 			+ CATALOGS_URL.substring(CATALOGS_URL.lastIndexOf("/") + 1);
 

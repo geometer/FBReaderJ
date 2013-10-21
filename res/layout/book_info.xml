@@ -41,7 +41,7 @@
 			android:id="@+id/book_info_annotation_title"
 			style="?android:attr/listSeparatorTextViewStyle"
 		/>
-		<TextView
+		<android.patches.JellyBeanSpanFixTextView
 			android:id="@+id/book_info_annotation_body"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"

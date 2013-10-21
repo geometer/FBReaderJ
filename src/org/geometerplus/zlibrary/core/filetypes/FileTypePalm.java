@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,10 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 abstract class FileTypePalm extends FileType {
-	private static String palmFileType(final ZLFile file) {
+	protected static String palmFileType(final ZLFile file) {
 		// TODO: use database instead of option (?)
 		final ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");
 		String palmType = palmTypeOption.getValue();
@@ -62,10 +63,8 @@ abstract class FileTypePalm extends FileType {
 			myPalmId.equals(palmFileType(file));
 	}
 
-	/*
 	@Override
-	public String extension() {
+	public String defaultExtension(MimeType mime) {
 		return "pdb";
 	}
-	*/
 }

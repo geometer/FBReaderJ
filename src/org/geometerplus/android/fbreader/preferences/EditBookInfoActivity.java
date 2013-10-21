@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,18 @@ import java.util.*;
 import android.content.Context;
 import android.content.Intent;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.encodings.Encoding;
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
-import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -52,42 +50,39 @@ class BookTitlePreference extends ZLStringPreference {
 	protected void setValue(String value) {
 		super.setValue(value);
 		myBook.setTitle(value);
+		((EditBookInfoActivity)getContext()).saveBook();
 	}
 }
 
-class LanguagePreference extends ZLStringListPreference {
+class BookLanguagePreference extends LanguagePreference {
 	private final Book myBook;
 
-	LanguagePreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
-		super(context, rootResource, resourceKey);
-		myBook = book;
-		final TreeSet<String> set = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
-		set.addAll(ZLTextHyphenator.Instance().languageCodes());
-		set.add(ZLLanguageUtil.OTHER_LANGUAGE_CODE);
-
-		final int size = set.size();
-		String[] codes = new String[size];
-		String[] names = new String[size];
-		int index = 0;
-		for (String code : set) {
-			codes[index] = code;
-			names[index] = ZLLanguageUtil.languageName(code);
-			++index;
+	private static List<Language> languages() {
+		final TreeSet<Language> set = new TreeSet<Language>();
+		for (String code : ZLTextHyphenator.Instance().languageCodes()) {
+			set.add(new Language(code));
 		}
-		setLists(codes, names);
+		set.add(new Language(Language.OTHER_CODE));
+		return new ArrayList<Language>(set);
+	}
+
+	BookLanguagePreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context, rootResource, resourceKey, languages());
+		myBook = book;
 		final String language = myBook.getLanguage();
 		if (language == null || !setInitialValue(language)) {
-			setInitialValue(ZLLanguageUtil.OTHER_LANGUAGE_CODE);
+			setInitialValue(Language.OTHER_CODE);
 		}
 	}
 
 	@Override
-	protected void onDialogClosed(boolean result) {
-		super.onDialogClosed(result);
-		if (result) {
-			final String value = getValue();
-			myBook.setLanguage(value.length() > 0 ? value : null);
-		}
+	protected void init() {
+	}
+
+	@Override
+	protected void setLanguage(String code) {
+		myBook.setLanguage(code.length() > 0 ? code : null);
+		((EditBookInfoActivity)getContext()).saveBook();
 	}
 }
 
@@ -140,45 +135,62 @@ class EncodingPreference extends ZLStringListPreference {
 			final String value = getValue();
 			if (!value.equalsIgnoreCase(myBook.getEncoding())) {
 				myBook.setEncoding(value);
-				((EditBookInfoActivity)getContext()).setResult(FBReader.RESULT_RELOAD_BOOK);
+				((EditBookInfoActivity)getContext()).saveBook();
 			}
 		}
 	}
 }
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+	private volatile boolean myInitialized;
+
 	private Book myBook;
 
 	public EditBookInfoActivity() {
 		super("BookInfo");
 	}
 
+	void saveBook() {
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				myCollection.saveBook(myBook, false);
+			}
+		});
+	}
+
 	@Override
 	protected void init(Intent intent) {
-		if (SQLiteBooksDatabase.Instance() == null) {
-			new SQLiteBooksDatabase(this, "LIBRARY");
-		}
+	}
 
-		final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
-		final ZLFile file = ZLFile.createFileByPath(path);
-		myBook = Book.getByFile(file);
-		setResult(FBReader.RESULT_REPAINT);
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		myBook = BookInfoActivity.bookByIntent(getIntent());
 
 		if (myBook == null) {
 			finish();
 			return;
 		}
 
-		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
-		addPreference(new LanguagePreference(this, Resource, "language", myBook));
-		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				if (myInitialized) {
+					return;
+				}
+				myInitialized = true;
+
+				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
+				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
+				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
+			}
+		});
 	}
 
 	@Override
-	protected void onPause() {
-		super.onPause();
-		if (myBook != null) {
-			myBook.save();
-		}
+	protected void onStop() {
+		myCollection.unbind();
+		super.onStop();
 	}
 }

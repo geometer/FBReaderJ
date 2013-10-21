@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,9 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
-import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
+
+import org.geometerplus.android.fbreader.FBReader;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
@@ -65,34 +66,29 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return "GT-S5830".equals(Build.MODEL);
 	}
 
-	private ZLAndroidActivity myActivity;
+	private FBReader myActivity;
 	private final Application myApplication;
-	private ZLAndroidWidget myWidget;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
 	}
 
-	void setActivity(ZLAndroidActivity activity) {
+	public void setActivity(FBReader activity) {
 		myActivity = activity;
-		myWidget = null;
 	}
 
 	public void finish() {
-		if ((myActivity != null) && !myActivity.isFinishing()) {
+		if (myActivity != null && !myActivity.isFinishing()) {
 			myActivity.finish();
 		}
 	}
 
-	public ZLAndroidActivity getActivity() {
+	public FBReader getActivity() {
 		return myActivity;
 	}
 
 	public ZLAndroidWidget getWidget() {
-		if (myWidget == null) {
-			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
-		}
-		return myWidget;
+		return myActivity.getMainView();
 	}
 
 	@Override
@@ -183,7 +179,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	@Override
-	public Collection<String> defaultLanguageCodes() {
+	public List<String> defaultLanguageCodes() {
 		final TreeSet<String> set = new TreeSet<String>();
 		set.add(Locale.getDefault().getLanguage());
 		final TelephonyManager manager = (TelephonyManager)myApplication.getSystemService(Context.TELEPHONY_SERVICE);
@@ -206,7 +202,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			}
 		}
 		set.add("multi");
-		return set;
+		return new ArrayList<String>(set);
 	}
 
 	@Override

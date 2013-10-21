@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,13 +38,6 @@ class FileTypeEpub extends FileType {
 			"opf".equalsIgnoreCase(extension);
 	}
 
-	/*
-	@Override
-	public String extension() {
-		return "epub";
-	}
-	*/
-
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_EPUB;
@@ -61,12 +54,17 @@ class FileTypeEpub extends FileType {
 	}
 
 	@Override
-	public MimeType simplifiedMimeType(ZLFile file) {
+	public MimeType rawMimeType(ZLFile file) {
 		final String extension = file.getExtension();
 		if ("epub".equalsIgnoreCase(extension)) {
 			return MimeType.APP_ZIP;
 		}
 		// TODO: process other extensions (?)
 		return MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return "epub";
 	}
 }

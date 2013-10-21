@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,10 +40,11 @@ public final class ZLColor {
 		Blue = (short)(intValue & 0xFF);
 	}
 
-	public int getIntValue() {
+	public int intValue() {
 		return (Red << 16) + (Green << 8) + Blue;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
 			return true;
@@ -57,7 +58,17 @@ public final class ZLColor {
 		return (color.Red == Red) && (color.Green == Green) && (color.Blue == Blue);
 	}
 
+	@Override
 	public int hashCode() {
-		return getIntValue();
+		return intValue();
+	}
+
+	@Override
+	public String toString() {
+		return new StringBuilder("ZLColor(")
+			.append(String.valueOf(Red)).append(", ")
+			.append(String.valueOf(Green)).append(", ")
+			.append(String.valueOf(Blue)).append(")")
+			.toString();
 	}
 }

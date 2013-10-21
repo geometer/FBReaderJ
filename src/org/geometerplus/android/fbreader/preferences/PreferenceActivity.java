@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,31 +19,53 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.text.DecimalFormatSymbols;
+import java.util.*;
+
 import android.content.Intent;
+import android.net.Uri;
 import android.view.KeyEvent;
 import android.os.Build;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.style.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
-import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
-import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
+import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.tips.TipsManager;
 
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
+	private BookCollectionShadow myCollection = new BookCollectionShadow();
+
 	public PreferenceActivity() {
 		super("Preferences");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		myCollection.bindToService(this, null);
+	}
+
+	@Override
+	protected void onStop() {
+		myCollection.unbind();
+
+		super.onStop();
 	}
 
 	@Override
@@ -53,16 +75,57 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		final ColorProfile profile = fbReader.getColorProfile();
+		// TODO: use user-defined locale, not the default one,
+		// or set user-defined locale as default
+		final String decimalSeparator =
+			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
-		directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
-		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
+		directoriesScreen.addPreference(new ZLStringListOptionPreference(
+			this, Paths.BookPathOption(), directoriesScreen.Resource, "books"
+		) {
+			protected void setValue(String value) {
+				super.setValue(value);
+				myCollection.reset(false);
+			}
+		});
+		directoriesScreen.addPreference(new ZLStringListOptionPreference(
+			this, Paths.FontPathOption(), directoriesScreen.Resource, "fonts"
+		));
+		directoriesScreen.addPreference(new ZLStringListOptionPreference(
+			this, Paths.WallpaperPathOption(), directoriesScreen.Resource, "wallpapers"
+		));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
+		appearanceScreen.addPreference(new LanguagePreference(
+			this, appearanceScreen.Resource, "language", ZLResource.interfaceLanguages()
+		) {
+			@Override
+			protected void init() {
+				setInitialValue(ZLResource.getLanguageOption().getValue());
+			}
+
+			@Override
+			protected void setLanguage(String code) {
+				final ZLStringOption languageOption = ZLResource.getLanguageOption();
+				if (!code.equals(languageOption.getValue())) {
+					languageOption.setValue(code);
+					finish();
+					startActivity(new Intent(
+						Intent.ACTION_VIEW, Uri.parse("fbreader-action:preferences#appearance")
+					));
+				}
+			}
+		});
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
 			this, appearanceScreen.Resource, "screenOrientation",
-			androidLibrary.OrientationOption, androidLibrary.allOrientations()
+			androidLibrary.getOrientationOption(), androidLibrary.allOrientations()
+		));
+		appearanceScreen.addPreference(new ZLBooleanPreference(
+			this,
+			fbReader.TwoColumnViewOption,
+			appearanceScreen.Resource,
+			"twoColumnView"
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
@@ -91,7 +154,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			appearanceScreen.Resource,
 			"dontTurnScreenOffDuringCharging"
 		));
-		*/
+		 */
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
 		}
@@ -127,7 +190,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final String[] spacings = new String[spaceOption.MaxValue - spaceOption.MinValue + 1];
 		for (int i = 0; i < spacings.length; ++i) {
 			final int val = spaceOption.MinValue + i;
-			spacings[i] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
+			spacings[i] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
 		}
 		textScreen.addPreference(new ZLChoicePreference(
 			this, textScreen.Resource, "lineSpacing",
@@ -178,8 +241,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				continue;
 			}
 			ZLTextFullStyleDecoration fullDecoration =
-				decoration instanceof ZLTextFullStyleDecoration ?
-					(ZLTextFullStyleDecoration)decoration : null;
+				decoration instanceof ZLTextFullStyleDecoration
+					? (ZLTextFullStyleDecoration)decoration : null;
 
 			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.getName());
 			formatScreen.addPreference(new FontOption(
@@ -246,7 +309,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				for (int j = 1; j < spacingValues.length; ++j) {
 					final int val = 4 + j;
 					spacingValues[j] = 10 * val;
-					spacingKeys[j] = (char)(val / 10 + '0') + "." + (char)(val % 10 + '0');
+					spacingKeys[j] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
 				}
 				formatScreen.addPreference(new ZLIntegerChoicePreference(
 					this, textScreen.Resource, "lineSpacing",
@@ -257,6 +320,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
 		final ZLPreferenceSet bgPreferences = new ZLPreferenceSet();
+
+		final Screen cssScreen = createPreferenceScreen("css");
+		cssScreen.addOption(collection.UseCSSFontSizeOption, "fontSize");
+		cssScreen.addOption(collection.UseCSSTextAlignmentOption, "textAlignment");
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 		colorsScreen.addPreference(new WallpaperPreference(
@@ -274,7 +341,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		bgPreferences.setEnabled("".equals(profile.WallpaperOption.getValue()));
 		/*
 		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
-		*/
+		 */
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
@@ -300,6 +367,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, marginsScreen.Resource.getResource("bottom"),
 			fbReader.BottomMarginOption
 		));
+		marginsScreen.addPreference(new ZLIntegerRangePreference(
+			this, marginsScreen.Resource.getResource("spaceBetweenColumns"),
+			fbReader.SpaceBetweenColumnsOption
+		));
 
 		final Screen statusLineScreen = createPreferenceScreen("scrollBar");
 
@@ -317,19 +388,20 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
+		final FooterOptions footerOptions = fbReader.FooterOptions;
 		footerPreferences.add(statusLineScreen.addPreference(new ZLIntegerRangePreference(
 			this, statusLineScreen.Resource.getResource("footerHeight"),
 			fbReader.FooterHeightOption
 		)));
 		footerPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerColor"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowTOCMarksOption, "tocMarks"));
+		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowTOCMarks, "tocMarks"));
 
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowClockOption, "showClock"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowBatteryOption, "showBattery"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowProgressOption, "showProgress"));
+		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
+		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowBattery, "showBattery"));
+		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowProgress, "showProgress"));
 		footerPreferences.add(statusLineScreen.addPreference(new FontOption(
 			this, statusLineScreen.Resource, "font",
-			fbReader.FooterFontOption, false
+			footerOptions.Font, false
 		)));
 		footerPreferences.setEnabled(
 			fbReader.ScrollbarTypeOption.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER
@@ -344,14 +416,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				this, fbreader, colorProfileScreen, key, ColorProfilePreference.createTitle(resource, key)
 			));
 		}
-		*/
+		 */
 
-		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
+		final PageTurningOptions pageTurningOptions = fbReader.PageTurningOptions;
 
 		final ZLKeyBindings keyBindings = fbReader.keyBindings();
 
 		final Screen scrollingScreen = createPreferenceScreen("scrolling");
-		scrollingScreen.addOption(scrollingPreferences.FingerScrollingOption, "fingerScrolling");
+		scrollingScreen.addOption(pageTurningOptions.FingerScrolling, "fingerScrolling");
 		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
 
 		final ZLPreferenceSet volumeKeysPreferences = new ZLPreferenceSet();
@@ -398,30 +470,66 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}));
 		volumeKeysPreferences.setEnabled(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
 
-		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
+		scrollingScreen.addOption(pageTurningOptions.Animation, "animation");
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
 			this,
 			scrollingScreen.Resource,
 			"animationSpeed",
-			scrollingPreferences.AnimationSpeedOption
+			pageTurningOptions.AnimationSpeed
 		));
-		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
+		scrollingScreen.addOption(pageTurningOptions.Horizontal, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
-		dictionaryScreen.addPreference(new DictionaryPreference(
-			this,
-			dictionaryScreen.Resource,
-			"dictionary",
-			DictionaryUtil.singleWordTranslatorOption(),
-			DictionaryUtil.dictionaryInfos(this, true)
+
+		final List<String> langCodes = ZLResource.languageCodes();
+		final ArrayList<Language> languages = new ArrayList<Language>(langCodes.size() + 1);
+		for (String code : langCodes) {
+			languages.add(new Language(code));
+		}
+		Collections.sort(languages);
+		languages.add(0, new Language(
+			Language.ANY_CODE, dictionaryScreen.Resource.getResource("targetLanguage")
 		));
-		dictionaryScreen.addPreference(new DictionaryPreference(
-			this,
-			dictionaryScreen.Resource,
-			"translator",
-			DictionaryUtil.multiWordTranslatorOption(),
-			DictionaryUtil.dictionaryInfos(this, false)
-		));
+		final LanguagePreference targetLanguagePreference = new LanguagePreference(
+			this, dictionaryScreen.Resource, "targetLanguage", languages
+		) {
+			@Override
+			protected void init() {
+				setInitialValue(DictionaryUtil.TargetLanguageOption.getValue());
+			}
+
+			@Override
+			protected void setLanguage(String code) {
+				DictionaryUtil.TargetLanguageOption.setValue(code);
+			}
+		};
+
+		try {
+			dictionaryScreen.addPreference(new DictionaryPreference(
+				this,
+				dictionaryScreen.Resource,
+				"dictionary",
+				DictionaryUtil.singleWordTranslatorOption(),
+				DictionaryUtil.dictionaryInfos(this, true)
+			) {
+				@Override
+				protected void onDialogClosed(boolean result) {
+					super.onDialogClosed(result);
+					targetLanguagePreference.setEnabled(
+						DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
+					);
+				}
+			});
+			dictionaryScreen.addPreference(new DictionaryPreference(
+				this,
+				dictionaryScreen.Resource,
+				"translator",
+				DictionaryUtil.multiWordTranslatorOption(),
+				DictionaryUtil.dictionaryInfos(this, false)
+			));
+		} catch (Exception e) {
+			// ignore: dictionary lists are not initialized yet
+		}
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
 			this,
 			fbReader.NavigateAllWordsOption,
@@ -429,17 +537,22 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			"navigateOverAllWords"
 		));
 		dictionaryScreen.addOption(fbReader.WordTappingActionOption, "tappingAction");
+		dictionaryScreen.addPreference(targetLanguagePreference);
+		targetLanguagePreference.setEnabled(
+			DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
+		);
 
 		final Screen imagesScreen = createPreferenceScreen("images");
 		imagesScreen.addOption(fbReader.ImageTappingActionOption, "tappingAction");
 		imagesScreen.addOption(fbReader.FitImagesToScreenOption, "fitImagesToScreen");
 		imagesScreen.addOption(fbReader.ImageViewBackgroundOption, "backgroundColor");
 
+		final CancelMenuOptions cancelMenuOptions = fbReader.CancelMenuOptions;
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
-		cancelMenuScreen.addOption(fbReader.ShowLibraryInCancelMenuOption, "library");
-		cancelMenuScreen.addOption(fbReader.ShowNetworkLibraryInCancelMenuOption, "networkLibrary");
-		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");
-		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");
+		cancelMenuScreen.addOption(cancelMenuOptions.ShowLibraryItem, "library");
+		cancelMenuScreen.addOption(cancelMenuOptions.ShowNetworkLibraryItem, "networkLibrary");
+		cancelMenuScreen.addOption(cancelMenuOptions.ShowPreviousBookItem, "previousBook");
+		cancelMenuScreen.addOption(cancelMenuOptions.ShowPositionItems, "positions");
 		final String[] backKeyActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(

@@ -1,0 +1,10 @@
+<resources>
+  <style name="FBReader.Activity" parent="android:Theme">
+	</style>
+  <style name="FBReader.Dialog" parent="android:Theme.Dialog">
+	</style>
+	<color name="transparent">#00000000</color>
+  <style name="FBReader.Transparent" parent="android:Theme.Translucent.NoTitleBar">
+    <item name="android:windowBackground">@color/transparent</item>
+  </style>
+</resources>

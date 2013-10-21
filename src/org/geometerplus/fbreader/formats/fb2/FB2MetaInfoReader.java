@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,11 @@ package org.geometerplus.fbreader.formats.fb2;
 import java.util.*;
 import java.io.IOException;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Tag;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Tag;
 
 public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 	private final static int READ_NOTHING = 0;
@@ -52,6 +51,7 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		myBook.setLanguage(null);
 	}
 
+	@Override
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
@@ -69,6 +69,7 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		}
 	}
 
+	@Override
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
 		switch (FB2Tag.getTagByName(tagName)) {
 			case FB2Tag.BODY:
@@ -126,6 +127,7 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public boolean endElementHandler(String tag) {
 		switch (FB2Tag.getTagByName(tag)) {
 			case FB2Tag.TITLE_INFO:
@@ -202,6 +204,7 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public void characterDataHandler(char[] data, int start, int length) {
 		switch (myReadState) {
 			case READ_AUTHOR_NAME_0:

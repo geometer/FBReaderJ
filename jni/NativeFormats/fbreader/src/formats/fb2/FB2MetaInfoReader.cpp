@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #include <cstdlib>
 
 #include <ZLInputStream.h>
-#include <ZLStringUtil.h>
+#include <ZLUnicodeUtil.h>
 
 #include "FB2MetaInfoReader.h"
 #include "FB2TagManager.h"
@@ -32,14 +32,15 @@ FB2MetaInfoReader::FB2MetaInfoReader(Book &book) : myBook(book) {
 	myBook.setTitle(std::string());
 	myBook.setLanguage(std::string());
 	myBook.removeAllTags();
+	myBook.removeAllUids();
 }
 
-void FB2MetaInfoReader::characterDataHandler(const char *text, size_t len) {
+void FB2MetaInfoReader::characterDataHandler(const char *text, std::size_t len) {
 	switch (myReadState) {
 		case READ_TITLE:
-			myBuffer.append(text, len);
-			break;
 		case READ_LANGUAGE:
+		case READ_GENRE:
+		case READ_ID:
 			myBuffer.append(text, len);
 			break;
 		case READ_AUTHOR_NAME_0:
@@ -50,9 +51,6 @@ void FB2MetaInfoReader::characterDataHandler(const char *text, size_t len) {
 			break;
 		case READ_AUTHOR_NAME_2:
 			myAuthorNames[2].append(text, len);
-			break;
-		case READ_GENRE:
-			myBuffer.append(text, len);
 			break;
 		default:
 			break;
@@ -66,25 +64,28 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 			interrupt();
 			break;
 		case _TITLE_INFO:
-			myReadState = READ_SOMETHING;
+			myReadState = READ_TITLE_INFO;
+			break;
+		case _DOCUMENT_INFO:
+			myReadState = READ_DOCUMENT_INFO;
 			break;
 		case _BOOK_TITLE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_TITLE;
 			}
 			break;
 		case _GENRE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_GENRE;
 			}
 			break;
 		case _AUTHOR:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_AUTHOR;
 			}
 			break;
 		case _LANG:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				myReadState = READ_LANGUAGE;
 			}
 			break;
@@ -104,14 +105,19 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 			}
 			break;
 		case _SEQUENCE:
-			if (myReadState == READ_SOMETHING) {
+			if (myReadState == READ_TITLE_INFO) {
 				const char *name = attributeValue(attributes, "name");
 				if (name != 0) {
 					std::string seriesTitle = name;
-					ZLStringUtil::stripWhiteSpaces(seriesTitle);
+					ZLUnicodeUtil::utf8Trim(seriesTitle);
 					const char *number = attributeValue(attributes, "number");
 					myBook.setSeries(seriesTitle, number != 0 ? std::string(number) : std::string());
 				}
+			}
+			break;
+		case _ID:
+			if (myReadState == READ_DOCUMENT_INFO) {
+				myReadState = READ_ID;
 			}
 			break;
 		default:
@@ -124,16 +130,19 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 		case _TITLE_INFO:
 			myReadState = READ_NOTHING;
 			break;
+		case _DOCUMENT_INFO:
+			myReadState = READ_NOTHING;
+			break;
 		case _BOOK_TITLE:
 			if (myReadState == READ_TITLE) {
 				myBook.setTitle(myBuffer);
 				myBuffer.erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _GENRE:
 			if (myReadState == READ_GENRE) {
-				ZLStringUtil::stripWhiteSpaces(myBuffer);
+				ZLUnicodeUtil::utf8Trim(myBuffer);
 				if (!myBuffer.empty()) {
 					const std::vector<std::string> &tags =
 						FB2TagManager::Instance().humanReadableTags(myBuffer);
@@ -146,14 +155,14 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 					}
 					myBuffer.erase();
 				}
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _AUTHOR:
 			if (myReadState == READ_AUTHOR) {
-				ZLStringUtil::stripWhiteSpaces(myAuthorNames[0]);
-				ZLStringUtil::stripWhiteSpaces(myAuthorNames[1]);
-				ZLStringUtil::stripWhiteSpaces(myAuthorNames[2]);
+				ZLUnicodeUtil::utf8Trim(myAuthorNames[0]);
+				ZLUnicodeUtil::utf8Trim(myAuthorNames[1]);
+				ZLUnicodeUtil::utf8Trim(myAuthorNames[2]);
 				std::string fullName = myAuthorNames[0];
 				if (!fullName.empty() && !myAuthorNames[1].empty()) {
 					fullName += ' ';
@@ -167,14 +176,14 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 				myAuthorNames[0].erase();
 				myAuthorNames[1].erase();
 				myAuthorNames[2].erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _LANG:
 			if (myReadState == READ_LANGUAGE) {
 				myBook.setLanguage(myBuffer);
 				myBuffer.erase();
-				myReadState = READ_SOMETHING;
+				myReadState = READ_TITLE_INFO;
 			}
 			break;
 		case _FIRST_NAME:
@@ -192,6 +201,13 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 				myReadState = READ_AUTHOR;
 			}
 			break;
+		case _ID:
+			if (myReadState == READ_ID) {
+				myBook.addUid("FB2-DOC-ID", myBuffer);
+				myBuffer.erase();
+				myReadState = READ_DOCUMENT_INFO;
+			}
+			break;
 		default:
 			break;
 	}
@@ -199,6 +215,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 
 bool FB2MetaInfoReader::readMetaInfo() {
 	myReadState = READ_NOTHING;
+	myBuffer.erase();
 	for (int i = 0; i < 3; ++i) {
 		myAuthorNames[i].erase();
 	}

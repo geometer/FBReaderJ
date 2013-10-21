@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,6 +75,21 @@ public final class ZLTextRegion {
 				return -1;
 			}
 			if (StartElementIndex > area.ElementIndex) {
+				return 1;
+			}
+			return 0;
+		}
+
+		public final int compareTo(ZLTextPosition position) {
+			final int ppi = position.getParagraphIndex();
+			if (ParagraphIndex != ppi) {
+				return ParagraphIndex < ppi ? -1 : 1;
+			}
+			final int pei = position.getElementIndex();
+			if (EndElementIndex < pei) {
+				return -1;
+			}
+			if (StartElementIndex > pei) {
 				return 1;
 			}
 			return 0;

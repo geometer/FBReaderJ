@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,12 @@
 package org.geometerplus.zlibrary.text.hyphenation;
 
 import java.util.List;
-import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.text.view.ZLTextWord; 
+import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
 public abstract class ZLTextHyphenator {
 	private static ZLTextHyphenator ourInstance;
-	
+
 	public static ZLTextHyphenator Instance() {
 		if (ourInstance == null) {
 			ourInstance = new ZLTextTeXHyphenator();
@@ -56,7 +55,7 @@ public abstract class ZLTextHyphenator {
 		pattern[0] = ' ';
 		for (int i = 0, j = word.Offset; i < len; ++i, ++j) {
 			char character = data[j];
-			if (ZLCharacterUtil.isLetter(character)) {
+			if (character == '\'' || character == '^' || Character.isLetter(character)) {
 				isLetter[i] = true;
 				pattern[i + 1] = Character.toLowerCase(character);
 			} else {
@@ -78,16 +77,16 @@ public abstract class ZLTextHyphenator {
 						break;
 					case '-':
 						mask[i] = (i >= 3)
-							&& isLetter[i - 3] 
-							&& isLetter[i - 2] 
-							&& isLetter[i] 
+							&& isLetter[i - 3]
+							&& isLetter[i - 2]
+							&& isLetter[i]
 							&& isLetter[i + 1];
 						break;
 					default:
-						mask[i] = mask[i] 
-							&& isLetter[i - 2] 
-							&& isLetter[i - 1] 
-							&& isLetter[i] 
+						mask[i] = mask[i]
+							&& isLetter[i - 2]
+							&& isLetter[i - 1]
+							&& isLetter[i]
 							&& isLetter[i + 1];
 						break;
 				}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 #include "Book.h"
 #include "Author.h"
 #include "Tag.h"
+#include "UID.h"
 
 #include "../formats/FormatPlugin.h"
 //#include "../migration/BookInfo.h"
@@ -217,9 +218,9 @@ bool Book::cloneTag(shared_ptr<Tag> from, shared_ptr<Tag> to, bool includeSubTag
 
 	const std::string &tagList = info.TagsOption.value();
 	if (!tagList.empty()) {
-		size_t index = 0;
+		std::size_t index = 0;
 		do {
-			size_t newIndex = tagList.find(',', index);
+			std::size_t newIndex = tagList.find(',', index);
 			book->addTag(Tag::getTagByFullName(tagList.substr(index, newIndex - index)));
 			index = newIndex + 1;
 		} while (index != 0);
@@ -227,9 +228,9 @@ bool Book::cloneTag(shared_ptr<Tag> from, shared_ptr<Tag> to, bool includeSubTag
 
 	const std::string &authorList = info.AuthorDisplayNameOption.value();
 	if (!authorList.empty()) {
-		size_t index = 0;
+		std::size_t index = 0;
 		do {
-			size_t newIndex = authorList.find(',', index);
+			std::size_t newIndex = authorList.find(',', index);
 			book->addAuthor(authorList.substr(index, newIndex - index));
 			index = newIndex + 1;
 		} while (index != 0);
@@ -294,4 +295,25 @@ void Book::addAuthor(shared_ptr<Author> author) {
 
 void Book::removeAllAuthors() {
 	myAuthors.clear();
+}
+
+void Book::addUid(shared_ptr<UID> uid) {
+	if (uid.isNull()) {
+		return;
+	}
+	UIDList::const_iterator it = std::find(myUIDs.begin(), myUIDs.end(), uid);
+	if (it == myUIDs.end()) {
+		myUIDs.push_back(uid);
+	}
+}
+
+void Book::addUid(const std::string &type, const std::string &id) {
+	if (type == "" || id == "") {
+		return;
+	}
+	addUid(new UID(type, id));
+}
+
+void Book::removeAllUids() {
+	myUIDs.clear();
 }

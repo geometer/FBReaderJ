@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ void XHTMLImageFinder::startElementHandler(const char *tag, const char **attribu
 		reference = attributeValue(attributes, "src");
 	} else if (TAG_IMAGE == tag) {
 		reference = attributeValue(
-			attributes, NamespaceAttributeNamePredicate(ZLXMLNamespace::XLink, "href")
+			attributes, FullNamePredicate(ZLXMLNamespace::XLink, "href")
 		);
 	}
 	if (reference != 0) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,11 +28,11 @@ public class HexInputStream extends InputStream {
 	private final byte[] myBuffer = new byte[32768];
 	private int myBufferOffset;
 	private int myBufferLength;
-	
+
 	public HexInputStream(InputStream stream) {
 		myBaseStream = stream;
 	}
-	
+
 	@Override
 	public int available() throws IOException {
 		// TODO: real value might be less than returned one

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,8 +47,8 @@ JavaClass AndroidUtil::Class_JavaEncodingCollection("org/geometerplus/zlibrary/c
 JavaClass AndroidUtil::Class_NativeFormatPlugin("org/geometerplus/fbreader/formats/NativeFormatPlugin");
 JavaClass AndroidUtil::Class_PluginCollection("org/geometerplus/fbreader/formats/PluginCollection");
 JavaClass AndroidUtil::Class_Paths("org/geometerplus/fbreader/Paths");
-JavaClass AndroidUtil::Class_Book("org/geometerplus/fbreader/library/Book");
-JavaClass AndroidUtil::Class_Tag("org/geometerplus/fbreader/library/Tag");
+JavaClass AndroidUtil::Class_Book("org/geometerplus/fbreader/book/Book");
+JavaClass AndroidUtil::Class_Tag("org/geometerplus/fbreader/book/Tag");
 JavaClass AndroidUtil::Class_NativeBookModel("org/geometerplus/fbreader/bookmodel/NativeBookModel");
 
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toLowerCase;
@@ -78,8 +78,8 @@ shared_ptr<IntMethod> AndroidUtil::Method_EncodingConverter_convert;
 shared_ptr<VoidMethod> AndroidUtil::Method_EncodingConverter_reset;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_JavaEncodingCollection_Instance;
-shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding_int;
-shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding_String;
+//shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding_int;
+shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding;
 shared_ptr<BooleanMethod> AndroidUtil::Method_JavaEncodingCollection_providesConverterFor;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_ZLFile_createFileByPath;
@@ -104,7 +104,7 @@ shared_ptr<VoidMethod> AndroidUtil::Method_Book_setLanguage;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_setEncoding;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_addAuthor;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_addTag;
-shared_ptr<BooleanMethod> AndroidUtil::Method_Book_save;
+shared_ptr<VoidMethod> AndroidUtil::Method_Book_addUid;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Tag_getTag;
 
@@ -154,8 +154,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_EncodingConverter_reset = new VoidMethod(Class_EncodingConverter, "reset", "()");
 
 	StaticMethod_JavaEncodingCollection_Instance = new StaticObjectMethod(Class_JavaEncodingCollection, "Instance", Class_JavaEncodingCollection, "()");
-	Method_JavaEncodingCollection_getEncoding_String = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(Ljava/lang/String;)");
-	Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(I)");
+	Method_JavaEncodingCollection_getEncoding = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(Ljava/lang/String;)");
+	//Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(I)");
 	Method_JavaEncodingCollection_providesConverterFor = new BooleanMethod(Class_JavaEncodingCollection, "providesConverterFor", "(Ljava/lang/String;)");
 
 	StaticMethod_ZLFile_createFileByPath = new StaticObjectMethod(Class_ZLFile, "createFileByPath", Class_ZLFile, "(Ljava/lang/String;)");
@@ -179,10 +179,10 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Book_setLanguage = new VoidMethod(Class_Book, "setLanguage", "(Ljava/lang/String;)");
 	Method_Book_setEncoding = new VoidMethod(Class_Book, "setEncoding", "(Ljava/lang/String;)");
 	Method_Book_addAuthor = new VoidMethod(Class_Book, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
-	Method_Book_addTag = new VoidMethod(Class_Book, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)");
-	Method_Book_save = new BooleanMethod(Class_Book, "save", "()");
+	Method_Book_addTag = new VoidMethod(Class_Book, "addTag", "(Lorg/geometerplus/fbreader/book/Tag;)");
+	Method_Book_addUid = new VoidMethod(Class_Book, "addUid", "(Ljava/lang/String;Ljava/lang/String;)");
 
-	StaticMethod_Tag_getTag = new StaticObjectMethod(Class_Tag, "getTag", Class_Tag, "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)");
+	StaticMethod_Tag_getTag = new StaticObjectMethod(Class_Tag, "getTag", Class_Tag, "(Lorg/geometerplus/fbreader/book/Tag;Ljava/lang/String;)");
 
 	Field_NativeBookModel_Book = new ObjectField(Class_NativeBookModel, "Book", Class_Book);
 	Method_NativeBookModel_initInternalHyperlinks = new VoidMethod(Class_NativeBookModel, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)");
@@ -215,7 +215,7 @@ jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
 
 	std::vector<jint> offsets, sizes;
 	const ZLFileImage::Blocks &blocks = image.blocks();
-	for (size_t i = 0; i < blocks.size(); ++i) {
+	for (std::size_t i = 0; i < blocks.size(); ++i) {
 		offsets.push_back((jint)blocks.at(i).offset);
 		sizes.push_back((jint)blocks.at(i).size);
 	}
@@ -274,14 +274,14 @@ std::string AndroidUtil::convertNonUtfString(const std::string &str) {
 }
 
 jintArray AndroidUtil::createJavaIntArray(JNIEnv *env, const std::vector<jint> &data) {
-	size_t size = data.size();
+	std::size_t size = data.size();
 	jintArray array = env->NewIntArray(size);
 	env->SetIntArrayRegion(array, 0, size, &data.front());
 	return array;
 }
 
 jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data) {
-	size_t size = data.size();
+	std::size_t size = data.size();
 	jbyteArray array = env->NewByteArray(size);
 	env->SetByteArrayRegion(array, 0, size, &data.front());
 	return array;

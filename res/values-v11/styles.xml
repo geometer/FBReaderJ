@@ -1,0 +1,6 @@
+<resources>
+  <style name="FBReader.Activity" parent="android:Theme.Holo">
+	</style>
+  <style name="FBReader.Dialog" parent="android:Theme.Holo.Dialog">
+	</style>
+</resources>

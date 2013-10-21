@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,6 @@ package org.geometerplus.android.fbreader;
 import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
-
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.text.view.*;
 
@@ -62,7 +60,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					openInBrowser(hyperlink.Id);
 					break;
 				case FBHyperlinkType.INTERNAL:
-					Reader.Model.Book.markHyperlinkAsVisited(hyperlink.Id);
+					Reader.Collection.markHyperlinkAsVisited(Reader.Model.Book, hyperlink.Id);
 					Reader.tryOpenFootnote(hyperlink.Id);
 					break;
 			}
@@ -77,9 +75,9 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					intent.setData(Uri.parse(url));
 					intent.putExtra(
 						ImageViewActivity.BACKGROUND_COLOR_KEY,
-						Reader.ImageViewBackgroundOption.getValue().getIntValue()
+						Reader.ImageViewBackgroundOption.getValue().intValue()
 					);
-					BaseActivity.startActivity(intent);
+					OrientationUtil.startActivity(BaseActivity, intent);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -111,7 +109,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 				BaseActivity.runOnUiThread(new Runnable() {
 					public void run() {
 						try {
-							BaseActivity.startActivity(intent);
+							OrientationUtil.startActivity(BaseActivity, intent);
 						} catch (ActivityNotFoundException e) {
 							e.printStackTrace();
 						}

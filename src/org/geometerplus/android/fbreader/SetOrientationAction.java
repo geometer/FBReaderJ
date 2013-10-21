@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,6 @@ import android.content.pm.ActivityInfo;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
@@ -55,14 +53,14 @@ class SetScreenOrientationAction extends FBAndroidAction {
 
 	@Override
 	public ZLBoolean3 isChecked() {
-		return myOptionValue.equals(ZLibrary.Instance().OrientationOption.getValue())
+		return myOptionValue.equals(ZLibrary.Instance().getOrientationOption().getValue())
 			? ZLBoolean3.B3_TRUE : ZLBoolean3.B3_FALSE;
 	}
 
 	@Override
 	protected void run(Object ... params) {
 		setOrientation(BaseActivity, myOptionValue);
-		ZLibrary.Instance().OrientationOption.setValue(myOptionValue);
+		ZLibrary.Instance().getOrientationOption().setValue(myOptionValue);
 		Reader.onRepaintFinished();
 	}
 }

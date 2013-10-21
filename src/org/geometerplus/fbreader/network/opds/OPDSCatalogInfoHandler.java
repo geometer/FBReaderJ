@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,19 +45,19 @@ class OPDSCatalogInfoHandler extends AbstractOPDSFeedHandler {
 	}
 
 	public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
-		Icon = (feed.Icon != null) ? ZLNetworkUtil.url(myBaseURL, feed.Icon.Uri) : null;
+		Icon = feed.Icon != null ? ZLNetworkUtil.url(myBaseURL, feed.Icon.Uri) : null;
 		Title = feed.Title;
 		Summary = feed.Subtitle;
 
 		for (ATOMLink link: feed.Links) {
-			final MimeType type = MimeType.get(link.getType());
-			final String rel = myLink.relation(link.getRel(), type);
+			final MimeType mime = MimeType.get(link.getType());
+			final String rel = myLink.relation(link.getRel(), mime);
 			if ("search".equals(rel)) {
-				if (MimeType.APP_OPENSEARCHDESCRIPTION.equals(type)) {
+				if (MimeType.APP_OPENSEARCHDESCRIPTION.equals(mime)) {
 					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
-				} else if (MimeType.APP_ATOM_XML.weakEquals(type)) {
-					final String template = ZLNetworkUtil.url(myBaseURL, link.getHref());
-					final OpenSearchDescription descr = OpenSearchDescription.createDefault(template);
+				} else if (MimeType.APP_ATOM_XML.weakEquals(mime) || MimeType.TEXT_HTML.weakEquals(mime)) {
+					final String tmpl = ZLNetworkUtil.url(myBaseURL, link.getHref());
+					final OpenSearchDescription descr = OpenSearchDescription.createDefault(tmpl, mime);
 					if (descr.isValid()) {
 						DirectOpenSearchDescription = descr;
 					}

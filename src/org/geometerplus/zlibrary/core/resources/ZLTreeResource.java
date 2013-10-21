@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,10 @@ package org.geometerplus.zlibrary.core.resources;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-import org.geometerplus.zlibrary.core.filesystem.*;
 
 final class ZLTreeResource extends ZLResource {
 	private static interface Condition {
@@ -132,20 +133,39 @@ final class ZLTreeResource extends ZLResource {
 		}
 	}
 
+	private static void setInterfaceLanguage() {
+		final String custom = getLanguageOption().getValue();
+		final String language;
+		final String country;
+		if (Language.SYSTEM_CODE.equals(custom)) {
+			final Locale locale = Locale.getDefault();
+			language = locale.getLanguage();
+			country = locale.getCountry();
+		} else {
+			final int index = custom.indexOf('_');
+			if (index == -1) {
+				language = custom;
+				country = null;
+			} else {
+				language = custom.substring(0, index);
+				country = custom.substring(index + 1);
+			}
+		}
+		if ((language != null && !language.equals(ourLanguage)) ||
+			(country != null && !country.equals(ourCountry))) {
+			ourLanguage = language;
+			ourCountry = country;
+			loadData();
+		}
+	}
+
 	private static void updateLanguage() {
 		final long timeStamp = System.currentTimeMillis();
 		if (timeStamp > ourTimeStamp + 1000) {
 			synchronized (ourLock) {
 				if (timeStamp > ourTimeStamp + 1000) {
 					ourTimeStamp = timeStamp;
-					final String language = Locale.getDefault().getLanguage();
-					final String country = Locale.getDefault().getCountry();
-					if ((language != null && !language.equals(ourLanguage)) ||
-						(country != null && !country.equals(ourCountry))) {
-						ourLanguage = language;
-						ourCountry = country;
-						loadData();
-					}
+					setInterfaceLanguage();
 				}
 			}
 		}
@@ -154,6 +174,7 @@ final class ZLTreeResource extends ZLResource {
 	private static void loadData(ResourceTreeReader reader, String fileName) {
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/zlibrary/" + fileName));
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/" + fileName));
+		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/lang.xml"));
 	}
 
 	private static void loadData() {

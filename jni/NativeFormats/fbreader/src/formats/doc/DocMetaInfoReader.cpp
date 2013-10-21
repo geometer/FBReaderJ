@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,21 +30,9 @@ DocMetaInfoReader::DocMetaInfoReader(Book &book) : myBook(book) {
 	myBook.removeAllTags();
 }
 
-/*
-void DocMetaInfoReader::characterDataHandler(const char *text, size_t len) {
-}
-
-void DocMetaInfoReader::startElementHandler(int tag, const char **) {
-}
-
-void DocMetaInfoReader::endElementHandler(int tag) {
-}
-*/
-
 bool DocMetaInfoReader::readMetaInfo() {
 	myBook.removeAllAuthors();
 	myBook.setTitle(myBook.file().name(true));
-	myBook.setEncoding("windows-1251"); //TODO implement encoding retrieving
 	myBook.removeAllTags();
 	return true;
 }

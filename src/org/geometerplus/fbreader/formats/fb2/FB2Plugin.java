@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
 public class FB2Plugin extends JavaFormatPlugin {
@@ -45,6 +45,11 @@ public class FB2Plugin extends JavaFormatPlugin {
 	@Override
 	public void readMetaInfo(Book book) throws BookReadingException {
 		new FB2MetaInfoReader(book).readMetaInfo();
+	}
+
+	@Override
+	public void readUids(Book book) throws BookReadingException {
+		// this method does nothing, we expect it will be never called
 	}
 
 	@Override

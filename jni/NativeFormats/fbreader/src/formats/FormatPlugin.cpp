@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,66 +22,76 @@
 #include <ZLInputStream.h>
 #include <ZLLanguageDetector.h>
 #include <ZLImage.h>
+#include <ZLEncodingConverter.h>
 
 #include "FormatPlugin.h"
 
 #include "../library/Book.h"
 
-void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) {
+bool FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream, bool force) {
 	std::string language = book.language();
 	std::string encoding = book.encoding();
 
-	if (!encoding.empty()) {
-		return;
+	if (!force && !encoding.empty()) {
+		return true;
 	}
 
+	bool detected = false;
 	PluginCollection &collection = PluginCollection::Instance();
 	if (encoding.empty()) {
-		encoding = "utf-8";
+		encoding = ZLEncodingConverter::UTF8;
 	}
 	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
-		const size_t size = stream.read(buffer, BUFSIZE);
+		const std::size_t size = stream.read(buffer, BUFSIZE);
 		stream.close();
 		shared_ptr<ZLLanguageDetector::LanguageInfo> info = ZLLanguageDetector().findInfo(buffer, size);
 		delete[] buffer;
 		if (!info.isNull()) {
+			detected = true;
 			if (!info->Language.empty()) {
 				language = info->Language;
 			}
 			encoding = info->Encoding;
-			if ((encoding == "us-ascii") || (encoding == "iso-8859-1")) {
+			if (encoding == ZLEncodingConverter::ASCII || encoding == "iso-8859-1") {
 				encoding = "windows-1252";
 			}
 		}
 	}
 	book.setEncoding(encoding);
 	book.setLanguage(language);
+
+	return detected;
 }
 
-void FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream) {
+bool FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream, const std::string &encoding, bool force) {
 	std::string language = book.language();
-	if (!language.empty()) {
-		return;
+	if (!force && !language.empty()) {
+		return true;
 	}
+
+	bool detected = false;
 
 	PluginCollection &collection = PluginCollection::Instance();
 	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
-		const size_t size = stream.read(buffer, BUFSIZE);
+		const std::size_t size = stream.read(buffer, BUFSIZE);
 		stream.close();
 		shared_ptr<ZLLanguageDetector::LanguageInfo> info =
-			ZLLanguageDetector().findInfoForEncoding(book.encoding(), buffer, size, -20000);
+			ZLLanguageDetector().findInfoForEncoding(encoding, buffer, size, -20000);
 		delete[] buffer;
 		if (!info.isNull()) {
+			detected = true;
 			if (!info->Language.empty()) {
 				language = info->Language;
 			}
 		}
 	}
 	book.setLanguage(language);
+
+	return detected;
 }
 
 const std::string &FormatPlugin::tryOpen(const ZLFile&) const {

@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="本地搜尋"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="打開書藉"/>
 		<node name="showBookInfo" value="書藉資訊"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="刪除書藉"/>
 		<node name="addToFavorites" value="收藏"/>
 		<node name="removeFromFavorites" value="從收藏中移除"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="作者">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="搜尋結果">
 			<node name="summary" value="%s 的搜尋結果"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="打開目錄"/>
 		<node name="networkSearch" value="搜尋"/>
@@ -107,6 +113,7 @@
 		<node name="removeCustomCatalog" value="刪除目錄"/>
 		<node name="addCustomCatalog" value="新增目錄"/>
 		<node name="addCustomCatalogSummary" value="手動新增 OPDS 目錄"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="是否要閱讀書藉的本地存檔嗎?"/>
 			<node name="download" value="是否下載此書?"/>
@@ -123,7 +130,13 @@
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="網絡搜尋"/>
 			<node name="reload" value="重新載入"/>
 			<node name="signIn" value="登入"/>
@@ -132,7 +145,7 @@
 			<node name="topup" value="升級賬戶"/>
 			<node name="addCustomCatalog" value="新增目錄"/>
 			<node name="refreshCatalogsList" value="重新整理目錄"/>
-			<node name="languages" value="語言篩選"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="清空購物籃"/>
 			<node name="buyAllBooks" value="購買全部書藉"/>
 		</node>
@@ -208,6 +221,19 @@
 		<node name="forward" value="前進"/>
 		<node name="close" value="開閉 FBReader"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="刪除書籤"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="選擇">
 		<node name="copyToClipboard" value="複製"/>
 		<node name="openInDictionary" value="查詢字典"/>
@@ -217,7 +243,7 @@
 		<node name="clearSelection" value="清空"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="設定"/>
@@ -252,6 +278,7 @@
 		<node name="decreaseFont" value="縮小"/>
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="書籤"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="檔名"/>
@@ -271,6 +298,7 @@
 		</node>
 		<node name="appearance" value="外觀">
 			<node name="summary" value="旋轉， 狀態列"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
 				<node name="system" value="System" toBeTranslated="true"/>
 				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
@@ -299,19 +327,18 @@
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="調整屏幕亮度">
 				<node name="summaryOn" value="通過於屏幕左方上下拉動調整"/>
 				<node name="summaryOff" value="關閉"/>
 			</node>
 			<node name="dontTurnScreenOff" value="防止進入待機狀態">
 				<node name="0" value="必然"/>
-				<!-- Percent sign (%) could not be used in resource strings
-								because there is a bug in Cyanogen Mod firmware that
-								crashes the program with such resources
-					<node name="25" value= "當電量大於25%"/>
-					<node name="50" value= "當電量大於50%"/>-->
-				<node name="25" value="While battery level is greater than 25 percent"/>
-				<node name="50" value="While battery level is greater than 50 percent"/>
+				<node name="25" value="當電量大於25%%"/>
+				<node name="50" value="當電量大於50%%"/>
 				<node name="100" value="永不"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="充電時防止關閉屏幕">
@@ -502,6 +529,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="colors" value="顏色及壁紙">
 			<node name="summary" value="顏色設定"/>
 			<node name="background" value="背景">
@@ -525,6 +563,7 @@
 			<node name="right" value="右邊距"/>
 			<node name="top" value="頂邊距"/>
 			<node name="bottom" value="底邊距"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="滾動條">
 			<node name="summary" value="滾動條及頁尾設定"/>
@@ -602,6 +641,9 @@
 			<node name="summary" value="字典設定"/>
 			<node name="dictionary" value="字典"/>
 			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="長按動作">
 				<node name="doNothing" value="長按不做任何動作"/>
 				<node name="selectSingleWord" value="長按選字"/>
@@ -668,7 +710,7 @@
 			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
 			<node name="version" value="Version" toBeTranslated="true"/>
 			<node name="site" value="Visit our website" toBeTranslated="true">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
 				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
@@ -698,6 +740,10 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="收藏"/>
+			<node name="removeFromFavorites" value="從收藏中移除"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安裝插件"/>
@@ -785,6 +831,7 @@
 		<node name="dictionaryIsNotInstalled" value="你並未有安裝字典"/>
 		<node name="permissionDenied" value="沒有足夠權限"/>
 		<node name="noFavorites" value="你並未有收藏"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="空目錄"/>
 		<node name="emptyBasket" value="購物籃內沒有物品"/>
 		<node name="emptyNetworkSearchResults" value="沒有結果符合"/>
@@ -822,5 +869,8 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

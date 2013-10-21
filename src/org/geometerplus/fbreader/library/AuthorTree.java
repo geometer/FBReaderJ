@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,24 +19,27 @@
 
 package org.geometerplus.fbreader.library;
 
-public class AuthorTree extends LibraryTree {
+import java.util.Collections;
+
+import org.geometerplus.fbreader.book.*;
+
+public class AuthorTree extends FilteredTree {
 	public final Author Author;
 
-	AuthorTree(Author author) {
+	AuthorTree(IBookCollection collection, Author author) {
+		super(collection, new Filter.ByAuthor(author));
 		Author = author;
 	}
 
-	AuthorTree(LibraryTree parent, Author author, int position) {
-		super(parent, position);
+	AuthorTree(AuthorListTree parent, Author author, int position) {
+		super(parent, new Filter.ByAuthor(author), position);
 		Author = author;
 	}
 
 	@Override
 	public String getName() {
-		return
-			Author != null ?
-				Author.DisplayName :
-				LibraryUtil.resource().getResource("unknownAuthor").getValue();
+		return Author.NULL.equals(Author)
+			? resource().getResource("unknownAuthor").getValue() : Author.DisplayName;
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	protected String getSortKey() {
-		if (Author == null) {
+		if (Author.NULL.equals(Author)) {
 			return null;
 		}
 		return new StringBuilder()
@@ -57,8 +60,30 @@ public class AuthorTree extends LibraryTree {
 			.toString();
 	}
 
+	private SeriesTree getSeriesSubtree(Series series) {
+		final SeriesTree temp = new SeriesTree(Collection, series, Author);
+		int position = Collections.binarySearch(subtrees(), temp);
+		if (position >= 0) {
+			return (SeriesTree)subtrees().get(position);
+		} else {
+			return new SeriesTree(this, series, Author, - position - 1);
+		}
+	}
+
 	@Override
-	public boolean containsBook(Book book) {
-		return book != null && book.authors().contains(Author);
+	protected boolean createSubtree(Book book) {
+		final SeriesInfo seriesInfo = book.getSeriesInfo();
+		if (seriesInfo != null) {
+			return getSeriesSubtree(seriesInfo.Series).createSubtree(book);
+		}
+
+		final BookTree temp = new BookTree(Collection, book);
+		int position = Collections.binarySearch(subtrees(), temp);
+		if (position >= 0) {
+			return false;
+		} else {
+			new BookTree(this, book, - position - 1);
+			return true;
+		}
 	}
 }

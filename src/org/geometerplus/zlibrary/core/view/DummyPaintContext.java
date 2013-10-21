@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  */
 
 package org.geometerplus.zlibrary.core.view;
-
-import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -69,7 +67,7 @@ final class DummyPaintContext extends ZLPaintContext {
 	public int getHeight() {
 		return 1;
 	}
-	
+
 	@Override
 	public int getStringWidth(char[] string, int offset, int length) {
 		return 1;

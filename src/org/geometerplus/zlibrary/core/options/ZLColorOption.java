@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ public final class ZLColorOption extends ZLOption {
 			if (value != null) {
 				try {
 					int intValue = Integer.parseInt(value);
-					if (myValue.getIntValue() != intValue) {
+					if (myValue.intValue() != intValue) {
 						myValue = new ZLColor(intValue);
 					}
 				} catch (NumberFormatException e) {
@@ -61,7 +61,7 @@ public final class ZLColorOption extends ZLOption {
 			if (colorValue.equals(myDefaultValue)) {
 				unsetConfigValue();
 			} else {
-				setConfigValue("" + colorValue.getIntValue());
+				setConfigValue(String.valueOf(colorValue.intValue()));
 			}
 		}
 	}

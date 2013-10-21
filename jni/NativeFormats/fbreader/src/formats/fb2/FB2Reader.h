@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,9 @@ private:
 public:
 	enum TagCode {
 		_P,
+		_UL,
+		_OL,
+		_LI,
 		_SUBTITLE,
 		_CITE,
 		_TEXT_AUTHOR,
@@ -78,6 +81,8 @@ public:
 		_COVERPAGE,
 		_SEQUENCE,
 		_GENRE,
+		_DOCUMENT_INFO,
+		_ID,
 		_UNKNOWN
 	};
 
@@ -86,7 +91,8 @@ protected:
 	~FB2Reader();
 
 protected:
-	const NamespaceAttributeNamePredicate myHrefPredicate;
+	const FullNamePredicate myHrefPredicate;
+	const BrokenNamePredicate myBrokenHrefPredicate;
 };
 
 inline FB2Reader::~FB2Reader() {}

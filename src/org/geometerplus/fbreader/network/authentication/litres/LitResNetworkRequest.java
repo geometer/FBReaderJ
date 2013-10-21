@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
 
 package org.geometerplus.fbreader.network.authentication.litres;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -34,7 +34,7 @@ public class LitResNetworkRequest extends ZLNetworkRequest {
 	}
 
 	public LitResNetworkRequest(String url, LitResAuthenticationXMLReader reader) {
-		super(clean(url), null, null);
+		super(clean(url));
 		final int index = url.indexOf('?');
 		if (index != -1) {
 			for (String param : url.substring(index + 1).split("&")) {

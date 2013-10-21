@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Cautare locala"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Deschide carte"/>
 		<node name="showBookInfo" value="Informatii despre carte"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Stergere cartea"/>
 		<node name="addToFavorites" value="Adauga la favorite"/>
 		<node name="removeFromFavorites" value="Sterge din favorite"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Reteaua de biblioteci Online">
 		<node name="byAuthor" value="Dupa autor">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="S-au gasit">
 			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Deschide catalogul"/>
 		<node name="networkSearch" value="Cautare"/>
@@ -107,6 +113,7 @@
 		<node name="removeCustomCatalog" value="Eliminati catalog"/>
 		<node name="addCustomCatalog" value="Adauga catalog"/>
 		<node name="addCustomCatalogSummary" value="Adauga particularizate catalog OPDS manual"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Doriti sa cititi copia locala?"/>
 			<node name="download" value="Doriti sa descarcati aceasta carte?"/>
@@ -123,7 +130,13 @@
 			<node name="title" value="Adauga Catalog"/>
 			<node name="editUrl" value="Editeaza URL manual"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Reteaua de cautare"/>
 			<node name="reload" value="Reîncarca"/>
 			<node name="signIn" value="Conectati-va în"/>
@@ -132,7 +145,7 @@
 			<node name="topup" value="Incarca cont"/>
 			<node name="addCustomCatalog" value="Adauga catalog"/>
 			<node name="refreshCatalogsList" value="Reîmprospatare cataloage"/>
-			<node name="languages" value="Filtru limba"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clar cos"/>
 			<node name="buyAllBooks" value="Cumpara toate cartile"/>
 		</node>
@@ -208,6 +221,19 @@
 		<node name="forward" value="Înainte"/>
 		<node name="close" value="Inchide Aplicatia"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Sterge marcaj"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Copiati în clipboard"/>
 		<node name="openInDictionary" value="Open in dictionar"/>
@@ -217,7 +243,7 @@
 		<node name="clearSelection" value="Sterge"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Setari"/>
@@ -252,6 +278,7 @@
 		<node name="decreaseFont" value="Micsoreaza"/>
 		<node name="toggleFullscreen" value="Pe intreg ecranul"/>
 		<node name="bookmarks" value="Favorite"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nume de fisier"/>
@@ -271,6 +298,7 @@
 		</node>
 		<node name="appearance" value="Aspect">
 			<node name="summary" value="Rotire, bara de stare"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Orientarea ecranului">
 				<node name="system" value="Sistem"/>
 				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
@@ -298,6 +326,10 @@
 			<node name="disableButtonLights" value="Dezactiveaza lumina butoanelor hardware în timpul lecturii">
 				<node name="summaryOn" value="Dezactiveaza lumina butonului (nu functioneaza pentru unele dispozitive)"/>
 				<node name="summaryOff" value="Nu dezactivati lumina butonului"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
 				<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
@@ -497,6 +529,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="colors" value="Culori si imagini de fundal">
 			<node name="summary" value="Setarile de culoare"/>
 			<node name="background" value="Fundal">
@@ -520,6 +563,7 @@
 			<node name="right" value="Marginea din dreapta"/>
 			<node name="top" value="Marginea de sus"/>
 			<node name="bottom" value="Marginea de jos"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Indicator de progres">
 			<node name="summary" value="Setarile scrollbar &amp; subsol"/>
@@ -597,6 +641,9 @@
 			<node name="summary" value="Setari dictionar "/>
 			<node name="dictionary" value="Dictionar"/>
 			<node name="translator" value="Traducator"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Atingere lunga pentru actiune">
 				<node name="doNothing" value="Apasând lung nu face nimic"/>
 				<node name="selectSingleWord" value="Apasând lung selecteaza un singur cuvânt"/>
@@ -663,7 +710,7 @@
 			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
 			<node name="version" value="Version" toBeTranslated="true"/>
 			<node name="site" value="Visit our website" toBeTranslated="true">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
 				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
@@ -693,6 +740,10 @@
 			<node name="authorize" value="Autorizeaza"/>
 			<node name="resetPosition" value="Reseteaza pozitia"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Adauga la favorite"/>
+			<node name="removeFromFavorites" value="Sterge din favorite"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -780,6 +831,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionarul nu este instalat, imi pare rau"/>
 		<node name="permissionDenied" value="Permisiune refuzata, îmi pare rau"/>
 		<node name="noFavorites" value="Lista ta de favorite este goala, îmi pare rau"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Catalogul este gol, îmi pare rau"/>
 		<node name="emptyBasket" value="Cosul Dvs. este gol, îmi pare rau"/>
 		<node name="emptyNetworkSearchResults" value="Nu s-a gasit nici o carte"/>
@@ -817,5 +869,8 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,9 +73,9 @@ public class FileTypeCollection {
 		return MimeType.UNKNOWN;
 	}
 
-	public MimeType simplifiedMimeType(ZLFile file) {
+	public MimeType rawMimeType(ZLFile file) {
 		for (FileType type : types()) {
-			final MimeType mime = type.simplifiedMimeType(file);
+			final MimeType mime = type.rawMimeType(file);
 			if (mime != MimeType.NULL) {
 				return mime;
 			}

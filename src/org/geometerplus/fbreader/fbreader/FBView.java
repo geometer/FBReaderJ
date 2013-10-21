@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
+import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 
 public final class FBView extends ZLTextView {
 	private FBReaderApp myReader;
@@ -56,10 +57,10 @@ public final class FBView extends ZLTextView {
 	private TapZoneMap myZoneMap;
 
 	private TapZoneMap getZoneMap() {
-		final ScrollingPreferences prefs = ScrollingPreferences.Instance();
-		String id = prefs.TapZoneMapOption.getValue();
+		final PageTurningOptions prefs = myReader.PageTurningOptions;
+		String id = prefs.TapZoneMap.getValue();
 		if ("".equals(id)) {
-			id = ScrollingPreferences.Instance().HorizontalOption.getValue() ? "right_to_left" : "up";
+			id = prefs.Horizontal.getValue() ? "right_to_left" : "up";
 		}
 		if (myZoneMap == null || !id.equals(myZoneMap.Name)) {
 			myZoneMap = TapZoneMap.zoneMap(id);
@@ -81,8 +82,17 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		final ZLTextHighlighting highlighting = findHighlighting(x, y, MAX_SELECTION_DISTANCE);
+		if (highlighting instanceof BookmarkHighlighting) {
+			myReader.runAction(
+				ActionCode.SELECTION_BOOKMARK,
+				((BookmarkHighlighting)highlighting).Bookmark
+			);
+			return true;
+		}
+
 		myReader.runAction(getZoneMap().getActionByCoordinates(
-			x, y, myContext.getWidth(), myContext.getHeight(),
+			x, y, getContextWidth(), getContextHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
 		), x, y);
 
@@ -100,7 +110,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 		myReader.runAction(getZoneMap().getActionByCoordinates(
-			x, y, myContext.getWidth(), myContext.getHeight(), TapZoneMap.Tap.doubleTap
+			x, y, getContextWidth(), getContextHeight(), TapZoneMap.Tap.doubleTap
 		), x, y);
 		return true;
 	}
@@ -117,7 +127,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
+		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < getContextWidth() / 10) {
 			myIsBrightnessAdjustmentInProgress = true;
 			myStartY = y;
 			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
@@ -129,11 +139,11 @@ public final class FBView extends ZLTextView {
 	}
 
 	private boolean isFlickScrollingEnabled() {
-		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			ScrollingPreferences.Instance().FingerScrollingOption.getValue();
+		final PageTurningOptions.FingerScrollingType fingerScrolling =
+			myReader.PageTurningOptions.FingerScrolling.getValue();
 		return
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
+			fingerScrolling == PageTurningOptions.FingerScrollingType.byFlick ||
+			fingerScrolling == PageTurningOptions.FingerScrollingType.byTapAndFlick;
 	}
 
 	private void startManualScrolling(int x, int y) {
@@ -141,7 +151,7 @@ public final class FBView extends ZLTextView {
 			return;
 		}
 
-		final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
+		final boolean horizontal = myReader.PageTurningOptions.Horizontal.getValue();
 		final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
 		myReader.getViewWidget().startManualScrolling(x, y, direction);
 	}
@@ -159,11 +169,11 @@ public final class FBView extends ZLTextView {
 
 		synchronized (this) {
 			if (myIsBrightnessAdjustmentInProgress) {
-				if (x >= myContext.getWidth() / 5) {
+				if (x >= getContextWidth() / 5) {
 					myIsBrightnessAdjustmentInProgress = false;
 					startManualScrolling(x, y);
 				} else {
-					final int delta = (myStartBrightness + 30) * (myStartY - y) / myContext.getHeight();
+					final int delta = (myStartBrightness + 30) * (myStartY - y) / getContextHeight();
 					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
 					return true;
 				}
@@ -194,7 +204,7 @@ public final class FBView extends ZLTextView {
 
 		if (isFlickScrollingEnabled()) {
 			myReader.getViewWidget().startAnimatedScrolling(
-				x, y, ScrollingPreferences.Instance().AnimationSpeedOption.getValue()
+				x, y, myReader.PageTurningOptions.AnimationSpeed.getValue()
 			);
 			return true;
 		}
@@ -353,6 +363,16 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
+	public int getSpaceBetweenColumns() {
+		return myReader.SpaceBetweenColumnsOption.getValue();
+	}
+
+	@Override
+	public boolean twoColumnView() {
+		return getContextHeight() <= getContextWidth() && myReader.TwoColumnViewOption.getValue();
+	}
+
+	@Override
 	public ZLFile getWallpaperFile() {
 		final String filePath = myReader.getColorProfile().WallpaperOption.getValue();
 		if ("".equals(filePath)) {
@@ -379,12 +399,12 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLColor getSelectedBackgroundColor() {
+	public ZLColor getSelectionBackgroundColor() {
 		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
 	}
 
 	@Override
-	public ZLColor getSelectedForegroundColor() {
+	public ZLColor getSelectionForegroundColor() {
 		return myReader.getColorProfile().SelectionForegroundOption.getValue();
 	}
 
@@ -396,7 +416,7 @@ public final class FBView extends ZLTextView {
 			case FBHyperlinkType.NONE:
 				return profile.RegularTextOption.getValue();
 			case FBHyperlinkType.INTERNAL:
-				return myReader.Model.Book.isHyperlinkVisited(hyperlink.Id)
+				return myReader.Collection.isHyperlinkVisited(myReader.Model.Book, hyperlink.Id)
 					? profile.VisitedHyperlinkTextOption.getValue()
 					: profile.HyperlinkTextOption.getValue();
 			case FBHyperlinkType.EXTERNAL:
@@ -405,7 +425,7 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLColor getHighlightingColor() {
+	public ZLColor getHighlightingBackgroundColor() {
 		return myReader.getColorProfile().HighlightingOption.getValue();
 	}
 
@@ -450,7 +470,7 @@ public final class FBView extends ZLTextView {
 					}
 				}
 			}
-			for (TOCTree tocItem : toc.allSubTrees(maxLevel)) {
+			for (TOCTree tocItem : toc.allSubtrees(maxLevel)) {
 				myTOCMarks.add(tocItem);
 			}
 		}
@@ -483,7 +503,7 @@ public final class FBView extends ZLTextView {
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
 			context.setFont(
-				reader.FooterFontOption.getValue(),
+				reader.FooterOptions.Font.getValue(),
 				height <= 10 ? height + 3 : height + 1,
 				height > 10, false, false, false
 			);
@@ -491,19 +511,19 @@ public final class FBView extends ZLTextView {
 			final PagePosition pagePosition = FBView.this.pagePosition();
 
 			final StringBuilder info = new StringBuilder();
-			if (reader.FooterShowProgressOption.getValue()) {
+			if (reader.FooterOptions.ShowProgress.getValue()) {
 				info.append(pagePosition.Current);
 				info.append("/");
 				info.append(pagePosition.Total);
 			}
-			if (reader.FooterShowBatteryOption.getValue()) {
+			if (reader.FooterOptions.ShowBattery.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
 				info.append(reader.getBatteryLevel());
 				info.append("%");
 			}
-			if (reader.FooterShowClockOption.getValue()) {
+			if (reader.FooterOptions.ShowClock.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
@@ -534,7 +554,7 @@ public final class FBView extends ZLTextView {
 			context.setFillColor(fillColor);
 			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
-			if (reader.FooterShowTOCMarksOption.getValue()) {
+			if (reader.FooterOptions.ShowTOCMarks.getValue()) {
 				if (myTOCMarks == null) {
 					updateTOCMarks(model);
 				}
@@ -623,6 +643,6 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Animation getAnimationType() {
-		return ScrollingPreferences.Instance().AnimationOption.getValue();
+		return myReader.PageTurningOptions.Animation.getValue();
 	}
 }

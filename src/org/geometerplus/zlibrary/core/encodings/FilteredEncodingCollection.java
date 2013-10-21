@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,10 +66,12 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 		private String myCurrentFamilyName;
 		private Encoding myCurrentEncoding;
 
+		@Override
 		public boolean dontCacheAttributeValues() {
 			return true;
 		}
 
+		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("group".equals(tag)) {
 				myCurrentFamilyName = attributes.getValue("name");

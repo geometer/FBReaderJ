@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,8 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
+import org.geometerplus.android.util.ViewUtil;
+
 class NetworkLibraryAdapter extends TreeAdapter {
 	NetworkLibraryAdapter(NetworkLibraryActivity activity) {
 		super(activity);
@@ -40,17 +42,13 @@ class NetworkLibraryAdapter extends TreeAdapter {
 
 	private CoverManager myCoverManager;
 
-	private void setSubviewText(View view, int resourceId, String text) {
-		((TextView)view.findViewById(resourceId)).setText(text);
-	}
-
 	public View getView(int position, View view, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		if (tree == null) {
 			throw new IllegalArgumentException("tree == null");
 		}
 		if (view == null) {
-			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
+			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 			if (myCoverManager == null) {
 				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 				final int coverHeight = view.getMeasuredHeight();
@@ -59,11 +57,11 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			}
 		}
 
-		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
-		setSubviewText(view, R.id.network_tree_item_childrenlist, tree.getSummary());
-		setupCover((ImageView)view.findViewById(R.id.network_tree_item_icon), tree);
+		ViewUtil.setSubviewText(view, R.id.library_tree_item_name, tree.getName());
+		ViewUtil.setSubviewText(view, R.id.library_tree_item_childrenlist, tree.getSummary());
+		setupCover(ViewUtil.findImageView(view, R.id.library_tree_item_icon), tree);
 
-		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
+		final ImageView statusView = ViewUtil.findImageView(view, R.id.library_tree_item_status);
 		final int status = (tree instanceof NetworkBookTree)
 			? NetworkBookActions.getBookStatus(
 				((NetworkBookTree)tree).Book,
@@ -90,10 +88,14 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else if (tree instanceof SearchCatalogTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_search);
+		} else if (tree instanceof RecentCatalogListTree) {
+			coverView.setImageResource(R.drawable.ic_list_library_recent);
 		} else if (tree instanceof BasketCatalogTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_basket);
 		} else if (tree instanceof AddCustomCatalogItemTree) {
 			coverView.setImageResource(R.drawable.ic_list_plus);
+		} else if (tree instanceof ManageCatalogsItemTree) {
+			coverView.setImageResource(R.drawable.ic_menu_filter);
 		} else {
 			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}

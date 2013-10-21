@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Search"/>
+			<node name="rescan" value="Rescan"/>
 		</node>
 		<node name="openBook" value="Open book"/>
 		<node name="showBookInfo" value="Book info"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
+		<node name="markAsRead" value="Mark as read"/>
+		<node name="markAsUnread" value="Mark as unread"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
 		<node name="byAuthor" value="By author">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
+		</node>
+		<node name="recent" value="Recent catalogs">
+			<node name="summary" value="Catalogs you visited recently"/>
 		</node>
 		<node name="openCatalog" value="Open catalog"/>
 		<node name="networkSearch" value="Search"/>
@@ -111,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Remove catalog"/>
 		<node name="addCustomCatalog" value="Add catalog"/>
 		<node name="addCustomCatalogSummary" value="Add custom OPDS catalog manually"/>
+		<node name="disableCatalog" value="Disable catalog"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Do you want to read local copy?"/>
 			<node name="download" value="Do you want to download this book?"/>
@@ -127,7 +134,13 @@
 			<node name="title" value="Add catalog"/>
 			<node name="editUrl" value="Enter URL manually"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs">
+			<node name="summary" value="Configure your catalogs list"/>
+			<node name="enabled" value="Enabled"/>
+			<node name="disabled" value="Disabled"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog"/>
 			<node name="networkSearch" value="Search"/>
 			<node name="reload" value="Reload"/>
 			<node name="signIn" value="Sign in"/>
@@ -136,7 +149,7 @@
 			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="Add catalog"/>
 			<node name="refreshCatalogsList" value="Refresh catalogs"/>
-			<node name="languages" value="Language filter"/>
+			<node name="manageCatalogs" value="Manage catalogs"/>
 			<node name="clearBasket" value="Clear basket"/>
 			<node name="buyAllBooks" value="Buy all books"/>
 		</node>
@@ -218,6 +231,19 @@
 		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
+	<node name="style" value="Style %s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…"/>
+		<node name="deleteBookmark" value="Delete bookmark"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name"/>
+		<node name="invisible" value="Invisible">
+			<node name="summaryOn" value="Do not highlight bookmarks"/>
+			<node name="summaryOff" value="Highlight bookmarks"/>
+		</node>
+		<node name="bgColor" value="Background color"/>
+	</node>
 	<node name="selection" value="Selection">
 		<node name="copyToClipboard" value="Copy to clipboard"/>
 		<node name="openInDictionary" value="Open in dictionary"/>
@@ -227,7 +253,7 @@
 		<node name="clearSelection" value="Clear"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Settings"/>
@@ -262,6 +288,7 @@
 		<node name="decreaseFont" value="Zoom out"/>
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
+		<node name="help" value="Help"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="File name"/>
@@ -281,6 +308,7 @@
 		</node>
 		<node name="appearance" value="Appearance">
 			<node name="summary" value="Display settings, status bar, button lights"/>
+			<node name="language" value="Interface language"/>
 			<node name="screenOrientation" value="Screen orientation">
 				<node name="system" value="System"/>
 				<node name="sensor" value="Device orientation sensitive"/>
@@ -308,6 +336,10 @@
 			<node name="disableButtonLights" value="Disable buttons light during reading">
 				<node name="summaryOn" value="Disable button lights (does not work for some devices)"/>
 				<node name="summaryOff" value="Don't try to disable button lights"/>
+			</node>
+			<node name="twoColumnView" value="Two column view">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally"/>
+				<node name="summaryOff" value="Always display text in one column"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
 				<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
@@ -507,6 +539,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="Apply/ignore values defined in CSS"/>
+			<node name="fontSize" value="Font size">
+				<node name="summaryOn" value="Apply font size defined in CSS"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS"/>
+			</node>
+			<node name="textAlignment" value="Text alignment">
+				<node name="summaryOn" value="Apply text alignment defined in CSS"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS"/>
+			</node>
+		</node>
 		<node name="colors" value="Colors &amp; wallpapers">
 			<node name="summary" value="Color settings"/>
 			<node name="background" value="Background">
@@ -530,6 +573,7 @@
 			<node name="right" value="Right margin"/>
 			<node name="top" value="Top margin"/>
 			<node name="bottom" value="Bottom margin"/>
+			<node name="spaceBetweenColumns" value="Space between columns"/>
 		</node>
 		<node name="scrollBar" value="Progress indicator">
 			<node name="summary" value="Scrollbar &amp; footer settings"/>
@@ -607,6 +651,9 @@
 			<node name="summary" value="Dictionary settings"/>
 			<node name="dictionary" value="Dictionary"/>
 			<node name="translator" value="Translator"/>
+			<node name="targetLanguage" value="Translate to">
+				<node name="any" value="all languages"/>
+			</node>
 			<node name="tappingAction" value="Long tapping action">
 				<node name="doNothing" value="Long tapping does nothing"/>
 				<node name="selectSingleWord" value="Long tapping selects single word"/>
@@ -673,7 +720,7 @@
 			<node name="summary" value="Version info, contacts"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Visit our website">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -703,6 +750,10 @@
 			<node name="authorize" value="Authorize"/>
 			<node name="resetPosition" value="Reset position"/>
 			<node name="sendReport" value="Send report"/>
+			<node name="addToFavorites" value="Add to favorites"/>
+			<node name="removeFromFavorites" value="Remove from favorites"/>
+			<node name="markAsRead" value="Mark as read"/>
+			<node name="markAsUnread" value="Mark as unread"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>
@@ -790,6 +841,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
+		<node name="noSeries" value="There are no books in series, sorry"/>
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
@@ -827,5 +879,8 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

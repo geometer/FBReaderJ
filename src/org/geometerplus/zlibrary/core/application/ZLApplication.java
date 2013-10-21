@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
@@ -189,8 +188,6 @@ public abstract class ZLApplication {
 	public void onWindowClosing() {
 	}
 
-	public abstract void openFile(ZLFile file, Runnable postAction);
-
 	//Action
 	static abstract public class ZLAction {
 		public boolean isVisible() {
@@ -256,6 +253,7 @@ public abstract class ZLApplication {
 			myRunnable = runnable;
 		}
 
+		@Override
 		public void run() {
 			myRunnable.run();
 		}

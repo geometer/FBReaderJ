@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ public:
 	bool isAncestorOf(shared_ptr<Tag> tag) const;
 
 	int tagId() const;
-	size_t level() const;
+	std::size_t level() const;
 	
 private:
 	const std::string myName;
@@ -77,7 +77,7 @@ private:
 
 	shared_ptr<Tag> myParent;
 	TagList myChildren;
-	const size_t myLevel;
+	const std::size_t myLevel;
 	
 	int myTagId;
 
@@ -102,6 +102,6 @@ inline const std::string &Tag::name() const { return myName; }
 inline shared_ptr<Tag> Tag::parent() const { return myParent; }
 
 inline int Tag::tagId() const { return myTagId; }
-inline size_t Tag::level() const { return myLevel; }
+inline std::size_t Tag::level() const { return myLevel; }
 
 #endif /* __TAG_H__ */

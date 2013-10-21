@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
  * 02110-1301, USA.
  */
 
+#include <ZLLogger.h>
+
 #include "OleUtil.h"
 #include "OleStream.h"
 #include "OleMainStream.h"
@@ -32,7 +34,10 @@ DocFloatImageReader::DocFloatImageReader(unsigned int off, unsigned int len, sha
 
 void DocFloatImageReader::readAll() {
 	//OfficeArtContent structure is described at p.405-406 [MS-DOC]
-	myTableStream->seek(myOffset, true);
+	if (!myTableStream->seek(myOffset, true)) {
+		ZLLogger::Instance().println("DocPlugin", "problems with reading float images");
+		return;
+	}
 
 	unsigned int count = 0;
 
@@ -53,11 +58,11 @@ void DocFloatImageReader::readAll() {
 	}
 }
 
-ZLFileImage::Blocks DocFloatImageReader::getBlocksForShapeID(unsigned int shapeID) const {
+ZLFileImage::Blocks DocFloatImageReader::getBlocksForShapeId(unsigned int shapeId) const {
 	FSPContainer container;
 	bool found = false;
-	for (size_t i = 0; !found && i < myItem.FSPs.size(); ++i) {
-		if (myItem.FSPs.at(i).fsp.shapeID == shapeID) {
+	for (std::size_t i = 0; !found && i < myItem.FSPs.size(); ++i) {
+		if (myItem.FSPs.at(i).fsp.shapeId == shapeId) {
 			found = true;
 			container = myItem.FSPs.at(i);
 		}
@@ -67,9 +72,9 @@ ZLFileImage::Blocks DocFloatImageReader::getBlocksForShapeID(unsigned int shapeI
 		return ZLFileImage::Blocks();
 	}
 
-	for (size_t i = 0; i < container.fopte.size(); ++i) {
+	for (std::size_t i = 0; i < container.fopte.size(); ++i) {
 		const FOPTE &fopte = container.fopte.at(i);
-		if (fopte.pID == 0x0104 && !fopte.isComplex) { //0x0104 specifies the BLIP, see p.420 [MS-ODRAW]
+		if (fopte.pId == 0x0104 && !fopte.isComplex) { //0x0104 specifies the BLIP, see p.420 [MS-ODRAW]
 			if (fopte.value <= myItem.blips.size() && fopte.value > 0) {
 				Blip blip = myItem.blips.at(fopte.value - 1);
 				return blip.blocks;
@@ -144,21 +149,26 @@ unsigned int DocFloatImageReader::skipRecord(const RecordHeader &header, shared_
 unsigned int DocFloatImageReader::readBStoreContainerFileBlock(Blip &blip, shared_ptr<OleStream> stream, shared_ptr<OleStream> mainStream) {
 	//OfficeArtBStoreContainerFileBlock structure is described at p.59 [MS-ODRAW]
 	unsigned int count = readFBSE(blip.storeEntry, stream);
-	if( blip.storeEntry.offsetInDelay != (unsigned int)(-1)) {
-		mainStream->seek(blip.storeEntry.offsetInDelay, true); //see p.70 [MS-ODRAW]
+	if (blip.storeEntry.offsetInDelay != (unsigned int)-1) {
+		if (mainStream->seek(blip.storeEntry.offsetInDelay, true)) { //see p.70 [MS-ODRAW]
+			//TODO maybe we should stop reading float images here
+			ZLLogger::Instance().println("DocPlugin", "DocFloatImageReader: problems with seeking for offset");
+			return count;
+		}
 	}
 	RecordHeader header;
 	unsigned int count2 = readRecordHeader(header, mainStream);
 	switch (header.type) {
-		case OleMainStream::WMF:
-		case OleMainStream::EMF:
-		case OleMainStream::PICT:
+		case OleMainStream::IMAGE_WMF:
+		case OleMainStream::IMAGE_EMF:
+		case OleMainStream::IMAGE_PICT:
 			count2 += skipRecord(header, mainStream);
 			break;
-		case OleMainStream::JPEG: case OleMainStream::JPEG2:
-		case OleMainStream::PNG:
-		case OleMainStream::DIB:
-		case OleMainStream::TIFF:
+		case OleMainStream::IMAGE_JPEG:
+		case OleMainStream::IMAGE_JPEG2:
+		case OleMainStream::IMAGE_PNG:
+		case OleMainStream::IMAGE_DIB:
+		case OleMainStream::IMAGE_TIFF:
 			count2 += readBlip(blip, header, mainStream);
 			break;
 	}
@@ -173,21 +183,22 @@ unsigned int DocFloatImageReader::readBlip(Blip &blip, const RecordHeader &heade
 
 	bool addField = false;
 	switch (header.type) {
-		case OleMainStream::PNG:
+		case OleMainStream::IMAGE_PNG:
 			if (header.instance == 0x6E1) {
 				addField = true;
 			}
 			break;
-		case OleMainStream::JPEG: case OleMainStream::JPEG2:
+		case OleMainStream::IMAGE_JPEG:
+		case OleMainStream::IMAGE_JPEG2:
 			if (header.instance == 0x46B || header.instance == 0x6E3) {
 				addField = true;
 			}
 			break;
-		case OleMainStream::DIB:
+		case OleMainStream::IMAGE_DIB:
 			if (header.instance == 0x7A9) {
 				addField = true;
 			}
-		case OleMainStream::TIFF:
+		case OleMainStream::IMAGE_TIFF:
 			if (header.instance == 0x6E5) {
 				addField = true;
 			}
@@ -315,7 +326,7 @@ unsigned int DocFloatImageReader::readSpContainter(FSPContainer &item, unsigned 
 
 unsigned int DocFloatImageReader::readFSP(FSP &fsp, shared_ptr<OleStream> stream) {
 	//OfficeArtFSP structure is described at p.76 [MS-ODRAW]
-	fsp.shapeID = read4Bytes(stream);
+	fsp.shapeId = read4Bytes(stream);
 	stream->seek(4, false);
 	return 8;
 }
@@ -328,7 +339,7 @@ unsigned int DocFloatImageReader::readArrayFOPTE(std::vector<FOPTE> &fopteArray,
 		count += readFOPTE(fopte, stream);
 		fopteArray.push_back(fopte);
 	}
-	for (size_t i = 0; i < fopteArray.size(); ++i) {
+	for (std::size_t i = 0; i < fopteArray.size(); ++i) {
 		if (fopteArray.at(i).isComplex) {
 			stream->seek(fopteArray.at(i).value, false);
 			count += fopteArray.at(i).value;
@@ -340,29 +351,34 @@ unsigned int DocFloatImageReader::readArrayFOPTE(std::vector<FOPTE> &fopteArray,
 unsigned int DocFloatImageReader::readFOPTE(FOPTE &fopte, shared_ptr<OleStream> stream) {
 	//OfficeArtFOPTE structure is described at p.32 [MS-ODRAW]
 	unsigned int dtemp;
-	dtemp = read2Bytes (stream);
-	fopte.pID = (dtemp & 0x3fff);
-	fopte.isBlipID = ((dtemp & 0x4000) >> 14) == 0x1;
+	dtemp = read2Bytes(stream);
+	fopte.pId = (dtemp & 0x3fff);
+	fopte.isBlipId = ((dtemp & 0x4000) >> 14) == 0x1;
 	fopte.isComplex = ((dtemp & 0x8000) >> 15) == 0x1;
-	fopte.value = read4Bytes (stream);
+	fopte.value = read4Bytes(stream);
 	return 6;
 }
 
 unsigned int DocFloatImageReader::read1Byte(shared_ptr<OleStream> stream) {
 	char b[1];
-	stream->read(b, 1);
+	if (stream->read(b, 1) != 1) {
+		return 0;
+	}
 	return OleUtil::getU1Byte(b, 0);
 }
 
 unsigned int DocFloatImageReader::read2Bytes(shared_ptr<OleStream> stream) {
 	char b[2];
-	stream->read(b, 2);
+	if (stream->read(b, 2) != 2) {
+		return 0;
+	}
 	return OleUtil::getU2Bytes(b, 0);
 }
 
 unsigned int DocFloatImageReader::read4Bytes(shared_ptr<OleStream> stream) {
 	char b[4];
-	stream->read(b, 4);
+	if (stream->read(b, 4) != 4) {
+		return 0;
+	}
 	return OleUtil::getU4Bytes(b, 0);
 }
-

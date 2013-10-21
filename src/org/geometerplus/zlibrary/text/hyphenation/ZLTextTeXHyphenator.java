@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.text.hyphenation;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
@@ -54,7 +55,7 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 	}
 
 	public void load(String language) {
-		if (language == null || ZLLanguageUtil.OTHER_LANGUAGE_CODE.equals(language)) {
+		if (language == null || Language.OTHER_CODE.equals(language)) {
 			language = ZLLanguageUtil.defaultLanguageCode();
 		}
 		if (language == null || language.equals(myLanguage)) {

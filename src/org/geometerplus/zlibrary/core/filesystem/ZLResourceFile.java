@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,17 +31,17 @@ public abstract class ZLResourceFile extends ZLFile {
 	}
 
 	private final String myPath;
-	
+
 	protected ZLResourceFile(String path) {
 		myPath = path;
 		init();
 	}
-	
+
 	@Override
 	public String getPath() {
 		return myPath;
 	}
-	
+
 	@Override
 	public String getLongName() {
 		return myPath.substring(myPath.lastIndexOf('/') + 1);

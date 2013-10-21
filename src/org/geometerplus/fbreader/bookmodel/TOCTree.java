@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,11 +46,11 @@ public class TOCTree extends ZLTree<TOCTree> {
 			myText = null;
 		}
 	}
-	
+
 	public Reference getReference() {
 		return myReference;
 	}
-	
+
 	public void setReference(ZLTextModel model, int reference) {
 		myReference = new Reference(reference, model);
 	}
@@ -58,7 +58,7 @@ public class TOCTree extends ZLTree<TOCTree> {
 	public static class Reference {
 		public final int ParagraphIndex;
 		public final ZLTextModel Model;
-		
+
 		public Reference(final int paragraphIndex, final ZLTextModel model) {
 			ParagraphIndex = paragraphIndex;
 			Model = model;

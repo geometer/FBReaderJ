@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.library.Tag;
+import org.geometerplus.fbreader.book.Tag;
 
 abstract class FB2TagManager {
 	private static final HashMap<String,ArrayList<Tag>> ourMap = new HashMap<String,ArrayList<Tag>>();
@@ -52,6 +52,7 @@ abstract class FB2TagManager {
 			myLanguage = ("ru".equals(language)) ? "ru" : "en";
 		}
 
+		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ((tag == "subgenre") || (tag == "genre-alt")) {
 				final String id = attributes.getValue("value");
@@ -70,6 +71,7 @@ abstract class FB2TagManager {
 			return false;
 		}
 
+		@Override
 		public boolean endElementHandler(String tag) {
 			if (tag == "genre") {
 				myCategoryTag = null;

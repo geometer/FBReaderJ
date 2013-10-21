@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,14 @@
 #include <shared_ptr.h>
 #include <ZLFile.h>
 #include <ZLTextStyleEntry.h>
+#include <ZLEncodingConverter.h>
 
 #include "../../bookmodel/BookReader.h"
 
 #include "OleMainStream.h"
-#include "OleStreamReader.h"
+#include "OleStreamParser.h"
 
-class DocBookReader : public OleStreamReader {
+class DocBookReader : public OleStreamParser {
 
 public:
 	DocBookReader(BookModel &model, const std::string &encoding);
@@ -39,7 +40,9 @@ public:
 	bool readBook();
 
 private:
-	bool readDocument(shared_ptr<ZLInputStream> stream, size_t streamSize);
+	void ansiDataHandler(const char *buffer, std::size_t len);
+	void ucs2SymbolHandler(ZLUnicodeUtil::Ucs2Char symbol);
+	void footnotesStartHandler();
 
 	void handleChar(ZLUnicodeUtil::Ucs2Char ucs2char);
 	void handleHardLinebreak();
@@ -87,9 +90,12 @@ private:
 
 	//formatting
 	std::vector<FBTextKind> myKindStack;
-	shared_ptr<ZLTextStyleEntry> myCurStyleEntry;
-	OleMainStream::Style myCurStyleInfo;
+	shared_ptr<ZLTextStyleEntry> myCurrentStyleEntry;
+	OleMainStream::Style myCurrentStyleInfo;
 	unsigned int myPictureCounter;
+
+	const std::string myEncoding;
+	shared_ptr<ZLEncodingConverter> myConverter;
 };
 
 inline DocBookReader::~DocBookReader() {}

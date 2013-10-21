@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+/*);
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 
@@ -31,14 +30,16 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-public abstract class TreeActivity extends ListActivity {
+import org.geometerplus.android.fbreader.OrientationUtil;
+
+public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	private static final String OPEN_TREE_ACTION = "android.fbreader.action.OPEN_TREE";
 
 	public static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_TREE_KEY_KEY = "SelectedTreeKey";
 	public static final String HISTORY_KEY = "HistoryKey";
 
-	private FBTree myCurrentTree;
+	private T myCurrentTree;
 	// we store the key separately because
 	// it will be changed in case of myCurrentTree.removeSelf() call
 	private FBTree.Key myCurrentKey;
@@ -53,16 +54,23 @@ public abstract class TreeActivity extends ListActivity {
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
 	public TreeAdapter getListAdapter() {
 		return (TreeAdapter)super.getListAdapter();
 	}
 
-	protected FBTree getCurrentTree() {
+	protected T getCurrentTree() {
 		return myCurrentTree;
 	}
 
 	@Override
 	protected void onNewIntent(final Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
 			runOnUiThread(new Runnable() {
 				public void run() {
@@ -74,7 +82,7 @@ public abstract class TreeActivity extends ListActivity {
 		}
 	}
 
-	protected abstract FBTree getTreeByKey(FBTree.Key key);
+	protected abstract T getTreeByKey(FBTree.Key key);
 	public abstract boolean isTreeSelected(FBTree tree);
 
 	protected boolean isTreeInvisible(FBTree tree) {
@@ -103,6 +111,14 @@ public abstract class TreeActivity extends ListActivity {
 	// TODO: change to protected
 	public void openTree(final FBTree tree) {
 		openTree(tree, null, true);
+	}
+
+	public void clearHistory() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				myHistory.clear();
+			}
+		});
 	}
 
 	protected void onCurrentTreeChanged() {
@@ -147,7 +163,7 @@ public abstract class TreeActivity extends ListActivity {
 		// because key might be null
 		myCurrentKey = myCurrentTree.getUniqueKey();
 		final TreeAdapter adapter = getListAdapter();
-		adapter.replaceAll(myCurrentTree.subTrees());
+		adapter.replaceAll(myCurrentTree.subtrees());
 		setTitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
 			selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();

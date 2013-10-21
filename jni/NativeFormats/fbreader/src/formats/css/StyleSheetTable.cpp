@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ const std::vector<std::string> &StyleSheetTable::values(const AttributeMap &map,
 }
 
 shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &styles) {
-	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry();
+	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry(ZLTextStyleEntry::STYLE_CSS_ENTRY);
 
 	const std::vector<std::string> &alignment = values(styles, "text-align");
 	if (!alignment.empty()) {

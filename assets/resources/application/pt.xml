@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Pesquise"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Abra o livro"/>
 		<node name="showBookInfo" value="Informações do livro"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Delete o livro"/>
 		<node name="addToFavorites" value="Adicionar aos favoritos"/>
 		<node name="removeFromFavorites" value="Remover dos favoritos"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Rede de bibliotecas FBReader">
 		<node name="byAuthor" value="Pelo autor">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="Encontrado">
 			<node name="summary" value="Resultados da pesquisa para:%s"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Abra o catálogo"/>
 		<node name="networkSearch" value="Pesquise"/>
@@ -111,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Remover catálogo"/>
 		<node name="addCustomCatalog" value="Adicionar catálogo"/>
 		<node name="addCustomCatalogSummary" value="Adicionar catálogo personalizado OPDS manualmente"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Você quer ler uma cópia local?"/>
 			<node name="download" value="Você quer baixar este livro?"/>
@@ -129,7 +136,13 @@
 			<node name="title" value="Adicionar catálogo"/>
 			<node name="editUrl" value="Digite a URL manualmente"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Pesquise"/>
 			<node name="reload" value="Recarregue"/>
 			<node name="signIn" value="Entrar"/>
@@ -138,7 +151,7 @@
 			<node name="topup" value="Deposite na conta"/>
 			<node name="addCustomCatalog" value="Adicionar catálogo"/>
 			<node name="refreshCatalogsList" value="Atualizar catálogos"/>
-			<node name="languages" value="Filtro de idioma"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Limpe a cesta"/>
 			<node name="buyAllBooks" value="Compre todos os livros"/>
 		</node>
@@ -220,6 +233,19 @@
 		<node name="forward" value="Adiantar"/>
 		<node name="close" value="Feche o FBReader"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Deletar marcador"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Seleção">
 		<node name="copyToClipboard" value="Copiar para o clipboard"/>
 		<node name="openInDictionary" value="Abrir em dicionário"/>
@@ -229,7 +255,7 @@
 		<node name="clearSelection" value="Limpar"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Configurações"/>
@@ -264,6 +290,7 @@
 		<node name="decreaseFont" value="Diminuir o zoom"/>
 		<node name="toggleFullscreen" value="Tela inteira"/>
 		<node name="bookmarks" value="Favoritos"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nome do arquivo"/>
@@ -283,6 +310,7 @@
 		</node>
 		<node name="appearance" value="Aparência">
 			<node name="summary" value="Definições do visor, barra de status, luzes das teclas"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Orientação da tela">
 				<node name="system" value="Sistema"/>
 				<node name="sensor" value="Orientação do dispositivo sensível"/>
@@ -310,6 +338,10 @@
 			<node name="disableButtonLights" value="Desativar luzes das teclas durante a leitura">
 				<node name="summaryOn" value="Desativar luzes das teclas (não funciona em alguns dispositivos)"/>
 				<node name="summaryOff" value="Não tente desabilitar as luzes das teclas"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ajuste de brilho da tela">
 				<node name="summaryOn" value="Arrastando dedo para cima/para baixo ao longo do lado esquerdo da tela"/>
@@ -509,6 +541,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="colors" value="Cores &amp; papéis de parede">
 			<node name="summary" value="Configurações de cor"/>
 			<node name="background" value="Fundo">
@@ -532,6 +575,7 @@
 			<node name="right" value="Margem direita"/>
 			<node name="top" value="Margem superior"/>
 			<node name="bottom" value="Margem inferior"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Indicador de progresso">
 			<node name="summary" value="Configurações de barra de rolagem &amp; rodapé"/>
@@ -609,6 +653,9 @@
 			<node name="summary" value="Configurações de dicionário"/>
 			<node name="dictionary" value="Dicionário"/>
 			<node name="translator" value="Tradutor"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Ação de tocar o dedo de forma contínua">
 				<node name="doNothing" value="Desabiltar a forma contínua"/>
 				<node name="selectSingleWord" value="A forma contínua seleciona uma palavra única"/>
@@ -705,6 +752,10 @@
 			<node name="authorize" value="Autorizar"/>
 			<node name="resetPosition" value="Redefinir posição"/>
 			<node name="sendReport" value="Enviar relatório"/>
+			<node name="addToFavorites" value="Adicionar aos favoritos"/>
+			<node name="removeFromFavorites" value="Remover dos favoritos"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar o plugin"/>
@@ -792,6 +843,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dicionário não está instalado, desculpe"/>
 		<node name="permissionDenied" value="Permissão negada, desculpe"/>
 		<node name="noFavorites" value="Sua lista de favoritos está vazia, desculpe"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Catálogo está vazio, desculpe"/>
 		<node name="emptyBasket" value="O seu cesto está vazio, desculpe"/>
 		<node name="emptyNetworkSearchResults" value="Nenhum livro encontrado, desculpe"/>
@@ -829,5 +881,8 @@
 		<node name="opfFileNotFound" value="OPF não foi encontrado em %s"/>
 		<node name="unsupportedFileFormat" value="Formato de arquivo não é suportado para '%s'"/>
 		<node name="errorParsingRtf" value="Erro de análise Rtf em: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

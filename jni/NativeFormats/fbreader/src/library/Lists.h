@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 class Book;
 class Author;
 class Tag;
+class UID;
 class BookByFileNameComparator;
 
 typedef std::vector<shared_ptr<Book> > BookList;
@@ -35,5 +36,6 @@ typedef std::set<shared_ptr<Book>,BookByFileNameComparator> BookSet;
 typedef std::vector<shared_ptr<Author> > AuthorList;
 typedef std::vector<shared_ptr<Tag> > TagList;
 typedef std::set<shared_ptr<Tag> > TagSet;
+typedef std::vector<shared_ptr<UID> > UIDList;
 
 #endif /* __LISTS_H__ */

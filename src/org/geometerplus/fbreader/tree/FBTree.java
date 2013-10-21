@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@ package org.geometerplus.fbreader.tree;
 
 import java.io.Serializable;
 
-import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.tree.ZLTree;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree> {
 	public static class Key implements Serializable {
@@ -49,7 +49,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 				return false;
 			}
 			final Key key = (Key)other;
-			return Id.equals(key.Id) && ZLMiscUtil.equals(Parent, key.Parent);
+			return Id.equals(key.Id) && MiscUtil.equals(Parent, key.Parent);
 		}
 
 		@Override
@@ -99,8 +99,8 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	 */
 	protected abstract String getStringId();
 
-	public FBTree getSubTree(String id) {
-		for (FBTree tree : subTrees()) {
+	public FBTree getSubtree(String id) {
+		for (FBTree tree : subtrees()) {
 			if (id.equals(tree.getStringId())) {
 				return tree;
 			}
@@ -109,7 +109,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	}
 
 	public int indexOf(FBTree tree) {
-		return subTrees().indexOf(tree);
+		return subtrees().indexOf(tree);
 	}
 
 	public abstract String getName();
@@ -167,23 +167,11 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		if (key1 == null) {
 			return 1;
 		}
-		return compareStringsIgnoreCase(key0, key1);
+		final int diff = compareStringsIgnoreCase(key0, key1);
+		return diff != 0 ? diff : getName().compareTo(tree.getName());
 	}
 
-	public String getSummary() {
-		StringBuilder builder = new StringBuilder();
-		int count = 0;
-		for (FBTree subtree : subTrees()) {
-			if (count++ > 0) {
-				builder.append(",  ");
-			}
-			builder.append(subtree.getName());
-			if (count == 5) {
-				break;
-			}
-		}
-		return builder.toString();
-	}
+	public abstract String getSummary();
 
 	protected ZLImage createCover() {
 		return null;

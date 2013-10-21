@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  */
 
 package org.geometerplus.fbreader.network.tree;
-
-import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -49,14 +47,15 @@ public abstract class NetworkItemsLoader implements Runnable {
 	public final void run() {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
-		try {
-			synchronized (library) {
-				final NetworkCatalogTree tree = getTree();
-				if (library.isLoadingInProgress(tree)) {
-					return;
-				}
-				library.storeLoader(tree, this);
+		synchronized (library) {
+			final NetworkCatalogTree tree = getTree();
+			if (library.isLoadingInProgress(tree)) {
+				return;
 			}
+			library.storeLoader(tree, this);
+		}
+
+		try {
 			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 			try {

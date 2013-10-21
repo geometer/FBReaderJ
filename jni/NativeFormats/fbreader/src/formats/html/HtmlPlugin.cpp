@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,10 @@ bool HtmlPlugin::readMetaInfo(Book &book) const {
 	}
 	HtmlDescriptionReader(book).readDocument(*stream);
 
+	return true;
+}
+
+bool HtmlPlugin::readUids(Book &/*book*/) const {
 	return true;
 }
 

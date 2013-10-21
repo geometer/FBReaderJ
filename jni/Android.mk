@@ -29,7 +29,7 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE                  := NativeFormats-v2
+LOCAL_MODULE                  := NativeFormats-v3
 LOCAL_CFLAGS                  := -Wall
 LOCAL_LDLIBS                  := -lz -llog
 LOCAL_STATIC_LIBRARIES        := expat
@@ -43,6 +43,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/constants/ZLXMLNamespace.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/Utf16EncodingConverters.cpp \
+	NativeFormats/zlibrary/core/src/encoding/Utf8EncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/JavaEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
@@ -96,6 +97,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/fb2/FB2Plugin.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2UidReader.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlBookReader.cpp \
@@ -110,6 +112,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/oeb/OEBMetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBPlugin.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBTextStream.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBUidReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/XHTMLImageFinder.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
@@ -128,9 +131,11 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/doc/DocBookReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocMetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocPlugin.cpp \
+	NativeFormats/fbreader/src/formats/doc/DocStreams.cpp \
 	NativeFormats/fbreader/src/formats/doc/OleMainStream.cpp \
 	NativeFormats/fbreader/src/formats/doc/OleStorage.cpp \
 	NativeFormats/fbreader/src/formats/doc/OleStream.cpp \
+	NativeFormats/fbreader/src/formats/doc/OleStreamParser.cpp \
 	NativeFormats/fbreader/src/formats/doc/OleStreamReader.cpp \
 	NativeFormats/fbreader/src/formats/doc/OleUtil.cpp \
 	NativeFormats/fbreader/src/formats/doc/DocInlineImageReader.cpp \
@@ -139,7 +144,8 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/library/Book.cpp \
 	NativeFormats/fbreader/src/library/Comparators.cpp \
 	NativeFormats/fbreader/src/library/Library.cpp \
-	NativeFormats/fbreader/src/library/Tag.cpp
+	NativeFormats/fbreader/src/library/Tag.cpp \
+	NativeFormats/fbreader/src/library/UID.cpp
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \

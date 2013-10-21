@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ class CatalogExpander extends NetworkItemsLoader {
 					);
 				} else {
 					getTree().updateLoadedTime();
-					if (getTree().subTrees().isEmpty()) {
+					if (getTree().subtrees().isEmpty()) {
 						NetworkLibrary.Instance().fireModelChangedEvent(
 							NetworkLibrary.ChangeListener.Code.EmptyCatalog
 						);

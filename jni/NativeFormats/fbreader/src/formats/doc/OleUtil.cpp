@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,3 @@ int OleUtil::get1Byte(const char *buffer, unsigned int offset) {
 	const unsigned char *buf = (const unsigned char*)buffer;
 	return (int)buf[offset];
 }
-
-
-

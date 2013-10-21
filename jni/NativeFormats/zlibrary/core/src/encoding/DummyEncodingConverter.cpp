@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 class DummyEncodingConverter : public ZLEncodingConverter {
 
 private:
-	DummyEncodingConverter(const std::string &name);
+	DummyEncodingConverter();
 
 public:
 	~DummyEncodingConverter();
@@ -33,29 +33,25 @@ public:
 	void reset();
 	bool fillTable(int *map);
 
-private:
-	const std::string myName;
-
 friend class DummyEncodingConverterProvider;
 };
 
 bool DummyEncodingConverterProvider::providesConverter(const std::string &encoding) {
-	const std::string lowerCasedEncoding = ZLUnicodeUtil::toLower(encoding);
-	return (lowerCasedEncoding == "utf-8") || (lowerCasedEncoding == "us-ascii");
+	return ZLUnicodeUtil::toLower(encoding) == ZLEncodingConverter::ASCII;
 }
 
-shared_ptr<ZLEncodingConverter> DummyEncodingConverterProvider::createConverter(const std::string &name) {
-	return new DummyEncodingConverter(name);
+shared_ptr<ZLEncodingConverter> DummyEncodingConverterProvider::createConverter(const std::string&) {
+	return new DummyEncodingConverter();
 }
 
-DummyEncodingConverter::DummyEncodingConverter(const std::string &name) : myName(name) {
+DummyEncodingConverter::DummyEncodingConverter() {
 }
 
 DummyEncodingConverter::~DummyEncodingConverter() {
 }
 
 std::string DummyEncodingConverter::name() const {
-	return myName;
+	return ZLEncodingConverter::ASCII;
 }
 
 void DummyEncodingConverter::convert(std::string &dst, const char *srcStart, const char *srcEnd) {

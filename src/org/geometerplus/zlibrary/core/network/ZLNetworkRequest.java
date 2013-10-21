@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,34 +19,36 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLNetworkRequest {
 	String URL;
-	public final String SSLCertificate;
 	public final String PostData;
 	public final Map<String,String> PostParameters = new HashMap<String,String>();
+	public final MimeType Mime;
 
 	private final boolean myIsQuiet;
 
 	protected ZLNetworkRequest(String url) {
-		this(url, null, null, false);
+		this(url, false);
 	}
 
 	protected ZLNetworkRequest(String url, boolean quiet) {
-		this(url, null, null, quiet);
+		this(url, null, quiet);
 	}
 
-	protected ZLNetworkRequest(String url, String sslCertificate, String postData) {
-		this(url, null, null, false);
+	protected ZLNetworkRequest(String url, String postData, boolean quiet) {
+		this(url, MimeType.NULL, postData, quiet);
 	}
 
-	protected ZLNetworkRequest(String url, String sslCertificate, String postData, boolean quiet) {
+	protected ZLNetworkRequest(String url, MimeType mime, String postData, boolean quiet) {
 		URL = url;
-		SSLCertificate = sslCertificate;
+		Mime = mime;
 		PostData = postData;
 		myIsQuiet = quiet;
 	}
@@ -65,7 +67,7 @@ public abstract class ZLNetworkRequest {
 
 	public void doBefore() throws ZLNetworkException {
 	}
-	
+
 	public abstract void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException;
 
 	public void doAfter(boolean success) throws ZLNetworkException {

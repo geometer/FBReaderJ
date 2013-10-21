@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,8 @@ public final class ZLTextParagraphCursor {
 							}
 						}
 						break;
-					case ZLTextParagraph.Entry.STYLE:
+					case ZLTextParagraph.Entry.STYLE_CSS:
+					case ZLTextParagraph.Entry.STYLE_OTHER:
 						elements.add(new ZLTextStyleElement(it.getStyleEntry()));
 						break;
 					case ZLTextParagraph.Entry.STYLE_CLOSE:

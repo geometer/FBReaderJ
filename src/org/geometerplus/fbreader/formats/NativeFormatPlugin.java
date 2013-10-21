@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,15 +19,15 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.fb2.FB2NativePlugin;
 import org.geometerplus.fbreader.formats.oeb.OEBNativePlugin;
 
@@ -55,8 +55,21 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	private native boolean readMetaInfoNative(Book book);
 
+	synchronized public void readUids(Book book) throws BookReadingException {
+		readUidsNative(book);
+		if (book.uids().isEmpty()) {
+			book.addUid(BookUtil.createSHA256Uid(book.File));
+		}
+	}
+
+	private native boolean readUidsNative(Book book);
+
 	@Override
-	public native void detectLanguageAndEncoding(Book book);
+	public void detectLanguageAndEncoding(Book book) {
+		detectLanguageAndEncodingNative(book);
+	}
+
+	public native void detectLanguageAndEncodingNative(Book book);
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
@@ -109,5 +122,10 @@ public class NativeFormatPlugin extends FormatPlugin {
 	@Override
 	public EncodingCollection supportedEncodings() {
 		return JavaEncodingCollection.Instance();
+	}
+
+	@Override
+	public String toString() {
+		return "NativeFormatPlugin [" + supportedFileType() + "]";
 	}
 }

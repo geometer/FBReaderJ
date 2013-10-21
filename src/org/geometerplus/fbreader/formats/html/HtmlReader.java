@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,10 +67,10 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 	private int myOLCounter = 0;
 	private byte[] myControls = new byte[10];
 	private byte myControlsNumber = 0;
-	
+
 	public HtmlReader(BookModel model) throws UnsupportedEncodingException {
 		super(model);
-		try {	
+		try {
 			//String encoding = model.Book.getEncoding();
 			myAttributeDecoder = createDecoder();
 			setByteDecoder(createDecoder());
@@ -138,7 +138,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 		}
 		myControls[myControlsNumber++] = control;
 	}
-	
+
 	private void closeControl(byte control) {
 		for (int i = 0; i < myControlsNumber; i++) {
 			addControl(myControls[i], false);
@@ -161,12 +161,12 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			myControls[i] = myControls[i + 1];
 		}
 	}
-	
+
 	private void startNewParagraph() {
 		endParagraph();
 		beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 	}
-	
+
 	public final void endElementHandler(String tagName) {
 		endElementHandler(HtmlTag.getTagByName(tagName));
 	}
@@ -177,6 +177,8 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			case HtmlTag.SELECT:
 			case HtmlTag.STYLE:
 			case HtmlTag.P:
+			case HtmlTag.DIV:
+			case HtmlTag.BLOCKQUOTE:
 				startNewParagraph();
 				break;
 
@@ -201,7 +203,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			case HtmlTag.HTML:
 				//unsetCurrentTextModel();
 				break;
-				
+
 			case HtmlTag.B:
 			case HtmlTag.S:
 			case HtmlTag.SUB:
@@ -215,15 +217,19 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				closeControl(myStyleTable[tag]);
 				break;
 
+			case HtmlTag.FONT:
+				// TODO: implement
+				break;
+
 			case HtmlTag.OL:
 				myOrderedListIsStarted = false;
 				myOLCounter = 0;
 				break;
-				
+
 			case HtmlTag.UL:
 				//myUnorderedListIsStarted = false;
 				break;
-				
+
 			default:
 				break;
 		}
@@ -245,6 +251,8 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				break;
 
 			case HtmlTag.P:
+			case HtmlTag.DIV:
+			case HtmlTag.BLOCKQUOTE:
 				if (mySectionStarted) {
 					mySectionStarted = false;
 				} else if (myInsideTitle) {
@@ -272,7 +280,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				}
 				break;
 			}
-			
+
 			case HtmlTag.IMG:
 			{
 				/*
@@ -289,7 +297,7 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				*/
 				break;
 			}
-			
+
 			case HtmlTag.B:
 			case HtmlTag.S:
 			case HtmlTag.SUB:
@@ -303,7 +311,11 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			case HtmlTag.I:
 				openControl(myStyleTable[tag]);
 				break;
-				
+
+			case HtmlTag.FONT:
+				// TODO: implement
+				break;
+
 			case HtmlTag.H1:
 			case HtmlTag.H2:
 			case HtmlTag.H3:
@@ -313,15 +325,15 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 				startNewParagraph();
 				openControl(myStyleTable[tag]);
 				break;
-				
+
 			case HtmlTag.OL:
 				myOrderedListIsStarted = true;
 				break;
-				
+
 			case HtmlTag.UL:
 				//myUnorderedListIsStarted = true;
 				break;
-				
+
 			case HtmlTag.LI:
 				startNewParagraph();
 				if (myOrderedListIsStarted) {
@@ -332,14 +344,14 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 					addData(new char[] {'*', ' '});
 				}
 				break;
-				
+
 			case HtmlTag.SCRIPT:
 			case HtmlTag.SELECT:
 			case HtmlTag.STYLE:
 				endParagraph();
 				break;
-				
-			case HtmlTag.TR: 
+
+			case HtmlTag.TR:
 			case HtmlTag.BR:
 				startNewParagraph();
 				break;

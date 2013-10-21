@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,4 +21,5 @@ package org.geometerplus.zlibrary.core.image;
 
 public interface ZLImage {
 	String getURI();
+	boolean saveToFile(String url);
 }

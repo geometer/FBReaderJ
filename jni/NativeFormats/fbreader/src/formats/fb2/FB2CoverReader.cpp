@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ void FB2CoverReader::endElementHandler(int tag) {
 	}
 }
 
-void FB2CoverReader::characterDataHandler(const char *text, size_t len) {
+void FB2CoverReader::characterDataHandler(const char *text, std::size_t len) {
 	if (len > 0 && myLookForImage) {
 		myImageStart = getCurrentPosition();
 		myLookForImage = false;

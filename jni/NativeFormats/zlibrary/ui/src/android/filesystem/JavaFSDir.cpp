@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ void JavaFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlin
 		std::string path = AndroidUtil::Method_ZLFile_getPath->callForCppString(file);
 		env->DeleteLocalRef(file);
 
-		size_t index = path.rfind('/');
+		std::size_t index = path.rfind('/');
 		if (index != std::string::npos) {
 			path = path.substr(index + 1);
 		}

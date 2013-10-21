@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
 
 #include "Author.h"
@@ -26,28 +25,28 @@ std::set<shared_ptr<Author>,AuthorComparator> Author::ourAuthorSet;
 
 shared_ptr<Author> Author::getAuthor(const std::string &name, const std::string &sortKey) {
 	std::string strippedName = name;
-	ZLStringUtil::stripWhiteSpaces(strippedName);
+	ZLUnicodeUtil::utf8Trim(strippedName);
 	if (strippedName.empty()) {
 		return 0;
 	}
 	std::string strippedKey = sortKey;
-	ZLStringUtil::stripWhiteSpaces(strippedKey);
+	ZLUnicodeUtil::utf8Trim(strippedKey);
 
 	if (strippedKey.empty()) {
-		const size_t index = strippedName.find(',');
+		const std::size_t index = strippedName.find(',');
 		if (index != std::string::npos) {
 			strippedKey = strippedName.substr(0, index);
-			ZLStringUtil::stripWhiteSpaces(strippedKey);
+			ZLUnicodeUtil::utf8Trim(strippedKey);
 		}
 	}
 
 	if (strippedKey.empty()) {
-		size_t index = strippedName.rfind(' ');
+		std::size_t index = strippedName.rfind(' ');
 		if (index == std::string::npos) {
 			strippedKey = strippedName;
 		} else {
 			strippedKey = strippedName.substr(index + 1);
-			const size_t size = strippedName.size();
+			const std::size_t size = strippedName.size();
 			while (index < size && strippedName[index] == ' ') {
 				--index;
 			}

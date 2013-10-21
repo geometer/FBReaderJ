@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,23 +92,23 @@ class AnimationSpeedPreference extends DialogPreference {
 		protected void onBoundsChange(Rect bounds) {
 			myBase.setBounds(bounds);
 		}
-		
+
 		@Override
 		protected boolean onStateChange(int[] state) {
 			invalidateSelf();
 			return false;
 		}
-		
+
 		@Override
 		public boolean isStateful() {
 			return true;
 		}
-		
+
 		@Override
 		protected boolean onLevelChange(int level) {
 			return myBase.setLevel(level);
 		}
-		
+
 		@Override
 		public void draw(Canvas canvas) {
 			myBase.draw(canvas);

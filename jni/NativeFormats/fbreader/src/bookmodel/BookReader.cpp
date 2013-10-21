@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,6 @@
 BookReader::BookReader(BookModel &model) : myModel(model) {
 	myCurrentTextModel = 0;
 
-	myTextParagraphExists = false;
-
 	myInsideTitle = false;
 	mySectionContainsRegularContents = false;
 }
@@ -59,6 +57,18 @@ void BookReader::setFootnoteTextModel(const std::string &id) {
 		myCurrentTextModel = new ZLTextPlainModel(id, myModel.myBookTextModel->language(), myFootnotesAllocator);
 		myModel.myFootnotes.insert(std::make_pair(id, myCurrentTextModel));
 	}
+}
+
+bool BookReader::paragraphIsOpen() const {
+	if (myCurrentTextModel.isNull()) {
+		return false;
+	}
+	for (std::list<shared_ptr<ZLTextModel> >::const_iterator it = myModelsWithOpenParagraphs.begin(); it != myModelsWithOpenParagraphs.end(); ++it) {
+		if (*it == myCurrentTextModel) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void BookReader::unsetTextModel() {
@@ -91,19 +101,19 @@ void BookReader::beginParagraph(ZLTextParagraph::Kind kind) {
 		if (!myHyperlinkReference.empty()) {
 			myCurrentTextModel->addHyperlinkControl(myHyperlinkKind, myHyperlinkType, myHyperlinkReference);
 		}
-		myTextParagraphExists = true;
+		myModelsWithOpenParagraphs.push_back(myCurrentTextModel);
 	}
 }
 
 void BookReader::endParagraph() {
-	if (myTextParagraphExists) {
+	if (paragraphIsOpen()) {
 		flushTextBufferToParagraph();
-		myTextParagraphExists = false;
+		myModelsWithOpenParagraphs.remove(myCurrentTextModel);
 	}
 }
 
 void BookReader::addControl(FBTextKind kind, bool start) {
-	if (myTextParagraphExists) {
+	if (paragraphIsOpen()) {
 		flushTextBufferToParagraph();
 		myCurrentTextModel->addControl(kind, start);
 	}
@@ -113,21 +123,22 @@ void BookReader::addControl(FBTextKind kind, bool start) {
 }
 
 void BookReader::addStyleEntry(const ZLTextStyleEntry &entry) {
-	if (myTextParagraphExists) {
+	if (paragraphIsOpen()) {
 		flushTextBufferToParagraph();
 		myCurrentTextModel->addStyleEntry(entry);
 	}
 }
 
 void BookReader::addStyleCloseEntry() {
-	if (myTextParagraphExists) {
+	if (paragraphIsOpen()) {
 		flushTextBufferToParagraph();
 		myCurrentTextModel->addStyleCloseEntry();
 	}
 }
 
 void BookReader::addFixedHSpace(unsigned char length) {
-	if (myTextParagraphExists) {
+	if (paragraphIsOpen()) {
+		flushTextBufferToParagraph();
 		myCurrentTextModel->addFixedHSpace(length);
 	}
 }
@@ -157,7 +168,7 @@ void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) 
 		"hyperlink",
 		" + control (" + type + "): " + label
 	);
-	if (myTextParagraphExists) {
+	if (paragraphIsOpen()) {
 		flushTextBufferToParagraph();
 		myCurrentTextModel->addHyperlinkControl(kind, myHyperlinkType, label);
 	}
@@ -167,7 +178,7 @@ void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) 
 void BookReader::addHyperlinkLabel(const std::string &label) {
 	if (!myCurrentTextModel.isNull()) {
 		int paragraphNumber = myCurrentTextModel->paragraphsNumber();
-		if (myTextParagraphExists) {
+		if (paragraphIsOpen()) {
 			--paragraphNumber;
 		}
 		addHyperlinkLabel(label, paragraphNumber);
@@ -185,7 +196,7 @@ void BookReader::addHyperlinkLabel(const std::string &label, int paragraphNumber
 }
 
 void BookReader::addData(const std::string &data) {
-	if (!data.empty() && myTextParagraphExists) {
+	if (!data.empty() && paragraphIsOpen()) {
 		if (!myInsideTitle) {
 			mySectionContainsRegularContents = true;
 		}
@@ -220,9 +231,10 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 }
 
 void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {
-	if ((myCurrentTextModel != 0) && mySectionContainsRegularContents) {
-		size_t size = myCurrentTextModel->paragraphsNumber();
-		if ((size > 0) && (((*myCurrentTextModel)[(size_t)-1])->kind() != kind)) {
+	if (myCurrentTextModel != 0 && mySectionContainsRegularContents) {
+		std::size_t size = myCurrentTextModel->paragraphsNumber();
+		if ((size > 0) && (((*myCurrentTextModel)[(std::size_t)-1])->kind() != kind)) {
+			endParagraph();
 			((ZLTextPlainModel&)*myCurrentTextModel).createParagraph(kind);
 			mySectionContainsRegularContents = false;
 		}
@@ -240,7 +252,7 @@ void BookReader::insertEndOfTextParagraph() {
 void BookReader::addImageReference(const std::string &id, short vOffset, bool isCover) {
 	if (myCurrentTextModel != 0) {
 		mySectionContainsRegularContents = true;
-		if (myTextParagraphExists) {
+		if (paragraphIsOpen()) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel->addImage(id, vOffset, isCover);
 		} else {
@@ -282,7 +294,7 @@ void BookReader::endContentsParagraph() {
 }
 
 /*
-void BookReader::setReference(size_t contentsParagraphNumber, int referenceNumber) {
+void BookReader::setReference(std::size_t contentsParagraphNumber, int referenceNumber) {
 	ContentsModel &contentsModel = (ContentsModel&)*myModel.myContentsModel;
 	if (contentsParagraphNumber >= contentsModel.paragraphsNumber()) {
 		return;

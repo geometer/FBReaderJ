@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ import android.app.SearchManager;
 import android.os.Bundle;
 import android.content.Intent;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
+
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
@@ -44,9 +46,14 @@ public class NetworkSearchActivity extends Activity {
 					(NetworkTree.Key)data.getSerializable(NetworkLibraryActivity.TREE_KEY_KEY);
 				final NetworkTree tree = library.getTreeByKey(key);
 				if (tree instanceof SearchCatalogTree) {
-					((SearchCatalogTree)tree).startItemsLoader(
-						intent.getStringExtra(SearchManager.QUERY)
-					);
+					final SearchCatalogTree searchTree = (SearchCatalogTree)tree;
+					final String pattern = intent.getStringExtra(SearchManager.QUERY);
+					final MimeType mime = searchTree.getMimeType();
+					if (MimeType.APP_ATOM_XML.weakEquals(mime)) {
+						searchTree.startItemsLoader(pattern);
+					} else if (MimeType.TEXT_HTML.weakEquals(mime)) {
+						Util.openInBrowser(this, searchTree.getUrl(pattern));
+					}
 				}
 			}
 		}

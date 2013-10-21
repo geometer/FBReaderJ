@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@ public:
 	ZLXMLReaderInternal(ZLXMLReader &reader, const char *encoding);
 	~ZLXMLReaderInternal();
 	void init(const char *encoding = 0);
-	bool parseBuffer(const char *buffer, size_t len);
-	size_t getCurrentPosition() const;
+	bool parseBuffer(const char *buffer, std::size_t len);
+	std::size_t getCurrentPosition() const;
 
 private:
 	void setupEntities();

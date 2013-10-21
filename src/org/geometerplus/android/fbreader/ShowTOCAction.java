@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,23 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.Intent;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-class ShowTOCAction extends RunActivityAction {
+class ShowTOCAction extends FBAndroidAction {
 	ShowTOCAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader, TOCActivity.class);
+		super(baseActivity, fbreader);
 	}
 
 	public boolean isVisible() {
-		return (Reader.Model != null) && Reader.Model.TOCTree.hasChildren();
+		return Reader.Model != null && Reader.Model.TOCTree.hasChildren();
+	}
+
+	@Override
+	protected void run(Object ... params) {
+		OrientationUtil.startActivity(
+			BaseActivity, new Intent(BaseActivity.getApplicationContext(), TOCActivity.class)
+		);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,13 +35,6 @@ class FileTypeHtml extends FileType {
 		return extension.endsWith("html") || "htm".equals(extension);
 	}
 
-	/*
-	@Override
-	public String extension() {
-		return "html";
-	}
-	*/
-
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_HTML;
@@ -50,5 +43,10 @@ class FileTypeHtml extends FileType {
 	@Override
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? MimeType.TEXT_HTML : MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return "html";
 	}
 }

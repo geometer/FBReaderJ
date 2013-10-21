@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ ZLLanguageDetector::ZLLanguageDetector() {
 ZLLanguageDetector::~ZLLanguageDetector() {
 }
 
-static std::string naiveEncodingDetection(const unsigned char *buffer, size_t length) {
+static std::string naiveEncodingDetection(const unsigned char *buffer, std::size_t length) {
 	if (buffer[0] == 0xFE && buffer[1] == 0xFF) {
 		return ZLEncodingConverter::UTF16BE;
 	}
@@ -86,10 +86,10 @@ static std::string naiveEncodingDetection(const unsigned char *buffer, size_t le
 			return std::string();
 		}
 	}
-	return ascii ? "us-ascii" : "utf-8";
+	return ascii ? ZLEncodingConverter::ASCII : ZLEncodingConverter::UTF8;
 }
 
-shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfo(const char *buffer, size_t length, int matchingCriterion) {
+shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfo(const char *buffer, std::size_t length, int matchingCriterion) {
 	std::string naive;
 	if ((unsigned char)buffer[0] == 0xFE &&
 			(unsigned char)buffer[1] == 0xFF) {
@@ -103,7 +103,7 @@ shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfo(const 
 	return findInfoForEncoding(naive, buffer, length, matchingCriterion);
 }
 
-shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfoForEncoding(const std::string &encoding, const char *buffer, size_t length, int matchingCriterion) {
+shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfoForEncoding(const std::string &encoding, const char *buffer, std::size_t length, int matchingCriterion) {
 	shared_ptr<LanguageInfo> info;
 	std::map<int,shared_ptr<ZLMapBasedStatistics> > statisticsMap;
 	for (SBVector::const_iterator it = myMatchers.begin(); it != myMatchers.end(); ++it) {

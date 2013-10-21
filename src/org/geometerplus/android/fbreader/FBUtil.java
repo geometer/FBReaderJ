@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.book.Book;
 
 public abstract class FBUtil {
 	public static void shareBook(Activity activity, Book book) {
@@ -43,7 +43,7 @@ public abstract class FBUtil {
 				Html.fromHtml(ZLResource.resource("sharing").getResource("sharedFrom").getValue());
 			activity.startActivity(
 				new Intent(Intent.ACTION_SEND)
-					.setType(FileTypeCollection.Instance.simplifiedMimeType(file).Name)
+					.setType(FileTypeCollection.Instance.rawMimeType(file).Name)
 					.putExtra(Intent.EXTRA_SUBJECT, book.getTitle())
 					.putExtra(Intent.EXTRA_TEXT, sharedFrom)
 					.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file.javaFile()))

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +25,24 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.Paths;
 
 public class FileFirstLevelTree extends FirstLevelTree {
-	FileFirstLevelTree(RootTree root, String id) {
-		super(root, id);
-		addChild(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
-		addChild("/", "fileTreeRoot");
-		addChild(Paths.cardDirectory(), "fileTreeCard");
+	FileFirstLevelTree(RootTree root) {
+		super(root, ROOT_FILE_TREE);
+		for (String dir : Paths.BookPathOption().getValue()) {
+			addChild(dir, "fileTreeLibrary", dir);
+		}
+		addChild("/", "fileTreeRoot", null);
+		addChild(Paths.cardDirectory(), "fileTreeCard", null);
 	}
 
-	private void addChild(String path, String resourceKey) {
+	private void addChild(String path, String resourceKey, String summary) {
 		final ZLFile file = ZLFile.createFileByPath(path);
 		if (file != null) {
-			final ZLResource resource = LibraryUtil.resource().getResource(resourceKey);
+			final ZLResource resource = resource().getResource(resourceKey);
 			new FileTree(
 				this,
 				file,
 				resource.getValue(),
-				resource.getResource("summary").getValue()
+				summary != null ? summary : resource.getResource("summary").getValue()
 			);
 		}
 	}

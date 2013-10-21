@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,8 +40,8 @@ public:
 	ZLLanguageDetector();
 	~ZLLanguageDetector();
 
-	shared_ptr<LanguageInfo> findInfo(const char *buffer, size_t length, int matchingCriterion = 0);
-	shared_ptr<LanguageInfo> findInfoForEncoding(const std::string &encoding, const char *buffer, size_t length, int matchingCriterion = 0);
+	shared_ptr<LanguageInfo> findInfo(const char *buffer, std::size_t length, int matchingCriterion = 0);
+	shared_ptr<LanguageInfo> findInfoForEncoding(const std::string &encoding, const char *buffer, std::size_t length, int matchingCriterion = 0);
 
 private:
 	typedef std::vector<shared_ptr<ZLStatisticsBasedMatcher> > SBVector;

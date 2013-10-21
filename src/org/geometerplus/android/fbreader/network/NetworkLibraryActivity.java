@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,35 +19,40 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
-import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.tree.FBTree;
 
-import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.fbreader.network.action.*;
+import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
-public abstract class NetworkLibraryActivity extends TreeActivity implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
+public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
-	BookDownloaderServiceConnection Connection;
+	public static final int REQUEST_MANAGE_CATALOGS = 1;
+	public static final String ENABLED_CATALOG_IDS_KEY = "android.fbreader.data.enabled_catalogs";
+	public static final String DISABLED_CATALOG_IDS_KEY = "android.fbreader.data.disabled_catalogs";
+
+	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
@@ -62,13 +67,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 		AuthenticationActivity.initCredentialsCreator(this);
 
 		SQLiteCookieDatabase.init(this);
-
-		Connection = new BookDownloaderServiceConnection();
-		bindService(
-			new Intent(getApplicationContext(), BookDownloaderService.class),
-			Connection,
-			BIND_AUTO_CREATE
-		);
 
 		setListAdapter(new NetworkLibraryAdapter(this));
 		final Intent intent = getIntent();
@@ -102,6 +100,8 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 	protected void onStart() {
 		super.onStart();
 
+		Connection.bindToService(this, null);
+
 		NetworkLibrary.Instance().addChangeListener(this);
 	}
 
@@ -115,15 +115,14 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 	@Override
 	protected void onStop() {
 		NetworkLibrary.Instance().removeChangeListener(this);
+
+		Connection.unbind(this);
+
 		super.onStop();
 	}
 
 	@Override
 	public void onDestroy() {
-		if (Connection != null) {
-			unbindService(Connection);
-			Connection = null;
-		}
 		super.onDestroy();
 	}
 
@@ -150,8 +149,22 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Connection.bindToService(this, new Runnable() {
+			public void run() {
+				getListView().invalidateViews();
+			}
+		});
+		if (requestCode == REQUEST_MANAGE_CATALOGS && resultCode == RESULT_OK && data != null) {
+			final ArrayList<String> myIds = data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
+			NetworkLibrary.Instance().setActiveIds(myIds);
+			NetworkLibrary.Instance().synchronize();
+		}
+	}
+
+	@Override
 	public boolean onSearchRequested() {
-		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree tree = getCurrentTree();
 		final RunSearchAction action = new RunSearchAction(this, false);
 		if (action.isVisible(tree) && action.isEnabled(tree)) {
 			action.run(tree);
@@ -175,7 +188,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			final NetworkItemsLoader loader =
-				NetworkLibrary.Instance().getStoredLoader((NetworkTree)getCurrentTree());
+				NetworkLibrary.Instance().getStoredLoader(getCurrentTree());
 			if (loader != null) {
 				loader.interrupt();
 			}
@@ -187,7 +200,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 		myOptionsMenuActions.add(new RunSearchAction(this, false));
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
 		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
-		myOptionsMenuActions.add(new LanguageFilterAction(this));
+		myOptionsMenuActions.add(new ManageCatalogsAction(this));
 		myOptionsMenuActions.add(new ReloadCatalogAction(this));
 		myOptionsMenuActions.add(new SignInAction(this));
 		myOptionsMenuActions.add(new SignUpAction(this));
@@ -195,6 +208,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 		myOptionsMenuActions.add(new TopupAction(this));
 		myOptionsMenuActions.add(new BuyBasketBooksAction(this));
 		myOptionsMenuActions.add(new ClearBasketAction(this));
+		myOptionsMenuActions.add(new OpenRootAction(this));
 	}
 
 	private void fillContextMenuList() {
@@ -206,6 +220,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 		myContextMenuActions.add(new TopupAction(this));
 		myContextMenuActions.add(new SignInAction(this));
 		myContextMenuActions.add(new EditCustomCatalogAction(this));
+		myContextMenuActions.add(new DisableCatalogAction(this));
 		myContextMenuActions.add(new RemoveCustomCatalogAction(this));
 		myContextMenuActions.add(new BuyBasketBooksAction(this));
 		myContextMenuActions.add(new ClearBasketAction(this));
@@ -218,6 +233,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 		myListClickActions.add(new AddCustomCatalogAction(this));
 		myListClickActions.add(new TopupAction(this));
 		myListClickActions.add(new ShowBookInfoAction(this));
+		myListClickActions.add(new ManageCatalogsAction(this));
 	}
 
 	private List<? extends Action> getContextMenuActions(NetworkTree tree) {
@@ -297,7 +313,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 
-		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree tree = getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			final MenuItem item = menu.findItem(a.Code);
 			if (a.isVisible(tree)) {
@@ -313,7 +329,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree tree = getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			if (a.Code == item.getItemId()) {
 				checkAndRun(a, tree);
@@ -325,7 +341,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 
 	private void updateLoadingProgress() {
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree tree = getCurrentTree();
 		final NetworkTree lTree = getLoadableNetworkTree(tree);
 		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
 		setProgressBarIndeterminateVisibility(
@@ -342,7 +358,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 				switch (code) {
 					default:
 						updateLoadingProgress();
-						getListAdapter().replaceAll(getCurrentTree().subTrees());
+						getListAdapter().replaceAll(getCurrentTree().subtrees());
 						//getListView().invalidateViews();
 						invalidateOptionsMenu();
 						break;
@@ -361,6 +377,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 						break;
 					case NotFound:
 						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyNetworkSearchResults");
+						getListView().invalidateViews();
 						break;
 					case EmptyCatalog:
 						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyCatalog");
@@ -446,7 +463,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 
 	public void onScroll(AbsListView view, int firstVisible, int visibleCount, int totalCount) {
 		if (firstVisible + visibleCount + 1 >= totalCount) {
-			final FBTree tree = getCurrentTree();
+			final NetworkTree tree = getCurrentTree();
 			if (tree instanceof NetworkCatalogTree) {
 				((NetworkCatalogTree)tree).loadMoreChildren(totalCount);
 			}

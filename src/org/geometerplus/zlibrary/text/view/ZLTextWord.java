@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-public final class ZLTextWord extends ZLTextElement { 
+public final class ZLTextWord extends ZLTextElement {
 	public final char[] Data;
 	public final int Offset;
 	public final int Length;
@@ -48,7 +48,7 @@ public final class ZLTextWord extends ZLTextElement {
 			myNext = mark;
 		}
 	}
-	
+
 	public ZLTextWord(char[] data, int offset, int length, int paragraphOffset) {
 		Data = data;
 		Offset = offset;
@@ -72,7 +72,7 @@ public final class ZLTextWord extends ZLTextElement {
 	public int getParagraphOffset() {
 		return myParagraphOffset;
 	}
-	
+
 	public void addMark(int start, int length) {
 		Mark existingMark = myMark;
 		Mark mark = new Mark(start, length);
@@ -85,13 +85,13 @@ public final class ZLTextWord extends ZLTextElement {
 			}
 			mark.setNext(existingMark.getNext());
 			existingMark.setNext(mark);
-		}		
+		}
 	}
-	
+
 	public int getWidth(ZLPaintContext context) {
 		int width = myWidth;
 		if (width <= 1) {
-			width = context.getStringWidth(Data, Offset, Length);	
+			width = context.getStringWidth(Data, Offset, Length);
 			myWidth = width;
 		}
 		return width;

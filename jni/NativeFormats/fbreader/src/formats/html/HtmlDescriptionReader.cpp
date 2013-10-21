@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ bool HtmlDescriptionReader::tagHandler(const HtmlTag &tag) {
 		}
 		if (it != tag.Attributes.end()) {
 			const std::string prefix = "charset=";
-			size_t index = it->Value.find(prefix);
+			std::size_t index = it->Value.find(prefix);
 			if (index != std::string::npos) {
 				std::string charset = it->Value.substr(index + prefix.length());
 				index = charset.find(';');
@@ -74,7 +74,7 @@ bool HtmlDescriptionReader::tagHandler(const HtmlTag &tag) {
 	return tag.Name != "BODY";
 }
 
-bool HtmlDescriptionReader::characterDataHandler(const char *text, size_t len, bool) {
+bool HtmlDescriptionReader::characterDataHandler(const char *text, std::size_t len, bool) {
 	if (myReadTitle) {
 		myBuffer.append(text, len);
 	}

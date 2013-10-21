@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,21 +21,29 @@ package org.geometerplus.fbreader.library;
 
 import java.util.Collections;
 
-public final class SeriesTree extends LibraryTree {
-	public final String Series;
+import org.geometerplus.fbreader.book.*;
 
-	SeriesTree(String series) {
+public final class SeriesTree extends FilteredTree {
+	public final Series Series;
+
+	private static Filter filter(Series series, Author author) {
+		final Filter f = new Filter.BySeries(series);
+		return author != null ? new Filter.And(f, new Filter.ByAuthor(author)) : f;
+	}
+
+	SeriesTree(IBookCollection collection, Series series, Author author) {
+		super(collection, filter(series, author));
 		Series = series;
 	}
 
-	SeriesTree(LibraryTree parent, String series, int position) {
-		super(parent, position);
+	SeriesTree(LibraryTree parent, Series series, Author author, int position) {
+		super(parent, filter(series, author), position);
 		Series = series;
 	}
 
 	@Override
 	public String getName() {
-		return Series;
+		return Series.getTitle();
 	}
 
 	@Override
@@ -43,27 +51,20 @@ public final class SeriesTree extends LibraryTree {
 		return "@SeriesTree " + getName();
 	}
 
-	BookTree getBookInSeriesSubTree(Book book) {
-		final BookInSeriesTree temp = new BookInSeriesTree(book);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (BookInSeriesTree)subTrees().get(position);
-		} else {
-			return new BookInSeriesTree(this, book, - position - 1);
-		}
-	}
-
-	@Override
-	public boolean containsBook(Book book) {
-		if (book == null) {
-			return false;
-		}
-		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Name);
-	}
-
 	@Override
 	protected String getSortKey() {
-		return " Series:" + super.getSortKey();
+		return Series.getSortKey();
+	}
+
+	@Override
+	protected boolean createSubtree(Book book) {
+		final BookInSeriesTree temp = new BookInSeriesTree(Collection, book);
+		int position = Collections.binarySearch(subtrees(), temp);
+		if (position >= 0) {
+			return false;
+		} else {
+			new BookInSeriesTree(this, book, - position - 1);
+			return true;
+		}
 	}
 }

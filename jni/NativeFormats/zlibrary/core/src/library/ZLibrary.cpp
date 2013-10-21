@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ void ZLibrary::parseArguments(int &argc, char **&argv) {
 			}
 		} else*/ if (LOGGER_OPTION == argument) {
 			std::string loggerClasses = argv[2];
-			while (size_t index = loggerClasses.find(':') != std::string::npos) {
+			while (std::size_t index = loggerClasses.find(':') != std::string::npos) {
 				ZLLogger::Instance().registerClass(loggerClasses.substr(0, index));
 				loggerClasses.erase(0, index + 1);
 			}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 
 FB2BookReader::FB2BookReader(BookModel &model) : myModelReader(model) {
 	myInsideCoverpage = false;
-	myParagraphsBeforeBodyNumber = (size_t)-1;
+	myParagraphsBeforeBodyNumber = (std::size_t)-1;
 	myInsidePoem = false;
 	mySectionDepth = 0;
 	myBodyCounter = 0;
@@ -40,9 +40,10 @@ FB2BookReader::FB2BookReader(BookModel &model) : myModelReader(model) {
 	myCurrentImageStart = -1;
 	mySectionStarted = false;
 	myInsideTitle = false;
+	myListDepth = 0;
 }
 
-void FB2BookReader::characterDataHandler(const char *text, size_t len) {
+void FB2BookReader::characterDataHandler(const char *text, std::size_t len) {
 	if ((len > 0) && (!myCurrentImageId.empty() || myModelReader.paragraphIsOpen())) {
 		std::string str(text, len);
 		if (!myCurrentImageId.empty()) {
@@ -80,6 +81,24 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 			}
 			myModelReader.beginParagraph();
 			break;
+		case _UL:
+		case _OL:
+			++myListDepth;
+			break;
+		case _LI:
+		{
+			if (mySectionStarted) {
+				mySectionStarted = false;
+			}
+			myModelReader.beginParagraph();
+			static const std::string BULLET = "\xE2\x80\xA2";
+			if (myListDepth > 1) {
+				myModelReader.addFixedHSpace(3 * (myListDepth - 1));
+			}
+			myModelReader.addData(BULLET);
+			myModelReader.addFixedHSpace(1);
+			break;
+		}
 		case _V:
 			myModelReader.pushKind(VERSE);
 			myModelReader.beginParagraph();
@@ -163,6 +182,9 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 		case _A:
 		{
 			const char *ref = attributeValue(xmlattributes, myHrefPredicate);
+			if (ref == 0) {
+				ref = attributeValue(xmlattributes, myBrokenHrefPredicate);
+			}
 			if (ref != 0) {
 				if (ref[0] == '#') {
 					const char *type = attributeValue(xmlattributes, "type");
@@ -186,9 +208,12 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 		case _IMAGE:
 		{
 			const char *ref = attributeValue(xmlattributes, myHrefPredicate);
+			if (ref == 0) {
+				ref = attributeValue(xmlattributes, myBrokenHrefPredicate);
+			}
 			const char *vOffset = attributeValue(xmlattributes, "voffset");
-			char offset = (vOffset != 0) ? atoi(vOffset) : 0;
-			if ((ref != 0) && (*ref == '#')) {
+			char offset = vOffset != 0 ? std::atoi(vOffset) : 0;
+			if (ref != 0 && *ref == '#') {
 				++ref;
 				const bool isCoverImage =
 					myParagraphsBeforeBodyNumber ==
@@ -232,7 +257,12 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 void FB2BookReader::endElementHandler(int tag) {
 	switch (tag) {
 		case _P:
+		case _LI:
 			myModelReader.endParagraph();
+			break;
+		case _UL:
+		case _OL:
+			--myListDepth;
 			break;
 		case _V:
 		case _SUBTITLE:

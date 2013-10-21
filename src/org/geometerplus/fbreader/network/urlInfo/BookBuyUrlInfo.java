@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,15 @@
 package org.geometerplus.fbreader.network.urlInfo;
 
 import org.geometerplus.zlibrary.core.money.Money;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 public class BookBuyUrlInfo extends BookUrlInfo {
 	private static final long serialVersionUID = 7877935250896069650L;
 
 	public final Money Price;
 
-	public BookBuyUrlInfo(Type type, int format, String url, Money price) {
-		super(type, format, url);
+	public BookBuyUrlInfo(Type type, int format, String url, MimeType mime, Money price) {
+		super(type, format, url, mime);
 		Price = price;
 	}
 }

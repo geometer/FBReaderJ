@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  */
 
 package org.geometerplus.zlibrary.ui.android.view;
-
-import java.util.*;
 
 import android.graphics.*;
 
@@ -111,7 +109,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 						final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
 						final Canvas wallpaperCanvas = new Canvas(wallpaper);
 						final Paint wallpaperPaint = new Paint();
-                    
+
 						Matrix m = new Matrix();
 						wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
 						m.preScale(-1, 1);
@@ -246,7 +244,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public int getHeight() {
 		return myHeight;
 	}
-	
+
 	@Override
 	public int getStringWidth(char[] string, int offset, int length) {
 		boolean containsSoftHyphen = false;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,32 +21,35 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class BookTree extends LibraryTree {
 	public final Book Book;
-	private final boolean myShowAuthors;
 
-	BookTree(Book book, boolean showAuthors) {
+	BookTree(IBookCollection collection, Book book) {
+		super(collection);
 		Book = book;
-		myShowAuthors = showAuthors;
 	}
 
-	BookTree(LibraryTree parent, Book book, boolean showAuthors) {
+	BookTree(LibraryTree parent, Book book) {
 		super(parent);
 		Book = book;
-		myShowAuthors = showAuthors;
 	}
 
-	BookTree(LibraryTree parent, Book book, boolean showAuthors, int position) {
+	BookTree(LibraryTree parent, Book book, int position) {
 		super(parent, position);
 		Book = book;
-		myShowAuthors = showAuthors;
 	}
 
 	@Override
 	public String getName() {
 		return Book.getTitle();
+	}
+
+	@Override
+	public String getSummary() {
+		return "";
 	}
 
 	@Override
@@ -60,32 +63,18 @@ public class BookTree extends LibraryTree {
 	}
 
 	@Override
-	public String getSummary() {
-		if (!myShowAuthors) {
-			return super.getSummary();
-		}
-		StringBuilder builder = new StringBuilder();
-		int count = 0;
-		for (Author author : Book.authors()) {
-			if (count++ > 0) {
-				builder.append(",  ");
-			}
-			builder.append(author.DisplayName);
-			if (count == 5) {
-				break;
-			}
-		}
-		return builder.toString();
-	}
-
-	@Override
 	protected ZLImage createCover() {
-		return LibraryUtil.getCover(Book);
+		return BookUtil.getCover(Book);
 	}
 
 	@Override
 	public boolean containsBook(Book book) {
 		return book != null && book.equals(Book);
+	}
+
+	@Override
+	protected String getSortKey() {
+		return Book.getSortKey();
 	}
 
 	@Override

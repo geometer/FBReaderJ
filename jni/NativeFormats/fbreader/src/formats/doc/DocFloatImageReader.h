@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,12 +38,12 @@ public:
 	};
 
 	struct FSP { //see p.76-77 [MS-ODRAW]
-		unsigned int shapeID; //spid
+		unsigned int shapeId; //spid
 	};
 
 	struct FOPTE { //see p.98 and p.32 [MS-ODRAW]
-		unsigned int pID; //pid
-		bool isBlipID; //fBid
+		unsigned int pId; //pid
+		bool isBlipId; //fBid
 		bool isComplex; //fComplex
 		unsigned int value; //op
 	};
@@ -71,7 +71,7 @@ public:
 public:
 	void readAll();
 
-	ZLFileImage::Blocks getBlocksForShapeID(unsigned int shapeID) const;
+	ZLFileImage::Blocks getBlocksForShapeId(unsigned int shapeId) const;
 
 private:
 	static unsigned int readRecordHeader(RecordHeader &header, shared_ptr<OleStream> stream);

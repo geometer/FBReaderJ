@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,15 +31,15 @@ protected:
 
 private:
 	bool open();
-	size_t read(char *buffer, size_t maxSize);
+	std::size_t read(char *buffer, std::size_t maxSize);
 	void close();
 	void seek(int offset, bool absoluteOffset);
-	size_t offset() const;
-	size_t sizeOfOpened();
+	std::size_t offset() const;
+	std::size_t sizeOfOpened();
 
 private:
 	shared_ptr<ZLInputStream> myCurrentStream;
-	size_t myOffset;
+	std::size_t myOffset;
 };
 
 #endif /* __MERGEDSTREAM_H__ */

@@ -1,4 +1,157 @@
-===== 1.6.0 (Oct 06, 2012) =====
+===== 1.9.1 (Oct ??, 2013) =====
+* Updated Czech localization (by Marek Pavelka)
+* mobi: blockquote tag support
+
+===== 1.9 (Oct 14, 2013) =====
+* Dictionary support
+	** added OpenDictionary support (code provided by Paragon Software), better integration with SlovoEd dictionaries
+	** fixed ColorDict 3 integration
+	** added Lingvo integration
+* Network library
+	** Disable/enable separate catalogs
+	** Change order of catalogs
+	** Fixed unexpected 'Catalog is empty' messages
+* Formats
+	** mobi: added support for <div> & <mbp:pagebreak> tags
+	** ePub: fixed reading of files generated from LibreOffice
+	** ePub: no empty paragraphs before/after the cover
+	** RTF: added unicode symbols (\u command) support
+* Localizations
+	** Danish localization done by Jens Kaestel, sponsored by Panacea Supplies
+	** Danish hyphenation patterns imported by Dennis Sheil of Panacea Supplies
+	** Added Persian localization by HYIPEDU Team
+	** Added Basque localization by Ibon Idoiaga Basaras from http://librezale.org
+	** Added Armenian localization by Yavruhrat, Marat Yavrumyan, Ruben Tarumian
+	** Updated French localization by Mathias Monnerville
+* Small features & fixes
+	** Help item in the main menu (opens F.A.Q. page on the site)
+	** List views scrolling speed-up (https://github.com/geometer/FBReaderJ/issues/148)
+* Internal changes
+	** Current reading progress is saved in books db
+
+===== 1.8.2 (Jun 13, 2013) =====
+* Editable highlighting styles
+* Bookmarks with no highlighting
+* Two-column view in horizontal mode is enabled by default for 7" devices
+* New color picker dialog (AmbilWarna library http://code.google.com/p/android-color-picker/ is used)
+* Updated Spanish localization (by Diego Bernardi, sponsored by Panacea Supplies)
+* Updated Czech localization (by Marek Pavelka)
+* Updated Dutch localization (by Frank Fesevur)
+* Bitknights dictionaries support (by Norbert Kenderesi)
+* Support for new Paragon Software dictionaries (by Paragon Software)
+* Fixed decimal point separator in preferences (idea by Dennis Sheil)
+* Fixed book info saving for BookInfoActivity/EditBookInfoActivity (service mechanism is used instead of Activity.setResult())
+
+===== 1.8.1 (May 06, 2013) =====
+* Fixed ConcurrentModificationException in ZLTextView
+
+===== 1.8 (May 06, 2013) =====
+
+* 2 column text view (in horizontal mode, optional, enabled by default on devices with diagonal > 7")
+* text highlighting (show bookmarks in color)
+* Fixed ePub books scanning
+* Fixed series index representation: 10 instead 1E+1
+
+===== 1.7.9 (Apr 23, 2013) =====
+* Fixed Ukrainian hyphenations
+* Fixed missing paragraph before new section issue (in some book formats)
+* Fixed library/bookmarks start
+* Georgian in language list in book info dialog
+* Fixed interface language swithcing (change language immediately in menu, library, etc.)
+* Added "add/remove book to/from favorites" items in BookInfoActivity menu
+* Smaller font size in list activities
+* Read/unread book marks
+
+===== 1.7.8 (Mar 24, 2013) =====
+* Fixed library scanning: all books are visible in the library
+* Updated Czech & Norwegian translations
+* Library saves book uids
+* Calls for (possible) external library & bookmarks activities
+
+===== 1.7.7 (Mar 14, 2013) =====
+* Fixed XML parsing
+* Fixed series order in library
+
+===== 1.7.6 (Mar 13, 2013) =====
+* Fixed several possible NPEs
+
+===== 1.7.4/5 (Mar 11, 2013) =====
+* Book/bookmark deserializer: SAX instead of our own XML parser
+* Georgian localization (by Bookland.ge)
+* Interface language option
+* Book sort order in Library omits leading articles
+* Fixed "screen stays switched on while locked" issue
+
+===== 1.7.3 (Mar 04, 2013) =====
+* Library service does not work in background after program closing
+* We do not obfuscate code
+* Fixed issue in 'Books sorted by title' library catalog: viewing book info does not remove book from the list
+* Fixed issue with large (1000+) bookmarks collection opening
+
+===== 1.7.2 (Feb 22, 2013) =====
+* Restored android:changes attribute for all activities
+* Fixed possible NPE in BookmarksActivity
+
+===== 1.7.1 (Feb 18, 2013) =====
+* Fixed several NPEs
+
+===== 1.7 (Feb 17, 2013) =====
+* Introduced library service; FBReader loads library in background
+* Fixed issue for XHTML files with several body tags (sometimes produced by Calibre)
+* Fixed navigation popup text
+* Fixed NPE in findViewById in the main activity
+* Popup dictionary (https://play.google.com/store/apps/details?id=com.barisatamer.popupdictionary) integration
+* Catalan localization (by Alfonso Montero)
+* Open 'additional links in network library' with correct orientation
+* Some incorrect FB2 files support (li/i/b tags, href attributes with no namespace and with unknown namespace ids) -- e.g. CoolReader manual
+* Fixed 'Book is being downloaded' button behaviour (in Network book info activity)
+
+===== 1.6.9 (Jan 03, 2013) =====
+* Added Bulgarian translation (by Ники Арсов)
+* Updated Dutch translation (by Frank Fesevur)
+* Plural forms in Belarusian and Czech translations
+* Fixed issue with rendering during backward page turning with no amimation
+* xlarge screens support declared in AndroidManifest.xml
+* ePub: fixed svg namespace processing
+* main activity orientation is used in all dependent activities
+
+===== 1.6.8 (Nov 30, 2012) =====
+* Fixed NPE during adding a custom catalog with no search link
+
+===== 1.6.7 (Nov 29, 2012) =====
+* Android 4.*: show status bar if action bar is shown
+* Bulgarian hyphenation patterns, converted by Kaloyan Raev
+* OPDS: fixed opensearch description support
+
+===== 1.6.6 (Nov 13, 2012) =====
+* Fixed 'extra paragraph break after each footnote mark' issue for RTFs (and may be some other formats)
+* Fixed <pre>formatted text rendering
+* Fixed utf-8 *.txt files processing
+* Fixed library crash on some *.doc files
+* Updated Spanish localization (by Francisco Alvarado)
+
+===== 1.6.5 (Nov 04, 2012) =====
+* Fixed footnotes processing in rtf's
+* Updated Czech localization (by Marek Pavelka)
+* Added Belarusian localization (by Uievaład Čorny)
+
+===== 1.6.4 (Oct 30, 2012) =====
+* Supported encoding & language detection for *.doc (ms-word) files
+* Fixed crash in book info dialogs on some epubs (on Jelly Bean devices), code taken from https://gist.github.com/3424004
+* Fixed some problems in interaction with TTS+ plugin (by Greg Kochaniak)
+
+===== 1.6.3 (Oct 22, 2012) =====
+* FBReader stores text position after setPageStart API method (useful for TTS plugin, code by Greg Kochaniak)
+* MSWord doc plugin synchronized with the main branch
+* New options: apply/ignore values defined in CSS
+* Fixed crash in settings on devices with German, Thai, Traditional Chinese and Vietnamese locales
+
+===== 1.6.2 (Oct 13, 2012) =====
+* Optimized animation speed
+* Fixes in database code
+* API changes for compatibility with TTS+ FBReader Plugin (by Greg Kochaniak)
+
+===== 1.6.0/1.6.1 (Oct 06, 2012) =====
 * MS Word (.doc) format support
 * Fixed library duplicates issue
 * Library speed optimization
@@ -12,6 +165,7 @@
 * Norwegian localization by Haakon Meland Eriksen
 * Turkish localization by SonySinger
 * Updated Chinese localization by Chris Yu
+* Updated French localization by Mathias Monnerville
 * Updated German localization by Ingolf Kübler
 * Updated Ukrainian localization by Nazariy Makarenko
 

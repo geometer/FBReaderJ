@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,21 +25,14 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
 public class OEBNativePlugin extends NativeFormatPlugin {
 	public OEBNativePlugin() {
 		super("ePub");
-	}
-
-	@Override
-	public EncodingCollection supportedEncodings() {
-		return new AutoEncodingCollection();
 	}
 
 	@Override
@@ -53,5 +46,15 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 					: Collections.<String>emptyList();
 			}
 		});
+	}
+
+	@Override
+	public EncodingCollection supportedEncodings() {
+		return new AutoEncodingCollection();
+	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) {
+		book.setEncoding("auto");
 	}
 }

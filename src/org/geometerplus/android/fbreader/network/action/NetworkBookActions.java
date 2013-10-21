@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ import android.content.Intent;
 import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -39,7 +38,6 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
-import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.network.*;
 
@@ -91,7 +89,7 @@ public abstract class NetworkBookActions {
 			final BookUrlInfo reference = book.reference(UrlInfo.Type.Book);
 			if (reference != null
 					&& connection != null && connection.isBeingDownloaded(reference.Url)) {
-				return R.drawable.ic_list_download;
+				return R.drawable.ic_list_downloading;
 			} else if (book.localCopyFileName() != null) {
 				return R.drawable.ic_list_flag;
 			} else if (reference != null) {

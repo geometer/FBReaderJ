@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.text.model;
 class ZLTextParagraphImpl implements ZLTextParagraph {
 	private final ZLTextPlainModel myModel;
 	private final int myIndex;
-	
+
 	ZLTextParagraphImpl(ZLTextPlainModel model, int index) {
 		myModel = model;
 		myIndex = index;

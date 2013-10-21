@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -29,7 +30,7 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void setSummary(String summary);
 
 	UrlInfoCollection<UrlInfoWithDate> urlInfoMap();
-	void setUrl(UrlInfo.Type type, String url);
+	void setUrl(UrlInfo.Type type, String url, MimeType mime);
 	void removeUrl(UrlInfo.Type type);
 
 	boolean isObsolete(long milliSeconds);

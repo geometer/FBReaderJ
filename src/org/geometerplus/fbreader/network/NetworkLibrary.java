@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,9 +26,9 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -99,58 +99,83 @@ public class NetworkLibrary {
 		return new ArrayList<String>(languageSet);
 	}
 
-	private ZLStringOption myActiveLanguageCodesOption;
-	private ZLStringOption activeLanguageCodesOption() {
- 		if (myActiveLanguageCodesOption == null) {
-			final TreeSet<String> defaultCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
-			defaultCodes.addAll(ZLibrary.Instance().defaultLanguageCodes());
-			myActiveLanguageCodesOption =
-				new ZLStringOption(
-					"Options",
-					"ActiveLanguages",
-					commaSeparatedString(defaultCodes)
-				);
+	public List<String> linkIds() {
+		final ArrayList<String> ids = new ArrayList<String>();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				ids.add(link.getUrl(UrlInfo.Type.Catalog));
+			}
 		}
-		return myActiveLanguageCodesOption;
+		return ids;
 	}
 
-	public Collection<String> activeLanguageCodes() {
-		return Arrays.asList(activeLanguageCodesOption().getValue().split(","));
+	private ZLStringListOption myActiveIdsOption;
+	private ZLStringListOption activeIdsOption() {
+		if (myActiveIdsOption == null) {
+			myActiveIdsOption = new ZLStringListOption(
+				"Options",
+				"ActiveIds",
+				"",
+				","
+			);
+		}
+		return myActiveIdsOption;
 	}
 
-	public void setActiveLanguageCodes(Collection<String> codes) {
-		final TreeSet<String> allCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
-		allCodes.addAll(ZLibrary.Instance().defaultLanguageCodes());
-		allCodes.removeAll(languageCodes());
-		allCodes.addAll(codes);
-		activeLanguageCodesOption().setValue(commaSeparatedString(allCodes));
+	public List<String> activeIds() {
+		return activeIdsOption().getValue();
+	}
+
+	public void setLinkActive(INetworkLink link, boolean active) {
+		if (link == null) {
+			return;
+		}
+		final String id = link.getUrl(UrlInfo.Type.Catalog);
+		if (id == null) {
+			return;
+		}
+		final List<String> oldIds = activeIds();
+		if (oldIds.contains(id) == active) {
+			return;
+		}
+
+		final List<String> newIds;
+		if (active) {
+			newIds = new ArrayList<String>(oldIds.size() + 1);
+			newIds.addAll(oldIds);
+			newIds.add(id);
+		} else {
+			newIds = new ArrayList<String>(oldIds);
+			newIds.remove(id);
+		}
+		activeIdsOption().setValue(newIds);
 		invalidateChildren();
 	}
 
-	private String commaSeparatedString(Collection<String> codes) {
-		final StringBuilder builder = new StringBuilder();
-		for (String code : codes) {
-			builder.append(code);
-			builder.append(",");
-		}
-		if (builder.length() > 0) {
-			builder.delete(builder.length() - 1, builder.length());
-		}
-		return builder.toString();
+	public void setActiveIds(Collection<String> ids) {
+		activeIdsOption().setValue(new ArrayList<String>(ids));
+		invalidateChildren();
 	}
 
 	List<INetworkLink> activeLinks() {
-		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
-		final Collection<String> codes = activeLanguageCodes();
+		final Map<String,INetworkLink> linksById = new TreeMap<String,INetworkLink>(); 
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
-				if (link instanceof ICustomNetworkLink ||
-					codes.contains(link.getLanguage())) {
-					filteredList.add(link);
+				final String id = link.getUrl(UrlInfo.Type.Catalog);
+				if (id != null) {
+					linksById.put(id, link);
 				}
 			}
 		}
-		return filteredList;
+
+		final List<INetworkLink> result = new LinkedList<INetworkLink>();
+		for (String id : activeIds()) {
+			final INetworkLink link = linksById.get(id);
+			if (link != null) {
+				result.add(link);
+			}
+		}
+		return result;
 	}
 
 	public INetworkLink getLinkByUrl(String url) {
@@ -168,7 +193,20 @@ public class NetworkLibrary {
 	}
 
 	public NetworkTree getCatalogTreeByUrl(String url) {
-		for (FBTree tree : getRootTree().subTrees()) {
+		for (FBTree tree : getRootTree().subtrees()) {
+			if (tree instanceof NetworkCatalogRootTree) {
+				final String cUrl =
+					((NetworkCatalogTree)tree).getLink().getUrlInfo(UrlInfo.Type.Catalog).Url;
+				if (url.equals(cUrl)) {
+					return (NetworkTree)tree;
+				}
+			}
+		}
+		return null;
+	}
+
+	public NetworkTree getCatalogTreeByUrlAll(String url) {
+		for (FBTree tree : getRootAllTree().subtrees()) {
 			if (tree instanceof NetworkCatalogRootTree) {
 				final String cUrl =
 					((NetworkCatalogTree)tree).getLink().getUrlInfo(UrlInfo.Type.Catalog).Url;
@@ -191,6 +229,7 @@ public class NetworkLibrary {
 		return null;
 	}
 
+	private final RootTree myRootAllTree = new RootTree("@AllRoot", false);
 	private final RootTree myRootTree = new RootTree("@Root", false);
 	private final RootTree myFakeRootTree = new RootTree("@FakeRoot", true);
 
@@ -258,7 +297,7 @@ public class NetworkLibrary {
 	private volatile boolean myUpdateInProgress;
 	private Object myUpdateLock = new Object();
 
-	public void runBackgroundUpdate(final boolean clearCache) {
+	public void runBackgroundUpdate(final boolean force) {
 		if (!isInitialized()) {
 			return;
 		}
@@ -268,7 +307,7 @@ public class NetworkLibrary {
 				try {
 					myUpdateInProgress = true;
 					fireModelChangedEvent(ChangeListener.Code.SomeCode);
-					runBackgroundUpdateInternal(clearCache);
+					runBackgroundUpdateInternal(force);
 				} catch (ZLNetworkException e) {
 					fireModelChangedEvent(ChangeListener.Code.NetworkError, e.getMessage());
 				} finally {
@@ -281,10 +320,10 @@ public class NetworkLibrary {
 		thread.start();
 	}
 
-	private void runBackgroundUpdateInternal(boolean clearCache) throws ZLNetworkException {
+	private void runBackgroundUpdateInternal(boolean force) throws ZLNetworkException {
 		synchronized (myUpdateLock) {
 			final OPDSLinkReader.CacheMode mode =
-				clearCache ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
+				force ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
 			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(mode);
 			if (!loadedLinks.isEmpty()) {
 				removeAllLoadedLinks();
@@ -297,7 +336,7 @@ public class NetworkLibrary {
 			for (INetworkLink link : linksCopy) {
 				if (link.getType() == INetworkLink.Type.Custom) {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
-					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
+					if (force || customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
 						try {
 							customLink.reloadInfo(true, true);
 							NetworkDatabase.Instance().saveLink(customLink);
@@ -332,60 +371,105 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
-	private void makeUpToDate() {
-		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
-
-		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
-
-		// we do remove sum tree items:
-		for (FBTree t : myRootTree.subTrees()) {
-			if (t instanceof NetworkCatalogTree) {
-				final INetworkLink link = ((NetworkCatalogTree)t).getLink();
-				if (link != null) {
-					if (!linkSet.contains(link)) {
-                        // 1. links not listed in activeLinks list right now
-						toRemove.add(t);
-					} else if (link instanceof ICustomNetworkLink &&
-								((ICustomNetworkLink)link).hasChanges()) {
-                        // 2. custom links that were changed
-						toRemove.add(t);
-					} else {
-						linkSet.remove(link);
+	private void makeUpToDateRootAll() {
+		myRootAllTree.clear();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				for (FBTree t : myRootAllTree.subtrees()) {
+					final INetworkLink l = ((NetworkTree)t).getLink();
+					if (l != null && link.compareTo(l) <= 0) {
+						break;
 					}
-				} else {
-					// 3. search item
-					toRemove.add(t);
+				}
+				new NetworkCatalogRootTree(myRootAllTree, link);
+			}
+		}
+	}
+
+	private void makeUpToDate() {
+		firstTimeComputeActiveIds();
+
+		final Map<INetworkLink,List<NetworkCatalogTree>> linkToTreeMap =
+			new HashMap<INetworkLink,List<NetworkCatalogTree>>();
+		for (FBTree tree : myRootTree.subtrees()) {
+			if (tree instanceof NetworkCatalogTree) {
+				final NetworkCatalogTree nTree = (NetworkCatalogTree)tree;
+				final INetworkLink link = nTree.getLink();
+				if (link != null) {
+					List<NetworkCatalogTree> list = linkToTreeMap.get(link);
+					if (list == null) {
+						list = new LinkedList<NetworkCatalogTree>();
+						linkToTreeMap.put(link, list);
+					}
+					list.add(nTree);
+				}
+			}
+		}
+
+		if (linkToTreeMap.isEmpty()) {
+			//new RecentCatalogListTree(
+			//	myRootTree, new RecentCatalogListItem(resource().getResource("recent"))
+			//);
+			new SearchCatalogTree(myRootTree, mySearchItem);
+			// normal catalog items to be inserted here
+			new ManageCatalogsItemTree(myRootTree);
+			new AddCustomCatalogItemTree(myRootTree);
+		}
+
+		int index = 1;
+		for (INetworkLink link : activeLinks()) {
+			final List<NetworkCatalogTree> trees = linkToTreeMap.remove(link);
+			if (trees != null) {
+				for (NetworkCatalogTree t : trees) {
+					myRootTree.moveSubtree(t, index++);
 				}
 			} else {
-				// 4. non-catalog nodes
-				toRemove.add(t);
+				new NetworkCatalogRootTree(myRootTree, link, index++);
 			}
-		}
-		for (FBTree tree : toRemove) {
-			tree.removeSelf();
 		}
 
-		// we do add new network catalog items
-		for (INetworkLink link : linkSet) {
-			int index = 0;
-			for (FBTree t : myRootTree.subTrees()) {
-				final INetworkLink l = ((NetworkTree)t).getLink();
-				if (l != null && link.compareTo(l) <= 0) {
-					break;
-				}
-				++index;
+		for (List<NetworkCatalogTree> trees : linkToTreeMap.values()) {
+			for (NetworkCatalogTree t : trees) {
+				t.removeSelf();
 			}
-			new NetworkCatalogRootTree(myRootTree, link, index);
 		}
-		// we do add non-catalog items
-		new SearchCatalogTree(myRootTree, mySearchItem, 0);
-		new AddCustomCatalogItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
+	private void firstTimeComputeActiveIds() {
+		final ZLBooleanOption firstLaunchOption = new ZLBooleanOption(
+			"Options",
+			"firstLaunch",
+			true
+		);
+		if (!firstLaunchOption.getValue()) {
+			return;
+		}
+
+		final ArrayList<String> ids = new ArrayList<String>();
+		// language codes were saved in this options in versions before 1.9
+		final Collection<String> codes = new ZLStringListOption(
+			"Options",
+			"ActiveLanguages",
+			ZLibrary.Instance().defaultLanguageCodes(),
+			","
+		).getValue();
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (link instanceof ICustomNetworkLink ||
+					codes.contains(link.getLanguage())) {
+					ids.add(link.getUrl(UrlInfo.Type.Catalog));
+				}
+			}
+		}
+		setActiveIds(ids);
+
+		firstLaunchOption.setValue(false);
+	}
+
 	private void updateVisibility() {
-		for (FBTree tree : myRootTree.subTrees()) {
+		for (FBTree tree : myRootTree.subtrees()) {
 			if (tree instanceof NetworkCatalogTree) {
 				((NetworkCatalogTree)tree).updateVisibility();
 			}
@@ -397,20 +481,26 @@ public class NetworkLibrary {
 		if (myChildrenAreInvalid) {
 			myChildrenAreInvalid = false;
 			makeUpToDate();
+			makeUpToDateRootAll();
 		}
 		if (myUpdateVisibility) {
 			myUpdateVisibility = false;
 			updateVisibility();
 		}
+		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
 	public NetworkTree getRootTree() {
 		return myRootTree;
 	}
 
+	public NetworkTree getRootAllTree() {
+		return myRootAllTree;
+	}
+
 	public NetworkBookTree getFakeBookTree(NetworkBookItem book) {
 		final String id = book.getStringId();
-		for (FBTree tree : myFakeRootTree.subTrees()) {
+		for (FBTree tree : myFakeRootTree.subtrees()) {
 			if (tree instanceof NetworkBookTree &&
 				id.equals(tree.getUniqueKey().Id)) {
 				return (NetworkBookTree)tree;
@@ -421,7 +511,7 @@ public class NetworkLibrary {
 
 	public BasketCatalogTree getFakeBasketTree(BasketItem item) {
 		final String id = item.getStringId();
-		for (FBTree tree : myFakeRootTree.subTrees()) {
+		for (FBTree tree : myFakeRootTree.subtrees()) {
 			if (tree instanceof BasketCatalogTree &&
 				id.equals(tree.getUniqueKey().Id)) {
 				return (BasketCatalogTree)tree;
@@ -432,7 +522,7 @@ public class NetworkLibrary {
 
 	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {
 		final String id = item.getStringId();
-		for (FBTree tree : myFakeRootTree.subTrees()) {
+		for (FBTree tree : myFakeRootTree.subtrees()) {
 			if (tree instanceof NetworkCatalogTree &&
 				id.equals(tree.getUniqueKey().Id)) {
 				return (NetworkCatalogTree)tree;
@@ -458,7 +548,7 @@ public class NetworkLibrary {
 		if (parentTree == null) {
 			return null;
 		}
-		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
+		return parentTree != null ? (NetworkTree)parentTree.getSubtree(key.Id) : null;
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
@@ -477,6 +567,7 @@ public class NetworkLibrary {
 			}
 		}
 		NetworkDatabase.Instance().saveLink(link);
+		setLinkActive(link, true);
 		invalidateChildren();
 	}
 
@@ -542,7 +633,7 @@ public class NetworkLibrary {
 
 	public ZLImage getImageByUrl(String url, MimeType mimeType) {
 		synchronized (myImageMap) {
-			WeakReference<ZLImage> ref = myImageMap.get(url);
+			final WeakReference<ZLImage> ref = myImageMap.get(url);
 			if (ref != null) {
 				final ZLImage image = ref.get();
 				if (image != null) {

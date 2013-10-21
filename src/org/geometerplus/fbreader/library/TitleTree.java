@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,51 +19,33 @@
 
 package org.geometerplus.fbreader.library;
 
-public final class TitleTree extends LibraryTree {
-	static String firstTitleLetter(Book book) {
-		if (book == null) {
-			return null;
-		}
-		String title = book.getTitle();
-		if (title == null) {
-			return null;
-		}
-		title = title.trim();
-		if ("".equals(title)) {
-			return null;
-		}
-		for (int i = 0; i < title.length(); ++i) {
-			char letter = title.charAt(i);
-			if (Character.isLetterOrDigit(letter)) {
-				return String.valueOf(Character.toUpperCase(letter));
-			}
-		}
-		return String.valueOf(Character.toUpperCase(title.charAt(0)));
+import org.geometerplus.fbreader.book.*;
+
+public final class TitleTree extends FilteredTree {
+	public final String Prefix;
+
+	TitleTree(IBookCollection collection, String prefix) {
+		super(collection, new Filter.ByTitlePrefix(prefix));
+		Prefix = prefix;
 	}
 
-	public final String Title;
-
-	TitleTree(String title) {
-		Title = title;
-	}
-
-	TitleTree(LibraryTree parent, String title, int position) {
-		super(parent, position);
-		Title = title;
+	TitleTree(LibraryTree parent, String prefix, int position) {
+		super(parent, new Filter.ByTitlePrefix(prefix), position);
+		Prefix = prefix;
 	}
 
 	@Override
 	public String getName() {
-		return Title;
+		return Prefix;
 	}
 
 	@Override
 	protected String getStringId() {
-		return "@TitleTree " + getName();
+		return "@PrefixTree " + getName();
 	}
 
 	@Override
-	public boolean containsBook(Book book) {
-		return Title.equals(firstTitleLetter(book));
+	protected boolean createSubtree(Book book) {
+		return createBookWithAuthorsSubtree(book);
 	}
 }

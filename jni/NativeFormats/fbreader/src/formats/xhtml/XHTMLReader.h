@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,21 +53,26 @@ class XHTMLReader : public ZLXMLReader {
 
 public:
 	static XHTMLTagAction *addAction(const std::string &tag, XHTMLTagAction *action);
+	static XHTMLTagAction *addAction(const std::string &ns, const std::string &name, XHTMLTagAction *action);
 	static void fillTagTable();
 
 private:
 	static std::map<std::string,XHTMLTagAction*> ourTagActions;
+	static std::map<shared_ptr<FullNamePredicate>,XHTMLTagAction*> ourNsTagActions;
 
 public:
 	XHTMLReader(BookReader &modelReader);
 	bool readFile(const ZLFile &file, const std::string &referenceName);
 	const std::string &fileAlias(const std::string &fileName) const;
 	const std::string normalizedReference(const std::string &reference) const;
+	void setMarkFirstImageAsCover();
 
 private:
+	XHTMLTagAction *getAction(const std::string &tag);
+
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
-	void characterDataHandler(const char *text, size_t len);
+	void characterDataHandler(const char *text, std::size_t len);
 
 	const std::vector<std::string> &externalDTDs() const;
 
@@ -99,6 +104,8 @@ private:
 		READ_STYLE,
 		READ_BODY
 	} myReadState;
+	int myBodyCounter;
+	bool myMarkNextImageAsCover;
 
 	friend class XHTMLTagAction;
 	friend class XHTMLTagStyleAction;
@@ -108,6 +115,7 @@ private:
 	friend class XHTMLTagParagraphAction;
 	friend class XHTMLTagBodyAction;
 	friend class XHTMLTagRestartParagraphAction;
+	friend class XHTMLTagImageAction;
 };
 
 #endif /* __XHTMLREADER_H__ */

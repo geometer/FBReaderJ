@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,8 @@ package org.geometerplus.fbreader.network.urlInfo;
 
 import java.io.Serializable;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 public class UrlInfo implements Serializable {
 	private static final long serialVersionUID = -893514485257788222L;
@@ -53,10 +54,12 @@ public class UrlInfo implements Serializable {
 
 	public final Type InfoType;
 	public final String Url;
+	public final MimeType Mime;
 
-	public UrlInfo(Type type, String url) {
+	public UrlInfo(Type type, String url, MimeType mime) {
 		InfoType = type;
 		Url = url;
+		Mime = mime;
 	}
 
 	@Override
@@ -68,11 +71,11 @@ public class UrlInfo implements Serializable {
 			return false;
 		}
 		final UrlInfo info = (UrlInfo)o;
-		return InfoType == info.InfoType && ZLMiscUtil.equals(Url, info.Url);
+		return InfoType == info.InfoType && MiscUtil.equals(Url, info.Url);
 	}
 
 	@Override
 	public int hashCode() {
-		return InfoType.hashCode() + ZLMiscUtil.hashCode(Url);
+		return InfoType.hashCode() + MiscUtil.hashCode(Url);
 	}
 }

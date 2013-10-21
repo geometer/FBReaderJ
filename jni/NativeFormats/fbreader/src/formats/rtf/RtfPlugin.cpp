@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 #include <ZLFile.h>
 #include <ZLInputStream.h>
+#include <ZLEncodingConverter.h>
 
 #include "RtfPlugin.h"
 #include "RtfDescriptionReader.h"
@@ -42,14 +43,18 @@ bool RtfPlugin::readMetaInfo(Book &book) const {
 	}
 
 	if (book.encoding().empty()) {
-		book.setEncoding("utf-8");
+		book.setEncoding(ZLEncodingConverter::UTF8);
 	} else if (book.language().empty()) {
 		shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
 		if (!stream.isNull()) {
-			detectLanguage(book, *stream);
+			detectLanguage(book, *stream, book.encoding());
 		}
 	}
 
+	return true;
+}
+
+bool RtfPlugin::readUids(Book &/*book*/) const {
 	return true;
 }
 

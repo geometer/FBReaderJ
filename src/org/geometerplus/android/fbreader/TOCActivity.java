@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ package org.geometerplus.android.fbreader;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -35,6 +35,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+import org.geometerplus.android.util.ViewUtil;
 
 public class TOCActivity extends ListActivity {
 	private TOCAdapter myAdapter;
@@ -69,6 +71,17 @@ public class TOCActivity extends ListActivity {
 		TOCTree treeToSelect = fbreader.getCurrentTOCElement();
 		myAdapter.selectItem(treeToSelect);
 		mySelectedItem = treeToSelect;
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 	}
 
 	private static final int PROCESS_TREE_ITEM_ID = 0;
@@ -112,8 +125,8 @@ public class TOCActivity extends ListActivity {
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.toc_tree_item, parent, false);
 			final TOCTree tree = (TOCTree)getItem(position);
 			view.setBackgroundColor(tree == mySelectedItem ? 0xff808080 : 0);
-			setIcon((ImageView)view.findViewById(R.id.toc_tree_item_icon), tree);
-			((TextView)view.findViewById(R.id.toc_tree_item_text)).setText(tree.getText());
+			setIcon(ViewUtil.findImageView(view, R.id.toc_tree_item_icon), tree);
+			ViewUtil.findTextView(view, R.id.toc_tree_item_text).setText(tree.getText());
 			return view;
 		}
 

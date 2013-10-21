@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ final class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 		myHyphenator = hyphenator;
 	}
 
+	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		if (PATTERN.equals(tag)) {
 			myReadPattern = true;
@@ -42,6 +43,7 @@ final class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public boolean endElementHandler(String tag) {
 		if (PATTERN.equals(tag)) {
 			myReadPattern = false;
@@ -54,6 +56,7 @@ final class ZLTextHyphenationReader extends ZLXMLReaderAdapter {
 		return false;
 	}
 
+	@Override
 	public void characterDataHandler(char[] ch, int start, int length) {
 		if (myReadPattern) {
 			char[] buffer = myBuffer;

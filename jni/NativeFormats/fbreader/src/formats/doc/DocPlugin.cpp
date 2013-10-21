@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,16 @@
  * 02110-1301, USA.
  */
 
-#include <iostream>
-
 #include <ZLFile.h>
 #include <ZLInputStream.h>
 #include <ZLLogger.h>
 #include <ZLImage.h>
+#include <ZLEncodingConverter.h>
 
 #include "DocPlugin.h"
 #include "DocMetaInfoReader.h"
 #include "DocBookReader.h"
+#include "DocStreams.h"
 #include "../../bookmodel/BookModel.h"
 #include "../../library/Book.h"
 
@@ -41,7 +41,7 @@ bool DocPlugin::providesMetaInfo() const {
 }
 
 const std::string DocPlugin::supportedFileType() const {
-	return "doc";
+	return "MS Word document";
 }
 
 bool DocPlugin::acceptsFile(const ZLFile &file) const {
@@ -49,7 +49,21 @@ bool DocPlugin::acceptsFile(const ZLFile &file) const {
 }
 
 bool DocPlugin::readMetaInfo(Book &book) const {
-	return DocMetaInfoReader(book).readMetaInfo();
+	if (!DocMetaInfoReader(book).readMetaInfo()) {
+		return false;
+	}
+
+	shared_ptr<ZLInputStream> stream = new DocAnsiStream(book.file(), 50000);
+	if (!detectEncodingAndLanguage(book, *stream)) {
+		stream = new DocUcs2Stream(book.file(), 50000);
+		detectLanguage(book, *stream, ZLEncodingConverter::UTF8, true);
+	}
+
+	return true;
+}
+
+bool DocPlugin::readUids(Book &/*book*/) const {
+	return true;
 }
 
 bool DocPlugin::readLanguageAndEncoding(Book &/*book*/) const {

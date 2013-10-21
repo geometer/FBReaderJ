@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,14 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
+import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.bookmodel.BookModel;
 
 import org.geometerplus.android.fbreader.library.LibraryActivity;
+import org.geometerplus.android.util.PackageUtil;
 
 class ShowLibraryAction extends FBAndroidAction {
 	ShowLibraryAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -33,11 +35,25 @@ class ShowLibraryAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final BookModel model = Reader.Model;
-		Intent intent = new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
-		if (model != null && model.Book != null) {
-			intent.putExtra(LibraryActivity.SELECTED_BOOK_PATH_KEY, model.Book.File.getPath());
+		final Intent externalIntent =
+			new Intent("android.fbreader.action.EXTERNAL_LIBRARY");
+		final Intent internalIntent =
+			new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
+		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
+			try {
+				startLibraryActivity(externalIntent);
+			} catch (ActivityNotFoundException e) {
+				startLibraryActivity(internalIntent);
+			}
+		} else {
+			startLibraryActivity(internalIntent);
 		}
-		BaseActivity.startActivity(intent);
+	}
+
+	private void startLibraryActivity(Intent intent) {
+		if (Reader.Model != null) {
+			intent.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(Reader.Model.Book));
+		}
+		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }

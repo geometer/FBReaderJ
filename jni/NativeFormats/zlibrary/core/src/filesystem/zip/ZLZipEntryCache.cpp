@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,15 +23,15 @@
 #include "ZLZip.h"
 #include "ZLZipHeader.h"
 
-const size_t ZLZipEntryCache::ourStorageSize = 5;
+const std::size_t ZLZipEntryCache::ourStorageSize = 5;
 shared_ptr<ZLZipEntryCache> *ZLZipEntryCache::ourStoredCaches =
 	 new shared_ptr<ZLZipEntryCache>[ourStorageSize];
-size_t ZLZipEntryCache::ourIndex = 0;
+std::size_t ZLZipEntryCache::ourIndex = 0;
 
 shared_ptr<ZLZipEntryCache> ZLZipEntryCache::cache(const std::string &containerName, ZLInputStream &containerStream) {
 	//ZLLogger::Instance().registerClass("ZipEntryCache");
 	//ZLLogger::Instance().println("ZipEntryCache", "requesting cache for " + containerName);
-	for (size_t i = 0; i < ourStorageSize; ++i) {
+	for (std::size_t i = 0; i < ourStorageSize; ++i) {
 		shared_ptr<ZLZipEntryCache> cache = ourStoredCaches[i];
 		if (!cache.isNull() && cache->myContainerName == containerName) {
 			return cache;

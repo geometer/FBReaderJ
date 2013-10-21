@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Locale;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 public class Money implements Comparable<Money>, Serializable {
 	public static final Money ZERO = new Money();
@@ -133,12 +133,12 @@ public class Money implements Comparable<Money>, Serializable {
 		if (Amount.equals(ZERO.Amount)) {
 			return m.Amount.equals(ZERO.Amount);
 		}
-		return Amount.equals(m.Amount) && ZLMiscUtil.equals(Currency, m.Currency);
+		return Amount.equals(m.Amount) && MiscUtil.equals(Currency, m.Currency);
 	}
 
 	@Override
 	public int hashCode() {
-		return Amount.hashCode() + ZLMiscUtil.hashCode(Currency);
+		return Amount.hashCode() + MiscUtil.hashCode(Currency);
 	}
 
 	@Override

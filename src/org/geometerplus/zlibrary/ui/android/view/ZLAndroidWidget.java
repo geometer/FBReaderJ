@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
+import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
@@ -56,12 +56,26 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setFocusableInTouchMode(true);
 		setDrawingCacheEnabled(false);
 		setOnLongClickListener(this);
-		setLayerType(LAYER_TYPE_SOFTWARE, null);
+	}
+
+	private volatile int myHDiff = 0;
+	private volatile boolean myUseHDiff = false;
+
+	public void setPreserveSize(boolean preserve) {
+		myUseHDiff = preserve;
+		if (!preserve) {
+			myHDiff = 0;
+		}
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
+		if (myUseHDiff && oldw == w) {
+			myHDiff += h - oldh;
+		} else {
+			myHDiff = 0;
+		}
 		getAnimationProvider().terminate();
 		if (myScreenIsTouched) {
 			final ZLView view = ZLApplication.Instance().getCurrentView();
@@ -73,15 +87,19 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	protected void onDraw(final Canvas canvas) {
 		final Context context = getContext();
-		if (context instanceof ZLAndroidActivity) {
-			((ZLAndroidActivity)context).createWakeLock();
+		if (context instanceof FBReader) {
+			((FBReader)context).createWakeLock();
 		} else {
-			System.err.println("A surprise: view's context is not a ZLAndroidActivity");
+			System.err.println("A surprise: view's context is not an FBReader");
 		}
 		super.onDraw(canvas);
 
-//		final int w = getWidth();
-//		final int h = getMainAreaHeight();
+		if (myHDiff != 0) {
+			//final Matrix m = new Matrix();
+			//m.preTranslate(0, myHDiff);
+			//canvas.setMatrix(m);
+			canvas.translate(0, myHDiff);
+		}
 
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
@@ -93,16 +111,22 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private AnimationProvider myAnimationProvider;
 	private ZLView.Animation myAnimationType;
+	private int myStoredLayerType = -1;
 	private AnimationProvider getAnimationProvider() {
 		final ZLView.Animation type = ZLApplication.Instance().getCurrentView().getAnimationType();
 		if (myAnimationProvider == null || myAnimationType != type) {
 			myAnimationType = type;
+			if (myStoredLayerType != -1) {
+				setLayerType(myStoredLayerType, null);
+			}
 			switch (type) {
 				case none:
 					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
 					break;
 				case curl:
+					myStoredLayerType = getLayerType();
 					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
+					setLayerType(LAYER_TYPE_SOFTWARE, null);
 					break;
 				case slide:
 					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
@@ -254,13 +278,26 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		footer.paint(context);
-		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - footer.getHeight(), myPaint);
+		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - myHDiff - footer.getHeight(), myPaint);
 	}
 
-	private void onDrawStatic(Canvas canvas) {
+	private void onDrawStatic(final Canvas canvas) {
 		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 		drawFooter(canvas);
+		new Thread() {
+			@Override
+			public void run() {
+				final ZLView view = ZLApplication.Instance().getCurrentView();
+				final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+					canvas,
+					getWidth(),
+					getMainAreaHeight(),
+					view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+				);
+				view.preparePage(context, ZLView.PageIndex.next);
+			}
+		}.start();
 	}
 
 	@Override
@@ -487,6 +524,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private int getMainAreaHeight() {
 		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
-		return footer != null ? getHeight() - footer.getHeight() : getHeight();
+		final int height = footer != null ? getHeight() - footer.getHeight() : getHeight();
+		return height - myHDiff;
 	}
 }

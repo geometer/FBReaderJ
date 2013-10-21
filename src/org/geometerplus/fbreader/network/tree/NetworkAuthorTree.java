@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ public class NetworkAuthorTree extends NetworkTree {
 		mySeriesMap.put(seriesName, Integer.valueOf(index));
 	}
 
-	public void updateSubTrees(LinkedList<NetworkBookItem> books) {
+	public void updateSubtrees(LinkedList<NetworkBookItem> books) {
 		if (myBooksNumber >= books.size()) {
 			return;
 		}
@@ -77,11 +77,11 @@ public class NetworkAuthorTree extends NetworkTree {
 			if (book.SeriesTitle != null) {
 				final int seriesPosition = getSeriesIndex(book.SeriesTitle);
 				if (seriesPosition == -1) {
-					final int insertAt = subTrees().size();
+					final int insertAt = subtrees().size();
 					setSeriesIndex(book.SeriesTitle, insertAt);
 					new NetworkBookTree(this, book, false);
 				} else {
-					FBTree treeAtSeriesPosition = subTrees().get(seriesPosition);
+					FBTree treeAtSeriesPosition = subtrees().get(seriesPosition);
 					if (treeAtSeriesPosition instanceof NetworkBookTree) {
 						final NetworkBookTree bookTree = (NetworkBookTree) treeAtSeriesPosition;
 						bookTree.removeSelf();
@@ -94,7 +94,7 @@ public class NetworkAuthorTree extends NetworkTree {
 						throw new RuntimeException("That's impossible!!!");
 					}
 					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) treeAtSeriesPosition;
-					ListIterator<FBTree> nodesIterator = seriesTree.subTrees().listIterator();
+					ListIterator<FBTree> nodesIterator = seriesTree.subtrees().listIterator();
 					int insertAt = 0;
 					while (nodesIterator.hasNext()) {
 						FBTree tree = nodesIterator.next();

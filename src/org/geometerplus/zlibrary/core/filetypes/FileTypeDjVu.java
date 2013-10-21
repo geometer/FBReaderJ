@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,13 +35,6 @@ class FileTypeDjVu extends FileType {
 		return "djvu".equalsIgnoreCase(extension) || "djv".equalsIgnoreCase(extension);
 	}
 
-	/*
-	@Override
-	public String extension() {
-		return "djvu";
-	}
-	*/
-
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_DJVU;
@@ -50,5 +43,10 @@ class FileTypeDjVu extends FileType {
 	@Override
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? MimeType.IMAGE_VND_DJVU : MimeType.NULL;
+	}
+
+	@Override
+	public String defaultExtension(MimeType mime) {
+		return "djvu";
 	}
 }

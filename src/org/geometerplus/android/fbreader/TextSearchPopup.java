@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ final class TextSearchPopup extends ButtonsPopupPanel {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Type.Bottom);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Bottom);
 
 		addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
 		addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);

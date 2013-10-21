@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,26 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 abstract public class ZLView {
 	public final ZLApplication Application;
-	protected ZLPaintContext myContext = new DummyPaintContext();
+	private ZLPaintContext myViewContext = new DummyPaintContext();
 
 	protected ZLView(ZLApplication application) {
 		Application = application;
 	}
 
+	protected final void setContext(ZLPaintContext context) {
+		myViewContext = context;
+	}
+
 	public final ZLPaintContext getContext() {
-		return myContext;
+		return myViewContext;
+	}
+
+	public final int getContextWidth() {
+		return myViewContext.getWidth();
+	}
+
+	public final int getContextHeight() {
+		return myViewContext.getHeight();
 	}
 
 	abstract public interface FooterArea {
@@ -80,6 +92,7 @@ abstract public class ZLView {
 
 	public abstract Animation getAnimationType();
 
+	abstract public void preparePage(ZLPaintContext context, PageIndex pageIndex);
 	abstract public void paint(ZLPaintContext context, PageIndex pageIndex);
 	abstract public void onScrollingFinished(PageIndex pageIndex);
 

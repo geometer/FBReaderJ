@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ public enum ZLBoolean3 {
 	B3_FALSE("false"),
 	B3_TRUE("true"),
 	B3_UNDEFINED("undefined");
-	
+
 	public final String Name;
 
 	private ZLBoolean3(String name) {

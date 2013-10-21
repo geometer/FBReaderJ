@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="ค้นหา"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="อ่านหนังสือ"/>
 		<node name="showBookInfo" value="ข้อมูลหนังสือ"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="ลบหนังสือ"/>
 		<node name="addToFavorites" value="เพิ่มเป็นหนังสือเล่มโปรด"/>
 		<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="ชื่อผู้แต่ง ">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="ค้นพบ">
 			<node name="summary" value="ผลการค้นหาสำหรับ: %s"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="เปิดแคตตาล็อก"/>
 		<node name="networkSearch" value="ค้นหา"/>
@@ -107,6 +113,7 @@
 		<node name="removeCustomCatalog" value="ลบแคตตาล็อก"/>
 		<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 		<node name="addCustomCatalogSummary" value="เพิ่ม OPDS แคตตาล็อกที่ด้วยตนเอง"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="คุณต้องการอ่านหนังสือที่คัดลอกไว้หรือไม่?"/>
 			<node name="download" value="คุณต้องการดาวน์โหลดหนังสือหรือไม่?"/>
@@ -123,7 +130,13 @@
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="ค้นหาในระบบเครือข่าย"/>
 			<node name="reload" value="โหลดใหม่"/>
 			<node name="signIn" value="ลงชื่อเข้าระบบ"/>
@@ -132,7 +145,7 @@
 			<node name="topup" value="เติมเงินเข้าบัญชี"/>
 			<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 			<node name="refreshCatalogsList" value="รีเฟรชแคตตาล็อก"/>
-			<node name="languages" value="ตัวกรองภาษา"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
@@ -208,6 +221,19 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="ปิด FBReader"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="ลบบุ๊คมาร์ค"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="เลือก">
 		<node name="copyToClipboard" value="คัดลอกไปที่คลิปบอร์ด"/>
 		<node name="openInDictionary" value="เปิดในพจนานุกรม"/>
@@ -217,7 +243,7 @@
 		<node name="clearSelection" value="ล้างข้อมูล"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="การตั้งค่า"/>
@@ -252,6 +278,7 @@
 		<node name="decreaseFont" value="ซูมออก"/>
 		<node name="toggleFullscreen" value="เต็มจอ"/>
 		<node name="bookmarks" value="บุ๊คมาร์ค"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="ชื่อไฟล์"/>
@@ -271,6 +298,7 @@
 		</node>
 		<node name="appearance" value="ลักษณะการแสดงผล">
 			<node name="summary" value="การหมุนหน้าจอ, แถบสถานะ"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
 				<node name="system" value="System" toBeTranslated="true"/>
 				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
@@ -299,14 +327,18 @@
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="การปรับความสว่างหน้าจอ">
 				<node name="summaryOn" value="ลากนิ้วขึ้นลงด้านซ้ายของหน้าจอ"/>
 				<node name="summaryOff" value="ปิดการใช้งาน"/>
 			</node>
 			<node name="dontTurnScreenOff" value="การป้องกันการพักหน้าจอ">
 				<node name="0" value="ตลอดเวลา"/>
-				<node name="25" value="ขณะที่ระดับแบตเตอรี่มากกว่า 25% "/>
-				<node name="50" value="ขณะที่ระดับแบตเตอรี่มากกว่า 50% "/>
+				<node name="25" value="ขณะที่ระดับแบตเตอรี่มากกว่า 25%%"/>
+				<node name="50" value="ขณะที่ระดับแบตเตอรี่มากกว่า 50%%"/>
 				<node name="100" value="ไม่มีการพักหน้าจอ"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="ป้องกันการพักหน้าจอระหว่างการชาร์ต">
@@ -497,6 +529,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="colors" value="สี &amp; วอลล์เปเปอร์">
 			<node name="summary" value="การตั้งค่าสี"/>
 			<node name="background" value="พื้นหลัง">
@@ -520,6 +563,7 @@
 			<node name="right" value="ขอบขวา"/>
 			<node name="top" value="ขอบบน"/>
 			<node name="bottom" value="ขอบล่าง"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="แถบเลื่อน">
 			<node name="summary" value="แถบเลื่อน &amp; การตั้งค่าข้อความท้ายหน้า"/>
@@ -597,6 +641,9 @@
 			<node name="summary" value="การตั้งค่าพจนานุกรม"/>
 			<node name="dictionary" value="พจนานุกรม"/>
 			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
 				<node name="doNothing" value="ไม่มีอะไรเกิดขึ้น"/>
 				<node name="selectSingleWord" value="เลือกคำเมื่อกดค้างที่หน้าจอ"/>
@@ -663,7 +710,7 @@
 			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
 			<node name="version" value="Version" toBeTranslated="true"/>
 			<node name="site" value="Visit our website" toBeTranslated="true">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
 				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
@@ -693,6 +740,10 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="เพิ่มเป็นหนังสือเล่มโปรด"/>
+			<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="ติดตั้งปลั๊กอิน"/>
@@ -780,6 +831,7 @@
 		<node name="dictionaryIsNotInstalled" value="ขออภัย, พจนานุกรมไม่ได้รับการติดตั้ง"/>
 		<node name="permissionDenied" value="ขออภัย, ไม่ได้รับการอนุญาต"/>
 		<node name="noFavorites" value="ขออภัย, ไม่มีข้อมูลในรายการโปรดของคุณ"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="แคตตาล็อกไม่มีข้อมูล"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
@@ -817,5 +869,8 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

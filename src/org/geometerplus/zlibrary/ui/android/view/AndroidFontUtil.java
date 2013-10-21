@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,9 +51,11 @@ public final class AndroidFontUtil {
 					return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 				}
 			};
-			final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(filter);
-			if (fileList != null) {
-				fileSet.addAll(Arrays.asList(fileList));
+			for (String dir : Paths.FontPathOption().getValue()) {
+				final File[] fileList = new File(dir).listFiles(filter);
+				if (fileList != null) {
+					fileSet.addAll(Arrays.asList(fileList));
+				}
 			}
 			if (!fileSet.equals(ourFileSet)) {
 				ourFileSet = fileSet;

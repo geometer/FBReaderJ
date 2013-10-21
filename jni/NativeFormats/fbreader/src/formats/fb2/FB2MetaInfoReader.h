@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ public:
 
 	void startElementHandler(int tag, const char **attributes);
 	void endElementHandler(int tag);
-	void characterDataHandler(const char *text, size_t len);
+	void characterDataHandler(const char *text, std::size_t len);
 
 private:
 	Book &myBook;
@@ -43,14 +43,16 @@ private:
 
 	enum {
 		READ_NOTHING,
-		READ_SOMETHING,
+		READ_TITLE_INFO,
 		READ_TITLE,
 		READ_AUTHOR,
 		READ_AUTHOR_NAME_0,
 		READ_AUTHOR_NAME_1,
 		READ_AUTHOR_NAME_2,
 		READ_LANGUAGE,
-		READ_GENRE
+		READ_GENRE,
+		READ_DOCUMENT_INFO,
+		READ_ID
 	} myReadState;
 
 	std::string myAuthorNames[3];

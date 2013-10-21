@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,40 +19,38 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
+import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.urlInfo.RelatedUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
+import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
-
+import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 import org.geometerplus.android.util.UIUtil;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
@@ -61,7 +59,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	private View myMainView;
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
-	private BookDownloaderServiceConnection myConnection;
+	private final BookDownloaderServiceConnection myConnection = new BookDownloaderServiceConnection();
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -75,14 +73,27 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+
+		OrientationUtil.setOrientation(this, getIntent());
+
+		myConnection.bindToService(this, new Runnable() {
+			public void run() {
+				if (!myInitializerStarted) {
+					UIUtil.wait("loadingNetworkBookInfo", myInitializer, NetworkBookInfoActivity.this);
+				}
+			}
+		});
+
+		NetworkLibrary.Instance().addChangeListener(this);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-
-		if (!myInitializerStarted) {
-			UIUtil.wait("loadingNetworkBookInfo", myInitializer, this);
-		}
 	}
 
 	private volatile boolean myInitializerStarted;
@@ -135,13 +146,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			if (myBook == null) {
 				finish();
 			} else {
-				myConnection = new BookDownloaderServiceConnection();
-				bindService(
-					new Intent(getApplicationContext(), BookDownloaderService.class),
-					myConnection,
-					BIND_AUTO_CREATE
-				);
-
 				setTitle(myBook.Title);
 
 				setupDescription();
@@ -168,10 +172,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public void onDestroy() {
-		if (myConnection != null) {
-			unbindService(myConnection);
-			myConnection = null;
-		}
 		super.onDestroy();
 	}
 
@@ -367,14 +367,16 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		NetworkLibrary.Instance().addChangeListener(this);
+	protected void onNewIntent(Intent intent) {
+		OrientationUtil.setOrientation(this, intent);
 	}
 
 	@Override
 	protected void onStop() {
+		myConnection.unbind(this);
+
 		NetworkLibrary.Instance().removeChangeListener(this);
+
 		super.onStop();
 	}
 

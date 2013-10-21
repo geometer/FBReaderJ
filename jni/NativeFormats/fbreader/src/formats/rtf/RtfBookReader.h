@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,8 +44,8 @@ public:
 	void setEncoding(int code);
 	void setAlignment();
 	void switchDestination(DestinationType destination, bool on);
-	void addCharData(const char *data, size_t len, bool convert);
-	void insertImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t size);
+	void addCharData(const char *data, std::size_t len, bool convert);
+	void insertImage(const std::string &mimeType, const std::string &fileName, std::size_t startOffset, std::size_t size);
 
 	void setFontProperty(FontProperty property);
 	void newParagraph();

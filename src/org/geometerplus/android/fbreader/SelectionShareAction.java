@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ public class SelectionShareAction extends FBAndroidAction {
 
 		final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 
+		intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
 			ZLResource.resource("selection").getResource("quoteFrom").getValue().replace("%s", title)
 		);
 		intent.putExtra(android.content.Intent.EXTRA_TEXT, text);

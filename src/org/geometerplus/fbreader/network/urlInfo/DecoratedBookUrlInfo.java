@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ public class DecoratedBookUrlInfo extends BookUrlInfo {
 	private final String myCleanUrl;
 
 	public DecoratedBookUrlInfo(BookUrlInfo base, String url) {
-		super(base.InfoType, base.BookFormat, url);
+		super(base.InfoType, base.BookFormat, url, base.Mime);
 		myCleanUrl = base.cleanUrl();
 	}
 

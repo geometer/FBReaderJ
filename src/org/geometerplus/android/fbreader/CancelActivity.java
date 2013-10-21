@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@ import android.widget.*;
 import android.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.android.util.ViewUtil;
 
 public class CancelActivity extends ListActivity {
 	static final String LIST_SIZE = "listSize";
@@ -65,8 +67,8 @@ public class CancelActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.cancel_item, parent, false);
-			final TextView titleView = (TextView)view.findViewById(R.id.cancel_item_title);
-			final TextView summaryView = (TextView)view.findViewById(R.id.cancel_item_summary);
+			final TextView titleView = ViewUtil.findTextView(view, R.id.cancel_item_title);
+			final TextView summaryView = ViewUtil.findTextView(view, R.id.cancel_item_summary);
 			final String title = myIntent.getStringExtra(ITEM_TITLE + position);
 			final String summary = myIntent.getStringExtra(ITEM_SUMMARY + position);
 			titleView.setText(title);

@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Поиск"/>
+			<node name="rescan" value="Пересканировать"/>
 		</node>
 		<node name="openBook" value="Читать книгу"/>
 		<node name="showBookInfo" value="Информация о книге"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Удалить книгу"/>
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
+		<node name="markAsRead" value="Пометить как прочтённое"/>
+		<node name="markAsUnread" value="Пометить как непрочтённое"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
 		<node name="byAuthor" value="По авторам">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s"/>
+		</node>
+		<node name="recent" value="История">
+			<node name="summary" value="Недавно посещённые каталоги"/>
 		</node>
 		<node name="openCatalog" value="Открыть каталог"/>
 		<node name="networkSearch" value="Искать"/>
@@ -115,6 +121,7 @@
 		<node name="removeCustomCatalog" value="Удалить каталог"/>
 		<node name="addCustomCatalog" value="Добавить каталог"/>
 		<node name="addCustomCatalogSummary" value="Добавить OPDS каталог вручную"/>
+		<node name="disableCatalog" value="Выключить каталог"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Вы хотите открыть локальную копию?"/>
 			<node name="download" value="Вы хотите скачать эту книгу?"/>
@@ -131,7 +138,13 @@
 			<node name="title" value="Добавление каталога"/>
 			<node name="editUrl" value="Ввести адрес вручную"/>
 		</node>
+		<node name="manageCatalogs" value="Управление каталогами">
+			<node name="summary" value="Настроить список библиотек и магазинов"/>
+			<node name="enabled" value="Включены"/>
+			<node name="disabled" value="Выключены"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="В начало"/>
 			<node name="networkSearch" value="Искать в сети"/>
 			<node name="reload" value="Обновить"/>
 			<node name="signIn" value="Войти"/>
@@ -140,7 +153,7 @@
 			<node name="topup" value="Пополнить счёт"/>
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
-			<node name="languages" value="Фильтр по языку"/>
+			<node name="manageCatalogs" value="Управление каталогами"/>
 			<node name="clearBasket" value="Очистить корзину"/>
 			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
@@ -223,6 +236,19 @@
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
+	<node name="style" value="Стиль №%s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Изменить…"/>
+		<node name="deleteBookmark" value="Стереть закладку"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Название стиля"/>
+		<node name="invisible" value="Невидимый">
+			<node name="summaryOn" value="Не выделять закладки"/>
+			<node name="summaryOff" value="Выделять закладки цветом"/>
+		</node>
+		<node name="bgColor" value="Цвет фона"/>
+	</node>
 	<node name="selection" value="Пометка">
 		<node name="copyToClipboard" value="Скопировать в буфер"/>
 		<node name="openInDictionary" value="Посмотреть в словаре"/>
@@ -232,7 +258,7 @@
 		<node name="clearSelection" value="Убрать пометку"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://www.fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Настройки"/>
@@ -267,6 +293,7 @@
 		<node name="decreaseFont" value="Уменьшить шрифт"/>
 		<node name="toggleFullscreen" value="На весь экран"/>
 		<node name="bookmarks" value="Закладки"/>
+		<node name="help" value="Помощь"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Файл"/>
@@ -286,6 +313,7 @@
 		</node>
 		<node name="appearance" value="Внешний вид">
 			<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>
+			<node name="language" value="Язык интерфейса"/>
 			<node name="screenOrientation" value="Ориентация экрана">
 				<node name="system" value="системная"/>
 				<node name="sensor" value="зависит от ориентации устройства"/>
@@ -313,6 +341,10 @@
 			<node name="disableButtonLights" value="Выключать подсветку кнопок во время чтения">
 				<node name="summaryOn" value="Выключать подсветку (работает не на всех устройствах)"/>
 				<node name="summaryOff" value="Не пытаться выключать подсветку"/>
+			</node>
+			<node name="twoColumnView" value="Текст в две колонки">
+				<node name="summaryOn" value="Показывать текст в две колонки, когда экран горизонтален"/>
+				<node name="summaryOff" value="Всегда показывать текст в одну колонку"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
 				<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
@@ -512,6 +544,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="Использовать ли форматирование CSS"/>
+			<node name="fontSize" value="Размер шрифта">
+				<node name="summaryOn" value="Использовать размер шрифта, заданный в CSS"/>
+				<node name="summaryOff" value="Игнорировать размер шрифта, заданный в CSS"/>
+			</node>
+			<node name="textAlignment" value="Выравнивание текста">
+				<node name="summaryOn" value="Выравнивать текст, как указано в CSS"/>
+				<node name="summaryOff" value="Игнорировать выравнивание текста, заданное в CSS"/>
+			</node>
+		</node>
 		<node name="colors" value="Цвета и обои">
 			<node name="summary" value="Настройки цвета"/>
 			<node name="background" value="Фон">
@@ -535,6 +578,7 @@
 			<node name="right" value="Отступ справа"/>
 			<node name="top" value="Отступ сверху"/>
 			<node name="bottom" value="Отступ снизу"/>
+			<node name="spaceBetweenColumns" value="Расстояние между колонками"/>
 		</node>
 		<node name="scrollBar" value="Полоса прокрутки">
 			<node name="summary" value="Индикатор количества прочитанного"/>
@@ -612,6 +656,9 @@
 			<node name="summary" value="Настройки словаря"/>
 			<node name="dictionary" value="Словарь"/>
 			<node name="translator" value="Переводчик"/>
+			<node name="targetLanguage" value="Переводить на">
+				<node name="any" value="все языки"/>
+			</node>
 			<node name="tappingAction" value="Действие при долгом нажатии на экран">
 				<node name="doNothing" value="Ничего не делать"/>
 				<node name="selectSingleWord" value="Выделять одно слово"/>
@@ -678,7 +725,7 @@
 			<node name="summary" value="Версия, контакты"/>
 			<node name="version" value="Версия"/>
 			<node name="site" value="Наш веб-сайт">
-				<node name="url" value="http://www.fbreader.ru/"/>
+				<node name="url" value="http://fbreader.ru/"/>
 			</node>
 			<node name="email" value="Отправьте нам письмо">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -708,6 +755,10 @@
 			<node name="authorize" value="Авторизоваться"/>
 			<node name="resetPosition" value="Назад"/>
 			<node name="sendReport" value="Отправить сообщение"/>
+			<node name="addToFavorites" value="Добавить в избранное"/>
+			<node name="removeFromFavorites" value="Убрать из избранного"/>
+			<node name="markAsRead" value="Пометить как прочтённое"/>
+			<node name="markAsUnread" value="Пометить как непрочтённое"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
@@ -795,6 +846,7 @@
 		<node name="dictionaryIsNotInstalled" value="Не удалось запустить словарь"/>
 		<node name="permissionDenied" value="Нет доступа к файлам"/>
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
+		<node name="noSeries" value="У вас нет книг из серий"/>
 		<node name="emptyCatalog" value="Каталог пуст"/>
 		<node name="emptyBasket" value="В корзине нет книг"/>
 		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги"/>
@@ -832,5 +884,8 @@
 		<node name="opfFileNotFound" value="Не удалось найти OPF в %s"/>
 		<node name="unsupportedFileFormat" value="Не поддерживается формат файла '%s'"/>
 		<node name="errorParsingRtf" value="Ошибка при чтении RTF-файла %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.ru/faq-page"/>
 	</node>
 </resources>

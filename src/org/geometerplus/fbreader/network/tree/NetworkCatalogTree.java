@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,19 +38,9 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	private long myLoadedTime = -1;
 
-	public NetworkCatalogTree(RootTree parent, INetworkLink link, NetworkCatalogItem item, int position) {
+	public NetworkCatalogTree(NetworkTree parent, INetworkLink link, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		myLink = link;
-		if (item == null) {
-			throw new IllegalArgumentException("item cannot be null");
-		}
-		Item = item;
-		addSpecialTrees();
-	}
-
-	NetworkCatalogTree(NetworkCatalogTree parent, NetworkCatalogItem item, int position) {
-		super(parent, position);
-		myLink = parent.myLink;
 		if (item == null) {
 			throw new IllegalArgumentException("item cannot be null");
 		}
@@ -81,7 +71,7 @@ public class NetworkCatalogTree extends NetworkTree {
 					mySearchItem = new SingleCatalogSearchItem(link);
 				}
 				myChildrenItems.add(mySearchItem);
-				new SearchCatalogTree(this, mySearchItem, -1);
+				new SearchCatalogTree(this, mySearchItem);
 			}
 		}
 	}
@@ -132,7 +122,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	public void updateVisibility() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
-		ListIterator<FBTree> nodeIterator = subTrees().listIterator();
+		ListIterator<FBTree> nodeIterator = subtrees().listIterator();
 		FBTree currentTree = null;
 		int nodeCount = 0;
 
@@ -185,7 +175,7 @@ public class NetworkCatalogTree extends NetworkTree {
 			final int nextIndex = nodeIterator.nextIndex();
 			if (!processed && NetworkTreeFactory.createNetworkTree(this, currentItem, nodeCount) != null) {
 				++nodeCount;
-				nodeIterator = subTrees().listIterator(nextIndex + 1);
+				nodeIterator = subtrees().listIterator(nextIndex + 1);
 			}
 		}
 
@@ -245,7 +235,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	public synchronized void loadMoreChildren(int currentTotal) {
-		if (currentTotal == subTrees().size()
+		if (currentTotal == subtrees().size()
 			&& myLastTotalChildren < currentTotal
 			&& !NetworkLibrary.Instance().isLoadingInProgress(this)) {
 			myLastTotalChildren = currentTotal;

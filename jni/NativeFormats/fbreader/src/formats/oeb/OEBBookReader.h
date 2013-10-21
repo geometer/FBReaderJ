@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,8 @@ private:
 	const std::vector<std::string> &externalDTDs() const;
 
 	void generateTOC(const XHTMLReader &xhtmlReader);
+	bool coverIsSingleImage() const;
+	void addCoverImage();
 
 private:
 	enum ReaderState {
@@ -63,6 +65,8 @@ private:
 	std::vector<std::string> myHtmlFileNames;
 	std::string myNCXTOCFileName;
 	std::string myCoverFileName;
+	std::string myCoverFileType;
+	std::string myCoverMimeType;
 	std::vector<std::pair<std::string,std::string> > myTourTOC;
 	std::vector<std::pair<std::string,std::string> > myGuideTOC;
 };

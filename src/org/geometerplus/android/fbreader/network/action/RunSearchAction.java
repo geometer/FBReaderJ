@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 public class RunSearchAction extends Action {
 	public static SearchCatalogTree getSearchTree(FBTree tree) {
 		for (; tree != null; tree = tree.Parent) {
-			for (FBTree t : tree.subTrees()) {
+			for (FBTree t : tree.subtrees()) {
 				if (t instanceof SearchCatalogTree) {
 					return (SearchCatalogTree)t;
 				}

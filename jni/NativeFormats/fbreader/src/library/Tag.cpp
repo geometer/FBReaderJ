@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include <AndroidUtil.h>
 #include <JniEnvelope.h>
 
-#include <ZLStringUtil.h>
+#include <ZLUnicodeUtil.h>
 
 #include "Tag.h"
 
@@ -52,13 +52,13 @@ shared_ptr<Tag> Tag::getTag(const std::string &name, shared_ptr<Tag> parent, int
 
 shared_ptr<Tag> Tag::getTagByFullName(const std::string &fullName) {
 	std::string tag = fullName;
-	ZLStringUtil::stripWhiteSpaces(tag);
-	size_t index = tag.rfind(DELIMITER);
+	ZLUnicodeUtil::utf8Trim(tag);
+	std::size_t index = tag.rfind(DELIMITER);
 	if (index == std::string::npos) {
 		return getTag(tag);
 	} else {
 		std::string lastName = tag.substr(index + 1);
-		ZLStringUtil::stripWhiteSpaces(lastName);
+		ZLUnicodeUtil::utf8Trim(lastName);
 		return getTag(lastName, getTagByFullName(tag.substr(0, index)));
 	}
 }

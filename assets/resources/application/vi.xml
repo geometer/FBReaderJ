@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Tìm nội bộ"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Mở sách"/>
 		<node name="showBookInfo" value="Book info"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Xóa sách"/>
 		<node name="addToFavorites" value="Thêm vào yêu thích"/>
 		<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Theo tác giả">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Mở danh mục"/>
 		<node name="networkSearch" value="Tìm"/>
@@ -107,6 +113,7 @@
 		<node name="removeCustomCatalog" value="Xóa catalo"/>
 		<node name="addCustomCatalog" value="Thêm"/>
 		<node name="addCustomCatalogSummary" value="Thêm tùy chỉnh OPDS bằng tay"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Bạn muốn đọc bản nội bộ?"/>
 			<node name="download" value="Bạn muốn tải về quyển sách này?"/>
@@ -123,7 +130,13 @@
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Tìm trên mạng"/>
 			<node name="reload" value="Tải lại"/>
 			<node name="signIn" value="Đăng nhập"/>
@@ -132,7 +145,7 @@
 			<node name="topup" value="Tái đầy tài khoản "/>
 			<node name="addCustomCatalog" value="Thêm catalo"/>
 			<node name="refreshCatalogsList" value="Tải lại các catalo"/>
-			<node name="languages" value="Bộ lọc ngôn ngữ"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
@@ -208,6 +221,19 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Xoa đánh dấu"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Lựa chọn">
 		<node name="copyToClipboard" value="Chép vào Clipboard"/>
 		<node name="openInDictionary" value="Mở trong Từ điển"/>
@@ -217,7 +243,7 @@
 		<node name="clearSelection" value="Xóa"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Cài đặt"/>
@@ -252,6 +278,7 @@
 		<node name="decreaseFont" value="Thu nhỏ"/>
 		<node name="toggleFullscreen" value="Toàn Màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Tên tập tin"/>
@@ -271,6 +298,7 @@
 		</node>
 		<node name="appearance" value="Giao diện">
 			<node name="summary" value="Xoay, thanh trạng thái"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
 				<node name="system" value="System" toBeTranslated="true"/>
 				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
@@ -299,14 +327,18 @@
 				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
 			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
 				<node name="summaryOn" value="Bằng việc rê ngón tay lên/xuống dọc cạnh trái màn hình"/>
 				<node name="summaryOff" value="Tắt"/>
 			</node>
 			<node name="dontTurnScreenOff" value="Không cho màn hình tắt">
 				<node name="0" value="Luôn luôn"/>
-				<node name="25" value="Khi thời lượng pin lớn hơn 25%"/>
-				<node name="50" value="Khi thời lượng pin lớn hơn 50%"/>
+				<node name="25" value="Khi thời lượng pin lớn hơn 25%%"/>
+				<node name="50" value="Khi thời lượng pin lớn hơn 50%%"/>
 				<node name="100" value="Không bao giờ"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Ngăn màn hình tắt trong khi sạc">
@@ -497,6 +529,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 			<node name="summary" value="Color settings"/>
 			<node name="background" value="Nền">
@@ -520,6 +563,7 @@
 			<node name="right" value="Lề Phải"/>
 			<node name="top" value="Lề Trên"/>
 			<node name="bottom" value="Lề Dưới"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Thanh cuộn">
 			<node name="summary" value="Thiết lập thanh cuộn &amp; cuối trang"/>
@@ -597,6 +641,9 @@
 			<node name="summary" value="Cài đặt từ điển"/>
 			<node name="dictionary" value="Từ điển"/>
 			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Nhấn giữ">
 				<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
 				<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>
@@ -663,7 +710,7 @@
 			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
 			<node name="version" value="Version" toBeTranslated="true"/>
 			<node name="site" value="Visit our website" toBeTranslated="true">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
 				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
@@ -693,6 +740,10 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Thêm vào yêu thích"/>
+			<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Cài phần bổ trợ"/>
@@ -780,6 +831,7 @@
 		<node name="dictionaryIsNotInstalled" value="Xin lỗi, từ điển chưa được cài"/>
 		<node name="permissionDenied" value="Xin lỗi, từ chối cho phép "/>
 		<node name="noFavorites" value="Xin lỗi, danh sách yêu thích của bạn đang trống"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Danh mục rỗng"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
@@ -817,5 +869,8 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

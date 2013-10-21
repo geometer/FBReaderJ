@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -42,7 +43,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentCodeVersion = 7;
+		final int currentCodeVersion = 8;
 		if (version >= currentCodeVersion) {
 			return;
 		}
@@ -62,6 +63,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				updateTables5();
 			case 6:
 				updateTables6();
+			case 7:
+				updateTables7();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();
@@ -70,7 +73,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		myDatabase.setVersion(currentCodeVersion);
 	}
 
-	protected void executeAsATransaction(Runnable actions) {
+	protected void executeAsTransaction(Runnable actions) {
 		myDatabase.beginTransaction();
 		try {
 			actions.run();
@@ -96,14 +99,15 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			final String language = cursor.getString(6);
 
 			linksMap.clear();
-			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE link_id = " + id, null);
+			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,mime,update_time FROM LinkUrls WHERE link_id = " + id, null);
 			while (linksCursor.moveToNext()) {
 				try {
 					linksMap.addInfo(
 						new UrlInfoWithDate(
 							UrlInfo.Type.valueOf(linksCursor.getString(0)),
 							linksCursor.getString(1),
-							SQLiteUtil.getDate(linksCursor, 2)
+							MimeType.get(linksCursor.getString(2)),
+							SQLiteUtil.getDate(linksCursor, 3)
 						)
 					);
 				} catch (IllegalArgumentException e) {
@@ -127,7 +131,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	private SQLiteStatement myUpdateCustomLinkUrlStatement;
 	@Override
 	protected synchronized void saveLink(final INetworkLink link) {
-		executeAsATransaction(new Runnable() {
+		executeAsTransaction(new Runnable() {
 			public void run() {
 				final SQLiteStatement statement;
 				if (link.getId() == INetworkLink.INVALID_ID) {
@@ -170,14 +174,15 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					statement.bindLong(5, id);
 					statement.execute();
 
-					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE link_id = " + link.getId(), null);
+					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,mime,update_time FROM LinkUrls WHERE link_id = " + link.getId(), null);
 					while (linksCursor.moveToNext()) {
 						try {
 							linksMap.addInfo(
 								new UrlInfoWithDate(
 									UrlInfo.Type.valueOf(linksCursor.getString(0)),
 									linksCursor.getString(1),
-									SQLiteUtil.getDate(linksCursor, 2)
+									MimeType.get(linksCursor.getString(2)),
+									SQLiteUtil.getDate(linksCursor, 3)
 								)
 							);
 						} catch (IllegalArgumentException e) {
@@ -194,22 +199,23 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					if (dbInfo == null) {
 						if (myInsertCustomLinkUrlStatement == null) {
 							myInsertCustomLinkUrlStatement = myDatabase.compileStatement(
-									"INSERT OR REPLACE INTO LinkUrls(url,update_time,link_id,key) VALUES (?,?,?,?)");
+									"INSERT OR REPLACE INTO LinkUrls(url,mime,update_time,link_id,key) VALUES (?,?,?,?,?)");
 						}
 						urlStatement = myInsertCustomLinkUrlStatement;
 					} else if (!info.equals(dbInfo)) {
 						if (myUpdateCustomLinkUrlStatement == null) {
 							myUpdateCustomLinkUrlStatement = myDatabase.compileStatement(
-									"UPDATE LinkUrls SET url = ?, update_time = ? WHERE link_id = ? AND key = ?");
+									"UPDATE LinkUrls SET url = ?, mime = ?, update_time = ? WHERE link_id = ? AND key = ?");
 						}
 						urlStatement = myUpdateCustomLinkUrlStatement;
 					} else {
 						continue;
 					}
 					SQLiteUtil.bindString(urlStatement, 1, info.Url);
-					SQLiteUtil.bindDate(urlStatement, 2, info.Updated);
-					urlStatement.bindLong(3, id);
-					urlStatement.bindString(4, key.toString());
+					SQLiteUtil.bindString(urlStatement, 2, info.Mime != null ? info.Mime.toString() : "");
+					SQLiteUtil.bindDate(urlStatement, 3, info.Updated);
+					urlStatement.bindLong(4, id);
+					urlStatement.bindString(5, key.toString());
 					urlStatement.execute();
 				}
 				for (UrlInfo info : linksMap.getAllInfos()) {
@@ -226,7 +232,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		if (link.getId() == INetworkLink.INVALID_ID) {
 			return;
 		}
-		executeAsATransaction(new Runnable() {
+		executeAsTransaction(new Runnable() {
 			public void run() {
 				final String stringLinkId = String.valueOf(link.getId());
 				myDatabase.delete("Links", "link_id = ?", new String[] { stringLinkId });
@@ -252,7 +258,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	@Override
 	protected synchronized void setLinkExtras(final INetworkLink link, final Map<String,String> extras) {
-		executeAsATransaction(new Runnable() {
+		executeAsTransaction(new Runnable() {
 			public void run() {
 				if (link.getId() == INetworkLink.INVALID_ID) {
 					return;
@@ -377,5 +383,9 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	private void updateTables6() {
 		myDatabase.execSQL("ALTER TABLE Links ADD COLUMN type INTEGER");
 		myDatabase.execSQL("UPDATE Links SET type=" + INetworkLink.Type.Custom.Index);
+	}
+
+	private void updateTables7() {
+		myDatabase.execSQL("ALTER TABLE LinkUrls ADD COLUMN mime TEXT");
 	}
 }

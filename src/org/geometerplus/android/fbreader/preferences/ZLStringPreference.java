@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ import android.preference.EditTextPreference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-abstract class ZLStringPreference extends EditTextPreference {
+public abstract class ZLStringPreference extends EditTextPreference {
 	private String myValue;
 
-	ZLStringPreference(Context context, ZLResource rootResource, String resourceKey) {
+	protected ZLStringPreference(Context context, ZLResource rootResource, String resourceKey) {
 		super(context);
 
 		ZLResource resource = rootResource.getResource(resourceKey);

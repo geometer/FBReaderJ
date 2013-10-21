@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Místní hledání"/>
+			<node name="rescan" value="Prohledat znovu"/>
 		</node>
 		<node name="openBook" value="Otevřít knihu"/>
 		<node name="showBookInfo" value="Informace o knize"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Odstranit knihu"/>
 		<node name="addToFavorites" value="Přidat do oblíbených"/>
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
+		<node name="markAsRead" value="Označit jako přečtené"/>
+		<node name="markAsUnread" value="Označit jako nepřečtené"/>
 	</node>
 	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
 		<node name="byAuthor" value="Podle autora">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
+		</node>
+		<node name="recent" value="Nedávné katalogy">
+			<node name="summary" value="Nedávno navštívené katalogy"/>
 		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>
 		<node name="networkSearch" value="Hledat"/>
@@ -99,9 +105,15 @@
 		<node name="basketSummaryEmpty" value="Žádné knihy"/>
 		<node name="basketSummaryCountOnly" value="%0 knih">
 			<node condition="value 1" value="%0 kniha"/>
+			<node condition="value 2" value="%0 knihy"/>
+			<node condition="value 3" value="%0 knihy"/>
+			<node condition="value 4" value="%0 knihy"/>
 		</node>
 		<node name="basketSummary" value="%0 knih (%1)">
 			<node condition="value 1" value="%0 kniha (%1)"/>
+			<node condition="value 2" value="%0 knihy (%1)"/>
+			<node condition="value 3" value="%0 knihy (%1)"/>
+			<node condition="value 4" value="%0 knihy (%1)"/>
 		</node>
 		<node name="alreadyDownloading" value="Kniha se stahuje"/>
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje"/>
@@ -111,6 +123,7 @@
 		<node name="removeCustomCatalog" value="Odebrat katalog"/>
 		<node name="addCustomCatalog" value="Přidat katalog"/>
 		<node name="addCustomCatalogSummary" value="Přidat vlastní OPDS katalog ručně"/>
+		<node name="disableCatalog" value="Zakázat katalog"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Chcete číst místní kopii?"/>
 			<node name="download" value="Chcete stáhnout tuto knihu?"/>
@@ -127,7 +140,13 @@
 			<node name="title" value="Přidat katalog"/>
 			<node name="editUrl" value="Zadat adresu ručně"/>
 		</node>
+		<node name="manageCatalogs" value="Spravovat katalogy">
+			<node name="summary" value="Konfigurovat váš seznam katalogů"/>
+			<node name="enabled" value="Povoleno"/>
+			<node name="disabled" value="Zakázáno"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Kořenový katalog"/>
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
 			<node name="signIn" value="Přihlásit"/>
@@ -136,7 +155,7 @@
 			<node name="topup" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
-			<node name="languages" value="Filtr jazyků"/>
+			<node name="manageCatalogs" value="Spravovat katalogy"/>
 			<node name="clearBasket" value="Vymazat košík"/>
 			<node name="buyAllBooks" value="Zakoupit všechny knihy"/>
 		</node>
@@ -174,6 +193,9 @@
 		<node name="time" value="Naposledy změněno:"/>
 		<node name="sizeInBytes" value="%s bajtů">
 			<node condition="value 1" value="%s bajt"/>
+			<node condition="value 2" value="%s bajty"/>
+			<node condition="value 3" value="%s bajty"/>
+			<node condition="value 4" value="%s bajty"/>
 		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Katalog:"/>
@@ -218,6 +240,19 @@
 		<node name="forward" value="Vpřed"/>
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
+	<node name="style" value="Styl %s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Upravit styl…"/>
+		<node name="deleteBookmark" value="Odstranit záložku"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Název stylu"/>
+		<node name="invisible" value="Skrytý">
+			<node name="summaryOn" value="Nezvýrazňovat záložky"/>
+			<node name="summaryOff" value="Zvýraznit záložky"/>
+		</node>
+		<node name="bgColor" value="Barva pozadí"/>
+	</node>
 	<node name="selection" value="Výběr">
 		<node name="copyToClipboard" value="Kopírovat do schránky"/>
 		<node name="openInDictionary" value="Otevřít ve slovníku"/>
@@ -227,7 +262,7 @@
 		<node name="clearSelection" value="Vymazat"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Nastavení"/>
@@ -262,6 +297,7 @@
 		<node name="decreaseFont" value="Zmenšit"/>
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
+		<node name="help" value="Nápověda"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Název souboru"/>
@@ -281,6 +317,7 @@
 		</node>
 		<node name="appearance" value="Vzhled">
 			<node name="summary" value="Otáčení, stavový řádek"/>
+			<node name="language" value="Jazyk rozhraní"/>
 			<node name="screenOrientation" value="Orientace obrazovky">
 				<node name="system" value="Systém"/>
 				<node name="sensor" value="Podle orientace zařízení"/>
@@ -308,6 +345,10 @@
 			<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
 				<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
 				<node name="summaryOff" value="Nezakazovat tlačítka osvětlení"/>
+			</node>
+			<node name="twoColumnView" value="Dvousloupcové zobrazení">
+				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
+				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
 				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
@@ -507,6 +548,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>
+			<node name="fontSize" value="Velikost písma">
+				<node name="summaryOn" value="Použít velikost písma definovanou v CSS"/>
+				<node name="summaryOff" value="Ignorovat velikost písma definovanou v CSS"/>
+			</node>
+			<node name="textAlignment" value="Zarovnání textu">
+				<node name="summaryOn" value="Použít zarovnání textu definované v CSS"/>
+				<node name="summaryOff" value="Ignorovat zarovnání textu definované v CSS"/>
+			</node>
+		</node>
 		<node name="colors" value="Barvy a pozadí">
 			<node name="summary" value="Nastavení barev"/>
 			<node name="background" value="Pozadí">
@@ -530,6 +582,7 @@
 			<node name="right" value="Pravý okraj"/>
 			<node name="top" value="Horní okraj"/>
 			<node name="bottom" value="Dolní okraj"/>
+			<node name="spaceBetweenColumns" value="Mezera mezi sloupci"/>
 		</node>
 		<node name="scrollBar" value="Posuvník">
 			<node name="summary" value="Nastavení posuvníku"/>
@@ -607,6 +660,9 @@
 			<node name="summary" value="Nastavení slovníku"/>
 			<node name="dictionary" value="Slovník"/>
 			<node name="translator" value="Překladač"/>
+			<node name="targetLanguage" value="Přeložit do">
+				<node name="any" value="všechny jazyky"/>
+			</node>
 			<node name="tappingAction" value="Dlouhé klepnutí">
 				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 				<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
@@ -626,10 +682,10 @@
 				<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
 				<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
 			</node>
-			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
-				<node name="none" value="None" toBeTranslated="true"/>
-				<node name="covers" value="Covers only" toBeTranslated="true"/>
-				<node name="all" value="All" toBeTranslated="true"/>
+			<node name="fitImagesToScreen" value="Přizpůsobit obrázky obrazovce">
+				<node name="none" value="Žádné"/>
+				<node name="covers" value="Pouze obálky"/>
+				<node name="all" value="Všechny"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">
@@ -673,7 +729,7 @@
 			<node name="summary" value="Informace o verzi, kontakty"/>
 			<node name="version" value="Verze"/>
 			<node name="site" value="Navštivte naši webovou stránku">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Pošlete nám e-mail">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -703,6 +759,10 @@
 			<node name="authorize" value="Authorizovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
 			<node name="sendReport" value="Odeslat zprávu"/>
+			<node name="addToFavorites" value="Přidat do oblíbených"/>
+			<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
+			<node name="markAsRead" value="Označit jako přečtené"/>
+			<node name="markAsUnread" value="Označit jako nepřečtené"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>
@@ -790,6 +850,7 @@
 		<node name="dictionaryIsNotInstalled" value="Slovník není bohužel nainstalován"/>
 		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
+		<node name="noSeries" value="V sérii nejsou bohužel žádné knihy"/>
 		<node name="emptyCatalog" value="Katalog je bohužel prázdný"/>
 		<node name="emptyBasket" value="Váš košík je bohužel prázdný"/>
 		<node name="emptyNetworkSearchResults" value="Nebyly nalezeny žádné knihy"/>
@@ -827,5 +888,8 @@
 		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
 		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
 		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

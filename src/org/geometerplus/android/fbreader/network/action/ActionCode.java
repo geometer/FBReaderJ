@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ public interface ActionCode {
 	int RELOAD_CATALOG = 11;
 	int OPEN_CATALOG = 12;
 	int OPEN_IN_BROWSER = 13;
+	int OPEN_ROOT = 14;
 
 	int SIGNUP = 21;
 	int SIGNIN = 22;
@@ -39,6 +40,8 @@ public interface ActionCode {
 	int CUSTOM_CATALOG_ADD = 31;
 	int CUSTOM_CATALOG_EDIT = 32;
 	int CUSTOM_CATALOG_REMOVE = 33;
+	int MANAGE_CATALOGS = 34;
+	int DISABLE_CATALOG = 35;
 
 	int BASKET_CLEAR = 41;
 	int BASKET_BUY_ALL_BOOKS = 42;

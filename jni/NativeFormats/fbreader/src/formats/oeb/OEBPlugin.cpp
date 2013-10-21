@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 
 #include "OEBPlugin.h"
 #include "OEBMetaInfoReader.h"
+#include "OEBUidReader.h"
 #include "OEBBookReader.h"
 #include "OEBCoverReader.h"
 #include "OEBTextStream.h"
@@ -123,6 +124,11 @@ bool OEBPlugin::readMetaInfo(Book &book) const {
 	return OEBMetaInfoReader(book).readMetaInfo(opfFile(file));
 }
 
+bool OEBPlugin::readUids(Book &book) const {
+	const ZLFile &file = book.file();
+	return OEBUidReader(book).readUids(opfFile(file));
+}
+
 bool OEBPlugin::readModel(BookModel &model) const {
 	const ZLFile &file = model.book()->file();
 	return OEBBookReader(model).readBook(opfFile(file));
@@ -135,7 +141,7 @@ shared_ptr<const ZLImage> OEBPlugin::coverImage(const ZLFile &file) const {
 bool OEBPlugin::readLanguageAndEncoding(Book &book) const {
 	if (book.language().empty()) {
 		shared_ptr<ZLInputStream> oebStream = new OEBTextStream(opfFile(book.file()));
-		detectLanguage(book, *oebStream);
+		detectLanguage(book, *oebStream, book.encoding());
 	}
 	return true;
 }

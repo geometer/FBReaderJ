@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 
 	public final ZLIntegerOption LineSpacePercentOption;
 
-	public ZLTextFullStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, byte alignment, int lineSpace, ZLBoolean3 allowHyphenations) {
-		super(name, fontSizeDelta, bold, italic, underline, strikeThrough, verticalShift, allowHyphenations);
+	public ZLTextFullStyleDecoration(String name, String fontFamily, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalShift, byte alignment, int lineSpace, ZLBoolean3 allowHyphenations) {
+		super(name, fontFamily, fontSizeDelta, bold, italic, underline, strikeThrough, verticalShift, allowHyphenations);
 		SpaceBeforeOption = new ZLIntegerRangeOption(STYLE, name + ":spaceBefore", -10, 100, spaceBefore);
 		SpaceAfterOption = new ZLIntegerRangeOption(STYLE, name + ":spaceAfter", -10, 100, spaceAfter);
 		LeftIndentOption = new ZLIntegerRangeOption(STYLE, name + ":leftIndent", -300, 300, leftIndent);
@@ -48,6 +48,7 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 		LineSpacePercentOption = new ZLIntegerOption(STYLE, name + ":lineSpacePercent", lineSpace);
 	}
 
+	@Override
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
 		return new ZLTextFullyDecoratedStyle(base, this, hyperlink);
 	}

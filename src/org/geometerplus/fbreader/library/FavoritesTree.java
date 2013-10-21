@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,23 +19,58 @@
 
 package org.geometerplus.fbreader.library;
 
-public class FavoritesTree extends FirstLevelTree {
-	FavoritesTree(RootTree root, String id) {
-		super(root, id);
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.fbreader.book.*;
+
+public class FavoritesTree extends FilteredTree {
+	private final ZLResource myResource;
+
+	FavoritesTree(RootTree root) {
+		super(root, new Filter.ByLabel(Book.FAVORITE_LABEL), -1);
+		myResource = resource().getResource(ROOT_FAVORITES);
+	}
+
+	@Override
+	public String getName() {
+		return myResource.getValue();
+	}
+
+	@Override
+	public String getTreeTitle() {
+		return getSummary();
+	}
+
+	@Override
+	public String getSummary() {
+		return myResource.getResource("summary").getValue();
+	}
+
+	@Override
+	protected String getStringId() {
+		return ROOT_FAVORITES;
+	}
+
+	@Override
+	public boolean isSelectable() {
+		return false;
 	}
 
 	@Override
 	public Status getOpeningStatus() {
-		final Status status = super.getOpeningStatus();
-		if (status == Status.READY_TO_OPEN && !hasChildren()) {
-			return Status.CANNOT_OPEN;
-		}
-		return status;
+		return Collection.hasBooks(new Filter.ByLabel(Book.FAVORITE_LABEL))
+			? Status.ALWAYS_RELOAD_BEFORE_OPENING
+			: Status.CANNOT_OPEN;
 	}
 
 	@Override
 	public String getOpeningStatusMessage() {
 		return getOpeningStatus() == Status.CANNOT_OPEN
 			? "noFavorites" : super.getOpeningStatusMessage();
+	}
+
+	@Override
+	protected boolean createSubtree(Book book) {
+		return createBookWithAuthorsSubtree(book);
 	}
 }

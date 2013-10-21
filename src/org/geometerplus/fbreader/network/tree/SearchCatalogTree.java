@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,17 +19,19 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
+
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.SearchItem;
 
 public class SearchCatalogTree extends NetworkCatalogTree {
-	public SearchCatalogTree(RootTree parent, SearchItem item, int position) {
-		super(parent, null, item, position);
+	public SearchCatalogTree(RootTree parent, SearchItem item) {
+		super(parent, null, item, -1);
 		item.setPattern(null);
 	}
 
-	public SearchCatalogTree(NetworkCatalogTree parent, SearchItem item, int position) {
-		super(parent, item, position);
+	public SearchCatalogTree(NetworkCatalogTree parent, SearchItem item) {
+		super(parent, parent.getLink(), item, -1);
 		item.setPattern(null);
 	}
 
@@ -71,6 +73,14 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 			return NetworkLibrary.resource().getResource("search").getResource("summaryInProgress").getValue();
 		}
 		return super.getSummary();
+	}
+
+	public MimeType getMimeType() {
+		return ((SearchItem)Item).getMimeType();
+	}
+
+	public String getUrl(String pattern) {
+		return ((SearchItem)Item).getUrl(pattern);
 	}
 
 	public void startItemsLoader(String pattern) {

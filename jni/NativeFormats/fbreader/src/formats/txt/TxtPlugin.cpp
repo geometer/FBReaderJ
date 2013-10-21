@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,11 @@ const std::string TxtPlugin::supportedFileType() const {
 	return "plain text";
 }
 
-bool TxtPlugin::readMetaInfo(Book &book) const {
+bool TxtPlugin::readMetaInfo(Book &/*book*/) const {
+	return true;
+}
+
+bool TxtPlugin::readUids(Book &/*book*/) const {
 	return true;
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -157,7 +158,7 @@ public class AddCustomCatalogActivity extends Activity {
 		} else {
 			myLink.setTitle(title);
 			myLink.setSummary(summary);
-			myLink.setUrl(UrlInfo.Type.Catalog, uri.toString());
+			myLink.setUrl(UrlInfo.Type.Catalog, uri.toString(), MimeType.APP_ATOM_XML);
 
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			library.addCustomLink(myLink);
@@ -242,7 +243,7 @@ public class AddCustomCatalogActivity extends Activity {
 			return;
 		}
 		final UrlInfoCollection<UrlInfoWithDate> infos = new UrlInfoCollection<UrlInfoWithDate>();
-		infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, textUrl));
+		infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, textUrl, MimeType.APP_ATOM_XML));
 		myLink = new OPDSCustomNetworkLink(
 			ICustomNetworkLink.INVALID_ID, myType, siteName, null, null, null, infos
 		);

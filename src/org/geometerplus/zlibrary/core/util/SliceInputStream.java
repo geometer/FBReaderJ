@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,14 +25,14 @@ import java.io.InputStream;
 public class SliceInputStream extends ZLInputStreamWithOffset {
 	private final int myStart;
 	private final int myLength;
-	
+
 	public SliceInputStream(InputStream base, int start, int length) throws IOException {
 		super(base);
 		super.skip(start);
 		myStart = start;
 		myLength = length;
 	}
-	
+
 	@Override
 	public int read() throws IOException {
 		if (myLength >= offset()) {

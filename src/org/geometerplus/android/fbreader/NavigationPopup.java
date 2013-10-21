@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ final class NavigationPopup {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, PopupWindow.Type.BottomFlat);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Location.BottomFlat);
 
 		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
 
@@ -105,8 +105,8 @@ final class NavigationPopup {
 				if (fromUser) {
 					final int page = progress + 1;
 					final int pagesNumber = seekBar.getMax() + 1;
-					text.setText(makeProgressText(page, pagesNumber));
 					gotoPage(page);
+					text.setText(makeProgressText(page, pagesNumber));
 				}
 			}
 		});
@@ -119,7 +119,7 @@ final class NavigationPopup {
 				}
 				myFBReader.getViewWidget().reset();
 				myFBReader.getViewWidget().repaint();
-				setupNavigation();
+				update();
 			}
 		});
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");

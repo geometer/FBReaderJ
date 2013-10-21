@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,19 +21,17 @@ package org.geometerplus.fbreader.network.atom;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.geometerplus.fbreader.network.atom.*;
-
 public abstract class AbstractATOMFeedHandler implements ATOMFeedHandler {
 	public void processFeedStart() {
 	}
-	
+
 	public void processFeedEnd() {
 	}
 
 	public boolean processFeedMetadata(ATOMFeedMetadata feed, boolean beforeEntries) {
 		return false;
 	}
-	
+
 	public boolean processFeedEntry(ATOMEntry entry) {
 		return false;
 	}

@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Søk"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Åpne book"/>
 		<node name="showBookInfo" value="Bokinformasjon"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Slett bok"/>
 		<node name="addToFavorites" value="Legg til i favoritter"/>
 		<node name="removeFromFavorites" value="Fjern fra favoritter"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader nettverksbibliotek">
 		<node name="byAuthor" value="Etter forfatter">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="Funnet">
 			<node name="summary" value="Søkeresultat for: %s"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Åpne katalog"/>
 		<node name="networkSearch" value="Søk"/>
@@ -111,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Fjern katalog"/>
 		<node name="addCustomCatalog" value="Legg til katalog"/>
 		<node name="addCustomCatalogSummary" value="Legg til egen OPDS-katalog manuelt"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Ønsker du å lese lokal kopi?"/>
 			<node name="download" value="Ønsker du å laste ned denne boken?"/>
@@ -127,7 +134,13 @@
 			<node name="title" value="Legg til katalog"/>
 			<node name="editUrl" value="Skriv URL manuelt"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Søk"/>
 			<node name="reload" value="Last på nytt"/>
 			<node name="signIn" value="Logg inn"/>
@@ -136,7 +149,7 @@
 			<node name="topup" value="Topp opp konto"/>
 			<node name="addCustomCatalog" value="Legg til katalog"/>
 			<node name="refreshCatalogsList" value="Oppdater katalogene"/>
-			<node name="languages" value="Språkfilter"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Tøm kurv"/>
 			<node name="buyAllBooks" value="Kjøp alle bøkene"/>
 		</node>
@@ -218,6 +231,19 @@
 		<node name="forward" value="Fram"/>
 		<node name="close" value="Lukk FBReader"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Slett bokmerke"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Utvalg">
 		<node name="copyToClipboard" value="Kopier til utklippstavle"/>
 		<node name="openInDictionary" value="Åpne i ordbok"/>
@@ -227,7 +253,7 @@
 		<node name="clearSelection" value="Tøm"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Delt fra &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Delt fra &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Innstillinger"/>
@@ -262,6 +288,7 @@
 		<node name="decreaseFont" value="Zoom ut"/>
 		<node name="toggleFullscreen" value="Full skjerm"/>
 		<node name="bookmarks" value="Bokmerker"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Filnavn"/>
@@ -281,6 +308,7 @@
 		</node>
 		<node name="appearance" value="Utseende">
 			<node name="summary" value="Visningsinnstillinger, statuslinje, knappelys"/>
+			<node name="language" value="Språk"/>
 			<node name="screenOrientation" value="Visningsretning">
 				<node name="system" value="System"/>
 				<node name="sensor" value="Følger retningen til enhet"/>
@@ -308,6 +336,10 @@
 			<node name="disableButtonLights" value="Skru av knappelys under lesing">
 				<node name="summaryOn" value="Skru av knappelys (virker ikke på alle enheter)"/>
 				<node name="summaryOff" value="Ikke prøv å skru av knappelys"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Juster skjermens lysstyrke">
 				<node name="summaryOn" value="Ved å dra fingeren opp/ned langs venstre side av skjermen"/>
@@ -507,6 +539,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="Bruk/ignorer verdier definert i CSS-stilark"/>
+			<node name="fontSize" value="Skriftstørrelse">
+				<node name="summaryOn" value="Bruk skriftstørrelse definert i CSS"/>
+				<node name="summaryOff" value="Ignorer skriftstørrelse definert i CSS"/>
+			</node>
+			<node name="textAlignment" value="Tekstjustering">
+				<node name="summaryOn" value="Bruk tekstjustering definert i CSS"/>
+				<node name="summaryOff" value="Ignorer tekstjustering definert i CSS"/>
+			</node>
+		</node>
 		<node name="colors" value="Farger og bakgrunnsbilder">
 			<node name="summary" value="Fargeinnstillinger"/>
 			<node name="background" value="Bakgrunn">
@@ -530,6 +573,7 @@
 			<node name="right" value="Høyre marg"/>
 			<node name="top" value="Toppmarg"/>
 			<node name="bottom" value="Bunnmarg"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Fremgangsindikator">
 			<node name="summary" value="Innstillinger for rullefelt og bunntekst"/>
@@ -607,6 +651,9 @@
 			<node name="summary" value="Innstillinger for ordbok"/>
 			<node name="dictionary" value="Ordbok"/>
 			<node name="translator" value="Oversetter"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Handling ved langvarig trykk">
 				<node name="doNothing" value="Langvarig trykk gjør ingenting"/>
 				<node name="selectSingleWord" value="Langvarig trykk velger enkeltord"/>
@@ -614,8 +661,8 @@
 				<node name="openDictionary" value="Langvarig trykk velger enkeltord, slipp trykk for å åpne ordbok"/>
 			</node>
 			<node name="navigateOverAllWords" value="Naviger over alle ord">
-				<node name="summaryOn" value="Key navigation visits all words"/>
-				<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
+				<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+				<node name="summaryOff" value="Tastenavigasjon besøker bare hyperlenker"/>
 			</node>
 		</node>
 		<node name="images" value="Bilder">
@@ -626,10 +673,10 @@
 				<node name="selectImage" value="Langvarig trykk velger bildet"/>
 				<node name="openImageView" value="Langvarig trykk åpner bildevisning"/>
 			</node>
-			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
-				<node name="none" value="None" toBeTranslated="true"/>
-				<node name="covers" value="Covers only" toBeTranslated="true"/>
-				<node name="all" value="All" toBeTranslated="true"/>
+			<node name="fitImagesToScreen" value="Tilpass bilder til skjerm">
+				<node name="none" value="Ingen"/>
+				<node name="covers" value="Bare forsider"/>
+				<node name="all" value="Alle"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Avbryt meny">
@@ -673,7 +720,7 @@
 			<node name="summary" value="Versjonsinfo, kontakter"/>
 			<node name="version" value="Versjon"/>
 			<node name="site" value="Besøk nettstedet vårt">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send oss en e-post">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -703,6 +750,10 @@
 			<node name="authorize" value="Autoriser"/>
 			<node name="resetPosition" value="Tilbakestill posisjon"/>
 			<node name="sendReport" value="Send rapport"/>
+			<node name="addToFavorites" value="Legg til i favoritter"/>
+			<node name="removeFromFavorites" value="Fjern fra favoritter"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Installer tillegg"/>
@@ -790,6 +841,7 @@
 		<node name="dictionaryIsNotInstalled" value="Ordbok er ikke installert, beklager"/>
 		<node name="permissionDenied" value="Mangler tillatelse, beklager"/>
 		<node name="noFavorites" value="Favorittlisten din er tom, beklager"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Katalogen er tom, beklager"/>
 		<node name="emptyBasket" value="Kurven din er tom, beklager"/>
 		<node name="emptyNetworkSearchResults" value="Ingen bøker ble funnet, beklager"/>
@@ -827,5 +879,8 @@
 		<node name="opfFileNotFound" value="OPF er ikke funnet i %s"/>
 		<node name="unsupportedFileFormat" value="Filformatet er ikke støttet for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf analysingsfeil i: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

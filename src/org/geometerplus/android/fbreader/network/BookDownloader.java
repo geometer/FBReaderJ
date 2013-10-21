@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ import android.content.Intent;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 public class BookDownloader extends Activity {
-
 	public static boolean acceptsUri(Uri uri) {
 		final List<String> path = uri.getPathSegments();
 		if ((path == null) || path.isEmpty()) {

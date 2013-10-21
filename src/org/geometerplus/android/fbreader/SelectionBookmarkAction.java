@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,15 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.Intent;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.library.Bookmark;
+import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBView;
 
+import org.geometerplus.android.fbreader.style.StyleListActivity;
 import org.geometerplus.android.util.UIUtil;
 
 public class SelectionBookmarkAction extends FBAndroidAction {
@@ -34,21 +37,26 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final FBView fbview = Reader.getTextView();
-		final String text = fbview.getSelectedText();
+		final boolean existingBookmark;
+		final Bookmark bookmark;
 
-		new Bookmark(
-			Reader.Model.Book,
-			fbview.getModel().getId(),
-			fbview.getSelectionStartPosition(),
-			text,
-			true
-		).save();
-		fbview.clearSelection();
+		if (params.length != 0) {
+			existingBookmark = true;
+			bookmark = (Bookmark)params[0];
+		} else {
+			existingBookmark = false;
+			bookmark = Reader.addSelectionBookmark();
+			UIUtil.showMessageText(
+				BaseActivity,
+				ZLResource.resource("selection").getResource("bookmarkCreated").getValue()
+					.replace("%s", bookmark.getText())
+			);
+		}
 
-		UIUtil.showMessageText(
-			BaseActivity,
-			ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
-		);
+		final Intent intent =
+			new Intent(BaseActivity.getApplicationContext(), StyleListActivity.class);
+		intent.putExtra(FBReader.BOOKMARK_KEY, SerializerUtil.serialize(bookmark));
+		intent.putExtra(StyleListActivity.EXISTING_BOOKMARK_KEY, existingBookmark);
+		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,9 @@
  */
 
 package org.geometerplus.android.fbreader.crash;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -56,7 +59,12 @@ public class FixBooksDirectoryActivity extends Activity {
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				Paths.BooksDirectoryOption().setValue(directoryView.getText().toString());
+				final List<String> bookPath =
+					new LinkedList<String>(Paths.BookPathOption().getValue());
+				final String newDirectory = directoryView.getText().toString();
+				bookPath.remove(newDirectory);
+				bookPath.add(0, newDirectory);
+				Paths.BookPathOption().setValue(bookPath);
 				startActivity(new Intent(FixBooksDirectoryActivity.this, FBReader.class));
 				finish();
 			}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -206,7 +206,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private static final int READ_SPINE = 2;
 	private static final int READ_GUIDE = 3;
 	private static final int READ_TOUR = 4;
-	
+
 	private int myState;
 
 	@Override

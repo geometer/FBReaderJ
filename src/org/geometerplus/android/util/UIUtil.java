@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ public abstract class UIUtil {
 	};
 	private static final Queue<Pair> ourTaskQueue = new LinkedList<Pair>();
 	private static volatile Handler ourProgressHandler;
-	
+
 	private static boolean init() {
 		if (ourProgressHandler != null) {
 			return true;
@@ -114,7 +114,7 @@ public abstract class UIUtil {
 		activity.runOnUiThread(new Runnable() {
 			public void run() {
 				final ProgressDialog progress = ProgressDialog.show(activity, null, message, true, false);
-            
+
 				final Thread runner = new Thread() {
 					public void run() {
 						action.run();

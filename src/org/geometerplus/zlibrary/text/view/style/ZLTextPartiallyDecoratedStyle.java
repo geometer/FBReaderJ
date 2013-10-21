@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 
 	ZLTextPartiallyDecoratedStyle(ZLTextStyle base, ZLTextStyleDecoration decoration, ZLTextHyperlink hyperlink) {
 		super(base, hyperlink);
-		myDecoration = decoration;		
+		myDecoration = decoration;
 	}
 
 	@Override
@@ -104,8 +104,8 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	@Override
 	public int getFirstLineIndentDelta() {
 		return Base.getFirstLineIndentDelta();
-	}	
-	
+	}
+
 	@Override
 	public int getLineSpacePercent() {
 		return Base.getLineSpacePercent();
@@ -124,7 +124,7 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	@Override
 	public int getSpaceAfter() {
 		return Base.getSpaceAfter();
-	}		
+	}
 
 	@Override
 	public byte getAlignment() {
@@ -140,6 +140,6 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 				return true;
 			default:
 				return Base.allowHyphenations();
-		} 
+		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ import java.util.*;
 import java.io.*;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -32,15 +31,14 @@ import android.view.MenuItem;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 
 import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.fbreader.FBReader;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
@@ -68,7 +66,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		final MenuItem menuItem = menu.add(name);
 		if (iconId != null) {
 			menuItem.setIcon(iconId);
-			final ZLAndroidActivity activity =
+			final FBReader activity =
 				((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 			if (showInActionBar) {
 				menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -101,7 +99,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 					break;
 			}
 		}
-		final ZLAndroidActivity activity =
+		final FBReader activity =
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		activity.refresh();
 	}

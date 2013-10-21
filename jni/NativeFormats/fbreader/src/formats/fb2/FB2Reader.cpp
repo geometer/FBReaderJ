@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 #include "FB2Reader.h"
 
-FB2Reader::FB2Reader() : myHrefPredicate(ZLXMLNamespace::XLink, "href") {
+FB2Reader::FB2Reader() : myHrefPredicate(ZLXMLNamespace::XLink, "href"), myBrokenHrefPredicate("href") {
 }
 
 void FB2Reader::startElementHandler(const char *t, const char **attributes) {
@@ -38,6 +38,9 @@ void FB2Reader::endElementHandler(const char *t) {
 
 static const FB2Reader::Tag TAGS[] = {
 	{"p", FB2Reader::_P},
+	{"ul", FB2Reader::_UL},
+	{"ol", FB2Reader::_OL},
+	{"li", FB2Reader::_LI},
 	{"subtitle", FB2Reader::_SUBTITLE},
 	{"cite", FB2Reader::_CITE},
 	{"text-author", FB2Reader::_TEXT_AUTHOR},
@@ -54,7 +57,9 @@ static const FB2Reader::Tag TAGS[] = {
 	{"code", FB2Reader::_CODE},
 	{"strikethrough", FB2Reader::_STRIKETHROUGH},
 	{"strong", FB2Reader::_STRONG},
+	{"b", FB2Reader::_STRONG},
 	{"emphasis", FB2Reader::_EMPHASIS},
+	{"i", FB2Reader::_EMPHASIS},
 	{"a", FB2Reader::_A},
 	{"image", FB2Reader::_IMAGE},
 	{"binary", FB2Reader::_BINARY},
@@ -71,12 +76,14 @@ static const FB2Reader::Tag TAGS[] = {
 	{"coverpage", FB2Reader::_COVERPAGE},
 	{"sequence", FB2Reader::_SEQUENCE},
 	{"genre", FB2Reader::_GENRE},
+	{"document-info", FB2Reader::_DOCUMENT_INFO},
+	{"id", FB2Reader::_ID},
 	{0, FB2Reader::_UNKNOWN}
 };
 
 int FB2Reader::tag(const char *name) {
 	for (int i = 0; ; ++i) {
-		if ((TAGS[i].tagName == 0) || (strcmp(name, TAGS[i].tagName) == 0)) {
+		if (TAGS[i].tagName == 0 || std::strcmp(name, TAGS[i].tagName) == 0) {
 			return TAGS[i].tagCode;
 		}
 	}

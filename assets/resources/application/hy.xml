@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Armenian FBReaderJ resources, by Yavruhrat -->
+<resources>
+	<node name="library" value="FBReader գրադարան">
+		<node name="unknownAuthor" value="Անհայտ հեղինակ"/>
+		<node name="booksWithNoTags" value="Գրքեր առանց գլխաբառերի"/>
+		<node name="demo" value="նմուշ"/>
+		<node name="byAuthor" value="Ըստ հեղինակի">
+			<node name="summary" value="Գրքեր՝ խմբված ըստ հեղինակի"/>
+		</node>
+		<node name="byTitle" value="Ըստ անվանման">
+			<node name="summary" value="Գրքեր՝ խմբված ըստ անվանման"/>
+		</node>
+		<node name="bySeries" value="Ըստ մատենաշարերի">
+			<node name="summary" value="Գրքեր՝ խմբված ըստ մատենաշարերի"/>
+		</node>
+		<node name="byTag" value="Ըստ կատեգորիաների">
+			<node name="summary" value="Գրքեր՝ խմբված ըստ կատեգորիաների"/>
+		</node>
+		<node name="recent" value="Պատմություն">
+			<node name="summary" value="Կարդացված վերջին գրքերը"/>
+		</node>
+		<node name="favorites" value="Ընտրյալք">
+			<node name="summary" value="Իմ նախընտրած գրքերը"/>
+		</node>
+		<node name="found" value="Գտնվել է">
+			<node name="summary" value="%s-ով որոնման արդյունքները"/>
+		</node>
+		<node name="fileTree" value="Նիշքերի ծառ">
+			<node name="summary" value="Նիշքերը իմ սարքավորումում"/>
+		</node>
+		<node name="fileTreeRoot" value="Սարքավորում">
+			<node name="summary" value="Ցուցադրել բոլոր նիշքերը սարքավորումում"/>
+		</node>
+		<node name="fileTreeCard" value="Հիշողության քարտ">
+			<node name="summary" value="Ցուցադրել հիշողության քարտը"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader գրադարան">
+			<node name="summary" value="Ցուցադրել գրացուցակը"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="Որոնում"/>
+			<node name="rescan" value="Վերաշարել"/>
+		</node>
+		<node name="openBook" value="Կարդալ գիրքը"/>
+		<node name="showBookInfo" value="Գրքի հանձնարարականը"/>
+		<node name="shareBook" value="Տարածել գիրքը"/>
+		<node name="deleteBook" value="Ջնջել գիրքը"/>
+		<node name="addToFavorites" value="Ավելացնել ընտրյալքում"/>
+		<node name="removeFromFavorites" value="Հեռացնել ընտրյալքից"/>
+		<node name="markAsRead" value="Նշել որպես ընթերցված"/>
+		<node name="markAsUnread" value="Նշել որպես չընթերցված"/>
+	</node>
+	<node name="networkLibrary" value="FBReader. ցանցային գրադարան">
+		<node name="byAuthor" value="Ըստ հեղինակի">
+			<node name="summary" value="Գրքեր՝ դասավորված ըստ հեղինակի"/>
+		</node>
+		<node name="byTitle" value="Ըստ անվանման">
+			<node name="summary" value="Գրքեր՝ դասավորված ըստ անվանման"/>
+		</node>
+		<node name="byDate" value="Ըստ տարեթվի">
+			<node name="summary" value="Գրքեր՝ դասավորված ըստ ձեռքբերման օրվա"/>
+		</node>
+		<node name="bySeries" value="Ըստ մատենաշարի">
+			<node name="summary" value="Գրքեր՝ դասավորված ըստ մատենաշարի"/>
+		</node>
+		<node name="search" value="Որոնում">
+			<node name="summary" value="Փնտրել գրքեր %s-ով"/>
+			<node name="summaryAllCatalogs" value="Փնտրել գիրքը բոլոր գրացուցակներում"/>
+			<node name="summaryInProgress" value="Որոնվում է..."/>
+		</node>
+		<node name="found" value="Գտնվել է">
+			<node name="summary" value="%s-ով որոնման արդյունքները"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
+		</node>
+		<node name="openCatalog" value="Բացել գրացուցակը"/>
+		<node name="networkSearch" value="Որոնել"/>
+		<node name="showResults" value="Ցուցադրել արդյունքները"/>
+		<node name="showBooks" value="Ցուցադրել գրքերը"/>
+		<node name="download" value="Ներբեռնել"/>
+		<node name="read" value="Կարդալ պատճենը"/>
+		<node name="delete" value="Ջնջել պատճենը"/>
+		<node name="readDemo" value="Կարդալ նմուշը"/>
+		<node name="deleteDemo" value="Ջնջել նմուշը"/>
+		<node name="downloadDemo" value="Ներբեռնել նմուշը"/>
+		<node name="buy" value="Գնել (%s)"/>
+		<node name="addToBasket" value="Ավելացնել զամբյուղում"/>
+		<node name="removeFromBasket" value="Հեռացնել զամբյուղից"/>
+		<node name="openBasket" value="Զամբյուղ"/>
+		<node name="clearBasket" value="Դատարկել զամբյուղը"/>
+		<node name="buyAllBooks" value="Գնել բոլոր գրքերը"/>
+		<node name="openInBrowser" value="Բացել դիտարկիչում"/>
+		<node name="stopLoading" value="Դադարեցնել բեռնումը"/>
+		<node name="stopSearching" value="Դադարեցնել որոնումը"/>
+		<node name="signIn" value="Մուտք"/>
+		<node name="signOut" value="Ելք (%s)"/>
+		<node name="topup" value="Համալրել հաշիվը (հաշվեկշիռ։ %s)"/>
+		<node name="topupTitle" value="Վճարում"/>
+		<node name="topupViaBrowser" value="Դիտարկիչում"/>
+		<node name="authorizationMenuTitle" value="Ընտրել գործողություն"/>
+		<node name="topupSummary" value="Ընթացիկ հաշիվ. %s"/>
+		<node name="basket" value="Զամբյուղ"/>
+		<node name="basketSummaryEmpty" value="Դատարկ զամբյուղ"/>
+		<node name="basketSummaryCountOnly" value="%0 գրքերի">
+			<node condition="modrange 11 19 100" value="%0 գրքերի"/>
+			<node condition="mod 1 10" value="%0 գիրք"/>
+			<node condition="modrange 2 4 10" value="%0 գրքեր"/>
+		</node>
+		<node name="basketSummary" value="%0 գրքեր, ընդամենը %1">
+			<node condition="modrange 11 19 100" value="%0 գրքեր, ընդամենը %1"/>
+			<node condition="mod 1 10" value="%0 գիրք, ընդամենը %1"/>
+			<node condition="modrange 2 4 10" value="%0 գրքեր, ընդամենը %1"/>
+		</node>
+		<node name="alreadyDownloading" value="Գիրքը բեռնվում է"/>
+		<node name="alreadyDownloadingDemo" value="Նմուշը բեռնվում է"/>
+		<node name="stoppingCatalogLoading" value="Դադարեցնել բեռնումը"/>
+		<node name="stoppingNetworkSearch" value="Ավարտել որոնումը"/>
+		<node name="editCustomCatalog" value="Փոխել գրացուցակը"/>
+		<node name="removeCustomCatalog" value="Ջնջել գրացուցակը"/>
+		<node name="addCustomCatalog" value="Հավելել գրացուցակ"/>
+		<node name="addCustomCatalogSummary" value="Ձեռքով ավելացնել OPDS գրացուցակ"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
+		<node name="confirmQuestions">
+			<node name="read" value="Բացե՞լ պատճենը"/>
+			<node name="download" value="Բեռնե՞լ գիրքը"/>
+			<node name="readDemo" value="Բացե՞լ նմուշը"/>
+			<node name="downloadDemo" value="Բեռնե՞լ նմուշը"/>
+			<node name="buy" value="Ձեռք բերե՞լ գիրքը (%s)"/>
+			<node name="openInBrowser" value="Բացե՞լ գրացուցակը դիտարկիչում"/>
+		</node>
+		<node name="downloadingCatalogs" value="Գրացուցակները բեռնվում են"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Գրքերը փնտրվում են ցանցում"/>
+		<!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Հավելել գրացուցակ"/>
+			<node name="editUrl" value="Հասցեն մուտքագրել ձեռքով"/>
+		</node>
+		<node name="manageCatalogs" value="Գրացուցակների կառավարում">
+			<node name="summary" value="Գրացուցակների ցանկի կարգավորումներ"/>
+			<node name="enabled" value="Միացնել"/>
+			<node name="disabled" value="Անջատել"/>
+		</node>
+		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
+			<node name="networkSearch" value="Փնտրել ցանցում"/>
+			<node name="reload" value="Թարմացնել"/>
+			<node name="signIn" value="Մուտք"/>
+			<node name="signUp" value="Գրանցում"/>
+			<node name="signOut" value="Ելք (%s)"/>
+			<node name="topup" value="Համալրել հաշիվը"/>
+			<node name="addCustomCatalog" value="Հավելել գրացուցակ"/>
+			<node name="refreshCatalogsList" value="Թարմացնել գրացուցակները"/>
+			<node name="manageCatalogs" value="Կառավարել գրացուցակները"/>
+			<node name="clearBasket" value="Դատարկել զամբյուղը"/>
+			<node name="buyAllBooks" value="Գնել բոլոր գրքերը"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Գնել գիրքը"/>
+		<node name="titleSeveralBooks" value="Գնել գրքերը"/>
+		<node name="confirm" value="Հաստատել &#10;«%s» գրքի գնումը"/>
+		<node name="confirmSeveralBooks" value="Հաստատել %s գրքերի գնումը"/>
+		<node name="alreadyBought" value="Գիրքն արդեն գնված է"/>
+		<node name="notAuthorized" value="Պահանջվում է հեղինակացում"/>
+		<node name="noAccountInformation" value="Չհաջողվեց ստուգել հաշվեկշիռը"/>
+		<node name="unsufficientFunds" value="Գնման համար պահանջվում է %0, առկա է միայն %1"/>
+		<node name="zeroFunds" value="Գնման համար պահանջվում է %0"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Տվյալներ գրքի մասին"/>
+		<node name="fileInfo" value="Տվյալներ նիշքի մասին"/>
+		<node name="description" value="Նկարագրություն"/>
+		<node name="noDescription" value="Նկարագրություն չգտնվեց"/>
+		<node name="annotation" value="Հանձնարարական"/>
+		<node name="title" value="Անվանում՝"/>
+		<node name="authors" value="Հեղինակներ՝">
+			<node condition="value 1" value="Հեղինակ՝"/>
+		</node>
+		<node name="series" value="Մատենաշար՝"/>
+		<node name="indexInSeries" value="Թիվը մատենաշարում՝"/>
+		<node name="tags" value="Կատեգորիաներ՝">
+			<node condition="value 1" value="Կատեգորիա՝"/>
+		</node>
+		<node name="language" value="Լեզու՝"/>
+		<node name="name" value="Անվանում՝"/>
+		<node name="type" value="Տեսակ՝"/>
+		<node name="size" value="Չափ՝"/>
+		<node name="time" value="Վերջին փոփոխություն՝"/>
+		<node name="sizeInBytes" value="%s բայթ">
+			<node condition="modrange 11 19 100" value="%0 բայթ"/>
+			<node condition="modrange 2 4 10" value="%0 բայթ"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s կԲ"/>
+		<node name="catalog" value="Գրացուցակ՝"/>
+		<node name="extraLinks" value="Հղումներ"/>
+		<node name="menu">
+			<node name="edit" value="Խմբագրել"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Գիրքը բեռնվեց"/>
+		<node name="tickerError" value="Չհաջողվեց բեռնել գիրքը"/>
+		<node name="contentSuccess" value="Բեռնումն ավարտվեց"/>
+		<node name="contentError" value="Բեռնումը ձախողվեց"/>
+		<node name="downloadingStarted" value="Գրքի բեռնումը սկսված է"/>
+		<node name="alreadyDownloading" value="Գիրքն արդեն բեռնվում է"/>
+		<node name="cannotCreateDirectory" value="Հնարավոր չէ ստեղծել %s գրացուցակը"/>
+		<node name="cannotCreateFile" value="Հնարավոր չէ ստեղծել %s նիշքը"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Ընդարձակել բովանդակությունը"/>
+		<node name="collapseTree" value="Կոծկել բովանդակությունը"/>
+		<node name="readText" value="Կարդալ գլուխը"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Այս գիրքը"/>
+		<node name="allBooks" value="Բոլոր գրքերը"/>
+		<node name="found" value="Գտնվեց"/>
+		<node name="new" value="Ավելացնել էջանիշ"/>
+		<node name="open" value="Բացել"/>
+		<node name="edit" value="Ուղղել էջանիշը"/>
+		<node name="delete" value="Ջնջել էջանիշը"/>
+		<node name="menu">
+			<node name="search" value="Որոնել"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="Բացել գրադարանը"/>
+		<node name="networkLibrary" value="Բացել ցանցային գրադարանը"/>
+		<node name="previousBook" value="Բացել նախորդ գիրքը"/>
+		<node name="returnTo" value="Վերադառնալ ..."/>
+		<node name="back" value="Հետ"/>
+		<node name="forward" value="Առաջ"/>
+		<node name="close" value="Փակել FBReader-ը"/>
+	</node>
+	<node name="style" value="Ոճ %s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Փոխել ոճը..."/>
+		<node name="deleteBookmark" value="Ջնջել էջանիշը"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Ոճի անունը"/>
+		<node name="invisible" value="Անտեսանելի">
+			<node name="summaryOn" value="Չգունանշել Էջանիշերը"/>
+			<node name="summaryOff" value="Էջանիշերը գունանշել"/>
+		</node>
+		<node name="bgColor" value="Ետնաշերտի գունավորում"/>
+	</node>
+	<node name="selection" value="Նշում">
+		<node name="copyToClipboard" value="Պատճենել սեղմատախտակում"/>
+		<node name="openInDictionary" value="Նայել բառարանում"/>
+		<node name="quoteFrom" value="Մեջբերում %s-ից"/>
+		<node name="textInBuffer" value="Պատճենվեց սեղմատախտակում՝ &#10;%s"/>
+		<node name="bookmarkCreated" value="Ստեղծվեց էջանիշ՝ &#10;%s"/>
+		<node name="clearSelection" value="Հեռացնել նշումը"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Ուղարկվել է &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="Կարգավորումներ"/>
+		<node name="bookInfo" value="Գրքի մասին"/>
+		<node name="library" value="Գրադարան"/>
+		<node name="toc" value="Բովանդակություն"/>
+		<node name="day" value="Ցերեկ"/>
+		<node name="night" value="Գիշեր"/>
+		<node name="networkLibrary" value="Ցանցային գրադարան"/>
+		<node name="navigate" value="Ընտրել էջը">
+			<node name="toc" value="Բովանդակություն"/>
+			<node name="gotoHome" value="Վերադառնալ գրքի սկիզբ"/>
+			<node name="gotoPageNumber" value="Գնալ էջ…"/>
+			<node name="gotoSectionStart" value="Վերադառնալ գլխի սկիզբ"/>
+			<node name="gotoSectionEnd" value="Գնալ գլխի վերջ"/>
+			<node name="nextTOCSection" value="Հաջորդ գլուխը"/>
+			<node name="previousTOCSection" value="Նախորդ գլուխը"/>
+			<node name="undo" value="Ետ"/>
+			<node name="redo" value="Առաջ"/>
+		</node>
+		<node name="shareBook" value="Տարածել գիրքը"/>
+		<node name="search" value="Որոնել"/>
+		<node name="rotate" value="Շրջել"/>
+		<node name="screenOrientation" value="Էկրանի ուղղությունը"/>
+		<node name="screenOrientationSystem" value="համակարգային"/>
+		<node name="screenOrientationSensor" value="կախված սարքավորումից "/>
+		<node name="screenOrientationPortrait" value="ուղղաձիգ"/>
+		<node name="screenOrientationLandscape" value="հորիզոնական"/>
+		<node name="screenOrientationReversePortrait" value="շրջված ուղղաձիգ"/>
+		<node name="screenOrientationReverseLandscape" value="շրջված հորիզոնական"/>
+		<node name="increaseFont" value="Մեծացնել տառատեսակը"/>
+		<node name="decreaseFont" value="Փոքրացնել տառատեսակը"/>
+		<node name="toggleFullscreen" value="Ամբողջ էկրանով"/>
+		<node name="bookmarks" value="Էջանիշեր"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Նիշք"/>
+		<node name="title" value="Անվանում"/>
+		<node name="language" value="Լեզու"/>
+		<node name="encoding" value="Այլագիր"/>
+		<node name="authors" value="Հեղինակ(ներ)"/>
+		<node name="tags" value="Գլխաբառեր"/>
+		<node name="series" value="Մատենաշար"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Պանակներ">
+			<node name="summary" value="Նիշքերի պանակները"/>
+			<node name="books" value="Գրքեր"/>
+			<node name="fonts" value="Տառատեսակներ"/>
+			<node name="wallpapers" value="Պաստառներ"/>
+		</node>
+		<node name="appearance" value="Արտաքին տեսք">
+			<node name="summary" value="Էկրանի, վիճակագոտու, ստեղների կարգավորումներ"/>
+			<node name="language" value="Միջերեսի լեզուն"/>
+			<node name="screenOrientation" value="Էկրանի ուղղությունը">
+				<node name="system" value="համակարգային"/>
+				<node name="sensor" value="կախված սարքավորումից"/>
+				<node name="portrait" value="ուղղաձիգ"/>
+				<node name="landscape" value="հորիզոնական"/>
+				<node name="reversePortrait" value="շրջված ուղղաձիգ"/>
+				<node name="reverseLandscape" value="շրջված հորիզոնական"/>
+			</node>
+			<node name="autoOrientation" value="Ինքնաշխատ շրջում">
+				<node name="summaryOn" value="Պատկերը շրջել սարքավորման հետ"/>
+				<node name="summaryOff" value="Պատկերը չշրջել սարքավորման հետ"/>
+			</node>
+			<node name="showStatusBar" value="Ցուցադրել վիճակագոտին">
+				<node name="summaryOn" value="Վիճակագոտին երևում է ընթերցելիս"/>
+				<node name="summaryOff" value="Վիճակագոտին չի երևում ընթերցելիս"/>
+			</node>
+			<node name="showActionBar" value="Ցուցադրել գործիքագոտին">
+				<node name="summaryOn" value="Գործիքագոտին երևում է ընթերցելիս"/>
+				<node name="summaryOff" value="Գործիքագոտին չի երևում ընթերցելիս"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Ցուցադրել վիճակագոտին, երբ գործիքագոտին միացված է">
+				<node name="summaryOn" value="Ցուցադրել վիճակագոտին"/>
+				<node name="summaryOff" value="Թաքցնել վիճակագոտին"/>
+			</node>
+			<node name="disableButtonLights" value="Անջատել ստեղների ետնալույսը ընթերցելիս">
+				<node name="summaryOn" value="Անջատել ետնալույսը (ոչ բոլոր սարքավորումներն են աջակցում)"/>
+				<node name="summaryOff" value="Չանջատել ետնալույսը"/>
+			</node>
+			<node name="twoColumnView" value="Երկսյունակ գրվածք">
+				<node name="summaryOn" value="Երկսյունակ գրվածք՝ երբ էկրանը հորիզոնական է"/>
+				<node name="summaryOff" value="Գրվածքը միշտ մեկ սյունակով"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Էկրանի պայծառության կարգավորումներ">
+				<node name="summaryOn" value="Մատի վերև-ներքև շարժումով՝ էկրանի ձախ կողմում"/>
+				<node name="summaryOff" value="Անջատել"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Ընթերցելիս չանջատել էկրանը">
+				<node name="0" value="Երբեք չանջատել"/>
+				<node name="25" value="Քանի դեռ մարտկոցը լիցքավորված է քառորդ մասով"/>
+				<node name="50" value="Քանի դեռ մարտկոցը լիցքավորված է կիսով չափ"/>
+				<node name="100" value="Միշտ անջատել"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Չանջատել էկրանը, եթե մարտկոցը լիցքավորվում է">
+				<node name="summaryOn" value="Երբեք չանջատել էկրանը, եթե մարտկոցը լիցքավորվում է"/>
+				<node name="summaryOff" value="Էկրանն անջատել անգամ լիցքավորման ժամանակ"/>
+			</node>
+		</node>
+		<node name="text" value="Գրվածք">
+			<node name="summary" value="Տառատեսակներ, տողադարձ և այլն"/>
+			<node name="fontProperties" value="Տառատեսակների հատկություններ">
+				<node name="summary" value="Տառատեսակների հարթման կարգավորումներ"/>
+				<node name="antiAlias" value="Հարթում">
+					<node name="summaryOn" value="Հարթումը միացված է"/>
+					<node name="summaryOff" value="Հարթումն անջատված է"/>
+				</node>
+				<node name="deviceKerning" value="Սարքային տառակցում">
+					<node name="summaryOn" value="Սարքային տառակցումը միացված է"/>
+					<node name="summaryOff" value="Սարքային տառակցումն անջատված է"/>
+				</node>
+				<node name="dithering" value="Գունահարթում">
+					<node name="summaryOn" value="Գունահարթումը միացված է"/>
+					<node name="summaryOff" value="Գունահարթումն անջատված է"/>
+				</node>
+				<node name="hinting" value="Կետաշտկում">
+					<node name="summaryOn" value="Կետաշտկումը միացված է"/>
+					<node name="summaryOff" value="Կետաշտկումն անջատված է"/>
+				</node>
+				<node name="subpixel" value="Ենթակետային կոկում">
+					<node name="summaryOn" value="Ենթակետային կոկումը միացված է"/>
+					<node name="summaryOff" value="Ենթակետային կոկումն անջատված է"/>
+				</node>
+			</node>
+			<node name="font" value="Տառատեսակ">
+				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+			</node>
+			<node name="fontSize" value="Տառաչափը"/>
+			<node name="fontSizeDifference" value="Չափը"/>
+			<node name="fontStyle" value="Ոճը">
+				<node name="regular" value="ուղիղ"/>
+				<node name="bold" value="թավ"/>
+				<node name="italic" value="շեղ"/>
+				<node name="boldItalic" value="թավ շեղ"/>
+			</node>
+			<node name="bold" value="Թավ">
+				<node name="summaryOn" value="գործածել թավ նկարվածք"/>
+				<node name="summaryOff" value="գործածել ուղիղ նկարվածք"/>
+				<node name="unchanged" value="անփոփոխ"/>
+			</node>
+			<node name="italic" value="Շեղ">
+				<node name="summaryOn" value="գործածել շեղ նկարվածք"/>
+				<node name="summaryOff" value="գործածել ուղիղ նկարվածք"/>
+				<node name="unchanged" value="անփոփոխ"/>
+			</node>
+			<node name="underlined" value="Ընդգծված">
+				<node name="summaryOn" value="միացնել"/>
+				<node name="summaryOff" value="անջատել"/>
+				<node name="unchanged" value="անփոփոխ"/>
+			</node>
+			<node name="strikedThrough" value="Վրագծել">
+				<node name="summaryOn" value="միացնել"/>
+				<node name="summaryOff" value="անջատել"/>
+				<node name="unchanged" value="անփոփոխ"/>
+			</node>
+			<node name="lineSpacing" value="Տողամիջոց">
+				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+			</node>
+			<node name="alignment" value="Հավասարեցում">
+				<node name="left" value="ձախից"/>
+				<node name="right" value="աջից"/>
+				<node name="center" value="կենտրոնով"/>
+				<node name="justify" value="եզրերով"/>
+				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Ինքնաշխատ տողադարձում">
+				<node name="summaryOn" value="Միացնել ինքնաբար վանկատումը"/>
+				<node name="summaryOff" value="Անջատել ինքնաբար վանկատումը"/>
+			</node>
+			<node name="allowHyphenations" value="Տողադարձում">
+				<node name="summaryOn" value="թույլատրել տողադարձումը"/>
+				<node name="summaryOff" value="արգելել տողադարձումը"/>
+				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Կարմիր տող"/>
+			<node name="spaceBefore" value="Բացատ սկզբում"/>
+			<node name="spaceAfter" value="Բացատ վերջում"/>
+			<node name="leftIndent" value="Հավասարեցնել ձախից"/>
+			<node name="rightIndent" value="Հավասարեցնել աջից"/>
+			<node name="more" value="Այլ ոճեր">
+				<node name="summary" value="Առանձին կարգավորումներ վերնագրերի, բնաբանների և այլնի համար"/>
+				<node name="Regular Paragraph" value="Կանոնավոր պարբերություն">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Վերնագիր">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Գլխի անվանումը">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Բանաստեղծության անվանումը">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Ենթավերնագիր">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Ծանոթագրություններ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Բնաբան">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Տուն (բանաստեղծական)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Բանաստեղծություններ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Նախաձևաչափված գրվածք">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Պատկեր">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Մեջբերում">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Հեղինակի անունը">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Տարեթիվ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Հղում">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Տողատակ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Շեշտադրում">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Թնդացում">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Վարգիր">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Վերգիր">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Ծրագրի գրվածքը">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Ընդգծված գրվածք">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Շեղ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Թավ գրվածք">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Սահմանում">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Սահմանման նկարագրությունը">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Վերնագիր 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Վերնագիր 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Վերնագիր 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Վերնագիր 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Վերնագիր 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Վերնագիր 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Արտաքին հղում">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="Գործածե՞լ CSS ձևաչափով"/>
+			<node name="fontSize" value="Տառատեսակի չափը">
+				<node name="summaryOn" value="Կիրառել CSS-ում տրվող տառատեսակի չափը"/>
+				<node name="summaryOff" value="Մերժել CSS-ում տրվող տառատեսակի չափը"/>
+			</node>
+			<node name="textAlignment" value="Հավասարեցնել գրվածքը">
+				<node name="summaryOn" value="Հավասարեցնել գրվածքը, ինչպես տրվում է CSS-ում"/>
+				<node name="summaryOff" value="Մերժել գրվածքի հավասարեցումը՝ տրված CSS-ում"/>
+			</node>
+		</node>
+		<node name="colors" value="Գունավորում և պաստառներ">
+			<node name="summary" value="Գույների կարգավորումներ"/>
+			<node name="background" value="Ետնաշերտ">
+				<node name="solidColor" value="Միագույն"/>
+				<node name="leather" value="Կաշեգույն"/>
+				<node name="sepia" value="Դարչնագույն"/>
+				<node name="wood" value="Փայտի գույնով"/>
+			</node>
+			<node name="backgroundColor" value="Ետնաշերտի գունավորում"/>
+			<node name="selectionBackground" value="Նշվածքի ենտաշերտը"/>
+			<node name="selectionForeground" value="Նշվածք"/>
+			<node name="text" value="Կանոնավոր գրվածք"/>
+			<node name="hyperlink" value="Գերհղում"/>
+			<node name="hyperlinkVisited" value="Այցելված հղում"/>
+			<node name="highlighting" value="Որոնման արդյունքների ետնաշերտը"/>
+			<node name="footer" value="Էջատակ"/>
+		</node>
+		<node name="margins" value="Լուսանցքներ">
+			<node name="summary" value="Լուսանցքներ գրվածքի շուրջ"/>
+			<node name="left" value="Ձախ լուսանց"/>
+			<node name="right" value="Աջ լուսանցք"/>
+			<node name="top" value="Վերին լուսանցք"/>
+			<node name="bottom" value="Ստորին լուսանցք"/>
+			<node name="spaceBetweenColumns" value="Միջնալուսանցք"/>
+		</node>
+		<node name="scrollBar" value="Ոլորագոտի">
+			<node name="summary" value="Ընթերցվածքի ցուցիչ"/>
+			<node name="scrollbarType" value="Ոլորագոտու տեսակ">
+				<node name="hide" value="Թաքցնել"/>
+				<node name="show" value="Ուղղաձիգ սահիչ"/>
+				<node name="showAsProgress" value="Ուղղաձիգ ընթացագոտի"/>
+				<node name="showAsFooter" value="Էջատակ"/>
+			</node>
+			<node name="footerHeight" value="Էջատակի բարձրությունը"/>
+			<node name="footerColor" value="Էջատակի գույնը"/>
+			<node name="tocMarks" value="Ցուցադրել ցանկի նիշերը">
+				<node name="summaryOn" value="Ցուցադրել ցանկի նիշերը էջատակում"/>
+				<node name="summaryOff" value="Թաքցնել ցանկի նիշերը"/>
+			</node>
+			<node name="showProgress" value="Էջերի համարակալում">
+				<node name="summaryOn" value="Ցուցադրել էջի համարը էջատակում"/>
+				<node name="summaryOff" value="Թաքցնել էջի համարը"/>
+			</node>
+			<node name="showBattery" value="Ցուցադրել մարտկոցի լիացքավորումը">
+				<node name="summaryOn" value="Ցուցադրել մարտկոցի լիցքավորումը էջատակում"/>
+				<node name="summaryOff" value="Թաքցնել մարտկոցի լիցքավորումը"/>
+			</node>
+			<node name="showClock" value="Ցուցադրել ժամացույցը">
+				<node name="summaryOn" value="Ցուցադրել ժամացույցը էջատակում"/>
+				<node name="summaryOff" value="Թաքցնել ժամացույցը"/>
+			</node>
+			<node name="font" value="Տառատեսակ"/>
+		</node>
+		<node name="scrolling" value="Էջերի թերթում">
+			<node name="summary" value="Ինչպես թերթել էջերը"/>
+			<node name="fingerScrolling" value="Թերթել՝ էկրանին հպումով">
+				<node name="byTap" value="Թերթել՝ էկրանին սեղմումով"/>
+				<node name="byFlick" value="Թերթել՝ քաշելով էջը"/>
+				<node name="byTapAndFlick" value="Թերթել՝ սեղմելով էկրանին կամ քաշելով էջը"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Կրկնակի սեղմման կարգավորումները">
+				<node name="summaryOn" value="Բացել նավարկման ժապավենը"/>
+				<node name="summaryOff" value="Անտեսել կրկնակի սեղմումը"/>
+			</node>
+			<node name="volumeKeys" value="Գործածել ձայնի կարգավորման ստեղները">
+				<node name="summaryOn" value="Ձայնի կարգավորման ստեղները գործածել էջերը թերթելու համար"/>
+				<node name="summaryOff" value="Ձայնի կարգավորման ստեղները գործածվում են ինչպես միշտ"/>
+			</node>
+			<node name="invertVolumeKeys" value="Ստեղները թերթում են հակառակ ուղղությամբ">
+				<node name="summaryOn" value="Վերին ստեղնը թերթում է առաջ"/>
+				<node name="summaryOff" value="Ստորին ստեղնը թերթում է ետ"/>
+			</node>
+			<node name="animation" value="Անիմացիա">
+				<node name="none" value="Անջատել անիմացիան"/>
+				<node name="curl" value="Եռաչափ անիմացիա"/>
+				<node name="slide" value="Սահեցնելով"/>
+				<node name="shift" value="Շարժով"/>
+			</node>
+			<node name="animationSpeed" value="Անիմացիայի արագությունը">
+				<node name="fast" value="արագ"/>
+				<node name="slow" value="դանդաղ"/>
+			</node>
+			<node name="horizontal" value="Հորիզոնական թերթում">
+				<node name="summaryOn" value="Էջը շրջել հորիզոնական"/>
+				<node name="summaryOff" value="Էջը շրջել ուղղաձիգ"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Սեղմագոտի">
+			<node name="summary" value="Գործողություն՝ սեղմելիս"/>
+			<node name="tapZonesScheme" value="Սեղմագոտու սխեման">
+				<node name="left_to_right" value="Էջը ոլորել ձախից աջ"/>
+				<node name="right_to_left" value="Էջը ոլորել աջից ձախ"/>
+				<node name="up" value="Էջը ոլորել ներքևից վերև"/>
+				<node name="down" value="Էջը ոլորել վերևից ներքև"/>
+				<node name="custom" value="Հարմարեցնել..."/>
+			</node>
+		</node>
+		<node name="dictionary" value="Բառարան">
+			<node name="summary" value="Բառարանի կարգավորումները"/>
+			<node name="dictionary" value="Բառարան"/>
+			<node name="translator" value="Թարգմանիչ"/>
+			<node name="targetLanguage" value="Թարգմանել ...">
+				<node name="any" value="Բոլոր լեզուներով"/>
+			</node>
+			<node name="tappingAction" value="Գործողություններ՝ էկրանին երկար սեղմելիս">
+				<node name="doNothing" value="Ոչինչ չանել"/>
+				<node name="selectSingleWord" value="Նշել մեկ բառ"/>
+				<node name="startSelecting" value="Սկսել նշումը"/>
+				<node name="openDictionary" value="Նշել մեկ բառ և գործարկել բառարանը"/>
+			</node>
+			<node name="navigateOverAllWords" value="Նավարկել բոլոր բառերով">
+				<node name="summaryOn" value="Ստեղների օգնությամբ նավարկելիս նշել բոլոր բառերը"/>
+				<node name="summaryOff" value="Ստեղների օգնությամբ նավարկելիս նշել միայն գերհղումները"/>
+			</node>
+		</node>
+		<node name="images" value="Պատկերներ">
+			<node name="summary" value="Պատկերների ցուցադրման կարգավորումներ"/>
+			<node name="backgroundColor" value="Ետնաշարտի գունավորումը՝ ամբողջ էկրանով դիտման ժամանակ"/>
+			<node name="tappingAction" value="Գործողություններ՝ էկրանին երկար սեղմելիս">
+				<node name="doNothing" value="Ոչինչ չանել"/>
+				<node name="selectImage" value="Նշել պատկերը"/>
+				<node name="openImageView" value="Գործարկել ամբողջ էկրանով դիտումը"/>
+			</node>
+			<node name="fitImagesToScreen" value="Ցուցադրել ամբողջ էկրանով">
+				<node name="none" value="Երբեք"/>
+				<node name="covers" value="Միայն շապիկները"/>
+				<node name="all" value="Բոլոր պատկերները"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="«Ետ»-գործիքագոտի">
+			<node name="summary" value="Գործողություններ՝ «Ետ» ստեղնը սեղմելիս"/>
+			<node name="library" value="Գրադարան">
+				<node name="summaryOn" value="Միացնել «Բացել գրադարանը» ներդիրը"/>
+				<node name="summaryOff" value="Անջատել «Բացել գրադարանը» ներդիրը"/>
+			</node>
+			<node name="networkLibrary" value="Ցանցային գրադարան">
+				<node name="summaryOn" value="Միացնել «Բացել ցանցային գրադարանը» ներդիրը"/>
+				<node name="summaryOff" value="Անջատել «Բացել ցանցային գրադարանը» ներդիրը"/>
+			</node>
+			<node name="previousBook" value="Նախորդ գիրքը">
+				<node name="summaryOn" value="Միացնել նախորդ գրքին վերադառնալու հնարավորությունը"/>
+				<node name="summaryOff" value="Աջատել նախորդ գրքին վերադառնալու հնարավորությունը"/>
+			</node>
+			<node name="positions" value="Վերջին էջերը">
+				<node name="summaryOn" value="Ցուցադրել ընթերցված վերջին երեք էջերի ցանկը"/>
+				<node name="summaryOff" value="Թաքցնել ընթերցված վերջին երեք էջերի ցանկը"/>
+			</node>
+			<node name="backKeyAction" value="Գործողություն «Ետ» ստեղնով">
+				<node name="exit" value="Փակել FBReader-ը"/>
+				<node name="goBack" value="Գնալ ետ"/>
+				<node name="cancelMenu" value="Ցուցադրել «Ետ» գործիքագոտին"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Գործողություն երկար սեղմումով">
+				<node name="exit" value="Փակել FBReader-ը"/>
+				<node name="goBack" value="Գնալ ետ"/>
+				<node name="cancelMenu" value="Ցուցադրել «Ետ» գործիքագոտին"/>
+				<node name="none" value="Ոչ մի գործողություն"/>
+			</node>
+		</node>
+		<node name="tips" value="Խորհուրդներ">
+			<node name="summary" value="Ամենօրյա խորհուրդներ"/>
+			<node name="showTips" value="Ցուցադրել խորհուրդները">
+				<node name="summaryOn" value="Ցուցադրել"/>
+				<node name="summaryOff" value="Թաքցնել"/>
+			</node>
+		</node>
+		<node name="about" value="FBReader-ի մասին">
+			<node name="summary" value="Տարբերակ, կապ"/>
+			<node name="version" value="Տարբերակ"/>
+			<node name="site" value="Մեր կայքը">
+				<node name="url" value="http://fbreader.ru/"/>
+			</node>
+			<node name="email" value="Ուղարկեք մեզ նամակ">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="Հետևեք մեզ Թվիթերում">
+				<node name="url" value="http://twitter.com/fbreader_ru"/>
+			</node>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="Տեղադրել"/>
+			<node name="update" value="Թարմացնել"/>
+			<node name="skip" value="Ոչ այժմ"/>
+			<node name="buy" value="Գնել"/>
+			<node name="buyAndDownload" value="Գնել և բեռնել"/>
+			<node name="continue" value="Շարունակել"/>
+			<node name="editUrl" value="Փոխել URL-ը"/>
+			<node name="tryAgain" value="Կրկնել"/>
+			<node name="openBook" value="Կարդալ"/>
+			<node name="editInfo" value="Փոխել"/>
+			<node name="reloadInfo" value="Թարմացնել"/>
+			<node name="shareBook" value="Տարածել"/>
+			<node name="topup" value="Հավելել հաշիվը"/>
+			<node name="pay" value="Վճարել"/>
+			<node name="refresh" value="Թարմացնել"/>
+			<node name="authorize" value="Հեղինակացում"/>
+			<node name="resetPosition" value="Ետ"/>
+			<node name="sendReport" value="Ուղարկել հաղորդագրություն"/>
+			<node name="addToFavorites" value="Ավելացնել ընտրյալքում"/>
+			<node name="removeFromFavorites" value="Ջնջել ընտրյալքից"/>
+			<node name="markAsRead" value="Նշել որպես ընթերցված"/>
+			<node name="markAsUnread" value="Նշել որպես չընթերցված"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="Տեղադրել հավելվածքներ"/>
+			<node name="updateTitle" value="Նոր տարբերակ"/>
+			<node name="dontAskAgain" value="Այլևս չհարցնել"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="Տեղադրել բառարան"/>
+			<node name="message" value="Տեղադրե՞լ %s-ը"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="Նիշքն անվերադարձելիորեն ջնջվելու է, շարունակե՞լ։"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="Նիշքն արդեն իսկ սարքավորումում է, կրկի՞ն բեռնել։"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="Բեռնվում է %s գիրքը"/>
+			<node name="search" value="Որոնվում է, սպասեք..."/>
+			<node name="loadInfo" value="Տվյալները բեռնվում են, սպասեք..."/>
+			<node name="loadingBook" value="Գիրքը բացվում է, սպասեք..."/>
+			<node name="loadingBookList" value="Գրադարանը բացվում է, սպասեք..."/>
+			<node name="creatingBooksDatabase" value="Գրքերի շտեմարանը ստեղծվում է, սպասեք..."/>
+			<node name="updatingBooksDatabase" value="Գրքերի շտեմարանը թարմացվում է, սպասեք..."/>
+			<node name="loadingNetworkLibrary" value="Գրադարանը բացվում է, սպասեք..."/>
+			<node name="authentication" value="Հեղինակացում, սպասեք..."/>
+			<node name="signOut" value="Ելք համակարգից, սպասեք..."/>
+			<node name="purchaseBook" value="Գիրքը գնվում է, սպասեք..."/>
+			<node name="loadingCatalogInfo" value="Տվյալները բեռնվում են գրացուցակից, սպասեք..."/>
+			<node name="loadingNetworkBookInfo" value="Բեռնվում են գրքի տվյալները, սպասեք..."/>
+			<node name="updatingCatalogsList" value="Թարմացվում է գրացուցակների ցանկը, սպասեք..."/>
+			<node name="updatingAccountInformation" value="Բեռնվում են հաշվի մասին տվյալները, սպասեք..."/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Սպասարկչի ներքին սխալ"/>
+			<node name="purchaseNotEnoughMoney" value="Հաշվի վրա բավարար միջոցներ չկան"/>
+			<node name="purchaseMissingBook" value="Գիրքը վաճառքում չէ"/>
+			<node name="purchaseAlreadyPurchased" value="Գիրքն արդեն գնվել է"/>
+			<node name="bookNotPurchased" value="Գիրքը չի գնվել"/>
+			<node name="downloadLimitExceeded" value="Բեռնումների սահմանաչափը սպառվել է"/>
+			<node name="noUserEmail" value="Նման էլ. հասցեով օգտատեր չկա"/>
+			<node name="unsupportedOperation" value="Գործողությունը չի աջակցվում"/>
+			<node name="notAnOPDS" value="Սա OPDS գրացուցակ չէ"/>
+			<node name="noRequiredInformation" value="Նման տվյալ գրացուցակում չկա"/>
+			<node name="cacheDirectoryError" value="Չի հաջողվում ստեղծել գրացուցակ քեշի համար"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Հեղինակացում"/>
+			<node name="unencryptedWarning" value="Գաղտնաբառը չի այլագրվելու"/>
+			<node name="login" value="Օգտատիրոջ անուն"/>
+			<node name="password" value="Գաղտնաբառ"/>
+			<node name="loginIsEmpty" value="Օգտատիրոջ անունը չի կարող դատարկ լինել"/>
+			<node name="register" value="Գրանցվել"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FBReader. ավելացնել գրացուցակ"/>
+			<node name="catalogTitle" value="Անվանում"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Նկարագրություն"/>
+			<node name="catalogTitleExample" value="Օր.՝ Epub գրքեր"/>
+			<node name="catalogUrlExample" value="Օր.՝ http://armebooks.fbreader.org/books/index.xml"/>
+			<node name="catalogSummaryExample" value="Օր.՝ Հայերեն էլ. գրքեր"/>
+			<node name="titleIsEmpty" value="Անվանումը չի կարող դատարկ լինել"/>
+			<node name="urlIsEmpty" value="URL-ը չի կարող դատարկ լինել"/>
+			<node name="invalidUrl" value="Սխալ URL"/>
+			<node name="titleAlreadyExists" value="Անվանումն արդեն իսկ օգտագործվել է"/>
+			<node name="siteAlreadyExists" value="Գրացուցակն արդեն իսկ ցանկում է"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Զտել ըստ լեզուների"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="Օրվա խորհուրդը"/>
+			<node name="initializationText" value="Ցանկանո՞ւմ եք օրական մեկ անգամ ստանալ FBReader-ի օգտագործման խորհուրդներ։ Նոր խորհուրդները բեռնվելու են FBReader-ի սպասարկչից։ Շաբաթական բեռնվելու է 1-2 կիլոբայթ .&#10;&#10;։ Միացնե՞լ խորհուրդները։"/>
+			<node name="dontShowAgain" value="Այլևս չցուցադրել"/>
+			<node name="more" value="Կրկին"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Չհաջողվեց գործարկել Android Market-ը։ Փորձեք տեղադրել %s-ը ձեռքով։"/>
+		<node name="textNotFound" value="Գրքում նման հատված չկա"/>
+		<node name="bookNotFound" value="Համապատասխան գրքեր չկան"/>
+		<node name="bookmarkNotFound" value="Համապատասխան էջանիշեր չկան"/>
+		<node name="cannotOpenBook" value="Չհաջողվեց բացել գիրքը"/>
+		<node name="dictionaryIsNotInstalled" value="Չհաջողվեց գործարկել բառարանը"/>
+		<node name="permissionDenied" value="Մատչումը մերժվեց"/>
+		<node name="noFavorites" value="Ընտրյալքը դատարկ է"/>
+		<node name="noSeries" value="Մատենաշարը դատարկ է"/>
+		<node name="emptyCatalog" value="Գրացուցակը դատարկ է"/>
+		<node name="emptyBasket" value="Զամբյուղը դատարկ է"/>
+		<node name="emptyNetworkSearchResults" value="Ոչ մի գիրք չգտնվեց"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="դիտարկիչ"/>
+		<node name="defaultBrowser" value="հիմնական դիտարկիչ"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="անհայտ սխալ"/>
+		<node name="unsupportedCompressionMethod" value="պահարկման այս եղանակը չի աջակցվում"/>
+		<node name="encryptedFile" value="նիշքը պաշտպանված է DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="Խնդիր FBReader-ում"/>
+			<node name="text" value="FBReader-ը չի կարող պահել ժամանակավոր նիշքերը։ Չի բացառվում՝ մոռացել եք տեղադրել հիշողության քարտը կամ այն հասանելի չէ համակարգչին միացված լինելու պատճառով։ Վերացրեք այս խնդիրը կամ ժամանակավոր նիշքերի գրացուցակի համար այլ անուն ընտրեք։"/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="Խնդիր FBReader-ում"/>
+			<node name="text" value="Չի հաջողվում բեռնել գրադարանը. հավանաբար FBReader-ը ճիշտ չի տեղադրվել։ Եթե այս հաղորդագրությունը կրկնվում է ծրագրի ամեն մեկնարկի ժամանակ, փորձեք վերատեղադրել FBReader-ը։"/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="Խնդիր FBReader-ում"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Սխալ՝ '%s'-ը կարդալիս"/>
+		<node name="errorReadingZip" value="Սխալ՝ '%s'-ը ապապահարկելիս"/>
+		<node name="pluginNotFound" value="'%s'-ի համար խրվակ չկա"/>
+		<node name="unknownPluginType" value="%s խրվակի անհայտ տեսակ"/>
+		<node name="fileNotFound" value="%s նիշքը չգտնվեց"/>
+		<node name="opfFileNotFound" value="%s-ում OPF չգտնվեց"/>
+		<node name="unsupportedFileFormat" value="'%s' նիշքերը չեն աջակցվում'"/>
+		<node name="errorParsingRtf" value="Սխալ %s RTF-նիշքը կարդալիս"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+</resources>

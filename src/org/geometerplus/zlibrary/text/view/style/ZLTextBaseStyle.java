@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		super(null, ZLTextHyperlink.NO_LINK);
 		FontFamilyOption = new ZLStringOption(GROUP, "Base:fontFamily", fontFamily);
 		fontSize = fontSize * ZLibrary.Instance().getDisplayDPI() / 320 * 2;
-		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 5, 72, fontSize);
+		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 5, Math.max(144, fontSize * 2), fontSize);
 	}
 
 	@Override

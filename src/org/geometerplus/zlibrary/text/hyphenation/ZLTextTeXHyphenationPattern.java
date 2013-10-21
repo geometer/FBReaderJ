@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,5 +120,20 @@ public final class ZLTextTeXHyphenationPattern {
 
 	public byte[] getValues() {
 		return myValues;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder buffer = new StringBuilder();
+		for (int i = 0; i < myLength; ++i) {
+			if (myValues != null) {
+				buffer.append((int)myValues[i]);
+			}
+			buffer.append(mySymbols[i]);
+		}
+		if (myValues != null) {
+			buffer.append((int)myValues[myLength]);
+		}
+		return buffer.toString();
 	}
 }

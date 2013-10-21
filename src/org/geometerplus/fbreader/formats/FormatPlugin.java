@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.library.Book;
 
 public abstract class FormatPlugin {
 	private final String myFileType;
@@ -42,6 +42,7 @@ public abstract class FormatPlugin {
 		return file;
 	}
 	public abstract void readMetaInfo(Book book) throws BookReadingException;
+	public abstract void readUids(Book book) throws BookReadingException;
 	public abstract void readModel(BookModel model) throws BookReadingException;
 	public abstract void detectLanguageAndEncoding(Book book) throws BookReadingException;
 	public abstract ZLImage readCover(ZLFile file);

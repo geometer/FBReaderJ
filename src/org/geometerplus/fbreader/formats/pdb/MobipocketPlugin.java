@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.JavaFormatPlugin;
@@ -88,7 +89,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 								if (index != -1) {
 									author = author.substring(index + 1).trim() +
 											 ' ' +
-											 author.substring(0, index).trim(); 
+											 author.substring(0, index).trim();
 								} else {
 									author = author.trim();
 								}
@@ -119,6 +120,13 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 				} catch (IOException e) {
 				}
 			}
+		}
+	}
+
+	@Override
+	public void readUids(Book book) throws BookReadingException {
+		if (book.uids().isEmpty()) {
+			book.addUid(BookUtil.createSHA256Uid(book.File));
 		}
 	}
 
@@ -228,7 +236,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 					return new ZLFileImage(MimeType.IMAGE_AUTO, file, ZLFileImage.ENCODING_NONE, start, len);
 				}
 			}
-			return null; 
+			return null;
 		} catch (IOException e) {
 			return null;
 		} finally {

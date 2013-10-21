@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ OEBMetaInfoReader::OEBMetaInfoReader(Book &book) : myBook(book) {
 	myBook.removeAllAuthors();
 	myBook.setTitle("");
 	myBook.removeAllTags();
+	myBook.removeAllUids();
 }
 
 static const std::string METADATA = "metadata";
@@ -40,7 +41,7 @@ static const std::string DC_METADATA = "dc-metadata";
 static const std::string META = "meta";
 static const std::string AUTHOR_ROLE = "aut";
 
-void OEBMetaInfoReader::characterDataHandler(const char *text, size_t len) {
+void OEBMetaInfoReader::characterDataHandler(const char *text, std::size_t len) {
 	switch (myReadState) {
 		case READ_NONE:
 		case READ_METADATA:
@@ -50,6 +51,7 @@ void OEBMetaInfoReader::characterDataHandler(const char *text, size_t len) {
 		case READ_SUBJECT:
 		case READ_LANGUAGE:
 		case READ_TITLE:
+		case READ_IDENTIFIER:
 			myBuffer.append(text, len);
 			break;
 	}
@@ -99,6 +101,11 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 				myReadState = READ_SUBJECT;
 			} else if (testDCTag("language", tagString)) {
 				myReadState = READ_LANGUAGE;
+			} else if (testDCTag("identifier", tagString)) {
+				myReadState = READ_IDENTIFIER;
+				static const FullNamePredicate schemePredicate(ZLXMLNamespace::OpenPackagingFormat, "scheme");
+				const char *scheme = attributeValue(attributes, schemePredicate);
+				myIdentifierScheme = scheme != 0 ? scheme : "EPUB-NOSCHEME";
 			} else if (testTag(ZLXMLNamespace::OpenPackagingFormat, META, tagString)) {
 				const char *name = attributeValue(attributes, "name");
 				const char *content = attributeValue(attributes, "content");
@@ -117,10 +124,10 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 
 void OEBMetaInfoReader::endElementHandler(const char *tag) {
 	const std::string tagString = ZLUnicodeUtil::toLower(tag);
-	ZLStringUtil::stripWhiteSpaces(myBuffer);
+	ZLUnicodeUtil::utf8Trim(myBuffer);
 	switch (myReadState) {
 		case READ_NONE:
-			break;
+			return;
 		case READ_METADATA:
 			if (testTag(ZLXMLNamespace::OpenPackagingFormat, METADATA, tagString) ||
 		 			DC_METADATA == tagString) {
@@ -160,6 +167,11 @@ void OEBMetaInfoReader::endElementHandler(const char *tag) {
 					myBuffer = myBuffer.substr(0, index);
 				}
 				myBook.setLanguage(myBuffer);
+			}
+			break;
+		case READ_IDENTIFIER:
+			if (!myBuffer.empty()) {
+				myBook.addUid(myIdentifierScheme, myBuffer);
 			}
 			break;
 	}

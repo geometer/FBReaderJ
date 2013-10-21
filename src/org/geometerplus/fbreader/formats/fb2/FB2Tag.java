@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ final class FB2Tag {
 	public static final byte IMAGE = 23;
 	public static final byte BINARY = 24;
 	public static final byte FICTIONBOOK = 25;
-	
+
 	public static final byte TITLE_INFO = 26;
 	public static final byte BOOK_TITLE = 27;
 	public static final byte AUTHOR = 28;
@@ -65,9 +65,9 @@ final class FB2Tag {
 	private static final HashMap<String,Byte> ourTagByName = new HashMap<String,Byte>(256, 0.2f);
 	private static final Byte ourUnknownTag;
 
-	static {	
+	static {
 		ourTagByName.put("unknown", UNKNOWN);
-		ourUnknownTag = (Byte)ourTagByName.get("unknown");
+		ourUnknownTag = ourTagByName.get("unknown");
 		ourTagByName.put("p", P);
 		ourTagByName.put("v", V);
 		ourTagByName.put("subtitle", SUBTITLE);
@@ -111,7 +111,7 @@ final class FB2Tag {
 		Byte num = tagByName.get(name);
 		if (num == null) {
 			final String upperCaseName = name.toLowerCase().intern();
-			num = (Byte)tagByName.get(upperCaseName);
+			num = tagByName.get(upperCaseName);
 			if (num == null) {
 				num = ourUnknownTag;
 				tagByName.put(upperCaseName, num);

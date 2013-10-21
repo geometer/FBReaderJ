@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,15 +22,13 @@ package org.geometerplus.fbreader.network.tree;
 import java.util.*;
 
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkBookItem;
-import org.geometerplus.fbreader.network.BasketItem;
+import org.geometerplus.fbreader.network.*;
 
 public class BasketCatalogTree extends NetworkCatalogTree {
 	private long myGeneration = -1;
 
 	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
-		super(parent, item, position);
+		super(parent, parent.getLink(), item, position);
 		if (!item.bookIds().isEmpty()) {
 			startItemsLoader(false, false);
 		}
@@ -49,14 +47,14 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 	}
 
 	@Override
-	public synchronized List<FBTree> subTrees() {
+	public synchronized List<FBTree> subtrees() {
 		final BasketItem basketItem = (BasketItem)Item;
 		final long generation = basketItem.getGeneration();
 		if (generation != myGeneration) {
 			myGeneration = generation;
 			final List<FBTree> toRemove = new ArrayList<FBTree>();
 			final Set<String> idsToAdd = new TreeSet(basketItem.bookIds());
-			for (FBTree t : super.subTrees()) {
+			for (FBTree t : super.subtrees()) {
 				if (!(t instanceof NetworkBookTree)) {
 					continue;
 				}
@@ -77,7 +75,7 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 				}
 			}
 		}
-		return super.subTrees();
+		return super.subtrees();
 	}
 
 	@Override
@@ -87,7 +85,7 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 		}
 		final NetworkBookItem bookItem = (NetworkBookItem)i;
 		final String id = bookItem.getStringId();
-		for (FBTree t : subTrees()) {
+		for (FBTree t : subtrees()) {
 			if (t instanceof NetworkBookTree &&
 				id.equals(((NetworkBookTree)t).Book.getStringId())) {
 				return;

@@ -40,6 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Ara"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Oku"/>
 		<node name="showBookInfo" value="Kitabın künyesi"/>
@@ -47,6 +48,8 @@
 		<node name="deleteBook" value="Kitabı sil"/>
 		<node name="addToFavorites" value="Favorilere ekle"/>
 		<node name="removeFromFavorites" value="Favorilerden çıkar"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader ağ kitaplığı">
 		<node name="byAuthor" value="Yazarlar">
@@ -68,6 +71,9 @@
 		</node>
 		<node name="found" value="Bulunan">
 			<node name="summary" value="%s için arama sonuçları"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Katalog aç"/>
 		<node name="networkSearch" value="Ara"/>
@@ -111,6 +117,7 @@
 		<node name="removeCustomCatalog" value="Katalogu sil"/>
 		<node name="addCustomCatalog" value="Katalog ekle"/>
 		<node name="addCustomCatalogSummary" value="Özelleştirilmiş OPDS katalogunu elle ekle"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Cihazınızdan bir kitap okumak ister misiniz?"/>
 			<node name="download" value="Bu kitabı indirmek ister misiniz?"/>
@@ -127,7 +134,13 @@
 			<node name="title" value="Katalog ekle"/>
 			<node name="editUrl" value="URL yaz"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Ara"/>
 			<node name="reload" value="Yenile"/>
 			<node name="signIn" value="Giriş"/>
@@ -136,7 +149,7 @@
 			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="Katalog ekle"/>
 			<node name="refreshCatalogsList" value="Katalogları yenile"/>
-			<node name="languages" value="Dil süzgeci"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Sepeti temizle"/>
 			<node name="buyAllBooks" value="Tüm kitapları satın al"/>
 		</node>
@@ -218,6 +231,19 @@
 		<node name="forward" value="İleri"/>
 		<node name="close" value="FBReader\'i kapat"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Yer imini sil"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Seçenekler">
 		<node name="copyToClipboard" value="Panoya kopyala"/>
 		<node name="openInDictionary" value="Sözlükte bul"/>
@@ -227,7 +253,7 @@
 		<node name="clearSelection" value="Sil"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Ayarlar"/>
@@ -262,6 +288,7 @@
 		<node name="decreaseFont" value="Küçült"/>
 		<node name="toggleFullscreen" value="Tam ekran"/>
 		<node name="bookmarks" value="Yer imleri"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Dosya adı"/>
@@ -281,6 +308,7 @@
 		</node>
 		<node name="appearance" value="Görünüm">
 			<node name="summary" value="Ekran ayarları, durum çubuğu, düğme ışıkları"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Ekran döndürme">
 				<node name="system" value="Sistem"/>
 				<node name="sensor" value="Cihaz dönüş hassasiyeti"/>
@@ -308,6 +336,10 @@
 			<node name="disableButtonLights" value="Okuma sırasında düğmeler devredışı kalsın">
 				<node name="summaryOn" value="Düğme ışıklarını kapat (bazı cihazlarda çalışmamaktadır)"/>
 				<node name="summaryOff" value="Düğme ışıklarına müdahale etme"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Ekran parlaklığı ayarı">
 				<node name="summaryOn" value="Parmağınızı ekranın sol yanında yukarı aşağı sürükleyerek parlaklığı ayarlayın"/>
@@ -507,6 +539,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="colors" value="Renkler &amp; duvarkağıtları">
 			<node name="summary" value="Renk ayarları"/>
 			<node name="background" value="Arkaplan">
@@ -530,6 +573,7 @@
 			<node name="right" value="Sağ kenar"/>
 			<node name="top" value="Üst kenar"/>
 			<node name="bottom" value="Alt kenar"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="İlerleme göstergesi">
 			<node name="summary" value="Kaydırma Çubuğu  &amp; altbilgi ayarları"/>
@@ -607,6 +651,9 @@
 			<node name="summary" value="Sözlük ayarları"/>
 			<node name="dictionary" value="Sözlük"/>
 			<node name="translator" value="Çevirmen"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Uzun dokunma eylemi">
 				<node name="doNothing" value="Uzun dokunma eylemsiz"/>
 				<node name="selectSingleWord" value="Uzun dokunma bir kelime seçsin"/>
@@ -673,7 +720,7 @@
 			<node name="summary" value="Version info, contacts"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Visit our website">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -703,6 +750,10 @@
 			<node name="authorize" value="Onay"/>
 			<node name="resetPosition" value="POzisyonu sıfırla"/>
 			<node name="sendReport" value="Rapor gönder"/>
+			<node name="addToFavorites" value="Favorilere ekle"/>
+			<node name="removeFromFavorites" value="Favorilerden çıkar"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Eklenti kur"/>
@@ -790,6 +841,7 @@
 		<node name="dictionaryIsNotInstalled" value="Sözlük kurulamadı"/>
 		<node name="permissionDenied" value="İzin reddedildi"/>
 		<node name="noFavorites" value="Hiç favoriniz yok"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Katalog boş"/>
 		<node name="emptyBasket" value="Sepetiniz boş"/>
 		<node name="emptyNetworkSearchResults" value="Hiç kitap bulunamadı"/>
@@ -827,5 +879,8 @@
 		<node name="opfFileNotFound" value="OPF %s\'de bulunamadı"/>
 		<node name="unsupportedFileFormat" value="'%s' dosya türü desteklenmiyor"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

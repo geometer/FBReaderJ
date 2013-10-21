@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,20 +19,49 @@
 
 package org.geometerplus.fbreader.library;
 
-class SearchResultsTree extends FirstLevelTree {
-	private final String myPattern;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.fbreader.book.*;
+
+public class SearchResultsTree extends FilteredTree {
+	public final String Pattern;
+	private final String myId;
+	private final ZLResource myResource;
 
 	SearchResultsTree(RootTree root, String id, String pattern) {
-		super(root, 0, id);
-		myPattern = pattern != null ? pattern : "";
+		super(root, new Filter.ByPattern(pattern), 0);
+		myId = id;
+		myResource = resource().getResource(myId);
+		Pattern = pattern != null ? pattern : "";
 	}
 
-	final String getPattern() {
-		return myPattern;
+	@Override
+	public String getName() {
+		return myResource.getValue();
+	}
+
+	@Override
+	public String getTreeTitle() {
+		return getSummary();
+	}
+
+	@Override
+	protected String getStringId() {
+		return myId;
+	}
+
+	@Override
+	public boolean isSelectable() {
+		return false;
 	}
 
 	@Override
 	public String getSummary() {
-		return super.getSummary().replace("%s", myPattern);
+		return myResource.getResource("summary").getValue().replace("%s", Pattern);
+	}
+
+	@Override
+	protected boolean createSubtree(Book book) {
+		return createBookWithAuthorsSubtree(book);
 	}
 }

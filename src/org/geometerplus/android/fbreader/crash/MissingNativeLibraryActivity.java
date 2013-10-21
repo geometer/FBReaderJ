@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +27,7 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.Paths;
-
 import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.android.fbreader.FBReader;
 
 public class MissingNativeLibraryActivity extends Activity {
 	@Override

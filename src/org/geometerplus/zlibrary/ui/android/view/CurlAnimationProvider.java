@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -189,6 +189,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		);
 
 		canvas.drawPath(myEdgePath, myEdgePaint);
+		/*
 		canvas.save();
 		canvas.clipPath(myEdgePath);
 		final Matrix m = new Matrix();
@@ -203,6 +204,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		m.postRotate(angle, x, y);
 		canvas.drawBitmap(fgBitmap, m, myBackPaint);
 		canvas.restore();
+		*/
 	}
 
 	@Override

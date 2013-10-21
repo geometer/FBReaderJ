@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  */
 
 package org.geometerplus.fbreader.formats;
-
-import org.geometerplus.fbreader.library.Book;
 
 public abstract class JavaFormatPlugin extends FormatPlugin {
 	protected JavaFormatPlugin(String fileType) {

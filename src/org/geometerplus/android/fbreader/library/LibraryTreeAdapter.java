@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import android.graphics.Bitmap;
+import android.text.Html;
 import android.view.*;
 import android.widget.*;
 
@@ -28,9 +28,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.book.Book;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 import org.geometerplus.android.fbreader.covers.CoverManager;
+
+import org.geometerplus.android.util.ViewUtil;
 
 class LibraryTreeAdapter extends TreeAdapter {
 	private CoverManager myCoverManager;
@@ -43,8 +46,23 @@ class LibraryTreeAdapter extends TreeAdapter {
 		final View view = (convertView != null) ? convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
-		((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSummary());
+		final boolean unread =
+			tree.getBook() != null && !tree.getBook().labels().contains(Book.READ_LABEL);
+
+		final TextView nameView = ViewUtil.findTextView(view, R.id.library_tree_item_name);
+		if (unread) {
+			nameView.setText(Html.fromHtml("<b>" + tree.getName()));
+		} else {
+			nameView.setText(tree.getName());
+		}
+		
+		final TextView summaryView = ViewUtil.findTextView(view, R.id.library_tree_item_childrenlist);
+		if (unread) {
+			summaryView.setText(Html.fromHtml("<b>" + tree.getSummary()));
+		} else {
+			summaryView.setText(tree.getSummary());
+		}
+
 		return view;
 	}
 
@@ -64,7 +82,7 @@ class LibraryTreeAdapter extends TreeAdapter {
 			view.requestLayout();
 		}
 
-		final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
+		final ImageView coverView = ViewUtil.findImageView(view, R.id.library_tree_item_icon);
 		if (!myCoverManager.trySetCoverImage(coverView, tree)) {
 			coverView.setImageResource(getCoverResourceId(tree));
 		}
@@ -75,23 +93,20 @@ class LibraryTreeAdapter extends TreeAdapter {
 	private int getCoverResourceId(LibraryTree tree) {
 		if (tree.getBook() != null) {
 			return R.drawable.ic_list_library_book;
-		} else if (tree instanceof FirstLevelTree) {
-			final String id = tree.getUniqueKey().Id;
-			if (Library.ROOT_FAVORITES.equals(id)) {
-				return R.drawable.ic_list_library_favorites;
-			} else if (Library.ROOT_RECENT.equals(id)) {
-				return R.drawable.ic_list_library_recent;
-			} else if (Library.ROOT_BY_AUTHOR.equals(id)) {
-				return R.drawable.ic_list_library_authors;
-			} else if (Library.ROOT_BY_TITLE.equals(id)) {
-				return R.drawable.ic_list_library_books;
-			} else if (Library.ROOT_BY_TAG.equals(id)) {
-				return R.drawable.ic_list_library_tags;
-			} else if (Library.ROOT_FILE_TREE.equals(id)) {
-				return R.drawable.ic_list_library_folder;
-			} else if (Library.ROOT_FOUND.equals(id)) {
-				return R.drawable.ic_list_library_search;
-			}
+		} else if (tree instanceof FavoritesTree) {
+			return R.drawable.ic_list_library_favorites;
+		} else if (tree instanceof RecentBooksTree) {
+			return R.drawable.ic_list_library_recent;
+		} else if (tree instanceof AuthorListTree) {
+			return R.drawable.ic_list_library_authors;
+		} else if (tree instanceof TitleListTree) {
+			return R.drawable.ic_list_library_books;
+		} else if (tree instanceof TagListTree) {
+			return R.drawable.ic_list_library_tags;
+		} else if (tree instanceof FileFirstLevelTree) {
+			return R.drawable.ic_list_library_folder;
+		} else if (tree instanceof SearchResultsTree) {
+			return R.drawable.ic_list_library_search;
 		} else if (tree instanceof FileTree) {
 			final ZLFile file = ((FileTree)tree).getFile();
 			if (file.isArchive()) {

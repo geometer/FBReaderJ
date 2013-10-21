@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,22 +19,26 @@
 
 package org.geometerplus.fbreader.library;
 
-public final class TagTree extends LibraryTree {
+import java.util.List;
+
+import org.geometerplus.fbreader.book.*;
+
+public final class TagTree extends FilteredTree {
 	public final Tag Tag;
 
-	TagTree(Tag tag) {
+	TagTree(IBookCollection collection, Tag tag) {
+		super(collection, new Filter.ByTag(tag));
 		Tag = tag;
 	}
 
 	TagTree(LibraryTree parent, Tag tag, int position) {
-		super(parent, position);
+		super(parent, new Filter.ByTag(tag), position);
 		Tag = tag;
 	}
 
 	@Override
 	public String getName() {
-		return Tag != null
-			? Tag.Name : LibraryUtil.resource().getResource("booksWithNoTags").getValue();
+		return Tag.NULL.equals(Tag) ? resource().getResource("booksWithNoTags").getValue() : Tag.Name;
 	}
 
 	@Override
@@ -43,7 +47,7 @@ public final class TagTree extends LibraryTree {
 	}
 
 	protected String getSortKey() {
-		return Tag != null ? Tag.Name : null;
+		return Tag.NULL.equals(Tag) ? null : Tag.Name;
 	}
 
 	@Override
@@ -51,7 +55,7 @@ public final class TagTree extends LibraryTree {
 		if (book == null) {
 			return false;
 		}
-		if (Tag == null) {
+		if (Tag.NULL.equals(Tag)) {
 			return book.tags().isEmpty();
 		}
 		for (Tag t : book.tags()) {
@@ -63,4 +67,68 @@ public final class TagTree extends LibraryTree {
 		}
 		return false;
 	}
+
+	@Override
+	public void waitForOpening() {
+		clear();
+		if (!Tag.NULL.equals(Tag)) {
+			for (Tag t : Collection.tags()) {
+				if (Tag.equals(t.Parent)) {
+					createTagSubtree(t);
+				}
+			}
+		}
+		createBookSubtrees();
+	}
+
+	@Override
+	public boolean onBookEvent(BookEvent event, Book book) {
+		switch (event) {
+			case Added:
+			{
+				boolean changed = false;
+				final List<Tag> bookTags = book.tags();
+				if (bookTags.isEmpty()) {
+					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubtree(book);
+				} else {
+					for (Tag t : bookTags) {
+						if (Tag.equals(t)) {
+							changed &= createBookWithAuthorsSubtree(book);
+						} else if (Tag.equals(t.Parent)) {
+							changed &= createTagSubtree(t);
+						}
+					}
+				}
+				return changed;
+			}
+			case Removed:
+				// TODO: remove empty tag trees (?)
+				return super.onBookEvent(event, book);
+			case Updated:
+			{
+				// TODO: remove empty tag trees (?)
+				boolean changed = removeBook(book);
+				final List<Tag> bookTags = book.tags();
+				if (bookTags.isEmpty()) {
+					changed &= Tag.NULL.equals(Tag) && createBookWithAuthorsSubtree(book);
+				} else {
+					for (Tag t : bookTags) {
+						if (Tag.equals(t)) {
+							changed &= createBookWithAuthorsSubtree(book);
+						} else if (Tag.equals(t.Parent)) {
+							changed &= createTagSubtree(t);
+						}
+					}
+				}
+				return changed;
+			}
+			default:
+				return super.onBookEvent(event, book);
+		}
+	}
+
+	@Override
+	protected boolean createSubtree(Book book) {
+		return createBookWithAuthorsSubtree(book);
+	} 
 }

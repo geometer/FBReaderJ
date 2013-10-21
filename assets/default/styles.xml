@@ -17,7 +17,7 @@
 	<style id="7" name="Stanza" spaceBefore="6" spaceAfter="6" alignment="left" allowHyphenations="false"/>
 	<style id="8" name="Verse" leftIndent="20" alignment="left" allowHyphenations="false"/>
 	<style id="10" name="Image" spaceBefore="8" alignment="center"/>
-	<style id="9" name="Preformatted text" italic="true" alignment="left" allowHyphenations="false"/>
+	<style id="9" name="Preformatted text" family="Monospace" alignment="left" allowHyphenations="false"/>
 
 	<style id="12" partial="true" name="Cite" italic="true"/>
 	<style id="15" partial="true" name="Internal Hyperlink" allowHyphenations="false" underline="true"/>

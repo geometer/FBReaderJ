@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,8 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 import java.io.*;
 
-import android.os.IBinder;
-import android.os.Handler;
-import android.os.Message;
-import android.app.Service;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.os.*;
+import android.app.*;
 import android.net.Uri;
 import android.content.Intent;
 import android.widget.RemoteViews;
@@ -43,13 +38,13 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class BookDownloaderService extends Service {
 	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
 	public static final String TITLE_KEY = "org.geometerplus.android.fbreader.network.Title";
-	public static final String SSL_CERTIFICATE_KEY = "org.geometerplus.android.fbreader.network.SSLCertificate";
 
 	public static final String SHOW_NOTIFICATIONS_KEY = "org.geometerplus.android.fbreader.network.ShowNotifications";
 
@@ -173,8 +168,7 @@ public class BookDownloaderService extends Service {
 		if ((notifications & Notifications.DOWNLOADING_STARTED) != 0) {
 			showMessage("downloadingStarted");
 		}
-		final String sslCertificate = intent.getStringExtra(SSL_CERTIFICATE_KEY);
-		startFileDownload(url, sslCertificate, fileFile, title);
+		startFileDownload(url, fileFile, title);
 	}
 
 	private void showMessage(String key) {
@@ -244,7 +238,7 @@ public class BookDownloaderService extends Service {
 		);
 	}
 
-	private void startFileDownload(final String urlString, final String sslCertificate, final File file, final String title) {
+	private void startFileDownload(final String urlString, final File file, final String title) {
 		myDownloadingURLs.add(urlString);
 		sendDownloaderCallback();
 
@@ -287,7 +281,7 @@ public class BookDownloaderService extends Service {
 			}
 		};
 
-		final ZLNetworkRequest request = new ZLNetworkRequest(urlString, sslCertificate, null) {
+		final ZLNetworkRequest request = new ZLNetworkRequest(urlString) {
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 
@@ -296,7 +290,7 @@ public class BookDownloaderService extends Service {
 				if (length <= 0) {
 					progressHandler.sendEmptyMessage(-1);
 				}
-				OutputStream outStream;
+				final OutputStream outStream;
 				try {
 					outStream = new FileOutputStream(file);
 				} catch (FileNotFoundException ex) {
@@ -326,6 +320,14 @@ public class BookDownloaderService extends Service {
 						} catch (InterruptedException ex) {
 						}*/
 					}
+					final BookCollectionShadow collection = new BookCollectionShadow();
+					collection.bindToService(BookDownloaderService.this, new Runnable() {
+						@Override
+						public void run() {
+							collection.rescan(file.getPath());
+							collection.unbind();
+						}
+					});
 				} finally {
 					outStream.close();
 				}

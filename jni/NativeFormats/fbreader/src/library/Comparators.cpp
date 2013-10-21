@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,8 +79,8 @@ bool TagComparator::operator() (
 		return false;
 	}
 
-	size_t level0 = tag0->level();
-	size_t level1 = tag1->level();
+	std::size_t level0 = tag0->level();
+	std::size_t level1 = tag1->level();
 	if (level0 > level1) {
 		for (; level0 > level1; --level0) {
 			tag0 = tag0->parent();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,8 @@
 
 package org.geometerplus.zlibrary.core.xml;
 
+import java.io.*;
 import java.util.*;
-import java.io.InputStream;
-import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
@@ -30,19 +29,36 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 
 	public boolean readQuietly(ZLFile file) {
 		try {
-			ZLXMLProcessor.read(this, file);
+			read(file);
 			return true;
 		} catch (IOException e) {
 			return false;
 		}
 	}
 
-	public void read(ZLFile file) throws IOException {
+ 	public boolean readQuietly(String string) {
+		try {
+			read(string);
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
+ 	public void read(ZLFile file) throws IOException {
 		ZLXMLProcessor.read(this, file);
 	}
 
 	public void read(InputStream stream) throws IOException {
 		ZLXMLProcessor.read(this, stream, 65536);
+	}
+
+	public void read(String string) throws IOException {
+		ZLXMLProcessor.read(this, new StringReader(string), 65536);
+	}
+
+	public void read(Reader reader) throws IOException {
+		ZLXMLProcessor.read(this, reader, 65536);
 	}
 
 	public boolean dontCacheAttributeValues() {

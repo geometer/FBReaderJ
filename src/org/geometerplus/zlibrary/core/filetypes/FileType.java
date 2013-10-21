@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,11 @@ public abstract class FileType {
 
 	public abstract boolean acceptsFile(ZLFile file);
 
-	//public abstract String extension(MimeType mimeType);
 	public abstract List<MimeType> mimeTypes();
 	public abstract MimeType mimeType(ZLFile file);
-	public MimeType simplifiedMimeType(ZLFile file) {
+	public MimeType rawMimeType(ZLFile file) {
 		return mimeType(file);
 	}
+
+	public abstract String defaultExtension(MimeType mime);
 }

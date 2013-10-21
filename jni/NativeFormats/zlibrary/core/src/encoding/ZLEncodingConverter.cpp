@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #include "ZLEncodingConverter.h"
 #include "ZLEncodingConverterProvider.h"
 
+const std::string ZLEncodingConverter::ASCII = "us-ascii";
+const std::string ZLEncodingConverter::UTF8 = "utf-8";
 const std::string ZLEncodingConverter::UTF16 = "utf-16";
 const std::string ZLEncodingConverter::UTF16BE = "utf-16be";
 

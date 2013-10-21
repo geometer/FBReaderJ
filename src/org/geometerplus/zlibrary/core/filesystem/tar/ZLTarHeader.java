@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,12 +73,12 @@ class ZLTarHeader {
 		if (linkFlag == -1) {
 			return false;
 		}
-		IsRegularFile = (linkFlag == 0) || (linkFlag == (byte)'0');
+		IsRegularFile = linkFlag == 0 || linkFlag == (byte)'0';
 
 		stream.skip(355);
 
-		if (((linkFlag == (byte)'L') ||
-				 (linkFlag == (byte)'K')) && (Name == "././@LongLink") && (Size < 10240)) {
+		if ((linkFlag == (byte)'L' || linkFlag == (byte)'K')
+            	&& "././@LongLink".equals(Name) && Size < 10240) {
 			final byte[] nameBuffer = new byte[Size - 1];
 			stream.read(nameBuffer);
 			Name = getStringFromByteArray(nameBuffer);

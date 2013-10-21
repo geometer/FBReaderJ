@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,9 +67,13 @@ public abstract class TreeAdapter extends BaseAdapter {
 	}
 
 	public void replaceAll(final Collection<FBTree> items) {
+		replaceAll(items, false);
+	}
+
+	public void replaceAll(final Collection<FBTree> items, final boolean force) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				if (!myItems.equals(items)) {
+				if (force || !myItems.equals(items)) {
 					synchronized (myItems) {
 						myItems.clear();
 						myItems.addAll(items);

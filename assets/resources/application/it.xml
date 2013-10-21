@@ -41,6 +41,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Ricerca locale"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		</node>
 		<node name="openBook" value="Apri libro"/>
 		<node name="showBookInfo" value="Informazioni sul libro"/>
@@ -48,6 +49,8 @@
 		<node name="deleteBook" value="Cancella libro"/>
 		<node name="addToFavorites" value="Aggiungi a preferiti"/>
 		<node name="removeFromFavorites" value="Rimuovi da preferiti"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Libreria di rete FBReader">
 		<node name="byAuthor" value="Per autore">
@@ -69,6 +72,9 @@
 		</node>
 		<node name="found" value="Trovato">
 			<node name="summary" value="Cerca risultati per: %s"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
 		</node>
 		<node name="openCatalog" value="Apri catalogo"/>
 		<node name="networkSearch" value="Ricerca"/>
@@ -108,6 +114,7 @@
 		<node name="removeCustomCatalog" value="Cancella catalogo"/>
 		<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 		<node name="addCustomCatalogSummary" value="Aggiungi catalogo OPDS personalizzato manualmente"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Vuoi leggere la copia locale?"/>
 			<node name="download" value="Vuoi scaricare questo libro?"/>
@@ -124,7 +131,13 @@
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
 		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="Ricerca in rete"/>
 			<node name="reload" value="Ricarica"/>
 			<node name="signIn" value="Entra"/>
@@ -133,7 +146,7 @@
 			<node name="topup" value="Ricarica account"/>
 			<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 			<node name="refreshCatalogsList" value="Aggiorna cataloghi"/>
-			<node name="languages" value="Filtro lingua"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
@@ -209,6 +222,19 @@
 		<node name="forward" value="Avanti"/>
 		<node name="close" value="Chiudi FBReader"/>
 	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Cancella segnalibro"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
 	<node name="selection" value="Selezione">
 		<node name="copyToClipboard" value="Copia negli Appunti"/>
 		<node name="openInDictionary" value="Apri nel Dizionario"/>
@@ -218,7 +244,7 @@
 		<node name="clearSelection" value="Cancella"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Configurazioni"/>
@@ -253,6 +279,7 @@
 		<node name="decreaseFont" value="Zoom -"/>
 		<node name="toggleFullscreen" value="Tutto schermo"/>
 		<node name="bookmarks" value="Segnalibri"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nome file"/>
@@ -272,6 +299,7 @@
 		</node>
 		<node name="appearance" value="Aspetto">
 			<node name="summary" value="Rotazione, barra di stato"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
 			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
 				<node name="system" value="System" toBeTranslated="true"/>
 				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
@@ -299,6 +327,10 @@
 			<node name="disableButtonLights" value="Disabilitare i pulsanti hardware luce durante la lettura">
 				<node name="summaryOn" value="Disabilita pulsanti luce (potrebbe non funzionare per alcuni dispositivi"/>
 				<node name="summaryOff" value="Non tentare di disabilitare i pulsanti luce"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Regolazione della luminosità dello schermo">
 				<node name="summaryOn" value="Trascinando il dito su / giù lungo il lato sinistro dello schermo"/>
@@ -498,6 +530,17 @@
 				</node>
 			</node>
 		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="colors" value="Colori &amp; sfondi">
 			<node name="summary" value="Impostazioni dei colori"/>
 			<node name="background" value="Sfondo">
@@ -521,6 +564,7 @@
 			<node name="right" value="Margine destro"/>
 			<node name="top" value="Margine superiore"/>
 			<node name="bottom" value="Margine inferiore"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
 		</node>
 		<node name="scrollBar" value="Barra di scorrimento">
 			<node name="summary" value="Impostazioni barra di scorrimento &amp; piè di pagina"/>
@@ -598,6 +642,9 @@
 			<node name="summary" value="Impostazioni del dizionario"/>
 			<node name="dictionary" value="Dizionario"/>
 			<node name="translator" value="Traduttore"/>
+			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
 			<node name="tappingAction" value="Evento Tocco lungo">
 				<node name="doNothing" value="Tocco lungo non fa nulla"/>
 				<node name="selectSingleWord" value="Tocco lungo seleziona singola parole"/>
@@ -664,7 +711,7 @@
 			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
 			<node name="version" value="Version" toBeTranslated="true"/>
 			<node name="site" value="Visit our website" toBeTranslated="true">
-				<node name="url" value="http://www.fbreader.org/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
 				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
@@ -694,6 +741,10 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Aggiungi a preferiti"/>
+			<node name="removeFromFavorites" value="Rimuovi da preferiti"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Installa plugin"/>
@@ -781,6 +832,7 @@
 		<node name="dictionaryIsNotInstalled" value="Spiacente, il dizionario non è installato"/>
 		<node name="permissionDenied" value="Spiacente, permesso negato"/>
 		<node name="noFavorites" value="Spiacente, l'elenco dei favoriti e' vuoto"/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
 		<node name="emptyBasket" value="Spiacente, il carrello è vuoto"/>
 		<node name="emptyNetworkSearchResults" value="Non sono stati trovati libri adatti"/>
@@ -818,5 +870,8 @@
 		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

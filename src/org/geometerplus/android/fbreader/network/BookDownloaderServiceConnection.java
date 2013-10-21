@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,42 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.content.*;
 import android.os.IBinder;
-import android.content.ServiceConnection;
-import android.content.ComponentName;
 
 public class BookDownloaderServiceConnection implements ServiceConnection {
+	private volatile Runnable myAction;
+	private volatile BookDownloaderInterface myInterface;
 
-	private BookDownloaderInterface myInterface;
+	synchronized void bindToService(Context context, Runnable action) {
+		if (myInterface != null) {
+			if (action != null) {
+				action.run();
+			}
+		} else {
+			myAction = action;
+			context.bindService(
+				new Intent(context, BookDownloaderService.class),
+				this,
+				Context.BIND_AUTO_CREATE
+			);
+		}
+	}
+
+	synchronized void unbind(Context context) {
+		myAction = null;
+		if (myInterface != null) {
+			context.unbindService(this);
+			myInterface = null;
+		}
+	}
 
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
 		myInterface = BookDownloaderInterface.Stub.asInterface(service);
+		if (myAction != null) {
+			myAction.run();
+			myAction = null;
+		}
 	}
 
 	public synchronized void onServiceDisconnected(ComponentName name) {

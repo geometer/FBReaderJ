@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ public:
 	const std::string supportedFileType() const;
 	bool acceptsFile(const ZLFile &file) const;
 	bool readMetaInfo(Book &book) const;
+	bool readUids(Book &book) const;
 	bool readLanguageAndEncoding(Book &book) const;
 	bool readModel(BookModel &model) const;
 };

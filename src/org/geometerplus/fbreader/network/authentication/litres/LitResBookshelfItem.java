@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -184,7 +184,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 		} finally {
 			myForceReload = true;
 			// TODO: implement asynchronous loading
-			ArrayList<NetworkItem> children =
+			final ArrayList<NetworkItem> children =
 				new ArrayList<NetworkItem>(mgr.purchasedBooks());
 			if (children.size() <= 5) {
 				Collections.sort(children, new NetworkBookItemComparator());

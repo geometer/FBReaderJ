@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,10 @@ import org.geometerplus.fbreader.network.*;
 public class NetworkCatalogRootTree extends NetworkCatalogTree {
 	public NetworkCatalogRootTree(RootTree parent, INetworkLink link, int position) {
 		super(parent, link, (NetworkCatalogItem)link.libraryItem(), position);
+	}
+
+	public NetworkCatalogRootTree(RootTree parent, INetworkLink link) {
+		this(parent, link, -1);
 	}
 
 	@Override

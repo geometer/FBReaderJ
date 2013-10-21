@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ public abstract class PdbStream extends InputStream {
 		myBufferLength = 0;
 		myBufferOffset = 0;
 	}
-	
+
 	public int read() {
 		if (!fillBuffer()) {
 			return -1;
@@ -68,7 +68,7 @@ public abstract class PdbStream extends InputStream {
 		}
 		return (realSize > 0) ? realSize : -1;
 	}
-	
+
 	public void close() throws IOException {
 		if (myBase != null) {
 			myBase.close();

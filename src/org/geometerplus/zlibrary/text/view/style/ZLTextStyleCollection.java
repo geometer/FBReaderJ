@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,22 +19,15 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 public class ZLTextStyleCollection {
 	private static ZLTextStyleCollection ourInstance = null;
-
-	private int myDefaultFontSize;
-	private ZLTextBaseStyle myBaseStyle;
-	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
-
-	private ZLTextStyleCollection() {
-		new TextStyleReader(this).readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
-	}
 
 	public static ZLTextStyleCollection Instance() {
 		if (ourInstance == null) {
@@ -45,6 +38,19 @@ public class ZLTextStyleCollection {
 
 	public static void deleteInstance() {
 		ourInstance = null;
+	}
+
+	private int myDefaultFontSize;
+	private ZLTextBaseStyle myBaseStyle;
+	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
+
+	public final ZLBooleanOption UseCSSTextAlignmentOption =
+		new ZLBooleanOption("Style", "css:textAlignment", true);
+	public final ZLBooleanOption UseCSSFontSizeOption =
+		new ZLBooleanOption("Style", "css:fontSize", true);
+
+	private ZLTextStyleCollection() {
+		new TextStyleReader(this).readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
 	}
 
 	public int getDefaultFontSize() {
@@ -63,6 +69,7 @@ public class ZLTextStyleCollection {
 		private final int myDpi = ZLibrary.Instance().getDisplayDPI();
 		private ZLTextStyleCollection myCollection;
 
+		@Override
 		public boolean dontCacheAttributeValues() {
 			return true;
 		}
@@ -99,6 +106,7 @@ public class ZLTextStyleCollection {
 			myCollection = collection;
 		}
 
+		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			final String BASE = "base";
 			final String STYLE = "style";
@@ -113,16 +121,17 @@ public class ZLTextStyleCollection {
 					byte id = Byte.parseByte(idString);
 					ZLTextStyleDecoration decoration;
 
-					int fontSizeDelta = intValue(attributes, "fontSizeDelta", 0);
-					ZLBoolean3 bold = b3Value(attributes, "bold");
-					ZLBoolean3 italic = b3Value(attributes, "italic");
-					ZLBoolean3 underline = b3Value(attributes, "underline");
-					ZLBoolean3 strikeThrough = b3Value(attributes, "strikeThrough");
-					int verticalShift = intValue(attributes, "vShift", 0);
-					ZLBoolean3 allowHyphenations = b3Value(attributes, "allowHyphenations");
+					final String fontFamily = attributes.getValue("family");
+					final int fontSizeDelta = intValue(attributes, "fontSizeDelta", 0);
+					final ZLBoolean3 bold = b3Value(attributes, "bold");
+					final ZLBoolean3 italic = b3Value(attributes, "italic");
+					final ZLBoolean3 underline = b3Value(attributes, "underline");
+					final ZLBoolean3 strikeThrough = b3Value(attributes, "strikeThrough");
+					final int verticalShift = intValue(attributes, "vShift", 0);
+					final ZLBoolean3 allowHyphenations = b3Value(attributes, "allowHyphenations");
 
 					if (booleanValue(attributes, "partial")) {
-						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, underline, strikeThrough, verticalShift, allowHyphenations);
+						decoration = new ZLTextStyleDecoration(name, fontFamily, fontSizeDelta, bold, italic, underline, strikeThrough, verticalShift, allowHyphenations);
 					} else {
 						int spaceBefore = intValue(attributes, "spaceBefore", 0);
 						int spaceAfter = intValue(attributes, "spaceAfter", 0);
@@ -145,12 +154,7 @@ public class ZLTextStyleCollection {
 						}
 						final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
 
-						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, underline, strikeThrough, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
-					}
-
-					String fontFamily = attributes.getValue("family");
-					if (fontFamily != null) {
-						decoration.FontFamilyOption.setValue(fontFamily);
+						decoration = new ZLTextFullStyleDecoration(name, fontFamily, fontSizeDelta, bold, italic, underline, strikeThrough, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
 
 					myCollection.myDecorationMap[id & 0xFF] = decoration;

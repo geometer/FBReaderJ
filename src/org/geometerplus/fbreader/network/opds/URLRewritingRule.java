@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -110,8 +110,8 @@ class URLRewritingRule {
 		final URLRewritingRule rule = (URLRewritingRule) o;
 		if (Type != rule.Type
 				|| Apply != rule.Apply
-				|| !ZLMiscUtil.equals(Name, rule.Name)
-				|| !ZLMiscUtil.equals(Value, rule.Value)) {
+				|| !MiscUtil.equals(Name, rule.Name)
+				|| !MiscUtil.equals(Value, rule.Value)) {
 			return false;
 		}
 		return true;
