@@ -215,16 +215,16 @@ mainSwitchLabel:
 										tagName.append(buffer, startPosition, i - startPosition);
 										break mainSwitchLabel;
 									case '>':
-											tagName.append(buffer, startPosition, i - startPosition);
-											{
-												final ZLByteBuffer stringTagName = unique(strings, tagName);
-												processEndTag(htmlReader, stringTagName);
-												if (scriptOpened) {
-												}
-												if (stringTagName.equalsToLCString("script")) {
-													scriptOpened = false;
-												}
+										tagName.append(buffer, startPosition, i - startPosition);
+										{
+											final ZLByteBuffer stringTagName = unique(strings, tagName);
+											processEndTag(htmlReader, stringTagName);
+											if (scriptOpened) {
 											}
+											if (stringTagName.equalsToLCString("script")) {
+												scriptOpened = false;
+											}
+										}
 										if (scriptOpened) {
 											state = SCRIPT;
 										} else {
