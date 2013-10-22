@@ -235,6 +235,7 @@ public final class FBReader extends Activity {
 			new SelectionPopup(myFBReaderApp);
 		}
 
+		myFBReaderApp.addAction(ActionCode.PUT_TO_BACK, new PutToBackAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoAction(this, myFBReaderApp));
@@ -561,7 +562,9 @@ public final class FBReader extends Activity {
 	private void setupMenu(Menu menu) {
 		addMenuItem(menu, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library);
 		// YOTA changes start
-		addMenuItem(menu, ActionCode.PUT_TO_BACK, R.drawable.ic_menu_p2b);
+		if (Build.BRAND.equals("YotaPhone")) {
+			addMenuItem(menu, ActionCode.PUT_TO_BACK, R.drawable.ic_menu_p2b);
+		}
 		// YOTA changes end
 		addMenuItem(menu, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary);
 		addMenuItem(menu, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc);
