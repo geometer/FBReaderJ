@@ -847,20 +847,17 @@ public final class FBReader extends Activity {
 		application.myMainWindow.addMenuItem(menu, actionId, null, name);
 	}
 
-	private void addMenuItem(Menu menu, String actionId, int iconId) {
+	private void addMenuItem(Menu menu, String actionId, Integer iconId) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.addMenuItem(menu, actionId, iconId, null);
-	}
-
-	private void addMenuItem(Menu menu, String actionId) {
-		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.addMenuItem(menu, actionId, null, null);
 	}
 
 	private void fillMenu(Menu menu, MenuItemData source) {
 		for (MenuItemData el : source.Children) {
 			if (el.Type == MenuItemData.MenuType.ACTION) {
-				addMenuItem(menu, el.Code, el.IconId);
+				addMenuItem(menu,
+						el.Code, 
+						el.IconId);
 			} else {
 				final Menu subMenu = addSubMenu(menu, el.Code);
 				fillMenu(subMenu, el);
