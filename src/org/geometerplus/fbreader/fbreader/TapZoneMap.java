@@ -118,6 +118,8 @@ public class TapZoneMap {
 		if (width == 0 || height == 0) {
 			return null;
 		}
+		x = Math.max(0, Math.min(width - 1, x));
+		y = Math.max(0, Math.min(height - 1, y));
 		return getActionByZone(myWidth.getValue() * x / width, myHeight.getValue() * y / height, tap);
 	}
 
