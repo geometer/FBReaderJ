@@ -19,6 +19,7 @@ public abstract class ApiObject implements Parcelable {
 		int BOOLEAN = 3;
 		int DATE = 4;
 		int LONG = 5;
+		int FLOAT = 6;
 		int TEXT_POSITION = 10;
 	}
 
@@ -50,6 +51,25 @@ public abstract class ApiObject implements Parcelable {
 		public void writeToParcel(Parcel parcel, int flags) {
 			super.writeToParcel(parcel, flags);
 			parcel.writeInt(Value);
+		}
+	}
+
+	static class Float extends ApiObject {
+		final float Value;
+
+		Float(float value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.FLOAT;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeFloat(Value);
 		}
 	}
 
@@ -152,6 +172,10 @@ public abstract class ApiObject implements Parcelable {
 		return new Integer(value);
 	}
 
+	static ApiObject envelope(float value) {
+		return new Float(value);
+	}
+
 	static ApiObject envelope(long value) {
 		return new Long(value);
 	}
@@ -207,6 +231,8 @@ public abstract class ApiObject implements Parcelable {
 						return Void.Instance;
 					case Type.INT:
 						return new Integer(parcel.readInt());
+					case Type.FLOAT:
+						return new Float(parcel.readFloat());
 					case Type.LONG:
 						return new Long(parcel.readLong());
 					case Type.BOOLEAN:
