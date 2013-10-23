@@ -126,6 +126,17 @@ public class TapZoneMap {
 		return option != null ? option.getValue() : null;
 	}
 
+	/* x and y are in [0,1) range */
+	public String getActionByCoordinates(float x, float y, Tap tap) {
+		final int width = myWidth.getValue();
+		final int height = myHeight.getValue();
+		return getActionByZone(
+			Math.max(0, Math.min(width, (int)width * x)),
+			Math.max(0, Math.min(height, (int)height * y)),
+			tap
+		);
+	}
+
 	private ZLStringOption getOptionByZone(Zone zone, Tap tap) {
 		switch (tap) {
 			default:
