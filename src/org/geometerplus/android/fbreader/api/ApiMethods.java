@@ -74,4 +74,5 @@ interface ApiMethods {
 
 	int GET_TAPZONE_ACTION = 931;
 	int SET_TAPZONE_ACTION = 932;
+	int GET_TAP_ACTION_BY_COORDINATES = 933;
 }
