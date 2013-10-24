@@ -855,9 +855,7 @@ public final class FBReader extends Activity {
 	private void fillMenu(Menu menu, MenuItemData source) {
 		for (MenuItemData el : source.Children) {
 			if (el.Type == MenuItemData.MenuType.ACTION) {
-				addMenuItem(menu,
-						el.Code, 
-						el.IconId);
+				addMenuItem(menu, el.Code, el.IconId);
 			} else {
 				final Menu subMenu = addSubMenu(menu, el.Code);
 				fillMenu(subMenu, el);
