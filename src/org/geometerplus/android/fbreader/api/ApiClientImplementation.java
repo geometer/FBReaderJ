@@ -142,7 +142,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		}
 		return ((ApiObject.Integer)object).Value;
 	}
-	
+
 	private long requestLong(int method, ApiObject[] params) throws ApiException {
 		final ApiObject object = request(method, params);
 		if (!(object instanceof ApiObject.Long)) {
@@ -446,12 +446,14 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			ApiObject.envelope(singleTap)
 		});
 	}
-	
-	public String getTapZoneRelativeAction(String name, float h, float v, boolean singleTap) throws ApiException {
-		return requestString(GET_TAPZONE_ACTION_RELATIVE, new ApiObject[] {
+
+	public String getTapActionByCoordinates(String name, int x, int y, int width, int height, boolean singleTap) throws ApiException {
+		return requestString(GET_TAP_ACTION_BY_COORDINATES, new ApiObject[] {
 			ApiObject.envelope(name),
-			ApiObject.envelope(h),
-			ApiObject.envelope(v),
+			ApiObject.envelope(x),
+			ApiObject.envelope(y),
+			ApiObject.envelope(width),
+			ApiObject.envelope(height),
 			ApiObject.envelope(singleTap)
 		});
 	}
@@ -465,44 +467,43 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			ApiObject.envelope(action)
 		});
 	}
-	
+
 	public void storeTextPosition(String file, TextPosition pos) throws ApiException {
 		request(SET_STORED_POSITION, new ApiObject[] {
 			ApiObject.envelope(file),
 			pos
 		});
 	}
-	
+
 	public String getResourceValue(String res) throws ApiException {
 		return requestString(GET_RESOURCE_VALUE, envelope(res));
 	}
-	
+
 	public void saveBookmark(String s) throws ApiException {
 		request(SAVE_BOOKMARK, new ApiObject[] {
 			ApiObject.envelope(s)
 		});
 	}
-	
+
 	public void addBookToREcent(String s) throws ApiException {
 		request(ADD_BOOK_TO_RECENT, new ApiObject[] {
 			ApiObject.envelope(s)
 		});
 	}
-	
+
 	public List<String> getMenuChildren(String code) throws ApiException {
 		return requestStringList(GET_MENU_CHILDREN, envelope(code));
 	}
-	
+
 	public String getMenuText(String code) throws ApiException {
 		return requestString(GET_MENU_TEXT, envelope(code));
 	}
-	
+
 	public String getMenuIcon(String code) throws ApiException {
 		return requestString(GET_MENU_ICON, envelope(code));
 	}
-	
+
 	public String getMenuType(String code) throws ApiException {
 		return requestString(GET_MENU_TYPE, envelope(code));
 	}
-	
 }

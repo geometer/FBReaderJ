@@ -118,16 +118,14 @@ public class TapZoneMap {
 		if (width == 0 || height == 0) {
 			return null;
 		}
+		x = Math.max(0, Math.min(width - 1, x));
+		y = Math.max(0, Math.min(height - 1, y));
 		return getActionByZone(myWidth.getValue() * x / width, myHeight.getValue() * y / height, tap);
 	}
 
 	public String getActionByZone(int h, int v, Tap tap) {
 		final ZLStringOption option = getOptionByZone(new Zone(h, v), tap);
 		return option != null ? option.getValue() : null;
-	}
-	
-	public String getActionByRelativeZone(float h, float v, Tap tap) {
-		return getActionByZone((int)(h * myWidth.getValue()), (int)(v * myHeight.getValue()), tap);
 	}
 
 	private ZLStringOption getOptionByZone(Zone zone, Tap tap) {
