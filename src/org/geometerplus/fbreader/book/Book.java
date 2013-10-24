@@ -66,6 +66,9 @@ public class Book extends TitledEntity {
 
 	Book(long id, ZLFile file, String title, String encoding, String language) {
 		super(title);
+		if (file == null) {
+			throw new IllegalArgumentException("Creating book with no file");
+		}
 		myId = id;
 		File = file;
 		myEncoding = encoding;
@@ -75,6 +78,9 @@ public class Book extends TitledEntity {
 
 	Book(ZLFile file) throws BookReadingException {
 		super(null);
+		if (file == null) {
+			throw new IllegalArgumentException("Creating book with no file");
+		}
 		myId = -1;
 		final FormatPlugin plugin = getPlugin(file);
 		File = plugin.realBookFile(file);
