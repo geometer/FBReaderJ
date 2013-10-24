@@ -127,10 +127,6 @@ public class TapZoneMap {
 		final ZLStringOption option = getOptionByZone(new Zone(h, v), tap);
 		return option != null ? option.getValue() : null;
 	}
-	
-	public String getActionByRelativeZone(float h, float v, Tap tap) {
-		return getActionByZone((int)(h * myWidth.getValue()), (int)(v * myHeight.getValue()), tap);
-	}
 
 	private ZLStringOption getOptionByZone(Zone zone, Tap tap) {
 		switch (tap) {

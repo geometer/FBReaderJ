@@ -447,11 +447,13 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 	
-	public String getTapZoneRelativeAction(String name, float h, float v, boolean singleTap) throws ApiException {
-		return requestString(GET_TAPZONE_ACTION_RELATIVE, new ApiObject[] {
+	public String getTapActionByCoordinates(String name, int x, int y, int width, int height, boolean singleTap) throws ApiException {
+		return requestString(GET_TAP_ACTION_BY_COORDINATES, new ApiObject[] {
 			ApiObject.envelope(name),
-			ApiObject.envelope(h),
-			ApiObject.envelope(v),
+			ApiObject.envelope(x),
+			ApiObject.envelope(y),
+			ApiObject.envelope(width),
+			ApiObject.envelope(height),
 			ApiObject.envelope(singleTap)
 		});
 	}

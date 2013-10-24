@@ -74,7 +74,7 @@ interface ApiMethods {
 
 	int GET_TAPZONE_ACTION = 931;
 	int SET_TAPZONE_ACTION = 932;
-	int GET_TAPZONE_ACTION_RELATIVE = 933;
+	int GET_TAP_ACTION_BY_COORDINATES = 933;
 	
 	// for pdf plugin
 	int SET_STORED_POSITION = 1002;

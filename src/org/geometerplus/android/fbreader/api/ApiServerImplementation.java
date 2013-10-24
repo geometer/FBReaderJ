@@ -213,12 +213,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 						((ApiObject.Integer)parameters[2]).Value,
 						((ApiObject.Boolean)parameters[3]).Value
 					));
-				case GET_TAPZONE_ACTION_RELATIVE:
-					return ApiObject.envelope(getTapZoneRelativeAction(
+				case GET_TAP_ACTION_BY_COORDINATES:
+					return ApiObject.envelope(getTapActionByCoordinates(
 						((ApiObject.String)parameters[0]).Value,
-						((ApiObject.Float)parameters[1]).Value,
-						((ApiObject.Float)parameters[2]).Value,
-						((ApiObject.Boolean)parameters[3]).Value
+						((ApiObject.Integer)parameters[1]).Value,
+						((ApiObject.Integer)parameters[2]).Value,
+						((ApiObject.Integer)parameters[3]).Value,
+						((ApiObject.Integer)parameters[4]).Value,
+						((ApiObject.Boolean)parameters[5]).Value
 					));
 				case SET_TAPZONE_ACTION:
 					setTapZoneAction(
@@ -625,9 +627,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		);
 	}
 
-	public String getTapZoneRelativeAction(String name, float h, float v, boolean singleTap) {
-		return TapZoneMap.zoneMap(name).getActionByRelativeZone(
-			h, v, singleTap ? TapZoneMap.Tap.singleTap : TapZoneMap.Tap.doubleTap
+	public String getTapActionByCoordinates(String name, int x, int y, int width, int height, boolean singleTap) {
+		return TapZoneMap.zoneMap(name).getActionByCoordinates(
+			x, y, width, height, singleTap ? TapZoneMap.Tap.singleTap : TapZoneMap.Tap.doubleTap
 		);
 	}
 
