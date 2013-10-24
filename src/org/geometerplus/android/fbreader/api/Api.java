@@ -84,4 +84,5 @@ public interface Api {
 
 	String getTapZoneAction(String name, int h, int v, boolean singleTap) throws ApiException;
 	void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) throws ApiException;
+	String getTapActionByCoordinates(String name, int x, int y, int width, int height, boolean singleTap) throws ApiException;
 }
