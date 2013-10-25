@@ -1,6 +1,8 @@
 ===== 1.9.1 (Oct ??, 2013) =====
+* hi-res launcher icon
 * Updated Czech localization (by Marek Pavelka)
 * mobi: blockquote tag support
+* fixed book duplicates porblem on some devices
 
 ===== 1.9 (Oct 14, 2013) =====
 * Dictionary support
