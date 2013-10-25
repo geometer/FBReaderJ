@@ -17,7 +17,7 @@
 	<!-- YOTA changes start -->
 	<uses-permission android:name="com.yotadevices.framework.permission.ACCESS_BACKSCREEN"/>
 	<!-- YOTA changes end -->
-	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_bw" android:label="FBReader">
+	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/yota_fbreader" android:logo="@drawable/yota_fbreader_bw" android:label="FBReader">
 		<!-- YOTA changes start -->
 		<meta-data android:name="@string/com.yotadevices.BS_ICON" android:resource="@drawable/reader_bs_icon"/>
 		<meta-data android:name="@string/com.yotadevices.BS_TITLE" android:value="FBReader"/>
@@ -56,7 +56,7 @@
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</service>
-		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
+		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:launchMode="singleTask" android:icon="@drawable/yota_fbreader" android:label="FBReader" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
