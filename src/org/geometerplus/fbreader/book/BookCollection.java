@@ -211,7 +211,7 @@ public class BookCollection extends AbstractBookCollection {
 	public List<Book> books(BookQuery query) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
-			allBooks = new ArrayList<Book>(myBooksByFile.values());
+			allBooks = new ArrayList<Book>(new LinkedHashSet<Book>(myBooksByFile.values()));
 		}
 		final int start = query.Page * query.Limit;
 		if (start >= allBooks.size()) {

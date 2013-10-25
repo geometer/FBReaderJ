@@ -573,7 +573,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected Long bookIdByUid(UID uid) {
 		Long bookId = null;
-		final Cursor cursor = myDatabase.rawQuery("SELECT book_id FROM BookUid WHERE type = ? AND uid = ?", new String[] { uid.Type, uid.Id });
+		final Cursor cursor = myDatabase.rawQuery("SELECT book_id FROM BookUid WHERE type = ? AND uid = ? LIMIT 1", new String[] { uid.Type, uid.Id });
 		if (cursor.moveToNext()) {
 			bookId = cursor.getLong(0);
 		}

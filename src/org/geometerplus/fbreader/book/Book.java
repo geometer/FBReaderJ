@@ -544,7 +544,7 @@ public class Book extends TitledEntity {
 
 	@Override
 	public int hashCode() {
-		return (int)myId;
+		return File.getShortName().hashCode();
 	}
 
 	@Override
@@ -555,7 +555,23 @@ public class Book extends TitledEntity {
 		if (!(o instanceof Book)) {
 			return false;
 		}
-		return File.equals(((Book)o).File);
+		final Book obook = ((Book)o);
+		final ZLFile ofile = obook.File;
+		if (File.equals(ofile)) {
+			return true;
+		}
+		if (!File.getShortName().equals(ofile.getShortName())) {
+			return false;
+		}
+		if (myUids == null || obook.myUids == null) {
+			return false;
+		}
+		for (UID uid : obook.myUids) {
+			if (myUids.contains(uid)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
