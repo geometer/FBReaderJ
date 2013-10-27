@@ -426,26 +426,16 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private final ArrayList<CancelMenuHelper.ActionDescription> myCancelActionsList =
-		new ArrayList<CancelMenuHelper.ActionDescription>();
-
 	public List<CancelMenuHelper.ActionDescription> getCancelActionsList() {
-		return getCancelActionsList(Collection);
+		return new CancelMenuHelper().getActionsList(Collection);
 	}
 
-	public List<CancelMenuHelper.ActionDescription> getCancelActionsList(IBookCollection collection) {
-		myCancelActionsList.clear();
-		myCancelActionsList.addAll(new CancelMenuHelper().getActionsList(collection));
-		return myCancelActionsList;
-	}
-
-	public void runCancelAction(int index) {
-		if (index < 0 || index >= myCancelActionsList.size()) {
+	public void runCancelAction(CancelMenuHelper.ActionType type, Bookmark bookmark) {
+		if (type == null) {
 			return;
 		}
 
-		final CancelMenuHelper.ActionDescription description = myCancelActionsList.get(index);
-		switch (description.Type) {
+		switch (type) {
 			case library:
 				runAction(ActionCode.SHOW_LIBRARY);
 				break;
@@ -456,12 +446,11 @@ public final class FBReaderApp extends ZLApplication {
 				openBook(Collection.getRecentBook(1), null, null);
 				break;
 			case returnTo:
-			{
-				final Bookmark b = ((CancelMenuHelper.BookmarkDescription)description).Bookmark;
-				Collection.deleteBookmark(b);
-				gotoBookmark(b);
+				if (bookmark != null) {
+					Collection.deleteBookmark(bookmark);
+					gotoBookmark(bookmark);
+				}
 				break;
-			}
 			case close:
 				closeWindow();
 				break;

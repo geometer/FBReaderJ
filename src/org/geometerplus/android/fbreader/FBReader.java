@@ -533,7 +533,20 @@ public final class FBReader extends Activity {
 				}
 				break;
 			case REQUEST_CANCEL_MENU:
-				myFBReaderApp.runCancelAction(resultCode - 1);
+				try {
+					final CancelMenuHelper.ActionType type = CancelMenuHelper.ActionType.valueOf(
+						data.getStringExtra(CancelActivity.TYPE_KEY)
+					);
+					Bookmark bookmark = null;
+					if (type == CancelMenuHelper.ActionType.returnTo) {
+						bookmark = SerializerUtil.deserializeBookmark(
+							data.getStringExtra(CancelActivity.BOOKMARK_KEY)
+						);
+					}
+					myFBReaderApp.runCancelAction(type, bookmark);
+				} catch (Throwable t) {
+					// broken intent received
+				}
 				break;
 		}
 	}
