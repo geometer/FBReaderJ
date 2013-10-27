@@ -118,10 +118,10 @@ public final class FBReaderApp extends ZLApplication {
 					case BookmarkStyleChanged:
 					case BookmarksUpdated:
 						if (Model != null && (book == null || book.equals(Model.Book))) {
-							if (BookTextView.getModel() != null) { 
+							if (BookTextView.getModel() != null) {
 								setBookmarkHighlightings(BookTextView, null);
 							}
-							if (FootnoteView.getModel() != null && myFootnoteModelId != null) { 
+							if (FootnoteView.getModel() != null && myFootnoteModelId != null) {
 								setBookmarkHighlightings(FootnoteView, myFootnoteModelId);
 							}
 						}
@@ -430,6 +430,10 @@ public final class FBReaderApp extends ZLApplication {
 		new ArrayList<CancelMenuHelper.ActionDescription>();
 
 	public List<CancelMenuHelper.ActionDescription> getCancelActionsList() {
+		return getCancelActionsList(Collection);
+	}
+
+	public List<CancelMenuHelper.ActionDescription> getCancelActionsList(IBookCollection collection) {
 		final CancelMenuHelper helper = new CancelMenuHelper();
 
 		myCancelActionsList.clear();
@@ -444,7 +448,7 @@ public final class FBReaderApp extends ZLApplication {
 			));
 		}
 		if (helper.ShowPreviousBookItemOption.getValue()) {
-			final Book previousBook = Collection.getRecentBook(1);
+			final Book previousBook = collection.getRecentBook(1);
 			if (previousBook != null) {
 				myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
 					CancelMenuHelper.ActionType.previousBook, previousBook.getTitle()
