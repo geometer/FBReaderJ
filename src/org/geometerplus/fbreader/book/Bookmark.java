@@ -82,6 +82,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 		}
 
 		myStyleId = styleId;
+		System.err.println("CREATED BOOKMARK A: " + getParagraphIndex() + "::" + getElementIndex() + "::" + getCharIndex());
 	}
 
 	private static class Buffer {
@@ -243,6 +244,8 @@ mainLoop:
 		IsVisible = isVisible;
 		myEnd = new ZLTextFixedPosition(end);
 		myStyleId = 1;
+
+		System.err.println("CREATED BOOKMARK B: " + getParagraphIndex() + "::" + getElementIndex() + "::" + getCharIndex());
 	}
 
 	public long getId() {

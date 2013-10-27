@@ -3,6 +3,7 @@
 * Updated Czech localization (by Marek Pavelka)
 * mobi: blockquote tag support
 * fixed book duplicates porblem on some devices
+* fixed cancel menu "jump back" item behaviour: returns exactly to the old position
 
 ===== 1.9 (Oct 14, 2013) =====
 * Dictionary support
