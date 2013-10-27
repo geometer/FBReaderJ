@@ -502,6 +502,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public List<CancelMenuHelper.ActionDescription> getCancelActionsList(IBookCollection collection) {
 		final CancelMenuHelper helper = new CancelMenuHelper();
+
 		myCancelActionsList.clear();
 		if (helper.ShowLibraryItemOption.getValue()) {
 			myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
