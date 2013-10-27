@@ -23,6 +23,7 @@ import java.util.List;
 
 import android.content.Intent;
 
+import org.geometerplus.fbreader.fbreader.CancelMenuHelper;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class ShowCancelMenuAction extends FBAndroidAction {
@@ -33,7 +34,7 @@ class ShowCancelMenuAction extends FBAndroidAction {
 	@Override
 	protected void run(Object ... params) {
 		if (!Reader.jumpBack()) {
-			final List<FBReaderApp.CancelActionDescription> descriptionList =
+			final List<CancelMenuHelper.ActionDescription> descriptionList =
 				Reader.getCancelActionsList();
 			if (descriptionList.size() == 1) {
 				Reader.closeWindow();
@@ -42,7 +43,7 @@ class ShowCancelMenuAction extends FBAndroidAction {
 				intent.setClass(BaseActivity, CancelActivity.class);
 				intent.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
 				int index = 0;
-				for (FBReaderApp.CancelActionDescription description : descriptionList) {
+				for (CancelMenuHelper.ActionDescription description : descriptionList) {
 					intent.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
 					intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
 					++index;
