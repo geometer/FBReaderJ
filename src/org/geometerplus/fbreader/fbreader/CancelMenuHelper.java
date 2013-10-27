@@ -66,7 +66,7 @@ public class CancelMenuHelper {
 		}
 	}
 
-	public List<ActionDescription> getActionsList(IBookCollection collection) {
+	public List<ActionDescription> getActionsList(IBookCollection collection, boolean addPostionItems) {
 		final List<ActionDescription> list = new ArrayList<ActionDescription>();
 
 		if (ShowLibraryItemOption.getValue()) {
@@ -81,7 +81,7 @@ public class CancelMenuHelper {
 				list.add(new ActionDescription(ActionType.previousBook, previousBook.getTitle()));
 			}
 		}
-		if (ShowPositionItemsOption.getValue()) {
+		if (addPostionItems && ShowPositionItemsOption.getValue()) {
 			final Book currentBook = collection.getRecentBook(0);
 			if (currentBook != null) {
 				final List<Bookmark> bookmarks = collection.bookmarks(

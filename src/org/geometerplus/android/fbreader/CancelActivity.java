@@ -75,7 +75,8 @@ public class CancelActivity extends ListActivity {
 			myCollection = new BookCollectionShadow();
 			myCollection.bindToService(this, new Runnable() {
 				public void run() {
-					List<CancelMenuHelper.ActionDescription> descriptionList = FBReaderApp.getStaticCancelActionsList(myCollection);
+					List<CancelMenuHelper.ActionDescription> descriptionList =
+						new CancelMenuHelper().getActionsList(myCollection, false);
 					init(descriptionList);
 				}
 			});
