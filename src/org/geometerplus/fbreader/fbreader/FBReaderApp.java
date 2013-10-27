@@ -501,37 +501,8 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public List<CancelMenuHelper.ActionDescription> getCancelActionsList(IBookCollection collection) {
-		final CancelMenuHelper helper = new CancelMenuHelper();
-
 		myCancelActionsList.clear();
-		if (helper.ShowLibraryItemOption.getValue()) {
-			myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
-				CancelMenuHelper.ActionType.library, null
-			));
-		}
-		if (helper.ShowNetworkLibraryItemOption.getValue()) {
-			myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
-				CancelMenuHelper.ActionType.networkLibrary, null
-			));
-		}
-		if (helper.ShowPreviousBookItemOption.getValue()) {
-			final Book previousBook = collection.getRecentBook(1);
-			if (previousBook != null) {
-				myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
-					CancelMenuHelper.ActionType.previousBook, previousBook.getTitle()
-				));
-			}
-		}
-		if (helper.ShowPositionItemsOption.getValue()) {
-			if (Model != null && Model.Book != null) {
-				for (Bookmark bookmark : invisibleBookmarks()) {
-					myCancelActionsList.add(new CancelMenuHelper.BookmarkDescription(bookmark));
-				}
-			}
-		}
-		myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
-			CancelMenuHelper.ActionType.close, null
-		));
+		myCancelActionsList.addAll(new CancelMenuHelper().getActionsList(collection));
 		return myCancelActionsList;
 	}
 
