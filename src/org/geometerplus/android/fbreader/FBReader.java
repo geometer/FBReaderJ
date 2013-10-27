@@ -797,21 +797,24 @@ public final class FBReader extends Activity {
 				}
 				break;
 			case REQUEST_CANCEL_MENU:
-			{
 				if (resultCode != RESULT_CANCELED && resultCode != -1) {
 					myNeedToSkipPlugin = true;
 				}
-				final CancelMenuHelper.ActionType type = CancelMenuHelper.ActionType.valueOf(
-					data.getStringExtra(CancelActivity.TYPE_KEY)
-				); 
-				// TODO: extract & pass bookmark
-				getCollection().bindToService(this, new Runnable() {
-					public void run() {
-						myFBReaderApp.runCancelAction(resultCode - 1, type);
+				try {
+					final CancelMenuHelper.ActionType type = CancelMenuHelper.ActionType.valueOf(
+						data.getStringExtra(CancelActivity.TYPE_KEY)
+					);
+					Bookmark bookmark = null;
+					if (type == CancelMenuHelper.ActionType.returnTo) {
+						bookmark = SerializerUtil.deserializeBookmark(
+							data.getStringExtra(CancelActivity.BOOKMARK_KEY)
+						);
 					}
-				});
+					myFBReaderApp.runCancelAction(type, bookmark);
+				} catch (Throwable t) {
+					// broken intent received
+				}
 				break;
-			}
 		}
 	}
 
