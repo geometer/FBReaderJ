@@ -502,35 +502,8 @@ public final class FBReaderApp extends ZLApplication {
 
 	public List<CancelMenuHelper.ActionDescription> getCancelActionsList(IBookCollection collection) {
 		myCancelActionsList.clear();
-		myCancelActionsList.addAll(new CancelMenuHelper().getActionsList(collection));
+		myCancelActionsList.addAll(new CancelMenuHelper().getActionsList(collection, true));
 		return myCancelActionsList;
-	}
-
-	public static List<CancelMenuHelper.ActionDescription> getStaticCancelActionsList(IBookCollection collection) {
-		final CancelMenuHelper helper = new CancelMenuHelper();
-		final ArrayList<CancelMenuHelper.ActionDescription> cancelActionsList = new ArrayList<CancelMenuHelper.ActionDescription>();
-		if (helper.ShowLibraryItemOption.getValue()) {
-			cancelActionsList.add(new CancelMenuHelper.ActionDescription(
-				CancelMenuHelper.ActionType.library, null
-			));
-		}
-		if (helper.ShowNetworkLibraryItemOption.getValue()) {
-			cancelActionsList.add(new CancelMenuHelper.ActionDescription(
-				CancelMenuHelper.ActionType.networkLibrary, null
-			));
-		}
-		if (helper.ShowPreviousBookItemOption.getValue()) {
-			final Book previousBook = collection.getRecentBook(1);
-			if (previousBook != null) {
-				cancelActionsList.add(new CancelMenuHelper.ActionDescription(
-					CancelMenuHelper.ActionType.previousBook, previousBook.getTitle()
-				));
-			}
-		}
-		cancelActionsList.add(new CancelMenuHelper.ActionDescription(
-			CancelMenuHelper.ActionType.close, null
-		));
-		return cancelActionsList;
 	}
 
 	public void runCancelAction(int index) {
