@@ -95,7 +95,6 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
 	public final FooterOptions FooterOptions = new FooterOptions();
-	public final CancelMenuOptions CancelMenuOptions = new CancelMenuOptions();
 
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
@@ -427,68 +426,40 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	static enum CancelActionType {
-		library,
-		networkLibrary,
-		previousBook,
-		returnTo,
-		close
-	}
+	private final ArrayList<CancelMenuHelper.ActionDescription> myCancelActionsList =
+		new ArrayList<CancelMenuHelper.ActionDescription>();
 
-	public static class CancelActionDescription {
-		final CancelActionType Type;
-		public final String Title;
-		public final String Summary;
+	public List<CancelMenuHelper.ActionDescription> getCancelActionsList() {
+		final CancelMenuHelper helper = new CancelMenuHelper();
 
-		CancelActionDescription(CancelActionType type, String summary) {
-			final ZLResource resource = ZLResource.resource("cancelMenu");
-			Type = type;
-			Title = resource.getResource(type.toString()).getValue();
-			Summary = summary;
-		}
-	}
-
-	private static class BookmarkDescription extends CancelActionDescription {
-		final Bookmark Bookmark;
-
-		BookmarkDescription(Bookmark b) {
-			super(CancelActionType.returnTo, b.getText());
-			Bookmark = b;
-		}
-	}
-
-	private final ArrayList<CancelActionDescription> myCancelActionsList =
-		new ArrayList<CancelActionDescription>();
-
-	public List<CancelActionDescription> getCancelActionsList() {
 		myCancelActionsList.clear();
-		if (CancelMenuOptions.ShowLibraryItem.getValue()) {
-			myCancelActionsList.add(new CancelActionDescription(
-				CancelActionType.library, null
+		if (helper.ShowLibraryItemOption.getValue()) {
+			myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
+				CancelMenuHelper.ActionType.library, null
 			));
 		}
-		if (CancelMenuOptions.ShowNetworkLibraryItem.getValue()) {
-			myCancelActionsList.add(new CancelActionDescription(
-				CancelActionType.networkLibrary, null
+		if (helper.ShowNetworkLibraryItemOption.getValue()) {
+			myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
+				CancelMenuHelper.ActionType.networkLibrary, null
 			));
 		}
-		if (CancelMenuOptions.ShowPreviousBookItem.getValue()) {
+		if (helper.ShowPreviousBookItemOption.getValue()) {
 			final Book previousBook = Collection.getRecentBook(1);
 			if (previousBook != null) {
-				myCancelActionsList.add(new CancelActionDescription(
-					CancelActionType.previousBook, previousBook.getTitle()
+				myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
+					CancelMenuHelper.ActionType.previousBook, previousBook.getTitle()
 				));
 			}
 		}
-		if (CancelMenuOptions.ShowPositionItems.getValue()) {
+		if (helper.ShowPositionItemsOption.getValue()) {
 			if (Model != null && Model.Book != null) {
 				for (Bookmark bookmark : invisibleBookmarks()) {
-					myCancelActionsList.add(new BookmarkDescription(bookmark));
+					myCancelActionsList.add(new CancelMenuHelper.BookmarkDescription(bookmark));
 				}
 			}
 		}
-		myCancelActionsList.add(new CancelActionDescription(
-			CancelActionType.close, null
+		myCancelActionsList.add(new CancelMenuHelper.ActionDescription(
+			CancelMenuHelper.ActionType.close, null
 		));
 		return myCancelActionsList;
 	}
@@ -498,7 +469,7 @@ public final class FBReaderApp extends ZLApplication {
 			return;
 		}
 
-		final CancelActionDescription description = myCancelActionsList.get(index);
+		final CancelMenuHelper.ActionDescription description = myCancelActionsList.get(index);
 		switch (description.Type) {
 			case library:
 				runAction(ActionCode.SHOW_LIBRARY);
@@ -511,7 +482,7 @@ public final class FBReaderApp extends ZLApplication {
 				break;
 			case returnTo:
 			{
-				final Bookmark b = ((BookmarkDescription)description).Bookmark;
+				final Bookmark b = ((CancelMenuHelper.BookmarkDescription)description).Bookmark;
 				Collection.deleteBookmark(b);
 				gotoBookmark(b);
 				break;
