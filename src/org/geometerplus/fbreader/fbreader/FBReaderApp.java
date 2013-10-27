@@ -372,7 +372,7 @@ public final class FBReaderApp extends ZLApplication {
 
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
-				gotoBookmark(bookmark);
+				gotoBookmark(bookmark, false);
 			}
 			return;
 		}
@@ -397,7 +397,7 @@ public final class FBReaderApp extends ZLApplication {
 			if (bookmark == null) {
 				setView(BookTextView);
 			} else {
-				gotoBookmark(bookmark);
+				gotoBookmark(bookmark, false);
 			}
 			Collection.addBookToRecentList(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
@@ -451,7 +451,7 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			final Bookmark b = bookmarks.get(0);
 			Collection.deleteBookmark(b);
-			gotoBookmark(b);
+			gotoBookmark(b, true);
 			return true;
 		} finally {
 			myJumpEndPosition = null;
@@ -459,19 +459,27 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private void gotoBookmark(Bookmark bookmark) {
+	private void gotoBookmark(Bookmark bookmark, boolean exactly) {
 		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			addInvisibleBookmark();
-			BookTextView.gotoHighlighting(
-				new BookmarkHighlighting(BookTextView, Collection, bookmark)
-			);
+			if (exactly) {
+				BookTextView.gotoPosition(bookmark);
+			} else {
+				BookTextView.gotoHighlighting(
+					new BookmarkHighlighting(BookTextView, Collection, bookmark)
+				);
+			}
 			setView(BookTextView);
 		} else {
 			setFootnoteModel(modelId);
-			FootnoteView.gotoHighlighting(
-				new BookmarkHighlighting(FootnoteView, Collection, bookmark)
-			);
+			if (exactly) {
+				FootnoteView.gotoPosition(bookmark);
+			} else {
+				FootnoteView.gotoHighlighting(
+					new BookmarkHighlighting(FootnoteView, Collection, bookmark)
+				);
+			}
 			setView(FootnoteView);
 		}
 		getViewWidget().repaint();
@@ -510,7 +518,7 @@ public final class FBReaderApp extends ZLApplication {
 				break;
 			case returnTo:
 				Collection.deleteBookmark(bookmark);
-				gotoBookmark(bookmark);
+				gotoBookmark(bookmark, true);
 				break;
 			case close:
 				closeWindow();
