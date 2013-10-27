@@ -501,8 +501,8 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	public List<CancelMenuHelper.ActionDescription> getCancelActionsList() {
-		return new CancelMenuHelper().getActionsList(Collection);
+	public boolean hasCancelActions() {
+		return new CancelMenuHelper().getActionsList(Collection).size() > 1;
 	}
 
 	public void runCancelAction(CancelMenuHelper.ActionType type, Bookmark bookmark) {
