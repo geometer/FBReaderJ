@@ -36,7 +36,7 @@ public class CancelMenuHelper {
 	public final ZLBooleanOption ShowPositionItemsOption =
 		new ZLBooleanOption("CancelMenu", "positions", true);
 
-	static enum ActionType {
+	public static enum ActionType {
 		library,
 		networkLibrary,
 		previousBook,
@@ -45,7 +45,7 @@ public class CancelMenuHelper {
 	}
 
 	public static class ActionDescription {
-		final ActionType Type;
+		public final ActionType Type;
 		public final String Title;
 		public final String Summary;
 
@@ -57,8 +57,8 @@ public class CancelMenuHelper {
 		}
 	}
 
-	static class BookmarkDescription extends ActionDescription {
-		final Bookmark Bookmark;
+	public static class BookmarkDescription extends ActionDescription {
+		public final Bookmark Bookmark;
 
 		BookmarkDescription(Bookmark b) {
 			super(ActionType.returnTo, b.getText());
@@ -66,7 +66,7 @@ public class CancelMenuHelper {
 		}
 	}
 
-	public List<ActionDescription> getActionsList(IBookCollection collection, boolean addPostionItems) {
+	public List<ActionDescription> getActionsList(IBookCollection collection) {
 		final List<ActionDescription> list = new ArrayList<ActionDescription>();
 
 		if (ShowLibraryItemOption.getValue()) {
@@ -81,7 +81,7 @@ public class CancelMenuHelper {
 				list.add(new ActionDescription(ActionType.previousBook, previousBook.getTitle()));
 			}
 		}
-		if (addPostionItems && ShowPositionItemsOption.getValue()) {
+		if (ShowPositionItemsOption.getValue()) {
 			final Book currentBook = collection.getRecentBook(0);
 			if (currentBook != null) {
 				final List<Bookmark> bookmarks = collection.bookmarks(
