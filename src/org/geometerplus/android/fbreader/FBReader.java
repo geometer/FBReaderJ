@@ -656,7 +656,8 @@ public final class FBReader extends Activity {
 			if (myCancelAction != -1) {
 				getCollection().bindToService(this, new Runnable() {
 					public void run() {
-						myFBReaderApp.runCancelAction(myCancelAction - 1);
+						// TODO: restore
+						//myFBReaderApp.runCancelAction(myCancelAction - 1);
 					}
 				});
 			} else {
@@ -796,15 +797,21 @@ public final class FBReader extends Activity {
 				}
 				break;
 			case REQUEST_CANCEL_MENU:
+			{
 				if (resultCode != RESULT_CANCELED && resultCode != -1) {
 					myNeedToSkipPlugin = true;
 				}
+				final CancelMenuHelper.ActionType type = CancelMenuHelper.ActionType.valueOf(
+					data.getStringExtra(CancelActivity.TYPE_KEY)
+				); 
+				// TODO: extract & pass bookmark
 				getCollection().bindToService(this, new Runnable() {
 					public void run() {
-						myFBReaderApp.runCancelAction(resultCode - 1);
+						myFBReaderApp.runCancelAction(resultCode - 1, type);
 					}
 				});
 				break;
+			}
 		}
 	}
 

@@ -497,13 +497,8 @@ public final class FBReaderApp extends ZLApplication {
 		return new CancelMenuHelper().getActionsList(Collection);
 	}
 
-	public void runCancelAction(int index) {
-		if (index < 0 || index >= myCancelActionsList.size()) {
-			return;
-		}
-
-		final CancelMenuHelper.ActionDescription description = myCancelActionsList.get(index);
-		switch (description.Type) {
+	public void runCancelAction(int index, CancelMenuHelper.ActionType type) {
+		switch (type) {
 			case library:
 				runAction(ActionCode.SHOW_LIBRARY);
 				break;
@@ -515,9 +510,17 @@ public final class FBReaderApp extends ZLApplication {
 				break;
 			case returnTo:
 			{
-				final Bookmark b = ((CancelMenuHelper.BookmarkDescription)description).Bookmark;
-				Collection.deleteBookmark(b);
-				gotoBookmark(b);
+				final List<CancelMenuHelper.ActionDescription> list =
+					new CancelMenuHelper().getActionsList(Collection);
+				if (index < 0 || index >= list.size()) {
+					return;
+				}
+				final CancelMenuHelper.ActionDescription description = list.get(index);
+				if (description instanceof CancelMenuHelper.BookmarkDescription) {
+					final Bookmark b = ((CancelMenuHelper.BookmarkDescription)description).Bookmark;
+					Collection.deleteBookmark(b);
+					gotoBookmark(b);
+				}
 				break;
 			}
 			case close:
