@@ -615,12 +615,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(FBReaderApp.ImageViewBackgroundOption, "backgroundColor");
 		imagesScreen.addOption(new ZLBooleanOption("Colors", "ImagesBackground", true), "imagesBackground");
 
-		final CancelMenuOptions cancelMenuOptions = FBReaderApp.CancelMenuOptions;
+		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
-		cancelMenuScreen.addOption(cancelMenuOptions.ShowLibraryItem, "library");
-		cancelMenuScreen.addOption(cancelMenuOptions.ShowNetworkLibraryItem, "networkLibrary");
-		cancelMenuScreen.addOption(cancelMenuOptions.ShowPreviousBookItem, "previousBook");
-		cancelMenuScreen.addOption(cancelMenuOptions.ShowPositionItems, "positions");
+		cancelMenuScreen.addOption(cancelMenuHelper.ShowLibraryItemOption, "library");
+		cancelMenuScreen.addOption(cancelMenuHelper.ShowNetworkLibraryItemOption, "networkLibrary");
+		cancelMenuScreen.addOption(cancelMenuHelper.ShowPreviousBookItemOption, "previousBook");
+		cancelMenuScreen.addOption(cancelMenuHelper.ShowPositionItemsOption, "positions");
 		final String[] backKeyActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
