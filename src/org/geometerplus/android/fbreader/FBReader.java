@@ -533,8 +533,14 @@ public final class FBReader extends Activity {
 				}
 				break;
 			case REQUEST_CANCEL_MENU:
-				myFBReaderApp.runCancelAction(resultCode - 1);
+			{
+				final CancelMenuHelper.ActionType type = CancelMenuHelper.ActionType.valueOf(
+					data.getStringExtra(CancelActivity.TYPE_KEY)
+				); 
+				// TODO: extract & pass bookmark
+				myFBReaderApp.runCancelAction(resultCode - 1, type);
 				break;
+			}
 		}
 	}
 
