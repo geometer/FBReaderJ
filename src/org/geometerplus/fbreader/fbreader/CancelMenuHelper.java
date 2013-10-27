@@ -19,10 +19,12 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.*;
+
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.*;
 
 public class CancelMenuHelper {
 	public final ZLBooleanOption ShowLibraryItemOption =
@@ -62,5 +64,37 @@ public class CancelMenuHelper {
 			super(ActionType.returnTo, b.getText());
 			Bookmark = b;
 		}
+	}
+
+	public List<ActionDescription> getActionsList(IBookCollection collection) {
+		final List<ActionDescription> list = new ArrayList<ActionDescription>();
+
+		if (ShowLibraryItemOption.getValue()) {
+			list.add(new ActionDescription(ActionType.library, null));
+		}
+		if (ShowNetworkLibraryItemOption.getValue()) {
+			list.add(new ActionDescription(ActionType.networkLibrary, null));
+		}
+		if (ShowPreviousBookItemOption.getValue()) {
+			final Book previousBook = collection.getRecentBook(1);
+			if (previousBook != null) {
+				list.add(new ActionDescription(ActionType.previousBook, previousBook.getTitle()));
+			}
+		}
+		if (ShowPositionItemsOption.getValue()) {
+			final Book currentBook = collection.getRecentBook(0);
+			if (currentBook != null) {
+				final List<Bookmark> bookmarks = collection.bookmarks(
+					new BookmarkQuery(currentBook, false, 3)
+				);
+				Collections.sort(bookmarks, new Bookmark.ByTimeComparator());
+				for (Bookmark b : bookmarks) {
+					list.add(new BookmarkDescription(b));
+				}
+			}
+		}
+		list.add(new ActionDescription(ActionType.close, null));
+
+		return list;
 	}
 }
