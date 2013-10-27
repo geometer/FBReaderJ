@@ -30,6 +30,7 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.fbreader.CancelMenuHelper;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -62,30 +63,30 @@ public class CancelActivity extends ListActivity {
 				myCollection = new BookCollectionShadow();
 				myCollection.bindToService(this, new Runnable() {
 					public void run() {
-						List<FBReaderApp.CancelActionDescription> descriptionList = fbReader.getCancelActionsList(myCollection);
+						List<CancelMenuHelper.ActionDescription> descriptionList = fbReader.getCancelActionsList(myCollection);
 						init(descriptionList);
 					}
 				});
 			} else {
-				List<FBReaderApp.CancelActionDescription> descriptionList = fbReader.getCancelActionsList();
+				List<CancelMenuHelper.ActionDescription> descriptionList = fbReader.getCancelActionsList();
 				init(descriptionList);
 			}
 		} else {
 			myCollection = new BookCollectionShadow();
 			myCollection.bindToService(this, new Runnable() {
 				public void run() {
-					List<FBReaderApp.CancelActionDescription> descriptionList = FBReaderApp.getStaticCancelActionsList(myCollection);
+					List<CancelMenuHelper.ActionDescription> descriptionList = FBReaderApp.getStaticCancelActionsList(myCollection);
 					init(descriptionList);
 				}
 			});
 		}
 	}
 	
-	private void init(List<FBReaderApp.CancelActionDescription> descriptionList) {
+	private void init(List<CancelMenuHelper.ActionDescription> descriptionList) {
 		Intent i = getIntent();
 		i.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
 		int index = 0;
-		for (FBReaderApp.CancelActionDescription description : descriptionList) {
+		for (CancelMenuHelper.ActionDescription description : descriptionList) {
 			i.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
 			i.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
 			++index;
