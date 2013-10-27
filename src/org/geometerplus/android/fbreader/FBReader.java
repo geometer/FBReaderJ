@@ -447,7 +447,7 @@ public final class FBReader extends Activity {
 	private boolean myCancelCalled = false;
 	private boolean myNeedToSkipPlugin = false;
 
-	private int myCancelAction = -1;
+	private Intent myCancelIntent = null;
 
 	public ZLAndroidWidget getMainView() {
 		return myMainView;
@@ -498,7 +498,7 @@ public final class FBReader extends Activity {
 			UIUtil.wait("search", runnable, this);
 		} else if ("android.fbreader.action.CLOSE".equals(intent.getAction())) {
 			myCancelCalled = true;
-			myCancelAction = intent.getIntExtra("value", -1);
+			myCancelIntent = intent;
 		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(intent.getAction())) {
 			Log.d("fbj", "crash");
 			long bookid = intent.getLongExtra("BOOKID", -1);
@@ -653,11 +653,12 @@ public final class FBReader extends Activity {
 		Log.d("fbreader", "onresume");
 		if (myCancelCalled) {
 			myCancelCalled = false;
-			if (myCancelAction != -1) {
+			if (myCancelIntent != null) {
+				final Intent ci = myCancelIntent;
+				myCancelIntent = null;
 				getCollection().bindToService(this, new Runnable() {
 					public void run() {
-						// TODO: restore
-						//myFBReaderApp.runCancelAction(myCancelAction - 1);
+						runCancelAction(ci);
 					}
 				});
 			} else {
