@@ -29,6 +29,7 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.CancelMenuHelper;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -116,7 +117,10 @@ public class CancelActivity extends ListActivity {
 			final CancelMenuHelper.ActionDescription item = getItem(position);
 			data.putExtra(TYPE_KEY, item.Type.name());
 			if (item instanceof CancelMenuHelper.BookmarkDescription) {
-				// TODO: add bookmark to intent
+				data.putExtra(
+					BOOKMARK_KEY,
+					SerializerUtil.serialize(((CancelMenuHelper.BookmarkDescription)item).Bookmark)
+				);
 			}
 			setResult((int)id + 1, data);
 			finish();
