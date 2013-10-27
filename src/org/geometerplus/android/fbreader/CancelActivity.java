@@ -56,7 +56,6 @@ public class CancelActivity extends ListActivity {
 				getListView().setOnItemClickListener(adapter);
 			}
 		});
-		setResult(-1);
 	}
 
 	@Override
@@ -122,7 +121,7 @@ public class CancelActivity extends ListActivity {
 					SerializerUtil.serialize(((CancelMenuHelper.BookmarkDescription)item).Bookmark)
 				);
 			}
-			setResult((int)id + 1, data);
+			setResult(RESULT_FIRST_USER, data);
 			finish();
 		}
 	}
