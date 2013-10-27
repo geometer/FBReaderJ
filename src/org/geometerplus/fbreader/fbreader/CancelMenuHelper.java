@@ -36,7 +36,7 @@ public class CancelMenuHelper {
 	public final ZLBooleanOption ShowPositionItemsOption =
 		new ZLBooleanOption("CancelMenu", "positions", true);
 
-	static enum ActionType {
+	public static enum ActionType {
 		library,
 		networkLibrary,
 		previousBook,
@@ -45,7 +45,7 @@ public class CancelMenuHelper {
 	}
 
 	public static class ActionDescription {
-		final ActionType Type;
+		public final ActionType Type;
 		public final String Title;
 		public final String Summary;
 
@@ -57,8 +57,8 @@ public class CancelMenuHelper {
 		}
 	}
 
-	static class BookmarkDescription extends ActionDescription {
-		final Bookmark Bookmark;
+	public static class BookmarkDescription extends ActionDescription {
+		public final Bookmark Bookmark;
 
 		BookmarkDescription(Bookmark b) {
 			super(ActionType.returnTo, b.getText());

@@ -39,15 +39,7 @@ class ShowCancelMenuAction extends FBAndroidAction {
 			if (descriptionList.size() == 1) {
 				Reader.closeWindow();
 			} else {
-				final Intent intent = new Intent();
-				intent.setClass(BaseActivity, CancelActivity.class);
-//				intent.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
-//				int index = 0;
-//				for (CancelMenuHelper.ActionDescription description : descriptionList) {
-//					intent.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
-//					intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
-//					++index;
-//				}
+				final Intent intent = new Intent(BaseActivity, CancelActivity.class);
 				BaseActivity.startActivityForResult(intent, FBReader.REQUEST_CANCEL_MENU);
 			}
 		}
