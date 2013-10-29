@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Catalan zlibrary resources, by Alfonso Montero. -->
+<!-- Catalan zlibrary resources, by Alfonso Montero and Carles Pastor i Badosa. -->
 <!-- CHANGELOG
 	02-12-2013: Initial version. Based on Spanish translation.
+	2013-10-28: Translated all the strings that had been left untranslated. -Carles Pastor i Badosa
 -->
 <resources>
 	<node name="dialog">
@@ -35,49 +36,49 @@
 		<node name="blue" value="Blau"/>
 	</node>
 	<node name="language">
-		<node name="ar" value="Árabe" toBeTranslated="true"/>
-		<node name="be" value="Belarusian" toBeTranslated="true"/>
-		<node name="bg" value="Búlgaro" toBeTranslated="true"/>
-		<node name="ca" value="Catalan" toBeTranslated="true"/>
-		<node name="cs" value="Checo" toBeTranslated="true"/>
-		<node name="da" value="Danish" toBeTranslated="true"/>
-		<node name="de" value="Alemán" toBeTranslated="true"/>
-		<node name="de-traditional" value="Alemán (ortografía tradicional)" toBeTranslated="true"/>
-		<node name="el" value="Griego" toBeTranslated="true"/>
-		<node name="en" value="Inglés" toBeTranslated="true"/>
-		<node name="eo" value="Esperanto" toBeTranslated="true"/>
-		<node name="es" value="Español" toBeTranslated="true"/>
-		<node name="eu" value="Basque" toBeTranslated="true"/>
-		<node name="fa" value="Persian" toBeTranslated="true"/>
-		<node name="fi" value="Finlandés" toBeTranslated="true"/>
-		<node name="fr" value="Francés" toBeTranslated="true"/>
-		<node name="gl" value="Gallego" toBeTranslated="true"/>
-		<node name="he" value="Hebreo" toBeTranslated="true"/>
-		<node name="hu" value="Húngaro" toBeTranslated="true"/>
-		<node name="hy" value="Armenian" toBeTranslated="true"/>
-		<node name="id" value="Indonesio" toBeTranslated="true"/>
-		<node name="it" value="Italiano" toBeTranslated="true"/>
-		<node name="ka" value="Georgian" toBeTranslated="true"/>
-		<node name="lt" value="Lituano" toBeTranslated="true"/>
-		<node name="nl" value="Holandés" toBeTranslated="true"/>
-		<node name="nb" value="Noruego" toBeTranslated="true"/>
-		<node name="pl" value="Polaco" toBeTranslated="true"/>
-		<node name="pt" value="Portugués" toBeTranslated="true"/>
-		<node name="ro" value="Rumano" toBeTranslated="true"/>
-		<node name="ru" value="Ruso" toBeTranslated="true"/>
-		<node name="sr" value="Serbian" toBeTranslated="true"/>
-		<node name="sv" value="Sueco" toBeTranslated="true"/>
-		<node name="ta" value="Tamil" toBeTranslated="true"/>
-		<node name="th" value="Tailandés" toBeTranslated="true"/>
-		<node name="tr" value="Turco" toBeTranslated="true"/>
-		<node name="uk" value="Ucraniano" toBeTranslated="true"/>
-		<node name="vi" value="Vietnamita" toBeTranslated="true"/>
-		<node name="zh" value="Chino" toBeTranslated="true"/>
-		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
-		<node name="any" value="Any" toBeTranslated="true"/>
-		<node name="other" value="Otro" toBeTranslated="true"/>
-		<node name="multi" value="Multilingüe" toBeTranslated="true"/>
-		<node name="system" value="System" toBeTranslated="true"/>
+		<node name="ar" value="Àrab"/>
+		<node name="be" value="Bielorús"/>
+		<node name="bg" value="Búlgar"/>
+		<node name="ca" value="Català"/>
+		<node name="cs" value="Txec"/>
+		<node name="da" value="Danès"/>
+		<node name="de" value="Alemany"/>
+		<node name="de-traditional" value="Alemany (ortografía tradicional)"/>
+		<node name="el" value="Grec"/>
+		<node name="en" value="Anglès"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Castellà"/>
+		<node name="eu" value="Euskera"/>
+		<node name="fa" value="Persa"/>
+		<node name="fi" value="Finès"/>
+		<node name="fr" value="Francès"/>
+		<node name="gl" value="Gallec"/>
+		<node name="he" value="Hebreu"/>
+		<node name="hu" value="Hongarès"/>
+		<node name="hy" value="Armeni"/>
+		<node name="id" value="Indonesi"/>
+		<node name="it" value="Italià"/>
+		<node name="ka" value="Georgià"/>
+		<node name="lt" value="Lituà"/>
+		<node name="nl" value="Holandès"/>
+		<node name="nb" value="Noruec"/>
+		<node name="pl" value="Polonès"/>
+		<node name="pt" value="Portuguès"/>
+		<node name="ro" value="Romanès"/>
+		<node name="ru" value="Rús"/>
+		<node name="sr" value="Serbi"/>
+		<node name="sv" value="Suec"/>
+		<node name="ta" value="Tamil"/>
+		<node name="th" value="Tailandès"/>
+		<node name="tr" value="Turc"/>
+		<node name="uk" value="Ucrainès"/>
+		<node name="vi" value="Vietnamita"/>
+		<node name="zh" value="Xinès"/>
+		<node name="zh_TW" value="Xinès (traditional)"/>
+		<node name="any" value="Qualsevol"/>
+		<node name="other" value="Altre"/>
+		<node name="multi" value="Multilingüe"/>
+		<node name="system" value="Sistema"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="encès"/>
