@@ -201,19 +201,19 @@
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="El libro ha sido descargado" toBeTranslated="true"/>
-		<node name="tickerError" value="Error al descargar el libro" toBeTranslated="true"/>
-		<node name="contentSuccess" value="Descarga completa" toBeTranslated="true"/>
-		<node name="contentError" value="Descarga fallida" toBeTranslated="true"/>
-		<node name="downloadingStarted" value="La descarga del libro ha comenzado" toBeTranslated="true"/>
-		<node name="alreadyDownloading" value="El libro ya está siendo descargado" toBeTranslated="true"/>
-		<node name="cannotCreateDirectory" value="No se pudo crear el directorio %s" toBeTranslated="true"/>
-		<node name="cannotCreateFile" value="No se pudo crear el archivo %s" toBeTranslated="true"/>
+		<node name="tickerSuccess" value="El libro ha sido descargado"/>
+		<node name="tickerError" value="Error al descargar el libro"/>
+		<node name="contentSuccess" value="Descarga completa"/>
+		<node name="contentError" value="Descarga fallida"/>
+		<node name="downloadingStarted" value="La descarga del libro ha comenzado"/>
+		<node name="alreadyDownloading" value="El libro ya está siendo descargado"/>
+		<node name="cannotCreateDirectory" value="No se pudo crear el directorio %s"/>
+		<node name="cannotCreateFile" value="No se pudo crear el archivo %s"/>
 	</node>
 	<node name="tocView">
-		<node name="expandTree" value="Expandir árbol" toBeTranslated="true"/>
-		<node name="collapseTree" value="Replegar árbol" toBeTranslated="true"/>
-		<node name="readText" value="Leer texto del libro" toBeTranslated="true"/>
+		<node name="expandTree" value="Expandir árbol"/>
+		<node name="collapseTree" value="Replegar árbol"/>
+		<node name="readText" value="Leer texto del libro"/>
 	</node>
 	<node name="bookmarksView">
 		<node name="thisBook" value="Aquest llibre"/>
@@ -249,16 +249,16 @@
 		</node>
 		<node name="bgColor" value="Background color" toBeTranslated="true"/>
 	</node>
-	<node name="selection" value="Selección" toBeTranslated="true">
-		<node name="copyToClipboard" value="Copiar al portapapeles" toBeTranslated="true"/>
+	<node name="selection" value="Selección">
+		<node name="copyToClipboard" value="Copiar al portapapeles"/>
 		<node name="openInDictionary" value="Obrir al diccionari"/>
 		<node name="quoteFrom" value="Cita de %s"/>
-		<node name="textInBuffer" value="Copiado al portapapeles:&#10;%s" toBeTranslated="true"/>
-		<node name="bookmarkCreated" value="Marcador creado:&#10;%s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copiado al portapapeles:&#10;%s"/>
+		<node name="bookmarkCreated" value="Marcador creado:&#10;%s"/>
 		<node name="clearSelection" value="Neteja"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Compartido desde &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Preferències"/>
@@ -269,13 +269,13 @@
 		<node name="night" value="Nit"/>
 		<node name="networkLibrary" value="Biblioteca en xarxa"/>
 		<node name="navigate" value="Navega">
-			<node name="toc" value="Tabla de Contenido" toBeTranslated="true"/>
-			<node name="gotoHome" value="Ir al Inicio del Documento" toBeTranslated="true"/>
-			<node name="gotoPageNumber" value="Ir a la Página…" toBeTranslated="true"/>
-			<node name="gotoSectionStart" value="Ir al Inicio de la Sección de Texto" toBeTranslated="true"/>
-			<node name="gotoSectionEnd" value="Ir al Final de la Sección de Texto" toBeTranslated="true"/>
-			<node name="nextTOCSection" value="Ir al siguiente elemento de la TDC" toBeTranslated="true"/>
-			<node name="previousTOCSection" value="Ir al anterior elemento de la TDC" toBeTranslated="true"/>
+			<node name="toc" value="Tabla de Contenido"/>
+			<node name="gotoHome" value="Ir al Inicio del Documento"/>
+			<node name="gotoPageNumber" value="Ir a la Página…"/>
+			<node name="gotoSectionStart" value="Ir al Inicio de la Sección de Texto"/>
+			<node name="gotoSectionEnd" value="Ir al Final de la Sección de Texto"/>
+			<node name="nextTOCSection" value="Ir al siguiente elemento de la TDC"/>
+			<node name="previousTOCSection" value="Ir al anterior elemento de la TDC"/>
 			<node name="undo" value="Recula"/>
 			<node name="redo" value="Avança"/>
 		</node>
@@ -284,7 +284,7 @@
 		<node name="rotate" value="Rotar pantalla"/>
 		<node name="screenOrientation" value="Orientació de la pantalla"/>
 		<node name="screenOrientationSystem" value="Sistema"/>
-		<node name="screenOrientationSensor" value="Sensible a la orientación del dispositivo" toBeTranslated="true"/>
+		<node name="screenOrientationSensor" value="Sensible a la orientación del dispositivo"/>
 		<node name="screenOrientationPortrait" value="Vertical"/>
 		<node name="screenOrientationLandscape" value="Horitzontal"/>
 		<node name="screenOrientationReversePortrait" value="Vertical inversa"/>
@@ -381,7 +381,7 @@
 					<node name="summaryOn" value="El difuminat de color està habilitat"/>
 					<node name="summaryOff" value="El difuminat de color està deshabilitat"/>
 				</node>
-				<node name="hinting" value="Optimizació" toBeTranslated="true">
+				<node name="hinting" value="Optimizació">
 					<node name="summaryOn" value="L'Optimitazió de fonts en pantalla està habilitada"/>
 					<node name="summaryOff" value="L'Optimitazió de fonts en pantalla està deshabilitada"/>
 				</node>
@@ -604,7 +604,7 @@
 			</node>
 			<node name="showProgress" value="Mostra el número de la pàgina">
 				<node name="summaryOn" value="Mostra el número de la pàgina al peu de pàgina"/>
-				<node name="summaryOff" value="No mostrar número de página en el pie de página" toBeTranslated="true"/>
+				<node name="summaryOff" value="No mostrar número de página en el pie de página"/>
 			</node>
 			<node name="showBattery" value="Mostra la càrrega de la bateria">
 				<node name="summaryOn" value="Mostra la càrrega de la bateria al peu de pàgina"/>
@@ -638,8 +638,8 @@
 			<node name="animation" value="Animació">
 				<node name="none" value="Sense animació"/>
 				<node name="curl" value="Donar la volta"/>
-				<node name="slide" value="Lliscar" toBeTranslated="true"/>
-				<node name="shift" value="Desplaçar" toBeTranslated="true"/>
+				<node name="slide" value="Lliscar"/>
+				<node name="shift" value="Desplaçar"/>
 			</node>
 			<node name="animationSpeed" value="Velocitat d'animació">
 				<node name="fast" value="ràpida"/>
@@ -653,11 +653,11 @@
 		<node name="tapZones" value="Zones de toc">
 			<node name="summary" value="Accions en tocar amb el dit"/>
 			<node name="tapZonesScheme" value="Esquema de les zones de toc">
-				<node name="left_to_right" value="Desplazar página de izquierda a derecha" toBeTranslated="true"/>
-				<node name="right_to_left" value="Desplazar página de derecha a izquierda" toBeTranslated="true"/>
-				<node name="up" value="Desplazar página de abajo a arriba" toBeTranslated="true"/>
-				<node name="down" value="Desplazar página de arriba a abajo" toBeTranslated="true"/>
-				<node name="custom" value="Personalizado…" toBeTranslated="true"/>
+				<node name="left_to_right" value="Desplazar página de izquierda a derecha"/>
+				<node name="right_to_left" value="Desplazar página de derecha a izquierda"/>
+				<node name="up" value="Desplazar página de abajo a arriba"/>
+				<node name="down" value="Desplazar página de arriba a abajo"/>
+				<node name="custom" value="Personalizado…"/>
 			</node>
 		</node>
 		<node name="dictionary" value="Diccionari">
@@ -670,7 +670,7 @@
 			<node name="tappingAction" value="Acció de toc llarg">
 				<node name="doNothing" value="El toc llarg no fa res"/>
 				<node name="selectSingleWord" value="El toc llarg selecciona una paraula"/>
-				<node name="startSelecting" value="El toc llarg inicia la selecció" toBeTranslated="true"/>
+				<node name="startSelecting" value="El toc llarg inicia la selecció"/>
 				<node name="openDictionary" value="El toc llarg selecciona una paraula, en deixar anar obre el diccionari"/>
 			</node>
 			<node name="navigateOverAllWords" value="Navegar per totes les paraules">
@@ -692,8 +692,8 @@
 				<node name="all" value="Totes"/>
 			</node>
 		</node>
-		<node name="cancelMenu" value="Menú cancelar" toBeTranslated="true">
-			<node name="summary" value="Lista de acciones para botón Atrás" toBeTranslated="true"/>
+		<node name="cancelMenu" value="Menú cancelar">
+			<node name="summary" value="Lista de acciones para botón Atrás"/>
 			<node name="library" value="Biblioteca">
 				<node name="summaryOn" value="Mostra el botó 'obre la biblioteca'"/>
 				<node name="summaryOff" value="No mostris el botó 'obre la biblioteca'"/>
@@ -768,7 +768,7 @@
 			<node name="editInfo" value="Edita"/>
 			<node name="reloadInfo" value="Recarrega"/>
 			<node name="shareBook" value="Comparteix"/>
-			<node name="topup" value="Arrodoneix" toBeTranslated="true"/>
+			<node name="topup" value="Arrodoneix"/>
 			<node name="pay" value="Paga"/>
 			<node name="refresh" value="Recarrega"/>
 			<node name="authorize" value="Autoritza"/>
@@ -780,79 +780,79 @@
 			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
-			<node name="installTitle" value="Instalar plugin" toBeTranslated="true"/>
-			<node name="updateTitle" value="Actualizar plugin" toBeTranslated="true"/>
-			<node name="dontAskAgain" value="No volver a preguntar" toBeTranslated="true"/>
+			<node name="installTitle" value="Instalar plugin"/>
+			<node name="updateTitle" value="Actualizar plugin"/>
+			<node name="dontAskAgain" value="No volver a preguntar"/>
 		</node>
 		<node name="installDictionary">
-			<node name="title" value="Instalar dicionario" toBeTranslated="true"/>
-			<node name="message" value="¿Le gustaría instalar %s?" toBeTranslated="true"/>
+			<node name="title" value="Instalar dicionario"/>
+			<node name="message" value="¿Le gustaría instalar %s?"/>
 		</node>
 		<node name="deleteBookBox">
-			<node name="message" value="El archivo del libro será borrado irreversiblemente. ¿Está bien?" toBeTranslated="true"/>
+			<node name="message" value="El archivo del libro será borrado irreversiblemente. ¿Está bien?"/>
 		</node>
 		<node name="redownloadFileBox">
-			<node name="message" value="El archivo ya existe. ¿Volver a descargarlo?" toBeTranslated="true"/>
+			<node name="message" value="El archivo ya existe. ¿Volver a descargarlo?"/>
 		</node>
 		<node name="waitMessage">
-			<node name="downloadingFile" value="Descargando libro %s" toBeTranslated="true"/>
-			<node name="search" value="Buscando. Por favor, espere…" toBeTranslated="true"/>
-			<node name="loadInfo" value="Cargando información. Por favor, espere…" toBeTranslated="true"/>
-			<node name="loadingBook" value="Abriendo libro. Por favor, espere…" toBeTranslated="true"/>
-			<node name="loadingBookList" value="Abriendo biblioteca. Por favor, espere…" toBeTranslated="true"/>
-			<node name="creatingBooksDatabase" value="Creando base de datos de libros. Por favor, espere…" toBeTranslated="true"/>
-			<node name="updatingBooksDatabase" value="Actualizando base de datos de libros. Por favor, espere…" toBeTranslated="true"/>
-			<node name="loadingNetworkLibrary" value="Abriendo biblioteca en red. Por favor, espere…" toBeTranslated="true"/>
-			<node name="authentication" value="Autenticando. Por favor, espere…" toBeTranslated="true"/>
-			<node name="signOut" value="Cerrando sesión. Por favor, espere…" toBeTranslated="true"/>
-			<node name="purchaseBook" value="Comprando libro. Por favor, espere…" toBeTranslated="true"/>
-			<node name="loadingCatalogInfo" value="Cargando información de catálogo. Por favor, espere…" toBeTranslated="true"/>
-			<node name="loadingNetworkBookInfo" value="Cargando información de libro. Por favor, espere…" toBeTranslated="true"/>
-			<node name="updatingCatalogsList" value="Actualizando lista de catálogos. Por favor, espere…" toBeTranslated="true"/>
-			<node name="updatingAccountInformation" value="Actualizando información de cuenta. Por favor, espere…" toBeTranslated="true"/>
-			<node name="extrcact" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="downloadingFile" value="Descargando libro %s"/>
+			<node name="search" value="Buscando. Por favor, espere…"/>
+			<node name="loadInfo" value="Cargando información. Por favor, espere…"/>
+			<node name="loadingBook" value="Abriendo libro. Por favor, espere…"/>
+			<node name="loadingBookList" value="Abriendo biblioteca. Por favor, espere…"/>
+			<node name="creatingBooksDatabase" value="Creando base de datos de libros. Por favor, espere…"/>
+			<node name="updatingBooksDatabase" value="Actualizando base de datos de libros. Por favor, espere…"/>
+			<node name="loadingNetworkLibrary" value="Abriendo biblioteca en red. Por favor, espere…"/>
+			<node name="authentication" value="Autenticando. Por favor, espere…"/>
+			<node name="signOut" value="Cerrando sesión. Por favor, espere…"/>
+			<node name="purchaseBook" value="Comprando libro. Por favor, espere…"/>
+			<node name="loadingCatalogInfo" value="Cargando información de catálogo. Por favor, espere…"/>
+			<node name="loadingNetworkBookInfo" value="Cargando información de libro. Por favor, espere…"/>
+			<node name="updatingCatalogsList" value="Actualizando lista de catálogos. Por favor, espere…"/>
+			<node name="updatingAccountInformation" value="Actualizando información de cuenta. Por favor, espere…"/>
+			<node name="extrcact" value="Preparing file for external app. Please, wait…"/>
 		</node>
 		<node name="networkError">
-			<node name="internalError" value="Error interno de servidor" toBeTranslated="true"/>
-			<node name="purchaseNotEnoughMoney" value="No hay dinero suficiente" toBeTranslated="true"/>
-			<node name="purchaseMissingBook" value="No se encuentra el libro" toBeTranslated="true"/>
-			<node name="purchaseAlreadyPurchased" value="Ya fue comprado" toBeTranslated="true"/>
-			<node name="bookNotPurchased" value="El libro no fue comprado" toBeTranslated="true"/>
-			<node name="downloadLimitExceeded" value="Se ha excedido el límite de descarga" toBeTranslated="true"/>
-			<node name="noUserEmail" value="Ningún usuario ha sido registrado&#10;con la dirección de correo electrónico especificada" toBeTranslated="true"/>
-			<node name="unsupportedOperation" value="Operación no admitida" toBeTranslated="true"/>
-			<node name="notAnOPDS" value="Este no es un catálogo OPDS" toBeTranslated="true"/>
-			<node name="noRequiredInformation" value="La información requerida no está especificada en el catálogo" toBeTranslated="true"/>
-			<node name="cacheDirectoryError" value="No es posible crear el directorio de caché" toBeTranslated="true"/>
+			<node name="internalError" value="Error interno de servidor"/>
+			<node name="purchaseNotEnoughMoney" value="No hay dinero suficiente"/>
+			<node name="purchaseMissingBook" value="No se encuentra el libro"/>
+			<node name="purchaseAlreadyPurchased" value="Ya fue comprado"/>
+			<node name="bookNotPurchased" value="El libro no fue comprado"/>
+			<node name="downloadLimitExceeded" value="Se ha excedido el límite de descarga"/>
+			<node name="noUserEmail" value="Ningún usuario ha sido registrado&#10;con la dirección de correo electrónico especificada"/>
+			<node name="unsupportedOperation" value="Operación no admitida"/>
+			<node name="notAnOPDS" value="Este no es un catálogo OPDS"/>
+			<node name="noRequiredInformation" value="La información requerida no está especificada en el catálogo"/>
+			<node name="cacheDirectoryError" value="No es posible crear el directorio de caché"/>
 		</node>
 		<node name="AuthenticationDialog">
-			<node name="title" value="Autenticación" toBeTranslated="true"/>
-			<node name="unencryptedWarning" value="Su contraseña se enviará sin encriptar" toBeTranslated="true"/>
-			<node name="login" value="Nombre de usuario" toBeTranslated="true"/>
-			<node name="password" value="Contraseña" toBeTranslated="true"/>
-			<node name="loginIsEmpty" value="El nombre de usuario no puede estar vacío" toBeTranslated="true"/>
-			<node name="register" value="Registrarse" toBeTranslated="true"/>
+			<node name="title" value="Autenticación"/>
+			<node name="unencryptedWarning" value="Su contraseña se enviará sin encriptar"/>
+			<node name="login" value="Nombre de usuario"/>
+			<node name="password" value="Contraseña"/>
+			<node name="loginIsEmpty" value="El nombre de usuario no puede estar vacío"/>
+			<node name="register" value="Registrarse"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: Agregar catálogo personalizado" toBeTranslated="true"/>
+			<node name="title" value="FBReader: Agregar catálogo personalizado"/>
 			<node name="catalogTitle" value="Títol"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Resum"/>
-			<node name="catalogTitleExample" value="ej.: Catálogo del Proyecto Gutenberg" toBeTranslated="true"/>
+			<node name="catalogTitleExample" value="ej.: Catálogo del Proyecto Gutenberg"/>
 			<node name="catalogUrlExample" value="ex.: http://m.gutenberg.org/"/>
-			<node name="catalogSummaryExample" value="ej.: Libros de dominio público" toBeTranslated="true"/>
-			<node name="titleIsEmpty" value="El título no puede estar vacío" toBeTranslated="true"/>
-			<node name="urlIsEmpty" value="La URL no puede estar vacía" toBeTranslated="true"/>
+			<node name="catalogSummaryExample" value="ej.: Libros de dominio público"/>
+			<node name="titleIsEmpty" value="El título no puede estar vacío"/>
+			<node name="urlIsEmpty" value="La URL no puede estar vacía"/>
 			<node name="invalidUrl" value="URL no vàlida"/>
-			<node name="titleAlreadyExists" value="El título especificado ya está en uso" toBeTranslated="true"/>
-			<node name="siteAlreadyExists" value="El sitio especificado ya está en uso" toBeTranslated="true"/>
+			<node name="titleAlreadyExists" value="El título especificado ya está en uso"/>
+			<node name="siteAlreadyExists" value="El sitio especificado ya está en uso"/>
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Filtre d'idioma"/>
 		</node>
 		<node name="tips">
 			<node name="title" value="Consell del dia"/>
-			<node name="initializationText" value="¿Le gustaría leer consejos diarios de FBReader? Nuevos consejos serán descargados desde el sitio web de FBReader. El tráfico de red esperado es 1-2 kilobytes por semana.&#10;&#10;¿Habilitar consejos?" toBeTranslated="true"/>
+			<node name="initializationText" value="¿Le gustaría leer consejos diarios de FBReader? Nuevos consejos serán descargados desde el sitio web de FBReader. El tráfico de red esperado es 1-2 kilobytes por semana.&#10;&#10;¿Habilitar consejos?"/>
 			<node name="dontShowAgain" value="No tornis a mostrar"/>
 			<node name="more" value="Següent consell"/>
 		</node>
@@ -861,18 +861,18 @@
 		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
-		<node name="cannotRunAndroidMarket" value="No es posible acceder a Google Play. Por favor, instale %s manualmente " toBeTranslated="true"/>
-		<node name="textNotFound" value="Lamentablemente, no hay texto que coincida en el libro" toBeTranslated="true"/>
-		<node name="bookNotFound" value="Lamentablemente, no hay libros que coincidan en la biblioteca" toBeTranslated="true"/>
-		<node name="bookmarkNotFound" value="Lamentablemente, no hay marcadores coincidentes" toBeTranslated="true"/>
-		<node name="cannotOpenBook" value="Lamentablemente, no se puede abrir este libro en este momento" toBeTranslated="true"/>
-		<node name="dictionaryIsNotInstalled" value="Lamentablemente, el diccionario no está instalado" toBeTranslated="true"/>
-		<node name="permissionDenied" value="Lamentablemente, se ha negado el permiso" toBeTranslated="true"/>
-		<node name="noFavorites" value="Lamentablemente, su lista de favoritos está vacía" toBeTranslated="true"/>
+		<node name="cannotRunAndroidMarket" value="No es posible acceder a Google Play. Por favor, instale %s manualmente "/>
+		<node name="textNotFound" value="Lamentablemente, no hay texto que coincida en el libro"/>
+		<node name="bookNotFound" value="Lamentablemente, no hay libros que coincidan en la biblioteca"/>
+		<node name="bookmarkNotFound" value="Lamentablemente, no hay marcadores coincidentes"/>
+		<node name="cannotOpenBook" value="Lamentablemente, no se puede abrir este libro en este momento"/>
+		<node name="dictionaryIsNotInstalled" value="Lamentablemente, el diccionario no está instalado"/>
+		<node name="permissionDenied" value="Lamentablemente, se ha negado el permiso"/>
+		<node name="noFavorites" value="Lamentablemente, su lista de favoritos está vacía"/>
 		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
-		<node name="emptyCatalog" value="Lamentablemente, el catálogo está vacío" toBeTranslated="true"/>
-		<node name="emptyBasket" value="Lamentablemente, su cesta está vacía" toBeTranslated="true"/>
-		<node name="emptyNetworkSearchResults" value="Lamentablemente, no se encontraron libros" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="Lamentablemente, el catálogo está vacío"/>
+		<node name="emptyBasket" value="Lamentablemente, su cesta está vacía"/>
+		<node name="emptyNetworkSearchResults" value="Lamentablemente, no se encontraron libros"/>
 		<node name="externalNotFound" value="Cannot open external application" toBeTranslated="true"/>
 		<node name="appNotFound" value="No suitable application found" toBeTranslated="true"/>
 		<node name="invalidFormat" value="Format is invalid" toBeTranslated="true"/>
@@ -886,17 +886,17 @@
 	</node>
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Error desconegut"/>
-		<node name="unsupportedCompressionMethod" value="Método de compresión no admitido" toBeTranslated="true"/>
-		<node name="encryptedFile" value="Archivo protegido con DRM" toBeTranslated="true"/>
+		<node name="unsupportedCompressionMethod" value="Método de compresión no admitido"/>
+		<node name="encryptedFile" value="Archivo protegido con DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Problema de FBReader"/>
-			<node name="text" value="El directorio caché de FBReader no está accesible para escritura. Tal vez usted haya olvidado insertar o desmontar su tarjeta de memoria. Por favor, solucione este problema o ingrese otro nombre de directorio a continuación." toBeTranslated="true"/>
+			<node name="text" value="El directorio caché de FBReader no está accesible para escritura. Tal vez usted haya olvidado insertar o desmontar su tarjeta de memoria. Por favor, solucione este problema o ingrese otro nombre de directorio a continuación."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problema de FBReader"/>
-			<node name="text" value="FBReader no puede cargar la biblioteca nativa. Tal vez no está instalada correctamente. Si el problema persiste por favor intente reinstalar FBReader." toBeTranslated="true"/>
+			<node name="text" value="FBReader no puede cargar la biblioteca nativa. Tal vez no está instalada correctamente. Si el problema persiste por favor intente reinstalar FBReader."/>
 		</node>
 	</node>
 	<node name="error">
@@ -905,14 +905,14 @@
 		</node>
 	</node>
 	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Se produjo un error durante la lectura de '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Se produjo un error durante la extracción de '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No hay plugin para '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Tipo desconocido de plugin: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="No se encuentra el archivo: %s" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF no se encuentra en %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Error de análisis RTF en: %s" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Se produjo un error durante la lectura de '%s'"/>
+		<node name="errorReadingZip" value="Se produjo un error durante la extracción de '%s'"/>
+		<node name="pluginNotFound" value="No hay plugin para '%s'"/>
+		<node name="unknownPluginType" value="Tipo desconocido de plugin: %s"/>
+		<node name="fileNotFound" value="No se encuentra el archivo: %s"/>
+		<node name="opfFileNotFound" value="OPF no se encuentra en %s"/>
+		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'"/>
+		<node name="errorParsingRtf" value="Error de análisis RTF en: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
