@@ -85,7 +85,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	private class Initializer implements Runnable {
 		public void run() {
-			long id = 0;
 			if (myBook != null) {
 				for (BookmarkQuery query = new BookmarkQuery(myBook, 20); ; query = query.next()) {
 					final List<Bookmark> thisBookBookmarks = myCollection.bookmarks(query);
@@ -96,7 +95,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 					myAllBooksAdapter.addAll(thisBookBookmarks);
 				}
 			}
-			id = 0;
 			for (BookmarkQuery query = new BookmarkQuery(20); ; query = query.next()) {
 				final List<Bookmark> allBookmarks = myCollection.bookmarks(query);
 				if (allBookmarks.isEmpty()) {
