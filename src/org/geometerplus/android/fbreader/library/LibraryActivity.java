@@ -310,8 +310,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				book.removeLabel(Book.FAVORITE_LABEL);
 				myRootTree.Collection.saveBook(book, false);
 				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
-					getListAdapter().replaceAll(getCurrentTree().subtrees());
-					getListView().invalidateViews();
+					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 				}
 				return true;
 			case MARK_AS_READ_ITEM_ID:
@@ -388,8 +387,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), myBook.File));
 				getListView().invalidateViews();
 			} else if (getCurrentTree().onBookEvent(BookEvent.Removed, myBook)) {
-				getListAdapter().replaceAll(getCurrentTree().subtrees());
-				getListView().invalidateViews();
+				getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 			}
 
 			myRootTree.Collection.removeBook(myBook, true);
@@ -447,8 +445,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	public void onBookEvent(BookEvent event, Book book) {
 		if (getCurrentTree().onBookEvent(event, book)) {
-			getListAdapter().replaceAll(getCurrentTree().subtrees());
-			getListView().invalidateViews();
+			getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 		}
 	}
 
