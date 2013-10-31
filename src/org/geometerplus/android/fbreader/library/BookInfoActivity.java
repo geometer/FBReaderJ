@@ -118,7 +118,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 					myDontReloadBook = false;
 					myCollection.bindToService(BookInfoActivity.this, new Runnable() {
 						public void run() {
-							myCollection.saveBook(myBook, false);
+							myCollection.saveBook(myBook);
 						}
 					});
 				}

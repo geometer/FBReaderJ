@@ -154,7 +154,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	void saveBook() {
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				myCollection.saveBook(myBook, false);
+				myCollection.saveBook(myBook);
 			}
 		});
 	}
