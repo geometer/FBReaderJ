@@ -22,13 +22,8 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 import java.io.*;
 
-import android.os.IBinder;
-import android.os.Handler;
-import android.os.Message;
-import android.app.Service;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.os.*;
+import android.app.*;
 import android.net.Uri;
 import android.content.Intent;
 import android.widget.RemoteViews;
@@ -43,6 +38,7 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class BookDownloaderService extends Service {
 	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
@@ -324,6 +320,14 @@ public class BookDownloaderService extends Service {
 						} catch (InterruptedException ex) {
 						}*/
 					}
+					final BookCollectionShadow collection = new BookCollectionShadow();
+					collection.bindToService(BookDownloaderService.this, new Runnable() {
+						@Override
+						public void run() {
+							collection.rescan(file.getPath());
+							collection.unbind();
+						}
+					});
 				} finally {
 					outStream.close();
 				}

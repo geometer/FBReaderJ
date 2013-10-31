@@ -278,6 +278,10 @@ public class LibraryService extends Service {
 		public void saveHighlightingStyle(String style) {
 			myCollection.saveHighlightingStyle(SerializerUtil.deserializeStyle(style));
 		}
+
+		public void rescan(String path) {
+			myCollection.rescan(path);
+		}
 	}
 
 	private volatile LibraryImplementation myLibrary;
