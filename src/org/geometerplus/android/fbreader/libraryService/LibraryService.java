@@ -202,8 +202,8 @@ public class LibraryService extends Service {
 			return myCollection.firstTitleLetters();
 		}
 
-		public boolean saveBook(String book, boolean force) {
-			return myCollection.saveBook(SerializerUtil.deserializeBook(book), force);
+		public boolean saveBook(String book) {
+			return myCollection.saveBook(SerializerUtil.deserializeBook(book));
 		}
 
 		public void removeBook(String book, boolean deleteFromDisk) {
