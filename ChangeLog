@@ -5,6 +5,7 @@
 * mobi: blockquote tag support
 //* fixed book duplicates problem on some devices
 * fixed cancel menu "jump back" item behaviour: returns exactly to the old position
+* fixed book info saving
 
 ===== 1.9 (Oct 14, 2013) =====
 * Dictionary support
