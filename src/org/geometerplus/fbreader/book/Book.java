@@ -580,6 +580,8 @@ public class Book extends TitledEntity {
 			.append(File.getPath())
 			.append(", ")
 			.append(myId)
+			.append(", ")
+			.append(getTitle())
 			.append("]")
 			.toString();
 	}
