@@ -403,7 +403,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void saveBook() {
 		myCollection.bindToService(BookInfoActivity.this, new Runnable() {
 			public void run() {
-				myCollection.saveBook(myBook, false);
+				myCollection.saveBook(myBook);
 			}
 		});
 	}
