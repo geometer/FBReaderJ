@@ -406,7 +406,7 @@ public class NetworkLibrary {
 			}
 		}
 
-		if (linkToTreeMap.isEmpty()) {
+		if (!myRootTree.hasChildren()) {
 			//new RecentCatalogListTree(
 			//	myRootTree, new RecentCatalogListItem(resource().getResource("recent"))
 			//);

@@ -66,19 +66,16 @@ public abstract class TreeAdapter extends BaseAdapter {
 		});
 	}
 
-	public void replaceAll(final Collection<FBTree> items) {
-		replaceAll(items, false);
-	}
-
-	public void replaceAll(final Collection<FBTree> items, final boolean force) {
+	public void replaceAll(final Collection<FBTree> items, final boolean invalidateViews) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				if (force || !myItems.equals(items)) {
-					synchronized (myItems) {
-						myItems.clear();
-						myItems.addAll(items);
-					}
-					notifyDataSetChanged();
+				synchronized (myItems) {
+					myItems.clear();
+					myItems.addAll(items);
+				}
+				notifyDataSetChanged();
+				if (invalidateViews) {
+					myActivity.getListView().invalidateViews();
 				}
 			}
 		});

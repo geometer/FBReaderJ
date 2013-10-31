@@ -193,7 +193,7 @@ public final class FBReaderApp extends ZLApplication {
 		System.err.println("4");
 		final Book bookToOpen = tempBook;
 		bookToOpen.addLabel(Book.READ_LABEL);
-		Collection.saveBook(bookToOpen, false);
+		Collection.saveBook(bookToOpen);
 		final FormatPlugin p = PluginCollection.Instance().getPlugin(bookToOpen.File);
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
@@ -389,7 +389,7 @@ public final class FBReaderApp extends ZLApplication {
 		System.gc();
 		try {
 			Model = BookModel.createModel(book);
-			Collection.saveBook(book, false);
+			Collection.saveBook(book);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
 			setBookmarkHighlightings(BookTextView, null);
@@ -497,7 +497,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (Model != null && Model.isValid() && Model.Book != null && BookTextView != null) {
 			Collection.storePosition(Model.Book.getId(), BookTextView.getStartCursor());
 			Model.Book.setProgress(BookTextView.getProgress());
-			Collection.saveBook(Model.Book, false);
+			Collection.saveBook(Model.Book);
 		}
 	}
 

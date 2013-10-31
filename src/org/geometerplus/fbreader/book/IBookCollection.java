@@ -70,7 +70,7 @@ public interface IBookCollection {
 	List<Tag> tags();
 	List<String> firstTitleLetters();
 
-	boolean saveBook(Book book, boolean force);
+	boolean saveBook(Book book);
 	void removeBook(Book book, boolean deleteFromDisk);
 
 	ZLTextPosition getStoredPosition(long bookId);
@@ -88,4 +88,6 @@ public interface IBookCollection {
 	HighlightingStyle getHighlightingStyle(int styleId);
 	List<HighlightingStyle> highlightingStyles();
 	void saveHighlightingStyle(HighlightingStyle style);
+
+	void rescan(String path);
 }

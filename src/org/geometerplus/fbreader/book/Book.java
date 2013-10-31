@@ -93,14 +93,29 @@ public class Book extends TitledEntity {
 			return;
 		}
 		setTitle(book.getTitle());
-		myEncoding = book.myEncoding;
-		myLanguage = book.myLanguage;
-		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
-		myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
-		myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
-		mySeriesInfo = book.mySeriesInfo;
-		myProgress = book.myProgress;
-		HasBookmark = book.HasBookmark;
+		setEncoding(book.myEncoding);
+		setLanguage(book.myLanguage);
+		if (!MiscUtil.equals(myAuthors, book.myAuthors)) {
+			myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.equals(myTags, book.myTags)) {
+			myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.equals(myLabels, book.myLabels)) {
+			myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.equals(mySeriesInfo, book.mySeriesInfo)) {
+			mySeriesInfo = book.mySeriesInfo;
+			myIsSaved = false;
+		}
+		setProgress(book.myProgress);
+		if (HasBookmark != book.HasBookmark) {
+			HasBookmark = book.HasBookmark;
+			myIsSaved = false;
+		}
 	}
 
 	public void reloadInfoFromFile() {
@@ -435,8 +450,10 @@ public class Book extends TitledEntity {
 	}
 
 	public void setProgress(RationalNumber progress) {
-		myProgress = progress;
-		myIsSaved = false;
+		if (!MiscUtil.equals(myProgress, progress)) {
+			myProgress = progress;
+			myIsSaved = false;
+		}
 	}
 	
 	public void setProgressWithNoCheck(RationalNumber progress) {
@@ -621,6 +638,8 @@ public class Book extends TitledEntity {
 			.append(File.getPath())
 			.append(", ")
 			.append(myId)
+			.append(", ")
+			.append(getTitle())
 			.append("]")
 			.toString();
 	}
