@@ -31,7 +31,7 @@ interface LibraryInterface {
 	List<String> titles(in String query);
 	List<String> firstTitleLetters();
 
-	boolean saveBook(in String book, in boolean force);
+	boolean saveBook(in String book);
 	void removeBook(in String book, in boolean deleteFromDisk);
 	void addBookToRecentList(in String book);
 
