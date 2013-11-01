@@ -36,6 +36,10 @@ public class RationalNumber {
 			numerator /= gcd;
 			denominator /= gcd;
 		}
+		if (denominator < 0) {
+			numerator = -numerator;
+			denominator = -denominator;
+		}
 		Numerator = numerator;
 		Denominator = denominator;
 	}
