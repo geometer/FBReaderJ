@@ -1,9 +1,8 @@
-===== 1.9.1 (Oct ??, 2013) =====
+===== 1.9.1 (Nov 01, 2013) =====
 * hi-res launcher icon
 * Updated Catalan localization (by Carles Pastor i Badosa)
 * Updated Czech localization (by Marek Pavelka)
 * mobi: blockquote tag support
-//* fixed book duplicates problem on some devices
 * fixed cancel menu "jump back" item behaviour: returns exactly to the old position
 * fixed book info saving
 
