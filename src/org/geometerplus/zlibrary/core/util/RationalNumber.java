@@ -31,7 +31,39 @@ public class RationalNumber {
 	public final long Denominator;
 	
 	private RationalNumber(long numerator, long denominator) {
+		final long gcd = getGCD(numerator, denominator);
+		if (gcd > 1) {
+			numerator /= gcd;
+			denominator /= gcd;
+		}
 		Numerator = numerator;
 		Denominator = denominator;
+	}
+	
+	public float getFraction() {
+		return Numerator/Denominator;
+	}
+	
+	private long getGCD(long a, long b) {
+		return b == 0 ? a : getGCD(b, a % b);
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		final RationalNumber rationalNumber = (RationalNumber) other;
+		if (other instanceof RationalNumber) {
+			if ((rationalNumber.Numerator == Numerator) && (rationalNumber.Denominator == Denominator)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return (int) (37 * (37 * 17 + Numerator) + Denominator);
 	}
 }
