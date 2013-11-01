@@ -40,7 +40,7 @@ public class RationalNumber {
 		Denominator = denominator;
 	}
 	
-	public float getFraction() {
+	public float toFloat() {
 		return 1.0f * Numerator / Denominator;
 	}
 	
