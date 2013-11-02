@@ -159,13 +159,17 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	private boolean addBook(Book book, boolean force) {
-		if (book == null || book.getId() == -1) {
+		if (book == null) {
 			return false;
 		}
 
 		synchronized (myBooksByFile) {
 			final Book existing = myBooksByFile.get(book.File);
 			if (existing == null) {
+				if (book.getId() == -1 && !book.save(myDatabase, true)) {	
+					return false;
+				}
+
 				myBooksByFile.put(book.File, book);
 				myBooksById.put(book.getId(), book);
 				fireBookEvent(BookEvent.Added, book);
