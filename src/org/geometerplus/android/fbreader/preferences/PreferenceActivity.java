@@ -542,6 +542,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
 		);
 
+		dictionaryScreen.addPreference(new ZLIntegerRangePreference(
+			this, dictionaryScreen.Resource.getResource("height"),
+			DictionaryUtil.HeightOption
+		));
+		
 		final Screen imagesScreen = createPreferenceScreen("images");
 		imagesScreen.addOption(fbReader.ImageTappingActionOption, "tappingAction");
 		imagesScreen.addOption(fbReader.FitImagesToScreenOption, "fitImagesToScreen");

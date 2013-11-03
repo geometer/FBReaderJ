@@ -654,6 +654,7 @@
 				<node name="summaryOn" value="A tecla de navegación percorre todas as palabras"/>
 				<node name="summaryOff" value="A tecla de navegación percorre só as ligazóns"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Images" toBeTranslated="true">
 			<node name="summary" value="Image displaying options" toBeTranslated="true"/>

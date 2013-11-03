@@ -664,6 +664,7 @@
 				<node name="summaryOn" value="Nabigazio teklak hitz guztiak bisitatzen ditu"/>
 				<node name="summaryOff" value="Nabigazio teklak loturak baino ez ditu bisitatzen"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Irudiak">
 			<node name="summary" value="Irudiak bistaratzeko aukerak"/>

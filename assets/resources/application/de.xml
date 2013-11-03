@@ -666,6 +666,7 @@
 				<node name="summaryOn" value="Tastennavigation trifft alle Wörter."/>
 				<node name="summaryOff" value="Tastennavigation trifft nur Hyperlinks."/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Bilder">
 			<node name="summary" value="Einstellung für die Anzeige von Bildern."/>

@@ -654,6 +654,7 @@
 				<node name="summaryOn" value="導航鍵訪問所有語句"/>
 				<node name="summaryOff" value="導航鍵僅訪問超連結"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Images" toBeTranslated="true">
 			<node name="summary" value="Image displaying options" toBeTranslated="true"/>

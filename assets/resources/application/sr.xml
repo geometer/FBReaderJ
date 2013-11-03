@@ -664,6 +664,7 @@
 				<node name="summaryOn" value="Навигација тастерима отвара све речи."/>
 				<node name="summaryOff" value="Навигација тастерима отвара само хипервезе."/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Слике">
 			<node name="summary" value="Подешавања око приказивања слика."/>

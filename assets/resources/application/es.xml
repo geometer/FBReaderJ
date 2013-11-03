@@ -669,6 +669,7 @@
 				<node name="summaryOn" value="La tecla de navegación visita todas las palabras"/>
 				<node name="summaryOff" value="La tecla de navegación visita solo hipervínculos"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Imágenes">
 			<node name="summary" value="Opciones de visualización de imágenes"/>

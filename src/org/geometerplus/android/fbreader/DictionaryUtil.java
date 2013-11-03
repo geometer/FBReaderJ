@@ -34,6 +34,7 @@ import com.paragon.open.dictionary.api.OpenDictionaryAPI;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
@@ -57,6 +58,8 @@ public abstract class DictionaryUtil {
 
 	// TODO: use StringListOption instead
 	public static final ZLStringOption TargetLanguageOption = new ZLStringOption("Dictionary", "TargetLanguage", Language.ANY_CODE);
+	
+	public static final ZLIntegerRangeOption HeightOption = new ZLIntegerRangeOption("Dictionary", "Height", 10, 45, 20);
 
 	// Map: dictionary info -> mode if package is not installed
 	private static Map<PackageInfo,Integer> ourInfos =
@@ -372,7 +375,7 @@ public abstract class DictionaryUtil {
 			final int bottomSpace = metrics.heightPixels - selectionBottom;
 			final boolean showAtBottom = bottomSpace >= topSpace;
 			final int space = (showAtBottom ? bottomSpace : topSpace) - metrics.densityDpi / 12;
-			final int maxHeight = Math.min(metrics.densityDpi * 20 / 12, screenHeight * 2 / 3);
+			final int maxHeight = Math.min(metrics.densityDpi * HeightOption.getValue() / 12, screenHeight * 2 / 3);
 			final int minHeight = Math.min(metrics.densityDpi * 10 / 12, screenHeight * 2 / 3);
 
 			Height = Math.max(minHeight, Math.min(maxHeight, space));

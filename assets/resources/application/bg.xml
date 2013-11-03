@@ -669,6 +669,7 @@
 				<node name="summaryOn" value="Придвижване с бутоните по всички думи"/>
 				<node name="summaryOff" value="Придвижване с бутоните само по препратките"/>
 			</node>
+			<node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Изображения">
 			<node name="summary" value="Настройки на изображенията"/>

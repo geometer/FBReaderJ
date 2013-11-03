@@ -664,6 +664,7 @@
 				<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
 				<node name="summaryOff" value="Tastenavigasjon besøker bare hyperlenker"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Bilder">
 			<node name="summary" value="Valg for bildevisning"/>
