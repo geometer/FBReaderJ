@@ -152,7 +152,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				setupExtraLinks();
 				setupInfo();
 				setupCover();
-				setupButtons();
+
+				invalidateOptionsMenu();
 			}
 		}
 	};
@@ -351,60 +352,18 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		}
 	}
 
-	private final void setupButtons() {
-		final int buttons[] = new int[] {
-				R.id.network_book_button0,
-				R.id.network_book_button1,
-				R.id.network_book_button2,
-				R.id.network_book_button3,
-		};
-		final List<NetworkBookActions.NBAction> actions = NetworkBookActions.getContextMenuActions(this, myTree, myConnection);
-
-		final boolean skipSecondButton =
-			actions.size() < buttons.length &&
-			actions.size() % 2 == 1;
-		int buttonNumber = 0;
-		for (final NetworkBookActions.NBAction a : actions) {
-			if (skipSecondButton && buttonNumber == 1) {
-				++buttonNumber;
-			}
-			if (buttonNumber >= buttons.length) {
-				break;
-			}
-
-			final int buttonId = buttons[buttonNumber++];
-			TextView button = (TextView)findViewById(buttonId);
-			button.setText(a.getContextLabel(null));
-			button.setVisibility(View.VISIBLE);
-			button.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					a.run(myTree);
-					NetworkBookInfoActivity.this.updateView();
-				}
-			});
-			button.setEnabled(a.isEnabled(null));
-		}
-		findViewById(R.id.network_book_left_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
-		findViewById(R.id.network_book_right_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
-		if (skipSecondButton) {
-			final int buttonId = buttons[1];
-			View button = findViewById(buttonId);
-			button.setVisibility(View.GONE);
-			button.setOnClickListener(null);
-		}
-		while (buttonNumber < buttons.length) {
-			final int buttonId = buttons[buttonNumber++];
-			View button = findViewById(buttonId);
-			button.setVisibility(View.GONE);
-			button.setOnClickListener(null);
-		}
+	private void addMenuItem(Menu menu, int index, String label, boolean showAsAction) {
+		final MenuItem item = menu.add(0, index, Menu.NONE, label);
+		item.setShowAsAction(
+			showAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
+		);
 	}
 
 	private void updateView() {
-		setupButtons();
 		final View rootView = findViewById(R.id.network_book_root);
 		rootView.invalidate();
 		rootView.requestLayout();
+		invalidateOptionsMenu();
 	}
 
 	@Override
@@ -436,5 +395,27 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				updateView();
 			}
 		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		if (myTree != null) {
+			for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myTree, myConnection)) {
+				addMenuItem(menu, a.Code, a.getContextLabel(null), a.ShowAsAction);
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myTree, myConnection)) {
+			if (a.Code == item.getItemId()) {
+				a.run(myTree);
+				NetworkBookInfoActivity.this.updateView();
+				return true;
+			}
+		}
+		return false;
 	}
 }

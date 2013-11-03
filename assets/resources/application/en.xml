@@ -664,6 +664,7 @@
 				<node name="summaryOn" value="Key navigation visits all words"/>
 				<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
 			</node>
+			<node name="height" value="Height of dictionary"/>
 		</node>
 		<node name="images" value="Images">
 			<node name="summary" value="Image displaying options"/>

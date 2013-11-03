@@ -34,7 +34,20 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public static ZLBooleanOption AntiAliasOption = new ZLBooleanOption("Fonts", "AntiAlias", true);
 	public static ZLBooleanOption DeviceKerningOption = new ZLBooleanOption("Fonts", "DeviceKerning", false);
 	public static ZLBooleanOption DitheringOption = new ZLBooleanOption("Fonts", "Dithering", false);
+	public static ZLBooleanOption HintingOption = new ZLBooleanOption("Fonts", "Hinting", false);
 	public static ZLBooleanOption SubpixelOption = new ZLBooleanOption("Fonts", "Subpixel", false);
+
+	private static Boolean ourUsesHintingOption;
+	public static boolean usesHintingOption() {
+		if (ourUsesHintingOption == null) {
+			try {
+				ourUsesHintingOption = Paint.class.getMethod("setHinting", int.class) != null;
+			} catch (NoSuchMethodException e) {
+				ourUsesHintingOption = false;
+			}
+		}
+		return ourUsesHintingOption;
+	}
 
 	private final Canvas myCanvas;
 	private final Paint myTextPaint = new Paint();
@@ -62,6 +75,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			myTextPaint.setFlags(myTextPaint.getFlags() & ~Paint.DEV_KERN_TEXT_FLAG);
 		}
 		myTextPaint.setDither(DitheringOption.getValue());
+		if (usesHintingOption()) {
+			myTextPaint.setHinting(HintingOption.getValue() ? Paint.HINTING_ON : Paint.HINTING_OFF);
+		}
 		myTextPaint.setSubpixelText(SubpixelOption.getValue());
 
 		myLinePaint.setStyle(Paint.Style.STROKE);
@@ -274,7 +290,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			}
 		}
 		if (!containsSoftHyphen) {
-			myCanvas.drawText(string, offset, length, x, y, myTextPaint);
+			myCanvas.drawText(new String(string, offset, length), x, y, myTextPaint);
 		} else {
 			final char[] corrected = new char[length];
 			int len = 0;
@@ -284,7 +300,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 					corrected[len++] = chr;
 				}
 			}
-			myCanvas.drawText(corrected, 0, len, x, y, myTextPaint);
+			myCanvas.drawText(new String(corrected, 0, len), x, y, myTextPaint);
 		}
 	}
 

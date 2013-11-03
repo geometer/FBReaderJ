@@ -30,6 +30,11 @@ class ShowCancelMenuAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		if (BaseActivity.barsAreShown()) {
+			BaseActivity.hideBars();
+			return;
+		}
+
 		if (!Reader.jumpBack()) {
 			if (Reader.hasCancelActions()) {
 				final Intent intent = new Intent(BaseActivity, CancelActivity.class);

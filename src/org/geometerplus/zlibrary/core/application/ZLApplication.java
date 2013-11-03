@@ -36,6 +36,7 @@ public abstract class ZLApplication {
 
 	private volatile ZLApplicationWindow myWindow;
 	private volatile ZLView myView;
+	private volatile String myTitle;
 
 	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
 
@@ -68,9 +69,14 @@ public abstract class ZLApplication {
 	}
 
 	protected void setTitle(String title) {
+		myTitle = title;
 		if (myWindow != null) {
 			myWindow.setTitle(title);
 		}
+	}
+
+	public String getTitle() {
+		return myTitle;
 	}
 
 	protected void runWithMessage(String key, Runnable runnable, Runnable postAction) {
@@ -123,6 +129,13 @@ public abstract class ZLApplication {
 
 	public final void removeAction(String actionId) {
 		myIdToActionMap.remove(actionId);
+	}
+
+	public final void runAction(String actionId) {
+		final ZLAction action = myIdToActionMap.get(actionId);
+		if (action != null) {
+			action.checkAndRun();
+		}
 	}
 
 	public final boolean isActionVisible(String actionId) {

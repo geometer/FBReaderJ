@@ -81,8 +81,8 @@ public final class FBReaderApp extends ZLApplication {
 		TwoColumnViewOption = new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 42 * dpi * dpi);
 		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
-		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
-		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
+		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
+		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 20);
 		SpaceBetweenColumnsOption = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
 		FooterHeightOption = new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
 	}

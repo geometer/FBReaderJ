@@ -24,23 +24,26 @@
 			android:padding="8dip"
 		>
 			<SeekBar
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
 				android:id="@+id/color_red"
+				style="@android:style/Widget.SeekBar"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
 				android:max="255"
 				android:padding="4dip"
 			/>
 			<SeekBar
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
 				android:id="@+id/color_green"
+				style="@android:style/Widget.SeekBar"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
 				android:max="255"
 				android:padding="4dip"
 			/>
 			<SeekBar
+				android:id="@+id/color_blue"
+				style="@android:style/Widget.SeekBar"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:id="@+id/color_blue"
 				android:max="255"
 				android:padding="4dip"
 			/>

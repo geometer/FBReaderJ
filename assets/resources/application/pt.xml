@@ -666,6 +666,7 @@
 				<node name="summaryOn" value="Tecla de navegação seleciona todas as palavras"/>
 				<node name="summaryOff" value="Tecla de navegação seleciona apenas hyperlinks"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Imagens">
 			<node name="summary" value="Imagens mostrando opções"/>

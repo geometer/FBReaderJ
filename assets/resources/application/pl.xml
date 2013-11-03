@@ -654,6 +654,7 @@
 				<node name="summaryOn" value="Nawigacja klawiszami dotyczy wszystkich słów"/>
 				<node name="summaryOff" value="Nawigacja klawiszami dotyczy tylko odsyłaczy"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Obrazy">
 			<node name="summary" value="Opcje wyświetlania obrazów"/>

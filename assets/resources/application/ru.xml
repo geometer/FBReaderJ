@@ -669,6 +669,7 @@
 				<node name="summaryOn" value="При перемещении с помощью кнопок помечать все слова"/>
 				<node name="summaryOff" value="При перемещении с помощью кнопок помечать только гиперссылки"/>
 			</node>
+			<node name="height" value="Высота словаря"/>
 		</node>
 		<node name="images" value="Картинки">
 			<node name="summary" value="Настройки отображения картинок"/>

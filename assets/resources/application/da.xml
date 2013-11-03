@@ -671,6 +671,7 @@
 				<node name="summaryOn" value="Navigering med tast stopper ved alle ord"/>
 				<node name="summaryOff" value="Navigering med tast stopper kun ved hyperlinks"/>
 			</node>
+			<node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="Billeder">
 			<node name="summary" value="Billedvisningsindstillinger"/>

@@ -30,7 +30,7 @@ import org.geometerplus.android.fbreader.network.Util;
 
 public class SignUpAction extends Action {
 	public SignUpAction(Activity activity) {
-		super(activity, ActionCode.SIGNUP, "signUp", -1);
+		super(activity, ActionCode.SIGNUP, "signUp", false);
 	}
 
 	@Override

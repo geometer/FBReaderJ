@@ -669,6 +669,7 @@
 				<node name="summaryOn" value="ყველა სიტყვაზე გადაადგილებისას ღილაკების მეშვეობით მონიშნოს ყველა სიტყვა"/>
 				<node name="summaryOff" value="გადაადგილებისას ღილაკების მეშვეობით მონიშნოს მხოლოდ ჰიპერლინკები"/>
 			</node>
+                        <node name="height" value="Height of dictionary" toBeTranslated="true"/>
 		</node>
 		<node name="images" value="სურათები">
 			<node name="summary" value="სურათის ჩვენების პარამეტრები"/>
