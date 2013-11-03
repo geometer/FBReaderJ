@@ -28,7 +28,7 @@
 		<node name="tr" value="Türkçe"/>
 		<node name="uk" value="Українська"/>
 		<node name="vi" value="Tiếng Việt"/>
-		<node name="zh" value="中文"/>
+		<node name="zh" value="简体中文"/>
 		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
 	</node>
 </resources>
