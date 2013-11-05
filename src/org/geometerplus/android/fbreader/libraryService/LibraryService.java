@@ -89,7 +89,7 @@ public class LibraryService extends Service {
 
 		LibraryImplementation() {
 			myDatabase = SQLiteBooksDatabase.Instance(LibraryService.this);
-			reset(Collections.singletonList(Paths.BooksDirectoryOption().getValue()), true);
+			reset(Paths.BookPathOption().getValue(), true);
 		}
 
 		public void reset(List<String> bookDirectories, boolean force) {
@@ -202,8 +202,8 @@ public class LibraryService extends Service {
 			return myCollection.firstTitleLetters();
 		}
 
-		public boolean saveBook(String book, boolean force) {
-			return myCollection.saveBook(SerializerUtil.deserializeBook(book), force);
+		public boolean saveBook(String book) {
+			return myCollection.saveBook(SerializerUtil.deserializeBook(book));
 		}
 
 		public void removeBook(String book, boolean deleteFromDisk) {

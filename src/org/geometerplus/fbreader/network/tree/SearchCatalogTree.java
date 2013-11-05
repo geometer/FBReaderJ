@@ -31,7 +31,7 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 	}
 
 	public SearchCatalogTree(NetworkCatalogTree parent, SearchItem item) {
-		super(parent, item, -1);
+		super(parent, parent.getLink(), item, -1);
 		item.setPattern(null);
 	}
 

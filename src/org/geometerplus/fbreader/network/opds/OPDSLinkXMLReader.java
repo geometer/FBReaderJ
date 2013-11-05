@@ -38,7 +38,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 		private String myAuthenticationType;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
-		private final HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
+		private final HashMap<RelationAlias,String> myRelationAliases = new HashMap<RelationAlias,String>();
 		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>();
 
 		List<INetworkLink> links() {
@@ -83,7 +83,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 			final UrlInfoCollection<UrlInfoWithDate> infos =
 				new UrlInfoCollection<UrlInfoWithDate>();
-			for (ATOMLink link: entry.Links) {
+			for (ATOMLink link : entry.Links) {
 				final String href = link.getHref();
 				final MimeType mime = MimeType.get(link.getType());
 				final String rel = link.getRel();

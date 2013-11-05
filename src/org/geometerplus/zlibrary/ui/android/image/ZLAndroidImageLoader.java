@@ -70,14 +70,14 @@ class ZLAndroidImageLoader {
 	private final ExecutorService myPool = Executors.newFixedThreadPool(IMAGE_LOADING_THREADS_NUMBER, new MinPriorityThreadFactory());
 	private final ExecutorService mySinglePool = Executors.newFixedThreadPool(1, new MinPriorityThreadFactory());
 
-	private final HashMap<String, LinkedList<Runnable>> myOnImageSyncRunnables = new HashMap<String, LinkedList<Runnable>>();
+	private final HashMap<String,LinkedList<Runnable>> myOnImageSyncRunnables = new HashMap<String,LinkedList<Runnable>>();
 
 	private class ImageSynchronizedHandler extends Handler {
 		@Override
 		public void handleMessage(Message message) {
-			final String imageUrl = (String) message.obj;
+			final String imageUrl = (String)message.obj;
 			final LinkedList<Runnable> runables = myOnImageSyncRunnables.remove(imageUrl);
-			for (Runnable runnable: runables) {
+			for (Runnable runnable : runables) {
 				runnable.run();
 			}
 		}

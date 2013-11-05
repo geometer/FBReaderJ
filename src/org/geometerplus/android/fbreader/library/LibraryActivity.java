@@ -216,24 +216,23 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
 				book.addLabel(Book.FAVORITE_LABEL);
-				myRootTree.Collection.saveBook(book, false);
+				myRootTree.Collection.saveBook(book);
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
 				book.removeLabel(Book.FAVORITE_LABEL);
-				myRootTree.Collection.saveBook(book, false);
+				myRootTree.Collection.saveBook(book);
 				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
-					getListAdapter().replaceAll(getCurrentTree().subtrees());
-					getListView().invalidateViews();
+					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 				}
 				return true;
 			case MARK_AS_READ_ITEM_ID:
 				book.addLabel(Book.READ_LABEL);
-				myRootTree.Collection.saveBook(book, false);
+				myRootTree.Collection.saveBook(book);
 				getListView().invalidateViews();
 				return true;
 			case MARK_AS_UNREAD_ITEM_ID:
 				book.removeLabel(Book.READ_LABEL);
-				myRootTree.Collection.saveBook(book, false);
+				myRootTree.Collection.saveBook(book);
 				getListView().invalidateViews();
 				return true;
 			case DELETE_BOOK_ITEM_ID:
@@ -301,8 +300,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), myBook.File));
 				getListView().invalidateViews();
 			} else if (getCurrentTree().onBookEvent(BookEvent.Removed, myBook)) {
-				getListAdapter().replaceAll(getCurrentTree().subtrees());
-				getListView().invalidateViews();
+				getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 			}
 
 			myRootTree.Collection.removeBook(myBook, true);
@@ -360,8 +358,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	public void onBookEvent(BookEvent event, Book book) {
 		if (getCurrentTree().onBookEvent(event, book)) {
-			getListAdapter().replaceAll(getCurrentTree().subtrees());
-			getListView().invalidateViews();
+			getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 		}
 	}
 

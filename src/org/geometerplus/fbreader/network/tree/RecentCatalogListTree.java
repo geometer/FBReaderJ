@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader.options;
+package org.geometerplus.fbreader.network.tree;
 
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.fbreader.network.RecentCatalogListItem;
 
-public class CancelMenuOptions {
-	public final ZLBooleanOption ShowLibraryItem =
-		new ZLBooleanOption("CancelMenu", "library", true);
-	public final ZLBooleanOption ShowNetworkLibraryItem =
-		new ZLBooleanOption("CancelMenu", "networkLibrary", true);
-	public final ZLBooleanOption ShowPreviousBookItem =
-		new ZLBooleanOption("CancelMenu", "previousBook", false);
-	public final ZLBooleanOption ShowPositionItems =
-		new ZLBooleanOption("CancelMenu", "positions", true);
+public class RecentCatalogListTree extends NetworkCatalogTree {
+	public RecentCatalogListTree(RootTree parent, RecentCatalogListItem item) {
+		super(parent, null, item, -1);
+	}
 }

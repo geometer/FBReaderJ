@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.atom.*;
 
-public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
+public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
 	public static final String KEY_PRICE = "price";
 
 	private DCDate myDCIssued;
@@ -90,7 +90,7 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 						myState = OPENSEARCH_STARTINDEX;
 					}
 					return false;
-				} else if (ns == XMLNamespaces.FBReaderCatalogMetadata){
+				} else if (ns == XMLNamespaces.FBReaderCatalogMetadata) {
 					if (tag == FBREADER_TAG_VIEW) {
 						myState = FBREADER_VIEW;
 					}
@@ -123,7 +123,7 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 					myPriceCurrency = attributes.getValue("currencycode");
 					myState = FEL_PRICE;
 					return false;
-				} if (ns == XMLNamespaces.DublinCoreTerms && tag == DC_TAG_FORMAT) {
+				} else if (ns == XMLNamespaces.DublinCoreTerms && tag == DC_TAG_FORMAT) {
 					myState = FEL_FORMAT;
 					return false;
 				} else {

@@ -40,7 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="本地搜索"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="rescan" value="重新扫描"/>
 		</node>
 		<node name="openBook" value="打开阅读"/>
 		<node name="showBookInfo" value="书文信息"/>
@@ -48,8 +48,8 @@
 		<node name="deleteBook" value="删除本书"/>
 		<node name="addToFavorites" value="收藏到我的超爱"/>
 		<node name="removeFromFavorites" value="从收藏列表中移除"/>
-		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="markAsRead" value="标记为已读"/>
+		<node name="markAsUnread" value="标记为未读"/>
 	</node>
 	<node name="networkLibrary" value="FBReader 网络书库">
 		<node name="byAuthor" value="作者">
@@ -72,8 +72,8 @@
 		<node name="found" value="搜索结果">
 			<node name="summary" value="搜索结果: %s"/>
 		</node>
-		<node name="recent" value="Recent catalogs" toBeTranslated="true">
-			<node name="summary" value="Catalogs you viewed recently" toBeTranslated="true"/>
+		<node name="recent" value="最近书库">
+			<node name="summary" value="你最近访问过的书库"/>
 		</node>
 		<node name="openCatalog" value="打开书库"/>
 		<node name="networkSearch" value="搜索"/>
@@ -113,7 +113,7 @@
 		<node name="removeCustomCatalog" value="移除书库"/>
 		<node name="addCustomCatalog" value="增加书库"/>
 		<node name="addCustomCatalogSummary" value="手工添加自有的OPDS书库"/>
-		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
+		<node name="disableCatalog" value="停用书库"/>
 		<node name="confirmQuestions">
 			<node name="read" value="是否本地阅读"/>
 			<node name="download" value="是否下载本图书?"/>
@@ -130,13 +130,13 @@
 			<node name="title" value="添加书库"/>
 			<node name="editUrl" value="手动输入URL"/>
 		</node>
-		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
-			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
-			<node name="enabled" value="Enabled" toBeTranslated="true"/>
-			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		<node name="manageCatalogs" value="管理书库">
+			<node name="summary" value="配置你的书库列表"/>
+			<node name="enabled" value="启用"/>
+			<node name="disabled" value="停用"/>
 		</node>
 		<node name="menu">
-			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
+			<node name="openRoot" value="根书库"/>
 			<node name="networkSearch" value="网络搜索"/>
 			<node name="reload" value="重新加载"/>
 			<node name="signIn" value="登录"/>
@@ -145,7 +145,7 @@
 			<node name="topup" value="重新输入账号"/>
 			<node name="addCustomCatalog" value="添加书库"/>
 			<node name="refreshCatalogsList" value="刷新书库"/>
-			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
+			<node name="manageCatalogs" value="管理书库"/>
 			<node name="clearBasket" value="清空购物篮"/>
 			<node name="buyAllBooks" value="购买所有图书"/>
 		</node>
@@ -221,18 +221,18 @@
 		<node name="forward" value="前进"/>
 		<node name="close" value="关闭FBReader"/>
 	</node>
-	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="style" value="样式 %s"/>
 	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="editStyle" value="编辑样式…"/>
 		<node name="deleteBookmark" value="删除书签"/>
 	</node>
 	<node name="editStyle">
-		<node name="name" value="Style name" toBeTranslated="true"/>
-		<node name="invisible" value="Invisible" toBeTranslated="true">
-			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
-			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		<node name="name" value="样式名称"/>
+		<node name="invisible" value="不可见">
+			<node name="summaryOn" value="不要高亮书签"/>
+			<node name="summaryOff" value="高亮书签"/>
 		</node>
-		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+		<node name="bgColor" value="背景颜色"/>
 	</node>
 	<node name="selection" value="选择">
 		<node name="copyToClipboard" value="复制到剪贴板"/>
@@ -278,7 +278,7 @@
 		<node name="decreaseFont" value="字体缩小"/>
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="我的书签"/>
-		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="help" value="帮助"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="文件"/>
@@ -298,7 +298,7 @@
 		</node>
 		<node name="appearance" value="呈现方式">
 			<node name="summary" value="旋转，状态工具条"/>
-			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="language" value="界面语言"/>
 			<node name="screenOrientation" value="屏幕方向">
 				<node name="system" value="系统"/>
 				<node name="sensor" value="感知设备方向"/>
@@ -327,9 +327,9 @@
 				<node name="summaryOn" value="禁用设备系统按键发亮 (对某些设备无效)"/>
 				<node name="summaryOff" value="不要尝试禁用系统按键发亮"/>
 			</node>
-			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
-				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
-				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			<node name="twoColumnView" value="双列试图">
+				<node name="summaryOn" value="水平方向手持设备时使用双列显示文字"/>
+				<node name="summaryOff" value="始终将文字一列显示"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="屏幕亮度调整">
 				<node name="summaryOn" value="通过在屏幕左侧上下滑动手指来调整"/>
@@ -529,15 +529,15 @@
 				</node>
 			</node>
 		</node>
-		<node name="css" value="CSS" toBeTranslated="true">
-			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
-			<node name="fontSize" value="Font size" toBeTranslated="true">
-				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+		<node name="css" value="CSS">
+			<node name="summary" value="使用/忽略CSS中定义的值"/>
+			<node name="fontSize" value="字体大小">
+				<node name="summaryOn" value="使用CSS中定义的字体大小"/>
+				<node name="summaryOff" value="忽略CSS中定义的字体大小"/>
 			</node>
-			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
-				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			<node name="textAlignment" value="文字排列">
+				<node name="summaryOn" value="使用CSS中定义的文字排列"/>
+				<node name="summaryOff" value="忽略CSS中定义的文字排列"/>
 			</node>
 		</node>
 		<node name="colors" value="颜色 &amp; 墙纸">
@@ -563,7 +563,7 @@
 			<node name="right" value="右边距"/>
 			<node name="top" value="顶边距"/>
 			<node name="bottom" value="底边距"/>
-			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
+			<node name="spaceBetweenColumns" value="列间距"/>
 		</node>
 		<node name="scrollBar" value="滚动条">
 			<node name="summary" value="滚动条 &amp; 页脚设定"/>
@@ -641,8 +641,8 @@
 			<node name="summary" value="设置字典及其对应操作"/>
 			<node name="dictionary" value="字典"/>
 			<node name="translator" value="译者"/>
-			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
-				<node name="any" value="all languages" toBeTranslated="true"/>
+			<node name="targetLanguage" value="翻译为">
+				<node name="any" value="所有语言"/>
 			</node>
 			<node name="tappingAction" value="长按动作设定">
 				<node name="doNothing" value="长按不做任何事"/>
@@ -663,10 +663,10 @@
 				<node name="selectImage" value="长按选择图像"/>
 				<node name="openImageView" value="长按打开图像"/>
 			</node>
-			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
-				<node name="none" value="None" toBeTranslated="true"/>
-				<node name="covers" value="Covers only" toBeTranslated="true"/>
-				<node name="all" value="All" toBeTranslated="true"/>
+			<node name="fitImagesToScreen" value="图像适合屏幕">
+				<node name="none" value="无"/>
+				<node name="covers" value="只有封面"/>
+				<node name="all" value="所有"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="取消菜单设定">
@@ -742,8 +742,8 @@
 			<node name="sendReport" value="发送报告"/>
 			<node name="addToFavorites" value="收藏到我的超爱"/>
 			<node name="removeFromFavorites" value="从收藏列表中移除"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+			<node name="markAsRead" value="标记为已读"/>
+			<node name="markAsUnread" value="标记为未读"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件"/>
@@ -831,7 +831,7 @@
 		<node name="dictionaryIsNotInstalled" value="抱歉，你没有安装字典."/>
 		<node name="permissionDenied" value="对不起，没有权限"/>
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="对不起，这个系列中没有书"/>
 		<node name="emptyCatalog" value="空书库目录"/>
 		<node name="emptyBasket" value="很抱歉，你的购物篮是空的"/>
 		<node name="emptyNetworkSearchResults" value="没有找到对应的书籍"/>

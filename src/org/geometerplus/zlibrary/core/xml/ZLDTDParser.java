@@ -218,7 +218,7 @@ mainSwitchLabel:
 								}
 							}
 						case END_OF_COMMENT1:
-							switch(buffer[++i]) {
+							switch (buffer[++i]) {
 								case '-':
 									state = END_OF_COMMENT2;
 									break mainSwitchLabel;
@@ -227,7 +227,7 @@ mainSwitchLabel:
 									break mainSwitchLabel;
 							}
 						case END_OF_COMMENT2:
-							switch(buffer[++i]) {
+							switch (buffer[++i]) {
 								case '>':
 									state = IGNORABLE_WHITESPACE;
 									break mainSwitchLabel;

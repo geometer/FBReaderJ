@@ -218,7 +218,6 @@ mainLoop:
 					--count;
 				}
 				word = (ZLTextWord)element;
-				System.err.println(new String(word.Data, word.Offset, word.Length));
 				count -= word.Length;
 			}
 		}

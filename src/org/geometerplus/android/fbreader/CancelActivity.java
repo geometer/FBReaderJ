@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.List;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,36 +29,57 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.book.SerializerUtil;
+import org.geometerplus.fbreader.fbreader.CancelMenuHelper;
+
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+
 import org.geometerplus.android.util.ViewUtil;
 
 public class CancelActivity extends ListActivity {
-	static final String LIST_SIZE = "listSize";
-	static final String ITEM_TITLE = "title";
-	static final String ITEM_SUMMARY = "summary";
+	static final String TYPE_KEY = "type";
+	static final String BOOKMARK_KEY = "bookmark";
+
+	private BookCollectionShadow myCollection;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		final ActionListAdapter adapter = new ActionListAdapter(getIntent());
-		setListAdapter(adapter);
-		getListView().setOnItemClickListener(adapter);
-		setResult(-1);
+		myCollection = new BookCollectionShadow();
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				final ActionListAdapter adapter = new ActionListAdapter(
+					new CancelMenuHelper().getActionsList(myCollection)
+				);
+				setListAdapter(adapter);
+				getListView().setOnItemClickListener(adapter);
+			}
+		});
+	}
+
+	@Override
+	protected void onStop() {
+		if (myCollection != null) {
+			myCollection.unbind();
+			myCollection = null;
+		}
+		super.onStop();
 	}
 
 	private class ActionListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
-		private final Intent myIntent;
+		private final List<CancelMenuHelper.ActionDescription> myActions;
 
-		ActionListAdapter(Intent intent) {
-			myIntent = intent;
+		ActionListAdapter(List<CancelMenuHelper.ActionDescription> actions) {
+			myActions = actions;
 		}
 
 		public final int getCount() {
-			return myIntent.getIntExtra(LIST_SIZE, 0);
+			return myActions.size();
 		}
 
-		public final Integer getItem(int position) {
-			return position;
+		public final CancelMenuHelper.ActionDescription getItem(int position) {
+			return myActions.get(position);
 		}
 
 		public final long getItemId(int position) {
@@ -67,10 +90,11 @@ public class CancelActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.cancel_item, parent, false);
+			final CancelMenuHelper.ActionDescription item = getItem(position);
 			final TextView titleView = ViewUtil.findTextView(view, R.id.cancel_item_title);
 			final TextView summaryView = ViewUtil.findTextView(view, R.id.cancel_item_summary);
-			final String title = myIntent.getStringExtra(ITEM_TITLE + position);
-			final String summary = myIntent.getStringExtra(ITEM_SUMMARY + position);
+			final String title = item.Title;
+			final String summary = item.Summary;
 			titleView.setText(title);
 			if (summary != null) {
 				summaryView.setVisibility(View.VISIBLE);
@@ -88,7 +112,16 @@ public class CancelActivity extends ListActivity {
 		}
 
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			setResult((int)id + 1);
+			final Intent data = new Intent();
+			final CancelMenuHelper.ActionDescription item = getItem(position);
+			data.putExtra(TYPE_KEY, item.Type.name());
+			if (item instanceof CancelMenuHelper.BookmarkDescription) {
+				data.putExtra(
+					BOOKMARK_KEY,
+					SerializerUtil.serialize(((CancelMenuHelper.BookmarkDescription)item).Bookmark)
+				);
+			}
+			setResult(RESULT_FIRST_USER, data);
 			finish();
 		}
 	}

@@ -573,7 +573,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected Long bookIdByUid(UID uid) {
 		Long bookId = null;
-		final Cursor cursor = myDatabase.rawQuery("SELECT book_id FROM BookUid WHERE type = ? AND uid = ?", new String[] { uid.Type, uid.Id });
+		final Cursor cursor = myDatabase.rawQuery("SELECT book_id FROM BookUid WHERE type = ? AND uid = ? LIMIT 1", new String[] { uid.Type, uid.Id });
 		if (cursor.moveToNext()) {
 			bookId = cursor.getLong(0);
 		}
@@ -1048,7 +1048,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	
 	private SQLiteStatement mySaveProgessStatement;
 	@Override
-	protected void saveProgress(long bookId, RationalNumber progress) {
+	protected void saveBookProgress(long bookId, RationalNumber progress) {
 		if (mySaveProgessStatement == null) {
 			mySaveProgessStatement = myDatabase.compileStatement(
 				"INSERT OR REPLACE INTO BookReadingProgress (book_id,numerator,denominator) VALUES (?,?,?)"
@@ -1061,7 +1061,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected RationalNumber loadProgress(long bookId) {
+	protected RationalNumber getProgress(long bookId) {
 		final RationalNumber progress;
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT numerator,denominator FROM BookReadingProgress WHERE book_id = " + bookId, null

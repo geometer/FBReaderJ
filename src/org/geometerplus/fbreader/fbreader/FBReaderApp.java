@@ -25,8 +25,7 @@ import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
-import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
@@ -96,7 +95,6 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
 	public final FooterOptions FooterOptions = new FooterOptions();
-	public final CancelMenuOptions CancelMenuOptions = new CancelMenuOptions();
 
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
@@ -120,10 +118,10 @@ public final class FBReaderApp extends ZLApplication {
 					case BookmarkStyleChanged:
 					case BookmarksUpdated:
 						if (Model != null && (book == null || book.equals(Model.Book))) {
-							if (BookTextView.getModel() != null) { 
+							if (BookTextView.getModel() != null) {
 								setBookmarkHighlightings(BookTextView, null);
 							}
-							if (FootnoteView.getModel() != null && myFootnoteModelId != null) { 
+							if (FootnoteView.getModel() != null && myFootnoteModelId != null) {
 								setBookmarkHighlightings(FootnoteView, myFootnoteModelId);
 							}
 						}
@@ -176,7 +174,7 @@ public final class FBReaderApp extends ZLApplication {
 					openBookInternal(book, bookmark, false);
 					if (book != null) {
 						book.addLabel(Book.READ_LABEL);
-						Collection.saveBook(book, false);
+						Collection.saveBook(book);
 					}
 				}
 			}, postAction);
@@ -303,11 +301,11 @@ public final class FBReaderApp extends ZLApplication {
 				return;
 			}
 			book.addLabel(Book.READ_LABEL);
-			Collection.saveBook(book, false);
+			Collection.saveBook(book);
 		}
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
-				gotoBookmark(bookmark);
+				gotoBookmark(bookmark, false);
 			}
 			return;
 		}
@@ -324,7 +322,7 @@ public final class FBReaderApp extends ZLApplication {
 		System.gc();
 		try {
 			Model = BookModel.createModel(book);
-			Collection.saveBook(book, false);
+			Collection.saveBook(book);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
 			setBookmarkHighlightings(BookTextView, null);
@@ -332,7 +330,7 @@ public final class FBReaderApp extends ZLApplication {
 			if (bookmark == null) {
 				setView(BookTextView);
 			} else {
-				gotoBookmark(bookmark);
+				gotoBookmark(bookmark, false);
 			}
 			Collection.addBookToRecentList(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
@@ -386,7 +384,7 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			final Bookmark b = bookmarks.get(0);
 			Collection.deleteBookmark(b);
-			gotoBookmark(b);
+			gotoBookmark(b, true);
 			return true;
 		} finally {
 			myJumpEndPosition = null;
@@ -394,19 +392,27 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private void gotoBookmark(Bookmark bookmark) {
+	private void gotoBookmark(Bookmark bookmark, boolean exactly) {
 		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			addInvisibleBookmark();
-			BookTextView.gotoHighlighting(
-				new BookmarkHighlighting(BookTextView, Collection, bookmark)
-			);
+			if (exactly) {
+				BookTextView.gotoPosition(bookmark);
+			} else {
+				BookTextView.gotoHighlighting(
+					new BookmarkHighlighting(BookTextView, Collection, bookmark)
+				);
+			}
 			setView(BookTextView);
 		} else {
 			setFootnoteModel(modelId);
-			FootnoteView.gotoHighlighting(
-				new BookmarkHighlighting(FootnoteView, Collection, bookmark)
-			);
+			if (exactly) {
+				FootnoteView.gotoPosition(bookmark);
+			} else {
+				FootnoteView.gotoHighlighting(
+					new BookmarkHighlighting(FootnoteView, Collection, bookmark)
+				);
+			}
 			setView(FootnoteView);
 		}
 		getViewWidget().repaint();
@@ -423,82 +429,17 @@ public final class FBReaderApp extends ZLApplication {
 	public void storePosition() {
 		if (Model != null && Model.Book != null && BookTextView != null) {
 			Collection.storePosition(Model.Book.getId(), BookTextView.getStartCursor());
+			Model.Book.setProgress(BookTextView.getProgress());
+			Collection.saveBook(Model.Book);
 		}
 	}
 
-	static enum CancelActionType {
-		library,
-		networkLibrary,
-		previousBook,
-		returnTo,
-		close
+	public boolean hasCancelActions() {
+		return new CancelMenuHelper().getActionsList(Collection).size() > 1;
 	}
 
-	public static class CancelActionDescription {
-		final CancelActionType Type;
-		public final String Title;
-		public final String Summary;
-
-		CancelActionDescription(CancelActionType type, String summary) {
-			final ZLResource resource = ZLResource.resource("cancelMenu");
-			Type = type;
-			Title = resource.getResource(type.toString()).getValue();
-			Summary = summary;
-		}
-	}
-
-	private static class BookmarkDescription extends CancelActionDescription {
-		final Bookmark Bookmark;
-
-		BookmarkDescription(Bookmark b) {
-			super(CancelActionType.returnTo, b.getText());
-			Bookmark = b;
-		}
-	}
-
-	private final ArrayList<CancelActionDescription> myCancelActionsList =
-		new ArrayList<CancelActionDescription>();
-
-	public List<CancelActionDescription> getCancelActionsList() {
-		myCancelActionsList.clear();
-		if (CancelMenuOptions.ShowLibraryItem.getValue()) {
-			myCancelActionsList.add(new CancelActionDescription(
-				CancelActionType.library, null
-			));
-		}
-		if (CancelMenuOptions.ShowNetworkLibraryItem.getValue()) {
-			myCancelActionsList.add(new CancelActionDescription(
-				CancelActionType.networkLibrary, null
-			));
-		}
-		if (CancelMenuOptions.ShowPreviousBookItem.getValue()) {
-			final Book previousBook = Collection.getRecentBook(1);
-			if (previousBook != null) {
-				myCancelActionsList.add(new CancelActionDescription(
-					CancelActionType.previousBook, previousBook.getTitle()
-				));
-			}
-		}
-		if (CancelMenuOptions.ShowPositionItems.getValue()) {
-			if (Model != null && Model.Book != null) {
-				for (Bookmark bookmark : invisibleBookmarks()) {
-					myCancelActionsList.add(new BookmarkDescription(bookmark));
-				}
-			}
-		}
-		myCancelActionsList.add(new CancelActionDescription(
-			CancelActionType.close, null
-		));
-		return myCancelActionsList;
-	}
-
-	public void runCancelAction(int index) {
-		if (index < 0 || index >= myCancelActionsList.size()) {
-			return;
-		}
-
-		final CancelActionDescription description = myCancelActionsList.get(index);
-		switch (description.Type) {
+	public void runCancelAction(CancelMenuHelper.ActionType type, Bookmark bookmark) {
+		switch (type) {
 			case library:
 				runAction(ActionCode.SHOW_LIBRARY);
 				break;
@@ -509,12 +450,9 @@ public final class FBReaderApp extends ZLApplication {
 				openBook(Collection.getRecentBook(1), null, null);
 				break;
 			case returnTo:
-			{
-				final Bookmark b = ((BookmarkDescription)description).Bookmark;
-				Collection.deleteBookmark(b);
-				gotoBookmark(b);
+				Collection.deleteBookmark(bookmark);
+				gotoBookmark(bookmark, true);
 				break;
-			}
 			case close:
 				closeWindow();
 				break;

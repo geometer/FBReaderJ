@@ -60,6 +60,9 @@ public class Book extends TitledEntity {
 
 	Book(long id, ZLFile file, String title, String encoding, String language) {
 		super(title);
+		if (file == null) {
+			throw new IllegalArgumentException("Creating book with no file");
+		}
 		myId = id;
 		File = file;
 		myEncoding = encoding;
@@ -69,6 +72,9 @@ public class Book extends TitledEntity {
 
 	Book(ZLFile file) throws BookReadingException {
 		super(null);
+		if (file == null) {
+			throw new IllegalArgumentException("Creating book with no file");
+		}
 		myId = -1;
 		final FormatPlugin plugin = getPlugin(file);
 		File = plugin.realBookFile(file);
@@ -81,14 +87,29 @@ public class Book extends TitledEntity {
 			return;
 		}
 		setTitle(book.getTitle());
-		myEncoding = book.myEncoding;
-		myLanguage = book.myLanguage;
-		myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
-		myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
-		myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
-		mySeriesInfo = book.mySeriesInfo;
-		myProgress = book.myProgress;
-		HasBookmark = book.HasBookmark;
+		setEncoding(book.myEncoding);
+		setLanguage(book.myLanguage);
+		if (!MiscUtil.equals(myAuthors, book.myAuthors)) {
+			myAuthors = book.myAuthors != null ? new ArrayList<Author>(book.myAuthors) : null;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.equals(myTags, book.myTags)) {
+			myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.equals(myLabels, book.myLabels)) {
+			myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.equals(mySeriesInfo, book.mySeriesInfo)) {
+			mySeriesInfo = book.mySeriesInfo;
+			myIsSaved = false;
+		}
+		setProgress(book.myProgress);
+		if (HasBookmark != book.HasBookmark) {
+			HasBookmark = book.HasBookmark;
+			myIsSaved = false;
+		}
 	}
 
 	public void reloadInfoFromFile() {
@@ -150,6 +171,7 @@ public class Book extends TitledEntity {
 		myLabels = database.listLabels(myId);
 		mySeriesInfo = database.getSeriesInfo(myId);
 		myUids = database.listUids(myId);
+		myProgress = database.getProgress(myId);
 		HasBookmark = database.hasVisibleBookmark(myId);
 		myIsSaved = true;
 		if (myUids == null || myUids.isEmpty()) {
@@ -401,6 +423,17 @@ public class Book extends TitledEntity {
 		return myProgress;
 	}
 
+	public void setProgress(RationalNumber progress) {
+		if (!MiscUtil.equals(myProgress, progress)) {
+			myProgress = progress;
+			myIsSaved = false;
+		}
+	}
+	
+	public void setProgressWithNoCheck(RationalNumber progress) {
+		myProgress = progress;
+	}
+
 	public boolean matches(String pattern) {
 		if (MiscUtil.matchesIgnoreCase(getTitle(), pattern)) {
 			return true;
@@ -472,6 +505,9 @@ public class Book extends TitledEntity {
 				for (UID uid : uids()) {
 					database.saveBookUid(myId, uid);
 				}
+				if (myProgress != null) {
+					database.saveBookProgress(myId, myProgress);
+				}
 			}
 		});
 
@@ -525,7 +561,7 @@ public class Book extends TitledEntity {
 
 	@Override
 	public int hashCode() {
-		return (int)myId;
+		return File.getShortName().hashCode();
 	}
 
 	@Override
@@ -536,7 +572,23 @@ public class Book extends TitledEntity {
 		if (!(o instanceof Book)) {
 			return false;
 		}
-		return File.equals(((Book)o).File);
+		final Book obook = ((Book)o);
+		final ZLFile ofile = obook.File;
+		if (File.equals(ofile)) {
+			return true;
+		}
+		if (!File.getShortName().equals(ofile.getShortName())) {
+			return false;
+		}
+		if (myUids == null || obook.myUids == null) {
+			return false;
+		}
+		for (UID uid : obook.myUids) {
+			if (myUids.contains(uid)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -545,6 +597,8 @@ public class Book extends TitledEntity {
 			.append(File.getPath())
 			.append(", ")
 			.append(myId)
+			.append(", ")
+			.append(getTitle())
 			.append("]")
 			.toString();
 	}

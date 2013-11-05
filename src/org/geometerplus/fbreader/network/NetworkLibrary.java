@@ -406,8 +406,12 @@ public class NetworkLibrary {
 			}
 		}
 
-		if (linkToTreeMap.isEmpty()) {
+		if (!myRootTree.hasChildren()) {
+			//new RecentCatalogListTree(
+			//	myRootTree, new RecentCatalogListItem(resource().getResource("recent"))
+			//);
 			new SearchCatalogTree(myRootTree, mySearchItem);
+			// normal catalog items to be inserted here
 			new ManageCatalogsItemTree(myRootTree);
 			new AddCustomCatalogItemTree(myRootTree);
 		}

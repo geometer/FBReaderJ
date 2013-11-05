@@ -81,16 +81,20 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addPreference(new ZLStringOptionPreference(
-			this, Paths.BooksDirectoryOption(), directoriesScreen.Resource, "books"
+		directoriesScreen.addPreference(new ZLStringListOptionPreference(
+			this, Paths.BookPathOption(), directoriesScreen.Resource, "books"
 		) {
 			protected void setValue(String value) {
 				super.setValue(value);
 				myCollection.reset(false);
 			}
 		});
-		directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
-		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
+		directoriesScreen.addPreference(new ZLStringListOptionPreference(
+			this, Paths.FontPathOption(), directoriesScreen.Resource, "fonts"
+		));
+		directoriesScreen.addPreference(new ZLStringListOptionPreference(
+			this, Paths.WallpaperPathOption(), directoriesScreen.Resource, "wallpapers"
+		));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
@@ -543,12 +547,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(fbReader.FitImagesToScreenOption, "fitImagesToScreen");
 		imagesScreen.addOption(fbReader.ImageViewBackgroundOption, "backgroundColor");
 
-		final CancelMenuOptions cancelMenuOptions = fbReader.CancelMenuOptions;
+		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
-		cancelMenuScreen.addOption(cancelMenuOptions.ShowLibraryItem, "library");
-		cancelMenuScreen.addOption(cancelMenuOptions.ShowNetworkLibraryItem, "networkLibrary");
-		cancelMenuScreen.addOption(cancelMenuOptions.ShowPreviousBookItem, "previousBook");
-		cancelMenuScreen.addOption(cancelMenuOptions.ShowPositionItems, "positions");
+		cancelMenuScreen.addOption(cancelMenuHelper.ShowLibraryItemOption, "library");
+		cancelMenuScreen.addOption(cancelMenuHelper.ShowNetworkLibraryItemOption, "networkLibrary");
+		cancelMenuScreen.addOption(cancelMenuHelper.ShowPreviousBookItemOption, "previousBook");
+		cancelMenuScreen.addOption(cancelMenuHelper.ShowPositionItemsOption, "positions");
 		final String[] backKeyActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(

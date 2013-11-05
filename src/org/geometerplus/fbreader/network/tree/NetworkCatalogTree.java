@@ -38,19 +38,9 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	private long myLoadedTime = -1;
 
-	public NetworkCatalogTree(RootTree parent, INetworkLink link, NetworkCatalogItem item, int position) {
+	public NetworkCatalogTree(NetworkTree parent, INetworkLink link, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		myLink = link;
-		if (item == null) {
-			throw new IllegalArgumentException("item cannot be null");
-		}
-		Item = item;
-		addSpecialTrees();
-	}
-
-	NetworkCatalogTree(NetworkCatalogTree parent, NetworkCatalogItem item, int position) {
-		super(parent, position);
-		myLink = parent.myLink;
 		if (item == null) {
 			throw new IllegalArgumentException("item cannot be null");
 		}

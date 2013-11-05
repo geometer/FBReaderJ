@@ -167,7 +167,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		boolean hasBookLink = false;
-		for (ATOMLink link: entry.Links) {
+		for (ATOMLink link : entry.Links) {
 			final MimeType mime = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), mime);
 			if (rel == null

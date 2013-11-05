@@ -88,9 +88,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
-			saveBook(book, false);
-			// saved
-			addBook(book, false);
+			saveBook(book);
 			return book;
 		}
 		fileInfos.save();
@@ -105,7 +103,7 @@ public class BookCollection extends AbstractBookCollection {
 			return null;
 		}
 
-		saveBook(book, false);
+		saveBook(book);
 		return book;
 	}
 
@@ -160,32 +158,35 @@ public class BookCollection extends AbstractBookCollection {
 		return bookId != null ? getBookById(bookId) : null;
 	}
 
-	private void addBook(Book book, boolean force) {
-		if (book == null || book.getId() == -1) {
-			return;
+	private boolean addBook(Book book, boolean force) {
+		if (book == null) {
+			return false;
 		}
 
 		synchronized (myBooksByFile) {
 			final Book existing = myBooksByFile.get(book.File);
 			if (existing == null) {
+				if (book.getId() == -1 && !book.save(myDatabase, true)) {	
+					return false;
+				}
+
 				myBooksByFile.put(book.File, book);
 				myBooksById.put(book.getId(), book);
 				fireBookEvent(BookEvent.Added, book);
+				return true;
 			} else if (force) {
 				existing.updateFrom(book);
-				fireBookEvent(BookEvent.Updated, existing);
+				if (existing.save(myDatabase, false)) {	
+					fireBookEvent(BookEvent.Updated, existing);
+					return true;
+				}
 			}
+			return false;
 		}
 	}
 
-	public synchronized boolean saveBook(Book book, boolean force) {
-		if (book == null) {
-			return false;
-		}
-
-		final boolean result = book.save(myDatabase, force);
-		addBook(book, true);
-		return result;
+	public synchronized boolean saveBook(Book book) {
+		return addBook(book, true);
 	}
 
 	public void removeBook(Book book, boolean deleteFromDisk) {
@@ -211,6 +212,7 @@ public class BookCollection extends AbstractBookCollection {
 	public List<Book> books(BookQuery query) {
 		final List<Book> allBooks;
 		synchronized (myBooksByFile) {
+			//allBooks = new ArrayList<Book>(new LinkedHashSet<Book>(myBooksByFile.values()));
 			allBooks = new ArrayList<Book>(myBooksByFile.values());
 		}
 		final int start = query.Page * query.Limit;
@@ -432,7 +434,7 @@ public class BookCollection extends AbstractBookCollection {
 				filesToRemove.remove(file);
 				final Book book = getBookByFile(file);
 				if (book != null) {
-					saveBook(book, false);
+					saveBook(book);
 				}
 			}
 
@@ -482,7 +484,7 @@ public class BookCollection extends AbstractBookCollection {
 				if (!fileInfos.check(file, true)) {
 					try {
 						book.readMetaInfo();
-						saveBook(book, false);
+						saveBook(book);
 					} catch (BookReadingException e) {
 						doAdd = false;
 					}
@@ -523,9 +525,7 @@ public class BookCollection extends AbstractBookCollection {
 		if (helpBook == null) {
 			helpBook = getBookByFile(helpFile);
 		}
-		saveBook(helpBook, false);
-		// saved
-		addBook(helpBook, false);
+		saveBook(helpBook);
 
 		// Step 4: save changes into database
 		fileInfos.save();
@@ -533,7 +533,7 @@ public class BookCollection extends AbstractBookCollection {
 		myDatabase.executeAsTransaction(new Runnable() {
 			public void run() {
 				for (Book book : newBooks) {
-					saveBook(book, false);
+					saveBook(book);
 				}
 			}
 		});
