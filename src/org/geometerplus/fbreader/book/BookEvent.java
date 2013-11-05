@@ -26,5 +26,4 @@ public enum BookEvent {
 	Opened,
 	BookmarksUpdated,
 	BookmarkStyleChanged,
-	ProgressUpdated
 }
