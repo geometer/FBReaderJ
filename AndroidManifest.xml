@@ -124,7 +124,12 @@
 				<action android:name="android.fbreader.action.LIBRARY_SERVICE"/>
 			</intent-filter>
 		</service>
-		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:theme="@style/FBReader.Activity" android:process=":library" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:theme="@style/FBReader.Activity" android:process=":library" android:configChanges="orientation|keyboardHidden|screenSize">
+			<intent-filter>
+				<action android:name="android.fbreader.action.BOOK_INFO" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.library.LibrarySearchActivity" android:process=":library" android:theme="@android:style/Theme.NoDisplay">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH"/>
