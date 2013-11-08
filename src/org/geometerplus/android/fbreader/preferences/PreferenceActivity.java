@@ -530,9 +530,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(pageTurningOptions.Horizontal, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
-		if (DictionaryUtil.needIniting()) {
-			DictionaryUtil.forceInit(this);
-		}
+		new DictionaryUtil.Initializer(this).run();
 
 		final List<String> langCodes = ZLResource.languageCodes();
 		final ArrayList<Language> languages = new ArrayList<Language>(langCodes.size() + 1);
