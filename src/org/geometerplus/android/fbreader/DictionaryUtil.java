@@ -280,13 +280,18 @@ public abstract class DictionaryUtil {
 		}
 
 		public void run() {
-			new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
-			new BitKnightsInfoReader(myActivity).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
-			myActivity.runOnUiThread(new Runnable() {
-				public void run() {
-					collectOpenDictionaries(myActivity);
+			synchronized (ourInfos) {
+				if (!ourInfos.isEmpty()) {
+					return;
 				}
-			});
+				new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
+				new BitKnightsInfoReader(myActivity).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
+				myActivity.runOnUiThread(new Runnable() {
+					public void run() {
+						collectOpenDictionaries(myActivity);
+					}
+				});
+			}
 		}
 	}
 
