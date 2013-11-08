@@ -272,19 +272,32 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void init(final Activity activity) {
-		if (ourInfos.isEmpty()) {
-			final Thread initThread = new Thread(new Runnable() {
-				public void run() {
-					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
-					new BitKnightsInfoReader(activity).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
-					activity.runOnUiThread(new Runnable() {
-						public void run() {
-							collectOpenDictionaries(activity);
-						}
-					});
+	private static final class Initializer implements Runnable {
+		private final Activity myActivity;
+
+		public Initializer(Activity activity) {
+			myActivity = activity;
+		}
+
+		public void run() {
+			synchronized (ourInfos) {
+				if (!ourInfos.isEmpty()) {
+					return;
 				}
-			});
+				new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
+				new BitKnightsInfoReader(myActivity).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
+				myActivity.runOnUiThread(new Runnable() {
+					public void run() {
+						collectOpenDictionaries(myActivity);
+					}
+				});
+			}
+		}
+	}
+
+	public static void init(Activity activity) {
+		if (ourInfos.isEmpty()) {
+			final Thread initThread = new Thread(new Initializer(activity));
 			initThread.setPriority(Thread.MIN_PRIORITY);
 			initThread.start();
 		}
