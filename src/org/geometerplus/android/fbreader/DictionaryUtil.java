@@ -272,17 +272,17 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void init(final Context context) {
+	public static void init(final Activity activity) {
 		if (ourInfos.isEmpty()) {
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
-					Looper.prepare();
-
 					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
-					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
-					collectOpenDictionaries(context);
-
-					Looper.loop();
+					new BitKnightsInfoReader(activity).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
+					activity.runOnUiThread(new Runnable() {
+						public void run() {
+							collectOpenDictionaries(activity);
+						}
+					});
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);
