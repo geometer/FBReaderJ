@@ -326,7 +326,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		cssScreen.addOption(collection.UseCSSTextAlignmentOption, "textAlignment");
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
-		colorsScreen.addPreference(new WallpaperPreference(
+		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
 			this, profile, colorsScreen.Resource, "background"
 		) {
 			@Override
@@ -334,7 +334,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				super.onDialogClosed(result);
 				bgPreferences.setEnabled("".equals(getValue()));
 			}
-		});
+		};
+		colorsScreen.addPreference(wallpaperPreference);
 		bgPreferences.add(
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
 		);
