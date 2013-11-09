@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 import java.text.DateFormat;
-import java.text.ParseException;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -345,8 +344,57 @@ class XMLSerializer extends AbstractSerializer {
 	private static String formatDate(Date date) {
 		return date != null ? ourDateFormatter.format(date) : null;
 	}
-	private static Date parseDate(String str) throws ParseException {
-		return str != null ? ourDateFormatter.parse(str) : null;
+	private static Date parseDate(String str) throws SAXException {
+		try {
+			return str != null ? ourDateFormatter.parse(str) : null;
+		} catch (Exception e) {
+			throw new SAXException("XML parsing error", e);
+		}
+	}
+	private static Date parseDateSafe(String str) throws SAXException {
+		try {
+			return str != null ? ourDateFormatter.parse(str) : null;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	private static int parseInt(String str) throws SAXException {
+		try {
+			return Integer.parseInt(str);
+		} catch (Exception e) {
+			throw new SAXException("XML parsing error", e);
+		}
+	}
+	private static int parseIntSafe(String str, int defaultValue) {
+		try {
+			return Integer.parseInt(str);
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	private static long parseLong(String str) throws SAXException {
+		try {
+			return Long.parseLong(str);
+		} catch (Exception e) {
+			throw new SAXException("XML parsing error", e);
+		}
+	}
+	private static long parseLongSafe(String str, long defaultValue) {
+		try {
+			return Long.parseLong(str);
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	private static boolean parseBoolean(String str) throws SAXException {
+		try {
+			return Boolean.parseBoolean(str);
+		} catch (Exception e) {
+			throw new SAXException("XML parsing error", e);
+		}
 	}
 
 	private static void appendTag(StringBuilder buffer, String tag, boolean close, String ... attrs) {
@@ -548,13 +596,10 @@ class XMLSerializer extends AbstractSerializer {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
 					} else if ("progress".equals(localName)) {
-						try {
-							myProgress = RationalNumber.create(
-								Long.parseLong(attributes.getValue("numerator")),
-								Long.parseLong(attributes.getValue("denominator"))
-							);
-						} catch (NumberFormatException e) {
-						}
+						myProgress = RationalNumber.create(
+							parseLong(attributes.getValue("numerator")),
+							parseLong(attributes.getValue("denominator"))
+						);
 					} else {
 						throw new SAXException("Unexpected tag " + localName);
 					}
@@ -608,10 +653,7 @@ class XMLSerializer extends AbstractSerializer {
 		public void characters(char[] ch, int start, int length) {
 			switch (myState) {
 				case READ_ID:
-					try {
-						myId = Long.parseLong(new String(ch, start, length));
-					} catch (NumberFormatException e) {
-					}
+					myId = parseLongSafe(new String(ch, start, length), -1);
 					break;
 				case READ_TITLE:
 					myTitle.append(ch, start, length);
@@ -676,12 +718,8 @@ class XMLSerializer extends AbstractSerializer {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if (myStateStack.isEmpty()) {
 				if ("query".equals(localName)) {
-					try {
-						myLimit = Integer.parseInt(attributes.getValue("limit"));
-						myPage = Integer.parseInt(attributes.getValue("page"));
-					} catch (Exception e) {
-						throw new SAXException("XML parsing error", e);
-					}
+					myLimit = parseInt(attributes.getValue("limit"));
+					myPage = parseInt(attributes.getValue("page"));
 					myStateStack.add(State.READ_QUERY);
 				} else {
 					throw new SAXException("Unexpected tag " + localName);
@@ -784,13 +822,9 @@ class XMLSerializer extends AbstractSerializer {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if ("query".equals(localName)) {
-				try {
-					myVisible = Boolean.parseBoolean(attributes.getValue("visible"));
-					myLimit = Integer.parseInt(attributes.getValue("limit"));
-					myPage = Integer.parseInt(attributes.getValue("page"));
-				} catch (Exception e) {
-					throw new SAXException("XML parsing error", e);
-				}
+				myVisible = parseBoolean(attributes.getValue("visible"));
+				myLimit = parseInt(attributes.getValue("limit"));
+				myPage = parseInt(attributes.getValue("page"));
 			} else {
 				myBookDeserializer.startElement(uri, localName, qName, attributes);
 			}
@@ -889,63 +923,39 @@ class XMLSerializer extends AbstractSerializer {
 					if (!"bookmark".equals(localName)) {
 						throw new SAXException("Unexpected tag " + localName);
 					}
-					try {
-						myId = Long.parseLong(attributes.getValue("id"));
-						myIsVisible = Boolean.parseBoolean(attributes.getValue("visible"));
-						myState = State.READ_BOOKMARK;
-					} catch (Exception e) {
-						throw new SAXException("XML parsing error", e);
-					}
+					myId = parseLong(attributes.getValue("id"));
+					myIsVisible = parseBoolean(attributes.getValue("visible"));
+					myState = State.READ_BOOKMARK;
 					break;
 				case READ_BOOKMARK:
 					if ("book".equals(localName)) {
-						try {
-							myBookId = Long.parseLong(attributes.getValue("id"));
-							myBookTitle = attributes.getValue("title");
-						} catch (Exception e) {
-							throw new SAXException("XML parsing error", e);
-						}
+						myBookId = parseLong(attributes.getValue("id"));
+						myBookTitle = attributes.getValue("title");
 					} else if ("text".equals(localName)) {
 						myState = State.READ_TEXT;
 					} else if ("history".equals(localName)) {
-						try {
-							myCreationDate = parseDate(attributes.getValue("date-creation"));
-							myModificationDate = parseDate(attributes.getValue("date-modification"));
-							myAccessDate = parseDate(attributes.getValue("date-access"));
-							myAccessCount = Integer.parseInt(attributes.getValue("access-count"));
-						} catch (Exception e) {
-							throw new SAXException("XML parsing error", e);
-						}
+						myCreationDate = parseDate(attributes.getValue("date-creation"));
+						myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
+						myAccessDate = parseDateSafe(attributes.getValue("date-access"));
+						myAccessCount = parseIntSafe(attributes.getValue("access-count"), 0);
 					} else if ("start".equals(localName)) {
-						try {
-							myModelId = attributes.getValue("model");
-							myStartParagraphIndex = Integer.parseInt(attributes.getValue("paragraph"));
-							myStartElementIndex = Integer.parseInt(attributes.getValue("element"));
-							myStartCharIndex = Integer.parseInt(attributes.getValue("char"));
-						} catch (Exception e) {
-							throw new SAXException("XML parsing error", e);
-						}
+						myModelId = attributes.getValue("model");
+						myStartParagraphIndex = parseInt(attributes.getValue("paragraph"));
+						myStartElementIndex = parseInt(attributes.getValue("element"));
+						myStartCharIndex = parseInt(attributes.getValue("char"));
 					} else if ("end".equals(localName)) {
-						try {
-							final String para = attributes.getValue("paragraph");
-							if (para != null) {
-								myEndParagraphIndex = Integer.parseInt(para);
-								myEndElementIndex = Integer.parseInt(attributes.getValue("element"));
-								myEndCharIndex = Integer.parseInt(attributes.getValue("char"));
-							} else {
-								myEndParagraphIndex = Integer.parseInt(attributes.getValue("length"));
-								myEndElementIndex = -1;
-								myEndCharIndex = -1;
-							}
-						} catch (Exception e) {
-							throw new SAXException("XML parsing error", e);
+						final String para = attributes.getValue("paragraph");
+						if (para != null) {
+							myEndParagraphIndex = parseInt(para);
+							myEndElementIndex = parseInt(attributes.getValue("element"));
+							myEndCharIndex = parseInt(attributes.getValue("char"));
+						} else {
+							myEndParagraphIndex = parseInt(attributes.getValue("length"));
+							myEndElementIndex = -1;
+							myEndCharIndex = -1;
 						}
 					} else if ("style".equals(localName)) {
-						try {
-							myStyle = Integer.parseInt(attributes.getValue("id"));
-						} catch (Exception e) {
-							throw new SAXException("XML parsing error", e);
-						}
+						myStyle = parseInt(attributes.getValue("id"));
 					} else {
 						throw new SAXException("Unexpected tag " + localName);
 					}
@@ -993,17 +1003,13 @@ class XMLSerializer extends AbstractSerializer {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if ("style".equals(localName)) {
-				try {
-					final int id = Integer.parseInt(attributes.getValue("id"));
-					if (id != -1) {
-						final int rgb = Integer.parseInt(attributes.getValue("bg-color"));
-						final ZLColor color = rgb != -1 ? new ZLColor(rgb) : null;
-						myStyle = new HighlightingStyle(
-							id, attributes.getValue("name"), color
-						);
-					}
-				} catch (Exception e) {
-					// ignore
+				final int id = parseIntSafe(attributes.getValue("id"), -1);
+				if (id != -1) {
+					final int rgb = parseIntSafe(attributes.getValue("bg-color"), -1);
+					final ZLColor color = rgb != -1 ? new ZLColor(rgb) : null;
+					myStyle = new HighlightingStyle(
+						id, attributes.getValue("name"), color
+					);
 				}
 			}
 		}
