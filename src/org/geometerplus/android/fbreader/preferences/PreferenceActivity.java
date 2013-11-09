@@ -326,6 +326,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		cssScreen.addOption(collection.UseCSSTextAlignmentOption, "textAlignment");
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
+
 		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
 			this, profile, colorsScreen.Resource, "background"
 		) {
@@ -336,6 +337,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		};
 		colorsScreen.addPreference(wallpaperPreference);
+
 		bgPreferences.add(
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
 		);
