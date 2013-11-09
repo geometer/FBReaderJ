@@ -274,14 +274,19 @@ public abstract class DictionaryUtil {
 
 	private static final class Initializer implements Runnable {
 		private final Activity myActivity;
+		private final Runnable myPostAction;
 
-		public Initializer(Activity activity) {
+		public Initializer(Activity activity, Runnable postAction) {
 			myActivity = activity;
+			myPostAction = postAction;
 		}
 
 		public void run() {
 			synchronized (ourInfos) {
 				if (!ourInfos.isEmpty()) {
+					if (myPostAction != null) {
+						myPostAction.run();
+					}
 					return;
 				}
 				new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
@@ -289,17 +294,22 @@ public abstract class DictionaryUtil {
 				myActivity.runOnUiThread(new Runnable() {
 					public void run() {
 						collectOpenDictionaries(myActivity);
+						if (myPostAction != null) {
+							myPostAction.run();
+						}
 					}
 				});
 			}
 		}
 	}
 
-	public static void init(Activity activity) {
+	public static void init(Activity activity, Runnable postAction) {
 		if (ourInfos.isEmpty()) {
-			final Thread initThread = new Thread(new Initializer(activity));
+			final Thread initThread = new Thread(new Initializer(activity, postAction));
 			initThread.setPriority(Thread.MIN_PRIORITY);
 			initThread.start();
+		} else if (postAction != null) {
+			postAction.run();
 		}
 	}
 
