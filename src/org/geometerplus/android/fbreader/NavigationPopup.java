@@ -132,12 +132,12 @@ final class NavigationPopup {
 				AlertDialog.Builder builder = new AlertDialog.Builder(myWindow.getActivity());
 				final EditText input = new EditText(myWindow.getActivity());
 				input.setInputType(InputType.TYPE_CLASS_NUMBER);
-				input.setFilters(new InputFilter[]{ 
+				input.setFilters(new InputFilter[] {
 					new InputFilterMinMax(0, myFBReader.getTextView().pagePosition().Total)
 				});
 				input.setText(Integer.toString(myFBReader.getTextView().pagePosition().Current));
 				builder.setView(input);
-				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { 
+				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						int num = Integer.parseInt(input.getText().toString());
@@ -161,10 +161,9 @@ final class NavigationPopup {
 					}
 				});
 				builder.show();
-				
 			}
 		});
-		
+
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		myResetButton.setText(buttonResource.getResource("resetPosition").getValue());
 		myEnterButton.setText(buttonResource.getResource("enterPosition").getValue());

@@ -455,7 +455,7 @@ public class Book extends TitledEntity {
 			myIsSaved = false;
 		}
 	}
-	
+
 	public void setProgressWithNoCheck(RationalNumber progress) {
 		myProgress = progress;
 	}
@@ -576,7 +576,6 @@ public class Book extends TitledEntity {
 			}
 		}
 		ZLImage image = null;
-		
 		try {
 			final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
 			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);

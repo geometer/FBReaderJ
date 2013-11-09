@@ -1,33 +1,48 @@
+/*
+ * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
 package org.geometerplus.android.fbreader;
 
 import android.text.InputFilter;
 import android.text.Spanned;
 
 public class InputFilterMinMax implements InputFilter {
+	private final int myMin, myMax;
 
-    private int min, max;
+	public InputFilterMinMax(int min, int max) {
+		myMin = Math.min(min, max);
+		myMax = Math.max(min, max);
+	}
 
-    public InputFilterMinMax(int min, int max) {
-        this.min = min;
-        this.max = max;
-    }
+	public InputFilterMinMax(String min, String max) {
+		this(Integer.parseInt(min), Integer.parseInt(max));
+	}
 
-    public InputFilterMinMax(String min, String max) {
-        this.min = Integer.parseInt(min);
-        this.max = Integer.parseInt(max);
-    }
-
-    @Override
-    public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {   
-        try {
-            int input = Integer.parseInt(dest.toString() + source.toString());
-            if (isInRange(min, max, input))
-                return null;
-        } catch (NumberFormatException nfe) { }     
-        return "";
-    }
-
-    private boolean isInRange(int a, int b, int c) {
-        return b > a ? c >= a && c <= b : c >= b && c <= a;
-    }
+	@Override
+	public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+		try {
+			final int input = Integer.parseInt(dest.toString() + source.toString());
+			if (myMin <= input && input <= myMax) {
+				return null;
+			}
+		} catch (NumberFormatException nfe) {
+		}
+		return "";
+	}
 }
