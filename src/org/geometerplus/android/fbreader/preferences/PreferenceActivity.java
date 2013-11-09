@@ -365,7 +365,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
-		final WallpaperPreference wp = new WallpaperPreference(
+		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
 			this, profile, colorsScreen.Resource, "background"
 		) {
 			@Override
@@ -374,9 +374,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				bgPreferences.setEnabled("".equals(getValue()));
 			}
 		};
-
-		colorsScreen.addPreference(wp);
-		wallpaperDirPreference.setBoundPref(wp);
+		colorsScreen.addPreference(wallpaperPreference);
+		wallpaperDirPreference.setBoundPref(wallpaperPreference);
 
 		bgPreferences.add(
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
