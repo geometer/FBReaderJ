@@ -173,7 +173,7 @@ public abstract class BaseStringListActivity extends ListActivity {
 				}
 			}
 		}
-		
+
 		StringItem getStringItem(int id) {
 			for (int i = 0; i < myItems.size(); i++) {
 				if (myItems.get(i).getId() == id) {
@@ -182,7 +182,6 @@ public abstract class BaseStringListActivity extends ListActivity {
 			}
 			return null;
 		}
-
 	}
 
 	public static class StringItem {
@@ -194,14 +193,14 @@ public abstract class BaseStringListActivity extends ListActivity {
 		public String getData() {
 			return myData;
 		}
-		
+
 		public String getFullData() {
 			if (mySubData == null || "".equals(mySubData)) {
 				return myData;
 			}
 			return myData + Divider + mySubData;
 		}
-		
+
 		public void setData(String data) {
 			int index = data.indexOf(Divider);
 			if (index != -1) {
@@ -212,10 +211,11 @@ public abstract class BaseStringListActivity extends ListActivity {
 				mySubData = "";
 			}
 		}
-		
+
 		public int getId() {
 			return myId;
 		}
+
 		public void setId(int id) {
 			myId = id;
 		}

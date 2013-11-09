@@ -39,7 +39,7 @@ public class TagListPreference extends ZLActivityPreference {
 		myTags.clear();
 		for (Tag t : tags) {
 			myTags.put(t.toString("/"), t);
-		} 
+		}
 	}
 
 	@Override

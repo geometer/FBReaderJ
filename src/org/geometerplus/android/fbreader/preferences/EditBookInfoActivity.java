@@ -167,7 +167,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			}
 			return res;
 		}
-		
+
 		public List<String> getDisplayValue() {
 			List<Author> authors = myBook.authors();
 			List<String> res = new ArrayList<String>();
@@ -207,7 +207,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			}
 			return myValues;
 		}
-		
+
 		public synchronized List<String> getDisplayValue() {
 			return getValue();
 		}
