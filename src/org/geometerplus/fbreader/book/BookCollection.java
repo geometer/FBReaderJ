@@ -177,14 +177,9 @@ public class BookCollection extends AbstractBookCollection {
 				fireBookEvent(BookEvent.Added, book);
 				return true;
 			} else if (force) {
-				final RationalNumber existingProgress = existing.getProgress();
-				final RationalNumber bookProgress = book.getProgress();
 				existing.updateFrom(book);
 				if (existing.save(myDatabase, false)) {	
 					fireBookEvent(BookEvent.Updated, existing);
-					if (!MiscUtil.equals(bookProgress, existingProgress)) {
-						fireBookEvent(BookEvent.ProgressUpdated, existing);
-					}
 					return true;
 				}
 			}
