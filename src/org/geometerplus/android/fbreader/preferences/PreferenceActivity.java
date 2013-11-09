@@ -530,7 +530,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(pageTurningOptions.Horizontal, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
-		new DictionaryUtil.Initializer(this).run();
 
 		final List<String> langCodes = ZLResource.languageCodes();
 		final ArrayList<Language> languages = new ArrayList<Language>(langCodes.size() + 1);
@@ -555,57 +554,43 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		};
 
-		try {
-			dictionaryScreen.addPreference(new DictionaryPreference(
-				this,
-				dictionaryScreen.Resource,
-				"dictionary",
-				DictionaryUtil.singleWordTranslatorOption(),
-				DictionaryUtil.dictionaryInfos(this, true)
-			) {
-				@Override
-				protected void onDialogClosed(boolean result) {
-					super.onDialogClosed(result);
-					targetLanguagePreference.setEnabled(
-						DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
-					);
-				}
-			});
-			dictionaryScreen.addPreference(new DictionaryPreference(
-				this,
-				dictionaryScreen.Resource,
-				"translator",
-				DictionaryUtil.multiWordTranslatorOption(),
-				DictionaryUtil.dictionaryInfos(this, false)
-			));
-		} catch (Exception e) {
-			// ignore: dictionary lists are not initialized yet
-		}
-		dictionaryScreen.addPreference(new DictionaryPreference(
-			this,
-			dictionaryScreen.Resource,
-			"dictionary",
-			DictionaryUtil.singleWordTranslatorOption(),
-			DictionaryUtil.dictionaryInfos(this, true)
-		));
-		dictionaryScreen.addPreference(new DictionaryPreference(
-			this,
-			dictionaryScreen.Resource,
-			"translator",
-			DictionaryUtil.multiWordTranslatorOption(),
-			DictionaryUtil.dictionaryInfos(this, false)
-		));
-		dictionaryScreen.addPreference(new ZLBooleanPreference(
-			this,
-			FBReaderApp.NavigateAllWordsOption,
-			dictionaryScreen.Resource,
-			"navigateOverAllWords"
-		));
-		dictionaryScreen.addOption(FBReaderApp.WordTappingActionOption, "tappingAction");
-		dictionaryScreen.addPreference(targetLanguagePreference);
-		targetLanguagePreference.setEnabled(
-			DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
-		);
+		DictionaryUtil.init(this, new Runnable() {
+			public void run() {
+				dictionaryScreen.addPreference(new DictionaryPreference(
+					PreferenceActivity.this,
+					dictionaryScreen.Resource,
+					"dictionary",
+					DictionaryUtil.singleWordTranslatorOption(),
+					DictionaryUtil.dictionaryInfos(PreferenceActivity.this, true)
+				) {
+					@Override
+					protected void onDialogClosed(boolean result) {
+						super.onDialogClosed(result);
+						targetLanguagePreference.setEnabled(
+							DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
+						);
+					}
+				});
+				dictionaryScreen.addPreference(new DictionaryPreference(
+					PreferenceActivity.this,
+					dictionaryScreen.Resource,
+					"translator",
+					DictionaryUtil.multiWordTranslatorOption(),
+					DictionaryUtil.dictionaryInfos(PreferenceActivity.this, false)
+				));
+				dictionaryScreen.addPreference(new ZLBooleanPreference(
+					PreferenceActivity.this,
+					FBReaderApp.NavigateAllWordsOption,
+					dictionaryScreen.Resource,
+					"navigateOverAllWords"
+				));
+				dictionaryScreen.addOption(FBReaderApp.WordTappingActionOption, "tappingAction");
+				dictionaryScreen.addPreference(targetLanguagePreference);
+				targetLanguagePreference.setEnabled(
+					DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
+				);
+			}
+		});
 
 		final Screen imagesScreen = createPreferenceScreen("images");
 		imagesScreen.addOption(FBReaderApp.ImageTappingActionOption, "tappingAction");

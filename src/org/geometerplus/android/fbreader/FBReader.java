@@ -313,7 +313,7 @@ public final class FBReader extends Activity {
 				runOnUiThread(new Runnable() {
 					public void run() {
 						new TipRunner().start();
-						DictionaryUtil.init(FBReader.this);
+						DictionaryUtil.init(FBReader.this, null);
 					}
 				});
 			}
