@@ -31,100 +31,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 		Latest
 	}
 
-	private long myId;
-	private final long myBookId;
-	private final String myBookTitle;
-	private String myText;
-	private final Date myCreationDate;
-	private Date myModificationDate;
-	private Date myAccessDate;
-	private int myAccessCount;
-	private Date myLatestDate;
-	private ZLTextFixedPosition myEnd;
-	private int myLength;
-	private int myStyleId;
-
-	public final String ModelId;
-	public final boolean IsVisible;
-
-	Bookmark(
-		long id, long bookId, String bookTitle, String text,
-		Date creationDate, Date modificationDate, Date accessDate, int accessCount,
-		String modelId,
-		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
-		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
-		boolean isVisible,
-		int styleId
-	) {
-		super(start_paragraphIndex, start_elementIndex, start_charIndex);
-
-		myId = id;
-		myBookId = bookId;
-		myBookTitle = bookTitle;
-		myText = text;
-		myCreationDate = creationDate;
-		myModificationDate = modificationDate;
-		myLatestDate = (modificationDate != null) ? modificationDate : creationDate;
-		if (accessDate != null) {
-			myAccessDate = accessDate;
-			if (myLatestDate.compareTo(accessDate) < 0) {
-				myLatestDate = accessDate;
-			}
-		}
-		myAccessCount = accessCount;
-		ModelId = modelId;
-		IsVisible = isVisible;
-
-		if (end_charIndex >= 0) {
-			myEnd = new ZLTextFixedPosition(end_paragraphIndex, end_elementIndex, end_charIndex);
-		} else {
-			myLength = end_paragraphIndex;
-		}
-
-		myStyleId = styleId;
-	}
-
-	private static class Buffer {
-		final StringBuilder Builder = new StringBuilder();
-		final ZLTextWordCursor Cursor;
-
-		Buffer(ZLTextWordCursor cursor) {
-			Cursor = new ZLTextWordCursor(cursor);
-		}
-
-		boolean isEmpty() {
-			return Builder.length() == 0;
-		}
-
-		void append(Buffer buffer) {
-			Builder.append(buffer.Builder);
-			Cursor.setCursor(buffer.Cursor);
-			buffer.Builder.delete(0, buffer.Builder.length());
-		}
-
-		void append(CharSequence data) {
-			Builder.append(data);
-		}
-	}
-
-	public Bookmark(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
-		this(book.getId(), book.getTitle(), modelId, start, end, text, isVisible);
-	}
-	
-	public Bookmark(Long bookId, String bookTitle, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
-		super(start);
-
-		myId = -1;
-		myBookId = bookId;
-		myBookTitle = bookTitle;
-		myText = text;
-		myCreationDate = new Date();
-		ModelId = modelId;
-		IsVisible = isVisible;
-		myEnd = new ZLTextFixedPosition(end);
-		myStyleId = 1;
-	}
-
 	public static Bookmark createBookmark(Book book, String modelId, ZLTextWordCursor startCursor, int maxWords, boolean isVisible) {
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(startCursor);
 
@@ -206,6 +112,77 @@ mainLoop:
 			buffer.append(sentenceBuffer);
 		}
 		return new Bookmark(book, modelId, startCursor, buffer.Cursor, buffer.Builder.toString(), isVisible);
+	}
+
+	private long myId;
+	private final long myBookId;
+	private final String myBookTitle;
+	private String myText;
+	private final Date myCreationDate;
+	private Date myModificationDate;
+	private Date myAccessDate;
+	private int myAccessCount;
+	private Date myLatestDate;
+	private ZLTextFixedPosition myEnd;
+	private int myLength;
+	private int myStyleId;
+
+	public final String ModelId;
+	public final boolean IsVisible;
+
+	Bookmark(
+		long id, long bookId, String bookTitle, String text,
+		Date creationDate, Date modificationDate, Date accessDate, int accessCount,
+		String modelId,
+		int start_paragraphIndex, int start_elementIndex, int start_charIndex,
+		int end_paragraphIndex, int end_elementIndex, int end_charIndex,
+		boolean isVisible,
+		int styleId
+	) {
+		super(start_paragraphIndex, start_elementIndex, start_charIndex);
+
+		myId = id;
+		myBookId = bookId;
+		myBookTitle = bookTitle;
+		myText = text;
+		myCreationDate = creationDate;
+		myModificationDate = modificationDate;
+		myLatestDate = (modificationDate != null) ? modificationDate : creationDate;
+		if (accessDate != null) {
+			myAccessDate = accessDate;
+			if (myLatestDate.compareTo(accessDate) < 0) {
+				myLatestDate = accessDate;
+			}
+		}
+		myAccessCount = accessCount;
+		ModelId = modelId;
+		IsVisible = isVisible;
+
+		if (end_charIndex >= 0) {
+			myEnd = new ZLTextFixedPosition(end_paragraphIndex, end_elementIndex, end_charIndex);
+		} else {
+			myLength = end_paragraphIndex;
+		}
+
+		myStyleId = styleId;
+	}
+
+	public Bookmark(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
+		this(book.getId(), book.getTitle(), modelId, start, end, text, isVisible);
+	}
+	
+	public Bookmark(Long bookId, String bookTitle, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
+		super(start);
+
+		myId = -1;
+		myBookId = bookId;
+		myBookTitle = bookTitle;
+		myText = text;
+		myCreationDate = new Date();
+		ModelId = modelId;
+		IsVisible = isVisible;
+		myEnd = new ZLTextFixedPosition(end);
+		myStyleId = 1;
 	}
 
 	public void findEnd(ZLTextView view) {
@@ -331,6 +308,29 @@ mainLoop:
 		// TODO: copy other fields (?)
 		if (other != null) {
 			myId = other.myId;
+		}
+	}
+
+	private static class Buffer {
+		final StringBuilder Builder = new StringBuilder();
+		final ZLTextWordCursor Cursor;
+
+		Buffer(ZLTextWordCursor cursor) {
+			Cursor = new ZLTextWordCursor(cursor);
+		}
+
+		boolean isEmpty() {
+			return Builder.length() == 0;
+		}
+
+		void append(Buffer buffer) {
+			Builder.append(buffer.Builder);
+			Cursor.setCursor(buffer.Cursor);
+			buffer.Builder.delete(0, buffer.Builder.length());
+		}
+
+		void append(CharSequence data) {
+			Builder.append(data);
 		}
 	}
 }
