@@ -259,12 +259,11 @@
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
 		<node name="library" value="Library"/>
-		<!-- YOTA changes start -->
-		<node name="p2b" value="Put to back"/>
-		<!-- YOTA changes end -->
 		<node name="toc" value="TOC"/>
 		<node name="day" value="Day"/>
 		<node name="night" value="Night"/>
+		<node name="yotaSwitchToBackScreen" value="Switch to back screen"/>
+		<node name="yotaSwitchToFrontScreen" value="Switch to front screen"/>
 		<node name="networkLibrary" value="Network library"/>
 		<node name="navigate" value="Navigate">
 			<node name="toc" value="Table of Contents"/>

@@ -26,9 +26,7 @@ import android.content.*;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.PowerManager;
+import android.os.*;
 import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -235,7 +233,6 @@ public final class FBReader extends Activity {
 			new SelectionPopup(myFBReaderApp);
 		}
 
-		myFBReaderApp.addAction(ActionCode.PUT_TO_BACK, new PutToBackAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoAction(this, myFBReaderApp));
@@ -267,6 +264,9 @@ public final class FBReader extends Activity {
 			myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
 		myFBReaderApp.addAction(ActionCode.OPEN_WEB_HELP, new OpenWebHelpAction(this, myFBReaderApp));
+
+		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
+		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
 	}
 
 	public ZLAndroidWidget getMainView() {
@@ -585,14 +585,13 @@ public final class FBReader extends Activity {
 
 	private void setupMenu(Menu menu) {
 		addMenuItem(menu, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library);
-		// YOTA changes start
-		if (Build.BRAND.equals("YotaPhone")) {
-			addMenuItem(menu, ActionCode.PUT_TO_BACK, R.drawable.ic_menu_p2b);
-		}
-		// YOTA changes end
 		addMenuItem(menu, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary);
 		addMenuItem(menu, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc);
 		addMenuItem(menu, ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks);
+		if (Build.BRAND.equals("YotaPhone")) {
+			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b);
+			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b);
+		}
 		addMenuItem(menu, ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night);
 		addMenuItem(menu, ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day);
 		addMenuItem(menu, ActionCode.SEARCH, R.drawable.ic_menu_search);

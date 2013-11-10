@@ -26,9 +26,6 @@ public interface ActionCode {
 	String SHOW_TOC = "toc";
 	String SHOW_BOOKMARKS = "bookmarks";
 	String SHOW_NETWORK_LIBRARY = "networkLibrary";
-	// YOTA changes start
-	String PUT_TO_BACK = "p2b";
-	// YOTA changes end
 
 	String SWITCH_TO_NIGHT_PROFILE = "night";
 	String SWITCH_TO_DAY_PROFILE = "day";
@@ -80,4 +77,7 @@ public interface ActionCode {
 	String SELECTION_BOOKMARK = "selectionBookmark";
 
 	String OPEN_WEB_HELP = "help";
+
+	String YOTA_SWITCH_TO_BACK_SCREEN = "yotaSwitchToBackScreen";
+	String YOTA_SWITCH_TO_FRONT_SCREEN = "yotaSwitchToFrontScreen";
 }

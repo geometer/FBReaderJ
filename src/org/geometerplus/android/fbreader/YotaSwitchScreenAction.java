@@ -2,16 +2,20 @@
 
 package org.geometerplus.android.fbreader;
 
-import com.yotadevices.fbreader.FBReaderYotaService;
 import com.yotadevices.sdk.utils.RotationAlgorithm;
+
+import com.yotadevices.fbreader.FBReaderYotaService;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import android.content.Intent;
 
-class PutToBackAction extends FBAndroidAction {
-	PutToBackAction(FBReader baseActivity, FBReaderApp fbreader) {
+class YotaSwitchScreenAction extends FBAndroidAction {
+	private final boolean mySwitchToBack;
+
+	YotaSwitchScreenAction(FBReader baseActivity, FBReaderApp fbreader, boolean switchToBack) {
 		super(baseActivity, fbreader);
+		mySwitchToBack = switchToBack;
 	}
 
 	@Override
