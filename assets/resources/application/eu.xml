@@ -289,6 +289,7 @@
 		<node name="toggleFullscreen" value="Pantaila osoan"/>
 		<node name="bookmarks" value="Laster-markak"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Fitxategiaren izena"/>

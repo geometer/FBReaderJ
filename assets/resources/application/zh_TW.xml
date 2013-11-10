@@ -279,6 +279,7 @@
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="書籤"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="檔名"/>
