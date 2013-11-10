@@ -295,6 +295,7 @@
 		<node name="toggleFullscreen" value="Поўны экран"/>
 		<node name="bookmarks" value="Закладкі"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Назва файла"/>
