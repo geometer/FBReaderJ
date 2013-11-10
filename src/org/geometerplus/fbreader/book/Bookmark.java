@@ -168,15 +168,11 @@ mainLoop:
 	}
 
 	public Bookmark(Book book, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
-		this(book.getId(), book.getTitle(), modelId, start, end, text, isVisible);
-	}
-	
-	public Bookmark(Long bookId, String bookTitle, String modelId, ZLTextPosition start, ZLTextPosition end, String text, boolean isVisible) {
 		super(start);
 
 		myId = -1;
-		myBookId = bookId;
-		myBookTitle = bookTitle;
+		myBookId = book.getId();
+		myBookTitle = book.getTitle();
 		myText = text;
 		myCreationDate = new Date();
 		ModelId = modelId;
