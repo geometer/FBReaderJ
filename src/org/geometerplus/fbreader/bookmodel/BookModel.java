@@ -49,8 +49,7 @@ public abstract class BookModel {
 	}
 	
 	public static BookModel createPluginModel(Book book) {
-		final BookModel model = new PluginBookModel(book);
-		return model;
+		return new PluginBookModel(book);
 	}
 
 	public final Book Book;
