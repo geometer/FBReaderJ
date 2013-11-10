@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.util.*;
 
 import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -56,9 +55,9 @@ import org.geometerplus.android.fbreader.FBReaderApplication;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	public static boolean isServiceRunning(Context context, String name) {
-		ActivityManager manager = (ActivityManager)context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-			if (name.equals(service.service.getClassName())) {
+		final ActivityManager manager = (ActivityManager)context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+		for (ActivityManager.RunningServiceInfo info : manager.getRunningServices(Integer.MAX_VALUE)) {
+			if (name.equals(info.service.getClassName())) {
 				return true;
 			}
 		}
@@ -72,9 +71,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
-	private boolean mIsDrawOnBack = false;
-
-	private View mP2BView;
+	private boolean myIsDrawOnBack = false;
+	private View myP2BView;
 
 	private Boolean myIsKindleFire = null;
 	public boolean isKindleFire() {
@@ -101,7 +99,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	public void setActivity(FBReader activity) {
 		myActivity = activity;
-		mP2BView = myActivity.findViewById(R.id.bs_active);
+		myP2BView = myActivity.findViewById(R.id.bs_active);
 		TextView textView = (TextView)myActivity.findViewById(R.id.p2b_message);
 		if (textView != null) {
 			textView.setText(ZLResource.resource("dialog").getResource("p2b").getResource("message").getValue());
@@ -113,8 +111,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			cancelBtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (mIsDrawOnBack) {
-						mIsDrawOnBack = false;
+					if (myIsDrawOnBack) {
+						myIsDrawOnBack = false;
 //						Intent serviceIntent = new Intent(FBReaderApplication.getAppContext(), FBReaderYotaService.class);
 //						serviceIntent.setAction(FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_DISABLE);
 //						FBReaderApplication.getAppContext().startService(serviceIntent);
@@ -123,9 +121,9 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			});
 		}
 		if (isServiceRunning(FBReaderApplication.getAppContext(), "com.yotadevices.apps.fbreader.FBReaderYotaService")) {
-			mIsDrawOnBack = true;
-			if (mP2BView != null) {
-				mP2BView.setVisibility(View.VISIBLE);
+			myIsDrawOnBack = true;
+			if (myP2BView != null) {
+				myP2BView.setVisibility(View.VISIBLE);
 			}
 		}
 		myWidget = null;
@@ -146,22 +144,22 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public void setViewWidget(ZLAndroidWidget widget) {
-		mIsDrawOnBack = true;
-		if (mP2BView != null) {
-			mP2BView.setVisibility(View.VISIBLE);
+		myIsDrawOnBack = true;
+		if (myP2BView != null) {
+			myP2BView.setVisibility(View.VISIBLE);
 		}
 		myWidget = widget;
 	}
 
 	public boolean isDrawOnBack() {
-		return mIsDrawOnBack;
+		return myIsDrawOnBack;
 	}
 
 	public void resetViewWidget() {
-		mIsDrawOnBack = false;
+		myIsDrawOnBack = false;
 		myWidget = null;
-		if (mP2BView != null) {
-			mP2BView.setVisibility(View.GONE);
+		if (myP2BView != null) {
+			myP2BView.setVisibility(View.GONE);
 		}
 		if (myActivity != null) {
 			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
