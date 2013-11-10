@@ -291,6 +291,7 @@
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
+		<node name="plugins" value="Plugins"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="File name"/>

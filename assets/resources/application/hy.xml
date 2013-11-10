@@ -294,6 +294,7 @@
 		<node name="toggleFullscreen" value="Ամբողջ էկրանով"/>
 		<node name="bookmarks" value="Էջանիշեր"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Նիշք"/>
