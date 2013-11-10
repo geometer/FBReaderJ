@@ -78,4 +78,5 @@ public interface ActionCode {
 	String SELECTION_BOOKMARK = "selectionBookmark";
 
 	String OPEN_WEB_HELP = "help";
+	String INSTALL_PLUGINS = "plugins";
 }
