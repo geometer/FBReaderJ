@@ -26,7 +26,6 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext.DrawMode;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
@@ -650,15 +649,15 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	protected DrawMode getDrawMode() {
+	protected ZLPaintContext.DrawMode getDrawMode() {
 		if (new ZLBooleanOption("Colors", "ImagesBackground", true).getValue()) {
-			String prof = new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
-			if (ColorProfile.DAY.equals(prof)) {
-				return DrawMode.DARKEN;
+			final String profile = new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
+			if (ColorProfile.DAY.equals(profile)) {
+				return ZLPaintContext.DrawMode.DARKEN;
 			} else {
-				return DrawMode.LIGHTEN;
+				return ZLPaintContext.DrawMode.LIGHTEN;
 			}
 		}
-		return DrawMode.STANDARD;
+		return ZLPaintContext.DrawMode.STANDARD;
 	}
 }
