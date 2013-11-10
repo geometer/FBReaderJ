@@ -294,6 +294,7 @@
 		<node name="toggleFullscreen" value="მთლიან ეკრანზე"/>
 		<node name="bookmarks" value="სანიშნეები"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="ფაილი"/>
