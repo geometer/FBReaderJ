@@ -20,11 +20,9 @@
 package org.geometerplus.fbreader.bookmodel;
 
 import org.geometerplus.zlibrary.text.model.*;
-
 import org.geometerplus.fbreader.book.Book;
 
 public class PluginBookModel extends BookModelImpl {
-
 	PluginBookModel(Book book) {
 		super(book);
 	}
@@ -43,5 +41,4 @@ public class PluginBookModel extends BookModelImpl {
 	public boolean isValid() {
 		return false;
 	}
-
 }
