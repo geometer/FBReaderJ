@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Catalan zlibrary resources, by Alfonso Montero and Carles Pastor i Badosa. -->
 <!-- CHANGELOG
-	02-12-2013: Initial version. Based on Spanish translation.
+	2013-02-12: Initial version. Based on Spanish translation. -Alfonso Montero
 	2013-10-28: Translated all the strings that had been left untranslated. -Carles Pastor i Badosa
+	2013-11-11: Minor fixes. -Alfonso Montero
 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
 			<node name="ok" value="Accepta"/>
-			<node name="cancel" value="Cancela"/>
+			<node name="cancel" value="Cancel·la"/>
 			<node name="yes" value="Sí"/>
 			<node name="no" value="No"/>
 			<node name="apply" value="Aplica"/>
@@ -43,7 +44,7 @@
 		<node name="cs" value="Txec"/>
 		<node name="da" value="Danès"/>
 		<node name="de" value="Alemany"/>
-		<node name="de-traditional" value="Alemany (ortografía tradicional)"/>
+		<node name="de-traditional" value="Alemany (ortografia tradicional)"/>
 		<node name="el" value="Grec"/>
 		<node name="en" value="Anglès"/>
 		<node name="eo" value="Esperanto"/>
@@ -71,10 +72,10 @@
 		<node name="ta" value="Tamil"/>
 		<node name="th" value="Tailandès"/>
 		<node name="tr" value="Turc"/>
-		<node name="uk" value="Ucrainès"/>
+		<node name="uk" value="Ucraïnès"/>
 		<node name="vi" value="Vietnamita"/>
 		<node name="zh" value="Xinès"/>
-		<node name="zh_TW" value="Xinès (traditional)"/>
+		<node name="zh_TW" value="Xinès (tradicional)"/>
 		<node name="any" value="Qualsevol"/>
 		<node name="other" value="Altre"/>
 		<node name="multi" value="Multilingüe"/>
