@@ -14,9 +14,7 @@
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<!-- YOTA changes start -->
 	<uses-permission android:name="com.yotadevices.framework.permission.ACCESS_BACKSCREEN"/>
-	<!-- YOTA changes end -->
 	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/yota_fbreader" android:logo="@drawable/yota_fbreader_bw" android:label="FBReader">
 		<!-- YOTA changes start -->
 		<meta-data android:name="@string/com.yotadevices.BS_ICON" android:resource="@drawable/reader_bs_icon"/>
