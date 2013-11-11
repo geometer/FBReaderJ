@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Catalan FBReaderJ resources, by Alfonso Montero and Carles Pastor i Badosa -->
 <!-- CHANGELOG
-	02-06-2013: Initial version. Based on Spanish translation.
-	02-13-2013: A few more strings translated. Marking untranslated ones.
+	2013-02-06: Initial version. Based on Spanish translation. -Alfonso Montero
+	2013-02-13: A few more strings translated. Marking untranslated ones. -Alfonso Montero
 	2013-10-29: Fixed some mistakes, translated some untranslated strings -Carles Pastor i Badosa
+	2013-11-11: Fixes. Marking untranslated strings. -Alfonso Montero
 -->
 <resources>
 	<node name="library" value="Biblioteca FBReader">
