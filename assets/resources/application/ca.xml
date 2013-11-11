@@ -551,8 +551,8 @@
 		<node name="css" value="CSS (Fulls d'estil)">
 			<node name="summary" value="Aplicar/ignorar els valors en CSS"/>
 			<node name="fontSize" value="Mida de la font">
-				<node name="summaryOn" value="Aplica la mida de font definit en CSS"/>
-				<node name="summaryOff" value="Ignora la mida de font definit en CSS"/>
+				<node name="summaryOn" value="Aplica la mida de font definida en CSS"/>
+				<node name="summaryOff" value="Ignora la mida de font definida en CSS"/>
 			</node>
 			<node name="textAlignment" value="Alineació del text">
 				<node name="summaryOn" value="Aplica l'alineació del text definida en CSS"/>
