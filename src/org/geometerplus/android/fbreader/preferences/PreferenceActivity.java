@@ -595,7 +595,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(FBReaderApp.ImageTappingActionOption, "tappingAction");
 		imagesScreen.addOption(FBReaderApp.FitImagesToScreenOption, "fitImagesToScreen");
 		imagesScreen.addOption(FBReaderApp.ImageViewBackgroundOption, "backgroundColor");
-		imagesScreen.addOption(new ZLBooleanOption("Colors", "ImagesBackground", true), "imagesBackground");
+		imagesScreen.addOption(new ZLBooleanOption("Colors", "MatchBackground", true), "matchBackground");
 
 		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");

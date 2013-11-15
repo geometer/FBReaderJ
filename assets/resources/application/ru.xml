@@ -688,9 +688,9 @@
 				<node name="covers" value="Только обложки"/>
 				<node name="all" value="Все картинки"/>
 			</node>
-			<node name="imagesBackground" value="Фон изображений">
-				<node name="summaryOn" value="Использовать фон"/>
-				<node name="summaryOff" value="Не использовать фон"/>
+			<node name="matchBackground" value="Подстройка картинки под фон">
+				<node name="summaryOn" value="Подгонять цвет картинки под цвет фона"/>
+				<node name="summaryOff" value="Не подгонять цвет картинки"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Меню выхода из программы">
