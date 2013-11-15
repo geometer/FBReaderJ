@@ -681,6 +681,10 @@
 				<node name="covers" value="Covers only"/>
 				<node name="all" value="All"/>
 			</node>
+			<node name="matchBackground" value="Match background intensity">
+				<node name="summaryOn" value="Adjust image color according background"/>
+				<node name="summaryOff" value="Do not adjust image color"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Cancel menu">
 			<node name="summary" value="Back button action list"/>
