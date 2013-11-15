@@ -692,6 +692,10 @@
 				<node name="covers" value="Само корицата"/>
 				<node name="all" value="Всички изображения"/>
 			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Меню за изход">
 			<node name="summary" value="Списък на действия при натискане на бутона 'Назад'"/>

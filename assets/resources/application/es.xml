@@ -692,6 +692,10 @@
 				<node name="covers" value="Solo las cubiertas"/>
 				<node name="all" value="Todas"/>
 			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Menú cancelar">
 			<node name="summary" value="Lista de acciones para botón Atrás"/>

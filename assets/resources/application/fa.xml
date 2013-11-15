@@ -679,6 +679,10 @@
 				<node name="covers" value="تنها پوشش ها"/>
 				<node name="all" value="همه"/>
 			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="لغو منو">
 			<node name="summary" value="ليست اقدام دكمه برگشت"/>
