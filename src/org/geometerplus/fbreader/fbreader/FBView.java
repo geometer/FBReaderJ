@@ -650,6 +650,14 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	protected ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages() {
+		if (new ZLBooleanOption("Colors", "MatchBackground", true).getValue()) {
+			final String profile = new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
+			if (ColorProfile.DAY.equals(profile)) {
+				return ZLPaintContext.ColorAdjustingMode.DARKEN_TO_BACKGROUND;
+			} else {
+				return ZLPaintContext.ColorAdjustingMode.LIGHTEN_TO_BACKGROUND;
+			}
+		}
 		return ZLPaintContext.ColorAdjustingMode.NONE;
 	}
 }
