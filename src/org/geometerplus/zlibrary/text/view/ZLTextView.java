@@ -876,6 +876,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	
 	protected abstract ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages();
 
+	protected abstract ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages();
+
 	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to) {
 		final ZLPaintContext context = getContext();
