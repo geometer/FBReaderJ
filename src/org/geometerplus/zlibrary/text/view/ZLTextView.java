@@ -903,7 +903,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 						areaX, areaY,
 						imageElement.ImageData,
 						getTextAreaSize(),
-						getScalingType(imageElement)
+						getScalingType(imageElement),
+						ZLPaintContext.ColorAdjustingMode.NONE
 					);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
