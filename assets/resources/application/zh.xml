@@ -669,6 +669,10 @@
 				<node name="covers" value="只有封面"/>
 				<node name="all" value="所有"/>
 			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="取消菜单设定">
 			<node name="summary" value="设定回退按键动作"/>

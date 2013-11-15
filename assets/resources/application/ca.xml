@@ -580,10 +580,6 @@
 			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 			<node name="highlighting" value="Search results background" toBeTranslated="true"/>
 			<node name="footer" value="Footer" toBeTranslated="true"/>
-			<node name="imagesBackground" value="Imatge de fons">
-				<node name="summaryOn" value="Fer servir fons"/>
-				<node name="summaryOff" value="No fer servir fons"/>
-			</node>
 			<node name="selectionBackground" value="Fons de selecció"/>
 			<node name="selectionForeground" value="Text de selecció"/>
 			<node name="text" value="Text"/>
@@ -702,6 +698,10 @@
 				<node name="none" value="Cap"/>
 				<node name="covers" value="Només les cobertes"/>
 				<node name="all" value="Totes"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Menú cancelar">
