@@ -164,9 +164,14 @@ abstract public class ZLPaintContext {
 		IntegerCoefficient,
 		FitMaximum
 	}
+	public enum ColorAdjustingMode {
+		NONE,
+		DARKEN_TO_BACKGROUND,
+		LIGHTEN_TO_BACKGROUND
+	}
 
 	abstract public Size imageSize(ZLImageData image, Size maxSize, ScalingType scaling);
-	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling);
+	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode);
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
