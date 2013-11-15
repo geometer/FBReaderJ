@@ -679,6 +679,10 @@
 				<node name="covers" value="Azalak baino ez"/>
 				<node name="all" value="Denak"/>
 			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Utzi menua">
 			<node name="summary" value="Atzera botoiaren ekintza zerrenda"/>
