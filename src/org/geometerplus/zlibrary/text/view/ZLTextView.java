@@ -874,6 +874,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	protected abstract ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages();
+
 	private static final char[] SPACE = new char[] { ' ' };
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to) {
 		final ZLPaintContext context = getContext();
@@ -904,7 +906,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 						imageElement.ImageData,
 						getTextAreaSize(),
 						getScalingType(imageElement),
-						ZLPaintContext.ColorAdjustingMode.NONE
+						getAdjustingModeForImages()
 					);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
