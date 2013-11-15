@@ -649,4 +649,9 @@ public final class FBView extends ZLTextView {
 	public Animation getAnimationType() {
 		return myReader.PageTurningOptions.Animation.getValue();
 	}
+
+	@Override
+	protected ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages() {
+		return ZLPaintContext.ColorAdjustingMode.NONE;
+	}
 }
