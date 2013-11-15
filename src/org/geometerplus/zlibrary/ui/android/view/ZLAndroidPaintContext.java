@@ -326,7 +326,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 					break;
 			}
 			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myFillPaint);
-			myFillPaint.setXfermode(new Xfermode());
+			myFillPaint.setXfermode(null);
 		}
 	}
 
