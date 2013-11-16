@@ -20,10 +20,7 @@
 package org.geometerplus.android.fbreader;
 
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.*;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
