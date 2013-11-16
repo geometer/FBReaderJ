@@ -179,6 +179,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		try {
 			return SerializerUtil.deserializeBook(myInterface.getRecentBook(index));
 		} catch (RemoteException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
