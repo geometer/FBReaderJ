@@ -873,8 +873,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			getContext().fillRectangle(left, top, right, bottom);
 		}
 	}
-	
-	protected abstract ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages();
 
 	protected abstract ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages();
 
