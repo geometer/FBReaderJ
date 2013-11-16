@@ -23,6 +23,7 @@ public enum BookEvent {
 	Added,
 	Updated,
 	Removed,
+	Opened,
 	BookmarksUpdated,
 	BookmarkStyleChanged,
 }
