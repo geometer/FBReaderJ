@@ -40,7 +40,6 @@ class FontOption extends ZLStringListPreference implements ZLReloadable {
 		myOption = option;
 		myIncludeDummyValue = includeDummyValue;
 		reload();
-
 	}
 
 	public void reload() {
