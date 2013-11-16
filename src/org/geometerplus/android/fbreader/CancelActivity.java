@@ -30,7 +30,7 @@ import android.view.*;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.SerializerUtil;
-import org.geometerplus.fbreader.fbreader.CancelMenuHelper;
+import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
