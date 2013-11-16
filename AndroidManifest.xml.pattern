@@ -16,7 +16,7 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="com.yotadevices.framework.permission.ACCESS_BACKSCREEN"/>
 	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_bw" android:label="FBReader">
-		<meta-data android:name="@string/com.yotadevices.BS_ICON" android:resource="@drawable/reader_bs_icon"/>
+		<meta-data android:name="@string/com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
 		<meta-data android:name="@string/com.yotadevices.BS_TITLE" android:value="FBReader"/>
 		<activity android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity" android:theme="@style/FBReader.Dialog" android:process=":error" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
