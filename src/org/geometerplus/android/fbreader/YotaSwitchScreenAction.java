@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
 class YotaSwitchScreenAction extends FBAndroidAction {
 	private final boolean mySwitchToBack;
 
