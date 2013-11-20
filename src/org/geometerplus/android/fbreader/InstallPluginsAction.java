@@ -17,13 +17,19 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.book;
+package org.geometerplus.android.fbreader;
 
-public enum BookEvent {
-	Added,
-	Updated,
-	Removed,
-	Opened,
-	BookmarksUpdated,
-	BookmarkStyleChanged,
+import android.content.Intent;
+
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+class InstallPluginsAction extends FBAndroidAction {
+	InstallPluginsAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
+	}
+
+	@Override
+	protected void run(Object ... params) {
+		BaseActivity.startActivity(new Intent(BaseActivity, PluginListActivity.class));
+	}
 }

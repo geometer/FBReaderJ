@@ -289,6 +289,7 @@
 		<node name="toggleFullscreen" value="Pantaila osoan"/>
 		<node name="bookmarks" value="Laster-markak"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Fitxategiaren izena"/>
@@ -677,6 +678,10 @@
 				<node name="none" value="Bat ere ez"/>
 				<node name="covers" value="Azalak baino ez"/>
 				<node name="all" value="Denak"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Utzi menua">

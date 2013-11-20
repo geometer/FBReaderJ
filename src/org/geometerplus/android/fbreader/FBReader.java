@@ -26,9 +26,7 @@ import android.content.*;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.PowerManager;
+import android.os.*;
 import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,6 +45,7 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
@@ -164,7 +163,7 @@ public final class FBReader extends Activity {
 				runOnUiThread(new Runnable() {
 					public void run() {
 						new TipRunner().start();
-						DictionaryUtil.init(FBReader.this);
+						DictionaryUtil.init(FBReader.this, null);
 					}
 				});
 			}
@@ -266,6 +265,7 @@ public final class FBReader extends Activity {
 			myFBReaderApp.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, myFBReaderApp, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
 		myFBReaderApp.addAction(ActionCode.OPEN_WEB_HELP, new OpenWebHelpAction(this, myFBReaderApp));
+		myFBReaderApp.addAction(ActionCode.INSTALL_PLUGINS, new InstallPluginsAction(this, myFBReaderApp));
 	}
 
 	public ZLAndroidWidget getMainView() {

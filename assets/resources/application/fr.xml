@@ -282,6 +282,7 @@
 		<node name="toggleFullscreen" value="Plein écran"/>
 		<node name="bookmarks" value="Marque-pages"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nom du fichier"/>
@@ -670,6 +671,10 @@
 				<node name="none" value="Aucune" toBeTranslated="true"/>
 				<node name="covers" value="Couverture uniquement" toBeTranslated="true"/>
 				<node name="all" value="Toutes" toBeTranslated="true"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Bouton retour">

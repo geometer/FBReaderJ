@@ -289,6 +289,7 @@
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
+		<node name="plugins" value="Plugins"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="File name"/>
@@ -677,6 +678,10 @@
 				<node name="none" value="None"/>
 				<node name="covers" value="Covers only"/>
 				<node name="all" value="All"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity">
+				<node name="summaryOn" value="Adjust image color according background"/>
+				<node name="summaryOff" value="Do not adjust image color"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Cancel menu">

@@ -14,7 +14,7 @@
 		android:orientation="vertical"
 	>
 		<TextView
-			android:id="@+id/cancel_item_title"
+			android:id="@+id/plugin_item_title"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center_vertical"
@@ -24,7 +24,7 @@
 			android:marqueeRepeatLimit="marquee_forever"
 		/>
 		<TextView
-			android:id="@+id/cancel_item_summary"
+			android:id="@+id/plugin_item_summary"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="5dip"

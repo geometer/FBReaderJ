@@ -298,6 +298,7 @@
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
 		<node name="help" value="Nápověda"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Název souboru"/>
@@ -686,6 +687,10 @@
 				<node name="none" value="Žádné"/>
 				<node name="covers" value="Pouze obálky"/>
 				<node name="all" value="Všechny"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">

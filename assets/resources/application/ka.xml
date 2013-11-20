@@ -294,6 +294,7 @@
 		<node name="toggleFullscreen" value="მთლიან ეკრანზე"/>
 		<node name="bookmarks" value="სანიშნეები"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="ფაილი"/>
@@ -682,6 +683,10 @@
 				<node name="none" value="არასდროს"/>
 				<node name="covers" value="მხოლოდ გარეკნები"/>
 				<node name="all" value="ყველა სურათი"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="პროგრამიდან გასვლის მენიუ">

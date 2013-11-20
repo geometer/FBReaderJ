@@ -295,6 +295,7 @@
 		<node name="toggleFullscreen" value="Поўны экран"/>
 		<node name="bookmarks" value="Закладкі"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Назва файла"/>
@@ -683,6 +684,10 @@
 				<node name="none" value="Ніякія"/>
 				<node name="covers" value="Толькі вокладкі"/>
 				<node name="all" value="Усе"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Мэню касацыі">

@@ -292,6 +292,7 @@
 		<node name="toggleFullscreen" value="Fuld skærm"/>
 		<node name="bookmarks" value="Bogmærker"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Filnavn"/>
@@ -685,9 +686,9 @@
 				<node name="covers" value="Omfatter kun"/>
 				<node name="all" value="Alle"/>
 			</node>
-			<node name="imagesBackground" value="Billedebaggrund">
-				<node name="summaryOn" value="Brug baggrund"/>
-				<node name="summaryOff" value="Brug ikke baggrund"/>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Annulleringsmenu">

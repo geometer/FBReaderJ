@@ -272,21 +272,44 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void init(final Context context) {
-		if (ourInfos.isEmpty()) {
-			final Thread initThread = new Thread(new Runnable() {
-				public void run() {
-					Looper.prepare();
+	private static final class Initializer implements Runnable {
+		private final Activity myActivity;
+		private final Runnable myPostAction;
 
-					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
-					new BitKnightsInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
-					collectOpenDictionaries(context);
+		public Initializer(Activity activity, Runnable postAction) {
+			myActivity = activity;
+			myPostAction = postAction;
+		}
 
-					Looper.loop();
+		public void run() {
+			synchronized (ourInfos) {
+				if (!ourInfos.isEmpty()) {
+					if (myPostAction != null) {
+						myPostAction.run();
+					}
+					return;
 				}
-			});
+				new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
+				new BitKnightsInfoReader(myActivity).readQuietly(ZLFile.createFileByPath("dictionaries/bitknights.xml"));
+				myActivity.runOnUiThread(new Runnable() {
+					public void run() {
+						collectOpenDictionaries(myActivity);
+						if (myPostAction != null) {
+							myPostAction.run();
+						}
+					}
+				});
+			}
+		}
+	}
+
+	public static void init(Activity activity, Runnable postAction) {
+		if (ourInfos.isEmpty()) {
+			final Thread initThread = new Thread(new Initializer(activity, postAction));
 			initThread.setPriority(Thread.MIN_PRIORITY);
 			initThread.start();
+		} else if (postAction != null) {
+			postAction.run();
 		}
 	}
 

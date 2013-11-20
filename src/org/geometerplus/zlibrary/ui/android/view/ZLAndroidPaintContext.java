@@ -312,10 +312,21 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void drawImage(int x, int y, ZLImageData imageData, Size maxSize, ScalingType scaling) {
+	public void drawImage(int x, int y, ZLImageData imageData, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode) {
 		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
 		if (bitmap != null && !bitmap.isRecycled()) {
+			switch (adjustingMode) {
+				case LIGHTEN_TO_BACKGROUND:
+					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+					break;
+				case DARKEN_TO_BACKGROUND:
+					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
+					break;
+				case NONE:
+					break;
+			}
 			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myFillPaint);
+			myFillPaint.setXfermode(null);
 		}
 	}
 

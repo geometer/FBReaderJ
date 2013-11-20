@@ -294,6 +294,7 @@
 		<node name="toggleFullscreen" value="На весь экран"/>
 		<node name="bookmarks" value="Закладки"/>
 		<node name="help" value="Помощь"/>
+		<node name="plugins" value="Дополнительные модули"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Файл"/>
@@ -683,16 +684,20 @@
 				<node name="covers" value="Только обложки"/>
 				<node name="all" value="Все картинки"/>
 			</node>
+			<node name="matchBackground" value="Подстройка картинки под фон">
+				<node name="summaryOn" value="Подгонять цвет картинки под цвет фона"/>
+				<node name="summaryOff" value="Не подгонять цвет картинки"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Меню выхода из программы">
 			<node name="summary" value="Список действий при нажатии на кнопку 'Назад'"/>
 			<node name="library" value="Библиотека">
-				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOn" value="Показывать пункт 'Библиотека'"/>
+				<node name="summaryOff" value="Не показывать пункт 'Библиотека'"/>
 			</node>
 			<node name="networkLibrary" value="Сетевая библиотека">
-				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOn" value="Показывать пункт 'Сетевая библиотека'"/>
+				<node name="summaryOff" value="Не показывать пункт 'Сетевая библиотека'"/>
 			</node>
 			<node name="previousBook" value="Предыдущая книга">
 				<node name="summaryOn" value="Показать пункт меню для возврата к предыдущей книге"/>
