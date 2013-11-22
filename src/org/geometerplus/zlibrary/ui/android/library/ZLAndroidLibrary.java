@@ -51,6 +51,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
+	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+
 	public boolean isKindleFire() {
 		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
 		return
