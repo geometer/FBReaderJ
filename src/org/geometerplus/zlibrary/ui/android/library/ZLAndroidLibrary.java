@@ -83,7 +83,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public boolean isYotaPhone() {
-		return "YotaPhone".equals(Build.BRAND);
+		return true;
+		//return "YotaPhone".equals(Build.BRAND);
 	}
 
 	public boolean hasButtonLightsBug() {
