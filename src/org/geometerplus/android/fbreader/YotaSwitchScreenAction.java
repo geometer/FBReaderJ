@@ -25,6 +25,8 @@ import com.yotadevices.sdk.utils.RotationAlgorithm;
 
 import com.yotadevices.fbreader.FBReaderYotaService;
 
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class YotaSwitchScreenAction extends FBAndroidAction {
@@ -33,6 +35,12 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 	YotaSwitchScreenAction(FBReader baseActivity, FBReaderApp fbreader, boolean switchToBack) {
 		super(baseActivity, fbreader);
 		mySwitchToBack = switchToBack;
+	}
+
+	@Override
+	public boolean isVisible() {
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		return zlibrary.YotaDrawOnBackScreenOption.getValue() != mySwitchToBack;
 	}
 
 	@Override
