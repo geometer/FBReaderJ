@@ -37,7 +37,7 @@ class VolumeKeyTurnPageAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
-		if (((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).isDrawOnBack()) {
+		if (((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).YotaDrawOnBackScreenOption.getValue()) {
 //			Intent serviceIntent = new Intent(FBReaderApplication.getAppContext(), FBReaderYotaService.class);
 //			serviceIntent.setAction(myForward ? FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_PAGE_RIGHT
 //					: FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_PAGE_LEFT);

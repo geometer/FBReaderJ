@@ -71,7 +71,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
-	private boolean myIsDrawOnBack = false;
+	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+
 	private View myP2BView;
 
 	public boolean isKindleFire() {
@@ -111,8 +112,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			cancelBtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (myIsDrawOnBack) {
-						myIsDrawOnBack = false;
+					if (YotaDrawOnBackScreenOption.getValue()) {
+						YotaDrawOnBackScreenOption.setValue(false);
 //						Intent serviceIntent = new Intent(FBReaderApplication.getAppContext(), FBReaderYotaService.class);
 //						serviceIntent.setAction(FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_DISABLE);
 //						FBReaderApplication.getAppContext().startService(serviceIntent);
@@ -121,7 +122,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			});
 		}
 		if (isServiceRunning(FBReaderApplication.getAppContext(), "com.yotadevices.apps.fbreader.FBReaderYotaService")) {
-			myIsDrawOnBack = true;
+			YotaDrawOnBackScreenOption.setValue(true);
 			if (myP2BView != null) {
 				myP2BView.setVisibility(View.VISIBLE);
 			}
@@ -144,19 +145,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public void setViewWidget(ZLAndroidWidget widget) {
-		myIsDrawOnBack = true;
+		YotaDrawOnBackScreenOption.setValue(true);
 		if (myP2BView != null) {
 			myP2BView.setVisibility(View.VISIBLE);
 		}
 		myWidget = widget;
 	}
 
-	public boolean isDrawOnBack() {
-		return myIsDrawOnBack;
-	}
-
 	public void resetViewWidget() {
-		myIsDrawOnBack = false;
+		YotaDrawOnBackScreenOption.setValue(false);
 		myWidget = null;
 		if (myP2BView != null) {
 			myP2BView.setVisibility(View.GONE);
