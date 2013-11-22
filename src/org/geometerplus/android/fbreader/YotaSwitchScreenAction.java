@@ -19,12 +19,17 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.content.Context;
 import android.content.Intent;
+
+import android.os.Vibrator;
+import android.view.View;
 
 import com.yotadevices.sdk.utils.RotationAlgorithm;
 
 import com.yotadevices.fbreader.FBReaderYotaService;
 
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -45,9 +50,23 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		RotationAlgorithm.getInstance(FBReaderApplication.getAppContext()).turnScreenOffIfRotated();
-		final Intent serviceIntent = new Intent(FBReaderApplication.getAppContext(), FBReaderYotaService.class);
-		//serviceIntent.setAction(BroadcastEvents.BROADCAST_ACTION_BACKSCREEN_APPLICATION_ACTIVE);
-		FBReaderApplication.getAppContext().startService(serviceIntent);
+		final Context context = BaseActivity.getApplicationContext();
+		final Intent serviceIntent = new Intent(context, FBReaderYotaService.class);
+		final View mainView = BaseActivity.findViewById(R.id.main_view);
+		final View mainHiddenView = BaseActivity.findViewById(R.id.main_hidden_view);
+		if (mySwitchToBack) {
+			RotationAlgorithm.getInstance(context).turnScreenOffIfRotated();
+			//serviceIntent.setAction(BroadcastEvents.BROADCAST_ACTION_BACKSCREEN_APPLICATION_ACTIVE);
+			context.startService(serviceIntent);
+			mainView.setVisibility(View.GONE);
+			mainHiddenView.setVisibility(View.VISIBLE);
+		} else {
+			context.stopService(serviceIntent);
+			mainView.setVisibility(View.VISIBLE);
+			mainHiddenView.setVisibility(View.GONE);
+		}
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		zlibrary.YotaDrawOnBackScreenOption.setValue(mySwitchToBack);
+		((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(400);
 	}
 }

@@ -71,7 +71,21 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
-	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false) {
+		@Override
+		public void setValue(boolean value) {
+			super.setValue(value);
+			System.err.println("YFB value set to: " + value);
+			new Exception().printStackTrace();
+		}
+
+		@Override
+		public boolean getValue() {
+			final boolean value = super.getValue();
+			System.err.println("YFB value = " + value);
+			return value;
+		}
+	};
 
 	private View myP2BView;
 
@@ -83,8 +97,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public boolean isYotaPhone() {
-		return true;
-		//return "YotaPhone".equals(Build.BRAND);
+		return "YotaPhone".equals(Build.BRAND);
 	}
 
 	public boolean hasButtonLightsBug() {
@@ -115,14 +128,14 @@ public final class ZLAndroidLibrary extends ZLibrary {
 				public void onClick(View v) {
 					if (YotaDrawOnBackScreenOption.getValue()) {
 						YotaDrawOnBackScreenOption.setValue(false);
-//						Intent serviceIntent = new Intent(FBReaderApplication.getAppContext(), FBReaderYotaService.class);
+//						Intent serviceIntent = new Intent(myApplication.getApplicationContext(), FBReaderYotaService.class);
 //						serviceIntent.setAction(FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_DISABLE);
-//						FBReaderApplication.getAppContext().startService(serviceIntent);
+//						myApplication.getApplicationContext().startService(serviceIntent);
 					}
 				}
 			});
 		}
-		if (isServiceRunning(FBReaderApplication.getAppContext(), "com.yotadevices.apps.fbreader.FBReaderYotaService")) {
+		if (isServiceRunning(myApplication.getApplicationContext(), "com.yotadevices.apps.fbreader.FBReaderYotaService")) {
 			YotaDrawOnBackScreenOption.setValue(true);
 			if (myP2BView != null) {
 				myP2BView.setVisibility(View.VISIBLE);
@@ -220,7 +233,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public int getDisplayDPI() {
 		if (myMetrics == null) {
-			myMetrics = FBReaderApplication.getAppContext().getResources().getDisplayMetrics();
+			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
 		}
 		return (int)(160 * myMetrics.density);
 	}
@@ -228,7 +241,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public int getPixelWidth() {
 		if (myMetrics == null) {
-			myMetrics = FBReaderApplication.getAppContext().getResources().getDisplayMetrics();
+			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
 		}
 		return myMetrics.widthPixels;
 	}
@@ -236,7 +249,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public int getPixelHeight() {
 		if (myMetrics == null) {
-			myMetrics = FBReaderApplication.getAppContext().getResources().getDisplayMetrics();
+			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
 		}
 		return myMetrics.heightPixels;
 	}

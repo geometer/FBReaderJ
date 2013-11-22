@@ -72,43 +72,18 @@ public class FBReaderYotaService extends BSActivity {
 		mBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
 				BSDrawer.SCREEN_HEIGHT, Config.ARGB_8888);
 		mCanvas = new Canvas(mBitmap);
-		myWidget = new ZLAndroidWidget(FBReaderApplication.getAppContext());
+		myWidget = new ZLAndroidWidget(getApplicationContext(), true);
 		if (FBReaderApp.Instance() == null) {
 			FBReaderApp.createInstance(myWidget);
 		}
-		((FBReaderApp) FBReaderApp.Instance()).getColorProfile().WallpaperOption
-				.setValue("");
 
-		try {
-			changeFont();
-
-			((FBReaderApp) FBReaderApp.Instance()).clearTextCaches();
-			((FBView) ZLApplication.Instance().getCurrentView()).resetFooter();
-			myWidget.setLayoutParams(new FrameLayout.LayoutParams(
-					BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT));
-			myWidget.measure(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
-			myWidget.layout(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
-			myWidget.draw(mCanvas);
-		} finally {
-			restoreFont();
-		}
-	}
-
-	private void restoreFont() {
-		ZLTextStyleCollection.Instance().getBaseStyle().FontSizeOption
-				.setValue(mInitialFontSize);
 		((FBReaderApp) FBReaderApp.Instance()).clearTextCaches();
-		((ZLAndroidLibrary) ZLAndroidLibrary.Instance()).resetViewWidget();
-	}
-
-	/**
-	 * update current font settings due to difference between front screen and back screen dpi.  
-	 */
-	private void changeFont() {
-		mInitialFontSize = ZLTextStyleCollection.Instance().getBaseStyle().FontSizeOption
-				.getValue();
-		ZLTextStyleCollection.Instance().getBaseStyle().FontSizeOption
-				.setValue(mInitialFontSize / 2);
+		((FBView) ZLApplication.Instance().getCurrentView()).resetFooter();
+		myWidget.setLayoutParams(new FrameLayout.LayoutParams(
+				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT));
+		myWidget.measure(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
+		myWidget.layout(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
+		myWidget.draw(mCanvas);
 	}
 
 	@Override
@@ -139,27 +114,13 @@ public class FBReaderYotaService extends BSActivity {
 
 	private void handleGesture(Gestures action) {
 		if (action == Gestures.GESTURES_BS_RL) {
-			try {
-				changeFont();
-
-				myWidget.nextPageStatic();
-				myWidget.draw(mCanvas);
-				getBSDrawer().drawBitmap(0, 0, mBitmap,
-						Waveform.WAVEFORM_GC_FULL);
-			} finally {
-				restoreFont();
-			}
+			myWidget.turnPageStatic(true);
+			myWidget.draw(mCanvas);
+			getBSDrawer().drawBitmap(0, 0, mBitmap, Waveform.WAVEFORM_GC_FULL);
 		} else if (action == Gestures.GESTURES_BS_LR) {
-			try {
-				changeFont();
-				myWidget.prevPageStatic();
-				myWidget.draw(mCanvas);
-				getBSDrawer().drawBitmap(0, 0, mBitmap,
-						Waveform.WAVEFORM_GC_FULL);
-			} finally {
-				restoreFont();
-			}
-
+			myWidget.turnPageStatic(false);
+			myWidget.draw(mCanvas);
+			getBSDrawer().drawBitmap(0, 0, mBitmap, Waveform.WAVEFORM_GC_FULL);
 		}
 	}
 }

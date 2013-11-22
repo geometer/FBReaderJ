@@ -14,6 +14,17 @@
 		android:scrollbarAlwaysDrawVerticalTrack="true"
 		android:fadeScrollbars="false"
 	/>
+	<TextView
+		android:id="@+id/main_hidden_view"
+		android:visibility="gone"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="Turn the device to read your book or select 'Switch to front screen' in menu to return text to this screen"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:paddingTop="20dp"
+	/>
 	<LinearLayout
 		android:id="@+id/bs_active"
 		android:layout_width="fill_parent"
