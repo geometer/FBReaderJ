@@ -74,15 +74,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	private boolean myIsDrawOnBack = false;
 	private View myP2BView;
 
-	private Boolean myIsKindleFire = null;
 	public boolean isKindleFire() {
-		if (myIsKindleFire == null) {
-			final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
-			myIsKindleFire =
-				Build.MODEL != null &&
-				Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
-		}
-		return myIsKindleFire;
+		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
+		return
+			Build.MODEL != null &&
+			Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
+	}
+
+	public boolean isYotaPhone() {
+		return "YotaPhone".equals(Build.BRAND);
 	}
 
 	public boolean hasButtonLightsBug() {
