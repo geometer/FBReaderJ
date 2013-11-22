@@ -262,6 +262,8 @@
 		<node name="toc" value="TOC"/>
 		<node name="day" value="Day"/>
 		<node name="night" value="Night"/>
+		<node name="yotaSwitchToBackScreen" value="Switch to back screen"/>
+		<node name="yotaSwitchToFrontScreen" value="Switch to front screen"/>
 		<node name="networkLibrary" value="Network library"/>
 		<node name="navigate" value="Navigate">
 			<node name="toc" value="Table of Contents"/>
