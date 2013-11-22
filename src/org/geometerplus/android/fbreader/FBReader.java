@@ -554,7 +554,7 @@ public final class FBReader extends Activity {
 
 		initPluginActions();
 
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		final ZLAndroidLibrary zlibrary = getZLibrary();
 
 		if (zlibrary.ShowStatusBarOption.getValue() != myShowStatusBarFlag ||
 			zlibrary.ShowActionBarOption.getValue() != myShowActionBarFlag) {
@@ -904,7 +904,7 @@ public final class FBReader extends Activity {
 	}
 
 	private void setStatusBarVisibility(boolean visible) {
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		final ZLAndroidLibrary zlibrary = getZLibrary();
 		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			myMainView.setPreserveSize(visible);
 			if (visible) {
@@ -923,7 +923,7 @@ public final class FBReader extends Activity {
 			myNavigationPopup = null;
 		}
 
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		final ZLAndroidLibrary zlibrary = getZLibrary();
 		if (!zlibrary.ShowActionBarOption.getValue()) {
 			getActionBar().hide();
 			myActionBarIsVisible = false;
