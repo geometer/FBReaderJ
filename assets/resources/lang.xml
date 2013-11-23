@@ -7,6 +7,7 @@
 		<node name="cs" value="Česky"/>
 		<node name="da" value="Dansk"/>
 		<node name="de" value="Deutsch"/>
+		<node name="el" value="Ελληνικά"/>
 		<node name="en" value="English"/>
 		<node name="eu" value="Euskara"/>
 		<node name="es" value="Español"/>
