@@ -346,32 +346,32 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public int getLeftMargin() {
-		return FBReaderApp.LeftMarginOption.getValue();
+		return FBReaderApp.ViewOptions.LeftMargin.getValue();
 	}
 
 	@Override
 	public int getRightMargin() {
-		return FBReaderApp.RightMarginOption.getValue();
+		return FBReaderApp.ViewOptions.RightMargin.getValue();
 	}
 
 	@Override
 	public int getTopMargin() {
-		return FBReaderApp.TopMarginOption.getValue();
+		return FBReaderApp.ViewOptions.TopMargin.getValue();
 	}
 
 	@Override
 	public int getBottomMargin() {
-		return FBReaderApp.BottomMarginOption.getValue();
+		return FBReaderApp.ViewOptions.BottomMargin.getValue();
 	}
 
 	@Override
 	public int getSpaceBetweenColumns() {
-		return FBReaderApp.SpaceBetweenColumnsOption.getValue();
+		return FBReaderApp.ViewOptions.SpaceBetweenColumns.getValue();
 	}
 
 	@Override
 	public boolean twoColumnView() {
-		return getContextHeight() <= getContextWidth() && FBReaderApp.TwoColumnViewOption.getValue();
+		return getContextHeight() <= getContextWidth() && FBReaderApp.ViewOptions.TwoColumnView.getValue();
 	}
 
 	@Override
@@ -441,7 +441,7 @@ public final class FBView extends ZLTextView {
 		private ArrayList<TOCTree> myTOCMarks;
 
 		public int getHeight() {
-			return FBReaderApp.FooterHeightOption.getValue();
+			return FBReaderApp.ViewOptions.FooterHeight.getValue();
 		}
 
 		public synchronized void resetTOCMarks() {
