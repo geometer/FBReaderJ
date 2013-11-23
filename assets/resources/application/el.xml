@@ -1,0 +1,889 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Greek FBReaderJ resources, by Alex Doulamis -->
+<resources>
+	<node name="library" value="βιβλιοθήκη FBReader">
+		<node name="unknownAuthor" value="Άγνωστοι συγγραφείς"/>
+		<node name="booksWithNoTags" value="Βιβλία χωρίς ετικέτα"/>
+		<node name="demo" value="Απόσπασμα"/>
+		<node name="byAuthor" value="Κατηγοριοποίηση ανά συγγραφείς">
+			<node name="summary" value="Επιλογή βιβλίων κατά συγγραφείς"/>
+		</node>
+		<node name="byTitle" value="Ταξινόμηση κατά τίτλο">
+			<node name="summary" value="Βιβλία ταξινομημένα κατά τίτλο"/>
+		</node>
+		<node name="bySeries" value="Κατηγοριοποίηση ανά τόμους">
+			<node name="summary" value="Επιλογή βιβλίων κατά τόμους"/>
+		</node>
+		<node name="byTag" value="Κατηγοριοποίηση ανά ετικέτων (Tags)">
+			<node name="summary" value="Επιλογή βιβλίων κατά ετικέτων (Tags)"/>
+		</node>
+		<node name="recent" value="Λίστα">
+			<node name="summary" value="Λίστα των τελευταίων αναγνωσμένων βιβλίων"/>
+		</node>
+		<node name="favorites" value="Αγαπημένα">
+			<node name="summary" value="Τα αγαπημένα βιβλία μου"/>
+		</node>
+		<node name="found" value="Βρέθηκαν">
+			<node name="summary" value="Αποτελέσματα για: %s"/>
+		</node>
+		<node name="fileTree" value="Αρχείο δέντρων">
+			<node name="summary" value="Αναζήτηση αρχείου δέντρων"/>
+		</node>
+		<node name="fileTreeRoot" value="Μνήμη συστήματος">
+			<node name="summary" value="Αρχείο συστήματος της συσκευής"/>
+		</node>
+		<node name="fileTreeCard" value="Κάρτα μνήμης">
+			<node name="summary" value="Κάρτα μνήμης (εσωτερική μνήμε σε ορισμένες συσκευές)"/>
+		</node>
+		<node name="fileTreeLibrary" value="βιβλιοθήκη FBReader">
+			<node name="summary" value="κατάλογος αρχείων FBReader"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="τοπική αναζήτηση"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+		</node>
+		<node name="openBook" value="Άνοιξε βιβλιο για ανάγνωση"/>
+		<node name="showBookInfo" value="Πληροφορίες για το βιβλίο"/>
+		<node name="shareBook" value="μοιράσου το βιβλίο"/>
+		<node name="deleteBook" value="διαγρφή βιβλίου"/>
+		<node name="addToFavorites" value="Τοποθέτηση βιβλίου στα αγαπημένα"/>
+		<node name="removeFromFavorites" value="Διαγραφή βιβλίου απο τα αγαπημένα"/>
+		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+	</node>
+	<node name="networkLibrary" value="δικτυακή βιβλιοθήκη FBReader">
+		<node name="byAuthor" value="Κατηγοριοποίηση ανά συγγραφείς">
+			<node name="summary" value="Επιλογή βιβλίου κατά συγγραφέα"/>
+		</node>
+		<node name="byTitle" value="Ταξινόμηση κατά τίτλο">
+			<node name="summary" value="Βιβλία ταξινομημένα κατά τίτλο"/>
+		</node>
+		<node name="byDate" value="Ταξινόμηση κατά Ημερομηνία">
+			<node name="summary" value="Βιβλία ταξινομημένα κατά Ημερομηνία αγοράς"/>
+		</node>
+		<node name="bySeries" value="Κατηγοροποίηση ανά τόμο">
+			<node name="summary" value="Επιλογή βιβλίων κατά τόμο"/>
+		</node>
+		<node name="search" value="Αναζήτηση">
+			<node name="summary" value="Αναξήτησ βιβλίων με %s "/>
+			<node name="summaryAllCatalogs" value="Αναζήτηση βιβλίων σε καταλόγους"/>
+			<node name="summaryInProgress" value="Η αναζήτηση εκτελείτε"/>
+		</node>
+		<node name="found" value="Βρέθηκαν">
+			<node name="summary" value="Αποτελέσματα αναζήτησης για: %s"/>
+		</node>
+		<node name="recent" value="Recent catalogs" toBeTranslated="true">
+			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
+		</node>
+		<node name="openCatalog" value="Άνοιγμα καταλόγου"/>
+		<node name="networkSearch" value="Αναζήτηση"/>
+		<node name="showResults" value="Προβολή αποτελεσμάτων"/>
+		<node name="showBooks" value="Προβολή βιβλίων"/>
+		<node name="download" value="Λήψη"/>
+		<node name="read" value="Ανάγνωση τοπικής αντιγραφής"/>
+		<node name="delete" value="Διαγραφή τοπικής αντιγραφής"/>
+		<node name="readDemo" value="Αναγνωση αποσπάσματος"/>
+		<node name="deleteDemo" value="Διαγραφή αποσπάσματος"/>
+		<node name="downloadDemo" value="Λήψη αποσπάσματος"/>
+		<node name="buy" value="(%s) αγορά"/>
+		<node name="addToBasket" value="Προσθήκη στο καλάθι αγοράς"/>
+		<node name="removeFromBasket" value="Διαγραφή από το καλάθι αγοράς"/>
+		<node name="openBasket" value="Άνοιγμα καλάθι αγοράς"/>
+		<node name="clearBasket" value="Άδοιασμα καλάθι αγοράς"/>
+		<node name="buyAllBooks" value="Αγορά όλων των βιβλίων"/>
+		<node name="openInBrowser" value="Άνοιγμα στο Browser"/>
+		<node name="stopLoading" value="Διακοπή λήψης"/>
+		<node name="stopSearching" value="Παύση αναζήτησης"/>
+		<node name="signIn" value="Σύνδεση (Log-In)"/>
+		<node name="signOut" value="Αποσύνδεση (Log-out) (%s)"/>
+		<node name="topup" value="Φόρτωση χρημάτων στον λογαρισμό (αυτήν την ώρα: %s)"/>
+		<node name="topupTitle" value="Φόρτωση χρημάτων"/>
+		<node name="topupViaBrowser" value="Άνοιγμα σελίδας στο Browser"/>
+		<node name="authorizationMenuTitle" value="Επιλογή ενέργειας"/>
+		<node name="topupSummary" value="Αυτή την στιγμή: %s"/>
+		<node name="basket" value="καλάθι αγοράς"/>
+		<node name="basketSummaryEmpty" value="δεν υπάρχουν βιβλία"/>
+		<node name="basketSummaryCountOnly" value="%0 βιβλία"/>
+		<node name="basketSummary" value="%0 βιβλία (%1)"/>
+		<node name="alreadyDownloading" value="Η λήψη βιβλίου έχει ήδη ξεκινήσει"/>
+		<node name="alreadyDownloadingDemo" value="Η λήψη του αποσπάσματος έχει ήδη ξεκινήσει"/>
+		<node name="stoppingCatalogLoading" value="Διακοπή λήψης"/>
+		<node name="stoppingNetworkSearch" value="Διακοπή αναζήτησης"/>
+		<node name="editCustomCatalog" value="επεξεργασία καταλόγου"/>
+		<node name="removeCustomCatalog" value="διαγραφή καταλόγου"/>
+		<node name="addCustomCatalog" value="προσθήκη καταλόγου"/>
+		<node name="addCustomCatalogSummary" value="Χειροκίνητη προσθήκη ενός καταλόγου OPDS"/>
+		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
+		<node name="confirmQuestions">
+			<node name="read" value="Θέλετε να διαβάσετε το τοπικό αντίγραφό;"/>
+			<node name="download" value="Θέλετε να κάνετε λήψη αυτό το βιβλίο;"/>
+			<node name="readDemo" value="Θέλετε να διαβάσετε αυτό το απόσπασμα;"/>
+			<node name="downloadDemo" value="Θέλετε να κάνετε λήψη αυτό το απόσπασμα;"/>
+			<node name="buy" value="Θέλετε να αγοράσετε αυτό το βιβλίο; (%s)"/>
+			<node name="openInBrowser" value="Θέλετε να ανοίξετε αυτόν τον κατάλογο στον Browser;"/>
+		</node>
+		<!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Καταλόγοι που λήφθηκαν"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Αναζήτηση βιβλίων στο δίκτυο"/>
+		<node name="addCatalog">
+			<node name="title" value="Πρόσθεση καταλόγου"/>
+			<node name="editUrl" value="Πληκτρολογίστε URL"/>
+		</node>
+		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="Enabled" toBeTranslated="true"/>
+			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		</node>
+		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
+			<node name="networkSearch" value="Αναζήτηση δικτύου"/>
+			<node name="reload" value="Νέα λήψη"/>
+			<node name="signIn" value="Log-In"/>
+			<node name="signUp" value="Εγγραφή"/>
+			<node name="signOut" value="Log-Out (%s)"/>
+			<node name="topup" value="Φόρτωση χρημάτων στον λογαρισμό"/>
+			<node name="addCustomCatalog" value="Προσθήκη καταλόγου"/>
+			<node name="refreshCatalogsList" value="Ενημέρωση λίστα καταλόγων"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
+			<node name="clearBasket" value="Άδειασμα καλάθι αγοράς"/>
+			<node name="buyAllBooks" value="Αγορά όλων των βιβλίων"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Αγορά βιβλίου"/>
+		<node name="titleSeveralBooks" value="Αγορά βιβλίων"/>
+		<node name="confirm" value="Θέλετε να αγοράσετε αυτό το βιβλίο &#10;“%s”&#10; ;"/>
+		<node name="confirmSeveralBooks" value="Θέλεται να αγοράσετε αυτο τα βιβλία %s ;"/>
+		<node name="alreadyBought" value="Το βιβλίο έχει ήδη αγοραστεί"/>
+		<node name="notAuthorized" value="Απαιτήτε εξουσιοδότηση"/>
+		<node name="noAccountInformation" value="Κατάσταση λογαριασμού δεν μπορεί να φορτοθεί"/>
+		<node name="unsufficientFunds" value="Αυτή η αγορά κοστίζει %0 ενώ εσεις έχετε μόνο %1"/>
+		<node name="zeroFunds" value="Αυτή η αγορά κοστίζει %0"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Πληροφορίες βιβλίου"/>
+		<node name="fileInfo" value="Πληροφορίες αρχείου"/>
+		<node name="description" value="Περιγραφή"/>
+		<node name="noDescription" value="Δεν υπάρχει περιγραφή"/>
+		<node name="annotation" value="Σημείωμα"/>
+		<node name="title" value="Τίτλος:"/>
+		<node name="authors" value="Συγραφέας(είς):"/>
+		<node name="series" value="Τόμος:"/>
+		<node name="indexInSeries" value="Αριθμός τόμου:"/>
+		<node name="tags" value="Ετικέτες (Tags):"/>
+		<node name="language" value="Γλώσσα:"/>
+		<node name="name" value="Όνομα:"/>
+		<node name="type" value="Τύπος:"/>
+		<node name="size" value="Μέγεθος:"/>
+		<node name="time" value="τελευταία αλλαγή:"/>
+		<node name="sizeInBytes" value="%s Byte(s)"/>
+		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="Κατάλογος:"/>
+		<node name="extraLinks" value="Σχετικά θέματα"/>
+		<node name="menu">
+			<node name="edit" value="Επεξεργασία"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Η λήψη του βιβλίου ολοκληρώθηκε."/>
+		<node name="tickerError" value="Σφάλμα κατά την λήψη του βιβλίου."/>
+		<node name="contentSuccess" value="Η λήψη ολοκληρώθηκε."/>
+		<node name="contentError" value="Η λήψη απέτυχε."/>
+		<node name="downloadingStarted" value="Η λήψη του βιβλίου ξεκίνησε."/>
+		<node name="alreadyDownloading" value="Η λήψη του βιβλίου έχει ήδη ξεκινήσει."/>
+		<node name="cannotCreateDirectory" value="Το ευρετήριο %s δεν μπορεί να δημιουργηθεί."/>
+		<node name="cannotCreateFile" value="Το αρχείο %s δεν μπορεί να δημιουργηθεί."/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Επέκταση ευρετηρίου"/>
+		<node name="collapseTree" value="Μείωση ευρετηρίου"/>
+		<node name="readText" value="Ανάγνωση κειμένου"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Αυτό το βιβλίο"/>
+		<node name="allBooks" value="Όλα τα βιβλία"/>
+		<node name="found" value="Βρέθηκε(αν)"/>
+		<node name="new" value="Νέος σελιδοδείκτης"/>
+		<node name="open" value="Πήγαινε στον σελιδοδείκτη"/>
+		<node name="edit" value="Επεξεργασία σελιδοδείκτη"/>
+		<node name="delete" value="Διαγραφή σελιδοδείκτη"/>
+		<node name="menu">
+			<node name="search" value="Αναζήτηση"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="Άνοιγμα βιβλιοθήκης"/>
+		<node name="networkLibrary" value="Άνοιγμα δικτυακής βιβλιοθήκης"/>
+		<node name="previousBook" value="άνοιγμα προηγούμενου βιβλίου"/>
+		<node name="returnTo" value="Πίσω στο…"/>
+		<node name="back" value="Πίσω"/>
+		<node name="forward" value="Μπροστά"/>
+		<node name="close" value="Τερματισμός FBReader"/>
+	</node>
+	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="deleteBookmark" value="Διαγραφή σελιδοδείκτη"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="invisible" value="Invisible" toBeTranslated="true">
+			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
+			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		</node>
+		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+	</node>
+	<node name="selection" value="Επιλογή">
+		<node name="copyToClipboard" value="Αντιγραφλη στο clipboard"/>
+		<node name="openInDictionary" value="Αναξήτηση στο λεξικό"/>
+		<node name="quoteFrom" value="Απόσπασμα από '%s'"/>
+		<node name="textInBuffer" value="Αντιγράφηκε στο clipboard:&#10;%s"/>
+		<node name="bookmarkCreated" value="Δημιουργήθηκε ο σελιδοδείκτης:&#10;%s"/>
+		<node name="clearSelection" value="Κατάργηση επιλογής"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Παρέχεται από &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="Ρυθμίσεις"/>
+		<node name="bookInfo" value="Πληροφορίες βιβλίου"/>
+		<node name="library" value="Βιβλιοθήκη"/>
+		<node name="toc" value="Ευρετήριο"/>
+		<node name="day" value="Μέρα"/>
+		<node name="night" value="Νύχτα"/>
+		<node name="networkLibrary" value="Δικτυακή βιβλιοθήκη"/>
+		<node name="navigate" value="Επιλογή σελίδας">
+			<node name="toc" value="Προβολή ευρετηρίου"/>
+			<node name="gotoHome" value="Μεταβιβασμός στην αρχή"/>
+			<node name="gotoPageNumber" value="Πήγαινε στην σελίδα…"/>
+			<node name="gotoSectionStart" value="Πήγαινε στην αρχή του αποσπάσματος"/>
+			<node name="gotoSectionEnd" value="Πήγαινε στο τέλος του αποσπάσματος"/>
+			<node name="nextTOCSection" value="Πήγαινε στο επόμενο κεφάλαιο"/>
+			<node name="previousTOCSection" value="Πήγαινε στο προηγούμενο κεφάλαιο"/>
+			<node name="undo" value="πίσω"/>
+			<node name="redo" value="επανάληψη"/>
+		</node>
+		<node name="shareBook" value="Μοιράσου το βιβλίο"/>
+		<node name="search" value="Εύρεση"/>
+		<node name="rotate" value="Συστροφή όψης"/>
+		<node name="screenOrientation" value="Προσανατολισμός οθόνης"/>
+		<node name="screenOrientationSystem" value="Σύστημα"/>
+		<node name="screenOrientationSensor" value="Αισθητήρας"/>
+		<node name="screenOrientationPortrait" value="κατακόρυφα"/>
+		<node name="screenOrientationLandscape" value="πλάγια"/>
+		<node name="screenOrientationReversePortrait" value="κατακόρυφα ανάποδα"/>
+		<node name="screenOrientationReverseLandscape" value="πλάγια αναάποδα"/>
+		<node name="increaseFont" value="Αύξηση μέγεθους γραμματοσειράς"/>
+		<node name="decreaseFont" value="Μείωση μέγεθους γραμματοσειράς"/>
+		<node name="toggleFullscreen" value="Αλλαγή πλήρης οθόνης"/>
+		<node name="bookmarks" value="Σελιδοδείκτες"/>
+		<node name="help" value="Help" toBeTranslated="true"/>
+		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Όνομα αρχείου"/>
+		<node name="title" value="Τίτλος"/>
+		<node name="language" value="Γλώσσα"/>
+		<node name="encoding" value="Κωδικοποίηση"/>
+		<node name="authors" value="Συγγραφέας(είς)"/>
+		<node name="tags" value="Ετικέτες (Tags)"/>
+		<node name="series" value="Τόμος"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Ευρετήρια">
+			<node name="summary" value="Ευρετήρια, στα οποία θα γίνει η αναζήτηση."/>
+			<node name="books" value="Βιβλία"/>
+			<node name="fonts" value="Γραμματοσειρά"/>
+			<node name="wallpapers" value="Φόντα"/>
+		</node>
+		<node name="appearance" value="Εμφάνιση">
+			<node name="summary" value="προςανατολισμός, γραμμή κατάστασης"/>
+			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="screenOrientation" value="Προσανατολισμός οθόνης">
+				<node name="system" value="Σύστημα"/>
+				<node name="sensor" value="Αισθητήρας"/>
+				<node name="portrait" value="Κατακόρυφα"/>
+				<node name="landscape" value="Πλάγια"/>
+				<node name="reversePortrait" value="Κατακόρυφα ανάποδα"/>
+				<node name="reverseLandscape" value="Πλάγια ανάποδα"/>
+			</node>
+			<node name="autoOrientation" value="Αυτόματος προσανατολιμός">
+				<node name="summaryOn" value="Η εικόνα περιστρέφεται αυτόματα, εάν περιστραφεί η συσκευή."/>
+				<node name="summaryOff" value="Η εικόνα δεν περιστρέφεται αυτόματα, εάν περιστραφεί η συσκευή."/>
+			</node>
+			<node name="showStatusBar" value="Εμφάνηση μπάρα κατάστασης">
+				<node name="summaryOn" value="Η μπάρα κατάστασης εμφανίζεται κατά την ανάγνωση."/>
+				<node name="summaryOff" value="Η μπάρα κατάστασης δεν εμφανίζεται κατά την ανάγνωση."/>
+			</node>
+			<node name="showActionBar" value="Εμφάνηση μπάρα γεγονότων">
+				<node name="summaryOn" value="Η μπάρα γεγονότων εμφανίζεται κατά την ανάγνωση."/>
+				<node name="summaryOff" value="Η μπάρα γεγονότων δεν εμφανίζεται κατά την ανάγνωση."/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Εμφάνηση μπάρα κατάστασης όταν το μενού είναι ενεργό">
+				<node name="summaryOn" value="Η μπάρα κατάστασης εμφανίζεται όταν το μενού είναι ενεργό."/>
+				<node name="summaryOff" value="Η μπάρα κατάστασης δεν εμφανίζεται όταν το μενού είναι ενεργό."/>
+			</node>
+			<node name="disableButtonLights" value="Απενεργοποίηση του φωτισμού των πλήκτρων την ώρα της ανάγνωσης.">
+				<node name="summaryOn" value="Απενεργοποίηση φωτισμού πλήκτρων (Δεν λειτουργεί σε όλες τις συσκευές)"/>
+				<node name="summaryOff" value="Μη απενεργοποίηση φωτισμού πλήκτρων"/>
+			</node>
+			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
+				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
+				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Ρύθμιση φωτεινότητας">
+				<node name="summaryOn" value="Αλλαγή με το δάχτυλο, πιέζοντας πάνω/κάτω στην αρριστερή πλευρά."/>
+				<node name="summaryOff" value="Απενεργοποιημένο"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Αποτροπή απενεργοποίησης οθόνης.">
+				<node name="0" value="Πάντα"/>
+				<node name="25" value="Εάν μπαταρία &gt; 25%%"/>
+				<node name="50" value="Εάν μπαταρία &gt; 50%%"/>
+				<node name="100" value="Ποτέ"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Απενεργοποίηση της οθόνης την ώρα της φόρτωσης.">
+				<node name="summaryOn" value="Μη απενεργοποίηση της οθόνης τν ώρα της φόρτωσης."/>
+				<node name="summaryOff" value="Απενεργοποίηση της οθόνης την ώρα της φόρτωσης."/>
+			</node>
+		</node>
+		<node name="text" value="Εμφάνιση κειμένου">
+			<node name="summary" value="Σύνολο χαρακτήρων, χωρισμός συλλαβών, κτλ."/>
+			<node name="fontProperties" value="Βελτιστοποίηση γραφής">
+				<node name="summary" value="Λείανση άκρων, διαγραμμάτωση κτλ."/>
+				<node name="antiAlias" value="Λείανση άκρων (Antialiasing)">
+					<node name="summaryOn" value="Λείανση άκρων εργοποιημένη"/>
+					<node name="summaryOff" value="Λείανση άκρων απνεργοποιημένη"/>
+				</node>
+				<node name="deviceKerning" value="Διαγραμμάτωση (Kerning)">
+					<node name="summaryOn" value="Διαγραμμάτωση ενεργοποιημένη"/>
+					<node name="summaryOff" value="Διαγραμμάτωση απενεργοποιημένη"/>
+				</node>
+				<node name="dithering" value="Μείωση χρώματος (Dithering)">
+					<node name="summaryOn" value="Μείωση χρώματος ενεργοποιημένη"/>
+					<node name="summaryOff" value="Μείωση χρώματος απενεργοποιημένη"/>
+				</node>
+				<node name="hinting" value="Hinting">
+					<node name="summaryOn" value="Hinting ενεργοποιημένη"/>
+					<node name="summaryOff" value="Hinting απενεργοποιημένη"/>
+				</node>
+				<node name="subpixel" value="εξομάλυνση Subpixel">
+					<node name="summaryOn" value="εξομάλυνση Subpixel ενεργοποιημένη"/>
+					<node name="summaryOff" value="εξομάλυνση Subpixel απενεργοποιημένη"/>
+				</node>
+			</node>
+			<node name="font" value="Γραμματοσειρά">
+				<node name="unchanged" value="&lt;αμετάβλητη&gt;"/>
+			</node>
+			<node name="fontSize" value="Μέγεθος γραμματοσειράς"/>
+			<node name="fontSizeDifference" value="Διαφορά μεγέθους"/>
+			<node name="fontStyle" value="Κόψιμό γραφής">
+				<node name="regular" value="Κανονικά"/>
+				<node name="bold" value="Παχύ"/>
+				<node name="italic" value="Πλάγια"/>
+				<node name="boldItalic" value="Παχύ &amp; Πλάγιο"/>
+			</node>
+			<node name="bold" value="Παχύ">
+				<node name="summaryOn" value="Παχύ"/>
+				<node name="summaryOff" value="Κανονικό"/>
+				<node name="unchanged" value="&lt;αμετάβλητο&gt;"/>
+			</node>
+			<node name="italic" value="Πλάγια">
+				<node name="summaryOn" value="Πλάγια"/>
+				<node name="summaryOff" value="Κανονικά"/>
+				<node name="unchanged" value="&lt;αμετάβλητο&gt;"/>
+			</node>
+			<node name="underlined" value="Υπογεγραμμένο">
+				<node name="summaryOn" value="υπογεγραμμένο"/>
+				<node name="summaryOff" value="κανονικό"/>
+				<node name="unchanged" value="&lt;αμετάβλητο&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Διαγραμμένο">
+				<node name="summaryOn" value="διαγραμμένο"/>
+				<node name="summaryOff" value="κανονικό"/>
+				<node name="unchanged" value="&lt;αμετάβλητο&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Απόσταση γραμμών">
+				<node name="unchanged" value="&lt;αμετάβλητη&gt;"/>
+			</node>
+			<node name="alignment" value="Προσανατολισμός">
+				<node name="left" value="αριστερά"/>
+				<node name="right" value="δεξιά"/>
+				<node name="center" value="στην μέση"/>
+				<node name="justify" value="σε μπλοκς"/>
+				<node name="unchanged" value="&lt;αμετάβλητος&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Αυτόματος χωρισμός">
+				<node name="summaryOn" value="Αυτόματος χωρισμός συλλαβών."/>
+				<node name="summaryOff" value="Μη αυτόματος χωρισμός συλλαβών.."/>
+			</node>
+			<node name="allowHyphenations" value="Επιτρεπτός χωρισμός">
+				<node name="summaryOn" value="χωρισμός λέξης"/>
+				<node name="summaryOff" value="μη χωρισμού λέξης"/>
+				<node name="unchanged" value="&lt;αμετάβλητος&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Τοποθεσίας πρώτης γραμμής"/>
+			<node name="spaceBefore" value="Απόσταση πρίν"/>
+			<node name="spaceAfter" value="Απόσταση μετά"/>
+			<node name="leftIndent" value="Απόσταση αριστερής άκρης"/>
+			<node name="rightIndent" value="Απόσταση δεξιάς άκρης"/>
+			<node name="more" value="αλλες διαφοροποιήσεις…">
+				<node name="summary" value="λεπτομερής ρυθμίσεις για τίτλους, περιεχόμενα, κ.τ.λ."/>
+				<node name="Regular Paragraph" value="Κανονικλη παράγραφος">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Τίτλος">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Τίτλος παραγράφου">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Τίτλος ποιήματος">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Υπότιτλοι">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Σημείωση">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Γραφή">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Στροφή">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Στίχος">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Προμορφοποιημένο κείμενο">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Εικόνα">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Παράθεση">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Συγγραφέας">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Ημερομηνία">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Εσωτερικός Υπερ-σύνδεσμος">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Υποσημείωση">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Τονισμός">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Ισχυρός">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Supscript">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Superscript">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Κώδικας">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Διαγραφημένο">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Πλάγιο">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Παχύ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Ορισμός">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Περιγραφή του ορισμού">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Τίτλος 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Τίτλος 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Τίτλος 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Τίτλος 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Τίτλος 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Τίτλος 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="εξωτερικός Υπερ-σύνδεσμος">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS" toBeTranslated="true">
+			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontSize" value="Font size" toBeTranslated="true">
+				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
+				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="colors" value="Χρώματα &amp; Φόντα">
+			<node name="summary" value="Επιλογή χρωμάτων."/>
+			<node name="background" value="Φόντο">
+				<node name="solidColor" value="Μονόχρωμα"/>
+				<node name="leather" value="Δέρμα"/>
+				<node name="sepia" value="Σέπια (παλιό χαρτή)"/>
+				<node name="wood" value="Ξύλο"/>
+			</node>
+			<node name="backgroundColor" value="Χρώματα φόντου"/>
+			<node name="selectionBackground" value="Φόντο επιλεγμένου κείμενου"/>
+			<node name="selectionForeground" value="Επιλεγμένο κείμενο"/>
+			<node name="text" value="Κανονικό κείμενο"/>
+			<node name="hyperlink" value="Υπερ-σύνδεσμοι"/>
+			<node name="hyperlinkVisited" value="Επισκεπτόμενοι Υπερ-σύνδεσμοι"/>
+			<node name="highlighting" value="Παρασκήνιο των αποτελεσμάτων"/>
+			<node name="footer" value="Υποσέλιδο"/>
+		</node>
+		<node name="margins" value="Άκρα">
+			<node name="summary" value="καθορισμός άκρων"/>
+			<node name="left" value="αριστερό άκρο"/>
+			<node name="right" value="δεξή άκρο"/>
+			<node name="top" value="πάνω άκρο"/>
+			<node name="bottom" value="κάτω άκρο"/>
+			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
+		</node>
+		<node name="scrollBar" value="Scrollbar">
+			<node name="summary" value="Ρυθμίσεις για την Scrollbar &amp; Υποσέλιδο."/>
+			<node name="scrollbarType" value="Τύπος Scrollbar">
+				<node name="hide" value="Καμία"/>
+				<node name="show" value="Κάθετη"/>
+				<node name="showAsProgress" value="Κάθετη σταδιακή"/>
+				<node name="showAsFooter" value="Οριζόντια"/>
+			</node>
+			<node name="footerHeight" value="Ύψος υποσέλιδου"/>
+			<node name="footerColor" value="Χρώμα υποσέλιδου"/>
+			<node name="tocMarks" value="Εμφάνιση Κεφάλαιου">
+				<node name="summaryOn" value="Εμφάνιση Κεφάλαιου στο υποσέλιδο."/>
+				<node name="summaryOff" value="Μη εμφάνιση Κεφάλαιου στο υποσέλιδο."/>
+			</node>
+			<node name="showProgress" value="Εμφάνιση αριθμού σελίδας">
+				<node name="summaryOn" value="Εμφάνιση αριθμού σελίδας στο υποσέλιδο."/>
+				<node name="summaryOff" value="Μη εμφάνιση αριθμού σελίδας στο υποσέλιδο."/>
+			</node>
+			<node name="showBattery" value="Εμφάνιση σύμβολου μπαταρίας">
+				<node name="summaryOn" value="Εμφάνιση σύμβολου μπαταρίας στο υποσέλιδο."/>
+				<node name="summaryOff" value="Μη εμφάνιση σύμβολου μπαταρίας στο υποσέλιδο."/>
+			</node>
+			<node name="showClock" value="Εμφάνιση ώρας">
+				<node name="summaryOn" value="Εμφάνιση ώρας στο υποσέλιδο."/>
+				<node name="summaryOff" value="Μη εμφάνιση ώρας στο υποσέλιδο."/>
+			</node>
+			<node name="font" value="Schriftart"/>
+		</node>
+		<node name="scrolling" value="Αλλαγή σελίδας">
+			<node name="summary" value="Καθορισμός αλλαγής σελίδας."/>
+			<node name="fingerScrolling" value="Touch-Screen">
+				<node name="byTap" value="Αλλαγή με άγγιγμα"/>
+				<node name="byFlick" value="Αλλαγή με ηχυτικό σύνθημα"/>
+				<node name="byTapAndFlick" value="Αλλαγή με άγγιγμα η με ηχυτικό σύνθημα"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Διπλό άγγιγμα">
+				<node name="summaryOn" value="Διπλό άγγιγμα ανοίγει το μενού."/>
+				<node name="summaryOff" value="Αγνόησε το διπλό άγγιγμα."/>
+			</node>
+			<node name="volumeKeys" value="Πλήκτρα ρύθμισης έντασης">
+				<node name="summaryOn" value="Πλήκτρα ρύθμισης έντασης για αλλαγή σελίδας."/>
+				<node name="summaryOff" value="Μη χρησιμοποίηση αυτών των πλήκτρων."/>
+			</node>
+			<node name="invertVolumeKeys" value="Αντιστροφή πλήκτρων ρύθμισης έντασης">
+				<node name="summaryOn" value="Πλήκτρο δυνάμωσης έντασης προχωράει μια σελίδα μπροστά."/>
+				<node name="summaryOff" value="Πλήκτρο χαμήλωσης έντασης προχωράει μια σελίδα πίσω."/>
+			</node>
+			<node name="animation" value="Animation">
+				<node name="none" value="Αλλαγή σελίδας χωρίς animation"/>
+				<node name="curl" value="Αλλαγή σελίδας"/>
+				<node name="slide" value="σπρώξτε"/>
+				<node name="shift" value="σύρετε"/>
+			</node>
+			<node name="animationSpeed" value="ταχύτητα Animation">
+				<node name="fast" value="γρύγορη"/>
+				<node name="slow" value="αργή"/>
+			</node>
+			<node name="horizontal" value="Οριζόντια αλλαγή σελίδας">
+				<node name="summaryOn" value="Οριζόντια αλλαγή σελίδας"/>
+				<node name="summaryOff" value="Κάθετη αλλαγή σελίδας"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Tap-περιοχές">
+			<!--Tap zones-->
+			<node name="summary" value="Ενέργειες στο άγγιγμα"/>
+			<!--Actions on finger tap-->
+			<node name="tapZonesScheme" value="Μέθοδος">
+				<!-- Tap zones scheme -->
+				<node name="left_to_right" value="Από αριστερά προς δεξιά"/>
+				<!-- Left to right page scrolling -->
+				<node name="right_to_left" value="Από δεξιά προς αριστερά"/>
+				<!-- Right to left page scrolling -->
+				<node name="up" value="Από κάτω προς τα πάνω"/>
+				<!-- Down to up page scrolling -->
+				<node name="down" value="Από πάνω προς τα κάτω"/>
+				<!-- Up to down page scrolling -->
+				<node name="custom" value="Καθορισμός απο τον χρήστη…"/>
+				<!-- Custom… -->
+			</node>
+		</node>
+		<node name="dictionary" value="Λεξικό">
+			<node name="summary" value="Ρυθμίσεις λεξικού"/>
+			<node name="dictionary" value="Λεξικό"/>
+			<node name="translator" value="Μεταφραστής"/>
+			<node name="targetLanguage" value="Μετάφραση σε" toBeTranslated="true">
+				<node name="any" value="all languages" toBeTranslated="true"/>
+			</node>
+			<node name="tappingAction" value="Ενέργεια σε παρατεταμένο άγγιγμα">
+				<node name="doNothing" value="Παρατεταμένο άγγιγμα δεν προκαλεί τίποτα."/>
+				<node name="selectSingleWord" value="Παρατεταμένα άγγιγμα επιλέγει μία λέξη."/>
+				<node name="startSelecting" value="Παρατεταμένο άγγιγμα ξεκινάει την λειτουργία επιλογής κειμένου."/>
+				<node name="openDictionary" value="Παρατεταμένα άγγιγμα επιλέγει μία λέξη και ανοίγει το λεξικό."/>
+			</node>
+			<node name="navigateOverAllWords" value="΄Πλοήγηση σε όλες τις λέξεις">
+				<node name="summaryOn" value="Πλοήγηση ανταποκρίνεται σε όλες τις λέξεις."/>
+				<node name="summaryOff" value="Πλοήγηση ανταποκρίνεται μόνο στους Υπερ-σύνδεσμους."/>
+			</node>
+		</node>
+		<node name="images" value="Εικόνες">
+			<node name="summary" value="Ρυθμίσεις για την προβολή εικόνων."/>
+			<node name="backgroundColor" value="Χρώμα φόντου εικόνων"/>
+			<node name="tappingAction" value="Ενέργειες σε παρατεταμένο άγγιγμα">
+				<node name="doNothing" value="Παρατεταμένο άγγιγμα δεν προκαλεί τίποτα."/>
+				<node name="selectImage" value="Παρατεταμένο άγγιγμα επιλέγει την εικόνα."/>
+				<node name="openImageView" value="Παρατεταμένο άγγιγμα ανοίγει την προβολή εικόνων."/>
+			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Πλήκτρο Πίσω">
+			<node name="summary" value="Ενέργειες στο άγγιγμα του πλήκτου Πίσω."/>
+			<node name="library" value="Βιβλιοθήκη">
+				<node name="summaryOn" value="Εμφάνηση καταχώρισης 'Άνοιγμα βιβλιοθήκης'"/>
+				<node name="summaryOff" value="Μη εμφάνηση καταχώρισης 'Άνοιγμα βιβλιοθήκης'"/>
+			</node>
+			<node name="networkLibrary" value="Βιβλιοθήκη δικτύου">
+				<node name="summaryOn" value="Εμφάνηση καταχώρισης 'Βιβλιοθήκη δικτύου'"/>
+				<node name="summaryOff" value="Μη εμφάνηση καταχώρισης 'Βιβλιοθήκη δικτύου'"/>
+			</node>
+			<node name="previousBook" value="Προηγούμενο βιβλίο">
+				<node name="summaryOn" value="Εμφάνηση πλαισίου 'Άνοιγμα προηγούμενο βιβλίου'."/>
+				<node name="summaryOff" value="Μη εμφάνηση πλαισίου 'Άνοιγμα προηγούμενο βιβλίου'."/>
+			</node>
+			<node name="positions" value="Τελευταίες 3 θέσεις">
+				<node name="summaryOn" value="Εμφάνισε μια λίστα με τις τελευταίες 3 θέσεις στο βιβλίο."/>
+				<node name="summaryOff" value="Μην εμφανίσεις λίστα με τις τελευταίες 3 θέσεις στο βιβλίο."/>
+			</node>
+			<node name="backKeyAction" value="Ενέργειες στο άγγιγμα του πλήκτου Πίσω.">
+				<node name="exit" value="Κλείσημο FBReader"/>
+				<node name="goBack" value="Πλοήγηση προς τα πίσω"/>
+				<node name="cancelMenu" value="Εμφάνησε το μενού Πίσω"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Ενέργειες στο περατατεμένο άγγιγμα του πλήκτου Πίσω">
+				<node name="exit" value="Κλείσημο FBReader"/>
+				<node name="goBack" value="Πλοήγηση προς τα πίσω"/>
+				<node name="cancelMenu" value="Εμφάνισε το μενού Πίσω"/>
+				<node name="none" value="Καμία ενέργεια"/>
+			</node>
+		</node>
+		<node name="tips" value="Οδηγίες">
+			<node name="summary" value="Ρυθμίσεις για καθημερινές συμβουλές"/>
+			<node name="showTips" value="Εμφάνισε τις Οφηγίες">
+				<node name="summaryOn" value="Εμφάνισε καθημερινά οδηγίες"/>
+				<node name="summaryOff" value="Μην εμφανίζεις οδηγίες"/>
+			</node>
+		</node>
+		<node name="about" value="Για το FBReader">
+			<node name="summary" value="Πληροφορίες έκδοσης, Επικοινωνία"/>
+			<node name="version" value="Έκδοση"/>
+			<node name="site" value="Ιστοσελίδα">
+				<node name="url" value="http://fbreader.org/"/>
+			</node>
+			<node name="email" value="Email">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="Twitter">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="Εγκατάσταση"/>
+			<node name="update" value="Ενημέρωση"/>
+			<node name="skip" value="Παράλειψη"/>
+			<node name="buy" value="Αγορά"/>
+			<node name="buyAndDownload" value="Αγορά και εγκατάσταση"/>
+			<node name="continue" value="Συνέχεια"/>
+			<node name="editUrl" value="επεξεργασία URL"/>
+			<node name="tryAgain" value="Δοκιμάστε ξανά"/>
+			<node name="openBook" value="Ανάγνωση"/>
+			<node name="editInfo" value="Επεξεργασία"/>
+			<node name="reloadInfo" value="Ενημέρωση"/>
+			<node name="shareBook" value="Μοιρασέ το"/>
+			<node name="topup" value="Μεταβίβασε λεφτά στον λογιαρισμό"/>
+			<node name="pay" value="Πλήρωσε"/>
+			<node name="refresh" value="Ενημέρωσε"/>
+			<node name="authorize" value="Εξουσιοδότησε"/>
+			<node name="resetPosition" value="Αναίρεση θέσης"/>
+			<node name="sendReport" value="στείλε αναφορά"/>
+			<node name="addToFavorites" value="Τοποθέτησε βιβλίο στα αγαπημένα"/>
+			<node name="removeFromFavorites" value="Διάγραψε βιβλίο απο τα αγαπημένα"/>
+			<node name="markAsRead" value="Σημείωσε ως αναγνωσμένο" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Σημείωσε ως μη αναγνωσμένο" toBeTranslated="true"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="εγκατάσταση Plug-In"/>
+			<node name="updateTitle" value="ενημέρωση Plug-In"/>
+			<node name="dontAskAgain" value="Μην ρωτήσεις ξανά"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="Φάκελος εγκατάστασης"/>
+			<node name="message" value="Θέλεται να εγκαταστήσεται το %s ?"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="Το βιβλίο θα διαγραφτεί αμετάκλητα. Είσαστε σίγουροι?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="Το αρχείο υπα΄ρχει ήδη. Λήψη ξανά?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="Η λήψη του βιβλίου ξεκίνησε %s"/>
+			<node name="search" value="Η ανάζητηση εκτελείτε. Παρακαλώ περιμένετε…"/>
+			<node name="loadInfo" value="Η πληροφορία φορτώνεται. Παρακαλώ περιμένετε…"/>
+			<node name="loadingBook" value="Το βιβλίο φορτώνεται. Παρακαλώ περιμένετε…"/>
+			<node name="loadingBookList" value="Η λίστα βιβλίων φορτώνεται. Παρακαλώ περιμένετε…"/>
+			<node name="creatingBooksDatabase" value="Erstelle Buch-Datenbank. Παρακαλώ περιμένετε…"/>
+			<node name="updatingBooksDatabase" value="Aktualisiere Buch-Datenbank. Παρακαλώ περιμένετε…"/>
+			<node name="loadingNetworkLibrary" value="Bibliothek wird geladen. Παρακαλώ περιμένετε…"/>
+			<node name="authentication" value="Πιστοποίηση. Παρακαλώ περιμένετε…"/>
+			<node name="signOut" value="Το βιβλίο αποσυνδέεται. Παρακαλώ περιμένετε…"/>
+			<node name="purchaseBook" value="Το βιβλίο είναι στην διαδικασία της αγοράς. Παρακαλώ περιμένετε…"/>
+			<node name="loadingCatalogInfo" value="Πληροφορίες καταλόγου φορτώνοντε. Παρακαλώ περιμένετε…"/>
+			<node name="loadingNetworkBookInfo" value="Φόρτωση πληροφορίες βιβλίου. Παρακαλώ περιμένετε…"/>
+			<node name="updatingCatalogsList" value="Ο κατάλογος ενημερώνεται. Παρακαλώ περιμένετε…"/>
+			<node name="updatingAccountInformation" value="Πληροφορίες λογαριασμού ενημερώνονται. Παρακαλώ περιμένετε…"/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Εσωτερικό σφάλμα διακομιστή."/>
+			<node name="purchaseNotEnoughMoney" value="Πολύ λίγα χρήματα."/>
+			<node name="purchaseMissingBook" value="Το βιβλίο λύπει."/>
+			<node name="purchaseAlreadyPurchased" value="Το βιβλίο έχει ήδη αγοραστεί."/>
+			<node name="bookNotPurchased" value="Το βιβλίο δεν αγοράστηκε."/>
+			<node name="downloadLimitExceeded" value="Το όριο λήψης υπερβάστηκε."/>
+			<node name="noUserEmail" value="Δεν υπάρχει εγεγγραμένο μέλος με αυτό το Email&#10;"/>
+			<node name="unsupportedOperation" value="Η λειτουργία δεν υποστηρίζεται."/>
+			<node name="notAnOPDS" value="Αυτός είναι ένας κατάλογος OPDS."/>
+			<node name="noRequiredInformation" value="Η πληροφορίες που απαιτούνται δεν αναφέρονται στον κατάλογο."/>
+			<node name="cacheDirectoryError" value="Δεν μπορεί να δημιουργιθεί αρχείο Cache."/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Πιστοποίηση"/>
+			<node name="unencryptedWarning" value="Ο κωδικάς προσβασή σας μεταφέρεται χωρίς κωδικοποίηση."/>
+			<node name="login" value="Όνομα"/>
+			<node name="password" value="Κωδικός"/>
+			<node name="loginIsEmpty" value="θα πρέπει να δοθεί ένα όνομα χρήστη."/>
+			<node name="register" value="Σύνδεση"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FBReader: προσθέστε τον δικό σας κατάλογο"/>
+			<node name="catalogTitle" value="Τίτλος"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Περίληψη"/>
+			<node name="catalogTitleExample" value="π.χ.: Κατάλογος Gutenberg."/>
+			<node name="catalogUrlExample" value="π.χ.: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="π.χ.: Public Domain Books."/>
+			<node name="titleIsEmpty" value="Ο τίτλος δεν θα πρέπει να είναι κενός."/>
+			<node name="urlIsEmpty" value="Το URL δεν θα πρέπει να είναι κενό."/>
+			<node name="invalidUrl" value="Άκυρο URL."/>
+			<node name="titleAlreadyExists" value="Ο πληκτρολογημένος τίτλος υπάρχει ήδη."/>
+			<node name="siteAlreadyExists" value="Η πληκτρολογημένη ιστοσελίδα υπάρει ήδη."/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Φίλτρο γλώσσας"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="Η συμβουλή της ημέρας"/>
+			<node name="initializationText" value="Θέλετε να λαμβάνετε καθημερινά συμβουλές για το FBReader; Οι νέες συμβουλες θα φορτώνεται από την ιστοσελίδα FBReader. Το αναμενόμενο εύρος φόρτωσης αναμένεται στα 1-2 kB την εβδομάδα.&#10;&#10;Ενεργοποίηση συμβουλών;"/>
+			<node name="dontShowAgain" value="Να μην εμφανιστεί ξανά"/>
+			<node name="more" value="Επόμενη συμβουλή"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Δεν υπάρχει πρόσβαση στο Android Market. Παρακαλώ, εγκαταστείστε %s χειροκίνητα."/>
+		<node name="textNotFound" value="Δεν βρέθηκε κατάλληλο κείμενο στο βιβλίο."/>
+		<node name="bookNotFound" value="Δεν βρέθηλαν κατάλληλα βιβλία στην βιβλιοθήκη."/>
+		<node name="bookmarkNotFound" value="Δεν βρέθηκαν κατάλληλοι σελιδοδείκτες."/>
+		<node name="cannotOpenBook" value="Το βιβλίο δεν μπορεί να ανοίξει αυτήν την στιγμή."/>
+		<node name="dictionaryIsNotInstalled" value="Δεν υπάρχει εγκατεστημένο λεξικό."/>
+		<node name="permissionDenied" value="Δεν επιτρέπετε η πρόσβαση."/>
+		<node name="noFavorites" value="Η λίστα με τα αγαπημένα είναι άδεια."/>
+		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="Ο κατάλογος είναι άδειος."/>
+		<node name="emptyBasket" value="Το καλάθι αγοράς είναι άδειο."/>
+		<node name="emptyNetworkSearchResults" value="Δυστυχώς δεν βρέθηκαν βιβλία."/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Browser"/>
+		<node name="defaultBrowser" value="Default-Browser"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Αγνωστό σφάλμα"/>
+		<node name="unsupportedCompressionMethod" value="Η μέθοδος συμπίεσης δεν υποστιρίζεται"/>
+		<node name="encryptedFile" value="Αρχείο με προστασία DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="Πρόβλημα FBReader"/>
+			<node name="text" value="Δέν υπάρχει πρόσβαση στο αρχείο Cache του FBReader. Πιθανόν να έχετε αφαιρέσει την κάρτα μνήμης ή το σύστημα δεν έχει πρόσβαση. Παρακαλώ διορθώστε το πρόβλημα η επλέξτε στο κάτω μέρος ενα διαφορετικό όνομα για το αρχείο."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="Πρόβλημα FBReader"/>
+			<node name="text" value="Το FBReader δεν μπορεί να φορτώσει την δικιά του βιβλιοθήκη. Πιθανόν να μην είναι εγκατεστημένη σωστά. Αν εξακολουθεί να υπάρχει το πρόβλημα, παρακαλώ εγκαταστήστε το FBReader ξανά."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="Πρόβλημα FBReader"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Σφάλμα κατά την ανάγνωση στο '%s'"/>
+		<node name="errorReadingZip" value="Σφάλμα κατά την αποσυμπίεση στο '%s'"/>
+		<node name="pluginNotFound" value="Δεν υπάρχει Plug-In για '%s'"/>
+		<node name="unknownPluginType" value="Άγνωστος τύπος Plug-In: %s"/>
+		<node name="fileNotFound" value="Το αρχείο δεν βρέθηκε: %s"/>
+		<node name="opfFileNotFound" value="Το OPF στο %s δεν βρέθηκε"/>
+		<node name="unsupportedFileFormat" value="Ο τύπος αρχείου '%s' δεν υποστιρίζεται"/>
+		<node name="errorParsingRtf" value="Λάθος στο Rtf-Parsing: %s"/>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+</resources>
