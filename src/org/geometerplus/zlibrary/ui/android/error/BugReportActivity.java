@@ -35,6 +35,7 @@ public class BugReportActivity extends Activity implements ErrorKeys {
 		setContentView(R.layout.bug_report_view);
 		final StringBuilder reportText = new StringBuilder();
 
+		reportText.append("Package:").append(getPackageName()).append("\n");
 		reportText.append("Model:").append(Build.MODEL).append("\n");
 		reportText.append("Device:").append(Build.DEVICE).append("\n");
 		reportText.append("Product:").append(Build.PRODUCT).append("\n");
