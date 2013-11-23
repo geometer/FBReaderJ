@@ -344,32 +344,32 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public int getLeftMargin() {
-		return myReader.LeftMarginOption.getValue();
+		return myReader.ViewOptions.LeftMargin.getValue();
 	}
 
 	@Override
 	public int getRightMargin() {
-		return myReader.RightMarginOption.getValue();
+		return myReader.ViewOptions.RightMargin.getValue();
 	}
 
 	@Override
 	public int getTopMargin() {
-		return myReader.TopMarginOption.getValue();
+		return myReader.ViewOptions.TopMargin.getValue();
 	}
 
 	@Override
 	public int getBottomMargin() {
-		return myReader.BottomMarginOption.getValue();
+		return myReader.ViewOptions.BottomMargin.getValue();
 	}
 
 	@Override
 	public int getSpaceBetweenColumns() {
-		return myReader.SpaceBetweenColumnsOption.getValue();
+		return myReader.ViewOptions.SpaceBetweenColumns.getValue();
 	}
 
 	@Override
 	public boolean twoColumnView() {
-		return getContextHeight() <= getContextWidth() && myReader.TwoColumnViewOption.getValue();
+		return getContextHeight() <= getContextWidth() && myReader.ViewOptions.TwoColumnView.getValue();
 	}
 
 	@Override
@@ -439,7 +439,7 @@ public final class FBView extends ZLTextView {
 		private ArrayList<TOCTree> myTOCMarks;
 
 		public int getHeight() {
-			return myReader.FooterHeightOption.getValue();
+			return myReader.ViewOptions.FooterHeight.getValue();
 		}
 
 		public synchronized void resetTOCMarks() {
