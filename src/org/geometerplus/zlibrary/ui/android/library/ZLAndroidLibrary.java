@@ -162,7 +162,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	@Override
-	public int getPixelWidth() {
+	public int getWidthInPixels() {
 		if (myMetrics == null) {
 			if (myActivity == null) {
 				return 0;
@@ -174,7 +174,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	@Override
-	public int getPixelHeight() {
+	public int getHeightInPixels() {
 		if (myMetrics == null) {
 			if (myActivity == null) {
 				return 0;
