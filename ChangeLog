@@ -4,6 +4,7 @@
 * Updated Catalan localization (by Alfonso Montero)
 * New option: adjust image color according background. For light background, adjusts too light colors to match background, for dark background adjusts too dark areas.
 * Litres: don't fail on loading of purchased books list (for large collections).
+* Immersive fullscreen mode on android 4.4 devices
 
 ===== 1.9.2 (Nov 02, 2013) =====
 * Fixed adding of new books to the library
