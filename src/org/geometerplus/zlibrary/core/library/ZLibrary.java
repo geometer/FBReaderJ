@@ -55,8 +55,8 @@ public abstract class ZLibrary {
 	abstract public void setScreenBrightness(int percent);
 	abstract public int getScreenBrightness();
 	abstract public int getDisplayDPI();
-	abstract public int getPixelWidth();
-	abstract public int getPixelHeight();
+	abstract public int getWidthInPixels();
+	abstract public int getHeightInPixels();
 	abstract public List<String> defaultLanguageCodes();
 
 	abstract public boolean supportsAllOrientations();

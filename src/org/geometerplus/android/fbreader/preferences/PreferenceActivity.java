@@ -105,6 +105,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
+
+		final ViewOptions viewOptions = FBReaderApp.ViewOptions;
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		final ColorProfile profile = FBReaderApp.getColorProfile();
 		// TODO: use user-defined locale, not the default one,
@@ -163,7 +165,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
-			FBReaderApp.TwoColumnViewOption,
+			viewOptions.TwoColumnView,
 			appearanceScreen.Resource,
 			"twoColumnView"
 		));
@@ -395,23 +397,23 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen marginsScreen = createPreferenceScreen("margins");
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("left"),
-			FBReaderApp.LeftMarginOption
+			viewOptions.LeftMargin
 		));
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("right"),
-			FBReaderApp.RightMarginOption
+			viewOptions.RightMargin
 		));
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("top"),
-			FBReaderApp.TopMarginOption
+			viewOptions.TopMargin
 		));
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("bottom"),
-			FBReaderApp.BottomMarginOption
+			viewOptions.BottomMargin
 		));
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
 			this, marginsScreen.Resource.getResource("spaceBetweenColumns"),
-			FBReaderApp.SpaceBetweenColumnsOption
+			viewOptions.SpaceBetweenColumns
 		));
 
 		final Screen statusLineScreen = createPreferenceScreen("scrollBar");
@@ -433,7 +435,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FooterOptions footerOptions = FBReaderApp.FooterOptions;
 		footerPreferences.add(statusLineScreen.addPreference(new ZLIntegerRangePreference(
 			this, statusLineScreen.Resource.getResource("footerHeight"),
-			FBReaderApp.FooterHeightOption
+			viewOptions.FooterHeight
 		)));
 		footerPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerColor"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowTOCMarks, "tocMarks"));
