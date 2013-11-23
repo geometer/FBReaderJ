@@ -1,8 +1,9 @@
 ===== 1.9.3 (Nov ??, 2013) =====
-* Updated Chinese localization by Chris Yu
+* Added Greek localization (by Alex Doulamis)
+* Updated Chinese localization (by Chris Yu)
 * Updated Catalan localization (by Alfonso Montero)
 * New option: adjust image color according background. For light background, adjusts too light colors to match background, for dark background adjusts too dark areas.
-* Litres: fixed loading of purchased books list (for large collections).
+* Litres: don't fail on loading of purchased books list (for large collections).
 
 ===== 1.9.2 (Nov 02, 2013) =====
 * Fixed adding of new books to the library
