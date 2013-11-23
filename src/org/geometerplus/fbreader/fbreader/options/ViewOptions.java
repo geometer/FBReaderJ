@@ -43,8 +43,8 @@ public class ViewOptions {
 		TwoColumnView = new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 42 * dpi * dpi);
 		LeftMargin = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 		RightMargin = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
-		TopMargin = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
-		BottomMargin = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
+		TopMargin = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
+		BottomMargin = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 20);
 		SpaceBetweenColumns = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
 		FooterHeight = new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
 	}
