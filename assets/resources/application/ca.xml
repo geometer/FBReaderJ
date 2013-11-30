@@ -268,6 +268,8 @@
 		<node name="toc" value="Índex"/>
 		<node name="day" value="Dia"/>
 		<node name="night" value="Nit"/>
+		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Biblioteca en xarxa"/>
 		<node name="navigate" value="Navega">
 			<node name="toc" value="Tabla de Contenido"/>
@@ -919,6 +921,10 @@
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page" toBeTranslated="true"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
+		<node name="frontScreenButton" value="Switch to front screen" toBeTranslated="true"/>
 	</node>
 	<node name="warningMessage">
 		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
