@@ -252,6 +252,8 @@
 		<node name="toc" value="本书目录"/>
 		<node name="day" value="白底黑字"/>
 		<node name="night" value="黑底白字"/>
+		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="在线书库"/>
 		<node name="navigate" value="快速翻看">
 			<node name="toc" value="内容目录"/>
@@ -877,5 +879,9 @@
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
+		<node name="frontScreenButton" value="Switch to front screen" toBeTranslated="true"/>
 	</node>
 </resources>

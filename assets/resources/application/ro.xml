@@ -252,6 +252,8 @@
 		<node name="toc" value="Cuprins"/>
 		<node name="day" value="Mod Zi"/>
 		<node name="night" value="Mod Noapte"/>
+		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Biblioteca din retea"/>
 		<node name="navigate" value="Navigati">
 			<node name="toc" value="Cuprins"/>
@@ -877,5 +879,9 @@
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
+		<node name="frontScreenButton" value="Switch to front screen" toBeTranslated="true"/>
 	</node>
 </resources>
