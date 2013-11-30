@@ -267,6 +267,8 @@
 		<node name="toc" value="Оглавление"/>
 		<node name="day" value="День"/>
 		<node name="night" value="Ночь"/>
+		<node name="yotaSwitchToBackScreen" value="Читать на заднем экране"/>
+		<node name="yotaSwitchToFrontScreen" value="Читать на переднем экране"/>
 		<node name="networkLibrary" value="Сетевая библиотека"/>
 		<node name="navigate" value="Переход">
 			<node name="toc" value="Оглавление"/>
@@ -892,5 +894,9 @@
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.ru/faq-page"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="Переверните телефон, чтобы увидеть текст книги. Если вы хотите читать на этом экране, нажмите на кнопку."/>
+		<node name="frontScreenButton" value="Читать здесь"/>
 	</node>
 </resources>
