@@ -893,4 +893,8 @@
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below.">
+		<node name="frontScreenButton" value="Switch to front screen">
+	</node>
 </resources>
