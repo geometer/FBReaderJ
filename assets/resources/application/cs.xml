@@ -901,6 +901,6 @@
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
-		<node name="frontScreenButton" value="Switch to front screen" toBeTranslated="true"/>
+		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
 	</node>
 </resources>
