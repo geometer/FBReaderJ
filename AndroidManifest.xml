@@ -71,7 +71,7 @@
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
-				<data android:host="" android:scheme="file"/>
+				<data android:mimeType="*/*" android:scheme="file"/>
 				<data android:pathPattern=".*\\.epub"/>
 				<data android:pathPattern=".*\\.oeb"/>
 				<data android:pathPattern=".*\\.fb2"/>
