@@ -121,7 +121,7 @@ public final class FBReader extends Activity {
 		}
 	};
 
-	private synchronized void openBook(Intent intent, Runnable action, boolean force) {
+	private synchronized void openBook(Intent intent, final Runnable action, boolean force) {
 		if (!force && myBook != null) {
 			return;
 		}
@@ -135,7 +135,14 @@ public final class FBReader extends Activity {
 				myBook = createBookForFile(ZLFile.createFileByPath(data.getPath()));
 			}
 		}
-		myFBReaderApp.openBook(myBook, bookmark, action);
+		myFBReaderApp.openBook(myBook, bookmark, new Runnable() {
+			public void run() {
+				if (action != null) {
+					action.run();
+				}
+				hideBars();
+			}
+		});
 	}
 
 	private Book createBookForFile(ZLFile file) {
@@ -266,6 +273,9 @@ public final class FBReader extends Activity {
 		}
 		myFBReaderApp.addAction(ActionCode.OPEN_WEB_HELP, new OpenWebHelpAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.INSTALL_PLUGINS, new InstallPluginsAction(this, myFBReaderApp));
+
+		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
+		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
 	}
 
 	public ZLAndroidWidget getMainView() {
@@ -337,7 +347,7 @@ public final class FBReader extends Activity {
 
 		initPluginActions();
 
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		final ZLAndroidLibrary zlibrary = getZLibrary();
 
 		if (zlibrary.ShowStatusBarOption.getValue() != myShowStatusBarFlag ||
 			zlibrary.ShowActionBarOption.getValue() != myShowActionBarFlag) {
@@ -587,6 +597,10 @@ public final class FBReader extends Activity {
 		addMenuItem(menu, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary);
 		addMenuItem(menu, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc);
 		addMenuItem(menu, ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks);
+		if (getZLibrary().isYotaPhone()) {
+			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b);
+			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b);
+		}
 		addMenuItem(menu, ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night);
 		addMenuItem(menu, ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day);
 		addMenuItem(menu, ActionCode.SEARCH, R.drawable.ic_menu_search);
@@ -638,7 +652,7 @@ public final class FBReader extends Activity {
 	}
 
 	private void setStatusBarVisibility(boolean visible) {
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		final ZLAndroidLibrary zlibrary = getZLibrary();
 		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			myMainView.setPreserveSize(visible);
 			if (visible) {
@@ -657,7 +671,7 @@ public final class FBReader extends Activity {
 			myNavigationPopup = null;
 		}
 
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		final ZLAndroidLibrary zlibrary = getZLibrary();
 		if (!zlibrary.ShowActionBarOption.getValue()) {
 			getActionBar().hide();
 			myActionBarIsVisible = false;
@@ -665,7 +679,19 @@ public final class FBReader extends Activity {
 		}
 
 		if (zlibrary.DisableButtonLightsOption.getValue()) {
-			myRootView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+			if (Build.VERSION.SDK_INT >= 19/*Build.VERSION_CODES.KITKAT*/) {
+				myRootView.setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_LOW_PROFILE |
+					2048 /*View.SYSTEM_UI_FLAG_IMMERSIVE*/ |
+					4096 /*View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY*/ |
+					4 /*View.SYSTEM_UI_FLAG_FULLSCREEN*/ |
+					View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+				);
+			} else {
+				myRootView.setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_LOW_PROFILE
+				);
+			}
 		}
 
 		setStatusBarVisibility(false);

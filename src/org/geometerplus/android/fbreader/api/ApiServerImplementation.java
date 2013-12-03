@@ -423,35 +423,35 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public int getBottomMargin() {
-		return getReader().BottomMarginOption.getValue();
+		return getReader().ViewOptions.BottomMargin.getValue();
 	}
 
 	public void setBottomMargin(int value) {
-		getReader().BottomMarginOption.setValue(value);
+		getReader().ViewOptions.BottomMargin.setValue(value);
 	}
 
 	public int getTopMargin() {
-		return getReader().TopMarginOption.getValue();
+		return getReader().ViewOptions.TopMargin.getValue();
 	}
 
 	public void setTopMargin(int value) {
-		getReader().TopMarginOption.setValue(value);
+		getReader().ViewOptions.TopMargin.setValue(value);
 	}
 
 	public int getLeftMargin() {
-		return getReader().LeftMarginOption.getValue();
+		return getReader().ViewOptions.LeftMargin.getValue();
 	}
 
 	public void setLeftMargin(int value) {
-		getReader().LeftMarginOption.setValue(value);
+		getReader().ViewOptions.LeftMargin.setValue(value);
 	}
 
 	public int getRightMargin() {
-		return getReader().RightMarginOption.getValue();
+		return getReader().ViewOptions.RightMargin.getValue();
 	}
 
 	public void setRightMargin(int value) {
-		getReader().RightMarginOption.setValue(value);
+		getReader().ViewOptions.RightMargin.setValue(value);
 	}
 
 	public int getParagraphsNumber() {

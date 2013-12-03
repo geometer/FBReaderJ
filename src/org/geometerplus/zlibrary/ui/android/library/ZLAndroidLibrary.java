@@ -51,15 +51,17 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
-	private Boolean myIsKindleFire = null;
+	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+
 	public boolean isKindleFire() {
-		if (myIsKindleFire == null) {
-			final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
-			myIsKindleFire =
-				Build.MODEL != null &&
-				Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
-		}
-		return myIsKindleFire;
+		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
+		return
+			Build.MODEL != null &&
+			Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
+	}
+
+	public boolean isYotaPhone() {
+		return "YotaPhone".equals(Build.BRAND);
 	}
 
 	public boolean hasButtonLightsBug() {
@@ -155,7 +157,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	@Override
-	public int getPixelWidth() {
+	public int getWidthInPixels() {
 		if (myMetrics == null) {
 			if (myActivity == null) {
 				return 0;
@@ -167,7 +169,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	@Override
-	public int getPixelHeight() {
+	public int getHeightInPixels() {
 		if (myMetrics == null) {
 			if (myActivity == null) {
 				return 0;

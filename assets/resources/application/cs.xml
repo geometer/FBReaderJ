@@ -271,6 +271,8 @@
 		<node name="toc" value="Obsah"/>
 		<node name="day" value="Den"/>
 		<node name="night" value="Noc"/>
+		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Síťová knihovna"/>
 		<node name="navigate" value="Navigace">
 			<node name="toc" value="Obsah"/>
@@ -298,7 +300,7 @@
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
 		<node name="help" value="Nápověda"/>
-		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+		<node name="plugins" value="Doplňky"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Název souboru"/>
@@ -688,9 +690,9 @@
 				<node name="covers" value="Pouze obálky"/>
 				<node name="all" value="Všechny"/>
 			</node>
-			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
-				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			<node name="matchBackground" value="Porovnat intenzitu pozadí">
+				<node name="summaryOn" value="Přizpůsobit barvu obrázku podle pozadí"/>
+				<node name="summaryOff" value="Nepřizpůsobovat barvu obrázku"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">
@@ -896,5 +898,9 @@
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
+		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
 	</node>
 </resources>
