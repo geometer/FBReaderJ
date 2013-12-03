@@ -10,12 +10,12 @@
 		android:orientation="horizontal"
 	>
 		<View
+			android:id="@+id/color_box"
 			android:layout_width="48dip"
 			android:layout_height="fill_parent"
 			android:layout_marginLeft="8dip"
 			android:layout_marginTop="8dip"
 			android:layout_marginBottom="8dip"
-			android:id="@+id/color_box"
 		/>
 		<LinearLayout 
 			android:layout_width="fill_parent"
@@ -24,23 +24,23 @@
 			android:padding="8dip"
 		>
 			<SeekBar
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
 				android:id="@+id/color_red"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
 				android:max="255"
 				android:padding="4dip"
 			/>
 			<SeekBar
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
 				android:id="@+id/color_green"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
 				android:max="255"
 				android:padding="4dip"
 			/>
 			<SeekBar
+				android:id="@+id/color_blue"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:id="@+id/color_blue"
 				android:max="255"
 				android:padding="4dip"
 			/>
