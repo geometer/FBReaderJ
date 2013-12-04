@@ -23,11 +23,14 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.yotadevices.sdk.utils.RotationAlgorithm;
 
 import com.yotadevices.fbreader.FBReaderYotaService;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
@@ -49,12 +52,17 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		switchScreen(mySwitchToBack);
+	}
+
+	private void switchScreen(boolean toBack) {
 		final Context context = BaseActivity.getApplicationContext();
 		final Intent serviceIntent = new Intent(context, FBReaderYotaService.class);
 		final View mainView = BaseActivity.findViewById(R.id.main_view);
-		final View mainHiddenView = BaseActivity.findViewById(R.id.main_hidden_view);
-		if (mySwitchToBack) {
+		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
+		if (toBack) {
 			context.startService(serviceIntent);
+			setupHiddenView(mainHiddenView);
 			mainView.setVisibility(View.GONE);
 			mainHiddenView.setVisibility(View.VISIBLE);
 			RotationAlgorithm.getInstance(context).turnScreenOffIfRotated();
@@ -64,6 +72,22 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 			mainHiddenView.setVisibility(View.GONE);
 		}
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-		zlibrary.YotaDrawOnBackScreenOption.setValue(mySwitchToBack);
+		zlibrary.YotaDrawOnBackScreenOption.setValue(toBack);
+	}
+
+	private void setupHiddenView(View mainView) {
+		final ZLResource yotaResource = ZLResource.resource("yota");
+
+		final TextView text = (TextView)mainView.findViewById(R.id.yota_hidden_view_text);
+		text.setText(yotaResource.getResource("frontScreenMessage").getValue());
+
+		final Button button = (Button)mainView.findViewById(R.id.yota_hidden_view_button);
+		button.setText(yotaResource.getResource("frontScreenButton").getValue());
+		button.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				switchScreen(false);
+			}
+		});
 	}
 }

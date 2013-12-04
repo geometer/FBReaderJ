@@ -23,10 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.res.AssetFileDescriptor;
@@ -34,36 +32,18 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.yotadevices.fbreader.FBReaderYotaService;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.FBReaderApplication;
 
 public final class ZLAndroidLibrary extends ZLibrary {
-	public static boolean isServiceRunning(Context context, String name) {
-		final ActivityManager manager = (ActivityManager)context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-		for (ActivityManager.RunningServiceInfo info : manager.getRunningServices(Integer.MAX_VALUE)) {
-			if (name.equals(info.service.getClassName())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
 	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", true);
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
@@ -71,23 +51,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
-	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false) {
-		@Override
-		public void setValue(boolean value) {
-			super.setValue(value);
-			System.err.println("YFB value set to: " + value);
-			new Exception().printStackTrace();
-		}
-
-		@Override
-		public boolean getValue() {
-			final boolean value = super.getValue();
-			System.err.println("YFB value = " + value);
-			return value;
-		}
-	};
-
-	private View myP2BView;
+	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
 
 	public boolean isKindleFire() {
 		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
@@ -97,7 +61,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	public boolean isYotaPhone() {
-		return "YotaPhone".equals(Build.BRAND);
+		return true || "YotaPhone".equals(Build.BRAND);
 	}
 
 	public boolean hasButtonLightsBug() {
@@ -106,7 +70,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	private FBReader myActivity;
 	private final Application myApplication;
-	private ZLAndroidWidget myWidget;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
@@ -114,34 +77,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	public void setActivity(FBReader activity) {
 		myActivity = activity;
-		myP2BView = myActivity.findViewById(R.id.bs_active);
-		TextView textView = (TextView)myActivity.findViewById(R.id.p2b_message);
-		if (textView != null) {
-			textView.setText(ZLResource.resource("dialog").getResource("p2b").getResource("message").getValue());
-		}
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		Button cancelBtn = (Button)myActivity.findViewById(R.id.btn_cancel);
-		if (cancelBtn != null) {
-			cancelBtn.setText(buttonResource.getResource("cancel").getValue());
-			cancelBtn.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if (YotaDrawOnBackScreenOption.getValue()) {
-						YotaDrawOnBackScreenOption.setValue(false);
-//						Intent serviceIntent = new Intent(myApplication.getApplicationContext(), FBReaderYotaService.class);
-//						serviceIntent.setAction(FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_DISABLE);
-//						myApplication.getApplicationContext().startService(serviceIntent);
-					}
-				}
-			});
-		}
-		if (isServiceRunning(myApplication.getApplicationContext(), "com.yotadevices.apps.fbreader.FBReaderYotaService")) {
-			YotaDrawOnBackScreenOption.setValue(true);
-			if (myP2BView != null) {
-				myP2BView.setVisibility(View.VISIBLE);
-			}
-		}
-		myWidget = null;
 	}
 
 	public void finish() {
@@ -156,27 +91,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	public ZLAndroidWidget getWidget() {
 		return myActivity.getMainView();
-	}
-
-	public void setViewWidget(ZLAndroidWidget widget) {
-		YotaDrawOnBackScreenOption.setValue(true);
-		if (myP2BView != null) {
-			myP2BView.setVisibility(View.VISIBLE);
-		}
-		myWidget = widget;
-	}
-
-	public void resetViewWidget() {
-		YotaDrawOnBackScreenOption.setValue(false);
-		myWidget = null;
-		if (myP2BView != null) {
-			myP2BView.setVisibility(View.GONE);
-		}
-		if (myActivity != null) {
-			myWidget = (ZLAndroidWidget)myActivity.findViewById(R.id.main_view);
-			myWidget.reset();
-			myWidget.repaint();
-		}
 	}
 
 	@Override

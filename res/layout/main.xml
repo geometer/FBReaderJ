@@ -14,49 +14,28 @@
 		android:scrollbarAlwaysDrawVerticalTrack="true"
 		android:fadeScrollbars="false"
 	/>
-	<TextView
-		android:id="@+id/main_hidden_view"
-		android:visibility="gone"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="Turn the device to read your book or select 'Switch to front screen' in menu to return text to this screen"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:paddingLeft="10dp"
-		android:paddingRight="10dp"
-		android:paddingTop="20dp"
-	/>
 	<LinearLayout
-		android:id="@+id/bs_active"
+		android:id="@+id/yota_main_hidden_view"
+		android:visibility="gone"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:background="#282828"
-		android:clickable="true"
 		android:gravity="center"
-		android:visibility="gone"
 		android:orientation="vertical"
 	>
-		<ImageView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:src="@drawable/p2b_arrow"
-		/>
 		<TextView
-			android:id="@+id/p2b_message"
-			android:layout_width="wrap_content"
+			android:id="@+id/yota_hidden_view_text"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="20dp"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="10dp"
-			android:layout_marginTop="20dp"
-			android:gravity="center"
-			android:textColor="#fff"
-			android:textSize="17dp"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:paddingBottom="20dp"
 		/>
 		<Button
-			android:id="@+id/btn_cancel"
-			android:layout_width="150dp"
+			android:id="@+id/yota_hidden_view_button"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@android:string/cancel"
+			android:gravity="center"
 		/>
 	</LinearLayout>
 </RelativeLayout>
