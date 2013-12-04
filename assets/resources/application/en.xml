@@ -838,9 +838,6 @@
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
 		</node>
-		<node name="p2b">
-			<node name="message" value="Your book is being moved to the back screen. Turn your device over to continue reading."/>
-		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually"/>
