@@ -143,29 +143,29 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	private DisplayMetrics myMetrics;
-
-	@Override
-	public int getDisplayDPI() {
+	private DisplayMetrics getMetrics() {
 		if (myMetrics == null) {
 			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
 		}
-		return (int)(160 * myMetrics.density);
+		return myMetrics;
+	}
+
+	@Override
+	public int getDisplayDPI() {
+		final DisplayMetrics metrics = getMetrics();
+		return metrics == null ? 0 : (int)(160 * metrics.density);
 	}
 
 	@Override
 	public int getWidthInPixels() {
-		if (myMetrics == null) {
-			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
-		}
-		return myMetrics.widthPixels;
+		final DisplayMetrics metrics = getMetrics();
+		return metrics == null ? 0 : metrics.widthPixels;
 	}
 
 	@Override
 	public int getHeightInPixels() {
-		if (myMetrics == null) {
-			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
-		}
-		return myMetrics.heightPixels;
+		final DisplayMetrics metrics = getMetrics();
+		return metrics == null ? 0 : metrics.heightPixels;
 	}
 
 	@Override
