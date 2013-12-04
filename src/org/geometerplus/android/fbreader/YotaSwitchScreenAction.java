@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader;
 import android.content.Context;
 import android.content.Intent;
 
-import android.os.Vibrator;
 import android.view.View;
 
 import com.yotadevices.sdk.utils.RotationAlgorithm;
@@ -55,11 +54,10 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		final View mainView = BaseActivity.findViewById(R.id.main_view);
 		final View mainHiddenView = BaseActivity.findViewById(R.id.main_hidden_view);
 		if (mySwitchToBack) {
-			RotationAlgorithm.getInstance(context).turnScreenOffIfRotated();
-			//serviceIntent.setAction(BroadcastEvents.BROADCAST_ACTION_BACKSCREEN_APPLICATION_ACTIVE);
 			context.startService(serviceIntent);
 			mainView.setVisibility(View.GONE);
 			mainHiddenView.setVisibility(View.VISIBLE);
+			RotationAlgorithm.getInstance(context).turnScreenOffIfRotated();
 		} else {
 			context.stopService(serviceIntent);
 			mainView.setVisibility(View.VISIBLE);
@@ -67,6 +65,5 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		}
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		zlibrary.YotaDrawOnBackScreenOption.setValue(mySwitchToBack);
-		((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(400);
 	}
 }
