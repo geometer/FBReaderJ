@@ -6,6 +6,10 @@
 
 package com.yotadevices.fbreader;
 
+import android.content.Intent;
+import android.graphics.*;
+import android.widget.FrameLayout;
+
 import com.yotadevices.sdk.BSActivity;
 import com.yotadevices.sdk.BSDrawer;
 import com.yotadevices.sdk.BSDrawer.Waveform;
@@ -20,13 +24,6 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.widget.FrameLayout;
 
 /**
  * @author ASazonov
@@ -83,8 +80,15 @@ public class FBReaderYotaService extends BSActivity {
 				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT));
 		myWidget.measure(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
 		myWidget.layout(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
-		myWidget.draw(mCanvas);
+		drawText();
 	}
+
+	private void drawText() {
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		if (zlibrary.YotaDrawOnBackScreenOption.getValue()) {
+			myWidget.draw(mCanvas);
+		}
+	}	
 
 	@Override
 	protected void onVolumeButtonsEvent(VolumeButtonsEvent event) {
@@ -115,11 +119,11 @@ public class FBReaderYotaService extends BSActivity {
 	private void handleGesture(Gestures action) {
 		if (action == Gestures.GESTURES_BS_RL) {
 			myWidget.turnPageStatic(true);
-			myWidget.draw(mCanvas);
+			drawText();
 			getBSDrawer().drawBitmap(0, 0, mBitmap, Waveform.WAVEFORM_GC_FULL);
 		} else if (action == Gestures.GESTURES_BS_LR) {
 			myWidget.turnPageStatic(false);
-			myWidget.draw(mCanvas);
+			drawText();
 			getBSDrawer().drawBitmap(0, 0, mBitmap, Waveform.WAVEFORM_GC_FULL);
 		}
 	}
