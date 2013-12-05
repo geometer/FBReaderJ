@@ -19,7 +19,6 @@ import com.yotadevices.sdk.BSMotionEvent;
 
 import org.geometerplus.android.fbreader.FBReaderApplication;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
@@ -61,21 +60,19 @@ public class FBReaderYotaService extends BSActivity {
 
 	private void initBookView() {
 		mWhiteBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
-				BSDrawer.SCREEN_HEIGHT, Config.ARGB_8888);
+				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		Canvas c = new Canvas(mWhiteBitmap);
 		Paint paint = new Paint();
 		paint.setColor(0xFFFFFF);
 		c.drawRect(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, paint);
 		mBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
-				BSDrawer.SCREEN_HEIGHT, Config.ARGB_8888);
+				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(mBitmap);
 		myWidget = new ZLAndroidWidget(getApplicationContext(), true);
 		if (FBReaderApp.Instance() == null) {
 			FBReaderApp.createInstance(myWidget);
 		}
 
-		((FBReaderApp) FBReaderApp.Instance()).clearTextCaches();
-		((FBView) ZLApplication.Instance().getCurrentView()).resetFooter();
 		myWidget.setLayoutParams(new FrameLayout.LayoutParams(
 				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT));
 		myWidget.measure(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);

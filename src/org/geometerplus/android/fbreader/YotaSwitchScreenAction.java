@@ -60,6 +60,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		final Intent serviceIntent = new Intent(context, FBReaderYotaService.class);
 		final View mainView = BaseActivity.findViewById(R.id.main_view);
 		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
+
 		if (toBack) {
 			context.startService(serviceIntent);
 			setupHiddenView(mainHiddenView);
@@ -71,8 +72,11 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 			mainView.setVisibility(View.VISIBLE);
 			mainHiddenView.setVisibility(View.GONE);
 		}
+
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		zlibrary.YotaDrawOnBackScreenOption.setValue(toBack);
+
+		Reader.clearTextCaches();
 	}
 
 	private void setupHiddenView(View mainView) {
