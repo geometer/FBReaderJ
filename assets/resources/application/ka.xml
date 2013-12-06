@@ -341,6 +341,10 @@
 				<node name="summaryOn" value="სტატუს ბარის ჩვენება, როცა მენიუ გამოჩნდება ეკრანზე"/>
 				<node name="summaryOff" value="არ აჩვენო სტატუს ბარის, როცა მენიუ გამოჩნდება ეკრანზე"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="კითხვის დროს ღილაკების განათების გამორთვა">
 				<node name="summaryOn" value="განათების გამორთვა (მუშაობს ყველა მოწყობილობაზე)"/>
 				<node name="summaryOff" value="არ სცადოთ განათების გამორთვა"/>

@@ -326,6 +326,10 @@
 				<node name="summaryOn" value="菜单处于激活状态时显示状态栏"/>
 				<node name="summaryOff" value="菜单激活时不要显示状态栏"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="阅读时禁用系统按键发亮">
 				<node name="summaryOn" value="禁用设备系统按键发亮 (对某些设备无效)"/>
 				<node name="summaryOff" value="不要尝试禁用系统按键发亮"/>

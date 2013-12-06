@@ -327,6 +327,10 @@
 				<node name="summaryOn" value="Mostra barra di stato quando il menu diventa attivo"/>
 				<node name="summaryOff" value="Non mostrare barra di stato quando menu diventa attivo"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Disabilitare i pulsanti hardware luce durante la lettura">
 				<node name="summaryOn" value="Disabilita pulsanti luce (potrebbe non funzionare per alcuni dispositivi"/>
 				<node name="summaryOff" value="Non tentare di disabilitare i pulsanti luce"/>
