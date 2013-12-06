@@ -678,8 +678,8 @@ public final class FBReader extends Activity {
 			invalidateOptionsMenu();
 		}
 
-		if (zlibrary.DisableButtonLightsOption.getValue()) {
-			if (Build.VERSION.SDK_INT >= 19/*Build.VERSION_CODES.KITKAT*/) {
+		if (Build.VERSION.SDK_INT >= 19/*Build.VERSION_CODES.KITKAT*/) {
+			if (zlibrary.EnableFullscreenModeOption.getValue()) {
 				myRootView.setSystemUiVisibility(
 					View.SYSTEM_UI_FLAG_LOW_PROFILE |
 					2048 /*View.SYSTEM_UI_FLAG_IMMERSIVE*/ |
@@ -687,7 +687,13 @@ public final class FBReader extends Activity {
 					4 /*View.SYSTEM_UI_FLAG_FULLSCREEN*/ |
 					View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 				);
-			} else {
+			} else if (zlibrary.DisableButtonLightsOption.getValue()) {
+				myRootView.setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_LOW_PROFILE
+				);
+			}
+		} else {
+			if (zlibrary.DisableButtonLightsOption.getValue()) {
 				myRootView.setSystemUiVisibility(
 					View.SYSTEM_UI_FLAG_LOW_PROFILE
 				);
