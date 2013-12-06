@@ -17,10 +17,7 @@ import com.yotadevices.sdk.Constants.Gestures;
 import com.yotadevices.sdk.Constants.VolumeButtonsEvent;
 import com.yotadevices.sdk.BSMotionEvent;
 
-import org.geometerplus.android.fbreader.FBReaderApplication;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
