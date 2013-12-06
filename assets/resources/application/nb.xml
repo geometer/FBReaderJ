@@ -336,6 +336,10 @@
 				<node name="summaryOn" value="Vis statuslinjen når menyen blir aktiv"/>
 				<node name="summaryOff" value="Ikke vis statuslinjen når menyen blir aktiv"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Skru av knappelys under lesing">
 				<node name="summaryOn" value="Skru av knappelys (virker ikke på alle enheter)"/>
 				<node name="summaryOff" value="Ikke prøv å skru av knappelys"/>

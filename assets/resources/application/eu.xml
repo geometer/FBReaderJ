@@ -336,6 +336,10 @@
 				<node name="summaryOn" value="Erakutsi egoera barra menua pizterakoan"/>
 				<node name="summaryOff" value="Gorde egoera barra menua pizterakoan"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Ezgaitu botoien argia irakurtzerakoan">
 				<node name="summaryOn" value="Ezgaitu botoien argiak (gailu batzuetan ez du balio)"/>
 				<node name="summaryOff" value="Ez saiatu botoien argiak ezgaitzen"/>

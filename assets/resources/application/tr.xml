@@ -336,6 +336,10 @@
 				<node name="summaryOn" value="Durum çubuğunu menü etkinleştirildiği zaman göster"/>
 				<node name="summaryOff" value="Menü etkinleştirildiğinde durum çubuğunu gösterme"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Okuma sırasında düğmeler devredışı kalsın">
 				<node name="summaryOn" value="Düğme ışıklarını kapat (bazı cihazlarda çalışmamaktadır)"/>
 				<node name="summaryOff" value="Düğme ışıklarına müdahale etme"/>

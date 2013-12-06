@@ -329,6 +329,10 @@
 				<node name="summaryOn" value="Afficher la barre  de statut lorsque le menu devient actif"/>
 				<node name="summaryOff" value="Cacher la barre de statut lorsque le menu devient actif"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Désactiver la lumière des boutons physiques pendant la lecture">
 				<node name="summaryOn" value="Désactive la lumière des boutons (ne fonctionne pas sur certains appareils)"/>
 				<node name="summaryOff" value="Ne pas essayer de désactiver la lumière des boutons"/>
