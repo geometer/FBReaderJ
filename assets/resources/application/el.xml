@@ -326,6 +326,10 @@
 				<node name="summaryOn" value="Η μπάρα κατάστασης εμφανίζεται όταν το μενού είναι ενεργό."/>
 				<node name="summaryOff" value="Η μπάρα κατάστασης δεν εμφανίζεται όταν το μενού είναι ενεργό."/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Απενεργοποίηση του φωτισμού των πλήκτρων την ώρα της ανάγνωσης.">
 				<node name="summaryOn" value="Απενεργοποίηση φωτισμού πλήκτρων (Δεν λειτουργεί σε όλες τις συσκευές)"/>
 				<node name="summaryOff" value="Μη απενεργοποίηση φωτισμού πλήκτρων"/>

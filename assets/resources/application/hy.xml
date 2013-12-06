@@ -341,6 +341,10 @@
 				<node name="summaryOn" value="Ցուցադրել վիճակագոտին"/>
 				<node name="summaryOff" value="Թաքցնել վիճակագոտին"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Անջատել ստեղների ետնալույսը ընթերցելիս">
 				<node name="summaryOn" value="Անջատել ետնալույսը (ոչ բոլոր սարքավորումներն են աջակցում)"/>
 				<node name="summaryOff" value="Չանջատել ետնալույսը"/>
