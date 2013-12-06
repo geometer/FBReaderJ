@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-public class ZLBooleanOption extends ZLOption {
+public final class ZLBooleanOption extends ZLOption {
 	private final boolean myDefaultValue;
 	private boolean myValue;
 
