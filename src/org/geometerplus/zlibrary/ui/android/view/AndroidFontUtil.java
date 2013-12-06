@@ -87,7 +87,7 @@ public final class AndroidFontUtil {
 			}
 			if (!fileSet.equals(ourFileSet)) {
 				ourFileSet = fileSet;
-				ourFontFileMap = new ZLTTFInfoDetector().collectFontFiles(fileSet);
+				ourFontFileMap = new ZLTTFInfoDetector().collectFonts(fileSet);
 			}
 		}
 		return ourFontFileMap;
