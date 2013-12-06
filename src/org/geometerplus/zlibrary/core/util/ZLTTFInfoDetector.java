@@ -85,7 +85,7 @@ public class ZLTTFInfoDetector {
 		if (nameInfo == null) {
 			return null;
 		}
-		return readFontInfo(nameInfo);
+		return readFontInfo(stream, nameInfo);
 	}
 
 	private static int getInt16(byte[] buffer, int offset) {
