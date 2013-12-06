@@ -336,6 +336,10 @@
 				<node name="summaryOn" value="Show status bar when menu becomes active"/>
 				<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode">
+				<node name="summaryOn" value="Hide navigation controls"/>
+				<node name="summaryOff" value="Show navigation controls"/>
+			</node>
 			<node name="disableButtonLights" value="Disable buttons light during reading">
 				<node name="summaryOn" value="Disable button lights (does not work for some devices)"/>
 				<node name="summaryOff" value="Don't try to disable button lights"/>

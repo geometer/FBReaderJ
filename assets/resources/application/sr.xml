@@ -336,6 +336,10 @@
 				<node name="summaryOn" value="Приказује траку стања када мени постане активан."/>
 				<node name="summaryOff" value="Не приказује траку стања када мени постане активан."/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Осветљење дугмади при читању">
 				<node name="summaryOn" value="Онемогућава осветљење дугмади (не ради на неким уређајима)."/>
 				<node name="summaryOff" value="Омогућава осветљење дугмади."/>

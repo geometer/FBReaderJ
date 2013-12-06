@@ -341,6 +341,10 @@
 				<node name="summaryOn" value="Показывать строку состояния, когда меню появляется на экране"/>
 				<node name="summaryOff" value="Не показывать строку состояния, когда меню появляется на экране"/>
 			</node>
+			<node name="fullscreenMode" value="Полноэкранный режим">
+				<node name="summaryOn" value="Скрывать кнопки навигации"/>
+				<node name="summaryOff" value="Оставлять кнопки навигации на экране"/>
+			</node>
 			<node name="disableButtonLights" value="Выключать подсветку кнопок во время чтения">
 				<node name="summaryOn" value="Выключать подсветку (работает не на всех устройствах)"/>
 				<node name="summaryOff" value="Не пытаться выключать подсветку"/>

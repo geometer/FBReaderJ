@@ -326,6 +326,10 @@
 				<node name="summaryOn" value="Az állapotsor látszik a menübe belépéskor"/>
 				<node name="summaryOff" value="Az állapotsor nem látszik a menübe belépéskor"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Gombok megvilágításának kikapcsolása">
 				<node name="summaryOn" value="Megvilágítás kikapcsolása olvasás közben (nem minden eszköznél működik)"/>
 				<node name="summaryOff" value="Ne próbálja kikapcsolni a gombok háttérvilágítását"/>

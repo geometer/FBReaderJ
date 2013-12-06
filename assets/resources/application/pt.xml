@@ -338,6 +338,10 @@
 				<node name="summaryOn" value="Mostrar barra de status quando o menu se torna ativo"/>
 				<node name="summaryOff" value="Não mostrar barra de status quando o menu se torna ativo"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Desativar luzes das teclas durante a leitura">
 				<node name="summaryOn" value="Desativar luzes das teclas (não funciona em alguns dispositivos)"/>
 				<node name="summaryOff" value="Não tente desabilitar as luzes das teclas"/>
