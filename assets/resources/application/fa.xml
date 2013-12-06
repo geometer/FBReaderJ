@@ -336,6 +336,10 @@
 				<node name="summaryOn" value="نمایش نوار وضعیت هنگامی که منو فعال میشود"/>
 				<node name="summaryOff" value="عدم نمایش نوار وضعیت هنگامی که منو فعال میشود"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="غیرفعال کردن نور کلیدها هنگام خواندن">
 				<node name="summaryOn" value="غیرفعال کردن نور کلیدها &quot; در بعضی از دستگاه ها عمل نمیکند&quot;"/>
 				<node name="summaryOff" value="برای غیر فعال کردن نور کلیدها تلاش نکنید"/>
