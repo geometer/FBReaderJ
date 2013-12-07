@@ -87,10 +87,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
-	public FBReader getActivity() {
-		return myActivity;
-	}
-
 	public ZLAndroidWidget getWidget() {
 		return myActivity.getMainView();
 	}
