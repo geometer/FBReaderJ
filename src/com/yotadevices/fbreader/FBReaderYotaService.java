@@ -12,9 +12,7 @@ import android.widget.FrameLayout;
 
 import com.yotadevices.sdk.BSActivity;
 import com.yotadevices.sdk.BSDrawer;
-import com.yotadevices.sdk.BSDrawer.Waveform;
-import com.yotadevices.sdk.Constants.Gestures;
-import com.yotadevices.sdk.Constants.VolumeButtonsEvent;
+import com.yotadevices.sdk.Constants;
 import com.yotadevices.sdk.BSMotionEvent;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -25,28 +23,18 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
  * @author ASazonov
  */
 public class FBReaderYotaService extends BSActivity {
-
 	private static final String TAG = FBReaderYotaService.class.getSimpleName();
 
 	private ZLAndroidWidget myWidget;
-
 	private Canvas mCanvas;
-
 	private Bitmap mBitmap;
-
 	private Bitmap mWhiteBitmap;
-
-	private int mInitialFontSize;
-
-	public FBReaderYotaService() {
-		super();
-	}
 
 	@Override
 	public void onBSResume() {
 		super.onBSResume();
 		initBookView();
-		getBSDrawer().drawBitmap(0, 0, mBitmap, Waveform.WAVEFORM_GC_FULL);
+		getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 	}
 
 	@Override
@@ -58,8 +46,8 @@ public class FBReaderYotaService extends BSActivity {
 	private void initBookView() {
 		mWhiteBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
 				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
-		Canvas c = new Canvas(mWhiteBitmap);
-		Paint paint = new Paint();
+		final Canvas c = new Canvas(mWhiteBitmap);
+		final Paint paint = new Paint();
 		paint.setColor(0xFFFFFF);
 		c.drawRect(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, paint);
 		mBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
@@ -85,24 +73,24 @@ public class FBReaderYotaService extends BSActivity {
 	}	
 
 	@Override
-	protected void onVolumeButtonsEvent(VolumeButtonsEvent event) {
+	protected void onVolumeButtonsEvent(Constants.VolumeButtonsEvent event) {
 		super.onVolumeButtonsEvent(event);
 		switch (event) {
-		case VOLUME_MINUS_UP:
-			handleGesture(Gestures.GESTURES_BS_RL);
-			break;
-		case VOLUME_PLUS_UP:
-			handleGesture(Gestures.GESTURES_BS_LR);
-			break;
-		default:
-			break;
+			case VOLUME_MINUS_UP:
+				handleGesture(Constants.Gestures.GESTURES_BS_RL);
+				break;
+			case VOLUME_PLUS_UP:
+				handleGesture(Constants.Gestures.GESTURES_BS_LR);
+				break;
+			default:
+				break;
 		}
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		initBookView();
-		getBSDrawer().drawBitmap(0, 0, mBitmap, Waveform.WAVEFORM_GC_FULL);
+		getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 	}
 
 	@Override
@@ -110,15 +98,15 @@ public class FBReaderYotaService extends BSActivity {
 		handleGesture(event.getBSAction());
 	}
 
-	private void handleGesture(Gestures action) {
-		if (action == Gestures.GESTURES_BS_RL) {
+	private void handleGesture(Constants.Gestures action) {
+		if (action == Constants.Gestures.GESTURES_BS_RL) {
 			myWidget.turnPageStatic(true);
 			drawText();
-			getBSDrawer().drawBitmap(0, 0, mBitmap, Waveform.WAVEFORM_GC_FULL);
-		} else if (action == Gestures.GESTURES_BS_LR) {
+			getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+		} else if (action == Constants.Gestures.GESTURES_BS_LR) {
 			myWidget.turnPageStatic(false);
 			drawText();
-			getBSDrawer().drawBitmap(0, 0, mBitmap, Waveform.WAVEFORM_GC_FULL);
+			getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 		}
 	}
 }
