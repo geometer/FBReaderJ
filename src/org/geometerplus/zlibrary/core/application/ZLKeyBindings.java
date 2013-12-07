@@ -81,6 +81,31 @@ public final class ZLKeyBindings {
 		volumeKeysOption.setValue(true);
 		invertVolumeKeysOption.setValue(false);
 		// end of migration code
+		
+		if(isNook()){
+            /*
+             * Only apply these key bindings for a Nook.
+             * This will bind the 4 front left/right keys 
+             * on a Barns and Noble Nook.
+             * 
+             * Information From:
+             * 	http://forum.xda-developers.com/showthread.php?t=1126654
+             *  Key numbers were verified with a self created APK 
+             *  using the code in the above thread.
+             * 	key 92 (left top) - KEYCODE_PAGE_UP
+             * 	key 93 (left bottom) - KEYCODE_PAGE_DOWN
+             * 	key 94 (right top) - KEYCODE_PICTSYMBOLS
+             * 	key 95 (right bottom) -  KEYCODE_SWITCH_CHARSET
+             * 
+             * Note: 	
+             * 	ints are used instead of KeyEvent.* 
+             * 	because the 4 fields require API level 9
+             */
+            bindKey(92, false, ActionCode.TURN_PAGE_FORWARD);
+            bindKey(93, false, ActionCode.TURN_PAGE_FORWARD);           
+            bindKey(94, false, ActionCode.TURN_PAGE_FORWARD);
+            bindKey(95, false, ActionCode.TURN_PAGE_BACK);                          
+		}
 	}
 
 	private ZLStringOption createOption(int key, boolean longPress, String defaultValue) {
@@ -113,6 +138,20 @@ public final class ZLKeyBindings {
 	public String getBinding(int key, boolean longPress) {
 		return getOption(key, longPress).getValue();
 	}
+	
+	/*
+	 * http://forum.xda-developers.com/showthread.php?t=2403559
+	 */
+	public boolean isNook(){
+		String thisManufacturer=android.os.Build.MANUFACTURER;
+	    String thisProduct=android.os.Build.PRODUCT;
+
+	    if( thisManufacturer.equals("BarnesAndNoble") && 
+	        thisProduct.equals("NOOK"))
+	        return(true);
+	    else
+	        return(false);
+    }
 
 	private class Reader extends ZLXMLReaderAdapter {
 		private final Set<String> myKeySet;
