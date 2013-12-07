@@ -63,13 +63,13 @@ public class MenuItemData {
 		MenuItemData root = new MenuItemData(MenuType.SUBMENU, "root", null);
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
-		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
-		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		if (zlibrary.isYotaPhone()) {
 			root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b));
 			root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b));
 		}
+		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
+		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night));
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day));
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SEARCH, R.drawable.ic_menu_search));
