@@ -841,14 +841,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public void setWindowTitle(final String title) {
-		final Activity activity =
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
-		if (activity != null) {
-			activity.runOnUiThread(new Runnable() {
-				public void run() {
-					activity.setTitle(title);
-				}
-			});
-		}
+		runOnUiThread(new Runnable() {
+			public void run() {
+				setTitle(title);
+			}
+		});
 	}
 }
