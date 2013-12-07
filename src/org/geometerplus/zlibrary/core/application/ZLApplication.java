@@ -59,7 +59,7 @@ public abstract class ZLApplication {
 		return myView;
 	}
 
-	final void setWindow(ZLApplicationWindow window) {
+	public final void setWindow(ZLApplicationWindow window) {
 		myWindow = window;
 	}
 
@@ -69,13 +69,15 @@ public abstract class ZLApplication {
 
 	protected void setTitle(String title) {
 		if (myWindow != null) {
-			myWindow.setTitle(title);
+			myWindow.setWindowTitle(title);
 		}
 	}
 
-	protected void runWithMessage(String key, Runnable runnable, Runnable postAction) {
+	protected void runWithMessage(String key, Runnable action, Runnable postAction) {
 		if (myWindow != null) {
-			myWindow.runWithMessage(key, runnable, postAction);
+			myWindow.runWithMessage(key, action, postAction);
+		} else {
+			action.run();
 		}
 	}
 
