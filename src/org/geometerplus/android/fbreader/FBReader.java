@@ -453,10 +453,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private Intent myCancelIntent = null;
 
-	public ZLAndroidWidget getMainView() {
-		return myMainView;
-	}
-
 	@Override
 	protected void onNewIntent(final Intent intent) {
 		final String action = intent.getAction();
@@ -1059,7 +1055,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public ZLViewWidget getViewWidget() {
-		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		return myMainView;
 	}
 
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
