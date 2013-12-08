@@ -610,10 +610,6 @@ public final class FBView extends ZLTextView {
 		return myFooter;
 	}
 
-	public void resetFooter() {
-		myFooter = null;
-	}
-
 	@Override
 	protected void releaseSelectionCursor() {
 		super.releaseSelectionCursor();
