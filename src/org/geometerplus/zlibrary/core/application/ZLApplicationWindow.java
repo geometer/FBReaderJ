@@ -21,27 +21,16 @@ package org.geometerplus.zlibrary.core.application;
 
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
-abstract public class ZLApplicationWindow {
-	private ZLApplication myApplication;
+public interface ZLApplicationWindow {
+	void setWindowTitle(String title);
+	void runWithMessage(String key, Runnable runnable, Runnable postAction);
+	void processException(Exception e);
 
-	protected ZLApplicationWindow(ZLApplication application) {
-		myApplication = application;
-		myApplication.setWindow(this);
-	}
+	void refresh();
 
-	public ZLApplication getApplication() {
-		return myApplication;
-	}
+	ZLViewWidget getViewWidget();
 
-	abstract protected void setTitle(String title);
-	abstract protected void runWithMessage(String key, Runnable runnable, Runnable postAction);
-	abstract protected void processException(Exception e);
+	void close();
 
-	abstract protected void refresh();
-
-	abstract protected ZLViewWidget getViewWidget();
-
-	abstract protected void close();
-
-	abstract protected int getBatteryLevel();
+	int getBatteryLevel();
 }
