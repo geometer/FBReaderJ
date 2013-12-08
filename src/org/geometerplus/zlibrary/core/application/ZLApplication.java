@@ -125,7 +125,7 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final ZLViewWidget getViewWidget() {
+	public ZLViewWidget getViewWidget() {
 		return myWindow != null ? myWindow.getViewWidget() : null;
 	}
 
