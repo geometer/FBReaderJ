@@ -17,9 +17,6 @@ git checkout plugins-ics
 git merge plugins
 git merge ice-cream-sandwich
 
-git checkout yota
-git merge ice-cream-sandwich
-
 git checkout yota2
 git merge ice-cream-sandwich
 
