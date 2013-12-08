@@ -38,22 +38,27 @@ public final class ZLKeyBindings {
 	private final ZLStringListOption myKeysOption;
 	private final TreeMap<Integer,ZLStringOption> myActionMap = new TreeMap<Integer,ZLStringOption>();
 	private final TreeMap<Integer,ZLStringOption> myLongPressActionMap = new TreeMap<Integer,ZLStringOption>();
+	private final boolean isNook = isNook();
 
 	public ZLKeyBindings(String name) {
 		myName = name;
 		final Set<String> keys = new TreeSet<String>();
-		new Reader(keys).readQuietly(ZLFile.createFileByPath("default/keymap.xml"));
+		final String keymapFilename = isNook ? "/keymap-nook.xml" : "/keymap.xml";		
+		new Reader(keys).readQuietly(ZLFile.createFileByPath("default" + keymapFilename));
+		
 		try {
-			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
+			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + keymapFilename));
 		} catch (Exception e) {
 			// ignore
 		}
 		try {
-			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + "/keymap.xml"));
+			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + keymapFilename));
 		} catch (Exception e) {
 			// ignore
 		}
  		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
+ 		
+ 		if(isNook) return;
 
 		// this code is for migration from FBReader versions <= 1.1.2
 		ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
@@ -81,31 +86,6 @@ public final class ZLKeyBindings {
 		volumeKeysOption.setValue(true);
 		invertVolumeKeysOption.setValue(false);
 		// end of migration code
-		
-		if(isNook()){
-            /*
-             * Only apply these key bindings for a Nook.
-             * This will bind the 4 front left/right keys 
-             * on a Barns and Noble Nook.
-             * 
-             * Information From:
-             * 	http://forum.xda-developers.com/showthread.php?t=1126654
-             *  Key numbers were verified with a self created APK 
-             *  using the code in the above thread.
-             * 	key 92 (left top) - KEYCODE_PAGE_UP
-             * 	key 93 (left bottom) - KEYCODE_PAGE_DOWN
-             * 	key 94 (right top) - KEYCODE_PICTSYMBOLS
-             * 	key 95 (right bottom) -  KEYCODE_SWITCH_CHARSET
-             * 
-             * Note: 	
-             * 	ints are used instead of KeyEvent.* 
-             * 	because the 4 fields require API level 9
-             */
-            bindKey(92, false, ActionCode.TURN_PAGE_FORWARD);
-            bindKey(93, false, ActionCode.TURN_PAGE_FORWARD);           
-            bindKey(94, false, ActionCode.TURN_PAGE_FORWARD);
-            bindKey(95, false, ActionCode.TURN_PAGE_BACK);                          
-		}
 	}
 
 	private ZLStringOption createOption(int key, boolean longPress, String defaultValue) {
