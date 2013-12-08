@@ -10,10 +10,7 @@ import android.content.Intent;
 import android.graphics.*;
 import android.widget.FrameLayout;
 
-import com.yotadevices.sdk.BSActivity;
-import com.yotadevices.sdk.BSDrawer;
-import com.yotadevices.sdk.Constants;
-import com.yotadevices.sdk.BSMotionEvent;
+import com.yotadevices.sdk.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
@@ -53,8 +50,9 @@ public class FBReaderYotaService extends BSActivity {
 				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(mBitmap);
 		myWidget = new ZLAndroidWidget(getApplicationContext(), true);
-		myWidget.setLayoutParams(new FrameLayout.LayoutParams(
-				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT));
+		myWidget.setLayoutParams(
+			new FrameLayout.LayoutParams(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT)
+		);
 		myWidget.measure(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
 		myWidget.layout(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
 		drawText();
