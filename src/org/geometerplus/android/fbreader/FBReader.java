@@ -914,9 +914,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		}
 
-		if (myNavigationPopup != null) {
-			myNavigationPopup.update();
-		}
+		refresh();
 	}
 
 	@Override
@@ -1093,6 +1091,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					menuItem.setCheckable(false);
 					break;
 			}
+		}
+
+		if (myNavigationPopup != null) {
+			myNavigationPopup.update();
 		}
 	}
 
