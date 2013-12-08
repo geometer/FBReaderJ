@@ -31,11 +31,6 @@ public abstract class ZLApplication {
 	}
 
 	private static ZLApplication ourInstance;
-	private static ZLViewWidget sZLViewWidget;
-
-	public static void createInstance(ZLViewWidget widget) {
-		sZLViewWidget = widget;
-	}
 
 	public static final String NoAction = "none";
 
@@ -99,7 +94,7 @@ public abstract class ZLApplication {
 	}
 
 	public final ZLViewWidget getViewWidget() {
-		return myWindow != null ? myWindow.getViewWidget() : sZLViewWidget;
+		return myWindow != null ? myWindow.getViewWidget() : null;
 	}
 
 	public final void onRepaintFinished() {
