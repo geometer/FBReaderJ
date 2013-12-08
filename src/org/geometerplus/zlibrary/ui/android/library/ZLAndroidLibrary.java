@@ -87,10 +87,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
-	public ZLAndroidWidget getWidget() {
-		return myActivity.getMainView();
-	}
-
 	public AssetManager getAssets() {
 		return myApplication.getAssets();
 	}
