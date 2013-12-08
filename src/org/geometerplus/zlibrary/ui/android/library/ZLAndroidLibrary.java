@@ -91,10 +91,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
-	public FBReader getActivity() {
-		return myActivity;
-	}
-
 	public ZLAndroidWidget getWidget() {
 		return myActivity.getMainView();
 	}
@@ -211,11 +207,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	@Override
 	public boolean supportsAllOrientations() {
-		try {
-			return ActivityInfo.class.getField("SCREEN_ORIENTATION_REVERSE_PORTRAIT") != null;
-		} catch (NoSuchFieldException e) {
-			return false;
-		}
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
 	}
 
 	private final class AndroidAssetsFile extends ZLResourceFile {
