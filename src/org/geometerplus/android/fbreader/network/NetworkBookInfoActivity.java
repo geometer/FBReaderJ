@@ -56,7 +56,6 @@ import org.geometerplus.android.util.UIUtil;
 public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
 	private NetworkBookTree myTree;
 	private NetworkBookItem myBook;
-	private View myMainView;
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private final BookDownloaderServiceConnection myConnection = new BookDownloaderServiceConnection();
@@ -68,8 +67,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 		SQLiteCookieDatabase.init(this);
 
-		myMainView = getLayoutInflater().inflate(R.layout.network_book, null, false);
-		setContentView(myMainView);
+		setContentView(R.layout.network_book);
 	}
 
 	@Override
@@ -157,10 +155,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			}
 		}
 	};
-
-	View getMainView() {
-		return myMainView;
-	}
 
 	private void setTextById(int id, CharSequence text) {
 		((TextView)findViewById(id)).setText(text);
