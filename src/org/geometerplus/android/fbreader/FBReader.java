@@ -280,10 +280,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
 	}
 
-	public ZLAndroidWidget getMainView() {
-		return myMainView;
-	}
-
 	@Override
 	protected void onNewIntent(final Intent intent) {
 		final String action = intent.getAction();
@@ -859,7 +855,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public ZLViewWidget getViewWidget() {
-		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		return myMainView;
 	}
 
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
