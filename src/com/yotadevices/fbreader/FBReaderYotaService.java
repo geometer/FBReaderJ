@@ -19,12 +19,9 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
  * @author ASazonov
  */
 public class FBReaderYotaService extends BSActivity {
-	private static final String TAG = FBReaderYotaService.class.getSimpleName();
-
 	private ZLAndroidWidget myWidget;
 	private Canvas mCanvas;
 	private Bitmap mBitmap;
-	private Bitmap mWhiteBitmap;
 
 	@Override
 	public void onBSResume() {
@@ -40,12 +37,6 @@ public class FBReaderYotaService extends BSActivity {
 	}
 
 	private void initBookView() {
-		mWhiteBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
-				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
-		final Canvas c = new Canvas(mWhiteBitmap);
-		final Paint paint = new Paint();
-		paint.setColor(0xFFFFFF);
-		c.drawRect(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, paint);
 		mBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
 				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(mBitmap);
