@@ -12,8 +12,9 @@ import android.widget.FrameLayout;
 
 import com.yotadevices.sdk.*;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
+
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 /**
  * @author ASazonov
@@ -40,7 +41,7 @@ public class FBReaderYotaService extends BSActivity {
 		mBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
 				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(mBitmap);
-		myWidget = new ZLAndroidWidget(getApplicationContext(), true);
+		myWidget = new ZLAndroidWidget(getApplicationContext());
 		myWidget.setLayoutParams(
 			new FrameLayout.LayoutParams(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT)
 		);
@@ -50,8 +51,8 @@ public class FBReaderYotaService extends BSActivity {
 	}
 
 	private void drawText() {
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-		if (zlibrary.YotaDrawOnBackScreenOption.getValue()) {
+		final FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
+		if (reader.YotaDrawOnBackScreenOption.getValue()) {
 			myWidget.draw(mCanvas);
 		}
 	}	

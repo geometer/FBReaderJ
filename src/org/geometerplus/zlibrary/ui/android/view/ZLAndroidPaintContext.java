@@ -61,15 +61,11 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
 
-	private boolean myYota;
-
-	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth, boolean yota) {
+	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
 		myCanvas = canvas;
 		myWidth = width - scrollbarWidth;
 		myHeight = height;
 		myScrollbarWidth = scrollbarWidth;
-
-		myYota = yota;
 
 		myTextPaint.setLinearText(false);
 		myTextPaint.setAntiAlias(AntiAliasOption.getValue());
@@ -99,11 +95,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private static Bitmap ourWallpaper;
 	@Override
 	public void clear(ZLFile wallpaperFile, WallpaperMode mode) {
-		if (myYota) {
-			clear(new ZLColor(255, 255, 255));
-			return;
-		}
-
 		if (!wallpaperFile.equals(ourWallpaperFile)) {
 			ourWallpaperFile = wallpaperFile;
 			ourWallpaper = null;

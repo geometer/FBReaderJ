@@ -23,7 +23,6 @@ import android.content.Intent;
 
 import com.yotadevices.fbreader.FBReaderYotaService;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.android.fbreader.FBReaderApplication;
 
@@ -37,7 +36,7 @@ class VolumeKeyTurnPageAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
-		if (((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).YotaDrawOnBackScreenOption.getValue()) {
+		if (Reader.YotaDrawOnBackScreenOption.getValue()) {
 //			Intent serviceIntent = new Intent(BaseActivity.getApplicationContext(), FBReaderYotaService.class);
 //			serviceIntent.setAction(myForward ? FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_PAGE_RIGHT
 //					: FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_PAGE_LEFT);

@@ -35,24 +35,19 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	private final BitmapManager myBitmapManager = new BitmapManager(this);
 	private Bitmap myFooterBitmap;
 
-	private final boolean myYota;
-
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
-		myYota = false;
 	}
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
-		myYota = false;
 	}
 
-	public ZLAndroidWidget(Context context, boolean yota) {
+	public ZLAndroidWidget(Context context) {
 		super(context);
 		init();
-		myYota = yota;
 	}
 
 	private void init() {
@@ -122,17 +117,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	private AnimationProvider myAnimationProvider;
-	private AnimationProvider myYotaAnimationProvider;
 	private ZLView.Animation myAnimationType;
 	private int myStoredLayerType = -1;
 	private AnimationProvider getAnimationProvider() {
-		if (myYota) {
-			if (myYotaAnimationProvider == null) {
-				myYotaAnimationProvider = new NoneAnimationProvider(myBitmapManager);
-			}
-			return myYotaAnimationProvider;
-		}
-
 		final ZLView.Animation type = ZLApplication.Instance().getCurrentView().getAnimationType();
 		if (myAnimationProvider == null || myAnimationType != type) {
 			myAnimationType = type;
@@ -269,8 +256,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			new Canvas(bitmap),
 			getWidth(),
 			getMainAreaHeight(),
-			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0,
-			myYota
+			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		view.paint(context, index);
 	}
@@ -296,8 +282,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			new Canvas(myFooterBitmap),
 			getWidth(),
 			footer.getHeight(),
-			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0,
-			myYota
+			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		footer.paint(context);
 		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - myHDiff - footer.getHeight(), myPaint);
@@ -315,8 +300,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 					canvas,
 					getWidth(),
 					getMainAreaHeight(),
-					view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0,
-					myYota
+					view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 				);
 				view.preparePage(context, ZLView.PageIndex.next);
 			}

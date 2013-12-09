@@ -374,6 +374,10 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public ZLFile getWallpaperFile() {
+		if (myReader.YotaDrawOnBackScreenOption.getValue()) {
+			return null;
+		}
+
 		final String filePath = myReader.getColorProfile().WallpaperOption.getValue();
 		if ("".equals(filePath)) {
 			return null;
@@ -643,7 +647,11 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Animation getAnimationType() {
-		return myReader.PageTurningOptions.Animation.getValue();
+		if (myReader.YotaDrawOnBackScreenOption.getValue()) {
+			return Animation.none;
+		} else {
+			return myReader.PageTurningOptions.Animation.getValue();
+		}
 	}
 
 	@Override
