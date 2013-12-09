@@ -223,7 +223,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	@Override
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
 		myTextPaint.setTypeface(AndroidFontUtil.typeface(family, bold, italic));
-		myTextPaint.setTextSize(myYota ? size / 2 : size);
+		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
 		myTextPaint.setStrikeThruText(strikeThrought);
 	}
