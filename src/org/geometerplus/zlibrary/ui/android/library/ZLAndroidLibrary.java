@@ -53,8 +53,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
-	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
-
 	public boolean isKindleFire() {
 		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
 		return

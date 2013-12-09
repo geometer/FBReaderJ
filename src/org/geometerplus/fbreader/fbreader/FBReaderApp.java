@@ -36,6 +36,8 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
+	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
 		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 	public final ZLStringOption TextSearchPatternOption =
