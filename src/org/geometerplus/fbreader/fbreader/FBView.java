@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
@@ -335,6 +336,11 @@ public final class FBView extends ZLTextView {
 
 		new MoveCursorAction(myReader, direction).run();
 		return true;
+	}
+
+	@Override
+	public ZLTextStyleCollection getTextStyleCollection() {
+		return myReader.TextStyleCollection;
 	}
 
 	@Override

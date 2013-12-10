@@ -1,6 +1,7 @@
 ===== 1.9.4 (Dec ??, 2013) =====
 * New option: adjust image color according background. For light background, adjusts too light colors to match background, for dark background adjusts too dark areas.
 * Updated Czech localization (by Marek Pavelka)
+* It is possible to load fonts from assets; PT Sans font added in ics version
 
 ===== 1.9.3 (Nov 22, 2013) =====
 * Added Greek localization (by Alex Doulamis)

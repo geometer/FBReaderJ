@@ -27,30 +27,12 @@ import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
 public class ZLTextStyleCollection {
-	private static ZLTextStyleCollection ourInstance = null;
-
-	public static ZLTextStyleCollection Instance() {
-		if (ourInstance == null) {
-			ourInstance = new ZLTextStyleCollection();
-		}
-		return ourInstance;
-	}
-
-	public static void deleteInstance() {
-		ourInstance = null;
-	}
-
 	private int myDefaultFontSize;
 	private ZLTextBaseStyle myBaseStyle;
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
-	public final ZLBooleanOption UseCSSTextAlignmentOption =
-		new ZLBooleanOption("Style", "css:textAlignment", true);
-	public final ZLBooleanOption UseCSSFontSizeOption =
-		new ZLBooleanOption("Style", "css:fontSize", true);
-
-	private ZLTextStyleCollection() {
-		new TextStyleReader(this).readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
+	public ZLTextStyleCollection(String name) {
+		new TextStyleReader(name).readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
 	}
 
 	public int getDefaultFontSize() {
@@ -65,9 +47,9 @@ public class ZLTextStyleCollection {
 		return myDecorationMap[kind & 0xFF];
 	}
 
-	private static class TextStyleReader extends ZLXMLReaderAdapter {
+	private class TextStyleReader extends ZLXMLReaderAdapter {
 		private final int myDpi = ZLibrary.Instance().getDisplayDPI();
-		private ZLTextStyleCollection myCollection;
+		private String myCollectionName;
 
 		@Override
 		public boolean dontCacheAttributeValues() {
@@ -94,16 +76,16 @@ public class ZLTextStyleCollection {
 			return i;
 		}
 
-		private static boolean booleanValue(ZLStringMap attributes, String name) {
+		private boolean booleanValue(ZLStringMap attributes, String name) {
 			return "true".equals(attributes.getValue(name));
 		}
 
-		private static ZLBoolean3 b3Value(ZLStringMap attributes, String name) {
+		private ZLBoolean3 b3Value(ZLStringMap attributes, String name) {
 			return ZLBoolean3.getByName(attributes.getValue(name));
 		}
 
-		public TextStyleReader(ZLTextStyleCollection collection) {
-			myCollection = collection;
+		public TextStyleReader(String collectionName) {
+			myCollectionName = collectionName;
 		}
 
 		@Override
@@ -112,8 +94,10 @@ public class ZLTextStyleCollection {
 			final String STYLE = "style";
 
 			if (BASE.equals(tag)) {
-				myCollection.myDefaultFontSize = intValue(attributes, "fontSize", 0);
-				myCollection.myBaseStyle = new ZLTextBaseStyle(attributes.getValue("family"), myCollection.myDefaultFontSize);
+				if (myCollectionName.equals(attributes.getValue("screen"))) {
+					myDefaultFontSize = intValue(attributes, "fontSize", 0);
+					myBaseStyle = new ZLTextBaseStyle(myCollectionName, attributes.getValue("family"), myDefaultFontSize);
+				}
 			} else if (STYLE.equals(tag)) {
 				String idString = attributes.getValue("id");
 				String name = attributes.getValue("name");
@@ -157,7 +141,7 @@ public class ZLTextStyleCollection {
 						decoration = new ZLTextFullStyleDecoration(name, fontFamily, fontSizeDelta, bold, italic, underline, strikeThrough, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
 
-					myCollection.myDecorationMap[id & 0xFF] = decoration;
+					myDecorationMap[id & 0xFF] = decoration;
 				}
 			}
 			return false;

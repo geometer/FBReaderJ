@@ -30,8 +30,10 @@ public class ZLTTFInfoDetector {
 		}
 
 		for (File f : files) {
+			InputStream stream = null;
 			try {
-				final ZLTTFInfo info = detectInfo(f);
+				stream = new FileInputStream(f);
+				final ZLTTFInfo info = detectInfo(stream);
 				if (info != null && info.FamilyName != null) {
 					File[] table = fonts.get(info.FamilyName);
 					if (table == null) {
@@ -51,21 +53,27 @@ public class ZLTTFInfoDetector {
 					}
 				}
 			} catch (IOException e) {
+			} finally {
+				if (stream != null) {
+					try {
+						stream.close();
+					} catch (IOException e1) {
+					}
+				}
 			}
 		}
 		return fonts;
 	}
 
-	public ZLTTFInfo detectInfo(File file) throws IOException {
-		myStream = new FileInputStream(file);
+	public ZLTTFInfo detectInfo(InputStream stream) throws IOException {
 		myPosition = 0;
 
 		final byte[] subtable = new byte[12];
-		myPosition += myStream.read(subtable);
+		myPosition += stream.read(subtable);
 
 		final int numTables = getInt16(subtable, 4);
 		final byte[] tables = new byte[16 * numTables];
-		myPosition += myStream.read(tables);
+		myPosition += stream.read(tables);
 
 		TableInfo nameInfo = null;
 		for (int i = 0; i < numTables; ++i) {
@@ -77,7 +85,7 @@ public class ZLTTFInfoDetector {
 		if (nameInfo == null) {
 			return null;
 		}
-		return readFontInfo(nameInfo);
+		return readFontInfo(stream, nameInfo);
 	}
 
 	private static int getInt16(byte[] buffer, int offset) {
@@ -103,7 +111,6 @@ public class ZLTTFInfoDetector {
 		}
 	}
 
-	private InputStream myStream;
 	private int myPosition;
 
 	private static class TableInfo {
@@ -124,17 +131,17 @@ public class ZLTTFInfoDetector {
 		}*/
 	}
 
-	byte[] readTable(TableInfo info) throws IOException {
-		myPosition += (int)myStream.skip(info.Offset - myPosition);
+	byte[] readTable(InputStream stream, TableInfo info) throws IOException {
+		myPosition += (int)stream.skip(info.Offset - myPosition);
 		byte[] buffer = new byte[info.Length];
 		while (myPosition < info.Offset) {
-			int len = myStream.read(buffer, 0, Math.min(info.Offset - myPosition, info.Length));
+			int len = stream.read(buffer, 0, Math.min(info.Offset - myPosition, info.Length));
 			if (len <= 0) {
 				throw new IOException("Table " + info.Name + " not found in TTF file");
 			}
 			myPosition += len;
 		}
-		myPosition += myStream.read(buffer);
+		myPosition += stream.read(buffer);
 		/*
 		int sum = 0;
 		for (int i = 0; i < info.Length; i += 4) {
@@ -148,13 +155,13 @@ public class ZLTTFInfoDetector {
 		return buffer;
 	}
 
-	private ZLTTFInfo readFontInfo(TableInfo nameInfo) throws IOException {
+	private ZLTTFInfo readFontInfo(InputStream stream, TableInfo nameInfo) throws IOException {
 		if (nameInfo == null || nameInfo.Offset < myPosition || nameInfo.Length <= 0) {
 			return null;
 		}
 		byte[] buffer;
 		try {
-			buffer = readTable(nameInfo);
+			buffer = readTable(stream, nameInfo);
 		} catch (Throwable e) {
 			return null;
 		}

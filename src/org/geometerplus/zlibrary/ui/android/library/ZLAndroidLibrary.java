@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
@@ -49,9 +50,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
+	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
-
-	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
 
 	public boolean isKindleFire() {
 		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
@@ -85,14 +85,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 	}
 
-	public FBReader getActivity() {
-		return myActivity;
+	public AssetManager getAssets() {
+		return myApplication.getAssets();
 	}
-
-	public ZLAndroidWidget getWidget() {
-		return myActivity.getMainView();
-	}
-
+		
 	@Override
 	public ZLResourceFile createResourceFile(String path) {
 		return new AndroidAssetsFile(path);
@@ -143,41 +139,33 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	private DisplayMetrics myMetrics;
-
-	@Override
-	public int getDisplayDPI() {
+	private DisplayMetrics getMetrics() {
 		if (myMetrics == null) {
 			if (myActivity == null) {
-				return 0;
+				return null;
 			}
 			myMetrics = new DisplayMetrics();
 			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
 		}
-		return (int)(160 * myMetrics.density);
+		return myMetrics;
+	}
+
+	@Override
+	public int getDisplayDPI() {
+		final DisplayMetrics metrics = getMetrics();
+		return metrics == null ? 0 : (int)(160 * metrics.density);
 	}
 
 	@Override
 	public int getWidthInPixels() {
-		if (myMetrics == null) {
-			if (myActivity == null) {
-				return 0;
-			}
-			myMetrics = new DisplayMetrics();
-			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
-		}
-		return myMetrics.widthPixels;
+		final DisplayMetrics metrics = getMetrics();
+		return metrics == null ? 0 : metrics.widthPixels;
 	}
 
 	@Override
 	public int getHeightInPixels() {
-		if (myMetrics == null) {
-			if (myActivity == null) {
-				return 0;
-			}
-			myMetrics = new DisplayMetrics();
-			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
-		}
-		return myMetrics.heightPixels;
+		final DisplayMetrics metrics = getMetrics();
+		return metrics == null ? 0 : metrics.heightPixels;
 	}
 
 	@Override
@@ -209,11 +197,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	@Override
 	public boolean supportsAllOrientations() {
-		try {
-			return ActivityInfo.class.getField("SCREEN_ORIENTATION_REVERSE_PORTRAIT") != null;
-		} catch (NoSuchFieldException e) {
-			return false;
-		}
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
 	}
 
 	private final class AndroidAssetsFile extends ZLResourceFile {

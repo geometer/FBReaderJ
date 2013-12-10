@@ -23,12 +23,9 @@ import android.app.Application;
 
 import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
 
-import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 public abstract class ZLAndroidApplication extends Application {
-	public ZLAndroidApplicationWindow myMainWindow;
-
 	@Override
 	public void onCreate() {
 		super.onCreate();

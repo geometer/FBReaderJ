@@ -326,6 +326,10 @@
 				<node name="summaryOn" value="Arata bara de stare atunci când meniu devine activ"/>
 				<node name="summaryOff" value="Nu afisati bara de stare atunci când meniu devine activ"/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Dezactiveaza lumina butoanelor hardware în timpul lecturii">
 				<node name="summaryOn" value="Dezactiveaza lumina butonului (nu functioneaza pentru unele dispozitive)"/>
 				<node name="summaryOff" value="Nu dezactivati lumina butonului"/>

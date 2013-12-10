@@ -330,6 +330,10 @@
 				<node name="summaryOn" value="Statuszeile anzeigen wenn das Menü aktiviert wird."/>
 				<node name="summaryOff" value="Statuszeile nicht anzeigen wenn das Menü aktiviert wird."/>
 			</node>
+			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
+				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
+				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			</node>
 			<node name="disableButtonLights" value="Beleuchtung der Hardware-Tasten während des Lesens abschalten">
 				<node name="summaryOn" value="Tastenbeleuchtung abschalten (Funktioniert auf einigen Geräten nicht)"/>
 				<node name="summaryOff" value="Tastenbeleuchtung nicht abschalten"/>

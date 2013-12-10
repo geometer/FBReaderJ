@@ -23,18 +23,46 @@ import java.util.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.Paths;
 
 public final class AndroidFontUtil {
-	private static Map<String,File[]> ourFontMap;
+	private static Map<String,String[]> ourFontAssetMap;
+	private static Map<String,File[]> ourFontFileMap;
 	private static Set<File> ourFileSet;
 	private static long ourTimeStamp;
 
-	private static Map<String,File[]> getFontMap(boolean forceReload) {
+	private static Map<String,String[]> getFontAssetMap() {
+		if (ourFontAssetMap == null) {
+			ourFontAssetMap = new HashMap<String,String[]>();
+			new ZLXMLReaderAdapter() {
+				@Override
+				public boolean startElementHandler(String tag, ZLStringMap attributes) {
+					if ("font".equals(tag)) {
+						ourFontAssetMap.put(attributes.getValue("family"), new String[] {
+							"fonts/" + attributes.getValue("regular"),
+							"fonts/" + attributes.getValue("bold"),
+							"fonts/" + attributes.getValue("italic"),
+							"fonts/" + attributes.getValue("boldItalic")
+						});
+					}
+					return false;
+				}
+			}.readQuietly(ZLFile.createFileByPath("fonts/fonts.xml"));
+		}
+		return ourFontAssetMap;
+	}
+
+	private static Map<String,File[]> getFontFileMap(boolean forceReload) {
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < ourTimeStamp + 1000) {
 			forceReload = false;
@@ -59,14 +87,19 @@ public final class AndroidFontUtil {
 			}
 			if (!fileSet.equals(ourFileSet)) {
 				ourFileSet = fileSet;
-				ourFontMap = new ZLTTFInfoDetector().collectFonts(fileSet);
+				ourFontFileMap = new ZLTTFInfoDetector().collectFonts(fileSet);
 			}
 		}
-		return ourFontMap;
+		return ourFontFileMap;
 	}
 
 	public static String realFontFamilyName(String fontFamily) {
-		for (String name : getFontMap(false).keySet()) {
+		for (String name : getFontAssetMap().keySet()) {
+			if (name.equalsIgnoreCase(fontFamily)) {
+				return name;
+			}
+		}
+		for (String name : getFontFileMap(false).keySet()) {
 			if (name.equalsIgnoreCase(fontFamily)) {
 				return name;
 			}
@@ -84,7 +117,8 @@ public final class AndroidFontUtil {
 	}
 
 	public static void fillFamiliesList(ArrayList<String> families) {
-		final TreeSet<String> familySet = new TreeSet<String>(getFontMap(true).keySet());
+		final TreeSet<String> familySet = new TreeSet<String>(getFontFileMap(true).keySet());
+		familySet.addAll(getFontAssetMap().keySet());
 		familySet.add("Droid Sans");
 		familySet.add("Droid Serif");
 		familySet.add("Droid Mono");
@@ -92,6 +126,42 @@ public final class AndroidFontUtil {
 	}
 
 	private static final HashMap<String,Typeface[]> ourTypefaces = new HashMap<String,Typeface[]>();
+
+	private static Typeface createTypefaceFromAsset(Typeface[] typefaces, String family, int style) {
+		final String[] assets = getFontAssetMap().get(family);
+		if (assets == null) {
+			return null;
+		}
+		try {
+			return Typeface.createFromAsset(
+				((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getAssets(), assets[style]
+			);
+		} catch (Throwable t) {
+		}
+		return null;
+	}
+
+	private static Typeface createTypefaceFromFile(Typeface[] typefaces, String family, int style) {
+		final File[] files = getFontFileMap(false).get(family);
+		if (files == null) {
+			return null;
+		}
+		try {
+			if (files[style] != null) {
+				return Typeface.createFromFile(files[style]);
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (files[i] != null) {
+					if (typefaces[i] == null) {
+						typefaces[i] = Typeface.createFromFile(files[i]);
+					}
+					return typefaces[i];
+				}
+			}
+		} catch (Throwable e) {
+		}
+		return null;
+	}
 
 	public static Typeface typeface(String family, boolean bold, boolean italic) {
 		family = realFontFamilyName(family);
@@ -103,29 +173,15 @@ public final class AndroidFontUtil {
 		}
 		Typeface tf = typefaces[style];
 		if (tf == null) {
-			File[] files = getFontMap(false).get(family);
-			if (files != null) {
-				try {
-					if (files[style] != null) {
-						tf = Typeface.createFromFile(files[style]);
-					} else {
-						for (int i = 0; i < 4; ++i) {
-							if (files[i] != null) {
-								tf = (typefaces[i] != null) ?
-									typefaces[i] : Typeface.createFromFile(files[i]);
-								typefaces[i] = tf;
-								break;
-							}
-						}
-					}
-				} catch (Throwable e) {
-				}
-			}
-			if (tf == null) {
-				tf = Typeface.create(family, style);
-			}
-			typefaces[style] = tf;
+			tf = createTypefaceFromFile(typefaces, family, style);
 		}
+		if (tf == null) {
+			tf = createTypefaceFromAsset(typefaces, family, style);
+		}
+		if (tf == null) {
+			tf = Typeface.create(family, style);
+		}
+		typefaces[style] = tf;
 		return tf;
 	}
 
