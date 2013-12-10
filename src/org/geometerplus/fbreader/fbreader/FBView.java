@@ -421,6 +421,9 @@ public final class FBView extends ZLTextView {
 	@Override
 	public ZLColor getTextColor(ZLTextHyperlink hyperlink) {
 		final ColorProfile profile = myReader.getColorProfile();
+		if (myReader.YotaDrawOnBackScreenOption.getValue()) {
+			return profile.RegularTextOption.getValue();
+		}
 		switch (hyperlink.Type) {
 			default:
 			case FBHyperlinkType.NONE:
