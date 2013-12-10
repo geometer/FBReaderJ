@@ -27,20 +27,20 @@ import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	private final ZLTextStyleDecoration myDecoration;
 
-	ZLTextPartiallyDecoratedStyle(ZLTextStyle base, ZLTextStyleDecoration decoration, ZLTextHyperlink hyperlink) {
-		super(base, hyperlink);
+	ZLTextPartiallyDecoratedStyle(ZLTextStyle parent, ZLTextStyleDecoration decoration, ZLTextHyperlink hyperlink) {
+		super(parent, hyperlink);
 		myDecoration = decoration;
 	}
 
 	@Override
 	protected String getFontFamilyInternal() {
 		String decoratedValue = myDecoration.FontFamilyOption.getValue();
-		return (decoratedValue.length() != 0) ? decoratedValue : Base.getFontFamily();
+		return (decoratedValue.length() != 0) ? decoratedValue : Parent.getFontFamily();
 	}
 
 	@Override
 	protected int getFontSizeInternal(ZLTextMetrics metrics) {
-		return Base.getFontSize(metrics) + myDecoration.FontSizeDeltaOption.getValue();
+		return Parent.getFontSize(metrics) + myDecoration.FontSizeDeltaOption.getValue();
 	}
 
 	@Override
@@ -51,7 +51,7 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 			case B3_FALSE:
 				return false;
 			default:
-				return Base.isBold();
+				return Parent.isBold();
 		}
 	}
 
@@ -63,7 +63,7 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 			case B3_FALSE:
 				return false;
 			default:
-				return Base.isItalic();
+				return Parent.isItalic();
 		}
 	}
 
@@ -75,7 +75,7 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 			case B3_FALSE:
 				return false;
 			default:
-				return Base.isUnderline();
+				return Parent.isUnderline();
 		}
 	}
 
@@ -87,48 +87,48 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 			case B3_FALSE:
 				return false;
 			default:
-				return Base.isStrikeThrough();
+				return Parent.isStrikeThrough();
 		}
 	}
 
 	@Override
 	public int getLeftIndent() {
-		return Base.getLeftIndent();
+		return Parent.getLeftIndent();
 	}
 
 	@Override
 	public int getRightIndent() {
-		return Base.getRightIndent();
+		return Parent.getRightIndent();
 	}
 
 	@Override
 	public int getFirstLineIndentDelta() {
-		return Base.getFirstLineIndentDelta();
+		return Parent.getFirstLineIndentDelta();
 	}
 
 	@Override
 	public int getLineSpacePercent() {
-		return Base.getLineSpacePercent();
+		return Parent.getLineSpacePercent();
 	}
 
 	@Override
 	protected int getVerticalShiftInternal() {
-		return Base.getVerticalShift() + myDecoration.VerticalShiftOption.getValue();
+		return Parent.getVerticalShift() + myDecoration.VerticalShiftOption.getValue();
 	}
 
 	@Override
 	public int getSpaceBefore() {
-		return Base.getSpaceBefore();
+		return Parent.getSpaceBefore();
 	}
 
 	@Override
 	public int getSpaceAfter() {
-		return Base.getSpaceAfter();
+		return Parent.getSpaceAfter();
 	}
 
 	@Override
 	public byte getAlignment() {
-		return Base.getAlignment();
+		return Parent.getAlignment();
 	}
 
 	@Override
@@ -139,7 +139,7 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 			case B3_TRUE:
 				return true;
 			default:
-				return Base.allowHyphenations();
+				return Parent.allowHyphenations();
 		}
 	}
 }
