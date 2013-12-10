@@ -41,7 +41,13 @@ public class FBReaderYotaService extends BSActivity {
 		mBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
 				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(mBitmap);
-		myWidget = new ZLAndroidWidget(getApplicationContext());
+		myWidget = new ZLAndroidWidget(getApplicationContext()) {
+			@Override
+			public void repaint() {
+				drawText();
+				getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			}	
+		};
 		myWidget.setLayoutParams(
 			new FrameLayout.LayoutParams(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT)
 		);
@@ -86,12 +92,8 @@ public class FBReaderYotaService extends BSActivity {
 	private void handleGesture(Constants.Gestures action) {
 		if (action == Constants.Gestures.GESTURES_BS_RL) {
 			myWidget.turnPageStatic(true);
-			drawText();
-			getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 		} else if (action == Constants.Gestures.GESTURES_BS_LR) {
 			myWidget.turnPageStatic(false);
-			drawText();
-			getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 		}
 	}
 }

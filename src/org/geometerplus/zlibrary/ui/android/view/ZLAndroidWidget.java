@@ -315,6 +315,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		myBitmapManager.shift(next);
 		view.onScrollingFinished(pageIndex);
+		repaint();
 		ZLApplication.Instance().onRepaintFinished();
 	}
 
