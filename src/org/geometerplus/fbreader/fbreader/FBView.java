@@ -445,7 +445,9 @@ public final class FBView extends ZLTextView {
 	private class Footer implements FooterArea {
 		private Runnable UpdateTask = new Runnable() {
 			public void run() {
-				myReader.getViewWidget().repaint();
+				if (!myReader.YotaDrawOnBackScreenOption.getValue()) {
+					myReader.getViewWidget().repaint();
+				}
 			}
 		};
 

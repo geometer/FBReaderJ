@@ -20,7 +20,7 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
  * @author ASazonov
  */
 public class FBReaderYotaService extends BSActivity {
-	private ZLAndroidWidget myWidget;
+	public static ZLAndroidWidget Widget;
 	private Canvas mCanvas;
 	private Bitmap mBitmap;
 
@@ -41,25 +41,25 @@ public class FBReaderYotaService extends BSActivity {
 		mBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
 				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(mBitmap);
-		myWidget = new ZLAndroidWidget(getApplicationContext()) {
+		Widget = new ZLAndroidWidget(getApplicationContext()) {
 			@Override
 			public void repaint() {
 				drawText();
 				getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 			}	
 		};
-		myWidget.setLayoutParams(
+		Widget.setLayoutParams(
 			new FrameLayout.LayoutParams(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT)
 		);
-		myWidget.measure(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
-		myWidget.layout(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
+		Widget.measure(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
+		Widget.layout(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
 		drawText();
 	}
 
 	private void drawText() {
 		final FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
 		if (reader.YotaDrawOnBackScreenOption.getValue()) {
-			myWidget.draw(mCanvas);
+			Widget.draw(mCanvas);
 		}
 	}	
 
@@ -89,11 +89,17 @@ public class FBReaderYotaService extends BSActivity {
 		handleGesture(event.getBSAction());
 	}
 
+	@Override
+	public void onBSDestroy() {
+		Widget = null;
+		super.onBSDestroy();
+	}
+
 	private void handleGesture(Constants.Gestures action) {
 		if (action == Constants.Gestures.GESTURES_BS_RL) {
-			myWidget.turnPageStatic(true);
+			Widget.turnPageStatic(true);
 		} else if (action == Constants.Gestures.GESTURES_BS_LR) {
-			myWidget.turnPageStatic(false);
+			Widget.turnPageStatic(false);
 		}
 	}
 }
