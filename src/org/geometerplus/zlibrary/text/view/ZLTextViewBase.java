@@ -41,7 +41,6 @@ abstract class ZLTextViewBase extends ZLView {
 
 	ZLTextViewBase(ZLApplication application) {
 		super(application);
-		resetTextStyle();
 	}
 
 	protected void resetMetrics() {
@@ -50,7 +49,7 @@ abstract class ZLTextViewBase extends ZLView {
 
 	private ZLTextMetrics metrics() {
 		if (myMetrics == null) {
-			final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
+			final ZLTextStyleCollection collection = getTextStyleCollection();
 			final ZLTextBaseStyle base = collection.getBaseStyle();
 			myMetrics = new ZLTextMetrics(
 				ZLibrary.Instance().getDisplayDPI(),
@@ -74,6 +73,8 @@ abstract class ZLTextViewBase extends ZLView {
 		}
 		return myWordHeight;
 	}
+
+	public abstract ZLTextStyleCollection getTextStyleCollection();
 
 	public abstract ImageFitting getImageFitting();
 
@@ -108,6 +109,9 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	final ZLTextStyle getTextStyle() {
+		if (myTextStyle == null) {
+			resetTextStyle();
+		}
 		return myTextStyle;
 	}
 
@@ -120,7 +124,7 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	final void resetTextStyle() {
-		setTextStyle(ZLTextStyleCollection.Instance().getBaseStyle());
+		setTextStyle(getTextStyleCollection().getBaseStyle());
 	}
 
 	boolean isStyleChangeElement(ZLTextElement element) {
@@ -149,14 +153,14 @@ abstract class ZLTextViewBase extends ZLView {
 	private void applyControl(ZLTextControlElement control) {
 		if (control.IsStart) {
 			final ZLTextStyleDecoration decoration =
-				ZLTextStyleCollection.Instance().getDecoration(control.Kind);
+				getTextStyleCollection().getDecoration(control.Kind);
 			if (control instanceof ZLTextHyperlinkControlElement) {
 				setTextStyle(decoration.createDecoratedStyle(myTextStyle, ((ZLTextHyperlinkControlElement)control).Hyperlink));
 			} else {
 				setTextStyle(decoration.createDecoratedStyle(myTextStyle));
 			}
 		} else {
-			setTextStyle(myTextStyle.Base);
+			setTextStyle(myTextStyle.Parent);
 		}
 	}
 
@@ -165,7 +169,7 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	private void applyStyleClose() {
-		setTextStyle(myTextStyle.Base);
+		setTextStyle(myTextStyle.Parent);
 	}
 
 	protected final ZLPaintContext.ScalingType getScalingType(ZLTextImageElement imageElement) {

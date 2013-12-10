@@ -26,6 +26,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
 public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	// fields to be cached
+	protected final ZLTextBaseStyle BaseStyle;
+
 	private String myFontFamily;
 	private boolean myIsItalic;
 	private boolean myIsBold;
@@ -40,6 +42,9 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 
 	protected ZLTextDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
 		super(base, (hyperlink != null) ? hyperlink : base.Hyperlink);
+		BaseStyle = base instanceof ZLTextBaseStyle
+			? (ZLTextBaseStyle)base
+			: ((ZLTextDecoratedStyle)base).BaseStyle;
 	}
 
 	private void initCache() {
