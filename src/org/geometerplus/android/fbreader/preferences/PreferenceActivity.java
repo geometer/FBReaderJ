@@ -208,7 +208,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DitheringOption, "dithering");
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.SubpixelOption, "subpixel");
 
-		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
+		final ZLTextStyleCollection collection = fbReader.TextStyleCollection;
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 
 		final FontOption fontOption = new FontOption(
@@ -362,8 +362,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ZLPreferenceSet bgPreferences = new ZLPreferenceSet();
 
 		final Screen cssScreen = createPreferenceScreen("css");
-		cssScreen.addOption(collection.UseCSSFontSizeOption, "fontSize");
-		cssScreen.addOption(collection.UseCSSTextAlignmentOption, "textAlignment");
+		cssScreen.addOption(baseStyle.UseCSSFontSizeOption, "fontSize");
+		cssScreen.addOption(baseStyle.UseCSSTextAlignmentOption, "textAlignment");
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 

@@ -22,11 +22,11 @@ package org.geometerplus.zlibrary.text.view;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
 
 public abstract class ZLTextStyle {
-	public final ZLTextStyle Base;
+	public final ZLTextStyle Parent;
 	public final ZLTextHyperlink Hyperlink;
 
-	protected ZLTextStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
-		Base = base != null ? base : this;
+	protected ZLTextStyle(ZLTextStyle parent, ZLTextHyperlink hyperlink) {
+		Parent = parent != null ? parent : this;
 		Hyperlink = hyperlink;
 	}
 

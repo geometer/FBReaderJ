@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle implements ZLTextStyleEntry.Feature, ZLTextStyleEntry.FontModifier {
 	private final ZLTextStyleEntry myEntry;
 
-	public ZLTextExplicitlyDecoratedStyle(ZLTextStyle base, ZLTextStyleEntry entry) {
-		super(base, base.Hyperlink);
+	public ZLTextExplicitlyDecoratedStyle(ZLTextStyle parent, ZLTextStyleEntry entry) {
+		super(parent, parent.Hyperlink);
 		myEntry = entry;
 	}
 
@@ -37,29 +37,28 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		if (myEntry.isFeatureSupported(FONT_FAMILY)) {
 			// TODO: implement
 		}
-		return Base.getFontFamily();
+		return Parent.getFontFamily();
 	}
 	@Override
 	protected int getFontSizeInternal(ZLTextMetrics metrics) {
-		if (myEntry instanceof ZLTextCSSStyleEntry &&
-			!ZLTextStyleCollection.Instance().UseCSSFontSizeOption.getValue()) {
-			return Base.getFontSize(metrics);
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontSizeOption.getValue()) {
+			return Parent.getFontSize(metrics);
 		}
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
-				return Base.Base.getFontSize(metrics);
+				return Parent.Parent.getFontSize(metrics);
 			}
 			if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
-				return Base.Base.getFontSize(metrics) * 120 / 100;
+				return Parent.Parent.getFontSize(metrics) * 120 / 100;
 			}
 			if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == ZLBoolean3.B3_TRUE) {
-				return Base.Base.getFontSize(metrics) * 100 / 120;
+				return Parent.Parent.getFontSize(metrics) * 100 / 120;
 			}
 		}
 		if (myEntry.isFeatureSupported(LENGTH_FONT_SIZE)) {
 			return myEntry.getLength(LENGTH_FONT_SIZE, metrics);
 		}
-		return Base.getFontSize(metrics);
+		return Parent.getFontSize(metrics);
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 			case B3_FALSE:
 				return false;
 			default:
-				return Base.isBold();
+				return Parent.isBold();
 		}
 	}
 	@Override
@@ -81,7 +80,7 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 			case B3_FALSE:
 				return false;
 			default:
-				return Base.isItalic();
+				return Parent.isItalic();
 		}
 	}
 	@Override
@@ -92,7 +91,7 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 			case B3_FALSE:
 				return false;
 			default:
-				return Base.isUnderline();
+				return Parent.isUnderline();
 		}
 	}
 	@Override
@@ -103,52 +102,51 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 			case B3_FALSE:
 				return false;
 			default:
-				return Base.isStrikeThrough();
+				return Parent.isStrikeThrough();
 		}
 	}
 
 	public int getLeftIndent() {
 		// TODO: implement
-		return Base.getLeftIndent();
+		return Parent.getLeftIndent();
 	}
 	public int getRightIndent() {
 		// TODO: implement
-		return Base.getRightIndent();
+		return Parent.getRightIndent();
 	}
 	public int getFirstLineIndentDelta() {
 		// TODO: implement
-		return Base.getFirstLineIndentDelta();
+		return Parent.getFirstLineIndentDelta();
 	}
 	public int getLineSpacePercent() {
 		// TODO: implement
-		return Base.getLineSpacePercent();
+		return Parent.getLineSpacePercent();
 	}
 	@Override
 	protected int getVerticalShiftInternal() {
 		// TODO: implement
-		return Base.getVerticalShift();
+		return Parent.getVerticalShift();
 	}
 	public int getSpaceBefore() {
 		// TODO: implement
-		return Base.getSpaceBefore();
+		return Parent.getSpaceBefore();
 	}
 	public int getSpaceAfter() {
 		// TODO: implement
-		return Base.getSpaceAfter();
+		return Parent.getSpaceAfter();
 	}
 	public byte getAlignment() {
-		if (myEntry instanceof ZLTextCSSStyleEntry &&
-			!ZLTextStyleCollection.Instance().UseCSSTextAlignmentOption.getValue()) {
-			return Base.getAlignment();
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSTextAlignmentOption.getValue()) {
+			return Parent.getAlignment();
 		}
 		return
 			myEntry.isFeatureSupported(ALIGNMENT_TYPE)
 				? myEntry.getAlignmentType()
-				: Base.getAlignment();
+				: Parent.getAlignment();
 	}
 
 	public boolean allowHyphenations() {
 		// TODO: implement
-		return Base.allowHyphenations();
+		return Parent.allowHyphenations();
 	}
 }

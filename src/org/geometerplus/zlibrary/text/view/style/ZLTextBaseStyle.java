@@ -31,30 +31,35 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	private static final String GROUP = "Style";
 	private static final String OPTIONS = "Options";
 
+	public final ZLBooleanOption UseCSSTextAlignmentOption =
+		new ZLBooleanOption("Style", "css:textAlignment", true);
+	public final ZLBooleanOption UseCSSFontSizeOption =
+		new ZLBooleanOption("Style", "css:fontSize", true);
+
 	public final ZLBooleanOption AutoHyphenationOption =
 		new ZLBooleanOption(OPTIONS, "AutoHyphenation", true);
 
-	public final ZLBooleanOption BoldOption =
-		new ZLBooleanOption(GROUP, "Base:bold", false);
-	public final ZLBooleanOption ItalicOption =
-		new ZLBooleanOption(GROUP, "Base:italic", false);
-	public final ZLBooleanOption UnderlineOption =
-		new ZLBooleanOption(GROUP, "Base:underline", false);
-	public final ZLBooleanOption StrikeThroughOption =
-		new ZLBooleanOption(GROUP, "Base:strikeThrough", false);
-	public final ZLIntegerRangeOption AlignmentOption =
-		new ZLIntegerRangeOption(GROUP, "Base:alignment", 1, 4, ZLTextAlignmentType.ALIGN_JUSTIFY);
-	public final ZLIntegerRangeOption LineSpaceOption =
-		new ZLIntegerRangeOption(GROUP, "Base:lineSpacing", 5, 20, 12);
+	public final ZLBooleanOption BoldOption;
+	public final ZLBooleanOption ItalicOption;
+	public final ZLBooleanOption UnderlineOption;
+	public final ZLBooleanOption StrikeThroughOption;
+	public final ZLIntegerRangeOption AlignmentOption;
+	public final ZLIntegerRangeOption LineSpaceOption;
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeOption;
 
-	public ZLTextBaseStyle(String fontFamily, int fontSize) {
+	public ZLTextBaseStyle(String prefix, String fontFamily, int fontSize) {
 		super(null, ZLTextHyperlink.NO_LINK);
-		FontFamilyOption = new ZLStringOption(GROUP, "Base:fontFamily", fontFamily);
+		FontFamilyOption = new ZLStringOption(GROUP, prefix + ":fontFamily", fontFamily);
 		fontSize = fontSize * ZLibrary.Instance().getDisplayDPI() / 320 * 2;
-		FontSizeOption = new ZLIntegerRangeOption(GROUP, "Base:fontSize", 5, Math.max(144, fontSize * 2), fontSize);
+		FontSizeOption = new ZLIntegerRangeOption(GROUP, prefix + ":fontSize", 5, Math.max(144, fontSize * 2), fontSize);
+		BoldOption = new ZLBooleanOption(GROUP, prefix + ":bold", false);
+		ItalicOption = new ZLBooleanOption(GROUP, prefix + ":italic", false);
+		UnderlineOption = new ZLBooleanOption(GROUP, prefix + ":underline", false);
+		StrikeThroughOption = new ZLBooleanOption(GROUP, prefix + ":strikeThrough", false);
+		AlignmentOption = new ZLIntegerRangeOption(GROUP, prefix + ":alignment", 1, 4, ZLTextAlignmentType.ALIGN_JUSTIFY);
+		LineSpaceOption = new ZLIntegerRangeOption(GROUP, prefix + ":lineSpacing", 5, 20, 12);
 	}
 
 	@Override

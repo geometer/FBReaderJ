@@ -628,7 +628,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	// Can be called only when (myModel.getParagraphsNumber() != 0)
 	private synchronized float computeCharsPerPage() {
-		setTextStyle(ZLTextStyleCollection.Instance().getBaseStyle());
+		setTextStyle(getTextStyleCollection().getBaseStyle());
 
 		final int textWidth = getTextColumnWidth();
 		final int textHeight = getTextAreaHeight();
@@ -993,7 +993,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private boolean isHyphenationPossible() {
-		return ZLTextStyleCollection.Instance().getBaseStyle().AutoHyphenationOption.getValue()
+		return getTextStyleCollection().getBaseStyle().AutoHyphenationOption.getValue()
 			&& getTextStyle().allowHyphenations();
 	}
 
