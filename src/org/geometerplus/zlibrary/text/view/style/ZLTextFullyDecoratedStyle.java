@@ -26,30 +26,30 @@ import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 public class ZLTextFullyDecoratedStyle extends ZLTextPartiallyDecoratedStyle {
 	private final ZLTextFullStyleDecoration myFullDecoration;
 
-	ZLTextFullyDecoratedStyle(ZLTextStyle base, ZLTextFullStyleDecoration decoration, ZLTextHyperlink hyperlink) {
-		super(base, decoration, hyperlink);
+	ZLTextFullyDecoratedStyle(ZLTextStyle parent, ZLTextFullStyleDecoration decoration, ZLTextHyperlink hyperlink) {
+		super(parent, decoration, hyperlink);
 		myFullDecoration = decoration;
 	}
 
 	@Override
 	public int getLeftIndent() {
-		return Base.getLeftIndent() + myFullDecoration.LeftIndentOption.getValue();
+		return Parent.getLeftIndent() + myFullDecoration.LeftIndentOption.getValue();
 	}
 
 	@Override
 	public int getRightIndent() {
-		return Base.getRightIndent() + myFullDecoration.RightIndentOption.getValue();
+		return Parent.getRightIndent() + myFullDecoration.RightIndentOption.getValue();
 	}
 
 	@Override
 	public int getFirstLineIndentDelta() {
-		return (getAlignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : Base.getFirstLineIndentDelta() + myFullDecoration.FirstLineIndentDeltaOption.getValue();
+		return (getAlignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : Parent.getFirstLineIndentDelta() + myFullDecoration.FirstLineIndentDeltaOption.getValue();
 	}
 
 	@Override
 	public int getLineSpacePercent() {
 		int value = myFullDecoration.LineSpacePercentOption.getValue();
-		return (value != -1) ? value : Base.getLineSpacePercent();
+		return (value != -1) ? value : Parent.getLineSpacePercent();
 	}
 
 	@Override
@@ -65,6 +65,6 @@ public class ZLTextFullyDecoratedStyle extends ZLTextPartiallyDecoratedStyle {
 	@Override
 	public byte getAlignment() {
 		byte value = (byte)myFullDecoration.AlignmentOption.getValue();
-		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? Base.getAlignment() : value;
+		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? Parent.getAlignment() : value;
 	}
 }
