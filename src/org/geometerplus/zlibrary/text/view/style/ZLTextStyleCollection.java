@@ -94,12 +94,9 @@ public class ZLTextStyleCollection {
 			final String STYLE = "style";
 
 			if (BASE.equals(tag)) {
-				if ("Base".equals(myCollectionName)) {
+				if (myCollectionName.equals(attributes.getValue("screen"))) {
 					myDefaultFontSize = intValue(attributes, "fontSize", 0);
 					myBaseStyle = new ZLTextBaseStyle(myCollectionName, attributes.getValue("family"), myDefaultFontSize);
-				} else {
-					myDefaultFontSize = 21;
-					myBaseStyle = new ZLTextBaseStyle(myCollectionName, "PT Sans", myDefaultFontSize);
 				}
 			} else if (STYLE.equals(tag)) {
 				String idString = attributes.getValue("id");

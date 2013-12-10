@@ -52,7 +52,7 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	public ZLTextBaseStyle(String prefix, String fontFamily, int fontSize) {
 		super(null, ZLTextHyperlink.NO_LINK);
 		FontFamilyOption = new ZLStringOption(GROUP, prefix + ":fontFamily", fontFamily);
-		fontSize = fontSize * ZLibrary.Instance().getDisplayDPI() / 320 * 2;
+		fontSize = fontSize * ZLibrary.Instance().getDisplayDPI() / 160;
 		FontSizeOption = new ZLIntegerRangeOption(GROUP, prefix + ":fontSize", 5, Math.max(144, fontSize * 2), fontSize);
 		BoldOption = new ZLBooleanOption(GROUP, prefix + ":bold", false);
 		ItalicOption = new ZLBooleanOption(GROUP, prefix + ":italic", false);
