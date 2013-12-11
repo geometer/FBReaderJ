@@ -873,6 +873,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		new MenuItem.OnMenuItemClickListener() {
 			public boolean onMenuItemClick(MenuItem item) {
 				myFBReaderApp.runAction(myMenuItemMap.get(item));
+				refresh();
 				return true;
 			}
 		};
