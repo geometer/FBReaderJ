@@ -522,18 +522,18 @@ public final class FBView extends ZLTextView {
 				info.append("/");
 				info.append(pagePosition.Total);
 			}
+			if (reader.FooterOptions.ShowClock.getValue()) {
+				if (info.length() > 0) {
+					info.append(" ");
+				}
+				info.append(ZLibrary.Instance().getCurrentTimeString());
+			}
 			if (reader.FooterOptions.ShowBattery.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
 				info.append(reader.getBatteryLevel());
 				info.append("%");
-			}
-			if (reader.FooterOptions.ShowClock.getValue()) {
-				if (info.length() > 0) {
-					info.append(" ");
-				}
-				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
 			final String infoString = info.toString();
 
