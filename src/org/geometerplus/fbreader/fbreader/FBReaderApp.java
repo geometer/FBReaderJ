@@ -76,7 +76,7 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
 	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
-	public final FooterOptions FooterOptions = new FooterOptions();
+	public FooterOptions FooterOptions = new FooterOptions("Base");
 
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
