@@ -19,12 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import android.content.Intent;
-
-import com.yotadevices.fbreader.FBReaderYotaService;
-
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
-import org.geometerplus.android.fbreader.FBReaderApplication;
 
 class VolumeKeyTurnPageAction extends FBAction {
 	private final boolean myForward;
@@ -36,12 +31,7 @@ class VolumeKeyTurnPageAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
-		if (Reader.YotaDrawOnBackScreenOption.getValue()) {
-//			Intent serviceIntent = new Intent(BaseActivity.getApplicationContext(), FBReaderYotaService.class);
-//			serviceIntent.setAction(myForward ? FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_PAGE_RIGHT
-//					: FBReaderYotaService.BROADCAST_ACTION_BACKSCREEN_PAGE_LEFT);
-//			BaseActivity.getApplicationContext().startService(serviceIntent);
-		} else {
+		if (!Reader.YotaDrawOnBackScreenOption.getValue()) {
 			final PageTurningOptions preferences = Reader.PageTurningOptions;
 			Reader.getViewWidget().startAnimatedScrolling(
 				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,

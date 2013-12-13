@@ -105,14 +105,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			onDrawInScrolling(canvas);
 		} else {
 			onDrawStatic(canvas);
-			try {
-				ZLApplication.Instance().onRepaintFinished();
-			} catch (Exception ignored) {
-				// YOTA changes
-				// ignored calling from wrong UI thread exception - menu update
-				// in window
-				// called from service when p2b is active
-			}
+			ZLApplication.Instance().onRepaintFinished();
 		}
 	}
 
