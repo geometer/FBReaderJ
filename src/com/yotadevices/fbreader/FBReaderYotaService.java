@@ -8,11 +8,14 @@ package com.yotadevices.fbreader;
 
 import android.content.Intent;
 import android.graphics.*;
+import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
 import com.yotadevices.sdk.*;
 import com.yotadevices.sdk.utils.EinkUtils;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
@@ -22,6 +25,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 
 /**
  * @author ASazonov
@@ -118,15 +122,24 @@ public class FBReaderYotaService extends BSActivity {
 	@Override
 	protected void onVolumeButtonsEvent(Constants.VolumeButtonsEvent event) {
 		super.onVolumeButtonsEvent(event);
+
+		final ZLKeyBindings bindings = ZLApplication.Instance().keyBindings();
+		String action = null;
 		switch (event) {
 			case VOLUME_MINUS_UP:
-				handleGesture(Constants.Gestures.GESTURES_BS_RL);
+				action = bindings.getBinding(KeyEvent.KEYCODE_VOLUME_DOWN, false);
 				break;
 			case VOLUME_PLUS_UP:
-				handleGesture(Constants.Gestures.GESTURES_BS_LR);
+				action = bindings.getBinding(KeyEvent.KEYCODE_VOLUME_UP, false);
 				break;
 			default:
 				break;
+		}
+
+		if (ActionCode.VOLUME_KEY_SCROLL_FORWARD.equals(action)) {
+			Widget.turnPageStatic(true);
+		} else if (ActionCode.VOLUME_KEY_SCROLL_BACK.equals(action)) {
+			Widget.turnPageStatic(false);
 		}
 	}
 
