@@ -34,6 +34,8 @@ import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.yotadevices.fbreader.FBReaderYotaService;
+
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.FileType;
@@ -294,6 +296,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					action.run();
 				}
 				hideBars();
+				if (getZLibrary().isYotaPhone()) {
+					refreshYotaScreen();
+				}
 			}
 		});
 	}
@@ -1199,5 +1204,24 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				setTitle(title);
 			}
 		});
+	}
+
+	public void refreshYotaScreen() {
+		final Intent intent = new Intent(this, FBReaderYotaService.class);
+		intent.putExtra(
+			FBReaderYotaService.KEY_BACK_SCREEN_IS_ACTIVE,
+			myFBReaderApp.YotaDrawOnBackScreenOption.getValue()
+		);
+		if (myFBReaderApp.Model != null) {
+			intent.putExtra(
+				FBReaderYotaService.KEY_CURRENT_BOOK,
+				SerializerUtil.serialize(myFBReaderApp.Model.Book)
+			);
+		}
+		try {
+			startService(intent);
+		} catch (Throwable t) {
+			// ignore
+		}
 	}
 }

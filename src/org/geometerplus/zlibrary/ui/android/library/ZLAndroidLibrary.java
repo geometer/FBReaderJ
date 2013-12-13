@@ -141,11 +141,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	private DisplayMetrics myMetrics;
 	private DisplayMetrics getMetrics() {
 		if (myMetrics == null) {
-			if (myActivity == null) {
-				return null;
-			}
-			myMetrics = new DisplayMetrics();
-			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
+			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
 		}
 		return myMetrics;
 	}
