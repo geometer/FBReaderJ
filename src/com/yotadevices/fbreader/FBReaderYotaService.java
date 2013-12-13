@@ -33,8 +33,8 @@ public class FBReaderYotaService extends BSActivity {
 		"com.yotadevices.fbreader.currentBook";
 
 	public static ZLAndroidWidget Widget;
-	private Canvas mCanvas;
-	private Bitmap mBitmap;
+	private Canvas myCanvas;
+	private Bitmap myBitmap;
 
 	private volatile boolean myBackScreenIsActive;
 	private Book myCurrentBook;
@@ -43,7 +43,7 @@ public class FBReaderYotaService extends BSActivity {
 	public void onBSResume() {
 		super.onBSResume();
 		initBookView();
-		getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+		getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 	}
 
 	@Override
@@ -53,14 +53,14 @@ public class FBReaderYotaService extends BSActivity {
 	}
 
 	private void initBookView() {
-		mBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
+		myBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
 				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
-		mCanvas = new Canvas(mBitmap);
+		myCanvas = new Canvas(myBitmap);
 		Widget = new ZLAndroidWidget(getApplicationContext()) {
 			@Override
 			public void repaint() {
-				Widget.draw(mCanvas);
-				getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+				Widget.draw(myCanvas);
+				getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 			}
 
 			@Override
@@ -112,7 +112,7 @@ public class FBReaderYotaService extends BSActivity {
 		);
 		Widget.measure(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
 		Widget.layout(0, 0, BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT);
-		Widget.draw(mCanvas);
+		Widget.draw(myCanvas);
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class FBReaderYotaService extends BSActivity {
 		myCurrentBook = SerializerUtil.deserializeBook(intent.getStringExtra(KEY_CURRENT_BOOK));
 
 		initBookView();
-		getBSDrawer().drawBitmap(0, 0, mBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+		getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
 		setYotaGesturesEnabled(myBackScreenIsActive);
 	}
 
