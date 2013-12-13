@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -56,12 +54,12 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 	}
 
 	private void switchScreen(boolean toBack) {
-		final Context context = BaseActivity.getApplicationContext();
 		final View mainView = BaseActivity.findViewById(R.id.main_view);
 		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
 
 		Reader.YotaDrawOnBackScreenOption.setValue(toBack);
 		BaseActivity.refreshYotaScreen();
+
 		if (toBack) {
 			setupHiddenView(mainHiddenView);
 			mainView.setVisibility(View.GONE);
