@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
