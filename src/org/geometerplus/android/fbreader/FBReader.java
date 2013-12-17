@@ -33,6 +33,8 @@ import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.yotadevices.fbreader.FBReaderYotaService;
+
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -146,6 +148,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					action.run();
 				}
 				hideBars();
+				if (getZLibrary().isYotaPhone()) {
+					refreshYotaScreen();
+				}
 			}
 		});
 	}
@@ -607,7 +612,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		addMenuItem(menu, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library);
 		if (getZLibrary().isYotaPhone()) {
 			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b);
-			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b);
+			//addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b);
 		}
 		addMenuItem(menu, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary);
 		addMenuItem(menu, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc);
@@ -870,28 +875,32 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public void refresh() {
-		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
-			final String actionId = entry.getValue();
-			final MenuItem menuItem = entry.getKey();
-			menuItem.setVisible(myFBReaderApp.isActionVisible(actionId) && myFBReaderApp.isActionEnabled(actionId));
-			switch (myFBReaderApp.isActionChecked(actionId)) {
-				case B3_TRUE:
-					menuItem.setCheckable(true);
-					menuItem.setChecked(true);
-					break;
-				case B3_FALSE:
-					menuItem.setCheckable(true);
-					menuItem.setChecked(false);
-					break;
-				case B3_UNDEFINED:
-					menuItem.setCheckable(false);
-					break;
-			}
-		}
+		runOnUiThread(new Runnable() {
+			public void run() {
+				for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
+					final String actionId = entry.getValue();
+					final MenuItem menuItem = entry.getKey();
+					menuItem.setVisible(myFBReaderApp.isActionVisible(actionId) && myFBReaderApp.isActionEnabled(actionId));
+					switch (myFBReaderApp.isActionChecked(actionId)) {
+						case B3_TRUE:
+							menuItem.setCheckable(true);
+							menuItem.setChecked(true);
+							break;
+						case B3_FALSE:
+							menuItem.setCheckable(true);
+							menuItem.setChecked(false);
+							break;
+						case B3_UNDEFINED:
+							menuItem.setCheckable(false);
+							break;
+					}
+				}
 
-		if (myNavigationPopup != null) {
-			myNavigationPopup.update();
-		}
+				if (myNavigationPopup != null) {
+					myNavigationPopup.update();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -929,5 +938,24 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				setTitle(title);
 			}
 		});
+	}
+
+	public void refreshYotaScreen() {
+		final Intent intent = new Intent(this, FBReaderYotaService.class);
+		intent.putExtra(
+			FBReaderYotaService.KEY_BACK_SCREEN_IS_ACTIVE,
+			myFBReaderApp.YotaDrawOnBackScreenOption.getValue()
+		);
+		if (myFBReaderApp.Model != null) {
+			intent.putExtra(
+				FBReaderYotaService.KEY_CURRENT_BOOK,
+				SerializerUtil.serialize(myFBReaderApp.Model.Book)
+			);
+		}
+		try {
+			startService(intent);
+		} catch (Throwable t) {
+			// ignore
+		}
 	}
 }
