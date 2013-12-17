@@ -65,7 +65,7 @@ public class MenuItemData {
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		if (zlibrary.isYotaPhone()) {
 			root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b));
-			root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b));
+			//root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b));
 		}
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
 		root.Children.add(new MenuItemData(MenuType.ACTION, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
