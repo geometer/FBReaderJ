@@ -612,7 +612,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		addMenuItem(menu, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library);
 		if (getZLibrary().isYotaPhone()) {
 			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b);
-			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b);
+			//addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b);
 		}
 		addMenuItem(menu, ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary);
 		addMenuItem(menu, ActionCode.SHOW_TOC, R.drawable.ic_menu_toc);
