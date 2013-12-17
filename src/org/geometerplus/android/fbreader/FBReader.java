@@ -787,24 +787,28 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public void refresh() {
-		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
-			final String actionId = entry.getValue();
-			final MenuItem menuItem = entry.getKey();
-			menuItem.setVisible(myFBReaderApp.isActionVisible(actionId) && myFBReaderApp.isActionEnabled(actionId));
-			switch (myFBReaderApp.isActionChecked(actionId)) {
-				case B3_TRUE:
-					menuItem.setCheckable(true);
-					menuItem.setChecked(true);
-					break;
-				case B3_FALSE:
-					menuItem.setCheckable(true);
-					menuItem.setChecked(false);
-					break;
-				case B3_UNDEFINED:
-					menuItem.setCheckable(false);
-					break;
+		runOnUiThread(new Runnable() {
+			public void run() {
+				for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
+					final String actionId = entry.getValue();
+					final MenuItem menuItem = entry.getKey();
+					menuItem.setVisible(myFBReaderApp.isActionVisible(actionId) && myFBReaderApp.isActionEnabled(actionId));
+					switch (myFBReaderApp.isActionChecked(actionId)) {
+						case B3_TRUE:
+							menuItem.setCheckable(true);
+							menuItem.setChecked(true);
+							break;
+						case B3_FALSE:
+							menuItem.setCheckable(true);
+							menuItem.setChecked(false);
+							break;
+						case B3_UNDEFINED:
+							menuItem.setCheckable(false);
+							break;
+					}
+				}
 			}
-		}
+		});
 	}
 
 	@Override
