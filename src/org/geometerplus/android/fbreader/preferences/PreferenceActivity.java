@@ -208,7 +208,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DitheringOption, "dithering");
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.SubpixelOption, "subpixel");
 
-		final ZLTextStyleCollection collection = fbReader.TextStyleCollection;
+		final ZLTextStyleCollection collection = FBReaderApp.TextStyleCollection;
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 
 		final FontOption fontOption = new FontOption(
@@ -590,7 +590,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(FBReaderApp.ImageTappingActionOption, "tappingAction");
 		imagesScreen.addOption(FBReaderApp.FitImagesToScreenOption, "fitImagesToScreen");
 		imagesScreen.addOption(FBReaderApp.ImageViewBackgroundOption, "backgroundColor");
-		imagesScreen.addOption(new ZLBooleanOption("Colors", "MatchBackground", true), "matchBackground");
+		imagesScreen.addOption(FBReaderApp.ImageMatchBackgroundOption, "matchBackground");
 
 		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");

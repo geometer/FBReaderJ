@@ -40,7 +40,7 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
-	public final ZLTextStyleCollection TextStyleCollection = new ZLTextStyleCollection("Base");
+	public static final ZLTextStyleCollection TextStyleCollection = new ZLTextStyleCollection("Base");
 
 	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
 		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
@@ -67,6 +67,8 @@ public final class FBReaderApp extends ZLApplication {
 	}
 	public final static ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
 		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
+	public final static ZLBooleanOption ImageMatchBackgroundOption =
+		new ZLBooleanOption("Colors", "ImageMatchBackground", true);
 
 	public static final ViewOptions ViewOptions = new ViewOptions();
 
