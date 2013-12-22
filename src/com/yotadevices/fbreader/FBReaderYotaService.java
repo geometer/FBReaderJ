@@ -58,6 +58,12 @@ public class FBReaderYotaService extends BSActivity {
 		initBookView();
 	}
 
+	@Override
+	public void onBSDestroy() {
+		Widget = null;
+		super.onBSDestroy();
+	}
+
 	private class YotaBackScreenWidget extends ZLAndroidWidget {
 		private Bitmap myDefaultCoverBitmap;
 		private Boolean myLastPaintWasActive;
@@ -136,10 +142,15 @@ public class FBReaderYotaService extends BSActivity {
 	}
 
 	private void initBookView() {
-		myBitmap = Bitmap.createBitmap(BSDrawer.SCREEN_WIDTH,
-				BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
-		myCanvas = new Canvas(myBitmap);
-		Widget = new YotaBackScreenWidget(getApplicationContext());
+		if (myBitmap == null) {
+			myBitmap = Bitmap.createBitmap(
+				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888
+			);
+			myCanvas = new Canvas(myBitmap);
+		}
+		if (Widget == null) {
+			Widget = new YotaBackScreenWidget(getApplicationContext());
+		}
 		Widget.setLayoutParams(
 			new FrameLayout.LayoutParams(BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT)
 		);
@@ -189,12 +200,6 @@ public class FBReaderYotaService extends BSActivity {
 	@Override
 	public void onBSTouchEvent(BSMotionEvent event) {
 		handleGesture(event.getBSAction());
-	}
-
-	@Override
-	public void onBSDestroy() {
-		Widget = null;
-		super.onBSDestroy();
 	}
 
 	public void setYotaGesturesEnabled(boolean enabled) {
