@@ -11,7 +11,8 @@ ant distclean
 mv bin/FBReaderJ.apk READY
 cp bin/proguard/mapping.txt mappings/mapping-`cat VERSION`.master.txt
 
-git checkout ice-cream-sandwich
+#git checkout ice-cream-sandwich
+git checkout yota2
 ./scripts/packageTool.sh --updateVersion
 ant clean
 ./buildSignedJar.sh
