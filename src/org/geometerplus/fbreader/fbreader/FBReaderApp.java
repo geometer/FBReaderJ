@@ -66,6 +66,8 @@ public final class FBReaderApp extends ZLApplication {
 	}
 	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
 		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
+	public final ZLBooleanOption ImageMatchBackgroundOption =
+		new ZLBooleanOption("Colors", "ImageMatchBackground", true);
 
 	public final ViewOptions ViewOptions = new ViewOptions();
 

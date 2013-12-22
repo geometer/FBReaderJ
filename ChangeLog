@@ -1,4 +1,5 @@
-===== 1.9.4 (Dec ??, 2013) =====
+===== 1.9.4 (Dec 23, 2013) =====
+* YotaPhone back screen support
 * New option: adjust image color according background. For light background, adjusts too light colors to match background, for dark background adjusts too dark areas.
 * Updated Czech localization (by Marek Pavelka)
 * It is possible to load fonts from assets; PT Sans font added in ics version
