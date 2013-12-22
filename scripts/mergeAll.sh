@@ -20,4 +20,7 @@ git merge ice-cream-sandwich
 git checkout yota2
 git merge ice-cream-sandwich
 
+git checkout yota
+git merge yota2
+
 git checkout master
