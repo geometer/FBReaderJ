@@ -45,6 +45,7 @@ import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private BookCollectionShadow myCollection = new BookCollectionShadow();
@@ -563,6 +564,26 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
+		
+		if (androidLibrary.isEinkFastRefreshSupported()) {
+			final Screen einkScreen = createPreferenceScreen("eink");
+			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
+			
+			final ZLIntegerRangePreference einkUpd = new ZLIntegerRangePreference(this, einkScreen.Resource.getResource("interval"), androidLibrary.EinkUpdateIntervalOption);
+				final ZLBooleanPreference einkOpt = new ZLBooleanPreference(this, androidLibrary.EinkFastRefreshOption, einkScreen.Resource, "optimization") {
+					@Override
+					protected void onClick() {
+						super.onClick();
+						einkPreferences.setEnabled(androidLibrary.EinkFastRefreshOption.getValue());
+					}
+				};	
+	
+			einkScreen.addPreference(einkOpt);
+			einkScreen.addPreference(einkUpd);
+	
+			einkPreferences.add(einkUpd);
+			einkPreferences.setEnabled(androidLibrary.EinkFastRefreshOption.getValue());
+		}
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
 		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");

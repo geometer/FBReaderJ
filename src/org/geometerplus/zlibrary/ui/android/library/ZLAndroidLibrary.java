@@ -34,6 +34,7 @@ import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 
+import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -43,6 +44,7 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
@@ -50,30 +52,99 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
-
+	public final ZLBooleanOption EinkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EinkFastRefresh", isEinkFastRefreshSupported());
+	public final ZLIntegerRangeOption EinkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EinkUpdateInterval", 0, 20, 10);
+	
 	private boolean hasNoHardwareMenuButton() {
-		return
-			// Eken M001
-			(Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) ||
-			// PanDigital
-			"PD_Novel".equals(Build.MODEL);
+		return NoHardwareMenuButtonDevices.contains(myDevice);
 	}
 
 	public boolean isKindleFire() {
-		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
-		return
-			Build.MODEL != null &&
-			Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
+		return myDevice == Devices.KINDLE_FIRE;
 	}
+	
+	public static enum Devices {
+		GENERIC,
+		YOTA_PHONE,
+		GTS5830,
+		NOOK,
+		NOOK12,
+		EKEN_M001,
+		PAN_DIGITAL,
+		KINDLE_FIRE,
+	}
+	
+	private final Devices myDevice;
+	
+	public Devices getDevice() {
+		return myDevice;
+	}
+	
+	private static List<Devices> EinkDevices = Arrays.asList(Devices.NOOK,Devices.NOOK12);
+	private static List<Devices> EinkFastRefreshDevices = Arrays.asList(Devices.NOOK,Devices.NOOK12);
+	private static List<Devices> ButtonLightsBugDevices = Arrays.asList(Devices.GTS5830);
+	private static List<Devices> NoHardwareMenuButtonDevices = Arrays.asList(Devices.EKEN_M001,Devices.PAN_DIGITAL);
+	
+	{
+		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
+		if ("YotaPhone".equals(Build.BRAND)) {
+			myDevice = Devices.YOTA_PHONE;
+		} else if ("GT-S5830".equals(Build.MODEL)) {
+			myDevice = Devices.GTS5830;
+		} else if (Build.MODEL != null && Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP)) {
+			myDevice = Devices.KINDLE_FIRE;
+		} else if ((Build.DISPLAY != null && Build.DISPLAY.contains("simenxie"))) {
+			myDevice = Devices.EKEN_M001;
+		} else if ("PD_Novel".equals(Build.MODEL)) {
+			myDevice = Devices.PAN_DIGITAL;
+		} else {
+			String MANUFACTURER = Build.MANUFACTURER;
+			String MODEL = Build.MODEL;
+			String DEVICE = Build.DEVICE;
+			boolean nook = "barnesandnoble".equals(MANUFACTURER.toLowerCase()) && ("NOOK".equals(MODEL) || "BNRV350".equals(MODEL) || "BNRV300".equals(MODEL)) && "zoom2".equals(DEVICE.toLowerCase());
+			boolean nook12 = nook && ("1.2.0".equals(Build.VERSION.INCREMENTAL) || "1.2.1".equals(Build.VERSION.INCREMENTAL));
+			if (nook) {
+				if (nook12) {
+					myDevice = Devices.NOOK12;
+				} else {
+					myDevice = Devices.NOOK;
+				}
+			} else {
+				myDevice = Devices.GENERIC;
+			}
+		}
+	}
+	
+	
 
 	public boolean isYotaPhone() {
-		return "YotaPhone".equals(Build.BRAND);
+		return myDevice == Devices.YOTA_PHONE;
 	}
 
 	public boolean hasButtonLightsBug() {
-		return "GT-S5830".equals(Build.MODEL);
+		return ButtonLightsBugDevices.contains(myDevice);
 	}
-
+	
+	@Override
+	public boolean isEink() {
+		return EinkDevices.contains(myDevice);
+	}
+	
+	@Override
+	public boolean isEinkFastRefreshSupported() {
+		return EinkFastRefreshDevices.contains(myDevice);
+	}
+	
+	@Override
+	public void initSpecificKeys(ZLKeyBindings b) {
+		if (myDevice == Devices.NOOK || myDevice == Devices.NOOK12) {
+			b.bindKey(92, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+			b.bindKey(94, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+			b.bindKey(93, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+			b.bindKey(95, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+		}
+	}
+	
 	private FBReader myActivity;
 	private final Application myApplication;
 

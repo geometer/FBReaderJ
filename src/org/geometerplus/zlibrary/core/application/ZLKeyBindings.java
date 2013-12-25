@@ -25,6 +25,7 @@ import android.view.KeyEvent;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.Paths;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -81,6 +82,7 @@ public final class ZLKeyBindings {
 		volumeKeysOption.setValue(true);
 		invertVolumeKeysOption.setValue(false);
 		// end of migration code
+		ZLibrary.Instance().initSpecificKeys(this);
 	}
 
 	private ZLStringOption createOption(int key, boolean longPress, String defaultValue) {

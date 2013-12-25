@@ -740,6 +740,14 @@
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
+		<node name="eink" value="Eink">
+			<node name="summary" value="Eink Fast Refresh"/>
+			<node name="optimization" value="Refresh Mode">
+			    <node name="summaryOn" value="Fast refresh"/>
+			    <node name="summaryOff" value="Quality refresh"/>
+			</node>
+			<node name="interval" value="Full refresh interval"/>
+		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
