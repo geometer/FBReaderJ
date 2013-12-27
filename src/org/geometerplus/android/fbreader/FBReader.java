@@ -517,6 +517,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		myMainView.prepareFullRefresh();
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 				if (resultCode != RESULT_DO_NOTHING) {

@@ -75,6 +75,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 	
 	private int myFullRefreshCounter = 0;
+	
+	public void prepareFullRefresh() {
+		myFullRefreshCounter = 0;
+	}
 
 	@Override
 	protected void onDraw(final Canvas canvas) {
@@ -86,11 +90,11 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
 		if (lib.EinkFastRefreshOption.getValue()) {
-			if (myFullRefreshCounter < lib.EinkUpdateIntervalOption.getValue()) {
+			if (myFullRefreshCounter > 0) {
 				EinkUtil.prepareSingleFullRefresh(lib.getDevice(), (Activity) context);
-				myFullRefreshCounter++;
+				myFullRefreshCounter--;
 			} else {
-				myFullRefreshCounter = 0;
+				myFullRefreshCounter = lib.EinkUpdateIntervalOption.getValue();
 			}
 		}
 		super.onDraw(canvas);
