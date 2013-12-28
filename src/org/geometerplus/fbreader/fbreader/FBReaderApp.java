@@ -48,7 +48,7 @@ public final class FBReaderApp extends ZLApplication {
 	public static final ZLBooleanOption EnableDoubleTapOption;
 	public static final ZLBooleanOption NavigateAllWordsOption;
 
-	private static void configure() {
+	{
 		TextStyleCollection = new ZLTextStyleCollection("Base");
 
 		AllowScreenBrightnessAdjustmentOption =
@@ -102,10 +102,6 @@ public final class FBReaderApp extends ZLApplication {
 	private Date myJumpTimeStamp;
 
 	public final IBookCollection Collection;
-
-	static {
-		configure();
-	}
 
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
