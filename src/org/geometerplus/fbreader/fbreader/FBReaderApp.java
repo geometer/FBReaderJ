@@ -48,7 +48,7 @@ public final class FBReaderApp extends ZLApplication {
 	public static final ZLBooleanOption EnableDoubleTapOption;
 	public static final ZLBooleanOption NavigateAllWordsOption;
 
-	{
+	static {
 		TextStyleCollection = new ZLTextStyleCollection("Base");
 
 		AllowScreenBrightnessAdjustmentOption =
