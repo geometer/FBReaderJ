@@ -49,6 +49,19 @@ public final class FBReaderApp extends ZLApplication {
 	public static final ZLBooleanOption EnableDoubleTapOption;
 	public static final ZLBooleanOption NavigateAllWordsOption;
 
+	public static enum WordTappingAction {
+		doNothing, selectSingleWord, startSelecting, openDictionary
+	}
+	public static final ZLEnumOption<WordTappingAction> WordTappingActionOption;
+
+	public static final ZLColorOption ImageViewBackgroundOption;
+	public static final ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption;
+	public static enum ImageTappingAction {
+		doNothing, selectImage, openImageView
+	}
+	public static final ZLEnumOption<ImageTappingAction> ImageTappingActionOption;
+	public static final ZLBooleanOption ImageMatchBackgroundOption;
+
 	static {
 		TextStyleCollection = new ZLTextStyleCollection("Base");
 
@@ -63,25 +76,19 @@ public final class FBReaderApp extends ZLApplication {
 			new ZLBooleanOption("Options", "EnableDoubleTap", false);
 		NavigateAllWordsOption =
 			new ZLBooleanOption("Options", "NavigateAllWords", false);
-	}
 
-	public static enum WordTappingAction {
-		doNothing, selectSingleWord, startSelecting, openDictionary
-	}
-	public final static ZLEnumOption<WordTappingAction> WordTappingActionOption =
-		new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
+		WordTappingActionOption =
+			new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
 
-	public final static ZLColorOption ImageViewBackgroundOption =
-		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
-	public final static ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption =
-		new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
-	public static enum ImageTappingAction {
-		doNothing, selectImage, openImageView
+		ImageViewBackgroundOption =
+			new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
+		FitImagesToScreenOption =
+			new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
+		ImageTappingActionOption =
+			new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
+		ImageMatchBackgroundOption =
+			new ZLBooleanOption("Colors", "ImageMatchBackground", true);
 	}
-	public final static ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
-		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
-	public final static ZLBooleanOption ImageMatchBackgroundOption =
-		new ZLBooleanOption("Colors", "ImageMatchBackground", true);
 
 	public static final ViewOptions ViewOptions = new ViewOptions();
 
