@@ -603,7 +603,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Footer getFooterArea() {
-		if (myReader.ScrollbarTypeOption.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
+		if (myReader.ViewOptions.ScrollbarType.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
 			if (myFooter == null) {
 				myFooter = new Footer();
 				myReader.addTimerTask(myFooter.UpdateTask, 15000);
@@ -645,7 +645,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public int scrollbarType() {
-		return myReader.ScrollbarTypeOption.getValue();
+		return myReader.ViewOptions.ScrollbarType.getValue();
 	}
 
 	@Override
