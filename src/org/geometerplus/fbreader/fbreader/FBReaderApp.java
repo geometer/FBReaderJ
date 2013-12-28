@@ -46,7 +46,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption EnableDoubleTapOption;
 	public final ZLBooleanOption NavigateAllWordsOption;
 
-	private void configure() {
+	{
 		TextStyleCollection = new ZLTextStyleCollection("Base");
 
 		YotaDrawOnBackScreenOption =
@@ -105,8 +105,6 @@ public final class FBReaderApp extends ZLApplication {
 	public final IBookCollection Collection;
 
 	public FBReaderApp(IBookCollection collection) {
-		configure();
-
 		Collection = collection;
 
 		collection.addListener(new IBookCollection.Listener() {
