@@ -43,7 +43,6 @@ public final class FBReaderApp extends ZLApplication {
 	public static final ZLTextStyleCollection TextStyleCollection;
 
 	public static final ZLBooleanOption YotaDrawOnBackScreenOption;
-
 	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption;
 	public static final ZLStringOption TextSearchPatternOption;
 
