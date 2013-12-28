@@ -384,7 +384,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
 		statusLineScreen.addPreference(new ZLChoicePreference(
 			this, statusLineScreen.Resource, "scrollbarType",
-			fbReader.ScrollbarTypeOption, scrollBarTypes
+			viewOptions.ScrollbarType, scrollBarTypes
 		) {
 			@Override
 			protected void onDialogClosed(boolean result) {
@@ -411,7 +411,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			footerOptions.Font, false
 		)));
 		footerPreferences.setEnabled(
-			fbReader.ScrollbarTypeOption.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER
+			viewOptions.ScrollbarType.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER
 		);
 
 		/*

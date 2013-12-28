@@ -20,8 +20,10 @@
 package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.*;
+
+import org.geometerplus.fbreader.fbreader.FBView;
+import org.geometerplus.fbreader.fbreader.ColorProfile;
 
 public class ViewOptions {
 	public final ZLBooleanOption TwoColumnView;
@@ -30,7 +32,9 @@ public class ViewOptions {
 	public final ZLIntegerRangeOption TopMargin;
 	public final ZLIntegerRangeOption BottomMargin;
 	public final ZLIntegerRangeOption SpaceBetweenColumns;
+	public final ZLIntegerRangeOption ScrollbarType;
 	public final ZLIntegerRangeOption FooterHeight;
+	public final ZLStringOption ColorProfileName;
 
 	public ViewOptions() {
 		final ZLibrary zlibrary = ZLibrary.Instance();
@@ -52,7 +56,11 @@ public class ViewOptions {
 			new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 20);
 		SpaceBetweenColumns =
 			new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
+		ScrollbarType =
+			new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
 		FooterHeight =
 			new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
+		ColorProfileName =
+			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 	}
 }
