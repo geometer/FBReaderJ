@@ -40,17 +40,27 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
-	public static final ZLTextStyleCollection TextStyleCollection = new ZLTextStyleCollection("Base");
+	public static final ZLTextStyleCollection TextStyleCollection;
 
-	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
-		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
-	public final ZLStringOption TextSearchPatternOption =
-		new ZLStringOption("TextSearch", "Pattern", "");
+	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption;
+	public static final ZLStringOption TextSearchPatternOption;
 
-	public final static ZLBooleanOption EnableDoubleTapOption =
-		new ZLBooleanOption("Options", "EnableDoubleTap", false);
-	public final static ZLBooleanOption NavigateAllWordsOption =
-		new ZLBooleanOption("Options", "NavigateAllWords", false);
+	public static final ZLBooleanOption EnableDoubleTapOption;
+	public static final ZLBooleanOption NavigateAllWordsOption;
+
+	private static void configure() {
+		TextStyleCollection = new ZLTextStyleCollection("Base");
+
+		AllowScreenBrightnessAdjustmentOption =
+			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
+		TextSearchPatternOption =
+			new ZLStringOption("TextSearch", "Pattern", "");
+
+		EnableDoubleTapOption =
+			new ZLBooleanOption("Options", "EnableDoubleTap", false);
+		NavigateAllWordsOption =
+			new ZLBooleanOption("Options", "NavigateAllWords", false);
+	}
 
 	public static enum WordTappingAction {
 		doNothing, selectSingleWord, startSelecting, openDictionary
@@ -92,6 +102,10 @@ public final class FBReaderApp extends ZLApplication {
 	private Date myJumpTimeStamp;
 
 	public final IBookCollection Collection;
+
+	static {
+		configure();
+	}
 
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
