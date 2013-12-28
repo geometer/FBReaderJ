@@ -247,22 +247,12 @@ public final class FBReaderApp extends ZLApplication {
 		return ColorProfile.get(getColorProfileName());
 	}
 
-<<<<<<< HEAD
 	public static String getColorProfileName() {
-		return ColorProfileOption.getValue();
-	}
-
-	public void setColorProfileName(String name) {
-		ColorProfileOption.setValue(name);
-=======
-	public String getColorProfileName() {
 		return ViewOptions.ColorProfileName.getValue();
 	}
 
-	public void setColorProfileName(String name) {
+	public static void setColorProfileName(String name) {
 		ViewOptions.ColorProfileName.setValue(name);
-		myColorProfile = null;
->>>>>>> ice-cream-sandwich
 	}
 
 	public ZLKeyBindings keyBindings() {
