@@ -586,11 +586,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
+		final ImageOptions imageOptions = FBReaderApp.ImageOptions;
 		final Screen imagesScreen = createPreferenceScreen("images");
-		imagesScreen.addOption(FBReaderApp.ImageTappingActionOption, "tappingAction");
-		imagesScreen.addOption(FBReaderApp.FitImagesToScreenOption, "fitImagesToScreen");
-		imagesScreen.addOption(FBReaderApp.ImageViewBackgroundOption, "backgroundColor");
-		imagesScreen.addOption(FBReaderApp.ImageMatchBackgroundOption, "matchBackground");
+		imagesScreen.addOption(imageOptions.TapAction, "tappingAction");
+		imagesScreen.addOption(imageOptions.FitToScreen, "fitImagesToScreen");
+		imagesScreen.addOption(imageOptions.ImageViewBackground, "backgroundColor");
+		imagesScreen.addOption(imageOptions.MatchBackground, "matchBackground");
 
 		final CancelMenuHelper cancelMenuHelper = new CancelMenuHelper();
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");

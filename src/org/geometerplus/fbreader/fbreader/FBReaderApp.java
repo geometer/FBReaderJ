@@ -53,14 +53,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 	public static final ZLEnumOption<WordTappingAction> WordTappingActionOption;
 
-	public static final ZLColorOption ImageViewBackgroundOption;
-	public static final ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption;
-	public static enum ImageTappingAction {
-		doNothing, selectImage, openImageView
-	}
-	public static final ZLEnumOption<ImageTappingAction> ImageTappingActionOption;
-	public static final ZLBooleanOption ImageMatchBackgroundOption;
-
+	public static final ImageOptions ImageOptions;
 	public static final ViewOptions ViewOptions;
 
 	public static final ZLIntegerRangeOption ScrollbarTypeOption;
@@ -86,15 +79,7 @@ public final class FBReaderApp extends ZLApplication {
 		WordTappingActionOption =
 			new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
 
-		ImageViewBackgroundOption =
-			new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
-		FitImagesToScreenOption =
-			new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
-		ImageTappingActionOption =
-			new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
-		ImageMatchBackgroundOption =
-			new ZLBooleanOption("Colors", "ImageMatchBackground", true);
-
+		ImageOptions = new ImageOptions();
 		ViewOptions = new ViewOptions();
 
 		ScrollbarTypeOption =
