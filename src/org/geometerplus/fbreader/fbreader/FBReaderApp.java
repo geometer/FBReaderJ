@@ -40,19 +40,31 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
-	public static final ZLTextStyleCollection TextStyleCollection = new ZLTextStyleCollection("Base");
+	public static final ZLTextStyleCollection TextStyleCollection;
 
-	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+	public static final ZLBooleanOption YotaDrawOnBackScreenOption;
 
-	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
-		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
-	public final ZLStringOption TextSearchPatternOption =
-		new ZLStringOption("TextSearch", "Pattern", "");
+	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption;
+	public static final ZLStringOption TextSearchPatternOption;
 
-	public final static ZLBooleanOption EnableDoubleTapOption =
-		new ZLBooleanOption("Options", "EnableDoubleTap", false);
-	public final static ZLBooleanOption NavigateAllWordsOption =
-		new ZLBooleanOption("Options", "NavigateAllWords", false);
+	public static final ZLBooleanOption EnableDoubleTapOption;
+	public static final ZLBooleanOption NavigateAllWordsOption;
+
+	static {
+		TextStyleCollection = new ZLTextStyleCollection("Base");
+
+		YotaDrawOnBackScreenOption =
+			new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+		AllowScreenBrightnessAdjustmentOption =
+			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
+		TextSearchPatternOption =
+			new ZLStringOption("TextSearch", "Pattern", "");
+
+		EnableDoubleTapOption =
+			new ZLBooleanOption("Options", "EnableDoubleTap", false);
+		NavigateAllWordsOption =
+			new ZLBooleanOption("Options", "NavigateAllWords", false);
+	}
 
 	public static enum WordTappingAction {
 		doNothing, selectSingleWord, startSelecting, openDictionary
