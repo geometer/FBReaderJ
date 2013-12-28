@@ -62,6 +62,15 @@ public final class FBReaderApp extends ZLApplication {
 	public static final ZLEnumOption<ImageTappingAction> ImageTappingActionOption;
 	public static final ZLBooleanOption ImageMatchBackgroundOption;
 
+	public static final ViewOptions ViewOptions;
+
+	public static final ZLIntegerRangeOption ScrollbarTypeOption;
+
+	public static final PageTurningOptions PageTurningOptions;
+	public static final FooterOptions FooterOptions;
+
+	private static final ZLKeyBindings ourBindings;
+
 	static {
 		TextStyleCollection = new ZLTextStyleCollection("Base");
 
@@ -88,19 +97,16 @@ public final class FBReaderApp extends ZLApplication {
 			new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 		ImageMatchBackgroundOption =
 			new ZLBooleanOption("Colors", "ImageMatchBackground", true);
+
+		ViewOptions = new ViewOptions();
+
+		ScrollbarTypeOption =
+			new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
+		PageTurningOptions = new PageTurningOptions();
+		FooterOptions = new FooterOptions();
+
+		ourBindings = ZLKeyBindings.get("Keys");
 	}
-
-	public static final ViewOptions ViewOptions = new ViewOptions();
-
-	public final static ZLIntegerRangeOption ScrollbarTypeOption =
-		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-
-	final ZLStringOption ColorProfileOption =
-		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
-
-	private final static ZLKeyBindings ourBindings = ZLKeyBindings.get("Keys");
-	public final static PageTurningOptions PageTurningOptions = new PageTurningOptions();
-	public final static FooterOptions FooterOptions = new FooterOptions();
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
