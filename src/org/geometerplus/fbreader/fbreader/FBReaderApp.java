@@ -56,11 +56,6 @@ public final class FBReaderApp extends ZLApplication {
 
 	public static final ImageOptions ImageOptions;
 	public static final ViewOptions ViewOptions;
-
-	public static final ZLIntegerRangeOption ScrollbarTypeOption;
-
-	public static final ZLStringOption ColorProfileOption;
-
 	public static final PageTurningOptions PageTurningOptions;
 	public static final FooterOptions FooterOptions;
 
@@ -86,13 +81,6 @@ public final class FBReaderApp extends ZLApplication {
 
 		ImageOptions = new ImageOptions();
 		ViewOptions = new ViewOptions();
-
-		ScrollbarTypeOption =
-			new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-
-		ColorProfileOption =
-			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
-
 		PageTurningOptions = new PageTurningOptions();
 		FooterOptions = new FooterOptions();
 
@@ -259,12 +247,22 @@ public final class FBReaderApp extends ZLApplication {
 		return ColorProfile.get(getColorProfileName());
 	}
 
+<<<<<<< HEAD
 	public static String getColorProfileName() {
 		return ColorProfileOption.getValue();
 	}
 
 	public void setColorProfileName(String name) {
 		ColorProfileOption.setValue(name);
+=======
+	public String getColorProfileName() {
+		return ViewOptions.ColorProfileName.getValue();
+	}
+
+	public void setColorProfileName(String name) {
+		ViewOptions.ColorProfileName.setValue(name);
+		myColorProfile = null;
+>>>>>>> ice-cream-sandwich
 	}
 
 	public ZLKeyBindings keyBindings() {
