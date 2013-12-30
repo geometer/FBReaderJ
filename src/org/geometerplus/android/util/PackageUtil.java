@@ -41,7 +41,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public abstract class PackageUtil {
 	private static Uri marketUri(String pkg) {
-		return Uri.parse("market://details?id=" + pkg);
+		return Uri.parse("http://www.amazon.com/gp/mas/dl/android?p=" + pkg);
 	}
 
 	private static Uri homeUri(String pkg) {
