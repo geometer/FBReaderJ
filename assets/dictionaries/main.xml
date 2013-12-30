@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dictionaries>
 	<dictionary
-		id="ColorDict"
-		title="ColorDict&#160;3"
-		package="com.socialnmobile.colordict"
-		action="colordict.intent.action.SEARCH"
-		dataKey="EXTRA_QUERY"
-		pattern="%s"
-		list="always"
-	/>
-	<dictionary
-		id="ColorDict2"
-		title="ColorDict&#160;Old&#160;Style"
-		package="com.socialnmobile.colordict"
-		class=".activity.Main"
-		action="android.intent.action.SEARCH"
-		dataKey="query"
-		pattern="%s"
-		list="always"
-	/>
-	<dictionary
 		id="Fora Dictionary"
 		package="com.ngc.fora"
 		class=".ForaDictionary"
@@ -36,6 +17,23 @@
 		action="android.intent.action.VIEW"
 		pattern="%s"
 		list="always"
+	/>
+	<dictionary
+		id="ColorDict"
+		title="ColorDict&#160;3"
+		package="com.socialnmobile.colordict"
+		action="colordict.intent.action.SEARCH"
+		dataKey="EXTRA_QUERY"
+		pattern="%s"
+	/>
+	<dictionary
+		id="ColorDict2"
+		title="ColorDict&#160;Old&#160;Style"
+		package="com.socialnmobile.colordict"
+		class=".activity.Main"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
 	/>
 	<dictionary
 		id="ABBYY Lingvo"
