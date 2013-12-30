@@ -45,7 +45,7 @@ public class ViewOptions {
 		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
 
 		TwoColumnView =
-			new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 42 * dpi * dpi);
+			new ZLBooleanOption("Options", "TwoColumnView", true);
 		LeftMargin =
 			new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 		RightMargin =

@@ -163,7 +163,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		if (Build.VERSION.SDK_INT >= 19/*Build.VERSION_CODES.KITKAT*/) {
 			appearanceScreen.addOption(androidLibrary.EnableFullscreenModeOption, "fullscreenMode");
 		}
-		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
+		//appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
 
 		final Screen textScreen = createPreferenceScreen("text");
 

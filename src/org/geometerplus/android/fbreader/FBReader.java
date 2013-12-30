@@ -714,7 +714,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		} else {
 			if (zlibrary.DisableButtonLightsOption.getValue()) {
 				myRootView.setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_LOW_PROFILE
+					View.SYSTEM_UI_FLAG_FULLSCREEN
 				);
 			}
 		}
