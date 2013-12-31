@@ -24,7 +24,7 @@ public abstract class ZLOption {
 	protected String myDefaultStringValue;
 
 	protected ZLOption(String group, String optionName, String defaultStringValue) {
-		myId = new StringPair(group.intern(), optionName.intern());
+		myId = new StringPair(group, optionName);
 		myDefaultStringValue = defaultStringValue != null ? defaultStringValue : "";
 	}
 
