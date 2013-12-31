@@ -74,9 +74,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ViewOptions viewOptions = fbReader.ViewOptions;
 		final MiscOptions miscOptions = fbReader.MiscOptions;
+		final FooterOptions footerOptions = fbReader.FooterOptions;
+		final PageTurningOptions pageTurningOptions = fbReader.PageTurningOptions;
+		final ImageOptions imageOptions = fbReader.ImageOptions;
+		final ColorProfile profile = fbReader.getColorProfile();
+		final ZLTextStyleCollection collection = fbReader.TextStyleCollection;
+		final ZLKeyBindings keyBindings = fbReader.keyBindings();
 
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-		final ColorProfile profile = fbReader.getColorProfile();
 		// TODO: use user-defined locale, not the default one,
 		// or set user-defined locale as default
 		final String decimalSeparator =
@@ -168,7 +173,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DitheringOption, "dithering");
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.SubpixelOption, "subpixel");
 
-		final ZLTextStyleCollection collection = fbReader.TextStyleCollection;
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 		textScreen.addPreference(new FontOption(
 			this, textScreen.Resource, "font",
@@ -338,9 +342,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
 		);
 		bgPreferences.setEnabled("".equals(profile.WallpaperOption.getValue()));
-		/*
-		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
-		 */
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
@@ -387,7 +388,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
-		final FooterOptions footerOptions = fbReader.FooterOptions;
 		footerPreferences.add(statusLineScreen.addPreference(new ZLIntegerRangePreference(
 			this, statusLineScreen.Resource.getResource("footerHeight"),
 			viewOptions.FooterHeight
@@ -416,10 +416,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			));
 		}
 		 */
-
-		final PageTurningOptions pageTurningOptions = fbReader.PageTurningOptions;
-
-		final ZLKeyBindings keyBindings = fbReader.keyBindings();
 
 		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		scrollingScreen.addOption(pageTurningOptions.FingerScrolling, "fingerScrolling");
@@ -541,7 +537,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 
-		final ImageOptions imageOptions = fbReader.ImageOptions;
 		final Screen imagesScreen = createPreferenceScreen("images");
 		imagesScreen.addOption(imageOptions.TapAction, "tappingAction");
 		imagesScreen.addOption(imageOptions.FitToScreen, "fitImagesToScreen");
