@@ -494,6 +494,7 @@ public final class FBView extends ZLTextView {
 				return;
 			}
 
+			final FooterOptions footerOptions = myReader.FooterOptions;
 			//final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
 			final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
@@ -505,7 +506,7 @@ public final class FBView extends ZLTextView {
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
 			context.setFont(
-				myReader.FooterOptions.Font.getValue(),
+				footerOptions.Font.getValue(),
 				height <= 10 ? height + 3 : height + 1,
 				height > 10, false, false, false
 			);
@@ -513,18 +514,18 @@ public final class FBView extends ZLTextView {
 			final PagePosition pagePosition = FBView.this.pagePosition();
 
 			final StringBuilder info = new StringBuilder();
-			if (myReader.FooterOptions.ShowProgress.getValue()) {
+			if (footerOptions.ShowProgress.getValue()) {
 				info.append(pagePosition.Current);
 				info.append("/");
 				info.append(pagePosition.Total);
 			}
-			if (myReader.FooterOptions.ShowClock.getValue()) {
+			if (footerOptions.ShowClock.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
 				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
-			if (myReader.FooterOptions.ShowBattery.getValue()) {
+			if (footerOptions.ShowBattery.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
@@ -556,7 +557,7 @@ public final class FBView extends ZLTextView {
 			context.setFillColor(fillColor);
 			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
-			if (myReader.FooterOptions.ShowTOCMarks.getValue()) {
+			if (footerOptions.ShowTOCMarks.getValue()) {
 				if (myTOCMarks == null) {
 					updateTOCMarks(model);
 				}
