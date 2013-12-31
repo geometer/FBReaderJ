@@ -107,14 +107,13 @@ public final class SQLiteConfig extends ZLConfig {
 
 	@Override
 	synchronized public String getValue(String group, String name, String defaultValue) {
-		String answer = defaultValue;
 		myGetValueStatement.bindString(1, group);
 		myGetValueStatement.bindString(2, name);
 		try {
-			answer = myGetValueStatement.simpleQueryForString();
+			return myGetValueStatement.simpleQueryForString();
 		} catch (SQLException e) {
+			return defaultValue;
 		}
-		return answer;
 	}
 
 	@Override

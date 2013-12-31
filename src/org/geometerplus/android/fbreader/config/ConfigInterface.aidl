@@ -21,44 +21,12 @@ package org.geometerplus.android.fbreader.config;
 
 import java.util.List;
 
-import android.content.Context;
+interface ConfigInterface {
+	List<String> listGroups();
+	List<String> listNames(in String group);
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
-
-public final class ShadowConfig extends ZLConfig {
-	public ShadowConfig(Context context) {
-	}
-
-	@Override
-	synchronized public List<String> listGroups() {
-		// TODO: implement
-		return null;
-	}
-
-	@Override
-	synchronized public List<String> listNames(String group) {
-		// TODO: implement
-		return null;
-	}
-
-	@Override
-	synchronized public void removeGroup(String name) {
-		// TODO: implement
-	}
-
-	@Override
-	synchronized public String getValue(String group, String name, String defaultValue) {
-		// TODO: implement
-		return null;
-	}
-
-	@Override
-	synchronized public void setValue(String group, String name, String value) {
-		// TODO: implement
-	}
-
-	@Override
-	synchronized public void unsetValue(String group, String name) {
-		// TODO: implement
-	}
+	String getValue(in String group, in String name, in String defaultValue);
+	void setValue(in String group, in String name, in String value);
+	void unsetValue(in String group, in String name);
+	void removeGroup(in String name);
 }
