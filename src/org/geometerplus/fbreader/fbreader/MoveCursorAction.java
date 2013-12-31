@@ -36,7 +36,7 @@ class MoveCursorAction extends FBAction {
 		ZLTextRegion region = fbView.getSelectedRegion();
 		final ZLTextRegion.Filter filter =
 			(region != null && region.getSoul() instanceof ZLTextWordRegionSoul)
-				|| Reader.NavigateAllWordsOption.getValue()
+				|| Reader.MiscOptions.NavigateAllWords.getValue()
 					? ZLTextRegion.AnyRegionFilter : ZLTextRegion.ImageOrHyperlinkFilter;
 		region = fbView.nextRegion(myDirection, filter);
 		if (region != null) {

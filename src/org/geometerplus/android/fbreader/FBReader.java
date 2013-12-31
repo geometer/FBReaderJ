@@ -299,7 +299,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				public void run() {
 					final TextSearchPopup popup = (TextSearchPopup)myFBReaderApp.getPopupById(TextSearchPopup.ID);
 					popup.initPosition();
-					myFBReaderApp.TextSearchPatternOption.setValue(pattern);
+					myFBReaderApp.MiscOptions.TextSearchPattern.setValue(pattern);
 					if (myFBReaderApp.getTextView().search(pattern, true, false, false, false) != 0) {
 						runOnUiThread(new Runnable() {
 							public void run() {
@@ -492,7 +492,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				manager.setOnCancelListener(null);
 			}
 		});
-		startSearch(myFBReaderApp.TextSearchPatternOption.getValue(), true, null, false);
+		startSearch(myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), true, null, false);
 		return true;
 	}
 

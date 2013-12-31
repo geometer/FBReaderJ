@@ -73,6 +73,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ViewOptions viewOptions = fbReader.ViewOptions;
+		final MiscOptions miscOptions = fbReader.MiscOptions;
+
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		final ColorProfile profile = fbReader.getColorProfile();
 		// TODO: use user-defined locale, not the default one,
@@ -129,7 +131,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
-			fbReader.AllowScreenBrightnessAdjustmentOption,
+			miscOptions.AllowScreenBrightnessAdjustment,
 			appearanceScreen.Resource,
 			"allowScreenBrightnessAdjustment"
 		) {
@@ -421,7 +423,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		scrollingScreen.addOption(pageTurningOptions.FingerScrolling, "fingerScrolling");
-		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
+		scrollingScreen.addOption(miscOptions.EnableDoubleTap, "enableDoubleTapDetection");
 
 		final ZLPreferenceSet volumeKeysPreferences = new ZLPreferenceSet();
 		scrollingScreen.addPreference(new ZLCheckBoxPreference(
@@ -527,11 +529,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				));
 				dictionaryScreen.addPreference(new ZLBooleanPreference(
 					PreferenceActivity.this,
-					fbReader.NavigateAllWordsOption,
+					miscOptions.NavigateAllWords,
 					dictionaryScreen.Resource,
 					"navigateOverAllWords"
 				));
-				dictionaryScreen.addOption(fbReader.WordTappingActionOption, "tappingAction");
+				dictionaryScreen.addOption(miscOptions.WordTappingAction, "tappingAction");
 				dictionaryScreen.addPreference(targetLanguagePreference);
 				targetLanguagePreference.setEnabled(
 					DictionaryUtil.getCurrentDictionaryInfo(true).SupportsTargetLanguageSetting
