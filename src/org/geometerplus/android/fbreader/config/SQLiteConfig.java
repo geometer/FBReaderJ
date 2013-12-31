@@ -30,7 +30,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 
-public final class SQLiteConfig extends ZLConfig {
+final class SQLiteConfig extends ConfigInterface.Stub {
 	private final SQLiteDatabase myDatabase;
 	private final SQLiteStatement myGetValueStatement;
 	private final SQLiteStatement mySetValueStatement;
