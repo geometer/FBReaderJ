@@ -20,33 +20,27 @@
 package org.geometerplus.zlibrary.core.options;
 
 public abstract class ZLOption {
-	private final String myGroup;
-	private final String myOptionName;
-	protected boolean myIsSynchronized;
+	private final StringPair myId;
+	protected String myDefaultStringValue;
 
-	protected ZLOption(String group, String optionName) {
-		myGroup = group.intern();
-		myOptionName = optionName.intern();
-		myIsSynchronized = false;
+	protected ZLOption(String group, String optionName, String defaultStringValue) {
+		myId = new StringPair(group.intern(), optionName.intern());
+		myDefaultStringValue = defaultStringValue != null ? defaultStringValue : "";
 	}
 
-	protected final String getConfigValue(String defaultValue) {
+	protected final String getConfigValue() {
 		final Config config = Config.Instance();
-		return (config != null) ?
-			config.getValue(myGroup, myOptionName, defaultValue) : defaultValue;
+		return config != null ? config.getValue(myId, myDefaultStringValue) : myDefaultStringValue;
 	}
 
 	protected final void setConfigValue(String value) {
 		final Config config = Config.Instance();
 		if (config != null) {
-			config.setValue(myGroup, myOptionName, value);
-		}
-	}
-
-	protected final void unsetConfigValue() {
-		final Config config = Config.Instance();
-		if (config != null) {
-			config.unsetValue(myGroup, myOptionName);
+			if (!myDefaultStringValue.equals(value)) {
+				config.setValue(myId, value);
+			} else {
+				config.unsetValue(myId);
+			}
 		}
 	}
 }

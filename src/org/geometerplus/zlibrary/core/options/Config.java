@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-import java.util.List;
+import java.util.*;
 
 public abstract class Config {
 	public static Config Instance() {
@@ -32,11 +32,45 @@ public abstract class Config {
 		ourInstance = this;
 	}
 
+	private final Map<StringPair,String> myCache =
+		Collections.synchronizedMap(new HashMap<StringPair,String>());
+
+	// deprecated, used in API server implementation
+	public final String getValue(String name, String id, String defaultValue) {
+		return getValue(new StringPair(name.intern(), id.intern()), defaultValue);
+	}
+
+	public final String getValue(StringPair id, String defaultValue) {
+		String value = myCache.get(id);
+		if (value == null) {
+			value = getValueInternal(id.Group, id.Name);
+			if (value == null) {
+				return defaultValue;
+			}
+			myCache.put(id, value);
+		}
+		return value;
+	}
+
+	public final void setValue(StringPair id, String value) {
+		final String oldValue = myCache.get(id);
+		if (oldValue != null && oldValue.equals(value)) {
+			return;
+		}
+		myCache.put(id, value);
+		setValueInternal(id.Group, id.Name, value);
+	}
+
+	public final void unsetValue(StringPair id) {
+		myCache.remove(id);
+		unsetValueInternal(id.Group, id.Name);
+	}
+
 	public abstract List<String> listGroups();
 	public abstract List<String> listNames(String group);
-
-	public abstract String getValue(String group, String name, String defaultValue);
-	public abstract void setValue(String group, String name, String value);
-	public abstract void unsetValue(String group, String name);
 	public abstract void removeGroup(String name);
+
+	protected abstract String getValueInternal(String group, String name);
+	protected abstract void setValueInternal(String group, String name, String value);
+	protected abstract void unsetValueInternal(String group, String name);
 }
