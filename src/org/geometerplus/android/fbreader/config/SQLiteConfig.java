@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.sqliteconfig;
+package org.geometerplus.android.fbreader.config;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -30,14 +30,14 @@ import android.database.sqlite.SQLiteStatement;
 
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 
-public final class ZLSQLiteConfig extends ZLConfig {
+public final class SQLiteConfig extends ZLConfig {
 	private final SQLiteDatabase myDatabase;
 	private final SQLiteStatement myGetValueStatement;
 	private final SQLiteStatement mySetValueStatement;
 	private final SQLiteStatement myUnsetValueStatement;
 	private final SQLiteStatement myDeleteGroupStatement;
 
-	public ZLSQLiteConfig(Context context) {
+	public SQLiteConfig(Context context) {
 		myDatabase = context.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
 		switch (myDatabase.getVersion()) {
 			case 0:
