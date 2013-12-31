@@ -26,9 +26,9 @@ import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.options.Config;
 
-public final class ConfigShadow extends ZLConfig implements ServiceConnection {
+public final class ConfigShadow extends Config implements ServiceConnection {
 	private volatile ConfigInterface myInterface;
 
 	public ConfigShadow(Context context) {

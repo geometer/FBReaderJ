@@ -17,18 +17,18 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.config;
+package org.geometerplus.zlibrary.core.options;
 
 import java.util.List;
 
-public abstract class ZLConfig {
-	public static ZLConfig Instance() {
+public abstract class Config {
+	public static Config Instance() {
 		return ourInstance;
 	}
 
-	private static ZLConfig ourInstance;
+	private static Config ourInstance;
 
-	protected ZLConfig() {
+	protected Config() {
 		ourInstance = this;
 	}
 

@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
-
 public abstract class ZLOption {
 	public static final String PLATFORM_GROUP = "PlatformOptions";
 
@@ -35,20 +33,20 @@ public abstract class ZLOption {
 	}
 
 	protected final String getConfigValue(String defaultValue) {
-		ZLConfig config = ZLConfig.Instance();
+		final Config config = Config.Instance();
 		return (config != null) ?
 			config.getValue(myGroup, myOptionName, defaultValue) : defaultValue;
 	}
 
 	protected final void setConfigValue(String value) {
-		ZLConfig config = ZLConfig.Instance();
+		final Config config = Config.Instance();
 		if (config != null) {
 			config.setValue(myGroup, myOptionName, value);
 		}
 	}
 
 	protected final void unsetConfigValue() {
-		ZLConfig config = ZLConfig.Instance();
+		final Config config = Config.Instance();
 		if (config != null) {
 			config.unsetValue(myGroup, myOptionName);
 		}
