@@ -67,6 +67,14 @@ public final class MimeType {
 	public static final MimeType APP_EPUB = get("application/epub");
 	// ???
 	public static final MimeType APP_MOBIPOCKET = get("application/x-mobipocket-ebook");
+	// ???
+	//public static final MimeType APP_MOBI = get("application/mobi");
+	// ???
+	//public static final MimeType APP_FB2 = get("application/fb2");
+	// ???
+	public static final MimeType APP_FICTIONBOOK = get("application/x-fictionbook");
+	// ???
+	public static final MimeType APP_FICTIONBOOK_XML = get("application/x-fictionbook+xml");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_PDF = get("application/pdf");
 	// ???
@@ -129,7 +137,7 @@ public final class MimeType {
 	public static final MimeType UNKNOWN = get("*/*");
 	public static final MimeType NULL = new MimeType(null, null);
 
-	public static final List<MimeType> TYPES_FB2 = Collections.unmodifiableList(Arrays.asList(TEXT_FB2));
+	public static final List<MimeType> TYPES_FB2 = Collections.unmodifiableList(Arrays.asList(APP_FICTIONBOOK, APP_FICTIONBOOK_XML, TEXT_FB2));
 	public static final List<MimeType> TYPES_EPUB = Collections.unmodifiableList(Arrays.asList(APP_EPUB_ZIP, APP_EPUB));
 	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.singletonList(APP_MOBIPOCKET);
 	public static final List<MimeType> TYPES_TXT = Collections.unmodifiableList(Arrays.asList(TEXT_PLAIN, APP_TXT));
