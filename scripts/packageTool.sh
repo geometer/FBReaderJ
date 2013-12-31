@@ -21,6 +21,12 @@ updateVersion() {
 		ice-cream-sandwich)
 			variant=2
 			;;
+		yota)
+			variant=2
+			;;
+		yota2)
+			variant=2
+			;;
 		*-ics)
 			variant=2
 			;;

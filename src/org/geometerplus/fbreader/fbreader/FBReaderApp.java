@@ -37,48 +37,52 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
-	public final ZLTextStyleCollection TextStyleCollection = new ZLTextStyleCollection("Base");
+	public final ZLTextStyleCollection TextStyleCollection;
 
-	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+	public final ZLBooleanOption YotaDrawOnBackScreenOption;
+	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption;
+	public final ZLStringOption TextSearchPatternOption;
 
-	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
-		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
-	public final ZLStringOption TextSearchPatternOption =
-		new ZLStringOption("TextSearch", "Pattern", "");
-
-	public final ZLBooleanOption EnableDoubleTapOption =
-		new ZLBooleanOption("Options", "EnableDoubleTap", false);
-	public final ZLBooleanOption NavigateAllWordsOption =
-		new ZLBooleanOption("Options", "NavigateAllWords", false);
+	public final ZLBooleanOption EnableDoubleTapOption;
+	public final ZLBooleanOption NavigateAllWordsOption;
 
 	public static enum WordTappingAction {
 		doNothing, selectSingleWord, startSelecting, openDictionary
 	}
-	public final ZLEnumOption<WordTappingAction> WordTappingActionOption =
-		new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
+	public final ZLEnumOption<WordTappingAction> WordTappingActionOption;
 
-	public final ZLColorOption ImageViewBackgroundOption =
-		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
-	public final ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption =
-		new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
-	public static enum ImageTappingAction {
-		doNothing, selectImage, openImageView
+	public final ImageOptions ImageOptions;
+	public final ViewOptions ViewOptions;
+	public final PageTurningOptions PageTurningOptions;
+	public final FooterOptions FooterOptions;
+
+	private final ZLKeyBindings myBindings;
+
+	{
+		TextStyleCollection = new ZLTextStyleCollection("Base");
+
+		YotaDrawOnBackScreenOption =
+			new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+		AllowScreenBrightnessAdjustmentOption =
+			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
+		TextSearchPatternOption =
+			new ZLStringOption("TextSearch", "Pattern", "");
+
+		EnableDoubleTapOption =
+			new ZLBooleanOption("Options", "EnableDoubleTap", false);
+		NavigateAllWordsOption =
+			new ZLBooleanOption("Options", "NavigateAllWords", false);
+
+		WordTappingActionOption =
+			new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
+
+		ImageOptions = new ImageOptions();
+		ViewOptions = new ViewOptions();
+		PageTurningOptions = new PageTurningOptions();
+		FooterOptions = new FooterOptions();
+
+		myBindings = new ZLKeyBindings("Keys");
 	}
-	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
-		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
-
-	public final ViewOptions ViewOptions = new ViewOptions();
-
-	public final ZLIntegerRangeOption ScrollbarTypeOption =
-		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-
-	final ZLStringOption ColorProfileOption =
-		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
-
-	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
-	public final FooterOptions FooterOptions = new FooterOptions();
-
-	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
@@ -183,11 +187,11 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public String getColorProfileName() {
-		return ColorProfileOption.getValue();
+		return ViewOptions.ColorProfileName.getValue();
 	}
 
 	public void setColorProfileName(String name) {
-		ColorProfileOption.setValue(name);
+		ViewOptions.ColorProfileName.setValue(name);
 		myColorProfile = null;
 	}
 

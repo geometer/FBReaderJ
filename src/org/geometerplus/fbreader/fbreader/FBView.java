@@ -34,6 +34,7 @@ import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
+import org.geometerplus.fbreader.fbreader.options.ImageOptions;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 
 public final class FBView extends ZLTextView {
@@ -239,8 +240,8 @@ public final class FBView extends ZLTextView {
 				}
 			} else if (soul instanceof ZLTextImageRegionSoul) {
 				doSelectRegion =
-					myReader.ImageTappingActionOption.getValue() !=
-					FBReaderApp.ImageTappingAction.doNothing;
+					myReader.ImageOptions.TapAction.getValue() !=
+					ImageOptions.TapActionEnum.doNothing;
 			} else if (soul instanceof ZLTextHyperlinkRegionSoul) {
 				doSelectRegion = true;
 			}
@@ -312,8 +313,8 @@ public final class FBView extends ZLTextView {
 					FBReaderApp.WordTappingAction.openDictionary;
 			} else if (soul instanceof ZLTextImageRegionSoul) {
 				doRunAction =
-					myReader.ImageTappingActionOption.getValue() ==
-					FBReaderApp.ImageTappingAction.openImageView;
+					myReader.ImageOptions.TapAction.getValue() ==
+					ImageOptions.TapActionEnum.openImageView;
 			}
 
 			if (doRunAction) {
@@ -345,7 +346,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public ImageFitting getImageFitting() {
-		return myReader.FitImagesToScreenOption.getValue();
+		return myReader.ImageOptions.FitToScreen.getValue();
 	}
 
 	@Override
@@ -602,7 +603,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Footer getFooterArea() {
-		if (myReader.ScrollbarTypeOption.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
+		if (myReader.ViewOptions.ScrollbarType.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
 			if (myFooter == null) {
 				myFooter = new Footer();
 				myReader.addTimerTask(myFooter.UpdateTask, 15000);
@@ -644,7 +645,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public int scrollbarType() {
-		return myReader.ScrollbarTypeOption.getValue();
+		return myReader.ViewOptions.ScrollbarType.getValue();
 	}
 
 	@Override
@@ -654,6 +655,14 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	protected ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages() {
-		return ZLPaintContext.ColorAdjustingMode.NONE;
+		if (myReader.ImageOptions.MatchBackground.getValue()) {
+			if (ColorProfile.DAY.equals(myReader.getColorProfile().Name)) {
+				return ZLPaintContext.ColorAdjustingMode.DARKEN_TO_BACKGROUND;
+			} else {
+				return ZLPaintContext.ColorAdjustingMode.LIGHTEN_TO_BACKGROUND;
+			}
+		} else {
+			return ZLPaintContext.ColorAdjustingMode.NONE;
+		}
 	}
 }

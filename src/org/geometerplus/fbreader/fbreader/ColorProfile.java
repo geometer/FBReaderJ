@@ -53,6 +53,8 @@ public class ColorProfile {
 		return profile;
 	}
 
+	public final String Name;
+
 	public final ZLStringOption WallpaperOption;
 	public final ZLColorOption BackgroundOption;
 	public final ZLColorOption SelectionBackgroundOption;
@@ -80,6 +82,7 @@ public class ColorProfile {
 	}
 
 	private ColorProfile(String name) {
+		Name = name;
 		if (NIGHT.equals(name)) {
 			WallpaperOption =
 				new ZLStringOption("Colors", name + ":Wallpaper", "");
