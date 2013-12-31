@@ -37,7 +37,7 @@ public abstract class Config {
 
 	// deprecated, used in API server implementation
 	public final String getValue(String name, String id, String defaultValue) {
-		return getValue(new StringPair(name.intern(), id.intern()), defaultValue);
+		return getValue(new StringPair(name, id), defaultValue);
 	}
 
 	public final String getValue(StringPair id, String defaultValue) {
@@ -64,6 +64,15 @@ public abstract class Config {
 	public final void unsetValue(StringPair id) {
 		myCache.remove(id);
 		unsetValueInternal(id.Group, id.Name);
+	}
+
+	protected final void setToCache(String group, String name, String value) {
+		final StringPair id = new StringPair(group, name);
+		if (value != null) {
+			myCache.put(id, value);
+		} else {
+			myCache.remove(id);
+		}
 	}
 
 	public abstract List<String> listGroups();
