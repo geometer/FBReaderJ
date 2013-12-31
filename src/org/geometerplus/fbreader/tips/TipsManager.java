@@ -41,21 +41,22 @@ public class TipsManager {
 		return ourInstance;
 	}
 
-	public ZLBooleanOption TipsAreInitializedOption =
-		new ZLBooleanOption("tips", "tipsAreInitialized", false);
-	public ZLBooleanOption ShowTipsOption =
-		new ZLBooleanOption("tips", "showTips", false);
+	public final ZLBooleanOption TipsAreInitializedOption;
+	public final ZLBooleanOption ShowTipsOption;
 
 	// time when last tip was shown, 2^16 milliseconds
-	private final ZLIntegerOption myLastShownOption =
-		new ZLIntegerOption("tips", "shownAt", 0);
+	private final ZLIntegerOption myLastShownOption;
 	// index of next tip to show
-	private final ZLIntegerOption myIndexOption =
-		new ZLIntegerOption("tips", "index", 0);
+	private final ZLIntegerOption myIndexOption;
 
 	private volatile boolean myDownloadInProgress;
 
 	private TipsManager() {
+		TipsAreInitializedOption = new ZLBooleanOption("tips", "tipsAreInitialized", false);
+		ShowTipsOption = new ZLBooleanOption("tips", "showTips", false);
+
+		myLastShownOption = new ZLIntegerOption("tips", "shownAt", 0);
+		myIndexOption = new ZLIntegerOption("tips", "index", 0);
 	}
 
 	private String getUrl() {
