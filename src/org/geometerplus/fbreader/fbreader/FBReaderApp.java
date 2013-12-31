@@ -42,17 +42,7 @@ import org.geometerplus.fbreader.fbreader.options.*;
 public final class FBReaderApp extends ZLApplication {
 	public static final ZLTextStyleCollection TextStyleCollection;
 
-	public static final ZLBooleanOption AllowScreenBrightnessAdjustmentOption;
-	public static final ZLStringOption TextSearchPatternOption;
-
-	public static final ZLBooleanOption EnableDoubleTapOption;
-	public static final ZLBooleanOption NavigateAllWordsOption;
-
-	public static enum WordTappingAction {
-		doNothing, selectSingleWord, startSelecting, openDictionary
-	}
-	public static final ZLEnumOption<WordTappingAction> WordTappingActionOption;
-
+	public static final MiscOptions MiscOptions;
 	public static final ImageOptions ImageOptions;
 	public static final ViewOptions ViewOptions;
 	public static final PageTurningOptions PageTurningOptions;
@@ -63,19 +53,7 @@ public final class FBReaderApp extends ZLApplication {
 	static {
 		TextStyleCollection = new ZLTextStyleCollection("Base");
 
-		AllowScreenBrightnessAdjustmentOption =
-			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
-		TextSearchPatternOption =
-			new ZLStringOption("TextSearch", "Pattern", "");
-
-		EnableDoubleTapOption =
-			new ZLBooleanOption("Options", "EnableDoubleTap", false);
-		NavigateAllWordsOption =
-			new ZLBooleanOption("Options", "NavigateAllWords", false);
-
-		WordTappingActionOption =
-			new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
-
+		MiscOptions = new MiscOptions();
 		ImageOptions = new ImageOptions();
 		ViewOptions = new ViewOptions();
 		PageTurningOptions = new PageTurningOptions();

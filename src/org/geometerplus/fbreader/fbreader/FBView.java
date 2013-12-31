@@ -36,8 +36,7 @@ import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
-import org.geometerplus.fbreader.fbreader.options.ImageOptions;
-import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
+import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBView extends ZLTextView {
 	private FBReaderApp myReader;
@@ -105,7 +104,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public boolean isDoubleTapSupported() {
-		return myReader.EnableDoubleTapOption.getValue();
+		return myReader.MiscOptions.EnableDoubleTap.getValue();
 	}
 
 	@Override
@@ -131,7 +130,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < getContextWidth() / 10) {
+		if (myReader.MiscOptions.AllowScreenBrightnessAdjustment.getValue() && x < getContextWidth() / 10) {
 			myIsBrightnessAdjustmentInProgress = true;
 			myStartY = y;
 			myStartBrightness = ZLibrary.Instance().getScreenBrightness();
@@ -226,7 +225,7 @@ public final class FBView extends ZLTextView {
 			final ZLTextRegion.Soul soul = region.getSoul();
 			boolean doSelectRegion = false;
 			if (soul instanceof ZLTextWordRegionSoul) {
-				switch (myReader.WordTappingActionOption.getValue()) {
+				switch (myReader.MiscOptions.WordTappingAction.getValue()) {
 					case startSelecting:
 						myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 						initSelection(x, y);
@@ -275,8 +274,8 @@ public final class FBView extends ZLTextView {
 			ZLTextRegion.Soul soul = region.getSoul();
 			if (soul instanceof ZLTextHyperlinkRegionSoul ||
 				soul instanceof ZLTextWordRegionSoul) {
-				if (myReader.WordTappingActionOption.getValue() !=
-					FBReaderApp.WordTappingAction.doNothing) {
+				if (myReader.MiscOptions.WordTappingAction.getValue() !=
+					MiscOptions.WordTappingActionEnum.doNothing) {
 					region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 					if (region != null) {
 						soul = region.getSoul();
@@ -311,8 +310,8 @@ public final class FBView extends ZLTextView {
 			boolean doRunAction = false;
 			if (soul instanceof ZLTextWordRegionSoul) {
 				doRunAction =
-					myReader.WordTappingActionOption.getValue() ==
-					FBReaderApp.WordTappingAction.openDictionary;
+					myReader.MiscOptions.WordTappingAction.getValue() ==
+					MiscOptions.WordTappingActionEnum.openDictionary;
 			} else if (soul instanceof ZLTextImageRegionSoul) {
 				doRunAction =
 					myReader.ImageOptions.TapAction.getValue() ==
