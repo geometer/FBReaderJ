@@ -19,38 +19,28 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
-
 public abstract class ZLOption {
-	public static final String PLATFORM_GROUP = "PlatformOptions";
+	private final StringPair myId;
+	protected String myDefaultStringValue;
 
-	private final String myGroup;
-	private final String myOptionName;
-	protected boolean myIsSynchronized;
-
-	protected ZLOption(String group, String optionName) {
-		myGroup = group.intern();
-		myOptionName = optionName.intern();
-		myIsSynchronized = false;
+	protected ZLOption(String group, String optionName, String defaultStringValue) {
+		myId = new StringPair(group.intern(), optionName.intern());
+		myDefaultStringValue = defaultStringValue != null ? defaultStringValue : "";
 	}
 
-	protected final String getConfigValue(String defaultValue) {
-		ZLConfig config = ZLConfig.Instance();
-		return (config != null) ?
-			config.getValue(myGroup, myOptionName, defaultValue) : defaultValue;
+	protected final String getConfigValue() {
+		final Config config = Config.Instance();
+		return config != null ? config.getValue(myId, myDefaultStringValue) : myDefaultStringValue;
 	}
 
 	protected final void setConfigValue(String value) {
-		ZLConfig config = ZLConfig.Instance();
+		final Config config = Config.Instance();
 		if (config != null) {
-			config.setValue(myGroup, myOptionName, value);
-		}
-	}
-
-	protected final void unsetConfigValue() {
-		ZLConfig config = ZLConfig.Instance();
-		if (config != null) {
-			config.unsetValue(myGroup, myOptionName);
+			if (!myDefaultStringValue.equals(value)) {
+				config.setValue(myId, value);
+			} else {
+				config.unsetValue(myId);
+			}
 		}
 	}
 }
