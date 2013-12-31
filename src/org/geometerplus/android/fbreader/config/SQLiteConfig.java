@@ -22,21 +22,28 @@ package org.geometerplus.android.fbreader.config;
 import java.util.List;
 import java.util.LinkedList;
 
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 final class SQLiteConfig extends ConfigInterface.Stub {
+	static final String OPTION_CHANGE_EVENT_ACTION = "fbreader.config_service.option_change_event";
+
+	private final Service myService;
+
 	private final SQLiteDatabase myDatabase;
 	private final SQLiteStatement myGetValueStatement;
 	private final SQLiteStatement mySetValueStatement;
 	private final SQLiteStatement myUnsetValueStatement;
 	private final SQLiteStatement myDeleteGroupStatement;
 
-	public SQLiteConfig(Context context) {
-		myDatabase = context.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
+	public SQLiteConfig(Service service) {
+		myService = service;
+		myDatabase = service.openOrCreateDatabase("config.db", Context.MODE_PRIVATE, null);
 		switch (myDatabase.getVersion()) {
 			case 0:
 				myDatabase.execSQL("CREATE TABLE config (groupName VARCHAR, name VARCHAR, value VARCHAR, PRIMARY KEY(groupName, name) )");
@@ -133,5 +140,14 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 			myUnsetValueStatement.execute();
 		} catch (SQLException e) {
 		}
+	}
+
+	private void sendChangeEvent(String group, String name, String value) {
+		myService.sendBroadcast(
+			new Intent(OPTION_CHANGE_EVENT_ACTION)
+				.putExtra("group", group)
+				.putExtra("name", name)
+				.putExtra("value", value)
+		);
 	}
 }
