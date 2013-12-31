@@ -32,6 +32,11 @@ public final class ConfigShadow extends ZLConfig implements ServiceConnection {
 	private volatile ConfigInterface myInterface;
 
 	public ConfigShadow(Context context) {
+		context.bindService(
+			new Intent(context, ConfigService.class),
+			this,
+			ConfigService.BIND_AUTO_CREATE
+		);
 	}
 
 	@Override
