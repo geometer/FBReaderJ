@@ -17,20 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.library;
+package org.geometerplus.android.fbreader.config;
 
-import android.app.Application;
+import java.util.List;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+interface ConfigInterface {
+	List<String> listGroups();
+	List<String> listNames(in String group);
 
-import org.geometerplus.android.fbreader.config.ConfigShadow;
-
-public abstract class ZLAndroidApplication extends Application {
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		new ConfigShadow(this);
-		new ZLAndroidImageManager();
-		new ZLAndroidLibrary(this);
-	}
+	String getValue(in String group, in String name, in String defaultValue);
+	void setValue(in String group, in String name, in String value);
+	void unsetValue(in String group, in String name);
+	void removeGroup(in String name);
 }
