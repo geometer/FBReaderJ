@@ -17,20 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.library;
+package org.geometerplus.android.fbreader.config;
 
-import android.app.Application;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+public class ConfigService extends Service {
+	private ConfigInterface.Stub myConfig;
 
-import org.geometerplus.android.fbreader.config.ConfigShadow;
+	@Override
+	public IBinder onBind(Intent intent) {
+		return myConfig;
+	}
 
-public abstract class ZLAndroidApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		new ConfigShadow(this);
-		new ZLAndroidImageManager();
-		new ZLAndroidLibrary(this);
+		myConfig = new SQLiteConfig(this);
+	}
+
+	@Override
+	public void onDestroy() {
+		if (myConfig != null) {
+			// TODO: close db
+			myConfig = null;
+		}
+		super.onDestroy();
 	}
 }
