@@ -29,9 +29,25 @@ import android.os.RemoteException;
 import org.geometerplus.zlibrary.core.options.Config;
 
 public final class ConfigShadow extends Config implements ServiceConnection {
+	private final Context myContext;
 	private volatile ConfigInterface myInterface;
 
+	private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			try {
+				setToCache(
+					intent.getStringExtra("group"),
+					intent.getStringExtra("name"),
+					intent.getStringExtra("value")
+				);
+			} catch (Exception e) {
+				// ignore
+			}
+		}
+	};
+
 	public ConfigShadow(Context context) {
+		myContext = context;
 		context.bindService(
 			new Intent(context, ConfigService.class),
 			this,
@@ -108,9 +124,11 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = ConfigInterface.Stub.asInterface(service);
+		myContext.registerReceiver(myReceiver, new IntentFilter(SQLiteConfig.OPTION_CHANGE_EVENT_ACTION));
 	}
 
 	// method from ServiceConnection interface
 	public synchronized void onServiceDisconnected(ComponentName name) {
+		myContext.unregisterReceiver(myReceiver);
 	}
 }

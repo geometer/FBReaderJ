@@ -24,8 +24,8 @@ final class StringPair {
 	final String Name;
 
 	StringPair(String group, String name) {
-		Group = group;
-		Name = name;
+		Group = group.intern();
+		Name = name.intern();
 	}
 
 	@Override
