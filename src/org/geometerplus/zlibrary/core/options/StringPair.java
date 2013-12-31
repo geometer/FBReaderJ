@@ -17,26 +17,33 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.config;
+package org.geometerplus.zlibrary.core.options;
 
-import java.util.List;
+final class StringPair {
+	final String Group;
+	final String Name;
 
-public abstract class ZLConfig {
-	public static ZLConfig Instance() {
-		return ourInstance;
+	StringPair(String group, String name) {
+		Group = group;
+		Name = name;
 	}
 
-	private static ZLConfig ourInstance;
-
-	protected ZLConfig() {
-		ourInstance = this;
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		try {
+			final StringPair pair = (StringPair)other;
+			// yes, I'm sure Group & Name are not nulls
+			return Group.equals(pair.Group) && Name.equals(pair.Name);
+		} catch (ClassCastException e) {
+			return false;
+		} 
 	}
 
-	public abstract List<String> listGroups();
-	public abstract List<String> listNames(String group);
-
-	public abstract String getValue(String group, String name, String defaultValue);
-	public abstract void setValue(String group, String name, String value);
-	public abstract void unsetValue(String group, String name);
-	public abstract void removeGroup(String name);
+	@Override
+	public int hashCode() {
+		return Group.hashCode() + 37 * Name.hashCode();
+	}
 }
