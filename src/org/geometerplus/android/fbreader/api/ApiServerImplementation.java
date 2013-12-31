@@ -33,12 +33,10 @@ import android.util.Base64;
 import android.util.Log;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
-import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -336,15 +334,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	// preferences information
 	public List<String> getOptionGroups() {
-		return ZLConfig.Instance().listGroups();
+		return Config.Instance().listGroups();
 	}
 
 	public List<String> getOptionNames(String group) {
-		return ZLConfig.Instance().listNames(group);
+		return Config.Instance().listNames(group);
 	}
 
 	public String getOptionValue(String group, String name) {
-		return ZLConfig.Instance().getValue(group, name, null);
+		return Config.Instance().getValue(group, name, null);
 	}
 
 	public void setOptionValue(String group, String name, String value) {

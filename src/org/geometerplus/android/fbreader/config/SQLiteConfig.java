@@ -28,8 +28,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
-
 final class SQLiteConfig extends ConfigInterface.Stub {
 	private final SQLiteDatabase myDatabase;
 	private final SQLiteStatement myGetValueStatement;
@@ -106,13 +104,13 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 	}
 
 	@Override
-	synchronized public String getValue(String group, String name, String defaultValue) {
+	synchronized public String getValue(String group, String name) {
 		myGetValueStatement.bindString(1, group);
 		myGetValueStatement.bindString(2, name);
 		try {
 			return myGetValueStatement.simpleQueryForString();
 		} catch (SQLException e) {
-			return defaultValue;
+			return null;
 		}
 	}
 

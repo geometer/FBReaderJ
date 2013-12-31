@@ -28,7 +28,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.database.SQLException;
 import android.database.Cursor;
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
@@ -1230,7 +1230,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				statement.bindLong(4, chr);
 				statement.execute();
 			}
-			ZLConfig.Instance().removeGroup(fileName);
+			Config.Instance().removeGroup(fileName);
 		}
 		cursor.close();
 	}

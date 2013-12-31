@@ -26,9 +26,9 @@ import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.options.Config;
 
-public final class ConfigShadow extends ZLConfig implements ServiceConnection {
+public final class ConfigShadow extends Config implements ServiceConnection {
 	private volatile ConfigInterface myInterface;
 
 	public ConfigShadow(Context context) {
@@ -74,19 +74,19 @@ public final class ConfigShadow extends ZLConfig implements ServiceConnection {
 	}
 
 	@Override
-	synchronized public String getValue(String group, String name, String defaultValue) {
+	synchronized protected String getValueInternal(String group, String name) {
 		if (myInterface == null) {
-			return defaultValue;
+			return null;
 		}
 		try {
-			return myInterface.getValue(group, name, defaultValue);
+			return myInterface.getValue(group, name);
 		} catch (RemoteException e) {
-			return defaultValue;
+			return null;
 		}
 	}
 
 	@Override
-	synchronized public void setValue(String group, String name, String value) {
+	synchronized protected void setValueInternal(String group, String name, String value) {
 		if (myInterface != null) {
 			try {
 				myInterface.setValue(group, name, value);
@@ -96,7 +96,7 @@ public final class ConfigShadow extends ZLConfig implements ServiceConnection {
 	}
 
 	@Override
-	synchronized public void unsetValue(String group, String name) {
+	synchronized protected void unsetValueInternal(String group, String name) {
 		if (myInterface != null) {
 			try {
 				myInterface.unsetValue(group, name);
