@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBView extends ZLTextView {
-	private FBReaderApp myReader;
+	private final FBReaderApp myReader;
 
 	FBView(FBReaderApp reader) {
 		super(reader);
@@ -498,19 +498,16 @@ public final class FBView extends ZLTextView {
 				context.clear(getBackgroundColor());
 			}
 
-			final FBReaderApp reader = myReader;
-			if (reader == null) {
-				return;
-			}
-			final BookModel model = reader.Model;
+			final BookModel model = myReader.Model;
 			if (model == null) {
 				return;
 			}
 
+			final FooterOptions footerOptions = myReader.FooterOptions;
 			//final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
 			final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
-			final ZLColor fillColor = reader.getColorProfile().FooterFillOption.getValue();
+			final ZLColor fillColor = myReader.getColorProfile().FooterFillOption.getValue();
 
 			final int left = getLeftMargin();
 			final int right = context.getWidth() - getRightMargin();
@@ -518,7 +515,7 @@ public final class FBView extends ZLTextView {
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
 			context.setFont(
-				reader.FooterOptions.Font.getValue(),
+				footerOptions.Font.getValue(),
 				height <= 10 ? height + 3 : height + 1,
 				height > 10, false, false, false
 			);
@@ -526,22 +523,22 @@ public final class FBView extends ZLTextView {
 			final PagePosition pagePosition = FBView.this.pagePosition();
 
 			final StringBuilder info = new StringBuilder();
-			if (reader.FooterOptions.ShowProgress.getValue()) {
+			if (footerOptions.ShowProgress.getValue()) {
 				info.append(pagePosition.Current);
 				info.append("/");
 				info.append(pagePosition.Total);
 			}
-			if (reader.FooterOptions.ShowClock.getValue()) {
+			if (footerOptions.ShowClock.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
 				info.append(ZLibrary.Instance().getCurrentTimeString());
 			}
-			if (reader.FooterOptions.ShowBattery.getValue()) {
+			if (footerOptions.ShowBattery.getValue()) {
 				if (info.length() > 0) {
 					info.append(" ");
 				}
-				info.append(reader.getBatteryLevel());
+				info.append(myReader.getBatteryLevel());
 				info.append("%");
 			}
 			final String infoString = info.toString();
@@ -569,7 +566,7 @@ public final class FBView extends ZLTextView {
 			context.setFillColor(fillColor);
 			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
-			if (reader.FooterOptions.ShowTOCMarks.getValue()) {
+			if (footerOptions.ShowTOCMarks.getValue()) {
 				if (myTOCMarks == null) {
 					updateTOCMarks(model);
 				}
