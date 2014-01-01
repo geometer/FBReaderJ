@@ -1,3 +1,6 @@
+===== 1.9.5 (Jan ??, 2014) =====
+* new config subsystem implementation
+
 ===== 1.9.4 (Dec 23, 2013) =====
 * YotaPhone back screen support
 * Fullscreen mode in android 4.4 is now optional
