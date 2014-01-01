@@ -28,11 +28,17 @@ public class FooterOptions {
 	public final ZLBooleanOption ShowProgress;
 	public final ZLStringOption Font;
 
-	public FooterOptions() {
-		ShowTOCMarks = new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
-		ShowClock = new ZLBooleanOption("Options", "ShowClockInFooter", true);
-		ShowBattery = new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-		ShowProgress = new ZLBooleanOption("Options", "ShowProgressInFooter", true);
-		Font = new ZLStringOption("Options", "FooterFont", "Droid Sans");
+	public FooterOptions(String screen) {
+		final String prefix;
+		if ("Base".equals(screen)) {
+			prefix = "";
+		} else {
+			prefix = screen + ":";
+		}
+		ShowTOCMarks = new ZLBooleanOption("Options", prefix + "FooterShowTOCMarks", "Base".equals(screen));
+		ShowClock = new ZLBooleanOption("Options", prefix + "ShowClockInFooter", true);
+		ShowBattery = new ZLBooleanOption("Options", prefix + "ShowBatteryInFooter", true);
+		ShowProgress = new ZLBooleanOption("Options", prefix + "ShowProgressInFooter", true);
+		Font = new ZLStringOption("Options", prefix + "FooterFont", "Droid Sans");
 	}
 }

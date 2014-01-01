@@ -289,6 +289,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
+
+		if (myFBReaderApp.YotaDrawOnBackScreenOption.getValue()) {
+			new YotaSwitchScreenAction(this, myFBReaderApp, true).run();
+		}
 	}
 
 	@Override
@@ -878,6 +882,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public ZLViewWidget getViewWidget() {
+		if (myFBReaderApp.YotaDrawOnBackScreenOption.getValue()) {
+			if (com.yotadevices.fbreader.FBReaderYotaService.Widget != null) {
+				return com.yotadevices.fbreader.FBReaderYotaService.Widget;
+			}
+		}
 		return myMainView;
 	}
 
@@ -959,6 +968,26 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	public void refreshYotaScreen() {
+		if (!getZLibrary().isYotaPhone()) {
+			return;
+		}
+
+		if (!myFBReaderApp.YotaDrawOnBackScreenOption.getValue()) {
+			boolean isServiceRunning = false;
+			final String serviceClassName = FBReaderYotaService.class.getName();
+			final ActivityManager manager =
+				(ActivityManager)getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+			for (ActivityManager.RunningServiceInfo info : manager.getRunningServices(Integer.MAX_VALUE)) {
+				if (serviceClassName.equals(info.service.getClassName())) {
+					isServiceRunning = true;
+					break;
+				}
+			}
+			if (!isServiceRunning) {
+				return;
+			}
+		}
+
 		final Intent intent = new Intent(this, FBReaderYotaService.class);
 		intent.putExtra(
 			FBReaderYotaService.KEY_BACK_SCREEN_IS_ACTIVE,
