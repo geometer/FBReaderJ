@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.config;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import android.content.*;
 import android.os.IBinder;
@@ -31,6 +30,7 @@ import org.geometerplus.zlibrary.core.options.Config;
 public final class ConfigShadow extends Config implements ServiceConnection {
 	private final Context myContext;
 	private volatile ConfigInterface myInterface;
+	private final List<Runnable> myDeferredActions = new LinkedList<Runnable>();
 
 	private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
@@ -53,6 +53,15 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 			this,
 			ConfigService.BIND_AUTO_CREATE
 		);
+	}
+
+	@Override
+	synchronized public void runOnStart(Runnable runnable) {
+		if (myInterface != null) {
+			runnable.run();
+		} else {
+			myDeferredActions.add(runnable);
+		}
 	}
 
 	@Override
@@ -92,12 +101,12 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	@Override
 	synchronized protected String getValueInternal(String group, String name) throws NotAvailableException {
 		if (myInterface == null) {
-			throw new NotAvailableException();
+			throw new NotAvailableException("Config is not initialized for " + group + ":" + name);
 		}
 		try {
 			return myInterface.getValue(group, name);
 		} catch (RemoteException e) {
-			throw new NotAvailableException();
+			throw new NotAvailableException("RemoteException for " + group + ":" + name);
 		}
 	}
 
@@ -125,6 +134,10 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = ConfigInterface.Stub.asInterface(service);
 		myContext.registerReceiver(myReceiver, new IntentFilter(SQLiteConfig.OPTION_CHANGE_EVENT_ACTION));
+		for (Runnable r : myDeferredActions) {
+			r.run();
+		}
+		myDeferredActions.clear();
 	}
 
 	// method from ServiceConnection interface

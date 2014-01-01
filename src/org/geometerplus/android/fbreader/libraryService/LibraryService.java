@@ -26,6 +26,7 @@ import android.content.*;
 import android.os.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -94,7 +95,11 @@ public class LibraryService extends Service {
 
 		LibraryImplementation() {
 			myDatabase = SQLiteBooksDatabase.Instance(LibraryService.this);
-			reset(Paths.BookPathOption().getValue(), true);
+			Config.Instance().runOnStart(new Runnable() {
+				public void run() {
+					reset(Paths.BookPathOption().getValue(), true);
+				}
+			});
 		}
 
 		public void reset(List<String> bookDirectories, boolean force) {
