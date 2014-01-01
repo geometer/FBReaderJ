@@ -56,6 +56,11 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
+	synchronized public boolean isInitialized() {
+		return myInterface != null;
+	}
+
+	@Override
 	synchronized public void runOnStart(Runnable runnable) {
 		if (myInterface != null) {
 			runnable.run();
