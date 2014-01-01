@@ -23,7 +23,8 @@ import java.util.*;
 
 public abstract class Config {
 	protected final static class NotAvailableException extends Exception {
-		public NotAvailableException() {
+		public NotAvailableException(String message) {
+			super(message);
 		}
 	}
 
@@ -79,6 +80,8 @@ public abstract class Config {
 	protected final void setToCache(String group, String name, String value) {
 		myCache.put(new StringPair(group, name), value != null ? value : myNullString);
 	}
+
+	public abstract void runOnStart(Runnable runnable);
 
 	public abstract List<String> listGroups();
 	public abstract List<String> listNames(String group);
