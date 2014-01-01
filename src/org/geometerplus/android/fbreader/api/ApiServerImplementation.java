@@ -346,18 +346,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public void setOptionValue(String group, String name, String value) {
-		//sorry, but i need this now:
-		if ("Options".equals(group) && "ColorProfile".equals(name)) {
-			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).setValue(value);
-		} else 	if ("LookNFeel".equals(group) && "Orientation".equals(name)) {
-			new ZLStringOption("LookNFeel", "Orientation", "system").setValue(value);
-		} else 	if ("LookNFeel".equals(group) && "ScreenBrightnessLevel".equals(name)) {
-			new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0).setValue(Integer.parseInt(value));
-		} else 	if ("LookNFeel".equals(group) && "BatteryLevelToTurnScreenOff".equals(name)) {
-			new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50).setValue(Integer.parseInt(value));
-		}
-
-		// TODO: implement
+		new ZLStringOption(group, name, null).setValue(value);
 	}
 
 	public String getBookLanguage() {

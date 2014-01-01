@@ -223,11 +223,11 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public static String getColorProfileName() {
-		return new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).getValue();
+		return ViewOptions.ColorProfileName.getValue();
 	}
 
 	public static void setColorProfileName(String name) {
-		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY).setValue(name);
+		ViewOptions.ColorProfileName.setValue(name);
 	}
 
 	public ZLKeyBindings keyBindings() {
