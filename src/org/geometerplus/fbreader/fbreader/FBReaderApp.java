@@ -48,7 +48,7 @@ public final class FBReaderApp extends ZLApplication {
 	public static final PageTurningOptions PageTurningOptions;
 	public static final FooterOptions FooterOptions;
 
-	private static final ZLKeyBindings ourBindings;
+	private final ZLKeyBindings myBindings;
 
 	static {
 		TextStyleCollection = new ZLTextStyleCollection("Base");
@@ -58,8 +58,10 @@ public final class FBReaderApp extends ZLApplication {
 		ViewOptions = new ViewOptions();
 		PageTurningOptions = new PageTurningOptions();
 		FooterOptions = new FooterOptions();
+	}
 
-		ourBindings = new ZLKeyBindings();
+	{
+		myBindings = new ZLKeyBindings();
 	}
 
 	public final FBView BookTextView;
@@ -231,16 +233,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public ZLKeyBindings keyBindings() {
-		return ourBindings;
-	}
-
-	public static ZLKeyBindings keyBindingsStatic() {
-		return ourBindings;
-	}
-
-	public final static boolean hasActionForKeyStatic(int key, boolean longPress) {
-		final String actionId = keyBindingsStatic().getBinding(key, longPress);
-		return actionId != null && !NoAction.equals(actionId);
+		return myBindings;
 	}
 
 	public FBView getTextView() {
