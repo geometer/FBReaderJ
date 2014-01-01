@@ -39,7 +39,11 @@ public final class ZLKeyBindings {
 	private final TreeMap<Integer,ZLStringOption> myActionMap = new TreeMap<Integer,ZLStringOption>();
 	private final TreeMap<Integer,ZLStringOption> myLongPressActionMap = new TreeMap<Integer,ZLStringOption>();
 
-	public ZLKeyBindings(String name) {
+	public ZLKeyBindings() {
+		this("Keys");
+	}
+
+	private ZLKeyBindings(String name) {
 		myName = name;
 		final Set<String> keys = new TreeSet<String>();
 		new Reader(keys).readQuietly(ZLFile.createFileByPath("default/keymap.xml"));
