@@ -113,7 +113,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ImageOptions imageOptions = new ImageOptions();
 		final ColorProfile profile = FBReaderApp.getColorProfile();
 		final ZLTextStyleCollection collection = FBReaderApp.TextStyleCollection;
-		final ZLKeyBindings keyBindings = FBReaderApp.keyBindingsStatic();
+		final ZLKeyBindings keyBindings = new ZLKeyBindings();
 
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		// TODO: use user-defined locale, not the default one,
