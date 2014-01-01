@@ -56,7 +56,7 @@ public final class FBReaderApp extends ZLApplication {
 		PageTurningOptions = new PageTurningOptions();
 		FooterOptions = new FooterOptions();
 
-		myBindings = new ZLKeyBindings("Keys");
+		myBindings = new ZLKeyBindings();
 	}
 
 	public final FBView BookTextView;
