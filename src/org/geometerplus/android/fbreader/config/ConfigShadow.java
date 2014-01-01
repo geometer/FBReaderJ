@@ -90,14 +90,14 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
-	synchronized protected String getValueInternal(String group, String name) {
+	synchronized protected String getValueInternal(String group, String name) throws NotAvailableException {
 		if (myInterface == null) {
-			return null;
+			throw new NotAvailableException();
 		}
 		try {
 			return myInterface.getValue(group, name);
 		} catch (RemoteException e) {
-			return null;
+			throw new NotAvailableException();
 		}
 	}
 
