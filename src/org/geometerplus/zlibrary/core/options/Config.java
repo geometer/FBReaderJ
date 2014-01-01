@@ -32,6 +32,7 @@ public abstract class Config {
 		ourInstance = this;
 	}
 
+	private final String myNullString = new String("__NULL__");
 	private final Map<StringPair,String> myCache =
 		Collections.synchronizedMap(new HashMap<StringPair,String>());
 
@@ -45,11 +46,11 @@ public abstract class Config {
 		if (value == null) {
 			value = getValueInternal(id.Group, id.Name);
 			if (value == null) {
-				return defaultValue;
+				value = myNullString;
 			}
 			myCache.put(id, value);
 		}
-		return value;
+		return value != myNullString ? value : defaultValue;
 	}
 
 	public final void setValue(StringPair id, String value) {
@@ -62,17 +63,12 @@ public abstract class Config {
 	}
 
 	public final void unsetValue(StringPair id) {
-		myCache.remove(id);
+		myCache.put(id, myNullString);
 		unsetValueInternal(id.Group, id.Name);
 	}
 
 	protected final void setToCache(String group, String name, String value) {
-		final StringPair id = new StringPair(group, name);
-		if (value != null) {
-			myCache.put(id, value);
-		} else {
-			myCache.remove(id);
-		}
+		myCache.put(new StringPair(group, name), value != null ? value : myNullString);
 	}
 
 	public abstract List<String> listGroups();
