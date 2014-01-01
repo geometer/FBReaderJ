@@ -81,6 +81,7 @@ public abstract class Config {
 		myCache.put(new StringPair(group, name), value != null ? value : myNullString);
 	}
 
+	public abstract boolean isInitialized();
 	public abstract void runOnStart(Runnable runnable);
 
 	public abstract List<String> listGroups();

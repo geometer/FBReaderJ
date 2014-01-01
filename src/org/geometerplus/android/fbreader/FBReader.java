@@ -38,6 +38,7 @@ import com.yotadevices.fbreader.FBReaderYotaService;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -196,6 +197,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
 		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
 		myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
+		if (!Config.Instance().isInitialized()) {
+			final SharedPreferences preferences = getSharedPreferences("fbreader.ui", MODE_PRIVATE);
+			myShowStatusBarFlag = preferences.getBoolean("statusBar", myShowStatusBarFlag);
+			myShowActionBarFlag = preferences.getBoolean("actionBar", myShowActionBarFlag);
+		}
 		myActionBarIsVisible = myShowActionBarFlag;
 
 		getWindow().setFlags(
@@ -352,13 +358,21 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		final ZLAndroidLibrary zlibrary = getZLibrary();
 
-		if (zlibrary.ShowStatusBarOption.getValue() != myShowStatusBarFlag ||
-			zlibrary.ShowActionBarOption.getValue() != myShowActionBarFlag) {
-			finish();
-			startActivity(new Intent(this, getClass()));
-		}
-
-		SetScreenOrientationAction.setOrientation(this, zlibrary.getOrientationOption().getValue());
+		Config.Instance().runOnStart(new Runnable() {
+			public void run() {
+				final boolean showStatusBar = zlibrary.ShowStatusBarOption.getValue();
+				final boolean showActionBar = zlibrary.ShowActionBarOption.getValue();
+				if (showStatusBar != myShowStatusBarFlag || showActionBar != myShowActionBarFlag) {
+					finish();
+					startActivity(new Intent(FBReader.this, FBReader.class));
+				}
+				getSharedPreferences("fbreader.ui", MODE_PRIVATE).edit()
+					.putBoolean("statusBar", showStatusBar)
+					.putBoolean("actionBar", showActionBar)
+					.apply();
+				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
+			}
+		});
 
 		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
@@ -428,16 +442,20 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		super.onResume();
 
 		myStartTimer = true;
-		final int brightnessLevel =
-			getZLibrary().ScreenBrightnessLevelOption.getValue();
-		if (brightnessLevel != 0) {
-			setScreenBrightness(brightnessLevel);
-		} else {
-			setScreenBrightnessAuto();
-		}
-		if (getZLibrary().DisableButtonLightsOption.getValue()) {
-			setButtonLight(false);
-		}
+		Config.Instance().runOnStart(new Runnable() {
+			public void run() {
+				final int brightnessLevel =
+					getZLibrary().ScreenBrightnessLevelOption.getValue();
+				if (brightnessLevel != 0) {
+					setScreenBrightness(brightnessLevel);
+				} else {
+					setScreenBrightnessAuto();
+				}
+				if (getZLibrary().DisableButtonLightsOption.getValue()) {
+					setButtonLight(false);
+				}
+			}
+		});
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
