@@ -26,6 +26,7 @@ import android.util.AttributeSet;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
@@ -434,9 +435,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		final ZLApplication application = ZLApplication.Instance();
+		final ZLKeyBindings bindings = application.keyBindings();
 
-		if (application.hasActionForKey(keyCode, true) ||
-			application.hasActionForKey(keyCode, false)) {
+		if (bindings.hasBinding(keyCode, true) ||
+			bindings.hasBinding(keyCode, false)) {
 			if (myKeyUnderTracking != -1) {
 				if (myKeyUnderTracking == keyCode) {
 					return true;
@@ -444,7 +446,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 					myKeyUnderTracking = -1;
 				}
 			}
-			if (application.hasActionForKey(keyCode, true)) {
+			if (bindings.hasBinding(keyCode, true)) {
 				myKeyUnderTracking = keyCode;
 				myTrackingStartTime = System.currentTimeMillis();
 				return true;
@@ -467,10 +469,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			myKeyUnderTracking = -1;
 			return true;
 		} else {
-			final ZLApplication application = ZLApplication.Instance();
+			final ZLKeyBindings bindings = ZLApplication.Instance().keyBindings();
 			return
-				application.hasActionForKey(keyCode, false) ||
-				application.hasActionForKey(keyCode, true);
+				bindings.hasBinding(keyCode, false) ||
+				bindings.hasBinding(keyCode, true);
 		}
 	}
 
