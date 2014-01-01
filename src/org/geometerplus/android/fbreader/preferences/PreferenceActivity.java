@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.KeyEvent;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.options.*;
@@ -101,11 +100,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		myCollection.unbind();
 
 		super.onStop();
-	}
-
-	private boolean hasActionForKey(ZLKeyBindings bindings, int key, boolean longPress) {
-		final String actionId = bindings.getBinding(key, longPress);
-		return actionId != null && !ZLApplication.NoAction.equals(actionId);
 	}
 
 	@Override
@@ -479,7 +473,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, scrollingScreen.Resource, "volumeKeys"
 		) {
 			{
-				setChecked(hasActionForKey(keyBindings, KeyEvent.KEYCODE_VOLUME_UP, false));
+				setChecked(keyBindings.hasBinding(KeyEvent.KEYCODE_VOLUME_UP, false));
 			}
 
 			@Override
@@ -516,7 +510,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 		}));
-		volumeKeysPreferences.setEnabled(hasActionForKey(keyBindings, KeyEvent.KEYCODE_VOLUME_UP, false));
+		volumeKeysPreferences.setEnabled(keyBindings.hasBinding(KeyEvent.KEYCODE_VOLUME_UP, false));
 
 		scrollingScreen.addOption(pageTurningOptions.Animation, "animation");
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
