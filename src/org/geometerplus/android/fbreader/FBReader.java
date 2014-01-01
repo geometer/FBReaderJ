@@ -646,7 +646,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
 				final int brightnessLevel =
-					getZLibrary().ScreenBrightnessLevelOption().getValue();
+					getZLibrary().ScreenBrightnessLevelOption.getValue();
 				if (brightnessLevel != 0) {
 					setScreenBrightness(brightnessLevel);
 				} else {
@@ -1037,7 +1037,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
 		attrs.screenBrightness = percent / 100.0f;
 		getWindow().setAttributes(attrs);
-		getZLibrary().ScreenBrightnessLevelOption().setValue(percent);
+		getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
 	}
 
 	public int getScreenBrightness() {
