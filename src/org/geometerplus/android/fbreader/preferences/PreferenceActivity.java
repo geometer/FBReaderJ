@@ -436,7 +436,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, scrollingScreen.Resource, "volumeKeys"
 		) {
 			{
-				setChecked(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
+				setChecked(keyBindings.hasBinding(KeyEvent.KEYCODE_VOLUME_UP, false));
 			}
 
 			@Override
@@ -473,7 +473,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 		}));
-		volumeKeysPreferences.setEnabled(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
+		volumeKeysPreferences.setEnabled(keyBindings.hasBinding(KeyEvent.KEYCODE_VOLUME_UP, false));
 
 		scrollingScreen.addOption(pageTurningOptions.Animation, "animation");
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
