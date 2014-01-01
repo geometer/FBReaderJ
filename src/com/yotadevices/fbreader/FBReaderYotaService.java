@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import com.yotadevices.sdk.*;
 import com.yotadevices.sdk.utils.EinkUtils;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
@@ -43,6 +42,7 @@ public class FBReaderYotaService extends BSActivity {
 	private Canvas myCanvas;
 	private Bitmap myBitmap;
 
+	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 	private volatile boolean myBackScreenIsActive;
 	private Book myCurrentBook;
 
@@ -167,14 +167,13 @@ public class FBReaderYotaService extends BSActivity {
 	protected void onVolumeButtonsEvent(Constants.VolumeButtonsEvent event) {
 		super.onVolumeButtonsEvent(event);
 
-		final ZLKeyBindings bindings = ZLApplication.Instance().keyBindings();
 		String action = null;
 		switch (event) {
 			case VOLUME_MINUS_UP:
-				action = bindings.getBinding(KeyEvent.KEYCODE_VOLUME_DOWN, false);
+				action = myBindings.getBinding(KeyEvent.KEYCODE_VOLUME_DOWN, false);
 				break;
 			case VOLUME_PLUS_UP:
-				action = bindings.getBinding(KeyEvent.KEYCODE_VOLUME_UP, false);
+				action = myBindings.getBinding(KeyEvent.KEYCODE_VOLUME_UP, false);
 				break;
 			default:
 				break;
