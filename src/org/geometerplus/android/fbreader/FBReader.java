@@ -194,11 +194,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		final ZLAndroidLibrary zlibrary = getZLibrary();
+		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
+		myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
+		myActionBarIsVisible = myShowActionBarFlag;
+
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
-			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
+			myShowStatusBarFlag ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
 		);
-		if (!zlibrary.ShowActionBarOption.getValue()) {
+		if (!myShowActionBarFlag) {
 			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		}
 		setContentView(R.layout.main);
@@ -217,10 +221,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		myFBReaderApp.setWindow(this);
 		myFBReaderApp.initWindow();
-
-		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
-		myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
-		myActionBarIsVisible = myShowActionBarFlag;
 
 		final ActionBar bar = getActionBar();
 		bar.setDisplayOptions(
