@@ -118,6 +118,10 @@ public final class ZLKeyBindings {
 		return getOption(key, longPress).getValue();
 	}
 
+	public boolean hasBinding(int key, boolean longPress) {
+		return !ZLApplication.NoAction.equals(getBinding(key, longPress));
+	}
+
 	private class Reader extends ZLXMLReaderAdapter {
 		private final Set<String> myKeySet;
 
