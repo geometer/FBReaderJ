@@ -130,6 +130,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 			mySetValueStatement.execute();
 		} catch (SQLException e) {
 		}
+		sendChangeEvent(group, name, value);
 	}
 
 	@Override
