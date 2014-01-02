@@ -49,8 +49,6 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
-	private BookCollectionShadow myCollection = new BookCollectionShadow();
-
 	private final List<String> myRootpaths = Arrays.asList(Paths.cardDirectory() + "/");
 
 	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
@@ -89,20 +87,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-
-		myCollection.bindToService(this, null);
-	}
-
-	@Override
-	protected void onStop() {
-		myCollection.unbind();
-
-		super.onStop();
-	}
-
-	@Override
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
 
@@ -128,7 +112,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				@Override
 				public void setValue(List<String> value) {
 					super.setValue(value);
-					myCollection.reset(false);
+
+					final BookCollectionShadow collection = new BookCollectionShadow();
+					collection.bindToService(PreferenceActivity.this, new Runnable() {
+						public void run() {
+							collection.reset(false);
+							collection.unbind();
+						}
+					});
 				}
 			},
 			myActivityPrefs, myRootpaths,
