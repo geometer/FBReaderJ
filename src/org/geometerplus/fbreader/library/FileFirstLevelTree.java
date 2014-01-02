@@ -19,19 +19,24 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
 
 public class FileFirstLevelTree extends FirstLevelTree {
 	FileFirstLevelTree(RootTree root) {
 		super(root, ROOT_FILE_TREE);
-		for (String dir : Paths.BookPathOption().getValue()) {
-			addChild(dir, "fileTreeLibrary", dir);
-		}
-		addChild("/", "fileTreeRoot", null);
-		addChild(Paths.cardDirectory(), "fileTreeCard", null);
+		Config.Instance().runOnStart(new Runnable() {
+			public void run() {
+				for (String dir : Paths.BookPathOption().getValue()) {
+					addChild(dir, "fileTreeLibrary", dir);
+				}
+				addChild("/", "fileTreeRoot", null);
+				addChild(Paths.cardDirectory(), "fileTreeCard", null);
+			}
+		});
 	}
 
 	private void addChild(String path, String resourceKey, String summary) {
