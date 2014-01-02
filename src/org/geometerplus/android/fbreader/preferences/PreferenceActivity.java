@@ -47,24 +47,8 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
-	private BookCollectionShadow myCollection = new BookCollectionShadow();
-
 	public PreferenceActivity() {
 		super("Preferences");
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-
-		myCollection.bindToService(this, null);
-	}
-
-	@Override
-	protected void onStop() {
-		myCollection.unbind();
-
-		super.onStop();
 	}
 
 	@Override
@@ -93,7 +77,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		) {
 			protected void setValue(String value) {
 				super.setValue(value);
-				myCollection.reset(false);
+
+				final BookCollectionShadow collection = new BookCollectionShadow();
+				collection.bindToService(PreferenceActivity.this, new Runnable() {
+					public void run() {
+						collection.reset(false);
+						collection.unbind();
+					}
+				});
 			}
 		});
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
