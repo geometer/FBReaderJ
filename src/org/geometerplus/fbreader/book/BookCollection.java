@@ -114,7 +114,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		book = myDatabase.loadBook(id);
-		if (book == null) {
+		if (book == null || !book.File.exists()) {
 			return null;
 		}
 		book.loadLists(myDatabase);
