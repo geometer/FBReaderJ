@@ -23,7 +23,10 @@
 * PDF plugin integration
 
 ===== 1.9.5 (Jan ??, 2014) =====
-* new config subsystem implementation
+* Fixed back button behaviour
+* Fixed recent books list
+* Fixed possible crash in YotaPhone back screen service
+* New config subsystem implementation
 
 ===== 1.9.4 (Dec 23, 2013) =====
 * YotaPhone back screen support
