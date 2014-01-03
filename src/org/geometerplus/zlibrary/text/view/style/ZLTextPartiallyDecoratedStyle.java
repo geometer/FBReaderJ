@@ -142,4 +142,9 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 				return Parent.allowHyphenations();
 		}
 	}
+
+    @Override
+    public boolean allowMicroTypography() {
+        return Parent.allowMicroTypography();
+    }
 }
