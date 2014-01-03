@@ -143,8 +143,8 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 		}
 	}
 
-    @Override
-    public boolean allowMicroTypography() {
-        return Parent.allowMicroTypography();
-    }
+	@Override
+	public boolean allowMicroTypography() {
+		return Parent.allowMicroTypography();
+	}
 }

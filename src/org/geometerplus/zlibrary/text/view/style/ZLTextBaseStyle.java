@@ -141,8 +141,8 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		return true;
 	}
 
-    @Override
-    public boolean allowMicroTypography() {
-        return true; // TBD: Use Preference?
-    }
+	@Override
+	public boolean allowMicroTypography() {
+		return true; // TBD: Use Preference?
+	}
 }
