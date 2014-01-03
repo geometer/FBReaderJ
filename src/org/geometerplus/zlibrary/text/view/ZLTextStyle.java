@@ -48,5 +48,5 @@ public abstract class ZLTextStyle {
 	public abstract byte getAlignment();
 
 	public abstract boolean allowHyphenations();
-    public abstract boolean allowMicroTypography();
+	public abstract boolean allowMicroTypography();
 }
