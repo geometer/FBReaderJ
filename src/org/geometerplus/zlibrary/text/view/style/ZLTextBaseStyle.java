@@ -140,4 +140,9 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	public boolean allowHyphenations() {
 		return true;
 	}
+
+    @Override
+    public boolean allowMicroTypography() {
+        return true; // TBD: Use Preference?
+    }
 }

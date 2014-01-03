@@ -149,4 +149,10 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		// TODO: implement
 		return Parent.allowHyphenations();
 	}
+
+    @Override
+    public boolean allowMicroTypography() {
+        // TODO: implement
+        return Parent.allowMicroTypography();
+    }
 }
