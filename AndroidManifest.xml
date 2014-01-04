@@ -129,8 +129,8 @@
 		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:theme="@style/FBReader.Activity" android:process=":library" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
-				<action android:name="android.fbreader.action.BOOK_INFO" />
-				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="android.fbreader.action.BOOK_INFO"/>
+				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.library.LibrarySearchActivity" android:process=":library" android:theme="@android:style/Theme.NoDisplay">
