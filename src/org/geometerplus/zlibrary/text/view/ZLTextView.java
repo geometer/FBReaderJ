@@ -1043,16 +1043,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		ZLTextElement first = getFirst(paragraphCursor, info.StartElementIndex);
-		if(first instanceof ZLTextWord){
+		if (first instanceof ZLTextWord) {
 			ZLTextWord word = (ZLTextWord) first;
 			char[] data = word.Data;
 			firstChar = data[word.Offset + info.StartCharIndex];
 			System.out.println(new String(data,word.Offset + info.StartCharIndex,word.Length-info.StartCharIndex));
-		}
-		else{
+		} else {
 			System.out.println(first);
 		}
-		if(firstChar != 0 && getTextStyle().allowMicroTypography()){
+		if (firstChar != 0 && getTextStyle().allowMicroTypography()) {
 			info.LeftIndent -= getMarginAlignmentAdjust(firstChar);
 		}
 
@@ -1126,10 +1125,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				removeLastSpace = !wordOccurred && (internalSpaceCounter > 0);
 			}
 		} while (currentElementIndex != endIndex);
-		ZLTextElement last = getLast(paragraphCursor, info.EndElementIndex);
-		if(last instanceof ZLTextWord){
-			ZLTextWord word = (ZLTextWord) last;
-			char[] data = word.Data;
+		final ZLTextElement last = getLast(paragraphCursor, info.EndElementIndex);
+		if (last instanceof ZLTextWord) {
+			final ZLTextWord word = (ZLTextWord)last;
+			final char[] data = word.Data;
 			lastChar = data[word.Offset + word.Length - 1];
 		}
 
@@ -1196,7 +1195,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (removeLastSpace) {
 			info.Width -= lastSpaceWidth;
 			info.SpaceCounter--;
-		} else if(lastChar != 0 && getTextStyle().allowMicroTypography()){
+		} else if (lastChar != 0 && getTextStyle().allowMicroTypography()) {
 			info.Width -= getMarginAlignmentAdjust(lastChar);
 		}
 
@@ -1216,18 +1215,18 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return info;
 	}
 
-	protected ZLTextElement getFirst(ZLTextParagraphCursor paragraphCursor, int startElementIndex){
+	protected ZLTextElement getFirst(ZLTextParagraphCursor paragraphCursor, int startElementIndex) {
 		// tries to find the first relevant/visible element in a paragraph, not sure about this logic.
-		while (true){
+		while (true) {
 			ZLTextElement element = paragraphCursor.getElement(startElementIndex);
-			if(element == null) return null;
-			if(element == ZLTextElement.AfterParagraph) return null;
-			if(element instanceof ZLTextControlElement
-					|| element instanceof ZLTextStyleElement
-					|| element == ZLTextElement.HSpace
-					|| element == ZLTextElement.StyleClose
-					|| element == ZLTextElement.Indent
-					) {
+			if (element == null) return null;
+			if (element == ZLTextElement.AfterParagraph) return null;
+			if (element instanceof ZLTextControlElement
+				|| element instanceof ZLTextStyleElement
+				|| element == ZLTextElement.HSpace
+				|| element == ZLTextElement.StyleClose
+				|| element == ZLTextElement.Indent
+			   ) {
 				startElementIndex++;
 				continue;
 			}
@@ -1235,9 +1234,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	protected ZLTextElement getLast(ZLTextParagraphCursor paragraphCursor, int endElementIndex){
+	protected ZLTextElement getLast(ZLTextParagraphCursor paragraphCursor, int endElementIndex) {
 		// tries to find the last relevant/visible element in a paragraph, not sure about this logic.
-		while (true){
+		while (true) {
 			ZLTextElement element = paragraphCursor.getElement(endElementIndex - 1);
 			if(element == ZLTextElement.AfterParagraph) return null;
 			if(element == null) return null;
@@ -1255,13 +1254,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private int getMarginAlignmentAdjust(char lastChar) {
-		float factor;
+		final float factor;
 		// Normalize Char so für example umlaut letters are converted to their base letter.
-		char tmp = lastChar;
-		String s = Normalizer.normalize(String.valueOf(tmp), Normalizer.Form.NFD);
+		final char tmp = lastChar;
+		final String s = Normalizer.normalize(String.valueOf(tmp), Normalizer.Form.NFD);
 
 		// See https://en.wikipedia.org/w/index.php?title=Optical_margin_alignment&oldid=565516725
-		switch (s.charAt(0)){
+		switch (s.charAt(0)) {
 			case ',':
 			case '.':
 			case ':':
@@ -1300,7 +1299,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			default:
 				return 0;
 		}
-		int width = getContext().getStringWidth(s.toCharArray(), 0, 1);
+		final int width = getContext().getStringWidth(s.toCharArray(), 0, 1);
 		return (int) (width * factor);
 	}
 
