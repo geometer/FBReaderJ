@@ -19,9 +19,6 @@
 
 package org.geometerplus.fbreader.book;
 
-import java.util.Map;
-import java.util.HashMap;
-
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 

@@ -14,4 +14,28 @@
 		android:scrollbarAlwaysDrawVerticalTrack="true"
 		android:fadeScrollbars="false"
 	/>
+	<LinearLayout
+		android:id="@+id/yota_main_hidden_view"
+		android:visibility="gone"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center"
+		android:orientation="vertical"
+	>
+		<TextView
+			android:id="@+id/yota_hidden_view_text"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:paddingBottom="20dp"
+		/>
+		<Button
+			android:id="@+id/yota_hidden_view_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+		/>
+	</LinearLayout>
 </RelativeLayout>

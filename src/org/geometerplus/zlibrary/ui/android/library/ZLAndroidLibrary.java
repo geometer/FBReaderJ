@@ -45,19 +45,13 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.android.fbreader.FBReader;
 
 public final class ZLAndroidLibrary extends ZLibrary {
-	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
+	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
+	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", true);
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
+	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
-
-	private boolean hasNoHardwareMenuButton() {
-		return
-			// Eken M001
-			(Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) ||
-			// PanDigital
-			"PD_Novel".equals(Build.MODEL);
-	}
 
 	public boolean isKindleFire() {
 		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
@@ -147,11 +141,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	private DisplayMetrics myMetrics;
 	private DisplayMetrics getMetrics() {
 		if (myMetrics == null) {
-			if (myActivity == null) {
-				return null;
-			}
-			myMetrics = new DisplayMetrics();
-			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
+			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
 		}
 		return myMetrics;
 	}

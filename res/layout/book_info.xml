@@ -1,120 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/book_info_root"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 >
 	<LinearLayout
-		android:id="@+id/book_info_button_panel"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:orientation="horizontal"
-		android:paddingLeft="2dip"
-		android:paddingRight="2dip"
-		android:baselineAligned="false"
+		android:orientation="vertical"
 	>
-		<LinearLayout
-			android:layout_weight="0.21"
-			android:layout_width="0dip"
+		<ImageView
+			android:id="@+id/book_cover"
+			android:scaleType="centerInside"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
+			android:layout_margin="10dp"
+			android:layout_gravity="center_horizontal"
 		/>
-		<Button
-			android:id="@+id/book_info_button_open"
-			android:layout_width="0dip"
-			android:layout_weight="1"
-			android:maxLines="2"
-			android:layout_height="wrap_content"
+		<TextView
+			android:id="@+id/book_info_title"
+			style="?android:attr/listSeparatorTextViewStyle"
 		/>
-		<Button
-			android:id="@+id/book_info_button_edit"
-			android:layout_width="0dip"
-			android:layout_weight="1"
-			android:maxLines="2"
-			android:layout_height="wrap_content"
-		/>
-		<Button
-			android:id="@+id/book_info_button_reload"
-			android:layout_width="0dip"
-			android:layout_weight="1"
-			android:maxLines="2"
-			android:layout_height="wrap_content"
-		/>
-		<LinearLayout
-			android:layout_width="0dip"
-			android:layout_weight="0.21"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-		/>
-	</LinearLayout>
-	<ScrollView
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_alignParentTop="true"
-		android:layout_above="@id/book_info_button_panel"
-		android:layout_marginBottom="4dip"
-	>
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:layout_marginBottom="6px"
 		>
-			<ImageView
-				android:id="@+id/book_cover"
-				android:scaleType="centerInside"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_margin="10dp"
-				android:layout_gravity="center_horizontal"
-			/>
-			<TextView
-				android:id="@+id/book_info_title"
-				style="?android:attr/listSeparatorTextViewStyle"
-			/>
-			<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:layout_marginBottom="6px"
-			>
-				<include layout="@layout/book_info_pair" android:id="@+id/book_title" />
-				<include layout="@layout/book_info_pair" android:id="@+id/book_authors" />
-				<include layout="@layout/book_info_pair" android:id="@+id/book_series" />
-				<include layout="@layout/book_info_pair" android:id="@+id/book_series_index" />
-				<include layout="@layout/book_info_pair" android:id="@+id/book_tags" />
-				<include layout="@layout/book_info_pair" android:id="@+id/book_language" />
-			</LinearLayout>
-			<TextView
-				android:id="@+id/book_info_annotation_title"
-				style="?android:attr/listSeparatorTextViewStyle"
-			/>
-			<TextView
-				android:id="@+id/book_info_annotation_body"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-			/>
-			<TextView
-				android:id="@+id/file_info_title"
-				style="?android:attr/listSeparatorTextViewStyle"
-			/>
-			<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:layout_marginBottom="6px"
-			>
-				<include layout="@layout/book_info_pair" android:id="@+id/file_name" />
-				<include layout="@layout/book_info_pair" android:id="@+id/file_type" />
-				<include layout="@layout/book_info_pair" android:id="@+id/file_size" />
-				<include layout="@layout/book_info_pair" android:id="@+id/file_time" />
-			</LinearLayout>
+			<include layout="@layout/book_info_pair" android:id="@+id/book_title" />
+			<include layout="@layout/book_info_pair" android:id="@+id/book_authors" />
+			<include layout="@layout/book_info_pair" android:id="@+id/book_series" />
+			<include layout="@layout/book_info_pair" android:id="@+id/book_series_index" />
+			<include layout="@layout/book_info_pair" android:id="@+id/book_tags" />
+			<include layout="@layout/book_info_pair" android:id="@+id/book_language" />
 		</LinearLayout>
-	</ScrollView>
-</RelativeLayout>
+		<TextView
+			android:id="@+id/book_info_annotation_title"
+			style="?android:attr/listSeparatorTextViewStyle"
+		/>
+		<android.patches.JellyBeanSpanFixTextView
+			android:id="@+id/book_info_annotation_body"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+		/>
+		<TextView
+			android:id="@+id/file_info_title"
+			style="?android:attr/listSeparatorTextViewStyle"
+		/>
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:layout_marginBottom="6px"
+		>
+			<include layout="@layout/book_info_pair" android:id="@+id/file_name" />
+			<include layout="@layout/book_info_pair" android:id="@+id/file_type" />
+			<include layout="@layout/book_info_pair" android:id="@+id/file_size" />
+			<include layout="@layout/book_info_pair" android:id="@+id/file_time" />
+		</LinearLayout>
+	</LinearLayout>
+</ScrollView>

@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.fbreader.options;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class MiscOptions {
+	public final ZLBooleanOption YotaDrawOnBackScreen;
+
 	public final ZLBooleanOption AllowScreenBrightnessAdjustment;
 	public final ZLStringOption TextSearchPattern;
 
@@ -34,6 +36,9 @@ public class MiscOptions {
 	public final ZLEnumOption<WordTappingActionEnum> WordTappingAction;
 
 	public MiscOptions() {
+		YotaDrawOnBackScreen =
+			new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+
 		AllowScreenBrightnessAdjustment =
 			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 		TextSearchPattern =

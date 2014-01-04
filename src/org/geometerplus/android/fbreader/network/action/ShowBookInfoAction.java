@@ -35,7 +35,7 @@ import org.geometerplus.android.fbreader.OrientationUtil;
 
 public class ShowBookInfoAction extends BookAction {
 	public ShowBookInfoAction(Activity activity) {
-		super(activity, ActionCode.SHOW_BOOK_ACTIVITY, "bookInfo");
+		super(activity, ActionCode.SHOW_BOOK_ACTIVITY, "bookInfo", false);
 	}
 
 	@Override

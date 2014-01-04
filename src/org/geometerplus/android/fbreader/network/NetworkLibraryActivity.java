@@ -302,9 +302,9 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 		for (Action a : myOptionsMenuActions) {
 			final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
-			if (a.IconId != -1) {
-				item.setIcon(a.IconId);
-			}
+			item.setShowAsAction(
+				a.ShowAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
+			);
 		}
 		return true;
 	}
@@ -359,6 +359,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 					default:
 						updateLoadingProgress();
 						getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+						invalidateOptionsMenu();
 						break;
 					case InitializationFailed:
 						showInitLibraryDialog((String)params[0]);
