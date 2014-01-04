@@ -48,6 +48,7 @@
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
+		<node name="removeFromRecents" value="Remove from recent list"/>
 		<node name="markAsRead" value="Mark as read"/>
 		<node name="markAsUnread" value="Mark as unread"/>
 	</node>
@@ -919,6 +920,29 @@
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins">
+		<node name="litres" value="LitRes">
+			<node name="summary" value="Russian book store"/>
+		</node>
+		<node name="tts-plus" value="TTS+">
+			<node name="summary" value="Read aloud"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner">
+			<node name="summary" value="Look for books in local network"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf">
+			<node name="summary" value="Thumbnail library view"/>
+		</node>
+		<node name="opds-server" value="OPDS Server">
+			<node name="summary" value="Feed books from the device"/>
+		</node>
+		<node name="widgets" value="Widgets">
+			<node name="summary" value="Add books onto home screen"/>
+		</node>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="Read books in PDF format"/>
+		</node>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below."/>
