@@ -42,7 +42,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 
 	@Override
 	public boolean isVisible() {
-		return Reader.YotaDrawOnBackScreenOption.getValue() != mySwitchToBack;
+		return Reader.MiscOptions.YotaDrawOnBackScreen.getValue() != mySwitchToBack;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		final View mainView = BaseActivity.findViewById(R.id.main_view);
 		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
 
-		Reader.YotaDrawOnBackScreenOption.setValue(toBack);
+		Reader.MiscOptions.YotaDrawOnBackScreen.setValue(toBack);
 		BaseActivity.refreshYotaScreen();
 
 		if (toBack) {

@@ -39,18 +39,7 @@ import org.geometerplus.fbreader.fbreader.options.*;
 public final class FBReaderApp extends ZLApplication {
 	public final ZLTextStyleCollection TextStyleCollection;
 
-	public final ZLBooleanOption YotaDrawOnBackScreenOption;
-	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption;
-	public final ZLStringOption TextSearchPatternOption;
-
-	public final ZLBooleanOption EnableDoubleTapOption;
-	public final ZLBooleanOption NavigateAllWordsOption;
-
-	public static enum WordTappingAction {
-		doNothing, selectSingleWord, startSelecting, openDictionary
-	}
-	public final ZLEnumOption<WordTappingAction> WordTappingActionOption;
-
+	public final MiscOptions MiscOptions;
 	public final ImageOptions ImageOptions;
 	public final ViewOptions ViewOptions;
 	public final PageTurningOptions PageTurningOptions;
@@ -61,27 +50,13 @@ public final class FBReaderApp extends ZLApplication {
 	{
 		TextStyleCollection = new ZLTextStyleCollection("Base");
 
-		YotaDrawOnBackScreenOption =
-			new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
-		AllowScreenBrightnessAdjustmentOption =
-			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
-		TextSearchPatternOption =
-			new ZLStringOption("TextSearch", "Pattern", "");
-
-		EnableDoubleTapOption =
-			new ZLBooleanOption("Options", "EnableDoubleTap", false);
-		NavigateAllWordsOption =
-			new ZLBooleanOption("Options", "NavigateAllWords", false);
-
-		WordTappingActionOption =
-			new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
-
+		MiscOptions = new MiscOptions();
 		ImageOptions = new ImageOptions();
 		ViewOptions = new ViewOptions();
 		PageTurningOptions = new PageTurningOptions();
 		FooterOptions = new FooterOptions();
 
-		myBindings = new ZLKeyBindings("Keys");
+		myBindings = new ZLKeyBindings();
 	}
 
 	public final FBView BookTextView;

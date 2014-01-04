@@ -52,6 +52,7 @@ public abstract class FormatPlugin {
 		ANY,
 		JAVA,
 		NATIVE,
+		PLUGIN,
 		EXTERNAL,
 		NONE
 	};

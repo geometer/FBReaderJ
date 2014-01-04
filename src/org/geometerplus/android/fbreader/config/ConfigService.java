@@ -17,18 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.options;
+package org.geometerplus.android.fbreader.config;
 
-public final class ZLBooleanOption extends ZLOption {
-	public ZLBooleanOption(String group, String optionName, boolean defaultValue) {
-		super(group, optionName, defaultValue ? "true" : "false");
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+
+public class ConfigService extends Service {
+	private ConfigInterface.Stub myConfig;
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		return myConfig;
 	}
 
-	public boolean getValue() {
-		return "true".equals(getConfigValue());
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		myConfig = new SQLiteConfig(this);
 	}
 
-	public void setValue(boolean value) {
-		setConfigValue(value ? "true" : "false");
+	@Override
+	public void onDestroy() {
+		if (myConfig != null) {
+			// TODO: close db
+			myConfig = null;
+		}
+		super.onDestroy();
 	}
 }
