@@ -52,9 +52,9 @@ public abstract class FormatPlugin {
 		ANY,
 		JAVA,
 		NATIVE,
+		PLUGIN,
 		EXTERNAL,
-		NONE,
-		PLUGIN
+		NONE
 	};
 	public abstract Type type();
 
