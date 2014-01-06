@@ -81,21 +81,19 @@ public final class ZLAndroidLibrary extends ZLibrary {
 				myDevice = Device.EKEN_M001;
 			} else if ("PD_Novel".equals(Build.MODEL)) {
 				myDevice = Device.PAN_DIGITAL;
-			} else {
-				String MANUFACTURER = Build.MANUFACTURER;
-				String MODEL = Build.MODEL;
-				String DEVICE = Build.DEVICE;
-				boolean nook = "barnesandnoble".equals(MANUFACTURER.toLowerCase()) && ("NOOK".equals(MODEL) || "BNRV350".equals(MODEL) || "BNRV300".equals(MODEL)) && "zoom2".equals(DEVICE.toLowerCase());
-				boolean nook12 = nook && ("1.2.0".equals(Build.VERSION.INCREMENTAL) || "1.2.1".equals(Build.VERSION.INCREMENTAL));
-				if (nook) {
-					if (nook12) {
-						myDevice = Device.NOOK12;
-					} else {
-						myDevice = Device.NOOK;
-					}
+			} else if ("barnesandnoble".equalsIgnoreCase(Build.MANUFACTURER) &&
+					   "zoom2".equalsIgnoreCase(Build.DEVICE) &&
+					   ("NOOK".equals(Build.MODEL) ||
+						"BNRV350".equals(Build.MODEL) ||
+						"BNRV300".equals(Build.MODEL))) {
+				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
+					"1.2.1".equals(Build.VERSION.INCREMENTAL)) {
+					myDevice = Device.NOOK12;
 				} else {
-					myDevice = Device.GENERIC;
+					myDevice = Device.NOOK;
 				}
+			} else {
+				myDevice = Device.GENERIC;
 			}
 		}
 		return myDevice;
