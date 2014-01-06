@@ -257,7 +257,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
+		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
+			!zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 
@@ -270,7 +271,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public void onOptionsMenuClosed(Menu menu) {
 		super.onOptionsMenuClosed(menu);
 		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
+		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
+			!zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 	}
@@ -278,7 +280,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
+		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
+			!zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 		return super.onOptionsItemSelected(item);
