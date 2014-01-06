@@ -106,10 +106,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	private static List<Device> ButtonLightsBugDevices = Arrays.asList(Device.SAMSUNG_GT_S5830);
 	private static List<Device> NoHardwareMenuButtonDevices = Arrays.asList(Device.EKEN_M001, Device.PAN_DIGITAL);
 
-	public boolean isYotaPhone() {
-		return myDevice == Device.YOTA_PHONE;
-	}
-
 	private boolean hasNoHardwareMenuButton() {
 		return NoHardwareMenuButtonDevices.contains(myDevice);
 	}
