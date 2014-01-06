@@ -51,6 +51,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
+	public static enum Device {
+		GENERIC,
+		YOTA_PHONE,
+		KINDLE_FIRE,
+		EKEN_M001,
+		PAN_DIGITAL,
+		SAMSUNG_GT_S5830
+	}
+
 	private boolean hasNoHardwareMenuButton() {
 		return
 			// Eken M001
