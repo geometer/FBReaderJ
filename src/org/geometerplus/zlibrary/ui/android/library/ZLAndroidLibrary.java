@@ -77,7 +77,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 				myDevice = Device.SAMSUNG_GT_S5830;
 			} else if (Build.MODEL != null && Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP)) {
 				myDevice = Device.KINDLE_FIRE;
-			} else if ((Build.DISPLAY != null && Build.DISPLAY.contains("simenxie"))) {
+			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
 				myDevice = Device.EKEN_M001;
 			} else if ("PD_Novel".equals(Build.MODEL)) {
 				myDevice = Device.PAN_DIGITAL;
