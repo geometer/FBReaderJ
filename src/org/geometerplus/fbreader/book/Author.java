@@ -27,7 +27,7 @@ public final class Author implements Comparable<Author> {
 
 	public Author(String displayName, String sortKey) {
 		DisplayName = displayName;
-		SortKey = sortKey;
+		SortKey = sortKey.toLowerCase();
 	}
 
 	public static int hashCode(Author author) {
@@ -55,5 +55,10 @@ public final class Author implements Comparable<Author> {
 	public int compareTo(Author other) {
 		final int byKeys = SortKey.compareTo(other.SortKey);
 		return byKeys != 0 ? byKeys : DisplayName.compareTo(other.DisplayName);
+	}
+
+	@Override
+	public String toString() {
+		return DisplayName + " (" + SortKey + ")";
 	}
 }
