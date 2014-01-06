@@ -678,8 +678,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		return true;
 	}
 
-	private NavigationPopup myNavigationPopup;
-
 	private void setStatusBarVisibility(boolean visible) {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
 		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
@@ -694,6 +692,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		}
 	}
+
+	private NavigationPopup myNavigationPopup;
 
 	boolean barsAreShown() {
 		return myNavigationPopup != null;
