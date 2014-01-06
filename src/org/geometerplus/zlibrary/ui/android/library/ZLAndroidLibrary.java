@@ -126,7 +126,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public AssetManager getAssets() {
 		return myApplication.getAssets();
 	}
-		
+
 	@Override
 	public ZLResourceFile createResourceFile(String path) {
 		return new AndroidAssetsFile(path);
