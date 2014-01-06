@@ -256,12 +256,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
-			!zlibrary.ShowStatusBarOption.getValue()) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		}
-
+		setStatusBarVisibility(true);
 		setupMenu(menu);
 
 		return super.onPrepareOptionsMenu(menu);
@@ -270,20 +265,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	public void onOptionsMenuClosed(Menu menu) {
 		super.onOptionsMenuClosed(menu);
-		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
-			!zlibrary.ShowStatusBarOption.getValue()) {
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		}
+		setStatusBarVisibility(false);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
-			!zlibrary.ShowStatusBarOption.getValue()) {
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		}
+		setStatusBarVisibility(false);
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -666,6 +653,18 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		setupMenu(menu);
 
 		return true;
+	}
+
+	private void setStatusBarVisibility(boolean visible) {
+		final ZLAndroidLibrary zlibrary = getZLibrary();
+		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
+			!zlibrary.ShowStatusBarOption.getValue()) {
+			if (visible) {
+				getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+			} else {
+				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+			}
+		}
 	}
 
 	@Override
