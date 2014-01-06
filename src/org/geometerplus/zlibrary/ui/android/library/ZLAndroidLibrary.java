@@ -55,6 +55,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		GENERIC,
 		YOTA_PHONE,
 		KINDLE_FIRE,
+		NOOK,
+		NOOK12,
 		EKEN_M001,
 		PAN_DIGITAL,
 		SAMSUNG_GT_S5830
@@ -72,6 +74,17 @@ public final class ZLAndroidLibrary extends ZLibrary {
 				myDevice = Device.EKEN_M001;
 			} else if ("PD_Novel".equals(Build.MODEL)) {
 				myDevice = Device.PAN_DIGITAL;
+			} else if ("barnesandnoble".equalsIgnoreCase(Build.MANUFACTURER) &&
+					   "zoom2".equalsIgnoreCase(Build.DEVICE) &&
+					   ("NOOK".equals(Build.MODEL) ||
+						"BNRV350".equals(Build.MODEL) ||
+						"BNRV300".equals(Build.MODEL))) {
+				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
+					"1.2.1".equals(Build.VERSION.INCREMENTAL)) {
+					myDevice = Device.NOOK12;
+				} else {
+					myDevice = Device.NOOK;
+				}
 			} else {
 				myDevice = Device.GENERIC;
 			}
