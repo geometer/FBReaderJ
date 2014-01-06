@@ -680,13 +680,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private NavigationPopup myNavigationPopup;
 
-	boolean barsAreShown() {
-		return myNavigationPopup != null;
-	}
-
 	private void setStatusBarVisibility(boolean visible) {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
+		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
+			!zlibrary.ShowStatusBarOption.getValue()) {
 			myMainView.setPreserveSize(visible);
 			if (visible) {
 				getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
@@ -696,6 +693,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 			}
 		}
+	}
+
+	boolean barsAreShown() {
+		return myNavigationPopup != null;
 	}
 
 	void hideBars() {
