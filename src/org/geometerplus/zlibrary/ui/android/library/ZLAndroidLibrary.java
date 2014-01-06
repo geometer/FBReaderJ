@@ -54,97 +54,83 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 	public final ZLBooleanOption EinkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EinkFastRefresh", isEinkFastRefreshSupported());
 	public final ZLIntegerRangeOption EinkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EinkUpdateInterval", 0, 20, 10);
-	
-	private boolean hasNoHardwareMenuButton() {
-		return NoHardwareMenuButtonDevices.contains(myDevice);
-	}
 
-	public boolean isKindleFire() {
-		return myDevice == Devices.KINDLE_FIRE;
-	}
-	
-	public static enum Devices {
+	public static enum Device {
 		GENERIC,
 		YOTA_PHONE,
-		GTS5830,
+		KINDLE_FIRE,
 		NOOK,
 		NOOK12,
 		EKEN_M001,
 		PAN_DIGITAL,
-		KINDLE_FIRE,
+		SAMSUNG_GT_S5830
 	}
-	
-	private final Devices myDevice;
-	
-	public Devices getDevice() {
-		return myDevice;
-	}
-	
-	private static List<Devices> EinkDevices = Arrays.asList(Devices.NOOK,Devices.NOOK12);
-	private static List<Devices> EinkFastRefreshDevices = Arrays.asList(Devices.NOOK,Devices.NOOK12);
-	private static List<Devices> ButtonLightsBugDevices = Arrays.asList(Devices.GTS5830);
-	private static List<Devices> NoHardwareMenuButtonDevices = Arrays.asList(Devices.EKEN_M001,Devices.PAN_DIGITAL);
-	
-	{
-		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
-		if ("YotaPhone".equals(Build.BRAND)) {
-			myDevice = Devices.YOTA_PHONE;
-		} else if ("GT-S5830".equals(Build.MODEL)) {
-			myDevice = Devices.GTS5830;
-		} else if (Build.MODEL != null && Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP)) {
-			myDevice = Devices.KINDLE_FIRE;
-		} else if ((Build.DISPLAY != null && Build.DISPLAY.contains("simenxie"))) {
-			myDevice = Devices.EKEN_M001;
-		} else if ("PD_Novel".equals(Build.MODEL)) {
-			myDevice = Devices.PAN_DIGITAL;
-		} else {
-			String MANUFACTURER = Build.MANUFACTURER;
-			String MODEL = Build.MODEL;
-			String DEVICE = Build.DEVICE;
-			boolean nook = "barnesandnoble".equals(MANUFACTURER.toLowerCase()) && ("NOOK".equals(MODEL) || "BNRV350".equals(MODEL) || "BNRV300".equals(MODEL)) && "zoom2".equals(DEVICE.toLowerCase());
-			boolean nook12 = nook && ("1.2.0".equals(Build.VERSION.INCREMENTAL) || "1.2.1".equals(Build.VERSION.INCREMENTAL));
-			if (nook) {
-				if (nook12) {
-					myDevice = Devices.NOOK12;
+
+	private Device myDevice;
+
+	public Device getDevice() {
+		if (myDevice == null) {
+			if ("YotaPhone".equals(Build.BRAND)) {
+				myDevice = Device.YOTA_PHONE;
+			} else if ("GT-S5830".equals(Build.MODEL)) {
+				myDevice = Device.SAMSUNG_GT_S5830;
+			} else if ("Amazon".equals(Build.MANUFACTURER)) {
+				myDevice = Device.KINDLE_FIRE;
+			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
+				myDevice = Device.EKEN_M001;
+			} else if ("PD_Novel".equals(Build.MODEL)) {
+				myDevice = Device.PAN_DIGITAL;
+			} else if ("barnesandnoble".equalsIgnoreCase(Build.MANUFACTURER) &&
+					   "zoom2".equalsIgnoreCase(Build.DEVICE) &&
+					   ("NOOK".equals(Build.MODEL) ||
+						"BNRV350".equals(Build.MODEL) ||
+						"BNRV300".equals(Build.MODEL))) {
+				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
+					"1.2.1".equals(Build.VERSION.INCREMENTAL)) {
+					myDevice = Device.NOOK12;
 				} else {
-					myDevice = Devices.NOOK;
+					myDevice = Device.NOOK;
 				}
 			} else {
-				myDevice = Devices.GENERIC;
+				myDevice = Device.GENERIC;
 			}
 		}
+		return myDevice;
 	}
-	
-	
 
-	public boolean isYotaPhone() {
-		return myDevice == Devices.YOTA_PHONE;
+	private static List<Device> EinkDevices = Arrays.asList(Device.NOOK, Device.NOOK12);
+	private static List<Device> EinkFastRefreshDevices = Arrays.asList(Device.NOOK, Device.NOOK12);
+	private static List<Device> ButtonLightsBugDevices = Arrays.asList(Device.SAMSUNG_GT_S5830);
+	private static List<Device> NoHardwareMenuButtonDevices = Arrays.asList(Device.EKEN_M001, Device.PAN_DIGITAL);
+
+	private boolean hasNoHardwareMenuButton() {
+		return NoHardwareMenuButtonDevices.contains(myDevice);
 	}
 
 	public boolean hasButtonLightsBug() {
 		return ButtonLightsBugDevices.contains(myDevice);
 	}
-	
+
 	@Override
 	public boolean isEink() {
 		return EinkDevices.contains(myDevice);
 	}
-	
+
 	@Override
 	public boolean isEinkFastRefreshSupported() {
 		return EinkFastRefreshDevices.contains(myDevice);
 	}
-	
+
 	@Override
 	public void initSpecificKeys(ZLKeyBindings b) {
-		if (myDevice == Devices.NOOK || myDevice == Devices.NOOK12) {
+		if (myDevice == Device.NOOK || myDevice == Device.NOOK12) {
 			b.bindKey(92, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
 			b.bindKey(94, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
 			b.bindKey(93, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
 			b.bindKey(95, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
 		}
 	}
-	
+
 	private FBReader myActivity;
 	private final Application myApplication;
 
@@ -165,7 +151,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public AssetManager getAssets() {
 		return myApplication.getAssets();
 	}
-		
+
 	@Override
 	public ZLResourceFile createResourceFile(String path) {
 		return new AndroidAssetsFile(path);

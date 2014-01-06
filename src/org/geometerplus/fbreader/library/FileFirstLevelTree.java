@@ -19,14 +19,29 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
 
 public class FileFirstLevelTree extends FirstLevelTree {
 	FileFirstLevelTree(RootTree root) {
 		super(root, ROOT_FILE_TREE);
+	}
+
+	@Override
+	public String getTreeTitle() {
+		return getName();
+	}
+
+	@Override
+	public Status getOpeningStatus() {
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+	}
+
+	@Override
+	public void waitForOpening() {
+		clear();
 		for (String dir : Paths.BookPathOption().getValue()) {
 			addChild(dir, "fileTreeLibrary", dir);
 		}
@@ -45,15 +60,5 @@ public class FileFirstLevelTree extends FirstLevelTree {
 				summary != null ? summary : resource.getResource("summary").getValue()
 			);
 		}
-	}
-
-	@Override
-	public String getTreeTitle() {
-		return getName();
-	}
-
-	@Override
-	public Status getOpeningStatus() {
-		return Status.READY_TO_OPEN;
 	}
 }

@@ -19,16 +19,31 @@
 
 package org.geometerplus.zlibrary.core.options;
 
-public final class ZLBooleanOption extends ZLOption {
-	public ZLBooleanOption(String group, String optionName, boolean defaultValue) {
-		super(group, optionName, defaultValue ? "true" : "false");
+final class StringPair {
+	final String Group;
+	final String Name;
+
+	StringPair(String group, String name) {
+		Group = group.intern();
+		Name = name.intern();
 	}
 
-	public boolean getValue() {
-		return "true".equals(getConfigValue());
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		try {
+			final StringPair pair = (StringPair)other;
+			// yes, I'm sure Group & Name are not nulls
+			return Group.equals(pair.Group) && Name.equals(pair.Name);
+		} catch (ClassCastException e) {
+			return false;
+		} 
 	}
 
-	public void setValue(boolean value) {
-		setConfigValue(value ? "true" : "false");
+	@Override
+	public int hashCode() {
+		return Group.hashCode() + 37 * Name.hashCode();
 	}
 }

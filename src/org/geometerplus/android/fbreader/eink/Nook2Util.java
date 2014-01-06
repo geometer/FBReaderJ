@@ -41,7 +41,7 @@ public class Nook2Util {
                         .forName("android.hardware.EpdController");
             epdControllerRegionClass = Class
                     .forName("android.hardware.EpdController$Region");
-            if (lib.getDevice().equals(ZLAndroidLibrary.Devices.NOOK12)) {
+            if (lib.getDevice().equals(ZLAndroidLibrary.Device.NOOK12)) {
             	epdControllerRegionParamsClass = Class
             			.forName("android.hardware.EpdRegionParams");
             	epdControllerWaveClass = Class
@@ -87,7 +87,7 @@ public class Nook2Util {
 		ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
 		try {
             if (successful) {
-            	if (lib.getDevice().equals(ZLAndroidLibrary.Devices.NOOK12) && mEpdController == null) {
+            	if (lib.getDevice().equals(ZLAndroidLibrary.Device.NOOK12) && mEpdController == null) {
             		Constructor[] EpdControllerConstructors = epdControllerClass.getConstructors();
 					mEpdController = EpdControllerConstructors[0].newInstance(new Object[] { a });
 				}
@@ -102,7 +102,7 @@ public class Nook2Util {
                         "setRegion", new Class[] { String.class,
                                 epdControllerRegionClass,
                                 epdControllerRegionParamsClass, epdControllerModeClass });
-                if (lib.getDevice().equals(ZLAndroidLibrary.Devices.NOOK12)) {
+                if (lib.getDevice().equals(ZLAndroidLibrary.Device.NOOK12)) {
                 	epdControllerSetRegionMethod
 					.invoke(mEpdController, new Object[] { "FBReaderJ",
 							regionEnums[2], localRegionParams, modeEnums[2] }); // Mode = ONESHOT_ALL

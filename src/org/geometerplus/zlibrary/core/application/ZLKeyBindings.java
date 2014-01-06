@@ -41,7 +41,11 @@ public final class ZLKeyBindings {
 	private final TreeMap<Integer,ZLStringOption> myLongPressActionMap = new TreeMap<Integer,ZLStringOption>();
 	private final boolean isNookTouch = isNookTouch();
 
-	public ZLKeyBindings(String name) {
+	public ZLKeyBindings() {
+		this("Keys");
+	}
+
+	private ZLKeyBindings(String name) {
 		myName = name;
 		final Set<String> keys = new TreeSet<String>();
 		final String keymapFilename = isNookTouch ? "/keymap-nook.xml" : "/keymap.xml";		
@@ -141,6 +145,10 @@ public final class ZLKeyBindings {
 	    else
 	        return(false);
     }
+
+	public boolean hasBinding(int key, boolean longPress) {
+		return !ZLApplication.NoAction.equals(getBinding(key, longPress));
+	}
 
 	private class Reader extends ZLXMLReaderAdapter {
 		private final Set<String> myKeySet;
