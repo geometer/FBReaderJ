@@ -66,14 +66,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		SAMSUNG_GT_S5830
 	}
 
-	private boolean hasNoHardwareMenuButton() {
-		return NoHardwareMenuButtonDevices.contains(myDevice);
-	}
-
-	public boolean isKindleFire() {
-		return myDevice == Device.KINDLE_FIRE;
-	}
-
 	private Device myDevice;
 
 	public Device getDevice() {
@@ -116,6 +108,14 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	public boolean isYotaPhone() {
 		return myDevice == Device.YOTA_PHONE;
+	}
+
+	private boolean hasNoHardwareMenuButton() {
+		return NoHardwareMenuButtonDevices.contains(myDevice);
+	}
+
+	public boolean isKindleFire() {
+		return myDevice == Device.KINDLE_FIRE;
 	}
 
 	public boolean hasButtonLightsBug() {
