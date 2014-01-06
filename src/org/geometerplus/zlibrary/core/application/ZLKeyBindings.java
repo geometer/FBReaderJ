@@ -39,22 +39,27 @@ public final class ZLKeyBindings {
 	private final ZLStringListOption myKeysOption;
 	private final TreeMap<Integer,ZLStringOption> myActionMap = new TreeMap<Integer,ZLStringOption>();
 	private final TreeMap<Integer,ZLStringOption> myLongPressActionMap = new TreeMap<Integer,ZLStringOption>();
+	private final boolean isNookTouch = isNookTouch();
 
 	public ZLKeyBindings(String name) {
 		myName = name;
 		final Set<String> keys = new TreeSet<String>();
-		new Reader(keys).readQuietly(ZLFile.createFileByPath("default/keymap.xml"));
+		final String keymapFilename = isNookTouch ? "/keymap-nook.xml" : "/keymap.xml";		
+		new Reader(keys).readQuietly(ZLFile.createFileByPath("default" + keymapFilename));
+		
 		try {
-			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
+			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + keymapFilename));
 		} catch (Exception e) {
 			// ignore
 		}
 		try {
-			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + "/keymap.xml"));
+			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + keymapFilename));
 		} catch (Exception e) {
 			// ignore
 		}
  		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
+ 		
+ 		if(isNookTouch) return;
 
 		// this code is for migration from FBReader versions <= 1.1.2
 		ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
@@ -115,6 +120,27 @@ public final class ZLKeyBindings {
 	public String getBinding(int key, boolean longPress) {
 		return getOption(key, longPress).getValue();
 	}
+	
+	/*
+	 * This method will return true if the device is a Nook that 
+	 * does not contain a color screen.
+	 * src: http://forum.xda-developers.com/showthread.php?t=2403559
+	 */
+	public boolean isNookTouch(){
+		String thisManufacturer=android.os.Build.MANUFACTURER;
+	    String thisProduct=android.os.Build.PRODUCT;
+
+	    /*
+	     * A rooted Nook Simple Touch as of 12/8/2013 runs Android 2.1.
+	     * No Nook with volume keys should be running anything below Android 2.2
+	     * 	Android 2.2 for Nook Color was released 4/25/2011
+	     * 		http://nookdevs.com/Portal:NookColor
+	     */
+	    if( thisManufacturer.equals("BarnesAndNoble") && thisProduct.equals("NOOK"))
+	    	return android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.FROYO ? true : false;
+	    else
+	        return(false);
+    }
 
 	private class Reader extends ZLXMLReaderAdapter {
 		private final Set<String> myKeySet;
