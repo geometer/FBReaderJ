@@ -70,12 +70,11 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	public Device getDevice() {
 		if (myDevice == null) {
-			final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
 			if ("YotaPhone".equals(Build.BRAND)) {
 				myDevice = Device.YOTA_PHONE;
 			} else if ("GT-S5830".equals(Build.MODEL)) {
 				myDevice = Device.SAMSUNG_GT_S5830;
-			} else if (Build.MODEL != null && Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP)) {
+			} else if ("Amazon".equals(Build.MANUFACTURER)) {
 				myDevice = Device.KINDLE_FIRE;
 			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
 				myDevice = Device.EKEN_M001;
@@ -106,10 +105,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	private boolean hasNoHardwareMenuButton() {
 		return NoHardwareMenuButtonDevices.contains(myDevice);
-	}
-
-	public boolean isKindleFire() {
-		return myDevice == Device.KINDLE_FIRE;
 	}
 
 	public boolean hasButtonLightsBug() {
