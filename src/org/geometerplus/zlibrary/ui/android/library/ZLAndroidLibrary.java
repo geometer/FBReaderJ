@@ -53,6 +53,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
+	public static enum Device {
+		GENERIC,
+		YOTA_PHONE,
+		KINDLE_FIRE,
+		EKEN_M001,
+		PAN_DIGITAL,
+		SAMSUNG_GT_S5830
+	}
+
 	public boolean isKindleFire() {
 		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
 		return
