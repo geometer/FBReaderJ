@@ -72,6 +72,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 				myDevice = Device.YOTA_PHONE;
 			} else if ("GT-S5830".equals(Build.MODEL)) {
 				myDevice = Device.SAMSUNG_GT_S5830;
+			} else if ("Amazon".equals(Build.MANUFACTURER)) {
+				myDevice = Device.KINDLE_FIRE;
 			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
 				myDevice = Device.EKEN_M001;
 			} else if ("PD_Novel".equals(Build.MODEL)) {
@@ -92,13 +94,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			}
 		}
 		return myDevice;
-	}
-
-	public boolean isKindleFire() {
-		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
-		return
-			Build.MODEL != null &&
-			Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
 	}
 
 	public boolean hasButtonLightsBug() {
@@ -125,7 +120,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public AssetManager getAssets() {
 		return myApplication.getAssets();
 	}
-		
+
 	@Override
 	public ZLResourceFile createResourceFile(String path) {
 		return new AndroidAssetsFile(path);
