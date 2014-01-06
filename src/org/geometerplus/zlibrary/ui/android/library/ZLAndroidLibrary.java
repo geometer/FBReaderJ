@@ -60,6 +60,19 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		SAMSUNG_GT_S5830
 	}
 
+	private Device myDevice;
+
+	public Device getDevice() {
+		if (myDevice == null) {
+			if ("YotaPhone".equals(Build.BRAND)) {
+				myDevice = Device.YOTA_PHONE;
+			} else {
+				myDevice = Device.GENERIC;
+			}
+		}
+		return myDevice;
+	}
+
 	private boolean hasNoHardwareMenuButton() {
 		return
 			// Eken M001
@@ -73,10 +86,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return
 			Build.MODEL != null &&
 			Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
-	}
-
-	public boolean isYotaPhone() {
-		return "YotaPhone".equals(Build.BRAND);
 	}
 
 	public boolean hasButtonLightsBug() {
