@@ -149,7 +149,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					action.run();
 				}
 				hideBars();
-				if (getZLibrary().isYotaPhone()) {
+				if (getZLibrary().getDevice() == ZLAndroidLibrary.Device.YOTA_PHONE) {
 					refreshYotaScreen();
 				}
 			}
@@ -632,7 +632,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private void setupMenu(Menu menu) {
 		addMenuItem(menu, ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library);
-		if (getZLibrary().isYotaPhone()) {
+		if (getZLibrary().getDevice() == ZLAndroidLibrary.Device.YOTA_PHONE) {
 			addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b);
 			//addMenuItem(menu, ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b);
 		}
@@ -968,7 +968,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	public void refreshYotaScreen() {
-		if (!getZLibrary().isYotaPhone()) {
+		if (getZLibrary().getDevice() != ZLAndroidLibrary.Device.YOTA_PHONE) {
 			return;
 		}
 
