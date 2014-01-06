@@ -55,14 +55,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption EinkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EinkFastRefresh", isEinkFastRefreshSupported());
 	public final ZLIntegerRangeOption EinkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EinkUpdateInterval", 0, 20, 10);
 
-	private boolean hasNoHardwareMenuButton() {
-		return NoHardwareMenuButtonDevices.contains(myDevice);
-	}
-
-	public boolean isKindleFire() {
-		return myDevice == Device.KINDLE_FIRE;
-	}
-
 	public static enum Device {
 		GENERIC,
 		YOTA_PHONE,
@@ -72,6 +64,14 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		EKEN_M001,
 		PAN_DIGITAL,
 		SAMSUNG_GT_S5830
+	}
+
+	private boolean hasNoHardwareMenuButton() {
+		return NoHardwareMenuButtonDevices.contains(myDevice);
+	}
+
+	public boolean isKindleFire() {
+		return myDevice == Device.KINDLE_FIRE;
 	}
 
 	private Device myDevice;
