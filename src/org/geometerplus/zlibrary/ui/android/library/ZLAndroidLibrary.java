@@ -66,6 +66,12 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		if (myDevice == null) {
 			if ("YotaPhone".equals(Build.BRAND)) {
 				myDevice = Device.YOTA_PHONE;
+			} else if ("GT-S5830".equals(Build.MODEL)) {
+				myDevice = Device.SAMSUNG_GT_S5830;
+			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
+				myDevice = Device.EKEN_M001;
+			} else if ("PD_Novel".equals(Build.MODEL)) {
+				myDevice = Device.PAN_DIGITAL;
 			} else {
 				myDevice = Device.GENERIC;
 			}
