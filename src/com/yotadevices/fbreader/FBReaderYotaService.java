@@ -45,6 +45,8 @@ public class FBReaderYotaService extends BSActivity {
 
 	private volatile boolean myBackScreenIsActive;
 	private Book myCurrentBook;
+	private int myFullRefreshCounter = 0;
+	private int myFullRefreshMax = 10;
 
 	@Override
 	public void onBSCreate() {
@@ -76,7 +78,13 @@ public class FBReaderYotaService extends BSActivity {
 		@Override
 		public void repaint() {
 			draw(myCanvas);
-			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			if (myFullRefreshCounter > 0) {
+				--myFullRefreshCounter;
+				getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
+			} else {
+				myFullRefreshCounter = myFullRefreshMax;
+				getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			}
 		}
 
 		@Override
@@ -159,7 +167,13 @@ public class FBReaderYotaService extends BSActivity {
 		Widget.draw(myCanvas);
 
 		if (refresh) {
-			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			if (myFullRefreshCounter > 0) {
+				--myFullRefreshCounter;
+				getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
+			} else {
+				myFullRefreshCounter = myFullRefreshMax;
+				getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			}
 		}
 	}
 
