@@ -23,4 +23,13 @@ git merge ice-cream-sandwich
 git checkout yota
 git merge yota2
 
+git checkout kindle
+git merge yota2
+
+git checkout nook
+git merge master
+
+git checkout microtypography
+git merge ice-cream-sandwich
+
 git checkout master

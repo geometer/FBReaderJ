@@ -271,8 +271,8 @@
 		<node name="toc" value="Obsah"/>
 		<node name="day" value="Den"/>
 		<node name="night" value="Noc"/>
-		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
-		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToBackScreen" value="Přepnout na zadní displej"/>
+		<node name="yotaSwitchToFrontScreen" value="Přepnout na přední displej"/>
 		<node name="networkLibrary" value="Síťová knihovna"/>
 		<node name="navigate" value="Navigace">
 			<node name="toc" value="Obsah"/>
@@ -287,8 +287,8 @@
 		</node>
 		<node name="shareBook" value="Sdílet knihu"/>
 		<node name="search" value="Hledat"/>
-		<node name="rotate" value="Otočit obrazovku"/>
-		<node name="screenOrientation" value="Orientace obrazovky"/>
+		<node name="rotate" value="Otočit displej"/>
+		<node name="screenOrientation" value="Orientace displeje"/>
 		<node name="screenOrientationSystem" value="Systém"/>
 		<node name="screenOrientationSensor" value="Podle orientace zařízení"/>
 		<node name="screenOrientationPortrait" value="Na výšku"/>
@@ -321,7 +321,7 @@
 		<node name="appearance" value="Vzhled">
 			<node name="summary" value="Otáčení, stavový řádek"/>
 			<node name="language" value="Jazyk rozhraní"/>
-			<node name="screenOrientation" value="Orientace obrazovky">
+			<node name="screenOrientation" value="Orientace displeje">
 				<node name="system" value="Systém"/>
 				<node name="sensor" value="Podle orientace zařízení"/>
 				<node name="portrait" value="Na výšku"/>
@@ -345,9 +345,9 @@
 				<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
 				<node name="summaryOff" value="Nezobrazovat stavový řádek, když se menu aktivuje"/>
 			</node>
-			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
-				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
-				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			<node name="fullscreenMode" value="Celoobrazovkový režim">
+				<node name="summaryOn" value="Skrýt ovládací prvky navigace"/>
+				<node name="summaryOff" value="Zobrazit ovládací prvky navigace"/>
 			</node>
 			<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
 				<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
@@ -357,8 +357,8 @@
 				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
 				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
 			</node>
-			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
-				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
+			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu displeje">
+				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje displeje"/>
 				<node name="summaryOff" value="Zakázáno"/>
 			</node>
 			<node name="dontTurnScreenOff" value="Zabránit usínání displeje">
@@ -904,7 +904,7 @@
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 	<node name="yota">
-		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
-		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+		<node name="frontScreenMessage" value="Pro čtení knihy obraťte zařízení. Pro navrácení textu na tento displej stiskněte tlačítko dole."/>
+		<node name="frontScreenButton" value="Přepnout na tento displej"/>
 	</node>
 </resources>

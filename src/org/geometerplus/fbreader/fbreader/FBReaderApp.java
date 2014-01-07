@@ -37,50 +37,27 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
-	public ZLTextStyleCollection TextStyleCollection = new ZLTextStyleCollection("Base");
+	public ZLTextStyleCollection TextStyleCollection;
 
-	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+	public final MiscOptions MiscOptions;
+	public final ImageOptions ImageOptions;
+	public final ViewOptions ViewOptions;
+	public final PageTurningOptions PageTurningOptions;
+	public FooterOptions FooterOptions;
 
-	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
-		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
-	public final ZLStringOption TextSearchPatternOption =
-		new ZLStringOption("TextSearch", "Pattern", "");
+	private final ZLKeyBindings myBindings;
 
-	public final ZLBooleanOption EnableDoubleTapOption =
-		new ZLBooleanOption("Options", "EnableDoubleTap", false);
-	public final ZLBooleanOption NavigateAllWordsOption =
-		new ZLBooleanOption("Options", "NavigateAllWords", false);
+	{
+		TextStyleCollection = new ZLTextStyleCollection("Base");
 
-	public static enum WordTappingAction {
-		doNothing, selectSingleWord, startSelecting, openDictionary
+		MiscOptions = new MiscOptions();
+		ImageOptions = new ImageOptions();
+		ViewOptions = new ViewOptions();
+		PageTurningOptions = new PageTurningOptions();
+		FooterOptions = new FooterOptions("Base");
+
+		myBindings = new ZLKeyBindings();
 	}
-	public final ZLEnumOption<WordTappingAction> WordTappingActionOption =
-		new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
-
-	public final ZLColorOption ImageViewBackgroundOption =
-		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
-	public final ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption =
-		new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
-	public static enum ImageTappingAction {
-		doNothing, selectImage, openImageView
-	}
-	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
-		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
-	public final ZLBooleanOption ImageMatchBackgroundOption =
-		new ZLBooleanOption("Colors", "ImageMatchBackground", true);
-
-	public final ViewOptions ViewOptions = new ViewOptions();
-
-	public final ZLIntegerRangeOption ScrollbarTypeOption =
-		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-
-	final ZLStringOption ColorProfileOption =
-		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
-
-	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
-	public FooterOptions FooterOptions = new FooterOptions("Base");
-
-	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
@@ -185,11 +162,11 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public String getColorProfileName() {
-		return ColorProfileOption.getValue();
+		return ViewOptions.ColorProfileName.getValue();
 	}
 
 	public void setColorProfileName(String name) {
-		ColorProfileOption.setValue(name);
+		ViewOptions.ColorProfileName.setValue(name);
 		myColorProfile = null;
 	}
 

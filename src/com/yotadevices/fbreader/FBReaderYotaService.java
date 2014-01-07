@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import com.yotadevices.sdk.*;
 import com.yotadevices.sdk.utils.EinkUtils;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
@@ -28,7 +27,7 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.options.MiscOptions;
 
 /**
  * @author ASazonov
@@ -43,6 +42,7 @@ public class FBReaderYotaService extends BSActivity {
 	private Canvas myCanvas;
 	private Bitmap myBitmap;
 
+	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 	private volatile boolean myBackScreenIsActive;
 	private Book myCurrentBook;
 	private int myFullRefreshCounter = 0;
@@ -181,14 +181,13 @@ public class FBReaderYotaService extends BSActivity {
 	protected void onVolumeButtonsEvent(Constants.VolumeButtonsEvent event) {
 		super.onVolumeButtonsEvent(event);
 
-		final ZLKeyBindings bindings = ZLApplication.Instance().keyBindings();
 		String action = null;
 		switch (event) {
 			case VOLUME_MINUS_UP:
-				action = bindings.getBinding(KeyEvent.KEYCODE_VOLUME_DOWN, false);
+				action = myBindings.getBinding(KeyEvent.KEYCODE_VOLUME_DOWN, false);
 				break;
 			case VOLUME_PLUS_UP:
-				action = bindings.getBinding(KeyEvent.KEYCODE_VOLUME_UP, false);
+				action = myBindings.getBinding(KeyEvent.KEYCODE_VOLUME_UP, false);
 				break;
 			default:
 				break;
@@ -206,10 +205,7 @@ public class FBReaderYotaService extends BSActivity {
 		if (intent.hasExtra(KEY_BACK_SCREEN_IS_ACTIVE)) {
 			myBackScreenIsActive = intent.getBooleanExtra(KEY_BACK_SCREEN_IS_ACTIVE, false);
 		} else {
-			final FBReaderApp app = (FBReaderApp)FBReaderApp.Instance();
-			if (app != null) {
-				myBackScreenIsActive = app.YotaDrawOnBackScreenOption.getValue();
-			}
+			myBackScreenIsActive = new MiscOptions().YotaDrawOnBackScreen.getValue();
 		}
 		if (intent.hasExtra(KEY_CURRENT_BOOK)) {
 			myCurrentBook = SerializerUtil.deserializeBook(intent.getStringExtra(KEY_CURRENT_BOOK));
