@@ -56,7 +56,9 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public static enum Device {
 		GENERIC,
 		YOTA_PHONE,
-		KINDLE_FIRE,
+		KINDLE_FIRE_1ST_GENERATION,
+		KINDLE_FIRE_2ND_GENERATION,
+		KINDLE_FIRE_HD,
 		NOOK,
 		NOOK12,
 		EKEN_M001,
@@ -73,7 +75,13 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			} else if ("GT-S5830".equals(Build.MODEL)) {
 				myDevice = Device.SAMSUNG_GT_S5830;
 			} else if ("Amazon".equals(Build.MANUFACTURER)) {
-				myDevice = Device.KINDLE_FIRE;
+				if ("Kindle Fire".equals(Build.MODEL)) {
+					myDevice = Device.KINDLE_FIRE_1ST_GENERATION;
+				} else if ("KFOT".equals(Build.MODEL)) {
+					myDevice = Device.KINDLE_FIRE_2ND_GENERATION;
+				} else {
+					myDevice = Device.KINDLE_FIRE_HD;
+				}
 			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
 				myDevice = Device.EKEN_M001;
 			} else if ("PD_Novel".equals(Build.MODEL)) {
