@@ -680,7 +680,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private void setStatusBarVisibility(boolean visible) {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
+		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE_1ST_GENERATION &&
 			!zlibrary.ShowStatusBarOption.getValue()) {
 			myMainView.setPreserveSize(visible);
 			if (visible) {
