@@ -43,6 +43,7 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.util.DeviceType;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
@@ -51,7 +52,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
-	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !getDevice().hasButtonLightsBug());
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
 
 	public static enum Device {
 		GENERIC,
@@ -76,44 +77,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		public boolean isEInk() {
 			return this == NOOK || this == NOOK12;
 		}
-	}
-
-	private Device myDevice;
-
-	public Device getDevice() {
-		if (myDevice == null) {
-			if ("YotaPhone".equals(Build.BRAND)) {
-				myDevice = Device.YOTA_PHONE;
-			} else if ("GT-S5830".equals(Build.MODEL)) {
-				myDevice = Device.SAMSUNG_GT_S5830;
-			} else if ("Amazon".equals(Build.MANUFACTURER)) {
-				if ("Kindle Fire".equals(Build.MODEL)) {
-					myDevice = Device.KINDLE_FIRE_1ST_GENERATION;
-				} else if ("KFOT".equals(Build.MODEL)) {
-					myDevice = Device.KINDLE_FIRE_2ND_GENERATION;
-				} else {
-					myDevice = Device.KINDLE_FIRE_HD;
-				}
-			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
-				myDevice = Device.EKEN_M001;
-			} else if ("PD_Novel".equals(Build.MODEL)) {
-				myDevice = Device.PAN_DIGITAL;
-			} else if ("barnesandnoble".equalsIgnoreCase(Build.MANUFACTURER) &&
-					   "zoom2".equalsIgnoreCase(Build.DEVICE) &&
-					   ("NOOK".equals(Build.MODEL) ||
-						"BNRV350".equals(Build.MODEL) ||
-						"BNRV300".equals(Build.MODEL))) {
-				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
-					"1.2.1".equals(Build.VERSION.INCREMENTAL)) {
-					myDevice = Device.NOOK12;
-				} else {
-					myDevice = Device.NOOK;
-				}
-			} else {
-				myDevice = Device.GENERIC;
-			}
-		}
-		return myDevice;
 	}
 
 	private FBReader myActivity;
