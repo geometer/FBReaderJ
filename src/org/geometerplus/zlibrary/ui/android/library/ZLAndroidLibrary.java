@@ -70,6 +70,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		public boolean hasButtonLightsBug() {
 			return this == SAMSUNG_GT_S5830;
 		}
+
+		public boolean isEInk() {
+			return this == NOOK || this == NOOK12;
+		}
 	}
 
 	private Device myDevice;
