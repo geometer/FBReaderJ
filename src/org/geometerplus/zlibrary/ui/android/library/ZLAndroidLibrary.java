@@ -51,7 +51,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
-	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !getDevice().hasButtonLightsBug());
 
 	public static enum Device {
 		GENERIC,
@@ -63,7 +63,19 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		NOOK12,
 		EKEN_M001,
 		PAN_DIGITAL,
-		SAMSUNG_GT_S5830
+		SAMSUNG_GT_S5830;
+
+		public boolean hasNoHardwareMenuButton() {
+			return this == EKEN_M001 || this == PAN_DIGITAL;
+		}
+
+		public boolean hasButtonLightsBug() {
+			return this == SAMSUNG_GT_S5830;
+		}
+
+		public boolean isEInk() {
+			return this == NOOK || this == NOOK12;
+		}
 	}
 
 	private Device myDevice;
@@ -102,10 +114,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			}
 		}
 		return myDevice;
-	}
-
-	public boolean hasButtonLightsBug() {
-		return "GT-S5830".equals(Build.MODEL);
 	}
 
 	private FBReader myActivity;
