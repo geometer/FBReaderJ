@@ -33,8 +33,7 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.eink.EinkUtil;
-import org.geometerplus.android.fbreader.eink.Nook2Util;
+import org.geometerplus.android.util.eink.EInkUtil;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
@@ -92,7 +91,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
 		if (lib.EInkFastRefreshOption.getValue()) {
 			if (myFullRefreshCounter > 0) {
-				EinkUtil.prepareSingleFullRefresh((Activity)context);
+				EInkUtil.prepareSingleFullRefresh((Activity)context);
 				myFullRefreshCounter--;
 			} else {
 				myFullRefreshCounter = lib.EInkUpdateIntervalOption.getValue();

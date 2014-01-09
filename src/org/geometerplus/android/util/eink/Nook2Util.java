@@ -1,4 +1,4 @@
-package org.geometerplus.android.fbreader.eink;
+package org.geometerplus.android.util.eink;
 
 /**
  * This code is derived from
