@@ -92,7 +92,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
 		if (lib.EInkFastRefreshOption.getValue()) {
 			if (myFullRefreshCounter > 0) {
-				EinkUtil.prepareSingleFullRefresh(lib.getDevice(), (Activity) context);
+				EinkUtil.prepareSingleFullRefresh((Activity)context);
 				myFullRefreshCounter--;
 			} else {
 				myFullRefreshCounter = lib.EInkUpdateIntervalOption.getValue();

@@ -47,6 +47,8 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
 
+import org.geometerplus.android.util.DeviceType;
+
 public class PreferenceActivity extends ZLPreferenceActivity {
 	public PreferenceActivity() {
 		super("Preferences");
@@ -554,7 +556,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 		
-		if (androidLibrary.getDevice().isEInkFastRefreshSupported()) {
+		if (DeviceType.Instance().isEInkFastRefreshSupported()) {
 			final Screen einkScreen = createPreferenceScreen("eink");
 			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
 			
