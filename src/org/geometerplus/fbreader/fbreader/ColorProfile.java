@@ -106,7 +106,7 @@ public class ColorProfile {
 		} else {
 			ZLibrary lib = ZLibrary.Instance();
 			WallpaperOption =
-				new ZLStringOption("Colors", name + ":Wallpaper", lib.isEink() ? "" : "wallpapers/sepia.jpg");
+				new ZLStringOption("Colors", name + ":Wallpaper", lib.isEInk() ? "" : "wallpapers/sepia.jpg");
 			BackgroundOption =
 				createOption(name, "Background", 255, 255, 255);
 			SelectionBackgroundOption =

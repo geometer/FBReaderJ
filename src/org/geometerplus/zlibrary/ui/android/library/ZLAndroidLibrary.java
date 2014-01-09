@@ -43,87 +43,58 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.util.DeviceType;
+
 public final class ZLAndroidLibrary extends ZLibrary {
-	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
+	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", DeviceType.Instance().hasNoHardwareMenuButton());
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
-	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
-	public final ZLBooleanOption EinkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EinkFastRefresh", isEinkFastRefreshSupported());
-	public final ZLIntegerRangeOption EinkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EinkUpdateInterval", 0, 20, 10);
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
+	public final ZLBooleanOption EInkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EInkFastRefresh", DeviceType.Instance().isEInkFastRefreshSupported());
+	public final ZLIntegerRangeOption EInkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EInkUpdateInterval", 0, 20, 10);
 
 	public static enum Device {
 		GENERIC,
 		YOTA_PHONE,
-		KINDLE_FIRE,
+		KINDLE_FIRE_1ST_GENERATION,
+		KINDLE_FIRE_2ND_GENERATION,
+		KINDLE_FIRE_HD,
 		NOOK,
 		NOOK12,
 		EKEN_M001,
 		PAN_DIGITAL,
-		SAMSUNG_GT_S5830
-	}
+		SAMSUNG_GT_S5830;
 
-	private Device myDevice;
-
-	public Device getDevice() {
-		if (myDevice == null) {
-			if ("YotaPhone".equals(Build.BRAND)) {
-				myDevice = Device.YOTA_PHONE;
-			} else if ("GT-S5830".equals(Build.MODEL)) {
-				myDevice = Device.SAMSUNG_GT_S5830;
-			} else if ("Amazon".equals(Build.MANUFACTURER)) {
-				myDevice = Device.KINDLE_FIRE;
-			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
-				myDevice = Device.EKEN_M001;
-			} else if ("PD_Novel".equals(Build.MODEL)) {
-				myDevice = Device.PAN_DIGITAL;
-			} else if ("barnesandnoble".equalsIgnoreCase(Build.MANUFACTURER) &&
-					   "zoom2".equalsIgnoreCase(Build.DEVICE) &&
-					   ("NOOK".equals(Build.MODEL) ||
-						"BNRV350".equals(Build.MODEL) ||
-						"BNRV300".equals(Build.MODEL))) {
-				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
-					"1.2.1".equals(Build.VERSION.INCREMENTAL)) {
-					myDevice = Device.NOOK12;
-				} else {
-					myDevice = Device.NOOK;
-				}
-			} else {
-				myDevice = Device.GENERIC;
-			}
+		public boolean hasNoHardwareMenuButton() {
+			return this == EKEN_M001 || this == PAN_DIGITAL;
 		}
-		return myDevice;
-	}
 
-	private static List<Device> EinkDevices = Arrays.asList(Device.NOOK, Device.NOOK12);
-	private static List<Device> EinkFastRefreshDevices = Arrays.asList(Device.NOOK, Device.NOOK12);
-	private static List<Device> ButtonLightsBugDevices = Arrays.asList(Device.SAMSUNG_GT_S5830);
-	private static List<Device> NoHardwareMenuButtonDevices = Arrays.asList(Device.EKEN_M001, Device.PAN_DIGITAL);
+		public boolean hasButtonLightsBug() {
+			return this == SAMSUNG_GT_S5830;
+		}
 
-	private boolean hasNoHardwareMenuButton() {
-		return NoHardwareMenuButtonDevices.contains(myDevice);
-	}
+		public boolean isEInk() {
+			return this == NOOK || this == NOOK12;
+		}
 
-	public boolean hasButtonLightsBug() {
-		return ButtonLightsBugDevices.contains(myDevice);
-	}
-
-	@Override
-	public boolean isEink() {
-		return EinkDevices.contains(myDevice);
+		public boolean isEInkFastRefreshSupported() {
+			return this == NOOK || this == NOOK12;
+		}
 	}
 
 	@Override
-	public boolean isEinkFastRefreshSupported() {
-		return EinkFastRefreshDevices.contains(myDevice);
+	public boolean isEInk() {
+		return DeviceType.Instance().isEInk();
 	}
 
 	@Override
 	public void initSpecificKeys(ZLKeyBindings b) {
-		if (myDevice == Device.NOOK || myDevice == Device.NOOK12) {
+		final DeviceType deviceType = DeviceType.Instance();
+		if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
 			b.bindKey(92, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
 			b.bindKey(94, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
 			b.bindKey(93, false, ActionCode.VOLUME_KEY_SCROLL_BACK);

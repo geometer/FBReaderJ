@@ -60,6 +60,7 @@ import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
@@ -657,7 +658,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private void setStatusBarVisibility(boolean visible) {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (zlibrary.getDevice() != ZLAndroidLibrary.Device.KINDLE_FIRE &&
+		if (DeviceType.Instance() != DeviceType.KINDLE_FIRE_1ST_GENERATION &&
 			!zlibrary.ShowStatusBarOption.getValue()) {
 			if (visible) {
 				getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);

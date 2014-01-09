@@ -1,6 +1,7 @@
-package org.geometerplus.android.fbreader.eink;
+package org.geometerplus.android.util.eink;
 
 /**
+ * This code is derived from
  * Nook Touch EPD controller interface wrapper.
  * @author DairyKnight <dairyknight@gmail.com>
  * http://forum.xda-developers.com/showthread.php?t=1183173
@@ -9,13 +10,11 @@ package org.geometerplus.android.fbreader.eink;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
-
 import android.app.Activity;
 
-public class Nook2Util {
+import org.geometerplus.android.util.DeviceType;
 
+public class Nook2Util {
     private static Class epdControllerClass;
 
     private  static Class epdControllerRegionClass;
@@ -36,12 +35,11 @@ public class Nook2Util {
 			 * Loading the Epson EPD Controller Classes
 			 *
 			 * */
-        	ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
             epdControllerClass = Class
                         .forName("android.hardware.EpdController");
             epdControllerRegionClass = Class
                     .forName("android.hardware.EpdController$Region");
-            if (lib.getDevice().equals(ZLAndroidLibrary.Device.NOOK12)) {
+            if (DeviceType.Instance() == DeviceType.NOOK12) {
             	epdControllerRegionParamsClass = Class
             			.forName("android.hardware.EpdRegionParams");
             	epdControllerWaveClass = Class
@@ -49,8 +47,8 @@ public class Nook2Util {
             } else {
             	epdControllerRegionParamsClass = Class
             			.forName("android.hardware.EpdController$RegionParams");
-            	 epdControllerWaveClass = Class
-                         .forName("android.hardware.EpdController$Wave");
+            	epdControllerWaveClass = Class
+                        .forName("android.hardware.EpdController$Wave");
             }
             epdControllerModeClass = Class
                     .forName("android.hardware.EpdController$Mode");
@@ -84,10 +82,9 @@ public class Nook2Util {
 
 	static void setGL16Mode(Activity a) {
 		System.err.println("setGL16Mode");
-		ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
 		try {
             if (successful) {
-            	if (lib.getDevice().equals(ZLAndroidLibrary.Device.NOOK12) && mEpdController == null) {
+            	if (DeviceType.Instance() == DeviceType.NOOK12 && mEpdController == null) {
             		Constructor[] EpdControllerConstructors = epdControllerClass.getConstructors();
 					mEpdController = EpdControllerConstructors[0].newInstance(new Object[] { a });
 				}
@@ -102,7 +99,7 @@ public class Nook2Util {
                         "setRegion", new Class[] { String.class,
                                 epdControllerRegionClass,
                                 epdControllerRegionParamsClass, epdControllerModeClass });
-                if (lib.getDevice().equals(ZLAndroidLibrary.Device.NOOK12)) {
+                if (DeviceType.Instance() == DeviceType.NOOK12) {
                 	epdControllerSetRegionMethod
 					.invoke(mEpdController, new Object[] { "FBReaderJ",
 							regionEnums[2], localRegionParams, modeEnums[2] }); // Mode = ONESHOT_ALL
