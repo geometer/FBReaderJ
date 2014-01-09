@@ -90,12 +90,12 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			System.err.println("A surprise: view's context is not an FBReader");
 		}
 		ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
-		if (lib.EinkFastRefreshOption.getValue()) {
+		if (lib.EInkFastRefreshOption.getValue()) {
 			if (myFullRefreshCounter > 0) {
 				EinkUtil.prepareSingleFullRefresh(lib.getDevice(), (Activity) context);
 				myFullRefreshCounter--;
 			} else {
-				myFullRefreshCounter = lib.EinkUpdateIntervalOption.getValue();
+				myFullRefreshCounter = lib.EInkUpdateIntervalOption.getValue();
 			}
 		}
 		super.onDraw(canvas);

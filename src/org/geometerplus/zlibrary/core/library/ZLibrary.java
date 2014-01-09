@@ -60,8 +60,7 @@ public abstract class ZLibrary {
 	abstract public int getHeightInPixels();
 	abstract public List<String> defaultLanguageCodes();
 	
-	abstract public boolean isEink();//simple interface settings
-	abstract public boolean isEinkFastRefreshSupported();
+	abstract public boolean isEInk();//simple interface settings
 	abstract public void initSpecificKeys(ZLKeyBindings b);
 
 	abstract public boolean supportsAllOrientations();

@@ -52,8 +52,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !getDevice().hasButtonLightsBug());
-	public final ZLBooleanOption EinkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EinkFastRefresh", isEinkFastRefreshSupported());
-	public final ZLIntegerRangeOption EinkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EinkUpdateInterval", 0, 20, 10);
+	public final ZLBooleanOption EInkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EInkFastRefresh", getDevice().isEInkFastRefreshSupported());
+	public final ZLIntegerRangeOption EInkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EInkUpdateInterval", 0, 20, 10);
 
 	public static enum Device {
 		GENERIC,
@@ -76,6 +76,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 
 		public boolean isEInk() {
+			return this == NOOK || this == NOOK12;
+		}
+
+		public boolean isEInkFastRefreshSupported() {
 			return this == NOOK || this == NOOK12;
 		}
 	}
@@ -118,17 +122,9 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return myDevice;
 	}
 
-	private static List<Device> EinkDevices = Arrays.asList(Device.NOOK, Device.NOOK12);
-	private static List<Device> EinkFastRefreshDevices = Arrays.asList(Device.NOOK, Device.NOOK12);
-
 	@Override
-	public boolean isEink() {
-		return EinkDevices.contains(myDevice);
-	}
-
-	@Override
-	public boolean isEinkFastRefreshSupported() {
-		return EinkFastRefreshDevices.contains(myDevice);
+	public boolean isEInk() {
+		return getDevice().isEInk();
 	}
 
 	@Override
