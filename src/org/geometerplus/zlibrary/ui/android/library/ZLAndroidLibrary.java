@@ -47,11 +47,11 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 
 public final class ZLAndroidLibrary extends ZLibrary {
-	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
+	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", getDevice().hasNoHardwareMenuButton());
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
-	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !getDevice().hasButtonLightsBug());
 	public final ZLBooleanOption EinkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EinkFastRefresh", isEinkFastRefreshSupported());
 	public final ZLIntegerRangeOption EinkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EinkUpdateInterval", 0, 20, 10);
 
@@ -65,7 +65,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		NOOK12,
 		EKEN_M001,
 		PAN_DIGITAL,
-		SAMSUNG_GT_S5830
+		SAMSUNG_GT_S5830;
+
+		public boolean hasNoHardwareMenuButton() {
+			return this == EKEN_M001 || this == PAN_DIGITAL;
+		}
+
+		public boolean hasButtonLightsBug() {
+			return this == SAMSUNG_GT_S5830;
+		}
 	}
 
 	private Device myDevice;
@@ -108,16 +116,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	private static List<Device> EinkDevices = Arrays.asList(Device.NOOK, Device.NOOK12);
 	private static List<Device> EinkFastRefreshDevices = Arrays.asList(Device.NOOK, Device.NOOK12);
-	private static List<Device> ButtonLightsBugDevices = Arrays.asList(Device.SAMSUNG_GT_S5830);
-	private static List<Device> NoHardwareMenuButtonDevices = Arrays.asList(Device.EKEN_M001, Device.PAN_DIGITAL);
-
-	private boolean hasNoHardwareMenuButton() {
-		return NoHardwareMenuButtonDevices.contains(myDevice);
-	}
-
-	public boolean hasButtonLightsBug() {
-		return ButtonLightsBugDevices.contains(myDevice);
-	}
 
 	@Override
 	public boolean isEink() {
