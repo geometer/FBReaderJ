@@ -19,7 +19,8 @@
 
 package org.geometerplus.fbreader;
 
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import android.os.Environment;
 
@@ -28,6 +29,45 @@ import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 public abstract class Paths {
 	public static String cardDirectory() {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			return Environment.getExternalStorageDirectory().getPath();
+		}
+
+		final List<String> dirNames = new LinkedList<String>();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader("/proc/self/mounts"));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				final String[] parts = line.split("\\s+");
+				if (parts.length >= 4 &&
+					parts[2].toLowerCase().indexOf("fat") >= 0 &&
+					parts[3].indexOf("rw") >= 0) {
+					final File fsDir = new File(parts[1]);
+					if (fsDir.isDirectory() && fsDir.canWrite()) {
+						dirNames.add(fsDir.getPath());
+					}
+				}
+			}
+		} catch (Throwable e) {
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+
+		for (String dir : dirNames) {
+			if (dir.toLowerCase().indexOf("media") > 0) {
+				return dir;
+			}
+		}
+		if (dirNames.size() > 0) {
+			return dirNames.get(0);
+		}
+
 		return Environment.getExternalStorageDirectory().getPath();
 	}
 
@@ -35,16 +75,26 @@ public abstract class Paths {
 		return cardDirectory() + "/Books";
 	}
 
+	private static ZLStringListOption directoryOption(String key, String defaultDirectory) {
+		final ZLStringListOption option = new ZLStringListOption(
+			"Files", key, Collections.<String>emptyList(), "\n"
+		);
+		if (option.getValue().isEmpty()) {
+			option.setValue(Collections.singletonList(defaultDirectory));
+		}
+		return option;
+	}
+
 	public static ZLStringListOption BookPathOption() {
-		return new ZLStringListOption("Files", "BooksDirectory", defaultBookDirectory(), "\n");
+		return directoryOption("BooksDirectory", defaultBookDirectory());
 	}
 
 	public static ZLStringListOption FontPathOption() {
-		return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
+		return directoryOption("FontPathOption", cardDirectory() + "/Fonts");
 	}
 
 	public static ZLStringListOption WallpaperPathOption() {
-		return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
+		return directoryOption("WallpapersDirectory", cardDirectory() + "/Wallpapers");
 	}
 
 	public static String mainBookDirectory() {
