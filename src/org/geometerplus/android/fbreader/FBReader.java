@@ -125,7 +125,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	};
 
-	private synchronized void openBook(Intent intent, Runnable action, boolean force) {
+	private synchronized void openBook(Intent intent, final Runnable action, boolean force) {
 		if (!force && myBook != null) {
 			return;
 		}
@@ -139,7 +139,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myBook = createBookForFile(ZLFile.createFileByPath(data.getPath()));
 			}
 		}
-		myFBReaderApp.openBook(myBook, bookmark, action);
+		Config.Instance().runOnStart(new Runnable() {
+			public void run() {
+				myFBReaderApp.openBook(myBook, bookmark, action);
+			}
+		});
 	}
 
 	private Book createBookForFile(ZLFile file) {
