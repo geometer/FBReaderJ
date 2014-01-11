@@ -111,7 +111,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	public synchronized void reset(boolean force) {
 		if (myInterface != null) {
 			try {
-				myInterface.reset(Paths.BookPathOption().getValue(), force);
+				myInterface.reset(force);
 			} catch (RemoteException e) {
 			}
 		}

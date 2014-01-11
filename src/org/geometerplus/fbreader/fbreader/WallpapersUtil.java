@@ -33,7 +33,7 @@ public abstract class WallpapersUtil {
 
 	public static List<ZLFile> externalWallpaperFiles() {
 		final List<ZLFile> files = new ArrayList<ZLFile>();
-		for (String dir : Paths.WallpaperPathOption().getValue()) {
+		for (String dir : Paths.WallpaperPathOption.getValue()) {
 			files.addAll(ZLFile.createFileByPath(dir).children());
 		}
 		return files;

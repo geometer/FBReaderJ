@@ -28,6 +28,15 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 public abstract class Paths {
+	public static ZLStringListOption BookPathOption =
+		directoryOption("BooksDirectory", defaultBookDirectory());
+
+	public static ZLStringListOption FontPathOption =
+		directoryOption("FontPathOption", cardDirectory() + "/Fonts");
+
+	public static ZLStringListOption WallpaperPathOption =
+		directoryOption("WallpapersDirectory", cardDirectory() + "/Wallpapers");
+
 	public static String cardDirectory() {
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 			return Environment.getExternalStorageDirectory().getPath();
@@ -85,20 +94,8 @@ public abstract class Paths {
 		return option;
 	}
 
-	public static ZLStringListOption BookPathOption() {
-		return directoryOption("BooksDirectory", defaultBookDirectory());
-	}
-
-	public static ZLStringListOption FontPathOption() {
-		return directoryOption("FontPathOption", cardDirectory() + "/Fonts");
-	}
-
-	public static ZLStringListOption WallpaperPathOption() {
-		return directoryOption("WallpapersDirectory", cardDirectory() + "/Wallpapers");
-	}
-
 	public static String mainBookDirectory() {
-		final List<String> bookPath = BookPathOption().getValue();
+		final List<String> bookPath = BookPathOption.getValue();
 		return bookPath.isEmpty() ? defaultBookDirectory() : bookPath.get(0);
 	}
 

@@ -144,15 +144,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myBook = createBookForFile(ZLFile.createFileByPath(data.getPath()));
 			}
 		}
-		myFBReaderApp.openBook(myBook, bookmark, new Runnable() {
+		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
-				if (action != null) {
-					action.run();
-				}
-				hideBars();
-				if (DeviceType.Instance() == DeviceType.YOTA_PHONE) {
-					refreshYotaScreen();
-				}
+				myFBReaderApp.openBook(myBook, bookmark, new Runnable() {
+					public void run() {
+						if (action != null) {
+							action.run();
+						}
+						hideBars();
+						if (DeviceType.Instance() == DeviceType.YOTA_PHONE) {
+							refreshYotaScreen();
+						}
+					}
+				});
 			}
 		});
 	}

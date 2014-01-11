@@ -23,8 +23,7 @@ import java.util.*;
 import java.io.File;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -152,19 +151,22 @@ public class TipsManager {
 
 		myDownloadInProgress = true;
 
-		new File(Paths.networkCacheDirectory() + "/tips").mkdirs();
-		new Thread(new Runnable() {
+		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
-				try {
-					ZLNetworkManager.Instance().downloadToFile(
-						getUrl(), new File(getLocalFilePath())
-					);
-				} catch (ZLNetworkException e) {
-					e.printStackTrace();
-				} finally {
-					myDownloadInProgress = false;
-				}
+				final File tipsFile = new File(getLocalFilePath());
+				tipsFile.getParentFile().mkdirs();
+				new Thread(new Runnable() {
+					public void run() {
+						try {
+							ZLNetworkManager.Instance().downloadToFile(getUrl(), tipsFile);
+						} catch (ZLNetworkException e) {
+							e.printStackTrace();
+						} finally {
+							myDownloadInProgress = false;
+						}
+					}
+				}).start();
 			}
-		}).start();
+		});
 	}
 }
