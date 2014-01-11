@@ -90,14 +90,19 @@ public class LibraryService extends Service {
 
 		LibraryImplementation() {
 			myDatabase = SQLiteBooksDatabase.Instance(LibraryService.this);
+			reset(true);
+		}
+
+		public void reset(final boolean force) {
 			Config.Instance().runOnStart(new Runnable() {
 				public void run() {
-					reset(Paths.BookPathOption().getValue(), true);
+					resetInternal(force);
 				}
 			});
 		}
 
-		public void reset(List<String> bookDirectories, boolean force) {
+		private void resetInternal(boolean force) {
+			final List<String> bookDirectories = Paths.BookPathOption.getValue();
 			if (!force && myCollection != null && bookDirectories.equals(myCollection.BookDirectories)) {
 				return;
 			}
