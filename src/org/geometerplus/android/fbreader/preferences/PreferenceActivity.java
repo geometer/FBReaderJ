@@ -106,9 +106,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addOption(Paths.TempDirectoryOption(), "temp");
+		directoriesScreen.addOption(Paths.TempDirectoryOption, "temp");
 		directoriesScreen.addPreference(new ZLBookDirActivityPreference(
-			this, new OptionHolder(Paths.BookPathOption()) {
+			this, new OptionHolder(Paths.BookPathOption) {
 				@Override
 				public void setValue(List<String> value) {
 					super.setValue(value);
@@ -126,12 +126,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			directoriesScreen.Resource, "bookPath"
 		));
 		final ZLActivityPreference fontDirPreference = new ZLSimpleActivityPreference(
-			this, new OptionHolder(Paths.FontPathOption()), myActivityPrefs, myRootpaths,
+			this, new OptionHolder(Paths.FontPathOption), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "fontPath"
 		);
 		directoriesScreen.addPreference(fontDirPreference);
 		final ZLActivityPreference wallpaperDirPreference = new ZLSimpleActivityPreference(
-			this, new OptionHolder(Paths.WallpaperPathOption()), myActivityPrefs, myRootpaths,
+			this, new OptionHolder(Paths.WallpaperPathOption), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "wallpaperPath"
 		);
 		directoriesScreen.addPreference(wallpaperDirPreference);
