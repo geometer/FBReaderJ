@@ -42,7 +42,7 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (String dir : Paths.BookPathOption().getValue()) {
+		for (String dir : Paths.BookPathOption.getValue()) {
 			addChild(dir, "fileTreeLibrary", dir);
 		}
 		addChild("/", "fileTreeRoot", null);
