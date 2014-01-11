@@ -563,7 +563,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 				getSharedPreferences("fbreader.ui", MODE_PRIVATE).edit()
 					.putBoolean("statusBar", showStatusBar)
-					.apply();
+					.commit();
 				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
 			}
 		});
