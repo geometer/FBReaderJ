@@ -74,7 +74,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.BookPathOption(), directoriesScreen.Resource, "books"
+			this, Paths.BookPathOption, directoriesScreen.Resource, "books"
 		) {
 			protected void setValue(String value) {
 				super.setValue(value);
@@ -89,10 +89,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.FontPathOption(), directoriesScreen.Resource, "fonts"
+			this, Paths.FontPathOption, directoriesScreen.Resource, "fonts"
 		));
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.WallpaperPathOption(), directoriesScreen.Resource, "wallpapers"
+			this, Paths.WallpaperPathOption, directoriesScreen.Resource, "wallpapers"
 		));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");

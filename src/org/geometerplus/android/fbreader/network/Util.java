@@ -24,6 +24,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.core.options.Config;
+
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
@@ -53,15 +55,19 @@ public abstract class Util implements UserRegistrationConstants {
 			return;
 		}
 
-		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
-				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase(activity.getApplication());
-				}
+				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+					public void run() {
+						if (SQLiteNetworkDatabase.Instance() == null) {
+							new SQLiteNetworkDatabase(activity.getApplication());
+						}
 
-				library.initialize();
+						library.initialize();
+					}
+				}, activity);
 			}
-		}, activity);
+		});
 	}
 
 	static Intent authorizationIntent(INetworkLink link, Uri id) {

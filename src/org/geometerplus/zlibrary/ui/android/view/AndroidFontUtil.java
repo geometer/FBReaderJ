@@ -79,7 +79,7 @@ public final class AndroidFontUtil {
 					return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 				}
 			};
-			for (String dir : Paths.FontPathOption().getValue()) {
+			for (String dir : Paths.FontPathOption.getValue()) {
 				final File[] fileList = new File(dir).listFiles(filter);
 				if (fileList != null) {
 					fileSet.addAll(Arrays.asList(fileList));
