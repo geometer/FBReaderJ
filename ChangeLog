@@ -5,6 +5,7 @@
 * New config subsystem implementation
 * Updated Czech localization (by Marek Pavelka)
 * Separate build for Kindle Fire HD(X) devices
+* Better detection of catalog where FBReader can write their files
 
 ===== 1.9.4 (Dec 23, 2013) =====
 * YotaPhone back screen support
