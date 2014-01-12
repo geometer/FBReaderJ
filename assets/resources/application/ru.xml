@@ -48,7 +48,7 @@
 		<node name="deleteBook" value="Удалить книгу"/>
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
-		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
+		<node name="removeFromRecents" value="Удалить из списка недавних"/>
 		<node name="markAsRead" value="Пометить как прочтённое"/>
 		<node name="markAsUnread" value="Пометить как непрочтённое"/>
 	</node>
@@ -908,27 +908,27 @@
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.ru/faq-page"/>
 	</node>
-	<node name="plugins" value="Install plugins" toBeTranslated="true">
-		<node name="litres" value="LitRes" toBeTranslated="true">
-			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+	<node name="plugins" value="Дополнительные модули">
+		<node name="litres" value="ЛитРес">
+			<node name="summary" value="Дополнительные возможности при покупке в магазине ЛитРес"/>
 		</node>
-		<node name="tts-plus" value="TTS+" toBeTranslated="true">
-			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		<node name="tts-plus" value="TTS+">
+			<node name="summary" value="Чтение вслух"/>
 		</node>
-		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
-			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		<node name="local-opds-scanner" value="Поиск OPDS каталогов">
+			<node name="summary" value="Поиск книг в локальной сети"/>
 		</node>
-		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
-			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		<node name="bookshelf" value="Книжная полка">
+			<node name="summary" value="Красивый внешний вид для библиотеки"/>
 		</node>
-		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
-			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		<node name="opds-server" value="Сервер OPDS">
+			<node name="summary" value="Раздача книг другим устройствам"/>
 		</node>
-		<node name="widgets" value="Widgets" toBeTranslated="true">
-			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		<node name="widgets" value="Виджеты">
+			<node name="summary" value="Книги прямо на домашнем экране устройства"/>
 		</node>
-		<node name="pdf" value="PDF" toBeTranslated="true">
-			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="Чтение файлов PDF"/>
 		</node>
 	</node>
 	<node name="yota">
