@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
@@ -52,21 +54,27 @@ public class FixBooksDirectoryActivity extends Activity {
 		textView.setText(resource.getResource("text").getValue());
 
 		final EditText directoryView = (EditText)findViewById(R.id.books_directory_fix_directory);
-		directoryView.setText(Paths.mainBookDirectory());
 
 		final View buttonsView = findViewById(R.id.books_directory_fix_buttons);
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("ok").getValue());
-		okButton.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				final List<String> bookPath =
-					new LinkedList<String>(Paths.BookPathOption().getValue());
-				final String newDirectory = directoryView.getText().toString();
-				bookPath.remove(newDirectory);
-				bookPath.add(0, newDirectory);
-				Paths.BookPathOption().setValue(bookPath);
-				startActivity(new Intent(FixBooksDirectoryActivity.this, FBReader.class));
-				finish();
+
+		Config.Instance().runOnStart(new Runnable() {
+			public void run() {
+				final ZLStringListOption bookPathOption = Paths.BookPathOption;
+				directoryView.setText(Paths.mainBookDirectory());
+				okButton.setOnClickListener(new Button.OnClickListener() {
+					public void onClick(View v) {
+						final List<String> bookPath =
+							new LinkedList<String>(bookPathOption.getValue());
+						final String newDirectory = directoryView.getText().toString();
+						bookPath.remove(newDirectory);
+						bookPath.add(0, newDirectory);
+						bookPathOption.setValue(bookPath);
+						startActivity(new Intent(FixBooksDirectoryActivity.this, FBReader.class));
+						finish();
+					}
+				});
 			}
 		});
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ public abstract class WallpapersUtil {
 
 	public static List<ZLFile> externalWallpaperFiles() {
 		final List<ZLFile> files = new ArrayList<ZLFile>();
-		for (String dir : Paths.WallpaperPathOption().getValue()) {
+		for (String dir : Paths.WallpaperPathOption.getValue()) {
 			files.addAll(ZLFile.createFileByPath(dir).children());
 		}
 		return files;

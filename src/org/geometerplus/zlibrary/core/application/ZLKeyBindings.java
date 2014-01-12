@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ public final class ZLKeyBindings {
 	private static final String LONG_PRESS_ACTION = "LongPressAction";
 
 	private final String myName;
-	private final ZLStringListOption myKeysOption;
+	private ZLStringListOption myKeysOption;
 	private final TreeMap<Integer,ZLStringOption> myActionMap = new TreeMap<Integer,ZLStringOption>();
 	private final TreeMap<Integer,ZLStringOption> myLongPressActionMap = new TreeMap<Integer,ZLStringOption>();
 	private final boolean isNookTouch = isNookTouch();
@@ -47,51 +47,54 @@ public final class ZLKeyBindings {
 
 	private ZLKeyBindings(String name) {
 		myName = name;
-		final Set<String> keys = new TreeSet<String>();
-		final String keymapFilename = isNookTouch ? "/keymap-nook.xml" : "/keymap.xml";		
-		new Reader(keys).readQuietly(ZLFile.createFileByPath("default" + keymapFilename));
-		
-		try {
-			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + keymapFilename));
-		} catch (Exception e) {
-			// ignore
-		}
-		try {
-			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + keymapFilename));
-		} catch (Exception e) {
-			// ignore
-		}
- 		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
- 		
- 		if(isNookTouch) return;
+		Config.Instance().runOnStart(new Initializer());
+	}
 
-		// this code is for migration from FBReader versions <= 1.1.2
-		ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
-		if (!"".equals(oldBackKeyOption.getValue())) {
-			bindKey(KeyEvent.KEYCODE_BACK, false, oldBackKeyOption.getValue());
-			oldBackKeyOption.setValue("");
-		}
-		oldBackKeyOption = new ZLStringOption(myName + ":" + LONG_PRESS_ACTION, "<Back>", "");
-		if (!"".equals(oldBackKeyOption.getValue())) {
-			bindKey(KeyEvent.KEYCODE_BACK, true, oldBackKeyOption.getValue());
-			oldBackKeyOption.setValue("");
-		}
+	private class Initializer implements Runnable {
+		public void run() {
+			final Set<String> keys = new TreeSet<String>();
+			final String keymapFilename = isNookTouch ? "/keymap-nook.xml" : "/keymap.xml";		
+			new Reader(keys).readQuietly(ZLFile.createFileByPath("default" + keymapFilename));
+			
+			try {
+				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + keymapFilename));
+			} catch (Exception e) {
+				// ignore
+			}
+			try {
+				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + keymapFilename));
+			} catch (Exception e) {
+				// ignore
+			}
+			myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
 
-		final ZLBooleanOption volumeKeysOption =
-			new ZLBooleanOption("Scrolling", "VolumeKeys", true);
-		final ZLBooleanOption invertVolumeKeysOption =
-			new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
-		if (!volumeKeysOption.getValue()) {
-			bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ZLApplication.NoAction);
-			bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ZLApplication.NoAction);
-		} else if (invertVolumeKeysOption.getValue()) {
-			bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
-			bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+			// this code is for migration from FBReader versions <= 1.1.2
+			ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
+			if (!"".equals(oldBackKeyOption.getValue())) {
+				bindKey(KeyEvent.KEYCODE_BACK, false, oldBackKeyOption.getValue());
+				oldBackKeyOption.setValue("");
+			}
+			oldBackKeyOption = new ZLStringOption(myName + ":" + LONG_PRESS_ACTION, "<Back>", "");
+			if (!"".equals(oldBackKeyOption.getValue())) {
+				bindKey(KeyEvent.KEYCODE_BACK, true, oldBackKeyOption.getValue());
+				oldBackKeyOption.setValue("");
+			}
+
+			final ZLBooleanOption volumeKeysOption =
+				new ZLBooleanOption("Scrolling", "VolumeKeys", true);
+			final ZLBooleanOption invertVolumeKeysOption =
+				new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
+			if (!volumeKeysOption.getValue()) {
+				bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ZLApplication.NoAction);
+				bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ZLApplication.NoAction);
+			} else if (invertVolumeKeysOption.getValue()) {
+				bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+				bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+			}
+			volumeKeysOption.setValue(true);
+			invertVolumeKeysOption.setValue(false);
+			// end of migration code
 		}
-		volumeKeysOption.setValue(true);
-		invertVolumeKeysOption.setValue(false);
-		// end of migration code
-		ZLibrary.Instance().initSpecificKeys(this);
 	}
 
 	private ZLStringOption createOption(int key, boolean longPress, String defaultValue) {
@@ -110,6 +113,9 @@ public final class ZLKeyBindings {
 	}
 
 	public void bindKey(int key, boolean longPress, String actionId) {
+		if (myKeysOption == null) {
+			return;
+		}
 		final String stringKey = String.valueOf(key);
 		List<String> keys = myKeysOption.getValue();
 		if (!keys.contains(stringKey)) {

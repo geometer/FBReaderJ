@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -125,7 +125,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	};
 
-	private synchronized void openBook(Intent intent, Runnable action, boolean force) {
+	private synchronized void openBook(Intent intent, final Runnable action, boolean force) {
 		if (!force && myBook != null) {
 			return;
 		}
@@ -139,7 +139,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myBook = createBookForFile(ZLFile.createFileByPath(data.getPath()));
 			}
 		}
-		myFBReaderApp.openBook(myBook, bookmark, action);
+		Config.Instance().runOnStart(new Runnable() {
+			public void run() {
+				myFBReaderApp.openBook(myBook, bookmark, action);
+			}
+		});
 	}
 
 	private Book createBookForFile(ZLFile file) {
@@ -350,7 +354,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 				getSharedPreferences("fbreader.ui", MODE_PRIVATE).edit()
 					.putBoolean("statusBar", showStatusBar)
-					.apply();
+					.commit();
 				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
 			}
 		});

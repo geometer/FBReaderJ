@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,6 @@ import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
 
 import org.geometerplus.android.util.DeviceType;
 
@@ -64,6 +63,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FooterOptions footerOptions = fbReader.FooterOptions;
 		final PageTurningOptions pageTurningOptions = new PageTurningOptions();
 		final ImageOptions imageOptions = new ImageOptions();
+		final EInkOptions einkOptions = new EInkOptions();
 		final ColorProfile profile = fbReader.getColorProfile();
 		final ZLTextStyleCollection collection = fbReader.TextStyleCollection;
 		final ZLKeyBindings keyBindings = new ZLKeyBindings();
@@ -76,7 +76,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.BookPathOption(), directoriesScreen.Resource, "books"
+			this, Paths.BookPathOption, directoriesScreen.Resource, "books"
 		) {
 			protected void setValue(String value) {
 				super.setValue(value);
@@ -91,10 +91,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.FontPathOption(), directoriesScreen.Resource, "fonts"
+			this, Paths.FontPathOption, directoriesScreen.Resource, "fonts"
 		));
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.WallpaperPathOption(), directoriesScreen.Resource, "wallpapers"
+			this, Paths.WallpaperPathOption, directoriesScreen.Resource, "wallpapers"
 		));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
@@ -556,16 +556,16 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 		
-		if (DeviceType.Instance().isEInkFastRefreshSupported()) {
+		if (DeviceType.Instance().isEInk()) {
 			final Screen einkScreen = createPreferenceScreen("eink");
 			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
 			
-			final ZLIntegerRangePreference einkUpd = new ZLIntegerRangePreference(this, einkScreen.Resource.getResource("interval"), androidLibrary.EInkUpdateIntervalOption);
-				final ZLBooleanPreference einkOpt = new ZLBooleanPreference(this, androidLibrary.EInkFastRefreshOption, einkScreen.Resource, "optimization") {
+			final ZLIntegerRangePreference einkUpd = new ZLIntegerRangePreference(this, einkScreen.Resource.getResource("interval"), einkOptions.UpdateInterval);
+				final ZLBooleanPreference einkOpt = new ZLBooleanPreference(this, einkOptions.EnableFastRefresh, einkScreen.Resource, "optimization") {
 					@Override
 					protected void onClick() {
 						super.onClick();
-						einkPreferences.setEnabled(androidLibrary.EInkFastRefreshOption.getValue());
+						einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
 					}
 				};	
 	
@@ -573,7 +573,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			einkScreen.addPreference(einkUpd);
 	
 			einkPreferences.add(einkUpd);
-			einkPreferences.setEnabled(androidLibrary.EInkFastRefreshOption.getValue());
+			einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
 		}
 
 		final Screen tipsScreen = createPreferenceScreen("tips");

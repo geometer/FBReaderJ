@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,8 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+
+import org.geometerplus.fbreader.fbreader.options.EInkOptions;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.eink.EInkUtil;
@@ -88,13 +90,14 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		} else {
 			System.err.println("A surprise: view's context is not an FBReader");
 		}
-		ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
-		if (lib.EInkFastRefreshOption.getValue()) {
+		final ZLAndroidLibrary lib = (ZLAndroidLibrary) ZLibrary.Instance();
+		final EInkOptions einkOptions = new EInkOptions();
+		if (lib.isEInk() && einkOptions.EnableFastRefresh.getValue()) {
 			if (myFullRefreshCounter > 0) {
 				EInkUtil.prepareSingleFullRefresh((Activity)context);
 				myFullRefreshCounter--;
 			} else {
-				myFullRefreshCounter = lib.EInkUpdateIntervalOption.getValue();
+				myFullRefreshCounter = einkOptions.UpdateInterval.getValue();
 			}
 		}
 		super.onDraw(canvas);

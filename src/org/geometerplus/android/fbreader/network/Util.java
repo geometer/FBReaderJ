@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+
+import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -53,15 +55,19 @@ public abstract class Util implements UserRegistrationConstants {
 			return;
 		}
 
-		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
-				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase(activity.getApplication());
-				}
+				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+					public void run() {
+						if (SQLiteNetworkDatabase.Instance() == null) {
+							new SQLiteNetworkDatabase(activity.getApplication());
+						}
 
-				library.initialize();
+						library.initialize();
+					}
+				}, activity);
 			}
-		}, activity);
+		});
 	}
 
 	static Intent authorizationIntent(INetworkLink link, Uri id) {

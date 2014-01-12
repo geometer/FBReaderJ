@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,10 +79,6 @@ public enum DeviceType {
 	}
 
 	public boolean isEInk() {
-		return this == NOOK || this == NOOK12;
-	}
-
-	public boolean isEInkFastRefreshSupported() {
 		return this == NOOK || this == NOOK12;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,7 +111,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	public synchronized void reset(boolean force) {
 		if (myInterface != null) {
 			try {
-				myInterface.reset(Paths.BookPathOption().getValue(), force);
+				myInterface.reset(force);
 			} catch (RemoteException e) {
 			}
 		}

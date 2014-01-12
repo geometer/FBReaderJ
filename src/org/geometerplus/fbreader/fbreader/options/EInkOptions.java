@@ -17,13 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.fbreader.fbreader.options;
 
-public interface ZLTextAlignmentType {
-	byte ALIGN_UNDEFINED = 0;
-	byte ALIGN_LEFT = 1;
-	byte ALIGN_RIGHT = 2;
-	byte ALIGN_CENTER = 3;
-	byte ALIGN_JUSTIFY = 4;
-	byte ALIGN_LINESTART = 5; // left for LTR languages and right for RTL
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+
+public class EInkOptions {
+	public final ZLBooleanOption EnableFastRefresh =
+		new ZLBooleanOption("EInk", "EnableFastRefresh", true);
+	public final ZLIntegerRangeOption UpdateInterval =
+		new ZLIntegerRangeOption("EInk", "UpdateInterval", 0, 20, 10);
 }
