@@ -46,6 +46,8 @@ import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
+import org.geometerplus.android.util.DeviceType;
+
 public class PreferenceActivity extends ZLPreferenceActivity {
 	public PreferenceActivity() {
 		super("Preferences");
@@ -155,6 +157,30 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		 */
 		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
+		
+		if (DeviceType.Instance().isEInk()) {
+			final EInkOptions einkOptions = new EInkOptions();
+			final Screen einkScreen = createPreferenceScreen("eink");
+			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
+			
+			einkScreen.addPreference(new ZLBooleanPreference(
+				this, einkOptions.EnableFastRefresh, einkScreen.Resource, "enableFastRefresh"
+			) {
+				@Override
+				protected void onClick() {
+					super.onClick();
+					einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
+				}
+			});
+	
+			final ZLIntegerRangePreference updateIntervalPreference = new ZLIntegerRangePreference(
+				this, einkScreen.Resource.getResource("interval"), einkOptions.UpdateInterval
+			);
+			einkScreen.addPreference(updateIntervalPreference);
+	
+			einkPreferences.add(updateIntervalPreference);
+			einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
+		}
 
 		final Screen textScreen = createPreferenceScreen("text");
 
