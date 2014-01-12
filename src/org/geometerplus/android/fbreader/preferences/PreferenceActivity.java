@@ -45,7 +45,6 @@ import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
 
 import org.geometerplus.android.util.DeviceType;
 
