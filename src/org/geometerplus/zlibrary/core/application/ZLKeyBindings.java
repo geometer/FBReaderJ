@@ -54,9 +54,15 @@ public final class ZLKeyBindings {
 	private class Initializer implements Runnable {
 		public void run() {
 			final Set<String> keys = new TreeSet<String>();
-			final String keymapFilename = isNookTouch() ? "/keymap-nook.xml" : "/keymap.xml";		
-			new Reader(keys).readQuietly(ZLFile.createFileByPath("default" + keymapFilename));
-			
+			final DeviceType deviceType = DeviceType.Instance();
+			final String keymapFilename;
+			if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
+				keymapFilename = "keymap-nook.xml";
+			} else {
+				keymapFilename = "keymap.xml";
+			}
+			new Reader(keys).readQuietly(ZLFile.createFileByPath("default/" + keymapFilename));
+
 			try {
 				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
 			} catch (Exception e) {
@@ -104,27 +110,6 @@ public final class ZLKeyBindings {
 	public String getBinding(int key, boolean longPress) {
 		return getOption(key, longPress).getValue();
 	}
-	
-	/*
-	 * This method will return true if the device is a Nook that 
-	 * does not contain a color screen.
-	 * src: http://forum.xda-developers.com/showthread.php?t=2403559
-	 */
-	public boolean isNookTouch(){
-		String thisManufacturer=android.os.Build.MANUFACTURER;
-	    String thisProduct=android.os.Build.PRODUCT;
-
-	    /*
-	     * A rooted Nook Simple Touch as of 12/8/2013 runs Android 2.1.
-	     * No Nook with volume keys should be running anything below Android 2.2
-	     * 	Android 2.2 for Nook Color was released 4/25/2011
-	     * 		http://nookdevs.com/Portal:NookColor
-	     */
-	    if( thisManufacturer.equals("BarnesAndNoble") && thisProduct.equals("NOOK"))
-	    	return android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.FROYO ? true : false;
-	    else
-	        return(false);
-    }
 
 	public boolean hasBinding(int key, boolean longPress) {
 		return !ZLApplication.NoAction.equals(getBinding(key, longPress));
