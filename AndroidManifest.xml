@@ -3,7 +3,7 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
 		android:versionCode="109041"
-		android:versionName="1.9.4"
+		android:versionName="1.9.4 for Nook Simple Touch"
 		android:installLocation="auto"
 >
 	<uses-sdk
