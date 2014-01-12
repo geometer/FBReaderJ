@@ -30,6 +30,8 @@ import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 import org.geometerplus.fbreader.Paths;
 
+import org.geometerplus.android.util.DeviceType;
+
 public final class ZLKeyBindings {
 	private static final String ACTION = "Action";
 	private static final String LONG_PRESS_ACTION = "LongPressAction";
@@ -51,7 +53,16 @@ public final class ZLKeyBindings {
 	private class Initializer implements Runnable {
 		public void run() {
 			final Set<String> keys = new TreeSet<String>();
-			new Reader(keys).readQuietly(ZLFile.createFileByPath("default/keymap.xml"));
+
+			final DeviceType deviceType = DeviceType.Instance();
+			final String keymapFilename;
+			if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
+				keymapFilename = "keymap-nook.xml";
+			} else {
+				keymapFilename = "keymap.xml";
+			}
+			new Reader(keys).readQuietly(ZLFile.createFileByPath("default/" + keymapFilename));
+
 			try {
 				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
 			} catch (Exception e) {
