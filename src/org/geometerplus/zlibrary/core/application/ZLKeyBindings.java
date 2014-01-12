@@ -91,7 +91,7 @@ public final class ZLKeyBindings {
 			volumeKeysOption.setValue(true);
 			invertVolumeKeysOption.setValue(false);
 			// end of migration code
-			ZLibrary.Instance().initSpecificKeys(this);
+			ZLibrary.Instance().initSpecificKeys(ZLKeyBindings.this);
 		}
 	}
 
