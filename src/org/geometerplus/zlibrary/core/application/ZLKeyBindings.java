@@ -23,7 +23,6 @@ import java.util.*;
 
 import android.view.KeyEvent;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -54,6 +53,7 @@ public final class ZLKeyBindings {
 	private class Initializer implements Runnable {
 		public void run() {
 			final Set<String> keys = new TreeSet<String>();
+
 			final DeviceType deviceType = DeviceType.Instance();
 			final String keymapFilename;
 			if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
