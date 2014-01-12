@@ -741,6 +741,14 @@
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
+		<node name="eink" value="E-ink screen">
+			<node name="summary" value="Specific options for e-ink screen"/>
+			<node name="enableFastRefresh" value="Fast refresh mode">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update"/>
+				<node name="summaryOff" value="Use complete (slow, but clean) screen update"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes"/>
+		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
