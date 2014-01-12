@@ -741,13 +741,13 @@
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
-		<node name="eink" value="Eink">
-			<node name="summary" value="Eink Fast Refresh"/>
-			<node name="optimization" value="Refresh Mode">
-			    <node name="summaryOn" value="Fast refresh"/>
-			    <node name="summaryOff" value="Quality refresh"/>
+		<node name="eink" value="E-ink screen">
+			<node name="summary" value="Specific options for e-ink screen"/>
+			<node name="enableFastRefresh" value="Fast refresh mode">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update"/>
+				<node name="summaryOff" value="Use complete (slow, but clean) screen update"/>
 			</node>
-			<node name="interval" value="Full refresh interval"/>
+			<node name="interval" value="Number of fast updates between complete refreshes"/>
 		</node>
 	</node>
 	<node name="dialog">
