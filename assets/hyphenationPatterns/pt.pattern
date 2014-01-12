@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   Portuguese hyphenations description for FBReader (original was taken from the teTeX distribution)
 
@@ -42,15 +42,15 @@
   <pattern>1bo</pattern>
   <pattern>1b2r</pattern>
   <pattern>1bu</pattern>
-  <pattern>1bá</pattern>
-  <pattern>1bâ</pattern>
-  <pattern>1bã</pattern>
-  <pattern>1bé</pattern>
-  <pattern>1bê</pattern>
-  <pattern>1bí</pattern>
-  <pattern>1bó</pattern>
-  <pattern>1bõ</pattern>
-  <pattern>1bú</pattern>
+  <pattern>1bÃ¡</pattern>
+  <pattern>1bÃ¢</pattern>
+  <pattern>1bÃ£</pattern>
+  <pattern>1bÃ©</pattern>
+  <pattern>1bÃª</pattern>
+  <pattern>1bÃ­</pattern>
+  <pattern>1bÃ³</pattern>
+  <pattern>1bÃµ</pattern>
+  <pattern>1bÃº</pattern>
   <pattern>1ca</pattern>
   <pattern>c3c</pattern>
   <pattern>1ce</pattern>
@@ -60,15 +60,15 @@
   <pattern>1co</pattern>
   <pattern>1c2r</pattern>
   <pattern>1cu</pattern>
-  <pattern>1cá</pattern>
-  <pattern>1câ</pattern>
-  <pattern>1cã</pattern>
-  <pattern>1cé</pattern>
-  <pattern>1cê</pattern>
-  <pattern>1cí</pattern>
-  <pattern>1có</pattern>
-  <pattern>1cõ</pattern>
-  <pattern>1cú</pattern>
+  <pattern>1cÃ¡</pattern>
+  <pattern>1cÃ¢</pattern>
+  <pattern>1cÃ£</pattern>
+  <pattern>1cÃ©</pattern>
+  <pattern>1cÃª</pattern>
+  <pattern>1cÃ­</pattern>
+  <pattern>1cÃ³</pattern>
+  <pattern>1cÃµ</pattern>
+  <pattern>1cÃº</pattern>
   <pattern>1da</pattern>
   <pattern>1de</pattern>
   <pattern>1di</pattern>
@@ -76,15 +76,15 @@
   <pattern>1do</pattern>
   <pattern>1d2r</pattern>
   <pattern>1du</pattern>
-  <pattern>1dá</pattern>
-  <pattern>1dâ</pattern>
-  <pattern>1dã</pattern>
-  <pattern>1dé</pattern>
-  <pattern>1dê</pattern>
-  <pattern>1dí</pattern>
-  <pattern>1dó</pattern>
-  <pattern>1dõ</pattern>
-  <pattern>1dú</pattern>
+  <pattern>1dÃ¡</pattern>
+  <pattern>1dÃ¢</pattern>
+  <pattern>1dÃ£</pattern>
+  <pattern>1dÃ©</pattern>
+  <pattern>1dÃª</pattern>
+  <pattern>1dÃ­</pattern>
+  <pattern>1dÃ³</pattern>
+  <pattern>1dÃµ</pattern>
+  <pattern>1dÃº</pattern>
   <pattern>e3a</pattern>
   <pattern>e3e</pattern>
   <pattern>e3o</pattern>
@@ -95,15 +95,15 @@
   <pattern>1fo</pattern>
   <pattern>1f2r</pattern>
   <pattern>1fu</pattern>
-  <pattern>1fá</pattern>
-  <pattern>1fâ</pattern>
-  <pattern>1fã</pattern>
-  <pattern>1fé</pattern>
-  <pattern>1fê</pattern>
-  <pattern>1fí</pattern>
-  <pattern>1fó</pattern>
-  <pattern>1fõ</pattern>
-  <pattern>1fú</pattern>
+  <pattern>1fÃ¡</pattern>
+  <pattern>1fÃ¢</pattern>
+  <pattern>1fÃ£</pattern>
+  <pattern>1fÃ©</pattern>
+  <pattern>1fÃª</pattern>
+  <pattern>1fÃ­</pattern>
+  <pattern>1fÃ³</pattern>
+  <pattern>1fÃµ</pattern>
+  <pattern>1fÃº</pattern>
   <pattern>1ga</pattern>
   <pattern>1ge</pattern>
   <pattern>1gi</pattern>
@@ -115,36 +115,36 @@
   <pattern>1gu4e</pattern>
   <pattern>1gu4i</pattern>
   <pattern>1gu4o</pattern>
-  <pattern>1gá</pattern>
-  <pattern>1gâ</pattern>
-  <pattern>1gã</pattern>
-  <pattern>1gé</pattern>
-  <pattern>1gê</pattern>
-  <pattern>1gí</pattern>
-  <pattern>1gó</pattern>
-  <pattern>1gõ</pattern>
-  <pattern>1gú</pattern>
+  <pattern>1gÃ¡</pattern>
+  <pattern>1gÃ¢</pattern>
+  <pattern>1gÃ£</pattern>
+  <pattern>1gÃ©</pattern>
+  <pattern>1gÃª</pattern>
+  <pattern>1gÃ­</pattern>
+  <pattern>1gÃ³</pattern>
+  <pattern>1gÃµ</pattern>
+  <pattern>1gÃº</pattern>
   <pattern>i3a</pattern>
   <pattern>i3e</pattern>
   <pattern>i3i</pattern>
   <pattern>i3o</pattern>
-  <pattern>i3â</pattern>
-  <pattern>i3ê</pattern>
-  <pattern>i3ô</pattern>
+  <pattern>i3Ã¢</pattern>
+  <pattern>i3Ãª</pattern>
+  <pattern>i3Ã´</pattern>
   <pattern>1ja</pattern>
   <pattern>1je</pattern>
   <pattern>1ji</pattern>
   <pattern>1jo</pattern>
   <pattern>1ju</pattern>
-  <pattern>1já</pattern>
-  <pattern>1jâ</pattern>
-  <pattern>1jã</pattern>
-  <pattern>1jé</pattern>
-  <pattern>1jê</pattern>
-  <pattern>1jí</pattern>
-  <pattern>1jó</pattern>
-  <pattern>1jõ</pattern>
-  <pattern>1jú</pattern>
+  <pattern>1jÃ¡</pattern>
+  <pattern>1jÃ¢</pattern>
+  <pattern>1jÃ£</pattern>
+  <pattern>1jÃ©</pattern>
+  <pattern>1jÃª</pattern>
+  <pattern>1jÃ­</pattern>
+  <pattern>1jÃ³</pattern>
+  <pattern>1jÃµ</pattern>
+  <pattern>1jÃº</pattern>
   <pattern>1ka</pattern>
   <pattern>1ke</pattern>
   <pattern>1ki</pattern>
@@ -152,59 +152,59 @@
   <pattern>1ko</pattern>
   <pattern>1k2r</pattern>
   <pattern>1ku</pattern>
-  <pattern>1ká</pattern>
-  <pattern>1kâ</pattern>
-  <pattern>1kã</pattern>
-  <pattern>1ké</pattern>
-  <pattern>1kê</pattern>
-  <pattern>1kí</pattern>
-  <pattern>1kó</pattern>
-  <pattern>1kõ</pattern>
-  <pattern>1kú</pattern>
+  <pattern>1kÃ¡</pattern>
+  <pattern>1kÃ¢</pattern>
+  <pattern>1kÃ£</pattern>
+  <pattern>1kÃ©</pattern>
+  <pattern>1kÃª</pattern>
+  <pattern>1kÃ­</pattern>
+  <pattern>1kÃ³</pattern>
+  <pattern>1kÃµ</pattern>
+  <pattern>1kÃº</pattern>
   <pattern>1la</pattern>
   <pattern>1le</pattern>
   <pattern>1l2h</pattern>
   <pattern>1li</pattern>
   <pattern>1lo</pattern>
   <pattern>1lu</pattern>
-  <pattern>1lá</pattern>
-  <pattern>1lâ</pattern>
-  <pattern>1lã</pattern>
-  <pattern>1lé</pattern>
-  <pattern>1lê</pattern>
-  <pattern>1lí</pattern>
-  <pattern>1ló</pattern>
-  <pattern>1lõ</pattern>
-  <pattern>1lú</pattern>
+  <pattern>1lÃ¡</pattern>
+  <pattern>1lÃ¢</pattern>
+  <pattern>1lÃ£</pattern>
+  <pattern>1lÃ©</pattern>
+  <pattern>1lÃª</pattern>
+  <pattern>1lÃ­</pattern>
+  <pattern>1lÃ³</pattern>
+  <pattern>1lÃµ</pattern>
+  <pattern>1lÃº</pattern>
   <pattern>1ma</pattern>
   <pattern>1me</pattern>
   <pattern>1mi</pattern>
   <pattern>1mo</pattern>
   <pattern>1mu</pattern>
-  <pattern>1má</pattern>
-  <pattern>1mâ</pattern>
-  <pattern>1mã</pattern>
-  <pattern>1mé</pattern>
-  <pattern>1mê</pattern>
-  <pattern>1mí</pattern>
-  <pattern>1mó</pattern>
-  <pattern>1mõ</pattern>
-  <pattern>1mú</pattern>
+  <pattern>1mÃ¡</pattern>
+  <pattern>1mÃ¢</pattern>
+  <pattern>1mÃ£</pattern>
+  <pattern>1mÃ©</pattern>
+  <pattern>1mÃª</pattern>
+  <pattern>1mÃ­</pattern>
+  <pattern>1mÃ³</pattern>
+  <pattern>1mÃµ</pattern>
+  <pattern>1mÃº</pattern>
   <pattern>1na</pattern>
   <pattern>1ne</pattern>
   <pattern>1n2h</pattern>
   <pattern>1ni</pattern>
   <pattern>1no</pattern>
   <pattern>1nu</pattern>
-  <pattern>1ná</pattern>
-  <pattern>1nâ</pattern>
-  <pattern>1nã</pattern>
-  <pattern>1né</pattern>
-  <pattern>1nê</pattern>
-  <pattern>1ní</pattern>
-  <pattern>1nó</pattern>
-  <pattern>1nõ</pattern>
-  <pattern>1nú</pattern>
+  <pattern>1nÃ¡</pattern>
+  <pattern>1nÃ¢</pattern>
+  <pattern>1nÃ£</pattern>
+  <pattern>1nÃ©</pattern>
+  <pattern>1nÃª</pattern>
+  <pattern>1nÃ­</pattern>
+  <pattern>1nÃ³</pattern>
+  <pattern>1nÃµ</pattern>
+  <pattern>1nÃº</pattern>
   <pattern>o3a</pattern>
   <pattern>o3e</pattern>
   <pattern>o3o</pattern>
@@ -215,15 +215,15 @@
   <pattern>1po</pattern>
   <pattern>1p2r</pattern>
   <pattern>1pu</pattern>
-  <pattern>1pá</pattern>
-  <pattern>1pâ</pattern>
-  <pattern>1pã</pattern>
-  <pattern>1pé</pattern>
-  <pattern>1pê</pattern>
-  <pattern>1pí</pattern>
-  <pattern>1pó</pattern>
-  <pattern>1põ</pattern>
-  <pattern>1pú</pattern>
+  <pattern>1pÃ¡</pattern>
+  <pattern>1pÃ¢</pattern>
+  <pattern>1pÃ£</pattern>
+  <pattern>1pÃ©</pattern>
+  <pattern>1pÃª</pattern>
+  <pattern>1pÃ­</pattern>
+  <pattern>1pÃ³</pattern>
+  <pattern>1pÃµ</pattern>
+  <pattern>1pÃº</pattern>
   <pattern>1qu4a</pattern>
   <pattern>1qu4e</pattern>
   <pattern>1qu4i</pattern>
@@ -234,30 +234,30 @@
   <pattern>1ro</pattern>
   <pattern>r3r</pattern>
   <pattern>1ru</pattern>
-  <pattern>1rá</pattern>
-  <pattern>1râ</pattern>
-  <pattern>1rã</pattern>
-  <pattern>1ré</pattern>
-  <pattern>1rê</pattern>
-  <pattern>1rí</pattern>
-  <pattern>1ró</pattern>
-  <pattern>1rõ</pattern>
-  <pattern>1rú</pattern>
+  <pattern>1rÃ¡</pattern>
+  <pattern>1rÃ¢</pattern>
+  <pattern>1rÃ£</pattern>
+  <pattern>1rÃ©</pattern>
+  <pattern>1rÃª</pattern>
+  <pattern>1rÃ­</pattern>
+  <pattern>1rÃ³</pattern>
+  <pattern>1rÃµ</pattern>
+  <pattern>1rÃº</pattern>
   <pattern>1sa</pattern>
   <pattern>1se</pattern>
   <pattern>1si</pattern>
   <pattern>1so</pattern>
   <pattern>s3s</pattern>
   <pattern>1su</pattern>
-  <pattern>1sá</pattern>
-  <pattern>1sâ</pattern>
-  <pattern>1sã</pattern>
-  <pattern>1sé</pattern>
-  <pattern>1sê</pattern>
-  <pattern>1sí</pattern>
-  <pattern>1só</pattern>
-  <pattern>1sõ</pattern>
-  <pattern>1sú</pattern>
+  <pattern>1sÃ¡</pattern>
+  <pattern>1sÃ¢</pattern>
+  <pattern>1sÃ£</pattern>
+  <pattern>1sÃ©</pattern>
+  <pattern>1sÃª</pattern>
+  <pattern>1sÃ­</pattern>
+  <pattern>1sÃ³</pattern>
+  <pattern>1sÃµ</pattern>
+  <pattern>1sÃº</pattern>
   <pattern>1ta</pattern>
   <pattern>1te</pattern>
   <pattern>1ti</pattern>
@@ -265,15 +265,15 @@
   <pattern>1to</pattern>
   <pattern>1t2r</pattern>
   <pattern>1tu</pattern>
-  <pattern>1tá</pattern>
-  <pattern>1tâ</pattern>
-  <pattern>1tã</pattern>
-  <pattern>1té</pattern>
-  <pattern>1tê</pattern>
-  <pattern>1tí</pattern>
-  <pattern>1tó</pattern>
-  <pattern>1tõ</pattern>
-  <pattern>1tú</pattern>
+  <pattern>1tÃ¡</pattern>
+  <pattern>1tÃ¢</pattern>
+  <pattern>1tÃ£</pattern>
+  <pattern>1tÃ©</pattern>
+  <pattern>1tÃª</pattern>
+  <pattern>1tÃ­</pattern>
+  <pattern>1tÃ³</pattern>
+  <pattern>1tÃµ</pattern>
+  <pattern>1tÃº</pattern>
   <pattern>u3a</pattern>
   <pattern>u3e</pattern>
   <pattern>u3o</pattern>
@@ -285,15 +285,15 @@
   <pattern>1vo</pattern>
   <pattern>1v2r</pattern>
   <pattern>1vu</pattern>
-  <pattern>1vá</pattern>
-  <pattern>1vâ</pattern>
-  <pattern>1vã</pattern>
-  <pattern>1vé</pattern>
-  <pattern>1vê</pattern>
-  <pattern>1ví</pattern>
-  <pattern>1vó</pattern>
-  <pattern>1võ</pattern>
-  <pattern>1vú</pattern>
+  <pattern>1vÃ¡</pattern>
+  <pattern>1vÃ¢</pattern>
+  <pattern>1vÃ£</pattern>
+  <pattern>1vÃ©</pattern>
+  <pattern>1vÃª</pattern>
+  <pattern>1vÃ­</pattern>
+  <pattern>1vÃ³</pattern>
+  <pattern>1vÃµ</pattern>
+  <pattern>1vÃº</pattern>
   <pattern>1w2l</pattern>
   <pattern>1w2r</pattern>
   <pattern>1xa</pattern>
@@ -301,41 +301,41 @@
   <pattern>1xi</pattern>
   <pattern>1xo</pattern>
   <pattern>1xu</pattern>
-  <pattern>1xá</pattern>
-  <pattern>1xâ</pattern>
-  <pattern>1xã</pattern>
-  <pattern>1xé</pattern>
-  <pattern>1xê</pattern>
-  <pattern>1xí</pattern>
-  <pattern>1xó</pattern>
-  <pattern>1xõ</pattern>
-  <pattern>1xú</pattern>
+  <pattern>1xÃ¡</pattern>
+  <pattern>1xÃ¢</pattern>
+  <pattern>1xÃ£</pattern>
+  <pattern>1xÃ©</pattern>
+  <pattern>1xÃª</pattern>
+  <pattern>1xÃ­</pattern>
+  <pattern>1xÃ³</pattern>
+  <pattern>1xÃµ</pattern>
+  <pattern>1xÃº</pattern>
   <pattern>1za</pattern>
   <pattern>1ze</pattern>
   <pattern>1zi</pattern>
   <pattern>1zo</pattern>
   <pattern>1zu</pattern>
-  <pattern>1zá</pattern>
-  <pattern>1zâ</pattern>
-  <pattern>1zã</pattern>
-  <pattern>1zé</pattern>
-  <pattern>1zê</pattern>
-  <pattern>1zí</pattern>
-  <pattern>1zó</pattern>
-  <pattern>1zõ</pattern>
-  <pattern>1zú</pattern>
-  <pattern>1ça</pattern>
-  <pattern>1çe</pattern>
-  <pattern>1çi</pattern>
-  <pattern>1ço</pattern>
-  <pattern>1çu</pattern>
-  <pattern>1çá</pattern>
-  <pattern>1çâ</pattern>
-  <pattern>1çã</pattern>
-  <pattern>1çé</pattern>
-  <pattern>1çê</pattern>
-  <pattern>1çí</pattern>
-  <pattern>1çó</pattern>
-  <pattern>1çõ</pattern>
-  <pattern>1çú</pattern>
+  <pattern>1zÃ¡</pattern>
+  <pattern>1zÃ¢</pattern>
+  <pattern>1zÃ£</pattern>
+  <pattern>1zÃ©</pattern>
+  <pattern>1zÃª</pattern>
+  <pattern>1zÃ­</pattern>
+  <pattern>1zÃ³</pattern>
+  <pattern>1zÃµ</pattern>
+  <pattern>1zÃº</pattern>
+  <pattern>1Ã§a</pattern>
+  <pattern>1Ã§e</pattern>
+  <pattern>1Ã§i</pattern>
+  <pattern>1Ã§o</pattern>
+  <pattern>1Ã§u</pattern>
+  <pattern>1Ã§Ã¡</pattern>
+  <pattern>1Ã§Ã¢</pattern>
+  <pattern>1Ã§Ã£</pattern>
+  <pattern>1Ã§Ã©</pattern>
+  <pattern>1Ã§Ãª</pattern>
+  <pattern>1Ã§Ã­</pattern>
+  <pattern>1Ã§Ã³</pattern>
+  <pattern>1Ã§Ãµ</pattern>
+  <pattern>1Ã§Ãº</pattern>
 </HyphenationDescription>
