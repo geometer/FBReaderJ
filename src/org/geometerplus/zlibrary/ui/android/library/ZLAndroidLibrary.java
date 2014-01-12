@@ -54,8 +54,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
-	public final ZLBooleanOption EInkFastRefreshOption = new ZLBooleanOption("LookNFeel", "EInkFastRefresh", DeviceType.Instance().isEInk());
-	public final ZLIntegerRangeOption EInkUpdateIntervalOption = new ZLIntegerRangeOption("LookNFeel", "EInkUpdateInterval", 0, 20, 10);
 
 	@Override
 	public boolean isEInk() {

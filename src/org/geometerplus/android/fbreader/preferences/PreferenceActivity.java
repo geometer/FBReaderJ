@@ -63,6 +63,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FooterOptions footerOptions = fbReader.FooterOptions;
 		final PageTurningOptions pageTurningOptions = new PageTurningOptions();
 		final ImageOptions imageOptions = new ImageOptions();
+		final EInkOptions einkOptions = new EInkOptions();
 		final ColorProfile profile = fbReader.getColorProfile();
 		final ZLTextStyleCollection collection = fbReader.TextStyleCollection;
 		final ZLKeyBindings keyBindings = new ZLKeyBindings();
@@ -559,12 +560,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			final Screen einkScreen = createPreferenceScreen("eink");
 			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
 			
-			final ZLIntegerRangePreference einkUpd = new ZLIntegerRangePreference(this, einkScreen.Resource.getResource("interval"), androidLibrary.EInkUpdateIntervalOption);
-				final ZLBooleanPreference einkOpt = new ZLBooleanPreference(this, androidLibrary.EInkFastRefreshOption, einkScreen.Resource, "optimization") {
+			final ZLIntegerRangePreference einkUpd = new ZLIntegerRangePreference(this, einkScreen.Resource.getResource("interval"), einkOptions.UpdateInterval);
+				final ZLBooleanPreference einkOpt = new ZLBooleanPreference(this, einkOptions.EnableFastRefresh, einkScreen.Resource, "optimization") {
 					@Override
 					protected void onClick() {
 						super.onClick();
-						einkPreferences.setEnabled(androidLibrary.EInkFastRefreshOption.getValue());
+						einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
 					}
 				};	
 	
@@ -572,7 +573,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			einkScreen.addPreference(einkUpd);
 	
 			einkPreferences.add(einkUpd);
-			einkPreferences.setEnabled(androidLibrary.EInkFastRefreshOption.getValue());
+			einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
 		}
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
