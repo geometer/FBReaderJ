@@ -298,7 +298,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
 				if (myFBReaderApp.MiscOptions.YotaDrawOnBackScreen.getValue()) {
-					new YotaSwitchScreenAction(this, myFBReaderApp, true).run();
+					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
 				}
 			}
 		});
@@ -978,7 +978,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	public void refreshYotaScreen() {
-		if (getZLibrary().getDevice() != ZLAndroidLibrary.Device.YOTA_PHONE) {
+		if (DeviceType.Instance() == DeviceType.YOTA_PHONE) {
 			return;
 		}
 
