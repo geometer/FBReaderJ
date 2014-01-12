@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.fbreader.ActionCode;
 
 import org.geometerplus.android.util.DeviceType;
 
@@ -42,7 +41,6 @@ public final class ZLKeyBindings {
 	private ZLStringListOption myKeysOption;
 	private final TreeMap<Integer,ZLStringOption> myActionMap = new TreeMap<Integer,ZLStringOption>();
 	private final TreeMap<Integer,ZLStringOption> myLongPressActionMap = new TreeMap<Integer,ZLStringOption>();
-	private final boolean isNookTouch = isNookTouch();
 
 	public ZLKeyBindings() {
 		this("Keys");
@@ -56,16 +54,16 @@ public final class ZLKeyBindings {
 	private class Initializer implements Runnable {
 		public void run() {
 			final Set<String> keys = new TreeSet<String>();
-			final String keymapFilename = isNookTouch ? "/keymap-nook.xml" : "/keymap.xml";		
+			final String keymapFilename = isNookTouch() ? "/keymap-nook.xml" : "/keymap.xml";		
 			new Reader(keys).readQuietly(ZLFile.createFileByPath("default" + keymapFilename));
 			
 			try {
-				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + keymapFilename));
+				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
 			} catch (Exception e) {
 				// ignore
 			}
 			try {
-				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + keymapFilename));
+				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + "/keymap.xml"));
 			} catch (Exception e) {
 				// ignore
 			}
@@ -159,16 +157,6 @@ public final class ZLKeyBindings {
 				}
 			}
 			return false;
-		}
-	}
-
-	private void initSpecificKeys(ZLKeyBindings b) {
-		final DeviceType deviceType = DeviceType.Instance();
-		if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
-			b.bindKey(92, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
-			b.bindKey(94, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
-			b.bindKey(93, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
-			b.bindKey(95, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
 		}
 	}
 }
