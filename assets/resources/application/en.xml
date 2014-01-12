@@ -742,7 +742,7 @@
 			</node>
 		</node>
 		<node name="eink" value="E-ink screen">
-			<node name="summary" value="Specific options for e-ink screen"/>
+			<node name="summary" value="Specific options for e-ink screens"/>
 			<node name="enableFastRefresh" value="Fast refresh mode">
 				<node name="summaryOn" value="Use fast (but not very clean) screen update"/>
 				<node name="summaryOff" value="Use complete (clean, but slow) screen update"/>
@@ -911,16 +911,16 @@
 			<node name="summary" value="Read aloud"/>
 		</node>
 		<node name="local-opds-scanner" value="Local OPDS Scanner">
-			<node name="summary" value="Look for books in local network"/>
+			<node name="summary" value="Look for books in the local network"/>
 		</node>
 		<node name="bookshelf" value="Bookshelf">
 			<node name="summary" value="Thumbnail library view"/>
 		</node>
 		<node name="opds-server" value="OPDS Server">
-			<node name="summary" value="Feed books from the device"/>
+			<node name="summary" value="Serve books from your device"/>
 		</node>
 		<node name="widgets" value="Widgets">
-			<node name="summary" value="Add books onto home screen"/>
+			<node name="summary" value="Add books to your home screen"/>
 		</node>
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Read books in PDF format"/>
