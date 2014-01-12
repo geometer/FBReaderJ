@@ -22,14 +22,17 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 
 import android.view.KeyEvent;
-import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.Paths;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+
+import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.fbreader.ActionCode;
+
+import org.geometerplus.android.util.DeviceType;
 
 public final class ZLKeyBindings {
 	private static final String ACTION = "Action";
@@ -66,7 +69,7 @@ public final class ZLKeyBindings {
 			} catch (Exception e) {
 				// ignore
 			}
-			myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
+			myKeysOption = new ZLStringListOption(myName, "KeyList", new ArrayList<String>(keys), ",");
 		}
 	}
 
@@ -156,6 +159,16 @@ public final class ZLKeyBindings {
 				}
 			}
 			return false;
+		}
+	}
+
+	private void initSpecificKeys(ZLKeyBindings b) {
+		final DeviceType deviceType = DeviceType.Instance();
+		if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
+			b.bindKey(92, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+			b.bindKey(94, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+			b.bindKey(93, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+			b.bindKey(95, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
 		}
 	}
 }
