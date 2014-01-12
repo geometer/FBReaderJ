@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.core.library;
 
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
@@ -60,8 +59,7 @@ public abstract class ZLibrary {
 	abstract public int getHeightInPixels();
 	abstract public List<String> defaultLanguageCodes();
 	
-	abstract public boolean isEInk();//simple interface settings
-	abstract public void initSpecificKeys(ZLKeyBindings b);
+	abstract public boolean isEInk();
 
 	abstract public boolean supportsAllOrientations();
 	public String[] allOrientations() {

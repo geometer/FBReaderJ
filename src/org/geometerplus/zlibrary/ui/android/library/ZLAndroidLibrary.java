@@ -34,7 +34,6 @@ import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 
-import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -42,8 +41,6 @@ import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
-import org.geometerplus.fbreader.fbreader.ActionCode;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.util.DeviceType;
@@ -58,17 +55,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public boolean isEInk() {
 		return DeviceType.Instance().isEInk();
-	}
-
-	@Override
-	public void initSpecificKeys(ZLKeyBindings b) {
-		final DeviceType deviceType = DeviceType.Instance();
-		if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
-			b.bindKey(92, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
-			b.bindKey(94, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
-			b.bindKey(93, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
-			b.bindKey(95, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
-		}
 	}
 
 	private FBReader myActivity;
