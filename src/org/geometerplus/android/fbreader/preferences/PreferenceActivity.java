@@ -556,7 +556,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 		
-		if (DeviceType.Instance().isEInkFastRefreshSupported()) {
+		if (DeviceType.Instance().isEInk()) {
 			final Screen einkScreen = createPreferenceScreen("eink");
 			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
 			
