@@ -54,31 +54,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
 
-	public static enum Device {
-		GENERIC,
-		YOTA_PHONE,
-		KINDLE_FIRE_1ST_GENERATION,
-		KINDLE_FIRE_2ND_GENERATION,
-		KINDLE_FIRE_HD,
-		NOOK,
-		NOOK12,
-		EKEN_M001,
-		PAN_DIGITAL,
-		SAMSUNG_GT_S5830;
-
-		public boolean hasNoHardwareMenuButton() {
-			return this == EKEN_M001 || this == PAN_DIGITAL;
-		}
-
-		public boolean hasButtonLightsBug() {
-			return this == SAMSUNG_GT_S5830;
-		}
-
-		public boolean isEInk() {
-			return this == NOOK || this == NOOK12;
-		}
-	}
-
 	private FBReader myActivity;
 	private final Application myApplication;
 
