@@ -52,9 +52,10 @@ public enum DeviceType {
 				ourInstance = EKEN_M001;
 			} else if ("PD_Novel".equals(Build.MODEL)) {
 				ourInstance = PAN_DIGITAL;
-			} else if ("barnesandnoble".equalsIgnoreCase(Build.MANUFACTURER) &&
-					   "zoom2".equalsIgnoreCase(Build.DEVICE) &&
+			} else if ("BarnesAndNoble".equals(Build.MANUFACTURER) &&
+					   "zoom2".equals(Build.DEVICE) &&
 					   ("NOOK".equals(Build.MODEL) ||
+						"unknown".equals(Build.MODEL) ||
 						"BNRV350".equals(Build.MODEL) ||
 						"BNRV300".equals(Build.MODEL))) {
 				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
