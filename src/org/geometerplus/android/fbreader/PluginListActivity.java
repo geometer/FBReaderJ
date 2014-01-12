@@ -92,7 +92,7 @@ public class PluginListActivity extends ListActivity {
 		private final List<Plugin> myPlugins = new LinkedList<Plugin>();
 
 		PluginListAdapter() {
-			new Reader(myPlugins).readQuietly(ZLFile.createFileByPath("plugins.xml"));
+			new Reader(myPlugins).readQuietly(ZLFile.createFileByPath("default/plugins.xml"));
 		}
 
 		public final int getCount() {
