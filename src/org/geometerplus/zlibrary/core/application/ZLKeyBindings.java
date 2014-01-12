@@ -63,33 +63,6 @@ public final class ZLKeyBindings {
 				// ignore
 			}
 			myKeysOption = new ZLStringListOption(myName, "KeyList", new ArrayList<String>(keys), ",");
-
-			// this code is for migration from FBReader versions <= 1.1.2
-			ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
-			if (!"".equals(oldBackKeyOption.getValue())) {
-				bindKey(KeyEvent.KEYCODE_BACK, false, oldBackKeyOption.getValue());
-				oldBackKeyOption.setValue("");
-			}
-			oldBackKeyOption = new ZLStringOption(myName + ":" + LONG_PRESS_ACTION, "<Back>", "");
-			if (!"".equals(oldBackKeyOption.getValue())) {
-				bindKey(KeyEvent.KEYCODE_BACK, true, oldBackKeyOption.getValue());
-				oldBackKeyOption.setValue("");
-			}
-
-			final ZLBooleanOption volumeKeysOption =
-				new ZLBooleanOption("Scrolling", "VolumeKeys", true);
-			final ZLBooleanOption invertVolumeKeysOption =
-				new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
-			if (!volumeKeysOption.getValue()) {
-				bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ZLApplication.NoAction);
-				bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ZLApplication.NoAction);
-			} else if (invertVolumeKeysOption.getValue()) {
-				bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
-				bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
-			}
-			volumeKeysOption.setValue(true);
-			invertVolumeKeysOption.setValue(false);
-			// end of migration code
 		}
 	}
 
