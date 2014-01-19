@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.core.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class SliceInputStream extends ZLInputStreamWithOffset {
+public class SliceInputStream extends InputStreamWithOffset {
 	private final int myStart;
 	private final int myLength;
 
