@@ -97,7 +97,7 @@ shared_ptr<ZLInputStream> ZLFile::envelopeCompressedStream(shared_ptr<ZLInputStr
 
 shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 	shared_ptr<ZLInputStream> stream;
-	
+
 	int index = ZLFSManager::Instance().findArchiveFileNameDelimiter(myPath);
 	if (index == -1) {
 		if (isDirectory()) {
