@@ -22,11 +22,11 @@ package org.geometerplus.zlibrary.core.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ZLInputStreamWithOffset extends InputStream {
+public class InputStreamWithOffset extends InputStream {
 	private final InputStream myDecoratedStream;
 	private int myOffset = 0;
 
-	public ZLInputStreamWithOffset(InputStream stream) {
+	public InputStreamWithOffset(InputStream stream) {
 		myDecoratedStream = stream;
 	}
 
