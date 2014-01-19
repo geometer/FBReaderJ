@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011. Last update 11-May-2013. -->
+<!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011. Last update 10-Jan-2014 -->
 <resources>
 	<node name="library" value="FBReader bibliotheek">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -40,7 +40,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Lokaal zoeken"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="rescan" value="Vernieuwen"/>
 		</node>
 		<node name="openBook" value="Boek openen"/>
 		<node name="showBookInfo" value="Boekinformatie"/>
@@ -73,8 +73,8 @@
 		<node name="found" value="Gevonden">
 			<node name="summary" value="Zoekresultaten voor: %s"/>
 		</node>
-		<node name="recent" value="Recent catalogs" toBeTranslated="true">
-			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
+		<node name="recent" value="Recente catalogussen">
+			<node name="summary" value="Catalogussen die je recent bezocht hebt"/>
 		</node>
 		<node name="openCatalog" value="Open catalogus"/>
 		<node name="networkSearch" value="Zoeken"/>
@@ -93,7 +93,7 @@
 		<node name="clearBasket" value="Mandje leegmaken"/>
 		<node name="buyAllBooks" value="Koop alle boeken"/>
 		<node name="openInBrowser" value="Openen in de browser"/>
-		<node name="stopLoading" value="Stop loading" toBeTranslated="true"/>
+		<node name="stopLoading" value="Stop met laden"/>
 		<node name="stopSearching" value="Stop met zoeken"/>
 		<node name="signIn" value="Aanmelden"/>
 		<node name="signOut" value="Afmelden (%s)"/>
@@ -101,7 +101,7 @@
 		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open pagina in de browser"/>
 		<node name="authorizationMenuTitle" value="Selecteer actie"/>
-		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
+		<node name="topupSummary" value="Momenteel: %s"/>
 		<node name="basket" value="Mandje"/>
 		<node name="basketSummaryEmpty" value="Geen boeken"/>
 		<node name="basketSummaryCountOnly" value="%0 boeken">
@@ -112,13 +112,13 @@
 		</node>
 		<node name="alreadyDownloading" value="Boek wordt gedownload"/>
 		<node name="alreadyDownloadingDemo" value="Voorbeeld wordt gedownload"/>
-		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true"/>
-		<node name="stoppingNetworkSearch" value="Stopping search" toBeTranslated="true"/>
+		<node name="stoppingCatalogLoading" value="Stoppen met laden"/>
+		<node name="stoppingNetworkSearch" value="Stoppen met zoeken"/>
 		<node name="editCustomCatalog" value="Catalogus bewerken"/>
 		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
 		<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 		<node name="addCustomCatalogSummary" value="Voeg handmatig eigen OPDS-catalogus toe"/>
-		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
+		<node name="disableCatalog" value="Catalogus uitschakelen"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Wil je de lokale kopie lezen?"/>
 			<node name="download" value="Wil je dit boek downloaden?"/>
@@ -135,10 +135,10 @@
 			<node name="title" value="Catalog toevoegen"/>
 			<node name="editUrl" value="Geef URL handmatig op"/>
 		</node>
-		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
-			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
-			<node name="enabled" value="Enabled" toBeTranslated="true"/>
-			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		<node name="manageCatalogs" value="Catalogussen beheren">
+			<node name="summary" value="Configureer jouw catalogussen"/>
+			<node name="enabled" value="Inschakelen"/>
+			<node name="disabled" value="Uitschakelen"/>
 		</node>
 		<node name="menu">
 			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
@@ -150,7 +150,7 @@
 			<node name="topup" value="Top up account" toBeTranslated="true"/>
 			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 			<node name="refreshCatalogsList" value="Catalogi vernieuwen"/>
-			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
+			<node name="manageCatalogs" value="Beheer catalogussen"/>
 			<node name="clearBasket" value="Leeg mandje"/>
 			<node name="buyAllBooks" value="Koop alle boeken"/>
 		</node>
@@ -234,16 +234,16 @@
 	</node>
 	<node name="style" value="Stijl %s"/>
 	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="editStyle" value="Stijl aanpassen…"/>
 		<node name="deleteBookmark" value="Bladwijzer verwijderen"/>
 	</node>
 	<node name="editStyle">
-		<node name="name" value="Style name" toBeTranslated="true"/>
+		<node name="name" value="Stijlnaam"/>
 		<node name="invisible" value="Invisible" toBeTranslated="true">
 			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
 			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
 		</node>
-		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+		<node name="bgColor" value="Achtergrondkleur"/>
 	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Kopieer naar klembord"/>
@@ -263,8 +263,8 @@
 		<node name="toc" value="Inhoud"/>
 		<node name="day" value="Dag"/>
 		<node name="night" value="Nacht"/>
-		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
-		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToBackScreen" value="Schakel naar achter-scherm"/>
+		<node name="yotaSwitchToFrontScreen" value="Schakel naar voor-scherm"/>
 		<node name="networkLibrary" value="Netwerkbibliotheek"/>
 		<node name="navigate" value="Navigeer">
 			<node name="toc" value="Inhoudsopgave"/>
@@ -291,8 +291,8 @@
 		<node name="decreaseFont" value="Uitzoomen"/>
 		<node name="toggleFullscreen" value="Volledig scherm"/>
 		<node name="bookmarks" value="Bladwijzers"/>
-		<node name="help" value="Help" toBeTranslated="true"/>
-		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+		<node name="help" value="Help"/>
+		<node name="plugins" value="Plug-ins"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Bestandsnaam"/>
@@ -355,8 +355,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="Voorkom uitschakelen scherm">
 				<node name="0" value="Altijd"/>
-				<node name="25" value="Zolang batterijniveau hoger is dan 25 procent"/>
-				<node name="50" value="Zolang batterijniveau hoger is dan 50 procent"/>
+				<node name="25" value="Zolang batterijniveau hoger is dan 25%"/>
+				<node name="50" value="Zolang batterijniveau hoger is dan 50%"/>
 				<node name="100" value="Nooit"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Voorkom uitschakelen scherm tijdens opladen">
@@ -721,7 +721,7 @@
 				<node name="none" value="Geen actie"/>
 			</node>
 		</node>
-		<node name="tips" value="Tips" toBeTranslated="true">
+		<node name="tips" value="Tips">
 			<node name="summary" value="Dagelijkse tips"/>
 			<node name="showTips" value="Toon tips">
 				<node name="summaryOn" value="Toon dagelijkse tips"/>
@@ -817,8 +817,8 @@
 			<node name="noUserEmail" value="Er is geen gebruik bekend met het opgegeven e-mailadres"/>
 			<node name="unsupportedOperation" value="Bewerking wordt niet ondersteund"/>
 			<node name="notAnOPDS" value="Dit is geen OPDS-catalogus"/>
-			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true"/>
-			<node name="cacheDirectoryError" value="Maken van de cache-directory is mislukt"/>
+			<node name="noRequiredInformation" value="Aangevraagde informatie is niet beschikbaar in de catalogus"/>
+			<node name="cacheDirectoryError" value="Maken van de cache-map is mislukt"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authenticatie"/>
@@ -878,11 +878,11 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader probleem"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or enter another directory name below." toBeTranslated="true"/>
+			<node name="text" value="FBReader kan niet in de cache-map schrijven. Mogelijk ben je vergeten om de geheugenkaart te plaatsen. Plaats een geheugenkaart of geef een andere mapnaam."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader probleem"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
+			<node name="text" value="FBReader kan de native library niet laden. Het is waarschijnlijk niet goed geïnstalleerd. Als dit probleem blijft bestaan, probeer dan FBReader opnieuw te installeren."/>
 		</node>
 	</node>
 	<node name="error">
@@ -927,7 +927,7 @@
 		</node>
 	</node>
 	<node name="yota">
-		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
-		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+		<node name="frontScreenMessage" value="Draai het apparaat om om je boek te lezen. Om terug te gaan naar dit scherm, druk op de knop hieronder."/>
+		<node name="frontScreenButton" value="Schakel naar dit scherm"/>
 	</node>
 </resources>
