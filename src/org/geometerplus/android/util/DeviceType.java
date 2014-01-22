@@ -19,7 +19,15 @@
 
 package org.geometerplus.android.util;
 
+import org.geometerplus.android.fbreader.FBReader;
+
+import android.app.*;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Build;
+import android.text.InputType;
+import android.widget.EditText;
 
 public enum DeviceType {
 	GENERIC,
@@ -82,22 +90,51 @@ public enum DeviceType {
 	public boolean isEInk() {
 		return this == NOOK || this == NOOK12;
 	}
+	
+	public boolean searchIsBroken() {
+		return this == NOOK || this == NOOK12;
+	}
+	
+	public static AlertDialog.Builder showSearchDialog(final Activity a, final Class c, final String defaultValue) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(a);
+		builder.setTitle("<Search>");
+		final EditText input = new EditText(a);
+		input.setInputType(InputType.TYPE_CLASS_TEXT);
+		input.setText(defaultValue);
+		builder.setView(input);
+		builder.setPositiveButton("<OK>", new DialogInterface.OnClickListener() { 
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		    	Intent i = new Intent(Intent.ACTION_SEARCH);
+		    	i.setClass(a, c);
+		    	i.putExtra(SearchManager.QUERY, input.getText().toString());
+		        a.startActivity(i);
+		    }
+		});
+		builder.setNegativeButton("<Cancel>", new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        dialog.cancel();
+		    }
+		});
+		return builder;
+	}
 
-	/*
-	 * This method will return true if the device is a Nook that
-	 * does not contain a color screen.
-	 * src: http://forum.xda-developers.com/showthread.php?t=2403559
-	 */
-	public static boolean isNookTouch() {
-	    /*
-	     * A rooted Nook Simple Touch as of 12/8/2013 runs Android 2.1.
-	     * No Nook with volume keys should be running anything below Android 2.2
-	     * 	Android 2.2 for Nook Color was released 4/25/2011
-	     * 		http://nookdevs.com/Portal:NookColor
-	     */
-	    return 
-			"BarnesAndNoble".equals(Build.MANUFACTURER) &&
-			"NOOK".equals(Build.PRODUCT) &&
-	    	android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.FROYO;
-    }
+//	/*
+//	 * This method will return true if the device is a Nook that
+//	 * does not contain a color screen.
+//	 * src: http://forum.xda-developers.com/showthread.php?t=2403559
+//	 */
+//	public static boolean isNookTouch() {
+//	    /*
+//	     * A rooted Nook Simple Touch as of 12/8/2013 runs Android 2.1.
+//	     * No Nook with volume keys should be running anything below Android 2.2
+//	     * 	Android 2.2 for Nook Color was released 4/25/2011
+//	     * 		http://nookdevs.com/Portal:NookColor
+//	     */
+//	    return 
+//			"BarnesAndNoble".equals(Build.MANUFACTURER) &&
+//			"NOOK".equals(Build.PRODUCT) &&
+//	    	android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.FROYO;
+//    }
 }

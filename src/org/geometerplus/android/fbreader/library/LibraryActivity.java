@@ -22,20 +22,20 @@ package org.geometerplus.android.fbreader.library;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.*;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.book.Filter;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
-
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -145,7 +145,12 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	public boolean onSearchRequested() {
-		startSearch(BookSearchPatternOption.getValue(), true, null, false);
+		if (DeviceType.Instance().searchIsBroken()) {
+			AlertDialog.Builder builder = DeviceType.showSearchDialog(this, LibrarySearchActivity.class, BookSearchPatternOption.getValue());
+			builder.show();
+		} else {
+			startSearch(BookSearchPatternOption.getValue(), true, null, false);
+		}
 		return true;
 	}
 

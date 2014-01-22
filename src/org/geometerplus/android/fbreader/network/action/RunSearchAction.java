@@ -19,17 +19,23 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
-import android.app.Activity;
+import android.app.*;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.widget.EditText;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
-
 import org.geometerplus.zlibrary.ui.android.R;
-
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.library.LibraryActivity;
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+import org.geometerplus.android.fbreader.network.NetworkSearchActivity;
+import org.geometerplus.android.util.DeviceType;
 
 public class RunSearchAction extends Action {
 	public static SearchCatalogTree getSearchTree(FBTree tree) {
@@ -72,6 +78,12 @@ public class RunSearchAction extends Action {
 			getSearchTree(tree).getUniqueKey()
 		);
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
+		if (DeviceType.Instance().searchIsBroken()) {
+			AlertDialog.Builder builder = DeviceType.showSearchDialog(myActivity, NetworkSearchActivity.class, library.NetworkSearchPatternOption.getValue());
+			builder.show();
+		} else {
+			myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
+		}
+		
 	}
 }

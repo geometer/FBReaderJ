@@ -23,6 +23,7 @@ import java.util.*;
 
 import android.app.*;
 import android.os.*;
+import android.text.InputType;
 import android.view.*;
 import android.widget.*;
 import android.content.*;
@@ -30,14 +31,11 @@ import android.content.*;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-
 import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.fbreader.book.*;
-
+import org.geometerplus.android.fbreader.library.LibraryActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.util.ViewUtil;
+import org.geometerplus.android.util.*;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	private static final int OPEN_ITEM_ID = 0;
@@ -189,7 +187,12 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	@Override
 	public boolean onSearchRequested() {
-		startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
+		if (DeviceType.Instance().searchIsBroken()) {
+			AlertDialog.Builder builder = DeviceType.showSearchDialog(this, BookmarksActivity.class, myBookmarkSearchPatternOption.getValue());
+			builder.show();
+		} else {
+			startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
+		}
 		return true;
 	}
 
