@@ -57,8 +57,7 @@ import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
-import org.geometerplus.android.util.DeviceType;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
 	public static final String ACTION_OPEN_BOOK = "android.fbreader.action.VIEW";
@@ -491,8 +490,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public boolean onSearchRequested() {
 		final FBReaderApp.PopupPanel popup = myFBReaderApp.getActivePopup();
 		myFBReaderApp.hideActivePopup();
-		if (DeviceType.Instance().searchIsBroken()) {
-			AlertDialog.Builder builder = DeviceType.showSearchDialog(this, FBReader.class, myFBReaderApp.MiscOptions.TextSearchPattern.getValue());
+		if (DeviceType.Instance().standardSearchDialogIsMissing()) {
+			final AlertDialog.Builder builder = SearchDialogUtil.createDialog(
+				this, FBReader.class, myFBReaderApp.MiscOptions.TextSearchPattern.getValue()
+			);
 			builder.setOnCancelListener(new OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface arg0) {

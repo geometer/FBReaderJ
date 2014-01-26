@@ -187,9 +187,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	@Override
 	public boolean onSearchRequested() {
-		if (DeviceType.Instance().searchIsBroken()) {
-			AlertDialog.Builder builder = DeviceType.showSearchDialog(this, BookmarksActivity.class, myBookmarkSearchPatternOption.getValue());
-			builder.show();
+		if (DeviceType.Instance().standardSearchDialogIsMissing()) {
+			SearchDialogUtil.createDialog(this, BookmarksActivity.class, myBookmarkSearchPatternOption.getValue()).show();
 		} else {
 			startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
 		}

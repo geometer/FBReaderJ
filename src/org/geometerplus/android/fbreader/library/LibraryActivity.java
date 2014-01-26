@@ -35,8 +35,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.book.Filter;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.android.util.DeviceType;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.*;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
@@ -145,9 +144,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	public boolean onSearchRequested() {
-		if (DeviceType.Instance().searchIsBroken()) {
-			AlertDialog.Builder builder = DeviceType.showSearchDialog(this, LibrarySearchActivity.class, BookSearchPatternOption.getValue());
-			builder.show();
+		if (DeviceType.Instance().standardSearchDialogIsMissing()) {
+			SearchDialogUtil.createDialog(this, LibrarySearchActivity.class, BookSearchPatternOption.getValue()).show();
 		} else {
 			startSearch(BookSearchPatternOption.getValue(), true, null, false);
 		}
