@@ -37,20 +37,20 @@ public class SearchDialogUtil {
 		input.setText(defaultValue);
 		builder.setView(input);
 		builder.setPositiveButton("<OK>", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        activity.startActivity(
-		    		new Intent(Intent.ACTION_SEARCH)
-		    			.setClass(activity, clazz)
-		    			.putExtra(SearchManager.QUERY, input.getText().toString())
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				activity.startActivity(
+					new Intent(Intent.ACTION_SEARCH)
+						.setClass(activity, clazz)
+						.putExtra(SearchManager.QUERY, input.getText().toString())
 				);
-		    }
+			}
 		});
 		builder.setNegativeButton("<Cancel>", new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        dialog.cancel();
-		    }
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
 		});
 		return builder;
 	}
