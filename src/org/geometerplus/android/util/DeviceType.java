@@ -119,22 +119,4 @@ public enum DeviceType {
 		});
 		return builder;
 	}
-
-//	/*
-//	 * This method will return true if the device is a Nook that
-//	 * does not contain a color screen.
-//	 * src: http://forum.xda-developers.com/showthread.php?t=2403559
-//	 */
-//	public static boolean isNookTouch() {
-//	    /*
-//	     * A rooted Nook Simple Touch as of 12/8/2013 runs Android 2.1.
-//	     * No Nook with volume keys should be running anything below Android 2.2
-//	     * 	Android 2.2 for Nook Color was released 4/25/2011
-//	     * 		http://nookdevs.com/Portal:NookColor
-//	     */
-//	    return 
-//			"BarnesAndNoble".equals(Build.MANUFACTURER) &&
-//			"NOOK".equals(Build.PRODUCT) &&
-//	    	android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.FROYO;
-//    }
 }
