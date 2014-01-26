@@ -29,20 +29,21 @@ import android.text.InputType;
 import android.widget.EditText;
 
 public class SearchDialogUtil {
-	public static AlertDialog.Builder createDialog(final Activity a, final Class c, final String defaultValue) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(a);
+	public static AlertDialog.Builder createDialog(final Activity activity, final Class<? extends Activity> clazz, final String defaultValue) {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle("<Search>");
-		final EditText input = new EditText(a);
+		final EditText input = new EditText(activity);
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
 		input.setText(defaultValue);
 		builder.setView(input);
 		builder.setPositiveButton("<OK>", new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface dialog, int which) {
-		    	Intent i = new Intent(Intent.ACTION_SEARCH);
-		    	i.setClass(a, c);
-		    	i.putExtra(SearchManager.QUERY, input.getText().toString());
-		        a.startActivity(i);
+		        activity.startActivity(
+		    		new Intent(Intent.ACTION_SEARCH)
+		    			.setClass(activity, clazz)
+		    			.putExtra(SearchManager.QUERY, input.getText().toString())
+				);
 		    }
 		});
 		builder.setNegativeButton("<Cancel>", new DialogInterface.OnClickListener() {

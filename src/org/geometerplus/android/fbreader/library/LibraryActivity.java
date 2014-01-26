@@ -22,19 +22,20 @@ package org.geometerplus.android.fbreader.library;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
-import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.*;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.zlibrary.ui.android.R;
+
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.book.Filter;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
+
 import org.geometerplus.android.util.*;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
