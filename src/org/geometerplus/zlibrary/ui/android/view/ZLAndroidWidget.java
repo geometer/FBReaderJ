@@ -60,12 +60,12 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setOnLongClickListener(this);
 	}
 
-	private volatile boolean myUseHDiff = false;
+	private volatile boolean myAmendSize = false;
 	private volatile int myHDiff = 0;
 	private volatile int myHShift = 0;
 
 	public void setPreserveSize(boolean preserve) {
-		myUseHDiff = preserve;
+		myAmendSize = preserve;
 		if (!preserve) {
 			myHDiff = 0;
 			myHShift = 0;
@@ -75,7 +75,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		if (myUseHDiff && oldw == w) {
+		if (myAmendSize && oldw == w) {
 			myHDiff += h - oldh;
 			myHShift -= getStatusBarHeight();
 		} else {
@@ -100,10 +100,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		super.onDraw(canvas);
 
-		if (myHDiff != 0) {
-			//final Matrix m = new Matrix();
-			//m.preTranslate(0, myHShift);
-			//canvas.setMatrix(m);
+		if (myHShift != 0) {
 			canvas.translate(0, myHShift);
 		}
 
