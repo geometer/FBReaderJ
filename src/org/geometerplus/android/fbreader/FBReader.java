@@ -494,8 +494,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public boolean onSearchRequested() {
 		final FBReaderApp.PopupPanel popup = myFBReaderApp.getActivePopup();
 		myFBReaderApp.hideActivePopup();
-		if (DeviceType.Instance().standardSearchDialogIsMissing()) {
-		} else {
+		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
 				public void onCancel() {
@@ -506,6 +505,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 			});
 			startSearch(myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), true, null, false);
+		} else {
 		}
 		return true;
 	}

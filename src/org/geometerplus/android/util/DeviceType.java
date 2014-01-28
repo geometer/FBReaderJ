@@ -83,7 +83,7 @@ public enum DeviceType {
 		return this == NOOK || this == NOOK12;
 	}
 
-	public boolean standardSearchDialogIsMissing() {
-		return this == NOOK || this == NOOK12;
+	public boolean hasStandardSearchDialog() {
+		return this != NOOK && this != NOOK12;
 	}
 }
