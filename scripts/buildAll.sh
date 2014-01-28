@@ -9,7 +9,7 @@ mv FBReader*sources*.zip READY
 ant distclean
 ./buildSignedJar.sh
 mv bin/FBReaderJ.apk READY
-cp bin/proguard/mapping.txt mappings/mapping-`cat VERSION`.master.txt
+#cp bin/proguard/mapping.txt mappings/mapping-`cat VERSION`.master.txt
 
 #git checkout ice-cream-sandwich
 git checkout yota2
@@ -17,7 +17,19 @@ git checkout yota2
 ant clean
 ./buildSignedJar.sh
 mv bin/FBReaderJ.apk READY/FBReaderJ_ice-cream-sandwich.apk
-cp bin/proguard/mapping.txt mappings/mapping-`cat VERSION`.ice-cream-sandwich.txt
+#cp bin/proguard/mapping.txt mappings/mapping-`cat VERSION`.ice-cream-sandwich.txt
+
+git checkout nook
+./scripts/packageTool.sh --updateVersion
+ant clean
+./buildSignedJar.sh
+mv bin/FBReaderJ.apk READY/FBReaderJ_nst.apk
+
+git checkout kindle
+./scripts/packageTool.sh --updateVersion
+ant clean
+./buildSignedJar.sh
+mv bin/FBReaderJ.apk READY/FBReaderJ_kindlehd.apk
 
 git checkout beta
 ant distclean
