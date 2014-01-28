@@ -28,6 +28,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
 
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+import org.geometerplus.android.fbreader.network.NetworkSearchActivity;
 
 import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.android.util.SearchDialogUtil;
@@ -76,6 +77,7 @@ public class RunSearchAction extends Action {
 		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
 		} else {
+			SearchDialogUtil.createDialog(myActivity, NetworkSearchActivity.class, library.NetworkSearchPatternOption.getValue(), bundle).show();
 		}
 	}
 }
