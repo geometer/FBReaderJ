@@ -493,7 +493,18 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public boolean onSearchRequested() {
 		final FBReaderApp.PopupPanel popup = myFBReaderApp.getActivePopup();
 		myFBReaderApp.hideActivePopup();
-		if (DeviceType.Instance().standardSearchDialogIsMissing()) {
+		if (DeviceType.Instance().hasStandardSearchDialog()) {
+			final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
+			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
+				public void onCancel() {
+					if (popup != null) {
+						myFBReaderApp.showPopup(popup.getId());
+					}
+					manager.setOnCancelListener(null);
+				}
+			});
+			startSearch(myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), true, null, false);
+		} else {
 			final AlertDialog.Builder builder = SearchDialogUtil.createDialog(
 				this, FBReader.class, myFBReaderApp.MiscOptions.TextSearchPattern.getValue()
 			);
@@ -506,17 +517,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 			});
 			builder.show();
-		} else {
-			final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
-			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
-				public void onCancel() {
-					if (popup != null) {
-						myFBReaderApp.showPopup(popup.getId());
-					}
-					manager.setOnCancelListener(null);
-				}
-			});
-			startSearch(myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), true, null, false);
 		}
 		return true;
 	}

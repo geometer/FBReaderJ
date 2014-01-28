@@ -145,10 +145,10 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	public boolean onSearchRequested() {
-		if (DeviceType.Instance().standardSearchDialogIsMissing()) {
-			SearchDialogUtil.createDialog(this, LibrarySearchActivity.class, BookSearchPatternOption.getValue()).show();
-		} else {
+		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			startSearch(BookSearchPatternOption.getValue(), true, null, false);
+		} else {
+			SearchDialogUtil.createDialog(this, LibrarySearchActivity.class, BookSearchPatternOption.getValue()).show();
 		}
 		return true;
 	}

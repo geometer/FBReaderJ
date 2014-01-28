@@ -76,10 +76,10 @@ public class RunSearchAction extends Action {
 			getSearchTree(tree).getUniqueKey()
 		);
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		if (DeviceType.Instance().standardSearchDialogIsMissing()) {
-			SearchDialogUtil.createDialog(myActivity, NetworkSearchActivity.class, library.NetworkSearchPatternOption.getValue()).show();
-		} else {
+		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
+		} else {
+			SearchDialogUtil.createDialog(myActivity, NetworkSearchActivity.class, library.NetworkSearchPatternOption.getValue()).show();
 		}
 		
 	}
