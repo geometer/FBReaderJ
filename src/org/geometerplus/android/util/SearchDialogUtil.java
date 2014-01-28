@@ -19,5 +19,48 @@
 
 package org.geometerplus.android.util;
 
+import android.app.*;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.InputType;
+import android.widget.EditText;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 public abstract class SearchDialogUtil {
+	public static AlertDialog.Builder createDialog(Activity activity, Class<? extends Activity> clazz, String initialPattern) {
+		return createDialog(activity, clazz, initialPattern, null);
+	}
+
+	public static AlertDialog.Builder createDialog(final Activity activity, final Class<? extends Activity> clazz, final String initialPattern, final Bundle bundle) {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+		builder.setTitle(ZLResource.resource("menu").getResource("search").getValue());
+
+		final EditText input = new EditText(activity);
+		input.setInputType(InputType.TYPE_CLASS_TEXT);
+		input.setText(initialPattern);
+		builder.setView(input);
+
+		final ZLResource dialogResource = ZLResource.resource("dialog").getResource("button");
+		builder.setPositiveButton(dialogResource.getResource("ok").getValue(), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				activity.startActivity(
+					new Intent(Intent.ACTION_SEARCH)
+						.setClass(activity, clazz)
+						.putExtra(SearchManager.QUERY, input.getText().toString())
+						.putExtra(SearchManager.APP_DATA, bundle)
+				);
+			}
+		});
+		builder.setNegativeButton(dialogResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		return builder;
+	}
 }
