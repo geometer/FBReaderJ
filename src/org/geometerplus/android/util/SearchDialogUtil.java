@@ -19,24 +19,25 @@
 
 package org.geometerplus.android.util;
 
-import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnCancelListener;
 import android.text.InputType;
 import android.widget.EditText;
 
 public abstract class SearchDialogUtil {
 	public static AlertDialog.Builder createDialog(final Activity activity, final Class<? extends Activity> clazz, final String defaultValue) {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setTitle("<Search>");
+		String title = ZLResource.resource("menu").getResource("search").getValue();
+		builder.setTitle(title);
+		ZLResource dialogResource = ZLResource.resource("dialog").getResource("button");
 		final EditText input = new EditText(activity);
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
 		input.setText(defaultValue);
 		builder.setView(input);
-		builder.setPositiveButton("<OK>", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(dialogResource.getResource("ok").getValue(), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				activity.startActivity(
@@ -46,7 +47,7 @@ public abstract class SearchDialogUtil {
 				);
 			}
 		});
-		builder.setNegativeButton("<Cancel>", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(dialogResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.cancel();
