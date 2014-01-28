@@ -27,6 +27,9 @@ updateVersion() {
 		yota2)
 			variant=2
 			;;
+		kindle)
+			variant=2
+			;;
 		*-ics)
 			variant=2
 			;;
@@ -44,6 +47,11 @@ updateVersion() {
 		major=`echo $version | cut -d . -f 1`
 		minor=`echo $version | cut -d . -f 2`
 		micro=`echo $version | cut -d . -f 3`
+		if [ "$branch" == "nook" ]; then
+			version=$version-nst
+		elif [ "$branch" == "kindle" ]; then
+			version=$version-kindlehd
+		fi
 	fi
 	
 	if [ "$micro" == "" ]; then
