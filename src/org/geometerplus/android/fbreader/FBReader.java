@@ -61,8 +61,7 @@ import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
-import org.geometerplus.android.util.DeviceType;
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
 	public static final String ACTION_OPEN_BOOK = "android.fbreader.action.VIEW";
@@ -539,6 +538,18 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 			startSearch(myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), true, null, false);
 		} else {
+			final AlertDialog.Builder builder = SearchDialogUtil.createDialog(
+				this, FBReader.class, myFBReaderApp.MiscOptions.TextSearchPattern.getValue()
+			);
+			builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface di) {
+					if (popup != null) {
+						myFBReaderApp.showPopup(popup.getId());
+					}
+				}
+			});
+			builder.show();
 		}
 		return true;
 	}
