@@ -24,16 +24,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class SearchDialogUtil {
-	public static AlertDialog.Builder createDialog(Activity activity, Class<? extends Activity> clazz, String initialPattern) {
-		return createDialog(activity, clazz, initialPattern, null);
+	public static void showDialog(Activity activity, Class<? extends Activity> clazz, String initialPattern, DialogInterface.OnCancelListener listener) {
+		showDialog(activity, clazz, initialPattern, listener, null);
 	}
 
-	public static AlertDialog.Builder createDialog(final Activity activity, final Class<? extends Activity> clazz, final String initialPattern, final Bundle bundle) {
+	public static void showDialog(final Activity activity, final Class<? extends Activity> clazz, final String initialPattern, DialogInterface.OnCancelListener listener, final Bundle bundle) {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
 		builder.setTitle(ZLResource.resource("menu").getResource("search").getValue());
@@ -61,6 +62,11 @@ public abstract class SearchDialogUtil {
 				dialog.cancel();
 			}
 		});
-		return builder;
+		if (listener != null) {
+			builder.setOnCancelListener(listener);
+		}
+		AlertDialog dialog = builder.create();
+		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+		dialog.show();
 	}
 }
