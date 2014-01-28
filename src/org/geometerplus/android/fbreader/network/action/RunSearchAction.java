@@ -35,8 +35,6 @@ import org.geometerplus.android.fbreader.network.NetworkSearchActivity;
 import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.android.util.SearchDialogUtil;
 
-import org.geometerplus.android.util.DeviceType;
-
 public class RunSearchAction extends Action {
 	public static SearchCatalogTree getSearchTree(FBTree tree) {
 		for (; tree != null; tree = tree.Parent) {
