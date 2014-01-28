@@ -26,7 +26,6 @@ import java.util.*;
 
 import android.app.*;
 import android.content.*;
-import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -508,9 +507,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			final AlertDialog.Builder builder = SearchDialogUtil.createDialog(
 				this, FBReader.class, myFBReaderApp.MiscOptions.TextSearchPattern.getValue()
 			);
-			builder.setOnCancelListener(new OnCancelListener() {
+			builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
 				@Override
-				public void onCancel(DialogInterface arg0) {
+				public void onCancel(DialogInterface di) {
 					if (popup != null) {
 						myFBReaderApp.showPopup(popup.getId());
 					}
