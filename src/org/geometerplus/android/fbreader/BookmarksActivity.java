@@ -194,7 +194,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
 		} else {
-			SearchDialogUtil.createDialog(this, BookmarksActivity.class, myBookmarkSearchPatternOption.getValue()).show();
+			SearchDialogUtil.showDialog(this, BookmarksActivity.class, myBookmarkSearchPatternOption.getValue(), null);
 		}
 		return true;
 	}
