@@ -527,16 +527,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public boolean onSearchRequested() {
 		final FBReaderApp.PopupPanel popup = myFBReaderApp.getActivePopup();
 		myFBReaderApp.hideActivePopup();
-		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
-		manager.setOnCancelListener(new SearchManager.OnCancelListener() {
-			public void onCancel() {
-				if (popup != null) {
-					myFBReaderApp.showPopup(popup.getId());
+		if (DeviceType.Instance().standardSearchDialogIsMissing()) {
+		} else {
+			final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
+			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
+				public void onCancel() {
+					if (popup != null) {
+						myFBReaderApp.showPopup(popup.getId());
+					}
+					manager.setOnCancelListener(null);
 				}
-				manager.setOnCancelListener(null);
-			}
-		});
-		startSearch(myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), true, null, false);
+			});
+			startSearch(myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), true, null, false);
+		}
 		return true;
 	}
 
