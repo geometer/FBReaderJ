@@ -28,7 +28,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.text.InputType;
 import android.widget.EditText;
 
-public class SearchDialogUtil {
+public abstract class SearchDialogUtil {
 	public static AlertDialog.Builder createDialog(final Activity activity, final Class<? extends Activity> clazz, final String defaultValue) {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle("<Search>");
