@@ -24,7 +24,8 @@ import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import android.app.*;
+import android.app.Activity;
+import android.app.SearchManager;
 import android.content.*;
 import android.graphics.Color;
 import android.net.Uri;
