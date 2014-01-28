@@ -4,9 +4,13 @@
 * Fixed possible crash in YotaPhone back screen service
 * New config subsystem implementation
 * Updated Czech localization (by Marek Pavelka)
-* Separate build for Kindle Fire HD(X) devices
+* Special edition for Kindle Fire HD(X) devices
 * Better detection of catalog where FBReader can write their files
 * Fixed russian hyphenations even for devices with no koi8-r encoding
+* Special search dialog for Nook Simple Touch
+
+===== 1.9.4-nst (Jan 12, 2013) =====
+* Special edition for Nook Simple Touch
 
 ===== 1.9.4 (Dec 23, 2013) =====
 * YotaPhone back screen support
