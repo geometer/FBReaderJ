@@ -30,13 +30,15 @@ import android.widget.EditText;
 public abstract class SearchDialogUtil {
 	public static AlertDialog.Builder createDialog(final Activity activity, final Class<? extends Activity> clazz, final String defaultValue) {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		String title = ZLResource.resource("menu").getResource("search").getValue();
-		builder.setTitle(title);
-		ZLResource dialogResource = ZLResource.resource("dialog").getResource("button");
+
+		builder.setTitle(ZLResource.resource("menu").getResource("search").getValue());
+
 		final EditText input = new EditText(activity);
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
 		input.setText(defaultValue);
 		builder.setView(input);
+
+		final ZLResource dialogResource = ZLResource.resource("dialog").getResource("button");
 		builder.setPositiveButton(dialogResource.getResource("ok").getValue(), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
