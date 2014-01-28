@@ -504,18 +504,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 			startSearch(myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), true, null, false);
 		} else {
-			final AlertDialog.Builder builder = SearchDialogUtil.createDialog(
-				this, FBReader.class, myFBReaderApp.MiscOptions.TextSearchPattern.getValue()
-			);
-			builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface di) {
-					if (popup != null) {
-						myFBReaderApp.showPopup(popup.getId());
+			SearchDialogUtil.showDialog(
+				this, FBReader.class, myFBReaderApp.MiscOptions.TextSearchPattern.getValue(), new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface di) {
+						if (popup != null) {
+							myFBReaderApp.showPopup(popup.getId());
+						}
 					}
 				}
-			});
-			builder.show();
+			);
 		}
 		return true;
 	}
