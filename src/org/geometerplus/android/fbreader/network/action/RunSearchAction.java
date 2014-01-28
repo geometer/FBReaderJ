@@ -77,7 +77,7 @@ public class RunSearchAction extends Action {
 		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
 		} else {
-			SearchDialogUtil.createDialog(myActivity, NetworkSearchActivity.class, library.NetworkSearchPatternOption.getValue(), bundle).show();
+			SearchDialogUtil.showDialog(myActivity, NetworkSearchActivity.class, library.NetworkSearchPatternOption.getValue(), null, bundle);
 		}
 	}
 }
