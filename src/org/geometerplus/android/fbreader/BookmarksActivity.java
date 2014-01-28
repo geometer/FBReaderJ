@@ -36,8 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.util.ViewUtil;
+import org.geometerplus.android.util.*;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	private static final int OPEN_ITEM_ID = 0;
@@ -192,7 +191,10 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	@Override
 	public boolean onSearchRequested() {
-		startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
+		if (DeviceType.Instance().hasStandardSearchDialog()) {
+			startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
+		} else {
+		}
 		return true;
 	}
 
