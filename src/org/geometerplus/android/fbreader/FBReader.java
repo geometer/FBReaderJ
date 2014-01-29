@@ -23,8 +23,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
 
-import android.app.Activity;
-import android.app.SearchManager;
+import android.app.*;
 import android.content.*;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
