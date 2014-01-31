@@ -135,7 +135,7 @@ public class BookUrlInfo extends UrlInfo {
 		}
 
 		String ext = null;
-		if (format != null && MiscUtil.isEmptyString(format.Extension)) {
+		if (format != null && !MiscUtil.isEmptyString(format.Extension)) {
 			ext = "." + format.Extension;
 		}
 		if (ext == null) {
