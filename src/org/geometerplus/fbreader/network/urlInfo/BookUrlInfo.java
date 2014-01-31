@@ -35,26 +35,45 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
-	public interface Format {
-		String NONE = "null.type";
-		String MOBIPOCKET = "Mobipocket";
-		String FB2_ZIP = "fb2.zip";
-		String FB2 = "fb2";
-		String EPUB = "ePub";
+	public static final class Format {
+		public static final Format NONE = new Format("null.type");
+		public static final Format MOBIPOCKET = new Format("Mobipocket");
+		public static final Format FB2_ZIP = new Format("fb2.zip");
+		public static final Format FB2 = new Format("fb2");
+		public static final Format EPUB = new Format("ePub");
+
+		public final String Name;
+
+		public Format(String name) {
+			Name = name;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (this == other) {
+				return false;
+			}
+			return other instanceof Format && Name.equals(((Format)other).Name);
+		}
+
+		@Override
+		public int hashCode() {
+			return Name.hashCode();
+		}
 	}
 
-	public static int getPriority(String type) {
-		if (Format.NONE.equals(type)) return -1;
-		if (Format.MOBIPOCKET.equals(type)) return 1;
-		if (Format.FB2.equals(type)) return 2;
-		if (Format.EPUB.equals(type)) return 3;
-		if (Format.FB2_ZIP.equals(type)) return 4;
+	public static int getPriority(Format type) {
+		if (Format.NONE.equals(type.Name)) return -1;
+		if (Format.MOBIPOCKET.equals(type.Name)) return 1;
+		if (Format.FB2.equals(type.Name)) return 2;
+		if (Format.EPUB.equals(type.Name)) return 3;
+		if (Format.FB2_ZIP.equals(type.Name)) return 4;
 		return 0;
 	}
 
-	public final String BookFormat;
+	public final Format BookFormat;
 
-	public BookUrlInfo(Type type, String format, String url, MimeType mime) {
+	public BookUrlInfo(Type type, Format format, String url, MimeType mime) {
 		super(type, url, mime);
 		BookFormat = format;
 	}
@@ -62,9 +81,9 @@ public class BookUrlInfo extends UrlInfo {
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
 	public static String makeBookFileName(String url, FileType fileType, MimeType mimeType, Type resolvedReferenceType) {
-		return makeBookFileName(url, fileType.defaultExtension(mimeType), resolvedReferenceType);
+		return makeBookFileName(url, new Format(fileType.defaultExtension(mimeType)), resolvedReferenceType);
 	}
-	public static String makeBookFileName(String url, String extension, Type resolvedReferenceType) {
+	public static String makeBookFileName(String url, Format format, Type resolvedReferenceType) {
 		final Uri uri = Uri.parse(url);
 
 		String host = uri.getHost();
@@ -105,9 +124,7 @@ public class BookUrlInfo extends UrlInfo {
 			++index;
 		}
 
-		String ext = null;
-		ext = "." + extension;
-
+		String ext = "." + format.Name;
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`
 			if (j != -1) {
