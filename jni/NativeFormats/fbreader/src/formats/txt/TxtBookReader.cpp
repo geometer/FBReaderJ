@@ -39,7 +39,7 @@ bool TxtBookReader::characterDataHandler(std::string &str) {
 	const char *ptr = str.data();
 	const char *end = ptr + str.length();
 	for (; ptr != end; ++ptr) {
-		if (isspace((unsigned char)*ptr)) {
+		if (std::isspace((unsigned char)*ptr)) {
 			if (*ptr != '\t') {
 				++mySpaceCounter;
 			} else {
