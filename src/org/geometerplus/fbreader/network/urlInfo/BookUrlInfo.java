@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network.urlInfo;
 
 import java.io.File;
+import java.util.Arrays;
 
 import android.net.Uri;
 
@@ -36,16 +37,30 @@ public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
 	public static final class Format implements Comparable<Format> {
-		public static final Format NONE = new Format("");
-		public static final Format MOBIPOCKET = new Format("mobi");
-		public static final Format FB2_ZIP = new Format("fb2.zip");
-		public static final Format FB2 = new Format("fb2");
-		public static final Format EPUB = new Format("ePub");
+		public static final Format NONE = new Format("", -1);
+		public static final Format MOBIPOCKET = new Format("mobi", 1);
+		public static final Format FB2 = new Format("fb2", 2);
+		public static final Format EPUB = new Format("epub", 3);
+		public static final Format FB2_ZIP = new Format("fb2.zip", 4);
 
 		public final String Extension;
+		private final int myPriority;
 
 		public Format(String extension) {
 			Extension = extension;
+			int priority = 0;
+			for (Format f : Arrays.asList(NONE, MOBIPOCKET, FB2_ZIP, FB2, EPUB)) {
+				if (f.equals(this)) {
+					priority = f.myPriority;
+					break;
+				}
+			}
+			myPriority = priority;
+		}
+
+		private Format(String extension, int priority) {
+			Extension = extension;
+			myPriority = priority;
 		}
 
 		@Override
@@ -63,16 +78,7 @@ public class BookUrlInfo extends UrlInfo {
 
 		@Override
 		public int compareTo(Format format) {
-			return getPriority() - format.getPriority();
-		}
-
-		private int getPriority() {
-			if (Format.NONE.equals(this)) return -1;
-			if (Format.MOBIPOCKET.equals(this)) return 1;
-			if (Format.FB2.equals(this)) return 2;
-			if (Format.EPUB.equals(this)) return 3;
-			if (Format.FB2_ZIP.equals(this)) return 4;
-			return 0;
+			return myPriority - format.myPriority;
 		}
 	}
 
@@ -129,7 +135,10 @@ public class BookUrlInfo extends UrlInfo {
 			++index;
 		}
 
-		String ext = format.Extension != null ? "." + format.Extension : null;
+		String ext = null;
+		if (format != null && format.Extension != null && !Format.NONE.equals(format)) {
+			ext = "." + format.Extension;
+		}
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`
 			if (j != -1) {
