@@ -746,13 +746,13 @@
 				<node name="url" value="http://twitter.com/fbreader_ru"/>
 			</node>
 		</node>
-		<node name="eink" value="E-ink screen" toBeTranslated="true">
-			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
-			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
-				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
-				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+		<node name="eink" value="Экран e-ink">
+			<node name="summary" value="Настройки для экрана с электронными чернилами"/>
+			<node name="enableFastRefresh" value="Режим быстрого обновления">
+				<node name="summaryOn" value="Быстрое (но не очень чистое) обновление экрана"/>
+				<node name="summaryOff" value="Полное (чистое, но медленное) обновление экрана"/>
 			</node>
-			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
+			<node name="interval" value="После скольки быстрых перерисовок обновлять экран полностью"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -909,6 +909,7 @@
 		<node name="faqPage" value="http://fbreader.ru/faq-page"/>
 	</node>
 	<node name="plugins" value="Дополнительные модули">
+		<node name="noMorePlugins" value="Извините, но прямо сейчас у нас нет новых модулей"/>
 		<node name="litres" value="ЛитРес">
 			<node name="summary" value="Дополнительные возможности при покупке в магазине ЛитРес"/>
 		</node>
