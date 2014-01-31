@@ -443,7 +443,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					setButtonLight(false);
 				}
 
-				getCollection().bindToService(this, new Runnable() {
+				getCollection().bindToService(FBReader.this, new Runnable() {
 					public void run() {
 						final BookModel model = myFBReaderApp.Model;
 						if (model == null || model.Book == null) {
