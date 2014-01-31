@@ -1,13 +1,15 @@
-===== 1.9.5 (Jan ??, 2014) =====
+===== 1.9.5 (Jan 31, 2014) =====
 * Fixed back button behaviour
 * Fixed recent books list
 * Fixed possible crash in YotaPhone back screen service
 * New config subsystem implementation
 * Updated Czech localization (by Marek Pavelka)
+* Updated Dutch localization (by Frank Fesevur)
 * Special edition for Kindle Fire HD(X) devices
 * Better detection of catalog where FBReader can write their files
 * Fixed russian hyphenations even for devices with no koi8-r encoding
 * Special search dialog for Nook Simple Touch
+* New item "Install plugins" in the main menu
 
 ===== 1.9.4-nst (Jan 12, 2013) =====
 * Special edition for Nook Simple Touch
