@@ -35,7 +35,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
-	public static final class Format {
+	public static final class Format implements Comparable<Format> {
 		public static final Format NONE = new Format("null.type");
 		public static final Format MOBIPOCKET = new Format("Mobipocket");
 		public static final Format FB2_ZIP = new Format("fb2.zip");
@@ -60,15 +60,20 @@ public class BookUrlInfo extends UrlInfo {
 		public int hashCode() {
 			return Name.hashCode();
 		}
-	}
 
-	public static int getPriority(Format type) {
-		if (Format.NONE.equals(type.Name)) return -1;
-		if (Format.MOBIPOCKET.equals(type.Name)) return 1;
-		if (Format.FB2.equals(type.Name)) return 2;
-		if (Format.EPUB.equals(type.Name)) return 3;
-		if (Format.FB2_ZIP.equals(type.Name)) return 4;
-		return 0;
+		@Override
+		public int compareTo(Format format) {
+			return getPriority() - format.getPriority();
+		}
+
+		private int getPriority() {
+			if (Format.NONE.equals(this)) return -1;
+			if (Format.MOBIPOCKET.equals(this)) return 1;
+			if (Format.FB2.equals(this)) return 2;
+			if (Format.EPUB.equals(this)) return 3;
+			if (Format.FB2_ZIP.equals(this)) return 4;
+			return 0;
+		}
 	}
 
 	public final Format BookFormat;
