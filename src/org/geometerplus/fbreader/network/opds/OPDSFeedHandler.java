@@ -114,7 +114,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		}
 
 		String id = null;
-		BookUrlInfo.Format idType = null;
+		BookUrlInfo.Format idType = BookUrlInfo.Format.NONE;
 
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link : entry.Links) {
@@ -129,9 +129,8 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 					|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX)) {
 				relType = OPDSBookItem.formatByMimeType(mime);
 			}
-			if (!relType.equals(BookUrlInfo.Format.NONE)
-					&& (id == null
-						|| idType.compareTo(relType) < 0
+			if (!BookUrlInfo.Format.NONE.equals(relType)
+					&& (id == null || idType.compareTo(relType) < 0
 						|| (idType.equals(relType) && REL_ACQUISITION.equals(rel)))) {
 				id = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				idType = relType;

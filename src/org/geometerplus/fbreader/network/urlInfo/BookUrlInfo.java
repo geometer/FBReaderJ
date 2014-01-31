@@ -93,6 +93,7 @@ public class BookUrlInfo extends UrlInfo {
 	public static String makeBookFileName(String url, FileType fileType, MimeType mimeType, Type resolvedReferenceType) {
 		return makeBookFileName(url, new Format(fileType.defaultExtension(mimeType)), resolvedReferenceType);
 	}
+
 	public static String makeBookFileName(String url, Format format, Type resolvedReferenceType) {
 		final Uri uri = Uri.parse(url);
 

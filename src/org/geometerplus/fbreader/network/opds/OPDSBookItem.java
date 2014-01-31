@@ -156,7 +156,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				urls.addInfo(new UrlInfo(referenceType, href, mime));
 			} else if (referenceType != null) {
 				final BookUrlInfo.Format format = formatByMimeType(mime);
-				if (format != null && !format.equals(BookUrlInfo.Format.NONE)) {
+				if (!BookUrlInfo.Format.NONE.equals(format)) {
 					urls.addInfo(new BookUrlInfo(referenceType, format, href, mime));
 				}
 			}
@@ -198,7 +198,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		for (String f : opdsLink.Formats) {
 			final MimeType mime = MimeType.get(f);
 			final BookUrlInfo.Format format = formatByMimeType(mime);
-			if (!format.equals(BookUrlInfo.Format.NONE)) {
+			if (!BookUrlInfo.Format.NONE.equals(format)) {
 				urls.addInfo(new BookBuyUrlInfo(type, format, href, mime, price));
 				added = true;
 			}
