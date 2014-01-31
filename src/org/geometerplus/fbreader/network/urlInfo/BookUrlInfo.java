@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
@@ -66,14 +67,14 @@ public class BookUrlInfo extends UrlInfo {
 		@Override
 		public boolean equals(Object other) {
 			if (this == other) {
-				return false;
+				return true;
 			}
-			return other instanceof Format && Extension.equals(((Format)other).Extension);
+			return other instanceof Format && MiscUtil.equals(Extension, ((Format)other).Extension);
 		}
 
 		@Override
 		public int hashCode() {
-			return Extension.hashCode();
+			return MiscUtil.hashCode(Extension);
 		}
 
 		@Override
