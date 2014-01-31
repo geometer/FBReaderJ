@@ -29,13 +29,11 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.sort.TitledEntity;
@@ -175,12 +173,6 @@ public class Book extends TitledEntity {
 			final String fileName = File.getShortName();
 			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL ? -1 : fileName.lastIndexOf('.'));
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
-		}
-		final String demoPathPrefix = Paths.mainBookDirectory() + "/Demos/";
-		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = ZLResource.resource("library").getResource("demo").getValue();
-			setTitle(getTitle() + " (" + demoTag + ")");
-			addTag(demoTag);
 		}
 	}
 
