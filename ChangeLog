@@ -1,5 +1,5 @@
 ===== 1.9.5.2 (Feb 1, 2014) =====
-* Fixed possible crash on program start
+* Fixed one more possible crash on program start
 
 ===== 1.9.5.1 (Jan 31, 2014) =====
 * Fixed possible crash on program start
