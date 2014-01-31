@@ -49,7 +49,7 @@ public class BookUrlInfo extends UrlInfo {
 		public Format(String extension) {
 			Extension = extension;
 			int priority = 0;
-			for (Format f : Arrays.asList(NONE, MOBIPOCKET, FB2_ZIP, FB2, EPUB)) {
+			for (Format f : Arrays.asList(NONE, MOBIPOCKET, FB2, FB2_ZIP, EPUB)) {
 				if (f.equals(this)) {
 					priority = f.myPriority;
 					break;
