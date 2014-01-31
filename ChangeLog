@@ -6,8 +6,8 @@
 * Updated Czech localization (by Marek Pavelka)
 * Updated Dutch localization (by Frank Fesevur)
 * Special edition for Kindle Fire HD(X) devices
-* Better detection of catalog where FBReader can write their files
-* Fixed russian hyphenations even for devices with no koi8-r encoding
+* Better detection of catalog where FBReader can write books
+* Fixed Russian hyphenations even for devices with no koi8-r encoding
 * Special search dialog for Nook Simple Touch
 * New item "Install plugins" in the main menu
 
