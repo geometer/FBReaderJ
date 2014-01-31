@@ -57,7 +57,7 @@ void StyleSheetTable::addMap(const std::string &tag, const std::string &aClass, 
 static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntry::SizeUnit &unit) {
 	if (ZLStringUtil::stringEndsWith(toParse, "%")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_PERCENT;
-		size = atoi(toParse.c_str());
+		size = std::atoi(toParse.c_str());
 		return true;
 	} else if (ZLStringUtil::stringEndsWith(toParse, "em")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_EM_100;
@@ -69,11 +69,11 @@ static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntr
 		return true;
 	} else if (ZLStringUtil::stringEndsWith(toParse, "px")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_PIXEL;
-		size = atoi(toParse.c_str());
+		size = std::atoi(toParse.c_str());
 		return true;
 	} else if (ZLStringUtil::stringEndsWith(toParse, "pt")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_POINT;
-		size = atoi(toParse.c_str());
+		size = std::atoi(toParse.c_str());
 		return true;
 	}
 	return false;
