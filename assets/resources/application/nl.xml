@@ -355,8 +355,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="Voorkom uitschakelen scherm">
 				<node name="0" value="Altijd"/>
-				<node name="25" value="Zolang batterijniveau hoger is dan 25%"/>
-				<node name="50" value="Zolang batterijniveau hoger is dan 50%"/>
+				<node name="25" value="Zolang batterijniveau hoger is dan 25%%"/>
+				<node name="50" value="Zolang batterijniveau hoger is dan 50%%"/>
 				<node name="100" value="Nooit"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Voorkom uitschakelen scherm tijdens opladen">
