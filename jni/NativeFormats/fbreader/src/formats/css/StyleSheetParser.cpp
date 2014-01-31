@@ -65,7 +65,7 @@ void StyleSheetTableParser::processAtRule(const std::string &name, const StyleSh
 
 shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char *text) {
 	myReadState = WAITING_FOR_ATTRIBUTE;
-	parse(text, strlen(text), true);
+	parse(text, std::strlen(text), true);
 	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createControl(myMap);
 	reset();
 	return control;
@@ -106,7 +106,7 @@ void StyleSheetParser::parse(const char *text, int len, bool final) {
 	const char *start = text;
 	const char *end = text + len;
 	for (const char *ptr = start; ptr != end; ++ptr) {
-		if (isspace(*ptr)) {
+		if (std::isspace(*ptr)) {
 			if (start != ptr) {
 				myWord.append(start, ptr - start);
 			}
@@ -212,8 +212,8 @@ void StyleSheetParser::processWord(std::string &word) {
 		word.erase(0, index + 2);
 	}
 }
-	
-void StyleSheetParser::processWordWithoutComments(const std::string &word) {	
+
+void StyleSheetParser::processWordWithoutComments(const std::string &word) {
 	switch (myReadState) {
 		case WAITING_FOR_SELECTOR:
 			myReadState = SELECTOR;

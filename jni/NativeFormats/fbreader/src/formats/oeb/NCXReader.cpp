@@ -47,14 +47,14 @@ void NCXReader::startElementHandler(const char *fullTag, const char **attributes
 		case READ_MAP:
 			if (TAG_NAVPOINT == tag) {
 				const char *order = attributeValue(attributes, "playOrder");
-				myPointStack.push_back(NavPoint((order != 0) ? atoi(order) : myPlayIndex++, myPointStack.size()));
+				myPointStack.push_back(NavPoint(order != 0 ? std::atoi(order) : myPlayIndex++, myPointStack.size()));
 				myReadState = READ_POINT;
 			}
 			break;
 		case READ_POINT:
 			if (TAG_NAVPOINT == tag) {
 				const char *order = attributeValue(attributes, "playOrder");
-				myPointStack.push_back(NavPoint((order != 0) ? atoi(order) : myPlayIndex++, myPointStack.size()));
+				myPointStack.push_back(NavPoint(order != 0 ? std::atoi(order) : myPlayIndex++, myPointStack.size()));
 			} else if (TAG_NAVLABEL == tag) {
 				myReadState = READ_LABEL;
 			} else if (TAG_CONTENT == tag) {

@@ -133,7 +133,7 @@ void PlainTextFormatDetector::detect(ZLInputStream &stream, PlainTextFormat &for
 				currentLineIndent = 0;
 			} else if (*ptr == '\r') {
 				continue;
-			} else if (isspace((unsigned char)*ptr)) {
+			} else if (std::isspace((unsigned char)*ptr)) {
 				if (currentLineIsEmpty) {
 					++currentLineIndent;
 				}
