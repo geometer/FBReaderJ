@@ -131,7 +131,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			}
 			if (!BookUrlInfo.Format.NONE.equals(relType)
 					&& (id == null || idType.compareTo(relType) < 0
-							|| (idType.equals(relType) && REL_ACQUISITION.equals(rel)))) {
+						|| (idType.equals(relType) && REL_ACQUISITION.equals(rel)))) {
 				id = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				idType = relType;
 			}
