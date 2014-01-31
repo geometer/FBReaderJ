@@ -24,13 +24,11 @@ import java.util.Arrays;
 
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.zlibrary.core.filetypes.*;
-
-import org.geometerplus.zlibrary.core.util.MiscUtil;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
