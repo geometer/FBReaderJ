@@ -123,7 +123,7 @@ public abstract class Util implements UserRegistrationConstants {
 			activity.startService(
 				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url),
 						activity.getApplicationContext(), BookDownloaderService.class)
-					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
+					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat.Extension)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
 					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanUrl())
 					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
