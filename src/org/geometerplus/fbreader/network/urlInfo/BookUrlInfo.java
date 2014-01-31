@@ -36,16 +36,16 @@ public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
 	public static final class Format implements Comparable<Format> {
-		public static final Format NONE = new Format("null.type");
-		public static final Format MOBIPOCKET = new Format("Mobipocket");
+		public static final Format NONE = new Format("");
+		public static final Format MOBIPOCKET = new Format("mobi");
 		public static final Format FB2_ZIP = new Format("fb2.zip");
 		public static final Format FB2 = new Format("fb2");
 		public static final Format EPUB = new Format("ePub");
 
-		public final String Name;
+		public final String Extension;
 
-		public Format(String name) {
-			Name = name;
+		public Format(String extension) {
+			Extension = extension;
 		}
 
 		@Override
@@ -53,12 +53,12 @@ public class BookUrlInfo extends UrlInfo {
 			if (this == other) {
 				return false;
 			}
-			return other instanceof Format && Name.equals(((Format)other).Name);
+			return other instanceof Format && Extension.equals(((Format)other).Extension);
 		}
 
 		@Override
 		public int hashCode() {
-			return Name.hashCode();
+			return Extension.hashCode();
 		}
 
 		@Override
@@ -129,7 +129,7 @@ public class BookUrlInfo extends UrlInfo {
 			++index;
 		}
 
-		String ext = "." + format.Name;
+		String ext = format.Extension != null ? "." + format.Extension : null;
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`
 			if (j != -1) {
