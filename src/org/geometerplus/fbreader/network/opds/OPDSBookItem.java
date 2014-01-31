@@ -152,8 +152,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			} else if (referenceType == UrlInfo.Type.TOC) {
 				urls.addInfo(new UrlInfo(referenceType, href, mime));
 			} else if (referenceType != null) {
-				final int format = formatByMimeType(mime);
-				if (format != BookUrlInfo.Format.NONE) {
+				final BookUrlInfo.Format format = formatByMimeType(mime);
+				if (!BookUrlInfo.Format.NONE.equals(format)) {
 					urls.addInfo(new BookUrlInfo(referenceType, format, href, mime));
 				}
 			}
@@ -194,8 +194,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		boolean added = false;
 		for (String f : opdsLink.Formats) {
 			final MimeType mime = MimeType.get(f);
-			final int format = formatByMimeType(mime);
-			if (format != BookUrlInfo.Format.NONE) {
+			final BookUrlInfo.Format format = formatByMimeType(mime);
+			if (!BookUrlInfo.Format.NONE.equals(format)) {
 				urls.addInfo(new BookBuyUrlInfo(type, format, href, mime, price));
 				added = true;
 			}
@@ -205,7 +205,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		}
 	}
 
-	static int formatByMimeType(MimeType mime) {
+	static BookUrlInfo.Format formatByMimeType(MimeType mime) {
 		if (MimeType.TEXT_FB2.equals(mime)) {
 			return BookUrlInfo.Format.FB2;
 		} else if (MimeType.APP_FB2_ZIP.equals(mime)) {
