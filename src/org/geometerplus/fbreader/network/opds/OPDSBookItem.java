@@ -32,8 +32,10 @@ import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.zlibrary.core.filetypes.*;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.Formats;
+import org.geometerplus.zlibrary.core.filetypes.FileType;
+import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	public static OPDSBookItem create(INetworkLink link, String url) {
