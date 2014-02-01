@@ -298,7 +298,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
-				if (myFBReaderApp.MiscOptions.YotaDrawOnBackScreen.getValue()) {
+				if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
 				}
 			}
@@ -911,7 +911,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public ZLViewWidget getViewWidget() {
-		if (myFBReaderApp.MiscOptions.YotaDrawOnBackScreen.getValue()) {
+		if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 			if (com.yotadevices.fbreader.FBReaderYotaService.Widget != null) {
 				return com.yotadevices.fbreader.FBReaderYotaService.Widget;
 			}
@@ -1001,7 +1001,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			return;
 		}
 
-		if (!myFBReaderApp.MiscOptions.YotaDrawOnBackScreen.getValue()) {
+		if (!myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 			boolean isServiceRunning = false;
 			final String serviceClassName = FBReaderYotaService.class.getName();
 			final ActivityManager manager =
@@ -1020,7 +1020,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		final Intent intent = new Intent(this, FBReaderYotaService.class);
 		intent.putExtra(
 			FBReaderYotaService.KEY_BACK_SCREEN_IS_ACTIVE,
-			myFBReaderApp.MiscOptions.YotaDrawOnBackScreen.getValue()
+			myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()
 		);
 		if (myFBReaderApp.Model != null) {
 			intent.putExtra(

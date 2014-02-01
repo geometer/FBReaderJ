@@ -35,6 +35,8 @@ public class ViewOptions {
 	public final ZLIntegerRangeOption FooterHeight;
 	public final ZLStringOption ColorProfileName;
 
+	public final ZLBooleanOption YotaDrawOnBackScreen;
+
 	private ColorProfile myColorProfile;
 
 	public ViewOptions() {
@@ -63,6 +65,9 @@ public class ViewOptions {
 			new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
 		ColorProfileName =
 			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
+
+		YotaDrawOnBackScreen =
+			new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
 	}
 
 	public ColorProfile getColorProfile() {

@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.options.MiscOptions;
+import org.geometerplus.fbreader.fbreader.options.ViewOptions;
 
 /**
  * @author ASazonov
@@ -191,7 +191,7 @@ public class FBReaderYotaService extends BSActivity {
 		if (intent.hasExtra(KEY_BACK_SCREEN_IS_ACTIVE)) {
 			myBackScreenIsActive = intent.getBooleanExtra(KEY_BACK_SCREEN_IS_ACTIVE, false);
 		} else {
-			myBackScreenIsActive = new MiscOptions().YotaDrawOnBackScreen.getValue();
+			myBackScreenIsActive = new ViewOptions().YotaDrawOnBackScreen.getValue();
 		}
 		if (intent.hasExtra(KEY_CURRENT_BOOK)) {
 			myCurrentBook = SerializerUtil.deserializeBook(intent.getStringExtra(KEY_CURRENT_BOOK));
