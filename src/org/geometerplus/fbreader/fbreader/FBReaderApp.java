@@ -155,8 +155,9 @@ public final class FBReaderApp extends ZLApplication {
 	private ColorProfile myColorProfile;
 
 	public ColorProfile getColorProfile() {
-		if (myColorProfile == null) {
-			myColorProfile = ColorProfile.get(getColorProfileName());
+		final String name = getColorProfileName();
+		if (myColorProfile == null || !name.equals(myColorProfile.Name)) {
+			myColorProfile = ColorProfile.get(name);
 		}
 		return myColorProfile;
 	}
@@ -167,7 +168,6 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void setColorProfileName(String name) {
 		ViewOptions.ColorProfileName.setValue(name);
-		myColorProfile = null;
 	}
 
 	public ZLKeyBindings keyBindings() {
