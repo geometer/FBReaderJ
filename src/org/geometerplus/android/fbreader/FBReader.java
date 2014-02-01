@@ -987,7 +987,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		final Intent intent = new Intent(this, FBReaderYotaService.class);
 		intent.putExtra(
 			FBReaderYotaService.KEY_BACK_SCREEN_IS_ACTIVE,
-			myFBReaderApp.MiscOptions.YotaDrawOnBackScreen.getValue()
+			myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()
 		);
 		if (myFBReaderApp.Model != null) {
 			intent.putExtra(
