@@ -64,7 +64,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FooterOptions footerOptions = fbReader.FooterOptions;
 		final PageTurningOptions pageTurningOptions = new PageTurningOptions();
 		final ImageOptions imageOptions = new ImageOptions();
-		final ColorProfile profile = fbReader.getColorProfile();
+		final ColorProfile profile = viewOptions.getColorProfile();
 		final ZLTextStyleCollection collection = fbReader.TextStyleCollection;
 		final ZLKeyBindings keyBindings = new ZLKeyBindings();
 

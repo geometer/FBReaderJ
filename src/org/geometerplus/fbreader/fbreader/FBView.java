@@ -384,7 +384,7 @@ public final class FBView extends ZLTextView {
 			return null;
 		}
 
-		final String filePath = myReader.getColorProfile().WallpaperOption.getValue();
+		final String filePath = myReader.ViewOptions.getColorProfile().WallpaperOption.getValue();
 		if ("".equals(filePath)) {
 			return null;
 		}
@@ -405,22 +405,22 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public ZLColor getBackgroundColor() {
-		return myReader.getColorProfile().BackgroundOption.getValue();
+		return myReader.ViewOptions.getColorProfile().BackgroundOption.getValue();
 	}
 
 	@Override
 	public ZLColor getSelectionBackgroundColor() {
-		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
+		return myReader.ViewOptions.getColorProfile().SelectionBackgroundOption.getValue();
 	}
 
 	@Override
 	public ZLColor getSelectionForegroundColor() {
-		return myReader.getColorProfile().SelectionForegroundOption.getValue();
+		return myReader.ViewOptions.getColorProfile().SelectionForegroundOption.getValue();
 	}
 
 	@Override
 	public ZLColor getTextColor(ZLTextHyperlink hyperlink) {
-		final ColorProfile profile = myReader.getColorProfile();
+		final ColorProfile profile = myReader.ViewOptions.getColorProfile();
 		if (myReader.MiscOptions.YotaDrawOnBackScreen.getValue()) {
 			return profile.RegularTextOption.getValue();
 		}
@@ -439,7 +439,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public ZLColor getHighlightingBackgroundColor() {
-		return myReader.getColorProfile().HighlightingOption.getValue();
+		return myReader.ViewOptions.getColorProfile().HighlightingOption.getValue();
 	}
 
 	private class Footer implements FooterArea {
@@ -507,7 +507,7 @@ public final class FBView extends ZLTextView {
 			//final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
 			final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
-			final ZLColor fillColor = myReader.getColorProfile().FooterFillOption.getValue();
+			final ZLColor fillColor = myReader.ViewOptions.getColorProfile().FooterFillOption.getValue();
 
 			final int left = getLeftMargin();
 			final int right = context.getWidth() - getRightMargin();
@@ -665,7 +665,7 @@ public final class FBView extends ZLTextView {
 	@Override
 	protected ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages() {
 		if (myReader.ImageOptions.MatchBackground.getValue()) {
-			if (ColorProfile.DAY.equals(myReader.getColorProfile().Name)) {
+			if (ColorProfile.DAY.equals(myReader.ViewOptions.getColorProfile().Name)) {
 				return ZLPaintContext.ColorAdjustingMode.DARKEN_TO_BACKGROUND;
 			} else {
 				return ZLPaintContext.ColorAdjustingMode.LIGHTEN_TO_BACKGROUND;
