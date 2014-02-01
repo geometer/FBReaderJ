@@ -340,7 +340,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public ZLTextStyleCollection getTextStyleCollection() {
-		return myReader.TextStyleCollection;
+		return myReader.ViewOptions.getTextStyleCollection();
 	}
 
 	@Override
