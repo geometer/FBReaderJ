@@ -27,7 +27,6 @@ import com.yotadevices.sdk.utils.RotationAlgorithm;
 import com.yotadevices.fbreader.FBReaderYotaService;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
@@ -73,7 +72,6 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		}
 
 		final String screen = toBack ? "Yota" : "Base";
-		Reader.TextStyleCollection = new ZLTextStyleCollection(screen);
 		Reader.FooterOptions = new FooterOptions(screen);
 		Reader.clearTextCaches();
 		BaseActivity.refresh();
