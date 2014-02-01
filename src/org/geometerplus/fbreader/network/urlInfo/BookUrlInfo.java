@@ -24,7 +24,6 @@ import java.util.Arrays;
 
 import android.net.Uri;
 
-import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
@@ -36,11 +35,11 @@ public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
 	public static final class Format implements Comparable<Format> {
-		public static final Format NONE = new Format("", -1);
+		public static final Format NONE = new Format(null, -1);
 		public static final Format MOBIPOCKET = new Format("mobi", 1);
 		public static final Format FB2 = new Format("fb2", 2);
-		public static final Format EPUB = new Format("epub", 3);
-		public static final Format FB2_ZIP = new Format("fb2.zip", 4);
+		public static final Format FB2_ZIP = new Format("fb2.zip", 3);
+		public static final Format EPUB = new Format("epub", 4);
 
 		public final String Extension;
 		private final int myPriority;
