@@ -230,6 +230,7 @@ public final class FBReaderApp extends ZLApplication {
 			book.addLabel(Book.READ_LABEL);
 			Collection.saveBook(book);
 		}
+
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
 				gotoBookmark(bookmark, false);
