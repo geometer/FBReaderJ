@@ -29,10 +29,8 @@ import com.yotadevices.fbreader.FBReaderYotaService;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.options.FooterOptions;
 
 class YotaSwitchScreenAction extends FBAndroidAction {
 	private final boolean mySwitchToBack;
@@ -71,8 +69,6 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 			mainHiddenView.setVisibility(View.GONE);
 		}
 
-		final String screen = toBack ? "Yota" : "Base";
-		Reader.FooterOptions = new FooterOptions(screen);
 		Reader.clearTextCaches();
 		BaseActivity.refresh();
 	}
