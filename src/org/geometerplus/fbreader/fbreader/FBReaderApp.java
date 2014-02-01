@@ -43,13 +43,8 @@ public final class FBReaderApp extends ZLApplication {
 	public final ImageOptions ImageOptions;
 	public final ViewOptions ViewOptions;
 	public final PageTurningOptions PageTurningOptions;
-	public static final FooterOptions FooterOptions;
 
 	private final ZLKeyBindings myBindings;
-
-	static {
-		FooterOptions = new FooterOptions();
-	}
 
 	{
 		MiscOptions = new MiscOptions();
