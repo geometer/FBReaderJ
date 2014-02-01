@@ -26,12 +26,14 @@ import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
 public class ZLTextStyleCollection {
+	public final String Screen;
 	private int myDefaultFontSize;
 	private ZLTextBaseStyle myBaseStyle;
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
-	public ZLTextStyleCollection(String name) {
-		new TextStyleReader(name).readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
+	public ZLTextStyleCollection(String screen) {
+		Screen = screen;
+		new TextStyleReader().readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
 	}
 
 	public int getDefaultFontSize() {
@@ -48,7 +50,6 @@ public class ZLTextStyleCollection {
 
 	private class TextStyleReader extends ZLXMLReaderAdapter {
 		private final int myDpi = ZLibrary.Instance().getDisplayDPI();
-		private String myCollectionName;
 
 		@Override
 		public boolean dontCacheAttributeValues() {
@@ -83,19 +84,15 @@ public class ZLTextStyleCollection {
 			return ZLBoolean3.getByName(attributes.getValue(name));
 		}
 
-		public TextStyleReader(String collectionName) {
-			myCollectionName = collectionName;
-		}
-
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			final String BASE = "base";
 			final String STYLE = "style";
 
 			if (BASE.equals(tag)) {
-				if (myCollectionName.equals(attributes.getValue("screen"))) {
+				if (Screen.equals(attributes.getValue("screen"))) {
 					myDefaultFontSize = intValue(attributes, "fontSize", 0);
-					myBaseStyle = new ZLTextBaseStyle(myCollectionName, attributes.getValue("family"), myDefaultFontSize);
+					myBaseStyle = new ZLTextBaseStyle(Screen, attributes.getValue("family"), myDefaultFontSize);
 				}
 			} else if (STYLE.equals(tag)) {
 				String idString = attributes.getValue("id");

@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.fbreader.fbreader.FBView;
 
@@ -38,6 +39,7 @@ public class ViewOptions {
 	public final ZLBooleanOption YotaDrawOnBackScreen;
 
 	private ColorProfile myColorProfile;
+	private ZLTextStyleCollection myTextStyleCollection;
 
 	public ViewOptions() {
 		final ZLibrary zlibrary = ZLibrary.Instance();
@@ -76,5 +78,13 @@ public class ViewOptions {
 			myColorProfile = ColorProfile.get(name);
 		}
 		return myColorProfile;
+	}
+
+	public ZLTextStyleCollection getTextStyleCollection() {
+		final String screen = YotaDrawOnBack.getValue() ? "Yota" : "Base";
+		if (myTextStyleCollection == null) {
+			myTextStyleCollection = new ZLTextStyleCollection(screen);
+		}
+		return myTextStyleCollection;
 	}
 }
