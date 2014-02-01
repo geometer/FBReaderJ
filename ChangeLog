@@ -1,3 +1,7 @@
+===== 1.9.5.3 (Feb 1, 2014) =====
+* Fixed YotaPhone second screen support
+* Fixed color profile loading
+
 ===== 1.9.5.2 (Feb 1, 2014) =====
 * Fixed one more possible crash on program start
 
