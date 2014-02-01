@@ -40,6 +40,7 @@ public class ViewOptions {
 
 	private ColorProfile myColorProfile;
 	private ZLTextStyleCollection myTextStyleCollection;
+	private FooterOptions myFooterOptions;
 
 	public ViewOptions() {
 		final ZLibrary zlibrary = ZLibrary.Instance();
@@ -86,5 +87,13 @@ public class ViewOptions {
 			myTextStyleCollection = new ZLTextStyleCollection(screen);
 		}
 		return myTextStyleCollection;
+	}
+
+	public FooterOptions getFooterOptions() {
+		final String screen = YotaDrawOnBackScreen.getValue() ? "Yota".intern() : "Base".intern();
+		if (myFooterOptions == null || myFooterOptions.Screen != screen) {
+			myFooterOptions = new FooterOptions(screen);
+		}
+		return myFooterOptions;
 	}
 }
