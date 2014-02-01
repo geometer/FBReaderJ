@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.fbreader.ColorProfile;
 import org.geometerplus.fbreader.fbreader.WallpapersUtil;
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 
 class WallpaperPreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;
