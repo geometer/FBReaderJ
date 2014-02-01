@@ -306,19 +306,11 @@
 	<node name="Preferences">
 		<node name="directories" value="Direktorioak">
 			<node name="summary" value="Fitxategiak bilatzeko direktorioak"/>
-<<<<<<< HEAD
-			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
-			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
-			<node name="books" value="Liburu direktorioa"/>
-=======
 			<node name="temp" value="Behin-behineko fitxategien direktorioa"/>
 			<node name="bookPath" value="Liburuen direktorioak"/>
 			<node name="fontPath" value="Letra-tipoen direktorioak"/>
 			<node name="wallpaperPath" value="Atzeko irudien direktorioak"/>
 			<node name="books" value="Liburuen direktorioa"/>
->>>>>>> master
 			<node name="fonts" value="Letra-tipoen direktorioa"/>
 			<node name="wallpapers" value="Atzeko irudien direktorioa"/>
 		</node>
@@ -803,11 +795,7 @@
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorize" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
-<<<<<<< HEAD
-			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
-=======
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
->>>>>>> master
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
 			<node name="removeFromFavorites" value="Kendu gogokoetatik"/>
@@ -845,11 +833,7 @@
 			<node name="loadingNetworkBookInfo" value="Liburuaren informazioa kargatzen. Itxaron mesedez…"/>
 			<node name="updatingCatalogsList" value="Katalogoen zerrenda eguneratzen. Itxaron mesedez…"/>
 			<node name="updatingAccountInformation" value="Kontuaren informazioa eguneratzen. Itxaron mesedez…"/>
-<<<<<<< HEAD
-			<node name="extrcact" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
-=======
 			<node name="extrcact" value="Fitxategia kanpoko aplikaziorako prestatzen. Itxaron apur bat…"/>
->>>>>>> master
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Zerbitzariaren barneko errorea"/>
@@ -897,11 +881,7 @@
 		</node>
 	</node>
 	<node name="warningMessage">
-<<<<<<< HEAD
-		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
-=======
 		<node name="mainBookDirEditing" value="Direktorio nagusia aldatzerakoan datuak galduko dituzu. Jarraitu?"/>
->>>>>>> master
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Ezin izan da Google Play-ra sartu. %s eskuz instalatu, mesedez"/>
@@ -916,21 +896,12 @@
 		<node name="emptyCatalog" value="Katalogoa hutsik dago, barkatu"/>
 		<node name="emptyBasket" value="Saskia hutsik dago, barkatu"/>
 		<node name="emptyNetworkSearchResults" value="Ez da libururik aurkitu, barkatu"/>
-<<<<<<< HEAD
-		<node name="externalNotFound" value="Cannot open external application" toBeTranslated="true"/>
-		<node name="appNotFound" value="No suitable application found" toBeTranslated="true"/>
-		<node name="invalidFormat" value="Format is invalid" toBeTranslated="true"/>
-		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
-		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
-		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
-=======
 		<node name="externalNotFound" value="Ezin da kanpoko aplikazioa ireki"/>
 		<node name="appNotFound" value="Ez da aplikazio egokirik aurkitu"/>
 		<node name="invalidFormat" value="Formatuak ez du balio"/>
 		<node name="formatExists" value="Formatua dagoneko %s(e)k du"/>
 		<node name="unzipFailed" value="Ezin izan da liburua deskonprimatu"/>
 		<node name="noPlugin" value="Gehigarria instalatu fitxategi-mota hau irakurtzeko"/>
->>>>>>> master
 	</node>
 	<node name="external">
 		<node name="browser" value="Nabigatzailea"/>

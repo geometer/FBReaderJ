@@ -219,18 +219,8 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-
-<<<<<<< HEAD
 	public static ColorProfile getColorProfile() {
 		return ColorProfile.get(getColorProfileName());
-=======
-	public ColorProfile getColorProfile() {
-		final String name = getColorProfileName();
-		if (myColorProfile == null || !name.equals(myColorProfile.Name)) {
-			myColorProfile = ColorProfile.get(name);
-		}
-		return myColorProfile;
->>>>>>> master
 	}
 
 	public static String getColorProfileName() {
