@@ -220,18 +220,6 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	public static ColorProfile getColorProfile() {
-		return ColorProfile.get(getColorProfileName());
-	}
-
-	public static String getColorProfileName() {
-		return ViewOptions.ColorProfileName.getValue();
-	}
-
-	public static void setColorProfileName(String name) {
-		ViewOptions.ColorProfileName.setValue(name);
-	}
-
 	public ZLKeyBindings keyBindings() {
 		return myBindings;
 	}
