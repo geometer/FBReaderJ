@@ -81,8 +81,8 @@ public class ViewOptions {
 	}
 
 	public ZLTextStyleCollection getTextStyleCollection() {
-		final String screen = YotaDrawOnBack.getValue() ? "Yota" : "Base";
-		if (myTextStyleCollection == null) {
+		final String screen = YotaDrawOnBackScreen.getValue() ? "Yota".intern() : "Base".intern();
+		if (myTextStyleCollection == null || myTextStyleCollection.Screen != screen) {
 			myTextStyleCollection = new ZLTextStyleCollection(screen);
 		}
 		return myTextStyleCollection;
