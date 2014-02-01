@@ -116,17 +116,13 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-		System.err.println("openbook");
 		if (Model != null && Model.isValid()) {
-			System.err.println("1");
 			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
 			}
 		}
-		System.err.println("2");
 		Book tempBook = book;
 		if (tempBook == null) {
-			System.err.println("3");
 			tempBook = Collection.getRecentBook(0);
 			if (tempBook == null || !tempBook.File.exists()) {
 				tempBook = Collection.getBookByFile(BookUtil.getHelpFile());
@@ -135,14 +131,12 @@ public final class FBReaderApp extends ZLApplication {
 				return;
 			}
 		}
-		System.err.println("4");
 		final Book bookToOpen = tempBook;
 		bookToOpen.addLabel(Book.READ_LABEL);
 		Collection.saveBook(bookToOpen);
 		final FormatPlugin p = PluginCollection.Instance().getPlugin(bookToOpen.File);
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
-			System.err.println("5");
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					final ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
@@ -157,7 +151,6 @@ public final class FBReaderApp extends ZLApplication {
 			return;
 		}
 		if (p.type() == FormatPlugin.Type.PLUGIN) {
-			System.err.println("6");
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
@@ -175,7 +168,6 @@ public final class FBReaderApp extends ZLApplication {
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					final ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
-					System.err.println(SerializerUtil.serialize(bm));
 					myPluginFileOpener.openFile(((PluginFormatPlugin)p).getPackage(), SerializerUtil.serialize(bm), SerializerUtil.serialize(bookToOpen));
 				}
 			}, postAction);
