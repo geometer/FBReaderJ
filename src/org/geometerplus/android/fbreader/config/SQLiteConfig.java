@@ -128,9 +128,9 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 		mySetValueStatement.bindString(3, value);
 		try {
 			mySetValueStatement.execute();
+			sendChangeEvent(group, name, value);
 		} catch (SQLException e) {
 		}
-		sendChangeEvent(group, name, value);
 	}
 
 	@Override
@@ -139,6 +139,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 		myUnsetValueStatement.bindString(2, name);
 		try {
 			myUnsetValueStatement.execute();
+			sendChangeEvent(group, name, null);
 		} catch (SQLException e) {
 		}
 	}
