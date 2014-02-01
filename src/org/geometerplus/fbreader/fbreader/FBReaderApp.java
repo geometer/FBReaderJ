@@ -36,21 +36,12 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
-	public final MiscOptions MiscOptions;
-	public final ImageOptions ImageOptions;
-	public final ViewOptions ViewOptions;
-	public final PageTurningOptions PageTurningOptions;
+	public final MiscOptions MiscOptions = new MiscOptions();
+	public final ImageOptions ImageOptions = new ImageOptions();
+	public final ViewOptions ViewOptions = new ViewOptions();
+	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
 
-	private final ZLKeyBindings myBindings;
-
-	{
-		MiscOptions = new MiscOptions();
-		ImageOptions = new ImageOptions();
-		ViewOptions = new ViewOptions();
-		PageTurningOptions = new PageTurningOptions();
-
-		myBindings = new ZLKeyBindings();
-	}
+	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
