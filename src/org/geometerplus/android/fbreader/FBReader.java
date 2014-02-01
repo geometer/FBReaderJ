@@ -997,7 +997,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	public void refreshYotaScreen() {
-		if (DeviceType.Instance() == DeviceType.YOTA_PHONE) {
+		if (DeviceType.Instance() != DeviceType.YOTA_PHONE) {
 			return;
 		}
 
