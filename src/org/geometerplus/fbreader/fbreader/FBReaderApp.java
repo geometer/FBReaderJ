@@ -40,7 +40,6 @@ public final class FBReaderApp extends ZLApplication {
 	public final ImageOptions ImageOptions;
 	public final ViewOptions ViewOptions;
 	public final PageTurningOptions PageTurningOptions;
-	public final FooterOptions FooterOptions;
 
 	private final ZLKeyBindings myBindings;
 
@@ -49,7 +48,6 @@ public final class FBReaderApp extends ZLApplication {
 		ImageOptions = new ImageOptions();
 		ViewOptions = new ViewOptions();
 		PageTurningOptions = new PageTurningOptions();
-		FooterOptions = new FooterOptions();
 
 		myBindings = new ZLKeyBindings();
 	}
