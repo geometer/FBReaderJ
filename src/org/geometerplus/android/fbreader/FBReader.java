@@ -97,7 +97,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	private RelativeLayout myRootView;
 	private ZLAndroidWidget myMainView;
 
-	private boolean myShowStatusBarFlag;
+	private volatile boolean myShowStatusBarFlag;
 	private String myMenuLanguage;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
@@ -190,6 +190,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (!Config.Instance().isInitialized()) {
 			final SharedPreferences preferences = getSharedPreferences("fbreader.ui", MODE_PRIVATE);
 			myShowStatusBarFlag = preferences.getBoolean("statusBar", myShowStatusBarFlag);
+		} else {
+			myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
 		}
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -681,8 +683,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private void setStatusBarVisibility(boolean visible) {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
-		if (DeviceType.Instance() != DeviceType.KINDLE_FIRE_1ST_GENERATION &&
-			!zlibrary.ShowStatusBarOption.getValue()) {
+		if (DeviceType.Instance() != DeviceType.KINDLE_FIRE_1ST_GENERATION && !myShowStatusBarFlag) {
 			if (visible) {
 				getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 			} else {
