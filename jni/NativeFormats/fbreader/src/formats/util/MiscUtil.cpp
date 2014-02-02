@@ -26,10 +26,11 @@
 
 FBTextKind MiscUtil::referenceType(const std::string &link) {
 	std::string lowerCasedLink = link;
-	bool isFileReference =
+	const bool isFileReference =
 		ZLStringUtil::stringStartsWith(lowerCasedLink, "http://") ||
 		ZLStringUtil::stringStartsWith(lowerCasedLink, "https://") ||
 		ZLStringUtil::stringStartsWith(lowerCasedLink, "ftp://");
+
 	if (!isFileReference) {
 		return ZLStringUtil::stringStartsWith(lowerCasedLink, "mailto:") ? EXTERNAL_HYPERLINK : INTERNAL_HYPERLINK;
 	}
