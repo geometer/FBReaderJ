@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="1090523"
-		android:versionName="1.9.5.3"
+		android:versionCode="1090524"
+		android:versionName="1.9.5.4"
 		android:installLocation="auto"
 >
 	<uses-sdk
@@ -69,7 +69,7 @@
 				<data android:scheme="fbreader-action"/>
 			</intent-filter>
 			<intent-filter>
-				<action android:name="android.intent.action.PLUGIN"/>
+				<action android:name="android.fbreader.action.PLUGIN"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 			<intent-filter>
