@@ -69,7 +69,7 @@
 				<data android:scheme="fbreader-action"/>
 			</intent-filter>
 			<intent-filter>
-				<action android:name="android.intent.action.PLUGIN"/>
+				<action android:name="android.fbreader.action.PLUGIN"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 			<intent-filter>
