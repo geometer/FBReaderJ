@@ -41,6 +41,7 @@ public abstract class Config {
 	private final String myNullString = new String("__NULL__");
 	private final Map<StringPair,String> myCache =
 		Collections.synchronizedMap(new HashMap<StringPair,String>());
+	private final Set<String> myCachedGroups = new HashSet<String>();
 
 	// deprecated, used in API server implementation
 	public final String getValue(String name, String id, String defaultValue) {
@@ -50,13 +51,17 @@ public abstract class Config {
 	public final String getValue(StringPair id, String defaultValue) {
 		String value = myCache.get(id);
 		if (value == null) {
-			try {
-				value = getValueInternal(id.Group, id.Name);
-			} catch (NotAvailableException e) {
-				return defaultValue;
-			}
-			if (value == null) {
+			if (myCachedGroups.contains(id.Group)) {
 				value = myNullString;
+			} else {
+				try {
+					value = getValueInternal(id.Group, id.Name);
+				} catch (NotAvailableException e) {
+					return defaultValue;
+				}
+				if (value == null) {
+					value = myNullString;
+				}
 			}
 			myCache.put(id, value);
 		}
@@ -70,6 +75,24 @@ public abstract class Config {
 		}
 		myCache.put(id, value);
 		setValueInternal(id.Group, id.Name, value);
+	}
+
+	public final void requestAllValuesForGroup(String group) {
+		synchronized (myCachedGroups) {
+			if (myCachedGroups.contains(group)) {
+				return;
+			}
+			final Map<String,String> values;
+			try {
+				values = requestAllValuesForGroupInternal(group);
+			} catch (NotAvailableException e) {
+				return;
+			}
+			for (Map.Entry<String,String> entry : values.entrySet()) {
+				setToCache(group, entry.getKey(), entry.getValue());
+			}
+			myCachedGroups.add(group);
+		}
 	}
 
 	public final void unsetValue(StringPair id) {
@@ -96,4 +119,5 @@ public abstract class Config {
 	protected abstract String getValueInternal(String group, String name) throws NotAvailableException;
 	protected abstract void setValueInternal(String group, String name, String value);
 	protected abstract void unsetValueInternal(String group, String name);
+	protected abstract Map<String,String> requestAllValuesForGroupInternal(String group) throws NotAvailableException;
 }
