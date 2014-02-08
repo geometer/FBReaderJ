@@ -846,6 +846,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Erreur survenue pendant la lecture de '%s'"/>
+		<node name="errorReadingZip" value="Erreur survenue pendant l'extraction de '%s'"/>
+		<node name="pluginNotFound" value="Aucun plugin pour '%s'"/>
+		<node name="unknownPluginType" value="Type de plugin inconnu: %s"/>
+		<node name="fileNotFound" value="Fichier non trouvé: %s"/>
+		<node name="opfFileNotFound" value="OPF non trouvé dans %s"/>
+		<node name="unsupportedFileFormat" value="Format de fichier non supporté '%s'"/>
+		<node name="errorParsingRtf" value="Rtf: erreur de paring dans: %s"/>
 		<node name="cannotRunAndroidMarket" value="Impossible d'accéder à Android Market. Veuillez installer %s manuellement"/>
 		<node name="textNotFound" value="Aucune occurence dans le livre"/>
 		<node name="bookNotFound" value="Aucun livre correspondant dans la bibliothèque"/>
@@ -882,16 +891,6 @@
 		<node name="bookReading">
 			<node name="title" value="Problème FBReader"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Erreur survenue pendant la lecture de '%s'"/>
-		<node name="errorReadingZip" value="Erreur survenue pendant l'extraction de '%s'"/>
-		<node name="pluginNotFound" value="Aucun plugin pour '%s'"/>
-		<node name="unknownPluginType" value="Type de plugin inconnu: %s"/>
-		<node name="fileNotFound" value="Fichier non trouvé: %s"/>
-		<node name="opfFileNotFound" value="OPF non trouvé dans %s"/>
-		<node name="unsupportedFileFormat" value="Format de fichier non supporté '%s'"/>
-		<node name="errorParsingRtf" value="Rtf: erreur de paring dans: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

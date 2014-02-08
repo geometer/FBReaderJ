@@ -843,6 +843,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Виникла помилка під час читання '%s'"/>
+		<node name="errorReadingZip" value="Виникла помилка під час розпаковування '%s'"/>
+		<node name="pluginNotFound" value="Немає плагіну для '%s'"/>
+		<node name="unknownPluginType" value="Невідомий тип плагіну: %s"/>
+		<node name="fileNotFound" value="Файл не знайдено: %s"/>
+		<node name="opfFileNotFound" value="OPF не знайдено в %s"/>
+		<node name="unsupportedFileFormat" value="Формат файлу не підтримується для '%s'"/>
+		<node name="errorParsingRtf" value="Помилка обробки Rtf в: %s"/>
 		<node name="cannotRunAndroidMarket" value="Немає доступу до Android Market. Будь-ласка, встановіть %s вручну"/>
 		<node name="textNotFound" value="У цій книзі нема такого тексту"/>
 		<node name="bookNotFound" value="Немає відповідних книг"/>
@@ -879,16 +888,6 @@
 		<node name="bookReading">
 			<node name="title" value="неполадка FBReader"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Виникла помилка під час читання '%s'"/>
-		<node name="errorReadingZip" value="Виникла помилка під час розпаковування '%s'"/>
-		<node name="pluginNotFound" value="Немає плагіну для '%s'"/>
-		<node name="unknownPluginType" value="Невідомий тип плагіну: %s"/>
-		<node name="fileNotFound" value="Файл не знайдено: %s"/>
-		<node name="opfFileNotFound" value="OPF не знайдено в %s"/>
-		<node name="unsupportedFileFormat" value="Формат файлу не підтримується для '%s'"/>
-		<node name="errorParsingRtf" value="Помилка обробки Rtf в: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

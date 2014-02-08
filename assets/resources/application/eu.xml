@@ -49,8 +49,8 @@
 		<node name="addToFavorites" value="Gehitu gogokoetara"/>
 		<node name="removeFromFavorites" value="Kendu gogokoetatik"/>
 		<node name="removeFromRecents" value="Kendu azkenaldikoen zerrendatik"/>
-		<node name="markAsRead" value="Markatu irakurria bezala" />
-		<node name="markAsUnread" value="Markatu irakurri gabea bezala" />
+		<node name="markAsRead" value="Markatu irakurria bezala"/>
+		<node name="markAsUnread" value="Markatu irakurri gabea bezala"/>
 	</node>
 	<node name="networkLibrary" value="FBReadereko sare-liburutegia">
 		<node name="byAuthor" value="Egileagatik">
@@ -316,7 +316,7 @@
 		</node>
 		<node name="appearance" value="Itxura">
 			<node name="summary" value="Pantaila ezarpenak, egoera barra, botoien argiak"/>
-			<node name="language" value="Interfazearen hizkuntza" />
+			<node name="language" value="Interfazearen hizkuntza"/>
 			<node name="screenOrientation" value="Pantailaren orientazioa">
 				<node name="system" value="Sistema"/>
 				<node name="sensor" value="Gailuaren orientazioaren araberakoa"/>
@@ -350,7 +350,7 @@
 				<node name="summaryOff" value="Ez saiatu botoien argiak ezgaitzen"/>
 			</node>
 			<node name="twoColumnView" value="Zutabe biko bista">
-				<node name="summaryOn" value="Testua zutabe bitan aurkeztu gailua horizontalean eusterakoan" /> 
+				<node name="summaryOn" value="Testua zutabe bitan aurkeztu gailua horizontalean eusterakoan"/>
 				<node name="summaryOff" value="Testua beti zutabe bakarrean aurkeztu"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Pantailaren distira doitu">
@@ -585,7 +585,7 @@
 			<node name="right" value="Eskumako marjina"/>
 			<node name="top" value="Goiko marjina"/>
 			<node name="bottom" value="Beheko marjina"/>
-			<node name="spaceBetweenColumns" value="Zutabeen arteko tartea" />
+			<node name="spaceBetweenColumns" value="Zutabeen arteko tartea"/>
 		</node>
 		<node name="scrollBar" value="Aurrerapen-barra">
 			<node name="summary" value="Aurrerapen adierazlearen eta oin-oharren hobespenak"/>
@@ -745,13 +745,13 @@
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
-			<node name="eink" value="E-ink pantaila">
-				<node name="summary" value="E-ink pantailentzako aukera bereziak"/>
-				<node name="enableFastRefresh" value="Berritze azkarra">
-					<node name="summaryOn" value="Pantaila azkar berritu (ez oso garbia)"/>
-					<node name="summaryOff" value="Pantaila osoan berritu (garbia baina motela)"/>
-				</node>
-				<node name="interval" value="Osoan berritu arteko berritze azkarren kopurua"/>
+		<node name="eink" value="E-ink pantaila">
+			<node name="summary" value="E-ink pantailentzako aukera bereziak"/>
+			<node name="enableFastRefresh" value="Berritze azkarra">
+				<node name="summaryOn" value="Pantaila azkar berritu (ez oso garbia)"/>
+				<node name="summaryOff" value="Pantaila osoan berritu (garbia baina motela)"/>
+			</node>
+			<node name="interval" value="Osoan berritu arteko berritze azkarren kopurua"/>
 		</node>
 		<node name="externalFormats" value="Formatuak">
 			<node name="summary" value="Kudeatu fitxategiek formatuak"/>
@@ -788,8 +788,8 @@
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
 			<node name="removeFromFavorites" value="Kendu gogokoetatik"/>
-			<node name="markAsRead" value="Markatu irakurria bezala" />
-			<node name="markAsUnread" value="Markatu ez irakurria bezala" />
+			<node name="markAsRead" value="Markatu irakurria bezala"/>
+			<node name="markAsUnread" value="Markatu ez irakurria bezala"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalatu gehigarria"/>
@@ -873,6 +873,15 @@
 		<node name="mainBookDirEditing" value="Direktorio nagusia aldatzerakoan datuak galduko dituzu. Jarraitu?"/>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Errorea gertatu da '%s' (r)ren irakurketa bitartean"/>
+		<node name="errorReadingZip" value="Errorea gertatu da '%s' (r)en erauzketa bitartean"/>
+		<node name="pluginNotFound" value="Ez dago gehigarririk '%s' (r)entzat"/>
+		<node name="unknownPluginType" value="Gehigarri mota ezezaguna: %s"/>
+		<node name="fileNotFound" value="Aurkitzen ez den fitxategia: %s"/>
+		<node name="opfFileNotFound" value="Ez da OPF aurkitzen %s (e)n"/>
+		<node name="unsupportedFileFormat" value="Ez da onartzen  '%s' (r)en fitxategi formatua"/>
+		<node name="errorParsingRtf" value="RTF prozesatzerakoan hemen: %s"/>
 		<node name="cannotRunAndroidMarket" value="Ezin izan da Google Play-ra sartu. %s eskuz instalatu, mesedez"/>
 		<node name="textNotFound" value="Ez dago bat egiten duen testurik liburuan, barkatu"/>
 		<node name="bookNotFound" value="Ez dago bat egiten duen libururik liburutegian, barkatu"/>
@@ -881,7 +890,7 @@
 		<node name="dictionaryIsNotInstalled" value="Ez dago hiztegia instalaturik, barkatu"/>
 		<node name="permissionDenied" value="Baimena ezeztatu egin da, barkatu"/>
 		<node name="noFavorites" value="Zure gogokoen zerrenda hutsik dago, barkatu"/>
-		<node name="noSeries" value="Ez dago libururik sailetan, barkatu" />
+		<node name="noSeries" value="Ez dago libururik sailetan, barkatu"/>
 		<node name="emptyCatalog" value="Katalogoa hutsik dago, barkatu"/>
 		<node name="emptyBasket" value="Saskia hutsik dago, barkatu"/>
 		<node name="emptyNetworkSearchResults" value="Ez da libururik aurkitu, barkatu"/>
@@ -915,16 +924,6 @@
 		<node name="bookReading">
 			<node name="title" value="FBReader arazoa"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Errorea gertatu da '%s' (r)ren irakurketa bitartean"/>
-		<node name="errorReadingZip" value="Errorea gertatu da '%s' (r)en erauzketa bitartean"/>
-		<node name="pluginNotFound" value="Ez dago gehigarririk '%s' (r)entzat"/>
-		<node name="unknownPluginType" value="Gehigarri mota ezezaguna: %s"/>
-		<node name="fileNotFound" value="Aurkitzen ez den fitxategia: %s"/>
-		<node name="opfFileNotFound" value="Ez da OPF aurkitzen %s (e)n"/>
-		<node name="unsupportedFileFormat" value="Ez da onartzen  '%s' (r)en fitxategi formatua"/>
-		<node name="errorParsingRtf" value="RTF prozesatzerakoan hemen: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

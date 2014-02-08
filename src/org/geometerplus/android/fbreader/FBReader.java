@@ -145,6 +145,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myBook = createBookForFile(ZLFile.createFileByPath(data.getPath()));
 			}
 		}
+		if (myBook != null) {
+			ZLFile file = myBook.File;
+			if (!file.exists()) {
+				if (file.getPhysicalFile() != null) {
+					file = file.getPhysicalFile();
+				}
+				UIUtil.showErrorMessage(this, "fileNotFound", file.getPath());
+				myBook = null;
+			}
+		}
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
 				myFBReaderApp.openBook(myBook, bookmark, new Runnable() {
