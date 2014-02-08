@@ -203,14 +203,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		final ZLAndroidLibrary zlibrary = getZLibrary();
 		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
 		myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
-		if (!Config.Instance().isInitialized()) {
-			final SharedPreferences preferences = getSharedPreferences("fbreader.ui", MODE_PRIVATE);
-			myShowStatusBarFlag = preferences.getBoolean("statusBar", myShowStatusBarFlag);
-			myShowActionBarFlag = preferences.getBoolean("actionBar", myShowActionBarFlag);
-		} else {
-			myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
-			myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
-		}
 		myActionBarIsVisible = myShowActionBarFlag;
 
 		getWindow().setFlags(
@@ -379,10 +371,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					finish();
 					startActivity(new Intent(FBReader.this, FBReader.class));
 				}
-				getSharedPreferences("fbreader.ui", MODE_PRIVATE).edit()
-					.putBoolean("statusBar", showStatusBar)
-					.putBoolean("actionBar", showActionBar)
-					.commit();
+				zlibrary.ShowStatusBarOption.saveSpecialValue();
+				zlibrary.ShowActionBarOption.saveSpecialValue();
 				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
 			}
 		});
