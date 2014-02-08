@@ -88,6 +88,9 @@ public abstract class Config {
 	public abstract List<String> listNames(String group);
 	public abstract void removeGroup(String name);
 
+	public abstract boolean getSpecialBooleanValue(String name, boolean defaultValue);
+	public abstract void setSpecialBooleanValue(String name, boolean value);
+
 	protected abstract String getValueInternal(String group, String name) throws NotAvailableException;
 	protected abstract void setValueInternal(String group, String name, String value);
 	protected abstract void unsetValueInternal(String group, String name);
