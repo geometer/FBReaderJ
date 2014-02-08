@@ -197,8 +197,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+
+		final Config config = Config.Instance();
+		config.runOnStart(new Runnable() {
+			public void run() {
+				config.requestAllValuesForGroup("Options");
+				config.requestAllValuesForGroup("Style");
+				config.requestAllValuesForGroup("LookNFeel");
+				config.requestAllValuesForGroup("Fonts");
+				config.requestAllValuesForGroup("Colors");
+				config.requestAllValuesForGroup("Files");
+			}
+		});
 
 		final ZLAndroidLibrary zlibrary = getZLibrary();
 		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
