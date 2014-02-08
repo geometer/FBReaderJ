@@ -103,6 +103,21 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 		}
 	}
 
+	public boolean getSpecialBooleanValue(String name, boolean defaultValue) {
+		//return myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE)
+		//	.getBoolean(name, defaultValue);
+		final boolean value = myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE)
+			.getBoolean(name, defaultValue);
+		System.err.println("SPECIAL GET: (" + name + "," + defaultValue + ") = " + value);
+		return value;
+	}
+
+	public void setSpecialBooleanValue(String name, boolean value) {
+		System.err.println("SPECIAL PUT: " + name + " => " + value);
+		myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE).edit()
+			.putBoolean(name, value).commit();
+	}
+
 	@Override
 	protected String getValueInternal(String group, String name) throws NotAvailableException {
 		if (myInterface == null) {
