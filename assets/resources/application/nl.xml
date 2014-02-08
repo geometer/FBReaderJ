@@ -853,6 +853,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Fout tijdens lezen van '%s'"/>
+		<node name="errorReadingZip" value="Fout tijdens uitpakken '%s'"/>
+		<node name="pluginNotFound" value="Geen plug-in voor '%s'"/>
+		<node name="unknownPluginType" value="Onbekend plug-in type: %s"/>
+		<node name="fileNotFound" value="Bestand niet gevonden: %s"/>
+		<node name="opfFileNotFound" value="OPF is niet gevonden in %s"/>
+		<node name="unsupportedFileFormat" value="Bestandsformaat van '%s' wordt niet ondersteund"/>
+		<node name="errorParsingRtf" value="RTF parse-fout in: %s"/>
 		<node name="cannotRunAndroidMarket" value="Geen toegang tot de Android Market. Installeer %s handmatig"/>
 		<node name="textNotFound" value="Er is geen passende tekst in het boek"/>
 		<node name="bookNotFound" value="Er zijn geen passende boeken in de bibliotheek"/>
@@ -889,16 +898,6 @@
 		<node name="bookReading">
 			<node name="title" value="FBReader probleem"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Fout tijdens lezen van '%s'"/>
-		<node name="errorReadingZip" value="Fout tijdens uitpakken '%s'"/>
-		<node name="pluginNotFound" value="Geen plug-in voor '%s'"/>
-		<node name="unknownPluginType" value="Onbekend plug-in type: %s"/>
-		<node name="fileNotFound" value="Bestand niet gevonden: %s"/>
-		<node name="opfFileNotFound" value="OPF is niet gevonden in %s"/>
-		<node name="unsupportedFileFormat" value="Bestandsformaat van '%s' wordt niet ondersteund"/>
-		<node name="errorParsingRtf" value="RTF parse-fout in: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
