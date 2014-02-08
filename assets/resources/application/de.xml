@@ -886,6 +886,15 @@
 		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Fehler beim Lesen von '%s'"/>
+		<node name="errorReadingZip" value="Fehler beim Entpacken von '%s'"/>
+		<node name="pluginNotFound" value="Kein Plug-In für '%s'"/>
+		<node name="unknownPluginType" value="Unbekannter Plug-In-Typ: %s"/>
+		<node name="fileNotFound" value="Datei nicht gefunden: %s"/>
+		<node name="opfFileNotFound" value="OPF in %s nicht gefunden"/>
+		<node name="unsupportedFileFormat" value="Dateiformat für '%s' wird nicht unterstützt"/>
+		<node name="errorParsingRtf" value="Rtf-Parsing Fehler in: %s"/>
 		<node name="cannotRunAndroidMarket" value="Es kann nicht auf den Android Market zugegriffen werden. Bitte, installieren Sie %s manuell."/>
 		<node name="textNotFound" value="Es wurde kein passender Text im Buch gefunden."/>
 		<node name="bookNotFound" value="Es wurden keine passenden Bücher in der Bibliothek gefunden."/>
@@ -928,16 +937,6 @@
 		<node name="bookReading">
 			<node name="title" value="FBReader Problem"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Fehler beim Lesen von '%s'"/>
-		<node name="errorReadingZip" value="Fehler beim Entpacken von '%s'"/>
-		<node name="pluginNotFound" value="Kein Plug-In für '%s'"/>
-		<node name="unknownPluginType" value="Unbekannter Plug-In-Typ: %s"/>
-		<node name="fileNotFound" value="Datei nicht gefunden: %s"/>
-		<node name="opfFileNotFound" value="OPF in %s nicht gefunden"/>
-		<node name="unsupportedFileFormat" value="Dateiformat für '%s' wird nicht unterstützt"/>
-		<node name="errorParsingRtf" value="Rtf-Parsing Fehler in: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

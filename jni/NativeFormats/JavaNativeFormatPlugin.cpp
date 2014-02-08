@@ -114,20 +114,20 @@ static void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
 }
 
 extern "C"
-JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfoNative(JNIEnv* env, jobject thiz, jobject javaBook) {
+JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfoNative(JNIEnv* env, jobject thiz, jobject javaBook) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
 	if (plugin.isNull()) {
-		return JNI_FALSE;
+		return 1;
 	}
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
 
 	if (!plugin->readMetaInfo(*book)) {
-		return JNI_FALSE;
+		return 2;
 	}
 
 	fillMetaInfo(env, javaBook, *book);
-	return JNI_TRUE;
+	return 0;
 }
 
 extern "C"
@@ -252,10 +252,10 @@ static void initTOC(JNIEnv *env, jobject javaModel, const ContentsTree &tree) {
 }
 
 extern "C"
-JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModelNative(JNIEnv* env, jobject thiz, jobject javaModel) {
+JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModelNative(JNIEnv* env, jobject thiz, jobject javaModel) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
 	if (plugin.isNull()) {
-		return JNI_FALSE;
+		return 1;
 	}
 
 	jobject javaBook = AndroidUtil::Field_NativeBookModel_Book->value(javaModel);
@@ -263,15 +263,15 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
 	shared_ptr<BookModel> model = new BookModel(book, javaModel);
 	if (!plugin->readModel(*model)) {
-		return JNI_FALSE;
+		return 2;
 	}
 	if (!model->flush()) {
 		AndroidUtil::throwCachedCharStorageException("Cannot write file from native code");
-		return JNI_FALSE;
+		return 3;
 	}
 
 	if (!initInternalHyperlinks(env, javaModel, *model)) {
-		return JNI_FALSE;
+		return 4;
 	}
 
 	initTOC(env, javaModel, *model->contentsTree());
@@ -279,11 +279,11 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	shared_ptr<ZLTextModel> textModel = model->bookTextModel();
 	jobject javaTextModel = createTextModel(env, javaModel, *textModel);
 	if (javaTextModel == 0) {
-		return JNI_FALSE;
+		return 5;
 	}
 	AndroidUtil::Method_NativeBookModel_setBookTextModel->call(javaModel, javaTextModel);
 	if (env->ExceptionCheck()) {
-		return JNI_FALSE;
+		return 6;
 	}
 	env->DeleteLocalRef(javaTextModel);
 
@@ -292,15 +292,15 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	for (; it != footnotes.end(); ++it) {
 		jobject javaFootnoteModel = createTextModel(env, javaModel, *it->second);
 		if (javaFootnoteModel == 0) {
-			return JNI_FALSE;
+			return 7;
 		}
 		AndroidUtil::Method_NativeBookModel_setFootnoteModel->call(javaModel, javaFootnoteModel);
 		if (env->ExceptionCheck()) {
-			return JNI_FALSE;
+			return 8;
 		}
 		env->DeleteLocalRef(javaFootnoteModel);
 	}
-	return JNI_TRUE;
+	return 0;
 }
 
 extern "C"

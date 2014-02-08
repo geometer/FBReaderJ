@@ -41,7 +41,9 @@ public abstract class BookModel {
 				model = new JavaBookModel(book);
 				break;
 			default:
-				throw new BookReadingException("unknownPluginType", plugin.type().toString(), null);
+				throw new BookReadingException(
+					"unknownPluginType", null, new String[] { plugin.type().toString() }
+				);
 		}
 
 		plugin.readModel(model);

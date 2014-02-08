@@ -889,6 +889,15 @@
 		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="შეცდომა '%s'-ს კითხვისას"/>
+		<node name="errorReadingZip" value="შეცდომა '%s'-ს განარქივებისას"/>
+		<node name="pluginNotFound" value="ვერ მოიძებნა პლაგინი '%s'-სთვის"/>
+		<node name="unknownPluginType" value="უცნობი ტიპის პლაგინი: %s"/>
+		<node name="fileNotFound" value="არ მოიძებნა ფაილი: %s"/>
+		<node name="opfFileNotFound" value="არ მოიძებნა OPF %s-ში"/>
+		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
+		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
 		<node name="cannotRunAndroidMarket" value="არ ხერხდება Android Market-ის ჩართვა. სცადეთ დააყენოთ %s ხელით"/>
 		<node name="textNotFound" value="ამ წიგნში არ არის მასეთი ტექსტი"/>
 		<node name="bookNotFound" value="არ მოიძებნა შესაფერისი წიგნი"/>
@@ -931,16 +940,6 @@
 		<node name="bookReading">
 			<node name="title" value="FBReader-ის პრობლემა"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="შეცდომა '%s'-ს კითხვისას"/>
-		<node name="errorReadingZip" value="შეცდომა '%s'-ს განარქივებისას"/>
-		<node name="pluginNotFound" value="ვერ მოიძებნა პლაგინი '%s'-სთვის"/>
-		<node name="unknownPluginType" value="უცნობი ტიპის პლაგინი: %s"/>
-		<node name="fileNotFound" value="არ მოიძებნა ფაილი: %s"/>
-		<node name="opfFileNotFound" value="არ მოიძებნა OPF %s-ში"/>
-		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
-		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

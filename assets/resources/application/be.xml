@@ -577,13 +577,6 @@
 				<node name="wood" value="Драўніна"/>
 			</node>
 			<node name="backgroundColor" value="Колер фону"/>
-			<node name="selectionBackground" value="Selection background" toBeTranslated="true"/>
-			<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
-			<node name="text" value="Regular text" toBeTranslated="true"/>
-			<node name="hyperlink" value="Hyperlink text" toBeTranslated="true"/>
-			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
-			<node name="highlighting" value="Search results background" toBeTranslated="true"/>
-			<node name="footer" value="Footer" toBeTranslated="true"/>
 			<node name="imagesBackground" value="Images Background" toBeTranslated="true">
 				<node name="summaryOn" value="Use background" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not use background" toBeTranslated="true"/>
@@ -890,6 +883,15 @@
 		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Адбылася памылка падчас чытаньня '%s'"/>
+		<node name="errorReadingZip" value="Адбылася памылка падчас выманьня '%s'"/>
+		<node name="pluginNotFound" value="Няма ўбудовы для '%s'"/>
+		<node name="unknownPluginType" value="Невядомы тып убудовы: %s"/>
+		<node name="fileNotFound" value="Файл ня знойдзены: %s"/>
+		<node name="opfFileNotFound" value="OPF ня знойдзены ў %s"/>
+		<node name="unsupportedFileFormat" value="Фармат файла не падтрымліваецца для '%s'"/>
+		<node name="errorParsingRtf" value="Памылка разбору rtf у: %s"/>
 		<node name="cannotRunAndroidMarket" value="Няма доступу да рынку Android. Калі ласка, усталюйце %s уручную"/>
 		<node name="textNotFound" value="Няма адпаведнага тэксту ў кнізе, прабачце"/>
 		<node name="bookNotFound" value="Няма адпаведных кніг у бібліятэцы, прабачце"/>
@@ -932,16 +934,6 @@
 		<node name="bookReading">
 			<node name="title" value="Праблема FBReader"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Адбылася памылка падчас чытаньня '%s'"/>
-		<node name="errorReadingZip" value="Адбылася памылка падчас выманьня '%s'"/>
-		<node name="pluginNotFound" value="Няма ўбудовы для '%s'"/>
-		<node name="unknownPluginType" value="Невядомы тып убудовы: %s"/>
-		<node name="fileNotFound" value="Файл ня знойдзены: %s"/>
-		<node name="opfFileNotFound" value="OPF ня знойдзены ў %s"/>
-		<node name="unsupportedFileFormat" value="Фармат файла не падтрымліваецца для '%s'"/>
-		<node name="errorParsingRtf" value="Памылка разбору rtf у: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

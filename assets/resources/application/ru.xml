@@ -878,6 +878,15 @@
 		<node name="mainBookDirEditing" value="Редактирование основной директории приведёт к потере данных. Продолжить?"/>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Ошибка при чтении '%s'"/>
+		<node name="errorReadingZip" value="Ошибка при разархивировании '%s'"/>
+		<node name="pluginNotFound" value="Нет плагина для '%s'"/>
+		<node name="unknownPluginType" value="Неизвестный тип плагина: %s"/>
+		<node name="fileNotFound" value="Не найти файл: %s"/>
+		<node name="opfFileNotFound" value="Не удалось найти OPF в %s"/>
+		<node name="unsupportedFileFormat" value="Не поддерживается формат файла '%s'"/>
+		<node name="errorParsingRtf" value="Ошибка при чтении RTF-файла %s"/>
 		<node name="cannotRunAndroidMarket" value="Не удается запустить Android Market. Попробуйте установить %s вручную"/>
 		<node name="textNotFound" value="В этой книге нет такого текста"/>
 		<node name="bookNotFound" value="Нет подходящих книг"/>
@@ -920,16 +929,6 @@
 		<node name="bookReading">
 			<node name="title" value="Проблема у FBReader"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Ошибка при чтении '%s'"/>
-		<node name="errorReadingZip" value="Ошибка при разархивировании '%s'"/>
-		<node name="pluginNotFound" value="Нет плагина для '%s'"/>
-		<node name="unknownPluginType" value="Неизвестный тип плагина: %s"/>
-		<node name="fileNotFound" value="Не найти файл: %s"/>
-		<node name="opfFileNotFound" value="Не удалось найти OPF в %s"/>
-		<node name="unsupportedFileFormat" value="Не поддерживается формат файла '%s'"/>
-		<node name="errorParsingRtf" value="Ошибка при чтении RTF-файла %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.ru/faq-page"/>

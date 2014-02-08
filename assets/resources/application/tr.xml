@@ -884,6 +884,15 @@
 		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="'%s' okunurken hata oluştu"/>
+		<node name="errorReadingZip" value="'%s' çıkarılırken hata oluştu"/>
+		<node name="pluginNotFound" value="'%s' eklentisi yok"/>
+		<node name="unknownPluginType" value="Bilinmeyen eklenti tipi: %s"/>
+		<node name="fileNotFound" value="Dosya bulunamadı: %s"/>
+		<node name="opfFileNotFound" value="OPF %s\'de bulunamadı"/>
+		<node name="unsupportedFileFormat" value="'%s' dosya türü desteklenmiyor"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 		<node name="cannotRunAndroidMarket" value="Android Markete ulaşılamıyor. Lütfen %s elle indirin"/>
 		<node name="textNotFound" value="Kitapta buna uyan metin yok, üzgünüm"/>
 		<node name="bookNotFound" value="Kitaplıkta buna uyan kitap yok, üzgünüm"/>
@@ -926,16 +935,6 @@
 		<node name="bookReading">
 			<node name="title" value="FBReader sorunu"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="'%s' okunurken hata oluştu"/>
-		<node name="errorReadingZip" value="'%s' çıkarılırken hata oluştu"/>
-		<node name="pluginNotFound" value="'%s' eklentisi yok"/>
-		<node name="unknownPluginType" value="Bilinmeyen eklenti tipi: %s"/>
-		<node name="fileNotFound" value="Dosya bulunamadı: %s"/>
-		<node name="opfFileNotFound" value="OPF %s\'de bulunamadı"/>
-		<node name="unsupportedFileFormat" value="'%s' dosya türü desteklenmiyor"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

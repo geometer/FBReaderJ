@@ -286,6 +286,14 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		Log.d("fbreader", "filePath");
 		if (myBook != null) {
 			Log.d("fbreader", myBook.File.getPath());
+			ZLFile file = myBook.File;
+			if (!file.exists()) {
+				if (file.getPhysicalFile() != null) {
+					file = file.getPhysicalFile();
+				}
+				UIUtil.showErrorMessage(this, "fileNotFound", file.getPath());
+				myBook = null;
+			}
 		}
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
