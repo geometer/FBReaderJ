@@ -19,11 +19,11 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.money.Money;
+import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
