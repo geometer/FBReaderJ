@@ -306,13 +306,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Biblioteker">
 			<node name="summary" value="Biblioteker for filsøgning"/>
-			<node name="books" value="Bogbibliotek"/>
-			<node name="fonts" value="Skrifttype-bibliotek"/>
-			<node name="wallpapers" value="Tapet-bibliotek"/>
 			<node name="temp" value="Katalog for midlertidige filer"/>
 			<node name="bookPath" value="Bogbiblioteker"/>
 			<node name="fontPath" value="Skrifttype-biblioteker"/>
 			<node name="wallpaperPath" value="Tapet-biblioteker"/>
+			<node name="books" value="Bogbibliotek"/>
+			<node name="fonts" value="Skrifttype-bibliotek"/>
+			<node name="wallpapers" value="Tapet-bibliotek"/>
 		</node>
 		<node name="appearance" value="Fremtoning">
 			<node name="summary" value="Vis indstillinger, statuslinje, knaplys"/>
