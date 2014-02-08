@@ -858,6 +858,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Սխալ՝ '%s'-ը կարդալիս"/>
+		<node name="errorReadingZip" value="Սխալ՝ '%s'-ը ապապահարկելիս"/>
+		<node name="pluginNotFound" value="'%s'-ի համար խրվակ չկա"/>
+		<node name="unknownPluginType" value="%s խրվակի անհայտ տեսակ"/>
+		<node name="fileNotFound" value="%s նիշքը չգտնվեց"/>
+		<node name="opfFileNotFound" value="%s-ում OPF չգտնվեց"/>
+		<node name="unsupportedFileFormat" value="'%s' նիշքերը չեն աջակցվում'"/>
+		<node name="errorParsingRtf" value="Սխալ %s RTF-նիշքը կարդալիս"/>
 		<node name="cannotRunAndroidMarket" value="Չհաջողվեց գործարկել Android Market-ը։ Փորձեք տեղադրել %s-ը ձեռքով։"/>
 		<node name="textNotFound" value="Գրքում նման հատված չկա"/>
 		<node name="bookNotFound" value="Համապատասխան գրքեր չկան"/>
@@ -894,16 +903,6 @@
 		<node name="bookReading">
 			<node name="title" value="Խնդիր FBReader-ում"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Սխալ՝ '%s'-ը կարդալիս"/>
-		<node name="errorReadingZip" value="Սխալ՝ '%s'-ը ապապահարկելիս"/>
-		<node name="pluginNotFound" value="'%s'-ի համար խրվակ չկա"/>
-		<node name="unknownPluginType" value="%s խրվակի անհայտ տեսակ"/>
-		<node name="fileNotFound" value="%s նիշքը չգտնվեց"/>
-		<node name="opfFileNotFound" value="%s-ում OPF չգտնվեց"/>
-		<node name="unsupportedFileFormat" value="'%s' նիշքերը չեն աջակցվում'"/>
-		<node name="errorParsingRtf" value="Սխալ %s RTF-նիշքը կարդալիս"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

@@ -858,6 +858,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Грешка при четенето на '%s'"/>
+		<node name="errorReadingZip" value="Грешка при разархивирането на '%s'"/>
+		<node name="pluginNotFound" value="Няма плъгин за '%s'"/>
+		<node name="unknownPluginType" value="Неизвестен тип плъгин: %s"/>
+		<node name="fileNotFound" value="Липсващ файл: %s"/>
+		<node name="opfFileNotFound" value="OPF файлът не е намерен в %s"/>
+		<node name="unsupportedFileFormat" value="Файловият формат '%s' не се поддържа"/>
+		<node name="errorParsingRtf" value="Грешка при четенето на RTF файла %s"/>
 		<node name="cannotRunAndroidMarket" value="Android Market е недостъпен. Опитайте да инсталирате %s ръчно"/>
 		<node name="textNotFound" value="Няма такъв текст в книгата"/>
 		<node name="bookNotFound" value="Няма такива книги в библиотеката"/>
@@ -894,16 +903,6 @@
 		<node name="bookReading">
 			<node name="title" value="Проблем с FBReader"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Грешка при четенето на '%s'"/>
-		<node name="errorReadingZip" value="Грешка при разархивирането на '%s'"/>
-		<node name="pluginNotFound" value="Няма плъгин за '%s'"/>
-		<node name="unknownPluginType" value="Неизвестен тип плъгин: %s"/>
-		<node name="fileNotFound" value="Липсващ файл: %s"/>
-		<node name="opfFileNotFound" value="OPF файлът не е намерен в %s"/>
-		<node name="unsupportedFileFormat" value="Файловият формат '%s' не се поддържа"/>
-		<node name="errorParsingRtf" value="Грешка при четенето на RTF файла %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

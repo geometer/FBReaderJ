@@ -853,6 +853,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="هنگام خواندن '%s' خطایی رخ داده است"/>
+		<node name="errorReadingZip" value="درهنگام استخراج '%s' خطایی رخ داده است"/>
+		<node name="pluginNotFound" value="پلاگینی وجود ندارد برای '%s'"/>
+		<node name="unknownPluginType" value="نوع پلاگین ناشناخته است: %s"/>
+		<node name="fileNotFound" value="فایل پیدا نشد: %s"/>
+		<node name="opfFileNotFound" value="OPF در %s پیدا نشد"/>
+		<node name="unsupportedFileFormat" value="فرمت فایل پشتیبانی نمیشود برای '%s'"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 		<node name="cannotRunAndroidMarket" value="عدم قابليت دسترسي به بازار آندرويد. لطفا %s را بصورت دستي نصب كنيد"/>
 		<node name="textNotFound" value="متاسفانه متن مناسبي در كتاب موجود نيست"/>
 		<node name="bookNotFound" value="متاسفانه كتاب مناسبي در كتابخانه موجود نيست"/>
@@ -889,16 +898,6 @@
 		<node name="bookReading">
 			<node name="title" value="مشکل اف بی ریدر"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="هنگام خواندن '%s' خطایی رخ داده است"/>
-		<node name="errorReadingZip" value="درهنگام استخراج '%s' خطایی رخ داده است"/>
-		<node name="pluginNotFound" value="پلاگینی وجود ندارد برای '%s'"/>
-		<node name="unknownPluginType" value="نوع پلاگین ناشناخته است: %s"/>
-		<node name="fileNotFound" value="فایل پیدا نشد: %s"/>
-		<node name="opfFileNotFound" value="OPF در %s پیدا نشد"/>
-		<node name="unsupportedFileFormat" value="فرمت فایل پشتیبانی نمیشود برای '%s'"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
