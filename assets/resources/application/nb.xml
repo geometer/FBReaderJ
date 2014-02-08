@@ -853,6 +853,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Feilen oppstod under lesing '%s'"/>
+		<node name="errorReadingZip" value="Feilen oppstod under utpakking '%s'"/>
+		<node name="pluginNotFound" value="Ingen tillegg for '%s'"/>
+		<node name="unknownPluginType" value="Ukjent tilleggstype: %s"/>
+		<node name="fileNotFound" value="Filen ble ikke funnet: %s"/>
+		<node name="opfFileNotFound" value="OPF er ikke funnet i %s"/>
+		<node name="unsupportedFileFormat" value="Filformatet er ikke støttet for '%s'"/>
+		<node name="errorParsingRtf" value="Rtf analysingsfeil i: %s"/>
 		<node name="cannotRunAndroidMarket" value="Ikke tilgang til Android Market. Vennligst installer %s manuelt"/>
 		<node name="textNotFound" value="Det er ingen passende tekst i boken, beklager"/>
 		<node name="bookNotFound" value="Det er ingen passende bøker i biblioteket, beklager"/>
@@ -889,16 +898,6 @@
 		<node name="bookReading">
 			<node name="title" value="FBReader problem"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Feilen oppstod under lesing '%s'"/>
-		<node name="errorReadingZip" value="Feilen oppstod under utpakking '%s'"/>
-		<node name="pluginNotFound" value="Ingen tillegg for '%s'"/>
-		<node name="unknownPluginType" value="Ukjent tilleggstype: %s"/>
-		<node name="fileNotFound" value="Filen ble ikke funnet: %s"/>
-		<node name="opfFileNotFound" value="OPF er ikke funnet i %s"/>
-		<node name="unsupportedFileFormat" value="Filformatet er ikke støttet for '%s'"/>
-		<node name="errorParsingRtf" value="Rtf analysingsfeil i: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

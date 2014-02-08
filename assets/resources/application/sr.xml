@@ -853,6 +853,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Грешка при читању „%s“."/>
+		<node name="errorReadingZip" value="Грешка при отпакивању „%s“."/>
+		<node name="pluginNotFound" value="Нема додатка за „%s“."/>
+		<node name="unknownPluginType" value="Непозната врста додатка: %s."/>
+		<node name="fileNotFound" value="Не могу да пронађем датотеку: %s."/>
+		<node name="opfFileNotFound" value="Не могу да пронађем OPF у „%s“."/>
+		<node name="unsupportedFileFormat" value="Формат датотеке није подржан за „%s“."/>
+		<node name="errorParsingRtf" value="Грешка при рашчлањивању RTF-а у: %s."/>
 		<node name="cannotRunAndroidMarket" value="Не могу да приступим Гугл плеју. Ручно инсталирајте „%s“."/>
 		<node name="textNotFound" value="Нема траженог текста у књизи."/>
 		<node name="bookNotFound" value="Нема тражених књига у библиотеци."/>
@@ -889,16 +898,6 @@
 		<node name="bookReading">
 			<node name="title" value="Проблем с FBReader-ом"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Грешка при читању „%s“."/>
-		<node name="errorReadingZip" value="Грешка при отпакивању „%s“."/>
-		<node name="pluginNotFound" value="Нема додатка за „%s“."/>
-		<node name="unknownPluginType" value="Непозната врста додатка: %s."/>
-		<node name="fileNotFound" value="Не могу да пронађем датотеку: %s."/>
-		<node name="opfFileNotFound" value="Не могу да пронађем OPF у „%s“."/>
-		<node name="unsupportedFileFormat" value="Формат датотеке није подржан за „%s“."/>
-		<node name="errorParsingRtf" value="Грешка при рашчлањивању RTF-а у: %s."/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

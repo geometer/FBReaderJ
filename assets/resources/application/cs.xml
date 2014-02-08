@@ -862,6 +862,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Došlo k chybě během čtení '%s'"/>
+		<node name="errorReadingZip" value="Došlo k chybě během rozbalování '%s'"/>
+		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
+		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
+		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
+		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
+		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
+		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
 		<node name="cannotRunAndroidMarket" value="Android Market není přístupný. Nainstalujte %s ručně"/>
 		<node name="textNotFound" value="V knize není bohužel žádný vhodný text"/>
 		<node name="bookNotFound" value="V knihovně nejsou bohužel žádné vhodné knihy"/>
@@ -898,16 +907,6 @@
 		<node name="bookReading">
 			<node name="title" value="Problém FBReaderu"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Došlo k chybě během čtení '%s'"/>
-		<node name="errorReadingZip" value="Došlo k chybě během rozbalování '%s'"/>
-		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
-		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
-		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
-		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
-		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
-		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
