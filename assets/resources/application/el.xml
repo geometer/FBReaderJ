@@ -851,6 +851,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Σφάλμα κατά την ανάγνωση στο '%s'"/>
+		<node name="errorReadingZip" value="Σφάλμα κατά την αποσυμπίεση στο '%s'"/>
+		<node name="pluginNotFound" value="Δεν υπάρχει Plug-In για '%s'"/>
+		<node name="unknownPluginType" value="Άγνωστος τύπος Plug-In: %s"/>
+		<node name="fileNotFound" value="Το αρχείο δεν βρέθηκε: %s"/>
+		<node name="opfFileNotFound" value="Το OPF στο %s δεν βρέθηκε"/>
+		<node name="unsupportedFileFormat" value="Ο τύπος αρχείου '%s' δεν υποστιρίζεται"/>
+		<node name="errorParsingRtf" value="Λάθος στο Rtf-Parsing: %s"/>
 		<node name="cannotRunAndroidMarket" value="Δεν υπάρχει πρόσβαση στο Android Market. Παρακαλώ, εγκαταστείστε %s χειροκίνητα."/>
 		<node name="textNotFound" value="Δεν βρέθηκε κατάλληλο κείμενο στο βιβλίο."/>
 		<node name="bookNotFound" value="Δεν βρέθηλαν κατάλληλα βιβλία στην βιβλιοθήκη."/>
@@ -887,16 +896,6 @@
 		<node name="bookReading">
 			<node name="title" value="Πρόβλημα FBReader"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Σφάλμα κατά την ανάγνωση στο '%s'"/>
-		<node name="errorReadingZip" value="Σφάλμα κατά την αποσυμπίεση στο '%s'"/>
-		<node name="pluginNotFound" value="Δεν υπάρχει Plug-In για '%s'"/>
-		<node name="unknownPluginType" value="Άγνωστος τύπος Plug-In: %s"/>
-		<node name="fileNotFound" value="Το αρχείο δεν βρέθηκε: %s"/>
-		<node name="opfFileNotFound" value="Το OPF στο %s δεν βρέθηκε"/>
-		<node name="unsupportedFileFormat" value="Ο τύπος αρχείου '%s' δεν υποστιρίζεται"/>
-		<node name="errorParsingRtf" value="Λάθος στο Rtf-Parsing: %s"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>

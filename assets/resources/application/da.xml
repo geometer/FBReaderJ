@@ -309,13 +309,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Biblioteker">
 			<node name="summary" value="Biblioteker for filsøgning"/>
-			<node name="books" value="Bogbibliotek"/>
-			<node name="fonts" value="Skrifttype-bibliotek"/>
-			<node name="wallpapers" value="Tapet-bibliotek"/>
 			<node name="temp" value="Katalog for midlertidige filer"/>
 			<node name="bookPath" value="Bogbiblioteker"/>
 			<node name="fontPath" value="Skrifttype-biblioteker"/>
 			<node name="wallpaperPath" value="Tapet-biblioteker"/>
+			<node name="books" value="Bogbibliotek"/>
+			<node name="fonts" value="Skrifttype-bibliotek"/>
+			<node name="wallpapers" value="Tapet-bibliotek"/>
 		</node>
 		<node name="appearance" value="Fremtoning">
 			<node name="summary" value="Vis indstillinger, statuslinje, knaplys"/>
@@ -871,7 +871,19 @@
 			<node name="more" value="Næste tip"/>
 		</node>
 	</node>
+	<node name="warningMessage">
+		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>
+	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Der opstod en fejl under indlæsning af '%s'"/>
+		<node name="errorReadingZip" value="Der opstod en fejl under udpakning af '%s'"/>
+		<node name="pluginNotFound" value="Ingen plugin for '%s'"/>
+		<node name="unknownPluginType" value="Ukendt plugin-type  %s"/>
+		<node name="fileNotFound" value="Filen blev ikke fundet: %s"/>
+		<node name="opfFileNotFound" value="OPF blev ikke fundet i %s"/>
+		<node name="unsupportedFileFormat" value="Filformatet understøttes ikke for '%s'"/>
+		<node name="errorParsingRtf" value="RTF-parsingfejl i: %s"/>
 		<node name="cannotRunAndroidMarket" value="Kan ikke få adgang til Android Market. Installer venligst %s manuelt"/>
 		<node name="textNotFound" value="Der er desværre ingen passende tekst i bogen"/>
 		<node name="bookNotFound" value="Der er desværre ingen egnede bøger i biblioteket"/>
@@ -915,18 +927,8 @@
 			<node name="title" value="FB-Læser problem"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Der opstod en fejl under indlæsning af '%s'"/>
-		<node name="errorReadingZip" value="Der opstod en fejl under udpakning af '%s'"/>
-		<node name="pluginNotFound" value="Ingen plugin for '%s'"/>
-		<node name="unknownPluginType" value="Ukendt plugin-type  %s"/>
-		<node name="fileNotFound" value="Filen blev ikke fundet: %s"/>
-		<node name="opfFileNotFound" value="OPF blev ikke fundet i %s"/>
-		<node name="unsupportedFileFormat" value="Filformatet understøttes ikke for '%s'"/>
-		<node name="errorParsingRtf" value="RTF-parsingfejl i: %s"/>
-	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page" toBeTranslated="true"/>
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Install plugins" toBeTranslated="true">
 		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
@@ -955,11 +957,5 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
-	</node>
-	<node name="warningMessage">
-		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>
-	</node>
-	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
 </resources>

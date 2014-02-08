@@ -843,6 +843,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File not found: %s" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 		<node name="cannotRunAndroidMarket" value="無法啟動Android Market，請自行安裝 %s"/>
 		<node name="textNotFound" value="書內沒有找到符合的字詞"/>
 		<node name="bookNotFound" value="書庫內沒有找到符合的書藉"/>
@@ -879,16 +888,6 @@
 		<node name="bookReading">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
