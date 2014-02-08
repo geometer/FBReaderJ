@@ -90,6 +90,8 @@ public abstract class Config {
 
 	public abstract boolean getSpecialBooleanValue(String name, boolean defaultValue);
 	public abstract void setSpecialBooleanValue(String name, boolean value);
+	public abstract String getSpecialStringValue(String name, String defaultValue);
+	public abstract void setSpecialStringValue(String name, String value);
 
 	protected abstract String getValueInternal(String group, String name) throws NotAvailableException;
 	protected abstract void setValueInternal(String group, String name, String value);
