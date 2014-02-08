@@ -22,10 +22,18 @@ package org.geometerplus.zlibrary.core.options;
 public abstract class ZLOption {
 	private final StringPair myId;
 	protected String myDefaultStringValue;
+	protected String mySpecialName;
 
 	protected ZLOption(String group, String optionName, String defaultStringValue) {
 		myId = new StringPair(group, optionName);
 		myDefaultStringValue = defaultStringValue != null ? defaultStringValue : "";
+	}
+
+	public final void setSpecialName(String specialName) {
+		mySpecialName = specialName;
+	}
+
+	public void saveSpecialValue() {
 	}
 
 	protected final String getConfigValue() {
