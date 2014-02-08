@@ -118,6 +118,21 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 			.putBoolean(name, value).commit();
 	}
 
+	public String getSpecialStringValue(String name, String defaultValue) {
+		//return myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE)
+		//	.getString(name, defaultValue);
+		final String value = myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE)
+			.getString(name, defaultValue);
+		System.err.println("SPECIAL GET: (" + name + "," + defaultValue + ") = " + value);
+		return value;
+	}
+
+	public void setSpecialStringValue(String name, String value) {
+		System.err.println("SPECIAL PUT: " + name + " => " + value);
+		myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE).edit()
+			.putString(name, value).commit();
+	}
+
 	@Override
 	protected String getValueInternal(String group, String name) throws NotAvailableException {
 		if (myInterface == null) {
