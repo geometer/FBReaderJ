@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.config;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
 import android.app.Service;
 import android.content.Context;
@@ -107,6 +106,24 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 		try {
 			myDeleteGroupStatement.execute();
 		} catch (SQLException e) {
+		}
+	}
+
+	@Override
+	synchronized public List<String> requestAllValuesForGroup(String group) {
+		try {
+			final List<String> pairs = new LinkedList<String>();
+			final Cursor cursor = myDatabase.rawQuery(
+				"SELECT name,value FROM config WHERE groupName = ?",
+				new String[] { group }
+			);
+			while (cursor.moveToNext()) {
+				pairs.add(cursor.getString(0) + "\000" + cursor.getString(1));
+			}
+			cursor.close();
+			return pairs;
+		} catch (SQLException e) {
+			return Collections.emptyList();
 		}
 	}
 

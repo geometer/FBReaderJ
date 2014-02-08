@@ -29,4 +29,6 @@ interface ConfigInterface {
 	void setValue(in String group, in String name, in String value);
 	void unsetValue(in String group, in String name);
 	void removeGroup(in String name);
+
+	List<String> requestAllValuesForGroup(in String group);
 }
