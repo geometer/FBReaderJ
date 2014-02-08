@@ -66,6 +66,7 @@ public class ViewOptions {
 			new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
 		ColorProfileName =
 			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
+		ColorProfileName.setSpecialName("colorProfile");
 	}
 
 	public ColorProfile getColorProfile() {

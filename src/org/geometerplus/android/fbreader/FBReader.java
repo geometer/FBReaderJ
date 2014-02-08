@@ -354,6 +354,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					startActivity(new Intent(FBReader.this, FBReader.class));
 				}
 				zlibrary.ShowStatusBarOption.saveSpecialValue();
+				myFBReaderApp.ViewOptions.ColorProfileName.saveSpecialValue();
 				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
 			}
 		});
