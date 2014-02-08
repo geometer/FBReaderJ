@@ -55,6 +55,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void init(Intent intent) {
+		final Config config = Config.Instance();
+		config.requestAllValuesForGroup("Style");
+		config.requestAllValuesForGroup("Options");
+		config.requestAllValuesForGroup("LookNFeel");
+		config.requestAllValuesForGroup("Fonts");
+		config.requestAllValuesForGroup("Files");
+		config.requestAllValuesForGroup("Scrolling");
+		config.requestAllValuesForGroup("Colors");
 		setResult(FBReader.RESULT_REPAINT);
 
 		final ViewOptions viewOptions = new ViewOptions();
