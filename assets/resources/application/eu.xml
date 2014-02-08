@@ -306,13 +306,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Direktorioak">
 			<node name="summary" value="Fitxategiak bilatzeko direktorioak"/>
-			<node name="books" value="Liburuen direktorioa"/>
-			<node name="fonts" value="Letra-tipoen direktorioa"/>
-			<node name="wallpapers" value="Atzeko irudien direktorioa"/>
 			<node name="temp" value="Behin-behineko fitxategien direktorioa"/>
 			<node name="bookPath" value="Liburuen direktorioak"/>
 			<node name="fontPath" value="Letra-tipoen direktorioak"/>
 			<node name="wallpaperPath" value="Atzeko irudien direktorioak"/>
+			<node name="books" value="Liburuen direktorioa"/>
+			<node name="fonts" value="Letra-tipoen direktorioa"/>
+			<node name="wallpapers" value="Atzeko irudien direktorioa"/>
 		</node>
 		<node name="appearance" value="Itxura">
 			<node name="summary" value="Pantaila ezarpenak, egoera barra, botoien argiak"/>
