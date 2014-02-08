@@ -561,17 +561,6 @@
 				<node name="wood" value="木质"/>
 			</node>
 			<node name="backgroundColor" value="背景色"/>
-			<node name="selectionBackground" value="Selection background" toBeTranslated="true"/>
-			<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
-			<node name="text" value="Regular text" toBeTranslated="true"/>
-			<node name="hyperlink" value="Hyperlink text" toBeTranslated="true"/>
-			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
-			<node name="highlighting" value="Search results background" toBeTranslated="true"/>
-			<node name="footer" value="Footer" toBeTranslated="true"/>
-			<node name="imagesBackground" value="Images Background" toBeTranslated="true">
-				<node name="summaryOn" value="Use background" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not use background" toBeTranslated="true"/>
-			</node>
 			<node name="selectionBackground" value="选择背景色"/>
 			<node name="selectionForeground" value="选择的文本"/>
 			<node name="text" value="普通文字"/>
