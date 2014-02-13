@@ -30,17 +30,17 @@ OEBEncryptionReader::OEBEncryptionReader() : myIsMarlin(false) {
 const std::string &OEBEncryptionReader::readEncryptionInfo(const ZLFile &epubFile) {
 	shared_ptr<ZLDir> epubDir = epubFile.directory();
 	if (epubDir.isNull()) {
-		return FormatPlugin::EncryptionType::UNKNOWN;
+		return FormatPlugin::EncryptionMethod::UNSUPPORTED;
 	}
 
 	const ZLFile rightsFile(epubDir->itemPath("META-INF/rights.xml"));
 	if (rightsFile.exists()) {
 		readDocument(rightsFile);
 		return myIsMarlin
-			? FormatPlugin::EncryptionType::MARLIN
-			: FormatPlugin::EncryptionType::UNKNOWN;
+			? FormatPlugin::EncryptionMethod::MARLIN
+			: FormatPlugin::EncryptionMethod::UNSUPPORTED;
 	} else {
-		return FormatPlugin::EncryptionType::NONE;
+		return FormatPlugin::EncryptionMethod::NONE;
 	}
 }
 

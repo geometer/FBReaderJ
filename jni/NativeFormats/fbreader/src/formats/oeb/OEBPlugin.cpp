@@ -129,7 +129,7 @@ bool OEBPlugin::readMetaInfo(Book &book) const {
 	return OEBMetaInfoReader(book).readMetaInfo(opfFile(file));
 }
 
-const std::string &OEBPlugin::readEncryptionType(Book &book) const {
+const std::string &OEBPlugin::readEncryptionMethod(Book &book) const {
 	return OEBEncryptionReader().readEncryptionInfo(epubFile(book.file()));
 }
 

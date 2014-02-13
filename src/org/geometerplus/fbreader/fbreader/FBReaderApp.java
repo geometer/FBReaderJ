@@ -34,6 +34,7 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
 	public final MiscOptions MiscOptions = new MiscOptions();
@@ -278,6 +279,22 @@ public final class FBReaderApp extends ZLApplication {
 
 		getViewWidget().reset();
 		getViewWidget().repaint();
+
+		try {
+			if (!FormatPlugin.EncryptionMethod.NONE.equals(
+				book.getPlugin().readEncryptionMethod(book))) {
+				System.err.println("UNSUPPORTED ALGORITHM");
+				/*
+				UIUtil.showErrorMessage(
+					FBReader.this,
+					"unsupportedEncryptionAlgorithm",
+					myBook.File.getPath()
+				);
+				*/
+			}
+		} catch (BookReadingException e) {
+			// ignore
+		}
 	}
 
 	private List<Bookmark> invisibleBookmarks() {

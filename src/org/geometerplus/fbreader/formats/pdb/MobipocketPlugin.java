@@ -124,8 +124,8 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public String readEncryptionType(Book book) {
-		return EncryptionType.NONE;
+	public String readEncryptionMethod(Book book) {
+		return EncryptionMethod.NONE;
 	}
 
 	@Override
