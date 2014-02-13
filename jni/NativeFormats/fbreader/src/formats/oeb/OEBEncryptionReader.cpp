@@ -17,27 +17,35 @@
  * 02110-1301, USA.
  */
 
-#ifndef __OEBPLUGIN_H__
-#define __OEBPLUGIN_H__
+#include <ZLDir.h>
+#include <ZLLogger.h>
+#include <ZLXMLNamespace.h>
 
-#include "../FormatPlugin.h"
+#include "OEBEncryptionReader.h"
 
-class OEBPlugin : public FormatPlugin {
+OEBEncryptionReader::OEBEncryptionReader() : myType("unknown") {
+}
 
-public:
-	static ZLFile opfFile(const ZLFile &oebFile);
-	static ZLFile epubFile(const ZLFile &oebFile);
+std::string OEBEncryptionReader::readEncryptionInfo(const ZLFile &epubFile) {
+	shared_ptr<ZLDir> epubDir = epubFile.directory();
+	if (!epubDir.isNull()) {
+		const ZLFile rightsFile(epubDir->itemPath("META-INF/rights.xml"));
+		if (rightsFile.exists()) {
+			readDocument(rightsFile);
+		} else {
+			myType = "none";
+		}
+	}
+	return myType;
+}
 
-public:
-	~OEBPlugin();
-	bool providesMetaInfo() const;
-	const std::string supportedFileType() const;
-	bool readMetaInfo(Book &book) const;
-	std::string readEncryptionType(Book &book) const;
-	bool readUids(Book &book) const;
-	bool readLanguageAndEncoding(Book &book) const;
-	bool readModel(BookModel &model) const;
-	shared_ptr<const ZLImage> coverImage(const ZLFile &file) const;
-};
+void OEBEncryptionReader::startElementHandler(const char *tag, const char **attributes) {
+	if (testTag(ZLXMLNamespace::MarlinEpub, "Marlin", tag)) {
+		myType = "marlin";
+	}
+	interrupt();
+}
 
-#endif /* __OEBPLUGIN_H__ */
+bool OEBEncryptionReader::processNamespaces() const {
+	return true;
+}
