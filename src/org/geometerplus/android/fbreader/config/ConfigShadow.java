@@ -178,10 +178,9 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = ConfigInterface.Stub.asInterface(service);
 		myContext.registerReceiver(myReceiver, new IntentFilter(SQLiteConfig.OPTION_CHANGE_EVENT_ACTION));
-		for (Runnable r : myDeferredActions) {
-			r.run();
+		while (!myDeferredActions.isEmpty()) {
+			myDeferredActions.remove(0).run();
 		}
-		myDeferredActions.clear();
 	}
 
 	// method from ServiceConnection interface
