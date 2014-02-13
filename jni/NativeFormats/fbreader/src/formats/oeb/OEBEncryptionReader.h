@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,26 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ZLXMLNAMESPACE_H__
-#define __ZLXMLNAMESPACE_H__
+#ifndef __OEBENCRYPTIONREADER_H__
+#define __OEBENCRYPTIONREADER_H__
 
 #include <string>
 
-class ZLXMLNamespace {
+#include <ZLFile.h>
+#include <ZLXMLReader.h>
 
-private:
-	ZLXMLNamespace();
+class OEBEncryptionReader : public ZLXMLReader {
 
 public:
-	static const std::string DublinCore;
-	static const std::string DublinCoreLegacy;
-	static const std::string DublinCoreTerms;
-	static const std::string XLink;
-	static const std::string XHTML;
-	static const std::string OpenPackagingFormat;
-	static const std::string Atom;
-	static const std::string OpenSearch;
-	static const std::string CalibreMetadata;
-	static const std::string Opds;
-	static const std::string DaisyNCX;
-	static const std::string Svg;
-	static const std::string MarlinEpub;
+	OEBEncryptionReader();
+	std::string readEncryptionInfo(const ZLFile &file);
+
+private:
+	void startElementHandler(const char *tag, const char **attributes);
+	bool processNamespaces() const;
+
+private:
+	std::string myType;
 };
 
-#endif /* __ZLXMLNAMESPACE_H__ */
+#endif /* __OEBENCRYPTIONREADER_H__ */
