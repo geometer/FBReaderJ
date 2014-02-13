@@ -28,9 +28,9 @@
 
 #include "../library/Book.h"
 
-const std::string FormatPlugin::EncryptionType::NONE = "none";
-const std::string FormatPlugin::EncryptionType::UNKNOWN = "unknown";
-const std::string FormatPlugin::EncryptionType::MARLIN = "marlin";
+const std::string FormatPlugin::EncryptionMethod::NONE = "none";
+const std::string FormatPlugin::EncryptionMethod::UNSUPPORTED = "unsupported";
+const std::string FormatPlugin::EncryptionMethod::MARLIN = "marlin";
 
 bool FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream, bool force) {
 	std::string language = book.language();
@@ -103,8 +103,8 @@ const std::string &FormatPlugin::tryOpen(const ZLFile&) const {
 	return EMPTY;
 }
 
-const std::string &FormatPlugin::readEncryptionType(Book &book) const {
-	return EncryptionType::NONE;
+const std::string &FormatPlugin::readEncryptionMethod(Book &book) const {
+	return EncryptionMethod::NONE;
 }
 
 shared_ptr<const ZLImage> FormatPlugin::coverImage(const ZLFile &file) const {

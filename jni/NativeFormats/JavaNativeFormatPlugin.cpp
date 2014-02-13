@@ -131,14 +131,14 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 }
 
 extern "C"
-JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readEncryptionType(JNIEnv* env, jobject thiz, jobject javaBook) {
+JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readEncryptionMethod(JNIEnv* env, jobject thiz, jobject javaBook) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
 	if (plugin.isNull()) {
-		return AndroidUtil::createJavaString(env, FormatPlugin::EncryptionType::UNKNOWN);
+		return AndroidUtil::createJavaString(env, FormatPlugin::EncryptionMethod::UNSUPPORTED);
 	}
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
-	return AndroidUtil::createJavaString(env, plugin->readEncryptionType(*book));
+	return AndroidUtil::createJavaString(env, plugin->readEncryptionMethod(*book));
 }
 
 extern "C"
