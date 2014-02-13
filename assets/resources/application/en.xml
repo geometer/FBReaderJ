@@ -879,6 +879,7 @@
 		<node name="pluginNotFound" value="No plugin for '%s'"/>
 		<node name="unknownPluginType" value="Unknown plugin type: %s"/>
 		<node name="fileNotFound" value="File not found: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable"/>
 		<node name="opfFileNotFound" value="OPF is not found in %s"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>

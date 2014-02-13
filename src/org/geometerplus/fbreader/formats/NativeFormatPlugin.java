@@ -63,7 +63,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	private native int readMetaInfoNative(Book book);
 
 	@Override
-	public native String readEncryptionType(Book book);
+	public native String readEncryptionMethod(Book book);
 
 	@Override
 	synchronized public void readUids(Book book) throws BookReadingException {
@@ -85,7 +85,6 @@ public class NativeFormatPlugin extends FormatPlugin {
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
 		final int code = readModelNative(model);
-		System.err.println("ENCRYPTION TYPE = " + readEncryptionType(model.Book));
 		if (code != 0) {
 			throw new BookReadingException(
 				"nativeCodeFailure",
