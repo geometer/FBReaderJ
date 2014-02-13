@@ -109,6 +109,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/oeb/NCXReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBBookReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBCoverReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBEncryptionReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBMetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBPlugin.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBTextStream.cpp \

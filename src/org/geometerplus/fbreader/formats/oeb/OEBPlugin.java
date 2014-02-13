@@ -62,6 +62,11 @@ public class OEBPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
+	public String readEncryptionType(Book book) {
+		return EncryptionType.NONE;
+	}
+
+	@Override
 	public void readUids(Book book) throws BookReadingException {
 		// this method does nothing, we expect it will be never called
 	}
