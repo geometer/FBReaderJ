@@ -29,14 +29,14 @@ class OEBEncryptionReader : public ZLXMLReader {
 
 public:
 	OEBEncryptionReader();
-	std::string readEncryptionInfo(const ZLFile &file);
+	const std::string &readEncryptionInfo(const ZLFile &file);
 
 private:
 	void startElementHandler(const char *tag, const char **attributes);
 	bool processNamespaces() const;
 
 private:
-	std::string myType;
+	bool myIsMarlin;
 };
 
 #endif /* __OEBENCRYPTIONREADER_H__ */

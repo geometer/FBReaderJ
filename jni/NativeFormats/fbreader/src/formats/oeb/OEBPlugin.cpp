@@ -129,7 +129,7 @@ bool OEBPlugin::readMetaInfo(Book &book) const {
 	return OEBMetaInfoReader(book).readMetaInfo(opfFile(file));
 }
 
-std::string OEBPlugin::readEncryptionType(Book &book) const {
+const std::string &OEBPlugin::readEncryptionType(Book &book) const {
 	return OEBEncryptionReader().readEncryptionInfo(epubFile(book.file()));
 }
 
@@ -139,8 +139,6 @@ bool OEBPlugin::readUids(Book &book) const {
 }
 
 bool OEBPlugin::readModel(BookModel &model) const {
-	ZLLogger::Instance().registerClass("encryption");
-	ZLLogger::Instance().println("encryption", "ENCRYPTION TYPE = " + readEncryptionType(*model.book()));
 	const ZLFile &file = model.book()->file();
 	return OEBBookReader(model).readBook(opfFile(file));
 }

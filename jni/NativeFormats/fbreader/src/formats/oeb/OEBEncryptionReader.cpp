@@ -21,28 +21,31 @@
 #include <ZLLogger.h>
 #include <ZLXMLNamespace.h>
 
+#include "../FormatPlugin.h"
 #include "OEBEncryptionReader.h"
 
-OEBEncryptionReader::OEBEncryptionReader() : myType("unknown") {
+OEBEncryptionReader::OEBEncryptionReader() : myIsMarlin(false) {
 }
 
-std::string OEBEncryptionReader::readEncryptionInfo(const ZLFile &epubFile) {
+const std::string &OEBEncryptionReader::readEncryptionInfo(const ZLFile &epubFile) {
 	shared_ptr<ZLDir> epubDir = epubFile.directory();
-	if (!epubDir.isNull()) {
-		const ZLFile rightsFile(epubDir->itemPath("META-INF/rights.xml"));
-		if (rightsFile.exists()) {
-			readDocument(rightsFile);
-		} else {
-			myType = "none";
-		}
+	if (epubDir.isNull()) {
+		return FormatPlugin::EncryptionType::UNKNOWN;
 	}
-	return myType;
+
+	const ZLFile rightsFile(epubDir->itemPath("META-INF/rights.xml"));
+	if (rightsFile.exists()) {
+		readDocument(rightsFile);
+		return myIsMarlin
+			? FormatPlugin::EncryptionType::MARLIN
+			: FormatPlugin::EncryptionType::UNKNOWN;
+	} else {
+		return FormatPlugin::EncryptionType::NONE;
+	}
 }
 
 void OEBEncryptionReader::startElementHandler(const char *tag, const char **attributes) {
-	if (testTag(ZLXMLNamespace::MarlinEpub, "Marlin", tag)) {
-		myType = "marlin";
-	}
+	myIsMarlin = testTag(ZLXMLNamespace::MarlinEpub, "Marlin", tag);
 	interrupt();
 }
 
