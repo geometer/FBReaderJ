@@ -26,6 +26,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -38,7 +39,7 @@ import org.geometerplus.android.fbreader.api.TextPosition;
 public class BookCollectionShadow extends AbstractBookCollection implements ServiceConnection {
 	private Context myContext;
 	private volatile LibraryInterface myInterface;
-	private Runnable myOnBindAction;
+	private final List<Runnable> myOnBindActions = new LinkedList<Runnable>();
 
 	private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
@@ -60,28 +61,15 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	};
 
-	private static Runnable combined(final Runnable action0, final Runnable action1) {
-		if (action0 == null) {
-			return action1;
-		}
-		if (action1 == null) {
-			return action0;
-		}
-		return new Runnable() {
-			public void run() {
-				action0.run();
-				action1.run();
-			}
-		};
-	}
-
 	public synchronized void bindToService(Context context, Runnable onBindAction) {
 		if (myInterface != null && myContext == context) {
 			if (onBindAction != null) {
-				onBindAction.run();
+				Config.Instance().runOnStart(onBindAction);
 			}
 		} else {
-			myOnBindAction = combined(myOnBindAction, onBindAction);
+			if (onBindAction != null) {
+				myOnBindActions.add(onBindAction);
+			}
 			context.bindService(
 				new Intent(context, LibraryService.class),
 				this,
@@ -473,9 +461,8 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = LibraryInterface.Stub.asInterface(service);
-		if (myOnBindAction != null) {
-			myOnBindAction.run();
-			myOnBindAction = null;
+		while (!myOnBindActions.isEmpty()) {
+			Config.Instance().runOnStart(myOnBindActions.remove(0));
 		}
 		if (myContext != null) {
 			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BOOK_EVENT_ACTION));
