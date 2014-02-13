@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,9 @@ abstract class Util {
 	}
 
 	static Author stringToAuthor(String string) {
-		final String[] splitted = string.split("\000");
-		if (splitted.length == 2) {
-			return new Author(splitted[0], splitted[1]);
+		final String[] split = string.split("\000");
+		if (split.length == 2) {
+			return new Author(split[0], split[1]);
 		} else {
 			return Author.NULL;
 		}
@@ -41,9 +41,9 @@ abstract class Util {
 	}
 
 	static Tag stringToTag(String string) {
-		final String[] splitted = string.split("\000");
-		if (splitted.length > 0) {
-			return Tag.getTag(splitted);
+		final String[] split = string.split("\000");
+		if (split.length > 0) {
+			return Tag.getTag(split);
 		} else {
 			return Tag.NULL;
 		}

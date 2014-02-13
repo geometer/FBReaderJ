@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
 
 public class PluginCollection {
 	static {
-		System.loadLibrary("NativeFormats-v3");
+		System.loadLibrary("NativeFormats-v4");
 	}
 
 	private static PluginCollection ourInstance;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
-import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.android.util.*;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
@@ -145,7 +145,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	@Override
 	public boolean onSearchRequested() {
-		startSearch(BookSearchPatternOption.getValue(), true, null, false);
+		if (DeviceType.Instance().hasStandardSearchDialog()) {
+			startSearch(BookSearchPatternOption.getValue(), true, null, false);
+		} else {
+			SearchDialogUtil.showDialog(this, LibrarySearchActivity.class, BookSearchPatternOption.getValue(), null);
+		}
 		return true;
 	}
 

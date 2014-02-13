@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ shared_ptr<ZLInputStream> ZLFile::envelopeCompressedStream(shared_ptr<ZLInputStr
 
 shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 	shared_ptr<ZLInputStream> stream;
-	
+
 	int index = ZLFSManager::Instance().findArchiveFileNameDelimiter(myPath);
 	if (index == -1) {
 		if (isDirectory()) {

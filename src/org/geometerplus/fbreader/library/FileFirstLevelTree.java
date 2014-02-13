@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (String dir : Paths.BookPathOption().getValue()) {
+		for (String dir : Paths.BookPathOption.getValue()) {
 			addChild(dir, "fileTreeLibrary", dir);
 		}
 		addChild("/", "fileTreeRoot", null);

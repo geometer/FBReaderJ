@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.fbreader.options;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class FooterOptions {
+	public final String Screen;
+
 	public final ZLBooleanOption ShowTOCMarks;
 	public final ZLBooleanOption ShowClock;
 	public final ZLBooleanOption ShowBattery;
@@ -29,12 +31,9 @@ public class FooterOptions {
 	public final ZLStringOption Font;
 
 	public FooterOptions(String screen) {
-		final String prefix;
-		if ("Base".equals(screen)) {
-			prefix = "";
-		} else {
-			prefix = screen + ":";
-		}
+		Screen = screen;
+		final String prefix = "Base".equals(screen) ? "" : screen + ":";
+
 		ShowTOCMarks = new ZLBooleanOption("Options", prefix + "FooterShowTOCMarks", "Base".equals(screen));
 		ShowClock = new ZLBooleanOption("Options", prefix + "ShowClockInFooter", true);
 		ShowBattery = new ZLBooleanOption("Options", prefix + "ShowBatteryInFooter", true);

@@ -48,6 +48,7 @@
 		<node name="deleteBook" value="Odstranit knihu"/>
 		<node name="addToFavorites" value="Přidat do oblíbených"/>
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
+		<node name="removeFromRecents" value="Odebrat ze seznamu posledních"/>
 		<node name="markAsRead" value="Označit jako přečtené"/>
 		<node name="markAsUnread" value="Označit jako nepřečtené"/>
 	</node>
@@ -749,6 +750,14 @@
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
+		<node name="eink" value="Displej s elektronickým inkoustem">
+			<node name="summary" value="Specifické možnosti pro displej s elektronickým inkoustem"/>
+			<node name="enableFastRefresh" value="Režim rychlého obnovení">
+				<node name="summaryOn" value="Použít rychlou (ale ne moc čistou) aktualizaci displeje"/>
+				<node name="summaryOff" value="Použít kompletní (čistou, ale pomalou) aktualizaci displeje"/>
+			</node>
+			<node name="interval" value="Počet ryclých aktualizací mezi úplnými obnoveními"/>
+		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -853,6 +862,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Došlo k chybě během čtení '%s'"/>
+		<node name="errorReadingZip" value="Došlo k chybě během rozbalování '%s'"/>
+		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
+		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
+		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
+		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
+		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
+		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
 		<node name="cannotRunAndroidMarket" value="Android Market není přístupný. Nainstalujte %s ručně"/>
 		<node name="textNotFound" value="V knize není bohužel žádný vhodný text"/>
 		<node name="bookNotFound" value="V knihovně nejsou bohužel žádné vhodné knihy"/>
@@ -890,18 +908,32 @@
 			<node name="title" value="Problém FBReaderu"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Došlo k chybě během čtení '%s'"/>
-		<node name="errorReadingZip" value="Došlo k chybě během rozbalování '%s'"/>
-		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
-		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
-		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
-		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
-		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
-		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
-	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Instalovat doplňky">
+		<node name="noMorePlugins" value="Bohužel, právě nemáme žádné nové doplňky"/>
+		<node name="litres" value="LitRes">
+			<node name="summary" value="Ruské knihkupectví"/>
+		</node>
+		<node name="tts-plus" value="TTS+">
+			<node name="summary" value="Čte nahlas"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner">
+			<node name="summary" value="Hledá knihy v místní síti"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf">
+			<node name="summary" value="Zobrazí knihovnu v režimu náhledů"/>
+		</node>
+		<node name="opds-server" value="OPDS Server">
+			<node name="summary" value="Dodá knihy z vašeho zařízení"/>
+		</node>
+		<node name="widgets" value="Widgety">
+			<node name="summary" value="Přidá knihy na domovskou obrazovku"/>
+		</node>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="Čte knihy ve formátu PDF"/>
+		</node>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Pro čtení knihy obraťte zařízení. Pro navrácení textu na tento displej stiskněte tlačítko dole."/>

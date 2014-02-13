@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@ package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.fbreader.fbreader.FBView;
-import org.geometerplus.fbreader.fbreader.ColorProfile;
 
 public class ViewOptions {
 	public final ZLBooleanOption TwoColumnView;
@@ -35,6 +35,12 @@ public class ViewOptions {
 	public final ZLIntegerRangeOption ScrollbarType;
 	public final ZLIntegerRangeOption FooterHeight;
 	public final ZLStringOption ColorProfileName;
+
+	public final ZLBooleanOption YotaDrawOnBackScreen;
+
+	private ColorProfile myColorProfile;
+	private ZLTextStyleCollection myTextStyleCollection;
+	private FooterOptions myFooterOptions;
 
 	public ViewOptions() {
 		final ZLibrary zlibrary = ZLibrary.Instance();
@@ -62,5 +68,33 @@ public class ViewOptions {
 			new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
 		ColorProfileName =
 			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
+		ColorProfileName.setSpecialName("colorProfile");
+
+		YotaDrawOnBackScreen =
+			new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+	}
+
+	public ColorProfile getColorProfile() {
+		final String name = ColorProfileName.getValue();
+		if (myColorProfile == null || !name.equals(myColorProfile.Name)) {
+			myColorProfile = ColorProfile.get(name);
+		}
+		return myColorProfile;
+	}
+
+	public ZLTextStyleCollection getTextStyleCollection() {
+		final String screen = YotaDrawOnBackScreen.getValue() ? "Yota".intern() : "Base".intern();
+		if (myTextStyleCollection == null || myTextStyleCollection.Screen != screen) {
+			myTextStyleCollection = new ZLTextStyleCollection(screen);
+		}
+		return myTextStyleCollection;
+	}
+
+	public FooterOptions getFooterOptions() {
+		final String screen = YotaDrawOnBackScreen.getValue() ? "Yota".intern() : "Base".intern();
+		if (myFooterOptions == null || myFooterOptions.Screen != screen) {
+			myFooterOptions = new FooterOptions(screen);
+		}
+		return myFooterOptions;
 	}
 }

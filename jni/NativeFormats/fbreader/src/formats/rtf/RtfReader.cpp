@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,7 +108,7 @@ void RtfDestinationCommand::run(RtfReader &reader, int*) const {
 void RtfStyleCommand::run(RtfReader &reader, int*) const {
 	if (reader.myState.Destination == RtfReader::DESTINATION_STYLESHEET) {
 		//std::cerr << "Add style index: " << val << "\n";
-		
+
 		//sprintf(style_attributes[0], "%i", val);
 	} else /*if (myState.Destination == rdsContent)*/ {
 		//std::cerr << "Set style index: " << val << "\n";
@@ -236,7 +236,7 @@ bool RtfReader::parseDocument() {
 		while (ptr != end) {
 			switch (parserState) {
 				case READ_END_OF_FILE:
-					if (*ptr != '}' && !isspace(*ptr)) {
+					if (*ptr != '}' && !std::isspace(*ptr)) {
 						return false;
 					}
 					break;
@@ -277,19 +277,19 @@ bool RtfReader::parseDocument() {
 								parserState = READ_END_OF_FILE;
 								break;
 							}
-							
+
 							if (myState.Destination != myStateStack.top().Destination) {
 								switchDestination(myState.Destination, false);
 								switchDestination(myStateStack.top().Destination, true);
 							}
-							
+
 							bool oldItalic = myState.Italic;
 							bool oldBold = myState.Bold;
 							bool oldUnderlined = myState.Underlined;
 							ZLTextAlignmentType oldAlignment = myState.Alignment;
 							myState = myStateStack.top();
 							myStateStack.pop();
-					
+
 							if (myState.Italic != oldItalic) {
 								setFontProperty(RtfReader::FONT_ITALIC);
 							}
@@ -302,7 +302,7 @@ bool RtfReader::parseDocument() {
 							if (myState.Alignment != oldAlignment) {
 								setAlignment();
 							}
-							
+
 							break;
 						}
 						case '\\':
@@ -332,7 +332,7 @@ bool RtfReader::parseDocument() {
 				case READ_HEX_SYMBOL:
 					hexString += *ptr;
 					if (hexString.size() == 2) {
-						char ch = strtol(hexString.c_str(), 0, 16); 
+						char ch = std::strtol(hexString.c_str(), 0, 16);
 						hexString.erase();
 						processCharData(&ch, 1);
 						parserState = READ_NORMAL_DATA;
@@ -340,7 +340,7 @@ bool RtfReader::parseDocument() {
 					}
 					break;
 				case READ_KEYWORD:
-					if (!isalpha(*ptr)) {
+					if (!std::isalpha(*ptr)) {
 						if (ptr == dataStart && keyword.empty()) {
 							if (*ptr == '\'') {
 								parserState = READ_HEX_SYMBOL;
@@ -352,7 +352,7 @@ bool RtfReader::parseDocument() {
 							dataStart = ptr + 1;
 						} else {
 							keyword.append(dataStart, ptr - dataStart);
-							if (*ptr == '-' || isdigit(*ptr)) {
+							if (*ptr == '-' || std::isdigit(*ptr)) {
 								dataStart = ptr;
 								parserState = READ_KEYWORD_PARAMETER;
 							} else {
@@ -365,9 +365,9 @@ bool RtfReader::parseDocument() {
 					}
 					break;
 				case READ_KEYWORD_PARAMETER:
-					if (!isdigit(*ptr)) {
+					if (!std::isdigit(*ptr)) {
 						parameterString.append(dataStart, ptr - dataStart);
-						int parameter = atoi(parameterString.c_str());
+						int parameter = std::atoi(parameterString.c_str());
 						parameterString.erase();
 						readNextChar = *ptr == ' ';
 						if (keyword == "bin" && parameter > 0) {
@@ -407,7 +407,7 @@ bool RtfReader::parseDocument() {
 			}
 		}
 	}
-	
+
 	return myIsInterrupted || myStateStack.empty();
 }
 
@@ -419,7 +419,7 @@ void RtfReader::processKeyword(const std::string &keyword, int *parameter) {
 	}
 
 	std::map<std::string, RtfCommand*>::const_iterator it = ourKeywordMap.find(keyword);
-	
+
 	if (it == ourKeywordMap.end()) {
 		if (wasSpecialMode) {
 			myState.Destination = RtfReader::DESTINATION_SKIP;
@@ -456,7 +456,7 @@ bool RtfReader::readDocument(const ZLFile &file) {
 	fillKeywordMap();
 
 	myStreamBuffer = new char[rtfStreamBufferSize];
-	
+
 	myIsInterrupted = false;
 
 	mySpecialMode = false;
@@ -473,9 +473,9 @@ bool RtfReader::readDocument(const ZLFile &file) {
 	while (!myStateStack.empty()) {
 		myStateStack.pop();
 	}
-	
+
 	delete[] myStreamBuffer;
 	myStream->close();
-	
+
 	return code;
 }

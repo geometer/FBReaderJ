@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,10 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
 
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+import org.geometerplus.android.fbreader.network.NetworkSearchActivity;
+
+import org.geometerplus.android.util.DeviceType;
+import org.geometerplus.android.util.SearchDialogUtil;
 
 public class RunSearchAction extends Action {
 	public static SearchCatalogTree getSearchTree(FBTree tree) {
@@ -70,6 +74,10 @@ public class RunSearchAction extends Action {
 			getSearchTree(tree).getUniqueKey()
 		);
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
+		if (DeviceType.Instance().hasStandardSearchDialog()) {
+			myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
+		} else {
+			SearchDialogUtil.showDialog(myActivity, NetworkSearchActivity.class, library.NetworkSearchPatternOption.getValue(), null, bundle);
+		}
 	}
 }

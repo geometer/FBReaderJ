@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,10 +22,18 @@ package org.geometerplus.zlibrary.core.options;
 public abstract class ZLOption {
 	private final StringPair myId;
 	protected String myDefaultStringValue;
+	protected String mySpecialName;
 
 	protected ZLOption(String group, String optionName, String defaultStringValue) {
 		myId = new StringPair(group, optionName);
 		myDefaultStringValue = defaultStringValue != null ? defaultStringValue : "";
+	}
+
+	public final void setSpecialName(String specialName) {
+		mySpecialName = specialName;
+	}
+
+	public void saveSpecialValue() {
 	}
 
 	protected final String getConfigValue() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class ChangeFontSizeAction extends FBAction {
 	@Override
 	protected void run(Object ... params) {
 		final ZLIntegerRangeOption option =
-			Reader.TextStyleCollection.getBaseStyle().FontSizeOption;
+			Reader.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption;
 		option.setValue(option.getValue() + myDelta);
 		Reader.clearTextCaches();
 		Reader.getViewWidget().repaint();

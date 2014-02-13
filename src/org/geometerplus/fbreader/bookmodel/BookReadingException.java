@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,26 +31,30 @@ public final class BookReadingException extends Exception {
 		throw new BookReadingException(resourceId, file);
 	}
 
-	private static String getResourceText(String resourceId) {
-		return ZLResource.resource("bookReadingException").getResource(resourceId).getValue();
+	private static String getResourceText(String resourceId, String ... params) {
+		String message = ZLResource.resource("errorMessage").getResource(resourceId).getValue();
+		for (String p : params) {
+			message = message.replaceFirst("%s", p);
+		}
+		return message;
 	}
 
 	public final ZLFile File;
 
-	public BookReadingException(String resourceId, String param, ZLFile file) {
-		super(getResourceText(resourceId).replace("%s", param));
+	public BookReadingException(String resourceId, ZLFile file, String[] params) {
+		super(getResourceText(resourceId, params));
 		File = file;
 	}
 
 	public BookReadingException(String resourceId, ZLFile file) {
-		super(getResourceText(resourceId).replace("%s", file.getPath()));
-		File = file;
+		this(resourceId, file, new String[] { file.getPath() });
 	}
 
 	public BookReadingException(IOException e, ZLFile file) {
 		super(getResourceText(
-			e instanceof ZipException ? "errorReadingZip" : "errorReadingFile"
-		).replace("%s", file.getPath()), e);
+			e instanceof ZipException ? "errorReadingZip" : "errorReadingFile",
+			file.getPath()
+		), e);
 		File = file;
 	}
 }

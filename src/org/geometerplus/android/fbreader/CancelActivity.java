@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
 
+import org.geometerplus.zlibrary.core.options.Config;
+
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.SerializerUtil;
@@ -49,11 +51,15 @@ public class CancelActivity extends ListActivity {
 		myCollection = new BookCollectionShadow();
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				final ActionListAdapter adapter = new ActionListAdapter(
-					new CancelMenuHelper().getActionsList(myCollection)
-				);
-				setListAdapter(adapter);
-				getListView().setOnItemClickListener(adapter);
+				Config.Instance().runOnStart(new Runnable() {
+					public void run() {
+						final ActionListAdapter adapter = new ActionListAdapter(
+							new CancelMenuHelper().getActionsList(myCollection)
+						);
+						setListAdapter(adapter);
+						getListView().setOnItemClickListener(adapter);
+					}
+				});
 			}
 		});
 	}

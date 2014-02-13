@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,8 @@ import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
+import org.geometerplus.android.util.DeviceType;
+
 public class PreferenceActivity extends ZLPreferenceActivity {
 	public PreferenceActivity() {
 		super("Preferences");
@@ -54,16 +56,23 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void init(Intent intent) {
+		final Config config = Config.Instance();
+		config.requestAllValuesForGroup("Style");
+		config.requestAllValuesForGroup("Options");
+		config.requestAllValuesForGroup("LookNFeel");
+		config.requestAllValuesForGroup("Fonts");
+		config.requestAllValuesForGroup("Files");
+		config.requestAllValuesForGroup("Scrolling");
+		config.requestAllValuesForGroup("Colors");
 		setResult(FBReader.RESULT_REPAINT);
 
-		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ViewOptions viewOptions = new ViewOptions();
 		final MiscOptions miscOptions = new MiscOptions();
-		final FooterOptions footerOptions = fbReader.FooterOptions;
+		final FooterOptions footerOptions = viewOptions.getFooterOptions();
 		final PageTurningOptions pageTurningOptions = new PageTurningOptions();
 		final ImageOptions imageOptions = new ImageOptions();
-		final ColorProfile profile = fbReader.getColorProfile();
-		final ZLTextStyleCollection collection = fbReader.TextStyleCollection;
+		final ColorProfile profile = viewOptions.getColorProfile();
+		final ZLTextStyleCollection collection = viewOptions.getTextStyleCollection();
 		final ZLKeyBindings keyBindings = new ZLKeyBindings();
 
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
@@ -74,7 +83,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.BookPathOption(), directoriesScreen.Resource, "books"
+			this, Paths.BookPathOption, directoriesScreen.Resource, "books"
 		) {
 			protected void setValue(String value) {
 				super.setValue(value);
@@ -89,10 +98,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.FontPathOption(), directoriesScreen.Resource, "fonts"
+			this, Paths.FontPathOption, directoriesScreen.Resource, "fonts"
 		));
 		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.WallpaperPathOption(), directoriesScreen.Resource, "wallpapers"
+			this, Paths.WallpaperPathOption, directoriesScreen.Resource, "wallpapers"
 		));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
@@ -162,6 +171,30 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			appearanceScreen.addOption(androidLibrary.EnableFullscreenModeOption, "fullscreenMode");
 		}
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
+		
+		if (DeviceType.Instance().isEInk()) {
+			final EInkOptions einkOptions = new EInkOptions();
+			final Screen einkScreen = createPreferenceScreen("eink");
+			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
+			
+			einkScreen.addPreference(new ZLBooleanPreference(
+				this, einkOptions.EnableFastRefresh, einkScreen.Resource, "enableFastRefresh"
+			) {
+				@Override
+				protected void onClick() {
+					super.onClick();
+					einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
+				}
+			});
+	
+			final ZLIntegerRangePreference updateIntervalPreference = new ZLIntegerRangePreference(
+				this, einkScreen.Resource.getResource("interval"), einkOptions.UpdateInterval
+			);
+			einkScreen.addPreference(updateIntervalPreference);
+	
+			einkPreferences.add(updateIntervalPreference);
+			einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
+		}
 
 		final Screen textScreen = createPreferenceScreen("text");
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,20 +21,27 @@ package org.geometerplus.fbreader.fbreader.options;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.*;
 
 public class CancelMenuHelper {
+	private final static String GROUP_NAME = "CancelMenu";
+
 	public final ZLBooleanOption ShowLibraryItemOption =
-		new ZLBooleanOption("CancelMenu", "library", true);
+		new ZLBooleanOption(GROUP_NAME, "library", true);
 	public final ZLBooleanOption ShowNetworkLibraryItemOption =
-		new ZLBooleanOption("CancelMenu", "networkLibrary", true);
+		new ZLBooleanOption(GROUP_NAME, "networkLibrary", true);
 	public final ZLBooleanOption ShowPreviousBookItemOption =
-		new ZLBooleanOption("CancelMenu", "previousBook", false);
+		new ZLBooleanOption(GROUP_NAME, "previousBook", false);
 	public final ZLBooleanOption ShowPositionItemsOption =
-		new ZLBooleanOption("CancelMenu", "positions", true);
+		new ZLBooleanOption(GROUP_NAME, "positions", true);
+
+	public CancelMenuHelper() {
+		Config.Instance().requestAllValuesForGroup(GROUP_NAME);
+	}
 
 	public static enum ActionType {
 		library,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,7 +151,7 @@ public class NetworkBookItem extends NetworkItem {
 				continue;
 			}
 			final BookUrlInfo br = (BookUrlInfo)r;
-			if (reference == null || br.BookFormat > reference.BookFormat) {
+			if (reference == null || br.BookFormat.compareTo(reference.BookFormat) > 0) {
 				reference = br;
 			}
 		}
@@ -207,7 +207,7 @@ public class NetworkBookItem extends NetworkItem {
 			if ((type == UrlInfo.Type.Book ||
 				 type == UrlInfo.Type.BookConditional ||
 				 (!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) &&
-				(reference == null || br.BookFormat > reference.BookFormat)) {
+				(reference == null || br.BookFormat.compareTo(reference.BookFormat) > 0)) {
 				String name = br.localCopyFileName(UrlInfo.Type.Book);
 				if (name != null) {
 					reference = br;

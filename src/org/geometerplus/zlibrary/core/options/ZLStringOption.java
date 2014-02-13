@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,26 @@ public final class ZLStringOption extends ZLOption {
 	}
 
 	public String getValue() {
-		return getConfigValue();
+		if (mySpecialName != null && !Config.Instance().isInitialized()) {
+			return Config.Instance().getSpecialStringValue(mySpecialName, myDefaultStringValue);
+		} else {
+			return getConfigValue();
+		}
 	}
 
 	public void setValue(String value) {
 		if (value == null) {
 			return;
 		}
+		if (mySpecialName != null) {
+			Config.Instance().setSpecialStringValue(mySpecialName, value);
+		}
 		setConfigValue(value);
+	}
+
+	public void saveSpecialValue() {
+		if (mySpecialName != null && Config.Instance().isInitialized()) {
+			Config.Instance().setSpecialStringValue(mySpecialName, getValue());
+		}
 	}
 }

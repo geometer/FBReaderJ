@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,6 @@ package org.geometerplus.fbreader.fbreader.options;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class MiscOptions {
-	public final ZLBooleanOption YotaDrawOnBackScreen;
-
 	public final ZLBooleanOption AllowScreenBrightnessAdjustment;
 	public final ZLStringOption TextSearchPattern;
 
@@ -36,9 +34,6 @@ public class MiscOptions {
 	public final ZLEnumOption<WordTappingActionEnum> WordTappingAction;
 
 	public MiscOptions() {
-		YotaDrawOnBackScreen =
-			new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
-
 		AllowScreenBrightnessAdjustment =
 			new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 		TextSearchPattern =

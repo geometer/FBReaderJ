@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.fbreader.ColorProfile;
 import org.geometerplus.fbreader.fbreader.WallpapersUtil;
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 
 class WallpaperPreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;

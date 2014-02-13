@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@ package org.geometerplus.zlibrary.core.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ZLInputStreamWithOffset extends InputStream {
+public class InputStreamWithOffset extends InputStream {
 	private final InputStream myDecoratedStream;
 	private int myOffset = 0;
 
-	public ZLInputStreamWithOffset(InputStream stream) {
+	public InputStreamWithOffset(InputStream stream) {
 		myDecoratedStream = stream;
 	}
 

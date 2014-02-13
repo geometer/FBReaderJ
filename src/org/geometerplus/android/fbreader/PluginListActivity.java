@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,15 +92,15 @@ public class PluginListActivity extends ListActivity {
 		private final List<Plugin> myPlugins = new LinkedList<Plugin>();
 
 		PluginListAdapter() {
-			new Reader(myPlugins).readQuietly(ZLFile.createFileByPath("plugins.xml"));
+			new Reader(myPlugins).readQuietly(ZLFile.createFileByPath("default/plugins.xml"));
 		}
 
 		public final int getCount() {
-			return myPlugins.size();
+			return myPlugins.isEmpty() ? 1 : myPlugins.size();
 		}
 
 		public final Plugin getItem(int position) {
-			return myPlugins.get(position);
+			return myPlugins.isEmpty() ? null : myPlugins.get(position);
 		}
 
 		public final long getItemId(int position) {
@@ -114,19 +114,28 @@ public class PluginListActivity extends ListActivity {
 			final TextView titleView = ViewUtil.findTextView(view, R.id.plugin_item_title);
 			final TextView summaryView = ViewUtil.findTextView(view, R.id.plugin_item_summary);
 			final Plugin plugin = getItem(position);
-			final ZLResource resource = myResource.getResource(plugin.Id);
-			titleView.setText(resource.getValue());
-			summaryView.setText(resource.getResource("summary").getValue());
+			if (plugin != null) {
+				final ZLResource resource = myResource.getResource(plugin.Id);
+				titleView.setText(resource.getValue());
+				summaryView.setText(resource.getResource("summary").getValue());
+			} else {
+				final ZLResource resource = myResource.getResource("noMorePlugins");
+				titleView.setText(resource.getValue());
+				summaryView.setVisibility(View.GONE);
+			}
 			return view;
 		}
 
 		public final void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-			runOnUiThread(new Runnable() {
-				public void run() {
-					finish();
-					PackageUtil.installFromMarket(PluginListActivity.this, getItem(position).PackageName);
-				}
-			});
+			final Plugin plugin = getItem(position);
+			if (plugin != null) {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						finish();
+						PackageUtil.installFromMarket(PluginListActivity.this, plugin.PackageName);
+					}
+				});
+			}
 		}
 	}
 }

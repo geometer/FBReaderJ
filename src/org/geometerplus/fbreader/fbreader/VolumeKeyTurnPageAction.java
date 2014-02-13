@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class VolumeKeyTurnPageAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
-		if (!Reader.MiscOptions.YotaDrawOnBackScreen.getValue()) {
+		if (!Reader.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 			final PageTurningOptions preferences = Reader.PageTurningOptions;
 			Reader.getViewWidget().startAnimatedScrolling(
 				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,12 +48,17 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	@Override
 	synchronized public void readMetaInfo(Book book) throws BookReadingException {
-		if (!readMetaInfoNative(book)) {
-			throw new BookReadingException("errorReadingFile", book.File);
+		final int code = readMetaInfoNative(book);
+		if (code != 0) {
+			throw new BookReadingException(
+				"nativeCodeFailure",
+				book.File,
+				new String[] { String.valueOf(code), book.File.getPath() }
+			);
 		}
 	}
 
-	private native boolean readMetaInfoNative(Book book);
+	private native int readMetaInfoNative(Book book);
 
 	synchronized public void readUids(Book book) throws BookReadingException {
 		readUidsNative(book);
@@ -73,12 +78,17 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
-		if (!readModelNative(model)) {
-			throw new BookReadingException("errorReadingFile", model.Book.File);
+		final int code = readModelNative(model);
+		if (code != 0) {
+			throw new BookReadingException(
+				"nativeCodeFailure",
+				model.Book.File,
+				new String[] { String.valueOf(code), model.Book.File.getPath() }
+			);
 		}
 	}
 
-	private native boolean readModelNative(BookModel model);
+	private native int readModelNative(BookModel model);
 
 	@Override
 	public ZLImage readCover(final ZLFile file) {

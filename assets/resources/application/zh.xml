@@ -48,6 +48,7 @@
 		<node name="deleteBook" value="删除本书"/>
 		<node name="addToFavorites" value="收藏到我的超爱"/>
 		<node name="removeFromFavorites" value="从收藏列表中移除"/>
+		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="标记为已读"/>
 		<node name="markAsUnread" value="标记为未读"/>
 	</node>
@@ -281,7 +282,7 @@
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="我的书签"/>
 		<node name="help" value="帮助"/>
-		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="文件"/>
@@ -730,6 +731,14 @@
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
+		<node name="eink" value="E-ink screen" toBeTranslated="true">
+			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
+			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -834,6 +843,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="读取 '%s' 时发生错误"/>
+		<node name="errorReadingZip" value="解压 '%s' 时发生错误"/>
+		<node name="pluginNotFound" value="没有这个插件 '%s'"/>
+		<node name="unknownPluginType" value="未知插件类型: %s"/>
+		<node name="fileNotFound" value="文件未找到: %s"/>
+		<node name="opfFileNotFound" value="在 %s 文件夹未找到 OPF  "/>
+		<node name="unsupportedFileFormat" value="文件格式 '%s' 不支持"/>
+		<node name="errorParsingRtf" value="Rtf解析错误: %s"/>
 		<node name="cannotRunAndroidMarket" value="无法访问Android官方应用市场. 请手工安装 %s ."/>
 		<node name="textNotFound" value="对不起，本书中找不到对应内容"/>
 		<node name="bookNotFound" value="对不起，书库中找不到需要的书籍"/>
@@ -871,18 +889,32 @@
 			<node name="title" value="FBReader 问题"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="读取 '%s' 时发生错误"/>
-		<node name="errorReadingZip" value="解压 '%s' 时发生错误"/>
-		<node name="pluginNotFound" value="没有这个插件 '%s'"/>
-		<node name="unknownPluginType" value="未知插件类型: %s"/>
-		<node name="fileNotFound" value="文件未找到: %s"/>
-		<node name="opfFileNotFound" value="在 %s 文件夹未找到 OPF  "/>
-		<node name="unsupportedFileFormat" value="文件格式 '%s' 不支持"/>
-		<node name="errorParsingRtf" value="Rtf解析错误: %s"/>
-	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins" toBeTranslated="true">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
+		<node name="litres" value="LitRes" toBeTranslated="true">
+			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+		</node>
+		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		</node>
+		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		</node>
+		<node name="widgets" value="Widgets" toBeTranslated="true">
+			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		</node>
+		<node name="pdf" value="PDF" toBeTranslated="true">
+			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

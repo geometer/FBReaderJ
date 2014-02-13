@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,70 +43,20 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.util.DeviceType;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
 	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", true);
+	{
+		ShowStatusBarOption.setSpecialName("statusBar");
+		ShowActionBarOption.setSpecialName("actionBar");
+	}
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
-	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
-
-	public static enum Device {
-		GENERIC,
-		YOTA_PHONE,
-		KINDLE_FIRE_1ST_GENERATION,
-		KINDLE_FIRE_2ND_GENERATION,
-		KINDLE_FIRE_HD,
-		NOOK,
-		NOOK12,
-		EKEN_M001,
-		PAN_DIGITAL,
-		SAMSUNG_GT_S5830
-	}
-
-	private Device myDevice;
-
-	public Device getDevice() {
-		if (myDevice == null) {
-			if ("YotaPhone".equals(Build.BRAND)) {
-				myDevice = Device.YOTA_PHONE;
-			} else if ("GT-S5830".equals(Build.MODEL)) {
-				myDevice = Device.SAMSUNG_GT_S5830;
-			} else if ("Amazon".equals(Build.MANUFACTURER)) {
-				if ("Kindle Fire".equals(Build.MODEL)) {
-					myDevice = Device.KINDLE_FIRE_1ST_GENERATION;
-				} else if ("KFOT".equals(Build.MODEL)) {
-					myDevice = Device.KINDLE_FIRE_2ND_GENERATION;
-				} else {
-					myDevice = Device.KINDLE_FIRE_HD;
-				}
-			} else if (Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) {
-				myDevice = Device.EKEN_M001;
-			} else if ("PD_Novel".equals(Build.MODEL)) {
-				myDevice = Device.PAN_DIGITAL;
-			} else if ("barnesandnoble".equalsIgnoreCase(Build.MANUFACTURER) &&
-					   "zoom2".equalsIgnoreCase(Build.DEVICE) &&
-					   ("NOOK".equals(Build.MODEL) ||
-						"BNRV350".equals(Build.MODEL) ||
-						"BNRV300".equals(Build.MODEL))) {
-				if ("1.2.0".equals(Build.VERSION.INCREMENTAL) ||
-					"1.2.1".equals(Build.VERSION.INCREMENTAL)) {
-					myDevice = Device.NOOK12;
-				} else {
-					myDevice = Device.NOOK;
-				}
-			} else {
-				myDevice = Device.GENERIC;
-			}
-		}
-		return myDevice;
-	}
-
-	public boolean hasButtonLightsBug() {
-		return "GT-S5830".equals(Build.MODEL);
-	}
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
 
 	private FBReader myActivity;
 	private final Application myApplication;

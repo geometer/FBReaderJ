@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,14 +47,14 @@ void NCXReader::startElementHandler(const char *fullTag, const char **attributes
 		case READ_MAP:
 			if (TAG_NAVPOINT == tag) {
 				const char *order = attributeValue(attributes, "playOrder");
-				myPointStack.push_back(NavPoint((order != 0) ? atoi(order) : myPlayIndex++, myPointStack.size()));
+				myPointStack.push_back(NavPoint(order != 0 ? std::atoi(order) : myPlayIndex++, myPointStack.size()));
 				myReadState = READ_POINT;
 			}
 			break;
 		case READ_POINT:
 			if (TAG_NAVPOINT == tag) {
 				const char *order = attributeValue(attributes, "playOrder");
-				myPointStack.push_back(NavPoint((order != 0) ? atoi(order) : myPlayIndex++, myPointStack.size()));
+				myPointStack.push_back(NavPoint(order != 0 ? std::atoi(order) : myPlayIndex++, myPointStack.size()));
 			} else if (TAG_NAVLABEL == tag) {
 				myReadState = READ_LABEL;
 			} else if (TAG_CONTENT == tag) {

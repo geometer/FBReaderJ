@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.*;
@@ -59,23 +60,27 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setOnLongClickListener(this);
 	}
 
+	private volatile boolean myAmendSize = false;
 	private volatile int myHDiff = 0;
-	private volatile boolean myUseHDiff = false;
+	private volatile int myHShift = 0;
 
 	public void setPreserveSize(boolean preserve) {
-		myUseHDiff = preserve;
+		myAmendSize = preserve;
 		if (!preserve) {
 			myHDiff = 0;
+			myHShift = 0;
 		}
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		if (myUseHDiff && oldw == w) {
+		if (myAmendSize && oldw == w) {
 			myHDiff += h - oldh;
+			myHShift -= getStatusBarHeight();
 		} else {
 			myHDiff = 0;
+			myHShift = 0;
 		}
 		getAnimationProvider().terminate();
 		if (myScreenIsTouched) {
@@ -95,11 +100,8 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		super.onDraw(canvas);
 
-		if (myHDiff != 0) {
-			//final Matrix m = new Matrix();
-			//m.preTranslate(0, myHDiff);
-			//canvas.setMatrix(m);
-			canvas.translate(0, myHDiff);
+		if (myHShift != 0) {
+			canvas.translate(0, myHShift);
 		}
 
 		if (getAnimationProvider().inProgress()) {
@@ -540,5 +542,11 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
 		final int height = footer != null ? getHeight() - footer.getHeight() : getHeight();
 		return height - myHDiff;
+	}
+
+	private int getStatusBarHeight() {
+		final Resources res = getContext().getResources();
+		int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
+		return resourceId > 0 ? res.getDimensionPixelSize(resourceId) : 0;
 	}
 }

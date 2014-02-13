@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,26 +155,26 @@ void DocBookReader::handleSeparatorField() {
 	}
 	std::vector<std::string> result = ZLStringUtil::split(utf8String, SPACE_DELIMETER);
 	//TODO split function can returns empty string, maybe fix it
-	std::vector<std::string> splitted;
+	std::vector<std::string> split;
 	for (std::size_t i = 0; i < result.size(); ++i) {
 		if (!result.at(i).empty()) {
-			splitted.push_back(result.at(i));
+			split.push_back(result.at(i));
 		}
 	}
 
-	if (!splitted.empty() && splitted.at(0) == SEQUENCE) {
+	if (!split.empty() && split.at(0) == SEQUENCE) {
 		myReadFieldState = READ_FIELD_TEXT;
 		myHyperlinkTypeState = NO_HYPERLINK;
 		return;
 	}
 
-	if (splitted.size() < 2 || splitted.at(0) != HYPERLINK) {
+	if (split.size() < 2 || split.at(0) != HYPERLINK) {
 		myReadFieldState = DONT_READ_FIELD_TEXT;
 		//to remove pagination from TOC and not hyperlink fields
 		return;
 	}
 
-	if (splitted.at(1) == LOCAL_LINK) {
+	if (split.at(1) == LOCAL_LINK) {
 		std::string link = parseLink(buffer);
 		if (!link.empty()) {
 			myModelReader.addHyperlinkControl(INTERNAL_HYPERLINK, link);

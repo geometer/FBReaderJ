@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.config;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
 import android.app.Service;
 import android.content.Context;
@@ -111,6 +110,24 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 	}
 
 	@Override
+	synchronized public List<String> requestAllValuesForGroup(String group) {
+		try {
+			final List<String> pairs = new LinkedList<String>();
+			final Cursor cursor = myDatabase.rawQuery(
+				"SELECT name,value FROM config WHERE groupName = ?",
+				new String[] { group }
+			);
+			while (cursor.moveToNext()) {
+				pairs.add(cursor.getString(0) + "\000" + cursor.getString(1));
+			}
+			cursor.close();
+			return pairs;
+		} catch (SQLException e) {
+			return Collections.emptyList();
+		}
+	}
+
+	@Override
 	synchronized public String getValue(String group, String name) {
 		myGetValueStatement.bindString(1, group);
 		myGetValueStatement.bindString(2, name);
@@ -128,9 +145,9 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 		mySetValueStatement.bindString(3, value);
 		try {
 			mySetValueStatement.execute();
+			sendChangeEvent(group, name, value);
 		} catch (SQLException e) {
 		}
-		sendChangeEvent(group, name, value);
 	}
 
 	@Override
@@ -139,6 +156,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 		myUnsetValueStatement.bindString(2, name);
 		try {
 			myUnsetValueStatement.execute();
+			sendChangeEvent(group, name, null);
 		} catch (SQLException e) {
 		}
 	}

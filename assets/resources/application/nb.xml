@@ -48,6 +48,7 @@
 		<node name="deleteBook" value="Slett bok"/>
 		<node name="addToFavorites" value="Legg til i favoritter"/>
 		<node name="removeFromFavorites" value="Fjern fra favoritter"/>
+		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
@@ -291,7 +292,7 @@
 		<node name="toggleFullscreen" value="Full skjerm"/>
 		<node name="bookmarks" value="Bokmerker"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
-		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Filnavn"/>
@@ -740,6 +741,14 @@
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
+		<node name="eink" value="E-ink screen" toBeTranslated="true">
+			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
+			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -844,6 +853,15 @@
 		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Feilen oppstod under lesing '%s'"/>
+		<node name="errorReadingZip" value="Feilen oppstod under utpakking '%s'"/>
+		<node name="pluginNotFound" value="Ingen tillegg for '%s'"/>
+		<node name="unknownPluginType" value="Ukjent tilleggstype: %s"/>
+		<node name="fileNotFound" value="Filen ble ikke funnet: %s"/>
+		<node name="opfFileNotFound" value="OPF er ikke funnet i %s"/>
+		<node name="unsupportedFileFormat" value="Filformatet er ikke støttet for '%s'"/>
+		<node name="errorParsingRtf" value="Rtf analysingsfeil i: %s"/>
 		<node name="cannotRunAndroidMarket" value="Ikke tilgang til Android Market. Vennligst installer %s manuelt"/>
 		<node name="textNotFound" value="Det er ingen passende tekst i boken, beklager"/>
 		<node name="bookNotFound" value="Det er ingen passende bøker i biblioteket, beklager"/>
@@ -881,18 +899,32 @@
 			<node name="title" value="FBReader problem"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Feilen oppstod under lesing '%s'"/>
-		<node name="errorReadingZip" value="Feilen oppstod under utpakking '%s'"/>
-		<node name="pluginNotFound" value="Ingen tillegg for '%s'"/>
-		<node name="unknownPluginType" value="Ukjent tilleggstype: %s"/>
-		<node name="fileNotFound" value="Filen ble ikke funnet: %s"/>
-		<node name="opfFileNotFound" value="OPF er ikke funnet i %s"/>
-		<node name="unsupportedFileFormat" value="Filformatet er ikke støttet for '%s'"/>
-		<node name="errorParsingRtf" value="Rtf analysingsfeil i: %s"/>
-	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins" toBeTranslated="true">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
+		<node name="litres" value="LitRes" toBeTranslated="true">
+			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+		</node>
+		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		</node>
+		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		</node>
+		<node name="widgets" value="Widgets" toBeTranslated="true">
+			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		</node>
+		<node name="pdf" value="PDF" toBeTranslated="true">
+			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

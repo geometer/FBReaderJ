@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,7 +133,7 @@ void PlainTextFormatDetector::detect(ZLInputStream &stream, PlainTextFormat &for
 				currentLineIndent = 0;
 			} else if (*ptr == '\r') {
 				continue;
-			} else if (isspace((unsigned char)*ptr)) {
+			} else if (std::isspace((unsigned char)*ptr)) {
 				if (currentLineIsEmpty) {
 					++currentLineIndent;
 				}

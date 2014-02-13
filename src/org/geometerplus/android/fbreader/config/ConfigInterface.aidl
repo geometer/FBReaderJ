@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,4 +29,6 @@ interface ConfigInterface {
 	void setValue(in String group, in String name, in String value);
 	void unsetValue(in String group, in String name);
 	void removeGroup(in String name);
+
+	List<String> requestAllValuesForGroup(in String group);
 }

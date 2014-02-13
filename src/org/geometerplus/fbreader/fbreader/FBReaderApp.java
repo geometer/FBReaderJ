@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,34 +30,18 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBReaderApp extends ZLApplication {
-	public ZLTextStyleCollection TextStyleCollection;
+	public final MiscOptions MiscOptions = new MiscOptions();
+	public final ImageOptions ImageOptions = new ImageOptions();
+	public final ViewOptions ViewOptions = new ViewOptions();
+	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
 
-	public final MiscOptions MiscOptions;
-	public final ImageOptions ImageOptions;
-	public final ViewOptions ViewOptions;
-	public final PageTurningOptions PageTurningOptions;
-	public FooterOptions FooterOptions;
-
-	private final ZLKeyBindings myBindings;
-
-	{
-		TextStyleCollection = new ZLTextStyleCollection("Base");
-
-		MiscOptions = new MiscOptions();
-		ImageOptions = new ImageOptions();
-		ViewOptions = new ViewOptions();
-		PageTurningOptions = new PageTurningOptions();
-		FooterOptions = new FooterOptions("Base");
-
-		myBindings = new ZLKeyBindings();
-	}
+	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
@@ -152,24 +136,6 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private ColorProfile myColorProfile;
-
-	public ColorProfile getColorProfile() {
-		if (myColorProfile == null) {
-			myColorProfile = ColorProfile.get(getColorProfileName());
-		}
-		return myColorProfile;
-	}
-
-	public String getColorProfileName() {
-		return ViewOptions.ColorProfileName.getValue();
-	}
-
-	public void setColorProfileName(String name) {
-		ViewOptions.ColorProfileName.setValue(name);
-		myColorProfile = null;
-	}
-
 	public ZLKeyBindings keyBindings() {
 		return myBindings;
 	}
@@ -252,7 +218,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
+	private synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
 		if (book == null) {
 			book = Collection.getRecentBook(0);
 			if (book == null || !book.File.exists()) {
@@ -264,6 +230,7 @@ public final class FBReaderApp extends ZLApplication {
 			book.addLabel(Book.READ_LABEL);
 			Collection.saveBook(book);
 		}
+
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
 				gotoBookmark(bookmark, false);

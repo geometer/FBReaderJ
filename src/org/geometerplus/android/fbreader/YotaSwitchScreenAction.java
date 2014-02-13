@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,13 +27,10 @@ import com.yotadevices.sdk.utils.RotationAlgorithm;
 import com.yotadevices.fbreader.FBReaderYotaService;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.options.FooterOptions;
 
 class YotaSwitchScreenAction extends FBAndroidAction {
 	private final boolean mySwitchToBack;
@@ -45,7 +42,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 
 	@Override
 	public boolean isVisible() {
-		return Reader.MiscOptions.YotaDrawOnBackScreen.getValue() != mySwitchToBack;
+		return Reader.ViewOptions.YotaDrawOnBackScreen.getValue() != mySwitchToBack;
 	}
 
 	@Override
@@ -57,7 +54,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		final View mainView = BaseActivity.findViewById(R.id.main_view);
 		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
 
-		Reader.MiscOptions.YotaDrawOnBackScreen.setValue(toBack);
+		Reader.ViewOptions.YotaDrawOnBackScreen.setValue(toBack);
 		BaseActivity.refreshYotaScreen();
 
 		if (toBack) {
@@ -72,9 +69,6 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 			mainHiddenView.setVisibility(View.GONE);
 		}
 
-		final String screen = toBack ? "Yota" : "Base";
-		Reader.TextStyleCollection = new ZLTextStyleCollection(screen);
-		Reader.FooterOptions = new FooterOptions(screen);
 		Reader.clearTextCaches();
 		BaseActivity.refresh();
 	}

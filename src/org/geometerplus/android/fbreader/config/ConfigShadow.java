@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,12 +56,12 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
-	synchronized public boolean isInitialized() {
+	public boolean isInitialized() {
 		return myInterface != null;
 	}
 
 	@Override
-	synchronized public void runOnStart(Runnable runnable) {
+	public void runOnStart(Runnable runnable) {
 		if (myInterface != null) {
 			runnable.run();
 		} else {
@@ -70,7 +70,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
-	synchronized public List<String> listGroups() {
+	public List<String> listGroups() {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
@@ -82,7 +82,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
-	synchronized public List<String> listNames(String group) {
+	public List<String> listNames(String group) {
 		if (myInterface == null) {
 			return Collections.emptyList();
 		}
@@ -94,7 +94,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
-	synchronized public void removeGroup(String name) {
+	public void removeGroup(String name) {
 		if (myInterface != null) {
 			try {
 				myInterface.removeGroup(name);
@@ -103,8 +103,28 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 		}
 	}
 
+	public boolean getSpecialBooleanValue(String name, boolean defaultValue) {
+		return myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE)
+			.getBoolean(name, defaultValue);
+	}
+
+	public void setSpecialBooleanValue(String name, boolean value) {
+		myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE).edit()
+			.putBoolean(name, value).commit();
+	}
+
+	public String getSpecialStringValue(String name, String defaultValue) {
+		return myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE)
+			.getString(name, defaultValue);
+	}
+
+	public void setSpecialStringValue(String name, String value) {
+		myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE).edit()
+			.putString(name, value).commit();
+	}
+
 	@Override
-	synchronized protected String getValueInternal(String group, String name) throws NotAvailableException {
+	protected String getValueInternal(String group, String name) throws NotAvailableException {
 		if (myInterface == null) {
 			throw new NotAvailableException("Config is not initialized for " + group + ":" + name);
 		}
@@ -116,7 +136,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
-	synchronized protected void setValueInternal(String group, String name, String value) {
+	protected void setValueInternal(String group, String name, String value) {
 		if (myInterface != null) {
 			try {
 				myInterface.setValue(group, name, value);
@@ -126,12 +146,31 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
-	synchronized protected void unsetValueInternal(String group, String name) {
+	protected void unsetValueInternal(String group, String name) {
 		if (myInterface != null) {
 			try {
 				myInterface.unsetValue(group, name);
 			} catch (RemoteException e) {
 			}
+		}
+	}
+
+	@Override
+	protected Map<String,String> requestAllValuesForGroupInternal(String group) throws NotAvailableException {
+		if (myInterface == null) {
+			throw new NotAvailableException("Config is not initialized for " + group);
+		}
+		try {
+			final Map<String,String> values = new HashMap<String,String>();
+			for (String pair : myInterface.requestAllValuesForGroup(group)) {
+				final String[] split = pair.split("\000");
+				if (split.length == 2) {
+					values.put(split[0], split[1]);
+				}
+			}
+			return values;
+		} catch (RemoteException e) {
+			throw new NotAvailableException("RemoteException for " + group);
 		}
 	}
 
