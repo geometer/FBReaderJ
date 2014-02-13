@@ -28,6 +28,12 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class FormatPlugin {
+	public interface EncryptionType {
+		String NONE = "none";
+		String UNKNOWN = "unknown";
+		String MARLIN = "marlin";
+	}
+
 	private final String myFileType;
 
 	protected FormatPlugin(String fileType) {
@@ -42,6 +48,7 @@ public abstract class FormatPlugin {
 		return file;
 	}
 	public abstract void readMetaInfo(Book book) throws BookReadingException;
+	public abstract String readEncryptionType(Book book);
 	public abstract void readUids(Book book) throws BookReadingException;
 	public abstract void readModel(BookModel model) throws BookReadingException;
 	public abstract void detectLanguageAndEncoding(Book book) throws BookReadingException;
