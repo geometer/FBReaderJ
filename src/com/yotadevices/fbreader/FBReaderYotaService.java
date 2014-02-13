@@ -24,10 +24,12 @@ import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
+
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
+
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
@@ -67,32 +69,20 @@ public class FBReaderYotaService extends BSActivity {
 		super.onBSDestroy();
 	}
 	
-	private static String MD5(Bitmap bm) {
-		final String MD5 = "MD5";
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-		bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-		byte[] bitmapBytes = baos.toByteArray();
+	private static byte[] MD5(Bitmap image) {
+		// TODO: possible too large array(s)?
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		image.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		final byte[] bitmapBytes = baos.toByteArray();
 		try {
-	        // Create MD5 Hash
-	        MessageDigest digest = java.security.MessageDigest
-	                .getInstance(MD5);
-	        digest.update(bitmapBytes);
-	        byte messageDigest[] = digest.digest();
-
-	        // Create Hex String
-	        StringBuilder hexString = new StringBuilder();
-	        for (byte aMessageDigest : messageDigest) {
-	            String h = Integer.toHexString(0xFF & aMessageDigest);
-	            while (h.length() < 2)
-	                h = "0" + h;
-	            hexString.append(h);
-	        }
-	        return hexString.toString();
-
-	    } catch (NoSuchAlgorithmException e) {
-	        e.printStackTrace();
-	    }
-	    return null;
+			// Create MD5 Hash
+			final MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+			digest.update(bitmapBytes);
+			return digest.digest();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	private class YotaBackScreenWidget extends ZLAndroidWidget {
@@ -104,15 +94,15 @@ public class FBReaderYotaService extends BSActivity {
 			super(context);
 		}
 		
-		private String myMD5ofDrawedBitmap = null;
+		private volatile byte[] myStoredMD5 = null;
 
 		@Override
 		public synchronized void repaint() {
 			draw(myCanvas);
-			String curMD5 = MD5(myBitmap);
-			if (myMD5ofDrawedBitmap == null || !myMD5ofDrawedBitmap.equals(curMD5)) {
+			final byte[] currentMD5 = MD5(myBitmap);
+			if (myStoredMD5 == null || !myStoredMD5.equals(currentMD5)) {
 				getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
-				myMD5ofDrawedBitmap = curMD5;
+				myStoredMD5 = currentMD5;
 			}
 		}
 
