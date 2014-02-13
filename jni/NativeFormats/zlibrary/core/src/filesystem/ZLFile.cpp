@@ -238,6 +238,14 @@ bool ZLFile::isDirectory() const {
 	return myInfo.IsDirectory;
 }
 
+ZLFile ZLFile::getContainerArchive() const {
+	const int index = ZLFSManager::Instance().findArchiveFileNameDelimiter(myPath);
+	if (index == -1) {
+		return NO_FILE;
+	}
+	return ZLFile(myPath.substr(index));
+}
+
 const std::string &ZLFile::mimeType() const {
 	if (!myMimeTypeIsUpToDate) {
 		myMimeType = ZLFSManager::Instance().mimeType(myPath);

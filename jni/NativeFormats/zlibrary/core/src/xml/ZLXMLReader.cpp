@@ -100,7 +100,11 @@ bool ZLXMLReader::readDocument(shared_ptr<ZLInputStream> stream) {
 	stream->seek(0, true);
 	int index = stringBuffer.find('>');
 	if (index > 0) {
-		stringBuffer = ZLUnicodeUtil::toLower(stringBuffer.substr(0, index));
+		stringBuffer = stringBuffer.substr(0, index);
+		if (!ZLUnicodeUtil::isUtf8String(stringBuffer)) {
+			return false;
+		}
+		stringBuffer = ZLUnicodeUtil::toLower(stringBuffer);
 		int index = stringBuffer.find("\"iso-8859-1\"");
 		if (index > 0) {
 			useWindows1252 = true;

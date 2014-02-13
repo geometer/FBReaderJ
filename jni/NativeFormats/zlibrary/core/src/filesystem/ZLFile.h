@@ -65,6 +65,8 @@ public:
 	bool isDirectory() const;
 	bool isArchive() const;
 
+	ZLFile getContainerArchive() const;
+
 	bool remove() const;
 	bool canRemove() const;
 
