@@ -51,15 +51,11 @@ public class CancelActivity extends ListActivity {
 		myCollection = new BookCollectionShadow();
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				Config.Instance().runOnStart(new Runnable() {
-					public void run() {
-						final ActionListAdapter adapter = new ActionListAdapter(
-							new CancelMenuHelper().getActionsList(myCollection)
-						);
-						setListAdapter(adapter);
-						getListView().setOnItemClickListener(adapter);
-					}
-				});
+				final ActionListAdapter adapter = new ActionListAdapter(
+					new CancelMenuHelper().getActionsList(myCollection)
+				);
+				setListAdapter(adapter);
+				getListView().setOnItemClickListener(adapter);
 			}
 		});
 	}
