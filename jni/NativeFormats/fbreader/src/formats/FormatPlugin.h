@@ -47,11 +47,11 @@ public:
 class FormatPlugin {
 
 public:
-	class EncryptionType {
+	class EncryptionMethod {
 
 	public:
 		static const std::string NONE;
-		static const std::string UNKNOWN;
+		static const std::string UNSUPPORTED;
 		static const std::string MARLIN;
 	};
 
@@ -67,7 +67,7 @@ public:
 
 	virtual const std::string &tryOpen(const ZLFile &file) const;
 	virtual bool readMetaInfo(Book &book) const = 0;
-	virtual const std::string &readEncryptionType(Book &book) const;
+	virtual const std::string &readEncryptionMethod(Book &book) const;
 	virtual bool readUids(Book &book) const = 0;
 	virtual bool readLanguageAndEncoding(Book &book) const = 0;
 	virtual bool readModel(BookModel &model) const = 0;
