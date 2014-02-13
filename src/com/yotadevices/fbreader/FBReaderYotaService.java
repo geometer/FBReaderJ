@@ -6,6 +6,11 @@
 
 package com.yotadevices.fbreader;
 
+import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.*;
@@ -19,12 +24,10 @@ import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
-
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
@@ -63,6 +66,34 @@ public class FBReaderYotaService extends BSActivity {
 		Widget = null;
 		super.onBSDestroy();
 	}
+	
+	private static String MD5(Bitmap bm) {
+		final String MD5 = "MD5";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		byte[] bitmapBytes = baos.toByteArray();
+		try {
+	        // Create MD5 Hash
+	        MessageDigest digest = java.security.MessageDigest
+	                .getInstance(MD5);
+	        digest.update(bitmapBytes);
+	        byte messageDigest[] = digest.digest();
+
+	        // Create Hex String
+	        StringBuilder hexString = new StringBuilder();
+	        for (byte aMessageDigest : messageDigest) {
+	            String h = Integer.toHexString(0xFF & aMessageDigest);
+	            while (h.length() < 2)
+	                h = "0" + h;
+	            hexString.append(h);
+	        }
+	        return hexString.toString();
+
+	    } catch (NoSuchAlgorithmException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
 
 	private class YotaBackScreenWidget extends ZLAndroidWidget {
 		private Bitmap myDefaultCoverBitmap;
@@ -72,11 +103,17 @@ public class FBReaderYotaService extends BSActivity {
 		YotaBackScreenWidget(Context context) {
 			super(context);
 		}
+		
+		private String myMD5ofDrawedBitmap = null;
 
 		@Override
-		public void repaint() {
+		public synchronized void repaint() {
 			draw(myCanvas);
-			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			String curMD5 = MD5(myBitmap);
+			if (myMD5ofDrawedBitmap == null || !myMD5ofDrawedBitmap.equals(curMD5)) {
+				getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
+				myMD5ofDrawedBitmap = curMD5;
+			}
 		}
 
 		@Override
@@ -159,7 +196,7 @@ public class FBReaderYotaService extends BSActivity {
 		Widget.draw(myCanvas);
 
 		if (refresh) {
-			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
 		}
 	}
 
