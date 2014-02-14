@@ -8,12 +8,15 @@ package com.yotadevices.fbreader;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.*;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
@@ -24,12 +27,10 @@ import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
-
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
@@ -71,14 +72,23 @@ public class FBReaderYotaService extends BSActivity {
 	
 	private static byte[] MD5(Bitmap image) {
 		// TODO: possible too large array(s)?
+		Log.e("MD5TEST", "start");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-		image.compress(Bitmap.CompressFormat.PNG, 100, baos);
-		final byte[] bitmapBytes = baos.toByteArray();
+//		image.compress(Bitmap.CompressFormat.PNG, 100, baos);
+//		final byte[] bitmapBytes = baos.toByteArray();
+		int bytesNum = image.getWidth()*image.getHeight()*4;
+		ByteBuffer buffer = ByteBuffer.allocate(bytesNum);
+		image.copyPixelsToBuffer(buffer);
+		byte[] bitmapBytes = buffer.array();
+		Log.e("MD5TEST", "compressed");
 		try {
 			// Create MD5 Hash
 			final MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
 			digest.update(bitmapBytes);
-			return digest.digest();
+			Log.e("MD5TEST", "hashed");
+			byte[] md5 = digest.digest();
+			Log.e("MD5TEST", Arrays.toString(md5));
+			return md5;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
