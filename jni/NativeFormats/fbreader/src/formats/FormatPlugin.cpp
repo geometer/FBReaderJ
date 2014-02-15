@@ -103,7 +103,7 @@ const std::string &FormatPlugin::tryOpen(const ZLFile&) const {
 	return EMPTY;
 }
 
-const std::string &FormatPlugin::readEncryptionMethod(Book &book) const {
+std::string FormatPlugin::readEncryptionMethod(Book &book) const {
 	return EncryptionMethod::NONE;
 }
 
