@@ -76,7 +76,7 @@ public class FBReaderYotaService extends BSActivity {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 //		image.compress(Bitmap.CompressFormat.PNG, 100, baos);
 //		final byte[] bitmapBytes = baos.toByteArray();
-		int bytesNum = image.getWidth()*image.getHeight()*4;
+		int bytesNum = image.getWidth()*image.getHeight()*2;
 		ByteBuffer buffer = ByteBuffer.allocate(bytesNum);
 		image.copyPixelsToBuffer(buffer);
 		byte[] bitmapBytes = buffer.array();
@@ -181,7 +181,7 @@ public class FBReaderYotaService extends BSActivity {
 	private void initBookView(final boolean refresh) {
 		if (myBitmap == null) {
 			myBitmap = Bitmap.createBitmap(
-				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888
+				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, Bitmap.Config.RGB_565
 			);
 			myCanvas = new Canvas(myBitmap);
 		}
