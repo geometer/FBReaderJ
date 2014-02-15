@@ -6,6 +6,12 @@
 
 package com.yotadevices.fbreader;
 
+import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.*;
@@ -63,6 +69,20 @@ public class FBReaderYotaService extends BSActivity {
 		Widget = null;
 		super.onBSDestroy();
 	}
+	
+	private static byte[] MD5(Bitmap image) {
+		// TODO: possible too large array(s)?
+		final int bytesNum = image.getWidth() * image.getHeight() * 2;
+		final ByteBuffer buffer = ByteBuffer.allocate(bytesNum);
+		image.copyPixelsToBuffer(buffer);
+		try {
+			final MessageDigest digest = MessageDigest.getInstance("MD5");
+			digest.update(buffer.array());
+			return digest.digest();
+		} catch (NoSuchAlgorithmException e) {
+			return null;
+		}
+	}
 
 	private class YotaBackScreenWidget extends ZLAndroidWidget {
 		private Bitmap myDefaultCoverBitmap;
@@ -72,11 +92,17 @@ public class FBReaderYotaService extends BSActivity {
 		YotaBackScreenWidget(Context context) {
 			super(context);
 		}
+		
+		private volatile byte[] myStoredMD5 = null;
 
 		@Override
-		public void repaint() {
+		public synchronized void repaint() {
 			draw(myCanvas);
-			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			final byte[] currentMD5 = MD5(myBitmap);
+			if (myStoredMD5 == null || !myStoredMD5.equals(currentMD5)) {
+				getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
+				myStoredMD5 = currentMD5;
+			}
 		}
 
 		@Override
@@ -144,7 +170,7 @@ public class FBReaderYotaService extends BSActivity {
 	private void initBookView(final boolean refresh) {
 		if (myBitmap == null) {
 			myBitmap = Bitmap.createBitmap(
-				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888
+				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, Bitmap.Config.RGB_565
 			);
 			myCanvas = new Canvas(myBitmap);
 		}
@@ -159,7 +185,7 @@ public class FBReaderYotaService extends BSActivity {
 		Widget.draw(myCanvas);
 
 		if (refresh) {
-			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_FULL);
+			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
 		}
 	}
 
