@@ -45,6 +45,11 @@ public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 	}
 
 	@Override
+	public String readEncryptionMethod(Book book) {
+		return EncryptionMethod.NONE;
+	}
+
+	@Override
 	public ZLImage readCover(ZLFile file) {
 		//TODO
 		return null;

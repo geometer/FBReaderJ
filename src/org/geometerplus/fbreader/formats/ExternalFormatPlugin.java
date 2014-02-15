@@ -90,6 +90,11 @@ public class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
+	public String readEncryptionMethod(Book book) {
+		return EncryptionMethod.NONE;
+	}
+
+	@Override
 	public void readModel(BookModel model) throws BookReadingException {
 		// TODO: throw an "unsupported operation" exception
 	}
