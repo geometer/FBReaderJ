@@ -72,7 +72,7 @@ public class FBReaderYotaService extends BSActivity {
 	
 	private static byte[] MD5(Bitmap image) {
 		// TODO: possible too large array(s)?
-		final int bytesNum = image.getWidth() * image.getHeight() * 4;
+		final int bytesNum = image.getWidth() * image.getHeight() * 2;
 		final ByteBuffer buffer = ByteBuffer.allocate(bytesNum);
 		image.copyPixelsToBuffer(buffer);
 		try {
@@ -170,7 +170,7 @@ public class FBReaderYotaService extends BSActivity {
 	private void initBookView(final boolean refresh) {
 		if (myBitmap == null) {
 			myBitmap = Bitmap.createBitmap(
-				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, Bitmap.Config.ARGB_8888
+				BSDrawer.SCREEN_WIDTH, BSDrawer.SCREEN_HEIGHT, Bitmap.Config.RGB_565
 			);
 			myCanvas = new Canvas(myBitmap);
 		}
