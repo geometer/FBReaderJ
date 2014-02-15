@@ -6,7 +6,6 @@
 
 package com.yotadevices.fbreader;
 
-import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
