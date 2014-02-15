@@ -21,22 +21,28 @@
 #define __OEBENCRYPTIONREADER_H__
 
 #include <string>
+#include <vector>
 
 #include <ZLFile.h>
-#include <ZLXMLReader.h>
 
-class OEBEncryptionReader : public ZLXMLReader {
+class EncryptionInfo {
 
 public:
-	OEBEncryptionReader();
-	const std::string &readEncryptionInfo(const ZLFile &file);
+	EncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId);
 
-private:
-	void startElementHandler(const char *tag, const char **attributes);
-	bool processNamespaces() const;
+public:
+	const std::string Uri;
+	const std::string Algorithm;
+	const std::string ContentId;
 
-private:
-	bool myIsMarlin;
+friend class OEBEncryptionReader;
+};
+
+class OEBEncryptionReader {
+
+public:
+	std::vector<EncryptionInfo> readEncryptionInfo(const ZLFile &file);
+	std::string readEncryptionMethod(const ZLFile &file);
 };
 
 #endif /* __OEBENCRYPTIONREADER_H__ */
