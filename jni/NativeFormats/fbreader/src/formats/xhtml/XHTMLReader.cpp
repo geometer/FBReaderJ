@@ -28,6 +28,7 @@
 #include <ZLXMLNamespace.h>
 #include <ZLInputStream.h>
 #include <ZLLogger.h>
+#include <FileEncryptionInfo.h>
 
 #include "XHTMLReader.h"
 #include "../util/EntityFilesCollector.h"
@@ -220,7 +221,7 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 
 	const std::string cssFilePath = reader.myPathPrefix + MiscUtil::decodeHtmlURL(href);
 	ZLLogger::Instance().println("CSS", "style file: " + cssFilePath);
-	shared_ptr<ZLInputStream> cssStream = ZLFile(cssFilePath).inputStream();
+	shared_ptr<ZLInputStream> cssStream = ZLFile(cssFilePath).inputStream(reader.myEncryptionMap);
 	if (cssStream.isNull()) {
 		return;
 	}
@@ -522,7 +523,7 @@ void XHTMLReader::fillTagTable() {
 	}
 }
 
-XHTMLReader::XHTMLReader(BookReader &modelReader) : myModelReader(modelReader) {
+XHTMLReader::XHTMLReader(BookReader &modelReader, shared_ptr<EncryptionMap> map) : myModelReader(modelReader), myEncryptionMap(map) {
 	myMarkNextImageAsCover = false;
 }
 
@@ -530,7 +531,7 @@ void XHTMLReader::setMarkFirstImageAsCover() {
 	myMarkNextImageAsCover = true;
 }
 
-bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName, shared_ptr<EncryptionInfo> encryptionInfo) {
+bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName) {
 	fillTagTable();
 
 	myPathPrefix = MiscUtil::htmlDirectoryPrefix(file.path());
@@ -555,7 +556,7 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName,
 	myStyleParser = new StyleSheetSingleStyleParser();
 	myTableParser.reset();
 
-	return readDocument(file);
+	return readDocument(file.inputStream(myEncryptionMap));
 }
 
 bool XHTMLReader::addStyleEntry(const std::string tag, const std::string aClass) {
