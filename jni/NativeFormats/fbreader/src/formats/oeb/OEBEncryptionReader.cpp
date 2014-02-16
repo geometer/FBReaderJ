@@ -20,9 +20,9 @@
 #include <ZLDir.h>
 #include <ZLXMLNamespace.h>
 #include <ZLXMLReader.h>
+#include <FileEncryptionInfo.h>
 
 #include "../FormatPlugin.h"
-#include "../EncryptionInfo.h"
 #include "OEBEncryptionReader.h"
 
 class EpubRightsFileReader : public ZLXMLReader {
@@ -44,7 +44,7 @@ class EpubEncryptionFileReader : public ZLXMLReader {
 public:
 	EpubEncryptionFileReader();
 
-	const std::vector<shared_ptr<EncryptionInfo> > &infos() const;
+	const std::vector<shared_ptr<FileEncryptionInfo> > &infos() const;
 
 private:
 	void startElementHandler(const char *tag, const char **attributes);
@@ -64,7 +64,7 @@ private:
 	};
 
 private:
-	std::vector<shared_ptr<EncryptionInfo> > myInfos;
+	std::vector<shared_ptr<FileEncryptionInfo> > myInfos;
 
 	State myState;
 	std::string myAlgorithm;
@@ -92,7 +92,7 @@ std::string OEBEncryptionReader::readEncryptionMethod(const ZLFile &epubFile) {
 	return reader.method();
 }
 
-std::vector<shared_ptr<EncryptionInfo> > OEBEncryptionReader::readEncryptionInfos(const ZLFile &epubFile) {
+std::vector<shared_ptr<FileEncryptionInfo> > OEBEncryptionReader::readEncryptionInfos(const ZLFile &epubFile) {
 	const std::string method = readEncryptionMethod(epubFile);
 	if (method == FormatPlugin::EncryptionMethod::MARLIN) {
 		shared_ptr<ZLDir> epubDir = epubFile.directory();
@@ -103,7 +103,7 @@ std::vector<shared_ptr<EncryptionInfo> > OEBEncryptionReader::readEncryptionInfo
 			return reader.infos();
 		}
 	}
-	return std::vector<shared_ptr<EncryptionInfo> >();
+	return std::vector<shared_ptr<FileEncryptionInfo> >();
 }
 
 EpubRightsFileReader::EpubRightsFileReader() : myMethod(FormatPlugin::EncryptionMethod::UNSUPPORTED) {
@@ -127,7 +127,7 @@ bool EpubRightsFileReader::processNamespaces() const {
 EpubEncryptionFileReader::EpubEncryptionFileReader() : myState(READ_NONE) {
 }
 
-const std::vector<shared_ptr<EncryptionInfo> > &EpubEncryptionFileReader::infos() const {
+const std::vector<shared_ptr<FileEncryptionInfo> > &EpubEncryptionFileReader::infos() const {
 	return myInfos;
 }
 
@@ -203,7 +203,7 @@ void EpubEncryptionFileReader::endElementHandler(const char *tag) {
 			break;
 		case READ_ENCRYPTED_DATA:
 			if (testTag(ZLXMLNamespace::XMLEncryption, "EncryptedData", tag)) {
-				myInfos.push_back(new EncryptionInfo(myUri, myAlgorithm, myKeyName));
+				myInfos.push_back(new FileEncryptionInfo(myUri, myAlgorithm, myKeyName));
 				myState = READ_ENCRYPTION;
 			}
 			break;
