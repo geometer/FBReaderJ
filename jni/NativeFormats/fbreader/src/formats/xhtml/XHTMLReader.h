@@ -34,6 +34,8 @@ class ZLFile;
 class BookReader;
 class XHTMLReader;
 
+class EncryptionInfo;
+
 class XHTMLTagAction {
 
 public:
@@ -62,7 +64,7 @@ private:
 
 public:
 	XHTMLReader(BookReader &modelReader);
-	bool readFile(const ZLFile &file, const std::string &referenceName);
+	bool readFile(const ZLFile &file, const std::string &referenceName, shared_ptr<EncryptionInfo> encryptionInfo);
 	const std::string &fileAlias(const std::string &fileName) const;
 	const std::string normalizedReference(const std::string &reference) const;
 	void setMarkFirstImageAsCover();

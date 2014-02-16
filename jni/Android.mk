@@ -89,6 +89,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/bookmodel/BookModel.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
+	NativeFormats/fbreader/src/formats/EncryptionInfo.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2BookReader.cpp \
