@@ -18,7 +18,6 @@
  */
 
 #include <ZLDir.h>
-#include <ZLLogger.h>
 #include <ZLXMLNamespace.h>
 #include <ZLXMLReader.h>
 
