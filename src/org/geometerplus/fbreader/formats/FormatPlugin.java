@@ -28,12 +28,6 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class FormatPlugin {
-	public interface EncryptionMethod {
-		String NONE = "none";
-		String UNSUPPORTED = "unsupported";
-		String MARLIN = "marlin";
-	}
-
 	private final String myFileType;
 
 	protected FormatPlugin(String fileType) {

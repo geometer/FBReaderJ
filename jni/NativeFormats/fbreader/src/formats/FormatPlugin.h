@@ -46,15 +46,6 @@ public:
 
 class FormatPlugin {
 
-public:
-	class EncryptionMethod {
-
-	public:
-		static const std::string NONE;
-		static const std::string UNSUPPORTED;
-		static const std::string MARLIN;
-	};
-
 protected:
 	FormatPlugin();
 
