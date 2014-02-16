@@ -20,6 +20,7 @@
 #include <AndroidUtil.h>
 #include <JniEnvelope.h>
 #include <ZLFileImage.h>
+#include <FileEncryptionInfo.h>
 
 #include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
@@ -134,7 +135,7 @@ extern "C"
 JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readEncryptionMethod(JNIEnv* env, jobject thiz, jobject javaBook) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
 	if (plugin.isNull()) {
-		return AndroidUtil::createJavaString(env, FormatPlugin::EncryptionMethod::UNSUPPORTED);
+		return AndroidUtil::createJavaString(env, EncryptionMethod::UNSUPPORTED);
 	}
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);

@@ -21,7 +21,11 @@
 
 #include "FileEncryptionInfo.h"
 
-FileEncryptionInfo::FileEncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId) : Uri(uri), Algorithm(algorithm), ContentId(contentId) {
+const std::string EncryptionMethod::NONE = "none";
+const std::string EncryptionMethod::UNSUPPORTED = "unsupported";
+const std::string EncryptionMethod::MARLIN = "marlin";
+
+FileEncryptionInfo::FileEncryptionInfo(const std::string &uri, const std::string &method, const std::string &algorithm, const std::string &contentId) : Uri(uri), Method(method), Algorithm(algorithm), ContentId(contentId) {
 }
 
 void EncryptionMap::addInfo(const ZLDir &dir, shared_ptr<FileEncryptionInfo> info) {
