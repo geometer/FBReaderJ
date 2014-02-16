@@ -23,6 +23,7 @@
 #include <ZLXMLReader.h>
 
 #include "../FormatPlugin.h"
+#include "../EncryptionInfo.h"
 #include "OEBEncryptionReader.h"
 
 class EpubRightsFileReader : public ZLXMLReader {
@@ -44,7 +45,7 @@ class EpubEncryptionFileReader : public ZLXMLReader {
 public:
 	EpubEncryptionFileReader();
 
-	const std::vector<EncryptionInfo> &infos() const;
+	const std::vector<shared_ptr<EncryptionInfo> > &infos() const;
 
 private:
 	void startElementHandler(const char *tag, const char **attributes);
@@ -64,7 +65,7 @@ private:
 	};
 
 private:
-	std::vector<EncryptionInfo> myInfos;
+	std::vector<shared_ptr<EncryptionInfo> > myInfos;
 
 	State myState;
 	std::string myAlgorithm;
@@ -92,7 +93,7 @@ std::string OEBEncryptionReader::readEncryptionMethod(const ZLFile &epubFile) {
 	return reader.method();
 }
 
-std::vector<EncryptionInfo> OEBEncryptionReader::readEncryptionInfo(const ZLFile &epubFile) {
+std::vector<shared_ptr<EncryptionInfo> > OEBEncryptionReader::readEncryptionInfos(const ZLFile &epubFile) {
 	const std::string method = readEncryptionMethod(epubFile);
 	if (method == FormatPlugin::EncryptionMethod::MARLIN) {
 		shared_ptr<ZLDir> epubDir = epubFile.directory();
@@ -103,7 +104,7 @@ std::vector<EncryptionInfo> OEBEncryptionReader::readEncryptionInfo(const ZLFile
 			return reader.infos();
 		}
 	}
-	return std::vector<EncryptionInfo>();
+	return std::vector<shared_ptr<EncryptionInfo> >();
 }
 
 EpubRightsFileReader::EpubRightsFileReader() : myMethod(FormatPlugin::EncryptionMethod::UNSUPPORTED) {
@@ -124,17 +125,10 @@ bool EpubRightsFileReader::processNamespaces() const {
 	return true;
 }
 
-EncryptionInfo::EncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId) : Uri(uri), Algorithm(algorithm), ContentId(contentId) {
-}
-
 EpubEncryptionFileReader::EpubEncryptionFileReader() : myState(READ_NONE) {
 }
 
-const std::vector<EncryptionInfo> &EpubEncryptionFileReader::infos() const {
-	//ZLLogger::Instance().registerClass("MARLIN");
-	//for (std::vector<EncryptionInfo>::const_iterator it = myInfos.begin(); it != myInfos.end(); ++it) {
-	//	ZLLogger::Instance().println("MARLIN", std::string("INFO: ") + it->Uri + " :: " + it->Algorithm + " :: " + it->ContentId);
-	//}
+const std::vector<shared_ptr<EncryptionInfo> > &EpubEncryptionFileReader::infos() const {
 	return myInfos;
 }
 
@@ -210,7 +204,7 @@ void EpubEncryptionFileReader::endElementHandler(const char *tag) {
 			break;
 		case READ_ENCRYPTED_DATA:
 			if (testTag(ZLXMLNamespace::XMLEncryption, "EncryptedData", tag)) {
-				myInfos.push_back(EncryptionInfo(myUri, myAlgorithm, myKeyName));
+				myInfos.push_back(new EncryptionInfo(myUri, myAlgorithm, myKeyName));
 				myState = READ_ENCRYPTION;
 			}
 			break;
