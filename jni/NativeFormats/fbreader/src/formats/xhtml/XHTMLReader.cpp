@@ -530,7 +530,7 @@ void XHTMLReader::setMarkFirstImageAsCover() {
 	myMarkNextImageAsCover = true;
 }
 
-bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName) {
+bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName, shared_ptr<EncryptionInfo> encryptionInfo) {
 	fillTagTable();
 
 	myPathPrefix = MiscUtil::htmlDirectoryPrefix(file.path());
