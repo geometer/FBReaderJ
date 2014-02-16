@@ -23,25 +23,15 @@
 #include <string>
 #include <vector>
 
+#include <shared_ptr.h>
 #include <ZLFile.h>
 
-class EncryptionInfo {
-
-public:
-	EncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId);
-
-public:
-	const std::string Uri;
-	const std::string Algorithm;
-	const std::string ContentId;
-
-friend class OEBEncryptionReader;
-};
+class EncryptionInfo;
 
 class OEBEncryptionReader {
 
 public:
-	std::vector<EncryptionInfo> readEncryptionInfo(const ZLFile &file);
+	std::vector<shared_ptr<EncryptionInfo> > readEncryptionInfos(const ZLFile &file);
 	std::string readEncryptionMethod(const ZLFile &file);
 };
 
