@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.library;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -220,24 +221,57 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
 				book.addLabel(Book.FAVORITE_LABEL);
-				myRootTree.Collection.saveBook(book);
+				new AsyncTask<Book, Void, Void>() {
+					protected Void doInBackground(Book... args) {
+						Book book = args[0];
+						myRootTree.Collection.saveBook(book);
+						return null;
+					}
+				}.execute(book);
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
 				book.removeLabel(Book.FAVORITE_LABEL);
-				myRootTree.Collection.saveBook(book);
-				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
-					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
-				}
+				new AsyncTask<Book, Void, Book>() {
+					protected Book doInBackground(Book... args) {
+						Book book = args[0];
+						myRootTree.Collection.saveBook(book);
+						return book;
+					}
+
+					protected void onPostExecute(Book book) {
+						if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
+							getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+						}
+					}
+				}.execute(book);
 				return true;
 			case MARK_AS_READ_ITEM_ID:
 				book.addLabel(Book.READ_LABEL);
-				myRootTree.Collection.saveBook(book);
-				getListView().invalidateViews();
+				new AsyncTask<Book, Void, Void>() {
+					protected Void doInBackground(Book... args) {
+						Book book = args[0];
+						myRootTree.Collection.saveBook(book);
+						return null;
+					}
+
+					protected void onPostExecute(Void v) {
+						getListView().invalidateViews();
+					}
+				}.execute(book);
 				return true;
 			case MARK_AS_UNREAD_ITEM_ID:
 				book.removeLabel(Book.READ_LABEL);
-				myRootTree.Collection.saveBook(book);
-				getListView().invalidateViews();
+				new AsyncTask<Book, Void, Void>() {
+					protected Void doInBackground(Book... args) {
+						Book book = args[0];
+						myRootTree.Collection.saveBook(book);
+						return null;
+					}
+
+					protected void onPostExecute(Void v) {
+						getListView().invalidateViews();
+					}
+				}.execute(book);
 				return true;
 			case DELETE_BOOK_ITEM_ID:
 				tryToDeleteBook(book);
@@ -367,5 +401,5 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	public void onBuildEvent(IBookCollection.Status status) {
 		setProgressBarIndeterminateVisibility(!status.IsCompleted);
-	}
+	}	
 }

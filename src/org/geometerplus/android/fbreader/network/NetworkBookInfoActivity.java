@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -308,7 +309,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 		final int maxHeight = metrics.heightPixels * 2 / 3;
 		final int maxWidth = maxHeight * 2 / 3;
-		Bitmap coverBitmap = null;
 		final ZLImage cover = NetworkTree.createCover(myBook);
 		if (cover != null) {
 			ZLAndroidImageData data = null;
@@ -334,14 +334,23 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				data = mgr.getImageData(cover);
 			}
 			if (data != null) {
-				coverBitmap = data.getBitmap(maxWidth, maxHeight);
+				new AsyncTask<ZLAndroidImageData, Void, Bitmap>() {
+					protected Bitmap doInBackground(ZLAndroidImageData... args) {
+						ZLAndroidImageData data = args[0];
+						Bitmap coverBitmap = data.getBitmap(maxWidth, maxHeight);
+						return coverBitmap;
+					}
+					
+					protected void onPostExecute(Bitmap coverBitmap) {
+						if (coverBitmap != null) {
+							coverView.setImageBitmap(coverBitmap);
+							coverView.setVisibility(View.VISIBLE);
+						} else {
+							coverView.setVisibility(View.GONE);
+						}
+					}
+				}.execute(data);
 			}
-		}
-		if (coverBitmap != null) {
-			coverView.setImageBitmap(coverBitmap);
-			coverView.setVisibility(View.VISIBLE);
-		} else {
-			coverView.setVisibility(View.GONE);
 		}
 	}
 

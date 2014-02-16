@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.*;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.view.*;
@@ -68,19 +69,31 @@ public class ImageViewActivity extends Activity {
 
 		final Uri uri = intent.getData();
 		if (ZLFileImage.SCHEME.equals(uri.getScheme())) {
-			final ZLFileImage image = ZLFileImage.byUrlPath(uri.getPath());
-			if (image == null) {
-				// TODO: error message (?)
-				finish();
-			}
-			try {
-				final ZLImageData imageData = ZLImageManager.Instance().getImageData(image);
-				myBitmap = ((ZLAndroidImageData)imageData).getFullSizeBitmap();
-			} catch (Exception e) {
-				// TODO: error message (?)
-				e.printStackTrace();
-				finish();
-			}
+			new AsyncTask<Uri, Void, Boolean>() {
+				protected Boolean doInBackground(Uri... args) {
+					Uri uri = args[0];
+					final ZLFileImage image = ZLFileImage.byUrlPath(uri.getPath());
+					if (image == null) {
+						return false;
+					}
+					
+					try {
+						final ZLImageData imageData = ZLImageManager.Instance().getImageData(image);
+						myBitmap = ((ZLAndroidImageData)imageData).getFullSizeBitmap();
+					} catch (Exception e) {
+						e.printStackTrace();
+						return false;
+					}
+					return true;
+				}
+
+				protected void onPostExecute(Boolean result) {
+					if(!result) {
+						// TODO: error message (?)
+						finish();
+					}
+				}
+			}.execute(uri);
 		} else {
 			// TODO: error message (?)
 			finish();
