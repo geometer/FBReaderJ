@@ -243,7 +243,7 @@ ZLFile ZLFile::getContainerArchive() const {
 	if (index == -1) {
 		return NO_FILE;
 	}
-	return ZLFile(myPath.substr(index));
+	return ZLFile(myPath.substr(0, index));
 }
 
 const std::string &ZLFile::mimeType() const {
