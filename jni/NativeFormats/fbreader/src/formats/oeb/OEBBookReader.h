@@ -24,7 +24,9 @@
 #include <vector>
 #include <string>
 
+#include <shared_ptr.h>
 #include <ZLXMLReader.h>
+#include <FileEncryptionInfo.h>
 
 #include "../../bookmodel/BookReader.h"
 
@@ -59,6 +61,7 @@ private:
 	BookReader myModelReader;
 	ReaderState myState;
 
+	shared_ptr<EncryptionMap> myEncryptionMap;
 	std::string myFilePrefix;
 	std::map<std::string,std::string> myIdToHref;
 	std::map<std::string,std::string> myHrefToMediatype;
