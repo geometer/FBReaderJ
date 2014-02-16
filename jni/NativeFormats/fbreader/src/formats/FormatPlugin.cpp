@@ -28,10 +28,6 @@
 
 #include "../library/Book.h"
 
-const std::string FormatPlugin::EncryptionMethod::NONE = "none";
-const std::string FormatPlugin::EncryptionMethod::UNSUPPORTED = "unsupported";
-const std::string FormatPlugin::EncryptionMethod::MARLIN = "marlin";
-
 bool FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream, bool force) {
 	std::string language = book.language();
 	std::string encoding = book.encoding();
