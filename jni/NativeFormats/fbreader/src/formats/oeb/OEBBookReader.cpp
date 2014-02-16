@@ -19,14 +19,16 @@
 
 #include <algorithm>
 
-//#include <ZLLogger.h>
+#include <ZLLogger.h>
 #include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
 #include <ZLFile.h>
 #include <ZLFileImage.h>
 #include <ZLXMLNamespace.h>
 
+#include "../EncryptionInfo.h"
 #include "OEBBookReader.h"
+#include "OEBEncryptionReader.h"
 #include "XHTMLImageFinder.h"
 #include "NCXReader.h"
 #include "../xhtml/XHTMLReader.h"
@@ -185,6 +187,16 @@ void OEBBookReader::endElementHandler(const char *tag) {
 }
 
 bool OEBBookReader::readBook(const ZLFile &file) {
+	ZLLogger::Instance().registerClass("MARLIN");
+	ZLLogger::Instance().println("MARLIN", "opf file = " + file.path());
+	const ZLFile epub = file.getContainerArchive();
+	epub.forceArchiveType(ZLFile::ZIP);
+	const std::vector<shared_ptr<EncryptionInfo> > encodingInfos =
+		OEBEncryptionReader().readEncryptionInfos(epub);
+	for (std::vector<shared_ptr<EncryptionInfo> >::const_iterator it = encodingInfos.begin(); it != encodingInfos.end(); ++it) {
+		ZLLogger::Instance().println("MARLIN", std::string("INFO: ") + (*it)->Uri + " :: " + (*it)->Algorithm + " :: " + (*it)->ContentId);
+	}
+
 	myFilePrefix = MiscUtil::htmlDirectoryPrefix(file.path());
 
 	myIdToHref.clear();
@@ -222,7 +234,8 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 			myModelReader.insertEndOfSectionParagraph();
 		}
 		//ZLLogger::Instance().println("oeb", "start " + xhtmlFile.path());
-		xhtmlReader.readFile(xhtmlFile, *it);
+		shared_ptr<EncryptionInfo> encryptionInfo;
+		xhtmlReader.readFile(xhtmlFile, *it, encryptionInfo);
 		//ZLLogger::Instance().println("oeb", "end " + xhtmlFile.path());
 		//std::string debug = "para count = ";
 		//ZLStringUtil::appendNumber(debug, myModelReader.model().bookTextModel()->paragraphsNumber());
