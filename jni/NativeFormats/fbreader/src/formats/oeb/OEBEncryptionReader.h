@@ -26,12 +26,12 @@
 #include <shared_ptr.h>
 #include <ZLFile.h>
 
-class EncryptionInfo;
+class FileEncryptionInfo;
 
 class OEBEncryptionReader {
 
 public:
-	std::vector<shared_ptr<EncryptionInfo> > readEncryptionInfos(const ZLFile &file);
+	std::vector<shared_ptr<FileEncryptionInfo> > readEncryptionInfos(const ZLFile &file);
 	std::string readEncryptionMethod(const ZLFile &file);
 };
 

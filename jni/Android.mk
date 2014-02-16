@@ -47,6 +47,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/encoding/JavaEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encryption/FileEncryptionInfo.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
@@ -89,7 +90,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/bookmodel/BookModel.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
-	NativeFormats/fbreader/src/formats/EncryptionInfo.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2BookReader.cpp \
@@ -153,6 +153,7 @@ LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/constants \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/encoding \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/encryption \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/filesystem \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/image \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/language \

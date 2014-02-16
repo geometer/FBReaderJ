@@ -17,7 +17,18 @@
  * 02110-1301, USA.
  */
 
-#include "EncryptionInfo.h"
+#include <ZLFile.h>
 
-EncryptionInfo::EncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId) : Uri(uri), Algorithm(algorithm), ContentId(contentId) {
+#include "FileEncryptionInfo.h"
+
+FileEncryptionInfo::FileEncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId) : Uri(uri), Algorithm(algorithm), ContentId(contentId) {
+}
+
+void EncryptionMap::addInfo(const ZLDir &dir, shared_ptr<FileEncryptionInfo> info) {
+	myPathToInfo[ZLFile(dir.itemPath(info->Uri)).path()] = info;
+}
+
+shared_ptr<FileEncryptionInfo> EncryptionMap::info(const std::string &path) const {
+	const std::map<std::string,shared_ptr<FileEncryptionInfo> >::const_iterator it = myPathToInfo.find(path);
+	return it != myPathToInfo.end() ? it->second : 0;
 }
