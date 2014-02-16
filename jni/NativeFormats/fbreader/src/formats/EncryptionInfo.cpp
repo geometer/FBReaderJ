@@ -17,22 +17,7 @@
  * 02110-1301, USA.
  */
 
-#ifndef __OEBENCRYPTIONREADER_H__
-#define __OEBENCRYPTIONREADER_H__
+#include "EncryptionInfo.h"
 
-#include <string>
-#include <vector>
-
-#include <shared_ptr.h>
-#include <ZLFile.h>
-
-class EncryptionInfo;
-
-class OEBEncryptionReader {
-
-public:
-	std::vector<shared_ptr<EncryptionInfo> > readEncryptionInfos(const ZLFile &file);
-	std::string readEncryptionMethod(const ZLFile &file);
-};
-
-#endif /* __OEBENCRYPTIONREADER_H__ */
+EncryptionInfo::EncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId) : Uri(uri), Algorithm(algorithm), ContentId(contentId) {
+}
