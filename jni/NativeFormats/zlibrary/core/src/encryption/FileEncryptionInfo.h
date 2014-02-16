@@ -17,15 +17,19 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ENCRYPTIONINFO_H__
-#define __ENCRYPTIONINFO_H__
+#ifndef __FILEENCRYPTIONINFO_H__
+#define __FILEENCRYPTIONINFO_H__
 
+#include <map>
 #include <string>
 
-class EncryptionInfo {
+#include <shared_ptr.h>
+#include <ZLDir.h>
+
+class FileEncryptionInfo {
 
 public:
-	EncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId);
+	FileEncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId);
 
 public:
 	const std::string Uri;
@@ -33,4 +37,14 @@ public:
 	const std::string ContentId;
 };
 
-#endif /* __ENCRYPTIONINFO_H__ */
+class EncryptionMap {
+
+public:
+	void addInfo(const ZLDir &dir, shared_ptr<FileEncryptionInfo> info);
+	shared_ptr<FileEncryptionInfo> info(const std::string &path) const;
+
+private:
+	std::map<std::string,shared_ptr<FileEncryptionInfo> > myPathToInfo;
+};
+
+#endif /* __FILEENCRYPTIONINFO_H__ */

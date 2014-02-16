@@ -19,14 +19,16 @@
 
 #include <algorithm>
 
+#include <ZLDir.h>
+#include <ZLInputStream.h>
 #include <ZLLogger.h>
 #include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
+#include <FileEncryptionInfo.h>
 #include <ZLFile.h>
 #include <ZLFileImage.h>
 #include <ZLXMLNamespace.h>
 
-#include "../EncryptionInfo.h"
 #include "OEBBookReader.h"
 #include "OEBEncryptionReader.h"
 #include "XHTMLImageFinder.h"
@@ -188,13 +190,18 @@ void OEBBookReader::endElementHandler(const char *tag) {
 
 bool OEBBookReader::readBook(const ZLFile &file) {
 	ZLLogger::Instance().registerClass("MARLIN");
-	ZLLogger::Instance().println("MARLIN", "opf file = " + file.path());
+
 	const ZLFile epub = file.getContainerArchive();
 	epub.forceArchiveType(ZLFile::ZIP);
-	const std::vector<shared_ptr<EncryptionInfo> > encodingInfos =
-		OEBEncryptionReader().readEncryptionInfos(epub);
-	for (std::vector<shared_ptr<EncryptionInfo> >::const_iterator it = encodingInfos.begin(); it != encodingInfos.end(); ++it) {
-		ZLLogger::Instance().println("MARLIN", std::string("INFO: ") + (*it)->Uri + " :: " + (*it)->Algorithm + " :: " + (*it)->ContentId);
+	shared_ptr<ZLDir> epubDir = epub.directory();
+	if (!epubDir.isNull()) {
+		myEncryptionMap = new EncryptionMap();
+		const std::vector<shared_ptr<FileEncryptionInfo> > encodingInfos =
+			OEBEncryptionReader().readEncryptionInfos(epub);
+
+		for (std::vector<shared_ptr<FileEncryptionInfo> >::const_iterator it = encodingInfos.begin(); it != encodingInfos.end(); ++it) {
+			myEncryptionMap->addInfo(*epubDir, *it);
+		}
 	}
 
 	myFilePrefix = MiscUtil::htmlDirectoryPrefix(file.path());
@@ -217,7 +224,7 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myModelReader.pushKind(REGULAR);
 
 	//ZLLogger::Instance().registerClass("oeb");
-	XHTMLReader xhtmlReader(myModelReader);
+	XHTMLReader xhtmlReader(myModelReader, myEncryptionMap);
 	for (std::vector<std::string>::const_iterator it = myHtmlFileNames.begin(); it != myHtmlFileNames.end(); ++it) {
 		const ZLFile xhtmlFile(myFilePrefix + *it);
 		if (it == myHtmlFileNames.begin()) {
@@ -234,8 +241,7 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 			myModelReader.insertEndOfSectionParagraph();
 		}
 		//ZLLogger::Instance().println("oeb", "start " + xhtmlFile.path());
-		shared_ptr<EncryptionInfo> encryptionInfo;
-		xhtmlReader.readFile(xhtmlFile, *it, encryptionInfo);
+		xhtmlReader.readFile(xhtmlFile, *it);
 		//ZLLogger::Instance().println("oeb", "end " + xhtmlFile.path());
 		//std::string debug = "para count = ";
 		//ZLStringUtil::appendNumber(debug, myModelReader.model().bookTextModel()->paragraphsNumber());
@@ -250,7 +256,8 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 void OEBBookReader::generateTOC(const XHTMLReader &xhtmlReader) {
 	if (!myNCXTOCFileName.empty()) {
 		NCXReader ncxReader(myModelReader);
-		if (ncxReader.readDocument(ZLFile(myFilePrefix + myNCXTOCFileName))) {
+		const ZLFile ncxFile(myFilePrefix + myNCXTOCFileName);
+		if (ncxReader.readDocument(ncxFile.inputStream(myEncryptionMap))) {
 			const std::map<int,NCXReader::NavPoint> navigationMap = ncxReader.navigationMap();
 			if (!navigationMap.empty()) {
 				std::size_t level = 0;
