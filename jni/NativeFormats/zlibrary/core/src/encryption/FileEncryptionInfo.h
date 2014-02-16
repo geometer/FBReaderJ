@@ -26,13 +26,22 @@
 #include <shared_ptr.h>
 #include <ZLDir.h>
 
+class EncryptionMethod {
+
+public:
+	static const std::string NONE;
+	static const std::string UNSUPPORTED;
+	static const std::string MARLIN;
+};
+
 class FileEncryptionInfo {
 
 public:
-	FileEncryptionInfo(const std::string &uri, const std::string &algorithm, const std::string &contentId);
+	FileEncryptionInfo(const std::string &uri, const std::string &method, const std::string &algorithm, const std::string &contentId);
 
 public:
 	const std::string Uri;
+	const std::string Method;
 	const std::string Algorithm;
 	const std::string ContentId;
 };
