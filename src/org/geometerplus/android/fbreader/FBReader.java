@@ -328,6 +328,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					public void run() {
 						new TipRunner().start();
 						DictionaryUtil.init(FBReader.this, null);
+						final Intent intent = getIntent();
+						if (intent != null && ACTION_OPEN_PLUGIN.equals(intent.getAction())) {
+							new RunPluginAction(FBReader.this, myFBReaderApp, intent.getData()).run();
+						}
 					}
 				});
 			}
@@ -490,9 +494,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myIntentToOpen = intent;
 			myNeedToSkipPlugin = true;
 		} else if (ACTION_OPEN_PLUGIN.equals(action)) {
-			if (data != null) {
-				new RunPluginAction(this, myFBReaderApp, data).run();
-			}
+			new RunPluginAction(this, myFBReaderApp, data).run();
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
