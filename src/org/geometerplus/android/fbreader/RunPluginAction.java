@@ -35,6 +35,9 @@ class RunPluginAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		if (myUri == null) {
+			return;
+		}
 		BaseActivity.hideBars();
 		try {
 			OrientationUtil.startActivity(
