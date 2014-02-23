@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
