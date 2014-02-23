@@ -22,7 +22,7 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.9.6 (Feb ??, 2014) =====
+===== 1.9.6 (Feb 23, 2014) =====
 * Config speed optimization
 * Fixed bookmarks creation & browsing problem
 * Fixed URL resolving (this also fixed bug with some catalogs created with calibre2opds)
