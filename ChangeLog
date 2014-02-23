@@ -1,6 +1,7 @@
 ===== 1.9.6 (Feb ??, 2014) =====
 * Config speed optimization
 * Fixed bookmarks creation & browsing problem
+* Fixed URL resolving (this also fixed bug with some catalogs created with calibre2opds)
 
 ===== 1.9.5.5 (Feb 4, 2014) =====
 * Fixed preference activity on Android 2.* devices
