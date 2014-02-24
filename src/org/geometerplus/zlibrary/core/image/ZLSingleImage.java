@@ -42,10 +42,10 @@ public abstract class ZLSingleImage implements ZLImage {
 	}
 	
 	@Override
-	public boolean saveToFile(Context context, String url, boolean force) {
+	public boolean saveToFile(Context context, String url, String title, boolean force) {
 		if (!saveExistingCover(url)) {
 			if (force) {
-				return saveDefaultCover(context, url);
+				return saveDefaultCover(getDefaultCover(context, title), url);
 			} else {
 				return false;
 			}
@@ -92,8 +92,7 @@ public abstract class ZLSingleImage implements ZLImage {
 		return true;
 	}
 	
-	private boolean saveDefaultCover(Context context, String url) {
-		final Bitmap cover = makeDefaultCover(context);
+	private boolean saveDefaultCover(Bitmap cover, String url) {
 		OutputStream outputStream = null;
 		final File file = new File(url);
 		final File parent = file.getParentFile();
@@ -116,24 +115,23 @@ public abstract class ZLSingleImage implements ZLImage {
 		return true;
 	}
 	
-	private Bitmap makeDefaultCover(Context context) {
-		final String title = "Text example";
+	private Bitmap getDefaultCover(Context context, String title) {
 		final Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_cover);
 		final Bitmap mutableBitmap = image.copy(Bitmap.Config.ARGB_8888, true);
 		final Canvas canvas = new Canvas(mutableBitmap);
-		final Paint paint = makePaint();
+		final Paint paint = getPaint();
 		canvas.drawText(title, (image.getWidth() - paint.measureText(title)) / 2, image.getHeight() / 2, paint);
 		return mutableBitmap;
 	}
 	
-	private Paint makePaint() {
+	private Paint getPaint() {
 		final Typeface font = Typeface.create("Arial", Typeface.BOLD);
 		final Paint paint = new Paint();
 		paint.setTypeface(font);
 		paint.setAntiAlias(true);
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL);
-		paint.setShadowLayer(2.0f, 1.0f, 1.0f, Color.BLACK);
+		paint.setShadowLayer(2, 1, 1, Color.BLACK);
 		final float fontSize = 50;
 		paint.setTextSize(fontSize);
 		return paint;

@@ -23,5 +23,5 @@ import android.content.Context;
 
 public interface ZLImage {
 	String getURI();
-	boolean saveToFile(Context context, String url, boolean force);
+	boolean saveToFile(Context context, String url, String title, boolean force);
 }

@@ -624,7 +624,7 @@ public class BookCollection extends AbstractBookCollection {
 			return false;
 		}
 
-		return image.saveToFile(context, url, force);
+		return image.saveToFile(context, url, book.getTitle(), force);
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
