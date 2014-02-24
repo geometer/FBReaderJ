@@ -22,6 +22,10 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
+===== 1.9.6.1 (Feb 24, 2014) =====
+* Fixed some config vaues reading (e.g. background)
+* Updated Czech localization (by Marek Pavelka)
+
 ===== 1.9.6 (Feb 23, 2014) =====
 * Config speed optimization
 * Fixed bookmarks creation & browsing problem

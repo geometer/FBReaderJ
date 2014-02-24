@@ -164,8 +164,13 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 			final Map<String,String> values = new HashMap<String,String>();
 			for (String pair : myInterface.requestAllValuesForGroup(group)) {
 				final String[] split = pair.split("\000");
-				if (split.length == 2) {
-					values.put(split[0], split[1]);
+				switch (split.length) {
+					case 1:
+						values.put(split[0], "");
+						break;
+					case 2:
+						values.put(split[0], split[1]);
+						break;
 				}
 			}
 			return values;
