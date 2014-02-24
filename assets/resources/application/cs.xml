@@ -862,7 +862,7 @@
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="nativeCodeFailure" value="Chyba %s v nativním kódu během čtení '%s'"/>
 		<node name="errorReadingFile" value="Došlo k chybě během čtení '%s'"/>
 		<node name="errorReadingZip" value="Došlo k chybě během rozbalování '%s'"/>
 		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
