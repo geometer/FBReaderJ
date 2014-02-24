@@ -99,7 +99,6 @@ shared_ptr<ZLInputStream> ZLFile::envelopeCompressedStream(shared_ptr<ZLInputStr
 shared_ptr<ZLInputStream> ZLFile::inputStream(shared_ptr<EncryptionMap> encryptionMap) const {
 	shared_ptr<FileEncryptionInfo> encryptionInfo =
 		encryptionMap.isNull() ? 0 : encryptionMap->info(myPath);
-	ZLLogger::Instance().println("MARLIN", myPath + " :: " + (encryptionInfo.isNull() ? "not encrypted" : "encrypted"));
 	if (!encryptionInfo.isNull()) {
 		return 0;
 	}
