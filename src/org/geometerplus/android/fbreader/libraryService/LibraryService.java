@@ -261,8 +261,8 @@ public class LibraryService extends Service {
 		}
 		
 		@Override
-		public boolean saveCover(String book, String url) {
-			return myCollection.saveCover(SerializerUtil.deserializeBook(book), url);
+		public boolean saveCover(String book, String url, boolean force) {
+			return myCollection.saveCover(getApplicationContext(), SerializerUtil.deserializeBook(book), url, force);
 		}
 
 		public List<String> bookmarks(String query) {

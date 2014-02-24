@@ -371,12 +371,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public synchronized boolean saveCover(Book book, String url) {
+	public synchronized boolean saveCover(Context context, Book book, String url, boolean force) {
 		if (myInterface == null) {
 			return false;
 		}
 		try {
-			return myInterface.saveCover(SerializerUtil.serialize(book), url);
+			return myInterface.saveCover(SerializerUtil.serialize(book), url, force);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return false;

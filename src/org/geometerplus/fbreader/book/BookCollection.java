@@ -31,6 +31,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
+import android.content.Context;
+
 public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
 	public final List<String> BookDirectories;
@@ -612,7 +614,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 	
 	@Override
-	public boolean saveCover(Book book, String url) {
+	public boolean saveCover(Context context, Book book, String url, boolean force) {
 		if (getBookById(book.getId()) == null) {
 			return false;
 		}
@@ -622,7 +624,7 @@ public class BookCollection extends AbstractBookCollection {
 			return false;
 		}
 
-		return image.saveToFile(url);
+		return image.saveToFile(context, url, force);
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
