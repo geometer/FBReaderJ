@@ -81,7 +81,7 @@ public class Book extends TitledEntity {
 	}
 
 	public void updateFrom(Book book) {
-		if (myId != book.myId) {
+		if (book == null || myId != book.myId) {
 			return;
 		}
 		setTitle(book.getTitle());

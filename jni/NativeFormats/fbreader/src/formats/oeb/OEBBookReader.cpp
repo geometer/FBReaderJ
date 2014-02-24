@@ -189,8 +189,6 @@ void OEBBookReader::endElementHandler(const char *tag) {
 }
 
 bool OEBBookReader::readBook(const ZLFile &file) {
-	ZLLogger::Instance().registerClass("MARLIN");
-
 	const ZLFile epub = file.getContainerArchive();
 	epub.forceArchiveType(ZLFile::ZIP);
 	shared_ptr<ZLDir> epubDir = epub.directory();
