@@ -159,16 +159,19 @@ std::size_t JavaInputStream::sizeOfOpened() {
 }
 
 void JavaInputStream::seek(int offset, bool absoluteOffset) {
+	if (!absoluteOffset) {
+		offset += myOffset;
+	}
 	if (offset < 0) {
 		return;
 	}
 	JNIEnv *env = AndroidUtil::getEnv();
-	if (myNeedRepositionToStart || absoluteOffset) {
+	if (myNeedRepositionToStart || offset < myOffset) {
 		rewind(env);
 		myNeedRepositionToStart = false;
 	}
-	if (offset > 0) {
-		skip(env, offset);
+	if (offset > myOffset) {
+		skip(env, offset - myOffset);
 	}
 }
 

@@ -2,7 +2,7 @@ package org.amse.ys.zip;
 
 import java.io.*;
 
-public class NoCompressionDecompressor extends Decompressor {
+public final class NoCompressionDecompressor extends Decompressor {
 	private final LocalFileHeader myHeader;
 	private final MyBufferedInputStream myStream;
 	private int myCurrentPosition;
@@ -15,17 +15,16 @@ public class NoCompressionDecompressor extends Decompressor {
 
 	@Override
 	public int read(byte b[], int off, int len) throws IOException {
-		int i = 0;
-		for (; i < len; ++i) {
-			int value = read();
-			if (value == -1) {
-				break;
-			}
-			if (b != null) {
-				b[off + i] = (byte)value;
-			}
+		final int left = available();
+		if (left <= 0) {
+			return -1;
 		}
-		return (i > 0) ? i : -1;
+		if (len > left) {
+			len = left;
+		}
+		final int r = myStream.read(b, off, len);
+		myCurrentPosition += r;
+		return r;
 	}
 
 	@Override
@@ -37,9 +36,9 @@ public class NoCompressionDecompressor extends Decompressor {
 			return -1;
 		}
 	}
-	
+
 	@Override
 	public int available() throws IOException {
-		return (myHeader.UncompressedSize - myCurrentPosition);
+		return myHeader.UncompressedSize - myCurrentPosition;
 	}
 }
