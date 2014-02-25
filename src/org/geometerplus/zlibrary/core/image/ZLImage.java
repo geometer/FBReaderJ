@@ -19,9 +19,7 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import android.content.Context;
-
 public interface ZLImage {
 	String getURI();
-	boolean saveToFile(Context context, String url, String title, boolean force);
+	boolean saveToFile(String url);
 }

@@ -53,10 +53,10 @@ public abstract class ZLLoadableImage extends ZLSingleImage {
 	public abstract String getId();
 	
 	@Override
-	public boolean saveToFile(Context context, String url, String title, boolean force) {
+	public boolean saveToFile(String url) {
 		if (!isSynchronized()) {
 			synchronize();
 		}
-		return super.saveToFile(context, url, title, force);
+		return super.saveToFile(url);
 	}
 }

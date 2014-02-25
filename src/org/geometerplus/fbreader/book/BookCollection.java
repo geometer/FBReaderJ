@@ -24,6 +24,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
+import org.geometerplus.zlibrary.core.image.DefaultImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
@@ -623,8 +624,10 @@ public class BookCollection extends AbstractBookCollection {
 		if (image == null) {
 			return false;
 		}
-
-		return image.saveToFile(context, url, book.getTitle(), force);
+		if (!image.saveToFile(url)) {
+			return DefaultImage.saveToFile(context, book.getTitle(), url);
+		}
+		return true;
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
