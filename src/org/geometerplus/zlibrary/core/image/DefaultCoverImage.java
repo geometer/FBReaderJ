@@ -1,17 +1,36 @@
+/*
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
 package org.geometerplus.zlibrary.core.image;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
 import android.content.Context;
 import android.graphics.*;
 
-public class DefaultImage {
+import org.geometerplus.zlibrary.ui.android.R;
+
+public class DefaultCoverImage {
 	public static boolean saveToFile(Context context, String title, String url) {
-		Bitmap cover = getDefaultCover(context, title);
+		final Bitmap cover = getDefaultCover(context, title);
 		OutputStream outputStream = null;
 		final File file = new File(url);
 		final File parent = file.getParentFile();
@@ -35,26 +54,32 @@ public class DefaultImage {
 	}
 	
 	private static Bitmap getDefaultCover(Context context, String title) {
+		final float textSize = 50;
+		final int fieldWidth = 80;
+		final int maxLines = 4;
+
 		final Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_cover);
 		final Bitmap mutableBitmap = image.copy(Bitmap.Config.ARGB_8888, true);
 		final Canvas canvas = new Canvas(mutableBitmap);
-		final Paint paint = getPaint();
-		final List<String> text = wrapText(title, image.getWidth() - 80, paint);
+		final Paint paint = getPaint(textSize);
+
+		final List<String> text = wrapText(title, image.getWidth() - fieldWidth, paint);
+		int height = (image.getHeight() - Math.min(text.size(), maxLines) * (int)textSize) / 2;
 		int i = 1;
 		for (String line : text) {
-			if (i > 4) {
+			if (i > maxLines) {
 				break;
 			}
-			if (i == 4) {
+			if (i == maxLines) {
 				line = "...";
 			}
-			canvas.drawText(line, (image.getWidth() - paint.measureText(line)) / 2, image.getHeight() * i / Math.min(text.size(), 4) / 2 + image.getHeight() / 4, paint);	
+			canvas.drawText(line, (image.getWidth() - paint.measureText(line)) / 2, height + (i - 1) * textSize, paint);	
 			i++;
 		}
 		return mutableBitmap;
 	}
 
-	private static Paint getPaint() {
+	private static Paint getPaint(float textSize) {
 		final Typeface font = Typeface.create("Arial", Typeface.BOLD);
 		final Paint paint = new Paint();
 		paint.setTypeface(font);
@@ -62,8 +87,7 @@ public class DefaultImage {
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL);
 		paint.setShadowLayer(2, 1, 1, Color.BLACK);
-		final float fontSize = 50;
-		paint.setTextSize(fontSize);
+		paint.setTextSize(textSize);
 		return paint;
 	}
 
@@ -81,6 +105,9 @@ public class DefaultImage {
 				break;
 			}
 		}
+		if (result.get(result.size() - 1).equals("")) {
+			result.remove(result.size() - 1);
+		}
 		return result;
 	}
 
@@ -90,7 +117,7 @@ public class DefaultImage {
 		String smallString="";
 		boolean spaceEncountered = false;
 		boolean maxWidthFound = false;
-		for (int i=0; i < bigString.length(); i++) {
+		for (int i = 0; i < bigString.length(); i++) {
 			char current = bigString.charAt(i);
 			smallString += current;
 			if (current == ' ') {
