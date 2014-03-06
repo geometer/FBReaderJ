@@ -19,7 +19,12 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 import android.graphics.*;
+import android.os.AsyncTask;
 
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
@@ -289,29 +294,50 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public Size imageSize(ZLImageData imageData, Size maxSize, ScalingType scaling) {
-		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
-		return (bitmap != null && !bitmap.isRecycled())
-			? new Size(bitmap.getWidth(), bitmap.getHeight()) : null;
+	public Size imageSize(final ZLImageData imageData, final Size maxSize, final ScalingType scaling) {
+		try {
+			final Bitmap bitmap = new AsyncTask<Object, Void, Bitmap>() {
+				protected Bitmap doInBackground(java.lang.Object... asyncTaskArgs) {
+					final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
+					return bitmap;
+				}
+			}.execute().get(5000, TimeUnit.MILLISECONDS);  // wait for max 5 seconds
+			return (bitmap != null && !bitmap.isRecycled())
+				? new Size(bitmap.getWidth(), bitmap.getHeight()) : null;
+		} catch (InterruptedException e) {
+			return null;
+		} catch (ExecutionException e) {
+			return null;
+		} catch (TimeoutException e) {
+			return null;
+		}
 	}
 
 	@Override
-	public void drawImage(int x, int y, ZLImageData imageData, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode) {
-		final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
-		if (bitmap != null && !bitmap.isRecycled()) {
-			switch (adjustingMode) {
-				case LIGHTEN_TO_BACKGROUND:
-					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
-					break;
-				case DARKEN_TO_BACKGROUND:
-					myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
-					break;
-				case NONE:
-					break;
+	public void drawImage(final int x, final int y, final ZLImageData imageData, final Size maxSize, final ScalingType scaling, final ColorAdjustingMode adjustingMode) {
+		new AsyncTask<Object, Void, Bitmap>() {
+			protected Bitmap doInBackground(java.lang.Object... asyncTaskArgs) {
+				final Bitmap bitmap = ((ZLAndroidImageData)imageData).getBitmap(maxSize, scaling);
+				return bitmap;
 			}
-			myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myFillPaint);
-			myFillPaint.setXfermode(null);
-		}
+
+			protected void onPostExecute(final Bitmap bitmap) {
+				if (bitmap != null && !bitmap.isRecycled()) {
+					switch (adjustingMode) {
+						case LIGHTEN_TO_BACKGROUND:
+							myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+							break;
+						case DARKEN_TO_BACKGROUND:
+							myFillPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
+							break;
+						case NONE:
+							break;
+					}
+					myCanvas.drawBitmap(bitmap, x, y - bitmap.getHeight(), myFillPaint);
+					myFillPaint.setXfermode(null);
+				}
+			}
+		}.execute();
 	}
 
 	@Override

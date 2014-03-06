@@ -27,6 +27,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -113,14 +114,22 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
 			public void onClick(View view) {
 				if (myBook != null) {
-					myBook.reloadInfoFromFile();
-					setupBookInfo(myBook);
-					myDontReloadBook = false;
-					myCollection.bindToService(BookInfoActivity.this, new Runnable() {
-						public void run() {
-							myCollection.saveBook(myBook);
+					new AsyncTask<Void, Void, Void>() {
+						protected Void doInBackground(Void... args) {
+							myBook.reloadInfoFromFile();
+							return null;
 						}
-					});
+
+						protected void onPostExecute(Void result) {
+							setupBookInfo(myBook);
+							myDontReloadBook = false;
+							myCollection.bindToService(BookInfoActivity.this, new Runnable() {
+								public void run() {
+									myCollection.saveBook(myBook);
+								}
+							});
+						}
+					}.execute();
 				}
 			}
 		});
@@ -193,33 +202,44 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		final ZLImage image = BookUtil.getCover(book);
+		new AsyncTask<Book, Void, Boolean>() {
+			Bitmap coverBitmap;
+			protected Boolean doInBackground(Book... args) {
+				Book book = args[0];
+				final ZLImage image = BookUtil.getCover(book);
 
-		if (image == null) {
-			return;
-		}
+				if (image == null) {
+					return false;
+				}
 
-		if (image instanceof ZLLoadableImage) {
-			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
-			if (!loadableImage.isSynchronized()) {
-				loadableImage.synchronize();
+				if (image instanceof ZLLoadableImage) {
+					final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
+					if (!loadableImage.isSynchronized()) {
+						loadableImage.synchronize();
+					}
+				}
+				final ZLAndroidImageData data =
+					((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
+				if (data == null) {
+					return false;
+				}
+
+				coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
+				if (coverBitmap == null) {
+					return false;
+				}
+				return true;
 			}
-		}
-		final ZLAndroidImageData data =
-			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
-		if (data == null) {
-			return;
-		}
 
-		final Bitmap coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
-		if (coverBitmap == null) {
-			return;
-		}
-
-		coverView.setVisibility(View.VISIBLE);
-		coverView.getLayoutParams().width = maxWidth;
-		coverView.getLayoutParams().height = maxHeight;
-		coverView.setImageBitmap(coverBitmap);
+			protected void onPostExecute(Boolean result) {
+				if(result) {
+					coverView.setVisibility(View.VISIBLE);
+					coverView.getLayoutParams().width = maxWidth;
+					coverView.getLayoutParams().height = maxHeight;
+					coverView.setImageBitmap(coverBitmap);
+				}
+			}
+		}.execute(book);
 	}
 
 	private void setupBookInfo(Book book) {
