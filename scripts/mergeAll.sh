@@ -29,4 +29,8 @@ git checkout yotabeta
 git merge beta-ics
 git merge yota2
 
+git checkout betayota
+git merge beta-ics
+git merge yota2
+
 git checkout master
