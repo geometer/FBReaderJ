@@ -908,6 +908,21 @@ public abstract class ZLTextView extends ZLTextViewBase {
 						getScalingType(imageElement),
 						getAdjustingModeForImages()
 					);
+				} else if (element instanceof ZLTextVideoElement) {
+					// TODO: draw
+					context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
+					context.drawLine(area.XStart, area.YStart, area.XStart, area.YEnd);
+					context.drawLine(area.XStart, area.YEnd, area.XEnd, area.YEnd);
+					context.drawLine(area.XEnd, area.YEnd, area.XEnd, area.YStart);
+					context.drawLine(area.XEnd, area.YStart, area.XStart, area.YStart);
+					final int l = area.XStart + (area.XEnd - area.XStart) * 7 / 16; 
+					final int r = area.XStart + (area.XEnd - area.XStart) * 10 / 16; 
+					final int t = area.YStart + (area.YEnd - area.YStart) * 2 / 6;
+					final int b = area.YStart + (area.YEnd - area.YStart) * 4 / 6;
+					final int c = area.YStart + (area.YEnd - area.YStart) / 2;
+					context.drawLine(l, t, l, b);
+					context.drawLine(l, t, r, c);
+					context.drawLine(l, b, r, c);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
@@ -1073,6 +1088,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				wordOccurred = true;
 				isVisible = true;
 			} else if (element instanceof ZLTextImageElement) {
+				wordOccurred = true;
+				isVisible = true;
+			} else if (element instanceof ZLTextVideoElement) {
 				wordOccurred = true;
 				isVisible = true;
 			} else if (isStyleChangeElement(element)) {
@@ -1251,7 +1269,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					wordOccurred = false;
 					--spaceCounter;
 				}
-			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement) {
+			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement) {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0;

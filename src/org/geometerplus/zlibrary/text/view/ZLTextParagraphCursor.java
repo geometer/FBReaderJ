@@ -100,6 +100,16 @@ public final class ZLTextParagraphCursor {
 							}
 						}
 						break;
+					case ZLTextParagraph.Entry.AUDIO:
+						break;
+					case ZLTextParagraph.Entry.VIDEO:
+						final ZLVideoEntry videoEntry = it.getVideoEntry();
+						elements.add(new ZLTextVideoElement(videoEntry.sources()));
+						System.err.println("VIDEO === VIDEO");
+						for (Map.Entry<String,String> entry : videoEntry.sources().entrySet()) {
+							System.err.println(entry.getKey() + " ===> " + entry.getValue());
+						}
+						break;
 					case ZLTextParagraph.Entry.STYLE_CSS:
 					case ZLTextParagraph.Entry.STYLE_OTHER:
 						elements.add(new ZLTextStyleElement(it.getStyleEntry()));

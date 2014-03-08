@@ -197,6 +197,8 @@ abstract class ZLTextViewBase extends ZLView {
 				getScalingType(imageElement)
 			);
 			return size != null ? size.Width : 0;
+		} else if (element instanceof ZLTextVideoElement) {
+			return 300;
 		} else if (element == ZLTextElement.Indent) {
 			return myTextStyle.getFirstLineIndentDelta();
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
@@ -217,6 +219,8 @@ abstract class ZLTextViewBase extends ZLView {
 			);
 			return (size != null ? size.Height : 0) +
 				Math.max(getContext().getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
+		} else if (element instanceof ZLTextVideoElement) {
+			return 200;
 		}
 		return 0;
 	}
