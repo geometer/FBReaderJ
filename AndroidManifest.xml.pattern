@@ -263,5 +263,6 @@
 		</receiver>
 		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="com.paragon.dictionary.fbreader.OpenDictionaryActivity" android:theme="@style/FBReader.Transparent" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<service android:name="org.geometerplus.android.fbreader.httpd.VideoService" android:launchMode="singleTask" android:process=":videoService" android:exported="false"/>
 	</application>
 </manifest>
