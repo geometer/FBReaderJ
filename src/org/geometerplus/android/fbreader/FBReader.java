@@ -198,6 +198,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
+		startService(new Intent(this, org.geometerplus.android.fbreader.httpd.VideoService.class));
+
 		final Config config = Config.Instance();
 		config.runOnStart(new Runnable() {
 			public void run() {
@@ -504,6 +506,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	protected void onDestroy() {
 		getCollection().unbind();
+		stopService(new Intent(this, org.geometerplus.android.fbreader.httpd.VideoService.class));
 		super.onDestroy();
 	}
 
