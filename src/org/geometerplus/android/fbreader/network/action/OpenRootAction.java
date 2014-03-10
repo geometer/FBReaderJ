@@ -29,7 +29,7 @@ import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class OpenRootAction extends Action {
 	public OpenRootAction(Activity activity) {
-		super(activity, ActionCode.OPEN_ROOT, "openRoot", -1);
+		super(activity, ActionCode.OPEN_ROOT, "openRoot", false);
 	}
 
 	@Override

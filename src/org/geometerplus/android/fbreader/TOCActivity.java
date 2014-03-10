@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,9 +48,19 @@ public class TOCActivity extends ListActivity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
+
+		final ActionBar bar = getActionBar();
+		if (bar != null) {
+			bar.setDisplayOptions(
+				ActionBar.DISPLAY_SHOW_CUSTOM,
+				ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
+			);
+			final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
+			titleView.setText(fbreader.getTitle());
+			bar.setCustomView(titleView);
+		}
+
 		final TOCTree root = fbreader.Model.TOCTree;
 		myAdapter = new TOCAdapter(root);
 		final ZLTextWordCursor cursor = fbreader.BookTextView.getStartCursor();

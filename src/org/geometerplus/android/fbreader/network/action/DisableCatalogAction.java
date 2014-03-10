@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 
 public class DisableCatalogAction extends Action {
 	public DisableCatalogAction(Activity activity) {
-		super(activity, ActionCode.DISABLE_CATALOG, "disableCatalog", -1);
+		super(activity, ActionCode.DISABLE_CATALOG, "disableCatalog", false);
 	}
 
 	@Override

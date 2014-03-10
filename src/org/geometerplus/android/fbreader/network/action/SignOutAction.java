@@ -30,7 +30,7 @@ import org.geometerplus.android.util.UIUtil;
 
 public class SignOutAction extends Action {
 	public SignOutAction(Activity activity) {
-		super(activity, ActionCode.SIGNOUT, "signOut", -1);
+		super(activity, ActionCode.SIGNOUT, "signOut", false);
 	}
 
 	@Override

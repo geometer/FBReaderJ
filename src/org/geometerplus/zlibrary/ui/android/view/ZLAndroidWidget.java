@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.*;
@@ -59,9 +60,28 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setOnLongClickListener(this);
 	}
 
+	private volatile boolean myAmendSize = false;
+	private volatile int myHDiff = 0;
+	private volatile int myHShift = 0;
+
+	public void setPreserveSize(boolean preserve) {
+		myAmendSize = preserve;
+		if (!preserve) {
+			myHDiff = 0;
+			myHShift = 0;
+		}
+	}
+
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
+		if (myAmendSize && oldw == w) {
+			myHDiff += h - oldh;
+			myHShift -= getStatusBarHeight();
+		} else {
+			myHDiff = 0;
+			myHShift = 0;
+		}
 		getAnimationProvider().terminate();
 		if (myScreenIsTouched) {
 			final ZLView view = ZLApplication.Instance().getCurrentView();
@@ -80,8 +100,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		super.onDraw(canvas);
 
-//		final int w = getWidth();
-//		final int h = getMainAreaHeight();
+		if (myHShift != 0) {
+			canvas.translate(0, myHShift);
+		}
 
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
@@ -93,16 +114,22 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private AnimationProvider myAnimationProvider;
 	private ZLView.Animation myAnimationType;
+	private int myStoredLayerType = -1;
 	private AnimationProvider getAnimationProvider() {
 		final ZLView.Animation type = ZLApplication.Instance().getCurrentView().getAnimationType();
 		if (myAnimationProvider == null || myAnimationType != type) {
 			myAnimationType = type;
+			if (myStoredLayerType != -1) {
+				setLayerType(myStoredLayerType, null);
+			}
 			switch (type) {
 				case none:
 					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
 					break;
 				case curl:
+					myStoredLayerType = getLayerType();
 					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
+					setLayerType(LAYER_TYPE_SOFTWARE, null);
 					break;
 				case slide:
 					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
@@ -254,7 +281,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		footer.paint(context);
-		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - footer.getHeight(), myPaint);
+		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - myHDiff - footer.getHeight(), myPaint);
 	}
 
 	private void onDrawStatic(final Canvas canvas) {
@@ -274,6 +301,18 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 				view.preparePage(context, ZLView.PageIndex.next);
 			}
 		}.start();
+	}
+
+	public void turnPageStatic(boolean next) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		final ZLView.PageIndex pageIndex = next ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+		if (pageIndex == ZLView.PageIndex.current || !view.canScroll(pageIndex)) {
+			return;
+		}
+		myBitmapManager.shift(next);
+		view.onScrollingFinished(pageIndex);
+		repaint();
+		ZLApplication.Instance().onRepaintFinished();
 	}
 
 	@Override
@@ -501,6 +540,13 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 	private int getMainAreaHeight() {
 		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
-		return footer != null ? getHeight() - footer.getHeight() : getHeight();
+		final int height = footer != null ? getHeight() - footer.getHeight() : getHeight();
+		return height - myHDiff;
+	}
+
+	private int getStatusBarHeight() {
+		final Resources res = getContext().getResources();
+		int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
+		return resourceId > 0 ? res.getDimensionPixelSize(resourceId) : 0;
 	}
 }

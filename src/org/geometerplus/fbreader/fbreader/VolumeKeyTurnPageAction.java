@@ -31,12 +31,14 @@ class VolumeKeyTurnPageAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final PageTurningOptions preferences = Reader.PageTurningOptions;
-		Reader.getViewWidget().startAnimatedScrolling(
-			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
-			preferences.Horizontal.getValue()
-				? FBView.Direction.rightToLeft : FBView.Direction.up,
-			preferences.AnimationSpeed.getValue()
-		);
+		if (!Reader.ViewOptions.YotaDrawOnBackScreen.getValue()) {
+			final PageTurningOptions preferences = Reader.PageTurningOptions;
+			Reader.getViewWidget().startAnimatedScrolling(
+				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+				preferences.Horizontal.getValue()
+					? FBView.Direction.rightToLeft : FBView.Direction.up,
+				preferences.AnimationSpeed.getValue()
+			);
+		}
 	}
 }

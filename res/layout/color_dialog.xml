@@ -25,6 +25,7 @@
 		>
 			<SeekBar
 				android:id="@+id/color_red"
+				style="@android:style/Widget.SeekBar"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:max="255"
@@ -32,6 +33,7 @@
 			/>
 			<SeekBar
 				android:id="@+id/color_green"
+				style="@android:style/Widget.SeekBar"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:max="255"
@@ -39,6 +41,7 @@
 			/>
 			<SeekBar
 				android:id="@+id/color_blue"
+				style="@android:style/Widget.SeekBar"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:max="255"

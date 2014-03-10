@@ -7,14 +7,14 @@
 		android:installLocation="auto"
 >
 	<uses-sdk
-			android:minSdkVersion="5"
-			android:maxSdkVersion="10"
-			android:targetSdkVersion="9"
+			android:minSdkVersion="11"
+			android:targetSdkVersion="14"
 	/>
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="com.yotadevices.framework.permission.ACCESS_BACKSCREEN"/>
 	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_bw" android:label="FBReader">
 		<activity android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity" android:theme="@style/FBReader.Dialog" android:process=":error" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
@@ -264,5 +264,9 @@
 		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="com.paragon.dictionary.fbreader.OpenDictionaryActivity" android:theme="@style/FBReader.Transparent" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<service android:name="org.geometerplus.android.fbreader.httpd.VideoService" android:launchMode="singleTask" android:process=":videoService" android:exported="false"/>
+		<service android:name="com.yotadevices.fbreader.FBReaderYotaService" android:exported="false" android:launchMode="singleTask"/>
+		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
+		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
+		<meta-data android:name="com.yotadevices.BS_TITLE" android:value="FBReader"/>
 	</application>
 </manifest>

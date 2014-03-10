@@ -50,8 +50,7 @@ public interface ActionCode {
 
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
 	String VOLUME_KEY_SCROLL_BACK = "volumeKeyScrollBackward";
-	String SHOW_MENU = "menu";
-	String SHOW_NAVIGATION = "navigate";
+	String TOGGLE_BARS = "toggleBars";
 
 	String GO_BACK = "goBack";
 	String EXIT = "exit";
@@ -79,4 +78,7 @@ public interface ActionCode {
 
 	String OPEN_WEB_HELP = "help";
 	String INSTALL_PLUGINS = "plugins";
+
+	String YOTA_SWITCH_TO_BACK_SCREEN = "yotaSwitchToBackScreen";
+	String YOTA_SWITCH_TO_FRONT_SCREEN = "yotaSwitchToFrontScreen";
 }

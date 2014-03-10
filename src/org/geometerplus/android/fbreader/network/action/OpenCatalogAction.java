@@ -34,7 +34,7 @@ import org.geometerplus.android.util.PackageUtil;
 
 public class OpenCatalogAction extends Action {
 	public OpenCatalogAction(Activity activity) {
-		super(activity, ActionCode.OPEN_CATALOG, "openCatalog", -1);
+		super(activity, ActionCode.OPEN_CATALOG, "openCatalog", false);
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.util.*;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -30,8 +31,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.Window;
+import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
@@ -52,7 +52,7 @@ import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
-public class BookInfoActivity extends Activity implements IBookCollection.Listener {
+public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener, IBookCollection.Listener {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String FROM_READING_MODE_KEY = "fbreader.from.reading.mode";
@@ -69,10 +69,14 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
 		);
 
-		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = bookByIntent(getIntent());
+		final Intent intent = getIntent();
+		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
+		myBook = bookByIntent(intent);
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		final ActionBar bar = getActionBar();
+		if (bar != null) {
+			bar.setDisplayShowTitleEnabled(false);
+		}
 		setContentView(R.layout.book_info);
 	}
 
@@ -91,39 +95,6 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 			setupAnnotation(myBook);
 			setupFileInfo(myBook);
 		}
-
-		setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
-			public void onClick(View view) {
-				if (myDontReloadBook) {
-					finish();
-				} else {
-					FBReader.openBookActivity(BookInfoActivity.this, myBook, null);
-				}
-			}
-		});
-		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
-			public void onClick(View view) {
-				OrientationUtil.startActivity(
-					BookInfoActivity.this,
-					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
-				);
-			}
-		});
-		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
-			public void onClick(View view) {
-				if (myBook != null) {
-					myBook.reloadInfoFromFile();
-					setupBookInfo(myBook);
-					myDontReloadBook = false;
-					myCollection.bindToService(BookInfoActivity.this, new Runnable() {
-						public void run() {
-							myCollection.saveBook(myBook);
-						}
-					});
-				}
-			}
-		});
 
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
@@ -157,13 +128,6 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 
 	private Button findButton(int buttonId) {
 		return (Button)findViewById(buttonId);
-	}
-
-	private void setupButton(int buttonId, String resourceKey, View.OnClickListener listener) {
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final Button button = findButton(buttonId);
-		button.setText(buttonResource.getResource(resourceKey).getValue());
-		button.setOnClickListener(listener);
 	}
 
 	private void setupInfoPair(int id, String key, CharSequence value) {
@@ -326,6 +290,105 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		return DateFormat.getDateTimeInstance().format(new Date(date));
 	}
 
+	private static final int OPEN_BOOK = 1;
+	private static final int EDIT_INFO = 2;
+	private static final int SHARE_BOOK = 3;
+	private static final int RELOAD_INFO = 4;
+	private static final int ADD_TO_FAVORITES = 5;
+	private static final int REMOVE_FROM_FAVORITES = 6;
+	private static final int MARK_AS_READ = 7;
+	private static final int MARK_AS_UNREAD = 8;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		addMenuItem(menu, OPEN_BOOK, "openBook", true);
+		addMenuItem(menu, EDIT_INFO, "editInfo", true);
+		addMenuItem(menu, SHARE_BOOK, "shareBook", false);
+		addMenuItem(menu, RELOAD_INFO, "reloadInfo", false);
+		if (myBook.labels().contains(Book.FAVORITE_LABEL)) {
+			addMenuItem(menu, REMOVE_FROM_FAVORITES, "removeFromFavorites", false);
+		} else {
+			addMenuItem(menu, ADD_TO_FAVORITES, "addToFavorites", false);
+		}
+		if (myBook.labels().contains(Book.READ_LABEL)) {
+			addMenuItem(menu, MARK_AS_UNREAD, "markAsUnread", false);
+		} else {
+			addMenuItem(menu, MARK_AS_READ, "markAsRead", false);
+		}
+		return true;
+	}
+
+	private void addMenuItem(Menu menu, int index, String resourceKey, boolean showAsAction) {
+		final String label =
+			ZLResource.resource("dialog").getResource("button").getResource(resourceKey).getValue();
+		final MenuItem item = menu.add(0, index, Menu.NONE, label);
+		item.setShowAsAction(
+			showAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
+		);
+		item.setOnMenuItemClickListener(this);
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		switch (item.getItemId()) {
+			case OPEN_BOOK:
+				if (myDontReloadBook) {
+					finish();
+				} else {
+					FBReader.openBookActivity(this, myBook, null);
+				}
+				return true;
+			case EDIT_INFO:
+				OrientationUtil.startActivity(
+					this,
+					new Intent(getApplicationContext(), EditBookInfoActivity.class)
+						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
+				);
+				return true;
+			case SHARE_BOOK:
+				FBUtil.shareBook(this, myBook);
+				return true;
+			case RELOAD_INFO:
+				if (myBook != null) {
+					myBook.reloadInfoFromFile();
+					setupBookInfo(myBook);
+					saveBook();
+				}
+				return true;
+			case ADD_TO_FAVORITES:
+				if (myBook != null) {
+					myBook.addLabel(Book.FAVORITE_LABEL);
+					saveBook();
+					invalidateOptionsMenu();
+				}
+				return true;
+			case REMOVE_FROM_FAVORITES:
+				if (myBook != null) {
+					myBook.removeLabel(Book.FAVORITE_LABEL);
+					saveBook();
+					invalidateOptionsMenu();
+				}
+				return true;
+			case MARK_AS_READ:
+				if (myBook != null) {
+					myBook.addLabel(Book.READ_LABEL);
+					saveBook();
+					invalidateOptionsMenu();
+				}
+				return true;
+			case MARK_AS_UNREAD:
+				if (myBook != null) {
+					myBook.removeLabel(Book.READ_LABEL);
+					saveBook();
+					invalidateOptionsMenu();
+				}
+				return true;
+			default:
+				return true;
+		}
+	}
+
 	public void onBookEvent(BookEvent event, Book book) {
 		if (event == BookEvent.Updated && book.equals(myBook)) {
 			myBook.updateFrom(book);
@@ -335,5 +398,13 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 	}
 
 	public void onBuildEvent(IBookCollection.Status status) {
+	}
+
+	private void saveBook() {
+		myCollection.bindToService(BookInfoActivity.this, new Runnable() {
+			public void run() {
+				myCollection.saveBook(myBook);
+			}
+		});
 	}
 }

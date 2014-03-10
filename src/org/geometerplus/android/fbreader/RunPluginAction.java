@@ -38,6 +38,7 @@ class RunPluginAction extends FBAndroidAction {
 		if (myUri == null) {
 			return;
 		}
+		BaseActivity.hideBars();
 		try {
 			OrientationUtil.startActivity(
 				BaseActivity, new Intent("android.fbreader.action.plugin.RUN", myUri)

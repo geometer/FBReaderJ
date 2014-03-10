@@ -1,139 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/network_book_root"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 >
 	<LinearLayout
-		android:id="@+id/network_book_button_panel1"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:layout_alignParentBottom="true"
-		android:paddingLeft="2dip"
-		android:paddingRight="2dip"
-		android:baselineAligned="false"
+		android:orientation="vertical"
 	>
-		<Button
-			android:id="@+id/network_book_button2"
-			android:layout_width="0dip"
-			android:layout_weight="1"
-			android:maxLines="2"
+		<ImageView
+			android:id="@+id/network_book_cover"
+			android:scaleType="centerInside"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:visibility="gone"
+			android:layout_margin="10dp"
 		/>
-		<Button
-			android:id="@+id/network_book_button3"
-			android:layout_width="0dip"
-			android:layout_weight="1"
-			android:maxLines="2"
-			android:layout_height="wrap_content"
-			android:visibility="gone"
+		<TextView
+			android:id="@+id/network_book_info_title"
+			style="?android:attr/listSeparatorTextViewStyle"
 		/>
-	</LinearLayout>
-	<LinearLayout
-		android:id="@+id/network_book_button_panel0"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:layout_above="@id/network_book_button_panel1"
-		android:paddingLeft="2dip"
-		android:paddingRight="2dip"
-		android:baselineAligned="false"
-	>
-		<LinearLayout
-			android:id="@+id/network_book_left_spacer"
-			android:layout_weight="0.31"
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:visibility="gone"
-		/>
-		<Button
-			android:id="@+id/network_book_button0"
-			android:layout_width="0dip"
-			android:layout_weight="1"
-			android:maxLines="2"
-			android:layout_height="wrap_content"
-			android:visibility="gone"
-		/>
-		<Button
-			android:id="@+id/network_book_button1"
-			android:layout_width="0dip"
-			android:layout_weight="1"
-			android:maxLines="2"
-			android:layout_height="wrap_content"
-			android:visibility="gone"
-		/>
-		<LinearLayout
-			android:id="@+id/network_book_right_spacer"
-			android:layout_width="0dip"
-			android:layout_weight="0.31"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:visibility="gone"
-		/>
-	</LinearLayout>
-	<ScrollView
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_alignParentTop="true"
-		android:layout_above="@id/network_book_button_panel0"
-		android:layout_marginBottom="4dip"
-	>
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:paddingTop="10dp"
 		>
-			<ImageView
-				android:id="@+id/network_book_cover"
-				android:scaleType="centerInside"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_margin="10dp"
-			/>
-			<TextView
-				android:id="@+id/network_book_info_title"
-				style="?android:attr/listSeparatorTextViewStyle"
-			/>
-			<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:paddingTop="10dp"
-			>
-				<include layout="@layout/book_info_pair" android:id="@+id/network_book_title" />
-				<include layout="@layout/book_info_pair" android:id="@+id/network_book_authors" />
-				<include layout="@layout/book_info_pair" android:id="@+id/network_book_series_title" />
-				<include layout="@layout/book_info_pair" android:id="@+id/network_book_series_index" />
-				<include layout="@layout/book_info_pair" android:id="@+id/network_book_tags" />
-				<include layout="@layout/book_info_pair" android:id="@+id/network_book_catalog" />
-			</LinearLayout>
-			<TextView
-				android:id="@+id/network_book_description_title"
-				style="?android:attr/listSeparatorTextViewStyle"
-			/>
-			<TextView
-				android:id="@+id/network_book_description"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:padding="10dp"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-			/>
-			<TextView
-				android:id="@+id/network_book_extra_links_title"
-				style="?android:attr/listSeparatorTextViewStyle"
-			/>
-			<LinearLayout
-				android:id="@+id/network_book_extra_links"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-			>
-			</LinearLayout>
+			<include layout="@layout/book_info_pair" android:id="@+id/network_book_title" />
+			<include layout="@layout/book_info_pair" android:id="@+id/network_book_authors" />
+			<include layout="@layout/book_info_pair" android:id="@+id/network_book_series_title" />
+			<include layout="@layout/book_info_pair" android:id="@+id/network_book_series_index" />
+			<include layout="@layout/book_info_pair" android:id="@+id/network_book_tags" />
+			<include layout="@layout/book_info_pair" android:id="@+id/network_book_catalog" />
 		</LinearLayout>
-	</ScrollView>
-</RelativeLayout>
+		<TextView
+			android:id="@+id/network_book_description_title"
+			style="?android:attr/listSeparatorTextViewStyle"
+		/>
+		<android.patches.JellyBeanSpanFixTextView
+			android:id="@+id/network_book_description"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:padding="10dp"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+		/>
+		<TextView
+			android:id="@+id/network_book_extra_links_title"
+			style="?android:attr/listSeparatorTextViewStyle"
+		/>
+		<LinearLayout
+			android:id="@+id/network_book_extra_links"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+		>
+		</LinearLayout>
+	</LinearLayout>
+</ScrollView>
