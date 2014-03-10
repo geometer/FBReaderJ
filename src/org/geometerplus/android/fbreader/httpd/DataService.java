@@ -32,6 +32,7 @@ public class VideoService extends Service {
 			public void run () {
 				try {
 					myServer = new VideoServer();
+        			myServer.start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,6 +47,7 @@ public class VideoService extends Service {
 			new Thread(new Runnable() {
 				public void run () {
 					myServer.stop();
+					myServer = null;
 				}
 			}).start();
 		}
