@@ -42,14 +42,14 @@ class OpenVideoAction extends FBAndroidAction {
 		}
 
 		final ZLTextVideoElement element = ((ZLTextVideoRegionSoul)params[0]).VideoElement;
-		final String path = element.Sources.get(MimeType.VIDEO_MP4.toString());
+		final String path = element.Sources.get(MimeType.VIDEO_WEBM.toString());
 		if (path != null) {
 			final StringBuilder url = new StringBuilder("http://127.0.0.1:12345/video/");
 			for (int i = 0; i < path.length(); ++i) {
 				url.append(String.format("X%X", (short)path.charAt(i)));
 			}
 			final Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.parse(url.toString()), "text/html");
+			intent.setDataAndType(Uri.parse(url.toString()), MimeType.VIDEO_WEBM.toString());
 			BaseActivity.startActivity(intent);
 		}	
 	}
