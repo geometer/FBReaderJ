@@ -52,10 +52,8 @@ public class DataServer extends NanoHTTPD {
 				}
 				final Response res = new Response(
 					Response.Status.OK,
-					MimeType.VIDEO_MP4.toString(),
-					//MimeType.TEXT_HTML.toString(),
+					MimeType.VIDEO_WEBM.toString(),
 					ZLFile.createFileByPath(path.toString()).getInputStream()
-					//path.toString()
 				);
 				res.addHeader("Accept-Ranges", "bytes");
 				return res;
