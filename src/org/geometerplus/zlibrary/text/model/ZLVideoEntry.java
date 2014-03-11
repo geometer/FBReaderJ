@@ -19,8 +19,7 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class ZLVideoEntry {
 	private final Map<String,String> mySources = new HashMap<String,String>();
@@ -30,6 +29,6 @@ public class ZLVideoEntry {
 	}
 
 	public Map<String,String> sources() {
-		return mySources;
+		return Collections.unmodifiableMap(mySources);
 	}
 }

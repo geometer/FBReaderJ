@@ -17,44 +17,13 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.httpd;
+package org.geometerplus.zlibrary.text.view;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+public class ZLTextVideoRegionSoul extends ZLTextRegion.Soul {
+	public final ZLTextVideoElement VideoElement;
 
-public class DataService extends Service {
-	private DataServer myServer;
-
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		new Thread(new Runnable() {
-			public void run () {
-				try {
-					myServer = new DataServer();
-					myServer.start();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
-		return START_STICKY;
-	}
-
-	@Override
-	public void onDestroy() {
-		if (myServer != null) {
-			new Thread(new Runnable() {
-				public void run () {
-					myServer.stop();
-					myServer = null;
-				}
-			}).start();
-		}
-		super.onDestroy();
-	}
-
-	public IBinder onBind(Intent intent) {
-		return null;
+	ZLTextVideoRegionSoul(ZLTextPosition position, ZLTextVideoElement videoElement) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
+		VideoElement = videoElement;
 	}
 }
