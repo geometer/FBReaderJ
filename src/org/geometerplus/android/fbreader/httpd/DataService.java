@@ -23,15 +23,16 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-public class VideoService extends Service {
-	private VideoServer myServer;
+public class DataService extends Service {
+	private DataServer myServer;
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		new Thread(new Runnable() {
 			public void run () {
 				try {
-					myServer = new VideoServer();
+					myServer = new DataServer();
+					myServer.start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,6 +47,7 @@ public class VideoService extends Service {
 			new Thread(new Runnable() {
 				public void run () {
 					myServer.stop();
+					myServer = null;
 				}
 			}).start();
 		}

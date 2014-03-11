@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,13 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.zlibrary.text.view;
 
-import java.util.*;
+public class ZLTextVideoRegionSoul extends ZLTextRegion.Soul {
+	public final ZLTextVideoElement VideoElement;
 
-public class ZLVideoEntry {
-	private final Map<String,String> mySources = new HashMap<String,String>();
-
-	public void addSource(String mime, String path) {
-		mySources.put(mime, path);
-	}
-
-	public Map<String,String> sources() {
-		return Collections.unmodifiableMap(mySources);
+	ZLTextVideoRegionSoul(ZLTextPosition position, ZLTextVideoElement videoElement) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
+		VideoElement = videoElement;
 	}
 }
