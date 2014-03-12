@@ -19,12 +19,15 @@
 
 package org.geometerplus.android.fbreader.httpd;
 
+import java.io.InputStream;
 import java.io.IOException;
+import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.util.SliceInputStream;
 
 public class DataServer extends NanoHTTPD {
 	DataServer() {
@@ -50,16 +53,14 @@ public class DataServer extends NanoHTTPD {
 					i = item;
 					path.append((char)Short.parseShort(item, 16));
 				}
-				final Response res = new Response(
-					Response.Status.OK,
+				return serveFile(
+					ZLFile.createFileByPath(path.toString()),
 					MimeType.VIDEO_WEBM.toString(),
-					ZLFile.createFileByPath(path.toString()).getInputStream()
+					session.getHeaders()
 				);
-				res.addHeader("Accept-Ranges", "bytes");
-				return res;
 			} catch (Exception e) {
 				return new Response(
-					Response.Status.NOT_FOUND,
+					Response.Status.FORBIDDEN,
 					MimeType.TEXT_HTML.toString(),
 					"<html><body><h1>" + e.getMessage() + "</h1>\n(" + uri + ")\n(" + encodedPath + ")</body></html>"
 				);
@@ -70,5 +71,64 @@ public class DataServer extends NanoHTTPD {
 			MimeType.TEXT_HTML.toString(),
 			"<html><body><h1>Not found: " + uri + "</h1></body></html>"
 		);
+	}
+
+	private static final String BYTES_PREFIX = "bytes=";
+
+	private Response serveFile(ZLFile file, String mime, Map<String,String> headers) throws IOException {
+		final Response res;
+		final InputStream baseStream = file.getInputStream();
+		final int fileLength = baseStream.available();
+		final String etag = Integer.toHexString(file.getPath().hashCode());
+
+		final String range = headers.get("range");
+		if (range == null || !range.startsWith(BYTES_PREFIX)) {
+			if (etag.equals(headers.get("if-none-match")))
+				res = new Response(Response.Status.NOT_MODIFIED, mime, "");
+			else {
+				res = new Response(Response.Status.OK, mime, baseStream);
+				res.addHeader("Content-Length", String.valueOf(fileLength));
+				res.addHeader("ETag", etag);
+			}
+		} else {
+			int start = 0;
+			int end = -1;
+			final String bytes = range.substring(BYTES_PREFIX.length());
+			final int minus = bytes.indexOf('-');
+			if (minus > 0) {
+				try {
+					start = Integer.parseInt(bytes.substring(0, minus));
+					final String endString = bytes.substring(minus + 1).trim();
+					if (!endString.isEmpty()) {
+						end = Integer.parseInt(endString);
+					}
+				} catch (NumberFormatException e) {
+				}
+			}
+			if (start >= fileLength) {
+				res = new Response(
+					Response.Status.RANGE_NOT_SATISFIABLE,
+					MimeType.TEXT_PLAIN.toString(),
+					""
+				);
+				res.addHeader("ETag", etag);
+				res.addHeader("Content-Range", "bytes 0-0/" + fileLength);
+			} else {
+				if (end == -1 || end >= fileLength) {
+					end = fileLength - 1;
+				}
+				res = new Response(
+					Response.Status.PARTIAL_CONTENT,
+					mime,
+					new SliceInputStream(baseStream, start, end - start + 1)
+				);
+				res.addHeader("ETag", etag);
+				res.addHeader("Content-Length", String.valueOf(end - start + 1));
+				res.addHeader("Content-Range", "bytes " + start + "-" + end + "/" + fileLength);
+			}
+		}
+
+		res.addHeader("Accept-Ranges", "bytes");
+		return res;
 	}
 }
