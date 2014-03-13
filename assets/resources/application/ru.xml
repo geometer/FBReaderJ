@@ -259,7 +259,7 @@
 		<node name="clearSelection" value="Убрать пометку"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Настройки"/>
@@ -741,7 +741,7 @@
 			<node name="summary" value="Версия, контакты"/>
 			<node name="version" value="Версия"/>
 			<node name="site" value="Наш веб-сайт">
-				<node name="url" value="http://fbreader.ru/"/>
+				<node name="url" value="http://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="Отправьте нам письмо">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -931,7 +931,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.ru/faq-page"/>
+		<node name="faqPage" value="http://ru.fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Дополнительные модули">
 		<node name="noMorePlugins" value="Извините, но прямо сейчас у нас нет новых модулей"/>
