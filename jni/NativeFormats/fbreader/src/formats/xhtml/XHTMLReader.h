@@ -112,6 +112,7 @@ private:
 	bool myCurrentParagraphIsEmpty;
 	shared_ptr<StyleSheetSingleStyleParser> myStyleParser;
 	shared_ptr<StyleSheetTableParser> myTableParser;
+	std::map<std::string,shared_ptr<StyleSheetParserWithCache> > myFileParsers;
 	XHTMLReadingState myReadState;
 	int myBodyCounter;
 	bool myMarkNextImageAsCover;
