@@ -30,10 +30,6 @@ public class InputFilterMinMax implements InputFilter {
 		myMax = Math.max(min, max);
 	}
 
-	public InputFilterMinMax(String min, String max) {
-		this(Integer.parseInt(min), Integer.parseInt(max));
-	}
-
 	@Override
 	public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
 		try {
