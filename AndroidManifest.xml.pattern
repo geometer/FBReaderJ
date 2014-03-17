@@ -299,5 +299,6 @@
 		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.BooksDirectoryActivity" android:theme="@style/FBReader.Dialog" android:windowSoftInputMode="adjustPan" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":preferences"/>
 		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.EditableSpinnerActivity" android:theme="@style/FBReader.Dialog" android:windowSoftInputMode="adjustPan" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":preferences"/>
 		<activity android:name="com.paragon.dictionary.fbreader.OpenDictionaryActivity" android:theme="@style/FBReader.Transparent" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<service android:name="org.geometerplus.android.fbreader.httpd.DataService" android:launchMode="singleTask" android:process=":dataService" android:exported="false"/>
 	</application>
 </manifest>
