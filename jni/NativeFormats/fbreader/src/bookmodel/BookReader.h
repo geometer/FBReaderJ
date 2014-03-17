@@ -36,6 +36,7 @@ class ZLTextModel;
 class ZLInputStream;
 class ZLCachedMemoryAllocator;
 class ZLTextStyleEntry;
+class ZLVideoEntry;
 
 class BookReader {
 
@@ -67,6 +68,8 @@ public:
 
 	void addImageReference(const std::string &id, short vOffset, bool isCover);
 	void addImage(const std::string &id, shared_ptr<const ZLImage> image);
+
+	void addVideoEntry(const ZLVideoEntry &entry);
 
 	void beginContentsParagraph(int referenceNumber = -1);
 	void endContentsParagraph();
