@@ -100,6 +100,11 @@ public final class ZLTextParagraphCursor {
 							}
 						}
 						break;
+					case ZLTextParagraph.Entry.AUDIO:
+						break;
+					case ZLTextParagraph.Entry.VIDEO:
+						elements.add(new ZLTextVideoElement(it.getVideoEntry().sources()));
+						break;
 					case ZLTextParagraph.Entry.STYLE_CSS:
 					case ZLTextParagraph.Entry.STYLE_OTHER:
 						elements.add(new ZLTextStyleElement(it.getStyleEntry()));

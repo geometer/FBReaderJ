@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <ZLXMLReader.h>
+#include <ZLVideoEntry.h>
 
 #include "../css/StyleSheetTable.h"
 #include "../css/StyleSheetParser.h"
@@ -36,6 +37,13 @@ class XHTMLReader;
 
 class EncryptionMap;
 
+enum XHTMLReadingState {
+	XHTML_READ_NOTHING,
+	XHTML_READ_STYLE,
+	XHTML_READ_BODY,
+	XHTML_READ_VIDEO
+};
+
 class XHTMLTagAction {
 
 public:
@@ -43,6 +51,7 @@ public:
 	
 	virtual void doAtStart(XHTMLReader &reader, const char **xmlattributes) = 0;
 	virtual void doAtEnd(XHTMLReader &reader) = 0;
+	virtual bool isEnabled(XHTMLReadingState state) = 0;
 
 protected:
 	static BookReader &bookReader(XHTMLReader &reader);	
@@ -103,13 +112,10 @@ private:
 	bool myCurrentParagraphIsEmpty;
 	shared_ptr<StyleSheetSingleStyleParser> myStyleParser;
 	shared_ptr<StyleSheetTableParser> myTableParser;
-	enum {
-		READ_NOTHING,
-		READ_STYLE,
-		READ_BODY
-	} myReadState;
+	XHTMLReadingState myReadState;
 	int myBodyCounter;
 	bool myMarkNextImageAsCover;
+	shared_ptr<ZLVideoEntry> myVideoEntry;
 
 	friend class XHTMLTagAction;
 	friend class XHTMLTagStyleAction;
@@ -120,6 +126,8 @@ private:
 	friend class XHTMLTagBodyAction;
 	friend class XHTMLTagRestartParagraphAction;
 	friend class XHTMLTagImageAction;
+	friend class XHTMLTagVideoAction;
+	friend class XHTMLTagSourceAction;
 };
 
 #endif /* __XHTMLREADER_H__ */

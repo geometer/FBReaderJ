@@ -25,6 +25,7 @@
 #include <ZLLogger.h>
 #include <ZLCachedMemoryAllocator.h>
 #include <ZLTextStyleEntry.h>
+#include <ZLVideoEntry.h>
 
 #include "BookReader.h"
 #include "BookModel.h"
@@ -228,6 +229,16 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 
 	env->DeleteLocalRef(javaId);
 	env->DeleteLocalRef(javaImage);
+}
+
+void BookReader::addVideoEntry(const ZLVideoEntry &entry) {
+	if (myCurrentTextModel != 0) {
+		mySectionContainsRegularContents = true;
+		endParagraph();
+		beginParagraph();
+		myCurrentTextModel->addVideoEntry(entry);
+		endParagraph();
+	}
 }
 
 void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {
