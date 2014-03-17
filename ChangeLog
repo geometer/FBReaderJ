@@ -1,5 +1,6 @@
 ===== 1.9.7 (Mar ??, 2014) =====
 * Experimental video support
+* CSS parsing optimization for ePubs (do not parse css files multiple times)
 
 ===== 1.9.6.1 (Feb 24, 2014) =====
 * Fixed some config vaues reading (e.g. background)

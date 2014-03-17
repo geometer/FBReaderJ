@@ -260,15 +260,21 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 	}
 
 	const std::string cssFilePath = reader.myPathPrefix + MiscUtil::decodeHtmlURL(href);
+	//ZLLogger::Instance().registerClass("CSS");
 	ZLLogger::Instance().println("CSS", "style file: " + cssFilePath);
-	shared_ptr<ZLInputStream> cssStream = ZLFile(cssFilePath).inputStream(reader.myEncryptionMap);
-	if (cssStream.isNull()) {
-		return;
+	const ZLFile cssFile(cssFilePath);
+	shared_ptr<StyleSheetParserWithCache> parser = reader.myFileParsers[cssFile.path()];
+	if (parser.isNull()) {
+		parser = new StyleSheetParserWithCache();
+		reader.myFileParsers[cssFile.path()] = parser;
+		ZLLogger::Instance().println("CSS", "creating stream");
+		shared_ptr<ZLInputStream> cssStream = ZLFile(cssFilePath).inputStream(reader.myEncryptionMap);
+		if (!cssStream.isNull()) {
+			ZLLogger::Instance().println("CSS", "parsing file");
+			parser->parseStream(*cssStream);
+		}
 	}
-	ZLLogger::Instance().println("CSS", "parsing file");
-	StyleSheetTableParser parser(reader.myStyleSheetTable);
-	parser.parse(*cssStream);
-	//reader.myStyleSheetTable.dump();
+	parser->applyToTable(reader.myStyleSheetTable);
 }
 
 void XHTMLTagLinkAction::doAtEnd(XHTMLReader&) {
