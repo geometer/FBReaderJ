@@ -169,9 +169,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
-	protected void onStop() {
+	protected void onDestroy() {
 		myCollection.unbind();
-		super.onStop();
+		super.onDestroy();
 	}
 
 	@Override
