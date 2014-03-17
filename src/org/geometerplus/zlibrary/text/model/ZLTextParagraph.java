@@ -30,6 +30,8 @@ public interface ZLTextParagraph {
 		byte STYLE_CLOSE = 7;
 		byte FIXED_HSPACE = 8;
 		byte RESET_BIDI = 9;
+		byte AUDIO = 10;
+		byte VIDEO = 11;
 	}
 
 	interface EntryIterator {
@@ -46,6 +48,7 @@ public interface ZLTextParagraph {
 		String getHyperlinkId();
 
 		ZLImageEntry getImageEntry();
+		ZLVideoEntry getVideoEntry();
 		ZLTextStyleEntry getStyleEntry();
 
 		short getFixedHSpaceLength();

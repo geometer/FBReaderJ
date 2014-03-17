@@ -46,6 +46,8 @@ public:
 		STYLE_CLOSE_ENTRY = 7,
 		FIXED_HSPACE_ENTRY = 8,
 		RESET_BIDI_ENTRY = 9,
+		AUDIO_ENTRY = 10,
+		VIDEO_ENTRY = 11,
 	};
 
 protected:
