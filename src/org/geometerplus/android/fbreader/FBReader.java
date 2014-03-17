@@ -596,9 +596,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		});
 
-		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, root);
-		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, root);
+		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
+		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
 	}
 
 	@Override
