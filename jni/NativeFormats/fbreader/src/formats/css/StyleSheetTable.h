@@ -64,6 +64,7 @@ private:
 	std::map<Key,bool> myPageBreakAfterMap;
 
 friend class StyleSheetTableParser;
+friend class StyleSheetParserWithCache;
 };
 
 inline StyleSheetTable::Key::Key(const std::string &tag, const std::string &aClass) : TagName(tag), ClassName(aClass) {

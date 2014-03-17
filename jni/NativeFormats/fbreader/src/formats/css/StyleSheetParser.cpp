@@ -26,51 +26,6 @@
 
 #include "StyleSheetParser.h"
 
-StyleSheetTableParser::StyleSheetTableParser(StyleSheetTable &table) : myTable(table) {
-	//ZLLogger::Instance().registerClass("CSS");
-}
-
-void StyleSheetTableParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
-	std::string s = selector;
-	ZLStringUtil::stripWhiteSpaces(s);
-
-	if (s.empty()) {
-		return;
-	}
-
-	if (s[0] == '@') {
-		processAtRule(s, map);
-		return;
-	}
-
-	const std::vector<std::string> ids = ZLStringUtil::split(s, ",");
-	for (std::vector<std::string>::const_iterator it = ids.begin(); it != ids.end(); ++it) {
-		std::string id = *it;
-		ZLStringUtil::stripWhiteSpaces(id);
-		if (!id.empty()) {
-			const std::size_t index = id.find('.');
-			if (index == std::string::npos) {
-				myTable.addMap(id, std::string(), map);
-			} else {
-				myTable.addMap(id.substr(0, index), id.substr(index + 1), map);
-			}
-		}
-	}
-}
-
-void StyleSheetTableParser::processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map) {
-	if (name == "@font-face") {
-	}
-}
-
-shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char *text) {
-	myReadState = WAITING_FOR_ATTRIBUTE;
-	parse(text, std::strlen(text), true);
-	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createControl(myMap);
-	reset();
-	return control;
-}
-
 StyleSheetParser::StyleSheetParser() {
 	reset();
 }
@@ -85,21 +40,6 @@ void StyleSheetParser::reset() {
 	myInsideComment = false;
 	mySelectorString.erase();
 	myMap.clear();
-}
-
-void StyleSheetParser::parse(ZLInputStream &stream) {
-	if (stream.open()) {
-		char *buffer = new char[1024];
-		while (true) {
-			int len = stream.read(buffer, 1024);
-			if (len == 0) {
-				break;
-			}
-			parse(buffer, len);
-		}
-		delete[] buffer;
-		stream.close();
-	}
 }
 
 void StyleSheetParser::parse(const char *text, int len, bool final) {
@@ -149,9 +89,6 @@ bool StyleSheetParser::isControlSymbol(const char symbol) {
 }
 
 void StyleSheetParser::storeData(const std::string&, const StyleSheetTable::AttributeMap&) {
-}
-
-void StyleSheetParser::processAtRule(const std::string&, const StyleSheetTable::AttributeMap&) {
 }
 
 void StyleSheetParser::processControl(const char control) {
@@ -239,5 +176,79 @@ void StyleSheetParser::processWordWithoutComments(const std::string &word) {
 			}
 			break;
 		}
+	}
+}
+
+shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char *text) {
+	myReadState = WAITING_FOR_ATTRIBUTE;
+	parse(text, std::strlen(text), true);
+	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createControl(myMap);
+	reset();
+	return control;
+}
+
+void StyleSheetMultiStyleParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
+	std::string s = selector;
+	ZLStringUtil::stripWhiteSpaces(s);
+
+	if (s.empty()) {
+		return;
+	}
+
+	if (s[0] == '@') {
+		processAtRule(s, map);
+		return;
+	}
+
+	const std::vector<std::string> ids = ZLStringUtil::split(s, ",");
+	for (std::vector<std::string>::const_iterator it = ids.begin(); it != ids.end(); ++it) {
+		std::string id = *it;
+		ZLStringUtil::stripWhiteSpaces(id);
+		if (!id.empty()) {
+			const std::size_t index = id.find('.');
+			if (index == std::string::npos) {
+				store(id, std::string(), map);
+			} else {
+				store(id.substr(0, index), id.substr(index + 1), map);
+			}
+		}
+	}
+}
+
+void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const StyleSheetTable::AttributeMap&) {
+	if (name == "@font-face") {
+	}
+}
+
+void StyleSheetMultiStyleParser::parseStream(ZLInputStream &stream) {
+	if (stream.open()) {
+		char *buffer = new char[1024];
+		while (true) {
+			int len = stream.read(buffer, 1024);
+			if (len == 0) {
+				break;
+			}
+			parse(buffer, len);
+		}
+		delete[] buffer;
+		stream.close();
+	}
+}
+
+StyleSheetTableParser::StyleSheetTableParser(StyleSheetTable &table) : myTable(table) {
+}
+
+void StyleSheetTableParser::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
+	myTable.addMap(tag, aClass, map);
+}
+
+void StyleSheetParserWithCache::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
+	myEntries.push_back(new Entry(tag, aClass, map));
+}
+
+void StyleSheetParserWithCache::applyToTable(StyleSheetTable &table) const {
+	for (std::list<shared_ptr<Entry> >::const_iterator it = myEntries.begin(); it != myEntries.end(); ++it) {
+		const Entry &entry = **it;
+		table.addMap(entry.Tag, entry.Class, entry.Map);
 	}
 }
