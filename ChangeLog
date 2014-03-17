@@ -1,3 +1,6 @@
+===== 1.9.7 (Mar ??, 2014) =====
+* Experimental video support
+
 ===== 1.9.6.1 (Feb 24, 2014) =====
 * Fixed some config vaues reading (e.g. background)
 * Updated Czech localization (by Marek Pavelka)
