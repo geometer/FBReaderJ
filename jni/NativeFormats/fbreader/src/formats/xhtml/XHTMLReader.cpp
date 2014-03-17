@@ -664,13 +664,36 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 
 	const std::string sTag = ZLUnicodeUtil::toLower(tag);
 
-	const char *aClass = attributeValue(attributes, "class");
-	const std::string sClass = (aClass != 0) ? aClass : "";
+	std::vector<std::string> classesList;
+	const char *aClasses = attributeValue(attributes, "class");
+	if (aClasses != 0) {
+		const std::vector<std::string> split = ZLStringUtil::split(aClasses, " ");
+		for (std::vector<std::string>::const_iterator it = split.begin(); it != split.end(); ++it) {
+			if (!it->empty()) {
+				classesList.push_back(*it);
+			}
+		}
+	}
+	if (classesList.empty()) {
+		classesList.push_back("");
+	}
 
-	if (myStyleSheetTable.doBreakBefore(sTag, sClass)) {
+	bool breakBefore = false;
+	bool breakAfter = false;
+	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
+		// TODO: use 3-value logic (yes, no, inherit)
+		if (myStyleSheetTable.doBreakBefore(sTag, *it)) {
+			breakBefore = true;
+		}
+		// TODO: use 3-value logic (yes, no, inherit)
+		if (myStyleSheetTable.doBreakAfter(sTag, *it)) {
+			breakAfter = true;
+		}
+	}
+	if (breakBefore) {
 		myModelReader.insertEndOfSectionParagraph();
 	}
-	myDoPageBreakAfterStack.push_back(myStyleSheetTable.doBreakAfter(sTag, sClass));
+	myDoPageBreakAfterStack.push_back(breakAfter);
 
 	XHTMLTagAction *action = getAction(sTag);
 	if (action != 0 && action->isEnabled(myReadState)) {
@@ -679,14 +702,16 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 
 	const int sizeBefore = myStyleEntryStack.size();
 	addStyleEntry(sTag, "");
-	addStyleEntry("", sClass);
-	addStyleEntry(sTag, sClass);
-	const char *style = attributeValue(attributes, "style");
-	if (style != 0) {
-		ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
-		shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseString(style);
-		myModelReader.addStyleEntry(*entry);
-		myStyleEntryStack.push_back(entry);
+	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
+		addStyleEntry("", *it);
+		addStyleEntry(sTag, *it);
+		const char *style = attributeValue(attributes, "style");
+		if (style != 0) {
+			ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
+			shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseString(style);
+			myModelReader.addStyleEntry(*entry);
+			myStyleEntryStack.push_back(entry);
+		}
 	}
 	myCSSStack.push_back(myStyleEntryStack.size() - sizeBefore);
 }
