@@ -58,6 +58,7 @@ void JavaInputStream::initStream(JNIEnv *env) {
 	} else {
 		stream = 0;
 	}
+
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
 	} else {
