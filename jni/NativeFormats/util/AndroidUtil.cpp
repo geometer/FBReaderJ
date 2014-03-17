@@ -62,6 +62,9 @@ shared_ptr<StringMethod> AndroidUtil::Method_java_util_Locale_getLanguage;
 shared_ptr<VoidMethod> AndroidUtil::Method_java_io_InputStream_close;
 shared_ptr<IntMethod> AndroidUtil::Method_java_io_InputStream_read;
 shared_ptr<LongMethod> AndroidUtil::Method_java_io_InputStream_skip;
+shared_ptr<VoidMethod> AndroidUtil::Method_java_io_InputStream_mark;
+shared_ptr<BooleanMethod> AndroidUtil::Method_java_io_InputStream_markSupported;
+shared_ptr<VoidMethod> AndroidUtil::Method_java_io_InputStream_reset;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_ZLibrary_Instance;
 shared_ptr<StringMethod> AndroidUtil::Method_ZLibrary_getVersionName;
@@ -139,6 +142,9 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_java_io_InputStream_close = new VoidMethod(Class_java_io_InputStream, "close", "()");
 	Method_java_io_InputStream_read = new IntMethod(Class_java_io_InputStream, "read", "([BII)");
 	Method_java_io_InputStream_skip = new LongMethod(Class_java_io_InputStream, "skip", "(J)");
+	Method_java_io_InputStream_mark = new VoidMethod(Class_java_io_InputStream, "mark", "(I)");
+	Method_java_io_InputStream_markSupported = new BooleanMethod(Class_java_io_InputStream, "markSupported", "()");
+	Method_java_io_InputStream_reset = new VoidMethod(Class_java_io_InputStream, "reset", "()");
 
 	StaticMethod_ZLibrary_Instance = new StaticObjectMethod(Class_ZLibrary, "Instance", Class_ZLibrary, "()");
 	Method_ZLibrary_getVersionName = new StringMethod(Class_ZLibrary, "getVersionName", "()");
