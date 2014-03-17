@@ -206,13 +206,13 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	static BookUrlInfo.Format formatByMimeType(MimeType mime) {
-		if (MimeType.TEXT_FB2.equals(mime)) {
+		if (MimeType.TYPES_FB2.contains(mime)) {
 			return BookUrlInfo.Format.FB2;
-		} else if (MimeType.APP_FB2_ZIP.equals(mime)) {
+		} else if (MimeType.TYPES_FB2_ZIP.contains(mime)) {
 			return BookUrlInfo.Format.FB2_ZIP;
-		} else if (MimeType.APP_EPUB_ZIP.equals(mime)) {
+		} else if (MimeType.TYPES_EPUB.contains(mime)) {
 			return BookUrlInfo.Format.EPUB;
-		} else if (MimeType.APP_MOBIPOCKET.equals(mime)) {
+		} else if (MimeType.TYPES_MOBIPOCKET.contains(mime)) {
 			return BookUrlInfo.Format.MOBIPOCKET;
 		}
 		return BookUrlInfo.Format.NONE;
