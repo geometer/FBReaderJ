@@ -37,6 +37,7 @@ public:
 	static void stripWhiteSpaces(std::string &str);
 
 	static std::vector<std::string> split(const std::string &str, const std::string &delimiter);
+	static std::string join(const std::vector<std::string> &data, const std::string &delimiter);
 
 	static std::string printf(const std::string &format, const std::string &arg0);
 

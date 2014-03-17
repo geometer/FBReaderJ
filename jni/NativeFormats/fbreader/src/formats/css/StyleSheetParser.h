@@ -29,7 +29,7 @@ class ZLInputStream;
 class StyleSheetParser {
 
 protected:
-	StyleSheetParser();
+	StyleSheetParser(const std::string &pathPrefix);
 
 public:
 	virtual ~StyleSheetParser();
@@ -44,6 +44,9 @@ private:
 	void processWord(std::string &word);
 	void processWordWithoutComments(const std::string &word);
 	void processControl(const char control);
+
+protected:
+	const std::string myPathPrefix;
 
 private:
 	std::string myWord;
@@ -65,10 +68,14 @@ friend class StyleSheetSingleStyleParser;
 class StyleSheetSingleStyleParser : public StyleSheetParser {
 
 public:
+	StyleSheetSingleStyleParser(const std::string &pathPrefix);
 	shared_ptr<ZLTextStyleEntry> parseString(const char *text);
 };
 
 class StyleSheetMultiStyleParser : public StyleSheetParser {
+
+protected:
+	StyleSheetMultiStyleParser(const std::string &pathPrefix);
 
 public:
 	void parseStream(ZLInputStream &stream);
@@ -84,7 +91,7 @@ private:
 class StyleSheetTableParser : public StyleSheetMultiStyleParser {
 
 public:
-	StyleSheetTableParser(StyleSheetTable &table);
+	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &table);
 
 private:
 	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
@@ -105,6 +112,7 @@ private:
 	};
 
 public:
+	StyleSheetParserWithCache(const std::string &pathPrefix);
 	void applyToTable(StyleSheetTable &table) const;
 
 private:

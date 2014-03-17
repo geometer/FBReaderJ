@@ -103,6 +103,19 @@ std::vector<std::string> ZLStringUtil::split(const std::string &str, const std::
 	return result;
 }
 
+std::string ZLStringUtil::join(const std::vector<std::string> &data, const std::string &delimiter) {
+	std::string joined;
+	bool addDelimiter = false;
+	for (std::vector<std::string>::const_iterator it = data.begin(); it != data.end(); ++it) {
+		if (addDelimiter) {
+			joined += delimiter;
+		}
+		joined += *it;
+		addDelimiter = true;
+	}
+	return joined;
+}
+
 std::string ZLStringUtil::printf(const std::string &format, const std::string &arg0) {
 	int index = format.find("%s");
 	if (index == -1) {

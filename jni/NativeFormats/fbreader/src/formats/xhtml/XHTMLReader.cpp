@@ -229,7 +229,7 @@ void XHTMLTagStyleAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 
 	if (reader.myReadState == XHTML_READ_NOTHING) {
 		reader.myReadState = XHTML_READ_STYLE;
-		reader.myTableParser = new StyleSheetTableParser(reader.myStyleSheetTable);
+		reader.myTableParser = new StyleSheetTableParser(reader.myPathPrefix, reader.myStyleSheetTable);
 		ZLLogger::Instance().println("CSS", "parsing style tag content");
 	}
 }
@@ -259,14 +259,15 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 		return;
 	}
 
-	const std::string cssFilePath = reader.myPathPrefix + MiscUtil::decodeHtmlURL(href);
+	std::string cssFilePath = reader.myPathPrefix + MiscUtil::decodeHtmlURL(href);
 	//ZLLogger::Instance().registerClass("CSS");
 	ZLLogger::Instance().println("CSS", "style file: " + cssFilePath);
 	const ZLFile cssFile(cssFilePath);
-	shared_ptr<StyleSheetParserWithCache> parser = reader.myFileParsers[cssFile.path()];
+	cssFilePath = cssFile.path();
+	shared_ptr<StyleSheetParserWithCache> parser = reader.myFileParsers[cssFilePath];
 	if (parser.isNull()) {
-		parser = new StyleSheetParserWithCache();
-		reader.myFileParsers[cssFile.path()] = parser;
+		parser = new StyleSheetParserWithCache(MiscUtil::htmlDirectoryPrefix(cssFilePath));
+		reader.myFileParsers[cssFilePath] = parser;
 		ZLLogger::Instance().println("CSS", "creating stream");
 		shared_ptr<ZLInputStream> cssStream = ZLFile(cssFilePath).inputStream(reader.myEncryptionMap);
 		if (!cssStream.isNull()) {
@@ -639,7 +640,7 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	myStylesToRemove = 0;
 
 	myDoPageBreakAfterStack.clear();
-	myStyleParser = new StyleSheetSingleStyleParser();
+	myStyleParser = new StyleSheetSingleStyleParser(myPathPrefix);
 	myTableParser.reset();
 
 	return readDocument(file.inputStream(myEncryptionMap));
