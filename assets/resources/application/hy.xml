@@ -864,6 +864,7 @@
 		<node name="pluginNotFound" value="'%s'-ի համար խրվակ չկա"/>
 		<node name="unknownPluginType" value="%s խրվակի անհայտ տեսակ"/>
 		<node name="fileNotFound" value="%s նիշքը չգտնվեց"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="%s-ում OPF չգտնվեց"/>
 		<node name="unsupportedFileFormat" value="'%s' նիշքերը չեն աջակցվում'"/>
 		<node name="errorParsingRtf" value="Սխալ %s RTF-նիշքը կարդալիս"/>
@@ -879,6 +880,7 @@
 		<node name="emptyCatalog" value="Գրացուցակը դատարկ է"/>
 		<node name="emptyBasket" value="Զամբյուղը դատարկ է"/>
 		<node name="emptyNetworkSearchResults" value="Ոչ մի գիրք չգտնվեց"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="դիտարկիչ"/>

@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader;
 
 import java.util.Map;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -29,6 +30,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextVideoElement;
 import org.geometerplus.zlibrary.text.view.ZLTextVideoRegionSoul;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
+import org.geometerplus.android.util.UIUtil;
 
 class OpenVideoAction extends FBAndroidAction {
 	OpenVideoAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -50,7 +53,11 @@ class OpenVideoAction extends FBAndroidAction {
 			}
 			final Intent intent = new Intent(Intent.ACTION_VIEW);
 			intent.setDataAndType(Uri.parse(url.toString()), MimeType.VIDEO_WEBM.toString());
-			BaseActivity.startActivity(intent);
+			try {
+				BaseActivity.startActivity(intent);
+			} catch (ActivityNotFoundException e) {
+				UIUtil.showErrorMessage(BaseActivity, "videoPlayerNotFound");
+			}
 		}	
 	}
 }

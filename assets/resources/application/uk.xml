@@ -849,6 +849,7 @@
 		<node name="pluginNotFound" value="Немає плагіну для '%s'"/>
 		<node name="unknownPluginType" value="Невідомий тип плагіну: %s"/>
 		<node name="fileNotFound" value="Файл не знайдено: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF не знайдено в %s"/>
 		<node name="unsupportedFileFormat" value="Формат файлу не підтримується для '%s'"/>
 		<node name="errorParsingRtf" value="Помилка обробки Rtf в: %s"/>
@@ -864,6 +865,7 @@
 		<node name="emptyCatalog" value="Каталог порожній"/>
 		<node name="emptyBasket" value="На жаль ваш кошик порожній"/>
 		<node name="emptyNetworkSearchResults" value="Відповідних книг не знайдено"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>

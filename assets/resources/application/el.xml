@@ -857,6 +857,7 @@
 		<node name="pluginNotFound" value="Δεν υπάρχει Plug-In για '%s'"/>
 		<node name="unknownPluginType" value="Άγνωστος τύπος Plug-In: %s"/>
 		<node name="fileNotFound" value="Το αρχείο δεν βρέθηκε: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="Το OPF στο %s δεν βρέθηκε"/>
 		<node name="unsupportedFileFormat" value="Ο τύπος αρχείου '%s' δεν υποστιρίζεται"/>
 		<node name="errorParsingRtf" value="Λάθος στο Rtf-Parsing: %s"/>
@@ -872,6 +873,7 @@
 		<node name="emptyCatalog" value="Ο κατάλογος είναι άδειος."/>
 		<node name="emptyBasket" value="Το καλάθι αγοράς είναι άδειο."/>
 		<node name="emptyNetworkSearchResults" value="Δυστυχώς δεν βρέθηκαν βιβλία."/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
