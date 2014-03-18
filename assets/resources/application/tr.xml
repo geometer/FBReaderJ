@@ -859,6 +859,7 @@
 		<node name="pluginNotFound" value="'%s' eklentisi yok"/>
 		<node name="unknownPluginType" value="Bilinmeyen eklenti tipi: %s"/>
 		<node name="fileNotFound" value="Dosya bulunamadı: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF %s\'de bulunamadı"/>
 		<node name="unsupportedFileFormat" value="'%s' dosya türü desteklenmiyor"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
@@ -874,6 +875,7 @@
 		<node name="emptyCatalog" value="Katalog boş"/>
 		<node name="emptyBasket" value="Sepetiniz boş"/>
 		<node name="emptyNetworkSearchResults" value="Hiç kitap bulunamadı"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Tarayıcı"/>

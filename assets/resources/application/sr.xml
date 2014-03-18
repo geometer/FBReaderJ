@@ -859,6 +859,7 @@
 		<node name="pluginNotFound" value="Нема додатка за „%s“."/>
 		<node name="unknownPluginType" value="Непозната врста додатка: %s."/>
 		<node name="fileNotFound" value="Не могу да пронађем датотеку: %s."/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="Не могу да пронађем OPF у „%s“."/>
 		<node name="unsupportedFileFormat" value="Формат датотеке није подржан за „%s“."/>
 		<node name="errorParsingRtf" value="Грешка при рашчлањивању RTF-а у: %s."/>
@@ -874,6 +875,7 @@
 		<node name="emptyCatalog" value="Каталог је празан."/>
 		<node name="emptyBasket" value="Ваша корпа је празна."/>
 		<node name="emptyNetworkSearchResults" value="Нема тражених књига."/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Прегледач"/>
