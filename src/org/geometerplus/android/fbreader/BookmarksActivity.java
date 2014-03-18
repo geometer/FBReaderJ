@@ -162,7 +162,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			return;
 		}
-		setIntent(intent);
 		String pattern = intent.getStringExtra(SearchManager.QUERY);
 		myBookmarkSearchPatternOption.setValue(pattern);
 
