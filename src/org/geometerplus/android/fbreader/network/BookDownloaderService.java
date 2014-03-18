@@ -128,7 +128,7 @@ public class BookDownloaderService extends Service {
 			return;
 		}
 
-		String fileName = BookUrlInfo.makeBookFileName(cleanURL, bookFormat, referenceType);
+		final String fileName = BookUrlInfo.makeBookFileName(cleanURL, bookFormat, referenceType);
 		if (fileName == null) {
 			doStop();
 			return;
