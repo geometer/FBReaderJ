@@ -306,13 +306,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Фасцикле">
 			<node name="summary" value="Фасцикле за тражење датотека."/>
-			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
-			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="Фасцикла са књигама"/>
 			<node name="fonts" value="Фасцикла са фонтовима"/>
 			<node name="wallpapers" value="Фасцикла са позадинама"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="Изглед">
 			<node name="summary" value="Приказ подешавања, траке стања и осветљења дугмади."/>

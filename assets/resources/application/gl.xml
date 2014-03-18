@@ -296,13 +296,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Cartafoles">
 			<node name="summary" value="Cartafoles para buscar ficheiros"/>
-			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
-			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="Cartafol de libros"/>
 			<node name="fonts" value="Cartafol de tipos de letra"/>
 			<node name="wallpapers" value="Cartafol de fondos de pantalla"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="Aparencia">
 			<node name="summary" value="Rotación, barra de estado"/>

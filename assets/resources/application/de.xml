@@ -300,13 +300,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Verzeichnisse">
 			<node name="summary" value="Verzeichnisse in denen Dateien gesucht werden."/>
-			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
-			<node name="bookPath" value="Bücher"/>
-			<node name="fontPath" value="Schriftarten"/>
-			<node name="wallpaperPath" value="Hintergründe"/>
 			<node name="books" value="Bücher"/>
 			<node name="fonts" value="Schriftarten"/>
 			<node name="wallpapers" value="Hintergründe"/>
+			<node name="bookPath" value="Bücher"/>
+			<node name="fontPath" value="Schriftarten"/>
+			<node name="wallpaperPath" value="Hintergründe"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="Aussehen">
 			<node name="summary" value="Ausrichtung, Statuszeile"/>

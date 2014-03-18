@@ -296,13 +296,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Thư mục">
 			<node name="summary" value="Các thư mục để tìm kiếm tập tin"/>
-			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
-			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="Thư mục sách"/>
 			<node name="fonts" value="Thư mục phông"/>
 			<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="Giao diện">
 			<node name="summary" value="Xoay, thanh trạng thái"/>

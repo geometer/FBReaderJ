@@ -296,13 +296,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Directoare">
 			<node name="summary" value="Directoare sa caute fisiere"/>
-			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
-			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="Directorul cu carti"/>
 			<node name="fonts" value="Directorul cu fonturi"/>
 			<node name="wallpapers" value="Imagini de Fundal director"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="Aspect">
 			<node name="summary" value="Rotire, bara de stare"/>

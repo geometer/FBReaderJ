@@ -311,13 +311,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталоги">
 			<node name="summary" value="Где искать файлы"/>
-			<node name="temp" value="Каталог для временных файлов"/>
-			<node name="bookPath" value="Каталоги с книгами"/>
-			<node name="fontPath" value="Каталоги со шрифтами"/>
-			<node name="wallpaperPath" value="Каталоги с обоями"/>
 			<node name="books" value="Каталог с книгами"/>
 			<node name="fonts" value="Каталог со шрифтами"/>
 			<node name="wallpapers" value="Каталог с обоями"/>
+			<node name="bookPath" value="Где лежат книги"/>
+			<node name="fontPath" value="Где лежат шрифты"/>
+			<node name="wallpaperPath" value="Где лежат рисунки для фона"/>
+			<node name="tempDir" value="Где создавать временные файлы"/>
 		</node>
 		<node name="appearance" value="Внешний вид">
 			<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>

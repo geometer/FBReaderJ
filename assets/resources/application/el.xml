@@ -296,13 +296,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Ευρετήρια">
 			<node name="summary" value="Ευρετήρια, στα οποία θα γίνει η αναζήτηση."/>
-			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
-			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="Βιβλία"/>
 			<node name="fonts" value="Γραμματοσειρά"/>
 			<node name="wallpapers" value="Φόντα"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="Εμφάνιση">
 			<node name="summary" value="προςανατολισμός, γραμμή κατάστασης"/>
