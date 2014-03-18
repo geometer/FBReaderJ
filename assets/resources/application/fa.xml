@@ -309,6 +309,10 @@
 			<node name="books" value="پوشه کتابها"/>
 			<node name="fonts" value="پوشه فونتها"/>
 			<node name="wallpapers" value="پوشه تصاویر"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="نمایش">
 			<node name="summary" value="تنظیمات نمایش, نوار وضعیت, نور کلیدها"/>

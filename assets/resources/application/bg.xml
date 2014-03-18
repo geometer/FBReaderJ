@@ -314,6 +314,10 @@
 			<node name="books" value="Каталог с книги"/>
 			<node name="fonts" value="Каталог с шрифтове"/>
 			<node name="wallpapers" value="Каталог с тапети"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="Външен вид">
 			<node name="summary" value="Екран за настройки, статус бар, светещи бутони"/>
