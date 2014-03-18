@@ -96,14 +96,14 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 			String extension = f.getExtension();
 			Uri uri = Uri.parse("file://" + f.getPath());
-			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
-			LaunchIntent.setPackage(appData);
-			LaunchIntent.setData(uri);
+			Intent launchIntent = new Intent(Intent.ACTION_VIEW);
+			launchIntent.setPackage(appData);
+			launchIntent.setData(uri);
 			FileType ft = FileTypeCollection.Instance.typeForFile(f);
 			for (MimeType type : ft.mimeTypes()) {
-				LaunchIntent.setDataAndType(uri, type.Name);
+				launchIntent.setDataAndType(uri, type.Name);
 				try {
-					startActivity(LaunchIntent);
+					startActivity(launchIntent);
 					return true;
 				} catch (ActivityNotFoundException e) {
 				}
@@ -173,15 +173,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				return;
 			}
 			//			Uri uri = Uri.parse("file://" + f.getPath());
-			Intent LaunchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
-			LaunchIntent.setPackage(appData);
-			//			LaunchIntent.setData(uri);
-			LaunchIntent.putExtra(BOOKMARK_KEY, bookmark);
-			LaunchIntent.putExtra(BOOK_KEY, book);
-			LaunchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			Intent launchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
+			launchIntent.setPackage(appData);
+			//			launchIntent.setData(uri);
+			launchIntent.putExtra(BOOKMARK_KEY, bookmark);
+			launchIntent.putExtra(BOOK_KEY, book);
+			launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			Log.d("fbj", book);
 			try {
-				startActivity(LaunchIntent);
+				startActivity(launchIntent);
 				overridePendingTransition(0,0);
 				return;
 			} catch (ActivityNotFoundException e) {
