@@ -311,6 +311,10 @@
 			<node name="books" value="Diretório de livros"/>
 			<node name="fonts" value="Diretórios de tipos de letras"/>
 			<node name="wallpapers" value="Diretórios de papéis de parede"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="Aparência">
 			<node name="summary" value="Definições do visor, barra de status, luzes das teclas"/>

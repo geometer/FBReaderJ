@@ -299,6 +299,10 @@
 			<node name="books" value="ไดเรคทอรีของหนังสือ"/>
 			<node name="fonts" value="ไดเรคทอรีของแบบตัวอักษร"/>
 			<node name="wallpapers" value="ไดเรคทอรีของวอลล์เปเปอร์"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="ลักษณะการแสดงผล">
 			<node name="summary" value="การหมุนหน้าจอ, แถบสถานะ"/>
