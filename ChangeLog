@@ -1,4 +1,4 @@
-===== 1.9.7 (Mar ??, 2014) =====
+===== 1.10 (Mar ??, 2014) =====
 * Experimental video support
 * CSS parsing optimization for ePubs (do not parse css files multiple times)
 * CSS support improvement: added support for space-separated classes list
