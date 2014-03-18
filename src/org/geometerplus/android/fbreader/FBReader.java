@@ -911,6 +911,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	// methods from ZLApplicationWindow interface
 	@Override
+	public void showErrorMessage(String key) {
+		UIUtil.showErrorMessage(this, key);
+	}
+
+	@Override
+	public void showErrorMessage(String key, String parameter) {
+		UIUtil.showErrorMessage(this, key, parameter);
+	}
+
+	@Override
 	public void runWithMessage(String key, Runnable action, Runnable postAction) {
 		UIUtil.runWithMessage(this, key, action, postAction, false);
 	}

@@ -864,6 +864,7 @@
 		<node name="pluginNotFound" value="ვერ მოიძებნა პლაგინი '%s'-სთვის"/>
 		<node name="unknownPluginType" value="უცნობი ტიპის პლაგინი: %s"/>
 		<node name="fileNotFound" value="არ მოიძებნა ფაილი: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="არ მოიძებნა OPF %s-ში"/>
 		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
 		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
@@ -879,6 +880,7 @@
 		<node name="emptyCatalog" value="კატალოგი ცარიელია"/>
 		<node name="emptyBasket" value="კალათა ცარიელია"/>
 		<node name="emptyNetworkSearchResults" value="არ მოიძებნა არცერთი წიგნი"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="ბრაუზერი"/>

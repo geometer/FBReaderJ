@@ -868,6 +868,7 @@
 		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
 		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
 		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
 		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
 		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
@@ -883,6 +884,7 @@
 		<node name="emptyCatalog" value="Katalog je bohužel prázdný"/>
 		<node name="emptyBasket" value="Váš košík je bohužel prázdný"/>
 		<node name="emptyNetworkSearchResults" value="Nebyly nalezeny žádné knihy"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>
