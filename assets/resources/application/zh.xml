@@ -849,6 +849,7 @@
 		<node name="pluginNotFound" value="没有这个插件 '%s'"/>
 		<node name="unknownPluginType" value="未知插件类型: %s"/>
 		<node name="fileNotFound" value="文件未找到: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="在 %s 文件夹未找到 OPF  "/>
 		<node name="unsupportedFileFormat" value="文件格式 '%s' 不支持"/>
 		<node name="errorParsingRtf" value="Rtf解析错误: %s"/>
@@ -864,6 +865,7 @@
 		<node name="emptyCatalog" value="空书库目录"/>
 		<node name="emptyBasket" value="很抱歉，你的购物篮是空的"/>
 		<node name="emptyNetworkSearchResults" value="没有找到对应的书籍"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="浏览器"/>
