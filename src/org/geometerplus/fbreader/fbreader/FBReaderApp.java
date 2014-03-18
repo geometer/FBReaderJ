@@ -284,14 +284,7 @@ public final class FBReaderApp extends ZLApplication {
 		try {
 			final String method = book.getPlugin().readEncryptionMethod(book);
 			if (!EncryptionMethod.NONE.equals(method)) {
-				System.err.println("UNSUPPORTED ALGORITHM: " + method);
-				/*
-				UIUtil.showErrorMessage(
-					FBReader.this,
-					"unsupportedEncryptionMethod",
-					myBook.File.getPath()
-				);
-				*/
+				showErrorMessage("unsupportedEncryptionMethod", book.File.getPath());
 			}
 		} catch (BookReadingException e) {
 			// ignore

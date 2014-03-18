@@ -859,6 +859,7 @@
 		<node name="pluginNotFound" value="پلاگینی وجود ندارد برای '%s'"/>
 		<node name="unknownPluginType" value="نوع پلاگین ناشناخته است: %s"/>
 		<node name="fileNotFound" value="فایل پیدا نشد: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF در %s پیدا نشد"/>
 		<node name="unsupportedFileFormat" value="فرمت فایل پشتیبانی نمیشود برای '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
@@ -874,6 +875,7 @@
 		<node name="emptyCatalog" value="متاسفانه كاتالوگ خالي است"/>
 		<node name="emptyBasket" value="متاسفانه سبدشما خالي است"/>
 		<node name="emptyNetworkSearchResults" value="متاسفانه كتابي يافت نشد"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="مرورگر"/>
