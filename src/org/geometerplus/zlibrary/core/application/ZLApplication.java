@@ -79,6 +79,18 @@ public abstract class ZLApplication {
 		return myTitle;
 	}
 
+	protected void showErrorMessage(String resourceKey) {
+		if (myWindow != null) {
+			myWindow.showErrorMessage(resourceKey);
+		}
+	}
+
+	protected void showErrorMessage(String resourceKey, String parameter) {
+		if (myWindow != null) {
+			myWindow.showErrorMessage(resourceKey, parameter);
+		}
+	}
+
 	protected void runWithMessage(String key, Runnable action, Runnable postAction) {
 		if (myWindow != null) {
 			myWindow.runWithMessage(key, action, postAction);

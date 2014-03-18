@@ -864,6 +864,7 @@
 		<node name="pluginNotFound" value="No hay plugin para '%s'"/>
 		<node name="unknownPluginType" value="Tipo desconocido de plugin: %s"/>
 		<node name="fileNotFound" value="No se encuentra el archivo: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF no se encuentra en %s"/>
 		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'"/>
 		<node name="errorParsingRtf" value="Error de análisis RTF en: %s"/>
@@ -879,6 +880,7 @@
 		<node name="emptyCatalog" value="Lamentablemente, el catálogo está vacío"/>
 		<node name="emptyBasket" value="Lamentablemente, su cesta está vacía"/>
 		<node name="emptyNetworkSearchResults" value="Lamentablemente, no se encontraron libros"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>
