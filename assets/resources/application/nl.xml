@@ -954,6 +954,9 @@
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
 		</node>
 	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
+	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Draai het apparaat om om je boek te lezen. Om terug te gaan naar dit scherm, druk op de knop hieronder."/>
 		<node name="frontScreenButton" value="Schakel naar dit scherm"/>
