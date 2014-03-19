@@ -50,12 +50,18 @@ public abstract class FormatPlugin {
 	public abstract String readAnnotation(ZLFile file);
 
 	public enum Type {
-		ANY,
-		JAVA,
-		NATIVE,
-		PLUGIN,
-		EXTERNAL,
-		NONE
+		ANY(false),
+		JAVA(true),
+		NATIVE(true),
+		PLUGIN(false),
+		EXTERNAL(false),
+		NONE(false);
+
+		public final boolean Builtin;
+
+		Type(boolean builtin) {
+			Builtin = builtin;
+		}
 	};
 	public abstract Type type();
 
