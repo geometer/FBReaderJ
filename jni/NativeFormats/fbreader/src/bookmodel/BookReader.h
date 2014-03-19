@@ -50,6 +50,7 @@ public:
 
 	void insertEndOfSectionParagraph();
 	void insertEndOfTextParagraph();
+	void insertEncryptedSectionParagraph();
 
 	void pushKind(FBTextKind kind);
 	bool popKind();

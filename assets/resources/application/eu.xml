@@ -954,6 +954,9 @@
 			<node name="summary" value="PDF formatuan dauden liburuak irakurri"/>
 		</node>
 	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
+	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Eman buelta gailuari liburua irakurtzeko. Testua pantailara itzul daiten, sakatu beheko botoia."/>
 		<node name="frontScreenButton" value="Pantaila honetara aldatu"/>
