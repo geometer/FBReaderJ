@@ -28,7 +28,6 @@ import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class PdfPluginFormatPlugin extends PluginFormatPlugin {
-
 	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
 	
 	public PdfPluginFormatPlugin() {
@@ -68,5 +67,4 @@ public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 			book.addUid(BookUtil.createSHA256Uid(book.File));
 		}
 	}
-
 }
