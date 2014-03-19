@@ -130,7 +130,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		}
 
-		private void showErrorDialog(final String errName, final String appData, final long bookId) {
+		private void showErrorDialog(final String errName, final String appData) {
 			runOnUiThread(new Runnable() {
 				public void run() {
 					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
@@ -146,13 +146,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 						})
 						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
-								onPluginAbsent(bookId);
+								onPluginAbsent();
 							}
 						})
 						.setOnCancelListener(new DialogInterface.OnCancelListener() {
 							@Override
 							public void onCancel(DialogInterface dialog) {
-								onPluginAbsent(bookId);
+								onPluginAbsent();
 							}
 						})
 						.create();
@@ -165,9 +165,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 		}
 
-		public void openFile(String appData, String bookmark, String book) {
-			Book bookToOpen = SerializerUtil.deserializeBook(book);
-			ZLFile f = bookToOpen.File;
+		public void openFile(String appData, Book book, Bookmark bookmark) {
+			final ZLFile f = book.File;
 			if (f == null) {
 				showErrorDialog("unzipFailed");
 				return;
@@ -176,18 +175,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			Intent launchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
 			launchIntent.setPackage(appData);
 			//			launchIntent.setData(uri);
-			launchIntent.putExtra(BOOKMARK_KEY, bookmark);
-			launchIntent.putExtra(BOOK_KEY, book);
+			launchIntent.putExtra(BOOK_KEY, SerializerUtil.serialize(book));
+			launchIntent.putExtra(BOOKMARK_KEY, SerializerUtil.serialize(bookmark));
 			launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			Log.d("fbj", book);
 			try {
 				startActivity(launchIntent);
 				overridePendingTransition(0,0);
-				return;
 			} catch (ActivityNotFoundException e) {
+				showErrorDialog("noPlugin", appData);
 			}
-			showErrorDialog("noPlugin", appData, bookToOpen.getId());
-			return;
 		}
 	}
 
@@ -969,7 +965,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		return true;
 	}
 
-	protected void onPluginAbsent(long bookId) {
+	protected void onPluginAbsent() {
 		myFBReaderApp.Model = null;
 		getCollection().bindToService(this, new Runnable() {
 			public void run() {

@@ -46,7 +46,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 	
 	public interface PluginFileOpener {
-		public void openFile(String appData, String book, String bookmark);
+		public void openFile(String appData, Book book, Bookmark bookmark);
 	}
 
 	protected ExternalFileOpener myExternalFileOpener;
@@ -201,7 +201,7 @@ public final class FBReaderApp extends ZLApplication {
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					final ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
-					myPluginFileOpener.openFile(((PluginFormatPlugin)p).getPackage(), SerializerUtil.serialize(bm), SerializerUtil.serialize(bookToOpen));
+					myPluginFileOpener.openFile(((PluginFormatPlugin)p).getPackage(), bookToOpen, bm);
 				}
 			}, postAction);
 			return;
