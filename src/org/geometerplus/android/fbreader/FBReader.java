@@ -73,13 +73,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				public void run() {
 					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
 					final AlertDialog dialog = new AlertDialog.Builder(FBReader.this)
-					.setTitle(title)
-					.setIcon(0)
-					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					})
-					.create();
+						.setTitle(title)
+						.setIcon(0)
+						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						})
+						.create();
 					if (myIsPaused) {
 						myDialogToShow = dialog;
 					} else {
