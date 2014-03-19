@@ -92,6 +92,9 @@ public class PluginCollection {
 			if (p == null) {
 				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 			}
+			if (p == null) {
+				p = getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+			}
 			return p;
 		} else {
 			final List<FormatPlugin> list = myPlugins.get(formatType);
