@@ -941,6 +941,9 @@
 			<node name="summary" value="Čte knihy ve formátu PDF"/>
 		</node>
 	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
+	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Pro čtení knihy obraťte zařízení. Pro navrácení textu na tento displej stiskněte tlačítko dole."/>
 		<node name="frontScreenButton" value="Přepnout na tento displej"/>
