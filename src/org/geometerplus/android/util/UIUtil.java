@@ -143,7 +143,7 @@ public abstract class UIUtil {
 	public static void showMessageText(final Activity activity, final String text) {
 		activity.runOnUiThread(new Runnable() {
 			public void run() {
-				Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
+				Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
 			}
 		});
 	}
