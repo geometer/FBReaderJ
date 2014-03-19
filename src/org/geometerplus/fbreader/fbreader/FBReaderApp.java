@@ -201,7 +201,8 @@ public final class FBReaderApp extends ZLApplication {
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
 					final PluginFormatPlugin pfp = (PluginFormatPlugin)p;
-					final ZLFile f = pfp.prepareFile(bookToOpen.File);
+					// TODO: what if the book is in an archive?
+					// final ZLFile f = pfp.prepareFile(bookToOpen.File);
 					myPluginFileOpener.openFile(pfp.getPackage(), bookToOpen, bm);
 				}
 			}, postAction);

@@ -114,22 +114,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	private class PluginFileOpener implements FBReaderApp.PluginFileOpener {
-		private void showErrorDialog(final String errorKey) {
-			final String title = ZLResource.resource("errorMessage").getResource(errorKey).getValue();
-			final AlertDialog dialog = new AlertDialog.Builder(FBReader.this)
-				.setTitle(title)
-				.setIcon(0)
-				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				}).create();
-			if (myIsPaused) {
-				myDialogToShow = dialog;
-			} else {
-				dialog.show();
-			}
-		}
-
 		private void showErrorDialog(final String errName, final String appData) {
 			runOnUiThread(new Runnable() {
 				public void run() {
@@ -166,14 +150,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 
 		public void openFile(String appData, Book book, Bookmark bookmark) {
-			final ZLFile f = book.File;
-			if (f == null) {
-				showErrorDialog("unzipFailed");
-				return;
-			}
-			//			Uri uri = Uri.parse("file://" + f.getPath());
 			Intent launchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
 			launchIntent.setPackage(appData);
+			//			Uri uri = Uri.parse("file://" + book.File.getPath());
 			//			launchIntent.setData(uri);
 			launchIntent.putExtra(BOOK_KEY, SerializerUtil.serialize(book));
 			launchIntent.putExtra(BOOKMARK_KEY, SerializerUtil.serialize(bookmark));
