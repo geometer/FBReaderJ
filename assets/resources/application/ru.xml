@@ -937,6 +937,9 @@
 			<node name="summary" value="Чтение файлов PDF"/>
 		</node>
 	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Этот раздел зашифрован"/>
+	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Переверните телефон, чтобы увидеть текст книги. Если вы хотите читать на этом экране, нажмите на кнопку."/>
 		<node name="frontScreenButton" value="Читать здесь"/>
