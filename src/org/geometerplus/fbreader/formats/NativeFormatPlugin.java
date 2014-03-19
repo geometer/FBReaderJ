@@ -22,8 +22,6 @@ package org.geometerplus.fbreader.formats;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filetypes.FileType;
-import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.*;
 
 import org.geometerplus.fbreader.book.Book;
@@ -123,8 +121,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	// FIXME: temporary implementation; implement as a native code (?)
 	@Override
 	public String readAnnotation(ZLFile file) {
-		final FileType ft = FileTypeCollection.Instance.typeForFile(file);
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.JAVA);
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file, FormatPlugin.Type.JAVA);
 		if (plugin != null) {
 			return plugin.readAnnotation(file);
 		}
