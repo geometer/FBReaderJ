@@ -565,21 +565,7 @@ public class Book extends TitledEntity {
 		}
 		ZLImage image = null;
 		try {
-			final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
-			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
-			if (plugin != null) {
-				try {
-					image = new PluginImage(File, ((PluginFormatPlugin)plugin).getPackage());
-					if (image != null) {
-						myCover = new WeakReference<ZLImage>(image);
-					}
-					return image;
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
-			} else {
-				image = getPlugin().readCover(File);
-			}
+			image = getPlugin().readCover(File);
 		} catch (BookReadingException e) {
 			// ignore
 		}
