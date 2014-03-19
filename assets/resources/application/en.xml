@@ -932,6 +932,9 @@
 			<node name="summary" value="Read books in PDF format"/>
 		</node>
 	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section"/>
+	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below."/>
 		<node name="frontScreenButton" value="Switch to this screen"/>

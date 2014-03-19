@@ -643,7 +643,15 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	myStyleParser = new StyleSheetSingleStyleParser(myPathPrefix);
 	myTableParser.reset();
 
-	return readDocument(file.inputStream(myEncryptionMap));
+	shared_ptr<ZLInputStream> stream = file.inputStream(myEncryptionMap);
+	if (!stream.isNull()) {
+		return readDocument(file.inputStream(myEncryptionMap));
+	} else {
+		if (file.exists() && !myEncryptionMap.isNull()) {
+			myModelReader.insertEncryptedSectionParagraph();
+		}
+		return false;
+	}
 }
 
 bool XHTMLReader::addStyleEntry(const std::string tag, const std::string aClass) {
