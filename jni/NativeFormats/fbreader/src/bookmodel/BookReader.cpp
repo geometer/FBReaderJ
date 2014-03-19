@@ -244,7 +244,7 @@ void BookReader::addVideoEntry(const ZLVideoEntry &entry) {
 void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {
 	if (myCurrentTextModel != 0 && mySectionContainsRegularContents) {
 		std::size_t size = myCurrentTextModel->paragraphsNumber();
-		if ((size > 0) && (((*myCurrentTextModel)[(std::size_t)-1])->kind() != kind)) {
+		if (size > 0 && ((*myCurrentTextModel)[(std::size_t)-1])->kind() != kind) {
 			endParagraph();
 			((ZLTextPlainModel&)*myCurrentTextModel).createParagraph(kind);
 			mySectionContainsRegularContents = false;
@@ -258,6 +258,13 @@ void BookReader::insertEndOfSectionParagraph() {
 
 void BookReader::insertEndOfTextParagraph() {
 	insertEndParagraph(ZLTextParagraph::END_OF_TEXT_PARAGRAPH);
+}
+
+void BookReader::insertEncryptedSectionParagraph() {
+	beginParagraph(ZLTextParagraph::ENCRYPTED_SECTION_PARAGRAPH);
+	endParagraph();
+	beginParagraph(ZLTextParagraph::END_OF_SECTION_PARAGRAPH);
+	endParagraph();
 }
 
 void BookReader::addImageReference(const std::string &id, short vOffset, bool isCover) {
