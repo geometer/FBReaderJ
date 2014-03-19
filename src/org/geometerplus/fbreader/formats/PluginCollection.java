@@ -128,6 +128,7 @@ public class PluginCollection {
 		if (fileType == null) {
 			return null;
 		}
+
 		switch (formatType) {
 			case NONE:
 				return null;
