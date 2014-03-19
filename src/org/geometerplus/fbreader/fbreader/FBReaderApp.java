@@ -41,6 +41,37 @@ import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
+	public interface ExternalFileOpener {
+		public boolean openFile(ZLFile f, String appData);
+	}
+	
+	public interface PluginFileOpener {
+		public void openFile(String appData, String book, String bookmark);
+	}
+
+	protected ExternalFileOpener myExternalFileOpener;
+	protected PluginFileOpener myPluginFileOpener;
+
+	public void setExternalFileOpener(ExternalFileOpener o) {
+		myExternalFileOpener = o;
+	}
+	
+	public boolean externalFileOpenerIsSet() {
+		return myExternalFileOpener != null;
+	}
+
+	public void setPluginFileOpener(PluginFileOpener o) {
+		myPluginFileOpener = o;
+	}
+
+	public boolean pluginFileOpenerIsSet() {
+		return myPluginFileOpener != null;
+	}
+	
+	public PluginFileOpener getPluginFileOpener() {
+		return myPluginFileOpener;
+	}
+
 	public final MiscOptions MiscOptions = new MiscOptions();
 	public final ImageOptions ImageOptions = new ImageOptions();
 	public final ViewOptions ViewOptions = new ViewOptions();
