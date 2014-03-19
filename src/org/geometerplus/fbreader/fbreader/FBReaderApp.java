@@ -200,8 +200,9 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
-					final ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
-					myPluginFileOpener.openFile(((PluginFormatPlugin)p).getPackage(), bookToOpen, bm);
+					final PluginFormatPlugin pfp = (PluginFormatPlugin)p;
+					final ZLFile f = pfp.prepareFile(bookToOpen.File);
+					myPluginFileOpener.openFile(pfp.getPackage(), bookToOpen, bm);
 				}
 			}, postAction);
 			return;
