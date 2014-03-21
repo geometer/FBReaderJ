@@ -22,17 +22,13 @@ package org.geometerplus.fbreader.book;
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.*;
-import java.io.ByteArrayInputStream;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
@@ -87,7 +83,7 @@ public class Book extends TitledEntity {
 	}
 
 	public void updateFrom(Book book) {
-		if (myId != book.myId) {
+		if (book == null || myId != book.myId) {
 			return;
 		}
 		setTitle(book.getTitle());
@@ -569,21 +565,7 @@ public class Book extends TitledEntity {
 		}
 		ZLImage image = null;
 		try {
-			final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
-			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
-			if (plugin != null) {
-				try {
-					image = new PluginImage(File, ((PluginFormatPlugin)plugin).getPackage());
-					if (image != null) {
-						myCover = new WeakReference<ZLImage>(image);
-					}
-					return image;
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
-			} else {
-				image = getPlugin().readCover(File);
-			}
+			image = getPlugin().readCover(File);
 		} catch (BookReadingException e) {
 			// ignore
 		}

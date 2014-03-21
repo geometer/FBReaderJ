@@ -306,13 +306,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Direktorioak">
 			<node name="summary" value="Fitxategiak bilatzeko direktorioak"/>
-			<node name="temp" value="Behin-behineko fitxategien direktorioa"/>
-			<node name="bookPath" value="Liburuen direktorioak"/>
-			<node name="fontPath" value="Letra-tipoen direktorioak"/>
-			<node name="wallpaperPath" value="Atzeko irudien direktorioak"/>
 			<node name="books" value="Liburuen direktorioa"/>
 			<node name="fonts" value="Letra-tipoen direktorioa"/>
 			<node name="wallpapers" value="Atzeko irudien direktorioa"/>
+			<node name="bookPath" value="Liburuen direktorioak"/>
+			<node name="fontPath" value="Letra-tipoen direktorioak"/>
+			<node name="wallpaperPath" value="Atzeko irudien direktorioak"/>
+			<node name="tempDir" value="Behin-behineko fitxategien direktorioa"/>
 		</node>
 		<node name="appearance" value="Itxura">
 			<node name="summary" value="Pantaila ezarpenak, egoera barra, botoien argiak"/>
@@ -879,6 +879,7 @@
 		<node name="pluginNotFound" value="Ez dago gehigarririk '%s' (r)entzat"/>
 		<node name="unknownPluginType" value="Gehigarri mota ezezaguna: %s"/>
 		<node name="fileNotFound" value="Aurkitzen ez den fitxategia: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="Ez da OPF aurkitzen %s (e)n"/>
 		<node name="unsupportedFileFormat" value="Ez da onartzen  '%s' (r)en fitxategi formatua"/>
 		<node name="errorParsingRtf" value="RTF prozesatzerakoan hemen: %s"/>
@@ -900,6 +901,7 @@
 		<node name="formatExists" value="Formatua dagoneko %s(e)k du"/>
 		<node name="unzipFailed" value="Ezin izan da liburua deskonprimatu"/>
 		<node name="noPlugin" value="Gehigarria instalatu fitxategi-mota hau irakurtzeko"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Nabigatzailea"/>
@@ -951,6 +953,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="PDF formatuan dauden liburuak irakurri"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Eman buelta gailuari liburua irakurtzeko. Testua pantailara itzul daiten, sakatu beheko botoia."/>

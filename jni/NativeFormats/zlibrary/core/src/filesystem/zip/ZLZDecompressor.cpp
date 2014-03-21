@@ -45,7 +45,7 @@ ZLZDecompressor::~ZLZDecompressor() {
 }
 
 std::size_t ZLZDecompressor::decompress(ZLInputStream &stream, char *buffer, std::size_t maxSize) {
-	while ((myBuffer.length() < maxSize) && (myAvailableSize > 0)) {
+	while (myBuffer.length() < maxSize && myAvailableSize > 0) {
 		std::size_t size = std::min(myAvailableSize, (std::size_t)IN_BUFFER_SIZE);
 
 		myZStream->next_in = (Bytef*)myInBuffer;

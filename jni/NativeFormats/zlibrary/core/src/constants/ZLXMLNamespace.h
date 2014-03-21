@@ -40,6 +40,10 @@ public:
 	static const std::string Opds;
 	static const std::string DaisyNCX;
 	static const std::string Svg;
+	static const std::string MarlinEpub;
+	static const std::string XMLEncryption;
+	static const std::string XMLDigitalSignature;
+	static const std::string EpubContainer;
 };
 
 #endif /* __ZLXMLNAMESPACE_H__ */

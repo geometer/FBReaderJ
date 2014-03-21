@@ -94,15 +94,10 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				return null;
 			}
 			try {
-				String s = myServices.get(appData).readBitmap(f.getPath());
-				try {
-					byte [] encodeByte = Base64.decode(s, Base64.DEFAULT);
-					Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-					return new ZLBitmapImage(bitmap);
-				} catch(Exception e){
-					e.getMessage();
-					return null;
-				}
+				final String s = myServices.get(appData).readBitmap(f.getPath());
+				final byte[] encodeByte = Base64.decode(s, Base64.DEFAULT);
+				final Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+				return new ZLBitmapImage(bitmap);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;

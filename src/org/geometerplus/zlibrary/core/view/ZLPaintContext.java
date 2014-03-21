@@ -48,7 +48,7 @@ abstract public class ZLPaintContext {
 	private boolean myFontIsStrikedThrough;
 
 	public final void setFont(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrough) {
-		if ((family != null) && !myFontFamily.equals(family)) {
+		if (family != null && !myFontFamily.equals(family)) {
 			myFontFamily = family;
 			myResetFont = true;
 		}

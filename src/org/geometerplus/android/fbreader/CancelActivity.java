@@ -48,18 +48,15 @@ public class CancelActivity extends ListActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		myCollection = new BookCollectionShadow();
-		myCollection.bindToService(this, new Runnable() {
+		final BookCollectionShadow collection = new BookCollectionShadow();
+		myCollection = collection;
+		collection.bindToService(this, new Runnable() {
 			public void run() {
-				Config.Instance().runOnStart(new Runnable() {
-					public void run() {
-						final ActionListAdapter adapter = new ActionListAdapter(
-							new CancelMenuHelper().getActionsList(myCollection)
-						);
-						setListAdapter(adapter);
-						getListView().setOnItemClickListener(adapter);
-					}
-				});
+				final ActionListAdapter adapter = new ActionListAdapter(
+					new CancelMenuHelper().getActionsList(collection)
+				);
+				setListAdapter(adapter);
+				getListView().setOnItemClickListener(adapter);
 			}
 		});
 	}

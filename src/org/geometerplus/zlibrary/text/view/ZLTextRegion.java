@@ -112,6 +112,12 @@ public final class ZLTextRegion {
 		}
 	};
 
+	public static Filter VideoFilter = new Filter() {
+		public boolean accepts(ZLTextRegion region) {
+			return region.getSoul() instanceof ZLTextVideoRegionSoul;
+		}
+	};
+
 	public static Filter ImageOrHyperlinkFilter = new Filter() {
 		public boolean accepts(ZLTextRegion region) {
 			final Soul soul = region.getSoul();

@@ -20,58 +20,15 @@
 #include <cctype>
 #include <cstring>
 
-#include <ZLStringUtil.h>
+#include <ZLFile.h>
 #include <ZLInputStream.h>
+#include <ZLStringUtil.h>
 #include <ZLLogger.h>
 
 #include "StyleSheetParser.h"
+#include "../util/MiscUtil.h"
 
-StyleSheetTableParser::StyleSheetTableParser(StyleSheetTable &table) : myTable(table) {
-	//ZLLogger::Instance().registerClass("CSS");
-}
-
-void StyleSheetTableParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
-	std::string s = selector;
-	ZLStringUtil::stripWhiteSpaces(s);
-
-	if (s.empty()) {
-		return;
-	}
-
-	if (s[0] == '@') {
-		processAtRule(s, map);
-		return;
-	}
-
-	const std::vector<std::string> ids = ZLStringUtil::split(s, ",");
-	for (std::vector<std::string>::const_iterator it = ids.begin(); it != ids.end(); ++it) {
-		std::string id = *it;
-		ZLStringUtil::stripWhiteSpaces(id);
-		if (!id.empty()) {
-			const std::size_t index = id.find('.');
-			if (index == std::string::npos) {
-				myTable.addMap(id, std::string(), map);
-			} else {
-				myTable.addMap(id.substr(0, index), id.substr(index + 1), map);
-			}
-		}
-	}
-}
-
-void StyleSheetTableParser::processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map) {
-	if (name == "@font-face") {
-	}
-}
-
-shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char *text) {
-	myReadState = WAITING_FOR_ATTRIBUTE;
-	parse(text, std::strlen(text), true);
-	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createControl(myMap);
-	reset();
-	return control;
-}
-
-StyleSheetParser::StyleSheetParser() {
+StyleSheetParser::StyleSheetParser(const std::string &pathPrefix) : myPathPrefix(pathPrefix) {
 	reset();
 }
 
@@ -85,21 +42,6 @@ void StyleSheetParser::reset() {
 	myInsideComment = false;
 	mySelectorString.erase();
 	myMap.clear();
-}
-
-void StyleSheetParser::parse(ZLInputStream &stream) {
-	if (stream.open()) {
-		char *buffer = new char[1024];
-		while (true) {
-			int len = stream.read(buffer, 1024);
-			if (len == 0) {
-				break;
-			}
-			parse(buffer, len);
-		}
-		delete[] buffer;
-		stream.close();
-	}
 }
 
 void StyleSheetParser::parse(const char *text, int len, bool final) {
@@ -149,9 +91,6 @@ bool StyleSheetParser::isControlSymbol(const char symbol) {
 }
 
 void StyleSheetParser::storeData(const std::string&, const StyleSheetTable::AttributeMap&) {
-}
-
-void StyleSheetParser::processAtRule(const std::string&, const StyleSheetTable::AttributeMap&) {
 }
 
 void StyleSheetParser::processControl(const char control) {
@@ -239,5 +178,126 @@ void StyleSheetParser::processWordWithoutComments(const std::string &word) {
 			}
 			break;
 		}
+	}
+}
+
+StyleSheetSingleStyleParser::StyleSheetSingleStyleParser(const std::string &pathPrefix) : StyleSheetParser(pathPrefix) {
+}
+
+shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char *text) {
+	myReadState = WAITING_FOR_ATTRIBUTE;
+	parse(text, std::strlen(text), true);
+	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createControl(myMap);
+	reset();
+	return control;
+}
+
+StyleSheetMultiStyleParser::StyleSheetMultiStyleParser(const std::string &pathPrefix) : StyleSheetParser(pathPrefix) {
+}
+
+void StyleSheetMultiStyleParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
+	std::string s = selector;
+	ZLStringUtil::stripWhiteSpaces(s);
+
+	if (s.empty()) {
+		return;
+	}
+
+	if (s[0] == '@') {
+		processAtRule(s, map);
+		return;
+	}
+
+	const std::vector<std::string> ids = ZLStringUtil::split(s, ",");
+	for (std::vector<std::string>::const_iterator it = ids.begin(); it != ids.end(); ++it) {
+		std::string id = *it;
+		ZLStringUtil::stripWhiteSpaces(id);
+		if (!id.empty()) {
+			const std::size_t index = id.find('.');
+			if (index == std::string::npos) {
+				store(id, std::string(), map);
+			} else {
+				store(id.substr(0, index), id.substr(index + 1), map);
+			}
+		}
+	}
+}
+
+static std::string firstValue(const StyleSheetTable::AttributeMap &map, const std::string &key) {
+	const StyleSheetTable::AttributeMap::const_iterator it = map.find(key);
+	if (it == map.end() || it->second.empty()) {
+		return std::string();
+	}
+	return it->second[0];
+}
+
+void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &attributes) {
+	ZLLogger::Instance().registerClass("FONT");
+	if (name == "@font-face") {
+		const std::string family = firstValue(attributes, "font-family");
+		if (family.empty()) {
+			ZLLogger::Instance().println("FONT", "Font family not specified in @font-face entry");
+			return;
+		}
+		const StyleSheetTable::AttributeMap::const_iterator it = attributes.find("src");
+		std::string url;
+		if (it != attributes.end()) {
+			for (std::vector<std::string>::const_iterator jt = it->second.begin(); jt != it->second.end(); ++jt) {
+				if (ZLStringUtil::stringStartsWith(*jt, "url(") &&
+						ZLStringUtil::stringEndsWith(*jt, ")")) {
+					url = jt->substr(4, jt->size() - 5);
+					if (url.size() > 2 && url[0] == url[url.size() - 1]) {
+						if (url[0] == '\'' || url[0] == '"') {
+							url = url.substr(1, url.size() - 2);
+						}
+					}
+					break;
+				}
+			}
+		}
+		if (url.empty()) {
+			ZLLogger::Instance().println("FONT", "Source not specified for " + family);
+			return;
+		}
+		const ZLFile fontFile(myPathPrefix + MiscUtil::decodeHtmlURL(url));
+		const bool bold = firstValue(attributes, "font-weight") == "bold";
+		const bool italic = firstValue(attributes, "font-style") == "italic";
+		ZLLogger::Instance().println("FONT", family + " => " + fontFile.path());
+	}
+}
+
+void StyleSheetMultiStyleParser::parseStream(ZLInputStream &stream) {
+	if (stream.open()) {
+		char *buffer = new char[1024];
+		while (true) {
+			int len = stream.read(buffer, 1024);
+			if (len == 0) {
+				break;
+			}
+			parse(buffer, len);
+		}
+		delete[] buffer;
+		stream.close();
+	}
+}
+
+StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &table) : StyleSheetMultiStyleParser(pathPrefix), myTable(table) {
+}
+
+void StyleSheetTableParser::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
+	myTable.addMap(tag, aClass, map);
+}
+
+StyleSheetParserWithCache::StyleSheetParserWithCache(const std::string &pathPrefix) : StyleSheetMultiStyleParser(pathPrefix) {
+}
+
+void StyleSheetParserWithCache::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
+	myEntries.push_back(new Entry(tag, aClass, map));
+}
+
+void StyleSheetParserWithCache::applyToTable(StyleSheetTable &table) const {
+	for (std::list<shared_ptr<Entry> >::const_iterator it = myEntries.begin(); it != myEntries.end(); ++it) {
+		const Entry &entry = **it;
+		table.addMap(entry.Tag, entry.Class, entry.Map);
 	}
 }

@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.formats.pdb;
 
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.encodings.Encoding;
@@ -121,6 +122,11 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 				}
 			}
 		}
+	}
+
+	@Override
+	public String readEncryptionMethod(Book book) {
+		return EncryptionMethod.NONE;
 	}
 
 	@Override

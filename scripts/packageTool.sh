@@ -18,19 +18,7 @@ updateVersion() {
 		android-1.5)
 			variant=0
 			;;
-		ice-cream-sandwich)
-			variant=2
-			;;
-		yota)
-			variant=2
-			;;
-		yota2)
-			variant=2
-			;;
-		kindle)
-			variant=2
-			;;
-		*-ics)
+		ice-cream-sandwich|yota|yota2|kindle|betayota|yotabeta|*-ics)
 			variant=2
 			;;
 		*)
@@ -38,7 +26,7 @@ updateVersion() {
 			;;
 	esac
 		
-	if [ "$branch" == "beta-ics" -o "$branch" == "beta" ]; then
+	if [ "$branch" == "beta-ics" -o "$branch" == "beta" -o "$branch" == "betayota" -o "$branch" == "yotabeta" ]; then
 		version=`cat VERSION-BETA`
 		major=1
 		minor=9

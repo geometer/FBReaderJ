@@ -20,6 +20,8 @@
 #ifndef __STYLESHEETPARSER_H__
 #define __STYLESHEETPARSER_H__
 
+#include <list>
+
 #include "StyleSheetTable.h"
 
 class ZLInputStream;
@@ -27,23 +29,24 @@ class ZLInputStream;
 class StyleSheetParser {
 
 protected:
-	StyleSheetParser();
+	StyleSheetParser(const std::string &pathPrefix);
 
 public:
 	virtual ~StyleSheetParser();
 	void reset();
-	void parse(ZLInputStream &stream);
 	void parse(const char *text, int len, bool final = false);
 
 protected:
 	virtual void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
-	virtual void processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map);
 
 private:
 	bool isControlSymbol(const char symbol);
 	void processWord(std::string &word);
 	void processWordWithoutComments(const std::string &word);
 	void processControl(const char control);
+
+protected:
+	const std::string myPathPrefix;
 
 private:
 	std::string myWord;
@@ -62,23 +65,64 @@ private:
 friend class StyleSheetSingleStyleParser;
 };
 
-class StyleSheetTableParser : public StyleSheetParser {
+class StyleSheetSingleStyleParser : public StyleSheetParser {
 
 public:
-	StyleSheetTableParser(StyleSheetTable &table);
+	StyleSheetSingleStyleParser(const std::string &pathPrefix);
+	shared_ptr<ZLTextStyleEntry> parseString(const char *text);
+};
+
+class StyleSheetMultiStyleParser : public StyleSheetParser {
+
+protected:
+	StyleSheetMultiStyleParser(const std::string &pathPrefix);
+
+public:
+	void parseStream(ZLInputStream &stream);
+
+protected:
+	virtual void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) = 0;
 
 private:
 	void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
 	void processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map);
+};
+
+class StyleSheetTableParser : public StyleSheetMultiStyleParser {
+
+public:
+	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &table);
+
+private:
+	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
 
 private:
 	StyleSheetTable &myTable;
 };
 
-class StyleSheetSingleStyleParser : public StyleSheetParser {
+class StyleSheetParserWithCache : public StyleSheetMultiStyleParser {
+
+private:
+	struct Entry {
+		const std::string Tag;
+		const std::string Class;
+		const StyleSheetTable::AttributeMap Map;
+
+		Entry(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
+	};
 
 public:
-	shared_ptr<ZLTextStyleEntry> parseString(const char *text);
+	StyleSheetParserWithCache(const std::string &pathPrefix);
+	void applyToTable(StyleSheetTable &table) const;
+
+private:
+	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
+
+private:
+	std::list<shared_ptr<Entry> > myEntries;
 };
+
+inline StyleSheetParserWithCache::Entry::Entry(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) : Tag(tag), Class(aClass), Map(map) {
+}
 
 #endif /* __STYLESHEETPARSER_H__ */

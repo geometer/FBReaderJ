@@ -416,6 +416,7 @@ public class NetworkLibrary {
 			new AddCustomCatalogItemTree(myRootTree);
 		}
 
+		boolean changedCatalogsList = false;
 		int index = 1;
 		for (INetworkLink link : activeLinks()) {
 			final List<NetworkCatalogTree> trees = linkToTreeMap.remove(link);
@@ -425,13 +426,19 @@ public class NetworkLibrary {
 				}
 			} else {
 				new NetworkCatalogRootTree(myRootTree, link, index++);
+				changedCatalogsList = true;
 			}
 		}
 
 		for (List<NetworkCatalogTree> trees : linkToTreeMap.values()) {
 			for (NetworkCatalogTree t : trees) {
 				t.removeSelf();
+				changedCatalogsList = true;
 			}
+		}
+
+		if (changedCatalogsList) {
+			mySearchItem.setPattern(null);
 		}
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);

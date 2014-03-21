@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.formats.fb2;
 
+import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -45,6 +46,11 @@ public class FB2Plugin extends JavaFormatPlugin {
 	@Override
 	public void readMetaInfo(Book book) throws BookReadingException {
 		new FB2MetaInfoReader(book).readMetaInfo();
+	}
+
+	@Override
+	public String readEncryptionMethod(Book book) {
+		return EncryptionMethod.NONE;
 	}
 
 	@Override

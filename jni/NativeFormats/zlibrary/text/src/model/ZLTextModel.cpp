@@ -26,11 +26,12 @@
 //#include <ZLLanguageUtil.h>
 #include <ZLUnicodeUtil.h>
 //#include <ZLStringUtil.h>
-//#include <ZLLogger.h>
+#include <ZLLogger.h>
 
 #include "ZLTextModel.h"
 #include "ZLTextParagraph.h"
 #include "ZLTextStyleEntry.h"
+#include "ZLVideoEntry.h"
 
 ZLTextModel::ZLTextModel(const std::string &id, const std::string &language, const std::size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension) :
@@ -348,6 +349,31 @@ void ZLTextModel::addBidiReset() {
 	myLastEntryStart = myAllocator->allocate(2);
 	*myLastEntryStart = ZLTextParagraphEntry::RESET_BIDI_ENTRY;
 	*(myLastEntryStart + 1) = 0;
+	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();
+}
+
+void ZLTextModel::addVideoEntry(const ZLVideoEntry &entry) {
+	const std::map<std::string,std::string> &sources = entry.sources();
+
+	std::size_t len = 4;
+	for (std::map<std::string,std::string>::const_iterator it = sources.begin(); it != sources.end(); ++it) {
+		len += 2 * (ZLUnicodeUtil::utf8Length(it->first) + ZLUnicodeUtil::utf8Length(it->second)) + 4;	
+	}
+
+	myLastEntryStart = myAllocator->allocate(len);
+	*myLastEntryStart = ZLTextParagraphEntry::VIDEO_ENTRY;
+	*(myLastEntryStart + 1) = 0;
+	char *p = ZLCachedMemoryAllocator::writeUInt16(myLastEntryStart + 2, sources.size());
+	for (std::map<std::string,std::string>::const_iterator it = sources.begin(); it != sources.end(); ++it) {
+		ZLUnicodeUtil::Ucs2String first;
+		ZLUnicodeUtil::utf8ToUcs2(first, it->first);
+		p = ZLCachedMemoryAllocator::writeString(p, first);
+		ZLUnicodeUtil::Ucs2String second;
+		ZLUnicodeUtil::utf8ToUcs2(second, it->second);
+		p = ZLCachedMemoryAllocator::writeString(p, second);
+	}
+
 	myParagraphs.back()->addEntry(myLastEntryStart);
 	++myParagraphLengths.back();
 }

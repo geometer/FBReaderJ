@@ -28,6 +28,7 @@
 #include <ZLXMLNamespace.h>
 #include <ZLInputStream.h>
 #include <ZLLogger.h>
+#include <FileEncryptionInfo.h>
 
 #include "XHTMLReader.h"
 #include "../util/EntityFilesCollector.h"
@@ -59,42 +60,82 @@ void XHTMLTagAction::endParagraph(XHTMLReader &reader) {
 	reader.endParagraph();
 }
 
-class XHTMLTagStyleAction : public XHTMLTagAction {
+class XHTMLGlobalTagAction : public XHTMLTagAction {
+
+private:
+	bool isEnabled(XHTMLReadingState state);
+};
+
+class XHTMLTextModeTagAction : public XHTMLTagAction {
+
+private:
+	bool isEnabled(XHTMLReadingState state);
+};
+
+bool XHTMLGlobalTagAction::isEnabled(XHTMLReadingState state) {
+	return true;
+}
+
+bool XHTMLTextModeTagAction::isEnabled(XHTMLReadingState state) {
+	return state == XHTML_READ_BODY;
+}
+
+class XHTMLTagStyleAction : public XHTMLGlobalTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
 	void doAtEnd(XHTMLReader &reader);
 };
 
-class XHTMLTagLinkAction : public XHTMLTagAction {
+class XHTMLTagLinkAction : public XHTMLGlobalTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
 	void doAtEnd(XHTMLReader &reader);
 };
 
-class XHTMLTagParagraphAction : public XHTMLTagAction {
+class XHTMLTagParagraphAction : public XHTMLTextModeTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
 	void doAtEnd(XHTMLReader &reader);
 };
 
-class XHTMLTagBodyAction : public XHTMLTagAction {
+class XHTMLTagBodyAction : public XHTMLGlobalTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
 	void doAtEnd(XHTMLReader &reader);
 };
 
-class XHTMLTagRestartParagraphAction : public XHTMLTagAction {
+class XHTMLTagRestartParagraphAction : public XHTMLTextModeTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
 	void doAtEnd(XHTMLReader &reader);
 };
 
-class XHTMLTagImageAction : public XHTMLTagAction {
+class XHTMLTagVideoAction : public XHTMLTagAction {
+
+private:
+	bool isEnabled(XHTMLReadingState state);
+
+public:
+	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
+	void doAtEnd(XHTMLReader &reader);
+};
+
+class XHTMLTagSourceAction : public XHTMLTagAction {
+
+private:
+	bool isEnabled(XHTMLReadingState state);
+
+public:
+	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
+	void doAtEnd(XHTMLReader &reader);
+};
+
+class XHTMLTagImageAction : public XHTMLTextModeTagAction {
 
 public:
 	XHTMLTagImageAction(shared_ptr<ZLXMLReader::NamePredicate> predicate);
@@ -119,7 +160,7 @@ private:
 friend class XHTMLTagSvgAction;
 };
 
-class XHTMLTagSvgAction : public XHTMLTagAction {
+class XHTMLTagSvgAction : public XHTMLTextModeTagAction {
 
 public:
 	XHTMLTagSvgAction(XHTMLSvgImageNamePredicate &predicate);
@@ -130,14 +171,14 @@ private:
 	XHTMLSvgImageNamePredicate &myPredicate;
 };
 
-class XHTMLTagItemAction : public XHTMLTagAction {
+class XHTMLTagItemAction : public XHTMLTextModeTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
 	void doAtEnd(XHTMLReader &reader);
 };
 
-class XHTMLTagHyperlinkAction : public XHTMLTagAction {
+class XHTMLTagHyperlinkAction : public XHTMLTextModeTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
@@ -147,7 +188,7 @@ private:
 	std::stack<FBTextKind> myHyperlinkStack;
 };
 
-class XHTMLTagControlAction : public XHTMLTagAction {
+class XHTMLTagControlAction : public XHTMLTextModeTagAction {
 
 public:
 	XHTMLTagControlAction(FBTextKind control);
@@ -159,7 +200,7 @@ private:
 	FBTextKind myControl;
 };
 
-class XHTMLTagParagraphWithControlAction : public XHTMLTagAction {
+class XHTMLTagParagraphWithControlAction : public XHTMLTextModeTagAction {
 
 public:
 	XHTMLTagParagraphWithControlAction(FBTextKind control);
@@ -171,7 +212,7 @@ private:
 	FBTextKind myControl;
 };
 
-class XHTMLTagPreAction : public XHTMLTagAction {
+class XHTMLTagPreAction : public XHTMLTextModeTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
@@ -186,16 +227,16 @@ void XHTMLTagStyleAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 		return;
 	}
 
-	if (reader.myReadState == XHTMLReader::READ_NOTHING) {
-		reader.myReadState = XHTMLReader::READ_STYLE;
-		reader.myTableParser = new StyleSheetTableParser(reader.myStyleSheetTable);
+	if (reader.myReadState == XHTML_READ_NOTHING) {
+		reader.myReadState = XHTML_READ_STYLE;
+		reader.myTableParser = new StyleSheetTableParser(reader.myPathPrefix, reader.myStyleSheetTable);
 		ZLLogger::Instance().println("CSS", "parsing style tag content");
 	}
 }
 
 void XHTMLTagStyleAction::doAtEnd(XHTMLReader &reader) {
-	if (reader.myReadState == XHTMLReader::READ_STYLE) {
-		reader.myReadState = XHTMLReader::READ_NOTHING;
+	if (reader.myReadState == XHTML_READ_STYLE) {
+		reader.myReadState = XHTML_READ_NOTHING;
 		reader.myTableParser.reset();
 	}
 }
@@ -203,13 +244,13 @@ void XHTMLTagStyleAction::doAtEnd(XHTMLReader &reader) {
 void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
 	static const std::string REL = "stylesheet";
 	const char *rel = reader.attributeValue(xmlattributes, "rel");
-	if ((rel == 0) || (REL != rel)) {
+	if (rel == 0 || REL != rel) {
 		return;
 	}
 	static const std::string TYPE = "text/css";
 
 	const char *type = reader.attributeValue(xmlattributes, "type");
-	if ((type == 0) || (TYPE != type)) {
+	if (type == 0 || TYPE != type) {
 		return;
 	}
 
@@ -218,16 +259,23 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 		return;
 	}
 
-	const std::string cssFilePath = reader.myPathPrefix + MiscUtil::decodeHtmlURL(href);
+	std::string cssFilePath = reader.myPathPrefix + MiscUtil::decodeHtmlURL(href);
+	//ZLLogger::Instance().registerClass("CSS");
 	ZLLogger::Instance().println("CSS", "style file: " + cssFilePath);
-	shared_ptr<ZLInputStream> cssStream = ZLFile(cssFilePath).inputStream();
-	if (cssStream.isNull()) {
-		return;
+	const ZLFile cssFile(cssFilePath);
+	cssFilePath = cssFile.path();
+	shared_ptr<StyleSheetParserWithCache> parser = reader.myFileParsers[cssFilePath];
+	if (parser.isNull()) {
+		parser = new StyleSheetParserWithCache(MiscUtil::htmlDirectoryPrefix(cssFilePath));
+		reader.myFileParsers[cssFilePath] = parser;
+		ZLLogger::Instance().println("CSS", "creating stream");
+		shared_ptr<ZLInputStream> cssStream = ZLFile(cssFilePath).inputStream(reader.myEncryptionMap);
+		if (!cssStream.isNull()) {
+			ZLLogger::Instance().println("CSS", "parsing file");
+			parser->parseStream(*cssStream);
+		}
 	}
-	ZLLogger::Instance().println("CSS", "parsing file");
-	StyleSheetTableParser parser(reader.myStyleSheetTable);
-	parser.parse(*cssStream);
-	//reader.myStyleSheetTable.dump();
+	parser->applyToTable(reader.myStyleSheetTable);
 }
 
 void XHTMLTagLinkAction::doAtEnd(XHTMLReader&) {
@@ -247,7 +295,7 @@ void XHTMLTagParagraphAction::doAtEnd(XHTMLReader &reader) {
 void XHTMLTagBodyAction::doAtStart(XHTMLReader &reader, const char**) {
 	++reader.myBodyCounter;
 	if (reader.myBodyCounter > 0) {
-		reader.myReadState = XHTMLReader::READ_BODY;
+		reader.myReadState = XHTML_READ_BODY;
 	}
 }
 
@@ -255,7 +303,7 @@ void XHTMLTagBodyAction::doAtEnd(XHTMLReader &reader) {
 	endParagraph(reader);
 	--reader.myBodyCounter;
 	if (reader.myBodyCounter <= 0) {
-		reader.myReadState = XHTMLReader::READ_NOTHING;
+		reader.myReadState = XHTML_READ_NOTHING;
 	}
 }
 
@@ -281,6 +329,43 @@ void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
 
 void XHTMLTagItemAction::doAtEnd(XHTMLReader &reader) {
 	endParagraph(reader);
+}
+
+bool XHTMLTagVideoAction::isEnabled(XHTMLReadingState state) {
+	return state == XHTML_READ_BODY || state == XHTML_READ_VIDEO;
+}
+
+void XHTMLTagVideoAction::doAtStart(XHTMLReader &reader, const char**) {
+	if (reader.myReadState == XHTML_READ_BODY) {
+		reader.myReadState = XHTML_READ_VIDEO;
+		reader.myVideoEntry = new ZLVideoEntry();
+	}
+}
+
+void XHTMLTagVideoAction::doAtEnd(XHTMLReader &reader) {
+	if (reader.myReadState == XHTML_READ_VIDEO) {
+		bookReader(reader).addVideoEntry(*reader.myVideoEntry);
+		reader.myVideoEntry.reset();
+		reader.myReadState = XHTML_READ_BODY;
+	}
+}
+
+bool XHTMLTagSourceAction::isEnabled(XHTMLReadingState state) {
+	return state == XHTML_READ_VIDEO;
+}
+
+void XHTMLTagSourceAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
+	const char *mime = reader.attributeValue(xmlattributes, "type");
+	const char *href = reader.attributeValue(xmlattributes, "src");
+	if (mime != 0 && href != 0) {
+		reader.myVideoEntry->addSource(
+			mime,
+			ZLFile(pathPrefix(reader) + MiscUtil::decodeHtmlURL(href)).path()
+		);
+	}
+}
+
+void XHTMLTagSourceAction::doAtEnd(XHTMLReader &reader) {
 }
 
 XHTMLTagImageAction::XHTMLTagImageAction(shared_ptr<ZLXMLReader::NamePredicate> predicate) {
@@ -519,10 +604,13 @@ void XHTMLReader::fillTagTable() {
 		//addAction("tr", new XHTMLTagAction());
 		//addAction("caption", new XHTMLTagAction());
 		//addAction("span", new XHTMLTagAction());
+
+		addAction("video", new XHTMLTagVideoAction());
+		addAction("source", new XHTMLTagSourceAction());
 	}
 }
 
-XHTMLReader::XHTMLReader(BookReader &modelReader) : myModelReader(modelReader) {
+XHTMLReader::XHTMLReader(BookReader &modelReader, shared_ptr<EncryptionMap> map) : myModelReader(modelReader), myEncryptionMap(map) {
 	myMarkNextImageAsCover = false;
 }
 
@@ -542,7 +630,7 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 
 	myPreformatted = false;
 	myNewParagraphInProgress = false;
-	myReadState = READ_NOTHING;
+	myReadState = XHTML_READ_NOTHING;
 	myBodyCounter = 0;
 	myCurrentParagraphIsEmpty = true;
 
@@ -552,10 +640,18 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	myStylesToRemove = 0;
 
 	myDoPageBreakAfterStack.clear();
-	myStyleParser = new StyleSheetSingleStyleParser();
+	myStyleParser = new StyleSheetSingleStyleParser(myPathPrefix);
 	myTableParser.reset();
 
-	return readDocument(file);
+	shared_ptr<ZLInputStream> stream = file.inputStream(myEncryptionMap);
+	if (!stream.isNull()) {
+		return readDocument(file.inputStream(myEncryptionMap));
+	} else {
+		if (file.exists() && !myEncryptionMap.isNull()) {
+			myModelReader.insertEncryptedSectionParagraph();
+		}
+		return false;
+	}
 }
 
 bool XHTMLReader::addStyleEntry(const std::string tag, const std::string aClass) {
@@ -577,29 +673,54 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 
 	const std::string sTag = ZLUnicodeUtil::toLower(tag);
 
-	const char *aClass = attributeValue(attributes, "class");
-	const std::string sClass = (aClass != 0) ? aClass : "";
+	std::vector<std::string> classesList;
+	const char *aClasses = attributeValue(attributes, "class");
+	if (aClasses != 0) {
+		const std::vector<std::string> split = ZLStringUtil::split(aClasses, " ");
+		for (std::vector<std::string>::const_iterator it = split.begin(); it != split.end(); ++it) {
+			if (!it->empty()) {
+				classesList.push_back(*it);
+			}
+		}
+	}
+	if (classesList.empty()) {
+		classesList.push_back("");
+	}
 
-	if (myStyleSheetTable.doBreakBefore(sTag, sClass)) {
+	bool breakBefore = false;
+	bool breakAfter = false;
+	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
+		// TODO: use 3-value logic (yes, no, inherit)
+		if (myStyleSheetTable.doBreakBefore(sTag, *it)) {
+			breakBefore = true;
+		}
+		// TODO: use 3-value logic (yes, no, inherit)
+		if (myStyleSheetTable.doBreakAfter(sTag, *it)) {
+			breakAfter = true;
+		}
+	}
+	if (breakBefore) {
 		myModelReader.insertEndOfSectionParagraph();
 	}
-	myDoPageBreakAfterStack.push_back(myStyleSheetTable.doBreakAfter(sTag, sClass));
+	myDoPageBreakAfterStack.push_back(breakAfter);
 
 	XHTMLTagAction *action = getAction(sTag);
-	if (action != 0) {
+	if (action != 0 && action->isEnabled(myReadState)) {
 		action->doAtStart(*this, attributes);
 	}
 
 	const int sizeBefore = myStyleEntryStack.size();
 	addStyleEntry(sTag, "");
-	addStyleEntry("", sClass);
-	addStyleEntry(sTag, sClass);
-	const char *style = attributeValue(attributes, "style");
-	if (style != 0) {
-		ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
-		shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseString(style);
-		myModelReader.addStyleEntry(*entry);
-		myStyleEntryStack.push_back(entry);
+	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
+		addStyleEntry("", *it);
+		addStyleEntry(sTag, *it);
+		const char *style = attributeValue(attributes, "style");
+		if (style != 0) {
+			ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
+			shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseString(style);
+			myModelReader.addStyleEntry(*entry);
+			myStyleEntryStack.push_back(entry);
+		}
 	}
 	myCSSStack.push_back(myStyleEntryStack.size() - sizeBefore);
 }
@@ -612,7 +733,7 @@ void XHTMLReader::endElementHandler(const char *tag) {
 	myCSSStack.pop_back();
 
 	XHTMLTagAction *action = getAction(tag);
-	if (action != 0) {
+	if (action != 0 && action->isEnabled(myReadState)) {
 		action->doAtEnd(*this);
 		myNewParagraphInProgress = false;
 	}
@@ -674,14 +795,15 @@ void XHTMLReader::endParagraph() {
 
 void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 	switch (myReadState) {
-		case READ_NOTHING:
+		case XHTML_READ_NOTHING:
+		case XHTML_READ_VIDEO:
 			break;
-		case READ_STYLE:
+		case XHTML_READ_STYLE:
 			if (!myTableParser.isNull()) {
 				myTableParser->parse(text, len);
 			}
 			break;
-		case READ_BODY:
+		case XHTML_READ_BODY:
 			if (myPreformatted) {
 				if (*text == '\r' || *text == '\n') {
 					endParagraph();

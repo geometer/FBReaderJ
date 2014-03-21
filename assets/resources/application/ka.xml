@@ -259,7 +259,7 @@
 		<node name="clearSelection" value="ნიშნულის მოხსნა"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
+		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="პარამეტრები"/>
@@ -311,13 +311,13 @@
 	<node name="Preferences">
 		<node name="directories" value="კატალოგები">
 			<node name="summary" value="სად მოიძებნოს ფაილები"/>
-			<node name="temp" value="Temp files directory" toBeTranslated="true"/>
-			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="კატალოგი წიგნებით"/>
 			<node name="fonts" value="კატალოგი შრიფტებით"/>
 			<node name="wallpapers" value="კატალოგი ფონის სურათებით"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
 		</node>
 		<node name="appearance" value="გარეგნობა">
 			<node name="summary" value="ეკრანი, სტატუს ბარი, ღილაკების განათება"/>
@@ -741,7 +741,7 @@
 			<node name="summary" value="ვერსია, კონტაქტები"/>
 			<node name="version" value="ვერსია"/>
 			<node name="site" value="ჩვენი ვებ-გვერდი">
-				<node name="url" value="http://fbreader.ru/"/>
+				<node name="url" value="http://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="მოგვწერეთ წერილი">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -884,6 +884,7 @@
 		<node name="pluginNotFound" value="ვერ მოიძებნა პლაგინი '%s'-სთვის"/>
 		<node name="unknownPluginType" value="უცნობი ტიპის პლაგინი: %s"/>
 		<node name="fileNotFound" value="არ მოიძებნა ფაილი: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="არ მოიძებნა OPF %s-ში"/>
 		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
 		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
@@ -905,6 +906,7 @@
 		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
 		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
 		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="ბრაუზერი"/>
@@ -931,7 +933,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="http://ru.fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Install plugins" toBeTranslated="true">
 		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
@@ -956,6 +958,9 @@
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

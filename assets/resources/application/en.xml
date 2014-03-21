@@ -306,13 +306,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Directories">
 			<node name="summary" value="Directories to seek for files"/>
-			<node name="temp" value="Temp files directory"/>
-			<node name="bookPath" value="Books directories"/>
-			<node name="fontPath" value="Fonts directories"/>
-			<node name="wallpaperPath" value="Wallpapers directories"/>
 			<node name="books" value="Books directory"/>
 			<node name="fonts" value="Fonts directory"/>
 			<node name="wallpapers" value="Wallpapers directory"/>
+			<node name="bookPath" value="Where to seek for books"/>
+			<node name="fontPath" value="Where to seek for fonts"/>
+			<node name="wallpaperPath" value="Where to seek for background images"/>
+			<node name="tempDir" value="Where to store temporary files"/>
 		</node>
 		<node name="appearance" value="Appearance">
 			<node name="summary" value="Display settings, status bar, button lights"/>
@@ -822,7 +822,7 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
-			<node name="extrcact" value="Preparing file for external app. Please, wait…"/>		
+			<node name="extrcact" value="Preparing file for external app. Please, wait…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
@@ -879,6 +879,7 @@
 		<node name="pluginNotFound" value="No plugin for '%s'"/>
 		<node name="unknownPluginType" value="Unknown plugin type: %s"/>
 		<node name="fileNotFound" value="File not found: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable"/>
 		<node name="opfFileNotFound" value="OPF is not found in %s"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
 		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
@@ -900,6 +901,7 @@
 		<node name="formatExists" value="Extension already supported by %s"/>
 		<node name="unzipFailed" value="Failed to unzip book for external use"/>
 		<node name="noPlugin" value="Please install plugin to read this file type"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -951,6 +953,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Read books in PDF format"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below."/>

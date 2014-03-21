@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.formats;
 
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.encodings.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -87,6 +88,11 @@ public class ExternalFormatPlugin extends FormatPlugin {
 		if (myInfoReader != null) {
 			myInfoReader.readMetaInfo(book);
 		}
+	}
+
+	@Override
+	public String readEncryptionMethod(Book book) {
+		return EncryptionMethod.NONE;
 	}
 
 	@Override

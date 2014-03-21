@@ -84,6 +84,9 @@ public:
 	static shared_ptr<VoidMethod> Method_java_io_InputStream_close;
 	static shared_ptr<IntMethod> Method_java_io_InputStream_read;
 	static shared_ptr<LongMethod> Method_java_io_InputStream_skip;
+	static shared_ptr<VoidMethod> Method_java_io_InputStream_mark;
+	static shared_ptr<BooleanMethod> Method_java_io_InputStream_markSupported;
+	static shared_ptr<VoidMethod> Method_java_io_InputStream_reset;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_ZLibrary_Instance;
 	static shared_ptr<StringMethod> Method_ZLibrary_getVersionName;

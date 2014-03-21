@@ -42,6 +42,7 @@ public abstract class FormatPlugin {
 		return file;
 	}
 	public abstract void readMetaInfo(Book book) throws BookReadingException;
+	public abstract String readEncryptionMethod(Book book);
 	public abstract void readUids(Book book) throws BookReadingException;
 	public abstract void readModel(BookModel model) throws BookReadingException;
 	public abstract void detectLanguageAndEncoding(Book book) throws BookReadingException;
@@ -49,12 +50,18 @@ public abstract class FormatPlugin {
 	public abstract String readAnnotation(ZLFile file);
 
 	public enum Type {
-		ANY,
-		JAVA,
-		NATIVE,
-		PLUGIN,
-		EXTERNAL,
-		NONE
+		ANY(false),
+		JAVA(true),
+		NATIVE(true),
+		PLUGIN(false),
+		EXTERNAL(false),
+		NONE(false);
+
+		public final boolean Builtin;
+
+		Type(boolean builtin) {
+			Builtin = builtin;
+		}
 	};
 	public abstract Type type();
 

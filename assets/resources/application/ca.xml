@@ -312,13 +312,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Directoris">
 			<node name="summary" value="Directoris per a cercar fitxers"/>
-			<node name="temp" value="Directori de fitxers temporals"/>
-			<node name="bookPath" value="Directoris de llibres"/>
-			<node name="fontPath" value="Directoris de fonts"/>
-			<node name="wallpaperPath" value="Directori de fons de pantalla"/>
 			<node name="books" value="Directori de llibres"/>
 			<node name="fonts" value="Directori de tipus de lletra"/>
 			<node name="wallpapers" value="Directori de fons de pantalla"/>
+			<node name="bookPath" value="Directoris de llibres"/>
+			<node name="fontPath" value="Directoris de fonts"/>
+			<node name="wallpaperPath" value="Directori de fons de pantalla"/>
+			<node name="tempDir" value="Directori de fitxers temporals"/>
 		</node>
 		<node name="appearance" value="Aparença">
 			<node name="summary" value="Pantalla, barra d'estat, llum dels botons"/>
@@ -885,6 +885,7 @@
 		<node name="pluginNotFound" value="No hay plugin para '%s'" toBeTranslated="true"/>
 		<node name="unknownPluginType" value="Tipo desconocido de plugin: %s" toBeTranslated="true"/>
 		<node name="fileNotFound" value="No se encuentra el archivo: %s" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF no se encuentra en %s" toBeTranslated="true"/>
 		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'" toBeTranslated="true"/>
 		<node name="errorParsingRtf" value="Error de análisis RTF en: %s" toBeTranslated="true"/>
@@ -906,6 +907,7 @@
 		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
 		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
 		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>
@@ -957,6 +959,9 @@
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

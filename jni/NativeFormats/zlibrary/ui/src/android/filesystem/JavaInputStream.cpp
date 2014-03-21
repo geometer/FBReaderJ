@@ -22,7 +22,7 @@
 #include <AndroidUtil.h>
 #include <JniEnvelope.h>
 
-JavaInputStream::JavaInputStream(const std::string &name) : myName(name), myNeedRepositionToStart(false) {
+JavaInputStream::JavaInputStream(const std::string &name, shared_ptr<FileEncryptionInfo> encryptionInfo) : myName(name), myEncryptionInfo(encryptionInfo), myNeedRepositionToStart(false), myMarkSupported(false) {
 	myJavaFile = 0;
 
 	myJavaInputStream = 0;
@@ -45,14 +45,20 @@ JavaInputStream::~JavaInputStream() {
 void JavaInputStream::initStream(JNIEnv *env) {
 	if (myJavaFile == 0) {
 		jobject javaFile = AndroidUtil::createJavaFile(env, myName);
-		myJavaFile = env->NewGlobalRef(javaFile);
-		env->DeleteLocalRef(javaFile);
-		if (myJavaFile == 0) {
+		if (javaFile == 0) {
 			return;
 		}
+		myJavaFile = env->NewGlobalRef(javaFile);
+		env->DeleteLocalRef(javaFile);
 	}
 
-	jobject stream = AndroidUtil::Method_ZLFile_getInputStream->call(myJavaFile);
+	jobject stream;
+	if (myEncryptionInfo.isNull()) {
+		stream = AndroidUtil::Method_ZLFile_getInputStream->call(myJavaFile);
+	} else {
+		stream = 0;
+	}
+
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
 	} else {
@@ -60,6 +66,11 @@ void JavaInputStream::initStream(JNIEnv *env) {
 		myOffset = 0;
 	}
 	env->DeleteLocalRef(stream);
+
+	myMarkSupported = AndroidUtil::Method_java_io_InputStream_markSupported->call(myJavaInputStream);
+	if (myMarkSupported) {
+		AndroidUtil::Method_java_io_InputStream_mark->call(myJavaInputStream, sizeOfOpened());
+	}
 }
 
 void JavaInputStream::closeStream(JNIEnv *env) {
@@ -74,8 +85,14 @@ void JavaInputStream::closeStream(JNIEnv *env) {
 
 void JavaInputStream::rewind(JNIEnv *env) {
 	if (myOffset > 0) {
-		closeStream(env);
-		initStream(env);
+		if (myMarkSupported) {
+			AndroidUtil::Method_java_io_InputStream_reset->call(myJavaInputStream);
+			AndroidUtil::Method_java_io_InputStream_mark->call(myJavaInputStream, sizeOfOpened());
+			myOffset = 0;
+		} else {
+			closeStream(env);
+			initStream(env);
+		}
 	}
 }
 
@@ -159,16 +176,19 @@ std::size_t JavaInputStream::sizeOfOpened() {
 }
 
 void JavaInputStream::seek(int offset, bool absoluteOffset) {
+	if (!absoluteOffset) {
+		offset += myOffset;
+	}
 	if (offset < 0) {
 		return;
 	}
 	JNIEnv *env = AndroidUtil::getEnv();
-	if (myNeedRepositionToStart || absoluteOffset) {
+	if (myNeedRepositionToStart || offset < myOffset) {
 		rewind(env);
 		myNeedRepositionToStart = false;
 	}
-	if (offset > 0) {
-		skip(env, offset);
+	if (offset > myOffset) {
+		skip(env, offset - myOffset);
 	}
 }
 

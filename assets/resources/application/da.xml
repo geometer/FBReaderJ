@@ -306,13 +306,13 @@
 	<node name="Preferences">
 		<node name="directories" value="Biblioteker">
 			<node name="summary" value="Biblioteker for filsøgning"/>
-			<node name="temp" value="Katalog for midlertidige filer"/>
-			<node name="bookPath" value="Bogbiblioteker"/>
-			<node name="fontPath" value="Skrifttype-biblioteker"/>
-			<node name="wallpaperPath" value="Tapet-biblioteker"/>
 			<node name="books" value="Bogbibliotek"/>
 			<node name="fonts" value="Skrifttype-bibliotek"/>
 			<node name="wallpapers" value="Tapet-bibliotek"/>
+			<node name="bookPath" value="Bogbiblioteker"/>
+			<node name="fontPath" value="Skrifttype-biblioteker"/>
+			<node name="wallpaperPath" value="Tapet-biblioteker"/>
+			<node name="tempDir" value="Katalog for midlertidige filer"/>
 		</node>
 		<node name="appearance" value="Fremtoning">
 			<node name="summary" value="Vis indstillinger, statuslinje, knaplys"/>
@@ -879,6 +879,7 @@
 		<node name="pluginNotFound" value="Ingen plugin for '%s'"/>
 		<node name="unknownPluginType" value="Ukendt plugin-type  %s"/>
 		<node name="fileNotFound" value="Filen blev ikke fundet: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF blev ikke fundet i %s"/>
 		<node name="unsupportedFileFormat" value="Filformatet understøttes ikke for '%s'"/>
 		<node name="errorParsingRtf" value="RTF-parsingfejl i: %s"/>
@@ -900,6 +901,7 @@
 		<node name="formatExists" value="Filtypen understøttes allerede af %s"/>
 		<node name="unzipFailed" value="Det mislykkedes at udpakke bogen til ekstern brug"/>
 		<node name="noPlugin" value="Installer plugin for at læse denne filtype"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -951,6 +953,9 @@
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

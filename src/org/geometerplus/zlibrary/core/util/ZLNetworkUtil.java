@@ -19,16 +19,21 @@
 
 package org.geometerplus.zlibrary.core.util;
 
-import java.net.URLEncoder;
+import java.net.*;
 import java.io.UnsupportedEncodingException;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public class ZLNetworkUtil {
-
 	public static String url(String baseUrl, String relativePath) {
 		if (relativePath == null || relativePath.length() == 0) {
 			return relativePath;
+		}
+
+		try {
+			return new URL(new URL(baseUrl), relativePath).toExternalForm();
+		} catch (MalformedURLException e) {
+			// just use our old code below
 		}
 
 		if (relativePath.contains("://")

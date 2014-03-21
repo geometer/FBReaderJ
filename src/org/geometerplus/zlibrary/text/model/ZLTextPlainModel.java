@@ -64,6 +64,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		// ImageEntry
 		private ZLImageEntry myImageEntry;
 
+		// VideoEntry
+		private ZLVideoEntry myVideoEntry;
+
 		// StyleEntry
 		private ZLTextStyleEntry myStyleEntry;
 
@@ -112,6 +115,10 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 
 		public ZLImageEntry getImageEntry() {
 			return myImageEntry;
+		}
+
+		public ZLVideoEntry getVideoEntry() {
+			return myVideoEntry;
 		}
 
 		public ZLTextStyleEntry getStyleEntry() {
@@ -163,11 +170,11 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 				}
 				case ZLTextParagraph.Entry.HYPERLINK_CONTROL:
 				{
-					short kind = (short)data[dataOffset++];
+					final short kind = (short)data[dataOffset++];
 					myControlKind = (byte)kind;
 					myControlIsStart = true;
 					myHyperlinkType = (byte)(kind >> 8);
-					short labelLength = (short)data[dataOffset++];
+					final short labelLength = (short)data[dataOffset++];
 					myHyperlinkId = new String(data, dataOffset, labelLength);
 					dataOffset += labelLength;
 					break;
@@ -223,6 +230,24 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 				case ZLTextParagraph.Entry.RESET_BIDI:
 					// No data
 					break;
+				case ZLTextParagraph.Entry.AUDIO:
+					// No data
+					break;
+				case ZLTextParagraph.Entry.VIDEO:
+				{
+					myVideoEntry = new ZLVideoEntry();
+					final short mapSize = (short)data[dataOffset++];
+					for (short i = 0; i < mapSize; ++i) {
+						short len = (short)data[dataOffset++];
+						final String mime = new String(data, dataOffset, len);
+						dataOffset += len;
+						len = (short)data[dataOffset++];
+						final String src = new String(data, dataOffset, len);
+						dataOffset += len;
+						myVideoEntry.addSource(mime, src);
+					}
+					break;
+				}
 			}
 			++myCounter;
 			myDataOffset = dataOffset;

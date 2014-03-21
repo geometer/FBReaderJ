@@ -164,8 +164,13 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 			final Map<String,String> values = new HashMap<String,String>();
 			for (String pair : myInterface.requestAllValuesForGroup(group)) {
 				final String[] split = pair.split("\000");
-				if (split.length == 2) {
-					values.put(split[0], split[1]);
+				switch (split.length) {
+					case 1:
+						values.put(split[0], "");
+						break;
+					case 2:
+						values.put(split[0], split[1]);
+						break;
 				}
 			}
 			return values;
@@ -178,10 +183,9 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = ConfigInterface.Stub.asInterface(service);
 		myContext.registerReceiver(myReceiver, new IntentFilter(SQLiteConfig.OPTION_CHANGE_EVENT_ACTION));
-		for (Runnable r : myDeferredActions) {
-			r.run();
+		while (!myDeferredActions.isEmpty()) {
+			myDeferredActions.remove(0).run();
 		}
-		myDeferredActions.clear();
 	}
 
 	// method from ServiceConnection interface

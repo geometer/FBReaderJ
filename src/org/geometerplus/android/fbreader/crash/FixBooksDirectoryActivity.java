@@ -32,7 +32,6 @@ import android.widget.*;
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 import org.geometerplus.fbreader.Paths;
 
@@ -59,6 +58,7 @@ public class FixBooksDirectoryActivity extends Activity {
 		final View buttonsView = findViewById(R.id.books_directory_fix_buttons);
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("ok").getValue());
+
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
 				final ZLStringListOption bookPathOption = Paths.BookPathOption;

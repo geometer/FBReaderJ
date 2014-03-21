@@ -22,8 +22,21 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.9.6 (Feb ??, 2014) =====
+===== 1.10 (Mar ??, 2014) =====
+* Experimental video support
+* CSS parsing optimization for ePubs (do not parse css files multiple times)
+* CSS support improvement: added support for space-separated classes list
+
+===== 1.9.6.1 (Feb 24, 2014) =====
+* Fixed some config vaues reading (e.g. background)
+* Updated Czech localization (by Marek Pavelka)
+
+===== 1.9.6 (Feb 23, 2014) =====
 * Config speed optimization
+* Fixed bookmarks creation & browsing problem
+* Fixed URL resolving (this also fixed bug with some catalogs created with calibre2opds)
+* Do not search on qumran sites with cyrillic patterns
+* Better network search logic
 
 ===== 1.9.5.5 (Feb 4, 2014) =====
 * Fixed preference activity on Android 2.* devices

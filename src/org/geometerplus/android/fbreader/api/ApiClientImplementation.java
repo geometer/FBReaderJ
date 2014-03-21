@@ -485,12 +485,6 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 
-	public void addBookToREcent(String s) throws ApiException {
-		request(ADD_BOOK_TO_RECENT, new ApiObject[] {
-			ApiObject.envelope(s)
-		});
-	}
-
 	public List<String> getMenuChildren(String code) throws ApiException {
 		return requestStringList(GET_MENU_CHILDREN, envelope(code));
 	}

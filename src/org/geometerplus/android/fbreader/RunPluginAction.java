@@ -35,6 +35,9 @@ class RunPluginAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		if (myUri == null) {
+			return;
+		}
 		try {
 			OrientationUtil.startActivity(
 				BaseActivity, new Intent("android.fbreader.action.plugin.RUN", myUri)
