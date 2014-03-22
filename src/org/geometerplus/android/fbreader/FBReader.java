@@ -615,12 +615,14 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			// invalid (or null) type value
 			return;
 		}
+		Bookmark bookmark = null;
 		if (type == CancelMenuHelper.ActionType.returnTo) {
-			final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(intent);
-			if (bookmark != null) {
-				myFBReaderApp.runCancelAction(type, bookmark);
+			bookmark = FBReaderIntents.getBookmarkExtra(intent);
+			if (bookmark == null) {
+				return;
 			}
 		}
+		myFBReaderApp.runCancelAction(type, bookmark);
 	}
 
 	private Menu addSubMenu(Menu menu, String id) {
