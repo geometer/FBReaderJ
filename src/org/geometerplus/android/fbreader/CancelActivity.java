@@ -31,7 +31,6 @@ import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -39,9 +38,6 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.ViewUtil;
 
 public class CancelActivity extends ListActivity {
-	static final String TYPE_KEY = "type";
-	static final String BOOKMARK_KEY = "bookmark";
-
 	private BookCollectionShadow myCollection;
 
 	@Override
@@ -117,11 +113,10 @@ public class CancelActivity extends ListActivity {
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Intent data = new Intent();
 			final CancelMenuHelper.ActionDescription item = getItem(position);
-			data.putExtra(TYPE_KEY, item.Type.name());
+			data.putExtra(FBReaderIntents.Key.TYPE, item.Type.name());
 			if (item instanceof CancelMenuHelper.BookmarkDescription) {
-				data.putExtra(
-					BOOKMARK_KEY,
-					SerializerUtil.serialize(((CancelMenuHelper.BookmarkDescription)item).Bookmark)
+				FBReaderIntents.putBookmarkExtra(
+					data, ((CancelMenuHelper.BookmarkDescription)item).Bookmark
 				);
 			}
 			setResult(RESULT_FIRST_USER, data);

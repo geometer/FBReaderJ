@@ -9,13 +9,13 @@ import java.util.*;
 import android.content.*;
 import android.os.IBinder;
 
+import org.geometerplus.android.fbreader.FBReaderIntents;
+
 public class ApiClientImplementation implements ServiceConnection, Api, ApiMethods {
 	public static interface ConnectionListener {
 		void onConnected();
 	}
 
-	private static final String ACTION_API = "android.fbreader.action.API";
-	static final String ACTION_API_CALLBACK = "android.fbreader.action.API_CALLBACK";
 	static final String EVENT_TYPE = "event.type";
 
 	private final Context myContext;
@@ -50,8 +50,8 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	public synchronized void connect() {
 		if (myInterface == null) {
-			myContext.bindService(new Intent(ACTION_API), this, Context.BIND_AUTO_CREATE);
-			myContext.registerReceiver(myEventReceiver, new IntentFilter(ACTION_API_CALLBACK));
+			myContext.bindService(new Intent(FBReaderIntents.Action.API), this, Context.BIND_AUTO_CREATE);
+			myContext.registerReceiver(myEventReceiver, new IntentFilter(FBReaderIntents.Action.API_CALLBACK));
 		}
 	}
 
