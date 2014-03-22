@@ -34,14 +34,14 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
 
+import org.geometerplus.android.fbreader.FBReaderIntents;
+
 /**
  * @author ASazonov
  */
 public class FBReaderYotaService extends BSActivity {
 	public static final String KEY_BACK_SCREEN_IS_ACTIVE =
 		"com.yotadevices.fbreader.backScreenIsActive";
-	public static final String KEY_CURRENT_BOOK =
-		"com.yotadevices.fbreader.currentBook";
 
 	public static ZLAndroidWidget Widget;
 	private Canvas myCanvas;
@@ -218,9 +218,7 @@ public class FBReaderYotaService extends BSActivity {
 		} else {
 			myBackScreenIsActive = new ViewOptions().YotaDrawOnBackScreen.getValue();
 		}
-		if (intent.hasExtra(KEY_CURRENT_BOOK)) {
-			myCurrentBook = SerializerUtil.deserializeBook(intent.getStringExtra(KEY_CURRENT_BOOK));
-		}
+		myCurrentBook = FBReaderIntents.getBookExtra(intent);
 
 		initBookView(true);
 		setYotaGesturesEnabled(myBackScreenIsActive);

@@ -331,12 +331,13 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 				}
 				return true;
 			case EDIT_INFO:
-				OrientationUtil.startActivity(
-					this,
-					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
-				);
+			{
+				final Intent intent =
+					new Intent(getApplicationContext(), EditBookInfoActivity.class);
+				FBReaderIntents.putBookExtra(intent, myBook);
+				OrientationUtil.startActivity(this, intent);
 				return true;
+			}
 			case SHARE_BOOK:
 				FBUtil.shareBook(this, myBook);
 				return true;
