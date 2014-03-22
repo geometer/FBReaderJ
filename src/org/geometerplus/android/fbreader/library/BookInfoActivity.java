@@ -69,8 +69,9 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
 		);
 
-		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = FBReaderIntents.getBookExtra(getIntent());
+		final Intent intent = getIntent();
+		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
+		myBook = FBReaderIntents.getBookExtra(intent);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
