@@ -34,7 +34,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
-import org.geometerplus.android.fbreader.library.BookInfoActivity;
+import org.geometerplus.android.fbreader.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
@@ -255,7 +255,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	protected void onStart() {
 		super.onStart();
 
-		myBook = BookInfoActivity.bookByIntent(getIntent());
+		myBook = FBReaderIntents.getBookExtra(getIntent());
 
 		if (myBook == null) {
 			finish();

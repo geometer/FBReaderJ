@@ -38,6 +38,7 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 import org.geometerplus.android.util.ViewUtil;
@@ -61,9 +62,7 @@ public class StyleListActivity extends ListActivity implements IBookCollection.L
 		myCollection.bindToService(this, new Runnable() {
 			public void run() {
 				myExistingBookmark = getIntent().getBooleanExtra(EXISTING_BOOKMARK_KEY, false);
-				myBookmark = SerializerUtil.deserializeBookmark(
-					getIntent().getStringExtra(FBReader.BOOKMARK_KEY)
-				);
+				myBookmark = FBReaderIntents.getBookmarkExtra(getIntent());
 				if (myBookmark == null) {
 					finish();
 					return;

@@ -23,9 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.*;
 
 import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.Intent;
+import android.content.*;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -44,13 +42,14 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
 
+import org.geometerplus.android.fbreader.FBReaderIntents;
 import org.geometerplus.android.fbreader.MenuItemData;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
 		context.sendBroadcast(
-			new Intent(ApiClientImplementation.ACTION_API_CALLBACK)
+			new Intent(FBReaderIntents.Action.API_CALLBACK)
 				.putExtra(ApiClientImplementation.EVENT_TYPE, eventType)
 		);
 	}
