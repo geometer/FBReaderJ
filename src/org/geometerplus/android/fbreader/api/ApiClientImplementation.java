@@ -143,14 +143,6 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return ((ApiObject.Integer)object).Value;
 	}
 
-	private long requestLong(int method, ApiObject[] params) throws ApiException {
-		final ApiObject object = request(method, params);
-		if (!(object instanceof ApiObject.Long)) {
-			throw new ApiException("Cannot cast return type of method " + method + " to int");
-		}
-		return ((ApiObject.Integer)object).Value;
-	}
-
 	private boolean requestBoolean(int method, ApiObject[] params) throws ApiException {
 		final ApiObject object = request(method, params);
 		if (!(object instanceof ApiObject.Boolean)) {
