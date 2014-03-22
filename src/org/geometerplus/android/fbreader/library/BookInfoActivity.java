@@ -71,7 +71,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 
 		final Intent intent = getIntent();
 		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = bookByIntent(intent);
+		myBook = FBReaderIntents.getBookExtra(intent);
 
 		final ActionBar bar = getActionBar();
 		if (bar != null) {
@@ -115,15 +115,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		myCollection.unbind();
 
 		super.onDestroy();
-	}
-
-	public static Intent intentByBook(Book book) {
-		return new Intent().putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book));
-	}
-
-	public static Book bookByIntent(Intent intent) {
-		return intent != null ?
-			SerializerUtil.deserializeBook(intent.getStringExtra(FBReader.BOOK_KEY)) : null;
 	}
 
 	private Button findButton(int buttonId) {
