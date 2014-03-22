@@ -82,7 +82,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
-		myBook = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+		myBook = FBReaderIntents.getBookExtra(getIntent());
 	}
 
 	private class Initializer implements Runnable {
@@ -252,8 +252,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private void addBookmark() {
-		final Bookmark bookmark =
-			SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
+		final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(getIntent());
 		if (bookmark != null) {
 			myCollection.saveBookmark(bookmark);
 			myThisBookAdapter.add(bookmark);
