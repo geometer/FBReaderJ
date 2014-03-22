@@ -24,7 +24,6 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Bookmark;
-import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.style.StyleListActivity;
@@ -55,7 +54,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 
 		final Intent intent =
 			new Intent(BaseActivity.getApplicationContext(), StyleListActivity.class);
-		intent.putExtra(FBReader.BOOKMARK_KEY, SerializerUtil.serialize(bookmark));
+		FBReaderIntents.putBookmarkExtra(intent, bookmark);
 		intent.putExtra(StyleListActivity.EXISTING_BOOKMARK_KEY, existingBookmark);
 		OrientationUtil.startActivity(BaseActivity, intent);
 	}

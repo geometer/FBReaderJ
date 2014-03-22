@@ -70,7 +70,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		);
 
 		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
-		myBook = bookByIntent(getIntent());
+		myBook = FBReaderIntents.getBookExtra(getIntent());
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
@@ -103,11 +103,10 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		});
 		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
 			public void onClick(View view) {
-				OrientationUtil.startActivity(
-					BookInfoActivity.this,
-					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(myBook))
-				);
+				final Intent intent =
+					new Intent(getApplicationContext(), EditBookInfoActivity.class);
+				FBReaderIntents.putBookExtra(intent, myBook);
+				OrientationUtil.startActivity(BookInfoActivity.this, intent);
 			}
 		});
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
@@ -144,15 +143,6 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		myCollection.unbind();
 
 		super.onDestroy();
-	}
-
-	public static Intent intentByBook(Book book) {
-		return new Intent().putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book));
-	}
-
-	public static Book bookByIntent(Intent intent) {
-		return intent != null ?
-			SerializerUtil.deserializeBook(intent.getStringExtra(FBReader.BOOK_KEY)) : null;
 	}
 
 	private Button findButton(int buttonId) {

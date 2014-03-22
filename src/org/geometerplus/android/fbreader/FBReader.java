@@ -63,12 +63,6 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
-	public static final String ACTION_OPEN_BOOK = "android.fbreader.action.VIEW";
-	public static final String ACTION_OPEN_PLUGIN = "android.fbreader.action.PLUGIN";
-	public static final String BOOK_KEY = "fbreader.book";
-	public static final String BOOKMARK_KEY = "fbreader.bookmark";
-	public static final String PLUGIN_KEY = "fbreader.plugin";
-
 	static final int ACTION_BAR_COLOR = Color.DKGRAY;
 
 	public static final int REQUEST_PREFERENCES = 1;
@@ -78,13 +72,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 
 	public static void openBookActivity(Context context, Book book, Bookmark bookmark) {
-		context.startActivity(
-			new Intent(context, FBReader.class)
-				.setAction(ACTION_OPEN_BOOK)
-				.putExtra(BOOK_KEY, SerializerUtil.serialize(book))
-				.putExtra(BOOKMARK_KEY, SerializerUtil.serialize(bookmark))
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-		);
+		final Intent intent = new Intent(context, FBReader.class)
+			.setAction(FBReaderIntents.Action.VIEW)
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		FBReaderIntents.putBookExtra(intent, book);
+		FBReaderIntents.putBookmarkExtra(intent, bookmark);
+		context.startActivity(intent);
 	}
 
 	private static ZLAndroidLibrary getZLibrary() {
@@ -131,9 +124,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			return;
 		}
 
-		myBook = SerializerUtil.deserializeBook(intent.getStringExtra(BOOK_KEY));
-		final Bookmark bookmark =
-			SerializerUtil.deserializeBookmark(intent.getStringExtra(BOOKMARK_KEY));
+		myBook = FBReaderIntents.getBookExtra(intent);
+		final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(intent);
 		if (myBook == null) {
 			final Uri data = intent.getData();
 			if (data != null) {
@@ -184,7 +176,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 						new TipRunner().start();
 						DictionaryUtil.init(FBReader.this, null);
 						final Intent intent = getIntent();
-						if (intent != null && ACTION_OPEN_PLUGIN.equals(intent.getAction())) {
+						if (intent != null && FBReaderIntents.Action.PLUGIN.equals(intent.getAction())) {
 							new RunPluginAction(FBReader.this, myFBReaderApp, intent.getData()).run();
 						}
 					}
@@ -314,13 +306,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		} else if (Intent.ACTION_VIEW.equals(action)
 				   && data != null && "fbreader-action".equals(data.getScheme())) {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
-		} else if (Intent.ACTION_VIEW.equals(action) || ACTION_OPEN_BOOK.equals(action)) {
+		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
 					openBook(intent, null, true);
 				}
 			});
-		} else if (ACTION_OPEN_PLUGIN.equals(action)) {
+		} else if (FBReaderIntents.Action.PLUGIN.equals(action)) {
 			new RunPluginAction(this, myFBReaderApp, data).run();
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
@@ -570,8 +562,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
-				if (resultCode != RESULT_DO_NOTHING) {
-					final Book book = BookInfoActivity.bookByIntent(data);
+				if (resultCode != RESULT_DO_NOTHING && data != null) {
+					final Book book = FBReaderIntents.getBookExtra(data);
 					if (book != null) {
 						getCollection().bindToService(this, new Runnable() {
 							public void run() {
@@ -591,24 +583,18 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		final CancelMenuHelper.ActionType type;
 		try {
 			type = CancelMenuHelper.ActionType.valueOf(
-				intent.getStringExtra(CancelActivity.TYPE_KEY)
+				intent.getStringExtra(FBReaderIntents.Key.TYPE)
 			);
 		} catch (Exception e) {
 			// invalid (or null) type value
 			return;
 		}
-		Bookmark bookmark = null;
 		if (type == CancelMenuHelper.ActionType.returnTo) {
-			try {
-				bookmark = SerializerUtil.deserializeBookmark(
-					intent.getStringExtra(CancelActivity.BOOKMARK_KEY)
-				);
-			} catch (Exception e) {
-				// invalid (or null) bookmark value
-				return;
+			final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(intent);
+			if (bookmark != null) {
+				myFBReaderApp.runCancelAction(type, bookmark);
 			}
 		}
-		myFBReaderApp.runCancelAction(type, bookmark);
 	}
 
 	public void navigate() {
@@ -889,7 +875,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		exception.printStackTrace();
 
 		final Intent intent = new Intent(
-			"android.fbreader.action.ERROR",
+			FBReaderIntents.Action.ERROR,
 			new Uri.Builder().scheme(exception.getClass().getSimpleName()).build()
 		);
 		intent.putExtra(ErrorKeys.MESSAGE, exception.getMessage());

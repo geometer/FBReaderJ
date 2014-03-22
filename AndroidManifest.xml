@@ -151,7 +151,7 @@
 		<activity android:name="org.geometerplus.android.fbreader.library.LibraryActivity" android:launchMode="singleTask" android:process=":library" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.library.LibrarySearchActivity"/>
 			<intent-filter>
-				<action android:name="android.fbreader.action.OPEN_LIBRARY"/>
+				<action android:name="android.fbreader.action.LIBRARY"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
@@ -162,14 +162,14 @@
 			</intent-filter>
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
 			<intent-filter>
-				<action android:name="android.fbreader.action.OPEN_BOOKMARKS"/>
+				<action android:name="android.fbreader.action.BOOKMARKS"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.BookmarkEditActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.preferences.PreferenceActivity" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":preferences">
 			<intent-filter>
-				<action android:name="android.fbreader.action.OPEN_PREFERENCES"/>
+				<action android:name="android.fbreader.action.PREFERENCES"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
@@ -236,7 +236,7 @@
 				<data android:host="*" android:scheme="https"/>
 			</intent-filter>
 			<intent-filter>
-				<action android:name="android.fbreader.action.OPEN_NETWORK_CATALOG"/>
+				<action android:name="android.fbreader.action.NETWORK_LIBRARY"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
