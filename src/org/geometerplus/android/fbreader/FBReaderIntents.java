@@ -70,7 +70,7 @@ public abstract class FBReaderIntents {
 	}
 
 	public static void putBookmarkExtra(Intent intent, Bookmark bookmark) {
-		putBookmarkExtra(intent, Key.BOOK, bookmark);
+		putBookmarkExtra(intent, Key.BOOKMARK, bookmark);
 	}
 
 	public static Bookmark getBookmarkExtra(Intent intent, String key) {
@@ -78,6 +78,6 @@ public abstract class FBReaderIntents {
 	}
 
 	public static Bookmark getBookmarkExtra(Intent intent) {
-		return getBookmarkExtra(intent, Key.BOOK);
+		return getBookmarkExtra(intent, Key.BOOKMARK);
 	}
 }
