@@ -56,12 +56,10 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	private Context myContext;
-	private BookCollectionShadow myCollection;
 	private ZLKeyBindings myBindings;
 
-	public ApiServerImplementation(Context c, BookCollectionShadow bcs) {
+	public ApiServerImplementation(Context c) {
 		myContext = c;
-		myCollection = bcs;
 		myBindings = new ZLKeyBindings();
 	}
 
@@ -242,9 +240,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					));
 				case DELETE_ZONEMAP:
 					deleteZoneMap(((ApiObject.String)parameters[0]).Value);
-					return ApiObject.Void.Instance;
-				case SET_STORED_POSITION:
-					storeTextPosition(((ApiObject.String)parameters[0]).Value, (TextPosition)parameters[1]);
 					return ApiObject.Void.Instance;
 				case GET_RESOURCE_VALUE:
 					return ApiObject.envelope(getResourceValue(((ApiObject.String)parameters[0]).Value));
@@ -616,18 +611,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
 		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
-	}
-
-	public void storeTextPosition(final String file, TextPosition pos) {
-		Log.d("api", "set position of " + file);
-		Log.d("api", "setting: " + Integer.toString(pos.ParagraphIndex));
-		final ZLTextPosition res = new ZLTextFixedPosition(pos.ParagraphIndex, pos.ElementIndex, pos.CharIndex);
-		myCollection.bindToService(myContext, new Runnable() {
-			@Override
-			public void run() {
-				myCollection.storePosition(myCollection.getBookByFile(ZLFile.createFileByPath(file)).getId(), res);
-			}
-		});
 	}
 
 	public String getResourceValue(String s) {
