@@ -248,9 +248,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.Void.Instance;
 				case GET_RESOURCE_VALUE:
 					return ApiObject.envelope(getResourceValue(((ApiObject.String)parameters[0]).Value));
-				case SAVE_BOOKMARK:
-					saveBookmark(((ApiObject.String)parameters[0]).Value);
-					return ApiObject.Void.Instance;
 				case GET_MENU_TEXT:
 					return ApiObject.envelope(getMenuText(((ApiObject.String)parameters[0]).Value));
 				case GET_MENU_ICON:
@@ -640,15 +637,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			r = r.getResource(l[i]);
 		}
 		return r.getValue();
-	}
-
-	public void saveBookmark(final String s) {
-		myCollection.bindToService(myContext, new Runnable() {
-			@Override
-			public void run() {
-				myCollection.saveBookmark(SerializerUtil.deserializeBookmark(s));
-			}
-		});
 	}
 
 	public List<String> getMenuChildren(String code) {

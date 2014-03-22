@@ -79,7 +79,6 @@ interface ApiMethods {
 	// for pdf plugin
 	int SET_STORED_POSITION = 1002;
 	int GET_RESOURCE_VALUE = 1004;
-	int SAVE_BOOKMARK = 1005;
 	int GET_MENU_CHILDREN = 1010;
 	int GET_MENU_TEXT = 1012;
 	int GET_MENU_ICON = 1013;

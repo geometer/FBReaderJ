@@ -479,12 +479,6 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestString(GET_RESOURCE_VALUE, envelope(res));
 	}
 
-	public void saveBookmark(String s) throws ApiException {
-		request(SAVE_BOOKMARK, new ApiObject[] {
-			ApiObject.envelope(s)
-		});
-	}
-
 	public List<String> getMenuChildren(String code) throws ApiException {
 		return requestStringList(GET_MENU_CHILDREN, envelope(code));
 	}
