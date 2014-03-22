@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 
-import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
@@ -38,11 +37,10 @@ class ShowBookInfoAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		OrientationUtil.startActivity(
-			BaseActivity,
+		final Intent intent =
 			new Intent(BaseActivity.getApplicationContext(), BookInfoActivity.class)
-				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(Reader.Model.Book))
-				.putExtra(BookInfoActivity.FROM_READING_MODE_KEY, true)
-		);
+				.putExtra(BookInfoActivity.FROM_READING_MODE_KEY, true);
+		FBReaderIntents.putBookExtra(intent, Reader.Model.Book);
+		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }
