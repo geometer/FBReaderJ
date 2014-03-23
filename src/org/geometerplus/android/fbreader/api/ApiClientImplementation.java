@@ -172,7 +172,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		}
 		return stringList;
 	}
- 
+
 	private <T extends Serializable> List<T> requestSerializableList(int method, ApiObject[] params) throws ApiException {
 		final List<ApiObject> list = requestList(method, params);
 		final ArrayList<T> serializableList = new ArrayList<T>(list.size());
