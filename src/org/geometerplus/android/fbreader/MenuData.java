@@ -54,6 +54,7 @@ public abstract class MenuData {
 			ourNodes.add(orientations);
 			ourNodes.add(new MenuNode.Item(ActionCode.INCREASE_FONT));
 			ourNodes.add(new MenuNode.Item(ActionCode.DECREASE_FONT));
+			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_NAVIGATION));
 			ourNodes.add(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
 			ourNodes.add(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
 			ourNodes = Collections.unmodifiableList(ourNodes);
