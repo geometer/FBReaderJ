@@ -858,8 +858,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	}
 
-	private Menu addSubMenu(Menu menu, String id) {
-		return menu.addSubMenu(ZLResource.resource("menu").getResource(id).getValue());
+	private Menu addSubmenu(Menu menu, String id) {
+		return menu.addSubmenu(ZLResource.resource("menu").getResource(id).getValue());
 	}
 
 	private void addMenuItem(Menu menu, String actionId, Integer iconId, String name) {
@@ -896,8 +896,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					addMenuItem(menu, n.Code);
 				}
 			} else /* if (n instanceof MenuNode.Submenu) */ {
-				final Menu subMenu = addSubMenu(menu, n.Code);
-				fillMenu(subMenu, ((MenuNode.Submenu)n).Children);
+				final Menu submenu = addSubmenu(menu, n.Code);
+				fillMenu(submenu, ((MenuNode.Submenu)n).Children);
 			}
 		}
 	}
