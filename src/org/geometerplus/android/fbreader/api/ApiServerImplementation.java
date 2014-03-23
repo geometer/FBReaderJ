@@ -19,23 +19,19 @@
 
 package org.geometerplus.android.fbreader.api;
 
-import java.io.ByteArrayOutputStream;
 import java.util.*;
 
 import android.content.*;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
-import android.util.Log;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.*;
-import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
@@ -50,15 +46,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		);
 	}
 
-	private Context myContext;
-	private ZLKeyBindings myBindings;
+	private final Context myContext;
+	private volatile FBReaderApp myReader;
+	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 
-	public ApiServerImplementation(Context c) {
-		myContext = c;
-		myBindings = new ZLKeyBindings();
+	ApiServerImplementation(Context context) {
+		myContext = context;
 	}
 
-	private volatile FBReaderApp myReader;
 	private synchronized FBReaderApp getReader() {
 		if (myReader == null) {
 			myReader = (FBReaderApp)FBReaderApp.Instance();
@@ -250,7 +245,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return unsupportedMethodError(method);
 			}
 		} catch (Throwable e) {
-			e.printStackTrace();
 			return new ApiObject.Error("Exception in method " + method + ": " + e);
 		}
 	}
@@ -636,11 +630,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public Bitmap getBitmap(int resourceId) {
-		try {
-			return BitmapFactory.decodeResource(myContext.getResources(), resourceId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return BitmapFactory.decodeResource(myContext.getResources(), resourceId);
 	}
 }
