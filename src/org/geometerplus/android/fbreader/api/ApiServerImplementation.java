@@ -21,8 +21,7 @@ package org.geometerplus.android.fbreader.api;
 
 import java.util.*;
 
-import android.content.ContextWrapper;
-import android.content.Intent;
+import android.content.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
@@ -43,7 +42,13 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		);
 	}
 
+	private final Context myContext;
 	private volatile FBReaderApp myReader;
+
+	ApiServerImplementation(Context context) {
+		myContext = context;
+	}
+
 	private synchronized FBReaderApp getReader() {
 		if (myReader == null) {
 			myReader = (FBReaderApp)FBReaderApp.Instance();
