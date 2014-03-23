@@ -77,9 +77,8 @@ interface ApiMethods {
 	int GET_TAP_ACTION_BY_COORDINATES = 933;
 
 	// for pdf plugin
+	int GET_MAIN_MENU_CONTENT = 1001;
 	int GET_RESOURCE_VALUE = 1004;
-	int GET_MENU_CHILDREN = 1010;
 	int GET_MENU_TEXT = 1012;
 	int GET_MENU_ICON = 1013;
-	int GET_MENU_TYPE= 1014;
 }

@@ -245,8 +245,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelope(getMenuText(((ApiObject.String)parameters[0]).Value));
 				case GET_MENU_ICON:
 					return ApiObject.envelope(getMenuIcon(((ApiObject.String)parameters[0]).Value));
-				case GET_MENU_TYPE:
-					return ApiObject.envelope(getMenuType(((ApiObject.String)parameters[0]).Value));
 				default:
 					return unsupportedMethodError(method);
 			}
@@ -287,10 +285,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelopeIntegerList(getParagraphWordIndices(
 						((ApiObject.Integer)parameters[0]).Value
 					));
-				case GET_MENU_CHILDREN:
-					return ApiObject.envelopeStringList(getMenuChildren(
-						((ApiObject.String)parameters[0]).Value
-					));
+				case GET_MAIN_MENU_CONTENT:
+					return ApiObject.envelopeSerializableList(getMainMenuContent());
 				default:
 					return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 			}
@@ -620,27 +616,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return r.getValue();
 	}
 
-	public List<String> getMenuChildren(String code) {
-		final MenuNode current = MenuData.getRoot().findByCode(code);
-		if (current instanceof MenuNode.Submenu) {
-			final List<MenuNode> children = ((MenuNode.Submenu)current).Children;
-			final ArrayList<String> codes = new ArrayList<String>(children.size());
-			for (MenuNode node : children) {
-				codes.add(node.Code);
-			}
-			return codes;
-		} else {
-			return Collections.emptyList();
-		}
-	}
-
 	public String getMenuText(String code) {
 		return ZLResource.resource("menu").getResource(code).getValue();
-	}
-
-	public String getMenuType(String code) {
-		final MenuNode current = MenuData.getRoot().findByCode(code);
-		return current instanceof MenuNode.Submenu ? "SUBMENU" : "ACTION";
 	}
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
@@ -661,5 +638,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public List<MenuNode> getMainMenuContent() {
+		return MenuData.getRoot().Children;
 	}
 }
