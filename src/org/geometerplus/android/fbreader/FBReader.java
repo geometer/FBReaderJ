@@ -901,7 +901,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myMenuLanguage = menuLanguage;
 
 		menu.clear();
-		fillMenu(menu, MenuNode.getRoot());
+		fillMenu(menu, MenuData.getRoot());
 		synchronized (myPluginActions) {
 			int index = 0;
 			for (PluginApi.ActionInfo info : myPluginActions) {

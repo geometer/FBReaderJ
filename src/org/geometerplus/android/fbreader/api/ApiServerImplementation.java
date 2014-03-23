@@ -42,8 +42,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
 
-import org.geometerplus.android.fbreader.FBReaderIntents;
-import org.geometerplus.android.fbreader.MenuNode;
+import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
@@ -622,7 +621,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public List<String> getMenuChildren(String code) {
-		final MenuNode current = MenuNode.getRoot().findByCode(code);
+		final MenuNode current = MenuData.getRoot().findByCode(code);
 		if (current instanceof MenuNode.Submenu) {
 			final List<MenuNode> children = ((MenuNode.Submenu)current).Children;
 			final ArrayList<String> codes = new ArrayList<String>(children.size());
@@ -640,13 +639,13 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getMenuType(String code) {
-		final MenuNode current = MenuNode.getRoot().findByCode(code);
+		final MenuNode current = MenuData.getRoot().findByCode(code);
 		return current instanceof MenuNode.Submenu ? "SUBMENU" : "ACTION";
 	}
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	public String getMenuIcon(String code) {
-		final MenuNode current = MenuNode.getRoot().findByCode(code);
+		final MenuNode current = MenuData.getRoot().findByCode(code);
 		final Integer id = current instanceof MenuNode.Item
 			? ((MenuNode.Item)current).IconId : null;
 		if (id == null) {

@@ -21,10 +21,6 @@ package org.geometerplus.android.fbreader;
 
 import java.util.ArrayList;
 
-import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.ui.android.R;
-
 public abstract class MenuNode {
 	public final String Code;
 
@@ -62,43 +58,13 @@ public abstract class MenuNode {
 			if (Code.equals(code)) {
 				return this;
 			}
-			for (MenuNode el : Children) {
-				MenuNode res = el.findByCode(code);
-				if (res != null) {
-					return res;
+			for (MenuNode node : Children) {
+				MenuNode candidate = node.findByCode(code);
+				if (candidate != null) {
+					return candidate;
 				}
 			}
 			return null;
 		}
-
-	}
-
-	public static Submenu getRoot() {
-		final Submenu root = new Submenu("root");
-		root.Children.add(new Item(ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
-		root.Children.add(new Item(ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
-		root.Children.add(new Item(ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
-		root.Children.add(new Item(ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
-		root.Children.add(new Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night));
-		root.Children.add(new Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day));
-		root.Children.add(new Item(ActionCode.SEARCH, R.drawable.ic_menu_search));
-		root.Children.add(new Item(ActionCode.SHARE_BOOK));
-		root.Children.add(new Item(ActionCode.SHOW_PREFERENCES));
-		root.Children.add(new Item(ActionCode.SHOW_BOOK_INFO));
-		Submenu orient = new Submenu("screenOrientation");
-		orient.Children.add(new Item(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM));
-		orient.Children.add(new Item(ActionCode.SET_SCREEN_ORIENTATION_SENSOR));
-		orient.Children.add(new Item(ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT));
-		orient.Children.add(new Item(ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE));
-		if (ZLibrary.Instance().supportsAllOrientations()) {
-			orient.Children.add(new Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT));
-			orient.Children.add(new Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
-		}
-		root.Children.add(orient);
-		root.Children.add(new Item(ActionCode.INCREASE_FONT));
-		root.Children.add(new Item(ActionCode.DECREASE_FONT));
-		root.Children.add(new Item(ActionCode.INSTALL_PLUGINS));
-		root.Children.add(new Item(ActionCode.OPEN_WEB_HELP));
-		return root;
 	}
 }
