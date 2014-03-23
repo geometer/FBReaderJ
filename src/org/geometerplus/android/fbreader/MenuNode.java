@@ -22,13 +22,15 @@ package org.geometerplus.android.fbreader;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class MenuNode implements Serializable {
+public abstract class MenuNode implements Cloneable, Serializable {
 	public final String Code;
+	public String OptionalTitle;
 
 	private MenuNode(String code) {
 		Code = code;
 	}
 
+	public abstract MenuNode clone();
 	public abstract MenuNode findByCode(String code);
 
 	public static final class Item extends MenuNode {
@@ -45,6 +47,10 @@ public abstract class MenuNode implements Serializable {
 
 		public MenuNode findByCode(String code) {
 			return Code.equals(code) ? this : null;
+		}
+
+		public Item clone() {
+			return new Item(Code, IconId);
 		}
 	}
 
@@ -66,6 +72,14 @@ public abstract class MenuNode implements Serializable {
 				}
 			}
 			return null;
+		}
+
+		public Submenu clone() {
+			final Submenu copy = new Submenu(Code);
+			for (MenuNode node : Children) {
+				copy.Children.add(node.clone());
+			}
+			return copy;
 		}
 	}
 }
