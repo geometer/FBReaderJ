@@ -77,4 +77,5 @@ interface ApiMethods {
 	int GET_TAP_ACTION_BY_COORDINATES = 933;
 
 	int GET_MAIN_MENU_CONTENT = 1001;
+	int GET_RESOURCE_STRING = 1002;
 }
