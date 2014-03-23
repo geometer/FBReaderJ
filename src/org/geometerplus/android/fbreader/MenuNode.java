@@ -31,7 +31,6 @@ public abstract class MenuNode implements Cloneable, Serializable {
 	}
 
 	public abstract MenuNode clone();
-	public abstract MenuNode findByCode(String code);
 
 	public static final class Item extends MenuNode {
 		public final Integer IconId;
@@ -45,10 +44,6 @@ public abstract class MenuNode implements Cloneable, Serializable {
 			this(code, null);
 		}
 
-		public MenuNode findByCode(String code) {
-			return Code.equals(code) ? this : null;
-		}
-
 		public Item clone() {
 			return new Item(Code, IconId);
 		}
@@ -59,19 +54,6 @@ public abstract class MenuNode implements Cloneable, Serializable {
 
 		Submenu(String code) {
 			super(code);
-		}
-
-		public MenuNode findByCode(String code) {
-			if (Code.equals(code)) {
-				return this;
-			}
-			for (MenuNode node : Children) {
-				MenuNode candidate = node.findByCode(code);
-				if (candidate != null) {
-					return candidate;
-				}
-			}
-			return null;
 		}
 
 		public Submenu clone() {
