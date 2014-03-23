@@ -20,6 +20,7 @@ public abstract class ApiObject implements Parcelable {
 		int DATE = 4;
 		int LONG = 5;
 		int TEXT_POSITION = 10;
+		int SERIALIZABLE = 20;
 	}
 
 	static class Void extends ApiObject {
@@ -129,6 +130,25 @@ public abstract class ApiObject implements Parcelable {
 		}
 	}
 
+	static class Serializable extends ApiObject {
+		final java.io.Serializable Value;
+
+		Serializable(java.io.Serializable value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.SERIALIZABLE;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeSerializable(Value);
+		}
+	}
+
 	static class Error extends ApiObject {
 		final java.lang.String Message;
 
@@ -176,6 +196,14 @@ public abstract class ApiObject implements Parcelable {
 		return objects;
 	}
 
+	static List<ApiObject> envelopeSerializableList(List<? extends java.io.Serializable> values) {
+		final ArrayList<ApiObject> objects = new ArrayList<ApiObject>(values.size());
+		for (java.io.Serializable v : values) {
+			objects.add(new Serializable(v));
+		}
+		return objects;
+	}
+
 	static List<ApiObject> envelopeIntegerList(List<java.lang.Integer> values) {
 		final ArrayList<ApiObject> objects = new ArrayList<ApiObject>(values.size());
 		for (java.lang.Integer v : values) {
@@ -217,6 +245,8 @@ public abstract class ApiObject implements Parcelable {
 						return new String(parcel.readString());
 					case Type.TEXT_POSITION:
 						return new TextPosition(parcel.readInt(), parcel.readInt(), parcel.readInt());
+					case Type.SERIALIZABLE:
+						return new Serializable(parcel.readSerializable());
 				}
 			}
 
