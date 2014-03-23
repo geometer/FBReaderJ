@@ -8,7 +8,9 @@ import java.io.Serializable;
 import java.util.*;
 
 import android.content.*;
+import android.graphics.Bitmap;
 import android.os.IBinder;
+import android.os.Parcelable;
 
 import org.geometerplus.android.fbreader.FBReaderIntents;
 import org.geometerplus.android.fbreader.MenuNode;
@@ -159,6 +161,14 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			throw new ApiException("Cannot cast return type of method " + method + " to TextPosition");
 		}
 		return (TextPosition)object;
+	}
+
+	private <T extends Parcelable> T requestParcelable(int method, ApiObject[] params) throws ApiException {
+		final ApiObject object = request(method, params);
+		if (!(object instanceof ApiObject.Parcelable)) {
+			throw new ApiException("Cannot cast return type of method " + method + " to Parcelable");
+		}
+		return (T)((ApiObject.Parcelable)object).Value;
 	}
 
 	private List<String> requestStringList(int method, ApiObject[] params) throws ApiException {
@@ -489,5 +499,9 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	public String getResourceString(String ... keys) throws ApiException {
 		return requestString(GET_RESOURCE_STRING, envelope(keys));
+	}
+
+	public Bitmap getBitmap(int resourceId) throws ApiException {
+		return requestParcelable(GET_BITMAP, envelope(resourceId));
 	}
 }
