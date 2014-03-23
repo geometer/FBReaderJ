@@ -26,14 +26,14 @@ import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
 
-import org.geometerplus.android.fbreader.FBReaderIntents;
-import org.geometerplus.android.fbreader.MenuNode;
+import org.geometerplus.android.fbreader.*;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
@@ -592,7 +592,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public List<MenuNode> getMainMenuContent() {
-		return Collections.emptyList();
+		return MenuData.topLevelNodes();
 	}
 
 	public String getResourceString(String ... keys) {
