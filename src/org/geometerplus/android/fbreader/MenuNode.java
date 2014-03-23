@@ -82,7 +82,7 @@ public abstract class MenuNode {
 		root.Children.add(new Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night));
 		root.Children.add(new Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day));
 		root.Children.add(new Item(ActionCode.SEARCH, R.drawable.ic_menu_search));
-		root.Children.add(new Item(ActionCode.SHARE_BOOK, R.drawable.ic_menu_search));
+		root.Children.add(new Item(ActionCode.SHARE_BOOK));
 		root.Children.add(new Item(ActionCode.SHOW_PREFERENCES));
 		root.Children.add(new Item(ActionCode.SHOW_BOOK_INFO));
 		Submenu orient = new Submenu("screenOrientation");
