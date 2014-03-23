@@ -593,9 +593,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	private void setMenuTitles(List<MenuNode> nodes, ZLResource menuResource) {
 		for (MenuNode n : nodes) {
-			n.OptionalTitle = menuResource.getResource(n.Code);
+			n.OptionalTitle = menuResource.getResource(n.Code).getValue();
 			if (n instanceof MenuNode.Submenu) {
-				setMenuTitles(((MenuNode.Submenu)n).Children);
+				setMenuTitles(((MenuNode.Submenu)n).Children, menuResource);
 			}
 		}
 	}
