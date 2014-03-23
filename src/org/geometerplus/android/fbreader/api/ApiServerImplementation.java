@@ -22,11 +22,9 @@ package org.geometerplus.android.fbreader.api;
 import java.io.ByteArrayOutputStream;
 import java.util.*;
 
-import android.annotation.TargetApi;
 import android.content.*;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 
@@ -637,15 +635,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return resource.getValue();
 	}
 
-	@TargetApi(Build.VERSION_CODES.FROYO)
-	public String getBitmap(int resourceId) {
+	public Bitmap getBitmap(int resourceId) {
 		try {
-			final Bitmap bm = BitmapFactory.decodeResource(myContext.getResources(), resourceId);
-			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-			final byte[] b = baos.toByteArray();
-			// this is why we use TargetApi annotation
-			return Base64.encodeToString(b, Base64.DEFAULT);
+			return BitmapFactory.decodeResource(myContext.getResources(), resourceId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
