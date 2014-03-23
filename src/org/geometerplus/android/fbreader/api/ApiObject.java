@@ -21,6 +21,7 @@ public abstract class ApiObject implements Parcelable {
 		int LONG = 5;
 		int TEXT_POSITION = 10;
 		int SERIALIZABLE = 20;
+		int PARCELABALE = 21;
 	}
 
 	static class Void extends ApiObject {
@@ -149,6 +150,25 @@ public abstract class ApiObject implements Parcelable {
 		}
 	}
 
+	static class Parcelable extends ApiObject {
+		final android.os.Parcelable Value;
+
+		Parcelable(android.os.Parcelable value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.PARCELABALE;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeParcelable(Value, 0);
+		}
+	}
+
 	static class Error extends ApiObject {
 		final java.lang.String Message;
 
@@ -186,6 +206,10 @@ public abstract class ApiObject implements Parcelable {
 
 	static ApiObject envelope(java.util.Date value) {
 		return new Date(value);
+	}
+
+	static ApiObject envelope(android.os.Parcelable value) {
+		return new Parcelable(value);
 	}
 
 	static List<ApiObject> envelopeStringList(List<java.lang.String> values) {
@@ -247,6 +271,8 @@ public abstract class ApiObject implements Parcelable {
 						return new TextPosition(parcel.readInt(), parcel.readInt(), parcel.readInt());
 					case Type.SERIALIZABLE:
 						return new Serializable(parcel.readSerializable());
+					case Type.PARCELABALE:
+						return new Parcelable(parcel.readParcelable(null));
 				}
 			}
 
