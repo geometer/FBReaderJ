@@ -4,12 +4,14 @@
 
 package org.geometerplus.android.fbreader.api;
 
+import java.io.Serializable;
 import java.util.*;
 
 import android.content.*;
 import android.os.IBinder;
 
 import org.geometerplus.android.fbreader.FBReaderIntents;
+import org.geometerplus.android.fbreader.MenuNode;
 
 public class ApiClientImplementation implements ServiceConnection, Api, ApiMethods {
 	public static interface ConnectionListener {
@@ -169,6 +171,18 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			stringList.add(((ApiObject.String)object).Value);
 		}
 		return stringList;
+	}
+ 
+	private <T extends Serializable> List<T> requestSerializableList(int method, ApiObject[] params) throws ApiException {
+		final List<ApiObject> list = requestList(method, params);
+		final ArrayList<T> serializableList = new ArrayList<T>(list.size());
+		for (ApiObject object : list) {
+			if (!(object instanceof ApiObject.Serializable)) {
+				throw new ApiException("Cannot cast an element returned from method " + method + " to Serializable");
+			}
+			serializableList.add((T)((ApiObject.Serializable)object).Value);
+		}
+		return serializableList;
 	}
 
 	private List<Integer> requestIntegerList(int method, ApiObject[] params) throws ApiException {
@@ -458,5 +472,9 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			ApiObject.envelope(singleTap),
 			ApiObject.envelope(action)
 		});
+	}
+
+	public List<MenuNode> getMainMenuContent() throws ApiException {
+		return requestSerializableList(GET_MAIN_MENU_CONTENT, EMPTY_PARAMETERS);
 	}
 }

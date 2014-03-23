@@ -33,6 +33,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
 
 import org.geometerplus.android.fbreader.FBReaderIntents;
+import org.geometerplus.android.fbreader.MenuNode;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
@@ -259,6 +260,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelopeIntegerList(getParagraphWordIndices(
 						((ApiObject.Integer)parameters[0]).Value
 					));
+				case GET_MAIN_MENU_CONTENT:
+					return ApiObject.envelopeSerializableList(getMainMenuContent());
 				default:
 					return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 			}
@@ -578,5 +581,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
 		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
+	}
+
+	public List<MenuNode> getMainMenuContent() {
+		return Collections.emptyList();
 	}
 }
