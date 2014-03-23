@@ -483,14 +483,6 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 
-	public String getResourceValue(String res) throws ApiException {
-		return requestString(GET_RESOURCE_VALUE, envelope(res));
-	}
-
-	public String getMenuText(String code) throws ApiException {
-		return requestString(GET_MENU_TEXT, envelope(code));
-	}
-
 	public String getMenuIcon(String code) throws ApiException {
 		return requestString(GET_MENU_ICON, envelope(code));
 	}

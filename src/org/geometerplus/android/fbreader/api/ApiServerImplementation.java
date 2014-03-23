@@ -239,10 +239,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				case DELETE_ZONEMAP:
 					deleteZoneMap(((ApiObject.String)parameters[0]).Value);
 					return ApiObject.Void.Instance;
-				case GET_RESOURCE_VALUE:
-					return ApiObject.envelope(getResourceValue(((ApiObject.String)parameters[0]).Value));
-				case GET_MENU_TEXT:
-					return ApiObject.envelope(getMenuText(((ApiObject.String)parameters[0]).Value));
 				case GET_MENU_ICON:
 					return ApiObject.envelope(getMenuIcon(((ApiObject.String)parameters[0]).Value));
 				case GET_RESOURCE_STRING:
@@ -613,19 +609,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
 		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
-	}
-
-	public String getResourceValue(String s) {
-		String[] l = s.split("/");
-		ZLResource r = ZLResource.resource(l[0]);
-		for (int i = 1; i < l.length; ++i) {
-			r = r.getResource(l[i]);
-		}
-		return r.getValue();
-	}
-
-	public String getMenuText(String code) {
-		return ZLResource.resource("menu").getResource(code).getValue();
 	}
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
