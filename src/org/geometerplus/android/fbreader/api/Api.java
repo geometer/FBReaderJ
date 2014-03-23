@@ -89,4 +89,5 @@ public interface Api {
 	String getTapActionByCoordinates(String name, int x, int y, int width, int height, boolean singleTap) throws ApiException;
 
 	List<MenuNode> getMainMenuContent() throws ApiException;
+	String getResourceString(String ... keys) throws ApiException; 
 }
