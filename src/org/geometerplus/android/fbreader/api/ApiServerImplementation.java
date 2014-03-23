@@ -591,12 +591,26 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
 	}
 
+	private void setMenuTitles(List<MenuNode> nodes, ZLResource menuResource) {
+		for (MenuNode n : nodes) {
+			n.OptionalTitle = menuResource.getResource(n.Code).getValue();
+			if (n instanceof MenuNode.Submenu) {
+				setMenuTitles(((MenuNode.Submenu)n).Children, menuResource);
+			}
+		}
+	}
+			
 	public List<MenuNode> getMainMenuContent() {
-		return MenuData.topLevelNodes();
+		final List<MenuNode> nodes = MenuData.topLevelNodes();
+		final List<MenuNode> copies = new ArrayList<MenuNode>(nodes.size());
+		for (MenuNode n : nodes) {
+			copies.add(n.clone());
+		}
+		setMenuTitles(copies, ZLResource.resource("menu"));
+		return copies;
 	}
 
 	public String getResourceString(String ... keys) {
-		System.err.println("getResourceString: " + keys);
 		ZLResource resource = ZLResource.resource(keys[0]);
 		for (int i = 1; i < keys.length; ++i) {
 			resource = resource.getResource(keys[i]);
