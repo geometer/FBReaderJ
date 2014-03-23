@@ -19,5 +19,17 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.*;
+
 public abstract class MenuData {
+	private static List<MenuNode> ourNodes;
+
+	public static synchronized List<MenuNode> topLevelNodes() {
+		if (ourNodes == null) {
+			ourNodes = new ArrayList<MenuNode>();
+
+			ourNodes = Collections.unmodifiableList(ourNodes);
+		}
+		return ourNodes;
+	}
 }
