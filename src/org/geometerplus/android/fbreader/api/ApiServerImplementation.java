@@ -245,6 +245,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelope(getMenuText(((ApiObject.String)parameters[0]).Value));
 				case GET_MENU_ICON:
 					return ApiObject.envelope(getMenuIcon(((ApiObject.String)parameters[0]).Value));
+				case GET_RESOURCE_STRING:
+				{
+					final String[] stringParams = new String[parameters.length];
+					for (int i = 0; i < parameters.length; ++i) {
+						stringParams[i] = ((ApiObject.String)parameters[i]).Value;
+					}
+					return ApiObject.envelope(getResourceString(stringParams));
+				}
 				default:
 					return unsupportedMethodError(method);
 			}
@@ -642,5 +650,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public List<MenuNode> getMainMenuContent() {
 		return MenuData.getRoot().Children;
+	}
+
+	public String getResourceString(String ... keys) {
+		System.err.println("getResourceString: " + keys);
+		ZLResource resource = ZLResource.resource(keys[0]);
+		for (int i = 1; i < keys.length; ++i) {
+			resource = resource.getResource(keys[i]);
+		}
+		return resource.getValue();
 	}
 }

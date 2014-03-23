@@ -220,6 +220,15 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return objects;
 	}
 
+	private static ApiObject[] envelope(String[] value) {
+		final ApiObject[] objects = new ApiObject[value.length];
+		int index = 0;
+		for (String s : value) {
+			objects[index++] = ApiObject.envelope(s);
+		}
+		return objects;
+	}
+
 	// information about fbreader
 	public String getFBReaderVersion() throws ApiException {
 		return requestString(GET_FBREADER_VERSION, EMPTY_PARAMETERS);
@@ -488,5 +497,9 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	public List<MenuNode> getMainMenuContent() throws ApiException {
 		return requestSerializableList(GET_MAIN_MENU_CONTENT, EMPTY_PARAMETERS);
+	}
+
+	public String getResourceString(String ... keys) throws ApiException {
+		return requestString(GET_RESOURCE_STRING, envelope(keys));
 	}
 }
