@@ -878,14 +878,23 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		addMenuItem(menu, actionId, null, name);
 	}
 
-	private void addMenuItem(Menu menu, String actionId, Integer iconId) {
+	private void addMenuItem(Menu menu, String actionId, int iconId) {
 		addMenuItem(menu, actionId, iconId, null);
+	}
+
+	private void addMenuItem(Menu menu, String actionId) {
+		addMenuItem(menu, actionId, null, null);
 	}
 
 	private void fillMenu(Menu menu, List<MenuNode> nodes) {
 		for (MenuNode n : nodes) {
 			if (n instanceof MenuNode.Item) {
-				addMenuItem(menu, n.Code, ((MenuNode.Item)n).IconId);
+				final Integer iconId = ((MenuNode.Item)n).IconId;
+				if (iconId != null) {
+					addMenuItem(menu, n.Code, iconId);
+				} else {
+					addMenuItem(menu, n.Code);
+				}
 			} else /* if (n instanceof MenuNode.Submenu) */ {
 				final Menu subMenu = addSubMenu(menu, n.Code);
 				fillMenu(subMenu, ((MenuNode.Submenu)n).Children);
