@@ -882,13 +882,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		addMenuItem(menu, actionId, iconId, null);
 	}
 
-	private void fillMenu(Menu menu, MenuItemData source) {
-		for (MenuItemData el : source.Children) {
-			if (el.Type == MenuItemData.MenuType.ACTION) {
-				addMenuItem(menu, el.Code, el.IconId);
-			} else {
-				final Menu subMenu = addSubMenu(menu, el.Code);
-				fillMenu(subMenu, el);
+	private void fillMenu(Menu menu, MenuNode.Submenu source) {
+		for (MenuNode node : source.Children) {
+			if (node instanceof MenuNode.Item) {
+				addMenuItem(menu, node.Code, ((MenuNode.Item)node).IconId);
+			} else /* if (node instanceof MenuNode.Submenu) */ {
+				final Menu subMenu = addSubMenu(menu, node.Code);
+				fillMenu(subMenu, (MenuNode.Submenu)node);
 			}
 		}
 	}
@@ -901,7 +901,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myMenuLanguage = menuLanguage;
 
 		menu.clear();
-		fillMenu(menu, MenuItemData.getRoot());
+		fillMenu(menu, MenuNode.getRoot());
 		synchronized (myPluginActions) {
 			int index = 0;
 			for (PluginApi.ActionInfo info : myPluginActions) {

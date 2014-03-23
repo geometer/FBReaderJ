@@ -43,7 +43,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
 
 import org.geometerplus.android.fbreader.FBReaderIntents;
-import org.geometerplus.android.fbreader.MenuItemData;
+import org.geometerplus.android.fbreader.MenuNode;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
@@ -622,15 +622,17 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public List<String> getMenuChildren(String code) {
-		MenuItemData root = MenuItemData.getRoot();
-		MenuItemData cur = root.findByCode(code);
-		Log.d("gsdfgvbdf", code);
-		ArrayList<String> res = new ArrayList<String>();
-		for (MenuItemData el : cur.Children) {
-			Log.d("gsdfgvbdf", el.Code);
-			res.add(el.Code);
+		final MenuNode current = MenuNode.getRoot().findByCode(code);
+		if (current instanceof MenuNode.Submenu) {
+			final List<MenuNode> children = ((MenuNode.Submenu)current).Children;
+			final ArrayList<String> codes = new ArrayList<String>(children.size());
+			for (MenuNode node : children) {
+				codes.add(node.Code);
+			}
+			return codes;
+		} else {
+			return Collections.emptyList();
 		}
-		return res;
 	}
 
 	public String getMenuText(String code) {
@@ -638,16 +640,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getMenuType(String code) {
-		MenuItemData root = MenuItemData.getRoot();
-		MenuItemData cur = root.findByCode(code);
-		return cur.Type.name();
+		final MenuNode current = MenuNode.getRoot().findByCode(code);
+		return current instanceof MenuNode.Submenu ? "SUBMENU" : "ACTION";
 	}
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	public String getMenuIcon(String code) {
-		MenuItemData root = MenuItemData.getRoot();
-		MenuItemData cur = root.findByCode(code);
-		Integer id = cur.IconId;
+		final MenuNode current = MenuNode.getRoot().findByCode(code);
+		final Integer id = current instanceof MenuNode.Item
+			? ((MenuNode.Item)current).IconId : null;
 		if (id == null) {
 			return null;
 		}
