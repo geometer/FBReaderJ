@@ -80,16 +80,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
 		myBook = FBReaderIntents.getBookExtra(getIntent());
-		if (myBook == null) {
-			final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(getIntent());
-			if (bookmark != null) {
-				myCollection.bindToService(this, new Runnable() {
-					public void run() {
-						myBook = myCollection.getBookById(bookmark.getBookId());
-					}
-				});
-			}
-		}
 	}
 
 	private class Initializer implements Runnable {
