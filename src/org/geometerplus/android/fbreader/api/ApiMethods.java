@@ -79,5 +79,5 @@ interface ApiMethods {
 	// for pdf plugin
 	int GET_MAIN_MENU_CONTENT = 1001;
 	int GET_RESOURCE_STRING = 1002;
-	int GET_MENU_ICON = 1013;
+	int GET_BITMAP = 1003;
 }

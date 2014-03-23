@@ -238,8 +238,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				case DELETE_ZONEMAP:
 					deleteZoneMap(((ApiObject.String)parameters[0]).Value);
 					return ApiObject.Void.Instance;
-				case GET_MENU_ICON:
-					return ApiObject.envelope(getMenuIcon(((ApiObject.String)parameters[0]).Value));
 				case GET_RESOURCE_STRING:
 				{
 					final String[] stringParams = new String[parameters.length];
@@ -248,6 +246,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					}
 					return ApiObject.envelope(getResourceString(stringParams));
 				}
+				case GET_BITMAP:
+					return ApiObject.envelope(getBitmap(((ApiObject.Integer)parameters[0]).Value));
 				default:
 					return unsupportedMethodError(method);
 			}
@@ -610,32 +610,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
 	}
 
-	@TargetApi(Build.VERSION_CODES.FROYO)
-	public String getMenuIcon(String code) {
-		MenuNode byCode = null;
-		for (MenuNode node : MenuData.topLevelNodes()) {
-			byCode = node.findByCode(code);
-			if (byCode != null) {
-				break;
-			}
-		}
-		final Integer id = byCode instanceof MenuNode.Item
-			? ((MenuNode.Item)byCode).IconId : null;
-		if (id == null) {
-			return null;
-		}
-		try {
-			Bitmap bm = BitmapFactory.decodeResource(myContext.getResources(), id);
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			bm.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object
-			byte[] b = baos.toByteArray();
-			return Base64.encodeToString(b, Base64.DEFAULT);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	private void setMenuTitles(List<MenuNode> nodes, ZLResource menuResource) {
 		for (MenuNode n : nodes) {
 			n.OptionalTitle = menuResource.getResource(n.Code).getValue();
@@ -661,5 +635,20 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			resource = resource.getResource(keys[i]);
 		}
 		return resource.getValue();
+	}
+
+	@TargetApi(Build.VERSION_CODES.FROYO)
+	public String getBitmap(int resourceId) {
+		try {
+			final Bitmap bm = BitmapFactory.decodeResource(myContext.getResources(), resourceId);
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+			final byte[] b = baos.toByteArray();
+			// this is why we use TargetApi annotation
+			return Base64.encodeToString(b, Base64.DEFAULT);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

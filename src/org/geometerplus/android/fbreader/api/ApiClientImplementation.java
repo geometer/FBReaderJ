@@ -483,15 +483,15 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 
-	public String getMenuIcon(String code) throws ApiException {
-		return requestString(GET_MENU_ICON, envelope(code));
-	}
-
 	public List<MenuNode> getMainMenuContent() throws ApiException {
 		return requestSerializableList(GET_MAIN_MENU_CONTENT, EMPTY_PARAMETERS);
 	}
 
 	public String getResourceString(String ... keys) throws ApiException {
 		return requestString(GET_RESOURCE_STRING, envelope(keys));
+	}
+
+	public String getBitmap(int resourceId) throws ApiException {
+		return requestString(GET_BITMAP, envelope(resourceId));
 	}
 }

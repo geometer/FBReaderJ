@@ -7,6 +7,9 @@ package org.geometerplus.android.fbreader.api;
 import java.util.List;
 import java.util.Date;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+
 import org.geometerplus.android.fbreader.MenuNode;
 
 public interface Api {
@@ -90,4 +93,7 @@ public interface Api {
 
 	List<MenuNode> getMainMenuContent() throws ApiException;
 	String getResourceString(String ... keys) throws ApiException; 
+
+	@TargetApi(Build.VERSION_CODES.FROYO)
+	String getBitmap(int resourceId) throws ApiException;
 }
