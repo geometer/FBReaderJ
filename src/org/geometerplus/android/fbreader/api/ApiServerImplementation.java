@@ -30,9 +30,9 @@ import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -43,7 +43,6 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.*;
 
 import org.geometerplus.android.fbreader.*;
-import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
