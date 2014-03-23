@@ -19,37 +19,44 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.*;
+
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public abstract class MenuData {
-	public static MenuNode.Submenu getRoot() {
-		final MenuNode.Submenu root = new MenuNode.Submenu("root");
-		root.Children.add(new MenuNode.Item(ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
-		root.Children.add(new MenuNode.Item(ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
-		root.Children.add(new MenuNode.Item(ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
-		root.Children.add(new MenuNode.Item(ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
-		root.Children.add(new MenuNode.Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night));
-		root.Children.add(new MenuNode.Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day));
-		root.Children.add(new MenuNode.Item(ActionCode.SEARCH, R.drawable.ic_menu_search));
-		root.Children.add(new MenuNode.Item(ActionCode.SHARE_BOOK));
-		root.Children.add(new MenuNode.Item(ActionCode.SHOW_PREFERENCES));
-		root.Children.add(new MenuNode.Item(ActionCode.SHOW_BOOK_INFO));
-		MenuNode.Submenu orient = new MenuNode.Submenu("screenOrientation");
-		orient.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM));
-		orient.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_SENSOR));
-		orient.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT));
-		orient.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE));
-		if (ZLibrary.Instance().supportsAllOrientations()) {
-			orient.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT));
-			orient.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
+	private static List<MenuNode> ourNodes;
+
+	public static synchronized List<MenuNode> topLevelNodes() {
+		if (ourNodes == null) {
+			ourNodes = new ArrayList<MenuNode>();
+			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
+			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
+			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
+			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
+			ourNodes.add(new MenuNode.Item(ActionCode.SWITCH_TO_NIGHT_PROFILE, R.drawable.ic_menu_night));
+			ourNodes.add(new MenuNode.Item(ActionCode.SWITCH_TO_DAY_PROFILE, R.drawable.ic_menu_day));
+			ourNodes.add(new MenuNode.Item(ActionCode.SEARCH, R.drawable.ic_menu_search));
+			ourNodes.add(new MenuNode.Item(ActionCode.SHARE_BOOK));
+			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_PREFERENCES));
+			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_BOOK_INFO));
+			final MenuNode.Submenu orientations = new MenuNode.Submenu("screenOrientation");
+			orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM));
+			orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_SENSOR));
+			orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT));
+			orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE));
+			if (ZLibrary.Instance().supportsAllOrientations()) {
+				orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT));
+				orientations.Children.add(new MenuNode.Item(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
+			}
+			ourNodes.add(orientations);
+			ourNodes.add(new MenuNode.Item(ActionCode.INCREASE_FONT));
+			ourNodes.add(new MenuNode.Item(ActionCode.DECREASE_FONT));
+			ourNodes.add(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
+			ourNodes.add(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
+			ourNodes = Collections.unmodifiableList(ourNodes);
 		}
-		root.Children.add(orient);
-		root.Children.add(new MenuNode.Item(ActionCode.INCREASE_FONT));
-		root.Children.add(new MenuNode.Item(ActionCode.DECREASE_FONT));
-		root.Children.add(new MenuNode.Item(ActionCode.INSTALL_PLUGINS));
-		root.Children.add(new MenuNode.Item(ActionCode.OPEN_WEB_HELP));
-		return root;
+		return ourNodes;
 	}
 }

@@ -613,9 +613,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	public String getMenuIcon(String code) {
-		final MenuNode current = MenuData.getRoot().findByCode(code);
-		final Integer id = current instanceof MenuNode.Item
-			? ((MenuNode.Item)current).IconId : null;
+		MenuNode byCode = null;
+		for (MenuNode node : MenuData.topLevelNodes()) {
+			byCode = node.findByCode(code);
+			if (byCode != null) {
+				break;
+			}
+		}
+		final Integer id = byCode instanceof MenuNode.Item
+			? ((MenuNode.Item)byCode).IconId : null;
 		if (id == null) {
 			return null;
 		}
@@ -632,7 +638,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public List<MenuNode> getMainMenuContent() {
-		return MenuData.getRoot().Children;
+		return MenuData.topLevelNodes();
 	}
 
 	public String getResourceString(String ... keys) {
