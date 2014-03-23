@@ -7,6 +7,8 @@ package org.geometerplus.android.fbreader.api;
 import java.util.List;
 import java.util.Date;
 
+import org.geometerplus.android.fbreader.MenuNode;
+
 public interface Api {
 	// information about fbreader
 	String getFBReaderVersion() throws ApiException;
@@ -85,4 +87,6 @@ public interface Api {
 	String getTapZoneAction(String name, int h, int v, boolean singleTap) throws ApiException;
 	void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) throws ApiException;
 	String getTapActionByCoordinates(String name, int x, int y, int width, int height, boolean singleTap) throws ApiException;
+
+	List<MenuNode> getMainMenuContent() throws ApiException;
 }

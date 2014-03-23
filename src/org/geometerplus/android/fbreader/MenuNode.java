@@ -19,9 +19,10 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class MenuNode {
+public abstract class MenuNode implements Serializable {
 	public final String Code;
 
 	private MenuNode(String code) {
