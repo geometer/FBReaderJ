@@ -12,9 +12,6 @@ import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.Parcelable;
 
-import org.geometerplus.android.fbreader.FBReaderIntents;
-import org.geometerplus.android.fbreader.MenuNode;
-
 public class ApiClientImplementation implements ServiceConnection, Api, ApiMethods {
 	public static interface ConnectionListener {
 		void onConnected();
@@ -54,7 +51,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	public synchronized void connect() {
 		if (myInterface == null) {
-			myContext.bindService(new Intent(FBReaderIntents.Action.API), this, Context.BIND_AUTO_CREATE);
+			myContext.bindService(FBReaderIntents.defaultIntent(FBReaderIntents.Action.API), this, Context.BIND_AUTO_CREATE);
 			myContext.registerReceiver(myEventReceiver, new IntentFilter(FBReaderIntents.Action.API_CALLBACK));
 		}
 	}
