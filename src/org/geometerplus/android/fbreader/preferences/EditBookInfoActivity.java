@@ -34,7 +34,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
-import org.geometerplus.android.fbreader.FBReaderIntents;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 

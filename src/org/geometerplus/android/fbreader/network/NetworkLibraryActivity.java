@@ -40,7 +40,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
-import org.geometerplus.android.fbreader.FBReaderIntents;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.network.action.*;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 

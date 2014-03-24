@@ -53,7 +53,9 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
-import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.library.LibraryActivity.PluginMetaInfoReaderImpl;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
