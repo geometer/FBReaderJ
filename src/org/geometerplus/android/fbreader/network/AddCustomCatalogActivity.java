@@ -38,7 +38,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-import org.geometerplus.android.fbreader.FBReaderIntents;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
