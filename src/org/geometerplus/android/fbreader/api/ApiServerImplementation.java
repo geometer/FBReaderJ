@@ -320,7 +320,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getOptionValue(String group, String name) {
-		return Config.Instance().getValue(group, name, null);
+		return new ZLStringOption(group, name, null).getValue();
 	}
 
 	public void setOptionValue(String group, String name, String value) {
