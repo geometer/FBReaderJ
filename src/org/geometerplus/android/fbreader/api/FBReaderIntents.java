@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.android.fbreader.api;
 
 import android.content.Intent;
 
@@ -47,6 +47,12 @@ public abstract class FBReaderIntents {
 		String BOOKMARK                 = "fbreader.bookmark";
 		String PLUGIN                   = "fbreader.plugin";
 		String TYPE                     = "fbreader.type";
+	}
+
+	public static Intent defaultIntent(String action) {
+		return new Intent(action)
+			.addCategory(Intent.CATEGORY_DEFAULT)
+			.setPackage("org.geometerplus.zlibrary.ui.android");
 	}
 
 	public static void putBookExtra(Intent intent, String key, Book book) {
