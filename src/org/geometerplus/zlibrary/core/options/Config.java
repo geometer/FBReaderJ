@@ -43,11 +43,6 @@ public abstract class Config {
 		Collections.synchronizedMap(new HashMap<StringPair,String>());
 	private final Set<String> myCachedGroups = new HashSet<String>();
 
-	// deprecated, used in API server implementation
-	public final String getValue(String name, String id, String defaultValue) {
-		return getValue(new StringPair(name, id), defaultValue);
-	}
-
 	public final String getValue(StringPair id, String defaultValue) {
 		String value = myCache.get(id);
 		if (value == null) {
