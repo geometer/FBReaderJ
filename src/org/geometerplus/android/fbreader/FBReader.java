@@ -499,7 +499,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 		} else {
 			super.onNewIntent(intent);
-			if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
+			if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
 				myNeedToOpenFile = true;
 				myIntentToOpen = intent;
 				myNeedToSkipPlugin = true;
