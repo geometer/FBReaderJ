@@ -9,8 +9,6 @@ import java.util.Date;
 
 import android.graphics.Bitmap;
 
-import org.geometerplus.android.fbreader.MenuNode;
-
 public interface Api {
 	// information about fbreader
 	String getFBReaderVersion() throws ApiException;

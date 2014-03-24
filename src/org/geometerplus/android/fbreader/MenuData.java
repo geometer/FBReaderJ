@@ -26,6 +26,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 
+import org.geometerplus.android.fbreader.api.MenuNode;
+
 public abstract class MenuData {
 	private static List<MenuNode> ourNodes;
 

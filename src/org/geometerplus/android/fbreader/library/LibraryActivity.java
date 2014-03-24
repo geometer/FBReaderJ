@@ -38,6 +38,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.*;
 import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
