@@ -879,6 +879,7 @@
 		<node name="emptyCatalog" value="متاسفانه كاتالوگ خالي است"/>
 		<node name="emptyBasket" value="متاسفانه سبدشما خالي است"/>
 		<node name="emptyNetworkSearchResults" value="متاسفانه كتابي يافت نشد"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">

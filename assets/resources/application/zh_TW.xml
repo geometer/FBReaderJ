@@ -869,6 +869,7 @@
 		<node name="emptyCatalog" value="空目錄"/>
 		<node name="emptyBasket" value="購物籃內沒有物品"/>
 		<node name="emptyNetworkSearchResults" value="沒有結果符合"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
