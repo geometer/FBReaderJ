@@ -63,6 +63,12 @@ void ZLStringUtil::appendNumber(std::string &str, unsigned int n) {
 	}
 }
 
+std::string ZLStringUtil::numberToString(unsigned int n) {
+	std::string str;
+	appendNumber(str, n);
+	return str;
+}
+
 void ZLStringUtil::append(std::string &str, const std::vector<std::string> &text) {
 	std::size_t len = str.length();
 	for (std::vector<std::string>::const_iterator it = text.begin(); it != text.end(); ++it) {
