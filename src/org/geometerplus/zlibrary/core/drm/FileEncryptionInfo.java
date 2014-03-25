@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.encryption;
+package org.geometerplus.zlibrary.core.drm;
 
 public class FileEncryptionInfo {
 	public final String Uri;
