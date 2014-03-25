@@ -30,8 +30,8 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
 
 public class DataServer extends NanoHTTPD {
-	DataServer() {
-		super(12345);
+	DataServer(int port) {
+		super(port);
 	}
 
 	private static final String PREFIX_VIDEO = "/video/";

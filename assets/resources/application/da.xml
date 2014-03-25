@@ -901,6 +901,7 @@
 		<node name="formatExists" value="Filtypen understøttes allerede af %s"/>
 		<node name="unzipFailed" value="Det mislykkedes at udpakke bogen til ekstern brug"/>
 		<node name="noPlugin" value="Installer plugin for at læse denne filtype"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
