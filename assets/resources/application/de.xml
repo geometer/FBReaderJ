@@ -881,6 +881,7 @@
 		<node name="emptyCatalog" value="Der Katalog ist leer."/>
 		<node name="emptyBasket" value="Ihr Warenkorb ist leer."/>
 		<node name="emptyNetworkSearchResults" value="Es wurden leider keine Bücher gefunden."/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">

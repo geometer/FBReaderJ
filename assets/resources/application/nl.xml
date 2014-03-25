@@ -879,6 +879,7 @@
 		<node name="emptyCatalog" value="Catalogus is leeg"/>
 		<node name="emptyBasket" value="Je mandje is leeg, sorry"/>
 		<node name="emptyNetworkSearchResults" value="Geen boeken gevonden, sorry"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">

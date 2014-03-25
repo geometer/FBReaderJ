@@ -884,6 +884,7 @@
 		<node name="emptyCatalog" value="Каталогът е празен"/>
 		<node name="emptyBasket" value="Кошчето е празно"/>
 		<node name="emptyNetworkSearchResults" value="Книгата не е намерена"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
