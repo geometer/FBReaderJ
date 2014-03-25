@@ -901,6 +901,7 @@
 		<node name="formatExists" value="Formatua dagoneko %s(e)k du"/>
 		<node name="unzipFailed" value="Ezin izan da liburua deskonprimatu"/>
 		<node name="noPlugin" value="Gehigarria instalatu fitxategi-mota hau irakurtzeko"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">

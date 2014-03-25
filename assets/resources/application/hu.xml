@@ -869,6 +869,7 @@
 		<node name="emptyCatalog" value="A katalógus üres"/>
 		<node name="emptyBasket" value="A kosár sajnos üres"/>
 		<node name="emptyNetworkSearchResults" value="Nem található megfelelő könyv"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
