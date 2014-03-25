@@ -47,7 +47,13 @@ class OpenVideoAction extends FBAndroidAction {
 		final ZLTextVideoElement element = ((ZLTextVideoRegionSoul)params[0]).VideoElement;
 		final String path = element.Sources.get(MimeType.VIDEO_WEBM.toString());
 		if (path != null) {
-			final StringBuilder url = new StringBuilder("http://127.0.0.1:12345/video/");
+			final int port = BaseActivity.DataConnection.getPort();
+			if (port == -1) {
+				UIUtil.showErrorMessage(BaseActivity, "videoServiceNotWorking");
+				return;
+			}
+			final StringBuilder url =
+				new StringBuilder("http://127.0.0.1:").append(port).append("/video/");
 			for (int i = 0; i < path.length(); ++i) {
 				url.append(String.format("X%X", (short)path.charAt(i)));
 			}
