@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.image;
 
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.*;
 
@@ -46,7 +47,8 @@ public class ZLFileImage extends ZLSingleImage {
 				ZLFile.createFileByPath(data[0]),
 				data[1],
 				offsets,
-				lengths
+				lengths,
+				null
 			);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,17 +60,19 @@ public class ZLFileImage extends ZLSingleImage {
 	private final String myEncoding;
 	private final int[] myOffsets;
 	private final int[] myLengths;
+	private final FileEncryptionInfo myEncryptionInfo;
 
-	public ZLFileImage(String mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths) {
-		this(MimeType.get(mimeType), file, encoding, offsets, lengths);
+	public ZLFileImage(String mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
+		this(MimeType.get(mimeType), file, encoding, offsets, lengths, encryptionInfo);
 	}
 
-	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths) {
+	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
 		super(mimeType);
 		myFile = file;
 		myEncoding = encoding != null ? encoding : ENCODING_NONE;
 		myOffsets = offsets;
 		myLengths = lengths;
+		myEncryptionInfo = encryptionInfo;
 	}
 
 	public ZLFileImage(String mimeType, ZLFile file, String encoding, int offset, int length) {
@@ -76,7 +80,7 @@ public class ZLFileImage extends ZLSingleImage {
 	}
 
 	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int offset, int length) {
-		this(mimeType, file, encoding, new int[] { offset }, new int[] { length });
+		this(mimeType, file, encoding, new int[] { offset }, new int[] { length }, null);
 	}
 
 	public ZLFileImage(MimeType mimeType, ZLFile file) {
@@ -97,6 +101,10 @@ public class ZLFileImage extends ZLSingleImage {
 	@Override
 	public InputStream inputStream() {
 		try {
+			if (myEncryptionInfo != null) {
+				return null;
+			}
+
 			final InputStream stream;
 			if (myOffsets.length == 1) {
 				final int offset = myOffsets[0];

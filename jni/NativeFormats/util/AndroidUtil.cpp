@@ -18,6 +18,7 @@
  */
 
 #include <ZLFile.h>
+#include <FileEncryptionInfo.h>
 #include <ZLFileImage.h>
 
 #include "AndroidUtil.h"
@@ -36,7 +37,7 @@ JavaClass AndroidUtil::Class_java_io_InputStream("java/io/InputStream");
 
 JavaClass AndroidUtil::Class_ZLibrary("org/geometerplus/zlibrary/core/library/ZLibrary");
 JavaClass AndroidUtil::Class_ZLFile("org/geometerplus/zlibrary/core/filesystem/ZLFile");
-JavaClass AndroidUtil::Class_FileEncryptionInfo("org/geometerplus/zlibrary/core/enryption/FileEncryptionInfo");
+JavaClass AndroidUtil::Class_FileEncryptionInfo("org/geometerplus/zlibrary/core/drm/FileEncryptionInfo");
 JavaClass AndroidUtil::Class_ZLFileImage("org/geometerplus/zlibrary/core/image/ZLFileImage");
 JavaClass AndroidUtil::Class_ZLTextModel("org/geometerplus/zlibrary/text/model/ZLTextModel");
 JavaClass AndroidUtil::Class_CachedCharStorageException("org/geometerplus/zlibrary/text/model/CachedCharStorageException");
@@ -177,7 +178,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	Constructor_FileEncryptionInfo = new Constructor(Class_FileEncryptionInfo, "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 
-	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;[I[I)V");
+	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;[I[ILorg/geometerplus/zlibrary/core/drm/FileEncryptionInfo;)V");
 
 	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(Class_Paths, "cacheDirectory", Class_java_lang_String, "()");
 
@@ -219,6 +220,26 @@ jobject AndroidUtil::createJavaFile(JNIEnv *env, const std::string &path) {
 	return javaFile;
 }
 
+jobject AndroidUtil::createJavaEncryptionInfo(JNIEnv *env, shared_ptr<FileEncryptionInfo> info) {
+	if (info.isNull()) {
+		return 0;
+	}
+
+	jstring uri = createJavaString(env, info->Uri);
+	jstring method = createJavaString(env, info->Method);
+	jstring algorithm = createJavaString(env, info->Algorithm);
+	jstring contentId = createJavaString(env, info->ContentId);
+
+	jobject javaInfo = Constructor_FileEncryptionInfo->call(uri, method, algorithm, contentId);
+
+	env->DeleteLocalRef(contentId);
+	env->DeleteLocalRef(algorithm);
+	env->DeleteLocalRef(method);
+	env->DeleteLocalRef(uri);
+
+	return javaInfo;
+}
+
 jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
 	jstring javaMimeType = createJavaString(env, image.mimeType());
 	jobject javaFile = createJavaFile(env, image.file().path());
@@ -233,10 +254,16 @@ jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
 	jintArray javaOffsets = createJavaIntArray(env, offsets);
 	jintArray javaSizes = createJavaIntArray(env, sizes);
 
+	jobject javaEncryptionInfo = createJavaEncryptionInfo(env, image.encryptionInfo());
+
 	jobject javaImage = Constructor_ZLFileImage->call(
 		javaMimeType, javaFile, javaEncoding,
-		javaOffsets, javaSizes
+		javaOffsets, javaSizes, javaEncryptionInfo
 	);
+
+	if (javaEncryptionInfo != 0) {
+		env->DeleteLocalRef(javaEncryptionInfo);
+	}
 
 	env->DeleteLocalRef(javaEncoding);
 	env->DeleteLocalRef(javaFile);
