@@ -24,6 +24,8 @@ import android.content.Intent;
 import org.geometerplus.fbreader.book.*;
 
 public abstract class FBReaderIntents {
+	public static final String DEFAULT_PACKAGE = "org.geometerplus.zlibrary.ui.android";
+
 	public interface Action {
 		String API                      = "android.fbreader.action.API";
 		String API_CALLBACK             = "android.fbreader.action.API_CALLBACK";
@@ -39,6 +41,7 @@ public abstract class FBReaderIntents {
 		String NETWORK_LIBRARY          = "android.fbreader.action.NETWORK_LIBRARY";
 		String OPEN_NETWORK_CATALOG     = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 		String ERROR                    = "android.fbreader.action.ERROR";
+		String CRASH                    = "android.fbreader.action.CRASH";
 		String PLUGIN                   = "android.fbreader.action.PLUGIN";
 	}
 
@@ -52,7 +55,7 @@ public abstract class FBReaderIntents {
 	public static Intent defaultIntent(String action) {
 		return new Intent(action)
 			.addCategory(Intent.CATEGORY_DEFAULT)
-			.setPackage("org.geometerplus.zlibrary.ui.android");
+			.setPackage(DEFAULT_PACKAGE);
 	}
 
 	public static void putBookExtra(Intent intent, String key, Book book) {
