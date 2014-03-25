@@ -36,6 +36,7 @@ JavaClass AndroidUtil::Class_java_io_InputStream("java/io/InputStream");
 
 JavaClass AndroidUtil::Class_ZLibrary("org/geometerplus/zlibrary/core/library/ZLibrary");
 JavaClass AndroidUtil::Class_ZLFile("org/geometerplus/zlibrary/core/filesystem/ZLFile");
+JavaClass AndroidUtil::Class_FileEncryptionInfo("org/geometerplus/zlibrary/core/enryption/FileEncryptionInfo");
 JavaClass AndroidUtil::Class_ZLFileImage("org/geometerplus/zlibrary/core/image/ZLFileImage");
 JavaClass AndroidUtil::Class_ZLTextModel("org/geometerplus/zlibrary/text/model/ZLTextModel");
 JavaClass AndroidUtil::Class_CachedCharStorageException("org/geometerplus/zlibrary/text/model/CachedCharStorageException");
@@ -92,6 +93,8 @@ shared_ptr<ObjectMethod> AndroidUtil::Method_ZLFile_getInputStream;
 shared_ptr<StringMethod> AndroidUtil::Method_ZLFile_getPath;
 shared_ptr<BooleanMethod> AndroidUtil::Method_ZLFile_isDirectory;
 shared_ptr<LongMethod> AndroidUtil::Method_ZLFile_size;
+
+shared_ptr<Constructor> AndroidUtil::Constructor_FileEncryptionInfo;
 
 shared_ptr<Constructor> AndroidUtil::Constructor_ZLFileImage;
 
@@ -171,6 +174,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_ZLFile_getInputStream = new ObjectMethod(Class_ZLFile, "getInputStream", Class_java_io_InputStream, "()");
 	Method_ZLFile_getPath = new StringMethod(Class_ZLFile, "getPath", "()");
 	Method_ZLFile_size = new LongMethod(Class_ZLFile, "size", "()");
+
+	Constructor_FileEncryptionInfo = new Constructor(Class_FileEncryptionInfo, "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 
 	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;[I[I)V");
 
