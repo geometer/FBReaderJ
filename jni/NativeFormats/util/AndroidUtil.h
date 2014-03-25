@@ -41,6 +41,7 @@ class ObjectArrayMethod;
 class StaticObjectMethod;
 
 class ZLFile;
+class FileEncryptionInfo;
 class ZLFileImage;
 
 class AndroidUtil {
@@ -156,6 +157,7 @@ public:
 	static std::string convertNonUtfString(const std::string &str);
 
 	static jobject createJavaFile(JNIEnv *env, const std::string &path);
+	static jobject createJavaEncryptionInfo(JNIEnv *env, shared_ptr<FileEncryptionInfo> info);
 	static jobject createJavaImage(JNIEnv *env, const ZLFileImage &image);
 
 	static jintArray createJavaIntArray(JNIEnv *env, const std::vector<jint> &data);
