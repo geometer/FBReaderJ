@@ -963,6 +963,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			FBReaderIntents.Action.ERROR,
 			new Uri.Builder().scheme(exception.getClass().getSimpleName()).build()
 		);
+		intent.setPackage(FBReaderIntents.DEFAULT_PACKAGE);
 		intent.putExtra(ErrorKeys.MESSAGE, exception.getMessage());
 		final StringWriter stackTrace = new StringWriter();
 		exception.printStackTrace(new PrintWriter(stackTrace));
