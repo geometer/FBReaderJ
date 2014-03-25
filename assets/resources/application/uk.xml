@@ -869,6 +869,7 @@
 		<node name="emptyCatalog" value="Каталог порожній"/>
 		<node name="emptyBasket" value="На жаль ваш кошик порожній"/>
 		<node name="emptyNetworkSearchResults" value="Відповідних книг не знайдено"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
