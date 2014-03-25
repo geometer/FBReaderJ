@@ -879,6 +879,7 @@
 		<node name="emptyCatalog" value="Katalogen er tom, beklager"/>
 		<node name="emptyBasket" value="Kurven din er tom, beklager"/>
 		<node name="emptyNetworkSearchResults" value="Ingen bøker ble funnet, beklager"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">

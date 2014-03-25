@@ -19,26 +19,53 @@
 
 package org.geometerplus.android.fbreader.httpd;
 
+import java.io.IOException;
+
 import android.app.Service;
-import android.content.Intent;
+import android.content.*;
 import android.os.IBinder;
+import android.os.RemoteException;
 
 public class DataService extends Service {
+	public static class Connection implements ServiceConnection {
+		private DataInterface myDataInterface;
+
+		public void onServiceConnected(ComponentName componentName, IBinder binder) {
+			myDataInterface = DataInterface.Stub.asInterface(binder);
+		}
+
+		public void onServiceDisconnected(ComponentName componentName) {
+			myDataInterface = null;
+		}
+
+		public int getPort() {
+			try {
+				return myDataInterface != null ? myDataInterface.getPort() : -1;
+			} catch (RemoteException e) {
+				return -1;
+			}
+		}
+	}
+
 	private DataServer myServer;
+	private volatile int myPort = -1;
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
+	public void onCreate() {
 		new Thread(new Runnable() {
 			public void run () {
-				try {
-					myServer = new DataServer();
-					myServer.start();
-				} catch (Exception e) {
-					e.printStackTrace();
+				for (int port = 12000; port < 12500; ++port) {
+					try {
+						myServer = new DataServer(port);
+						myServer.start();
+						myPort = port;
+						break;
+					} catch (IOException e) {
+						myServer = null;
+					}
 				}
 			}
 		}).start();
-		return START_STICKY;
 	}
 
 	@Override
@@ -46,8 +73,10 @@ public class DataService extends Service {
 		if (myServer != null) {
 			new Thread(new Runnable() {
 				public void run () {
-					myServer.stop();
-					myServer = null;
+					if (myServer != null) {
+						myServer.stop();
+						myServer = null;
+					}
 				}
 			}).start();
 		}
@@ -55,6 +84,10 @@ public class DataService extends Service {
 	}
 
 	public IBinder onBind(Intent intent) {
-		return null;
+		return new DataInterface.Stub() {
+			public int getPort() {
+				return myPort;
+			}
+		};
 	}
 }
