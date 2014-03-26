@@ -29,6 +29,7 @@
 #include "../util/MiscUtil.h"
 
 StyleSheetParser::StyleSheetParser(const std::string &pathPrefix) : myPathPrefix(pathPrefix) {
+	//ZLLogger::Instance().registerClass("CSS-IMPORT");
 	reset();
 }
 
@@ -132,8 +133,14 @@ void StyleSheetParser::processControl(const char control) {
 			break;
 		case IMPORT:
 			if (control == ';') {
-				if (!myFirstRuleProcessed && !myImportVector.empty()) {
-					importCSS(url2FullPath(myImportVector[0]));
+				if (!myImportVector.empty()) {
+					if (myFirstRuleProcessed) {
+						ZLLogger::Instance().println(
+							"CSS-IMPORT", "Ignore import after style rule " + myImportVector[0]
+						);
+					} else {
+						importCSS(url2FullPath(myImportVector[0]));
+					}
 					myImportVector.clear();
 				}
 				myReadState = WAITING_FOR_SELECTOR;
@@ -321,7 +328,8 @@ void StyleSheetTableParser::store(const std::string &tag, const std::string &aCl
 	myTable.addMap(tag, aClass, map);
 }
 
-StyleSheetParserWithCache::StyleSheetParserWithCache(const std::string &pathPrefix) : StyleSheetMultiStyleParser(pathPrefix) {
+StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix) : StyleSheetMultiStyleParser(pathPrefix) {
+	myProcessedFiles.insert(file.path());
 }
 
 void StyleSheetParserWithCache::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
@@ -329,12 +337,22 @@ void StyleSheetParserWithCache::store(const std::string &tag, const std::string 
 }
 
 void StyleSheetParserWithCache::importCSS(const std::string &path) {
-	shared_ptr<ZLInputStream> stream = ZLFile(path).inputStream();
+	const ZLFile fileToImport(path);
+	if (myProcessedFiles.find(fileToImport.path()) != myProcessedFiles.end()) {
+		ZLLogger::Instance().println(
+			"CSS-IMPORT", "File " + fileToImport.path() + " is already processed, do skip"
+		);
+		return;
+	}
+	ZLLogger::Instance().println("CSS-IMPORT", "Go to process imported file " + fileToImport.path());
+	shared_ptr<ZLInputStream> stream = fileToImport.inputStream();
 	if (!stream.isNull()) {
-		StyleSheetParserWithCache importParser(myPathPrefix);
+		StyleSheetParserWithCache importParser(fileToImport, myPathPrefix);
+		importParser.myProcessedFiles.insert(myProcessedFiles.begin(), myProcessedFiles.end());
 		importParser.parseStream(*stream);
 		myEntries.insert(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end()); 
 	}
+	myProcessedFiles.insert(fileToImport.path());
 }
 
 void StyleSheetParserWithCache::applyToTable(StyleSheetTable &table) const {
