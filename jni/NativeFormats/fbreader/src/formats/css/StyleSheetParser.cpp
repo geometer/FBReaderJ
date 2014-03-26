@@ -42,6 +42,8 @@ void StyleSheetParser::reset() {
 	myInsideComment = false;
 	mySelectorString.erase();
 	myMap.clear();
+	myImportVector.clear();
+	myFirstRuleProcessed = false;
 }
 
 void StyleSheetParser::parse(const char *text, int len, bool final) {
@@ -81,6 +83,8 @@ bool StyleSheetParser::isControlSymbol(const char symbol) {
 			return false;
 		case SELECTOR:
 			return symbol == '{' || symbol == ';';
+		case IMPORT:
+			return symbol == ';';
 		case WAITING_FOR_ATTRIBUTE:
 			return symbol == '}' || symbol == ':';
 		case ATTRIBUTE_NAME:
@@ -91,6 +95,23 @@ bool StyleSheetParser::isControlSymbol(const char symbol) {
 }
 
 void StyleSheetParser::storeData(const std::string&, const StyleSheetTable::AttributeMap&) {
+}
+
+std::string StyleSheetParser::url2FullPath(const std::string &url) const {
+	std::string path = url;
+	if (ZLStringUtil::stringStartsWith(path, "url(") &&
+			ZLStringUtil::stringEndsWith(path, ")")) {
+		path = path.substr(4, path.size() - 5);
+	}
+	if (path.size() > 2 && path[0] == path[path.size() - 1]) {
+		if (path[0] == '\'' || path[0] == '"') {
+			path = path.substr(1, path.size() - 2);
+		}
+	}
+	return myPathPrefix + MiscUtil::decodeHtmlURL(path);
+}
+
+void StyleSheetParser::importCSS(const std::string &path) {
 }
 
 void StyleSheetParser::processControl(const char control) {
@@ -106,6 +127,15 @@ void StyleSheetParser::processControl(const char control) {
 					myReadState = WAITING_FOR_SELECTOR;
 					mySelectorString.erase();
 					break;
+			}
+			break;
+		case IMPORT:
+			if (control == ';') {
+				if (!myImportVector.empty()) {
+					importCSS(url2FullPath(myImportVector[0]));
+					myImportVector.clear();
+				}
+				myReadState = WAITING_FOR_SELECTOR;
 			}
 			break;
 		case WAITING_FOR_ATTRIBUTE:
@@ -155,11 +185,18 @@ void StyleSheetParser::processWord(std::string &word) {
 void StyleSheetParser::processWordWithoutComments(const std::string &word) {
 	switch (myReadState) {
 		case WAITING_FOR_SELECTOR:
-			myReadState = SELECTOR;
 			mySelectorString = word;
+			if (word == "@import") {
+				myReadState = IMPORT;
+			} else {
+				myReadState = SELECTOR;
+			}
 			break;
 		case SELECTOR:
 			mySelectorString += ' ' + word;
+			break;
+		case IMPORT:
+			myImportVector.push_back(word);
 			break;
 		case WAITING_FOR_ATTRIBUTE:
 			myReadState = ATTRIBUTE_NAME;
@@ -240,26 +277,21 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 			return;
 		}
 		const StyleSheetTable::AttributeMap::const_iterator it = attributes.find("src");
-		std::string url;
+		std::string path;
 		if (it != attributes.end()) {
 			for (std::vector<std::string>::const_iterator jt = it->second.begin(); jt != it->second.end(); ++jt) {
 				if (ZLStringUtil::stringStartsWith(*jt, "url(") &&
 						ZLStringUtil::stringEndsWith(*jt, ")")) {
-					url = jt->substr(4, jt->size() - 5);
-					if (url.size() > 2 && url[0] == url[url.size() - 1]) {
-						if (url[0] == '\'' || url[0] == '"') {
-							url = url.substr(1, url.size() - 2);
-						}
-					}
+					path = url2FullPath(*jt);	
 					break;
 				}
 			}
 		}
-		if (url.empty()) {
+		if (path.empty()) {
 			ZLLogger::Instance().println("FONT", "Source not specified for " + family);
 			return;
 		}
-		const ZLFile fontFile(myPathPrefix + MiscUtil::decodeHtmlURL(url));
+		const ZLFile fontFile(path);
 		const bool bold = firstValue(attributes, "font-weight") == "bold";
 		const bool italic = firstValue(attributes, "font-style") == "italic";
 		ZLLogger::Instance().println("FONT", family + " => " + fontFile.path());
@@ -293,6 +325,15 @@ StyleSheetParserWithCache::StyleSheetParserWithCache(const std::string &pathPref
 
 void StyleSheetParserWithCache::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
 	myEntries.push_back(new Entry(tag, aClass, map));
+}
+
+void StyleSheetParserWithCache::importCSS(const std::string &path) {
+	shared_ptr<ZLInputStream> stream = ZLFile(path).inputStream();
+	if (!stream.isNull()) {
+		StyleSheetParserWithCache importParser(myPathPrefix);
+		importParser.parseStream(*stream);
+		myEntries.(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end()); 
+	}
 }
 
 void StyleSheetParserWithCache::applyToTable(StyleSheetTable &table) const {
