@@ -266,7 +266,11 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 	cssFilePath = cssFile.path();
 	shared_ptr<StyleSheetParserWithCache> parser = reader.myFileParsers[cssFilePath];
 	if (parser.isNull()) {
-		parser = new StyleSheetParserWithCache(cssFile, MiscUtil::htmlDirectoryPrefix(cssFilePath));
+		parser = new StyleSheetParserWithCache(
+			cssFile,
+			MiscUtil::htmlDirectoryPrefix(cssFilePath),
+			reader.myEncryptionMap
+		);
 		reader.myFileParsers[cssFilePath] = parser;
 		ZLLogger::Instance().println("CSS", "creating stream");
 		shared_ptr<ZLInputStream> cssStream = cssFile.inputStream(reader.myEncryptionMap);
