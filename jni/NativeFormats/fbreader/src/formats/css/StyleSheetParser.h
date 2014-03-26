@@ -23,6 +23,9 @@
 #include <list>
 #include <set>
 
+#include <shared_ptr.h>
+#include <FileEncryptionInfo.h>
+
 #include "StyleSheetTable.h"
 
 class ZLFile;
@@ -119,7 +122,7 @@ private:
 	};
 
 public:
-	StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix);
+	StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<EncryptionMap> encryptionMap);
 	void applyToTable(StyleSheetTable &table) const;
 
 private:
@@ -129,6 +132,7 @@ private:
 private:
 	std::list<shared_ptr<Entry> > myEntries;
 	std::set<std::string> myProcessedFiles;
+	shared_ptr<EncryptionMap> myEncryptionMap;
 };
 
 inline StyleSheetParserWithCache::Entry::Entry(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) : Tag(tag), Class(aClass), Map(map) {
