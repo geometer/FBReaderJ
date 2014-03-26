@@ -21,9 +21,11 @@
 #define __STYLESHEETPARSER_H__
 
 #include <list>
+#include <set>
 
 #include "StyleSheetTable.h"
 
+class ZLFile;
 class ZLInputStream;
 
 class StyleSheetParser {
@@ -117,7 +119,7 @@ private:
 	};
 
 public:
-	StyleSheetParserWithCache(const std::string &pathPrefix);
+	StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix);
 	void applyToTable(StyleSheetTable &table) const;
 
 private:
@@ -126,6 +128,7 @@ private:
 
 private:
 	std::list<shared_ptr<Entry> > myEntries;
+	std::set<std::string> myProcessedFiles;
 };
 
 inline StyleSheetParserWithCache::Entry::Entry(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) : Tag(tag), Class(aClass), Map(map) {
