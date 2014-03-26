@@ -328,7 +328,7 @@ void StyleSheetTableParser::store(const std::string &tag, const std::string &aCl
 	myTable.addMap(tag, aClass, map);
 }
 
-StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix) : StyleSheetMultiStyleParser(pathPrefix) {
+StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix), myEncryptionMap(encryptionMap) {
 	myProcessedFiles.insert(file.path());
 }
 
@@ -345,9 +345,9 @@ void StyleSheetParserWithCache::importCSS(const std::string &path) {
 		return;
 	}
 	ZLLogger::Instance().println("CSS-IMPORT", "Go to process imported file " + fileToImport.path());
-	shared_ptr<ZLInputStream> stream = fileToImport.inputStream();
+	shared_ptr<ZLInputStream> stream = fileToImport.inputStream(myEncryptionMap);
 	if (!stream.isNull()) {
-		StyleSheetParserWithCache importParser(fileToImport, myPathPrefix);
+		StyleSheetParserWithCache importParser(fileToImport, myPathPrefix, myEncryptionMap);
 		importParser.myProcessedFiles.insert(myProcessedFiles.begin(), myProcessedFiles.end());
 		importParser.parseStream(*stream);
 		myEntries.insert(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end()); 
