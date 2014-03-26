@@ -2,6 +2,7 @@
 * Experimental video support
 * CSS parsing optimization for ePubs (do not parse css files multiple times)
 * CSS support improvement: added support for space-separated classes list
+* Added CSS @import support
 
 ===== 1.9.6.1 (Feb 24, 2014) =====
 * Fixed some config vaues reading (e.g. background)
