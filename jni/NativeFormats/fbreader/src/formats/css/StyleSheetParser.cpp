@@ -122,6 +122,7 @@ void StyleSheetParser::processControl(const char control) {
 			switch (control) {
 				case '{':
 					myReadState = WAITING_FOR_ATTRIBUTE;
+					myFirstRuleProcessed = true;
 					break;
 				case ';':
 					myReadState = WAITING_FOR_SELECTOR;
@@ -131,7 +132,7 @@ void StyleSheetParser::processControl(const char control) {
 			break;
 		case IMPORT:
 			if (control == ';') {
-				if (!myImportVector.empty()) {
+				if (!myFirstRuleProcessed && !myImportVector.empty()) {
 					importCSS(url2FullPath(myImportVector[0]));
 					myImportVector.clear();
 				}
@@ -332,7 +333,7 @@ void StyleSheetParserWithCache::importCSS(const std::string &path) {
 	if (!stream.isNull()) {
 		StyleSheetParserWithCache importParser(myPathPrefix);
 		importParser.parseStream(*stream);
-		myEntries.(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end()); 
+		myEntries.insert(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end()); 
 	}
 }
 
