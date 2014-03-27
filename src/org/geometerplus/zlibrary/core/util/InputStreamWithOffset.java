@@ -71,12 +71,6 @@ public class InputStreamWithOffset extends InputStream {
 		return shift;
 	}
 
-	@Override
-	public void reset() throws IOException {
-		myOffset = 0;
-		myDecoratedStream.reset();
-	}
-
 	public int offset() {
 		return myOffset;
 	}

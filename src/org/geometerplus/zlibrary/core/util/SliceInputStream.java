@@ -61,12 +61,6 @@ public class SliceInputStream extends InputStreamWithOffset {
 	}
 
 	@Override
-	public void reset() throws IOException {
-		super.reset();
-		super.skip(myStart);
-	}
-
-	@Override
 	public int offset() {
 		return super.offset() - myStart;
 	}
