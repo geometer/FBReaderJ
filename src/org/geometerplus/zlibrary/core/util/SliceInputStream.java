@@ -35,7 +35,7 @@ public class SliceInputStream extends InputStreamWithOffset {
 
 	@Override
 	public int read() throws IOException {
-		if (myLength >= offset()) {
+		if (offset() >= myLength) {
 			return -1;
 		}
 		return super.read();
@@ -52,7 +52,7 @@ public class SliceInputStream extends InputStreamWithOffset {
 
 	@Override
 	public long skip(long n) throws IOException {
-		return super.skip(Math.min(n, myLength - offset()));
+		return super.skip(Math.min(n, Math.max(myLength - offset(), 0)));
 	}
 
 	@Override
