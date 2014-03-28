@@ -37,7 +37,7 @@ public class DataServer extends NanoHTTPD {
 	private static final String PREFIX_VIDEO = "/video/";
 
 	@Override
-	public Response serve(String uri, Method method, Map<String, String> headers, Map<String, String> params, Map<String, String> files) {
+	public Response serve(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
 		if (uri.startsWith(PREFIX_VIDEO)) {
 			final String encodedPath = uri.substring(PREFIX_VIDEO.length());
 			try {
