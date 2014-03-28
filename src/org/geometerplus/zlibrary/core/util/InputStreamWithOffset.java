@@ -57,9 +57,8 @@ public class InputStreamWithOffset extends InputStream {
 	}
 
 	@Override
-	public void close() throws IOException {
-		myOffset = 0;
-		myDecoratedStream.close();
+	public int read(byte[] b) throws IOException {
+		return read(b, 0, b.length);
 	}
 
 	@Override
@@ -71,13 +70,13 @@ public class InputStreamWithOffset extends InputStream {
 		return shift;
 	}
 
-	@Override
-	public void reset() throws IOException {
-		myOffset = 0;
-		myDecoratedStream.reset();
-	}
-
 	public int offset() {
 		return myOffset;
+	}
+
+	@Override
+	public void close() throws IOException {
+		myOffset = 0;
+		myDecoratedStream.close();
 	}
 }
