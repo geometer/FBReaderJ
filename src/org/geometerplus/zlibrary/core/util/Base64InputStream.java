@@ -152,16 +152,6 @@ main:
 		return len;
 	}
 
-	@Override
-	public void reset() throws IOException {
-		myBaseStream.reset();
-		myBufferOffset = 0;
-		myBufferLength = 0;
-		myDecoded0 = -1;
-		myDecoded1 = -1;
-		myDecoded2 = -1;
-	}
-
 	private void fillDecodedBuffer() throws IOException {
 		int first = -1;
 		int second = -1;
