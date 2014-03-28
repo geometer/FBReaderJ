@@ -27,6 +27,7 @@
 #include <FileEncryptionInfo.h>
 
 #include "StyleSheetTable.h"
+#include "FontMap.h"
 
 class ZLFile;
 class ZLInputStream;
@@ -85,7 +86,7 @@ public:
 class StyleSheetMultiStyleParser : public StyleSheetParser {
 
 protected:
-	StyleSheetMultiStyleParser(const std::string &pathPrefix);
+	StyleSheetMultiStyleParser(const std::string &pathPrefix, FontMap &map);
 
 public:
 	void parseStream(ZLInputStream &stream);
@@ -96,18 +97,21 @@ protected:
 private:
 	void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
 	void processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map);
+
+protected:
+	FontMap &myFontMap;
 };
 
 class StyleSheetTableParser : public StyleSheetMultiStyleParser {
 
 public:
-	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &table);
+	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &styleTable, FontMap &fontMap);
 
 private:
 	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
 
 private:
-	StyleSheetTable &myTable;
+	StyleSheetTable &myStyleTable;
 };
 
 class StyleSheetParserWithCache : public StyleSheetMultiStyleParser {
@@ -122,7 +126,7 @@ private:
 	};
 
 public:
-	StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<EncryptionMap> encryptionMap);
+	StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, FontMap &fontMap, shared_ptr<EncryptionMap> encryptionMap);
 	void applyToTable(StyleSheetTable &table) const;
 
 private:

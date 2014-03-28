@@ -28,6 +28,7 @@
 #include <ZLVideoEntry.h>
 
 #include "../css/StyleSheetTable.h"
+#include "../css/FontMap.h"
 #include "../css/StyleSheetParser.h"
 
 class ZLFile;
@@ -105,6 +106,7 @@ private:
 	bool myPreformatted;
 	bool myNewParagraphInProgress;
 	StyleSheetTable myStyleSheetTable;
+	shared_ptr<FontMap> myFontMap;
 	std::vector<int> myCSSStack;
 	std::vector<shared_ptr<ZLTextStyleEntry> > myStyleEntryStack;
 	int myStylesToRemove;
