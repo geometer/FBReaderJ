@@ -321,6 +321,9 @@ public class ZLNetworkManager {
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
 			httpRequest.setHeader("Accept-Encoding", "gzip");
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
+			for (Map.Entry<String,String> header : request.Headers.entrySet()) {
+				httpRequest.setHeader(header.getKey(), header.getValue());
+			}	
 			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest, request.isQuiet()));
 			HttpResponse response = null;
 			IOException lastException = null;
@@ -400,7 +403,7 @@ public class ZLNetworkManager {
 		}
 	}
 
-	public void perform(List<ZLNetworkRequest> requests) throws ZLNetworkException {
+	public void perform(List<? extends ZLNetworkRequest> requests) throws ZLNetworkException {
 		if (requests.size() == 0) {
 			return;
 		}
