@@ -37,26 +37,21 @@ public class DataServer extends NanoHTTPD {
 	private static final String PREFIX_VIDEO = "/video/";
 
 	@Override
-	public Response serve(IHTTPSession session) {
-		final Method method = session.getMethod();
-		final String uri = session.getUri();
+	public Response serve(String uri, Method method, Map<String,String> headers, Map<String,String> params, Map<String,String> files) {
 		if (uri.startsWith(PREFIX_VIDEO)) {
 			final String encodedPath = uri.substring(PREFIX_VIDEO.length());
-			// TODO: serve video from path
-			String i = null;
 			try {
 				final StringBuilder path = new StringBuilder();
 				for (String item : encodedPath.split("X")) {
 					if (item.length() == 0) {
 						continue;
 					}
-					i = item;
 					path.append((char)Short.parseShort(item, 16));
 				}
 				return serveFile(
 					ZLFile.createFileByPath(path.toString()),
 					MimeType.VIDEO_WEBM.toString(),
-					session.getHeaders()
+					headers
 				);
 			} catch (Exception e) {
 				return new Response(
@@ -79,7 +74,7 @@ public class DataServer extends NanoHTTPD {
 		final Response res;
 		final InputStream baseStream = file.getInputStream();
 		final int fileLength = baseStream.available();
-		final String etag = Integer.toHexString(file.getPath().hashCode());
+		final String etag = '"' + Integer.toHexString(file.getPath().hashCode()) + '"';
 
 		final String range = headers.get("range");
 		if (range == null || !range.startsWith(BYTES_PREFIX)) {
@@ -87,7 +82,6 @@ public class DataServer extends NanoHTTPD {
 				res = new Response(Response.Status.NOT_MODIFIED, mime, "");
 			else {
 				res = new Response(Response.Status.OK, mime, baseStream);
-				res.addHeader("Content-Length", String.valueOf(fileLength));
 				res.addHeader("ETag", etag);
 			}
 		} else {
@@ -123,7 +117,6 @@ public class DataServer extends NanoHTTPD {
 					new SliceInputStream(baseStream, start, end - start + 1)
 				);
 				res.addHeader("ETag", etag);
-				res.addHeader("Content-Length", String.valueOf(end - start + 1));
 				res.addHeader("Content-Range", "bytes " + start + "-" + end + "/" + fileLength);
 			}
 		}

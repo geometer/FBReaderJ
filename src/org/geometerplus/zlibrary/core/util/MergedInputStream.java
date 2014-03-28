@@ -87,15 +87,6 @@ public class MergedInputStream extends InputStream {
 		return total;
 	}
 
-	@Override
-	public void reset() throws IOException {
-		myCurrentStream = myStreams[0];
-		myCurrentStreamNumber = 0;
-		for (InputStream stream : myStreams) {
-			stream.reset();
-		}
-	}
-
 	private boolean nextStream() {
 		if (myCurrentStreamNumber + 1 >= myStreams.length) {
 			return false;

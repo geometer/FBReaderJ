@@ -119,13 +119,6 @@ public class HexInputStream extends InputStream {
 		return len;
 	}
 
-	@Override
-	public void reset() throws IOException {
-		myBaseStream.reset();
-		myBufferOffset = 0;
-		myBufferLength = 0;
-	}
-
 	private void fillBuffer() throws IOException {
 		myBufferLength = myBaseStream.read(myBuffer);
 		myBufferOffset = 0;
