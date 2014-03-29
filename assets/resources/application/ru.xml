@@ -315,6 +315,7 @@
 			<node name="fonts" value="Каталог со шрифтами"/>
 			<node name="wallpapers" value="Каталог с обоями"/>
 			<node name="bookPath" value="Где лежат книги"/>
+			<node name="downloadDir" value="Куда сохранять загруженные книги"/>
 			<node name="fontPath" value="Где лежат шрифты"/>
 			<node name="wallpaperPath" value="Где лежат рисунки для фона"/>
 			<node name="tempDir" value="Где создавать временные файлы"/>

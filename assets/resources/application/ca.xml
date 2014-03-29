@@ -316,6 +316,7 @@
 			<node name="fonts" value="Directori de tipus de lletra"/>
 			<node name="wallpapers" value="Directori de fons de pantalla"/>
 			<node name="bookPath" value="Directoris de llibres"/>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Directoris de fonts"/>
 			<node name="wallpaperPath" value="Directori de fons de pantalla"/>
 			<node name="tempDir" value="Directori de fitxers temporals"/>

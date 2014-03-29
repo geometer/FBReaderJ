@@ -303,6 +303,7 @@
 			<node name="books" value="Bücher"/>
 			<node name="fonts" value="Schriftarten"/>
 			<node name="wallpapers" value="Hintergründe"/>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="bookPath" value="Bücher"/>
 			<node name="fontPath" value="Schriftarten"/>
 			<node name="wallpaperPath" value="Hintergründe"/>
