@@ -310,6 +310,7 @@
 			<node name="fonts" value="Map met lettertypes"/>
 			<node name="wallpapers" value="Map met achtergronden"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
 			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
 			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
