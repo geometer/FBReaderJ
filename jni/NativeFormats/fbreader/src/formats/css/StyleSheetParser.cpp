@@ -237,7 +237,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char
 	return control;
 }
 
-StyleSheetMultiStyleParser::StyleSheetMultiStyleParser(const std::string &pathPrefix) : StyleSheetParser(pathPrefix) {
+StyleSheetMultiStyleParser::StyleSheetMultiStyleParser(const std::string &pathPrefix, FontMap &fontMap) : StyleSheetParser(pathPrefix), myFontMap(fontMap) {
 }
 
 void StyleSheetMultiStyleParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
@@ -299,10 +299,12 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 			ZLLogger::Instance().println("FONT", "Source not specified for " + family);
 			return;
 		}
-		const ZLFile fontFile(path);
-		const bool bold = firstValue(attributes, "font-weight") == "bold";
-		const bool italic = firstValue(attributes, "font-style") == "italic";
-		ZLLogger::Instance().println("FONT", family + " => " + fontFile.path());
+		myFontMap.appendFontFace(
+			family,
+			firstValue(attributes, "font-weight"),
+			firstValue(attributes, "font-style"),
+			path
+		);
 	}
 }
 
@@ -321,14 +323,14 @@ void StyleSheetMultiStyleParser::parseStream(ZLInputStream &stream) {
 	}
 }
 
-StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &table) : StyleSheetMultiStyleParser(pathPrefix), myTable(table) {
+StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &styleTable, FontMap &fontMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myStyleTable(styleTable) {
 }
 
 void StyleSheetTableParser::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
-	myTable.addMap(tag, aClass, map);
+	myStyleTable.addMap(tag, aClass, map);
 }
 
-StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix), myEncryptionMap(encryptionMap) {
+StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, FontMap &fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myEncryptionMap(encryptionMap) {
 	myProcessedFiles.insert(file.path());
 }
 
@@ -347,7 +349,7 @@ void StyleSheetParserWithCache::importCSS(const std::string &path) {
 	ZLLogger::Instance().println("CSS-IMPORT", "Go to process imported file " + fileToImport.path());
 	shared_ptr<ZLInputStream> stream = fileToImport.inputStream(myEncryptionMap);
 	if (!stream.isNull()) {
-		StyleSheetParserWithCache importParser(fileToImport, myPathPrefix, myEncryptionMap);
+		StyleSheetParserWithCache importParser(fileToImport, myPathPrefix, myFontMap, myEncryptionMap);
 		importParser.myProcessedFiles.insert(myProcessedFiles.begin(), myProcessedFiles.end());
 		importParser.parseStream(*stream);
 		myEntries.insert(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end()); 
