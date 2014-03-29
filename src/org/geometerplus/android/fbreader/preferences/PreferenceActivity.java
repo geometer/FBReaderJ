@@ -116,7 +116,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addOption(Paths.TempDirectoryOption, "temp");
+		directoriesScreen.addOption(Paths.TempDirectoryOption, "tempDir");
 		directoriesScreen.addPreference(new ZLBookDirActivityPreference(
 			this, new OptionHolder(Paths.BookPathOption) {
 				@Override
