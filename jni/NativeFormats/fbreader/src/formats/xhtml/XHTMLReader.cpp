@@ -660,14 +660,21 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	}
 }
 
-bool XHTMLReader::addStyleEntry(const std::string tag, const std::string aClass) {
+bool XHTMLReader::addTextStyleEntry(const std::string tag, const std::string aClass) {
 	shared_ptr<ZLTextStyleEntry> entry = myStyleSheetTable.control(tag, aClass);
 	if (!entry.isNull()) {
-		myModelReader.addStyleEntry(*entry);
+		addTextStyleEntry(*entry);
 		myStyleEntryStack.push_back(entry);
 		return true;
 	}
 	return false;
+}
+
+void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
+	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
+		ZLLogger::Instance().println("FONT", "Requested font family: " + entry.fontFamily());
+	}
+	myModelReader.addStyleEntry(entry);
 }
 
 void XHTMLReader::startElementHandler(const char *tag, const char **attributes) {
@@ -716,15 +723,15 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 	}
 
 	const int sizeBefore = myStyleEntryStack.size();
-	addStyleEntry(sTag, "");
+	addTextStyleEntry(sTag, "");
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
-		addStyleEntry("", *it);
-		addStyleEntry(sTag, *it);
+		addTextStyleEntry("", *it);
+		addTextStyleEntry(sTag, *it);
 		const char *style = attributeValue(attributes, "style");
 		if (style != 0) {
 			ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
 			shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseString(style);
-			myModelReader.addStyleEntry(*entry);
+			addTextStyleEntry(*entry);
 			myStyleEntryStack.push_back(entry);
 		}
 	}
@@ -759,7 +766,7 @@ void XHTMLReader::beginParagraph() {
 	myModelReader.beginParagraph();
 	bool doBlockSpaceBefore = false;
 	for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator it = myStyleEntryStack.begin(); it != myStyleEntryStack.end(); ++it) {
-		myModelReader.addStyleEntry(**it);
+		addTextStyleEntry(**it);
 		doBlockSpaceBefore =
 			doBlockSpaceBefore ||
 			(*it)->isFeatureSupported(ZLTextStyleEntry::LENGTH_SPACE_BEFORE);
@@ -772,7 +779,7 @@ void XHTMLReader::beginParagraph() {
 			0,
 			ZLTextStyleEntry::SIZE_UNIT_PIXEL
 		);
-		myModelReader.addStyleEntry(blockingEntry);
+		addTextStyleEntry(blockingEntry);
 	}
 }
 
@@ -790,10 +797,10 @@ void XHTMLReader::endParagraph() {
 			0,
 			ZLTextStyleEntry::SIZE_UNIT_PIXEL
 		);
-		myModelReader.addStyleEntry(blockingEntry);
+		addTextStyleEntry(blockingEntry);
 	}
 	for (; myStylesToRemove > 0; --myStylesToRemove) {
-		myModelReader.addStyleEntry(*myStyleEntryStack.back());
+		addTextStyleEntry(*myStyleEntryStack.back());
 		myStyleEntryStack.pop_back();
 	}
 	myModelReader.endParagraph();
