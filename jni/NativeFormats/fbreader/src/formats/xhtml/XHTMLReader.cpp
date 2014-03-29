@@ -229,7 +229,7 @@ void XHTMLTagStyleAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 
 	if (reader.myReadState == XHTML_READ_NOTHING) {
 		reader.myReadState = XHTML_READ_STYLE;
-		reader.myTableParser = new StyleSheetTableParser(reader.myPathPrefix, reader.myStyleSheetTable);
+		reader.myTableParser = new StyleSheetTableParser(reader.myPathPrefix, reader.myStyleSheetTable, *reader.myFontMap);
 		ZLLogger::Instance().println("CSS", "parsing style tag content");
 	}
 }
@@ -269,6 +269,7 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 		parser = new StyleSheetParserWithCache(
 			cssFile,
 			MiscUtil::htmlDirectoryPrefix(cssFilePath),
+			*reader.myFontMap,
 			reader.myEncryptionMap
 		);
 		reader.myFileParsers[cssFilePath] = parser;
@@ -639,6 +640,7 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	myCurrentParagraphIsEmpty = true;
 
 	myStyleSheetTable.clear();
+	myFontMap = new FontMap();
 	myCSSStack.clear();
 	myStyleEntryStack.clear();
 	myStylesToRemove = 0;

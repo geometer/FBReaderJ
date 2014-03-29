@@ -310,6 +310,7 @@
 			<node name="fonts" value="Letra-tipoen direktorioa"/>
 			<node name="wallpapers" value="Atzeko irudien direktorioa"/>
 			<node name="bookPath" value="Liburuen direktorioak"/>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Letra-tipoen direktorioak"/>
 			<node name="wallpaperPath" value="Atzeko irudien direktorioak"/>
 			<node name="tempDir" value="Behin-behineko fitxategien direktorioa"/>

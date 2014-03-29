@@ -310,6 +310,7 @@
 			<node name="fonts" value="Fonts directory"/>
 			<node name="wallpapers" value="Wallpapers directory"/>
 			<node name="bookPath" value="Where to seek for books"/>
+			<node name="downloadDir" value="Where to store downloaded books"/>
 			<node name="fontPath" value="Where to seek for fonts"/>
 			<node name="wallpaperPath" value="Where to seek for background images"/>
 			<node name="tempDir" value="Where to store temporary files"/>

@@ -274,7 +274,7 @@ HtmlStyleTagAction::HtmlStyleTagAction(HtmlBookReader &reader) : HtmlTagAction(r
 }
 
 void HtmlStyleTagAction::run(const HtmlReader::HtmlTag &tag) {
-	myReader.myStyleSheetParser = tag.Start ? new StyleSheetTableParser(myReader.myBaseDirPath, myReader.myStyleSheetTable) : 0;
+	myReader.myStyleSheetParser = tag.Start ? new StyleSheetTableParser(myReader.myBaseDirPath, myReader.myStyleSheetTable, myReader.myFontMap) : 0;
 	/*
 	if (!tag.Start) {
 		myReader.myStyleSheetTable.dump();

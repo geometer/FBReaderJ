@@ -100,6 +100,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2UidReader.cpp \
+	NativeFormats/fbreader/src/formats/css/FontMap.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlBookReader.cpp \
