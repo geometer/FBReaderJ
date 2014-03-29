@@ -26,6 +26,8 @@
 #include <ZLLogger.h>
 
 #include "StyleSheetParser.h"
+#include "StringInputStream.h"
+#include "CSSInputStream.h"
 #include "../util/MiscUtil.h"
 
 StyleSheetParser::StyleSheetParser(const std::string &pathPrefix) : myPathPrefix(pathPrefix) {
@@ -40,11 +42,30 @@ void StyleSheetParser::reset() {
 	myWord.erase();
 	myAttributeName.erase();
 	myReadState = WAITING_FOR_SELECTOR;
-	myInsideComment = false;
 	mySelectorString.erase();
 	myMap.clear();
 	myImportVector.clear();
 	myFirstRuleProcessed = false;
+}
+
+void StyleSheetParser::parseString(const char *data, std::size_t len) {
+	parseStream(new StringInputStream(data, len));
+}
+
+void StyleSheetParser::parseStream(shared_ptr<ZLInputStream> stream) {
+	stream = new CSSInputStream(stream);
+	if (stream->open()) {
+		char *buffer = new char[1024];
+		while (true) {
+			int len = stream->read(buffer, 1024);
+			if (len == 0) {
+				break;
+			}
+			parse(buffer, len);
+		}
+		delete[] buffer;
+		stream->close();
+	}
 }
 
 void StyleSheetParser::parse(const char *text, int len, bool final) {
@@ -172,25 +193,11 @@ void StyleSheetParser::processControl(const char control) {
 	}
 }
 
-void StyleSheetParser::processWord(std::string &word) {
-	while (!word.empty()) {
-		int index = word.find(myInsideComment ? "*/" : "/*");
-		if (!myInsideComment) {
-			if (index == -1) {
-				processWordWithoutComments(word);
-			} else if (index > 0) {
-				processWordWithoutComments(word.substr(0, index));
-			}
-		}
-		if (index == -1) {
-			break;
-		}
-		myInsideComment = !myInsideComment;
-		word.erase(0, index + 2);
+void StyleSheetParser::processWord(const std::string &word) {
+	if (word.empty()) {
+		return;
 	}
-}
 
-void StyleSheetParser::processWordWithoutComments(const std::string &word) {
 	switch (myReadState) {
 		case WAITING_FOR_SELECTOR:
 			mySelectorString = word;
@@ -229,7 +236,7 @@ void StyleSheetParser::processWordWithoutComments(const std::string &word) {
 StyleSheetSingleStyleParser::StyleSheetSingleStyleParser(const std::string &pathPrefix) : StyleSheetParser(pathPrefix) {
 }
 
-shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char *text) {
+shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseSingleEntry(const char *text) {
 	myReadState = WAITING_FOR_ATTRIBUTE;
 	parse(text, std::strlen(text), true);
 	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createControl(myMap);
@@ -308,21 +315,6 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 	}
 }
 
-void StyleSheetMultiStyleParser::parseStream(ZLInputStream &stream) {
-	if (stream.open()) {
-		char *buffer = new char[1024];
-		while (true) {
-			int len = stream.read(buffer, 1024);
-			if (len == 0) {
-				break;
-			}
-			parse(buffer, len);
-		}
-		delete[] buffer;
-		stream.close();
-	}
-}
-
 StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &styleTable, FontMap &fontMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myStyleTable(styleTable) {
 }
 
@@ -351,7 +343,7 @@ void StyleSheetParserWithCache::importCSS(const std::string &path) {
 	if (!stream.isNull()) {
 		StyleSheetParserWithCache importParser(fileToImport, myPathPrefix, myFontMap, myEncryptionMap);
 		importParser.myProcessedFiles.insert(myProcessedFiles.begin(), myProcessedFiles.end());
-		importParser.parseStream(*stream);
+		importParser.parseStream(stream);
 		myEntries.insert(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end()); 
 	}
 	myProcessedFiles.insert(fileToImport.path());

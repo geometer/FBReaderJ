@@ -277,7 +277,7 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 		shared_ptr<ZLInputStream> cssStream = cssFile.inputStream(reader.myEncryptionMap);
 		if (!cssStream.isNull()) {
 			ZLLogger::Instance().println("CSS", "parsing file");
-			parser->parseStream(*cssStream);
+			parser->parseStream(cssStream);
 		}
 	}
 	parser->applyToTable(reader.myStyleSheetTable);
@@ -729,8 +729,8 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		addTextStyleEntry(sTag, *it);
 		const char *style = attributeValue(attributes, "style");
 		if (style != 0) {
-			ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
-			shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseString(style);
+			//ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
+			shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseSingleEntry(style);
 			addTextStyleEntry(*entry);
 			myStyleEntryStack.push_back(entry);
 		}
@@ -813,7 +813,7 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 			break;
 		case XHTML_READ_STYLE:
 			if (!myTableParser.isNull()) {
-				myTableParser->parse(text, len);
+				myTableParser->parseString(text, len);
 			}
 			break;
 		case XHTML_READ_BODY:
