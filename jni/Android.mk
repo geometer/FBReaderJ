@@ -105,6 +105,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/css/StringInputStream.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
+	NativeFormats/fbreader/src/formats/css/StyleSheetUtil.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlBookReader.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlDescriptionReader.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlEntityCollection.cpp \
