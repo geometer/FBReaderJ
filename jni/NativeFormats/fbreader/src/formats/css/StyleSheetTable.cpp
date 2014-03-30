@@ -194,11 +194,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 
 	const std::string &fontFamily = value(styles, "font-family");
 	if (!fontFamily.empty()) {
-		std::vector<std::string> families = StyleSheetUtil::splitCommaSeparatedList(fontFamily);
-		// TODO: use all families
-		if (!families.empty()) {
-			entry->setFontFamily(families[0]);
-		}
+		entry->setFontFamilies(StyleSheetUtil::splitCommaSeparatedList(fontFamily));
 	}
 
 	const std::string &fontSize = value(styles, "font-size");

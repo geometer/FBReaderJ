@@ -237,6 +237,10 @@ void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
 //static int EntryLen = 0;
 
 void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry) {
+	addStyleEntry(entry, entry.fontFamilies());
+}
+
+void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector<std::string> &fontFamilies) {
 	// +++ calculating entry size
 	std::size_t len = 4; // entry type + feature mask
 	for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS; ++i) {
@@ -247,10 +251,10 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry) {
 	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE)) {
 		len += 2;
 	}
-	ZLUnicodeUtil::Ucs2String fontFamily;
+	ZLUnicodeUtil::Ucs2String fontFamilyUcs2;
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
-		ZLUnicodeUtil::utf8ToUcs2(fontFamily, entry.fontFamily());
-		len += 2 + fontFamily.size() * 2;
+		ZLUnicodeUtil::utf8ToUcs2(fontFamilyUcs2, fontFamilies[0]);
+		len += 2 + fontFamilyUcs2.size() * 2;
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_STYLE_MODIFIER)) {
 		len += 2;
@@ -288,7 +292,7 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry) {
 		*address++ = 0;
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
-		address = ZLCachedMemoryAllocator::writeString(address, fontFamily);
+		address = ZLCachedMemoryAllocator::writeString(address, fontFamilyUcs2);
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_STYLE_MODIFIER)) {
 		*address++ = entry.mySupportedFontModifier;

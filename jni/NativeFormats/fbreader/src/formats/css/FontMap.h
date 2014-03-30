@@ -46,10 +46,7 @@ class FontMap {
 public:
 	void append(const std::string &family, const std::string &weight, const std::string &style, const std::string &path);
 	void merge(const FontMap &fontMap);
-<<<<<<< HEAD
-=======
 	std::string put(const std::string &family, shared_ptr<FontEntry> entry);
->>>>>>> master
 	shared_ptr<FontEntry> get(const std::string &family);
 
 private:
