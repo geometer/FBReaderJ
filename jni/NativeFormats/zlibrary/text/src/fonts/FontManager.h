@@ -17,39 +17,26 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FONTMAP_H__
-#define __FONTMAP_H__
+#ifndef __FONTMANAGER_H__
+#define __FONTMANAGER_H__
 
 #include <string>
 #include <map>
+#include <vector>
 
 #include <shared_ptr.h>
 
-class FontEntry {
+#include <FontMap.h>
+
+class FontManager {
 
 public:
-	void addFile(bool bold, bool italic, const std::string &filePath);
-	void merge(const FontEntry &fontEntry);
-
-	bool operator == (const FontEntry &other) const;
-	bool operator != (const FontEntry &other) const;
-
-public:
-	shared_ptr<std::string> Normal;
-	shared_ptr<std::string> Bold;
-	shared_ptr<std::string> Italic;
-	shared_ptr<std::string> BoldItalic;
-};
-
-class FontMap {
-
-public:
-	void append(const std::string &family, bool bold, bool italic, const std::string &path);
-	void merge(const FontMap &fontMap);
-	shared_ptr<FontEntry> get(const std::string &family);
+	std::string put(const std::string &family, shared_ptr<FontEntry> entry);
+	int familyListIndex(const std::vector<std::string> &familyList);
 
 private:
 	std::map<std::string,shared_ptr<FontEntry> > myMap;
+	std::vector<std::vector<std::string> > myFamilyLists;
 };
 
-#endif /* __FONTMAP_H__ */
+#endif /* __FONTMANAGER_H__ */
