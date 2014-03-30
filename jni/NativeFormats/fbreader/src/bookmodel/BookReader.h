@@ -37,6 +37,7 @@ class ZLInputStream;
 class ZLCachedMemoryAllocator;
 class ZLTextStyleEntry;
 class ZLVideoEntry;
+class FontEntry;
 
 class BookReader {
 
@@ -83,6 +84,8 @@ public:
 
 	void enterTitle() { myInsideTitle = true; }
 	void exitTitle() { myInsideTitle = false; }
+
+	std::string putFontEntry(const std::string &family, shared_ptr<FontEntry> fontEntry);
 
 	const BookModel &model() const { return myModel; }
 
