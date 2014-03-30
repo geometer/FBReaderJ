@@ -45,3 +45,14 @@ std::string FontManager::put(const std::string &family, shared_ptr<FontEntry> en
 
 	return std::string();
 }
+
+int FontManager::familyListIndex(const std::vector<std::string> &familyList) {
+	std::vector<std::vector<std::string> >::const_iterator it =
+		std::find(myFamilyLists.begin(), myFamilyLists.end(), familyList);
+	if (it == myFamilyLists.end()) {
+		myFamilyLists.push_back(familyList);
+		return myFamilyLists.size() - 1;
+	} else {
+		return it - myFamilyLists.begin();
+	}
+}
