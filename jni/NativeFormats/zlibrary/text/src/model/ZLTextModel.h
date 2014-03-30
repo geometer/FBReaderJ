@@ -34,14 +34,15 @@
 
 class ZLTextStyleEntry;
 class ZLVideoEntry;
+class FontManager;
 
 class ZLTextModel {
 
 protected:
 	ZLTextModel(const std::string &id, const std::string &language, const std::size_t rowSize,
-		const std::string &directoryName, const std::string &fileExtension);
+		const std::string &directoryName, const std::string &fileExtension, FontManager &fManager);
 	ZLTextModel(const std::string &id, const std::string &language,
-		shared_ptr<ZLCachedMemoryAllocator> allocator);
+		shared_ptr<ZLCachedMemoryAllocator> allocator, FontManager &fManager);
 
 public:
 	virtual ~ZLTextModel();
@@ -105,6 +106,8 @@ private:
 	std::vector<jint> myTextSizes;
 	std::vector<jbyte> myParagraphKinds;
 
+	FontManager &myFontManager;
+
 private:
 	ZLTextModel(const ZLTextModel&);
 	const ZLTextModel &operator = (const ZLTextModel&);
@@ -114,9 +117,9 @@ class ZLTextPlainModel : public ZLTextModel {
 
 public:
 	ZLTextPlainModel(const std::string &id, const std::string &language, const std::size_t rowSize,
-			const std::string &directoryName, const std::string &fileExtension);
+			const std::string &directoryName, const std::string &fileExtension, FontManager &fManager);
 	ZLTextPlainModel(const std::string &id, const std::string &language,
-		shared_ptr<ZLCachedMemoryAllocator> allocator);
+		shared_ptr<ZLCachedMemoryAllocator> allocator, FontManager &fManager);
 	void createParagraph(ZLTextParagraph::Kind kind);
 };
 

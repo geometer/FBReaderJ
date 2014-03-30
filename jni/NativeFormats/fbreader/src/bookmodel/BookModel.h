@@ -28,6 +28,7 @@
 
 #include <ZLTextModel.h>
 #include <ZLTextParagraph.h>
+#include <FontManager.h>
 
 class ZLImage;
 class Book;
@@ -91,6 +92,7 @@ private:
 	std::map<std::string,shared_ptr<ZLTextModel> > myFootnotes;
 	std::map<std::string,Label> myInternalHyperlinks;
 	shared_ptr<HyperlinkMatcher> myHyperlinkMatcher;
+	FontManager myFontManager;
 
 friend class BookReader;
 };
