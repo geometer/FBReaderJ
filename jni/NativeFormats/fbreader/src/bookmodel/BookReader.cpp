@@ -123,6 +123,13 @@ void BookReader::addControl(FBTextKind kind, bool start) {
 	}
 }
 
+void BookReader::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector<std::string> &fontFamilies) {
+	if (paragraphIsOpen()) {
+		flushTextBufferToParagraph();
+		myCurrentTextModel->addStyleEntry(entry, fontFamilies);
+	}
+}
+
 void BookReader::addStyleEntry(const ZLTextStyleEntry &entry) {
 	if (paragraphIsOpen()) {
 		flushTextBufferToParagraph();
