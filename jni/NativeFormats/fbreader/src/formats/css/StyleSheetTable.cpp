@@ -126,7 +126,7 @@ bool StyleSheetTable::doBreakAfter(const std::string &tag, const std::string &aC
 shared_ptr<ZLTextStyleEntry> StyleSheetTable::control(const std::string &tag, const std::string &aClass) const {
 	std::map<Key,shared_ptr<ZLTextStyleEntry> >::const_iterator it =
 		myControlMap.find(Key(tag, aClass));
-	return (it != myControlMap.end()) ? it->second : 0;
+	return it != myControlMap.end() ? it->second : 0;
 }
 
 const std::string &StyleSheetTable::value(const AttributeMap &map, const std::string &name) {
