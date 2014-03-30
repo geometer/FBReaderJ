@@ -23,15 +23,15 @@
 
 #include "FontMap.h"
 
-void FontEntry::addFile(const std::string &weight, const std::string &style, const std::string &filePath) {
-	if (weight == "bold") {
-		if (style == "italic") {
+void FontEntry::addFile(bool bold, bool italic, const std::string &filePath) {
+	if (bold) {
+		if (italic) {
 			BoldItalic = new std::string(filePath);
 		} else {
 			Bold = new std::string(filePath);
 		}
 	} else {
-		if (style == "italic") {
+		if (italic) {
 			Italic = new std::string(filePath);
 		} else {
 			Normal = new std::string(filePath);
@@ -70,15 +70,14 @@ bool FontEntry::operator != (const FontEntry &other) const {
 	return !operator ==(other);
 }
 
-void FontMap::append(const std::string &family, const std::string &weight, const std::string &style, const std::string &path) {
+void FontMap::append(const std::string &family, bool bold, bool italic, const std::string &path) {
 	const ZLFile fontFile(path);
 	shared_ptr<FontEntry> entry = myMap[family];
 	if (entry.isNull()) {
 		entry = new FontEntry();
 		myMap[family] = entry;
 	}
-	entry->addFile(weight, style, fontFile.path());
-	ZLLogger::Instance().println("FONT", family + "," + weight + "," + style + " => " + fontFile.path());
+	entry->addFile(bold, italic, fontFile.path());
 }
 
 void FontMap::merge(const FontMap &fontMap) {

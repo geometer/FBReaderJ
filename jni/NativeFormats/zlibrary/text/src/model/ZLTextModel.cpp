@@ -251,10 +251,15 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector
 	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE)) {
 		len += 2;
 	}
-	ZLUnicodeUtil::Ucs2String fontFamilyUcs2;
+	std::vector<ZLUnicodeUtil::Ucs2String> fontFamiliesUcs2;
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
-		ZLUnicodeUtil::utf8ToUcs2(fontFamilyUcs2, fontFamilies[0]);
-		len += 2 + fontFamilyUcs2.size() * 2;
+		len += 2;
+		for (std::vector<std::string>::const_iterator it = fontFamilies.begin(); it != fontFamilies.end(); ++it) {
+			ZLUnicodeUtil::Ucs2String ucs2;
+			ZLUnicodeUtil::utf8ToUcs2(ucs2, *it);
+			len += 2 + ucs2.size() * 2;
+			fontFamiliesUcs2.push_back(ucs2);
+		}
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_STYLE_MODIFIER)) {
 		len += 2;
@@ -292,7 +297,10 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry, const std::vector
 		*address++ = 0;
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
-		address = ZLCachedMemoryAllocator::writeString(address, fontFamilyUcs2);
+		address = ZLCachedMemoryAllocator::writeUInt16(address, fontFamiliesUcs2.size());
+		for (std::vector<ZLUnicodeUtil::Ucs2String>::const_iterator it = fontFamiliesUcs2.begin(); it != fontFamiliesUcs2.end(); ++it) {
+			address = ZLCachedMemoryAllocator::writeString(address, *it);
+		}
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_STYLE_MODIFIER)) {
 		*address++ = entry.mySupportedFontModifier;
