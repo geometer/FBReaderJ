@@ -72,7 +72,7 @@ void StyleSheetParser::parse(const char *text, int len, bool final) {
 	const char *start = text;
 	const char *end = text + len;
 	for (const char *ptr = start; ptr != end; ++ptr) {
-		if (std::isspace(*ptr)) {
+		if (myReadState != ATTRIBUTE_VALUE && std::isspace(*ptr)) {
 			if (start != ptr) {
 				myWord.append(start, ptr - start);
 			}
@@ -221,15 +221,8 @@ void StyleSheetParser::processWord(const std::string &word) {
 			myMap[myAttributeName].clear();
 			break;
 		case ATTRIBUTE_VALUE:
-		{
-			const std::size_t l = word.length();
-			if (l >= 2 && (word[0] == '"' || word[0] == '\'') && word[0] == word[l - 1]) {
-				myMap[myAttributeName].push_back(word.substr(1, l - 2));
-			} else {
-				myMap[myAttributeName].push_back(word);
-			}
+			myMap[myAttributeName] = word;
 			break;
-		}
 	}
 }
 
@@ -275,18 +268,18 @@ void StyleSheetMultiStyleParser::storeData(const std::string &selector, const St
 	}
 }
 
-static std::string firstValue(const StyleSheetTable::AttributeMap &map, const std::string &key) {
+static std::string value(const StyleSheetTable::AttributeMap &map, const std::string &key) {
 	const StyleSheetTable::AttributeMap::const_iterator it = map.find(key);
 	if (it == map.end() || it->second.empty()) {
 		return std::string();
 	}
-	return it->second[0];
+	return it->second;
 }
 
 void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &attributes) {
 	ZLLogger::Instance().registerClass("FONT");
 	if (name == "@font-face") {
-		const std::string family = firstValue(attributes, "font-family");
+		const std::string family = value(attributes, "font-family");
 		if (family.empty()) {
 			ZLLogger::Instance().println("FONT", "Font family not specified in @font-face entry");
 			return;
@@ -294,7 +287,9 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 		const StyleSheetTable::AttributeMap::const_iterator it = attributes.find("src");
 		std::string path;
 		if (it != attributes.end()) {
-			for (std::vector<std::string>::const_iterator jt = it->second.begin(); jt != it->second.end(); ++jt) {
+			// TODO: better split
+			const std::vector<std::string> ids = ZLStringUtil::split(it->second, " ");
+			for (std::vector<std::string>::const_iterator jt = ids.begin(); jt != ids.end(); ++jt) {
 				if (ZLStringUtil::stringStartsWith(*jt, "url(") &&
 						ZLStringUtil::stringEndsWith(*jt, ")")) {
 					path = url2FullPath(*jt);	
@@ -308,8 +303,8 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 		}
 		myFontMap.appendFontFace(
 			family,
-			firstValue(attributes, "font-weight"),
-			firstValue(attributes, "font-style"),
+			value(attributes, "font-weight"),
+			value(attributes, "font-style"),
 			path
 		);
 	}
