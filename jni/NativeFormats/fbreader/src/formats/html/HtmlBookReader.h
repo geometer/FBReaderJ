@@ -75,7 +75,7 @@ private:
 
 	StyleSheetTable myStyleSheetTable;
 	shared_ptr<StyleSheetParser> myStyleSheetParser;
-	FontMap myFontMap;
+	shared_ptr<FontMap> myFontMap;
 
 	int mySpaceCounter;
 	int myBreakCounter;

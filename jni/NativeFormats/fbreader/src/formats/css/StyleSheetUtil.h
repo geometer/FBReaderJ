@@ -17,39 +17,14 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FONTMAP_H__
-#define __FONTMAP_H__
+#ifndef __STYLESHEETUTIL_H__
+#define __STYLESHEETUTIL_H__
 
 #include <string>
-#include <map>
 
-#include <shared_ptr.h>
-
-class FontEntry {
-
-public:
-	void addFile(const std::string &weight, const std::string &style, const std::string &filePath);
-	void merge(const FontEntry &fontEntry);
-
-	bool operator == (const FontEntry &other) const;
-	bool operator != (const FontEntry &other) const;
-
-public:
-	shared_ptr<std::string> Normal;
-	shared_ptr<std::string> Bold;
-	shared_ptr<std::string> Italic;
-	shared_ptr<std::string> BoldItalic;
+struct StyleSheetUtil {
+	static std::string strip(const std::string &data);
+	static std::vector<std::string> splitCommaSeparatedList(const std::string &data);
 };
 
-class FontMap {
-
-public:
-	void append(const std::string &family, const std::string &weight, const std::string &style, const std::string &path);
-	void merge(const FontMap &fontMap);
-	shared_ptr<FontEntry> get(const std::string &family);
-
-private:
-	std::map<std::string,shared_ptr<FontEntry> > myMap;
-};
-
-#endif /* __FONTMAP_H__ */
+#endif /* __STYLESHEETUTIL_H__ */
