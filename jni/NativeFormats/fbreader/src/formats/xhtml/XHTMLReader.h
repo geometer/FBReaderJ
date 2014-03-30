@@ -26,9 +26,9 @@
 
 #include <ZLXMLReader.h>
 #include <ZLVideoEntry.h>
+#include <FontMap.h>
 
 #include "../css/StyleSheetTable.h"
-#include "../css/FontMap.h"
 #include "../css/StyleSheetParser.h"
 
 class ZLFile;
