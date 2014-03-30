@@ -78,7 +78,11 @@ void FontMap::append(const std::string &family, const std::string &weight, const
 		myMap[family] = entry;
 	}
 	entry->addFile(weight, style, fontFile.path());
+<<<<<<< HEAD
 	ZLLogger::Instance().println("FONT", family + " => " + fontFile.path());
+=======
+	ZLLogger::Instance().println("FONT", family + "," + weight + "," + style + " => " + fontFile.path());
+>>>>>>> master
 }
 
 void FontMap::merge(const FontMap &fontMap) {
@@ -96,4 +100,32 @@ void FontMap::merge(const FontMap &fontMap) {
 
 shared_ptr<FontEntry> FontMap::get(const std::string &family) {
 	return myMap[family];
+<<<<<<< HEAD
+=======
+}
+
+std::string FontMap::put(const std::string &family, shared_ptr<FontEntry> entry) {
+	shared_ptr<FontEntry> existing = myMap[family];
+	if (existing.isNull() || *existing == *entry) {
+		myMap[family] = entry;
+		return family;
+	}
+
+	for (std::map<std::string,shared_ptr<FontEntry> >::const_iterator it = myMap.begin(); it != myMap.end(); ++it) {
+		if (*it->second == *entry) {
+			return it->first;
+		}
+	}
+
+	for (int i = 1; i < 1000; ++i) {
+		std::string indexed = family + "#";
+		ZLStringUtil::appendNumber(indexed, i);
+		if (myMap[indexed].isNull()) {
+			myMap[indexed] = entry;
+			return indexed;
+		}
+	}
+
+	return std::string();
+>>>>>>> master
 }

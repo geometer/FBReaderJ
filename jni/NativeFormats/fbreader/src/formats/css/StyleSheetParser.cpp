@@ -220,8 +220,12 @@ void StyleSheetParser::processWord(const std::string &word) {
 			myMap[myAttributeName].clear();
 			break;
 		case ATTRIBUTE_VALUE:
-			myMap[myAttributeName] = word;
+		{
+			std::string stripped = word;
+			ZLStringUtil::stripWhiteSpaces(stripped);
+			myMap[myAttributeName] = stripped;
 			break;
+		}
 	}
 }
 
