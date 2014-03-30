@@ -93,7 +93,8 @@ private:
 
 	void beginParagraph();
 	void endParagraph();
-	bool addStyleEntry(const std::string tag, const std::string aClass);
+	bool addTextStyleEntry(const std::string tag, const std::string aClass);
+	void addTextStyleEntry(const ZLTextStyleEntry &entry);
 
 private:
 	mutable std::map<std::string,std::string> myFileNumbers;
