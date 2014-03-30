@@ -183,11 +183,11 @@ void JavaInputStream::seek(int offset, bool absoluteOffset) {
 		return;
 	}
 	JNIEnv *env = AndroidUtil::getEnv();
-	if (myNeedRepositionToStart || offset < myOffset) {
+	if (myNeedRepositionToStart || offset < (int)myOffset) {
 		rewind(env);
 		myNeedRepositionToStart = false;
 	}
-	if (offset > myOffset) {
+	if (offset > (int)myOffset) {
 		skip(env, offset - myOffset);
 	}
 }
