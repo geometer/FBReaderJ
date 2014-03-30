@@ -396,6 +396,7 @@ void HtmlBookReader::setProcessPreTag(bool process) {
 }
 
 HtmlBookReader::HtmlBookReader(const std::string &baseDirectoryPath, BookModel &model, const PlainTextFormat &format, const std::string &encoding) : HtmlReader(encoding), myBookReader(model), myBaseDirPath(baseDirectoryPath), myFormat(format), myBuildTableOfContent(true), myProcessPreTag(true) {
+	myFontMap = new FontMap();
 }
 
 HtmlBookReader::~HtmlBookReader() {
