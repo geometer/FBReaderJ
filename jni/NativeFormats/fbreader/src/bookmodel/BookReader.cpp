@@ -318,6 +318,10 @@ void BookReader::endContentsParagraph() {
 	myContentsParagraphExists = false;
 }
 
+std::string BookReader::putFontEntry(const std::string &family, shared_ptr<FontEntry> fontEntry) {
+	return myModel.myFontManager.put(family, fontEntry);
+}
+
 /*
 void BookReader::setReference(std::size_t contentsParagraphNumber, int referenceNumber) {
 	ContentsModel &contentsModel = (ContentsModel&)*myModel.myContentsModel;

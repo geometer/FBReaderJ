@@ -17,39 +17,31 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FONTMAP_H__
-#define __FONTMAP_H__
+#include <ZLStringUtil.h>
 
-#include <string>
-#include <map>
+#include "FontManager.h"
 
-#include <shared_ptr.h>
+std::string FontManager::put(const std::string &family, shared_ptr<FontEntry> entry) {
+	shared_ptr<FontEntry> existing = myMap[family];
+	if (existing.isNull() || *existing == *entry) {
+		myMap[family] = entry;
+		return family;
+	}
 
-class FontEntry {
+	for (std::map<std::string,shared_ptr<FontEntry> >::const_iterator it = myMap.begin(); it != myMap.end(); ++it) {
+		if (*it->second == *entry) {
+			return it->first;
+		}
+	}
 
-public:
-	void addFile(bool bold, bool italic, const std::string &filePath);
-	void merge(const FontEntry &fontEntry);
+	for (int i = 1; i < 1000; ++i) {
+		std::string indexed = family + "#";
+		ZLStringUtil::appendNumber(indexed, i);
+		if (myMap[indexed].isNull()) {
+			myMap[indexed] = entry;
+			return indexed;
+		}
+	}
 
-	bool operator == (const FontEntry &other) const;
-	bool operator != (const FontEntry &other) const;
-
-public:
-	shared_ptr<std::string> Normal;
-	shared_ptr<std::string> Bold;
-	shared_ptr<std::string> Italic;
-	shared_ptr<std::string> BoldItalic;
-};
-
-class FontMap {
-
-public:
-	void append(const std::string &family, bool bold, bool italic, const std::string &path);
-	void merge(const FontMap &fontMap);
-	shared_ptr<FontEntry> get(const std::string &family);
-
-private:
-	std::map<std::string,shared_ptr<FontEntry> > myMap;
-};
-
-#endif /* __FONTMAP_H__ */
+	return std::string();
+}
