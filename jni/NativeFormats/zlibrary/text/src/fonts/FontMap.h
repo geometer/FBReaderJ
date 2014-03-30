@@ -28,7 +28,7 @@
 class FontEntry {
 
 public:
-	void addFile(const std::string &weight, const std::string &style, const std::string &filePath);
+	void addFile(bool bold, bool italic, const std::string &filePath);
 	void merge(const FontEntry &fontEntry);
 
 	bool operator == (const FontEntry &other) const;
@@ -44,7 +44,7 @@ public:
 class FontMap {
 
 public:
-	void append(const std::string &family, const std::string &weight, const std::string &style, const std::string &path);
+	void append(const std::string &family, bool bold, bool italic, const std::string &path);
 	void merge(const FontMap &fontMap);
 	std::string put(const std::string &family, shared_ptr<FontEntry> entry);
 	shared_ptr<FontEntry> get(const std::string &family);
