@@ -108,7 +108,6 @@ private:
 	bool myNewParagraphInProgress;
 	StyleSheetTable myStyleSheetTable;
 	shared_ptr<FontMap> myFontMap;
-	FontMap myFinalFontMap;
 	std::vector<int> myCSSStack;
 	std::vector<shared_ptr<ZLTextStyleEntry> > myStyleEntryStack;
 	int myStylesToRemove;

@@ -213,14 +213,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						entry.setAlignmentType((byte)(value & 0xFF));
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_FAMILY)) {
-						final short listLength = (short)data[dataOffset++];
-						final ArrayList<String> families = new ArrayList<String>(listLength);	
-						for (short i = 0; i < listLength; ++i) {
-							final short familyLength = (short)data[dataOffset++];
-							families.add(new String(data, dataOffset, familyLength));
-							dataOffset += familyLength;
-						}
-						entry.setFontFamilies(families);
+						entry.setFontFamiliesIndex((short)data[dataOffset++]);
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_STYLE_MODIFIER)) {
 						final short value = (short)data[dataOffset++];
