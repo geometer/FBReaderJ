@@ -71,7 +71,7 @@ public abstract class ZLTextStyleEntry {
 
 	private Length[] myLengths = new Length[Feature.NUMBER_OF_LENGTHS];
 	private byte myAlignmentType;
-	private List<String> myFontFamilies;
+	private int myFontFamiliesIndex;
 	private byte mySupportedFontModifiers;
 	private byte myFontModifiers;
 
@@ -134,13 +134,13 @@ public abstract class ZLTextStyleEntry {
 		return myAlignmentType;
 	}
 
-	final void setFontFamilies(List<String> fontFamilies) {
+	final void setFontFamiliesIndex(int fontFamiliesIndex) {
 		myFeatureMask |= 1 << Feature.FONT_FAMILY;
-		myFontFamilies = new ArrayList<String>(fontFamilies);
+		myFontFamiliesIndex = fontFamiliesIndex;
 	}
 
-	public final List<String> getFontFamilies() {
-		return myFontFamilies;
+	public final int getFontFamiliesIndex() {
+		return myFontFamiliesIndex;
 	}
 
 	final void setFontModifiers(byte supported, byte values) {
