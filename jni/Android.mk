@@ -84,6 +84,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextParagraph.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLVideoEntry.cpp \
+	NativeFormats/zlibrary/text/src/fonts/FontMap.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaInputStream.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
@@ -100,7 +101,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2UidReader.cpp \
-	NativeFormats/fbreader/src/formats/css/FontMap.cpp \
 	NativeFormats/fbreader/src/formats/css/CSSInputStream.cpp \
 	NativeFormats/fbreader/src/formats/css/StringInputStream.cpp \
 	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
@@ -166,6 +166,7 @@ LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/logger \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/model
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/model \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/fonts
 
 include $(BUILD_SHARED_LIBRARY)

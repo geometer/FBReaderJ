@@ -307,12 +307,10 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 			return;
 		}
 
-		myFontMap->append(
-			family,
-			value(attributes, "font-weight"),
-			value(attributes, "font-style"),
-			path
-		);
+		const std::string weight = value(attributes, "font-weight");
+		const std::string style = value(attributes, "font-style");
+
+		myFontMap->append(family, weight == "bold", style == "italic" || style == "oblique", path);
 	}
 }
 
