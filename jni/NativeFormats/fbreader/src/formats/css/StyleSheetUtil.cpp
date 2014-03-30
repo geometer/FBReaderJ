@@ -64,6 +64,9 @@ std::vector<std::string> StyleSheetUtil::splitCommaSeparatedList(const std::stri
 				break;
 		}
 	}
+	if (data.size() > start) {
+		split.push_back(strip(data.substr(start)));
+	}
 
 	return split;
 }

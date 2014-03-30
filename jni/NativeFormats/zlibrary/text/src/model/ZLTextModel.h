@@ -67,6 +67,7 @@ public:
 */
 	void addControl(ZLTextKind textKind, bool isStart);
 	void addStyleEntry(const ZLTextStyleEntry &entry);
+	void addStyleEntry(const ZLTextStyleEntry &entry, const std::vector<std::string> &fontFamilies);
 	void addStyleCloseEntry();
 	void addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label);
 	void addText(const std::string &text);
