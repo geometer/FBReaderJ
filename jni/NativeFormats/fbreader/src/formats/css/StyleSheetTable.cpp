@@ -138,6 +138,53 @@ const std::string &StyleSheetTable::value(const AttributeMap &map, const std::st
 	return emptyString;
 }
 
+static std::string strip(const std::string &data) {
+	std::string res = data;
+	ZLStringUtil::stripWhiteSpaces(res);
+	if (res.size() > 1 && (res[0] == '"' || res[0] == '\'') && res[0] == res[res.size() - 1]) {
+		return res.substr(1, res.size() - 2);
+	} else {
+		return res;
+	}
+}
+
+static std::vector<std::string> splitCommaSeparatedList(const std::string &data) {
+	std::vector<std::string> split;
+
+	enum {
+		S_QUOTED,
+		D_QUOTED,
+		NORMAL
+	} state = NORMAL;
+
+	std::size_t start = 0;
+	for (std::size_t i = 0; i < data.size(); ++i) {
+		const char ch = data[i];
+		switch (state) {
+			case NORMAL:
+				if (ch == ',') {
+					if (i > start) {
+						split.push_back(strip(data.substr(start, i - start)));
+					}
+					start = i + 1;
+				}
+				break;
+			case S_QUOTED:
+				if (ch == '\'') {
+					state = NORMAL;
+				}
+				break;
+			case D_QUOTED:
+				if (ch == '"') {
+					state = NORMAL;
+				}
+				break;
+		}
+	}
+
+	return split;
+}
+
 shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &styles) {
 	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry(ZLTextStyleEntry::STYLE_CSS_ENTRY);
 
@@ -192,9 +239,12 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 	}
 
 	const std::string &fontFamily = value(styles, "font-family");
-	// TODO: split(',')
 	if (!fontFamily.empty()) {
-		entry->setFontFamily(fontFamily);
+		std::vector<std::string> families = splitCommaSeparatedList(fontFamily);
+		// TODO: use all families
+		if (!families.empty()) {
+			entry->setFontFamily(families[0]);
+		}
 	}
 
 	const std::string &fontSize = value(styles, "font-size");
