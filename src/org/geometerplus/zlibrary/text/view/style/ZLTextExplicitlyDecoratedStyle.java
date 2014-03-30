@@ -35,6 +35,7 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	@Override
 	protected String getFontFamilyInternal() {
 		if (myEntry.isFeatureSupported(FONT_FAMILY)) {
+			System.err.println(myEntry.getFontFamilies());
 			// TODO: implement
 		}
 		return Parent.getFontFamily();
