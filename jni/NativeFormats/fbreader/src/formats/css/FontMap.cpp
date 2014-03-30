@@ -39,6 +39,21 @@ void FontEntry::addFile(const std::string &weight, const std::string &style, con
 	}
 }
 
+void FontEntry::merge(const FontEntry &fontEntry) {
+	if (!fontEntry.Normal.isNull()) {
+		Normal = fontEntry.Normal;
+	}
+	if (!fontEntry.Bold.isNull()) {
+		Bold = fontEntry.Bold;
+	}
+	if (!fontEntry.Italic.isNull()) {
+		Italic = fontEntry.Italic;
+	}
+	if (!fontEntry.BoldItalic.isNull()) {
+		BoldItalic = fontEntry.BoldItalic;
+	}
+}
+
 static bool compareStringPtrs(shared_ptr<std::string> str0, shared_ptr<std::string> str1) {
 	return str0.isNull() ? str1.isNull() : (!str1.isNull() && *str0 == *str1);
 }
@@ -55,16 +70,55 @@ bool FontEntry::operator != (const FontEntry &other) const {
 	return !operator ==(other);
 }
 
-bool FontMap::operator == (const FontMap &other) const {
-	return myMap == other.myMap;
-}
-
-bool FontMap::operator != (const FontMap &other) const {
-	return !operator ==(other);
-}
-
-void FontMap::appendFontFace(const std::string &family, const std::string &weight, const std::string &style, const std::string &path) {
+void FontMap::append(const std::string &family, const std::string &weight, const std::string &style, const std::string &path) {
 	const ZLFile fontFile(path);
-	myMap[family].addFile(weight, style, fontFile.path());
-	ZLLogger::Instance().println("FONT", family + " => " + fontFile.path());
+	shared_ptr<FontEntry> entry = myMap[family];
+	if (entry.isNull()) {
+		entry = new FontEntry();
+		myMap[family] = entry;
+	}
+	entry->addFile(weight, style, fontFile.path());
+	ZLLogger::Instance().println("FONT", family + "," + weight + "," + style + " => " + fontFile.path());
+}
+
+void FontMap::merge(const FontMap &fontMap) {
+	for (std::map<std::string,shared_ptr<FontEntry> >::const_iterator it = fontMap.myMap.begin(); it != fontMap.myMap.end(); ++it) {
+		if (!it->second.isNull()) {
+			shared_ptr<FontEntry> entry = myMap[it->first];
+			if (entry.isNull()) {
+				entry = new FontEntry();
+				myMap[it->first] = entry;
+			}
+			entry->merge(*it->second);
+		}
+	}
+}
+
+shared_ptr<FontEntry> FontMap::get(const std::string &family) {
+	return myMap[family];
+}
+
+std::string FontMap::put(const std::string &family, shared_ptr<FontEntry> entry) {
+	shared_ptr<FontEntry> existing = myMap[family];
+	if (existing.isNull() || *existing == *entry) {
+		myMap[family] = entry;
+		return family;
+	}
+
+	for (std::map<std::string,shared_ptr<FontEntry> >::const_iterator it = myMap.begin(); it != myMap.end(); ++it) {
+		if (*it->second == *entry) {
+			return it->first;
+		}
+	}
+
+	for (int i = 1; i < 1000; ++i) {
+		std::string indexed = family + "#";
+		ZLStringUtil::appendNumber(indexed, i);
+		if (myMap[indexed].isNull()) {
+			myMap[indexed] = entry;
+			return indexed;
+		}
+	}
+
+	return std::string();
 }

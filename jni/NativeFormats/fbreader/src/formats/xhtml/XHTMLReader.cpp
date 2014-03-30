@@ -229,7 +229,7 @@ void XHTMLTagStyleAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 
 	if (reader.myReadState == XHTML_READ_NOTHING) {
 		reader.myReadState = XHTML_READ_STYLE;
-		reader.myTableParser = new StyleSheetTableParser(reader.myPathPrefix, reader.myStyleSheetTable, *reader.myFontMap);
+		reader.myTableParser = new StyleSheetTableParser(reader.myPathPrefix, reader.myStyleSheetTable, reader.myFontMap);
 		ZLLogger::Instance().println("CSS", "parsing style tag content");
 	}
 }
@@ -269,7 +269,7 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 		parser = new StyleSheetParserWithCache(
 			cssFile,
 			MiscUtil::htmlDirectoryPrefix(cssFilePath),
-			*reader.myFontMap,
+			0,
 			reader.myEncryptionMap
 		);
 		reader.myFileParsers[cssFilePath] = parser;
@@ -280,7 +280,7 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 			parser->parseStream(cssStream);
 		}
 	}
-	parser->applyToTable(reader.myStyleSheetTable);
+	parser->applyToTables(reader.myStyleSheetTable, *reader.myFontMap);
 }
 
 void XHTMLTagLinkAction::doAtEnd(XHTMLReader&) {
@@ -673,6 +673,13 @@ bool XHTMLReader::addTextStyleEntry(const std::string tag, const std::string aCl
 void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
 		ZLLogger::Instance().println("FONT", "Requested font family: " + entry.fontFamily());
+		shared_ptr<FontEntry> fontEntry = myFontMap->get(entry.fontFamily());
+		if (fontEntry.isNull()) {
+			ZLLogger::Instance().println("FONT", "Font entry not found for " + entry.fontFamily());
+		} else {
+			const std::string realFamily = myFinalFontMap.put(entry.fontFamily(), fontEntry);
+			ZLLogger::Instance().println("FONT", "Entry for " + entry.fontFamily() + " stored as " + realFamily);
+		}
 	}
 	myModelReader.addStyleEntry(entry);
 }

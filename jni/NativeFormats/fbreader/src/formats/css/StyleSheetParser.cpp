@@ -26,6 +26,7 @@
 #include <ZLLogger.h>
 
 #include "StyleSheetParser.h"
+#include "StyleSheetUtil.h"
 #include "StringInputStream.h"
 #include "CSSInputStream.h"
 #include "../util/MiscUtil.h"
@@ -125,10 +126,8 @@ std::string StyleSheetParser::url2FullPath(const std::string &url) const {
 			ZLStringUtil::stringEndsWith(path, ")")) {
 		path = path.substr(4, path.size() - 5);
 	}
-	if (path.size() > 2 && path[0] == path[path.size() - 1]) {
-		if (path[0] == '\'' || path[0] == '"') {
-			path = path.substr(1, path.size() - 2);
-		}
+	if (path.size() > 1 && (path[0] == '"' || path[0] == '\'') && path[0] == path[path.size() - 1]) {
+		path = path.substr(1, path.size() - 2);
 	}
 	return myPathPrefix + MiscUtil::decodeHtmlURL(path);
 }
@@ -221,8 +220,12 @@ void StyleSheetParser::processWord(const std::string &word) {
 			myMap[myAttributeName].clear();
 			break;
 		case ATTRIBUTE_VALUE:
-			myMap[myAttributeName] = word;
+		{
+			std::string stripped = word;
+			ZLStringUtil::stripWhiteSpaces(stripped);
+			myMap[myAttributeName] = stripped;
 			break;
+		}
 	}
 }
 
@@ -237,7 +240,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseSingleEntry(const
 	return control;
 }
 
-StyleSheetMultiStyleParser::StyleSheetMultiStyleParser(const std::string &pathPrefix, FontMap &fontMap) : StyleSheetParser(pathPrefix), myFontMap(fontMap) {
+StyleSheetMultiStyleParser::StyleSheetMultiStyleParser(const std::string &pathPrefix, shared_ptr<FontMap> fontMap) : StyleSheetParser(pathPrefix), myFontMap(fontMap.isNull() ? new FontMap() : fontMap) {
 }
 
 void StyleSheetMultiStyleParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
@@ -279,11 +282,13 @@ static std::string value(const StyleSheetTable::AttributeMap &map, const std::st
 void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &attributes) {
 	ZLLogger::Instance().registerClass("FONT");
 	if (name == "@font-face") {
-		const std::string family = value(attributes, "font-family");
+		std::string family = value(attributes, "font-family");
 		if (family.empty()) {
 			ZLLogger::Instance().println("FONT", "Font family not specified in @font-face entry");
 			return;
 		}
+		family = StyleSheetUtil::strip(family);
+
 		const StyleSheetTable::AttributeMap::const_iterator it = attributes.find("src");
 		std::string path;
 		if (it != attributes.end()) {
@@ -301,7 +306,8 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 			ZLLogger::Instance().println("FONT", "Source not specified for " + family);
 			return;
 		}
-		myFontMap.appendFontFace(
+
+		myFontMap->append(
 			family,
 			value(attributes, "font-weight"),
 			value(attributes, "font-style"),
@@ -310,14 +316,14 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 	}
 }
 
-StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &styleTable, FontMap &fontMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myStyleTable(styleTable) {
+StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &styleTable, shared_ptr<FontMap> fontMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myStyleTable(styleTable) {
 }
 
 void StyleSheetTableParser::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
 	myStyleTable.addMap(tag, aClass, map);
 }
 
-StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, FontMap &fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myEncryptionMap(encryptionMap) {
+StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myEncryptionMap(encryptionMap) {
 	myProcessedFiles.insert(file.path());
 }
 
@@ -344,9 +350,10 @@ void StyleSheetParserWithCache::importCSS(const std::string &path) {
 	myProcessedFiles.insert(fileToImport.path());
 }
 
-void StyleSheetParserWithCache::applyToTable(StyleSheetTable &table) const {
+void StyleSheetParserWithCache::applyToTables(StyleSheetTable &table, FontMap &fontMap) const {
 	for (std::list<shared_ptr<Entry> >::const_iterator it = myEntries.begin(); it != myEntries.end(); ++it) {
 		const Entry &entry = **it;
 		table.addMap(entry.Tag, entry.Class, entry.Map);
 	}
+	fontMap.merge(*myFontMap);
 }
