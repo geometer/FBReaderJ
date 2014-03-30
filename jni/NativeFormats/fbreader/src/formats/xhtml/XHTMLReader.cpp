@@ -675,9 +675,16 @@ void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
 		ZLLogger::Instance().println("FONT", "Requested font family: " + entry.fontFamily());
 		shared_ptr<FontEntry> fontEntry = myFontMap->get(entry.fontFamily());
 		if (fontEntry.isNull()) {
+<<<<<<< HEAD
 			ZLLogger::Instance().println("FONT", "Entry not found");
 		} else {
 			ZLLogger::Instance().println("FONT", "Entry found");
+=======
+			ZLLogger::Instance().println("FONT", "Font entry not found for " + entry.fontFamily());
+		} else {
+			const std::string realFamily = myFinalFontMap.put(entry.fontFamily(), fontEntry);
+			ZLLogger::Instance().println("FONT", "Entry for " + entry.fontFamily() + " stored as " + realFamily);
+>>>>>>> master
 		}
 	}
 	myModelReader.addStyleEntry(entry);
