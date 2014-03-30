@@ -19,6 +19,9 @@
 
 package org.geometerplus.zlibrary.text.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 public abstract class ZLTextStyleEntry {
@@ -68,7 +71,7 @@ public abstract class ZLTextStyleEntry {
 
 	private Length[] myLengths = new Length[Feature.NUMBER_OF_LENGTHS];
 	private byte myAlignmentType;
-	private String myFontFamily;
+	private List<String> myFontFamilies;
 	private byte mySupportedFontModifiers;
 	private byte myFontModifiers;
 
@@ -131,13 +134,13 @@ public abstract class ZLTextStyleEntry {
 		return myAlignmentType;
 	}
 
-	final void setFontFamily(String fontFamily) {
+	final void setFontFamilies(List<String> fontFamilies) {
 		myFeatureMask |= 1 << Feature.FONT_FAMILY;
-		myFontFamily = fontFamily;
+		myFontFamilies = new ArrayList<String>(fontFamilies);
 	}
 
-	public final String getFontFamily() {
-		return myFontFamily;
+	public final List<String> getFontFamilies() {
+		return myFontFamilies;
 	}
 
 	final void setFontModifiers(byte supported, byte values) {

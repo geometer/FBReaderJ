@@ -24,10 +24,11 @@
 
 #include <shared_ptr.h>
 
+#include <FontMap.h>
+
 #include "HtmlReader.h"
 #include "../../bookmodel/BookReader.h"
 #include "../css/StyleSheetTable.h"
-#include "../css/FontMap.h"
 
 class BookModel;
 class PlainTextFormat;
