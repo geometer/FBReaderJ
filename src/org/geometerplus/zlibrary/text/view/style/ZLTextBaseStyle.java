@@ -36,6 +36,8 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		new ZLBooleanOption("Style", "css:textAlignment", true);
 	public final ZLBooleanOption UseCSSFontSizeOption =
 		new ZLBooleanOption("Style", "css:fontSize", true);
+	public final ZLBooleanOption UseCSSFontFamilyOption =
+		new ZLBooleanOption("Style", "css:fontFamily", true);
 
 	public final ZLBooleanOption AutoHyphenationOption =
 		new ZLBooleanOption(OPTIONS, "AutoHyphenation", true);

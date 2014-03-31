@@ -36,6 +36,10 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 
 	@Override
 	protected FontEntry getFontFamilyInternal() {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontFamilyOption.getValue()) {
+			return Parent.getFontFamily();
+		}
+
 		if (myEntry.isFeatureSupported(FONT_FAMILY)) {
 			// TODO: support all families
 			final List<FontEntry> entries = myEntry.getFontEntries();
@@ -45,11 +49,13 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		}
 		return Parent.getFontFamily();
 	}
+
 	@Override
 	protected int getFontSizeInternal(ZLTextMetrics metrics) {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontSizeOption.getValue()) {
 			return Parent.getFontSize(metrics);
 		}
+
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
 				return Parent.Parent.getFontSize(metrics);
