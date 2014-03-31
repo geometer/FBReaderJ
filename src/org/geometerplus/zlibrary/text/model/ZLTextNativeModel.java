@@ -23,6 +23,8 @@ import java.util.Map;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.zlibrary.text.fonts.FontManager;
+
 public class ZLTextNativeModel extends ZLTextPlainModel {
 	public ZLTextNativeModel(
 		String id, String language, int paragraphsNumber,
@@ -30,13 +32,15 @@ public class ZLTextNativeModel extends ZLTextPlainModel {
 		int[] paragraphLengths, int[] textSizes,
 		byte[] paragraphKinds,
 		String directoryName, String fileExtension, int blocksNumber,
-		Map<String,ZLImage> imageMap
+		Map<String,ZLImage> imageMap,
+		FontManager fontManager
 	) {
 		super(
 			id, language,
 			entryIndices, entryOffsets, paragraphLengths, textSizes, paragraphKinds,
 			new CachedCharStorageRO(directoryName, fileExtension, blocksNumber),
-			imageMap
+			imageMap,
+			fontManager
 		);
 		myParagraphsNumber = paragraphsNumber;
 	}

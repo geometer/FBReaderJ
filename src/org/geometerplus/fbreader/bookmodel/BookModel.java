@@ -19,9 +19,11 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.geometerplus.zlibrary.text.model.*;
+import org.geometerplus.zlibrary.text.fonts.FontManager;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;
@@ -49,13 +51,14 @@ public abstract class BookModel {
 		plugin.readModel(model);
 		return model;
 	}
-	
+
 	public static BookModel createPluginModel(Book book) {
 		return new PluginBookModel(book);
 	}
 
 	public final Book Book;
 	public final TOCTree TOCTree = new TOCTree();
+	public final FontManager FontManager = new FontManager();
 
 	public static final class Label {
 		public final String ModelId;
@@ -97,7 +100,11 @@ public abstract class BookModel {
 		}
 		return label;
 	}
-	
+
+	public void registerFontFamilyList(String[] families) {
+		FontManager.index(Arrays.asList(families));
+	}
+
 	public boolean isValid() {
 		return true;
 	}
