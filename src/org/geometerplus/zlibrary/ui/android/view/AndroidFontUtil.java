@@ -27,6 +27,7 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
@@ -163,7 +164,16 @@ public final class AndroidFontUtil {
 		return null;
 	}
 
-	public static Typeface typeface(String family, boolean bold, boolean italic) {
+	public static Typeface typeface(FontEntry entry, boolean bold, boolean italic) {
+		if (entry.isSystem()) {
+			return typefaceSystem(entry.Family, bold, italic);
+		} else {
+			// TODO: implement
+			return null;
+		}
+	}
+
+	private static Typeface typefaceSystem(String family, boolean bold, boolean italic) {
 		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = ourTypefaces.get(family);

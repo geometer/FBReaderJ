@@ -17,9 +17,25 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.fonts;
+package org.geometerplus.zlibrary.core.fonts;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public final class FontEntry {
+	private static Map<String,FontEntry> ourSystemEntries = new HashMap<String,FontEntry>();
+
+	public static FontEntry systemEntry(String family) {
+		synchronized(ourSystemEntries) {
+			FontEntry entry = ourSystemEntries.get(family);
+			if (entry == null) {
+				entry = new FontEntry(family);
+				ourSystemEntries.put(family, entry);
+			}
+			return entry;
+		}
+	}
+
 	public final String Family;
 	private final String[] myFiles;
 
@@ -32,7 +48,7 @@ public final class FontEntry {
 		myFiles[3] = boldItalic;
 	}
 
-	public FontEntry(String family) {
+	FontEntry(String family) {
 		Family = family;
 		myFiles = null;
 	}
@@ -55,5 +71,24 @@ public final class FontEntry {
 			}
 		}
 		return builder.append("]").toString();
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof FontEntry)) {
+			return false;
+		}
+		final FontEntry entry = (FontEntry)other;
+		return
+			Family.equals(entry.Family) &&
+			(myFiles == null ? entry.myFiles == null : myFiles.equals(entry.myFiles));
+	}
+
+	@Override
+	public int hashCode() {
+		return Family.hashCode();
 	}
 }

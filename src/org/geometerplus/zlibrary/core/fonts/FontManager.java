@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.fonts;
+package org.geometerplus.zlibrary.core.fonts;
 
 import java.io.*;
 import java.util.*;
@@ -41,9 +41,18 @@ public class FontManager {
 		return myFamilyLists.size() - 1;
 	}
 
-	public synchronized List<String> getFamilyList(int index) {
-		return index < myFamilyLists.size()
-			? myFamilyLists.get(index) : Collections.<String>emptyList();
+	public synchronized List<FontEntry> getFamilyEntries(int index) {
+		try {
+			final List<String> families = myFamilyLists.get(index);
+			final ArrayList<FontEntry> entries = new ArrayList<FontEntry>(families.size());
+			for (String f : families) {
+				final FontEntry e = Entries.get(f);
+				entries.add(e != null ? e : FontEntry.systemEntry(f));
+			}
+			return entries;
+		} catch (Exception e) {
+			return Collections.emptyList();
+		}
 	}
 
 	private static String alias(String family, boolean bold, boolean italic) {

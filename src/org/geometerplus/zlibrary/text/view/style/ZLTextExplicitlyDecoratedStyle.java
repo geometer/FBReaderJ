@@ -21,8 +21,8 @@ package org.geometerplus.zlibrary.text.view.style;
 
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
@@ -35,12 +35,12 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	}
 
 	@Override
-	protected String getFontFamilyInternal() {
+	protected FontEntry getFontFamilyInternal() {
 		if (myEntry.isFeatureSupported(FONT_FAMILY)) {
 			// TODO: support all families
-			final List<String> families = myEntry.getFontFamilies();
-			if (!families.isEmpty()) {
-				return families.get(0);
+			final List<FontEntry> entries = myEntry.getFontEntries();
+			if (!entries.isEmpty()) {
+				return entries.get(0);
 			}
 		}
 		return Parent.getFontFamily();

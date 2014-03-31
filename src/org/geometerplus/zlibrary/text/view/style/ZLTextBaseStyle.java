@@ -19,8 +19,9 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
-import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
@@ -63,8 +64,8 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	}
 
 	@Override
-	public String getFontFamily() {
-		return FontFamilyOption.getValue();
+	public FontEntry getFontFamily() {
+		return FontEntry.systemEntry(FontFamilyOption.getValue());
 	}
 
 	public int getFontSize() {
