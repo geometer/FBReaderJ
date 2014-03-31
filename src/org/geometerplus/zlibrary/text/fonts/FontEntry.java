@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,29 +17,23 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FONTMANAGER_H__
-#define __FONTMANAGER_H__
+package org.geometerplus.zlibrary.text.fonts;
 
-#include <string>
-#include <map>
-#include <vector>
+public class FontEntry {
+	public final String Normal;
+	public final String Bold;
+	public final String Italic;
+	public final String BoldItalic;
 
-#include <shared_ptr.h>
+	public FontEntry(String normal, String bold, String italic, String boldItalic) {
+		Normal = normal;
+		Bold = bold;
+		Italic = italic;
+		BoldItalic = boldItalic;
+	}
 
-#include <FontMap.h>
-
-class FontManager {
-
-public:
-	std::string put(const std::string &family, shared_ptr<FontEntry> entry);
-	int familyListIndex(const std::vector<std::string> &familyList);
-
-	const std::map<std::string,shared_ptr<FontEntry> > &entries() const;
-	const std::vector<std::vector<std::string> > &familyLists() const;
-
-private:
-	std::map<std::string,shared_ptr<FontEntry> > myEntries;
-	std::vector<std::vector<std::string> > myFamilyLists;
-};
-
-#endif /* __FONTMANAGER_H__ */
+	@Override
+	public String toString() {
+		return "FontEntry[" + Normal + ";" + Bold + ";" + Italic + ";" + BoldItalic + "]";
+	}
+}

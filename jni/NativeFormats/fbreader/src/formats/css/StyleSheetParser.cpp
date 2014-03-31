@@ -280,7 +280,7 @@ static std::string value(const StyleSheetTable::AttributeMap &map, const std::st
 }
 
 void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &attributes) {
-	ZLLogger::Instance().registerClass("FONT");
+	//ZLLogger::Instance().registerClass("FONT");
 	if (name == "@font-face") {
 		std::string family = value(attributes, "font-family");
 		if (family.empty()) {
