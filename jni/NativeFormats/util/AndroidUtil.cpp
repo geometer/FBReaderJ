@@ -124,6 +124,7 @@ shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_setBookTextModel;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_setFootnoteModel;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_addImage;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_registerFontFamilyList;
+shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_registerFontEntry;
 
 //shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_BookReadingException_throwForFile;
 
@@ -206,6 +207,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_NativeBookModel_setFootnoteModel = new VoidMethod(Class_NativeBookModel, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");
 	Method_NativeBookModel_addImage = new VoidMethod(Class_NativeBookModel, "addImage", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/image/ZLImage;)");
 	Method_NativeBookModel_registerFontFamilyList = new VoidMethod(Class_NativeBookModel, "registerFontFamilyList", "([Ljava/lang/String;)");
+	Method_NativeBookModel_registerFontEntry = new VoidMethod(Class_NativeBookModel, "registerFontEntry", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)");
 
 /*
 	Class_BookReadingException = new JavaClass(env, "org/geometerplus/fbreader/bookmodel/BookReadingException");
@@ -284,6 +286,10 @@ std::string AndroidUtil::fromJavaString(JNIEnv *env, jstring from) {
 	const std::string result(data);
 	env->ReleaseStringUTFChars(from, data);
 	return result;
+}
+
+jstring AndroidUtil::createJavaString(JNIEnv* env, shared_ptr<std::string> str) {
+	return str.isNull() ? 0 : createJavaString(env, *str);
 }
 
 jstring AndroidUtil::createJavaString(JNIEnv* env, const std::string &str) {
