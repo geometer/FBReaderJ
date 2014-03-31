@@ -145,6 +145,7 @@ public:
 	static shared_ptr<VoidMethod> Method_NativeBookModel_setBookTextModel;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_setFootnoteModel;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_addImage;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_registerFontFamilyList;
 
 	//static shared_ptr<StaticObjectMethod> StaticMethod_BookReadingException_throwForFile;
 
