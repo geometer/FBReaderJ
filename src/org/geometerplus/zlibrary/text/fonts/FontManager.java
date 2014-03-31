@@ -92,14 +92,15 @@ public class FontManager {
 	private final Map<String,Object> myCachedTypefaces = new HashMap<String,Object>();
 	private static final Object NULL_OBJECT = new Object();
 
-	private Typeface getOrCreateTypeface(String file, String family, boolean bold, boolean italic) {
-		if (file == null) {
+	private Typeface getOrCreateTypeface(FontEntry entry, String family, boolean bold, boolean italic) {
+		final String fileName = entry.fileName(bold, italic);
+		if (fileName == null) {
 			return null;
 		}
 		final String realFileName = alias(family, bold, italic);
 		Object cached = myCachedTypefaces.get(realFileName);
 		if (cached == null) {
-			if (copy(file, realFileName)) {
+			if (copy(fileName, realFileName)) {
 				try {
 					cached = Typeface.createFromFile(realFileName);
 				} catch (Throwable t) {
@@ -118,13 +119,13 @@ public class FontManager {
 		}
 		{
 			final int index = (bold ? 1 : 0) + (italic ? 2 : 0);
-			final Typeface tf = getOrCreateTypeface(entry.Files[index], family, bold, italic);
+			final Typeface tf = getOrCreateTypeface(entry, family, bold, italic);
 			if (tf != null) {
 				return tf;
 			}
 		}
 		for (int i = 0; i < 4; ++i) {
-			final Typeface tf = getOrCreateTypeface(entry.Files[i], family, (i & 1) == 1, (i & 2) == 2);
+			final Typeface tf = getOrCreateTypeface(entry, family, (i & 1) == 1, (i & 2) == 2);
 			if (tf != null) {
 				return tf;
 			}
