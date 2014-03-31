@@ -19,21 +19,41 @@
 
 package org.geometerplus.zlibrary.text.fonts;
 
-public class FontEntry {
-	public final String Normal;
-	public final String Bold;
-	public final String Italic;
-	public final String BoldItalic;
+public final class FontEntry {
+	public final String Family;
+	private final String[] myFiles;
 
-	public FontEntry(String normal, String bold, String italic, String boldItalic) {
-		Normal = normal;
-		Bold = bold;
-		Italic = italic;
-		BoldItalic = boldItalic;
+	public FontEntry(String family, String normal, String bold, String italic, String boldItalic) {
+		Family = family;
+		myFiles = new String[4];
+		myFiles[0] = normal;
+		myFiles[1] = bold;
+		myFiles[2] = italic;
+		myFiles[3] = boldItalic;
+	}
+
+	public FontEntry(String family) {
+		Family = family;
+		myFiles = null;
+	}
+
+	public boolean isSystem() {
+		return myFiles == null;
+	}
+
+	public String fileName(boolean bold, boolean italic) {
+		return myFiles != null ? myFiles[(bold ? 1 : 0) + (italic ? 2 : 0)] : null;
 	}
 
 	@Override
 	public String toString() {
-		return "FontEntry[" + Normal + ";" + Bold + ";" + Italic + ";" + BoldItalic + "]";
+		final StringBuilder builder = new StringBuilder("FontEntry[");
+		builder.append(Family);
+		if (myFiles != null) {
+			for (int i = 0; i < 4; ++i) {
+				builder.append(";").append(myFiles[i]);
+			}
+		}
+		return builder.append("]").toString();
 	}
 }
