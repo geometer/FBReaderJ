@@ -107,6 +107,6 @@ public abstract class BookModel {
 	}
 
 	public void registerFontEntry(String family, String normal, String bold, String italic, String boldItalic) {
-		registerFontEntry(family, new FontEntry(normal, bold, italic, boldItalic));
+		registerFontEntry(family, new FontEntry(family, normal, bold, italic, boldItalic));
 	}
 }
