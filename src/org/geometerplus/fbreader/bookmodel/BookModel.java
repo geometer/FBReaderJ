@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.geometerplus.zlibrary.text.model.*;
+import org.geometerplus.zlibrary.text.fonts.FontEntry;
 import org.geometerplus.zlibrary.text.fonts.FontManager;
 
 import org.geometerplus.fbreader.book.Book;
@@ -103,6 +104,14 @@ public abstract class BookModel {
 
 	public void registerFontFamilyList(String[] families) {
 		FontManager.index(Arrays.asList(families));
+	}
+
+	public void registerFontEntry(String family, FontEntry entry) {
+		FontManager.Entries.put(family, entry);
+	}
+
+	public void registerFontEntry(String family, String normal, String bold, String italic, String boldItalic) {
+		registerFontEntry(family, new FontEntry(normal, bold, italic, boldItalic));
 	}
 
 	public boolean isValid() {

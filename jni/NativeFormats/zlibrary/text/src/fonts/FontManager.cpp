@@ -22,13 +22,13 @@
 #include "FontManager.h"
 
 std::string FontManager::put(const std::string &family, shared_ptr<FontEntry> entry) {
-	shared_ptr<FontEntry> existing = myMap[family];
+	shared_ptr<FontEntry> existing = myEntries[family];
 	if (existing.isNull() || *existing == *entry) {
-		myMap[family] = entry;
+		myEntries[family] = entry;
 		return family;
 	}
 
-	for (std::map<std::string,shared_ptr<FontEntry> >::const_iterator it = myMap.begin(); it != myMap.end(); ++it) {
+	for (std::map<std::string,shared_ptr<FontEntry> >::const_iterator it = myEntries.begin(); it != myEntries.end(); ++it) {
 		if (*it->second == *entry) {
 			return it->first;
 		}
@@ -37,8 +37,8 @@ std::string FontManager::put(const std::string &family, shared_ptr<FontEntry> en
 	for (int i = 1; i < 1000; ++i) {
 		std::string indexed = family + "#";
 		ZLStringUtil::appendNumber(indexed, i);
-		if (myMap[indexed].isNull()) {
-			myMap[indexed] = entry;
+		if (myEntries[indexed].isNull()) {
+			myEntries[indexed] = entry;
 			return indexed;
 		}
 	}
@@ -55,6 +55,10 @@ int FontManager::familyListIndex(const std::vector<std::string> &familyList) {
 	} else {
 		return it - myFamilyLists.begin();
 	}
+}
+
+const std::map<std::string,shared_ptr<FontEntry> > &FontManager::entries() const {
+	return myEntries;
 }
 
 const std::vector<std::vector<std::string> > &FontManager::familyLists() const {

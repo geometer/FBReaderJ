@@ -146,6 +146,7 @@ public:
 	static shared_ptr<VoidMethod> Method_NativeBookModel_setFootnoteModel;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_addImage;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_registerFontFamilyList;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_registerFontEntry;
 
 	//static shared_ptr<StaticObjectMethod> StaticMethod_BookReadingException_throwForFile;
 
@@ -154,6 +155,7 @@ public:
 	static JNIEnv *getEnv();
 
 	static std::string fromJavaString(JNIEnv *env, jstring from);
+	static jstring createJavaString(JNIEnv* env, shared_ptr<std::string>);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
 	static std::string convertNonUtfString(const std::string &str);
 
