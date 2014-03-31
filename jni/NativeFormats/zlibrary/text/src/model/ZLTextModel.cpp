@@ -35,20 +35,20 @@
 #include "ZLVideoEntry.h"
 
 ZLTextModel::ZLTextModel(const std::string &id, const std::string &language, const std::size_t rowSize,
-		const std::string &directoryName, const std::string &fileExtension, FontManager &fManager) :
+		const std::string &directoryName, const std::string &fileExtension, FontManager &fontManager) :
 	myId(id),
 	myLanguage(language.empty() ? ZLibrary::Language() : language),
 	myAllocator(new ZLCachedMemoryAllocator(rowSize, directoryName, fileExtension)),
 	myLastEntryStart(0),
-	myFontManager(fManager) {
+	myFontManager(fontManager) {
 }
 
-ZLTextModel::ZLTextModel(const std::string &id, const std::string &language, shared_ptr<ZLCachedMemoryAllocator> allocator, FontManager &fManager) :
+ZLTextModel::ZLTextModel(const std::string &id, const std::string &language, shared_ptr<ZLCachedMemoryAllocator> allocator, FontManager &fontManager) :
 	myId(id),
 	myLanguage(language.empty() ? ZLibrary::Language() : language),
 	myAllocator(allocator),
 	myLastEntryStart(0),
-	myFontManager(fManager) {
+	myFontManager(fontManager) {
 }
 
 ZLTextModel::~ZLTextModel() {
@@ -138,12 +138,12 @@ void ZLTextModel::addParagraphInternal(ZLTextParagraph *paragraph) {
 }
 
 ZLTextPlainModel::ZLTextPlainModel(const std::string &id, const std::string &language, const std::size_t rowSize,
-		const std::string &directoryName, const std::string &fileExtension, FontManager &fManager) :
-	ZLTextModel(id, language, rowSize, directoryName, fileExtension, fManager) {
+		const std::string &directoryName, const std::string &fileExtension, FontManager &fontManager) :
+	ZLTextModel(id, language, rowSize, directoryName, fileExtension, fontManager) {
 }
 
-ZLTextPlainModel::ZLTextPlainModel(const std::string &id, const std::string &language, shared_ptr<ZLCachedMemoryAllocator> allocator, FontManager &fManager) :
-	ZLTextModel(id, language, allocator, fManager) {
+ZLTextPlainModel::ZLTextPlainModel(const std::string &id, const std::string &language, shared_ptr<ZLCachedMemoryAllocator> allocator, FontManager &fontManager) :
+	ZLTextModel(id, language, allocator, fontManager) {
 }
 
 void ZLTextPlainModel::createParagraph(ZLTextParagraph::Kind kind) {
