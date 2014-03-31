@@ -20,8 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.*;
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.*;
 
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -166,14 +165,14 @@ public final class AndroidFontUtil {
 
 	public static Typeface typeface(FontEntry entry, boolean bold, boolean italic) {
 		if (entry.isSystem()) {
-			return typefaceSystem(entry.Family, bold, italic);
+			return systemTypeface(entry.Family, bold, italic);
 		} else {
 			// TODO: implement
-			return null;
+			return embeddedTypeface(entry, bold, italic);
 		}
 	}
 
-	private static Typeface typefaceSystem(String family, boolean bold, boolean italic) {
+	private static Typeface systemTypeface(String family, boolean bold, boolean italic) {
 		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = ourTypefaces.get(family);
@@ -195,8 +194,92 @@ public final class AndroidFontUtil {
 		return tf;
 	}
 
+	private static final Map<String,Object> ourCachedEmbeddedTypefaces = new HashMap<String,Object>();
+	private static final Object NULL_OBJECT = new Object();
+
+	private static String alias(String family, boolean bold, boolean italic) {
+		final StringBuilder builder = new StringBuilder("/mnt/sdcard/");
+		builder.append(family);
+		if (bold) {
+			builder.append("-bold");
+		}
+		if (italic) {
+			builder.append("-italic");
+		}
+		return builder.append(".font").toString();
+	}
+
+	private static boolean copy(String from, String to) {
+		InputStream is = null;
+		OutputStream os = null;
+		try {
+			is = ZLFile.createFileByPath(from).getInputStream();
+			os = new FileOutputStream(to);
+			final byte[] buffer = new byte[8192];
+			while (true) {
+				final int len = is.read(buffer);
+				if (len <= 0) {
+					break;
+				}
+				os.write(buffer, 0, len);
+			}
+			return true;
+		} catch (IOException e) {
+			return false;
+		} finally {
+			try {
+				os.close();
+			} catch (Throwable t) {
+				// ignore
+			}
+			try {
+				is.close();
+			} catch (Throwable t) {
+				// ignore
+			}
+		}
+	}
+
+	private static Typeface getOrCreateEmbeddedTypeface(FontEntry entry, boolean bold, boolean italic) {
+		final String fileName = entry.fileName(bold, italic);
+		if (fileName == null) {
+			return null;
+		}
+		final String realFileName = alias(entry.Family, bold, italic);
+		Object cached = ourCachedEmbeddedTypefaces.get(realFileName);
+		if (cached == null) {
+			if (copy(fileName, realFileName)) {
+				try {
+					cached = Typeface.createFromFile(realFileName);
+				} catch (Throwable t) {
+					// ignore
+				}
+			}
+			ourCachedEmbeddedTypefaces.put(realFileName, cached != null ? cached : NULL_OBJECT);
+		}
+		return cached instanceof Typeface ? (Typeface)cached : null;
+	}
+
+	private static Typeface embeddedTypeface(FontEntry entry, boolean bold, boolean italic) {
+		{
+			final int index = (bold ? 1 : 0) + (italic ? 2 : 0);
+			final Typeface tf = getOrCreateEmbeddedTypeface(entry, bold, italic);
+			if (tf != null) {
+				return tf;
+			}
+		}
+		for (int i = 0; i < 4; ++i) {
+			final Typeface tf = getOrCreateEmbeddedTypeface(entry, (i & 1) == 1, (i & 2) == 2);
+			if (tf != null) {
+				return tf;
+			}
+		}
+		return null;
+	}
+
 	public static void clearFontCache() {
 		ourTypefaces.clear();
+		ourCachedEmbeddedTypefaces.clear();
 		ourFileSet = null;
 	}
 }
