@@ -82,6 +82,8 @@ public:
 
 	const shared_ptr<Book> book() const;
 
+	const FontManager &fontManager() const;
+
 	bool flush();
 
 private:
@@ -101,6 +103,7 @@ inline shared_ptr<ZLTextModel> BookModel::bookTextModel() const { return myBookT
 inline shared_ptr<ContentsTree> BookModel::contentsTree() const { return myContentsTree; }
 inline const std::map<std::string,shared_ptr<ZLTextModel> > &BookModel::footnotes() const { return myFootnotes; }
 inline const std::map<std::string,BookModel::Label> &BookModel::internalHyperlinks() const { return myInternalHyperlinks; }
+inline const FontManager &BookModel::fontManager() const { return myFontManager; }
 
 inline ContentsTree::ContentsTree() : myReference(-1) {}
 inline ContentsTree::ContentsTree(ContentsTree &parent, int reference) : myReference(reference) {

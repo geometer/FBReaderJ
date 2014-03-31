@@ -24,18 +24,21 @@ import java.util.Map;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.*;
 
+import org.geometerplus.zlibrary.text.fonts.FontManager;
+
 public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements ZLTextWritableModel {
 	private char[] myCurrentDataBlock;
 	private int myBlockOffset;
 
-	public ZLTextWritablePlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, Map<String,ZLImage> imageMap) {
+	public ZLTextWritablePlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, Map<String,ZLImage> imageMap, FontManager fontManager) {
 		super(
 			id, language,
 			new int[arraySize], new int[arraySize],
 			new int[arraySize], new int[arraySize],
 			new byte[arraySize],
 			new CachedCharStorage(dataBlockSize, directoryName, extension),
-			imageMap
+			imageMap,
+			fontManager
 		);
 	}
 
