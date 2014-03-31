@@ -20,20 +20,17 @@
 package org.geometerplus.zlibrary.text.fonts;
 
 public class FontEntry {
-	public final String Normal;
-	public final String Bold;
-	public final String Italic;
-	public final String BoldItalic;
+	final String[] Files = new String[4];
 
 	public FontEntry(String normal, String bold, String italic, String boldItalic) {
-		Normal = normal;
-		Bold = bold;
-		Italic = italic;
-		BoldItalic = boldItalic;
+		Files[0] = normal;
+		Files[1] = bold;
+		Files[2] = italic;
+		Files[3] = boldItalic;
 	}
 
 	@Override
 	public String toString() {
-		return "FontEntry[" + Normal + ";" + Bold + ";" + Italic + ";" + BoldItalic + "]";
+		return "FontEntry[" + Files[0] + ";" + Files[1] + ";" + Files[2] + ";" + Files[3] + "]";
 	}
 }
