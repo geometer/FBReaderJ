@@ -314,6 +314,18 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 	}
 
 	// TODO: synchronize FontManager
+	const std::vector<std::vector<std::string> > familyLists = model->fontManager().familyLists();
+	for (std::vector<std::vector<std::string> >::const_iterator it = familyLists.begin(); it != familyLists.end(); ++it) {
+		const std::vector<std::string> &lst = *it;
+		jobjectArray jList = env->NewObjectArray(lst.size(), AndroidUtil::Class_java_lang_String.j(), 0);
+		for (std::size_t i = 0; i < lst.size(); ++i) {
+			jstring jString = AndroidUtil::createJavaString(env, lst[i]);
+    	env->SetObjectArrayElement(jList, i, jString);
+			env->DeleteLocalRef(jString);
+		}
+		AndroidUtil::Method_NativeBookModel_registerFontFamilyList->call(javaModel, jList);
+		env->DeleteLocalRef(jList);
+	}
 
 	return 0;
 }

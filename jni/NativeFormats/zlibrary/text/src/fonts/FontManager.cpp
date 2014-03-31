@@ -56,3 +56,7 @@ int FontManager::familyListIndex(const std::vector<std::string> &familyList) {
 		return it - myFamilyLists.begin();
 	}
 }
+
+const std::vector<std::vector<std::string> > &FontManager::familyLists() const {
+	return myFamilyLists;
+}

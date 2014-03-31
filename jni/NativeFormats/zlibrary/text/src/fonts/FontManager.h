@@ -33,6 +33,7 @@ class FontManager {
 public:
 	std::string put(const std::string &family, shared_ptr<FontEntry> entry);
 	int familyListIndex(const std::vector<std::string> &familyList);
+	const std::vector<std::vector<std::string> > &familyLists() const;
 
 private:
 	std::map<std::string,shared_ptr<FontEntry> > myMap;

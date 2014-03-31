@@ -19,8 +19,7 @@
 
 package org.geometerplus.zlibrary.text.fonts;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FontManager {
 	private final ArrayList<List<String>> myFamilyLists = new ArrayList<List<String>>();
@@ -33,5 +32,9 @@ public class FontManager {
 		}
 		myFamilyLists.add(new ArrayList<String>(families));
 		return myFamilyLists.size() - 1;
+	}
+
+	public synchronized List<String> getFamilyList(int index) {
+		return index < myFamilyLists.size() ? myFamilyLists.get(index) : Collections.<String>emptyList();
 	}
 }
