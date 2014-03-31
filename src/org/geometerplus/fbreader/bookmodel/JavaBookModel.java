@@ -30,7 +30,7 @@ public class JavaBookModel extends BookModelImpl {
 	JavaBookModel(Book book) {
 		super(book);
 		myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
-		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
+		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap, FontManager);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class JavaBookModel extends BookModelImpl {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap);
+			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap, FontManager);
 			myFootnotes.put(id, model);
 		}
 		return model;

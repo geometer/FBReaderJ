@@ -59,7 +59,7 @@ public class NativeBookModel extends BookModelImpl {
 			id, language, paragraphsNumber,
 			entryIndices, entryOffsets,
 			paragraphLenghts, textSizes, paragraphKinds,
-			directoryName, fileExtension, blocksNumber, myImageMap
+			directoryName, fileExtension, blocksNumber, myImageMap, FontManager
 		);
 	}
 

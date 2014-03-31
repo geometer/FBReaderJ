@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,24 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FONTMANAGER_H__
-#define __FONTMANAGER_H__
+package org.geometerplus.zlibrary.text.fonts;
 
-#include <string>
-#include <map>
-#include <vector>
+import java.util.*;
 
-#include <shared_ptr.h>
+public class FontManager {
+	private final ArrayList<List<String>> myFamilyLists = new ArrayList<List<String>>();
 
-#include <FontMap.h>
+	public synchronized int index(List<String> families) {
+		for (int i = 0; i < myFamilyLists.size(); ++i) {
+			if (myFamilyLists.get(i).equals(families)) {
+				return i;
+			}
+		}
+		myFamilyLists.add(new ArrayList<String>(families));
+		return myFamilyLists.size() - 1;
+	}
 
-class FontManager {
-
-public:
-	std::string put(const std::string &family, shared_ptr<FontEntry> entry);
-	int familyListIndex(const std::vector<std::string> &familyList);
-	const std::vector<std::vector<std::string> > &familyLists() const;
-
-private:
-	std::map<std::string,shared_ptr<FontEntry> > myMap;
-	std::vector<std::vector<std::string> > myFamilyLists;
-};
-
-#endif /* __FONTMANAGER_H__ */
+	public synchronized List<String> getFamilyList(int index) {
+		return index < myFamilyLists.size() ? myFamilyLists.get(index) : Collections.<String>emptyList();
+	}
+}
