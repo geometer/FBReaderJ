@@ -312,6 +312,9 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 		}
 		env->DeleteLocalRef(javaFootnoteModel);
 	}
+
+	// TODO: synchronize FontManager
+
 	return 0;
 }
 
