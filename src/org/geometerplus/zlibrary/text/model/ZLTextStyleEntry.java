@@ -147,6 +147,10 @@ public abstract class ZLTextStyleEntry {
 		return myFontFamilies;
 	}
 
+	public final FontManager getFontManager() {
+		return myFontManager;
+	}
+
 	final void setFontModifiers(byte supported, byte values) {
 		myFeatureMask |= 1 << Feature.FONT_STYLE_MODIFIER;
 		mySupportedFontModifiers = supported;

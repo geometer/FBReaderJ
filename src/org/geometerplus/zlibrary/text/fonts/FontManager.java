@@ -23,6 +23,8 @@ import java.util.*;
 
 public class FontManager {
 	private final ArrayList<List<String>> myFamilyLists = new ArrayList<List<String>>();
+	public final Map<String,FontEntry> Entries =
+		Collections.synchronizedMap(new HashMap<String,FontEntry>());
 
 	public synchronized int index(List<String> families) {
 		for (int i = 0; i < myFamilyLists.size(); ++i) {
@@ -35,6 +37,7 @@ public class FontManager {
 	}
 
 	public synchronized List<String> getFamilyList(int index) {
-		return index < myFamilyLists.size() ? myFamilyLists.get(index) : Collections.<String>emptyList();
+		return index < myFamilyLists.size()
+			? myFamilyLists.get(index) : Collections.<String>emptyList();
 	}
 }
