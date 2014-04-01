@@ -548,6 +548,10 @@
 		</node>
 		<node name="css" value="CSS" toBeTranslated="true">
 			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Font size" toBeTranslated="true">
 				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>

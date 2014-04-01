@@ -559,6 +559,10 @@
 		</node>
 		<node name="css" value="CSS (Hojas de estilo en cascada)">
 			<node name="summary" value="Aplicar/ignorar valores definidos en CSS"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Tamaño de fuente">
 				<node name="summaryOn" value="Aplicar tamaño de fuente definido en las CSS"/>
 				<node name="summaryOff" value="Ignorar tamaño de fuente definido en las CSS"/>

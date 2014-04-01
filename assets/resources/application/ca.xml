@@ -560,6 +560,10 @@
 		</node>
 		<node name="css" value="CSS (Fulls d'estil)">
 			<node name="summary" value="Aplicar/ignorar els valors en CSS"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Mida de la font">
 				<node name="summaryOn" value="Aplica la mida de font definida en CSS"/>
 				<node name="summaryOff" value="Ignora la mida de font definida en CSS"/>

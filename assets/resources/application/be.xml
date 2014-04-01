@@ -560,6 +560,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Ужыць ці праіґнараваць значэньні з CSS"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Памер шрыфту">
 				<node name="summaryOn" value="Ужыць памер шрыфту з CSS"/>
 				<node name="summaryOff" value="Праіґнараваць памер шрыфту з CSS"/>

@@ -19,9 +19,9 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
-import org.geometerplus.zlibrary.text.view.ZLTextStyle;
-import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
+import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
+import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
 public class ZLTextFullyDecoratedStyle extends ZLTextPartiallyDecoratedStyle {
 	private final ZLTextFullStyleDecoration myFullDecoration;
