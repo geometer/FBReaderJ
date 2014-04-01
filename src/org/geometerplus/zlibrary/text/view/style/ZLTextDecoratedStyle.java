@@ -19,8 +19,8 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
-
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
@@ -28,7 +28,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	// fields to be cached
 	protected final ZLTextBaseStyle BaseStyle;
 
-	private String myFontFamily;
+	private FontEntry myFontEntry;
 	private boolean myIsItalic;
 	private boolean myIsBold;
 	private boolean myIsUnderline;
@@ -48,7 +48,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	}
 
 	private void initCache() {
-		myFontFamily = getFontFamilyInternal();
+		myFontEntry = getFontFamilyInternal();
 		myIsItalic = isItalicInternal();
 		myIsBold = isBoldInternal();
 		myIsUnderline = isUnderlineInternal();
@@ -64,13 +64,13 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	}
 
 	@Override
-	public final String getFontFamily() {
+	public final FontEntry getFontFamily() {
 		if (myIsNotCached) {
 			initCache();
 		}
-		return myFontFamily;
+		return myFontEntry;
 	}
-	protected abstract String getFontFamilyInternal();
+	protected abstract FontEntry getFontFamilyInternal();
 
 	@Override
 	public final int getFontSize(ZLTextMetrics metrics) {

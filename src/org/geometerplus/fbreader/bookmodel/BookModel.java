@@ -22,9 +22,9 @@ package org.geometerplus.fbreader.bookmodel;
 import java.util.Arrays;
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
+import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.text.model.*;
-import org.geometerplus.zlibrary.text.fonts.FontEntry;
-import org.geometerplus.zlibrary.text.fonts.FontManager;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.formats.FormatPlugin;

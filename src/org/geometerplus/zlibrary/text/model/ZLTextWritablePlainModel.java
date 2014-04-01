@@ -21,10 +21,9 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.Map;
 
+import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.*;
-
-import org.geometerplus.zlibrary.text.fonts.FontManager;
 
 public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements ZLTextWritableModel {
 	private char[] myCurrentDataBlock;
