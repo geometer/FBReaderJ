@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.core.fonts;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
 public final class FontEntry {
 	private static Map<String,FontEntry> ourSystemEntries = new HashMap<String,FontEntry>();
 
@@ -82,9 +84,21 @@ public final class FontEntry {
 			return false;
 		}
 		final FontEntry entry = (FontEntry)other;
-		return
-			Family.equals(entry.Family) &&
-			(myFiles == null ? entry.myFiles == null : myFiles.equals(entry.myFiles));
+		if (!Family.equals(entry.Family)) {
+			return false;
+		}
+		if (myFiles == null) {
+			return entry.myFiles == null;
+		}
+		if (entry.myFiles == null || entry.myFiles.length != myFiles.length) {
+			return false;
+		}
+		for (int i = 0; i < myFiles.length; ++i) {
+			if (!MiscUtil.equals(myFiles[i], entry.myFiles[i])) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

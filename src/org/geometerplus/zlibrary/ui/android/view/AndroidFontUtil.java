@@ -194,7 +194,7 @@ public final class AndroidFontUtil {
 		return tf;
 	}
 
-	private static final Map<String,Object> ourCachedEmbeddedTypefaces = new HashMap<String,Object>();
+	private static final Map<FontEntry,Object> ourCachedEmbeddedTypefaces = new HashMap<FontEntry,Object>();
 	private static final Object NULL_OBJECT = new Object();
 
 	private static String alias(String family, boolean bold, boolean italic) {
@@ -241,21 +241,20 @@ public final class AndroidFontUtil {
 	}
 
 	private static Typeface getOrCreateEmbeddedTypeface(FontEntry entry, boolean bold, boolean italic) {
-		final String fileName = entry.fileName(bold, italic);
-		if (fileName == null) {
-			return null;
-		}
-		final String realFileName = alias(entry.Family, bold, italic);
-		Object cached = ourCachedEmbeddedTypefaces.get(realFileName);
+		Object cached = ourCachedEmbeddedTypefaces.get(entry);
 		if (cached == null) {
-			if (copy(fileName, realFileName)) {
-				try {
-					cached = Typeface.createFromFile(realFileName);
-				} catch (Throwable t) {
-					// ignore
+			final String fileName = entry.fileName(bold, italic);
+			if (fileName != null) {
+				final String realFileName = alias(entry.Family, bold, italic);
+				if (copy(fileName, realFileName)) {
+					try {
+						cached = Typeface.createFromFile(realFileName);
+					} catch (Throwable t) {
+						// ignore
+					}
 				}
 			}
-			ourCachedEmbeddedTypefaces.put(realFileName, cached != null ? cached : NULL_OBJECT);
+			ourCachedEmbeddedTypefaces.put(entry, cached != null ? cached : NULL_OBJECT);
 		}
 		return cached instanceof Typeface ? (Typeface)cached : null;
 	}
@@ -279,7 +278,6 @@ public final class AndroidFontUtil {
 
 	public static void clearFontCache() {
 		ourTypefaces.clear();
-		ourCachedEmbeddedTypefaces.clear();
 		ourFileSet = null;
 	}
 }
