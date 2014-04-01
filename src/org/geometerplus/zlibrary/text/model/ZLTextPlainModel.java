@@ -21,9 +21,9 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.*;
-import org.geometerplus.zlibrary.text.fonts.FontManager;
 
 public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	private final String myId;

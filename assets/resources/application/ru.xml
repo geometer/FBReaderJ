@@ -559,6 +559,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Использовать ли форматирование CSS"/>
+			<node name="fontFamily" value="Названия шрифтов">
+				<node name="summaryOn" value="Использовать шрифты, указанные в CSS"/>
+				<node name="summaryOff" value="Игнорировать указания шрифтов в CSS"/>
+			</node>
 			<node name="fontSize" value="Размер шрифта">
 				<node name="summaryOn" value="Использовать размер шрифта, заданный в CSS"/>
 				<node name="summaryOff" value="Игнорировать размер шрифта, заданный в CSS"/>

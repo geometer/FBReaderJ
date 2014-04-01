@@ -103,6 +103,10 @@ public abstract class Paths {
 		return mainBookDirectory() + "/.FBReader";
 	}
 
+	public static String tempDirectory() {
+		return mainBookDirectory() + "/.FBReader";
+	}
+
 	public static String networkCacheDirectory() {
 		return cacheDirectory() + "/cache";
 	}

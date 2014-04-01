@@ -19,8 +19,8 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
-
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
@@ -33,9 +33,10 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
-	protected String getFontFamilyInternal() {
-		String decoratedValue = myDecoration.FontFamilyOption.getValue();
-		return (decoratedValue.length() != 0) ? decoratedValue : Parent.getFontFamily();
+	protected FontEntry getFontFamilyInternal() {
+		final String decoratedValue = myDecoration.FontFamilyOption.getValue();
+		return decoratedValue.length() != 0
+			? FontEntry.systemEntry(decoratedValue) : Parent.getFontFamily();
 	}
 
 	@Override
