@@ -554,6 +554,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="CSSetan zehaztutako balioak aplikatu/baztertu"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Letra-tipoaren tamaina">
 				<node name="summaryOn" value="Aplikatu CSSetan zehaztutako letra-tipoaren tamaina"/>
 				<node name="summaryOff" value="Baztertu CSSetan zehaztutako letra-tipoaren tamaina"/>
