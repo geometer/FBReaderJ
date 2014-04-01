@@ -21,9 +21,8 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.Map;
 
+import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-
-import org.geometerplus.zlibrary.text.fonts.FontManager;
 
 public class ZLTextNativeModel extends ZLTextPlainModel {
 	public ZLTextNativeModel(
