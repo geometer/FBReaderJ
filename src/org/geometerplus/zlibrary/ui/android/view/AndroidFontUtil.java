@@ -167,7 +167,6 @@ public final class AndroidFontUtil {
 		if (entry.isSystem()) {
 			return systemTypeface(entry.Family, bold, italic);
 		} else {
-			// TODO: implement
 			return embeddedTypeface(entry, bold, italic);
 		}
 	}
@@ -194,7 +193,38 @@ public final class AndroidFontUtil {
 		return tf;
 	}
 
-	private static final Map<FontEntry,Object> ourCachedEmbeddedTypefaces = new HashMap<FontEntry,Object>();
+	private static final class Spec {
+		FontEntry Entry;
+		boolean Bold;
+		boolean Italic;
+
+		Spec(FontEntry entry, boolean bold, boolean italic) {
+			Entry = entry;
+			Bold = bold;
+			Italic = italic;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (this == other) {
+				return true;
+			}
+
+			if (!(other instanceof Spec)) {
+				return false;
+			}
+
+			final Spec spec = (Spec)other;
+			return Bold == spec.Bold && Italic == spec.Italic && Entry.equals(spec.Entry);
+		}
+
+		@Override
+		public int hashCode() {
+			return 4 * Entry.hashCode() + (Bold ? 2 : 0) + (Italic ? 1 : 0);
+		}
+	}
+
+	private static final Map<Spec,Object> ourCachedEmbeddedTypefaces = new HashMap<Spec,Object>();
 	private static final Object NULL_OBJECT = new Object();
 
 	private static String alias(String family, boolean bold, boolean italic) {
@@ -241,7 +271,8 @@ public final class AndroidFontUtil {
 	}
 
 	private static Typeface getOrCreateEmbeddedTypeface(FontEntry entry, boolean bold, boolean italic) {
-		Object cached = ourCachedEmbeddedTypefaces.get(entry);
+		final Spec spec = new Spec(entry, bold, italic);
+		Object cached = ourCachedEmbeddedTypefaces.get(spec);
 		if (cached == null) {
 			final String fileName = entry.fileName(bold, italic);
 			if (fileName != null) {
@@ -254,7 +285,7 @@ public final class AndroidFontUtil {
 					}
 				}
 			}
-			ourCachedEmbeddedTypefaces.put(entry, cached != null ? cached : NULL_OBJECT);
+			ourCachedEmbeddedTypefaces.put(spec, cached != null ? cached : NULL_OBJECT);
 		}
 		return cached instanceof Typeface ? (Typeface)cached : null;
 	}
