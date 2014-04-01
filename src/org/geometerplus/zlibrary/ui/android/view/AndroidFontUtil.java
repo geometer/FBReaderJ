@@ -228,7 +228,7 @@ public final class AndroidFontUtil {
 	private static final Object NULL_OBJECT = new Object();
 
 	private static String alias(String family, boolean bold, boolean italic) {
-		final StringBuilder builder = new StringBuilder("/mnt/sdcard/");
+		final StringBuilder builder = new StringBuilder(Paths.tempDirectory());
 		builder.append(family);
 		if (bold) {
 			builder.append("-bold");
