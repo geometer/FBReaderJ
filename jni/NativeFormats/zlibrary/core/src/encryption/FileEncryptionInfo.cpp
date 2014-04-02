@@ -23,6 +23,7 @@
 
 const std::string EncryptionMethod::NONE = "none";
 const std::string EncryptionMethod::UNSUPPORTED = "unsupported";
+const std::string EncryptionMethod::EMBEDDING = "embedding";
 const std::string EncryptionMethod::MARLIN = "marlin";
 
 FileEncryptionInfo::FileEncryptionInfo(const std::string &uri, const std::string &method, const std::string &algorithm, const std::string &contentId) : Uri(uri), Method(method), Algorithm(algorithm), ContentId(contentId) {
