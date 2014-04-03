@@ -64,6 +64,7 @@ public class PluginCollection {
 		addPlugin(new OEBPlugin());
 		addPlugin(new FB2ZipExternalPlugin());
 		addPlugin(new PdfPluginFormatPlugin());
+		addPlugin(new DjvuPluginFormatPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
