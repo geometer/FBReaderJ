@@ -23,6 +23,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public abstract class MenuNode implements Cloneable, Serializable {
+	public static final long serialVersionUID = 42424242L;
+
 	public final String Code;
 	public String OptionalTitle;
 
