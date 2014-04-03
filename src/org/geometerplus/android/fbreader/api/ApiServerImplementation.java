@@ -206,7 +206,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 						((ApiObject.Integer)parameters[2]).Value,
 						((ApiObject.Integer)parameters[3]).Value,
 						((ApiObject.Integer)parameters[4]).Value,
-						((ApiObject.Boolean)parameters[5]).Value
+						((ApiObject.String)parameters[5]).Value
 					));
 				case SET_TAPZONE_ACTION:
 					setTapZoneAction(
@@ -592,10 +592,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		);
 	}
 
-	public String getTapActionByCoordinates(String name, int x, int y, int width, int height, boolean singleTap) {
-		return TapZoneMap.zoneMap(name).getActionByCoordinates(
-			x, y, width, height, singleTap ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.doubleTap
-		);
+	public String getTapActionByCoordinates(String name, int x, int y, int width, int height, String tap) {
+		TapZoneMap.Tap id;
+		try {
+			id = TapZoneMap.Tap.valueOf(tap);
+		} catch (Exception e) {
+			id = TapZoneMap.Tap.singleTap;
+		}
+		return TapZoneMap.zoneMap(name).getActionByCoordinates(x, y, width, height, id);
 	}
 
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
