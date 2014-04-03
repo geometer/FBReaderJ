@@ -71,7 +71,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 	private boolean myDontReloadBook;
 	
 	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
-	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
+	private List<ServiceConnection> myServiceConnections = new LinkedList<ServiceConnection>();
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
@@ -92,7 +92,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		if (MetaInfoUtil.PMIReader == null) {
 			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
 			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-				ServiceConnection servConn = new ServiceConnection() {
+				final ServiceConnection servConn = new ServiceConnection() {
 					public void onServiceConnected(ComponentName className, IBinder binder) {
 						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
 						setupCover(myBook);
@@ -102,7 +102,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 						myServices.remove(pack);
 					}
 				};
-				myServConns.put(pack, servConn);
+				myServiceConnections.add(servConn);
 				Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
 				i.setPackage(pack);
 				bindService(i, servConn, Context.BIND_AUTO_CREATE);
@@ -177,11 +177,8 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		myCollection.removeListener(this);
 		myCollection.unbind();
 
-		for (String pack : myServConns.keySet()) {
-			if (myServConns.get(pack) != null) {
-				unbindService(myServConns.get(pack));
-				myServConns.remove(pack);
-			}
+		for (ServiceConnection connection : myServiceConnections) {
+			unbindService(connection);
 		}
 
 		super.onDestroy();
