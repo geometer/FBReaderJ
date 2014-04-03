@@ -469,14 +469,14 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		});
 	}
 
-	public String getTapActionByCoordinates(String name, int x, int y, int width, int height, boolean singleTap) throws ApiException {
+	public String getTapActionByCoordinates(String name, int x, int y, int width, int height, String tap) throws ApiException {
 		return requestString(GET_TAP_ACTION_BY_COORDINATES, new ApiObject[] {
 			ApiObject.envelope(name),
 			ApiObject.envelope(x),
 			ApiObject.envelope(y),
 			ApiObject.envelope(width),
 			ApiObject.envelope(height),
-			ApiObject.envelope(singleTap)
+			ApiObject.envelope(tap)
 		});
 	}
 
