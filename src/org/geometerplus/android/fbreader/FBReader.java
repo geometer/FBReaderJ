@@ -151,7 +151,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 
 		public void openFile(String appData, Book book, Bookmark bookmark) {
-			Intent launchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
+			final Intent launchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
 			launchIntent.setPackage(appData);
 			//			Uri uri = Uri.parse("file://" + book.File.getPath());
 			//			launchIntent.setData(uri);
@@ -160,7 +160,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			try {
 				startActivity(launchIntent);
-				overridePendingTransition(0,0);
+				overridePendingTransition(0, 0);
 			} catch (ActivityNotFoundException e) {
 				showErrorDialog("noPlugin", appData);
 			}
