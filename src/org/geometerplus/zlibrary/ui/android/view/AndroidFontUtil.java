@@ -229,6 +229,7 @@ public final class AndroidFontUtil {
 
 	private static String alias(String family, boolean bold, boolean italic) {
 		final StringBuilder builder = new StringBuilder(Paths.tempDirectory());
+		builder.append("/");
 		builder.append(family);
 		if (bold) {
 			builder.append("-bold");
@@ -283,6 +284,7 @@ public final class AndroidFontUtil {
 					} catch (Throwable t) {
 						// ignore
 					}
+					System.err.println("deleting " + realFileName + ": " + new File(realFileName).delete());
 				}
 			}
 			ourCachedEmbeddedTypefaces.put(spec, cached != null ? cached : NULL_OBJECT);
