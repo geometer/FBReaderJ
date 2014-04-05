@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.List;
+
 import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -213,8 +215,15 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	protected void setFontInternal(FontEntry entry, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
-		myTextPaint.setTypeface(AndroidFontUtil.typeface(entry, bold, italic));
+	protected void setFontInternal(List<FontEntry> entries, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
+		Typeface typeface = null;
+		for (FontEntry e : entries) {
+			typeface = AndroidFontUtil.typeface(e, bold, italic);
+			if (typeface != null) {
+				break;
+			}
+		}
+		myTextPaint.setTypeface(typeface);
 		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
 		myTextPaint.setStrikeThruText(strikeThrought);
