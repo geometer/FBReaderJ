@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
@@ -35,19 +36,31 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	}
 
 	@Override
-	protected FontEntry getFontFamilyInternal() {
+	protected List<FontEntry> getFontEntriesInternal() {
+		final List<FontEntry> parentEntries = Parent.getFontEntries();
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontFamilyOption.getValue()) {
-			return Parent.getFontFamily();
+			return parentEntries;
 		}
 
-		if (myEntry.isFeatureSupported(FONT_FAMILY)) {
-			// TODO: support all families
-			final List<FontEntry> entries = myEntry.getFontEntries();
-			if (!entries.isEmpty()) {
-				return entries.get(0);
-			}
+		if (!myEntry.isFeatureSupported(FONT_FAMILY)) {
+			return parentEntries;
 		}
-		return Parent.getFontFamily();
+
+		final List<FontEntry> entries = myEntry.getFontEntries();
+		final int lSize = entries.size();
+		if (lSize == 0) {
+			return parentEntries;
+		}
+
+		final int pSize = parentEntries.size();
+		if (pSize > lSize && entries.equals(parentEntries.subList(pSize - lSize, pSize - 1))) {
+			return parentEntries;
+		}
+
+		final List<FontEntry> allEntries = new ArrayList<FontEntry>(pSize + lSize);
+		allEntries.addAll(entries);
+		allEntries.addAll(parentEntries);
+		return allEntries;
 	}
 
 	@Override
