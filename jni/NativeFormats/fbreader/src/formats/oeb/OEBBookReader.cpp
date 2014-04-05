@@ -239,7 +239,11 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 			myModelReader.insertEndOfSectionParagraph();
 		}
 		//ZLLogger::Instance().println("oeb", "start " + xhtmlFile.path());
-		xhtmlReader.readFile(xhtmlFile, *it);
+		if (!xhtmlReader.readFile(xhtmlFile, *it)) {
+			if (file.exists() && !myEncryptionMap.isNull()) {
+				myModelReader.insertEncryptedSectionParagraph();
+			}
+		}
 		//ZLLogger::Instance().println("oeb", "end " + xhtmlFile.path());
 		//std::string debug = "para count = ";
 		//ZLStringUtil::appendNumber(debug, myModelReader.model().bookTextModel()->paragraphsNumber());
