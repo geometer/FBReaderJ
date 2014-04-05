@@ -19,6 +19,9 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
@@ -65,9 +68,15 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		LineSpaceOption = new ZLIntegerRangeOption(GROUP, prefix + ":lineSpacing", 5, 20, 12);
 	}
 
+	private String myFontFamily;
+	private List<FontEntry> myFontEntries;
 	@Override
-	public FontEntry getFontFamily() {
-		return FontEntry.systemEntry(FontFamilyOption.getValue());
+	public List<FontEntry> getFontEntries() {
+		final String family = FontFamilyOption.getValue();
+		if (myFontEntries == null || !family.equals(myFontFamily)) {
+			myFontEntries = Collections.singletonList(FontEntry.systemEntry(family));
+		}
+		return myFontEntries;
 	}
 
 	public int getFontSize() {
