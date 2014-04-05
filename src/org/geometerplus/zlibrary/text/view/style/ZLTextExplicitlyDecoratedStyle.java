@@ -53,7 +53,7 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		}
 
 		final int pSize = parentEntries.size();
-		if (pSize > lSize && entries.equals(parentEntries.subList(pSize - lSize, pSize - 1))) {
+		if (pSize > lSize && entries.equals(parentEntries.subList(0, lSize))) {
 			return parentEntries;
 		}
 
