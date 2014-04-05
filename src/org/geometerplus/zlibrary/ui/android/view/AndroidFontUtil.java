@@ -284,7 +284,6 @@ public final class AndroidFontUtil {
 					} catch (Throwable t) {
 						// ignore
 					}
-					System.err.println("deleting " + realFileName + ": " + new File(realFileName).delete());
 				}
 			}
 			ourCachedEmbeddedTypefaces.put(spec, cached != null ? cached : NULL_OBJECT);
