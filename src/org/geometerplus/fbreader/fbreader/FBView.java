@@ -493,6 +493,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
+		private List<FontEntry> myFontEntry;
 		public synchronized void paint(ZLPaintContext context) {
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {
@@ -517,8 +518,12 @@ public final class FBView extends ZLTextView {
 			final int height = getHeight();
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
+			final String family = footerOptions.Font.getValue();
+			if (myFontEntry == null || !family.equals(myFontEntry.get(0).Family)) {
+				myFontEntry = Collections.singletonList(FontEntry.systemEntry(family));
+			}
 			context.setFont(
-				FontEntry.systemEntry(footerOptions.Font.getValue()),
+				myFontEntry,
 				height <= 10 ? height + 3 : height + 1,
 				height > 10, false, false, false
 			);
