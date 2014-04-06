@@ -299,9 +299,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Répertoires">
 			<node name="summary" value="Emplacements des livres et des polices"/>
-			<node name="books" value="Répertoire des livres"/>
-			<node name="fonts" value="Répertoire des polices"/>
-			<node name="wallpapers" value="Répertoire des fonds d'écran"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
