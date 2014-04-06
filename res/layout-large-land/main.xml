@@ -14,6 +14,19 @@
 		android:scrollbarAlwaysDrawVerticalTrack="true"
 		android:fadeScrollbars="false"
 	/>
+	<TextView
+		android:id="@+id/hint_view"
+		android:visibility="gone"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:focusable="false"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor="#FFFFFFFF"
+		android:background="#AA666666"
+		android:gravity="center|center_vertical"
+		android:paddingLeft="30dp"
+		android:paddingRight="30dp"
+	/>
 	<LinearLayout
 		android:id="@+id/yota_main_hidden_view"
 		android:visibility="gone"
