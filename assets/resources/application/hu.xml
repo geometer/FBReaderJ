@@ -860,6 +860,10 @@
 			<node name="dontShowAgain" value="Ne mutassa többet"/>
 			<node name="more" value="Következő"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to view controls permanently during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="warningMessage">
 		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
