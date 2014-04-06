@@ -306,9 +306,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Mappen">
 			<node name="summary" value="Waar zijn de bestanden opgeslagen"/>
-			<node name="books" value="Map met boeken"/>
-			<node name="fonts" value="Map met lettertypes"/>
-			<node name="wallpapers" value="Map met achtergronden"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

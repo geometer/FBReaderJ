@@ -306,9 +306,6 @@
 	<node name="Preferences">
 		<node name="directories" value="پوشه ها">
 			<node name="summary" value="پوشه های جستجوی فایل ها"/>
-			<node name="books" value="پوشه کتابها"/>
-			<node name="fonts" value="پوشه فونتها"/>
-			<node name="wallpapers" value="پوشه تصاویر"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
