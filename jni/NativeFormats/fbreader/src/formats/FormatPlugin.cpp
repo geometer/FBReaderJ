@@ -99,8 +99,8 @@ const std::string &FormatPlugin::tryOpen(const ZLFile&) const {
 	return EMPTY;
 }
 
-std::string FormatPlugin::readEncryptionMethod(Book &book) const {
-	return EncryptionMethod::NONE;
+std::vector<shared_ptr<FileEncryptionInfo> > FormatPlugin::readEncryptionInfos(Book &book) const {
+	return std::vector<shared_ptr<FileEncryptionInfo> >();
 }
 
 shared_ptr<const ZLImage> FormatPlugin::coverImage(const ZLFile &file) const {

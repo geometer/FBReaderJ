@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.*;
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
@@ -282,9 +283,11 @@ public final class FBReaderApp extends ZLApplication {
 		getViewWidget().repaint();
 
 		try {
-			final String method = book.getPlugin().readEncryptionMethod(book);
-			if (!EncryptionMethod.NONE.equals(method)) {
-				showErrorMessage("unsupportedEncryptionMethod", book.File.getPath());
+			for (FileEncryptionInfo info : book.getPlugin().readEncryptionInfos(book)) {
+				if (!EncryptionMethod.NONE.equals(info.Method)) {
+					showErrorMessage("unsupportedEncryptionMethod", book.File.getPath());
+					break;
+				}
 			}
 		} catch (BookReadingException e) {
 			// ignore

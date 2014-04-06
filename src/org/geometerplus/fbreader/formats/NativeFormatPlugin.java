@@ -19,6 +19,9 @@
 
 package org.geometerplus.fbreader.formats;
 
+import java.util.*;
+
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -61,7 +64,14 @@ public class NativeFormatPlugin extends FormatPlugin {
 	private native int readMetaInfoNative(Book book);
 
 	@Override
-	public native String readEncryptionMethod(Book book);
+	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
+		final FileEncryptionInfo[] infos = readEncryptionInfosNative(book);
+		return infos != null
+			? Arrays.<FileEncryptionInfo>asList(infos)
+			: Collections.<FileEncryptionInfo>emptyList();
+	}
+
+	private native FileEncryptionInfo[] readEncryptionInfosNative(Book book);
 
 	@Override
 	synchronized public void readUids(Book book) throws BookReadingException {
