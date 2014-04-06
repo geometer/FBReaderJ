@@ -311,9 +311,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Պանակներ">
 			<node name="summary" value="Նիշքերի պանակները"/>
-			<node name="books" value="Գրքեր"/>
-			<node name="fonts" value="Տառատեսակներ"/>
-			<node name="wallpapers" value="Պաստառներ"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

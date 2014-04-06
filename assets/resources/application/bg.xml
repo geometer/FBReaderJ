@@ -311,9 +311,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталози">
 			<node name="summary" value="Търси в каталозите"/>
-			<node name="books" value="Каталог с книги"/>
-			<node name="fonts" value="Каталог с шрифтове"/>
-			<node name="wallpapers" value="Каталог с тапети"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

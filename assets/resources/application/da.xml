@@ -306,9 +306,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Biblioteker">
 			<node name="summary" value="Biblioteker for filsøgning"/>
-			<node name="books" value="Bogbibliotek"/>
-			<node name="fonts" value="Skrifttype-bibliotek"/>
-			<node name="wallpapers" value="Tapet-bibliotek"/>
 			<node name="bookPath" value="Bogbiblioteker"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Skrifttype-biblioteker"/>

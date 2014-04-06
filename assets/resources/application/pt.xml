@@ -308,9 +308,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Diretórios">
 			<node name="summary" value="Diretórios para procurar por arquivos"/>
-			<node name="books" value="Diretório de livros"/>
-			<node name="fonts" value="Diretórios de tipos de letras"/>
-			<node name="wallpapers" value="Diretórios de papéis de parede"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

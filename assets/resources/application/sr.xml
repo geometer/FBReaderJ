@@ -306,9 +306,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Фасцикле">
 			<node name="summary" value="Фасцикле за тражење датотека."/>
-			<node name="books" value="Фасцикла са књигама"/>
-			<node name="fonts" value="Фасцикла са фонтовима"/>
-			<node name="wallpapers" value="Фасцикла са позадинама"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

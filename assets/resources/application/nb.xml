@@ -306,9 +306,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Kataloger">
 			<node name="summary" value="Kataloger å se etter filer i"/>
-			<node name="books" value="Bokkatalog"/>
-			<node name="fonts" value="Skrifttypekatalog"/>
-			<node name="wallpapers" value="Bakgrunnskatalog"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

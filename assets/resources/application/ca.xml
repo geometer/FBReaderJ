@@ -312,9 +312,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Directoris">
 			<node name="summary" value="Directoris per a cercar fitxers"/>
-			<node name="books" value="Directori de llibres"/>
-			<node name="fonts" value="Directori de tipus de lletra"/>
-			<node name="wallpapers" value="Directori de fons de pantalla"/>
 			<node name="bookPath" value="Directoris de llibres"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Directoris de fonts"/>

@@ -312,9 +312,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталёґі">
 			<node name="summary" value="Каталёґі для пошуку файлаў"/>
-			<node name="books" value="Каталёґ кніг"/>
-			<node name="fonts" value="Каталёґ шрыфтоў"/>
-			<node name="wallpapers" value="Каталёґ шпалераў"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

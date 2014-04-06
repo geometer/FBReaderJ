@@ -311,9 +311,6 @@
 	<node name="Preferences">
 		<node name="directories" value="კატალოგები">
 			<node name="summary" value="სად მოიძებნოს ფაილები"/>
-			<node name="books" value="კატალოგი წიგნებით"/>
-			<node name="fonts" value="კატალოგი შრიფტებით"/>
-			<node name="wallpapers" value="კატალოგი ფონის სურათებით"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

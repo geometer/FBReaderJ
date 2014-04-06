@@ -296,9 +296,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Cartafoles">
 			<node name="summary" value="Cartafoles para buscar ficheiros"/>
-			<node name="books" value="Cartafol de libros"/>
-			<node name="fonts" value="Cartafol de tipos de letra"/>
-			<node name="wallpapers" value="Cartafol de fondos de pantalla"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>

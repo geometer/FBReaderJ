@@ -296,9 +296,6 @@
 	<node name="Preferences">
 		<node name="directories" value="文件夹设定">
 			<node name="summary" value="相关文件夹位置设定"/>
-			<node name="books" value="书文存放位置"/>
-			<node name="fonts" value="字体存放位置"/>
-			<node name="wallpapers" value="墙纸存放位置"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
