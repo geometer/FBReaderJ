@@ -17,6 +17,8 @@
  * 02110-1301, USA.
  */
 
+#include <algorithm>
+
 #include <ZLDir.h>
 #include <ZLXMLNamespace.h>
 #include <ZLXMLReader.h>
@@ -43,7 +45,7 @@ class EpubEncryptionFileReader : public ZLXMLReader {
 
 public:
 	EpubEncryptionFileReader();
-
+	void addKnownMethod(const std::string &method);
 	const std::vector<shared_ptr<FileEncryptionInfo> > &infos() const;
 
 private:
@@ -64,6 +66,7 @@ private:
 	};
 
 private:
+	std::vector<std::string> myKnownMethods;
 	std::vector<shared_ptr<FileEncryptionInfo> > myInfos;
 
 	State myState;
@@ -72,38 +75,31 @@ private:
 	std::string myUri;
 };
 
-std::string OEBEncryptionReader::readEncryptionMethod(const ZLFile &epubFile) {
+static const std::string EMBEDDING_ALGORITHM = "http://www.idpf.org/2008/embedding";
+
+std::vector<shared_ptr<FileEncryptionInfo> > OEBEncryptionReader::readEncryptionInfos(const ZLFile &epubFile) {
 	shared_ptr<ZLDir> epubDir = epubFile.directory();
 	if (epubDir.isNull()) {
-		return EncryptionMethod::UNSUPPORTED;
+		return std::vector<shared_ptr<FileEncryptionInfo> >();
 	}
 
 	const ZLFile rightsFile(epubDir->itemPath("META-INF/rights.xml"));
 	const ZLFile encryptionFile(epubDir->itemPath("META-INF/encryption.xml"));
-	if (!rightsFile.exists() && !encryptionFile.exists()) {
-		return EncryptionMethod::NONE;
-	}
-	if (!rightsFile.exists() || !encryptionFile.exists()) {
-		return EncryptionMethod::UNSUPPORTED;
+
+	if (!encryptionFile.exists()) {
+		return std::vector<shared_ptr<FileEncryptionInfo> >();
 	}
 
-	EpubRightsFileReader reader;
-	reader.readDocument(rightsFile);
-	return reader.method();
-}
+	EpubEncryptionFileReader reader = EpubEncryptionFileReader();
 
-std::vector<shared_ptr<FileEncryptionInfo> > OEBEncryptionReader::readEncryptionInfos(const ZLFile &epubFile) {
-	const std::string method = readEncryptionMethod(epubFile);
-	if (method == EncryptionMethod::MARLIN) {
-		shared_ptr<ZLDir> epubDir = epubFile.directory();
-		if (!epubDir.isNull()) {
-			const ZLFile encryptionFile(epubDir->itemPath("META-INF/encryption.xml"));
-			EpubEncryptionFileReader reader = EpubEncryptionFileReader();
-			reader.readDocument(encryptionFile);
-			return reader.infos();
-		}
+	if (rightsFile.exists()) {
+		EpubRightsFileReader rightsReader;
+		rightsReader.readDocument(rightsFile);
+		reader.addKnownMethod(rightsReader.method());
 	}
-	return std::vector<shared_ptr<FileEncryptionInfo> >();
+
+	reader.readDocument(encryptionFile);
+	return reader.infos();
 }
 
 EpubRightsFileReader::EpubRightsFileReader() : myMethod(EncryptionMethod::UNSUPPORTED) {
@@ -125,6 +121,10 @@ bool EpubRightsFileReader::processNamespaces() const {
 }
 
 EpubEncryptionFileReader::EpubEncryptionFileReader() : myState(READ_NONE) {
+}
+
+void EpubEncryptionFileReader::addKnownMethod(const std::string &method) {
+	myKnownMethods.push_back(method);
 }
 
 const std::vector<shared_ptr<FileEncryptionInfo> > &EpubEncryptionFileReader::infos() const {
@@ -203,7 +203,19 @@ void EpubEncryptionFileReader::endElementHandler(const char *tag) {
 			break;
 		case READ_ENCRYPTED_DATA:
 			if (testTag(ZLXMLNamespace::XMLEncryption, "EncryptedData", tag)) {
-				myInfos.push_back(new FileEncryptionInfo(myUri, EncryptionMethod::MARLIN, myAlgorithm, myKeyName));
+				if (EMBEDDING_ALGORITHM == myAlgorithm) {
+					myInfos.push_back(new FileEncryptionInfo(
+						myUri, EncryptionMethod::EMBEDDING, myAlgorithm, std::string()
+					));
+				} else {
+					std::vector<std::string>::const_iterator it =
+						std::find(myKnownMethods.begin(), myKnownMethods.end(), EncryptionMethod::MARLIN);
+					if (it != myKnownMethods.end()) {
+						myInfos.push_back(new FileEncryptionInfo(
+							myUri, EncryptionMethod::MARLIN, myAlgorithm, myKeyName
+						));
+					}
+				}
 				myState = READ_ENCRYPTION;
 			}
 			break;

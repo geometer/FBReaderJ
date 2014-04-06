@@ -132,14 +132,27 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 }
 
 extern "C"
-JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readEncryptionMethod(JNIEnv* env, jobject thiz, jobject javaBook) {
+JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readEncryptionInfosNative(JNIEnv* env, jobject thiz, jobject javaBook) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
 	if (plugin.isNull()) {
-		return AndroidUtil::createJavaString(env, EncryptionMethod::UNSUPPORTED);
+		return 0;
 	}
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
-	return AndroidUtil::createJavaString(env, plugin->readEncryptionMethod(*book));
+	std::vector<shared_ptr<FileEncryptionInfo> > infos = plugin->readEncryptionInfos(*book);
+	if (infos.empty()) {
+		return 0;
+	}
+
+	jobjectArray jList = env->NewObjectArray(
+		infos.size(), AndroidUtil::Class_FileEncryptionInfo.j(), 0
+	);
+	for (std::size_t i = 0; i < infos.size(); ++i) {
+		jobject jInfo = AndroidUtil::createJavaEncryptionInfo(env, infos[i]);
+    env->SetObjectArrayElement(jList, i, jInfo);
+		env->DeleteLocalRef(jInfo);
+	}
+	return jList;
 }
 
 extern "C"
