@@ -21,7 +21,6 @@
 
 #include "FileEncryptionInfo.h"
 
-const std::string EncryptionMethod::NONE = "none";
 const std::string EncryptionMethod::UNSUPPORTED = "unsupported";
 const std::string EncryptionMethod::EMBEDDING = "embedding";
 const std::string EncryptionMethod::MARLIN = "marlin";
