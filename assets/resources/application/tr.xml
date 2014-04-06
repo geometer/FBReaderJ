@@ -306,9 +306,6 @@
 	<node name="Preferences">
 		<node name="directories" value="Dizinler">
 			<node name="summary" value="Taranacak dizinler"/>
-			<node name="books" value="Kitap dizini"/>
-			<node name="fonts" value="Font dizini"/>
-			<node name="wallpapers" value="Duvarkağıdı dizini"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
 			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
