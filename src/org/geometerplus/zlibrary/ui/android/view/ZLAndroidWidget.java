@@ -24,12 +24,19 @@ import android.content.res.Resources;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.*;
+import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
+import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+
+import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
@@ -109,6 +116,57 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		} else {
 			onDrawStatic(canvas);
 			ZLApplication.Instance().onRepaintFinished();
+		}
+
+		showHint(canvas);
+	}
+
+	private void showHint(Canvas canvas) {
+		String key = null;
+
+		final ZLAndroidLibrary library = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		final ZLIntegerOption stageOption = library.ScreenHintStageOption;
+		if (!library.OldShowActionBarOption.getValue()) {
+			stageOption.setValue(3);
+		}
+		final FBReader fbReader = (FBReader)getContext();
+		if (!fbReader.barsAreShown()) {
+			if (stageOption.getValue() == 0) {
+				stageOption.setValue(1);
+			}
+			if (stageOption.getValue() == 1) {
+				key = "message1";
+			} else {
+				stageOption.setValue(3);
+			}
+		} else {
+			if (stageOption.getValue() == 1) {
+				stageOption.setValue(2);
+			}
+			if (stageOption.getValue() == 2) {
+				key = "message2";
+			}
+		}
+
+		final TextView hintView = (TextView)fbReader.findViewById(R.id.hint_view);
+		if (key != null) {
+			if (!new PageTurningOptions().Horizontal.getValue()) {
+				key = null;
+				stageOption.setValue(3);
+			}
+		}
+		if (key != null) {
+			final String text =
+				ZLResource.resource("dialog").getResource("screenHint").getResource(key).getValue();
+			final int w = getWidth();
+			final int h = getHeight();
+			final Paint paint = new Paint();
+			paint.setARGB(192, 51, 102, 153);
+			canvas.drawRect(w / 3, 0, w * 2 / 3, h, paint);
+			hintView.setVisibility(View.VISIBLE);
+			hintView.setText(text);
+		} else {
+			hintView.setVisibility(View.GONE);
 		}
 	}
 
