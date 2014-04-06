@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
-import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -60,11 +59,6 @@ public class OEBPlugin extends JavaFormatPlugin {
 	@Override
 	public void readMetaInfo(Book book) throws BookReadingException {
 		new OEBMetaInfoReader(book).readMetaInfo(getOpfFile(book.File));
-	}
-
-	@Override
-	public String readEncryptionMethod(Book book) {
-		return EncryptionMethod.NONE;
 	}
 
 	@Override
