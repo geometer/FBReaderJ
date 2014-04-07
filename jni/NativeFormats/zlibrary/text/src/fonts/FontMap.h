@@ -25,26 +25,38 @@
 
 #include <shared_ptr.h>
 
+#include <FileEncryptionInfo.h>
+
+class FileInfo {
+
+public:
+	FileInfo(const std::string &path, shared_ptr<FileEncryptionInfo> info);
+
+public:
+	const std::string Path;
+	shared_ptr<FileEncryptionInfo> EncryptionInfo;
+};
+
 class FontEntry {
 
 public:
-	void addFile(bool bold, bool italic, const std::string &filePath);
+	void addFile(bool bold, bool italic, const std::string &filePath, shared_ptr<FileEncryptionInfo> encryptionInfo);
 	void merge(const FontEntry &fontEntry);
 
 	bool operator == (const FontEntry &other) const;
 	bool operator != (const FontEntry &other) const;
 
 public:
-	shared_ptr<std::string> Normal;
-	shared_ptr<std::string> Bold;
-	shared_ptr<std::string> Italic;
-	shared_ptr<std::string> BoldItalic;
+	shared_ptr<FileInfo> Normal;
+	shared_ptr<FileInfo> Bold;
+	shared_ptr<FileInfo> Italic;
+	shared_ptr<FileInfo> BoldItalic;
 };
 
 class FontMap {
 
 public:
-	void append(const std::string &family, bool bold, bool italic, const std::string &path);
+	void append(const std::string &family, bool bold, bool italic, const std::string &path, shared_ptr<FileEncryptionInfo> encryptionInfo);
 	void merge(const FontMap &fontMap);
 	shared_ptr<FontEntry> get(const std::string &family);
 
