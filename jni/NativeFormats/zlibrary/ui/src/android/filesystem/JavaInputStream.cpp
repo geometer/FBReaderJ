@@ -64,13 +64,12 @@ void JavaInputStream::initStream(JNIEnv *env) {
 	} else {
 		myJavaInputStream = env->NewGlobalRef(stream);
 		myOffset = 0;
+		myMarkSupported = AndroidUtil::Method_java_io_InputStream_markSupported->call(stream);
+		if (myMarkSupported) {
+			AndroidUtil::Method_java_io_InputStream_mark->call(stream, sizeOfOpened());
+		}
 	}
 	env->DeleteLocalRef(stream);
-
-	myMarkSupported = AndroidUtil::Method_java_io_InputStream_markSupported->call(myJavaInputStream);
-	if (myMarkSupported) {
-		AndroidUtil::Method_java_io_InputStream_mark->call(myJavaInputStream, sizeOfOpened());
-	}
 }
 
 void JavaInputStream::closeStream(JNIEnv *env) {
