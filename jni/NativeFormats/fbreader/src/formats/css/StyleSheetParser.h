@@ -86,7 +86,7 @@ public:
 class StyleSheetMultiStyleParser : public StyleSheetParser {
 
 protected:
-	StyleSheetMultiStyleParser(const std::string &pathPrefix, shared_ptr<FontMap> myFontMap);
+	StyleSheetMultiStyleParser(const std::string &pathPrefix, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap);
 
 protected:
 	virtual void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) = 0;
@@ -97,12 +97,13 @@ private:
 
 protected:
 	shared_ptr<FontMap> myFontMap;
+	shared_ptr<EncryptionMap> myEncryptionMap;
 };
 
 class StyleSheetTableParser : public StyleSheetMultiStyleParser {
 
 public:
-	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &styleTable, shared_ptr<FontMap> fontMap);
+	StyleSheetTableParser(const std::string &pathPrexix, StyleSheetTable &styleTable, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap);
 
 private:
 	void store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map);
@@ -133,7 +134,6 @@ private:
 private:
 	std::list<shared_ptr<Entry> > myEntries;
 	std::set<std::string> myProcessedFiles;
-	shared_ptr<EncryptionMap> myEncryptionMap;
 };
 
 inline StyleSheetParserWithCache::Entry::Entry(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) : Tag(tag), Class(aClass), Map(map) {

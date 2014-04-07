@@ -21,18 +21,22 @@
 
 #include "FontMap.h"
 
-void FontEntry::addFile(bool bold, bool italic, const std::string &filePath) {
+FileInfo::FileInfo(const std::string &path, shared_ptr<FileEncryptionInfo> info) : Path(path), EncryptionInfo(info) {
+}
+
+void FontEntry::addFile(bool bold, bool italic, const std::string &filePath, shared_ptr<FileEncryptionInfo> encryptionInfo) {
+	shared_ptr<FileInfo> fileInfo = new FileInfo(filePath, encryptionInfo);
 	if (bold) {
 		if (italic) {
-			BoldItalic = new std::string(filePath);
+			BoldItalic = fileInfo;
 		} else {
-			Bold = new std::string(filePath);
+			Bold = fileInfo;
 		}
 	} else {
 		if (italic) {
-			Italic = new std::string(filePath);
+			Italic = fileInfo;
 		} else {
-			Normal = new std::string(filePath);
+			Normal = fileInfo;
 		}
 	}
 }
@@ -52,30 +56,30 @@ void FontEntry::merge(const FontEntry &fontEntry) {
 	}
 }
 
-static bool compareStringPtrs(shared_ptr<std::string> str0, shared_ptr<std::string> str1) {
-	return str0.isNull() ? str1.isNull() : (!str1.isNull() && *str0 == *str1);
+static bool compareFileInfos(shared_ptr<FileInfo> info0, shared_ptr<FileInfo> info1) {
+	return info0.isNull() ? info1.isNull() : (!info1.isNull() && info0->Path == info1->Path);
 }
 
 bool FontEntry::operator == (const FontEntry &other) const {
 	return
-		compareStringPtrs(Normal, other.Normal) &&
-		compareStringPtrs(Bold, other.Bold) &&
-		compareStringPtrs(Italic, other.Italic) &&
-		compareStringPtrs(BoldItalic, other.BoldItalic);
+		compareFileInfos(Normal, other.Normal) &&
+		compareFileInfos(Bold, other.Bold) &&
+		compareFileInfos(Italic, other.Italic) &&
+		compareFileInfos(BoldItalic, other.BoldItalic);
 }
 
 bool FontEntry::operator != (const FontEntry &other) const {
 	return !operator ==(other);
 }
 
-void FontMap::append(const std::string &family, bool bold, bool italic, const std::string &path) {
+void FontMap::append(const std::string &family, bool bold, bool italic, const std::string &path, shared_ptr<FileEncryptionInfo> encryptionInfo) {
 	const ZLFile fontFile(path);
 	shared_ptr<FontEntry> entry = myMap[family];
 	if (entry.isNull()) {
 		entry = new FontEntry();
 		myMap[family] = entry;
 	}
-	entry->addFile(bold, italic, fontFile.path());
+	entry->addFile(bold, italic, fontFile.path(), encryptionInfo);
 }
 
 void FontMap::merge(const FontMap &fontMap) {
