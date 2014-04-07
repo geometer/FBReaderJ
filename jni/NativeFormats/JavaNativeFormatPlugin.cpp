@@ -132,7 +132,7 @@ JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlu
 	);
 	for (std::size_t i = 0; i < infos.size(); ++i) {
 		jobject jInfo = AndroidUtil::createJavaEncryptionInfo(env, infos[i]);
-    env->SetObjectArrayElement(jList, i, jInfo);
+		env->SetObjectArrayElement(jList, i, jInfo);
 		env->DeleteLocalRef(jInfo);
 	}
 	return jList;
@@ -315,7 +315,7 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 		jobjectArray jList = env->NewObjectArray(lst.size(), AndroidUtil::Class_java_lang_String.j(), 0);
 		for (std::size_t i = 0; i < lst.size(); ++i) {
 			JString jString(env, lst[i]);
-    	env->SetObjectArrayElement(jList, i, jString.j());
+			env->SetObjectArrayElement(jList, i, jString.j());
 		}
 		AndroidUtil::Method_NativeBookModel_registerFontFamilyList->call(javaModel, jList);
 		env->DeleteLocalRef(jList);
