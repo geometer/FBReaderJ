@@ -240,7 +240,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseSingleEntry(const
 	return control;
 }
 
-StyleSheetMultiStyleParser::StyleSheetMultiStyleParser(const std::string &pathPrefix, shared_ptr<FontMap> fontMap) : StyleSheetParser(pathPrefix), myFontMap(fontMap.isNull() ? new FontMap() : fontMap) {
+StyleSheetMultiStyleParser::StyleSheetMultiStyleParser(const std::string &pathPrefix, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetParser(pathPrefix), myFontMap(fontMap.isNull() ? new FontMap() : fontMap), myEncryptionMap(encryptionMap) {
 }
 
 void StyleSheetMultiStyleParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
@@ -297,7 +297,7 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 			for (std::vector<std::string>::const_iterator jt = ids.begin(); jt != ids.end(); ++jt) {
 				if (ZLStringUtil::stringStartsWith(*jt, "url(") &&
 						ZLStringUtil::stringEndsWith(*jt, ")")) {
-					path = url2FullPath(*jt);	
+					path = ZLFile(url2FullPath(*jt)).path();	
 					break;
 				}
 			}
@@ -310,18 +310,24 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 		const std::string weight = value(attributes, "font-weight");
 		const std::string style = value(attributes, "font-style");
 
-		myFontMap->append(family, weight == "bold", style == "italic" || style == "oblique", path);
+		myFontMap->append(
+			family,
+			weight == "bold",
+			style == "italic" || style == "oblique",
+			path,
+			myEncryptionMap.isNull() ? 0 : myEncryptionMap->info(path)
+		);
 	}
 }
 
-StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &styleTable, shared_ptr<FontMap> fontMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myStyleTable(styleTable) {
+StyleSheetTableParser::StyleSheetTableParser(const std::string &pathPrefix, StyleSheetTable &styleTable, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap, encryptionMap), myStyleTable(styleTable) {
 }
 
 void StyleSheetTableParser::store(const std::string &tag, const std::string &aClass, const StyleSheetTable::AttributeMap &map) {
 	myStyleTable.addMap(tag, aClass, map);
 }
 
-StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap), myEncryptionMap(encryptionMap) {
+StyleSheetParserWithCache::StyleSheetParserWithCache(const ZLFile &file, const std::string &pathPrefix, shared_ptr<FontMap> fontMap, shared_ptr<EncryptionMap> encryptionMap) : StyleSheetMultiStyleParser(pathPrefix, fontMap, encryptionMap) {
 	myProcessedFiles.insert(file.path());
 }
 
