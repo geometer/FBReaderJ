@@ -44,6 +44,22 @@ class ZLFile;
 class FileEncryptionInfo;
 class ZLFileImage;
 
+class JString {
+
+public:
+	JString(JNIEnv* env, const std::string &str, bool emptyIsNull = true);
+	jstring j();
+	~JString();
+
+private:
+	JNIEnv *myEnv;
+	jstring myJ;
+
+private:
+	JString(const JString&);
+	const JString& operator = (const JString&);
+};
+
 class AndroidUtil {
 
 private:
@@ -155,7 +171,6 @@ public:
 	static JNIEnv *getEnv();
 
 	static std::string fromJavaString(JNIEnv *env, jstring from);
-	static jstring createJavaString(JNIEnv* env, shared_ptr<std::string>);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
 	static std::string convertNonUtfString(const std::string &str);
 
@@ -170,5 +185,7 @@ public:
 	static void throwCachedCharStorageException(const std::string &message);
 	//static void throwBookReadingException(const std::string &resourceId, const ZLFile &file);
 };
+
+inline jstring JString::j() { return myJ; }
 
 #endif /* __ANDROIDUTIL_H__ */
