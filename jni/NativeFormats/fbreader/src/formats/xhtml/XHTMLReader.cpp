@@ -229,7 +229,7 @@ void XHTMLTagStyleAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 
 	if (reader.myReadState == XHTML_READ_NOTHING) {
 		reader.myReadState = XHTML_READ_STYLE;
-		reader.myTableParser = new StyleSheetTableParser(reader.myPathPrefix, reader.myStyleSheetTable, reader.myFontMap);
+		reader.myTableParser = new StyleSheetTableParser(reader.myPathPrefix, reader.myStyleSheetTable, reader.myFontMap, reader.myEncryptionMap);
 		ZLLogger::Instance().println("CSS", "parsing style tag content");
 	}
 }
