@@ -39,37 +39,38 @@ public final class FontEntry {
 	}
 
 	public final String Family;
-	private final String[] myFiles;
+	private final FileInfo[] myFileInfos;
 
-	public FontEntry(String family, String normal, String bold, String italic, String boldItalic) {
+	public FontEntry(String family, FileInfo normal, FileInfo bold, FileInfo italic, FileInfo boldItalic) {
 		Family = family;
-		myFiles = new String[4];
-		myFiles[0] = normal;
-		myFiles[1] = bold;
-		myFiles[2] = italic;
-		myFiles[3] = boldItalic;
+		myFileInfos = new FileInfo[4];
+		myFileInfos[0] = normal;
+		myFileInfos[1] = bold;
+		myFileInfos[2] = italic;
+		myFileInfos[3] = boldItalic;
 	}
 
 	FontEntry(String family) {
 		Family = family;
-		myFiles = null;
+		myFileInfos = null;
 	}
 
 	public boolean isSystem() {
-		return myFiles == null;
+		return myFileInfos == null;
 	}
 
-	public String fileName(boolean bold, boolean italic) {
-		return myFiles != null ? myFiles[(bold ? 1 : 0) + (italic ? 2 : 0)] : null;
+	public FileInfo fileInfo(boolean bold, boolean italic) {
+		return myFileInfos != null ? myFileInfos[(bold ? 1 : 0) + (italic ? 2 : 0)] : null;
 	}
 
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder("FontEntry[");
 		builder.append(Family);
-		if (myFiles != null) {
+		if (myFileInfos != null) {
 			for (int i = 0; i < 4; ++i) {
-				builder.append(";").append(myFiles[i]);
+				final FileInfo info = myFileInfos[i];
+				builder.append(";").append(info != null ? info.Path : null);
 			}
 		}
 		return builder.append("]").toString();
@@ -87,14 +88,14 @@ public final class FontEntry {
 		if (!Family.equals(entry.Family)) {
 			return false;
 		}
-		if (myFiles == null) {
-			return entry.myFiles == null;
+		if (myFileInfos == null) {
+			return entry.myFileInfos == null;
 		}
-		if (entry.myFiles == null || entry.myFiles.length != myFiles.length) {
+		if (entry.myFileInfos == null) {
 			return false;
 		}
-		for (int i = 0; i < myFiles.length; ++i) {
-			if (!MiscUtil.equals(myFiles[i], entry.myFiles[i])) {
+		for (int i = 0; i < myFileInfos.length; ++i) {
+			if (!MiscUtil.equals(myFileInfos[i], entry.myFileInfos[i])) {
 				return false;
 			}
 		}
