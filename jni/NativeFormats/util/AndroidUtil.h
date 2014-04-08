@@ -76,6 +76,7 @@ public:
 	static JavaClass Class_java_io_InputStream;
 	static JavaClass Class_ZLibrary;
 	static JavaClass Class_ZLFile;
+	static JavaClass Class_FileInfo;
 	static JavaClass Class_FileEncryptionInfo;
 	static JavaClass Class_ZLFileImage;
 	static JavaClass Class_ZLTextModel;
@@ -117,6 +118,7 @@ public:
 	static shared_ptr<BooleanMethod> Method_ZLFile_isDirectory;
 	static shared_ptr<LongMethod> Method_ZLFile_size;
 
+	static shared_ptr<Constructor> Constructor_FileInfo;
 	static shared_ptr<Constructor> Constructor_FileEncryptionInfo;
 
 	static shared_ptr<Constructor> Constructor_ZLFileImage;
