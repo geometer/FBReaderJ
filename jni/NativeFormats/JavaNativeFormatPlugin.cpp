@@ -255,8 +255,21 @@ static void initTOC(JNIEnv *env, jobject javaModel, const ContentsTree &tree) {
 	}
 }
 
-static jstring createJavaString(JNIEnv *env, shared_ptr<FileInfo> info) {
-	return info.isNull() ? 0 : AndroidUtil::createJavaString(env, info->Path);
+static jobject createJavaFileInfo(JNIEnv *env, shared_ptr<FileInfo> info) {
+	if (info.isNull()) {
+		return 0;
+	}
+
+	JString path(env, info->Path, false);
+	jobject encryptionInfo = AndroidUtil::createJavaEncryptionInfo(env, info->EncryptionInfo);
+
+	jobject fileInfo = AndroidUtil::Constructor_FileInfo->call(path.j(), encryptionInfo);
+
+	if (encryptionInfo != 0) {
+		env->DeleteLocalRef(encryptionInfo);
+	}
+
+	return fileInfo;
 }
 
 extern "C"
@@ -327,10 +340,10 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 			continue;
 		}
 		JString family(env, it->first);
-		jstring normal = createJavaString(env, it->second->Normal);
-		jstring bold = createJavaString(env, it->second->Bold);
-		jstring italic = createJavaString(env, it->second->Italic);
-		jstring boldItalic = createJavaString(env, it->second->BoldItalic);
+		jobject normal = createJavaFileInfo(env, it->second->Normal);
+		jobject bold = createJavaFileInfo(env, it->second->Bold);
+		jobject italic = createJavaFileInfo(env, it->second->Italic);
+		jobject boldItalic = createJavaFileInfo(env, it->second->BoldItalic);
 
 		AndroidUtil::Method_NativeBookModel_registerFontEntry->call(
 			javaModel, family.j(), normal, bold, italic, boldItalic
