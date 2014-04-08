@@ -22,8 +22,7 @@ package org.geometerplus.fbreader.bookmodel;
 import java.util.Arrays;
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.fonts.FontEntry;
-import org.geometerplus.zlibrary.core.fonts.FontManager;
+import org.geometerplus.zlibrary.core.fonts.*;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.book.Book;
@@ -106,7 +105,7 @@ public abstract class BookModel {
 		FontManager.Entries.put(family, entry);
 	}
 
-	public void registerFontEntry(String family, String normal, String bold, String italic, String boldItalic) {
+	public void registerFontEntry(String family, FileInfo normal, FileInfo bold, FileInfo italic, FileInfo boldItalic) {
 		registerFontEntry(family, new FontEntry(family, normal, bold, italic, boldItalic));
 	}
 }
