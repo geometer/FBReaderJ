@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.drm;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
 public class FileEncryptionInfo {
 	public final String Uri;
 	public final String Method;
@@ -30,5 +32,30 @@ public class FileEncryptionInfo {
 		Method = method;
 		Algorithm = algorithm;
 		ContentId = contentId;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		if (!(other instanceof FileEncryptionInfo)) {
+			return false;
+		}
+		final FileEncryptionInfo oInfo = (FileEncryptionInfo)other;
+		return
+			MiscUtil.equals(Uri, oInfo.Uri) &&
+			MiscUtil.equals(Method, oInfo.Method) &&
+			MiscUtil.equals(Algorithm, oInfo.Algorithm) &&
+			MiscUtil.equals(ContentId, oInfo.ContentId);
+	}
+
+	@Override
+	public int hashCode() {
+		return
+			MiscUtil.hashCode(Uri) +
+			23 * (MiscUtil.hashCode(Method) +
+				  23 * (MiscUtil.hashCode(Algorithm) +
+						23 * MiscUtil.hashCode(ContentId)));
 	}
 }

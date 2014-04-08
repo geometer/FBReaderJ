@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.core.filesystem;
 import java.io.*;
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
+
 public abstract class ZLFile {
 	private final static HashMap<String,ZLFile> ourCachedFiles = new HashMap<String,ZLFile>();
 
@@ -141,6 +143,14 @@ public abstract class ZLFile {
 	public abstract ZLFile getParent();
 	public abstract ZLPhysicalFile getPhysicalFile();
 	public abstract InputStream getInputStream() throws IOException;
+
+	public final InputStream getInputStream(FileEncryptionInfo encryptionInfo) throws IOException {
+		if (encryptionInfo == null) {
+			return getInputStream();
+		}
+
+		throw new IOException("Encryption method " + encryptionInfo.Method + " is not supported");
+	}
 
 	public String getUrl() {
 		return "file://" + getPath();
