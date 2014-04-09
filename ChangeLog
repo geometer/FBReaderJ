@@ -30,6 +30,7 @@
 * Added CSS font-family property support
 * Added ePub embedded fonts support
 * Android 3.*/4.*: FBReader works in fullscreen mode by default; hint at start added
+* Updated Czech localization (by Marek Pavelka)
 
 ===== 1.9.6.1 (Feb 24, 2014) =====
 * Fixed some config vaues reading (e.g. background)

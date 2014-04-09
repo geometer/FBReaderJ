@@ -315,11 +315,11 @@
 	<node name="Preferences">
 		<node name="directories" value="Adresáře">
 			<node name="summary" value="Adresáře pro hledání souborů"/>
-			<node name="bookPath" value="Where to seek for books" toBeTranslated="true"/>
-			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true"/>
-			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true"/>
-			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true"/>
-			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true"/>
+			<node name="bookPath" value="Kde hledat knihy"/>
+			<node name="downloadDir" value="Kam ukládat stažené knihy"/>
+			<node name="fontPath" value="Kde hledat písma"/>
+			<node name="wallpaperPath" value="Kde hledat obrázky pozadí"/>
+			<node name="tempDir" value="Kam ukládat dočasné soubory"/>
 		</node>
 		<node name="appearance" value="Vzhled">
 			<node name="summary" value="Otáčení, stavový řádek"/>
@@ -560,9 +560,9 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>
-			<node name="fontFamily" value="Font family" toBeTranslated="true">
-				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			<node name="fontFamily" value="Rodina písem">
+				<node name="summaryOn" value="Použít rodinu písem definovanou v CSS"/>
+				<node name="summaryOff" value="Ignorovat rodinu písem definovanou v CSS"/>
 			</node>
 			<node name="fontSize" value="Velikost písma">
 				<node name="summaryOn" value="Použít velikost písma definovanou v CSS"/>
@@ -880,8 +880,8 @@
 			<node name="more" value="Další tip"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
-			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message1" value="FBReader ve výchozím nastavení pracuje v režimu celé obrazovky. Klepnutím na prostřední třetinu obrazovky se zobrazí ovládání. Toto chování můžete změnit v části „Vzhled“ dialogového okna Nastavení."/>
+			<node name="message2" value="Výborně! Dalším klepnutím na prostřední třetinu obrazovky se skryje ovládání a tato nápověda. Pokud chcete ponechat během čtení ovládání na obrazovce, vyberte volbu „Zobrazit panel akcí“ v části „Vzhled“ dialogového okna Nastavení."/>
 		</node>
 	</node>
 	<node name="warningMessage">
@@ -894,7 +894,7 @@
 		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
 		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
 		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
-		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="Soubor %s je šifrovaný metodou, kterou FBReader nepodporuje. Některé stránky nelze číst."/>
 		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
 		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
 		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
@@ -916,8 +916,8 @@
 		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
 		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
 		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="Bohužel, videoslužba není dostupná"/>
+		<node name="videoPlayerNotFound" value="Bohužel, na tomto zařízení není nainstalovaný žádný přehrávač videa"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>
@@ -971,7 +971,7 @@
 		</node>
 	</node>
 	<node name="drm">
-		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
+		<node name="encryptedSection" value="Šifrovaná část"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Pro čtení knihy obraťte zařízení. Pro navrácení textu na tento displej stiskněte tlačítko dole."/>
