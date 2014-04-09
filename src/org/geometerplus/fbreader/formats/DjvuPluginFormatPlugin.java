@@ -45,11 +45,6 @@ public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
 	}
 
 	@Override
-	public String readEncryptionMethod(Book book) {
-		return EncryptionMethod.NONE;
-	}
-
-	@Override
 	public String readAnnotation(ZLFile file) {
 		//TODO
 		return null;
