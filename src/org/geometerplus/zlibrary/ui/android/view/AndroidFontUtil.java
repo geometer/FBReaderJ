@@ -286,6 +286,7 @@ public final class AndroidFontUtil {
 						// ignore
 					}
 				}
+				new File(realFileName).delete();
 			}
 			ourCachedEmbeddedTypefaces.put(spec, cached != null ? cached : NULL_OBJECT);
 		}
@@ -312,5 +313,6 @@ public final class AndroidFontUtil {
 	public static void clearFontCache() {
 		ourTypefaces.clear();
 		ourFileSet = null;
+		ourCachedEmbeddedTypefaces.clear();
 	}
 }
