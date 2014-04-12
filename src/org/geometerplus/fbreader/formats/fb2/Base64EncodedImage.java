@@ -41,7 +41,7 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 	public Base64EncodedImage(MimeType mimeType, String namePostfix) {
 		// TODO: use contentType
 		super(mimeType);
-		myDirName = Paths.cacheDirectory();
+		myDirName = Paths.tempDirectory();
 		new File(myDirName).mkdirs();
 		myFileNumber = ourCounter++;
 		myNamePostfix = namePostfix;
