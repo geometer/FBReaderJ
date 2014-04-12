@@ -144,6 +144,10 @@ public class LibraryService extends Service {
 			}
 		}
 
+		public void close() {
+			myDatabase.close();
+		}
+
 		public String status() {
 			return myCollection.status().toString();
 		}
@@ -324,8 +328,10 @@ public class LibraryService extends Service {
 	@Override
 	public void onDestroy() {
 		if (myLibrary != null) {
-			myLibrary.deactivate();
+			final LibraryImplementation l = myLibrary;
 			myLibrary = null;
+			l.deactivate();
+			l.close();
 		}
 		super.onDestroy();
 	}
