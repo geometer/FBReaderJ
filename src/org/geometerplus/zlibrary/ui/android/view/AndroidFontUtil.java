@@ -313,5 +313,6 @@ public final class AndroidFontUtil {
 	public static void clearFontCache() {
 		ourTypefaces.clear();
 		ourFileSet = null;
+		ourCachedEmbeddedTypefaces.clear();
 	}
 }

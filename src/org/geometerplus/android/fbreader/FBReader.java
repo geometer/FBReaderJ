@@ -148,6 +148,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
 				myFBReaderApp.openBook(myBook, bookmark, action);
+				AndroidFontUtil.clearFontCache();
 			}
 		});
 	}
