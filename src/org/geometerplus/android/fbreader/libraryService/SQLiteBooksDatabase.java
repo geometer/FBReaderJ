@@ -58,6 +58,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		migrate();
 	}
 
+	public void close() {
+		myDatabase.close();
+	}
+
 	protected void executeAsTransaction(Runnable actions) {
 		boolean transactionStarted = false;
 		try {
