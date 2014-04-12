@@ -493,4 +493,9 @@ public final class FBReaderApp extends ZLApplication {
 			getViewWidget().repaint();
 		}
 	}
+
+	public void onRepaintFinished() {
+		super.onRepaintFinished();
+		storePosition();
+	}
 }
