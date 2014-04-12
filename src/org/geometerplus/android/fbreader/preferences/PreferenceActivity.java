@@ -144,7 +144,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			directoriesScreen.Resource, "wallpaperPath"
 		);
 		directoriesScreen.addPreference(wallpaperDirPreference);
-		directoriesScreen.addOption(Paths.TempDirectoryOption, "tempDir");
+		directoriesScreen.addOption(Paths.TempDirectoryOption(), "tempDir");
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(

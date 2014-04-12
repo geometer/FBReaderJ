@@ -55,9 +55,9 @@ public class ExternalFormatPlugin extends FormatPlugin {
 				String filepath = f.getPath();
 				int p1 = filepath.lastIndexOf(":");
 				String filename = filepath.substring(p1 + 1);
-				final File dirFile = new File(Paths.TempDirectoryOption.getValue());
+				final File dirFile = new File(Paths.tempDirectory());
 				dirFile.mkdirs();
-				String path = Paths.TempDirectoryOption.getValue() + "/" + filename;
+				String path = Paths.tempDirectory() + "/" + filename;
 				OutputStream out = new FileOutputStream(path);
 
 				int read = 0;

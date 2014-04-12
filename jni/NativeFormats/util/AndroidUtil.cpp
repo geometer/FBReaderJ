@@ -101,7 +101,7 @@ shared_ptr<Constructor> AndroidUtil::Constructor_FileEncryptionInfo;
 
 shared_ptr<Constructor> AndroidUtil::Constructor_ZLFileImage;
 
-shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Paths_cacheDirectory;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Paths_tempDirectory;
 
 shared_ptr<ObjectField> AndroidUtil::Field_Book_File;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getTitle;
@@ -185,7 +185,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;[I[ILorg/geometerplus/zlibrary/core/drm/FileEncryptionInfo;)V");
 
-	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(Class_Paths, "cacheDirectory", Class_java_lang_String, "()");
+	StaticMethod_Paths_tempDirectory = new StaticObjectMethod(Class_Paths, "tempDirectory", Class_java_lang_String, "()");
 
 	Field_Book_File = new ObjectField(Class_Book, "File", Class_ZLFile);
 	Method_Book_getTitle = new StringMethod(Class_Book, "getTitle", "()");
