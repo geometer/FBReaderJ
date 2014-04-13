@@ -172,12 +172,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			appearanceScreen.addOption(androidLibrary.EnableFullscreenModeOption, "fullscreenMode");
 		}
 		//appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
-		
+
 		if (DeviceType.Instance().isEInk()) {
 			final EInkOptions einkOptions = new EInkOptions();
 			final Screen einkScreen = createPreferenceScreen("eink");
 			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
-			
+
 			einkScreen.addPreference(new ZLBooleanPreference(
 				this, einkOptions.EnableFastRefresh, einkScreen.Resource, "enableFastRefresh"
 			) {
@@ -187,12 +187,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
 				}
 			});
-	
+
 			final ZLIntegerRangePreference updateIntervalPreference = new ZLIntegerRangePreference(
 				this, einkScreen.Resource.getResource("interval"), einkOptions.UpdateInterval
 			);
 			einkScreen.addPreference(updateIntervalPreference);
-	
+
 			einkPreferences.add(updateIntervalPreference);
 			einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
 		}
