@@ -287,6 +287,8 @@
 		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="com.paragon.dictionary.fbreader.OpenDictionaryActivity" android:theme="@style/FBReader.Transparent" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<service android:name="org.geometerplus.android.fbreader.httpd.DataService" android:launchMode="singleTask" android:process=":dataService" android:exported="false"/>
+		<service android:name="group.pals.android.lib.ui.filechooser.services.LocalFileProvider" android:process=":fileChooser" android:exported="false"/>
+		<activity android:name="group.pals.android.lib.ui.filechooser.FileChooserActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:process=":filechooser" android:exported="false"/>
 		<service android:name="com.yotadevices.fbreader.FBReaderYotaService" android:exported="false" android:launchMode="singleTask"/>
 		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
 		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
