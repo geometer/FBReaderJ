@@ -24,8 +24,8 @@ import java.util.*;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.view.KeyEvent;
 import android.os.Build;
+import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.language.Language;
