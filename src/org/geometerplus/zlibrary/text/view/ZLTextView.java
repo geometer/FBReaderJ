@@ -235,7 +235,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public boolean findResultsAreEmpty() {
-		return (myModel == null) || myModel.getMarks().isEmpty();
+		return myModel == null || myModel.getMarks().isEmpty();
 	}
 
 	@Override

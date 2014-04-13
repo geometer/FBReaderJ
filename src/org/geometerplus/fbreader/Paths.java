@@ -39,7 +39,7 @@ public abstract class Paths {
 
 	public static ZLStringOption TempDirectoryOption() {
 		final ZLStringOption option = new ZLStringOption("Files", "tmp", "");
-		if (option.getValue().isEmpty()) {
+		if ("".equals(option.getValue())) {
 			option.setValue(mainBookDirectory() + "/.FBReader");
 		}
 		return option;
