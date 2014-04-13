@@ -131,7 +131,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		while (mark.compareTo(myCurrentPage.EndCursor.getMark()) > 0) {
 			doRepaint = true;
-			scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			turnPage(true, ScrollingMode.NO_OVERLAPPING, 0);
 			preparePaintInfo(myCurrentPage);
 		}
 		if (doRepaint) {
@@ -163,7 +163,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		while (!highlighting.intersects(myCurrentPage)) {
 			doRepaint = true;
-			scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			turnPage(true, ScrollingMode.NO_OVERLAPPING, 0);
 			preparePaintInfo(myCurrentPage);
 		}
 		if (doRepaint) {
@@ -1321,7 +1321,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	public synchronized final void scrollPage(boolean forward, int scrollingMode, int value) {
+	public synchronized final void turnPage(boolean forward, int scrollingMode, int value) {
 		preparePaintInfo(myCurrentPage);
 		myPreviousPage.reset();
 		myNextPage.reset();
@@ -1346,7 +1346,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			myNextPage.reset();
 			preparePaintInfo(myCurrentPage);
 			if (myCurrentPage.isEmptyPage()) {
-				scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+				turnPage(true, ScrollingMode.NO_OVERLAPPING, 0);
 			}
 		}
 	}
@@ -1358,7 +1358,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			myNextPage.reset();
 			preparePaintInfo(myCurrentPage);
 			if (myCurrentPage.isEmptyPage()) {
-				scrollPage(false, ScrollingMode.NO_OVERLAPPING, 0);
+				turnPage(false, ScrollingMode.NO_OVERLAPPING, 0);
 			}
 		}
 	}

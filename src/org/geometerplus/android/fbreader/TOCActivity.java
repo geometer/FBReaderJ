@@ -138,6 +138,7 @@ public class TOCActivity extends ListActivity {
 				fbreader.addInvisibleBookmark();
 				fbreader.BookTextView.gotoPosition(reference.ParagraphIndex, 0, 0);
 				fbreader.showBookTextView();
+				fbreader.storePosition();
 			}
 		}
 
