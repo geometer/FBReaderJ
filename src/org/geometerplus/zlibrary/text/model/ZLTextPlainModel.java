@@ -288,15 +288,15 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	}
 
 	public final ZLTextMark getFirstMark() {
-		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(0);
+		return (myMarks == null || myMarks.isEmpty()) ? null : myMarks.get(0);
 	}
 
 	public final ZLTextMark getLastMark() {
-		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
+		return (myMarks == null || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
 	}
 
 	public final ZLTextMark getNextMark(ZLTextMark position) {
-		if ((position == null) || (myMarks == null)) {
+		if (position == null || myMarks == null) {
 			return null;
 		}
 
@@ -364,7 +364,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	}
 
 	public final List<ZLTextMark> getMarks() {
-		return (myMarks != null) ? myMarks : Collections.<ZLTextMark>emptyList();
+		return myMarks != null ? myMarks : Collections.<ZLTextMark>emptyList();
 	}
 
 	public final void removeAllMarks() {
