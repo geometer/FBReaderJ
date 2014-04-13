@@ -145,7 +145,7 @@ public class LibraryService extends Service {
 		}
 
 		public void close() {
-			myDatabase.close();
+			((SQLiteBooksDatabase)myDatabase).close();
 		}
 
 		public String status() {
