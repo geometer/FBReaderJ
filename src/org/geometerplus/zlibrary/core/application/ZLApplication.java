@@ -103,7 +103,7 @@ public abstract class ZLApplication {
 		return myWindow != null ? myWindow.getViewWidget() : null;
 	}
 
-	public void onRepaintFinished() {
+	public final void onRepaintFinished() {
 		if (myWindow != null) {
 			myWindow.refresh();
 		}
