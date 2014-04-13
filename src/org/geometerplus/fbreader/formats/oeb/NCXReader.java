@@ -151,7 +151,7 @@ class NCXReader extends ZLXMLReaderAdapter {
 					}
 					myNavigationMap.put(last.Order, last);
 					myPointStack.remove(myPointStack.size() - 1);
-					myReadState = (myPointStack.isEmpty()) ? READ_MAP : READ_POINT;
+					myReadState = myPointStack.isEmpty() ? READ_MAP : READ_POINT;
 				}
 			case READ_LABEL:
 				if (TAG_NAVLABEL == tag) {

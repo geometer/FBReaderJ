@@ -39,7 +39,7 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	protected List<FontEntry> getFontEntriesInternal() {
 		final List<FontEntry> parentEntries = Parent.getFontEntries();
 		final String decoratedValue = myDecoration.FontFamilyOption.getValue();
-		if (decoratedValue.isEmpty()) {
+		if ("".equals(decoratedValue)) {
 			return parentEntries;
 		}
 		final FontEntry e = FontEntry.systemEntry(decoratedValue);
