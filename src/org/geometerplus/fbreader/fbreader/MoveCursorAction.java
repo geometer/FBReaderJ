@@ -44,10 +44,10 @@ class MoveCursorAction extends FBAction {
 		} else {
 			switch (myDirection) {
 				case down:
-					fbView.scrollPage(true, FBView.ScrollingMode.SCROLL_LINES, 1);
+					fbView.turnPage(true, FBView.ScrollingMode.SCROLL_LINES, 1);
 					break;
 				case up:
-					fbView.scrollPage(false, FBView.ScrollingMode.SCROLL_LINES, 1);
+					fbView.turnPage(false, FBView.ScrollingMode.SCROLL_LINES, 1);
 					break;
 			}
 		}
