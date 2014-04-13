@@ -36,6 +36,7 @@ import android.widget.*;
 
 import com.paragon.open.dictionary.api.*;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class OpenDictionaryActivity extends Activity {
@@ -92,10 +93,11 @@ public class OpenDictionaryActivity extends Activity {
 				@Override
 				public void onComplete(String s, TranslateMode translateMode) {
 					final String url = saveArticle(s.replace("</BODY>", "<br><br></BODY>"), getApplicationContext());
-					if (url == null || url.isEmpty())
+					if (MiscUtil.isEmptyString(url)) {
 						openTextInDictionary(myQuery);
-					else
+					} else {
 						myArticleView.loadUrl(url);
+					}
 					Log.d("FBReader", "OpenDictionaryActivity: translation ready");
 				}
 
