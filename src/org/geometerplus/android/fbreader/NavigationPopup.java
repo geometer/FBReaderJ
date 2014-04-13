@@ -70,6 +70,7 @@ final class NavigationPopup {
 		if (myStartPosition != null &&
 			!myStartPosition.equals(myFBReader.getTextView().getStartCursor())) {
 			myFBReader.addInvisibleBookmark(myStartPosition);
+			myFBReader.storePosition();
 		}
 		myWindow.hide();
 		myWindow = null;
