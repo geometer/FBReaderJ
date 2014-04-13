@@ -93,7 +93,7 @@ public class DataServer extends NanoHTTPD {
 				try {
 					start = Integer.parseInt(bytes.substring(0, minus));
 					final String endString = bytes.substring(minus + 1).trim();
-					if (!endString.isEmpty()) {
+					if (!"".equals(endString)) {
 						end = Integer.parseInt(endString);
 					}
 				} catch (NumberFormatException e) {
