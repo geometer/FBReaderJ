@@ -691,4 +691,10 @@ public final class FBView extends ZLTextView {
 			return ZLPaintContext.ColorAdjustingMode.NONE;
 		}
 	}
+
+	@Override
+	public synchronized void onScrollingFinished(PageIndex pageIndex) {
+		super.onScrollingFinished(pageIndex);
+		myReader.storePosition();
+	}
 }

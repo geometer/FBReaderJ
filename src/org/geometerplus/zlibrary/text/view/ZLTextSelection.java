@@ -166,13 +166,13 @@ class ZLTextSelection extends ZLTextHighlighting {
 
 		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
 			if (hasPartAfterPage(page)) {
-				myView.scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+				myView.turnPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
 			}
 		} else {
 			if (hasPartBeforePage(page)) {
-				myView.scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+				myView.turnPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
 			}
@@ -298,7 +298,7 @@ class ZLTextSelection extends ZLTextHighlighting {
 		}
 
 		public void run() {
-			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+			myView.turnPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
 			expandTo(myPage, myX, myY);
 			myView.Application.getViewWidget().reset();
