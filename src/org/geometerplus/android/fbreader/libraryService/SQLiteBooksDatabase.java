@@ -1012,7 +1012,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myStorePositionStatement.bindLong(2, position.getParagraphIndex());
 		myStorePositionStatement.bindLong(3, position.getElementIndex());
 		myStorePositionStatement.bindLong(4, position.getCharIndex());
-		myStorePositionStatement.execute();
+		myStorePositionStatement.executeInsert();
 	}
 
 	private SQLiteStatement myDeleteVisitedHyperlinksStatement;
