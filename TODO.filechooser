@@ -1,0 +1,7 @@
+* does not show parent with name '.FBReader'
+* all/writable only option
+* activity orientation
+* resource strings
+* use in fix book catalog dialog
+* standard temp dir (?)
+* layout for versions < v11
