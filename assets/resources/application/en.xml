@@ -311,6 +311,23 @@
 			<node name="fontPath" value="Where to seek for fonts"/>
 			<node name="wallpaperPath" value="Where to seek for background images"/>
 			<node name="tempDir" value="Where to store temporary files"/>
+            <node name="fileChooser" value="File chooser">
+                <node name="root" value="Root"/>
+                <node name="ok" value="Ok"/>
+                <node name="cancel" value="Cancel"/>
+                <node name="newFolder" value="New folder"/>
+                <node name="folderName" value="Folder name"/>
+                <node name="chooseFolder" value="Choose a folder..."/>
+                <node name="chooseFolders" value="Choose folders..."/>
+                <node name="chooseFile" value="Choose a file..."/>
+                <node name="menuHome" value="Home"/>
+                <node name="menuReload" value="Reload"/>
+                <node name="sortBy" value="Sort by">
+                    <node name="name" value="Name"/>
+                    <node name="size" value="Size"/>
+                    <node name="date" value="Date"/>
+                </node>
+            </node>
 		</node>
 		<node name="appearance" value="Appearance">
 			<node name="summary" value="Display settings, status bar, button lights"/>

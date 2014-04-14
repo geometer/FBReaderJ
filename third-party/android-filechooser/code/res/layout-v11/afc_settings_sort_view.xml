@@ -22,6 +22,7 @@
             android:layout_marginRight="@dimen/afc_10dp" >
 
             <TextView
+                android:id="@+id/afc_settings_sort_view_textview_sort_by_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -51,6 +52,7 @@
             android:layout_marginRight="@dimen/afc_10dp" >
 
             <TextView
+                android:id="@+id/afc_settings_sort_view_textview_sort_by_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -80,6 +82,7 @@
             android:layout_marginRight="@dimen/afc_10dp" >
 
             <TextView
+                android:id="@+id/afc_settings_sort_view_textview_sort_by_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

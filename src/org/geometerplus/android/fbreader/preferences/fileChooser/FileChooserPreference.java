@@ -25,6 +25,8 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.preference.Preference;
 
+import java.util.HashMap;
+
 import group.pals.android.lib.ui.filechooser.FileChooserActivity;
 import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
@@ -33,19 +35,41 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class FileChooserPreference extends Preference {
 	private final int myRegCode;
+    private ZLResource myRootResource;
+    private String myResourceName;
 
 	FileChooserPreference(Context context, ZLResource rootResource, String resourceKey, int regCode) {
 		super(context);
 
 		myRegCode = regCode;
-
-		setTitle(rootResource.getResource(resourceKey).getValue());
+        myRootResource = rootResource;
+        myResourceName = "fileChooser";
+		setTitle(myRootResource.getResource(resourceKey).getValue());
 	}
 
 	@Override
 	protected void onClick() {
-		final Intent intent = new Intent(getContext(), FileChooserActivity.class);
-		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(getStringValue()));
+		
+        HashMap<String, String> textResources = new HashMap<String, String>();
+        textResources.put("root", myRootResource.getResource(myResourceName).getResource("root").getValue());
+        textResources.put("ok", myRootResource.getResource(myResourceName).getResource("ok").getValue());
+        textResources.put("cancel", myRootResource.getResource(myResourceName).getResource("cancel").getValue());
+        textResources.put("newFolder", myRootResource.getResource(myResourceName).getResource("newFolder").getValue());
+        textResources.put("folderName", myRootResource.getResource(myResourceName).getResource("folderName").getValue());
+        textResources.put("chooseFolder", myRootResource.getResource(myResourceName).getResource("chooseFolder").getValue());
+        textResources.put("chooseFolders", myRootResource.getResource(myResourceName).getResource("chooseFolders").getValue());
+        textResources.put("chooseFile", myRootResource.getResource(myResourceName).getResource("chooseFile").getValue());
+        textResources.put("sortBy", myRootResource.getResource(myResourceName).getResource("sortBy").getValue());
+        textResources.put("sortByName", myRootResource.getResource(myResourceName).getResource("sortBy").getResource("name").getValue());
+        textResources.put("sortBySize", myRootResource.getResource(myResourceName).getResource("sortBy").getResource("size").getValue());
+        textResources.put("sortByDate", myRootResource.getResource(myResourceName).getResource("sortBy").getResource("date").getValue());
+        textResources.put("menuHome", myRootResource.getResource(myResourceName).getResource("menuHome").getValue());
+        textResources.put("menuReload", myRootResource.getResource(myResourceName).getResource("menuReload").getValue());
+        
+        final Intent intent = new Intent(getContext(), FileChooserActivity.class);
+		
+        intent.putExtra(FileChooserActivity._TextResources, textResources);
+        intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(getStringValue()));
 		intent.putExtra(FileChooserActivity._ActionBar, true);
 		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
 		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.AnyDirectories);
