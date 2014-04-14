@@ -32,6 +32,7 @@
 * Added ePub embedded fonts support
 * Android 3.*/4.*: FBReader works in fullscreen mode by default; hint at start added
 * Updated Czech localization (by Marek Pavelka)
+* Updated Hungarian localization (by Szabó Lajos Balázs)
 
 ===== 1.9.6.1 (Feb 24, 2014) =====
 * Fixed some config vaues reading (e.g. background)
