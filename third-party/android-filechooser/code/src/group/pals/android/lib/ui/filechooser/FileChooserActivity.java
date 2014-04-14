@@ -35,6 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.HashMap;
 
 import android.Manifest;
 import android.app.Activity;
@@ -203,6 +204,7 @@ public class FileChooserActivity extends Activity {
      */
     public static final String _SelectFile = _ClassName + ".select_file";
 
+    public static final String _TextResources = _ClassName + ".text_resources";
     // ---------------------------------------------------------
 
     /**
@@ -295,6 +297,8 @@ public class FileChooserActivity extends Activity {
     private ImageView mViewFoldersView;
     private ImageView mViewSort;
 
+    private HashMap<String, String> mTextResources; 
+       
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -336,8 +340,9 @@ public class FileChooserActivity extends Activity {
             DisplayPrefs.setRememberLastLocation(this, false);
         mDoubleTapToChooseFiles = getIntent().getBooleanExtra(_DoubleTapToChooseFiles, false);
 
+        mTextResources = (HashMap<String, String>)getIntent().getSerializableExtra(_TextResources);
+        
         // load controls
-
         mViewSort = (ImageView) findViewById(R.id.afc_filechooser_activity_button_sort);
         mViewFoldersView = (ImageView) findViewById(R.id.afc_filechooser_activity_button_folders_view);
         mViewCreateFolder = (ImageView) findViewById(R.id.afc_filechooser_activity_button_create_folder);
@@ -397,6 +402,12 @@ public class FileChooserActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.afc_file_chooser_activity, menu);
+        MenuItem item = menu.findItem(R.id.afc_filechooser_activity_menuitem_home);
+        if(item != null)
+            item.setTitle(mTextResources.get("menuHome"));
+        item = menu.findItem(R.id.afc_filechooser_activity_menuitem_reload);
+        if(item != null)
+            item.setTitle(mTextResources.get("menuReload"));
         return true;
     }// onCreateOptionsMenu()
 
@@ -658,7 +669,8 @@ public class FileChooserActivity extends Activity {
                 setTitle(R.string.afc_title_choose_files_and_directories);
                 break;
             case DirectoriesOnly:
-                setTitle(R.string.afc_title_choose_directories);
+                //setTitle(R.string.afc_title_choose_directories);
+                setTitle(mTextResources.get("chooseFolder"));
                 break;
             }
         }// title of activity
@@ -800,6 +812,8 @@ public class FileChooserActivity extends Activity {
             }
             mBtnCancel.setVisibility(View.VISIBLE);
             mBtnCancel.setOnClickListener(mBtnCancel_ActionBar_OnClickListener);
+            mBtnOk.setText(mTextResources.get("ok"));
+            mBtnCancel.setText(mTextResources.get("cancel"));
         }    
         
         if (mIsMultiSelection) {
@@ -906,6 +920,13 @@ public class FileChooserActivity extends Activity {
         };// listener
 
         View view = getLayoutInflater().inflate(R.layout.afc_settings_sort_view, null);
+        TextView sortTitle = (TextView) view.findViewById(R.id.afc_settings_sort_view_textview_sort_by_name);
+        sortTitle.setText(mTextResources.get("sortByName"));
+        sortTitle = (TextView) view.findViewById(R.id.afc_settings_sort_view_textview_sort_by_size);
+        sortTitle.setText(mTextResources.get("sortBySize"));
+        sortTitle = (TextView) view.findViewById(R.id.afc_settings_sort_view_textview_sort_by_date);
+        sortTitle.setText(mTextResources.get("sortByDate"));
+        
         for (int i = 0; i < _BtnSortIds.length; i++) {
             Button btn = (Button) view.findViewById(_BtnSortIds[i]);
             btn.setOnClickListener(listener);
@@ -916,7 +937,8 @@ public class FileChooserActivity extends Activity {
             }
         }
 
-        _dialog.setTitle(R.string.afc_title_sort_by);
+        //_dialog.setTitle(R.string.afc_title_sort_by);
+        _dialog.setTitle(mTextResources.get("sortBy"));
         _dialog.setView(view);
 
         _dialog.show();
@@ -998,7 +1020,7 @@ public class FileChooserActivity extends Activity {
 
         View view = getLayoutInflater().inflate(R.layout.afc_simple_text_input_view, null);
         final EditText _textFile = (EditText) view.findViewById(R.id.afc_simple_text_input_view_text1);
-        _textFile.setHint(R.string.afc_hint_folder_name);
+        _textFile.setHint(mTextResources.get("folderName"));
         _textFile.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -1013,7 +1035,7 @@ public class FileChooserActivity extends Activity {
         });
 
         _dlg.setView(view);
-        _dlg.setTitle(R.string.afc_cmd_new_folder);
+        _dlg.setTitle(mTextResources.get("newFolder"));
         _dlg.setIcon(android.R.drawable.ic_menu_add);
         _dlg.setButton(DialogInterface.BUTTON_POSITIVE, getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
@@ -1411,7 +1433,7 @@ public class FileChooserActivity extends Activity {
         int count = 0;
         while (path != null) {
             TextView btnLoc = (TextView) inflater.inflate(R.layout.afc_button_location, null);
-            btnLoc.setText(path.parentFile() != null ? "/"+path.getName() : getString(R.string.afc_root));
+            btnLoc.setText(path.parentFile() != null ? "/"+path.getName() : mTextResources.get("root"));
             btnLoc.setTag(path);
             btnLoc.setOnClickListener(mBtnLocationOnClickListener);
             btnLoc.setOnLongClickListener(mBtnLocationOnLongClickListener);
