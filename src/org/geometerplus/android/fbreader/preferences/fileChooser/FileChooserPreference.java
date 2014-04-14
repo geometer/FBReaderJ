@@ -19,13 +19,13 @@
 
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.preference.Preference;
-
-import java.util.HashMap;
 
 import group.pals.android.lib.ui.filechooser.FileChooserActivity;
 import group.pals.android.lib.ui.filechooser.services.IFileProvider;
@@ -35,41 +35,38 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class FileChooserPreference extends Preference {
 	private final int myRegCode;
-    private ZLResource myRootResource;
-    private String myResourceName;
 
 	FileChooserPreference(Context context, ZLResource rootResource, String resourceKey, int regCode) {
 		super(context);
 
 		myRegCode = regCode;
-        myRootResource = rootResource;
-        myResourceName = "fileChooser";
-		setTitle(myRootResource.getResource(resourceKey).getValue());
+
+		setTitle(rootResource.getResource(resourceKey).getValue());
 	}
 
 	@Override
 	protected void onClick() {
+		final ZLResource resource = ZLResource.resource("dialog").getResource("fileChooser");
+		final HashMap<String,String> textResources = new HashMap<String,String>();
+		textResources.put("root", resource.getResource("root").getValue());
+		textResources.put("ok", resource.getResource("ok").getValue());
+		textResources.put("cancel", resource.getResource("cancel").getValue());
+		textResources.put("newFolder", resource.getResource("newFolder").getValue());
+		textResources.put("folderName", resource.getResource("folderName").getValue());
+		textResources.put("chooseFolder", resource.getResource("chooseFolder").getValue());
+		textResources.put("chooseFolders", resource.getResource("chooseFolders").getValue());
+		textResources.put("chooseFile", resource.getResource("chooseFile").getValue());
+		final ZLResource sortResource = resource.getResource("sortBy");
+		textResources.put("sortBy", sortResource.getValue());
+		textResources.put("sortByName", sortResource.getResource("name").getValue());
+		textResources.put("sortBySize", sortResource.getResource("size").getValue());
+		textResources.put("sortByDate", sortResource.getResource("date").getValue());
+		textResources.put("menuHome", resource.getResource("menuHome").getValue());
+		textResources.put("menuReload", resource.getResource("menuReload").getValue());
 		
-        HashMap<String, String> textResources = new HashMap<String, String>();
-        textResources.put("root", myRootResource.getResource(myResourceName).getResource("root").getValue());
-        textResources.put("ok", myRootResource.getResource(myResourceName).getResource("ok").getValue());
-        textResources.put("cancel", myRootResource.getResource(myResourceName).getResource("cancel").getValue());
-        textResources.put("newFolder", myRootResource.getResource(myResourceName).getResource("newFolder").getValue());
-        textResources.put("folderName", myRootResource.getResource(myResourceName).getResource("folderName").getValue());
-        textResources.put("chooseFolder", myRootResource.getResource(myResourceName).getResource("chooseFolder").getValue());
-        textResources.put("chooseFolders", myRootResource.getResource(myResourceName).getResource("chooseFolders").getValue());
-        textResources.put("chooseFile", myRootResource.getResource(myResourceName).getResource("chooseFile").getValue());
-        textResources.put("sortBy", myRootResource.getResource(myResourceName).getResource("sortBy").getValue());
-        textResources.put("sortByName", myRootResource.getResource(myResourceName).getResource("sortBy").getResource("name").getValue());
-        textResources.put("sortBySize", myRootResource.getResource(myResourceName).getResource("sortBy").getResource("size").getValue());
-        textResources.put("sortByDate", myRootResource.getResource(myResourceName).getResource("sortBy").getResource("date").getValue());
-        textResources.put("menuHome", myRootResource.getResource(myResourceName).getResource("menuHome").getValue());
-        textResources.put("menuReload", myRootResource.getResource(myResourceName).getResource("menuReload").getValue());
-        
-        final Intent intent = new Intent(getContext(), FileChooserActivity.class);
-		
-        intent.putExtra(FileChooserActivity._TextResources, textResources);
-        intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(getStringValue()));
+		final Intent intent = new Intent(getContext(), FileChooserActivity.class);
+		intent.putExtra(FileChooserActivity._TextResources, textResources);
+		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(getStringValue()));
 		intent.putExtra(FileChooserActivity._ActionBar, true);
 		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
 		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.AnyDirectories);
