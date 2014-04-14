@@ -33,28 +33,28 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arab"/>
-		<node name="be" value="Belarusian" toBeTranslated="true"/>
-		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
-		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="be" value="Belarusz"/>
+		<node name="bg" value="Bolgár"/>
+		<node name="ca" value="Katalán"/>
 		<node name="cs" value="Cseh"/>
-		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="da" value="Dán"/>
 		<node name="de" value="Német"/>
 		<node name="de-traditional" value="Német (hagyományos)"/>
 		<node name="el" value="Görög"/>
 		<node name="en" value="Angol"/>
 		<node name="eo" value="Eszperantó"/>
 		<node name="es" value="Spanyol"/>
-		<node name="eu" value="Basque" toBeTranslated="true"/>
-		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="eu" value="Baszk"/>
+		<node name="fa" value="Perzsa"/>
 		<node name="fi" value="Finn"/>
 		<node name="fr" value="Francia"/>
 		<node name="gl" value="Galíciai"/>
 		<node name="he" value="Héber"/>
 		<node name="hu" value="Magyar"/>
-		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="hy" value="Örmény"/>
 		<node name="id" value="Indonéz"/>
 		<node name="it" value="Olasz"/>
-		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="ka" value="Grúz"/>
 		<node name="lt" value="Litván"/>
 		<node name="nl" value="Holland"/>
 		<node name="nb" value="Norvég"/>
@@ -62,19 +62,19 @@
 		<node name="pt" value="Portugál"/>
 		<node name="ro" value="Román"/>
 		<node name="ru" value="Orosz"/>
-		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sr" value="Szerb"/>
 		<node name="sv" value="Svéd"/>
-		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="ta" value="Tamil"/>
 		<node name="th" value="Thai"/>
 		<node name="tr" value="Török"/>
 		<node name="uk" value="Ukrán"/>
 		<node name="vi" value="Vietnami"/>
 		<node name="zh" value="Kínai"/>
-		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
-		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="zh_TW" value="Kínai (hagyományos)"/>
+		<node name="any" value="Bármelyik"/>
 		<node name="other" value="Egyéb"/>
 		<node name="multi" value="Többnyelvű"/>
-		<node name="system" value="System" toBeTranslated="true"/>
+		<node name="system" value="Rendszer"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="be"/>
