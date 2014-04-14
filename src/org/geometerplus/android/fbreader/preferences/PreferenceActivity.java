@@ -57,6 +57,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			myChooserCollection.update(requestCode, data);
+		}
+	}
+
+	@Override
 	protected void init(Intent intent) {
 		final Config config = Config.Instance();
 		config.requestAllValuesForGroup("Style");
@@ -84,28 +91,28 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.BookPathOption, directoriesScreen.Resource, "bookPath"
-		) {
-			protected void setValue(String value) {
-				super.setValue(value);
-
-				final BookCollectionShadow collection = new BookCollectionShadow();
-				collection.bindToService(PreferenceActivity.this, new Runnable() {
-					public void run() {
-						collection.reset(false);
-						collection.unbind();
-					}
-				});
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "bookPath", Paths.BookPathOption, new Runnable() {
+				public void run() {
+					final BookCollectionShadow collection = new BookCollectionShadow();
+					collection.bindToService(PreferenceActivity.this, new Runnable() {
+						public void run() {
+							collection.reset(false);
+							collection.unbind();
+						}
+					});
+				}
 			}
-		});
-		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.FontPathOption, directoriesScreen.Resource, "fontPath"
 		));
-		directoriesScreen.addPreference(new ZLStringListOptionPreference(
-			this, Paths.WallpaperPathOption, directoriesScreen.Resource, "wallpaperPath"
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "fontPath", Paths.FontPathOption
 		));
-		directoriesScreen.addOption(Paths.TempDirectoryOption(), "tempDir");
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "wallpaperPath", Paths.WallpaperPathOption
+		));
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption()
+		));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
