@@ -106,6 +106,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		));
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "downloadDir", Paths.DownloadsDirectoryOption()
+		));
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "fontPath", Paths.FontPathOption
 		));
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
