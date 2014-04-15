@@ -95,7 +95,7 @@ public class LibraryService extends Service {
 
 		LibraryImplementation() {
 			myDatabase = new SQLiteBooksDatabase(LibraryService.this);
-			myCollection = new BookCollection(myDatabase, Paths.BookPathOption.getValue());
+			myCollection = new BookCollection(myDatabase, Paths.bookPath());
 			reset(true);
 		}
 
@@ -108,7 +108,7 @@ public class LibraryService extends Service {
 		}
 
 		private void resetInternal(boolean force) {
-			final List<String> bookDirectories = Paths.BookPathOption.getValue();
+			final List<String> bookDirectories = Paths.bookPath();
 			if (!force &&
 				myCollection.status() != BookCollection.Status.NotStarted &&
 				bookDirectories.equals(myCollection.BookDirectories)
@@ -120,8 +120,8 @@ public class LibraryService extends Service {
 			myFileObservers.clear();
 
 			myCollection = new BookCollection(myDatabase, bookDirectories);
-			for (String path : bookDirectories) {
-				final Observer observer = new Observer(path, myCollection);
+			for (String dir : bookDirectories) {
+				final Observer observer = new Observer(dir, myCollection);
 				observer.startWatching();
 				myFileObservers.add(observer);
 			}
