@@ -69,7 +69,7 @@ public final class ZLKeyBindings {
 				// ignore
 			}
 			try {
-				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + "/keymap.xml"));
+				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.DownloadsDirectoryOption().getValue() + "/keymap.xml"));
 			} catch (Exception e) {
 				// ignore
 			}
