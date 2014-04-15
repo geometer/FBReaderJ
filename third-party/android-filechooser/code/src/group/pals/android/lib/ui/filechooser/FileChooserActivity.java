@@ -1649,15 +1649,12 @@ public class FileChooserActivity extends Activity {
     };// mBtnGoForwardOnClickListener
     
     private void checkUIForFolderCreation(IFile dir){
-        if(mFileProvider.getFilterMode() != IFileProvider.FilterMode.AnyDirectories){
-            if(!(((File) dir).canWrite()) ){
-                mBtnOk.setEnabled(false);
-                mViewCreateFolder.setEnabled(false);
-            }else{
-                mBtnOk.setEnabled(true);
-                mViewCreateFolder.setEnabled(true);
-            }
-        }
+        final boolean isDirectoryWriteable = ((File)dir).canWrite();
+        mViewCreateFolder.setEnabled(isDirectoryWriteable);
+        mBtnOk.setEnabled(
+			isDirectoryWriteable ||
+        	mFileProvider.getFilterMode() == IFileProvider.FilterMode.AnyDirectories
+		);
     }
     
     private final View.OnLongClickListener mBtnGoBackForwardOnLongClickListener = new View.OnLongClickListener() {
