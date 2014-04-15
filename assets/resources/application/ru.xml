@@ -311,11 +311,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталоги">
 			<node name="summary" value="Где искать файлы"/>
-			<node name="bookPath" value="Где лежат книги"/>
-			<node name="downloadDir" value="Куда сохранять загруженные книги"/>
-			<node name="fontPath" value="Где лежат шрифты"/>
-			<node name="wallpaperPath" value="Где лежат рисунки для фона"/>
-			<node name="tempDir" value="Где создавать временные файлы"/>
+			<node name="bookPath" value="Где лежат книги">
+				<node name="chooserTitle" value="Каталог для книг"/>
+			</node>
+			<node name="downloadDir" value="Куда сохранять загруженные книги">
+				<node name="chooserTitle" value="Каталог для книг"/>
+			</node>
+			<node name="fontPath" value="Где лежат шрифты">
+				<node name="chooserTitle" value="Каталог для шрифтов"/>
+			</node>
+			<node name="wallpaperPath" value="Где лежат рисунки для фона">
+				<node name="chooserTitle" value="Каталог для рисунков"/>
+			</node>
+			<node name="tempDir" value="Где создавать временные файлы">
+				<node name="chooserTitle" value="Для временных файлов"/>
+			</node>
 		</node>
 		<node name="appearance" value="Внешний вид">
 			<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>
@@ -865,6 +875,21 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader запускается в полноэкранном режиме. Чтобы увидеть элементы управления, нажмите на экран в средней трети. Вы можете изменить это поведение в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
 			<node name="message2" value="Отлично! Нажмите ещё раз на экран в средней трети, чтобы скрыть элементы управления и этот совет. Если вы хотите, чтобы верхнее меню оставалось на экране во время чтения, выберите «Показывать строку меню» в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Корень"/>
+			<node name="newFolder" value="Новый каталог"/>
+			<node name="folderNameHint" value="Название"/>
+			<node name="menu">
+				<node name="origin" value="В начало"/>
+				<node name="reload" value="Пересканировать"/>
+			</node>
+			<node name="sortBy" value="Сортировать">
+				<node name="name" value="по названию"/>
+				<node name="size" value="по размеру"/>
+				<node name="date" value="по дате"/>
+			</node>
+			<node name="permissionDenied" value="Нет доступа"/>
 		</node>
 	</node>
 	<node name="errorMessage">

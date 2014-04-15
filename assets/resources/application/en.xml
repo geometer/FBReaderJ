@@ -306,11 +306,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Directories">
 			<node name="summary" value="Directories to seek for files"/>
-			<node name="bookPath" value="Where to seek for books"/>
-			<node name="downloadDir" value="Where to store downloaded books"/>
-			<node name="fontPath" value="Where to seek for fonts"/>
-			<node name="wallpaperPath" value="Where to seek for background images"/>
-			<node name="tempDir" value="Where to store temporary files"/>
+			<node name="bookPath" value="Where to seek for books">
+				<node name="chooserTitle" value="Books folder"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books">
+				<node name="chooserTitle" value="Books folder"/>
+			</node>
+			<node name="fontPath" value="Where to seek for fonts">
+				<node name="chooserTitle" value="Fonts folder"/>
+			</node>
+			<node name="wallpaperPath" value="Where to seek for background images">
+				<node name="chooserTitle" value="Images folder"/>
+			</node>
+			<node name="tempDir" value="Where to store temporary files">
+				<node name="chooserTitle" value="Temp files folder"/>
+			</node>
 		</node>
 		<node name="appearance" value="Appearance">
 			<node name="summary" value="Display settings, status bar, button lights"/>
@@ -860,6 +870,21 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog."/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog."/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root"/>
+			<node name="newFolder" value="New folder"/>
+			<node name="folderNameHint" value="Folder name"/>
+			<node name="menu">
+				<node name="origin" value="Origin"/>
+				<node name="reload" value="Reload"/>
+			</node>
+			<node name="sortBy" value="Sort by">
+				<node name="name" value="Name"/>
+				<node name="size" value="Size"/>
+				<node name="date" value="Date"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied"/>
 		</node>
 	</node>
 	<node name="errorMessage">
