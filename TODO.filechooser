@@ -1,5 +1,5 @@
-* does not show hidden folders (like '.FBReader')
-* does not show parent if the parent's name is '.FBReader' (see 'temporary files' option)
+DONE does not show hidden folders (like '.FBReader')
+DONE does not show parent if the parent's name is '.FBReader' (see 'temporary files' option)
 * all/writable only option (use writable only for books & temp, all for fonts & wallpapers)
 * activity orientation (use fbreader's OrientaionUtil mechanism)
 * resource strings
