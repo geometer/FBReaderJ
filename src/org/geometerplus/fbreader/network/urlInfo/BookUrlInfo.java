@@ -106,7 +106,7 @@ public class BookUrlInfo extends UrlInfo {
 			path.insert(0, "Demos");
 			path.insert(0, File.separator);
 		}
-		path.insert(0, Paths.mainBookDirectory());
+		path.insert(0, Paths.DownloadsDirectoryOption().getValue());
 
 		int index = path.length();
 		final String uriPath = uri.getPath();
