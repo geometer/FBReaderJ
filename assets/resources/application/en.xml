@@ -863,8 +863,6 @@
 		</node>
 		<node name="fileChooser" value="File chooser">
 			<node name="root" value="Root"/>
-			<node name="ok" value="Ok"/>
-			<node name="cancel" value="Cancel"/>
 			<node name="newFolder" value="New folder"/>
 			<node name="folderName" value="Folder name"/>
 			<node name="chooseFolder" value="Choose a folder…"/>
