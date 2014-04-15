@@ -35,35 +35,37 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class FileChooserPreference extends Preference {
 	private final int myRegCode;
+	private final ZLResource myResource;
 
 	FileChooserPreference(Context context, ZLResource rootResource, String resourceKey, int regCode) {
 		super(context);
 
 		myRegCode = regCode;
-
-		setTitle(rootResource.getResource(resourceKey).getValue());
+		myResource = rootResource.getResource(resourceKey);
+		setTitle(myResource.getValue());
 	}
 
 	@Override
 	protected void onClick() {
-		final ZLResource resource = ZLResource.resource("dialog").getResource("fileChooser");
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final HashMap<String,String> textResources = new HashMap<String,String>();
-		textResources.put("root", resource.getResource("root").getValue());
+		textResources.put("title", myResource.getResource("chooserTitle").getValue());
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
 		textResources.put("ok", buttonResource.getResource("ok").getValue());
 		textResources.put("cancel", buttonResource.getResource("cancel").getValue());
+		final ZLResource resource = dialogResource.getResource("fileChooser");
+		textResources.put("root", resource.getResource("root").getValue());
 		textResources.put("newFolder", resource.getResource("newFolder").getValue());
-		textResources.put("folderName", resource.getResource("folderName").getValue());
-		textResources.put("chooseFolder", resource.getResource("chooseFolder").getValue());
-		textResources.put("chooseFolders", resource.getResource("chooseFolders").getValue());
-		textResources.put("chooseFile", resource.getResource("chooseFile").getValue());
+		textResources.put("folderNameHint", resource.getResource("folderNameHint").getValue());
+		final ZLResource menuResource = resource.getResource("menu");
+		textResources.put("menuOrigin", menuResource.getResource("origin").getValue());
+		textResources.put("menuReload", menuResource.getResource("reload").getValue());
 		final ZLResource sortResource = resource.getResource("sortBy");
 		textResources.put("sortBy", sortResource.getValue());
 		textResources.put("sortByName", sortResource.getResource("name").getValue());
 		textResources.put("sortBySize", sortResource.getResource("size").getValue());
 		textResources.put("sortByDate", sortResource.getResource("date").getValue());
-		textResources.put("menuHome", resource.getResource("menuHome").getValue());
-		textResources.put("menuReload", resource.getResource("menuReload").getValue());
+		textResources.put("permissionDenied", resource.getResource("permissionDenied").getValue());
 		
 		final Intent intent = new Intent(getContext(), FileChooserActivity.class);
 		intent.putExtra(FileChooserActivity._TextResources, textResources);

@@ -404,7 +404,7 @@ public class FileChooserActivity extends Activity {
         inflater.inflate(R.menu.afc_file_chooser_activity, menu);
         MenuItem item = menu.findItem(R.id.afc_filechooser_activity_menuitem_home);
         if(item != null)
-            item.setTitle(mTextResources.get("menuHome"));
+            item.setTitle(mTextResources.get("menuOrigin"));
         item = menu.findItem(R.id.afc_filechooser_activity_menuitem_reload);
         if(item != null)
             item.setTitle(mTextResources.get("menuReload"));
@@ -658,22 +658,7 @@ public class FileChooserActivity extends Activity {
      * - button go forward;
      */
     private void setupHeader() {
-        if (mIsSaveDialog) {
-            setTitle(R.string.afc_title_save_as);
-        } else {
-            switch (mFileProvider.getFilterMode()) {
-            case FilesOnly:
-                setTitle(R.string.afc_title_choose_files);
-                break;
-            case FilesAndDirectories:
-                setTitle(R.string.afc_title_choose_files_and_directories);
-                break;
-            case DirectoriesOnly:
-                //setTitle(R.string.afc_title_choose_directories);
-                setTitle(mTextResources.get("chooseFolder"));
-                break;
-            }
-        }// title of activity
+        setTitle(mTextResources.get("title"));
 
         mViewSort.setOnClickListener(mBtnSortOnClickListener);
         if(DisplayPrefs.isSortAscending(this)){
@@ -1020,7 +1005,7 @@ public class FileChooserActivity extends Activity {
 
         View view = getLayoutInflater().inflate(R.layout.afc_simple_text_input_view, null);
         final EditText _textFile = (EditText) view.findViewById(R.id.afc_simple_text_input_view_text1);
-        _textFile.setHint(mTextResources.get("folderName"));
+        _textFile.setHint(mTextResources.get("folderNameHint"));
         _textFile.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -1335,7 +1320,7 @@ public class FileChooserActivity extends Activity {
                 super.onPostExecute(result);
 
                 if (files == null) {
-                    Dlg.toast(FileChooserActivity.this, getString(R.string.afc_pmsg_cannot_access_dir, path.getName()),
+                    Dlg.toast(FileChooserActivity.this, mTextResources.get("permissionDenied"),
                             Dlg._LengthShort);
                     if (listener != null)
                         listener.onFinish(false, path);
