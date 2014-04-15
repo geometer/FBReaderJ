@@ -47,10 +47,11 @@ abstract class FileChooserPreference extends Preference {
 	@Override
 	protected void onClick() {
 		final ZLResource resource = ZLResource.resource("dialog").getResource("fileChooser");
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final HashMap<String,String> textResources = new HashMap<String,String>();
 		textResources.put("root", resource.getResource("root").getValue());
-		textResources.put("ok", resource.getResource("ok").getValue());
-		textResources.put("cancel", resource.getResource("cancel").getValue());
+		textResources.put("ok", buttonResource.getResource("ok").getValue());
+		textResources.put("cancel", buttonResource.getResource("cancel").getValue());
 		textResources.put("newFolder", resource.getResource("newFolder").getValue());
 		textResources.put("folderName", resource.getResource("folderName").getValue());
 		textResources.put("chooseFolder", resource.getResource("chooseFolder").getValue());
