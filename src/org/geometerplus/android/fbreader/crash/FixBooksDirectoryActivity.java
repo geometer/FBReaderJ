@@ -30,7 +30,7 @@ import android.widget.Button;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.options.Config;
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
@@ -61,16 +61,12 @@ public class FixBooksDirectoryActivity extends Activity {
 
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
-				final ZLStringListOption bookPathOption = Paths.BookPathOption;
-				directoryView.setText(Paths.mainBookDirectory());
+				final ZLStringOption tempDirectoryOption = Paths.TempDirectoryOption();
+				directoryView.setText(tempDirectoryOption.getValue());
 				okButton.setOnClickListener(new Button.OnClickListener() {
 					public void onClick(View v) {
-						final List<String> bookPath =
-							new LinkedList<String>(bookPathOption.getValue());
 						final String newDirectory = directoryView.getText().toString();
-						bookPath.remove(newDirectory);
-						bookPath.add(0, newDirectory);
-						bookPathOption.setValue(bookPath);
+						tempDirectoryOption.setValue(newDirectory);
 						startActivity(new Intent(FixBooksDirectoryActivity.this, FBReader.class));
 						finish();
 					}
