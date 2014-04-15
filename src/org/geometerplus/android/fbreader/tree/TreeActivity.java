@@ -46,7 +46,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	private ArrayList<FBTree.Key> myHistory;
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
