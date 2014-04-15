@@ -21,6 +21,8 @@ package org.geometerplus.android.fbreader.preferences.fileChooser;
 
 import android.content.Context;
 
+import group.pals.android.lib.ui.filechooser.services.IFileProvider;
+
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
@@ -29,7 +31,7 @@ class FileChooserStringPreference extends FileChooserPreference {
 	private final ZLStringOption myOption;
 
 	FileChooserStringPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringOption option, int regCode) {
-		super(context, rootResource, resourceKey, regCode);
+		super(context, rootResource, resourceKey, IFileProvider.FilterMode.DirectoriesOnly, regCode);
 		myOption = option;
 
 		setSummary(getStringValue());

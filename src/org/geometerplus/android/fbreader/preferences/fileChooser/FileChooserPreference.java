@@ -36,11 +36,13 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 abstract class FileChooserPreference extends Preference {
 	private final int myRegCode;
 	private final ZLResource myResource;
+	private final IFileProvider.FilterMode myFilterMode;
 
-	FileChooserPreference(Context context, ZLResource rootResource, String resourceKey, int regCode) {
+	FileChooserPreference(Context context, ZLResource rootResource, String resourceKey, IFileProvider.FilterMode filterMode, int regCode) {
 		super(context);
 
 		myRegCode = regCode;
+		myFilterMode = filterMode;
 		myResource = rootResource.getResource(resourceKey);
 		setTitle(myResource.getValue());
 	}
@@ -73,10 +75,11 @@ abstract class FileChooserPreference extends Preference {
 		intent.putExtra(FileChooserActivity._ActionBar, true);
 		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
 		intent.putExtra(FileChooserActivity._DisplayHiddenFiles, true);
+		intent.putExtra(FileChooserActivity._FilterMode, myFilterMode);
 		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.AnyDirectories);
+		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
 		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.FilesOnly);
 		//intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.FilesAndDirectories);
-		intent.putExtra(FileChooserActivity._FilterMode, IFileProvider.FilterMode.DirectoriesOnly);
 		((Activity)getContext()).startActivityForResult(intent, myRegCode);
 	}
 
