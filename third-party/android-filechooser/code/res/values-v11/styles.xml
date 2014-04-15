@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2012 Hai Bison
+
+    See the file LICENSE at the root directory of this project for copying
+    permission.
+-->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="afc_button_location" parent="@android:style/Widget.Holo.TextView">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@drawable/afc_selector_button_location_dark</item>
+        <item name="android:layout_margin">@dimen/afc_5dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxWidth">@dimen/afc_button_location_max_width</item>
+        <item name="android:minWidth">@dimen/afc_button_location_min_width</item>
+        <item name="android:padding">@dimen/afc_5dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+</resources>
