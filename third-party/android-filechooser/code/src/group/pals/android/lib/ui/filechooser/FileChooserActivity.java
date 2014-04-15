@@ -1391,15 +1391,7 @@ public class FileChooserActivity extends Activity {
                     mHistory.truncateAfter(mLastPath);
                     mHistory.push(dir);
                     mFullHistory.push(dir);
-                    if(mFileProvider.getFilterMode() != IFileProvider.FilterMode.AnyDirectories){
-                        if(!(((File) dir).canWrite()) ){
-                            mBtnOk.setEnabled(false);
-                            mViewCreateFolder.setEnabled(false);
-                        }else{
-                            mBtnOk.setEnabled(true);
-                            mViewCreateFolder.setEnabled(true);
-                        }
-                    }
+                    checkUIForFolderCreation(dir);
                 }
             }
         });
@@ -1594,6 +1586,7 @@ public class FileChooserActivity extends Activity {
                         }
                     }
                 });
+                checkUIForFolderCreation(preLoc);
             } else {
                 mViewGoBack.setEnabled(false);
             }
@@ -1648,12 +1641,25 @@ public class FileChooserActivity extends Activity {
                         }
                     }
                 });
+                checkUIForFolderCreation(nextLoc);
             } else {
                 mViewGoForward.setEnabled(false);
             }
         }
     };// mBtnGoForwardOnClickListener
-
+    
+    private void checkUIForFolderCreation(IFile dir){
+        if(mFileProvider.getFilterMode() != IFileProvider.FilterMode.AnyDirectories){
+            if(!(((File) dir).canWrite()) ){
+                mBtnOk.setEnabled(false);
+                mViewCreateFolder.setEnabled(false);
+            }else{
+                mBtnOk.setEnabled(true);
+                mViewCreateFolder.setEnabled(true);
+            }
+        }
+    }
+    
     private final View.OnLongClickListener mBtnGoBackForwardOnLongClickListener = new View.OnLongClickListener() {
 
         @Override
