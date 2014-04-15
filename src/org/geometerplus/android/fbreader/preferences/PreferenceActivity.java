@@ -47,14 +47,16 @@ import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.activityprefs.*;
+import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private final List<String> myRootpaths = Arrays.asList(Paths.cardDirectory() + "/");
-
 	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
 		new HashMap<Integer,ZLActivityPreference>();
+
+	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this);
 
 	public PreferenceActivity() {
 		super("Preferences");
@@ -66,6 +68,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		if (resultCode == RESULT_OK) {
 			p.setValue(data);
 		}
+		//if (resultCode == RESULT_OK) {
+		//	myChooserCollection.update(requestCode, data);
+		//}
 	}
 
 	private static class OptionHolder implements ZLActivityPreference.ListHolder {
@@ -145,6 +150,33 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		);
 		directoriesScreen.addPreference(wallpaperDirPreference);
 		directoriesScreen.addOption(Paths.TempDirectoryOption(), "tempDir");
+/*
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "bookPath", Paths.BookPathOption, new Runnable() {
+				public void run() {
+					final BookCollectionShadow collection = new BookCollectionShadow();
+					collection.bindToService(PreferenceActivity.this, new Runnable() {
+						public void run() {
+							collection.reset(false);
+							collection.unbind();
+						}
+					});
+				}
+			}
+		));
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "downloadDir", Paths.DownloadsDirectoryOption()
+		));
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "fontPath", Paths.FontPathOption
+		));
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "wallpaperPath", Paths.WallpaperPathOption
+		));
+		directoriesScreen.addPreference(myChooserCollection.createPreference(
+			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption()
+		));
+*/
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
