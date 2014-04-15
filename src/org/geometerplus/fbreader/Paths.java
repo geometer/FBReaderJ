@@ -37,12 +37,22 @@ public abstract class Paths {
 	public static ZLStringListOption WallpaperPathOption =
 		pathOption("WallpapersDirectory", cardDirectory() + "/Wallpapers");
 
-	public static ZLStringOption TempDirectoryOption() {
-		final ZLStringOption option = new ZLStringOption("Files", "tmp", "");
-		if ("".equals(option.getValue())) {
-			option.setValue(mainBookDirectory() + "/.FBReader");
+	private static ZLStringOption ourDownloadsDirectoryOption =
+		new ZLStringOption("Files", "DownloadsDirectory", "");
+	public static ZLStringOption DownloadsDirectoryOption() {
+		if ("".equals(ourDownloadsDirectoryOption.getValue())) {
+			ourDownloadsDirectoryOption.setValue(mainBookDirectory());
 		}
-		return option;
+		return ourDownloadsDirectoryOption;
+	}
+
+	private static ZLStringOption ourTempDirectoryOption =
+		new ZLStringOption("Files", "TempDirectory", "");
+	public static ZLStringOption TempDirectoryOption() {
+		if ("".equals(ourTempDirectoryOption.getValue())) {
+			ourTempDirectoryOption.setValue(mainBookDirectory() + "/.FBReader");
+		}
+		return ourTempDirectoryOption;
 	}
 
 	public static String cardDirectory() {
@@ -102,7 +112,16 @@ public abstract class Paths {
 		return option;
 	}
 
-	public static String mainBookDirectory() {
+	public static List<String> bookPath() {
+		final List<String> path = new ArrayList<String>(Paths.BookPathOption.getValue());
+		final String downloadsDirectory = Paths.DownloadsDirectoryOption().getValue();
+		if (!"".equals(downloadsDirectory) && !path.contains(downloadsDirectory)) {
+			path.add(downloadsDirectory);
+		}
+		return path;
+	}
+
+	private static String mainBookDirectory() {
 		final List<String> bookPath = BookPathOption.getValue();
 		return bookPath.isEmpty() ? defaultBookDirectory() : bookPath.get(0);
 	}
