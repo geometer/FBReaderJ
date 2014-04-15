@@ -45,6 +45,12 @@ public class CancelActivity extends ListActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		// we use this local variable to be sure collection is not null inside the runnable
 		final BookCollectionShadow collection = new BookCollectionShadow();
 		myCollection = collection;
 		collection.bindToService(this, new Runnable() {

@@ -42,18 +42,9 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.util.SQLiteUtil;
 
 final class SQLiteBooksDatabase extends BooksDatabase {
-	private static BooksDatabase ourInstance;
-
-	static BooksDatabase Instance(Context context) {
-		if (ourInstance == null) {
-			ourInstance = new SQLiteBooksDatabase(context);
-		}
-		return ourInstance;
-	}
-
 	private final SQLiteDatabase myDatabase;
 
-	private SQLiteBooksDatabase(Context context) {
+	SQLiteBooksDatabase(Context context) {
 		myDatabase = context.openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
 		migrate();
 	}
