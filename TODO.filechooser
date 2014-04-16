@@ -10,3 +10,5 @@ DONE resource strings
 DONE layout for versions < v11
 * create missing catalogs for fonts/wallpapers (if possible)
 * special icon for inaccessible folders
+* set impossible value for temp folder & check
+* set impossible value for downloads folder & check
