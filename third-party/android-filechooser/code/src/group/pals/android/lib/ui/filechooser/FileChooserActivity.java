@@ -634,7 +634,7 @@ public class FileChooserActivity extends Activity {
             mRoot = mFileProvider.defaultPath();
 
         IFileProvider.FilterMode filterMode = (FilterMode) getIntent().getSerializableExtra(_FilterMode);
-        if (filterMode == null){
+        if (filterMode == null) {
             filterMode = IFileProvider.FilterMode.DirectoriesOnly;
         }
 
@@ -1649,15 +1649,12 @@ public class FileChooserActivity extends Activity {
     };// mBtnGoForwardOnClickListener
     
     private void checkUIForFolderCreation(IFile dir){
-        if(mFileProvider.getFilterMode() != IFileProvider.FilterMode.AnyDirectories){
-            if(!(((File) dir).canWrite()) ){
-                mBtnOk.setEnabled(false);
-                mViewCreateFolder.setEnabled(false);
-            }else{
-                mBtnOk.setEnabled(true);
-                mViewCreateFolder.setEnabled(true);
-            }
-        }
+        final boolean isDirectoryWriteable = ((File)dir).canWrite();
+        mViewCreateFolder.setEnabled(isDirectoryWriteable);
+        mBtnOk.setEnabled(
+			isDirectoryWriteable ||
+        	mFileProvider.getFilterMode() == IFileProvider.FilterMode.AnyDirectories
+		);
     }
     
     private final View.OnLongClickListener mBtnGoBackForwardOnLongClickListener = new View.OnLongClickListener() {
@@ -1712,9 +1709,9 @@ public class FileChooserActivity extends Activity {
     private final View.OnClickListener mBtnOk_ActionBar_OnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if ((getLocation() instanceof File)){
-                if(mFileProvider.getFilterMode() != IFileProvider.FilterMode.AnyDirectories){
-                    if(!((File)getLocation()).canWrite()){
+            if (getLocation() instanceof File) {
+                if (mFileProvider.getFilterMode() != IFileProvider.FilterMode.AnyDirectories) {
+                    if (!((File)getLocation()).canWrite()) {
                         Dlg.toast(FileChooserActivity.this, R.string.afc_msg_app_cant_choose_folder, Dlg._LengthShort);
                         return;
                     }
