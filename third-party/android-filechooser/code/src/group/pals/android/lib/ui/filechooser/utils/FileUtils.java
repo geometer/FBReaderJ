@@ -63,6 +63,8 @@ public class FileUtils {
                 if(file instanceof File && !((File)file).canWrite()){
                     if(file instanceof ParentFile){
                         return R.drawable.afc_folder;
+                    }else if(!((File)file).canExecute()){
+                        return R.drawable.afc_folder_no_access;
                     }else{
                         return R.drawable.afc_folder_locked;
                     }
