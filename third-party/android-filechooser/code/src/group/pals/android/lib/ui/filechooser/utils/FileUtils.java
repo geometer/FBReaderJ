@@ -72,7 +72,11 @@ public class FileUtils {
                     return R.drawable.afc_folder;
                 }
             }else{
-                return R.drawable.afc_folder;
+                if(file instanceof File && !((File)file).canExecute()){
+                    return R.drawable.afc_folder_no_access;
+                }else{
+                    return R.drawable.afc_folder;
+                }
             }
         }
 
