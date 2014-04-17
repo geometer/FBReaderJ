@@ -52,6 +52,7 @@ public abstract class Paths {
 		if ("".equals(ourTempDirectoryOption.getValue())) {
 			ourTempDirectoryOption.setValue(mainBookDirectory() + "/.FBReader");
 		}
+		//ourTempDirectoryOption.setValue("/X/Y/Z");
 		return ourTempDirectoryOption;
 	}
 

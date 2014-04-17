@@ -25,11 +25,11 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 
-import group.pals.android.lib.ui.filechooser.FileChooserActivity;
-
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.android.util.FileChooserUtil;
 
 public class FileChooserCollection {
 	private final Context myContext;
@@ -61,9 +61,7 @@ public class FileChooserCollection {
 
 	public void update(int index, Intent data) {
 		try {
-			myPreferences.get(index).setValue(
-				data.getStringExtra(FileChooserActivity._FolderPath)
-			);
+			myPreferences.get(index).setValue(FileChooserUtil.pathFromData(data));
 		} catch (Exception e) {
 			// ignore
 		}
