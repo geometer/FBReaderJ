@@ -40,6 +40,14 @@ public class FileUtils {
         _MapFileIcons.put(MimeTypes._RegexFileTypePlainTexts, R.drawable.afc_file_plain_text);
     }
 
+	private static boolean accessDenied(IFile file) {
+		if (android.os.Build.VERSION.SDK_INT >= 9) {
+    		return file instanceof File && !((File)file).canExecute();
+		} else {
+			return false;
+		}
+	}
+
     /**
      * Gets resource icon ID of an {@link IFile}.
      * 
@@ -58,23 +66,23 @@ public class FileUtils {
                     return _MapFileIcons.get(r);
 
             return R.drawable.afc_file;
-        } else if (file.isDirectory()){
-            if(filterMode != IFileProvider.FilterMode.AnyDirectories){
-                if(file instanceof File && !((File)file).canWrite()){
-                    if(file instanceof ParentFile){
+        } else if (file.isDirectory()) {
+            if (filterMode != IFileProvider.FilterMode.AnyDirectories) {
+                if (file instanceof File && !((File)file).canWrite()) {
+                    if (file instanceof ParentFile) {
                         return R.drawable.afc_folder;
-                    }else if(!((File)file).canExecute()){
+                    } else if (accessDenied(file)) {
                         return R.drawable.afc_folder_no_access;
-                    }else{
+                    } else {
                         return R.drawable.afc_folder_locked;
                     }
-                }else{
+                } else {
                     return R.drawable.afc_folder;
                 }
-            }else{
-                if(file instanceof File && !((File)file).canExecute()){
+            } else {
+                if (accessDenied(file)) {
                     return R.drawable.afc_folder_no_access;
-                }else{
+                } else {
                     return R.drawable.afc_folder;
                 }
             }
