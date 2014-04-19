@@ -61,7 +61,7 @@ public class FixBooksDirectoryActivity extends Activity {
 
 		final View selectButton = findViewById(R.id.books_directory_fix_select_button);
 
-		Config.Instance().runOnStart(new Runnable() {
+		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				final ZLStringOption tempDirectoryOption = Paths.TempDirectoryOption();
 				myDirectoryView.setText(tempDirectoryOption.getValue());

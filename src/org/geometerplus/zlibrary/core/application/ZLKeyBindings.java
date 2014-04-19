@@ -47,7 +47,7 @@ public final class ZLKeyBindings {
 
 	private ZLKeyBindings(String name) {
 		myName = name;
-		Config.Instance().runOnStart(new Initializer());
+		Config.Instance().runOnConnect(new Initializer());
 	}
 
 	private class Initializer implements Runnable {
