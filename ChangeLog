@@ -25,6 +25,7 @@
 ===== 1.10 (Apr ??, 2014) =====
 * Fixed current position storing
 * New directory settings
+* Android 2.2 and higher: standard cache directory is now used
 * Experimental video support
 * CSS parsing optimization for ePubs (do not parse css files multiple times)
 * CSS support improvement: added support for space-separated classes list
