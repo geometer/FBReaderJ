@@ -23,13 +23,12 @@ import android.content.Context;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 class FileChooserStringPreference extends FileChooserPreference {
 	private final ZLStringOption myOption;
 
-	FileChooserStringPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringOption option, int regCode) {
-		super(context, rootResource, resourceKey, true, regCode);
+	FileChooserStringPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringOption option, int regCode, Runnable onValueSetAction) {
+		super(context, rootResource, resourceKey, true, regCode, onValueSetAction);
 		myOption = option;
 
 		setSummary(getStringValue());
@@ -41,11 +40,7 @@ class FileChooserStringPreference extends FileChooserPreference {
 	}
 
 	@Override
-	protected void setValue(String value) {
-		if (MiscUtil.isEmptyString(value)) {
-			return;
-		}
-
+	protected void setValueInternal(String value) {
 		final String currentValue = myOption.getValue();
 		if (!currentValue.equals(value)) {
 			myOption.setValue(value);
