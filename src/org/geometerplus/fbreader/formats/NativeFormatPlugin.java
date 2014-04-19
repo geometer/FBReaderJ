@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.text.model.CachedCharStorageException;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
@@ -93,12 +94,17 @@ public class NativeFormatPlugin extends FormatPlugin {
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
 		final int code = readModelNative(model);
-		if (code != 0) {
-			throw new BookReadingException(
-				"nativeCodeFailure",
-				model.Book.File,
-				new String[] { String.valueOf(code), model.Book.File.getPath() }
-			);
+		switch (code) {
+			case 0:
+				return;
+			case 3:
+				throw new CachedCharStorageException("Cannot write file from native code");
+			default:
+				throw new BookReadingException(
+					"nativeCodeFailure",
+					model.Book.File,
+					new String[] { String.valueOf(code), model.Book.File.getPath() }
+				);
 		}
 	}
 
