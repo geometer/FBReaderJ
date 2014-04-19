@@ -61,7 +61,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	@Override
-	public void runOnStart(Runnable runnable) {
+	public void runOnConnect(Runnable runnable) {
 		if (myInterface != null) {
 			runnable.run();
 		} else {
