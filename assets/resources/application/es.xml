@@ -930,7 +930,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Problema de FBReader"/>
-			<node name="text" value="El directorio caché de FBReader no está accesible para escritura. Tal vez usted haya olvidado insertar o desmontar su tarjeta de memoria. Por favor, solucione este problema o ingrese otro nombre de directorio a continuación."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problema de FBReader"/>
