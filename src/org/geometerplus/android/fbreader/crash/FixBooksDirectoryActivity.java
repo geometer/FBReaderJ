@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.options.Config;
@@ -60,13 +59,13 @@ public class FixBooksDirectoryActivity extends Activity {
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("ok").getValue());
 
-		final View selectArea = findViewById(R.id.books_directory_fix_select_area);
+		final View selectButton = findViewById(R.id.books_directory_fix_select_button);
 
 		Config.Instance().runOnStart(new Runnable() {
 			public void run() {
 				final ZLStringOption tempDirectoryOption = Paths.TempDirectoryOption();
 				myDirectoryView.setText(tempDirectoryOption.getValue());
-				selectArea.setOnClickListener(new View.OnClickListener() {
+				selectButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						FileChooserUtil.runDirectoryChooser(
 							FixBooksDirectoryActivity.this,
@@ -77,7 +76,7 @@ public class FixBooksDirectoryActivity extends Activity {
 						);
 					}
 				});
-				okButton.setOnClickListener(new Button.OnClickListener() {
+				okButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						final String newDirectory = myDirectoryView.getText().toString();
 						tempDirectoryOption.setValue(newDirectory);
@@ -90,7 +89,7 @@ public class FixBooksDirectoryActivity extends Activity {
 
 		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
-		cancelButton.setOnClickListener(new Button.OnClickListener() {
+		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				finish();
 			}

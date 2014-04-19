@@ -166,8 +166,6 @@ public:
 	static shared_ptr<VoidMethod> Method_NativeBookModel_registerFontFamilyList;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_registerFontEntry;
 
-	//static shared_ptr<StaticObjectMethod> StaticMethod_BookReadingException_throwForFile;
-
 public:
 	static bool init(JavaVM* jvm);
 	static JNIEnv *getEnv();
@@ -182,10 +180,6 @@ public:
 
 	static jintArray createJavaIntArray(JNIEnv *env, const std::vector<jint> &data);
 	static jbyteArray createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data);
-
-	static void throwRuntimeException(const std::string &message);
-	static void throwCachedCharStorageException(const std::string &message);
-	//static void throwBookReadingException(const std::string &resourceId, const ZLFile &file);
 };
 
 inline jstring JString::j() { return myJ; }

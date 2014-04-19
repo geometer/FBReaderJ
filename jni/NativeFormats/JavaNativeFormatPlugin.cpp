@@ -32,11 +32,7 @@
 
 static shared_ptr<FormatPlugin> findCppPlugin(jobject base) {
 	const std::string fileType = AndroidUtil::Method_NativeFormatPlugin_supportedFileType->callForCppString(base);
-	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().pluginByType(fileType);
-	if (plugin.isNull()) {
-		AndroidUtil::throwRuntimeException("Native FormatPlugin instance is NULL for type " + fileType);
-	}
-	return plugin;
+	return PluginCollection::Instance().pluginByType(fileType);
 }
 
 static void fillUids(JNIEnv* env, jobject javaBook, Book &book) {
@@ -287,7 +283,6 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 		return 2;
 	}
 	if (!model->flush()) {
-		AndroidUtil::throwCachedCharStorageException("Cannot write file from native code");
 		return 3;
 	}
 
