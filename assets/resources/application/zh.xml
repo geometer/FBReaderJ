@@ -915,7 +915,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader 问题"/>
-			<node name="text" value="FBReader缓存目录无法写入，或许你忘了插入或已拔出内存卡。请处理这个问题，或者进入下面的另一个文件夹。"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader 问题"/>

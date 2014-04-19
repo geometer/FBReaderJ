@@ -17,13 +17,13 @@
 			android:layout_marginBottom="10dp"
 		/>
 		<LinearLayout
-			android:id="@+id/books_directory_fix_select_area"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
 		>
-			<ImageView
-				android:src="@drawable/ic_list_library_folder"
+			<ImageButton
+				android:id="@+id/books_directory_fix_select_button"
+				android:src="@drawable/afc_folder"
 				android:layout_width="wrap_content"
 				android:layout_height="fill_parent"
 				android:gravity="center_vertical|left"
