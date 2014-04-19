@@ -149,7 +149,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			directoriesScreen.Resource, "wallpaperPath"
 		);
 		directoriesScreen.addPreference(wallpaperDirPreference);
-		directoriesScreen.addOption(Paths.TempDirectoryOption(), "tempDir");
+		directoriesScreen.addOption(Paths.TempDirectoryOption, "tempDir");
 /*
 		final Runnable libraryUpdater = new Runnable() {
 			public void run() {
