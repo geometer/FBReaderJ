@@ -39,10 +39,6 @@ public class FileChooserCollection {
 		myContext = context;
 	}
 
-	public FileChooserPreference createPreference(ZLResource rootResource, String resourceKey, ZLStringListOption option) {
-		return createPreference(rootResource, resourceKey, option, null);
-	}
-
 	public FileChooserPreference createPreference(ZLResource rootResource, String resourceKey, ZLStringListOption option, Runnable onValueSetAction) {
 		final FileChooserPreference preference = new FileChooserStringListPreference(
 			myContext, rootResource, resourceKey, option, myPreferences.size(), onValueSetAction
@@ -51,9 +47,9 @@ public class FileChooserCollection {
 		return preference;
 	}
 
-	public FileChooserPreference createPreference(ZLResource rootResource, String resourceKey, ZLStringOption option) {
+	public FileChooserPreference createPreference(ZLResource rootResource, String resourceKey, ZLStringOption option, Runnable onValueSetAction) {
 		final FileChooserPreference preference = new FileChooserStringPreference(
-			myContext, rootResource, resourceKey, option, myPreferences.size()
+			myContext, rootResource, resourceKey, option, myPreferences.size(), onValueSetAction
 		);
 		myPreferences.add(preference);
 		return preference;
