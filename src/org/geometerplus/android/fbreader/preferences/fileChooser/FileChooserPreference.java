@@ -24,6 +24,7 @@ import android.content.Context;
 import android.preference.Preference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.android.util.FileChooserUtil;
 
@@ -31,14 +32,17 @@ abstract class FileChooserPreference extends Preference {
 	private final int myRegCode;
 	private final ZLResource myResource;
 	private final boolean myChooseWritableDirectoriesOnly;
+	private final Runnable myOnValueSetAction;
 
-	FileChooserPreference(Context context, ZLResource rootResource, String resourceKey, boolean chooseWritableDirectoriesOnly, int regCode) {
+	FileChooserPreference(Context context, ZLResource rootResource, String resourceKey, boolean chooseWritableDirectoriesOnly, int regCode, Runnable onValueSetAction) {
 		super(context);
 
 		myRegCode = regCode;
-		myChooseWritableDirectoriesOnly = chooseWritableDirectoriesOnly;
 		myResource = rootResource.getResource(resourceKey);
 		setTitle(myResource.getValue());
+
+		myChooseWritableDirectoriesOnly = chooseWritableDirectoriesOnly;
+		myOnValueSetAction = onValueSetAction;
 	}
 
 	@Override
@@ -53,5 +57,18 @@ abstract class FileChooserPreference extends Preference {
 	}
 
 	protected abstract String getStringValue();
-	protected abstract void setValue(String value);
+
+	protected final void setValue(String value) {
+		if (MiscUtil.isEmptyString(value)) {
+			return;
+		}
+
+		setValueInternal(value);
+
+		if (myOnValueSetAction != null) {
+			myOnValueSetAction.run();
+		}
+	}
+
+	protected abstract void setValueInternal(String value);
 }
