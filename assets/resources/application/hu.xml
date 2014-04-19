@@ -915,7 +915,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader probléma"/>
-			<node name="text" value="Az FBReader gyorsítótár mappája nem írható. Valószínűleg elfelejtette behelyezni vagy leválasztani a memóriakártyát. Kérem, javítsa a problémát, vagy válasszon egy másik mappát."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader probléma"/>

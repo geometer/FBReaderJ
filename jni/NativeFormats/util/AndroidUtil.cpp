@@ -128,8 +128,6 @@ shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_addImage;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_registerFontFamilyList;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_registerFontEntry;
 
-//shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_BookReadingException_throwForFile;
-
 JNIEnv *AndroidUtil::getEnv() {
 	JNIEnv *env;
 	ourJavaVM->GetEnv((void **)&env, JNI_VERSION_1_2);
@@ -211,11 +209,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_NativeBookModel_addImage = new VoidMethod(Class_NativeBookModel, "addImage", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/image/ZLImage;)");
 	Method_NativeBookModel_registerFontFamilyList = new VoidMethod(Class_NativeBookModel, "registerFontFamilyList", "([Ljava/lang/String;)");
 	Method_NativeBookModel_registerFontEntry = new VoidMethod(Class_NativeBookModel, "registerFontEntry", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/fonts/FileInfo;Lorg/geometerplus/zlibrary/core/fonts/FileInfo;Lorg/geometerplus/zlibrary/core/fonts/FileInfo;Lorg/geometerplus/zlibrary/core/fonts/FileInfo;)");
-
-/*
-	Class_BookReadingException = new JavaClass(env, "org/geometerplus/fbreader/bookmodel/BookReadingException");
-	StaticMethod_BookReadingException_throwForFile = new StaticVoidMethod(Class_BookReadingException, "throwForFile", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;)V") );
-*/
 
 	return true;
 }
@@ -330,24 +323,3 @@ jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte
 	env->SetByteArrayRegion(array, 0, size, &data.front());
 	return array;
 }
-
-void AndroidUtil::throwRuntimeException(const std::string &message) {
-	getEnv()->ThrowNew(Class_java_lang_RuntimeException.j(), message.c_str());
-}
-
-void AndroidUtil::throwCachedCharStorageException(const std::string &message) {
-	getEnv()->ThrowNew(Class_CachedCharStorageException.j(), message.c_str());
-}
-
-/*
-void AndroidUtil::throwBookReadingException(const std::string &resourceId, const ZLFile &file) {
-	JNIEnv *env = getEnv();
-	env->CallStaticVoidMethod(
-		StaticMethod_BookReadingException_throwForFile,
-		AndroidUtil::createJavaString(env, resourceId),
-		AndroidUtil::createJavaFile(env, file.path())
-	);
-	// TODO: possible memory leak
-	// TODO: clear ZLFile object reference
-}
-*/

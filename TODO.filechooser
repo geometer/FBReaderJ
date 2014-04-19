@@ -10,5 +10,5 @@ DELAYED standard temp dir (?)
 DONE layout for versions < v11
 DELAYED create missing catalogs for fonts/wallpapers (if possible)
 DONE special icon for inaccessible folders
-* set impossible value for temp folder & check
+DONE set impossible value for temp folder & check
 * set impossible value for downloads folder & check
