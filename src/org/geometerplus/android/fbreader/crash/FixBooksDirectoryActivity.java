@@ -63,15 +63,14 @@ public class FixBooksDirectoryActivity extends Activity {
 
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				final ZLStringOption tempDirectoryOption = Paths.TempDirectoryOption();
-				myDirectoryView.setText(tempDirectoryOption.getValue());
+				myDirectoryView.setText(Paths.TempDirectoryOption.getValue());
 				selectButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						FileChooserUtil.runDirectoryChooser(
 							FixBooksDirectoryActivity.this,
 							1,
 							title,
-							tempDirectoryOption.getValue(),
+							Paths.TempDirectoryOption.getValue(),
 							true
 						);
 					}
@@ -79,7 +78,7 @@ public class FixBooksDirectoryActivity extends Activity {
 				okButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						final String newDirectory = myDirectoryView.getText().toString();
-						tempDirectoryOption.setValue(newDirectory);
+						Paths.TempDirectoryOption.setValue(newDirectory);
 						startActivity(new Intent(FixBooksDirectoryActivity.this, FBReader.class));
 						finish();
 					}
