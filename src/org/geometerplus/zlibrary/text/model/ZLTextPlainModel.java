@@ -139,7 +139,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		public void next() {
 			int dataOffset = myDataOffset;
 			char[] data = myStorage.block(myDataIndex);
-			if (dataOffset == data.length) {
+			if (dataOffset >= data.length) {
 				data = myStorage.block(++myDataIndex);
 				dataOffset = 0;
 			}
