@@ -55,7 +55,7 @@ public abstract class Util implements UserRegistrationConstants {
 			return;
 		}
 
-		Config.Instance().runOnStart(new Runnable() {
+		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
 					public void run() {

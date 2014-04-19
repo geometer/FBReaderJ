@@ -37,22 +37,15 @@ public abstract class Paths {
 	public static ZLStringListOption WallpaperPathOption =
 		pathOption("WallpapersDirectory", cardDirectory() + "/Wallpapers");
 
-	private static ZLStringOption ourDownloadsDirectoryOption =
-		new ZLStringOption("Files", "DownloadsDirectory", "");
-	public static ZLStringOption DownloadsDirectoryOption() {
-		if ("".equals(ourDownloadsDirectoryOption.getValue())) {
-			ourDownloadsDirectoryOption.setValue(mainBookDirectory());
-		}
-		return ourDownloadsDirectoryOption;
-	}
+	public static ZLStringOption TempDirectoryOption =
+		new ZLStringOption("Files", "TemporaryDirectory", "");
 
-	private static ZLStringOption ourTempDirectoryOption =
-		new ZLStringOption("Files", "TempDirectory", "");
-	public static ZLStringOption TempDirectoryOption() {
-		if ("".equals(ourTempDirectoryOption.getValue())) {
-			ourTempDirectoryOption.setValue(mainBookDirectory() + "/.FBReader");
+	public static ZLStringOption DownloadsDirectoryOption =
+		new ZLStringOption("Files", "DownloadsDirectory", "");
+	static {
+		if ("".equals(DownloadsDirectoryOption.getValue())) {
+			DownloadsDirectoryOption.setValue(mainBookDirectory());
 		}
-		return ourTempDirectoryOption;
 	}
 
 	public static String cardDirectory() {
@@ -114,20 +107,20 @@ public abstract class Paths {
 
 	public static List<String> bookPath() {
 		final List<String> path = new ArrayList<String>(Paths.BookPathOption.getValue());
-		final String downloadsDirectory = Paths.DownloadsDirectoryOption().getValue();
+		final String downloadsDirectory = DownloadsDirectoryOption.getValue();
 		if (!"".equals(downloadsDirectory) && !path.contains(downloadsDirectory)) {
 			path.add(downloadsDirectory);
 		}
 		return path;
 	}
 
-	private static String mainBookDirectory() {
+	public static String mainBookDirectory() {
 		final List<String> bookPath = BookPathOption.getValue();
 		return bookPath.isEmpty() ? defaultBookDirectory() : bookPath.get(0);
 	}
 
 	public static String tempDirectory() {
-		return TempDirectoryOption().getValue();
+		return TempDirectoryOption.getValue();
 	}
 
 	public static String networkCacheDirectory() {

@@ -134,7 +134,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		myScreen = getPreferenceManager().createPreferenceScreen(this);
 
 		final Intent intent = getIntent();
-		Config.Instance().runOnStart(new Runnable() {
+		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				init(intent);
 			}

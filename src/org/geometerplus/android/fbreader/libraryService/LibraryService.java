@@ -100,7 +100,7 @@ public class LibraryService extends Service {
 		}
 
 		public void reset(final boolean force) {
-			Config.Instance().runOnStart(new Runnable() {
+			Config.Instance().runOnConnect(new Runnable() {
 				public void run() {
 					resetInternal(force);
 				}
