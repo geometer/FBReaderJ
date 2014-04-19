@@ -949,7 +949,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader Problem"/>
-			<node name="text" value="Auf das FBReader Cache-Verzeichnis kann nicht schreibend zugegriffen werden. Möglicherweise haben sie ihre Speicherkarte entfernt oder sie ist nicht im Zugriff des Android-Systems. Bitte beheben sie das Problem oder geben Sie unten einen anderen Verzeichnisnamen ein."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader Problem"/>

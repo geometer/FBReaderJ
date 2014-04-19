@@ -952,7 +952,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Խնդիր FBReader-ում"/>
-			<node name="text" value="FBReader-ը չի կարող պահել ժամանակավոր նիշքերը։ Չի բացառվում՝ մոռացել եք տեղադրել հիշողության քարտը կամ այն հասանելի չէ համակարգչին միացված լինելու պատճառով։ Վերացրեք այս խնդիրը կամ ժամանակավոր նիշքերի գրացուցակի համար այլ անուն ընտրեք։"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Խնդիր FBReader-ում"/>
