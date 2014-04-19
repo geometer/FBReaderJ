@@ -47,7 +47,7 @@ public final class ZLKeyBindings {
 
 	private ZLKeyBindings(String name) {
 		myName = name;
-		Config.Instance().runOnStart(new Initializer());
+		Config.Instance().runOnConnect(new Initializer());
 	}
 
 	private class Initializer implements Runnable {
@@ -69,7 +69,7 @@ public final class ZLKeyBindings {
 				// ignore
 			}
 			try {
-				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.DownloadsDirectoryOption().getValue() + "/keymap.xml"));
+				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.bookPath().get(0) + "/keymap.xml"));
 			} catch (Exception e) {
 				// ignore
 			}

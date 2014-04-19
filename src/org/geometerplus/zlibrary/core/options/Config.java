@@ -100,7 +100,7 @@ public abstract class Config {
 	}
 
 	public abstract boolean isInitialized();
-	public abstract void runOnStart(Runnable runnable);
+	public abstract void runOnConnect(Runnable runnable);
 
 	public abstract List<String> listGroups();
 	public abstract List<String> listNames(String group);
