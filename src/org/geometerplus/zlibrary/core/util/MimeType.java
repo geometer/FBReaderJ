@@ -142,6 +142,9 @@ public final class MimeType {
 	public static final MimeType UNKNOWN = get("*/*");
 	public static final MimeType NULL = new MimeType(null, null);
 
+	public static final List<MimeType> TYPES_VIDEO
+		 = Arrays.asList(VIDEO_WEBM, VIDEO_OGG, VIDEO_MP4);
+
 	public static final List<MimeType> TYPES_FB2
 		 = Arrays.asList(APP_FICTIONBOOK, APP_FICTIONBOOK_XML, TEXT_FB2);
 	public static final List<MimeType> TYPES_EPUB
