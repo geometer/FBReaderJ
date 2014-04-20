@@ -68,9 +68,8 @@ void OEBSimpleIdReader::endElementHandler(const char *tag) {
 			ZLUnicodeUtil::utf8Trim(myBuffer);
 			if (!myBuffer.empty()) {
 				if (!myPublicationId.empty()) {
-					//myPublicationId += " ";
+					myPublicationId += " ";
 				}
-				myPublicationId += " ";
 				myPublicationId += myBuffer;
 				myBuffer.erase();
 			}
