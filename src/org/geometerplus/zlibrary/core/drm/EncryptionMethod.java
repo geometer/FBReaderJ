@@ -25,6 +25,6 @@ public abstract class EncryptionMethod {
 	public static final String MARLIN = "marlin";
 
 	public static boolean isSupported(String method) {
-		return false;
+		return EMBEDDING.equals(method);
 	}
 }
