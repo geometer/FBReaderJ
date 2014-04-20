@@ -22,8 +22,6 @@
 
 #include <vector>
 
-#include <ZLXMLReader.h>
-
 #include "OPFReader.h"
 
 class Book;

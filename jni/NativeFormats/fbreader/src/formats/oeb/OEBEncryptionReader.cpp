@@ -26,6 +26,7 @@
 
 #include "../FormatPlugin.h"
 #include "OEBEncryptionReader.h"
+#include "OEBSimpleIdReader.h"
 
 class EpubRightsFileReader : public ZLXMLReader {
 
@@ -44,7 +45,7 @@ private:
 class EpubEncryptionFileReader : public ZLXMLReader {
 
 public:
-	EpubEncryptionFileReader();
+	EpubEncryptionFileReader(const ZLFile &opfFile);
 	void addKnownMethod(const std::string &method);
 	const std::vector<shared_ptr<FileEncryptionInfo> > &infos() const;
 
@@ -53,6 +54,8 @@ private:
 	void endElementHandler(const char *tag);
 	void characterDataHandler(const char *text, std::size_t len);
 	bool processNamespaces() const;
+
+	std::string publicationId();
 
 private:
 	enum State {
@@ -66,6 +69,9 @@ private:
 	};
 
 private:
+	const ZLFile &myOpfFile;
+	std::string myPublicationId;
+	bool myPublicationIdFlag;
 	std::vector<std::string> myKnownMethods;
 	std::vector<shared_ptr<FileEncryptionInfo> > myInfos;
 
@@ -77,7 +83,7 @@ private:
 
 static const std::string EMBEDDING_ALGORITHM = "http://www.idpf.org/2008/embedding";
 
-std::vector<shared_ptr<FileEncryptionInfo> > OEBEncryptionReader::readEncryptionInfos(const ZLFile &epubFile) {
+std::vector<shared_ptr<FileEncryptionInfo> > OEBEncryptionReader::readEncryptionInfos(const ZLFile &epubFile, const ZLFile &opfFile) {
 	shared_ptr<ZLDir> epubDir = epubFile.directory();
 	if (epubDir.isNull()) {
 		return std::vector<shared_ptr<FileEncryptionInfo> >();
@@ -90,7 +96,7 @@ std::vector<shared_ptr<FileEncryptionInfo> > OEBEncryptionReader::readEncryption
 		return std::vector<shared_ptr<FileEncryptionInfo> >();
 	}
 
-	EpubEncryptionFileReader reader = EpubEncryptionFileReader();
+	EpubEncryptionFileReader reader = EpubEncryptionFileReader(opfFile);
 
 	if (rightsFile.exists()) {
 		EpubRightsFileReader rightsReader;
@@ -120,7 +126,7 @@ bool EpubRightsFileReader::processNamespaces() const {
 	return true;
 }
 
-EpubEncryptionFileReader::EpubEncryptionFileReader() : myState(READ_NONE) {
+EpubEncryptionFileReader::EpubEncryptionFileReader(const ZLFile &opfFile) : myOpfFile(opfFile), myPublicationIdFlag(false), myState(READ_NONE) {
 }
 
 void EpubEncryptionFileReader::addKnownMethod(const std::string &method) {
@@ -205,7 +211,7 @@ void EpubEncryptionFileReader::endElementHandler(const char *tag) {
 			if (testTag(ZLXMLNamespace::XMLEncryption, "EncryptedData", tag)) {
 				if (EMBEDDING_ALGORITHM == myAlgorithm) {
 					myInfos.push_back(new FileEncryptionInfo(
-						myUri, EncryptionMethod::EMBEDDING, myAlgorithm, "code.google.com.epub-samples.wasteland-otf-obfuscated"
+						myUri, EncryptionMethod::EMBEDDING, myAlgorithm, publicationId()
 					));
 				} else {
 					std::vector<std::string>::const_iterator it =
@@ -245,4 +251,12 @@ void EpubEncryptionFileReader::characterDataHandler(const char *text, std::size_
 
 bool EpubEncryptionFileReader::processNamespaces() const {
 	return true;
+}
+
+std::string EpubEncryptionFileReader::publicationId() {
+	if (!myPublicationIdFlag) {
+		myPublicationId = OEBSimpleIdReader().readId(myOpfFile);
+		myPublicationIdFlag = true;
+	}
+	return myPublicationId;
 }
