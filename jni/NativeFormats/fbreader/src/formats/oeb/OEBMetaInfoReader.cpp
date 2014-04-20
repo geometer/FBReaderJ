@@ -57,25 +57,6 @@ void OEBMetaInfoReader::characterDataHandler(const char *text, std::size_t len) 
 	}
 }
 
-bool OEBMetaInfoReader::testDCTag(const std::string &name, const std::string &tag) const {
-	return
-		testTag(ZLXMLNamespace::DublinCore, name, tag) ||
-		testTag(ZLXMLNamespace::DublinCoreLegacy, name, tag);
-}
-
-bool OEBMetaInfoReader::isNSName(const std::string &fullName, const std::string &shortName, const std::string &fullNSId) const {
-	const int prefixLength = fullName.length() - shortName.length() - 1;
-	if (prefixLength <= 0 ||
-			fullName[prefixLength] != ':' ||
-			!ZLStringUtil::stringEndsWith(fullName, shortName)) {
-		return false;
-	}
-	const std::map<std::string,std::string> &namespaceMap = namespaces();
-	std::map<std::string,std::string>::const_iterator iter =
-		namespaceMap.find(fullName.substr(0, prefixLength));
-	return iter != namespaceMap.end() && iter->second == fullNSId;
-}
-
 void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attributes) {
 	const std::string tagString = ZLUnicodeUtil::toLower(tag);
 	switch (myReadState) {
@@ -179,10 +160,6 @@ void OEBMetaInfoReader::endElementHandler(const char *tag) {
 	myReadState = READ_METADATA;
 }
 
-bool OEBMetaInfoReader::processNamespaces() const {
-	return true;
-}
-
 bool OEBMetaInfoReader::readMetaInfo(const ZLFile &file) {
 	myReadState = READ_NONE;
 	if (!readDocument(file)) {
@@ -200,8 +177,4 @@ bool OEBMetaInfoReader::readMetaInfo(const ZLFile &file) {
 		}
 	}
 	return true;
-}
-
-const std::vector<std::string> &OEBMetaInfoReader::externalDTDs() const {
-	return EntityFilesCollector::Instance().externalDTDs("xhtml");
 }
