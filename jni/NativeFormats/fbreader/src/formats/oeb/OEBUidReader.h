@@ -24,9 +24,11 @@
 
 #include <ZLXMLReader.h>
 
+#include "OPFReader.h"
+
 class Book;
 
-class OEBUidReader : public ZLXMLReader {
+class OEBUidReader : public OPFReader {
 
 public:
 	OEBUidReader(Book &book);
@@ -35,12 +37,6 @@ public:
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
 	void characterDataHandler(const char *text, std::size_t len);
-	bool processNamespaces() const;
-	const std::vector<std::string> &externalDTDs() const;
-
-private:
-	bool testDCTag(const std::string &name, const std::string &tag) const;
-	bool isNSName(const std::string &fullName, const std::string &shortName, const std::string &fullNSId) const;
 
 private:
 	Book &myBook;

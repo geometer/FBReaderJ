@@ -46,25 +46,6 @@ void OEBUidReader::characterDataHandler(const char *text, std::size_t len) {
 	}
 }
 
-bool OEBUidReader::testDCTag(const std::string &name, const std::string &tag) const {
-	return
-		testTag(ZLXMLNamespace::DublinCore, name, tag) ||
-		testTag(ZLXMLNamespace::DublinCoreLegacy, name, tag);
-}
-
-bool OEBUidReader::isNSName(const std::string &fullName, const std::string &shortName, const std::string &fullNSId) const {
-	const int prefixLength = fullName.length() - shortName.length() - 1;
-	if (prefixLength <= 0 ||
-			fullName[prefixLength] != ':' ||
-			!ZLStringUtil::stringEndsWith(fullName, shortName)) {
-		return false;
-	}
-	const std::map<std::string,std::string> &namespaceMap = namespaces();
-	std::map<std::string,std::string>::const_iterator iter =
-		namespaceMap.find(fullName.substr(0, prefixLength));
-	return iter != namespaceMap.end() && iter->second == fullNSId;
-}
-
 void OEBUidReader::startElementHandler(const char *tag, const char **attributes) {
 	const std::string tagString = ZLUnicodeUtil::toLower(tag);
 	switch (myReadState) {
@@ -111,18 +92,10 @@ void OEBUidReader::endElementHandler(const char *tag) {
 	myBuffer.erase();
 }
 
-bool OEBUidReader::processNamespaces() const {
-	return true;
-}
-
 bool OEBUidReader::readUids(const ZLFile &file) {
 	myReadState = READ_NONE;
 	if (!readDocument(file)) {
 		return false;
 	}
 	return true;
-}
-
-const std::vector<std::string> &OEBUidReader::externalDTDs() const {
-	return EntityFilesCollector::Instance().externalDTDs("xhtml");
 }
