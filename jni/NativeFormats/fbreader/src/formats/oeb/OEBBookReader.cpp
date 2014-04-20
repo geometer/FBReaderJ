@@ -184,21 +184,21 @@ void OEBBookReader::endElementHandler(const char *tag) {
 	}
 }
 
-bool OEBBookReader::readBook(const ZLFile &file) {
-	const ZLFile epub = file.getContainerArchive();
-	epub.forceArchiveType(ZLFile::ZIP);
-	shared_ptr<ZLDir> epubDir = epub.directory();
+bool OEBBookReader::readBook(const ZLFile &opfFile) {
+	const ZLFile epubFile = opfFile.getContainerArchive();
+	epubFile.forceArchiveType(ZLFile::ZIP);
+	shared_ptr<ZLDir> epubDir = epubFile.directory();
 	if (!epubDir.isNull()) {
 		myEncryptionMap = new EncryptionMap();
 		const std::vector<shared_ptr<FileEncryptionInfo> > encodingInfos =
-			OEBEncryptionReader().readEncryptionInfos(epub);
+			OEBEncryptionReader().readEncryptionInfos(epubFile, opfFile);
 
 		for (std::vector<shared_ptr<FileEncryptionInfo> >::const_iterator it = encodingInfos.begin(); it != encodingInfos.end(); ++it) {
 			myEncryptionMap->addInfo(*epubDir, *it);
 		}
 	}
 
-	myFilePrefix = MiscUtil::htmlDirectoryPrefix(file.path());
+	myFilePrefix = MiscUtil::htmlDirectoryPrefix(opfFile.path());
 
 	myIdToHref.clear();
 	myHtmlFileNames.clear();
@@ -210,7 +210,7 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myGuideTOC.clear();
 	myState = READ_NONE;
 
-	if (!readDocument(file)) {
+	if (!readDocument(opfFile)) {
 		return false;
 	}
 
@@ -236,7 +236,7 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 		}
 		//ZLLogger::Instance().println("oeb", "start " + xhtmlFile.path());
 		if (!xhtmlReader.readFile(xhtmlFile, *it)) {
-			if (file.exists() && !myEncryptionMap.isNull()) {
+			if (opfFile.exists() && !myEncryptionMap.isNull()) {
 				myModelReader.insertEncryptedSectionParagraph();
 			}
 		}

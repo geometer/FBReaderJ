@@ -25,7 +25,6 @@
 #include <string>
 
 #include <shared_ptr.h>
-#include <ZLXMLReader.h>
 #include <FileEncryptionInfo.h>
 
 #include "OPFReader.h"
