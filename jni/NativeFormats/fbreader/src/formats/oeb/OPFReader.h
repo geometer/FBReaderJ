@@ -17,34 +17,28 @@
  * 02110-1301, USA.
  */
 
-#ifndef __OEBUIDREADER_H__
-#define __OEBUIDREADER_H__
+#ifndef __OPFREADER_H__
+#define __OPFREADER_H__
 
-#include "OPFReader.h"
+#include <vector>
 
-class Book;
+#include <ZLXMLReader.h>
 
-class OEBUidReader : public OPFReader {
+class OPFReader : public ZLXMLReader {
+
+protected:
+	OPFReader();
 
 public:
-	OEBUidReader(Book &book);
-	bool readUids(const ZLFile &file);
+	bool processNamespaces() const;
+	const std::vector<std::string> &externalDTDs() const;
 
-	void startElementHandler(const char *tag, const char **attributes);
-	void endElementHandler(const char *tag);
-	void characterDataHandler(const char *text, std::size_t len);
+protected:
+	bool testOPFTag(const std::string &expected, const std::string &tag) const;
+	bool testDCTag(const std::string &expected, const std::string &tag) const;
 
-private:
-	Book &myBook;
-
-	enum {
-		READ_NONE,
-		READ_METADATA,
-		READ_IDENTIFIER,
-	} myReadState;
-
-	std::string myIdentifierScheme;
-	std::string myBuffer;
+	bool isNSName(const std::string &fullName, const std::string &shortName, const std::string &fullNSId) const;
+	bool isMetadataTag(const std::string &tagName);
 };
 
-#endif /* __OEBUIDREADER_H__ */
+#endif /* __OPFREADER_H__ */

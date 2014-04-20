@@ -22,15 +22,9 @@
 #include <ZLUnicodeUtil.h>
 #include <ZLXMLNamespace.h>
 
-#include "OEBUidReader.h"
+#include "OEBSimpleIdReader.h"
 
-#include "../../library/Book.h"
-
-OEBUidReader::OEBUidReader(Book &book) : myBook(book) {
-	myBook.removeAllUids();
-}
-
-void OEBUidReader::characterDataHandler(const char *text, std::size_t len) {
+void OEBSimpleIdReader::characterDataHandler(const char *text, std::size_t len) {
 	switch (myReadState) {
 		default:
 			break;
@@ -40,7 +34,7 @@ void OEBUidReader::characterDataHandler(const char *text, std::size_t len) {
 	}
 }
 
-void OEBUidReader::startElementHandler(const char *tag, const char **attributes) {
+void OEBSimpleIdReader::startElementHandler(const char *tag, const char **attributes) {
 	const std::string tagString = ZLUnicodeUtil::toLower(tag);
 	switch (myReadState) {
 		default:
@@ -53,17 +47,13 @@ void OEBUidReader::startElementHandler(const char *tag, const char **attributes)
 		case READ_METADATA:
 			if (testDCTag("identifier", tagString)) {
 				myReadState = READ_IDENTIFIER;
-				static const FullNamePredicate schemePredicate(ZLXMLNamespace::OpenPackagingFormat, "scheme");
-				const char *scheme = attributeValue(attributes, schemePredicate);
-				myIdentifierScheme = scheme != 0 ? scheme : "EPUB-NOSCHEME";
 			}
 			break;
 	}
 }
 
-void OEBUidReader::endElementHandler(const char *tag) {
+void OEBSimpleIdReader::endElementHandler(const char *tag) {
 	const std::string tagString = ZLUnicodeUtil::toLower(tag);
-	ZLUnicodeUtil::utf8Trim(myBuffer);
 	switch (myReadState) {
 		case READ_NONE:
 			break;
@@ -75,17 +65,24 @@ void OEBUidReader::endElementHandler(const char *tag) {
 			}
 			break;
 		case READ_IDENTIFIER:
+			ZLUnicodeUtil::utf8Trim(myBuffer);
 			if (!myBuffer.empty()) {
-				myBook.addUid(myIdentifierScheme, myBuffer);
+				if (!myPublicationId.empty()) {
+					//myPublicationId += " ";
+				}
+				myPublicationId += " ";
+				myPublicationId += myBuffer;
+				myBuffer.erase();
 			}
 			myReadState = READ_METADATA;
 			break;
 	}
-	myBuffer.erase();
 }
 
-bool OEBUidReader::readUids(const ZLFile &file) {
-	myReadState = READ_NONE;
+std::string OEBSimpleIdReader::readId(const ZLFile &file) {
+	myPublicationId.erase();
 	myBuffer.erase();
-	return readDocument(file);
+	myReadState = READ_NONE;
+	readDocument(file);
+	return myPublicationId;
 }
