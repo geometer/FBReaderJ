@@ -19,7 +19,6 @@
 
 #include <cstdlib>
 
-#include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
 #include <ZLLogger.h>
 #include <ZLXMLNamespace.h>
@@ -36,8 +35,6 @@ OEBMetaInfoReader::OEBMetaInfoReader(Book &book) : myBook(book) {
 	myBook.removeAllUids();
 }
 
-static const std::string METADATA = "metadata";
-static const std::string DC_METADATA = "dc-metadata";
 static const std::string META = "meta";
 static const std::string AUTHOR_ROLE = "aut";
 
@@ -63,8 +60,7 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 		default:
 			break;
 		case READ_NONE:
-			if (testTag(ZLXMLNamespace::OpenPackagingFormat, METADATA, tagString) ||
-					DC_METADATA == tagString) {
+			if (isMetadataTag(tagString)) {
 				myReadState = READ_METADATA;
 			}
 			break;
@@ -110,10 +106,9 @@ void OEBMetaInfoReader::endElementHandler(const char *tag) {
 		case READ_NONE:
 			return;
 		case READ_METADATA:
-			if (testTag(ZLXMLNamespace::OpenPackagingFormat, METADATA, tagString) ||
-		 			DC_METADATA == tagString) {
-				interrupt();
+			if (isMetadataTag(tagString)) {
 				myReadState = READ_NONE;
+				interrupt();
 				return;
 			}
 			break;
