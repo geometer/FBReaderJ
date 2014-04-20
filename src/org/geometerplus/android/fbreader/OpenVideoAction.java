@@ -44,26 +44,38 @@ class OpenVideoAction extends FBAndroidAction {
 			return;
 		}
 
+		final int port = BaseActivity.DataConnection.getPort();
+		if (port == -1) {
+			UIUtil.showErrorMessage(BaseActivity, "videoServiceNotWorking");
+			return;
+		}
+
 		final ZLTextVideoElement element = ((ZLTextVideoRegionSoul)params[0]).VideoElement;
-		final String path = element.Sources.get(MimeType.VIDEO_WEBM.toString());
-		if (path != null) {
-			final int port = BaseActivity.DataConnection.getPort();
-			if (port == -1) {
-				UIUtil.showErrorMessage(BaseActivity, "videoServiceNotWorking");
-				return;
+		boolean playerNotFound = false;
+		for (MimeType mimeType : MimeType.TYPES_VIDEO) {
+			final String mime = mimeType.toString();
+			final String path = element.Sources.get(mime);
+			if (path == null) {
+				continue;
 			}
 			final StringBuilder url =
-				new StringBuilder("http://127.0.0.1:").append(port).append("/video/");
+				new StringBuilder("http://127.0.0.1:").append(port)
+				.append("/").append(mime).append("/");
 			for (int i = 0; i < path.length(); ++i) {
 				url.append(String.format("X%X", (short)path.charAt(i)));
 			}
 			final Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.parse(url.toString()), MimeType.VIDEO_WEBM.toString());
+			intent.setDataAndType(Uri.parse(url.toString()), mime);
 			try {
 				BaseActivity.startActivity(intent);
+				return;
 			} catch (ActivityNotFoundException e) {
-				UIUtil.showErrorMessage(BaseActivity, "videoPlayerNotFound");
+				playerNotFound = true;
+				continue;
 			}
-		}	
+		}
+		if (playerNotFound) {
+			UIUtil.showErrorMessage(BaseActivity, "videoPlayerNotFound");
+		}
 	}
 }
