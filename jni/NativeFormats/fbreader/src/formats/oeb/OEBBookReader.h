@@ -28,11 +28,12 @@
 #include <ZLXMLReader.h>
 #include <FileEncryptionInfo.h>
 
+#include "OPFReader.h"
 #include "../../bookmodel/BookReader.h"
 
 class XHTMLReader;
 
-class OEBBookReader : public ZLXMLReader {
+class OEBBookReader : public OPFReader {
 
 public:
 	OEBBookReader(BookModel &model);
@@ -41,9 +42,6 @@ public:
 private:
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
-	bool processNamespaces() const;
-	bool isOPFTag(const std::string &expected, const std::string &tag) const;
-	const std::vector<std::string> &externalDTDs() const;
 
 	void generateTOC(const XHTMLReader &xhtmlReader);
 	bool coverIsSingleImage() const;
