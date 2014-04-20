@@ -205,7 +205,7 @@ void EpubEncryptionFileReader::endElementHandler(const char *tag) {
 			if (testTag(ZLXMLNamespace::XMLEncryption, "EncryptedData", tag)) {
 				if (EMBEDDING_ALGORITHM == myAlgorithm) {
 					myInfos.push_back(new FileEncryptionInfo(
-						myUri, EncryptionMethod::EMBEDDING, myAlgorithm, std::string()
+						myUri, EncryptionMethod::EMBEDDING, myAlgorithm, "code.google.com.epub-samples.wasteland-otf-obfuscated"
 					));
 				} else {
 					std::vector<std::string>::const_iterator it =
