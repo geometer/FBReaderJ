@@ -683,10 +683,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 			while (paragraph < myModel.getParagraphsNumber()
 					&& myLettersBufferLength < myLettersBuffer.length) {
-				ZLTextParagraph.EntryIterator it = myModel.getParagraph(paragraph++).iterator();
-				while (it.hasNext()
-						&& myLettersBufferLength < myLettersBuffer.length) {
-					it.next();
+				final ZLTextParagraph.EntryIterator it = myModel.getParagraph(paragraph++).iterator();
+				while (myLettersBufferLength < myLettersBuffer.length && it.next()) {
 					if (it.getType() == ZLTextParagraph.Entry.TEXT) {
 						final int len = Math.min(it.getTextLength(),
 								myLettersBuffer.length - myLettersBufferLength);

@@ -34,6 +34,9 @@ final class SimpleCharStorage implements CharStorage {
 	}
 
 	public char[] block(int index) {
+		if (index < 0 || index >= myArray.size()) {
+			return null;
+		}
 		return myArray.get(index);
 	}
 
