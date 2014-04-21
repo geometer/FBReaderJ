@@ -256,7 +256,7 @@ public final class AndroidFontUtil {
 				os.write(buffer, 0, len);
 			}
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return false;
 		} finally {
 			try {
