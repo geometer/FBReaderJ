@@ -48,10 +48,13 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	private ZLTextMetrics metrics() {
-		if (myMetrics == null) {
+		// this local variable is used to guarantee null will not
+		// be returned from this method enen in multi-thread environment
+		ZLTextMetrics m = myMetrics;
+		if (m == null) {
 			final ZLTextStyleCollection collection = getTextStyleCollection();
 			final ZLTextBaseStyle base = collection.getBaseStyle();
-			myMetrics = new ZLTextMetrics(
+			m = new ZLTextMetrics(
 				ZLibrary.Instance().getDisplayDPI(),
 				collection.getDefaultFontSize(),
 				base.getFontSize(),
@@ -62,8 +65,9 @@ abstract class ZLTextViewBase extends ZLView {
 				// TODO: screen area height
 				100
 			);
+			myMetrics = m;
 		}
-		return myMetrics;
+		return m;
 	}
 
 	final int getWordHeight() {
