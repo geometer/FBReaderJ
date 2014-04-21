@@ -77,9 +77,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		private short myFixedHSpaceLength;
 
 		EntryIteratorImpl(int index) {
-			myLength = myParagraphLengths[index];
-			myDataIndex = myStartEntryIndices[index];
-			myDataOffset = myStartEntryOffsets[index];
+			reset(index);
 		}
 
 		void reset(int index) {
@@ -132,20 +130,29 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			return myFixedHSpaceLength;
 		}
 
-		public boolean hasNext() {
-			return myCounter < myLength;
-		}
+		public boolean next() {
+			if (myCounter >= myLength) {
+				return false;
+			}
 
-		public void next() {
 			int dataOffset = myDataOffset;
 			char[] data = myStorage.block(myDataIndex);
+			if (data == null) {
+				return false;
+			}
 			if (dataOffset >= data.length) {
 				data = myStorage.block(++myDataIndex);
+				if (data == null) {
+					return false;
+				}
 				dataOffset = 0;
 			}
 			byte type = (byte)data[dataOffset];
 			if (type == 0) {
 				data = myStorage.block(++myDataIndex);
+				if (data == null) {
+					return false;
+				}
 				dataOffset = 0;
 				type = (byte)data[0];
 			}
@@ -252,6 +259,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			}
 			++myCounter;
 			myDataOffset = dataOffset;
+			return true;
 		}
 	}
 
@@ -341,8 +349,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		final EntryIteratorImpl it = new EntryIteratorImpl(index);
 		while (true) {
 			int offset = 0;
-			while (it.hasNext()) {
-				it.next();
+			while (it.next()) {
 				if (it.getType() == ZLTextParagraph.Entry.TEXT) {
 					char[] textData = it.getTextData();
 					int textOffset = it.getTextOffset();
@@ -383,6 +390,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	}
 
 	public final int getTextLength(int index) {
+		if (myTextSizes.length == 0) {
+			return 0;
+		}
 		return myTextSizes[Math.max(Math.min(index, myParagraphsNumber - 1), 0)];
 	}
 

@@ -53,8 +53,7 @@ public interface ZLTextParagraph {
 
 		short getFixedHSpaceLength();
 
-		boolean hasNext();
-		void next();
+		boolean next();
 	}
 
 	public EntryIterator iterator();
