@@ -383,6 +383,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	}
 
 	public final int getTextLength(int index) {
+		if (myTextSizes.length == 0) {
+			return 0;
+		}
 		return myTextSizes[Math.max(Math.min(index, myParagraphsNumber - 1), 0)];
 	}
 
