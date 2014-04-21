@@ -665,6 +665,7 @@ bool XHTMLReader::addTextStyleEntry(const std::string tag, const std::string aCl
 void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
 	if (!entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
 		myModelReader.addStyleEntry(entry);
+		return;
 	}
 
 	bool doFixFamiliesList = false;
