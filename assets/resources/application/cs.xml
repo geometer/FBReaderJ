@@ -765,6 +765,10 @@
 			<node name="twitter" value="Sledujte nás na twitteru">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
 		</node>
 		<node name="eink" value="Displej s elektronickým inkoustem">
 			<node name="summary" value="Specifické možnosti pro displej s elektronickým inkoustem"/>

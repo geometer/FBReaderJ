@@ -761,6 +761,10 @@
 			<node name="twitter" value="Читайте нас в твиттере">
 				<node name="url" value="http://twitter.com/fbreader_ru"/>
 			</node>
+			<node name="facebook" value="Страница FBReader на facebook">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Сторонние библиотеки"/>
 		</node>
 		<node name="eink" value="Экран e-ink">
 			<node name="summary" value="Настройки для экрана с электронными чернилами"/>

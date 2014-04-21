@@ -758,6 +758,10 @@
 			<node name="twitter" value="Siga-nos no twitter">
 				<node name="url" value="http://twitter.com/dennissheil"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
 		</node>
 		<node name="eink" value="E-ink screen" toBeTranslated="true">
 			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
