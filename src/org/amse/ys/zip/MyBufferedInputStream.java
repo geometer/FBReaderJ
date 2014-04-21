@@ -35,7 +35,9 @@ final class MyBufferedInputStream extends InputStream {
 	public int read(byte[] b, int off, int len) throws IOException {
 		int ready = (len < myBytesReady) ? len : myBytesReady;
 		if (ready > 0) {
-			System.arraycopy(myBuffer, myPositionInBuffer, b, off, ready);
+			if (b != null) {
+				System.arraycopy(myBuffer, myPositionInBuffer, b, off, ready);
+			}
 			len -= ready;
 			myBytesReady -= ready;
 			myPositionInBuffer += ready;
@@ -48,7 +50,7 @@ final class MyBufferedInputStream extends InputStream {
 			}
 		}
 		myCurrentPosition += ready;
-		return (ready > 0) ? ready : -1;
+		return ready > 0 ? ready : -1;
 	}
 
 	@Override
