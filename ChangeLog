@@ -1,3 +1,6 @@
+===== 1.10.0.3 (Apr 21, 2014) =====
+* Fixed duplicate processing for some CSS properties
+
 ===== 1.10.0.2 (Apr 21, 2014) =====
 * Fixed NPE in embedded font copying code
 
