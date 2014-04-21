@@ -129,7 +129,11 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		if (!library.OldShowActionBarOption.getValue()) {
 			stageOption.setValue(3);
 		}
-		final FBReader fbReader = (FBReader)getContext();
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return;
+		}
+		final FBReader fbReader = (FBReader)context;
 		if (!fbReader.barsAreShown()) {
 			if (stageOption.getValue() == 0) {
 				stageOption.setValue(1);
