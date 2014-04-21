@@ -26,6 +26,9 @@
 * Fixed metrics == null issue
 * Fixed yota-specific class cast exception
 * Fixed NPE in FontEntry.equals()
+* Fixed NPE in ZLTextPlainModel.getTextLength()
+* Fixed skip operation on non-compressed zips
+* Fixed possible AOOB in text model
 
 ===== 1.10.0.3 (Apr 21, 2014) =====
 * Fixed duplicate processing for some CSS properties

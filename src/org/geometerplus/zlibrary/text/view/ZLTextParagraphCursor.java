@@ -59,8 +59,7 @@ public final class ZLTextParagraphCursor {
 			ZLTextHyperlink hyperlink = null;
 
 			final ArrayList<ZLTextElement> elements = myElements;
-			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
-				it.next();
+			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.next(); ) {
 				switch (it.getType()) {
 					case ZLTextParagraph.Entry.TEXT:
 						processTextEntry(it.getTextData(), it.getTextOffset(), it.getTextLength(), hyperlink);
