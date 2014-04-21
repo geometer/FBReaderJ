@@ -44,9 +44,11 @@ public abstract class ZLAndroidApplication extends Application {
 					String dir = null;
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
 						final File d = getExternalCacheDir();
-						d.mkdirs();
-						if (d.exists() && d.isDirectory()) {
-							dir = d.getPath();
+						if (d != null) {
+							d.mkdirs();
+							if (d.exists() && d.isDirectory()) {
+								dir = d.getPath();
+							}
 						}
 					}
 					if (dir == null) {
