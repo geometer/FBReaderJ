@@ -85,7 +85,7 @@ public final class FontEntry {
 			return false;
 		}
 		final FontEntry entry = (FontEntry)other;
-		if (!Family.equals(entry.Family)) {
+		if (!MiscUtil.equals(Family, entry.Family)) {
 			return false;
 		}
 		if (myFileInfos == null) {
@@ -104,6 +104,6 @@ public final class FontEntry {
 
 	@Override
 	public int hashCode() {
-		return Family.hashCode();
+		return MiscUtil.hashCode(Family);
 	}
 }
