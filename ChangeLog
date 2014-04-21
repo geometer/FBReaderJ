@@ -1,3 +1,6 @@
+===== 1.10.0.2 (Apr 21, 2014) =====
+* Fixed NPE in embedded font copying code
+
 ===== 1.10.0.1 (Apr 21, 2014) =====
 * Fixed NPE if external cache dir is not defined
 
