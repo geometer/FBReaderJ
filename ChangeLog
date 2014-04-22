@@ -1,6 +1,7 @@
 ===== 1.10.0.5 (Apr 22, 2014) =====
 * Fixed crash on unexisting function (LinkedList.push()) for devices with SDK <= 8
 * Fixed problem with fullscreen mode warning (it was not possible to dismiss it on some devices)
+* Save book position in background
 
 ===== 1.10.0.4 (Apr 21, 2014) =====
 * Fixed metrics == null issue
