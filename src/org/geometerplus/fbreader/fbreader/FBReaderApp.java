@@ -370,11 +370,60 @@ public final class FBReaderApp extends ZLApplication {
 		storePosition();
 	}
 
+	private class PositionSaver implements Runnable {
+		private final Book myBook;
+		private final ZLTextPosition myPosition;
+		private final RationalNumber myProgress;
+
+		PositionSaver(Book book, ZLTextView view) {
+			myBook = book;
+			myPosition = new ZLTextFixedPosition(view.getStartCursor());
+			myProgress = view.getProgress();
+		}
+
+		public void run() {
+			Collection.storePosition(myBook.getId(), myPosition);
+			myBook.setProgress(myProgress);
+			Collection.saveBook(myBook);
+		}
+	}
+
+	private class SaverThread extends Thread {
+		private final List<Runnable> myTasks =
+			Collections.synchronizedList(new LinkedList<Runnable>());
+
+		SaverThread() {
+			setPriority(MIN_PRIORITY);
+		}
+
+		void add(Runnable task) {
+			myTasks.add(task);
+		}
+
+		public void run() {
+			while (true) {
+				synchronized (myTasks) {
+					while (!myTasks.isEmpty()) {
+						myTasks.remove(0).run();
+					}
+				}
+				try {
+					sleep(500);
+				} catch (InterruptedException e) {
+				}
+			}
+		}
+	}
+
+	private volatile SaverThread mySaverThread;
+
 	public void storePosition() {
 		if (Model != null && Model.Book != null && BookTextView != null) {
-			Collection.storePosition(Model.Book.getId(), BookTextView.getStartCursor());
-			Model.Book.setProgress(BookTextView.getProgress());
-			Collection.saveBook(Model.Book);
+			if (mySaverThread == null) {
+				mySaverThread = new SaverThread();
+				mySaverThread.start();
+			}
+			mySaverThread.add(new PositionSaver(Model.Book, BookTextView));
 		}
 	}
 
