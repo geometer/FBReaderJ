@@ -213,7 +213,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 						source.put(RSSCategory.LABEL, str);
 						myCategory = new RSSCategory(source);
 						if (myCategory != null) {
-							myItem.Categories.push(myCategory);
+							myItem.Categories.add(myCategory);
 						}
 						myCategory = null;
 					}
@@ -246,7 +246,7 @@ public class RSSXMLReader<MetadataType extends RSSChannelMetadata,EntryType exte
 					myItem.Title = title;
 					String authorName = bufferContent.substring(foundIndex+marks[i].length());
 					myAuthor.Name = authorName.trim();
-					myItem.Authors.push(myAuthor);
+					myItem.Authors.add(myAuthor);
 					myAuthor = null;
 				}
 				found = true;
