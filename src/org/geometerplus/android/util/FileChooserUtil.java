@@ -31,10 +31,17 @@ import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.android.fbreader.DirectoriesManagerActivity;
+
 public abstract class FileChooserUtil {
 	private FileChooserUtil() {
 	}
-
+    
+    public static void runDirectoriesManager(Activity activity, int requestCode){
+		final Intent intent = new Intent(activity, DirectoriesManagerActivity.class);
+		activity.startActivityForResult(intent, requestCode);
+    }
+    
 	public static void runDirectoryChooser(
 		Activity activity,
 		int requestCode,

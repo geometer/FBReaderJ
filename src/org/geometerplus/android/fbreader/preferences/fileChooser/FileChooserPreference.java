@@ -47,13 +47,16 @@ abstract class FileChooserPreference extends Preference {
 
 	@Override
 	protected void onClick() {
-		FileChooserUtil.runDirectoryChooser(
+		FileChooserUtil.runDirectoriesManager(
+            (Activity)getContext(),
+            myRegCode*2);
+        /*FileChooserUtil.runDirectoryChooser(
 			(Activity)getContext(),
 			myRegCode,
 			myResource.getResource("chooserTitle").getValue(),
 			getStringValue(),
 			myChooseWritableDirectoriesOnly
-		);
+		);*/
 	}
 
 	protected abstract String getStringValue();
