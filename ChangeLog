@@ -22,6 +22,10 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
+===== 1.10.0.5 (Apr 22, 2014) =====
+* Fixed crash on unexisting function (LinkedList.push()) for devices with SDK <= 8
+* Fixed problem with fullscreen mode warning (it was not possible to dismiss it on some devices)
+
 ===== 1.10.0.4 (Apr 21, 2014) =====
 * Fixed metrics == null issue
 * Fixed yota-specific class cast exception
