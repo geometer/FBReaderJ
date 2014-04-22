@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- German zlibrary resources, by Victor Massini-->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
+<!-- Updated by Matthias Dill 2014/04/14 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -35,28 +36,28 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabisch"/>
-		<node name="be" value="Belarusian" toBeTranslated="true"/>
-		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
-		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="be" value="Weissrussisch"/>
+		<node name="bg" value="Bulgarisch"/>
+		<node name="ca" value="Katalanisch"/>
 		<node name="cs" value="Tschechisch"/>
-		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="da" value="Dänisch"/>
 		<node name="de" value="Deutsch"/>
 		<node name="de-traditional" value="Deutsch (alte Schreibweise)"/>
 		<node name="el" value="Griechisch"/>
 		<node name="en" value="Englisch"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spanisch"/>
-		<node name="eu" value="Basque" toBeTranslated="true"/>
-		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="eu" value="Baskisch"/>
+		<node name="fa" value="Persisch"/>
 		<node name="fi" value="Finnisch"/>
 		<node name="fr" value="Französisch"/>
 		<node name="gl" value="Galicisch"/>
 		<node name="he" value="Hebräisch"/>
 		<node name="hu" value="Ungarisch"/>
-		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="hy" value="Armenisch"/>
 		<node name="id" value="Indonesisch"/>
 		<node name="it" value="Italienisch"/>
-		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="ka" value="Georgisch"/>
 		<node name="lt" value="Litauisch"/>
 		<node name="nl" value="Niederländisch"/>
 		<node name="nb" value="Norwegisch"/>
@@ -64,7 +65,7 @@
 		<node name="pt" value="Portugiesisch"/>
 		<node name="ro" value="Rumänisch"/>
 		<node name="ru" value="Russisch"/>
-		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sr" value="Serbisch"/>
 		<node name="sv" value="Schwedisch"/>
 		<node name="ta" value="Tamilisch"/>
 		<node name="th" value="Thailändich"/>
@@ -72,11 +73,11 @@
 		<node name="uk" value="Ukrainisch"/>
 		<node name="vi" value="Vietnamesisch"/>
 		<node name="zh" value="Chinesisch"/>
-		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
-		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="zh_TW" value="Chinesisch (traditionell)"/>
+		<node name="any" value="Beliebig"/>
 		<node name="other" value="Andere"/>
 		<node name="multi" value="Mehrsprachig"/>
-		<node name="system" value="System" toBeTranslated="true"/>
+		<node name="system" value="Systemsprache"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="ein"/>
