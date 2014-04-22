@@ -34,7 +34,7 @@ public class PageTurningOptions {
 	public final ZLEnumOption<ZLView.Animation> Animation =
 		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", lib.isEInk() ? ZLView.Animation.none : ZLView.Animation.slide);
 	public final ZLIntegerRangeOption AnimationSpeed =
-		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, lib.isEInk() ? 0 : 4);
+		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, lib.isEInk() ? 0 : 7);
 
 	public final ZLBooleanOption Horizontal =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
