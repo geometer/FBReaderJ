@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
@@ -118,60 +119,72 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			ZLApplication.Instance().onRepaintFinished();
 		}
 
-		showHint(canvas);
+		Config.Instance().runOnConnect(new Runnable() {
+			public void run() {
+				showHint(canvas);
+			}
+		});
 	}
 
-	private void showHint(Canvas canvas) {
-		String key = null;
+	private void showHint(final Canvas canvas) {
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return;
+		}
 
 		final ZLAndroidLibrary library = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		final ZLIntegerOption stageOption = library.ScreenHintStageOption;
 		if (!library.OldShowActionBarOption.getValue()) {
 			stageOption.setValue(3);
 		}
-		final Context context = getContext();
-		if (!(context instanceof FBReader)) {
+		if (stageOption.getValue() >= 3) {
 			return;
 		}
-		final FBReader fbReader = (FBReader)context;
-		if (!fbReader.barsAreShown()) {
-			if (stageOption.getValue() == 0) {
-				stageOption.setValue(1);
-			}
-			if (stageOption.getValue() == 1) {
-				key = "message1";
-			} else {
-				stageOption.setValue(3);
-			}
-		} else {
-			if (stageOption.getValue() == 1) {
-				stageOption.setValue(2);
-			}
-			if (stageOption.getValue() == 2) {
-				key = "message2";
-			}
-		}
 
-		final TextView hintView = (TextView)fbReader.findViewById(R.id.hint_view);
-		if (key != null) {
-			if (!new PageTurningOptions().Horizontal.getValue()) {
-				key = null;
-				stageOption.setValue(3);
+		final FBReader fbReader = (FBReader)context;
+		fbReader.runOnUiThread(new Runnable() {
+			public void run() {
+				String key = null;
+				if (!fbReader.barsAreShown()) {
+					if (stageOption.getValue() == 0) {
+						stageOption.setValue(1);
+					}
+					if (stageOption.getValue() == 1) {
+						key = "message1";
+					} else {
+						stageOption.setValue(3);
+					}
+				} else {
+					if (stageOption.getValue() == 1) {
+						stageOption.setValue(2);
+					}
+					if (stageOption.getValue() == 2) {
+						key = "message2";
+					}
+				}
+
+				final TextView hintView = (TextView)fbReader.findViewById(R.id.hint_view);
+				if (key != null) {
+					if (!new PageTurningOptions().Horizontal.getValue()) {
+						key = null;
+						stageOption.setValue(3);
+					}
+				}
+				if (key != null) {
+					final String text =
+						ZLResource.resource("dialog").getResource("screenHint").getResource(key).getValue();
+					final int w = getWidth();
+					final int h = getHeight();
+					final Paint paint = new Paint();
+					paint.setARGB(192, 51, 102, 153);
+					canvas.drawRect(w / 3, 0, w * 2 / 3, h, paint);
+					hintView.setVisibility(View.VISIBLE);
+					hintView.setText(text);
+				} else {
+					hintView.setVisibility(View.GONE);
+				}
 			}
-		}
-		if (key != null) {
-			final String text =
-				ZLResource.resource("dialog").getResource("screenHint").getResource(key).getValue();
-			final int w = getWidth();
-			final int h = getHeight();
-			final Paint paint = new Paint();
-			paint.setARGB(192, 51, 102, 153);
-			canvas.drawRect(w / 3, 0, w * 2 / 3, h, paint);
-			hintView.setVisibility(View.VISIBLE);
-			hintView.setText(text);
-		} else {
-			hintView.setVisibility(View.GONE);
-		}
+		});
 	}
 
 	private AnimationProvider myAnimationProvider;
