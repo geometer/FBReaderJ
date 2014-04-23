@@ -23,6 +23,9 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.util.MimeType;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 public abstract class ZLSingleImage implements ZLImage {
 	private final MimeType myMimeType;
 
@@ -37,42 +40,12 @@ public abstract class ZLSingleImage implements ZLImage {
 	}
 	
 	@Override
-	public boolean saveToFile(String url) {
+	public Bitmap getBitmap() {
 		final InputStream inputStream = inputStream();
 		if (inputStream == null) {
-			return false;
+			return null;
 		}
 
-		OutputStream outputStream = null;
-		final File file = new File(url);
-		final File parent = file.getParentFile();
-		parent.mkdirs();
-		try {
-			outputStream = new FileOutputStream(file);
-			int read = 0;
-			byte[] bytes = new byte[1024];
-			while ((read = inputStream.read(bytes)) != -1) {
-				outputStream.write(bytes, 0, read);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (outputStream != null) {
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return true;
+		return BitmapFactory.decodeStream(inputStream);
 	}
 }

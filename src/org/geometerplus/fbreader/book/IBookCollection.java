@@ -25,6 +25,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import android.graphics.Bitmap;
+
 public interface IBookCollection {
 	public enum Status {
 		NotStarted(false),
@@ -79,7 +81,7 @@ public interface IBookCollection {
 	boolean isHyperlinkVisited(Book book, String linkId);
 	void markHyperlinkAsVisited(Book book, String linkId);
 
-	boolean saveCover(Book book, String url);
+	Bitmap getCover(Book book);
 	
 	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);

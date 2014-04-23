@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.libraryService;
 import java.util.*;
 
 import android.content.*;
+import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.RemoteException;
 
@@ -31,7 +32,6 @@ import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
@@ -371,15 +371,15 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public synchronized boolean saveCover(Book book, String url) {
+	public synchronized Bitmap getCover(Book book) {
 		if (myInterface == null) {
-			return false;
+			return null;
 		}
 		try {
-			return myInterface.saveCover(SerializerUtil.serialize(book), url);
+			return myInterface.getCover(SerializerUtil.serialize(book));
 		} catch (RemoteException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 

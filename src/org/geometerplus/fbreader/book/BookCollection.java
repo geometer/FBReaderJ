@@ -24,12 +24,13 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
+
+import android.graphics.Bitmap;
 
 public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
@@ -615,17 +616,12 @@ public class BookCollection extends AbstractBookCollection {
 	}
 	
 	@Override
-	public boolean saveCover(Book book, String url) {
+	public Bitmap getCover(Book book) {
 		if (getBookById(book.getId()) == null) {
-			return false;
+			return null;
 		}
 
-		final ZLImage image = BookUtil.getCover(book);
-		if (image == null) {
-			return false;
-		}
-
-		return image.saveToFile(url);
+		return BookUtil.getCover(book).getBitmap();
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
