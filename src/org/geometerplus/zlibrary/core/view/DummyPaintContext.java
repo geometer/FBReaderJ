@@ -19,9 +19,12 @@
 
 package org.geometerplus.zlibrary.core.view;
 
-import org.geometerplus.zlibrary.core.util.ZLColor;
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 final class DummyPaintContext extends ZLPaintContext {
 	DummyPaintContext() {
@@ -41,7 +44,7 @@ final class DummyPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
+	protected void setFontInternal(List<FontEntry> entries, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
 	}
 
 	@Override

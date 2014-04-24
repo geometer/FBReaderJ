@@ -21,11 +21,12 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.ZLColor;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
@@ -76,12 +77,21 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
-		if (region != null) {
-			selectRegion(region);
+		final ZLTextRegion hyperlinkRegion = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
+		if (hyperlinkRegion != null) {
+			selectRegion(hyperlinkRegion);
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
 			myReader.runAction(ActionCode.PROCESS_HYPERLINK);
+			return true;
+		}
+
+		final ZLTextRegion videoRegion = findRegion(x, y, 0, ZLTextRegion.VideoFilter);
+		if (videoRegion != null) {
+			selectRegion(videoRegion);
+			myReader.getViewWidget().reset();
+			myReader.getViewWidget().repaint();
+			myReader.runAction(ActionCode.OPEN_VIDEO, (ZLTextVideoRegionSoul)videoRegion.getSoul());
 			return true;
 		}
 
@@ -483,6 +493,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
+		private List<FontEntry> myFontEntry;
 		public synchronized void paint(ZLPaintContext context) {
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {
@@ -507,8 +518,12 @@ public final class FBView extends ZLTextView {
 			final int height = getHeight();
 			final int lineWidth = height <= 10 ? 1 : 2;
 			final int delta = height <= 10 ? 0 : 1;
+			final String family = footerOptions.Font.getValue();
+			if (myFontEntry == null || !family.equals(myFontEntry.get(0).Family)) {
+				myFontEntry = Collections.singletonList(FontEntry.systemEntry(family));
+			}
 			context.setFont(
-				footerOptions.Font.getValue(),
+				myFontEntry,
 				height <= 10 ? height + 3 : height + 1,
 				height > 10, false, false, false
 			);
@@ -662,5 +677,11 @@ public final class FBView extends ZLTextView {
 		} else {
 			return ZLPaintContext.ColorAdjustingMode.NONE;
 		}
+	}
+
+	@Override
+	public synchronized void onScrollingFinished(PageIndex pageIndex) {
+		super.onScrollingFinished(pageIndex);
+		myReader.storePosition();
 	}
 }

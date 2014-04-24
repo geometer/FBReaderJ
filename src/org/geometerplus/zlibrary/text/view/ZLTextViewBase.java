@@ -48,10 +48,13 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	private ZLTextMetrics metrics() {
-		if (myMetrics == null) {
+		// this local variable is used to guarantee null will not
+		// be returned from this method enen in multi-thread environment
+		ZLTextMetrics m = myMetrics;
+		if (m == null) {
 			final ZLTextStyleCollection collection = getTextStyleCollection();
 			final ZLTextBaseStyle base = collection.getBaseStyle();
-			myMetrics = new ZLTextMetrics(
+			m = new ZLTextMetrics(
 				ZLibrary.Instance().getDisplayDPI(),
 				collection.getDefaultFontSize(),
 				base.getFontSize(),
@@ -62,8 +65,9 @@ abstract class ZLTextViewBase extends ZLView {
 				// TODO: screen area height
 				100
 			);
+			myMetrics = m;
 		}
-		return myMetrics;
+		return m;
 	}
 
 	final int getWordHeight() {
@@ -120,7 +124,7 @@ abstract class ZLTextViewBase extends ZLView {
 			myTextStyle = style;
 			myWordHeight = -1;
 		}
-		getContext().setFont(style.getFontFamily(), style.getFontSize(metrics()), style.isBold(), style.isItalic(), style.isUnderline(), style.isStrikeThrough());
+		getContext().setFont(style.getFontEntries(), style.getFontSize(metrics()), style.isBold(), style.isItalic(), style.isUnderline(), style.isStrikeThrough());
 	}
 
 	final void resetTextStyle() {
@@ -197,6 +201,8 @@ abstract class ZLTextViewBase extends ZLView {
 				getScalingType(imageElement)
 			);
 			return size != null ? size.Width : 0;
+		} else if (element instanceof ZLTextVideoElement) {
+			return Math.min(300, getTextColumnWidth());
 		} else if (element == ZLTextElement.Indent) {
 			return myTextStyle.getFirstLineIndentDelta();
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
@@ -217,6 +223,8 @@ abstract class ZLTextViewBase extends ZLView {
 			);
 			return (size != null ? size.Height : 0) +
 				Math.max(getContext().getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
+		} else if (element instanceof ZLTextVideoElement) {
+			return Math.min(Math.min(200, getTextAreaHeight()), getTextColumnWidth() * 2 / 3);
 		}
 		return 0;
 	}

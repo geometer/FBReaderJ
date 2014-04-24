@@ -87,23 +87,33 @@ public class PluginCollection {
 			return null;
 		}
 
-		if (formatType == FormatPlugin.Type.ANY) {
-			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
-			if (p == null) {
-				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
+		switch (formatType) {
+			case NONE:
+				return null;
+			case ANY:
+			{
+				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+				if (p == null) {
+					p = getPlugin(fileType, FormatPlugin.Type.JAVA);
+				}
+				if (p == null) {
+					p = getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+				}
+				return p;
 			}
-			return p;
-		} else {
-			final List<FormatPlugin> list = myPlugins.get(formatType);
-			if (list == null) {
+			default:
+			{
+				final List<FormatPlugin> list = myPlugins.get(formatType);
+				if (list == null) {
+					return null;
+				}
+				for (FormatPlugin p : list) {
+					if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
+						return p;
+					}
+				}
 				return null;
 			}
-			for (FormatPlugin p : list) {
-				if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
-					return p;
-				}
-			}
-			return null;
 		}
 	}
 

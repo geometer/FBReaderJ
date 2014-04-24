@@ -20,13 +20,14 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.*;
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.*;
 
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.fonts.FileInfo;
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
@@ -163,7 +164,15 @@ public final class AndroidFontUtil {
 		return null;
 	}
 
-	public static Typeface typeface(String family, boolean bold, boolean italic) {
+	public static Typeface typeface(FontEntry entry, boolean bold, boolean italic) {
+		if (entry.isSystem()) {
+			return systemTypeface(entry.Family, bold, italic);
+		} else {
+			return embeddedTypeface(entry, bold, italic);
+		}
+	}
+
+	private static Typeface systemTypeface(String family, boolean bold, boolean italic) {
 		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = ourTypefaces.get(family);
@@ -185,8 +194,125 @@ public final class AndroidFontUtil {
 		return tf;
 	}
 
+	private static final class Spec {
+		FontEntry Entry;
+		boolean Bold;
+		boolean Italic;
+
+		Spec(FontEntry entry, boolean bold, boolean italic) {
+			Entry = entry;
+			Bold = bold;
+			Italic = italic;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (this == other) {
+				return true;
+			}
+
+			if (!(other instanceof Spec)) {
+				return false;
+			}
+
+			final Spec spec = (Spec)other;
+			return Bold == spec.Bold && Italic == spec.Italic && Entry.equals(spec.Entry);
+		}
+
+		@Override
+		public int hashCode() {
+			return 4 * Entry.hashCode() + (Bold ? 2 : 0) + (Italic ? 1 : 0);
+		}
+	}
+
+	private static final Map<Spec,Object> ourCachedEmbeddedTypefaces = new HashMap<Spec,Object>();
+	private static final Object NULL_OBJECT = new Object();
+
+	private static String alias(String family, boolean bold, boolean italic) {
+		final StringBuilder builder = new StringBuilder(Paths.tempDirectory());
+		builder.append("/");
+		builder.append(family);
+		if (bold) {
+			builder.append("-bold");
+		}
+		if (italic) {
+			builder.append("-italic");
+		}
+		return builder.append(".font").toString();
+	}
+
+	private static boolean copy(FileInfo from, String to) {
+		InputStream is = null;
+		OutputStream os = null;
+		try {
+			is = ZLFile.createFileByPath(from.Path).getInputStream(from.EncryptionInfo);
+			os = new FileOutputStream(to);
+			final byte[] buffer = new byte[8192];
+			while (true) {
+				final int len = is.read(buffer);
+				if (len <= 0) {
+					break;
+				}
+				os.write(buffer, 0, len);
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			try {
+				os.close();
+			} catch (Throwable t) {
+				// ignore
+			}
+			try {
+				is.close();
+			} catch (Throwable t) {
+				// ignore
+			}
+		}
+	}
+
+	private static Typeface getOrCreateEmbeddedTypeface(FontEntry entry, boolean bold, boolean italic) {
+		final Spec spec = new Spec(entry, bold, italic);
+		Object cached = ourCachedEmbeddedTypefaces.get(spec);
+		if (cached == null) {
+			final FileInfo fileInfo = entry.fileInfo(bold, italic);
+			if (fileInfo != null) {
+				final String realFileName = alias(entry.Family, bold, italic);
+				if (copy(fileInfo, realFileName)) {
+					try {
+						cached = Typeface.createFromFile(realFileName);
+					} catch (Throwable t) {
+						// ignore
+					}
+				}
+				new File(realFileName).delete();
+			}
+			ourCachedEmbeddedTypefaces.put(spec, cached != null ? cached : NULL_OBJECT);
+		}
+		return cached instanceof Typeface ? (Typeface)cached : null;
+	}
+
+	private static Typeface embeddedTypeface(FontEntry entry, boolean bold, boolean italic) {
+		{
+			final int index = (bold ? 1 : 0) + (italic ? 2 : 0);
+			final Typeface tf = getOrCreateEmbeddedTypeface(entry, bold, italic);
+			if (tf != null) {
+				return tf;
+			}
+		}
+		for (int i = 0; i < 4; ++i) {
+			final Typeface tf = getOrCreateEmbeddedTypeface(entry, (i & 1) == 1, (i & 2) == 2);
+			if (tf != null) {
+				return tf;
+			}
+		}
+		return null;
+	}
+
 	public static void clearFontCache() {
 		ourTypefaces.clear();
 		ourFileSet = null;
+		ourCachedEmbeddedTypefaces.clear();
 	}
 }

@@ -19,8 +19,11 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
@@ -33,17 +36,39 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 	}
 
 	@Override
-	protected String getFontFamilyInternal() {
-		if (myEntry.isFeatureSupported(FONT_FAMILY)) {
-			// TODO: implement
+	protected List<FontEntry> getFontEntriesInternal() {
+		final List<FontEntry> parentEntries = Parent.getFontEntries();
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontFamilyOption.getValue()) {
+			return parentEntries;
 		}
-		return Parent.getFontFamily();
+
+		if (!myEntry.isFeatureSupported(FONT_FAMILY)) {
+			return parentEntries;
+		}
+
+		final List<FontEntry> entries = myEntry.getFontEntries();
+		final int lSize = entries.size();
+		if (lSize == 0) {
+			return parentEntries;
+		}
+
+		final int pSize = parentEntries.size();
+		if (pSize > lSize && entries.equals(parentEntries.subList(0, lSize))) {
+			return parentEntries;
+		}
+
+		final List<FontEntry> allEntries = new ArrayList<FontEntry>(pSize + lSize);
+		allEntries.addAll(entries);
+		allEntries.addAll(parentEntries);
+		return allEntries;
 	}
+
 	@Override
 	protected int getFontSizeInternal(ZLTextMetrics metrics) {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontSizeOption.getValue()) {
 			return Parent.getFontSize(metrics);
 		}
+
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
 				return Parent.Parent.getFontSize(metrics);

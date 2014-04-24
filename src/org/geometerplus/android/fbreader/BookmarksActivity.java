@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.book.*;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.*;
 
@@ -79,7 +80,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
-		myBook = SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+		myBook = FBReaderIntents.getBookExtra(getIntent());
 	}
 
 	private class Initializer implements Runnable {
@@ -169,9 +170,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
-	protected void onStop() {
+	protected void onDestroy() {
 		myCollection.unbind();
-		super.onStop();
+		super.onDestroy();
 	}
 
 	@Override
@@ -249,8 +250,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	private void addBookmark() {
-		final Bookmark bookmark =
-			SerializerUtil.deserializeBookmark(getIntent().getStringExtra(FBReader.BOOKMARK_KEY));
+		final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(getIntent());
 		if (bookmark != null) {
 			myCollection.saveBookmark(bookmark);
 			myThisBookAdapter.add(bookmark);

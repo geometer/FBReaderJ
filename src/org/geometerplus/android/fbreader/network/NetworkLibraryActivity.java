@@ -40,14 +40,13 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.network.action.*;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
 public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
-	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
-
 	public static final int REQUEST_MANAGE_CATALOGS = 1;
 	public static final String ENABLED_CATALOG_IDS_KEY = "android.fbreader.data.enabled_catalogs";
 	public static final String DISABLED_CATALOG_IDS_KEY = "android.fbreader.data.disabled_catalogs";
@@ -127,7 +126,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	}
 
 	private boolean openTreeByIntent(Intent intent) {
-		if (OPEN_CATALOG_ACTION.equals(intent.getAction())) {
+		if (FBReaderIntents.Action.OPEN_NETWORK_CATALOG.equals(intent.getAction())) {
 			final Uri uri = intent.getData();
 			if (uri != null) {
 				final NetworkTree tree =

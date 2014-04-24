@@ -25,6 +25,8 @@
 #include <vector>
 
 #include <ZLXMLReader.h>
+#include <ZLVideoEntry.h>
+#include <FontMap.h>
 
 #include "../css/StyleSheetTable.h"
 #include "../css/StyleSheetParser.h"
@@ -36,6 +38,13 @@ class XHTMLReader;
 
 class EncryptionMap;
 
+enum XHTMLReadingState {
+	XHTML_READ_NOTHING,
+	XHTML_READ_STYLE,
+	XHTML_READ_BODY,
+	XHTML_READ_VIDEO
+};
+
 class XHTMLTagAction {
 
 public:
@@ -43,6 +52,7 @@ public:
 	
 	virtual void doAtStart(XHTMLReader &reader, const char **xmlattributes) = 0;
 	virtual void doAtEnd(XHTMLReader &reader) = 0;
+	virtual bool isEnabled(XHTMLReadingState state) = 0;
 
 protected:
 	static BookReader &bookReader(XHTMLReader &reader);	
@@ -83,7 +93,8 @@ private:
 
 	void beginParagraph();
 	void endParagraph();
-	bool addStyleEntry(const std::string tag, const std::string aClass);
+	bool addTextStyleEntry(const std::string tag, const std::string aClass);
+	void addTextStyleEntry(const ZLTextStyleEntry &entry);
 
 private:
 	mutable std::map<std::string,std::string> myFileNumbers;
@@ -96,6 +107,7 @@ private:
 	bool myPreformatted;
 	bool myNewParagraphInProgress;
 	StyleSheetTable myStyleSheetTable;
+	shared_ptr<FontMap> myFontMap;
 	std::vector<int> myCSSStack;
 	std::vector<shared_ptr<ZLTextStyleEntry> > myStyleEntryStack;
 	int myStylesToRemove;
@@ -103,13 +115,11 @@ private:
 	bool myCurrentParagraphIsEmpty;
 	shared_ptr<StyleSheetSingleStyleParser> myStyleParser;
 	shared_ptr<StyleSheetTableParser> myTableParser;
-	enum {
-		READ_NOTHING,
-		READ_STYLE,
-		READ_BODY
-	} myReadState;
+	std::map<std::string,shared_ptr<StyleSheetParserWithCache> > myFileParsers;
+	XHTMLReadingState myReadState;
 	int myBodyCounter;
 	bool myMarkNextImageAsCover;
+	shared_ptr<ZLVideoEntry> myVideoEntry;
 
 	friend class XHTMLTagAction;
 	friend class XHTMLTagStyleAction;
@@ -120,6 +130,8 @@ private:
 	friend class XHTMLTagBodyAction;
 	friend class XHTMLTagRestartParagraphAction;
 	friend class XHTMLTagImageAction;
+	friend class XHTMLTagVideoAction;
+	friend class XHTMLTagSourceAction;
 };
 
 #endif /* __XHTMLREADER_H__ */

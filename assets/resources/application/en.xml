@@ -306,9 +306,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Directories">
 			<node name="summary" value="Directories to seek for files"/>
-			<node name="books" value="Books directory"/>
-			<node name="fonts" value="Fonts directory"/>
-			<node name="wallpapers" value="Wallpapers directory"/>
+			<node name="bookPath" value="Where to seek for books">
+				<node name="chooserTitle" value="Books folder"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books">
+				<node name="chooserTitle" value="Books folder"/>
+			</node>
+			<node name="fontPath" value="Where to seek for fonts">
+				<node name="chooserTitle" value="Fonts folder"/>
+			</node>
+			<node name="wallpaperPath" value="Where to seek for background images">
+				<node name="chooserTitle" value="Images folder"/>
+			</node>
+			<node name="tempDir" value="Where to store temporary files">
+				<node name="chooserTitle" value="Temp files folder"/>
+			</node>
 		</node>
 		<node name="appearance" value="Appearance">
 			<node name="summary" value="Display settings, status bar, button lights"/>
@@ -549,6 +561,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Apply/ignore values defined in CSS"/>
+			<node name="fontFamily" value="Font family">
+				<node name="summaryOn" value="Use font family defined in CSS"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS"/>
+			</node>
 			<node name="fontSize" value="Font size">
 				<node name="summaryOn" value="Apply font size defined in CSS"/>
 				<node name="summaryOff" value="Ignore font size defined in CSS"/>
@@ -740,6 +756,10 @@
 			<node name="twitter" value="Follow us at twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries"/>
 		</node>
 		<node name="eink" value="E-ink screen">
 			<node name="summary" value="Specific options for e-ink screens"/>
@@ -851,6 +871,25 @@
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog."/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog."/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root"/>
+			<node name="newFolder" value="New folder"/>
+			<node name="folderNameHint" value="Folder name"/>
+			<node name="menu">
+				<node name="origin" value="Origin"/>
+				<node name="reload" value="Reload"/>
+			</node>
+			<node name="sortBy" value="Sort by">
+				<node name="name" value="Name"/>
+				<node name="size" value="Size"/>
+				<node name="date" value="Date"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'"/>
@@ -875,6 +914,8 @@
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -888,7 +929,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or enter another directory name below."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader issue"/>
@@ -926,6 +967,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Read books in PDF format"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below."/>

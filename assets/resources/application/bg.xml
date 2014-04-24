@@ -259,7 +259,7 @@
 		<node name="clearSelection" value="Премахни"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Изпратено от &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Изпратено от &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Настройки"/>
@@ -311,9 +311,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталози">
 			<node name="summary" value="Търси в каталозите"/>
-			<node name="books" value="Каталог с книги"/>
-			<node name="fonts" value="Каталог с шрифтове"/>
-			<node name="wallpapers" value="Каталог с тапети"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
+				<node name="chooserTitle" value="Каталог с книги"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
+				<node name="chooserTitle" value="Каталог с книги"/>
+			</node>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
+				<node name="chooserTitle" value="Каталог с шрифтове"/>
+			</node>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
+				<node name="chooserTitle" value="Каталог с тапети"/>
+			</node>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
+				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="appearance" value="Външен вид">
 			<node name="summary" value="Екран за настройки, статус бар, светещи бутони"/>
@@ -554,6 +566,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="CSS форматиране"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Размер на шрифта">
 				<node name="summaryOn" value="Използвай размера на шрифта, зададен в CSS"/>
 				<node name="summaryOff" value="Игнорирай размера на шрифта, зададен в CSS"/>
@@ -737,14 +753,18 @@
 			<node name="summary" value="Версия, контакти"/>
 			<node name="version" value="Версия"/>
 			<node name="site" value="Сайт">
-				<node name="url" value="http://fbreader.ru/"/>
+				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Пишете ни">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
 			<node name="twitter" value="Пoследвайте ни в Twitter">
-				<node name="url" value="http://twitter.com/fbreader_ru"/>
+				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
 		</node>
 		<node name="eink" value="E-ink screen" toBeTranslated="true">
 			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
@@ -856,6 +876,25 @@
 			<node name="dontShowAgain" value="Не показвай повече"/>
 			<node name="more" value="Още"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root" toBeTranslated="true"/>
+			<node name="newFolder" value="New folder" toBeTranslated="true"/>
+			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="menu">
+				<node name="origin" value="Origin" toBeTranslated="true"/>
+				<node name="reload" value="Reload" toBeTranslated="true"/>
+			</node>
+			<node name="sortBy" value="Sort by" toBeTranslated="true">
+				<node name="name" value="Name" toBeTranslated="true"/>
+				<node name="size" value="Size" toBeTranslated="true"/>
+				<node name="date" value="Date" toBeTranslated="true"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
@@ -864,6 +903,7 @@
 		<node name="pluginNotFound" value="Няма плъгин за '%s'"/>
 		<node name="unknownPluginType" value="Неизвестен тип плъгин: %s"/>
 		<node name="fileNotFound" value="Липсващ файл: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF файлът не е намерен в %s"/>
 		<node name="unsupportedFileFormat" value="Файловият формат '%s' не се поддържа"/>
 		<node name="errorParsingRtf" value="Грешка при четенето на RTF файла %s"/>
@@ -879,6 +919,8 @@
 		<node name="emptyCatalog" value="Каталогът е празен"/>
 		<node name="emptyBasket" value="Кошчето е празно"/>
 		<node name="emptyNetworkSearchResults" value="Книгата не е намерена"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Браузер"/>
@@ -892,7 +934,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Проблем с FBReader"/>
-			<node name="text" value="FBReader кеш директорията е недостъпна. Липсваща или недостъпна карта памет. Моля, включете картата или задайте друго име на каталога с временни файлове."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Проблем с FBReader"/>
@@ -930,6 +972,9 @@
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

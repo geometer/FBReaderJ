@@ -19,18 +19,14 @@
 
 package org.geometerplus.android.fbreader.crash;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.options.Config;
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
@@ -38,8 +34,11 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.util.FileChooserUtil;
 
 public class FixBooksDirectoryActivity extends Activity {
+	private TextView myDirectoryView;
+
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -48,29 +47,38 @@ public class FixBooksDirectoryActivity extends Activity {
 		final ZLResource resource = ZLResource.resource("crash").getResource("fixBooksDirectory");
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
-		setTitle(resource.getResource("title").getValue());
+		final String title = resource.getResource("title").getValue();
+		setTitle(title);
 
 		final TextView textView = (TextView)findViewById(R.id.books_directory_fix_text);
 		textView.setText(resource.getResource("text").getValue());
 
-		final EditText directoryView = (EditText)findViewById(R.id.books_directory_fix_directory);
+		myDirectoryView = (TextView)findViewById(R.id.books_directory_fix_directory);
 
 		final View buttonsView = findViewById(R.id.books_directory_fix_buttons);
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("ok").getValue());
 
-		Config.Instance().runOnStart(new Runnable() {
+		final View selectButton = findViewById(R.id.books_directory_fix_select_button);
+
+		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				final ZLStringListOption bookPathOption = Paths.BookPathOption;
-				directoryView.setText(Paths.mainBookDirectory());
-				okButton.setOnClickListener(new Button.OnClickListener() {
+				myDirectoryView.setText(Paths.TempDirectoryOption.getValue());
+				selectButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
-						final List<String> bookPath =
-							new LinkedList<String>(bookPathOption.getValue());
-						final String newDirectory = directoryView.getText().toString();
-						bookPath.remove(newDirectory);
-						bookPath.add(0, newDirectory);
-						bookPathOption.setValue(bookPath);
+						FileChooserUtil.runDirectoryChooser(
+							FixBooksDirectoryActivity.this,
+							1,
+							title,
+							Paths.TempDirectoryOption.getValue(),
+							true
+						);
+					}
+				});
+				okButton.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						final String newDirectory = myDirectoryView.getText().toString();
+						Paths.TempDirectoryOption.setValue(newDirectory);
 						startActivity(new Intent(FixBooksDirectoryActivity.this, FBReader.class));
 						finish();
 					}
@@ -80,10 +88,17 @@ public class FixBooksDirectoryActivity extends Activity {
 
 		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
-		cancelButton.setOnClickListener(new Button.OnClickListener() {
+		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				finish();
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1 && resultCode == RESULT_OK) {
+			myDirectoryView.setText(FileChooserUtil.pathFromData(data));
+		}
 	}
 }

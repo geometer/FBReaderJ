@@ -19,6 +19,11 @@
 
 package org.geometerplus.zlibrary.text.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
+import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 public abstract class ZLTextStyleEntry {
@@ -68,7 +73,7 @@ public abstract class ZLTextStyleEntry {
 
 	private Length[] myLengths = new Length[Feature.NUMBER_OF_LENGTHS];
 	private byte myAlignmentType;
-	private String myFontFamily;
+	private List<FontEntry> myFontEntries;
 	private byte mySupportedFontModifiers;
 	private byte myFontModifiers;
 
@@ -131,13 +136,13 @@ public abstract class ZLTextStyleEntry {
 		return myAlignmentType;
 	}
 
-	final void setFontFamily(String fontFamily) {
+	final void setFontFamilies(FontManager fontManager, int fontFamiliesIndex) {
 		myFeatureMask |= 1 << Feature.FONT_FAMILY;
-		myFontFamily = fontFamily;
+		myFontEntries = fontManager.getFamilyEntries(fontFamiliesIndex);
 	}
 
-	public final String getFontFamily() {
-		return myFontFamily;
+	public final List<FontEntry> getFontEntries() {
+		return myFontEntries;
 	}
 
 	final void setFontModifiers(byte supported, byte values) {
@@ -146,7 +151,7 @@ public abstract class ZLTextStyleEntry {
 		myFontModifiers = values;
 	}
 
-	final void setFontModifier(byte modifier, boolean on) {
+	public final void setFontModifier(byte modifier, boolean on) {
 		myFeatureMask |= 1 << Feature.FONT_STYLE_MODIFIER;
 		mySupportedFontModifiers |= modifier;
 		if (on) {

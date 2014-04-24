@@ -32,14 +32,14 @@
 class StyleSheetTable {
 
 public:
-	typedef std::map<std::string,std::vector<std::string> > AttributeMap;
+	typedef std::map<std::string,std::string> AttributeMap;
 	static shared_ptr<ZLTextStyleEntry> createControl(const AttributeMap &map);
 
 private:
 	void addMap(const std::string &tag, const std::string &aClass, const AttributeMap &map);
 
 	static void setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const AttributeMap &map, const std::string &attributeName);
-	static const std::vector<std::string> &values(const AttributeMap &map, const std::string &name);
+	static const std::string &value(const AttributeMap &map, const std::string &name);
 
 public:
 	bool isEmpty() const;
@@ -64,6 +64,7 @@ private:
 	std::map<Key,bool> myPageBreakAfterMap;
 
 friend class StyleSheetTableParser;
+friend class StyleSheetParserWithCache;
 };
 
 inline StyleSheetTable::Key::Key(const std::string &tag, const std::string &aClass) : TagName(tag), ClassName(aClass) {

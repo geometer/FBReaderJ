@@ -421,7 +421,7 @@ public class Book extends TitledEntity {
 			myIsSaved = false;
 		}
 	}
-	
+
 	public void setProgressWithNoCheck(RationalNumber progress) {
 		myProgress = progress;
 	}

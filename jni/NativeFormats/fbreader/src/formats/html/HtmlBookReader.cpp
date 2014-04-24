@@ -274,7 +274,7 @@ HtmlStyleTagAction::HtmlStyleTagAction(HtmlBookReader &reader) : HtmlTagAction(r
 }
 
 void HtmlStyleTagAction::run(const HtmlReader::HtmlTag &tag) {
-	myReader.myStyleSheetParser = tag.Start ? new StyleSheetTableParser(myReader.myStyleSheetTable) : 0;
+	myReader.myStyleSheetParser = tag.Start ? new StyleSheetTableParser(myReader.myBaseDirPath, myReader.myStyleSheetTable, myReader.myFontMap, 0) : 0;
 	/*
 	if (!tag.Start) {
 		myReader.myStyleSheetTable.dump();
@@ -396,6 +396,7 @@ void HtmlBookReader::setProcessPreTag(bool process) {
 }
 
 HtmlBookReader::HtmlBookReader(const std::string &baseDirectoryPath, BookModel &model, const PlainTextFormat &format, const std::string &encoding) : HtmlReader(encoding), myBookReader(model), myBaseDirPath(baseDirectoryPath), myFormat(format), myBuildTableOfContent(true), myProcessPreTag(true) {
+	myFontMap = new FontMap();
 }
 
 HtmlBookReader::~HtmlBookReader() {
@@ -519,7 +520,7 @@ void HtmlBookReader::preformattedCharacterDataHandler(const char *text, std::siz
 
 bool HtmlBookReader::characterDataHandler(const char *text, std::size_t len, bool convert) {
 	if (!myStyleSheetParser.isNull()) {
-		myStyleSheetParser->parse(text, len);
+		myStyleSheetParser->parseString(text, len);
 		return true;
 	}
 

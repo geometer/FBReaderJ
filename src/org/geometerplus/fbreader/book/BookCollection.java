@@ -67,6 +67,9 @@ public class BookCollection extends AbstractBookCollection {
 		if (plugin == null) {
 			return null;
 		}
+		if (!plugin.type().Builtin && bookFile != bookFile.getPhysicalFile()) {
+			return null;
+		}
 		try {
 			bookFile = plugin.realBookFile(bookFile);
 		} catch (BookReadingException e) {

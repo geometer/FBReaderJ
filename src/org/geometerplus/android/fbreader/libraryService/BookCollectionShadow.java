@@ -64,7 +64,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	public synchronized void bindToService(Context context, Runnable onBindAction) {
 		if (myInterface != null && myContext == context) {
 			if (onBindAction != null) {
-				Config.Instance().runOnStart(onBindAction);
+				Config.Instance().runOnConnect(onBindAction);
 			}
 		} else {
 			if (onBindAction != null) {
@@ -462,7 +462,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = LibraryInterface.Stub.asInterface(service);
 		while (!myOnBindActions.isEmpty()) {
-			Config.Instance().runOnStart(myOnBindActions.remove(0));
+			Config.Instance().runOnConnect(myOnBindActions.remove(0));
 		}
 		if (myContext != null) {
 			myContext.registerReceiver(myReceiver, new IntentFilter(LibraryService.BOOK_EVENT_ACTION));

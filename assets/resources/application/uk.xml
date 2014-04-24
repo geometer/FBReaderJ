@@ -244,7 +244,7 @@
 		<node name="clearSelection" value="Прибрати позначку"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Поширено з &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Поширено з &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Налаштування"/>
@@ -296,9 +296,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Теки">
 			<node name="summary" value="Теки для пошуку файлів"/>
-			<node name="books" value="Теки з книжками"/>
-			<node name="fonts" value="Теки зі шрифтами"/>
-			<node name="wallpapers" value="Теки зі шпалерами"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
+				<node name="chooserTitle" value="Теки з книжками"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
+				<node name="chooserTitle" value="Теки з книжками"/>
+			</node>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
+				<node name="chooserTitle" value="Теки зі шрифтами"/>
+			</node>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
+				<node name="chooserTitle" value="Теки зі шпалерами"/>
+			</node>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
+				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="appearance" value="Зовнішній вигляд">
 			<node name="summary" value="Орієнтація, панель стану"/>
@@ -539,6 +551,10 @@
 		</node>
 		<node name="css" value="CSS" toBeTranslated="true">
 			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Font size" toBeTranslated="true">
 				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
@@ -722,14 +738,18 @@
 			<node name="summary" value="Інформація про версію, контакти"/>
 			<node name="version" value="Версія"/>
 			<node name="site" value="Зайти на наш вебсайт">
-				<node name="url" value="http://fbreader.org/"/>
+				<node name="url" value="http://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="Відпратити нам email">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
 			<node name="twitter" value="Зафоловити нас на Твітері">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="http://twitter.com/fbreader_ru"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
 		</node>
 		<node name="eink" value="E-ink screen" toBeTranslated="true">
 			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
@@ -841,6 +861,25 @@
 			<node name="dontShowAgain" value="Не показувати знову"/>
 			<node name="more" value="Наступна порада"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root" toBeTranslated="true"/>
+			<node name="newFolder" value="New folder" toBeTranslated="true"/>
+			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="menu">
+				<node name="origin" value="Origin" toBeTranslated="true"/>
+				<node name="reload" value="Reload" toBeTranslated="true"/>
+			</node>
+			<node name="sortBy" value="Sort by" toBeTranslated="true">
+				<node name="name" value="Name" toBeTranslated="true"/>
+				<node name="size" value="Size" toBeTranslated="true"/>
+				<node name="date" value="Date" toBeTranslated="true"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
@@ -849,6 +888,7 @@
 		<node name="pluginNotFound" value="Немає плагіну для '%s'"/>
 		<node name="unknownPluginType" value="Невідомий тип плагіну: %s"/>
 		<node name="fileNotFound" value="Файл не знайдено: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
 		<node name="opfFileNotFound" value="OPF не знайдено в %s"/>
 		<node name="unsupportedFileFormat" value="Формат файлу не підтримується для '%s'"/>
 		<node name="errorParsingRtf" value="Помилка обробки Rtf в: %s"/>
@@ -864,6 +904,8 @@
 		<node name="emptyCatalog" value="Каталог порожній"/>
 		<node name="emptyBasket" value="На жаль ваш кошик порожній"/>
 		<node name="emptyNetworkSearchResults" value="Відповідних книг не знайдено"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>
@@ -877,7 +919,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Проблема з FBReader"/>
-			<node name="text" value="FBReader неможливо записати в теку кешу. Можливо Ви забули підключити карту пам'яті. Будь-ласка виправте це або введіть інше ім'я теки."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Проблема з FBReader"/>
@@ -890,7 +932,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="http://ru.fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Install plugins" toBeTranslated="true">
 		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
@@ -915,6 +957,9 @@
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

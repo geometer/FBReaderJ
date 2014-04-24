@@ -129,8 +129,9 @@ bool OEBPlugin::readMetaInfo(Book &book) const {
 	return OEBMetaInfoReader(book).readMetaInfo(opfFile(file));
 }
 
-std::string OEBPlugin::readEncryptionMethod(Book &book) const {
-	return OEBEncryptionReader().readEncryptionMethod(epubFile(book.file()));
+std::vector<shared_ptr<FileEncryptionInfo> > OEBPlugin::readEncryptionInfos(Book &book) const {
+	const ZLFile &opf = opfFile(book.file());
+	return OEBEncryptionReader().readEncryptionInfos(epubFile(opf), opf);
 }
 
 bool OEBPlugin::readUids(Book &book) const {

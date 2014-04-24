@@ -131,7 +131,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		while (mark.compareTo(myCurrentPage.EndCursor.getMark()) > 0) {
 			doRepaint = true;
-			scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			turnPage(true, ScrollingMode.NO_OVERLAPPING, 0);
 			preparePaintInfo(myCurrentPage);
 		}
 		if (doRepaint) {
@@ -163,7 +163,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		while (!highlighting.intersects(myCurrentPage)) {
 			doRepaint = true;
-			scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+			turnPage(true, ScrollingMode.NO_OVERLAPPING, 0);
 			preparePaintInfo(myCurrentPage);
 		}
 		if (doRepaint) {
@@ -235,7 +235,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public boolean findResultsAreEmpty() {
-		return (myModel == null) || myModel.getMarks().isEmpty();
+		return myModel == null || myModel.getMarks().isEmpty();
 	}
 
 	@Override
@@ -682,10 +682,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 			while (paragraph < myModel.getParagraphsNumber()
 					&& myLettersBufferLength < myLettersBuffer.length) {
-				ZLTextParagraph.EntryIterator it = myModel.getParagraph(paragraph++).iterator();
-				while (it.hasNext()
-						&& myLettersBufferLength < myLettersBuffer.length) {
-					it.next();
+				final ZLTextParagraph.EntryIterator it = myModel.getParagraph(paragraph++).iterator();
+				while (myLettersBufferLength < myLettersBuffer.length && it.next()) {
 					if (it.getType() == ZLTextParagraph.Entry.TEXT) {
 						final int len = Math.min(it.getTextLength(),
 								myLettersBuffer.length - myLettersBufferLength);
@@ -908,6 +906,26 @@ public abstract class ZLTextView extends ZLTextViewBase {
 						getScalingType(imageElement),
 						getAdjustingModeForImages()
 					);
+				} else if (element instanceof ZLTextVideoElement) {
+					// TODO: draw
+					context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
+					context.setFillColor(new ZLColor(127, 127, 127));
+					final int xStart = area.XStart + 10;
+					final int xEnd = area.XEnd - 10;
+					final int yStart = area.YStart + 10;
+					final int yEnd = area.YEnd - 10;
+					context.fillRectangle(xStart, yStart, xEnd, yEnd);
+					context.drawLine(xStart, yStart, xStart, yEnd);
+					context.drawLine(xStart, yEnd, xEnd, yEnd);
+					context.drawLine(xEnd, yEnd, xEnd, yStart);
+					context.drawLine(xEnd, yStart, xStart, yStart);
+					final int l = xStart + (xEnd - xStart) * 7 / 16; 
+					final int r = xStart + (xEnd - xStart) * 10 / 16; 
+					final int t = yStart + (yEnd - yStart) * 2 / 6;
+					final int b = yStart + (yEnd - yStart) * 4 / 6;
+					final int c = yStart + (yEnd - yStart) / 2;
+					context.setFillColor(new ZLColor(196, 196, 196));
+					context.fillPolygon(new int[] { l, l, r }, new int[] { t, b, c });
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
@@ -1073,6 +1091,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				wordOccurred = true;
 				isVisible = true;
 			} else if (element instanceof ZLTextImageElement) {
+				wordOccurred = true;
+				isVisible = true;
+			} else if (element instanceof ZLTextVideoElement) {
 				wordOccurred = true;
 				isVisible = true;
 			} else if (isStyleChangeElement(element)) {
@@ -1251,7 +1272,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					wordOccurred = false;
 					--spaceCounter;
 				}
-			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement) {
+			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement || element instanceof ZLTextVideoElement) {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0;
@@ -1298,7 +1319,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	public synchronized final void scrollPage(boolean forward, int scrollingMode, int value) {
+	public synchronized final void turnPage(boolean forward, int scrollingMode, int value) {
 		preparePaintInfo(myCurrentPage);
 		myPreviousPage.reset();
 		myNextPage.reset();
@@ -1323,7 +1344,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			myNextPage.reset();
 			preparePaintInfo(myCurrentPage);
 			if (myCurrentPage.isEmptyPage()) {
-				scrollPage(true, ScrollingMode.NO_OVERLAPPING, 0);
+				turnPage(true, ScrollingMode.NO_OVERLAPPING, 0);
 			}
 		}
 	}
@@ -1335,7 +1356,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			myNextPage.reset();
 			preparePaintInfo(myCurrentPage);
 			if (myCurrentPage.isEmptyPage()) {
-				scrollPage(false, ScrollingMode.NO_OVERLAPPING, 0);
+				turnPage(false, ScrollingMode.NO_OVERLAPPING, 0);
 			}
 		}
 	}
@@ -1472,7 +1493,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myCharWidth = -1;
 	}
 
-	protected void rebuildPaintInfo() {
+	protected synchronized void rebuildPaintInfo() {
 		myPreviousPage.reset();
 		myNextPage.reset();
 		ZLTextParagraphCursorCache.clear();

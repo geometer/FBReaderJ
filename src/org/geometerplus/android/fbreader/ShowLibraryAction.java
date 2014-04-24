@@ -22,9 +22,9 @@ package org.geometerplus.android.fbreader;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
-import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.library.LibraryActivity;
 import org.geometerplus.android.util.PackageUtil;
 
@@ -36,7 +36,7 @@ class ShowLibraryAction extends FBAndroidAction {
 	@Override
 	protected void run(Object ... params) {
 		final Intent externalIntent =
-			new Intent("android.fbreader.action.EXTERNAL_LIBRARY");
+			new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
 		final Intent internalIntent =
 			new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
 		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
@@ -52,7 +52,7 @@ class ShowLibraryAction extends FBAndroidAction {
 
 	private void startLibraryActivity(Intent intent) {
 		if (Reader.Model != null) {
-			intent.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(Reader.Model.Book));
+			FBReaderIntents.putBookExtra(intent, Reader.Model.Book);
 		}
 		OrientationUtil.startActivity(BaseActivity, intent);
 	}

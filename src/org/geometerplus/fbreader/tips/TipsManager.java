@@ -151,7 +151,7 @@ public class TipsManager {
 
 		myDownloadInProgress = true;
 
-		Config.Instance().runOnStart(new Runnable() {
+		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				final File tipsFile = new File(getLocalFilePath());
 				tipsFile.getParentFile().mkdirs();

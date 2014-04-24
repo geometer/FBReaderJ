@@ -38,6 +38,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.*;
 import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
@@ -48,7 +49,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	private Book mySelectedBook;
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		if (myRootTree == null) {
@@ -56,8 +57,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		}
 		myRootTree.Collection.addListener(this);
 
-		mySelectedBook =
-			SerializerUtil.deserializeBook(getIntent().getStringExtra(FBReader.BOOK_KEY));
+		mySelectedBook = FBReaderIntents.getBookExtra(getIntent());
 
 		new LibraryTreeAdapter(this);
 
@@ -123,11 +123,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	// show BookInfoActivity
 	//
 	private void showBookInfo(Book book) {
-		OrientationUtil.startActivity(
-			this,
-			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(FBReader.BOOK_KEY, SerializerUtil.serialize(book))
-		);
+		final Intent intent = new Intent(getApplicationContext(), BookInfoActivity.class);
+		FBReaderIntents.putBookExtra(intent, book);
+		OrientationUtil.startActivity(this, intent);
 	}
 
 	//

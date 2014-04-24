@@ -19,8 +19,12 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
-import org.geometerplus.zlibrary.core.options.*;
+import java.util.Collections;
+import java.util.List;
+
+import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
@@ -35,6 +39,8 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		new ZLBooleanOption("Style", "css:textAlignment", true);
 	public final ZLBooleanOption UseCSSFontSizeOption =
 		new ZLBooleanOption("Style", "css:fontSize", true);
+	public final ZLBooleanOption UseCSSFontFamilyOption =
+		new ZLBooleanOption("Style", "css:fontFamily", true);
 
 	public final ZLBooleanOption AutoHyphenationOption =
 		new ZLBooleanOption(OPTIONS, "AutoHyphenation", true);
@@ -62,9 +68,15 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		LineSpaceOption = new ZLIntegerRangeOption(GROUP, prefix + ":lineSpacing", 5, 20, 12);
 	}
 
+	private String myFontFamily;
+	private List<FontEntry> myFontEntries;
 	@Override
-	public String getFontFamily() {
-		return FontFamilyOption.getValue();
+	public List<FontEntry> getFontEntries() {
+		final String family = FontFamilyOption.getValue();
+		if (myFontEntries == null || !family.equals(myFontFamily)) {
+			myFontEntries = Collections.singletonList(FontEntry.systemEntry(family));
+		}
+		return myFontEntries;
 	}
 
 	public int getFontSize() {

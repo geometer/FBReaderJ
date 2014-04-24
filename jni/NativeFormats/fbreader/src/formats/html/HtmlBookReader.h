@@ -24,6 +24,8 @@
 
 #include <shared_ptr.h>
 
+#include <FontMap.h>
+
 #include "HtmlReader.h"
 #include "../../bookmodel/BookReader.h"
 #include "../css/StyleSheetTable.h"
@@ -74,6 +76,7 @@ private:
 
 	StyleSheetTable myStyleSheetTable;
 	shared_ptr<StyleSheetParser> myStyleSheetParser;
+	shared_ptr<FontMap> myFontMap;
 
 	int mySpaceCounter;
 	int myBreakCounter;

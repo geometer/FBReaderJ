@@ -315,9 +315,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Adresáře">
 			<node name="summary" value="Adresáře pro hledání souborů"/>
-			<node name="books" value="Adresář s knihami"/>
-			<node name="fonts" value="Adresář s písmy"/>
-			<node name="wallpapers" value="Adresář s tapetami"/>
+			<node name="bookPath" value="Kde hledat knihy">
+				<node name="chooserTitle" value="Adresář s knihami"/>
+			</node>
+			<node name="downloadDir" value="Kam ukládat stažené knihy">
+				<node name="chooserTitle" value="Adresář s knihami"/>
+			</node>
+			<node name="fontPath" value="Kde hledat písma">
+				<node name="chooserTitle" value="Adresář s písmy"/>
+			</node>
+			<node name="wallpaperPath" value="Kde hledat obrázky pozadí">
+				<node name="chooserTitle" value="Adresář s tapetami"/>
+			</node>
+			<node name="tempDir" value="Kam ukládat dočasné soubory">
+				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="appearance" value="Vzhled">
 			<node name="summary" value="Otáčení, stavový řádek"/>
@@ -558,6 +570,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>
+			<node name="fontFamily" value="Rodina písem">
+				<node name="summaryOn" value="Použít rodinu písem definovanou v CSS"/>
+				<node name="summaryOff" value="Ignorovat rodinu písem definovanou v CSS"/>
+			</node>
 			<node name="fontSize" value="Velikost písma">
 				<node name="summaryOn" value="Použít velikost písma definovanou v CSS"/>
 				<node name="summaryOff" value="Ignorovat velikost písma definovanou v CSS"/>
@@ -749,6 +765,10 @@
 			<node name="twitter" value="Sledujte nás na twitteru">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
 		</node>
 		<node name="eink" value="Displej s elektronickým inkoustem">
 			<node name="summary" value="Specifické možnosti pro displej s elektronickým inkoustem"/>
@@ -860,6 +880,25 @@
 			<node name="dontShowAgain" value="Znovu nezobrazovat"/>
 			<node name="more" value="Další tip"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader ve výchozím nastavení pracuje v režimu celé obrazovky. Klepnutím na prostřední třetinu obrazovky se zobrazí ovládání. Toto chování můžete změnit v části „Vzhled“ dialogového okna Nastavení."/>
+			<node name="message2" value="Výborně! Dalším klepnutím na prostřední třetinu obrazovky se skryje ovládání a tato nápověda. Pokud chcete ponechat během čtení ovládání na obrazovce, vyberte volbu „Zobrazit panel akcí“ v části „Vzhled“ dialogového okna Nastavení."/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root" toBeTranslated="true"/>
+			<node name="newFolder" value="New folder" toBeTranslated="true"/>
+			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="menu">
+				<node name="origin" value="Origin" toBeTranslated="true"/>
+				<node name="reload" value="Reload" toBeTranslated="true"/>
+			</node>
+			<node name="sortBy" value="Sort by" toBeTranslated="true">
+				<node name="name" value="Name" toBeTranslated="true"/>
+				<node name="size" value="Size" toBeTranslated="true"/>
+				<node name="date" value="Date" toBeTranslated="true"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Chyba %s v nativním kódu během čtení '%s'"/>
@@ -868,6 +907,7 @@
 		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
 		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
 		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
+		<node name="unsupportedEncryptionMethod" value="Soubor %s je šifrovaný metodou, kterou FBReader nepodporuje. Některé stránky nelze číst."/>
 		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
 		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
 		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
@@ -883,6 +923,8 @@
 		<node name="emptyCatalog" value="Katalog je bohužel prázdný"/>
 		<node name="emptyBasket" value="Váš košík je bohužel prázdný"/>
 		<node name="emptyNetworkSearchResults" value="Nebyly nalezeny žádné knihy"/>
+		<node name="videoServiceNotWorking" value="Bohužel, videoslužba není dostupná"/>
+		<node name="videoPlayerNotFound" value="Bohužel, na tomto zařízení není nainstalovaný žádný přehrávač videa"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>
@@ -896,7 +938,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Problém FBReaderu"/>
-			<node name="text" value="Adresář vyrovnávací paměti FBReaderu není přístupný pro zápis. Možná jste zapomněli vložit nebo odpojit paměťovou kartu. Opravte tento problém nebo níže vyberte jiný název adresáře."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problém FBReaderu"/>
@@ -934,6 +976,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Čte knihy ve formátu PDF"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Šifrovaná část"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Pro čtení knihy obraťte zařízení. Pro navrácení textu na tento displej stiskněte tlačítko dole."/>

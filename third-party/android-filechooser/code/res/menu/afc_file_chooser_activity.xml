@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2012 Hai Bison
+
+    See the file LICENSE at the root directory of this project for copying
+    permission.
+-->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <group android:id="@+id/afc_filechooser_activity_menugroup_navigator" >
+        <item
+            android:id="@+id/afc_filechooser_activity_menuitem_home"
+            android:icon="@drawable/afc_ic_menu_home"
+            android:showAsAction="ifRoom"
+            android:title="@string/afc_cmd_home">
+        </item>
+        <item
+            android:id="@+id/afc_filechooser_activity_menuitem_reload"
+            android:icon="@drawable/afc_ic_menu_reload"
+            android:showAsAction="ifRoom"
+            android:title="@string/afc_cmd_reload">
+        </item>
+    </group>
+
+</menu>

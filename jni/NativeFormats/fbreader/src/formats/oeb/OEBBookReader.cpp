@@ -54,31 +54,27 @@ static const std::string REFERENCE = "reference";
 static const std::string COVER = "cover";
 static const std::string COVER_IMAGE = "other.ms-coverimage-standard";
 
-bool OEBBookReader::isOPFTag(const std::string &expected, const std::string &tag) const {
-	return expected == tag || testTag(ZLXMLNamespace::OpenPackagingFormat, expected, tag);
-}
-
 void OEBBookReader::startElementHandler(const char *tag, const char **xmlattributes) {
 	std::string tagString = ZLUnicodeUtil::toLower(tag);
 
 	switch (myState) {
 		case READ_NONE:
-			if (isOPFTag(MANIFEST, tagString)) {
+			if (testOPFTag(MANIFEST, tagString)) {
 				myState = READ_MANIFEST;
-			} else if (isOPFTag(SPINE, tagString)) {
+			} else if (testOPFTag(SPINE, tagString)) {
 				const char *toc = attributeValue(xmlattributes, "toc");
 				if (toc != 0) {
 					myNCXTOCFileName = myIdToHref[toc];
 				}
 				myState = READ_SPINE;
-			} else if (isOPFTag(GUIDE, tagString)) {
+			} else if (testOPFTag(GUIDE, tagString)) {
 				myState = READ_GUIDE;
-			} else if (isOPFTag(TOUR, tagString)) {
+			} else if (testOPFTag(TOUR, tagString)) {
 				myState = READ_TOUR;
 			}
 			break;
 		case READ_MANIFEST:
-			if (isOPFTag(ITEM, tagString)) {
+			if (testOPFTag(ITEM, tagString)) {
 				const char *href = attributeValue(xmlattributes, "href");
 				if (href != 0) {
 					const std::string sHref = MiscUtil::decodeHtmlURL(href);
@@ -94,7 +90,7 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 			}
 			break;
 		case READ_SPINE:
-			if (isOPFTag(ITEMREF, tagString)) {
+			if (testOPFTag(ITEMREF, tagString)) {
 				const char *id = attributeValue(xmlattributes, "idref");
 				if (id != 0) {
 					const std::string &fileName = myIdToHref[id];
@@ -105,7 +101,7 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 			}
 			break;
 		case READ_GUIDE:
-			if (isOPFTag(REFERENCE, tagString)) {
+			if (testOPFTag(REFERENCE, tagString)) {
 				const char *type = attributeValue(xmlattributes, "type");
 				const char *title = attributeValue(xmlattributes, "title");
 				const char *href = attributeValue(xmlattributes, "href");
@@ -127,7 +123,7 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 			}
 			break;
 		case READ_TOUR:
-			if (isOPFTag(SITE, tagString)) {
+			if (testOPFTag(SITE, tagString)) {
 				const char *title = attributeValue(xmlattributes, "title");
 				const char *href = attributeValue(xmlattributes, "href");
 				if ((title != 0) && (href != 0)) {
@@ -164,22 +160,22 @@ void OEBBookReader::endElementHandler(const char *tag) {
 
 	switch (myState) {
 		case READ_MANIFEST:
-			if (isOPFTag(MANIFEST, tagString)) {
+			if (testOPFTag(MANIFEST, tagString)) {
 				myState = READ_NONE;
 			}
 			break;
 		case READ_SPINE:
-			if (isOPFTag(SPINE, tagString)) {
+			if (testOPFTag(SPINE, tagString)) {
 				myState = READ_NONE;
 			}
 			break;
 		case READ_GUIDE:
-			if (isOPFTag(GUIDE, tagString)) {
+			if (testOPFTag(GUIDE, tagString)) {
 				myState = READ_NONE;
 			}
 			break;
 		case READ_TOUR:
-			if (isOPFTag(TOUR, tagString)) {
+			if (testOPFTag(TOUR, tagString)) {
 				myState = READ_NONE;
 			}
 			break;
@@ -188,21 +184,21 @@ void OEBBookReader::endElementHandler(const char *tag) {
 	}
 }
 
-bool OEBBookReader::readBook(const ZLFile &file) {
-	const ZLFile epub = file.getContainerArchive();
-	epub.forceArchiveType(ZLFile::ZIP);
-	shared_ptr<ZLDir> epubDir = epub.directory();
+bool OEBBookReader::readBook(const ZLFile &opfFile) {
+	const ZLFile epubFile = opfFile.getContainerArchive();
+	epubFile.forceArchiveType(ZLFile::ZIP);
+	shared_ptr<ZLDir> epubDir = epubFile.directory();
 	if (!epubDir.isNull()) {
 		myEncryptionMap = new EncryptionMap();
 		const std::vector<shared_ptr<FileEncryptionInfo> > encodingInfos =
-			OEBEncryptionReader().readEncryptionInfos(epub);
+			OEBEncryptionReader().readEncryptionInfos(epubFile, opfFile);
 
 		for (std::vector<shared_ptr<FileEncryptionInfo> >::const_iterator it = encodingInfos.begin(); it != encodingInfos.end(); ++it) {
 			myEncryptionMap->addInfo(*epubDir, *it);
 		}
 	}
 
-	myFilePrefix = MiscUtil::htmlDirectoryPrefix(file.path());
+	myFilePrefix = MiscUtil::htmlDirectoryPrefix(opfFile.path());
 
 	myIdToHref.clear();
 	myHtmlFileNames.clear();
@@ -214,7 +210,7 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myGuideTOC.clear();
 	myState = READ_NONE;
 
-	if (!readDocument(file)) {
+	if (!readDocument(opfFile)) {
 		return false;
 	}
 
@@ -239,7 +235,11 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 			myModelReader.insertEndOfSectionParagraph();
 		}
 		//ZLLogger::Instance().println("oeb", "start " + xhtmlFile.path());
-		xhtmlReader.readFile(xhtmlFile, *it);
+		if (!xhtmlReader.readFile(xhtmlFile, *it)) {
+			if (opfFile.exists() && !myEncryptionMap.isNull()) {
+				myModelReader.insertEncryptedSectionParagraph();
+			}
+		}
 		//ZLLogger::Instance().println("oeb", "end " + xhtmlFile.path());
 		//std::string debug = "para count = ";
 		//ZLStringUtil::appendNumber(debug, myModelReader.model().bookTextModel()->paragraphsNumber());
@@ -291,12 +291,4 @@ void OEBBookReader::generateTOC(const XHTMLReader &xhtmlReader) {
 			myModelReader.endContentsParagraph();
 		}
 	}
-}
-
-bool OEBBookReader::processNamespaces() const {
-	return true;
-}
-
-const std::vector<std::string> &OEBBookReader::externalDTDs() const {
-	return EntityFilesCollector::Instance().externalDTDs("xhtml");
 }

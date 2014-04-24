@@ -259,7 +259,7 @@
 		<node name="clearSelection" value="Убрать пометку"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Отправлено из &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Настройки"/>
@@ -311,9 +311,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталоги">
 			<node name="summary" value="Где искать файлы"/>
-			<node name="books" value="Каталог с книгами"/>
-			<node name="fonts" value="Каталог со шрифтами"/>
-			<node name="wallpapers" value="Каталог с обоями"/>
+			<node name="bookPath" value="Где лежат книги">
+				<node name="chooserTitle" value="Каталог для книг"/>
+			</node>
+			<node name="downloadDir" value="Куда сохранять загруженные книги">
+				<node name="chooserTitle" value="Каталог для книг"/>
+			</node>
+			<node name="fontPath" value="Где лежат шрифты">
+				<node name="chooserTitle" value="Каталог для шрифтов"/>
+			</node>
+			<node name="wallpaperPath" value="Где лежат рисунки для фона">
+				<node name="chooserTitle" value="Каталог для рисунков"/>
+			</node>
+			<node name="tempDir" value="Где создавать временные файлы">
+				<node name="chooserTitle" value="Для временных файлов"/>
+			</node>
 		</node>
 		<node name="appearance" value="Внешний вид">
 			<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>
@@ -554,6 +566,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Использовать ли форматирование CSS"/>
+			<node name="fontFamily" value="Названия шрифтов">
+				<node name="summaryOn" value="Использовать шрифты, указанные в CSS"/>
+				<node name="summaryOff" value="Игнорировать указания шрифтов в CSS"/>
+			</node>
 			<node name="fontSize" value="Размер шрифта">
 				<node name="summaryOn" value="Использовать размер шрифта, заданный в CSS"/>
 				<node name="summaryOff" value="Игнорировать размер шрифта, заданный в CSS"/>
@@ -737,7 +753,7 @@
 			<node name="summary" value="Версия, контакты"/>
 			<node name="version" value="Версия"/>
 			<node name="site" value="Наш веб-сайт">
-				<node name="url" value="http://fbreader.ru/"/>
+				<node name="url" value="http://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="Отправьте нам письмо">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -745,6 +761,10 @@
 			<node name="twitter" value="Читайте нас в твиттере">
 				<node name="url" value="http://twitter.com/fbreader_ru"/>
 			</node>
+			<node name="facebook" value="Страница FBReader на facebook">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Сторонние библиотеки"/>
 		</node>
 		<node name="eink" value="Экран e-ink">
 			<node name="summary" value="Настройки для экрана с электронными чернилами"/>
@@ -856,14 +876,34 @@
 			<node name="dontShowAgain" value="Больше не показывать"/>
 			<node name="more" value="Ещё"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader запускается в полноэкранном режиме. Чтобы увидеть элементы управления, нажмите на экран в средней трети. Вы можете изменить это поведение в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
+			<node name="message2" value="Отлично! Нажмите ещё раз на экран в средней трети, чтобы скрыть элементы управления и этот совет. Если вы хотите, чтобы верхнее меню оставалось на экране во время чтения, выберите «Показывать строку меню» в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Корень"/>
+			<node name="newFolder" value="Новый каталог"/>
+			<node name="folderNameHint" value="Название"/>
+			<node name="menu">
+				<node name="origin" value="В начало"/>
+				<node name="reload" value="Пересканировать"/>
+			</node>
+			<node name="sortBy" value="Сортировать">
+				<node name="name" value="по названию"/>
+				<node name="size" value="по размеру"/>
+				<node name="date" value="по дате"/>
+			</node>
+			<node name="permissionDenied" value="Нет доступа"/>
+		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="nativeCodeFailure" value="Ошибка %s в нативном коде при чтении '%s'"/>
 		<node name="errorReadingFile" value="Ошибка при чтении '%s'"/>
 		<node name="errorReadingZip" value="Ошибка при разархивировании '%s'"/>
 		<node name="pluginNotFound" value="Нет плагина для '%s'"/>
 		<node name="unknownPluginType" value="Неизвестный тип плагина: %s"/>
 		<node name="fileNotFound" value="Не найти файл: %s"/>
+		<node name="unsupportedEncryptionMethod" value="Файл %s зашифрован методом, неизвестным FBReader. Некоторые или все страницы могут быть недоступны"/>
 		<node name="opfFileNotFound" value="Не удалось найти OPF в %s"/>
 		<node name="unsupportedFileFormat" value="Не поддерживается формат файла '%s'"/>
 		<node name="errorParsingRtf" value="Ошибка при чтении RTF-файла %s"/>
@@ -879,6 +919,8 @@
 		<node name="emptyCatalog" value="Каталог пуст"/>
 		<node name="emptyBasket" value="В корзине нет книг"/>
 		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги"/>
+		<node name="videoServiceNotWorking" value="Просмотр видео не работает"/>
+		<node name="videoPlayerNotFound" value="Не удалось отыскать видеопроигрыватель"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>
@@ -892,7 +934,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Проблема у FBReader"/>
-			<node name="text" value="FBReader не может сохранить временные файлы. Возможно, вы забыли вставить карту памяти, или она недоступна из-за подключения к компьютеру. Пожалуйста, исправьте эту проблему или введите другое имя каталога для временных файлов."/>
+			<node name="text" value="FBReader не может сохранить временные файлы. Возможно, вы забыли вставить карту памяти, или она недоступна из-за подключения к компьютеру. Пожалуйста, исправьте эту проблему или выберите другой каталог для временных файлов."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Проблема у FBReader"/>
@@ -905,7 +947,7 @@
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.ru/faq-page"/>
+		<node name="faqPage" value="http://ru.fbreader.org/faq-page"/>
 	</node>
 	<node name="plugins" value="Дополнительные модули">
 		<node name="noMorePlugins" value="Извините, но прямо сейчас у нас нет новых модулей"/>
@@ -930,6 +972,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Чтение файлов PDF"/>
 		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Этот раздел зашифрован"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Переверните телефон, чтобы увидеть текст книги. Если вы хотите читать на этом экране, нажмите на кнопку."/>

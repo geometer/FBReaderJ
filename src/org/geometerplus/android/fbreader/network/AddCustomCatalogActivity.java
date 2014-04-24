@@ -38,6 +38,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
@@ -165,7 +166,7 @@ public class AddCustomCatalogActivity extends Activity {
 			library.synchronize();
 
 			final Intent intent = new Intent(
-				NetworkLibraryActivity.OPEN_CATALOG_ACTION,
+				FBReaderIntents.Action.OPEN_NETWORK_CATALOG,
 				myEditNotAdd ? null : uri,
 				AddCustomCatalogActivity.this,
 				NetworkLibraryPrimaryActivity.class

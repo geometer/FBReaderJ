@@ -89,13 +89,13 @@ public class LibraryService extends Service {
 		private BookCollection myCollection;
 
 		LibraryImplementation() {
-			myDatabase = SQLiteBooksDatabase.Instance(LibraryService.this);
-			myCollection = new BookCollection(myDatabase, Paths.BookPathOption.getValue());
+			myDatabase = new SQLiteBooksDatabase(LibraryService.this);
+			myCollection = new BookCollection(myDatabase, Paths.bookPath());
 			reset(true);
 		}
 
 		public void reset(final boolean force) {
-			Config.Instance().runOnStart(new Runnable() {
+			Config.Instance().runOnConnect(new Runnable() {
 				public void run() {
 					resetInternal(force);
 				}
@@ -103,7 +103,7 @@ public class LibraryService extends Service {
 		}
 
 		private void resetInternal(boolean force) {
-			final List<String> bookDirectories = Paths.BookPathOption.getValue();
+			final List<String> bookDirectories = Paths.bookPath();
 			if (!force &&
 				myCollection.status() != BookCollection.Status.NotStarted &&
 				bookDirectories.equals(myCollection.BookDirectories)
@@ -115,8 +115,8 @@ public class LibraryService extends Service {
 			myFileObservers.clear();
 
 			myCollection = new BookCollection(myDatabase, bookDirectories);
-			for (String path : bookDirectories) {
-				final Observer observer = new Observer(path, myCollection);
+			for (String dir : bookDirectories) {
+				final Observer observer = new Observer(dir, myCollection);
 				observer.startWatching();
 				myFileObservers.add(observer);
 			}
@@ -142,6 +142,10 @@ public class LibraryService extends Service {
 			for (FileObserver observer : myFileObservers) {
 				observer.stopWatching();
 			}
+		}
+
+		public void close() {
+			((SQLiteBooksDatabase)myDatabase).close();
 		}
 
 		public String status() {
@@ -324,8 +328,10 @@ public class LibraryService extends Service {
 	@Override
 	public void onDestroy() {
 		if (myLibrary != null) {
-			myLibrary.deactivate();
+			final LibraryImplementation l = myLibrary;
 			myLibrary = null;
+			l.deactivate();
+			l.close();
 		}
 		super.onDestroy();
 	}

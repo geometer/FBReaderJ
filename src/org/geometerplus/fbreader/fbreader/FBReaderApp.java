@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.*;
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
@@ -166,6 +167,7 @@ public final class FBReaderApp extends ZLApplication {
 					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
 				}
 				getViewWidget().repaint();
+				storePosition();
 			}
 		}
 	}
@@ -282,16 +284,11 @@ public final class FBReaderApp extends ZLApplication {
 		getViewWidget().repaint();
 
 		try {
-			final String method = book.getPlugin().readEncryptionMethod(book);
-			if (!EncryptionMethod.NONE.equals(method)) {
-				System.err.println("UNSUPPORTED ALGORITHM: " + method);
-				/*
-				UIUtil.showErrorMessage(
-					FBReader.this,
-					"unsupportedEncryptionMethod",
-					myBook.File.getPath()
-				);
-				*/
+			for (FileEncryptionInfo info : book.getPlugin().readEncryptionInfos(book)) {
+				if (info != null && !EncryptionMethod.isSupported(info.Method)) {
+					showErrorMessage("unsupportedEncryptionMethod", book.File.getPath());
+					break;
+				}
 			}
 		} catch (BookReadingException e) {
 			// ignore
@@ -362,6 +359,7 @@ public final class FBReaderApp extends ZLApplication {
 			setView(FootnoteView);
 		}
 		getViewWidget().repaint();
+		storePosition();
 	}
 
 	public void showBookTextView() {
@@ -372,11 +370,60 @@ public final class FBReaderApp extends ZLApplication {
 		storePosition();
 	}
 
+	private class PositionSaver implements Runnable {
+		private final Book myBook;
+		private final ZLTextPosition myPosition;
+		private final RationalNumber myProgress;
+
+		PositionSaver(Book book, ZLTextView view) {
+			myBook = book;
+			myPosition = new ZLTextFixedPosition(view.getStartCursor());
+			myProgress = view.getProgress();
+		}
+
+		public void run() {
+			Collection.storePosition(myBook.getId(), myPosition);
+			myBook.setProgress(myProgress);
+			Collection.saveBook(myBook);
+		}
+	}
+
+	private class SaverThread extends Thread {
+		private final List<Runnable> myTasks =
+			Collections.synchronizedList(new LinkedList<Runnable>());
+
+		SaverThread() {
+			setPriority(MIN_PRIORITY);
+		}
+
+		void add(Runnable task) {
+			myTasks.add(task);
+		}
+
+		public void run() {
+			while (true) {
+				synchronized (myTasks) {
+					while (!myTasks.isEmpty()) {
+						myTasks.remove(0).run();
+					}
+				}
+				try {
+					sleep(500);
+				} catch (InterruptedException e) {
+				}
+			}
+		}
+	}
+
+	private volatile SaverThread mySaverThread;
+
 	public void storePosition() {
 		if (Model != null && Model.Book != null && BookTextView != null) {
-			Collection.storePosition(Model.Book.getId(), BookTextView.getStartCursor());
-			Model.Book.setProgress(BookTextView.getProgress());
-			Collection.saveBook(Model.Book);
+			if (mySaverThread == null) {
+				mySaverThread = new SaverThread();
+				mySaverThread.start();
+			}
+			mySaverThread.add(new PositionSaver(Model.Book, BookTextView));
 		}
 	}
 

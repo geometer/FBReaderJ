@@ -29,13 +29,24 @@ import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 public abstract class Paths {
 	public static ZLStringListOption BookPathOption =
-		directoryOption("BooksDirectory", defaultBookDirectory());
+		pathOption("BooksDirectory", defaultBookDirectory());
 
 	public static ZLStringListOption FontPathOption =
-		directoryOption("FontPathOption", cardDirectory() + "/Fonts");
+		pathOption("FontPathOption", cardDirectory() + "/Fonts");
 
 	public static ZLStringListOption WallpaperPathOption =
-		directoryOption("WallpapersDirectory", cardDirectory() + "/Wallpapers");
+		pathOption("WallpapersDirectory", cardDirectory() + "/Wallpapers");
+
+	public static ZLStringOption TempDirectoryOption =
+		new ZLStringOption("Files", "TemporaryDirectory", "");
+
+	public static ZLStringOption DownloadsDirectoryOption =
+		new ZLStringOption("Files", "DownloadsDirectory", "");
+	static {
+		if ("".equals(DownloadsDirectoryOption.getValue())) {
+			DownloadsDirectoryOption.setValue(mainBookDirectory());
+		}
+	}
 
 	public static String cardDirectory() {
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
@@ -84,7 +95,7 @@ public abstract class Paths {
 		return cardDirectory() + "/Books";
 	}
 
-	private static ZLStringListOption directoryOption(String key, String defaultDirectory) {
+	private static ZLStringListOption pathOption(String key, String defaultDirectory) {
 		final ZLStringListOption option = new ZLStringListOption(
 			"Files", key, Collections.<String>emptyList(), "\n"
 		);
@@ -94,17 +105,26 @@ public abstract class Paths {
 		return option;
 	}
 
+	public static List<String> bookPath() {
+		final List<String> path = new ArrayList<String>(Paths.BookPathOption.getValue());
+		final String downloadsDirectory = DownloadsDirectoryOption.getValue();
+		if (!"".equals(downloadsDirectory) && !path.contains(downloadsDirectory)) {
+			path.add(downloadsDirectory);
+		}
+		return path;
+	}
+
 	public static String mainBookDirectory() {
 		final List<String> bookPath = BookPathOption.getValue();
 		return bookPath.isEmpty() ? defaultBookDirectory() : bookPath.get(0);
 	}
 
-	public static String cacheDirectory() {
-		return mainBookDirectory() + "/.FBReader";
+	public static String tempDirectory() {
+		return TempDirectoryOption.getValue();
 	}
 
 	public static String networkCacheDirectory() {
-		return cacheDirectory() + "/cache";
+		return tempDirectory() + "/cache";
 	}
 
 	public static String systemShareDirectory() {

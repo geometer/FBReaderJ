@@ -19,8 +19,12 @@
 
 package org.geometerplus.zlibrary.core.drm;
 
-public interface EncryptionMethod {
-	String NONE = "none";
-	String UNSUPPORTED = "unsupported";
-	String MARLIN = "marlin";
+public abstract class EncryptionMethod {
+	public static final String UNSUPPORTED = "unsupported";
+	public static final String EMBEDDING = "embedding";
+	public static final String MARLIN = "marlin";
+
+	public static boolean isSupported(String method) {
+		return EMBEDDING.equals(method);
+	}
 }
