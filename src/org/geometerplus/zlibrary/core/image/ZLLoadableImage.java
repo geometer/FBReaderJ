@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.core.image;
 
 import org.geometerplus.zlibrary.core.util.MimeType;
 
+import android.graphics.Bitmap;
+
 public abstract class ZLLoadableImage extends ZLSingleImage {
 	private volatile boolean myIsSynchronized;
 
@@ -51,10 +53,10 @@ public abstract class ZLLoadableImage extends ZLSingleImage {
 	public abstract String getId();
 	
 	@Override
-	public boolean saveToFile(String url) {
+	public Bitmap getBitmap() {
 		if (!isSynchronized()) {
 			synchronize();
 		}
-		return super.saveToFile(url);
+		return super.getBitmap();
 	}
 }
