@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    
+	>
+	<ImageView
+		android:id="@+id/delete"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_alignParentRight="true"
+		android:src="@drawable/selection_delete"/>
+	
+	<TextView
+		android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:padding="5dp"
+		android:layout_toLeftOf="@id/delete"
+		android:textSize="16dp"/>
+</RelativeLayout>

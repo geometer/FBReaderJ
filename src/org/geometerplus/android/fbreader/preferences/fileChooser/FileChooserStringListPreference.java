@@ -21,9 +21,12 @@ package org.geometerplus.android.fbreader.preferences.fileChooser;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 
+import org.geometerplus.android.util.FileChooserUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -39,6 +42,22 @@ class FileChooserStringListPreference extends FileChooserPreference {
 	}
 
 	@Override
+	protected void onClick() {
+		FileChooserUtil.runDirectoriesManager(
+            (Activity)getContext(),
+            myRegCode,
+			getStringListValue()
+		);
+	}
+	
+	private ArrayList<String> getStringListValue(){
+		final List<String> values = myOption.getValue();
+		ArrayList<String> resList = new ArrayList<String>();
+		resList.addAll(values);
+		return resList;
+	}
+	
+	@Override
 	protected String getStringValue() {
 		final List<String> values = myOption.getValue();
 		return values.isEmpty() ? "" : values.get(0);
@@ -46,10 +65,35 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueInternal(String value) {
-		final List<String> currentValues = myOption.getValue();
+		//System.out.println("FileChooserStringListPreference::setValueInternal() "+value);
+		List<String> currentValues = myOption.getValue();
+		//System.out.println("1 FileChooserStringListPreference::setValueInternal() currentValue "+currentValues);
 		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
 			myOption.setValue(Collections.singletonList(value));
 			setSummary(value);
+		}
+		/*boolean found = false;
+		for(int i = 0; i < currentValues.size();i++){
+			if(currentValues.get(i).equals(value)){
+				currentValues.remove(i);
+				currentValues.add(i, value);
+				found = true;
+			}
+		}
+		if(!found){
+			currentValues.add(value);
+		}
+		myOption.setValue(currentValues);
+		setSummary(value);
+		System.out.println("2 FileChooserStringListPreference::setValueInternal() currentValue "+currentValues);*/
+	}
+	
+	@Override
+	protected void setValueInternal(ArrayList<String> value) {
+		System.out.println("FileChooserStringListPreference::setValueInternal() "+value);
+		if(value.size() > 0){
+			myOption.setValue(value);
+			setSummary(value.get(0));
 		}
 	}
 }

@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
 import android.content.Context;
+import java.util.ArrayList;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -45,6 +46,13 @@ class FileChooserStringPreference extends FileChooserPreference {
 		if (!currentValue.equals(value)) {
 			myOption.setValue(value);
 			setSummary(value);
+		}
+	}
+	
+	@Override
+	protected void setValueInternal(ArrayList<String> value) {
+		if(value.size() > 0){
+			setValueInternal(value.get(0));
 		}
 	}
 }

@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.preference.Preference;
@@ -29,7 +31,7 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.android.util.FileChooserUtil;
 
 abstract class FileChooserPreference extends Preference {
-	private final int myRegCode;
+	protected final int myRegCode;
 	private final ZLResource myResource;
 	private final boolean myChooseWritableDirectoriesOnly;
 	private final Runnable myOnValueSetAction;
@@ -47,16 +49,13 @@ abstract class FileChooserPreference extends Preference {
 
 	@Override
 	protected void onClick() {
-		FileChooserUtil.runDirectoriesManager(
-            (Activity)getContext(),
-            myRegCode*2);
-        /*FileChooserUtil.runDirectoryChooser(
+        FileChooserUtil.runDirectoryChooser(
 			(Activity)getContext(),
 			myRegCode,
 			myResource.getResource("chooserTitle").getValue(),
 			getStringValue(),
 			myChooseWritableDirectoriesOnly
-		);*/
+		);
 	}
 
 	protected abstract String getStringValue();
@@ -72,6 +71,19 @@ abstract class FileChooserPreference extends Preference {
 			myOnValueSetAction.run();
 		}
 	}
+	
+	protected final void setValue(ArrayList<String> value) {
+		if (value.isEmpty()){
+			return;
+		}
+
+		setValueInternal(value);
+
+		if (myOnValueSetAction != null) {
+			myOnValueSetAction.run();
+		}
+	}
 
 	protected abstract void setValueInternal(String value);
+	protected abstract void setValueInternal(ArrayList<String> value);
 }

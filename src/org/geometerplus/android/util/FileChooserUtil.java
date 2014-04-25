@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -37,8 +38,14 @@ public abstract class FileChooserUtil {
 	private FileChooserUtil() {
 	}
     
-    public static void runDirectoriesManager(Activity activity, int requestCode){
+    public static void runDirectoriesManager(
+		Activity activity,
+		int requestCode,
+		ArrayList<String> initinalValue
+	) {
 		final Intent intent = new Intent(activity, DirectoriesManagerActivity.class);
+		System.out.println(">>>>>>>>>>>>>>> "+initinalValue);
+		intent.putStringArrayListExtra(DirectoriesManagerActivity.DIR_LIST, initinalValue);
 		activity.startActivityForResult(intent, requestCode);
     }
     
@@ -66,6 +73,10 @@ public abstract class FileChooserUtil {
 
 	public static String pathFromData(Intent data) {
 		return data.getStringExtra(FileChooserActivity._FolderPath);
+	}
+
+	public static ArrayList<String> pathArrayFromData(Intent data) {
+		return data.getStringArrayListExtra(DirectoriesManagerActivity.DIR_LIST);
 	}
 
 	private static HashMap<String,String> textResources(String title) {
