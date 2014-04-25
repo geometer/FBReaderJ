@@ -42,7 +42,7 @@ public class FileUtils {
 
 	private static boolean accessDenied(IFile file) {
 		if (android.os.Build.VERSION.SDK_INT >= 9) {
-    		return file instanceof File && !((File)file).canExecute();
+    		return file instanceof File && (!((File)file).canExecute() || !((File)file).canRead());
 		} else {
 			return false;
 		}
@@ -69,6 +69,7 @@ public class FileUtils {
         } else if (file.isDirectory()) {
             if (filterMode != IFileProvider.FilterMode.AnyDirectories) {
                 if (file instanceof File && !((File)file).canWrite()) {
+					System.out.println(">> "+file.getName());
                     if (file instanceof ParentFile) {
                         return R.drawable.afc_folder;
                     } else if (accessDenied(file)) {
