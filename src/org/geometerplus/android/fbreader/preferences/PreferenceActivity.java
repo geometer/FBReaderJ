@@ -59,7 +59,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-			System.out.println("PreferenceActivity::onActivityResult() "+requestCode);
 			myChooserCollection.update(requestCode, data);
 		}
 	}

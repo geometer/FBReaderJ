@@ -38,14 +38,19 @@ public abstract class FileChooserUtil {
 	private FileChooserUtil() {
 	}
     
-    public static void runDirectoriesManager(
+    public static void runDirectoryManager(
 		Activity activity,
 		int requestCode,
-		ArrayList<String> initinalValue
+		String title,
+		String fileChooserTitle,
+		ArrayList<String> initinalValue,
+		boolean chooseWritableDirsOnly
 	) {
 		final Intent intent = new Intent(activity, DirectoriesManagerActivity.class);
-		System.out.println(">>>>>>>>>>>>>>> "+initinalValue);
+		intent.putExtra(DirectoriesManagerActivity.TITLE, title);
+		intent.putExtra(DirectoriesManagerActivity.CHOOSER_TITLE, fileChooserTitle);
 		intent.putStringArrayListExtra(DirectoriesManagerActivity.DIR_LIST, initinalValue);
+		intent.putExtra(DirectoriesManagerActivity.WRITABLE_DIRS_ONLY, chooseWritableDirsOnly);
 		activity.startActivityForResult(intent, requestCode);
     }
     

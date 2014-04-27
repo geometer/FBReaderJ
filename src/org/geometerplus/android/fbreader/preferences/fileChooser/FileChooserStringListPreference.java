@@ -32,21 +32,27 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 class FileChooserStringListPreference extends FileChooserPreference {
 	private final ZLStringListOption myOption;
+	private final ZLResource myResource;
 
 	FileChooserStringListPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringListOption option, int regCode, Runnable onValueSetAction) {
 		super(context, rootResource, resourceKey, false, regCode, onValueSetAction);
 
 		myOption = option;
+		
+		myResource = rootResource.getResource(resourceKey);
 
 		setSummary(getStringValue());
 	}
 
 	@Override
 	protected void onClick() {
-		FileChooserUtil.runDirectoriesManager(
+		FileChooserUtil.runDirectoryManager(
             (Activity)getContext(),
             myRegCode,
-			getStringListValue()
+			myResource.getResource("chooserTitle").getValue(),
+			myResource.getResource("chooserTitle").getValue(),
+			getStringListValue(),
+			myChooseWritableDirectoriesOnly
 		);
 	}
 	
@@ -65,32 +71,15 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueInternal(String value) {
-		//System.out.println("FileChooserStringListPreference::setValueInternal() "+value);
 		List<String> currentValues = myOption.getValue();
-		//System.out.println("1 FileChooserStringListPreference::setValueInternal() currentValue "+currentValues);
 		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
 			myOption.setValue(Collections.singletonList(value));
 			setSummary(value);
 		}
-		/*boolean found = false;
-		for(int i = 0; i < currentValues.size();i++){
-			if(currentValues.get(i).equals(value)){
-				currentValues.remove(i);
-				currentValues.add(i, value);
-				found = true;
-			}
-		}
-		if(!found){
-			currentValues.add(value);
-		}
-		myOption.setValue(currentValues);
-		setSummary(value);
-		System.out.println("2 FileChooserStringListPreference::setValueInternal() currentValue "+currentValues);*/
 	}
 	
 	@Override
 	protected void setValueInternal(ArrayList<String> value) {
-		System.out.println("FileChooserStringListPreference::setValueInternal() "+value);
 		if(value.size() > 0){
 			myOption.setValue(value);
 			setSummary(value.get(0));

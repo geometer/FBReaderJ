@@ -42,28 +42,38 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public class DirectoriesManagerActivity extends Activity{
 	private final int ADD_NEW_DIR_POSITION = 0;
+    public static final String TITLE = "dir_manager_title";
+    public static final String CHOOSER_TITLE = "chooser_title";
     public static final String DIR_LIST = "dir_list";
+    public static final String WRITABLE_DIRS_ONLY = "writable_dirs_only";
+	
 	private DirectoriesAdapter myAdapter;
 	private ListView myListView;
-	private Intent myResultIntent;
 	private String myDefaultDir = "/";
 	private ArrayList<String> myDirList;
+	private String myChooserTitle;
+	private String myTitle;
 	private int myAddNewDirPosition = 0;
+	private ZLResource myResource;
+	private boolean myChooseWritableDirectoriesOnly;
 
 	public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dir_manager);
 		
-		myResultIntent = new Intent();
+		myTitle = getIntent().getStringExtra(TITLE);
+		myChooserTitle = getIntent().getStringExtra(CHOOSER_TITLE);
 		myDirList = getIntent().getStringArrayListExtra(DIR_LIST);
+		myChooseWritableDirectoriesOnly = getIntent().getBooleanExtra(WRITABLE_DIRS_ONLY, true);
 
-		System.out.println(ZLResource.resource("dialog").getResource("waitMessage").getResource("search").getValue());
+		setTitle(myTitle);
+		
+		myResource = ZLResource.resource("dialog").getResource("dirManager");
 		
         setupActionButtons();
 		myListView = (ListView) findViewById(R.id.directories);
 
-		myDirList.add(ADD_NEW_DIR_POSITION, "Add a new dir");
-		
+		myDirList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addNewDirButton").getValue());
 		setupDirectoriesAdapter(myDirList);
 	}
 	
@@ -71,9 +81,9 @@ public class DirectoriesManagerActivity extends Activity{
 		FileChooserUtil.runDirectoryChooser(
 						this,
 						index,
-						"",
+						myChooserTitle,
 						dirName,
-						true
+						myChooseWritableDirectoriesOnly
 					);
 	}
 	
@@ -105,7 +115,6 @@ public class DirectoriesManagerActivity extends Activity{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-			System.out.println("DirectoriesManagerActivity::onActivityResult() "+requestCode);
 			if(requestCode != ADD_NEW_DIR_POSITION){
 				updateDirs(requestCode, data);
 			}else{
@@ -131,15 +140,18 @@ public class DirectoriesManagerActivity extends Activity{
     
     private void setupActionButtons(){
         final Button okButton = (Button) findViewById(R.id.button_ok);
-        okButton.setOnClickListener(new View.OnClickListener() {
+        okButton.setText(myResource.getResource("ok").getValue());
+		okButton.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
 				myDirList.remove(0);
-				myResultIntent.putStringArrayListExtra(DIR_LIST, myDirList);
-				setResult(RESULT_OK, myResultIntent);
+				Intent result = new Intent();
+				result.putStringArrayListExtra(DIR_LIST, myDirList);
+				setResult(RESULT_OK, result);
 				finish();
              }
         });
         final Button cancelButton = (Button) findViewById(R.id.button_cancel);
+        cancelButton.setText(myResource.getResource("cancel").getValue());
         cancelButton.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
 				setResult(RESULT_CANCELED);
@@ -168,7 +180,6 @@ public class DirectoriesManagerActivity extends Activity{
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
-						System.out.println("DELETE: "+dirName);
 						view.animate()
 							.setDuration(300)
 							.alpha(0)
