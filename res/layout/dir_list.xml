@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
-    
+	android:paddingTop="8dp"
+	android:paddingLeft="5dp"
+	android:paddingRight="5dp"
+	android:paddingBottom="8dp"
 	>
 	<ImageView
 		android:id="@+id/delete"
@@ -15,7 +18,8 @@
 		android:id="@+id/title"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:padding="5dp"
+		android:paddingLeft="5dp"
+		android:paddingTop="5dp"
 		android:layout_toLeftOf="@id/delete"
-		android:textSize="16dp"/>
+		android:textSize="16sp"/>
 </RelativeLayout>
