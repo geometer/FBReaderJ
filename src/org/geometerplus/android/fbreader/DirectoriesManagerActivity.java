@@ -19,26 +19,20 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.os.Bundle;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
-import android.app.Activity;
-
 import java.util.ArrayList;
 import java.lang.Runnable;
 
-import android.content.Context;
-import android.content.Intent;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.os.*;
+import android.app.*;
+import android.content.*;
 import android.widget.*;
 import android.view.*;
 
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.android.util.FileChooserUtil;
-
-import org.geometerplus.zlibrary.ui.android.R;
 
 public class DirectoriesManagerActivity extends Activity{
 	private final int ADD_NEW_DIR_POSITION = 0;
@@ -98,7 +92,7 @@ public class DirectoriesManagerActivity extends Activity{
 			myDirList.add(index, path);
 			myAdapter.notifyDataSetChanged();
 		}else{
-			showMessage("Cannot add the duplicate directory "+path);
+			showMessage(myResource.getResource("duplicateDirectoryWarning").getValue().replace("%s", path));
 		}
 	}	
 
@@ -108,7 +102,7 @@ public class DirectoriesManagerActivity extends Activity{
 			myDirList.add(FileChooserUtil.pathFromData(data));
 			myAdapter.notifyDataSetChanged();
 		}else{
-			showMessage("Cannot add the duplicate directory "+path);
+			showMessage(myResource.getResource("duplicateDirectoryWarning").getValue().replace("%s", path));
 		}
 	}
 
@@ -164,10 +158,26 @@ public class DirectoriesManagerActivity extends Activity{
 		public DirectoriesAdapter(Context context, ArrayList<String> dirs){
 			super(context, R.layout.dir_list, dirs);
 		}
+		
+		private void removeItemView(final View view, final int position){
+			if(view == null || position > getCount()-1)
+				return;
 	
+			view.animate()
+				.setDuration(300)
+				.alpha(0)
+				.setListener(new AnimatorListenerAdapter() {
+					@Override
+					public void onAnimationEnd(Animator animation) {
+						myDirList.remove(position);
+						myAdapter.notifyDataSetChanged();
+						view.setAlpha(1);
+					}
+				});
+		}
+		
 		@Override
 		public View getView (final int position, View convertView, ViewGroup parent){
-			
 			final View view = LayoutInflater.from(getContext()).inflate(R.layout.dir_list, parent, false);
 			
 			final String dirName = (String) getItem(position);
@@ -179,18 +189,22 @@ public class DirectoriesManagerActivity extends Activity{
 			if(position != ADD_NEW_DIR_POSITION){
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						view.animate()
-							.setDuration(300)
-							.alpha(0)
-							.setListener(new AnimatorListenerAdapter() {
-								@Override
-								public void onAnimationEnd(Animator animation) {
-									myDirList.remove(position);
-									myAdapter.notifyDataSetChanged();
-									view.setAlpha(1);
+					public void onClick(final View v) {
+					
+						new AlertDialog.Builder(getContext())
+							.setCancelable(false)
+							.setTitle(myResource.getResource("deleteDialog").getValue())
+							.setMessage(myResource.getResource("deleteDialog").getResource("message").getValue().replace("%s", dirName))
+							.setPositiveButton(myResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,int id) {
+									removeItemView(v, position);
 								}
-							});
+							})
+							.setNegativeButton(myResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,int id) {
+									dialog.cancel();
+								}
+							}).create().show();
 					}
 				});
 			}else{	

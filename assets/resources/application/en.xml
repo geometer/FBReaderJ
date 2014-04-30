@@ -877,7 +877,12 @@
 		</node>
 		<node name="dirManager">
 			<node name="addNewDirButton" value="Add a new directory"/>
+			<node name="deleteDialog" value="Removing a directory">
+				<node name="message" value="Remove &#34;%s&#34; directory from the list?"/>
+			</node>
+			<node name="duplicateDirectoryWarning" value="Cannot add the duplicate directory &#34;%s&#34;"/>
 			<node name="ok" value="Ok"/>
+			<node name="yes" value="Yes"/>
 			<node name="cancel" value="Cancel"/>
 		</node>
 		<node name="fileChooser">
