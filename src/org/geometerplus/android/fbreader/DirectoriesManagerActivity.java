@@ -20,18 +20,15 @@
 package org.geometerplus.android.fbreader;
 
 import java.util.ArrayList;
-import java.lang.Runnable;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.os.*;
 import android.app.*;
 import android.content.*;
 import android.widget.*;
 import android.view.*;
 
-import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.FileChooserUtil;
 
 public class DirectoriesManagerActivity extends Activity{
@@ -40,7 +37,7 @@ public class DirectoriesManagerActivity extends Activity{
     public static final String CHOOSER_TITLE = "chooser_title";
     public static final String DIR_LIST = "dir_list";
     public static final String WRITABLE_DIRS_ONLY = "writable_dirs_only";
-	
+
 	private DirectoriesAdapter myAdapter;
 	private ListView myListView;
 	private String myDefaultDir = "/";
@@ -54,54 +51,54 @@ public class DirectoriesManagerActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dir_manager);
-		
+
 		myTitle = getIntent().getStringExtra(TITLE);
 		myChooserTitle = getIntent().getStringExtra(CHOOSER_TITLE);
 		myDirList = getIntent().getStringArrayListExtra(DIR_LIST);
 		myChooseWritableDirectoriesOnly = getIntent().getBooleanExtra(WRITABLE_DIRS_ONLY, true);
 
 		setTitle(myTitle);
-		
+
 		myResource = ZLResource.resource("dialog").getResource("dirManager");
-		
+
         setupActionButtons();
 		myListView = (ListView) findViewById(R.id.directories);
 
 		myDirList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addNewDirButton").getValue());
 		setupDirectoriesAdapter(myDirList);
 	}
-	
+
 	private void openFileChooser(int index, String dirName){
 		FileChooserUtil.runDirectoryChooser(
-						this,
-						index,
-						myChooserTitle,
-						dirName,
-						myChooseWritableDirectoriesOnly
-					);
+			this,
+			index,
+			myChooserTitle,
+			dirName,
+			myChooseWritableDirectoriesOnly
+		);
 	}
-	
+
 	private void showMessage(String msg){
 		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 	}
-	
+
 	private void updateDirs(int index, Intent data){
 		String path = FileChooserUtil.pathFromData(data);
 		if(!myDirList.contains(path)){
 			myDirList.remove(index);
 			myDirList.add(index, path);
 			myAdapter.notifyDataSetChanged();
-		}else{
+		} else{
 			showMessage(myResource.getResource("duplicateDirectoryWarning").getValue().replace("%s", path));
 		}
-	}	
+	}
 
 	private void addNewDir(Intent data){
 		String path = FileChooserUtil.pathFromData(data);
 		if(!myDirList.contains(path)){
 			myDirList.add(FileChooserUtil.pathFromData(data));
 			myAdapter.notifyDataSetChanged();
-		}else{
+		} else{
 			showMessage(myResource.getResource("duplicateDirectoryWarning").getValue().replace("%s", path));
 		}
 	}
@@ -111,12 +108,12 @@ public class DirectoriesManagerActivity extends Activity{
         if (resultCode == RESULT_OK) {
 			if(requestCode != ADD_NEW_DIR_POSITION){
 				updateDirs(requestCode, data);
-			}else{
+			} else{
 				addNewDir(data);
 			}
 		}
 	}
-	
+
 	private void setupDirectoriesAdapter(ArrayList<String> dirs){
 		myAdapter = new DirectoriesAdapter(this, dirs);
 		myListView.setAdapter(myAdapter);
@@ -127,11 +124,11 @@ public class DirectoriesManagerActivity extends Activity{
 					if(position <= 0){
 						dirName = myDefaultDir;
 					}
-					openFileChooser(position, dirName);		
+					openFileChooser(position, dirName);
 				}
 		});
 	}
-    
+
     private void setupActionButtons(){
         final Button okButton = (Button) findViewById(R.id.button_ok);
         okButton.setText(myResource.getResource("ok").getValue());
@@ -158,29 +155,29 @@ public class DirectoriesManagerActivity extends Activity{
 		public DirectoriesAdapter(Context context, ArrayList<String> dirs){
 			super(context, R.layout.dir_list, dirs);
 		}
-		
+
 		private void removeItemView(final View view, final int position){
 			if (view != null && position < getCount()) {
 				myDirList.remove(position);
 				myAdapter.notifyDataSetChanged();
 			}
 		}
-		
+
 		@Override
 		public View getView (final int position, View convertView, ViewGroup parent){
 			final View view = LayoutInflater.from(getContext()).inflate(R.layout.dir_list, parent, false);
-			
+
 			final String dirName = (String) getItem(position);
-			
+
 			TextView title = (TextView) view.findViewById(R.id.title);
 			title.setText(dirName);
 			ImageView deleteButton = (ImageView) view.findViewById(R.id.delete);
-			
+
 			if(position != ADD_NEW_DIR_POSITION){
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(final View v) {
-					
+
 						new AlertDialog.Builder(getContext())
 							.setCancelable(false)
 							.setTitle(myResource.getResource("deleteDialog").getValue())
@@ -197,10 +194,10 @@ public class DirectoriesManagerActivity extends Activity{
 							}).create().show();
 					}
 				});
-			}else{	
+			} else {
 				deleteButton.setVisibility(View.INVISIBLE);
 			}
-	
+
 			return view;
 		}
 	}
