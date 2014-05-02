@@ -160,20 +160,10 @@ public class DirectoriesManagerActivity extends Activity{
 		}
 		
 		private void removeItemView(final View view, final int position){
-			if(view == null || position > getCount()-1)
-				return;
-	
-			view.animate()
-				.setDuration(300)
-				.alpha(0)
-				.setListener(new AnimatorListenerAdapter() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						myDirList.remove(position);
-						myAdapter.notifyDataSetChanged();
-						view.setAlpha(1);
-					}
-				});
+			if (view != null && position < getCount()) {
+				myDirList.remove(position);
+				myAdapter.notifyDataSetChanged();
+			}
 		}
 		
 		@Override
