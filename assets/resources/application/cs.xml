@@ -328,7 +328,7 @@
 				<node name="chooserTitle" value="Adresář s tapetami"/>
 			</node>
 			<node name="tempDir" value="Kam ukládat dočasné soubory">
-				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+				<node name="chooserTitle" value="Složka dočasných souborů"/>
 			</node>
 		</node>
 		<node name="appearance" value="Vzhled">
@@ -765,10 +765,10 @@
 			<node name="twitter" value="Sledujte nás na twitteru">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+			<node name="facebook" value="FBReader na Facebooku">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
-			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
+			<node name="thirdParty" value="Knihovny třetích stran"/>
 		</node>
 		<node name="eink" value="Displej s elektronickým inkoustem">
 			<node name="summary" value="Specifické možnosti pro displej s elektronickým inkoustem"/>
@@ -898,19 +898,19 @@
 			<node name="message2" value="Výborně! Dalším klepnutím na prostřední třetinu obrazovky se skryje ovládání a tato nápověda. Pokud chcete ponechat během čtení ovládání na obrazovce, vyberte volbu „Zobrazit panel akcí“ v části „Vzhled“ dialogového okna Nastavení."/>
 		</node>
 		<node name="fileChooser">
-			<node name="root" value="Root" toBeTranslated="true"/>
-			<node name="newFolder" value="New folder" toBeTranslated="true"/>
-			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="root" value="Kořenová složka"/>
+			<node name="newFolder" value="Nová složka"/>
+			<node name="folderNameHint" value="Název složky"/>
 			<node name="menu">
-				<node name="origin" value="Origin" toBeTranslated="true"/>
-				<node name="reload" value="Reload" toBeTranslated="true"/>
+				<node name="origin" value="Původ"/>
+				<node name="reload" value="Znovu načíst"/>
 			</node>
-			<node name="sortBy" value="Sort by" toBeTranslated="true">
-				<node name="name" value="Name" toBeTranslated="true"/>
-				<node name="size" value="Size" toBeTranslated="true"/>
-				<node name="date" value="Date" toBeTranslated="true"/>
+			<node name="sortBy" value="Seřadit podle">
+				<node name="name" value="Názvu"/>
+				<node name="size" value="Velikosti"/>
+				<node name="date" value="Data"/>
 			</node>
-			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+			<node name="permissionDenied" value="Přístup byl odepřen"/>
 		</node>
 	</node>
 	<node name="warningMessage">
@@ -960,7 +960,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Problém FBReaderu"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
+			<node name="text" value="Adresář mezipaměti FBReaderu není přístupný pro zápis. Možná jste zapomněli vložit nebo odpojit paměťovou kartu. Opravte tento problém nebo vyberte jiný adresář."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problém FBReaderu"/>
