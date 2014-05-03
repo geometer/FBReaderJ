@@ -30,7 +30,7 @@ import android.widget.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class FolderListDialogActivity extends Activity{
+public class FolderListDialogActivity extends Activity {
 	private final int ADD_NEW_DIR_POSITION = 0;
 	public static final String TITLE = "dir_manager_title";
 	public static final String CHOOSER_TITLE = "chooser_title";
@@ -47,7 +47,7 @@ public class FolderListDialogActivity extends Activity{
 	private ZLResource myResource;
 	private boolean myChooseWritableDirectoriesOnly;
 
-	public void onCreate(Bundle savedInstanceState){
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dir_manager);
 
@@ -67,7 +67,7 @@ public class FolderListDialogActivity extends Activity{
 		setupDirectoriesAdapter(myDirList);
 	}
 
-	private void openFileChooser(int index, String dirName){
+	private void openFileChooser(int index, String dirName) {
 		FileChooserUtil.runDirectoryChooser(
 			this,
 			index,
@@ -77,13 +77,13 @@ public class FolderListDialogActivity extends Activity{
 		);
 	}
 
-	private void showMessage(String msg){
+	private void showMessage(String msg) {
 		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 	}
 
-	private void updateDirs(int index, Intent data){
+	private void updateDirs(int index, Intent data) {
 		String path = FileChooserUtil.pathFromData(data);
-		if(!myDirList.contains(path)){
+		if(!myDirList.contains(path)) {
 			myDirList.remove(index);
 			myDirList.add(index, path);
 			myAdapter.notifyDataSetChanged();
@@ -92,9 +92,9 @@ public class FolderListDialogActivity extends Activity{
 		}
 	}
 
-	private void addNewDir(Intent data){
+	private void addNewDir(Intent data) {
 		String path = FileChooserUtil.pathFromData(data);
-		if(!myDirList.contains(path)){
+		if(!myDirList.contains(path)) {
 			myDirList.add(FileChooserUtil.pathFromData(data));
 			myAdapter.notifyDataSetChanged();
 		} else {
@@ -105,22 +105,22 @@ public class FolderListDialogActivity extends Activity{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			if(requestCode != ADD_NEW_DIR_POSITION){
+			if(requestCode != ADD_NEW_DIR_POSITION) {
 				updateDirs(requestCode, data);
-			} else{
+			} else {
 				addNewDir(data);
 			}
 		}
 	}
 
-	private void setupDirectoriesAdapter(ArrayList<String> dirs){
+	private void setupDirectoriesAdapter(ArrayList<String> dirs) {
 		myAdapter = new DirectoriesAdapter(this, dirs);
 		myListView.setAdapter(myAdapter);
 		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-					String dirName = (String) parent.getItemAtPosition(position);
-					if(position <= 0){
+					final String dirName = (String)parent.getItemAtPosition(position);
+					if (position <= 0) {
 						dirName = myDefaultDir;
 					}
 					openFileChooser(position, dirName);
@@ -151,12 +151,12 @@ public class FolderListDialogActivity extends Activity{
 		});
 	}
 
-	private class DirectoriesAdapter extends ArrayAdapter<String>{
-		public DirectoriesAdapter(Context context, ArrayList<String> dirs){
+	private class DirectoriesAdapter extends ArrayAdapter<String> {
+		public DirectoriesAdapter(Context context, ArrayList<String> dirs) {
 			super(context, R.layout.folder_list, dirs);
 		}
 
-		private void removeItemView(final View view, final int position){
+		private void removeItemView(final View view, final int position) {
 			if (view != null && position < getCount()) {
 				myDirList.remove(position);
 				myAdapter.notifyDataSetChanged();
@@ -164,14 +164,14 @@ public class FolderListDialogActivity extends Activity{
 		}
 
 		@Override
-		public View getView (final int position, View convertView, ViewGroup parent){
+		public View getView (final int position, View convertView, ViewGroup parent) {
 			final View view = LayoutInflater.from(getContext()).inflate(R.layout.folder_list, parent, false);
 
 			final String dirName = (String) getItem(position);
 
-			TextView title = (TextView) view.findViewById(R.id.title);
-			title.setText(dirName);
-			ImageView deleteButton = (ImageView) view.findViewById(R.id.delete);
+			((TextView)view.findViewById(R.id.folder_list_title)).setText(dirName);
+
+			final ImageView deleteButton = (ImageView) view.findViewById(R.id.folder_list_remove);
 
 			if (position != ADD_NEW_DIR_POSITION) {
 				deleteButton.setVisibility(View.VISIBLE);
