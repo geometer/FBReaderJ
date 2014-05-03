@@ -916,9 +916,6 @@
 			<node name="permissionDenied" value="Нет доступа"/>
 		</node>
 	</node>
-	<node name="warningMessage">
-		<node name="mainBookDirEditing" value="Редактирование основной директории приведёт к потере данных. Продолжить?"/>
-	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Ошибка %s в нативном коде при чтении '%s'"/>
 		<node name="errorReadingFile" value="Ошибка при чтении '%s'"/>
