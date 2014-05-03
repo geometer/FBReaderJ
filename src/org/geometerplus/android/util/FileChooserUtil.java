@@ -37,8 +37,8 @@ import org.geometerplus.android.fbreader.DirectoriesManagerActivity;
 public abstract class FileChooserUtil {
 	private FileChooserUtil() {
 	}
-    
-    public static void runDirectoryManager(
+
+	public static void runDirectoryManager(
 		Activity activity,
 		int requestCode,
 		String title,
@@ -52,8 +52,8 @@ public abstract class FileChooserUtil {
 		intent.putStringArrayListExtra(DirectoriesManagerActivity.DIR_LIST, initinalValue);
 		intent.putExtra(DirectoriesManagerActivity.WRITABLE_DIRS_ONLY, chooseWritableDirsOnly);
 		activity.startActivityForResult(intent, requestCode);
-    }
-    
+	}
+
 	public static void runDirectoryChooser(
 		Activity activity,
 		int requestCode,
