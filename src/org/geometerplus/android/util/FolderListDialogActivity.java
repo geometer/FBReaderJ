@@ -42,7 +42,6 @@ public class FolderListDialogActivity extends ListActivity {
 	private String myDefaultDir = "/";
 	private ArrayList<String> myDirList;
 	private String myChooserTitle;
-	private int myAddNewDirPosition = 0;
 	private ZLResource myResource;
 	private boolean myChooseWritableDirectoriesOnly;
 
