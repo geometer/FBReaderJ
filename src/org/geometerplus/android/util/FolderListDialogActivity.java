@@ -42,7 +42,6 @@ public class FolderListDialogActivity extends ListActivity {
 	private String myDefaultDir = "/";
 	private ArrayList<String> myDirList;
 	private String myChooserTitle;
-	private String myTitle;
 	private int myAddNewDirPosition = 0;
 	private ZLResource myResource;
 	private boolean myChooseWritableDirectoriesOnly;
@@ -51,12 +50,10 @@ public class FolderListDialogActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.folder_list_dialog);
 
-		myTitle = getIntent().getStringExtra(TITLE);
+		setTitle(getIntent().getStringExtra(TITLE));
 		myChooserTitle = getIntent().getStringExtra(CHOOSER_TITLE);
 		myDirList = getIntent().getStringArrayListExtra(DIR_LIST);
 		myChooseWritableDirectoriesOnly = getIntent().getBooleanExtra(WRITABLE_DIRS_ONLY, true);
-
-		setTitle(myTitle);
 
 		myResource = ZLResource.resource("dialog").getResource("folderList");
 
