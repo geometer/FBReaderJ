@@ -23,16 +23,26 @@ import java.util.LinkedList;
 
 import android.preference.Preference;
 
-class ZLPreferenceSet {
+abstract class PreferenceSet<T> {
 	private final LinkedList<Preference> myPreferences = new LinkedList<Preference>();
 
 	final void add(Preference preference) {
 		myPreferences.add(preference);
 	}
 
-	final void setEnabled(boolean enable) {
+	final void update() {
+		final T state = detectState();
 		for (Preference preference : myPreferences) {
-			preference.setEnabled(enable);
+			update(preference, state);
+		}
+	}
+
+	protected abstract T detectState();
+	protected abstract void update(Preference preference, T state);
+
+	static abstract class Enabler extends PreferenceSet<Boolean> {
+		protected void update(Preference preference, Boolean state) {
+			preference.setEnabled(state);
 		}
 	}
 }
