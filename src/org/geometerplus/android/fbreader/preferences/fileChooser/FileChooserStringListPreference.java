@@ -40,7 +40,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 		super(context, rootResource, resourceKey, false, regCode, onValueSetAction);
 
 		myOption = option;
-		
+
 		myResource = rootResource.getResource(resourceKey);
 
 		setSummary(getStringValue());
@@ -53,15 +53,11 @@ class FileChooserStringListPreference extends FileChooserPreference {
             myRegCode,
 			myResource.getValue(),
 			myResource.getResource("chooserTitle").getValue(),
-			getStringListValue(),
+			new ArrayList<String>(myOption.getValue()),
 			myChooseWritableDirectoriesOnly
 		);
 	}
-	
-	private ArrayList<String> getStringListValue(){
-		return new ArrayList<String>(myOption.getValue());
-	}
-	
+
 	@Override
 	protected String getStringValue() {
 		return MiscUtil.join(myOption.getValue(), ", ");
@@ -69,19 +65,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueFromIntent(Intent data) {
-		setValue(FileChooserUtil.pathArrayFromData(data));
-	}
-
-	@Override
-	protected void setValueInternal(String value) {
-		final List<String> currentValues = myOption.getValue();
-		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
-			myOption.setValue(Collections.singletonList(value));
-			setSummary(getStringValue());
-		}
-	}
-
-	protected final void setValue(ArrayList<String> value) {
+		final List<String> value = FileChooserUtil.pathArrayFromData(data);
 		if (value.isEmpty()){
 			return;
 		}
