@@ -21,8 +21,8 @@ package org.geometerplus.android.util;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.*;
 import android.os.*;
 import android.view.*;
@@ -31,7 +31,7 @@ import android.widget.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class FolderListDialogActivity extends Activity {
+public class FolderListDialogActivity extends ListActivity {
 	private final int ADD_NEW_DIR_POSITION = 0;
 	public static final String TITLE = "dir_manager_title";
 	public static final String CHOOSER_TITLE = "chooser_title";
@@ -39,7 +39,6 @@ public class FolderListDialogActivity extends Activity {
 	public static final String WRITABLE_DIRS_ONLY = "writable_dirs_only";
 
 	private DirectoriesAdapter myAdapter;
-	private ListView myListView;
 	private String myDefaultDir = "/";
 	private ArrayList<String> myDirList;
 	private String myChooserTitle;
@@ -62,7 +61,6 @@ public class FolderListDialogActivity extends Activity {
 		myResource = ZLResource.resource("dialog").getResource("folderList");
 
 		setupActionButtons();
-		myListView = (ListView) findViewById(R.id.folder_list_dialog_directories);
 
 		myDirList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addFolder").getValue());
 		setupDirectoriesAdapter(myDirList);
@@ -115,8 +113,8 @@ public class FolderListDialogActivity extends Activity {
 
 	private void setupDirectoriesAdapter(ArrayList<String> dirs) {
 		myAdapter = new DirectoriesAdapter(this, dirs);
-		myListView.setAdapter(myAdapter);
-		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		setListAdapter(myAdapter);
+		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 				String dirName = (String)parent.getItemAtPosition(position);
