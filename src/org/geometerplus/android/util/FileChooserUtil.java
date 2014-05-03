@@ -39,12 +39,12 @@ public abstract class FileChooserUtil {
 		Activity activity,
 		int requestCode,
 		String title,
-		String initinalValue,
+		String initialValue,
 		boolean chooseWritableDirsOnly
 	) {
 		final Intent intent = new Intent(activity, FileChooserActivity.class);
 		intent.putExtra(FileChooserActivity._TextResources, textResources(title));
-		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initinalValue));
+		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initialValue));
 		intent.putExtra(FileChooserActivity._ActionBar, true);
 		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
 		intent.putExtra(FileChooserActivity._DisplayHiddenFiles, true);
