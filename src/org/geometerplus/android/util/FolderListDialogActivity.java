@@ -61,7 +61,7 @@ public class FolderListDialogActivity extends Activity {
 		myResource = ZLResource.resource("dialog").getResource("folderList");
 
 		setupActionButtons();
-		myListView = (ListView) findViewById(R.id.directories);
+		myListView = (ListView) findViewById(R.id.folder_list_dialog_directories);
 
 		myDirList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addFolder").getValue());
 		setupDirectoriesAdapter(myDirList);
@@ -129,7 +129,7 @@ public class FolderListDialogActivity extends Activity {
 
 	private void setupActionButtons() {
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final Button okButton = (Button)findViewById(R.id.button_ok);
+		final Button okButton = (Button)findViewById(R.id.folder_list_dialog_button_ok);
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -140,7 +140,7 @@ public class FolderListDialogActivity extends Activity {
 				finish();
 			}
 		});
-		final Button cancelButton = (Button)findViewById(R.id.button_cancel);
+		final Button cancelButton = (Button)findViewById(R.id.folder_list_dialog_button_cancel);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -152,7 +152,7 @@ public class FolderListDialogActivity extends Activity {
 
 	private class DirectoriesAdapter extends ArrayAdapter<String> {
 		public DirectoriesAdapter(Context context, ArrayList<String> dirs) {
-			super(context, R.layout.folder_list, dirs);
+			super(context, R.layout.folder_list_item, dirs);
 		}
 
 		private void removeItemView(final View view, final int position) {
@@ -164,13 +164,13 @@ public class FolderListDialogActivity extends Activity {
 
 		@Override
 		public View getView (final int position, View convertView, ViewGroup parent) {
-			final View view = LayoutInflater.from(getContext()).inflate(R.layout.folder_list, parent, false);
+			final View view = LayoutInflater.from(getContext()).inflate(R.layout.folder_list_item, parent, false);
 
 			final String dirName = (String) getItem(position);
 
-			((TextView)view.findViewById(R.id.folder_list_title)).setText(dirName);
+			((TextView)view.findViewById(R.id.folder_list_item_title)).setText(dirName);
 
-			final ImageView deleteButton = (ImageView) view.findViewById(R.id.folder_list_remove);
+			final ImageView deleteButton = (ImageView) view.findViewById(R.id.folder_list_item_remove);
 
 			if (position != ADD_NEW_DIR_POSITION) {
 				deleteButton.setVisibility(View.VISIBLE);
