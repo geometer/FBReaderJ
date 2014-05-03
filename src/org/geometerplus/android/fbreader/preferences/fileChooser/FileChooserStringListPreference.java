@@ -23,10 +23,13 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
+
+import org.geometerplus.android.util.FileChooserUtil;
 
 class FileChooserStringListPreference extends FileChooserPreference {
 	private final ZLStringListOption myOption;
@@ -45,11 +48,16 @@ class FileChooserStringListPreference extends FileChooserPreference {
 	}
 
 	@Override
+	protected void setValueFromIntent(Intent data) {
+		setValue(FileChooserUtil.pathFromData(data));
+	}
+
+	@Override
 	protected void setValueInternal(String value) {
 		final List<String> currentValues = myOption.getValue();
 		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
 			myOption.setValue(Collections.singletonList(value));
-			setSummary(value);
+			setSummary(getStringValue());
 		}
 	}
 }
