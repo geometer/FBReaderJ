@@ -940,6 +940,8 @@
 		<node name="emptyCatalog" value="Lamentablemente, el catálogo está vacío" toBeTranslated="true"/>
 		<node name="emptyBasket" value="Lamentablemente, su cesta está vacía" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="Lamentablemente, no se encontraron libros" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="externalNotFound" value="Cannot open external application" toBeTranslated="true"/>
 		<node name="appNotFound" value="No suitable application found" toBeTranslated="true"/>
 		<node name="invalidFormat" value="Format is invalid" toBeTranslated="true"/>
