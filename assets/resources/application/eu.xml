@@ -916,9 +916,6 @@
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 		</node>
 	</node>
-	<node name="warningMessage">
-		<node name="mainBookDirEditing" value="Direktorio nagusia aldatzerakoan datuak galduko dituzu. Jarraitu?"/>
-	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
 		<node name="errorReadingFile" value="Errorea gertatu da '%s' (r)ren irakurketa bitartean"/>
