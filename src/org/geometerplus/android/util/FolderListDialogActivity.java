@@ -153,7 +153,7 @@ public class FolderListDialogActivity extends Activity{
 
 	private class DirectoriesAdapter extends ArrayAdapter<String>{
 		public DirectoriesAdapter(Context context, ArrayList<String> dirs){
-			super(context, R.layout.dir_list, dirs);
+			super(context, R.layout.folder_list, dirs);
 		}
 
 		private void removeItemView(final View view, final int position){
@@ -165,7 +165,7 @@ public class FolderListDialogActivity extends Activity{
 
 		@Override
 		public View getView (final int position, View convertView, ViewGroup parent){
-			final View view = LayoutInflater.from(getContext()).inflate(R.layout.dir_list, parent, false);
+			final View view = LayoutInflater.from(getContext()).inflate(R.layout.folder_list, parent, false);
 
 			final String dirName = (String) getItem(position);
 
