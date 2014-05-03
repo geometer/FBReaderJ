@@ -46,16 +46,11 @@ import org.geometerplus.fbreader.formats.Formats;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
-	private final List<String> myRootpaths = Arrays.asList(Paths.cardDirectory() + "/");
-	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
-		new HashMap<Integer,ZLActivityPreference>();
-
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this);
 
 	public PreferenceActivity() {
@@ -64,32 +59,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		ZLActivityPreference p = myActivityPrefs.get(requestCode);
 		if (resultCode == RESULT_OK) {
-			p.setValue(data);
-		}
-		//if (resultCode == RESULT_OK) {
-		//	myChooserCollection.update(requestCode, data);
-		//}
-	}
-
-	private static class OptionHolder implements ZLActivityPreference.ListHolder {
-		private ZLStringListOption myOption;
-
-		public OptionHolder(ZLStringListOption option) {
-			myOption = option;
-		}
-
-		public List<String> getValue() {
-			return myOption.getValue();
-		}
-
-		public List<String> getDisplayValue() {
-			return getValue();
-		}
-
-		public void setValue(List<String> l) {
-			myOption.setValue(l);
+			myChooserCollection.update(requestCode, data);
 		}
 	}
 
@@ -121,36 +92,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			String.valueOf(new DecimalFormatSymbols(Locale.getDefault()).getDecimalSeparator());
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addPreference(new ZLBookDirActivityPreference(
-			this, new OptionHolder(Paths.BookPathOption) {
-				@Override
-				public void setValue(List<String> value) {
-					super.setValue(value);
-
-					final BookCollectionShadow collection = new BookCollectionShadow();
-					collection.bindToService(PreferenceActivity.this, new Runnable() {
-						public void run() {
-							collection.reset(false);
-							collection.unbind();
-						}
-					});
-				}
-			},
-			myActivityPrefs, myRootpaths,
-			directoriesScreen.Resource, "bookPath"
-		));
-		final ZLActivityPreference fontDirPreference = new ZLSimpleActivityPreference(
-			this, new OptionHolder(Paths.FontPathOption), myActivityPrefs, myRootpaths,
-			directoriesScreen.Resource, "fontPath"
-		);
-		directoriesScreen.addPreference(fontDirPreference);
-		final ZLActivityPreference wallpaperDirPreference = new ZLSimpleActivityPreference(
-			this, new OptionHolder(Paths.WallpaperPathOption), myActivityPrefs, myRootpaths,
-			directoriesScreen.Resource, "wallpaperPath"
-		);
-		directoriesScreen.addPreference(wallpaperDirPreference);
-		directoriesScreen.addOption(Paths.TempDirectoryOption, "tempDir");
-/*
 		final Runnable libraryUpdater = new Runnable() {
 			public void run() {
 				final BookCollectionShadow collection = new BookCollectionShadow();
@@ -177,7 +118,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption, null
 		));
-*/
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
@@ -277,10 +217,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final FontOption fontOption = new FontOption(
 			this, textScreen.Resource, "font",
-			baseStyle.FontFamilyOption, false);
-
+			baseStyle.FontFamilyOption, false
+		);
 		textScreen.addPreference(fontOption);
-		fontDirPreference.setBoundPref(fontOption);
+		//fontDirPreference.setBoundPref(fontOption);
 
 		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
@@ -442,7 +382,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		};
 		colorsScreen.addPreference(wallpaperPreference);
-		wallpaperDirPreference.setBoundPref(wallpaperPreference);
+		//wallpaperDirPreference.setBoundPref(wallpaperPreference);
 
 		bgPreferences.add(
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
