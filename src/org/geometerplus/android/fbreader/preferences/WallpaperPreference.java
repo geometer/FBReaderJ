@@ -69,9 +69,6 @@ class WallpaperPreference extends ZLStringListPreference implements ReloadablePr
 		setInitialValue(myOption.getValue());
 	}
 
-	public void reload() {
-	}
-
 	@Override
 	protected void onDialogClosed(boolean result) {
 		super.onDialogClosed(result);
