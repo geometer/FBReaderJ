@@ -42,7 +42,6 @@ public class FolderListDialogActivity extends ListActivity {
 	private final int ADD_NEW_DIR_POSITION = 0;
 
 	private DirectoriesAdapter myAdapter;
-	private String myDefaultDir = "/";
 	private ArrayList<String> myDirList;
 	private String myChooserTitle;
 	private ZLResource myResource;
@@ -119,7 +118,7 @@ public class FolderListDialogActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 				String dirName = (String)parent.getItemAtPosition(position);
 				if (position <= 0) {
-					dirName = myDefaultDir;
+					dirName = "/";
 				}
 				openFileChooser(position, dirName);
 			}
