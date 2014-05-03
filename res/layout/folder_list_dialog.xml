@@ -30,7 +30,7 @@
 		/>
 	</LinearLayout>
 	<ListView
-		android:id="@+id/folder_list_dialog_directories"
+		android:id="@android:id/list"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:layout_alignParentTop="true"
