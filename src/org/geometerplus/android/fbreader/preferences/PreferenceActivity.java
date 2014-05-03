@@ -228,10 +228,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.SubpixelOption, "subpixel");
 
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
-		textScreen.addPreference(new FontPreference(
+
+		final FontPreference fontPreference = new FontPreference(
 			this, textScreen.Resource, "font",
 			baseStyle.FontFamilyOption, false
-		));
+		);
+		textScreen.addPreference(fontPreference);
+
 		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
 			baseStyle.FontSizeOption
