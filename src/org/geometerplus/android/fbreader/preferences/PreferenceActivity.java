@@ -184,7 +184,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		if (DeviceType.Instance().isEInk()) {
 			final EInkOptions einkOptions = new EInkOptions();
 			final Screen einkScreen = createPreferenceScreen("eink");
-			final ZLPreferenceSet einkPreferences = new ZLPreferenceSet();
+			final PreferenceSet einkPreferences = new PreferenceSet.Enabler() {
+				@Override
+				protected Boolean detectState() {
+					return einkOptions.EnableFastRefresh.getValue();
+				}
+			};
 
 			einkScreen.addPreference(new ZLBooleanPreference(
 				this, einkOptions.EnableFastRefresh, einkScreen.Resource, "enableFastRefresh"
@@ -192,7 +197,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
+					einkPreferences.update();
 				}
 			});
 
@@ -202,7 +207,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			einkScreen.addPreference(updateIntervalPreference);
 
 			einkPreferences.add(updateIntervalPreference);
-			einkPreferences.setEnabled(einkOptions.EnableFastRefresh.getValue());
+			einkPreferences.update();
 		}
 
 		final Screen textScreen = createPreferenceScreen("text");
@@ -362,8 +367,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		}
 
-		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
-		final ZLPreferenceSet bgPreferences = new ZLPreferenceSet();
+		final PreferenceSet footerPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				return viewOptions.ScrollbarType.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER;
+			}
+		};
+		final PreferenceSet bgPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				return "".equals(profile.WallpaperOption.getValue());
+			}
+		};
 
 		final Screen cssScreen = createPreferenceScreen("css");
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
@@ -378,7 +393,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			@Override
 			protected void onDialogClosed(boolean result) {
 				super.onDialogClosed(result);
-				bgPreferences.setEnabled("".equals(getValue()));
+				bgPreferences.update();
 			}
 		};
 		colorsScreen.addPreference(wallpaperPreference);
@@ -387,7 +402,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		bgPreferences.add(
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
 		);
-		bgPreferences.setEnabled("".equals(profile.WallpaperOption.getValue()));
+		bgPreferences.update();
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
@@ -428,9 +443,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			@Override
 			protected void onDialogClosed(boolean result) {
 				super.onDialogClosed(result);
-				footerPreferences.setEnabled(
-					findIndexOfValue(getValue()) == FBView.SCROLLBAR_SHOW_AS_FOOTER
-				);
+				footerPreferences.update();
 			}
 		});
 
@@ -448,9 +461,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, statusLineScreen.Resource, "font",
 			footerOptions.Font, false
 		)));
-		footerPreferences.setEnabled(
-			viewOptions.ScrollbarType.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER
-		);
+		footerPreferences.update();
 
 		/*
 		final Screen colorProfileScreen = createPreferenceScreen("colorProfile");
@@ -467,7 +478,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(pageTurningOptions.FingerScrolling, "fingerScrolling");
 		scrollingScreen.addOption(miscOptions.EnableDoubleTap, "enableDoubleTapDetection");
 
-		final ZLPreferenceSet volumeKeysPreferences = new ZLPreferenceSet();
+		final PreferenceSet volumeKeysPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				return keyBindings.hasBinding(KeyEvent.KEYCODE_VOLUME_UP, false);
+			}
+		};
 		scrollingScreen.addPreference(new ZLCheckBoxPreference(
 			this, scrollingScreen.Resource, "volumeKeys"
 		) {
@@ -485,7 +501,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, FBReaderApp.NoAction);
 					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, FBReaderApp.NoAction);
 				}
-				volumeKeysPreferences.setEnabled(isChecked());
+				volumeKeysPreferences.update();
 			}
 		});
 		volumeKeysPreferences.add(scrollingScreen.addPreference(new ZLCheckBoxPreference(
@@ -509,7 +525,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 		}));
-		volumeKeysPreferences.setEnabled(keyBindings.hasBinding(KeyEvent.KEYCODE_VOLUME_UP, false));
+		volumeKeysPreferences.update();
 
 		scrollingScreen.addOption(pageTurningOptions.Animation, "animation");
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
