@@ -28,13 +28,13 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
-class FontOption extends ZLStringListPreference implements ReloadablePreference {
+class FontPreference extends ZLStringListPreference implements ReloadablePreference {
 	private final ZLStringOption myOption;
 	private boolean myIncludeDummyValue;
 
 	private static String UNCHANGED = "unchanged";
 
-	FontOption(Context context, ZLResource resource, String resourceKey, ZLStringOption option, boolean includeDummyValue) {
+	FontPreference(Context context, ZLResource resource, String resourceKey, ZLStringOption option, boolean includeDummyValue) {
 		super(context, resource, resourceKey);
 
 		myOption = option;

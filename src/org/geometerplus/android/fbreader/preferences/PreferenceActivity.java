@@ -215,12 +215,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 
-		final FontOption fontOption = new FontOption(
+		final FontPreference fontPreference = new FontPreference(
 			this, textScreen.Resource, "font",
 			baseStyle.FontFamilyOption, false
 		);
-		textScreen.addPreference(fontOption);
-		//fontDirPreference.setBoundPref(fontOption);
+		textScreen.addPreference(fontPreference);
+		//fontDirPreference.setBoundPref(fontPreference);
 
 		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
@@ -289,7 +289,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					? (ZLTextFullStyleDecoration)decoration : null;
 
 			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.getName());
-			formatScreen.addPreference(new FontOption(
+			formatScreen.addPreference(new FontPreference(
 				this, textScreen.Resource, "font",
 				decoration.FontFamilyOption, true
 			));
@@ -444,7 +444,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowProgress, "showProgress"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowBattery, "showBattery"));
-		footerPreferences.add(statusLineScreen.addPreference(new FontOption(
+		footerPreferences.add(statusLineScreen.addPreference(new FontPreference(
 			this, statusLineScreen.Resource, "font",
 			footerOptions.Font, false
 		)));
