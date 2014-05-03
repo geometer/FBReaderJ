@@ -77,6 +77,10 @@ public abstract class FileChooserUtil {
 		return data.getStringExtra(FileChooserActivity._FolderPath);
 	}
 
+	public static List<String> pathListFromData(Intent data) {
+		return data.getStringArrayListExtra(FolderListDialogActivity.Key.FOLDER_LIST);
+	}
+
 	private static HashMap<String,String> textResources(String title) {
 		final HashMap<String,String> map = new HashMap<String,String>();
 
