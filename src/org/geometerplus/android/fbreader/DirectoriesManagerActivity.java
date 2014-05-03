@@ -59,7 +59,7 @@ public class DirectoriesManagerActivity extends Activity{
 
 		setTitle(myTitle);
 
-		myResource = ZLResource.resource("dialog").getResource("dirManager");
+		myResource = ZLResource.resource("dialog").getResource("folderList");
 
 		setupActionButtons();
 		myListView = (ListView) findViewById(R.id.directories);
@@ -88,8 +88,8 @@ public class DirectoriesManagerActivity extends Activity{
 			myDirList.remove(index);
 			myDirList.add(index, path);
 			myAdapter.notifyDataSetChanged();
-		} else{
-			showMessage(myResource.getResource("duplicateDirectoryWarning").getValue().replace("%s", path));
+		} else {
+			showMessage(myResource.getResource("duplicate").getValue().replace("%s", path));
 		}
 	}
 
@@ -98,8 +98,8 @@ public class DirectoriesManagerActivity extends Activity{
 		if(!myDirList.contains(path)){
 			myDirList.add(FileChooserUtil.pathFromData(data));
 			myAdapter.notifyDataSetChanged();
-		} else{
-			showMessage(myResource.getResource("duplicateDirectoryWarning").getValue().replace("%s", path));
+		} else {
+			showMessage(myResource.getResource("duplicate").getValue().replace("%s", path));
 		}
 	}
 
@@ -179,10 +179,11 @@ public class DirectoriesManagerActivity extends Activity{
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(final View v) {
 						final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+						final ZLResource removeDialogResource = myResource.getResource("removeDialog");
 						new AlertDialog.Builder(getContext())
 							.setCancelable(false)
-							.setTitle(myResource.getResource("deleteDialog").getValue())
-							.setMessage(myResource.getResource("deleteDialog").getResource("message").getValue().replace("%s", dirName))
+							.setTitle(removeDialogResource.getValue())
+							.setMessage(removeDialogResource.getResource("message").getValue().replace("%s", dirName))
 							.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
 									removeItemView(v, position);
