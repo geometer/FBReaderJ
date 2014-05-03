@@ -49,7 +49,7 @@ public class FolderListDialogActivity extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dir_manager);
+		setContentView(R.layout.folder_list_dialog);
 
 		myTitle = getIntent().getStringExtra(TITLE);
 		myChooserTitle = getIntent().getStringExtra(CHOOSER_TITLE);
@@ -117,14 +117,14 @@ public class FolderListDialogActivity extends Activity {
 		myAdapter = new DirectoriesAdapter(this, dirs);
 		myListView.setAdapter(myAdapter);
 		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-					final String dirName = (String)parent.getItemAtPosition(position);
-					if (position <= 0) {
-						dirName = myDefaultDir;
-					}
-					openFileChooser(position, dirName);
+			@Override
+			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+				String dirName = (String)parent.getItemAtPosition(position);
+				if (position <= 0) {
+					dirName = myDefaultDir;
 				}
+				openFileChooser(position, dirName);
+			}
 		});
 	}
 
