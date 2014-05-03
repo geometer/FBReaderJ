@@ -50,7 +50,7 @@ class FontOption extends ZLStringListPreference implements ZLReloadable {
 		}
 		setList((String[])fonts.toArray(new String[fonts.size()]));
 
-		final String optionValue =myOption.getValue();
+		final String optionValue = myOption.getValue();
 		final String initialValue = optionValue.length() > 0 ?
 			AndroidFontUtil.realFontFamilyName(optionValue) : UNCHANGED;
 		for (String fontName : fonts) {
