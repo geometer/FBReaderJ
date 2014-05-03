@@ -48,7 +48,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 		FileChooserUtil.runDirectoryManager(
             (Activity)getContext(),
             myRegCode,
-			myResource.getResource("chooserTitle").getValue(),
+			myResource.getValue(),
 			myResource.getResource("chooserTitle").getValue(),
 			getStringListValue(),
 			myChooseWritableDirectoriesOnly
@@ -69,15 +69,20 @@ class FileChooserStringListPreference extends FileChooserPreference {
 		List<String> currentValues = myOption.getValue();
 		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
 			myOption.setValue(Collections.singletonList(value));
-			setSummary(value);
+			setSummary(getStringValue());
 		}
 	}
-	
-	@Override
-	protected void setValueInternal(ArrayList<String> value) {
-		if(value.size() > 0){
-			myOption.setValue(value);
-			setSummary(value.get(0));
+
+	protected final void setValue(ArrayList<String> value) {
+		if (value.isEmpty()){
+			return;
+		}
+
+		myOption.setValue(value);
+		setSummary(getStringValue());
+
+		if (myOnValueSetAction != null) {
+			myOnValueSetAction.run();
 		}
 	}
 }

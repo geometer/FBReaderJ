@@ -34,7 +34,7 @@ abstract class FileChooserPreference extends Preference {
 	protected final int myRegCode;
 	private final ZLResource myResource;
 	protected final boolean myChooseWritableDirectoriesOnly;
-	private final Runnable myOnValueSetAction;
+	protected final Runnable myOnValueSetAction;
 
 	FileChooserPreference(Context context, ZLResource rootResource, String resourceKey, boolean chooseWritableDirectoriesOnly, int regCode, Runnable onValueSetAction) {
 		super(context);
@@ -71,19 +71,5 @@ abstract class FileChooserPreference extends Preference {
 			myOnValueSetAction.run();
 		}
 	}
-	
-	protected final void setValue(ArrayList<String> value) {
-		if (value.isEmpty()){
-			return;
-		}
-
-		setValueInternal(value);
-
-		if (myOnValueSetAction != null) {
-			myOnValueSetAction.run();
-		}
-	}
-
 	protected abstract void setValueInternal(String value);
-	protected abstract void setValueInternal(ArrayList<String> value);
 }

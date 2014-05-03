@@ -48,11 +48,4 @@ class FileChooserStringPreference extends FileChooserPreference {
 			setSummary(value);
 		}
 	}
-	
-	@Override
-	protected void setValueInternal(ArrayList<String> value) {
-		if(value.size() > 0){
-			setValueInternal(value.get(0));
-		}
-	}
 }

@@ -57,11 +57,11 @@ public class FileChooserCollection {
 
 	public void update(int index, Intent data) {
 		try {
-			String path = FileChooserUtil.pathFromData(data);
-			if(path != null){
-				myPreferences.get(index).setValue(path);
-			}else{
-				myPreferences.get(index).setValue(FileChooserUtil.pathArrayFromData(data));
+			final FileChooserPreference preference = myPreferences.get(index);
+			if (preference instanceof FileChooserStringPreference) {
+				((FileChooserStringPreference)preference).setValue(FileChooserUtil.pathFromData(data));
+			} else {
+				((FileChooserStringListPreference)preference).setValue(FileChooserUtil.pathArrayFromData(data));
 			}
 		} catch (Exception e) {
 			// ignore
