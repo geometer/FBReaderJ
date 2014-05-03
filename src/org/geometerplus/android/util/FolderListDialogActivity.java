@@ -48,7 +48,8 @@ public class FolderListDialogActivity extends ListActivity {
 	private ZLResource myResource;
 	private boolean myChooseWritableDirectoriesOnly;
 
-	public void onCreate(Bundle savedInstanceState) {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.folder_list_dialog);
 
