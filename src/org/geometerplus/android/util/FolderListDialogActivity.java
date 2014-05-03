@@ -25,6 +25,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class FolderListDialogActivity extends ListActivity {
@@ -36,6 +37,9 @@ public class FolderListDialogActivity extends ListActivity {
 	}
 
 	private ArrayList<String> myFolderList;
+	private String myChooserTitle;
+	private boolean myChooseWritableDirectoriesOnly;
+	private ZLResource myResource;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,9 @@ public class FolderListDialogActivity extends ListActivity {
 		final Intent intent = getIntent();
 		myFolderList = intent.getStringArrayListExtra(Key.FOLDER_LIST);
 		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
+		myChooserTitle = intent.getStringExtra(Key.CHOOSER_TITLE);
+		myChooseWritableDirectoriesOnly = intent.getBooleanExtra(Key.WRITABLE_FOLDERS_ONLY, true);
+		myResource = ZLResource.resource("dialog").getResource("folderList");
 
 		setResult(RESULT_CANCELED);
 	}
