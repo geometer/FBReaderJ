@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.*;
-import android.os.*;
+import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
