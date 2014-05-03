@@ -45,4 +45,14 @@ abstract class PreferenceSet<T> {
 			preference.setEnabled(state);
 		}
 	}
+
+	static class Reloader extends PreferenceSet<Void> {
+		protected Void detectState() {
+			return null;
+		}
+
+		protected void update(Preference preference, Void state) {
+			((ReloadablePreference)preference).reload();
+		}
+	}
 }
