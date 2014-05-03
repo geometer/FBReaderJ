@@ -939,6 +939,8 @@
 		<node name="emptyCatalog" value="Katalogoa hutsik dago, barkatu"/>
 		<node name="emptyBasket" value="Saskia hutsik dago, barkatu"/>
 		<node name="emptyNetworkSearchResults" value="Ez da libururik aurkitu, barkatu"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="externalNotFound" value="Ezin da kanpoko aplikazioa ireki"/>
 		<node name="appNotFound" value="Ez da aplikazio egokirik aurkitu"/>
 		<node name="invalidFormat" value="Formatuak ez du balio"/>
