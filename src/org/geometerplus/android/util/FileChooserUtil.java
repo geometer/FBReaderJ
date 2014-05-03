@@ -36,7 +36,7 @@ public abstract class FileChooserUtil {
 	private FileChooserUtil() {
 	}
 
-	public static void runDirectoryManager(
+	public static void runFolderListDialog(
 		Activity activity,
 		int requestCode,
 		String title,

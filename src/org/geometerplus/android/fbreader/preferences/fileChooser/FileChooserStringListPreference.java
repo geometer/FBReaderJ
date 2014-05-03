@@ -44,7 +44,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void onClick() {
-		FileChooserUtil.runDirectoryManager(
+		FileChooserUtil.runFolderListDialog(
 			(Activity)getContext(),
 			myRegCode,
 			myResource.getValue(),
