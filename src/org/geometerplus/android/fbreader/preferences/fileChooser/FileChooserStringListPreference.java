@@ -26,6 +26,7 @@ import android.content.Context;
 
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 class FileChooserStringListPreference extends FileChooserPreference {
 	private final ZLStringListOption myOption;
@@ -40,8 +41,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected String getStringValue() {
-		final List<String> values = myOption.getValue();
-		return values.isEmpty() ? "" : values.get(0);
+		return MiscUtil.join(myOption.getValue(), ", ");
 	}
 
 	@Override
