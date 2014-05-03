@@ -25,7 +25,7 @@ import android.preference.ListPreference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class ZLStringListPreference extends ListPreference {
-	private final ZLResource myResource;
+	protected final ZLResource myResource;
 
 	ZLStringListPreference(Context context, ZLResource rootResource, String resourceKey) {
 		super(context);
