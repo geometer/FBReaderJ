@@ -24,6 +24,7 @@ import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.android.util.FileChooserUtil;
 
@@ -44,15 +45,19 @@ class FileChooserStringPreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueFromIntent(Intent data) {
-		setValue(FileChooserUtil.pathFromData(data));
-	}
+		final String value = FileChooserUtil.pathFromData(data);
+		if (MiscUtil.isEmptyString(value)) {
+			return;
+		}
 
-	@Override
-	protected void setValueInternal(String value) {
 		final String currentValue = myOption.getValue();
 		if (!currentValue.equals(value)) {
 			myOption.setValue(value);
 			setSummary(value);
+		}
+
+		if (myOnValueSetAction != null) {
+			myOnValueSetAction.run();
 		}
 	}
 }
