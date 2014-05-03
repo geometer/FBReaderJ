@@ -910,9 +910,6 @@
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 		</node>
 	</node>
-	<node name="warningMessage">
-		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>
-	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
 		<node name="errorReadingFile" value="Der opstod en fejl under indlæsning af '%s'"/>
