@@ -880,6 +880,13 @@
 			<node name="message1" value="FBReader запускается в полноэкранном режиме. Чтобы увидеть элементы управления, нажмите на экран в средней трети. Вы можете изменить это поведение в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
 			<node name="message2" value="Отлично! Нажмите ещё раз на экран в средней трети, чтобы скрыть элементы управления и этот совет. Если вы хотите, чтобы верхнее меню оставалось на экране во время чтения, выберите «Показывать строку меню» в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
 		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Добавить каталог"/>
+			<node name="removeDialog" value="Удаление каталога">
+				<node name="message" value="Удалить «%s» из списка?"/>
+			</node>
+			<node name="duplicate" value="«%s» уже в списке"/>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Корень"/>
 			<node name="newFolder" value="Новый каталог"/>
