@@ -44,8 +44,8 @@ public class FolderListDialogActivity extends ListActivity {
 	private DirectoriesAdapter myAdapter;
 	private ArrayList<String> myFolderList;
 	private String myChooserTitle;
-	private ZLResource myResource;
 	private boolean myChooseWritableDirectoriesOnly;
+	private ZLResource myResource;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,6 @@ public class FolderListDialogActivity extends ListActivity {
 		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
 		myChooserTitle = intent.getStringExtra(Key.CHOOSER_TITLE);
 		myChooseWritableDirectoriesOnly = intent.getBooleanExtra(Key.WRITABLE_FOLDERS_ONLY, true);
-
 		myResource = ZLResource.resource("dialog").getResource("folderList");
 
 		setupActionButtons();
