@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.util;
 
-import java.util.HashMap;
+import java.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -33,6 +33,22 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class FileChooserUtil {
 	private FileChooserUtil() {
+	}
+
+	public static void runFolderListDialog(
+		Activity activity,
+		int requestCode,
+		String title,
+		String fileChooserTitle,
+		List<String> initialValue,
+		boolean chooseWritableDirsOnly
+	) {
+		final Intent intent = new Intent(activity, FolderListDialogActivity.class);
+		intent.putExtra(FolderListDialogActivity.Key.ACTIVITY_TITLE, title);
+		intent.putExtra(FolderListDialogActivity.Key.CHOOSER_TITLE, fileChooserTitle);
+		intent.putExtra(FolderListDialogActivity.Key.FOLDER_LIST, new ArrayList<String>(initialValue));
+		intent.putExtra(FolderListDialogActivity.Key.WRITABLE_FOLDERS_ONLY, chooseWritableDirsOnly);
+		activity.startActivityForResult(intent, requestCode);
 	}
 
 	public static void runDirectoryChooser(
