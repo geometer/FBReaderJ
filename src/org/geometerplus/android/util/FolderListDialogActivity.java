@@ -82,20 +82,19 @@ public class FolderListDialogActivity extends Activity {
 	}
 
 	private void updateDirs(int index, Intent data) {
-		String path = FileChooserUtil.pathFromData(data);
-		if(!myDirList.contains(path)) {
-			myDirList.remove(index);
-			myDirList.add(index, path);
+		final String path = FileChooserUtil.pathFromData(data);
+		if (!myDirList.contains(path)) {
+			myDirList.set(index, path);
 			myAdapter.notifyDataSetChanged();
-		} else {
+		} else if (!path.equals(myDirList.get(index))) {
 			showMessage(myResource.getResource("duplicate").getValue().replace("%s", path));
 		}
 	}
 
 	private void addNewDir(Intent data) {
-		String path = FileChooserUtil.pathFromData(data);
-		if(!myDirList.contains(path)) {
-			myDirList.add(FileChooserUtil.pathFromData(data));
+		final String path = FileChooserUtil.pathFromData(data);
+		if (!myDirList.contains(path)) {
+			myDirList.add(path);
 			myAdapter.notifyDataSetChanged();
 		} else {
 			showMessage(myResource.getResource("duplicate").getValue().replace("%s", path));
