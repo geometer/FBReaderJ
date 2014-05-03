@@ -1362,6 +1362,11 @@ public class FileChooserActivity extends Activity {
                  * navigation buttons
                  */
                 createLocationButtons(path);
+				
+                /*
+                 * update UI elements
+                 */
+                updateUI(path);
 
                 if (listener != null)
                     listener.onFinish(true, path);
@@ -1391,7 +1396,6 @@ public class FileChooserActivity extends Activity {
                     mHistory.truncateAfter(mLastPath);
                     mHistory.push(dir);
                     mFullHistory.push(dir);
-                    updateUI(dir);
                 }
             }
         });
@@ -1586,7 +1590,6 @@ public class FileChooserActivity extends Activity {
                         }
                     }
                 });
-                updateUI(preLoc);
             } else {
                 mViewGoBack.setEnabled(false);
             }
@@ -1641,7 +1644,6 @@ public class FileChooserActivity extends Activity {
                         }
                     }
                 });
-                updateUI(nextLoc);
             } else {
                 mViewGoForward.setEnabled(false);
             }
