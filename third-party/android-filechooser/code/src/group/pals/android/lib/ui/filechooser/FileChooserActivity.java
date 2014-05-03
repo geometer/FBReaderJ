@@ -363,14 +363,15 @@ public class FileChooserActivity extends Activity {
             mHistory = savedInstanceState.getParcelable(_History);
         else
             mHistory = new HistoryStore<IFile>(DisplayPrefs._DefHistoryCapacity);
-			mHistory.addListener(new HistoryListener<IFile>() {
-				@Override
-				public void onChanged(History<IFile> history) {
-					int idx = history.indexOf(getLocation());
-					mViewGoBack.setEnabled(idx > 0);
-					mViewGoForward.setEnabled(idx >= 0 && idx < history.size() - 1);
-				}
-			});
+        mHistory.addListener(new HistoryListener<IFile>() {
+
+            @Override
+            public void onChanged(History<IFile> history) {
+                int idx = history.indexOf(getLocation());
+                mViewGoBack.setEnabled(idx > 0);
+                mViewGoForward.setEnabled(idx >= 0 && idx < history.size() - 1);
+            }
+        });
 
         // full history
         if (savedInstanceState != null && savedInstanceState.get(_FullHistory) instanceof HistoryStore<?>)
@@ -1362,10 +1363,10 @@ public class FileChooserActivity extends Activity {
                  */
                 createLocationButtons(path);
 				
-				/*
-				 * update UI elements
-				 */
-				updateUI(path);
+                /*
+                 * update UI elements
+                 */
+                updateUI(path);
 
                 if (listener != null)
                     listener.onFinish(true, path);
