@@ -19,8 +19,13 @@
 
 package org.geometerplus.android.util;
 
+import java.util.ArrayList;
+
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+
+import org.geometerplus.zlibrary.ui.android.R;
 
 public class FolderListDialogActivity extends ListActivity {
 	interface Key {
@@ -30,8 +35,17 @@ public class FolderListDialogActivity extends ListActivity {
 		String WRITABLE_FOLDERS_ONLY  = "folder_list.writable_folders_only";
 	}
 
+	private ArrayList<String> myFolderList;
+
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.folder_list_dialog);
+
+		final Intent intent = getIntent();
+		myFolderList = intent.getStringArrayListExtra(Key.FOLDER_LIST);
+		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
+
+		setResult(RESULT_CANCELED);
 	}
 }
