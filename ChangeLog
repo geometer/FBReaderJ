@@ -23,7 +23,9 @@
 * PDF plugin integration
 
 ===== 1.10.1 (May ??, 2014) =====
-* Updated German localization by Matthias Dill
+* Multiple locations for books, fonts and backgrounds
+* Updated German localization (by Matthias Dill)
+* Updated Czech localization (by Marek Pavelka)
 
 ===== 1.10.0.5 (Apr 22, 2014) =====
 * Fixed crash on unexisting function (LinkedList.push()) for devices with SDK <= 8
