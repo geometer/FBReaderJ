@@ -22,4 +22,10 @@ package org.geometerplus.android.util;
 import android.app.ListActivity;
 
 public class FolderListDialogActivity extends ListActivity {
+	interface Key {
+		String FOLDER_LIST            = "folder_list.folder_list";
+		String ACTIVITY_TITLE         = "folder_list.title";
+		String CHOOSER_TITLE          = "folder_list.chooser_title";
+		String WRITABLE_FOLDERS_ONLY  = "folder_list.writable_folders_only";
+	}
 }
