@@ -36,6 +36,6 @@
 		android:layout_marginLeft="0dp"
 		android:layout_marginRight="10dp"
 		android:layout_marginBottom="5dp"
-		android:src="@+drawable/ic_delete"
+		android:src="@android:drawable/ic_delete"
 	/>
 </LinearLayout>
