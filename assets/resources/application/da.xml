@@ -933,6 +933,8 @@
 		<node name="emptyCatalog" value="Kataloget er desværre tomt"/>
 		<node name="emptyBasket" value="Din kurv er desværre tom"/>
 		<node name="emptyNetworkSearchResults" value="Fandt desværre ingen bøger"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="externalNotFound" value="Kan ikke åbne eksternt program"/>
 		<node name="appNotFound" value="Der blev ikke fundet et egnet program"/>
 		<node name="invalidFormat" value="Formatet er ugyldigt"/>
