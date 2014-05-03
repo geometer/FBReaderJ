@@ -66,7 +66,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueInternal(String value) {
-		List<String> currentValues = myOption.getValue();
+		final List<String> currentValues = myOption.getValue();
 		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
 			myOption.setValue(Collections.singletonList(value));
 			setSummary(getStringValue());
