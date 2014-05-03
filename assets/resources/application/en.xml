@@ -888,6 +888,13 @@
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog."/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog."/>
 		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder"/>
+			<node name="removeDialog" value="Remove folder">
+				<node name="message" value="Remove “%s” from the list?"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list"/>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root"/>
 			<node name="newFolder" value="New folder"/>

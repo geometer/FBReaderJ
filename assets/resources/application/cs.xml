@@ -897,6 +897,13 @@
 			<node name="message1" value="FBReader ve výchozím nastavení pracuje v režimu celé obrazovky. Klepnutím na prostřední třetinu obrazovky se zobrazí ovládání. Toto chování můžete změnit v části „Vzhled“ dialogového okna Nastavení."/>
 			<node name="message2" value="Výborně! Dalším klepnutím na prostřední třetinu obrazovky se skryje ovládání a tato nápověda. Pokud chcete ponechat během čtení ovládání na obrazovce, vyberte volbu „Zobrazit panel akcí“ v části „Vzhled“ dialogového okna Nastavení."/>
 		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Kořenová složka"/>
 			<node name="newFolder" value="Nová složka"/>
