@@ -45,8 +45,8 @@ class FileChooserStringListPreference extends FileChooserPreference {
 	@Override
 	protected void onClick() {
 		FileChooserUtil.runDirectoryManager(
-            (Activity)getContext(),
-            myRegCode,
+			(Activity)getContext(),
+			myRegCode,
 			myResource.getValue(),
 			myResource.getResource("chooserTitle").getValue(),
 			new ArrayList<String>(myOption.getValue()),
@@ -62,7 +62,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 	@Override
 	protected void setValueFromIntent(Intent data) {
 		final List<String> value = FileChooserUtil.pathArrayFromData(data);
-		if (value.isEmpty()){
+		if (value.isEmpty()) {
 			return;
 		}
 
