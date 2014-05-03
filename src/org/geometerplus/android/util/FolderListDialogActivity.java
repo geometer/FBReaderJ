@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.util;
 
-import android.app.Activity;
+import android.app.ListActivity;
 
-public class FolderListDialogActivity extends Activity {
+public class FolderListDialogActivity extends ListActivity {
 }
