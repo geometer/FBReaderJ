@@ -8,17 +8,17 @@
 	android:paddingBottom="8dp"
 	>
 	<ImageView
-		android:id="@+id/folder_list_remove"
+		android:id="@+id/folder_list_item_remove"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:layout_alignParentRight="true"
 		android:src="@android:drawable/ic_delete"/>
 	<TextView
-		android:id="@+id/folder_list_title"
+		android:id="@+id/folder_list_item_title"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:paddingLeft="5dp"
 		android:paddingTop="5dp"
-		android:layout_toLeftOf="@id/folder_list_remove"
+		android:layout_toLeftOf="@id/folder_list_item_remove"
 		android:textSize="16sp"/>
 </RelativeLayout>
