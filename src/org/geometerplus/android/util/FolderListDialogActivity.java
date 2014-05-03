@@ -42,7 +42,7 @@ public class FolderListDialogActivity extends ListActivity {
 	private final int ADD_NEW_DIR_POSITION = 0;
 
 	private DirectoriesAdapter myAdapter;
-	private ArrayList<String> myDirList;
+	private ArrayList<String> myFolderList;
 	private String myChooserTitle;
 	private ZLResource myResource;
 	private boolean myChooseWritableDirectoriesOnly;
@@ -52,7 +52,7 @@ public class FolderListDialogActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.folder_list_dialog);
 
-		myDirList = getIntent().getStringArrayListExtra(Key.FOLDER_LIST);
+		myFolderList = getIntent().getStringArrayListExtra(Key.FOLDER_LIST);
 		setTitle(getIntent().getStringExtra(Key.ACTIVITY_TITLE));
 		myChooserTitle = getIntent().getStringExtra(Key.CHOOSER_TITLE);
 		myChooseWritableDirectoriesOnly = getIntent().getBooleanExtra(Key.WRITABLE_FOLDERS_ONLY, true);
@@ -61,8 +61,9 @@ public class FolderListDialogActivity extends ListActivity {
 
 		setupActionButtons();
 
-		myDirList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addFolder").getValue());
-		setupDirectoriesAdapter(myDirList);
+		myFolderList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addFolder").getValue());
+		setupDirectoriesAdapter(myFolderList);
+		setResult(RESULT_CANCELED);
 	}
 
 	private void openFileChooser(int index, String dirName) {
@@ -81,18 +82,19 @@ public class FolderListDialogActivity extends ListActivity {
 
 	private void updateDirs(int index, Intent data) {
 		final String path = FileChooserUtil.pathFromData(data);
-		if (!myDirList.contains(path)) {
-			myDirList.set(index, path);
+		final int existing = myFolderList.indexOf(path);
+		if (existing == -1) {
+			myFolderList.set(index, path);
 			myAdapter.notifyDataSetChanged();
-		} else if (!path.equals(myDirList.get(index))) {
+		} else if (existing != index) {
 			showMessage(myResource.getResource("duplicate").getValue().replace("%s", path));
 		}
 	}
 
 	private void addNewDir(Intent data) {
 		final String path = FileChooserUtil.pathFromData(data);
-		if (!myDirList.contains(path)) {
-			myDirList.add(path);
+		if (!myFolderList.contains(path)) {
+			myFolderList.add(path);
 			myAdapter.notifyDataSetChanged();
 		} else {
 			showMessage(myResource.getResource("duplicate").getValue().replace("%s", path));
@@ -131,10 +133,8 @@ public class FolderListDialogActivity extends ListActivity {
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				myDirList.remove(0);
-				final Intent result = new Intent();
-				result.putExtra(Key.FOLDER_LIST, myDirList);
-				setResult(RESULT_OK, result);
+				myFolderList.remove(0);
+				setResult(RESULT_OK, new Intent().putExtra(Key.FOLDER_LIST, myFolderList));
 				finish();
 			}
 		});
@@ -155,7 +155,7 @@ public class FolderListDialogActivity extends ListActivity {
 
 		private void removeItemView(final View view, final int position) {
 			if (view != null && position < getCount()) {
-				myDirList.remove(position);
+				myFolderList.remove(position);
 				myAdapter.notifyDataSetChanged();
 			}
 		}
