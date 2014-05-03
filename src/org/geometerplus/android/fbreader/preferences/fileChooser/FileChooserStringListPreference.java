@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
-import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
@@ -45,11 +44,12 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void onClick() {
-		FileChooserUtil.runDirectoryChooser(
+		FileChooserUtil.runFolderListDialog(
 			(Activity)getContext(),
 			myRegCode,
+			myResource.getValue(),
 			myResource.getResource("chooserTitle").getValue(),
-			getStringValue(),
+			myOption.getValue(),
 			myChooseWritableDirectoriesOnly
 		);
 	}
@@ -61,16 +61,13 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueFromIntent(Intent data) {
-		final String value = FileChooserUtil.pathFromData(data);
-		if (MiscUtil.isEmptyString(value)) {
+		final List<String> value = FileChooserUtil.pathListFromData(data);
+		if (value.isEmpty()) {
 			return;
 		}
 
-		final List<String> currentValues = myOption.getValue();
-		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
-			myOption.setValue(Collections.singletonList(value));
-			setSummary(getStringValue());
-		}
+		myOption.setValue(value);
+		setSummary(getStringValue());
 
 		if (myOnValueSetAction != null) {
 			myOnValueSetAction.run();
