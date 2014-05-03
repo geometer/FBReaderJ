@@ -64,7 +64,7 @@ public class DirectoriesManagerActivity extends Activity{
         setupActionButtons();
 		myListView = (ListView) findViewById(R.id.directories);
 
-		myDirList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addNewDirButton").getValue());
+		myDirList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addNewFolder").getValue());
 		setupDirectoriesAdapter(myDirList);
 	}
 

@@ -19,16 +19,15 @@
 
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import android.app.Activity;
 import android.content.Context;
 
-import org.geometerplus.android.util.FileChooserUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+import org.geometerplus.android.util.FileChooserUtil;
 
 class FileChooserStringListPreference extends FileChooserPreference {
 	private final ZLStringListOption myOption;
@@ -57,16 +56,12 @@ class FileChooserStringListPreference extends FileChooserPreference {
 	}
 	
 	private ArrayList<String> getStringListValue(){
-		final List<String> values = myOption.getValue();
-		ArrayList<String> resList = new ArrayList<String>();
-		resList.addAll(values);
-		return resList;
+		return new ArrayList<String>(myOption.getValue());
 	}
 	
 	@Override
 	protected String getStringValue() {
-		final List<String> values = myOption.getValue();
-		return values.isEmpty() ? "" : values.get(0);
+		return MiscUtil.join(myOption.getValue(), ", ");
 	}
 
 	@Override
