@@ -77,7 +77,7 @@ public abstract class FileChooserUtil {
 		return data.getStringExtra(FileChooserActivity._FolderPath);
 	}
 
-	public static List<String> pathArrayFromData(Intent data) {
+	public static List<String> pathListFromData(Intent data) {
 		return data.getStringArrayListExtra(FolderListDialogActivity.Key.FOLDER_LIST);
 	}
 

@@ -61,7 +61,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueFromIntent(Intent data) {
-		final List<String> value = FileChooserUtil.pathArrayFromData(data);
+		final List<String> value = FileChooserUtil.pathListFromData(data);
 		if (value.isEmpty()) {
 			return;
 		}
