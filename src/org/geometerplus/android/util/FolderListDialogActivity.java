@@ -52,10 +52,11 @@ public class FolderListDialogActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.folder_list_dialog);
 
-		myFolderList = getIntent().getStringArrayListExtra(Key.FOLDER_LIST);
-		setTitle(getIntent().getStringExtra(Key.ACTIVITY_TITLE));
-		myChooserTitle = getIntent().getStringExtra(Key.CHOOSER_TITLE);
-		myChooseWritableDirectoriesOnly = getIntent().getBooleanExtra(Key.WRITABLE_FOLDERS_ONLY, true);
+		final Intent intent = getIntent();
+		myFolderList = intent.getStringArrayListExtra(Key.FOLDER_LIST);
+		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
+		myChooserTitle = intent.getStringExtra(Key.CHOOSER_TITLE);
+		myChooseWritableDirectoriesOnly = intent.getBooleanExtra(Key.WRITABLE_FOLDERS_ONLY, true);
 
 		myResource = ZLResource.resource("dialog").getResource("folderList");
 
