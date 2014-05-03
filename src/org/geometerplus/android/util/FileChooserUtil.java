@@ -32,8 +32,6 @@ import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.android.fbreader.DirectoriesManagerActivity;
-
 public abstract class FileChooserUtil {
 	private FileChooserUtil() {
 	}
@@ -46,11 +44,11 @@ public abstract class FileChooserUtil {
 		ArrayList<String> initinalValue,
 		boolean chooseWritableDirsOnly
 	) {
-		final Intent intent = new Intent(activity, DirectoriesManagerActivity.class);
-		intent.putExtra(DirectoriesManagerActivity.TITLE, title);
-		intent.putExtra(DirectoriesManagerActivity.CHOOSER_TITLE, fileChooserTitle);
-		intent.putStringArrayListExtra(DirectoriesManagerActivity.DIR_LIST, initinalValue);
-		intent.putExtra(DirectoriesManagerActivity.WRITABLE_DIRS_ONLY, chooseWritableDirsOnly);
+		final Intent intent = new Intent(activity, FolderListDialogActivity.class);
+		intent.putExtra(FolderListDialogActivity.TITLE, title);
+		intent.putExtra(FolderListDialogActivity.CHOOSER_TITLE, fileChooserTitle);
+		intent.putStringArrayListExtra(FolderListDialogActivity.DIR_LIST, initinalValue);
+		intent.putExtra(FolderListDialogActivity.WRITABLE_DIRS_ONLY, chooseWritableDirsOnly);
 		activity.startActivityForResult(intent, requestCode);
 	}
 
@@ -81,7 +79,7 @@ public abstract class FileChooserUtil {
 	}
 
 	public static ArrayList<String> pathArrayFromData(Intent data) {
-		return data.getStringArrayListExtra(DirectoriesManagerActivity.DIR_LIST);
+		return data.getStringArrayListExtra(FolderListDialogActivity.DIR_LIST);
 	}
 
 	private static HashMap<String,String> textResources(String title) {

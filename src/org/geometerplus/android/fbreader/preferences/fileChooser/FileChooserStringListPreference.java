@@ -34,14 +34,11 @@ import org.geometerplus.android.util.FileChooserUtil;
 
 class FileChooserStringListPreference extends FileChooserPreference {
 	private final ZLStringListOption myOption;
-	private final ZLResource myResource;
 
 	FileChooserStringListPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringListOption option, int regCode, Runnable onValueSetAction) {
 		super(context, rootResource, resourceKey, false, regCode, onValueSetAction);
 
 		myOption = option;
-
-		myResource = rootResource.getResource(resourceKey);
 
 		setSummary(getStringValue());
 	}

@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.android.util;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.FileChooserUtil;
 
-public class DirectoriesManagerActivity extends Activity{
+public class FolderListDialogActivity extends Activity{
 	private final int ADD_NEW_DIR_POSITION = 0;
 	public static final String TITLE = "dir_manager_title";
 	public static final String CHOOSER_TITLE = "chooser_title";
