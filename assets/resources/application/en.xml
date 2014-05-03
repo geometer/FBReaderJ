@@ -876,7 +876,7 @@
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog."/>
 		</node>
 		<node name="folderList">
-			<node name="addNewFolder" value="Add new folder"/>
+			<node name="addFolder" value="Add folder"/>
 			<node name="removeDialog" value="Remove folder">
 				<node name="message" value="Remove “%s” from the list?"/>
 			</node>
