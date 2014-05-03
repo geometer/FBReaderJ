@@ -30,7 +30,7 @@ import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
 class FontPreference extends ZLStringListPreference implements ReloadablePreference {
 	private final ZLStringOption myOption;
-	private boolean myIncludeDummyValue;
+	private final boolean myIncludeDummyValue;
 
 	private static String UNCHANGED = "unchanged";
 
@@ -39,6 +39,7 @@ class FontPreference extends ZLStringListPreference implements ReloadablePrefere
 
 		myOption = option;
 		myIncludeDummyValue = includeDummyValue;
+
 		reload();
 	}
 
