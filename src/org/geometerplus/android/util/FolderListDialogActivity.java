@@ -21,15 +21,14 @@ package org.geometerplus.android.util;
 
 import java.util.ArrayList;
 
-import android.os.*;
 import android.app.*;
 import android.content.*;
-import android.widget.*;
+import android.os.*;
 import android.view.*;
+import android.widget.*;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.android.util.FileChooserUtil;
 
 public class FolderListDialogActivity extends Activity{
 	private final int ADD_NEW_DIR_POSITION = 0;
