@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
-import java.util.*;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -49,7 +49,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 			myRegCode,
 			myResource.getValue(),
 			myResource.getResource("chooserTitle").getValue(),
-			new ArrayList<String>(myOption.getValue()),
+			myOption.getValue(),
 			myChooseWritableDirectoriesOnly
 		);
 	}
