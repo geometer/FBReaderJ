@@ -23,14 +23,14 @@ import java.util.LinkedList;
 
 import android.preference.Preference;
 
-abstract class PreferenceSet<T> {
+abstract class PreferenceSet<T> implements Runnable {
 	private final LinkedList<Preference> myPreferences = new LinkedList<Preference>();
 
 	final void add(Preference preference) {
 		myPreferences.add(preference);
 	}
 
-	final void update() {
+	public final void run() {
 		final T state = detectState();
 		for (Preference preference : myPreferences) {
 			update(preference, state);
