@@ -35,8 +35,12 @@ class WallpaperPreference extends ZLStringListPreference implements ReloadablePr
 
 	WallpaperPreference(Context context, ColorProfile profile, ZLResource resource, String resourceKey) {
 		super(context, resource, resourceKey);
-
 		myOption = profile.WallpaperOption;
+
+		reload();
+	}
+
+	public void reload() {
 		final List<ZLFile> predefined = WallpapersUtil.predefinedWallpaperFiles();
 		final List<ZLFile> external = WallpapersUtil.externalWallpaperFiles();
 
@@ -63,9 +67,6 @@ class WallpaperPreference extends ZLStringListPreference implements ReloadablePr
 		setLists(values, texts);
 
 		setInitialValue(myOption.getValue());
-	}
-
-	public void reload() {
 	}
 
 	@Override
