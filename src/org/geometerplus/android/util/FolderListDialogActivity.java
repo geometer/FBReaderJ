@@ -21,7 +21,8 @@ package org.geometerplus.android.util;
 
 import java.util.ArrayList;
 
-import android.app.*;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.*;
 import android.os.*;
 import android.view.*;
