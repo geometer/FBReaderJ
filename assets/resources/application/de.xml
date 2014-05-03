@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- German FBReaderJ resources, by Victor Massini -->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
@@ -877,6 +877,13 @@
 		<node name="screenHint">
 			<node name="message1" value="Standardmäßig arbeitet FBReader im Vollbildmodus. Berühren sie das mittlere Drittel des Bildschirm um die Bedienflächen anzuzeigen. Dieses Verhalten kann in den Einstellungen unter “Aussehen” angepasst werden."/>
 			<node name="message2" value="Sehr gut! Berühren sie nun wieder das mittlere Drittel, um die Bedienflächen und den Hinweis zu vertecken. Wenn sie während des Lesens die Bedienflächen immer anzeigen wollen, wählen sie in den Einstellungen unter “Aussehen” den Punkt “Aktionsleiste im Lesemodus anzeigen”."/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Ursprung"/>
