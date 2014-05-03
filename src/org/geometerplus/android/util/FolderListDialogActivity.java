@@ -32,11 +32,14 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class FolderListDialogActivity extends ListActivity {
+	interface Key {
+		String FOLDER_LIST            = "folder_list.folder_list";
+		String ACTIVITY_TITLE         = "folder_list.title";
+		String CHOOSER_TITLE          = "folder_list.chooser_title";
+		String WRITABLE_FOLDERS_ONLY  = "folder_list.writable_folders_only";
+	}
+
 	private final int ADD_NEW_DIR_POSITION = 0;
-	public static final String TITLE = "dir_manager_title";
-	public static final String CHOOSER_TITLE = "chooser_title";
-	public static final String DIR_LIST = "dir_list";
-	public static final String WRITABLE_DIRS_ONLY = "writable_dirs_only";
 
 	private DirectoriesAdapter myAdapter;
 	private String myDefaultDir = "/";
@@ -49,10 +52,10 @@ public class FolderListDialogActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.folder_list_dialog);
 
-		setTitle(getIntent().getStringExtra(TITLE));
-		myChooserTitle = getIntent().getStringExtra(CHOOSER_TITLE);
-		myDirList = getIntent().getStringArrayListExtra(DIR_LIST);
-		myChooseWritableDirectoriesOnly = getIntent().getBooleanExtra(WRITABLE_DIRS_ONLY, true);
+		myDirList = getIntent().getStringArrayListExtra(Key.FOLDER_LIST);
+		setTitle(getIntent().getStringExtra(Key.ACTIVITY_TITLE));
+		myChooserTitle = getIntent().getStringExtra(Key.CHOOSER_TITLE);
+		myChooseWritableDirectoriesOnly = getIntent().getBooleanExtra(Key.WRITABLE_FOLDERS_ONLY, true);
 
 		myResource = ZLResource.resource("dialog").getResource("folderList");
 
@@ -129,8 +132,8 @@ public class FolderListDialogActivity extends ListActivity {
 		okButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				myDirList.remove(0);
-				Intent result = new Intent();
-				result.putStringArrayListExtra(DIR_LIST, myDirList);
+				final Intent result = new Intent();
+				result.putExtra(Key.FOLDER_LIST, myDirList);
 				setResult(RESULT_OK, result);
 				finish();
 			}

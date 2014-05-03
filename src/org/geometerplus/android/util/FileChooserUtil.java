@@ -41,14 +41,14 @@ public abstract class FileChooserUtil {
 		int requestCode,
 		String title,
 		String fileChooserTitle,
-		ArrayList<String> initinalValue,
+		ArrayList<String> initialValue,
 		boolean chooseWritableDirsOnly
 	) {
 		final Intent intent = new Intent(activity, FolderListDialogActivity.class);
-		intent.putExtra(FolderListDialogActivity.TITLE, title);
-		intent.putExtra(FolderListDialogActivity.CHOOSER_TITLE, fileChooserTitle);
-		intent.putStringArrayListExtra(FolderListDialogActivity.DIR_LIST, initinalValue);
-		intent.putExtra(FolderListDialogActivity.WRITABLE_DIRS_ONLY, chooseWritableDirsOnly);
+		intent.putExtra(FolderListDialogActivity.Key.ACTIVITY_TITLE, title);
+		intent.putExtra(FolderListDialogActivity.Key.CHOOSER_TITLE, fileChooserTitle);
+		intent.putExtra(FolderListDialogActivity.Key.FOLDER_LIST, initialValue);
+		intent.putExtra(FolderListDialogActivity.Key.WRITABLE_FOLDERS_ONLY, chooseWritableDirsOnly);
 		activity.startActivityForResult(intent, requestCode);
 	}
 
@@ -56,12 +56,12 @@ public abstract class FileChooserUtil {
 		Activity activity,
 		int requestCode,
 		String title,
-		String initinalValue,
+		String initialValue,
 		boolean chooseWritableDirsOnly
 	) {
 		final Intent intent = new Intent(activity, FileChooserActivity.class);
 		intent.putExtra(FileChooserActivity._TextResources, textResources(title));
-		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initinalValue));
+		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initialValue));
 		intent.putExtra(FileChooserActivity._ActionBar, true);
 		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
 		intent.putExtra(FileChooserActivity._DisplayHiddenFiles, true);
@@ -79,7 +79,7 @@ public abstract class FileChooserUtil {
 	}
 
 	public static ArrayList<String> pathArrayFromData(Intent data) {
-		return data.getStringArrayListExtra(FolderListDialogActivity.DIR_LIST);
+		return data.getStringArrayListExtra(FolderListDialogActivity.Key.FOLDER_LIST);
 	}
 
 	private static HashMap<String,String> textResources(String title) {
