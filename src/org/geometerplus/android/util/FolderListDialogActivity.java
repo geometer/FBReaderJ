@@ -39,9 +39,6 @@ public class FolderListDialogActivity extends ListActivity {
 		String WRITABLE_FOLDERS_ONLY  = "folder_list.writable_folders_only";
 	}
 
-	private final int ADD_NEW_DIR_POSITION = 0;
-
-	private DirectoriesAdapter myAdapter;
 	private ArrayList<String> myFolderList;
 	private String myChooserTitle;
 	private boolean myChooseWritableDirectoriesOnly;
@@ -59,81 +56,11 @@ public class FolderListDialogActivity extends ListActivity {
 		myChooseWritableDirectoriesOnly = intent.getBooleanExtra(Key.WRITABLE_FOLDERS_ONLY, true);
 		myResource = ZLResource.resource("dialog").getResource("folderList");
 
-		setupActionButtons();
-
-		myFolderList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addFolder").getValue());
-		setupDirectoriesAdapter(myFolderList);
-		setResult(RESULT_CANCELED);
-	}
-
-	private void openFileChooser(int index, String dirName) {
-		FileChooserUtil.runDirectoryChooser(
-			this,
-			index,
-			myChooserTitle,
-			dirName,
-			myChooseWritableDirectoriesOnly
-		);
-	}
-
-	private void showMessage(String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-	}
-
-	private void updateDirs(int index, Intent data) {
-		final String path = FileChooserUtil.pathFromData(data);
-		final int existing = myFolderList.indexOf(path);
-		if (existing == -1) {
-			myFolderList.set(index, path);
-			myAdapter.notifyDataSetChanged();
-		} else if (existing != index) {
-			showMessage(myResource.getResource("duplicate").getValue().replace("%s", path));
-		}
-	}
-
-	private void addNewDir(Intent data) {
-		final String path = FileChooserUtil.pathFromData(data);
-		if (!myFolderList.contains(path)) {
-			myFolderList.add(path);
-			myAdapter.notifyDataSetChanged();
-		} else {
-			showMessage(myResource.getResource("duplicate").getValue().replace("%s", path));
-		}
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK) {
-			if(requestCode != ADD_NEW_DIR_POSITION) {
-				updateDirs(requestCode, data);
-			} else {
-				addNewDir(data);
-			}
-		}
-	}
-
-	private void setupDirectoriesAdapter(ArrayList<String> dirs) {
-		myAdapter = new DirectoriesAdapter(this, dirs);
-		setListAdapter(myAdapter);
-		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-				String dirName = (String)parent.getItemAtPosition(position);
-				if (position <= 0) {
-					dirName = "/";
-				}
-				openFileChooser(position, dirName);
-			}
-		});
-	}
-
-	private void setupActionButtons() {
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final Button okButton = (Button)findViewById(R.id.folder_list_dialog_button_ok);
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				myFolderList.remove(0);
 				setResult(RESULT_OK, new Intent().putExtra(Key.FOLDER_LIST, myFolderList));
 				finish();
 			}
@@ -146,52 +73,84 @@ public class FolderListDialogActivity extends ListActivity {
 				finish();
 			}
 		});
+
+		final DirectoriesAdapter adapter = new DirectoriesAdapter();
+		setListAdapter(adapter);
+		getListView().setOnItemClickListener(adapter);
+
+		setResult(RESULT_CANCELED);
 	}
 
-	private class DirectoriesAdapter extends ArrayAdapter<String> {
-		public DirectoriesAdapter(Context context, ArrayList<String> dirs) {
-			super(context, R.layout.folder_list_item, dirs);
+	@Override
+	protected void onActivityResult(int index, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			final String path = FileChooserUtil.pathFromData(data);
+			final int existing = myFolderList.indexOf(path);
+			if (existing == -1) {
+				if (index == 0) {
+					myFolderList.add(path);
+				} else {
+					myFolderList.set(index - 1, path);
+				}
+				((DirectoriesAdapter)getListAdapter()).notifyDataSetChanged();
+			} else if (existing != index - 1) {
+				UIUtil.showMessageText(
+					this, myResource.getResource("duplicate").getValue().replace("%s", path)
+				);
+			}
+		}
+	}
+
+	private void showItemRemoveDialog(final int index) {
+		final ZLResource resource = myResource.getResource("removeDialog");
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		new AlertDialog.Builder(FolderListDialogActivity.this)
+			.setCancelable(false)
+			.setTitle(resource.getValue())
+			.setMessage(resource.getResource("message").getValue().replace("%s", myFolderList.get(index)))
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					myFolderList.remove(index);
+					((DirectoriesAdapter)getListAdapter()).notifyDataSetChanged();
+				}
+			})
+			.setNegativeButton(buttonResource.getResource("cancel").getValue(), null)
+			.create().show();
+	}
+
+	private class DirectoriesAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+		@Override
+		public int getCount() {
+			return myFolderList.size() + 1;
 		}
 
-		private void removeItemView(final View view, final int position) {
-			if (view != null && position < getCount()) {
-				myFolderList.remove(position);
-				myAdapter.notifyDataSetChanged();
-			}
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public String getItem(int position) {
+			return position != 0
+				? myFolderList.get(position - 1)
+				: myResource.getResource("addFolder").getValue();
 		}
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			final View view = convertView != null
 				? convertView
-				: LayoutInflater.from(getContext()).inflate(R.layout.folder_list_item, parent, false);
+				: LayoutInflater.from(FolderListDialogActivity.this).inflate(R.layout.folder_list_item, parent, false);
 
-			final String dirName = getItem(position);
+			((TextView)view.findViewById(R.id.folder_list_item_title)).setText(getItem(position));
 
-			((TextView)view.findViewById(R.id.folder_list_item_title)).setText(dirName);
+			final View deleteButton = view.findViewById(R.id.folder_list_item_remove);
 
-			final ImageView deleteButton = (ImageView)view.findViewById(R.id.folder_list_item_remove);
-
-			if (position != ADD_NEW_DIR_POSITION) {
+			if (position > 0 && myFolderList.size() > 1) {
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(final View v) {
-						final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-						final ZLResource removeDialogResource = myResource.getResource("removeDialog");
-						new AlertDialog.Builder(getContext())
-							.setCancelable(false)
-							.setTitle(removeDialogResource.getValue())
-							.setMessage(removeDialogResource.getResource("message").getValue().replace("%s", dirName))
-							.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int id) {
-									removeItemView(v, position);
-								}
-							})
-							.setNegativeButton(buttonResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int id) {
-									dialog.cancel();
-								}
-							}).create().show();
+						showItemRemoveDialog(position - 1);
 					}
 				});
 			} else {
@@ -199,6 +158,17 @@ public class FolderListDialogActivity extends ListActivity {
 			}
 
 			return view;
+		}
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+			FileChooserUtil.runDirectoryChooser(
+				FolderListDialogActivity.this,
+				position,
+				myChooserTitle,
+				position == 0 ? "/" : myFolderList.get(position - 1),
+				myChooseWritableDirectoriesOnly
+			);
 		}
 	}
 }
