@@ -28,7 +28,6 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
-import org.geometerplus.android.util.FileChooserUtil;
 
 import org.geometerplus.android.util.FileChooserUtil;
 
