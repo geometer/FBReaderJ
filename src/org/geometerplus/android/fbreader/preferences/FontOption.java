@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
-class FontOption extends ZLStringListPreference implements ZLReloadable {
+class FontOption extends ZLStringListPreference implements ReloadablePreference {
 	private final ZLStringOption myOption;
 	private boolean myIncludeDummyValue;
 

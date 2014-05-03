@@ -19,6 +19,6 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-public interface ZLReloadable {
+public interface ReloadablePreference {
 	public void reload();
 }

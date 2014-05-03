@@ -28,10 +28,10 @@ import android.preference.Preference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
-import org.geometerplus.android.fbreader.preferences.ZLReloadable;
+import org.geometerplus.android.fbreader.preferences.ReloadablePreference;
 
 public abstract class ZLActivityPreference extends Preference {
-	private ZLReloadable myBoundPref = null;
+	private ReloadablePreference myBoundPref = null;
 
 	public static interface ListHolder {
 		public List<String> getValue();
@@ -53,7 +53,7 @@ public abstract class ZLActivityPreference extends Preference {
 		updateSummary();
 	}
 
-	public void setBoundPref(ZLReloadable boundPref) {
+	public void setBoundPref(ReloadablePreference boundPref) {
 		myBoundPref = boundPref;
 	}
 
