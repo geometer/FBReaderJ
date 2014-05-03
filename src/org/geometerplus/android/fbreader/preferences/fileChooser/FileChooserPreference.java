@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.preference.Preference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.android.util.FileChooserUtil;
 
@@ -58,20 +57,5 @@ abstract class FileChooserPreference extends Preference {
 	}
 
 	protected abstract String getStringValue();
-
 	protected abstract void setValueFromIntent(Intent data);
-
-	protected final void setValue(String value) {
-		if (MiscUtil.isEmptyString(value)) {
-			return;
-		}
-
-		setValueInternal(value);
-
-		if (myOnValueSetAction != null) {
-			myOnValueSetAction.run();
-		}
-	}
-
-	protected abstract void setValueInternal(String value);
 }

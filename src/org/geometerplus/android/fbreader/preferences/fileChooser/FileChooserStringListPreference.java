@@ -49,15 +49,19 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueFromIntent(Intent data) {
-		setValue(FileChooserUtil.pathFromData(data));
-	}
+		final String value = FileChooserUtil.pathFromData(data);
+		if (MiscUtil.isEmptyString(value)) {
+			return;
+		}
 
-	@Override
-	protected void setValueInternal(String value) {
 		final List<String> currentValues = myOption.getValue();
 		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
 			myOption.setValue(Collections.singletonList(value));
 			setSummary(getStringValue());
+		}
+
+		if (myOnValueSetAction != null) {
+			myOnValueSetAction.run();
 		}
 	}
 }
