@@ -33,10 +33,10 @@ import org.geometerplus.android.util.FileChooserUtil;
 
 public class DirectoriesManagerActivity extends Activity{
 	private final int ADD_NEW_DIR_POSITION = 0;
-    public static final String TITLE = "dir_manager_title";
-    public static final String CHOOSER_TITLE = "chooser_title";
-    public static final String DIR_LIST = "dir_list";
-    public static final String WRITABLE_DIRS_ONLY = "writable_dirs_only";
+	public static final String TITLE = "dir_manager_title";
+	public static final String CHOOSER_TITLE = "chooser_title";
+	public static final String DIR_LIST = "dir_list";
+	public static final String WRITABLE_DIRS_ONLY = "writable_dirs_only";
 
 	private DirectoriesAdapter myAdapter;
 	private ListView myListView;
@@ -49,8 +49,8 @@ public class DirectoriesManagerActivity extends Activity{
 	private boolean myChooseWritableDirectoriesOnly;
 
 	public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.dir_manager);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.dir_manager);
 
 		myTitle = getIntent().getStringExtra(TITLE);
 		myChooserTitle = getIntent().getStringExtra(CHOOSER_TITLE);
@@ -61,7 +61,7 @@ public class DirectoriesManagerActivity extends Activity{
 
 		myResource = ZLResource.resource("dialog").getResource("dirManager");
 
-        setupActionButtons();
+		setupActionButtons();
 		myListView = (ListView) findViewById(R.id.directories);
 
 		myDirList.add(ADD_NEW_DIR_POSITION, myResource.getResource("addNewFolder").getValue());
@@ -105,7 +105,7 @@ public class DirectoriesManagerActivity extends Activity{
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
+		if (resultCode == RESULT_OK) {
 			if(requestCode != ADD_NEW_DIR_POSITION){
 				updateDirs(requestCode, data);
 			} else{
@@ -129,27 +129,28 @@ public class DirectoriesManagerActivity extends Activity{
 		});
 	}
 
-    private void setupActionButtons(){
-        final Button okButton = (Button) findViewById(R.id.button_ok);
-        okButton.setText(myResource.getResource("ok").getValue());
+	private void setupActionButtons() {
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		final Button okButton = (Button)findViewById(R.id.button_ok);
+		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View v) {
+			public void onClick(View v) {
 				myDirList.remove(0);
 				Intent result = new Intent();
 				result.putStringArrayListExtra(DIR_LIST, myDirList);
 				setResult(RESULT_OK, result);
 				finish();
-             }
-        });
-        final Button cancelButton = (Button) findViewById(R.id.button_cancel);
-        cancelButton.setText(myResource.getResource("cancel").getValue());
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View v) {
+			}
+		});
+		final Button cancelButton = (Button)findViewById(R.id.button_cancel);
+		cancelButton.setText(buttonResource.getResource("cancel").getValue());
+		cancelButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				setResult(RESULT_CANCELED);
-                finish();
-             }
-         });
-    }
+				finish();
+			}
+		});
+	}
 
 	private class DirectoriesAdapter extends ArrayAdapter<String>{
 		public DirectoriesAdapter(Context context, ArrayList<String> dirs){
@@ -173,21 +174,21 @@ public class DirectoriesManagerActivity extends Activity{
 			title.setText(dirName);
 			ImageView deleteButton = (ImageView) view.findViewById(R.id.delete);
 
-			if(position != ADD_NEW_DIR_POSITION){
+			if (position != ADD_NEW_DIR_POSITION) {
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(final View v) {
-
+						final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 						new AlertDialog.Builder(getContext())
 							.setCancelable(false)
 							.setTitle(myResource.getResource("deleteDialog").getValue())
 							.setMessage(myResource.getResource("deleteDialog").getResource("message").getValue().replace("%s", dirName))
-							.setPositiveButton(myResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+							.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
 									removeItemView(v, position);
 								}
 							})
-							.setNegativeButton(myResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
+							.setNegativeButton(buttonResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
 									dialog.cancel();
 								}
