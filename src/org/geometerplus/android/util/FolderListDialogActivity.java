@@ -161,14 +161,16 @@ public class FolderListDialogActivity extends ListActivity {
 		}
 
 		@Override
-		public View getView (final int position, View convertView, ViewGroup parent) {
-			final View view = LayoutInflater.from(getContext()).inflate(R.layout.folder_list_item, parent, false);
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			final View view = convertView != null
+				? convertView
+				: LayoutInflater.from(getContext()).inflate(R.layout.folder_list_item, parent, false);
 
-			final String dirName = (String) getItem(position);
+			final String dirName = getItem(position);
 
 			((TextView)view.findViewById(R.id.folder_list_item_title)).setText(dirName);
 
-			final ImageView deleteButton = (ImageView) view.findViewById(R.id.folder_list_item_remove);
+			final ImageView deleteButton = (ImageView)view.findViewById(R.id.folder_list_item_remove);
 
 			if (position != ADD_NEW_DIR_POSITION) {
 				deleteButton.setVisibility(View.VISIBLE);
@@ -181,12 +183,12 @@ public class FolderListDialogActivity extends ListActivity {
 							.setTitle(removeDialogResource.getValue())
 							.setMessage(removeDialogResource.getResource("message").getValue().replace("%s", dirName))
 							.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,int id) {
+								public void onClick(DialogInterface dialog, int id) {
 									removeItemView(v, position);
 								}
 							})
 							.setNegativeButton(buttonResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,int id) {
+								public void onClick(DialogInterface dialog, int id) {
 									dialog.cancel();
 								}
 							}).create().show();
