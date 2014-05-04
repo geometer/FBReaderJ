@@ -19,9 +19,7 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.Currency;
-import java.util.LinkedList;
-import java.util.Locale;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.money.Money;
