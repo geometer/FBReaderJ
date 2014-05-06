@@ -257,6 +257,12 @@
 				<data android:host="*" android:scheme="opds"/>
 			</intent-filter>
 			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+				<data android:host="*" android:scheme="opds-fbreader"/>
+			</intent-filter>
+			<intent-filter>
 				<action android:name="android.fbreader.action.ADD_OPDS_CATALOG_URL"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 				<data android:host="*" android:scheme="http"/>
