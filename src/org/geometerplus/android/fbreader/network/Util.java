@@ -49,12 +49,7 @@ public abstract class Util implements UserRegistrationConstants {
 		return intent;
 	}
 
-	static void initLibrary(final Activity activity) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		if (library.isInitialized()) {
-			return;
-		}
-
+	static void initLibrary(final Activity activity, final Runnable action) {
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
@@ -63,7 +58,13 @@ public abstract class Util implements UserRegistrationConstants {
 							new SQLiteNetworkDatabase(activity.getApplication());
 						}
 
-						library.initialize();
+						final NetworkLibrary library = NetworkLibrary.Instance();
+						if (!library.isInitialized()) {
+							library.initialize();
+						}
+						if (action != null) {
+							action.run();
+						}
 					}
 				}, activity);
 			}
