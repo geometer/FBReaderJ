@@ -77,8 +77,14 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		if (getCurrentTree() instanceof RootTree) {
 			mySingleCatalog = intent.getBooleanExtra("SingleCatalog", false);
 			if (!NetworkLibrary.Instance().isInitialized()) {
-				Util.initLibrary(this);
-				myDeferredIntent = intent;
+				Util.initLibrary(this, new Runnable() {
+					public void run() {
+						NetworkLibrary.Instance().runBackgroundUpdate(false);
+						if (intent != null) {
+							openTreeByIntent(intent);
+						}
+					}
+				});
 			} else {
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 				openTreeByIntent(intent);
@@ -363,11 +369,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 						showInitLibraryDialog((String)params[0]);
 						break;
 					case InitializationFinished:
-						NetworkLibrary.Instance().runBackgroundUpdate(false);
-						if (myDeferredIntent != null) {
-							openTreeByIntent(myDeferredIntent);
-							myDeferredIntent = null;
-						}
 						break;
 					case Found:
 						openTree((NetworkTree)params[0]);
@@ -407,7 +408,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
-					Util.initLibrary(NetworkLibraryActivity.this);
+					Util.initLibrary(NetworkLibraryActivity.this, null);
 				} else {
 					finish();
 				}
