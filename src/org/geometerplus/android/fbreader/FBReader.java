@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
 import java.util.*;
 
 import android.app.*;
@@ -40,31 +41,27 @@ import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
-
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.tips.TipsManager;
-
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
-
 import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
@@ -150,7 +147,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 		}
 
-		public void openFile(String appData, Book book, Bookmark bookmark) {
+		public void openFile(final String appData, Book book, Bookmark bookmark) {
 			final Intent launchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
 			launchIntent.setPackage(appData);
 			//			Uri uri = Uri.parse("file://" + book.File.getPath());
@@ -158,12 +155,24 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			FBReaderIntents.putBookExtra(launchIntent, book);
 			FBReaderIntents.putBookmarkExtra(launchIntent, bookmark);
 			launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			try {
-				startActivity(launchIntent);
-				overridePendingTransition(0, 0);
-			} catch (ActivityNotFoundException e) {
-				showErrorDialog("noPlugin", appData);
-			}
+			Config.Instance().runOnConnect(new Runnable() {
+				public void run() {
+					try {
+						Log.e("CALLER", "FORRESULT");
+						String date = DateFormat.getDateTimeInstance().format(new Date());
+						new ZLStringOption("Security", "PluginCalled", "").setValue(appData + date);
+						launchIntent.putExtra("SECURITY_CODE", date);
+						startActivity(launchIntent);
+						overridePendingTransition(0, 0);
+					} catch (ActivityNotFoundException e) {
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								showErrorDialog("noPlugin", appData);
+							}});
+					}
+				}
+			});
 		}
 	}
 
@@ -323,6 +332,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				config.requestAllValuesForGroup("Fonts");
 				config.requestAllValuesForGroup("Colors");
 				config.requestAllValuesForGroup("Files");
+				config.requestAllValuesForGroup("Security");
 			}
 		});
 
@@ -497,12 +507,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myCancelIntent = intent;
 		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(intent.getAction())) {
 			Log.d("fbj", "crash");
-			long bookid = intent.getLongExtra("BOOKID", -1);
+			final long bookid = intent.getLongExtra("BOOK", -1);
 			myNeedToSkipPlugin = true;
 			myFBReaderApp.Model = null;
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+					Book b = myFBReaderApp.Collection.getRecentBook(0);
+					if (b.getId() == bookid) {
+						b = myFBReaderApp.Collection.getRecentBook(1);
+					}
+					myFBReaderApp.openBook(b, null, null);
 				}
 			});
 		} else {
