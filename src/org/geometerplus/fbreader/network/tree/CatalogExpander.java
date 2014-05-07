@@ -60,7 +60,6 @@ class CatalogExpander extends NetworkItemsLoader {
 				if (myAuthenticator != null) {
 					myAuthenticator.run(f.URL);
 				}	
-				System.err.println("AUTH URI XX = " + f.URL);
 			}
 		}
 	}
