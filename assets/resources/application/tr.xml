@@ -100,7 +100,7 @@
 		<node name="topup" value="Kredi hesabı (Bakiye: %s)"/>
 		<node name="topupTitle" value="Kredi hesabı"/>
 		<node name="topupViaBrowser" value="Sayfayı tarayıcıda aç"/>
-		<node name="authorizationMenuTitle" value="Eylem seç"/>
+		<node name="authorisationMenuTitle" value="Eylem seç"/>
 		<node name="topupSummary" value="Şu anda: %s"/>
 		<node name="basket" value="Sepet"/>
 		<node name="basketSummaryEmpty" value="Kitap yok"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Bu kitabı satın almak istediğinizden emin misiniz: &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Bu kitapları satın almak istediğinizden emin misiniz: %s "/>
 		<node name="alreadyBought" value="Bu kitabı zaten satın almıştınız"/>
-		<node name="notAuthorized" value="Yetkilendirme gerekli"/>
+		<node name="notAuthorised" value="Yetkilendirme gerekli"/>
 		<node name="noAccountInformation" value="Hesap durumu yüklenemiyor"/>
 		<node name="unsufficientFunds" value="Kitabın fiyatı %0 ve sizde sadece %1 var"/>
 		<node name="zeroFunds" value="Bu alımın maliyeti %0"/>
@@ -798,7 +798,7 @@
 			<node name="topup" value="Kontör"/>
 			<node name="pay" value="Öde"/>
 			<node name="refresh" value="Yenile"/>
-			<node name="authorize" value="Onay"/>
+			<node name="authorise" value="Onay"/>
 			<node name="resetPosition" value="POzisyonu sıfırla"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Rapor gönder"/>

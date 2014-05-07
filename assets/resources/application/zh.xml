@@ -100,7 +100,7 @@
 		<node name="topup" value="重新输入账号(目前: %s)"/>
 		<node name="topupTitle" value="重新输入账号"/>
 		<node name="topupViaBrowser" value="在浏览器中打开页面"/>
-		<node name="authorizationMenuTitle" value="选择操作"/>
+		<node name="authorisationMenuTitle" value="选择操作"/>
 		<node name="topupSummary" value="当前: %s"/>
 		<node name="basket" value="购物篮"/>
 		<node name="basketSummaryEmpty" value="没有书籍"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="确认购买%s书籍?"/>
 		<node name="confirmSeveralBooks" value="确认购买%s书籍?"/>
 		<node name="alreadyBought" value="该书已经买过"/>
-		<node name="notAuthorized" value="需要授权"/>
+		<node name="notAuthorised" value="需要授权"/>
 		<node name="noAccountInformation" value="无法加载账号状态"/>
 		<node name="unsufficientFunds" value="你这次买了 %0 ，但是你现在只有 %1"/>
 		<node name="zeroFunds" value="你这次买了 %0"/>
@@ -788,7 +788,7 @@
 			<node name="topup" value="重新输入账号"/>
 			<node name="pay" value="支付"/>
 			<node name="refresh" value="刷新"/>
-			<node name="authorize" value="授权"/>
+			<node name="authorise" value="授权"/>
 			<node name="resetPosition" value="重置位置"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="发送报告"/>

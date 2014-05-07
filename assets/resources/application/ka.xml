@@ -100,7 +100,7 @@
 		<node name="topup" value="ანგარიშის შევსება (ბალანსი: %s)"/>
 		<node name="topupTitle" value="გადახდა"/>
 		<node name="topupViaBrowser" value="ბრაუზერის ფანჯარაში"/>
-		<node name="authorizationMenuTitle" value="ამოირჩიეთ ქმედება"/>
+		<node name="authorisationMenuTitle" value="ამოირჩიეთ ქმედება"/>
 		<node name="topupSummary" value="მიმდინარე ანგარიში: %s"/>
 		<node name="basket" value="კალათა"/>
 		<node name="basketSummaryEmpty" value="ცარიელი კალათა"/>
@@ -165,7 +165,7 @@
 		<node name="confirm" value="დარწმუნებული ხართ, რომ გნებავთ წიგნის შეძენა&#10;«%s»?"/>
 		<node name="confirmSeveralBooks" value="დარწმუნებული ხართ, რომ გნებავთ შეიძინოთ %s წიგნები?"/>
 		<node name="alreadyBought" value="წიგნი უკვე ნაყიდია"/>
-		<node name="notAuthorized" value="საჭიროა ავტორიზაცია"/>
+		<node name="notAuthorised" value="საჭიროა ავტორიზაცია"/>
 		<node name="noAccountInformation" value="ვერ მოხერხდა ანგარიშის შემოწმება"/>
 		<node name="unsufficientFunds" value="საყიდლად საჭიროა %0, ხოლო ანგარიშზეა მხოლოდ %1"/>
 		<node name="zeroFunds" value="ყიდვისთვის საჭიროა %0"/>
@@ -803,7 +803,7 @@
 			<node name="topup" value="ანგარიშის შევსება"/>
 			<node name="pay" value="გადახდა"/>
 			<node name="refresh" value="განახლება"/>
-			<node name="authorize" value="ავტორიზაცია"/>
+			<node name="authorise" value="ავტორიზაცია"/>
 			<node name="resetPosition" value="უკან"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="შეტყობინების გაგზავნა"/>

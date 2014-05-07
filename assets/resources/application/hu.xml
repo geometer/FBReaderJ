@@ -100,7 +100,7 @@
 		<node name="topup" value="Számla feltöltése (Jelenleg: %s)"/>
 		<node name="topupTitle" value="Számla feltöltése"/>
 		<node name="topupViaBrowser" value="Oldal megnyitása böngészőben"/>
-		<node name="authorizationMenuTitle" value="Művelet kiválasztása"/>
+		<node name="authorisationMenuTitle" value="Művelet kiválasztása"/>
 		<node name="topupSummary" value="Jelenleg: %s"/>
 		<node name="basket" value="Kosár"/>
 		<node name="basketSummaryEmpty" value="A kosár üres."/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="Biztosan megvásárolja ezt a könyvet?&#10;“%s”"/>
 		<node name="confirmSeveralBooks" value="Biztosan megvásárol %s könyvet?"/>
 		<node name="alreadyBought" value="Ezt a könyvet már megvásárolta"/>
-		<node name="notAuthorized" value="Bejelentkezés szükséges"/>
+		<node name="notAuthorised" value="Bejelentkezés szükséges"/>
 		<node name="noAccountInformation" value="Fiók állapota nem elérhető"/>
 		<node name="unsufficientFunds" value="A vásárlás végösszege %0, de az Ön számláján csak %1 van "/>
 		<node name="zeroFunds" value="A vásárlás végösszege %0"/>
@@ -788,7 +788,7 @@
 			<node name="topup" value="Számla feltöltése"/>
 			<node name="pay" value="Fizetés"/>
 			<node name="refresh" value="Frissítés"/>
-			<node name="authorize" value="Hitelesítés"/>
+			<node name="authorise" value="Hitelesítés"/>
 			<node name="resetPosition" value="Pozíció nullázása"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Jelentés küldése"/>

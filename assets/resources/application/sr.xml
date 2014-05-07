@@ -100,7 +100,7 @@
 		<node name="topup" value="Попуни налог (тренутно: %s)"/>
 		<node name="topupTitle" value="Попуна налога"/>
 		<node name="topupViaBrowser" value="Отвори страницу у прегледачу"/>
-		<node name="authorizationMenuTitle" value="Одабир радње"/>
+		<node name="authorisationMenuTitle" value="Одабир радње"/>
 		<node name="topupSummary" value="Тренутно: %s"/>
 		<node name="basket" value="Корпа"/>
 		<node name="basketSummaryEmpty" value="Нема књига"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Желите ли да купите &#10;„%s“?"/>
 		<node name="confirmSeveralBooks" value="Желите ли да купите %s књиге?"/>
 		<node name="alreadyBought" value="Већ сте купили књигу"/>
-		<node name="notAuthorized" value="Потребна је провера идентитета"/>
+		<node name="notAuthorised" value="Потребна је провера идентитета"/>
 		<node name="noAccountInformation" value="Не могу да учитам стање налога"/>
 		<node name="unsufficientFunds" value="Ова књига кошта %0 а ви имате само %1"/>
 		<node name="zeroFunds" value="Ова књига кошта %0"/>
@@ -798,7 +798,7 @@
 			<node name="topup" value="Попуни"/>
 			<node name="pay" value="Купи"/>
 			<node name="refresh" value="Освежи"/>
-			<node name="authorize" value="Одобри"/>
+			<node name="authorise" value="Одобри"/>
 			<node name="resetPosition" value="Поништи положај"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Пошаљи извештај"/>

@@ -103,7 +103,7 @@
 		<node name="topup" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="topupTitle" value="Recréditer le compte"/>
 		<node name="topupViaBrowser" value="Ouvrir la page dans le navigateur"/>
-		<node name="authorizationMenuTitle" value="Action"/>
+		<node name="authorisationMenuTitle" value="Action"/>
 		<node name="topupSummary" value="Аctuellement : %s"/>
 		<node name="basket" value="Panier"/>
 		<node name="basketSummaryEmpty" value="Aucun livre"/>
@@ -160,7 +160,7 @@
 		<node name="confirm" value="Êtes-vous sûr de vouloir acheter&#10;le livre&#10;« %s » ?"/>
 		<node name="confirmSeveralBooks" value="Etes-vous sûr d'acheter %s livres ?"/>
 		<node name="alreadyBought" value="Le livre a déjà été acheté"/>
-		<node name="notAuthorized" value="Autorisation requise"/>
+		<node name="notAuthorised" value="Autorisation requise"/>
 		<node name="noAccountInformation" value="Impossible de charger les informations du compte"/>
 		<node name="unsufficientFunds" value="Cet article vaut %0 et vous n'avez que %1"/>
 		<node name="zeroFunds" value="Cet article coûte %0"/>
@@ -791,7 +791,7 @@
 			<node name="topup" value="Recréditer"/>
 			<node name="pay" value="Payer"/>
 			<node name="refresh" value="Rafraîchir"/>
-			<node name="authorize" value="Autoriser"/>
+			<node name="authorise" value="Autoriser"/>
 			<node name="resetPosition" value="Réinitialiser position"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Envoyer un rapport"/>
