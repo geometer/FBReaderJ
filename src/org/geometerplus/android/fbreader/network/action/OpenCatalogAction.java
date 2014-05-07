@@ -105,7 +105,7 @@ public class OpenCatalogAction extends Action {
 					new Intent(myActivity, AuthorisationScreen.class)
 				);
 			}
-		}, true, resumeNotLoad);
+		}, resumeNotLoad);
 		processExtraData(tree.Item.extraData(), new Runnable() {
 			public void run() {
 				doOpenTree(tree);

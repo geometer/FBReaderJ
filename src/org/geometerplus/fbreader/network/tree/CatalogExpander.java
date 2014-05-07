@@ -26,20 +26,18 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 class CatalogExpander extends NetworkItemsLoader {
 	private final Authenticator myAuthenticator;
-	private final boolean myCheckAuthentication;
 	private final boolean myResumeNotLoad;
 
-	CatalogExpander(NetworkCatalogTree tree, Authenticator authenticator, boolean checkAuthentication, boolean resumeNotLoad) {
+	CatalogExpander(NetworkCatalogTree tree, Authenticator authenticator, boolean resumeNotLoad) {
 		super(tree);
 		myAuthenticator = authenticator;
-		myCheckAuthentication = checkAuthentication;
 		myResumeNotLoad = resumeNotLoad;
 	}
 
 	@Override
 	public void doBefore() throws ZLNetworkException {
 		final INetworkLink link = getTree().getLink();
-		if (myCheckAuthentication && link != null && link.authenticationManager() != null) {
+		if (myAuthenticator != null && link != null && link.authenticationManager() != null) {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			try {
 				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
