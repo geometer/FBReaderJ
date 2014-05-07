@@ -100,7 +100,7 @@
 		<node name="topup" value="Поповнити рахунок (поточний рахунок: %s)"/>
 		<node name="topupTitle" value="Поповнити рахунок"/>
 		<node name="topupViaBrowser" value="Відкрити сторінку веб-переглядачем"/>
-		<node name="authorizationMenuTitle" value="Select action"/>
+		<node name="authorisationMenuTitle" value="Select action"/>
 		<node name="topupSummary" value="Поточний рахунок: %s"/>
 		<node name="basket" value="Кошик"/>
 		<node name="basketSummaryEmpty" value="Немає книжок"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="Ви впевненні, що хочете придбати книгу&#10;«%s»?"/>
 		<node name="confirmSeveralBooks" value="Ви впевнені що хочете придбати %s книжок?"/>
 		<node name="alreadyBought" value="Книга вже придбана"/>
-		<node name="notAuthorized" value="Потрібна авторизація"/>
+		<node name="notAuthorised" value="Потрібна авторизація"/>
 		<node name="noAccountInformation" value="Неможливо завантажити стан аккаунту"/>
 		<node name="unsufficientFunds" value="Дана покупка коштує %0 але у Вас лише %1"/>
 		<node name="zeroFunds" value="Дана покупка коштує %0"/>
@@ -777,7 +777,7 @@
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="pay" value="Заплатити"/>
 			<node name="refresh" value="Оновити"/>
-			<node name="authorize" value="Авторизуватись"/>
+			<node name="authorise" value="Авторизуватись"/>
 			<node name="resetPosition" value="Скинути позицію"/>
 			<node name="sendReport" value="Відправити звіт"/>
 			<node name="addToFavorites" value="Додати в улюблені"/>

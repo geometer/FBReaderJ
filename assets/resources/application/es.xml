@@ -105,7 +105,7 @@
 		<node name="topup" value="Redondear cuenta (actualmente: %s)"/>
 		<node name="topupTitle" value="Redondear cuenta"/>
 		<node name="topupViaBrowser" value="Abrir página en el navegador"/>
-		<node name="authorizationMenuTitle" value="Seleccionar acción"/>
+		<node name="authorisationMenuTitle" value="Seleccionar acción"/>
 		<node name="topupSummary" value="Actualmente: %s"/>
 		<node name="basket" value="Cesta"/>
 		<node name="basketSummaryEmpty" value="No hay libros"/>
@@ -166,7 +166,7 @@
 		<node name="confirm" value="¿Confirma que desea comprar &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="¿Confirma que desea comprar %s libros?"/>
 		<node name="alreadyBought" value="Este libro ya fue comprado"/>
-		<node name="notAuthorized" value="Se requiere autorización"/>
+		<node name="notAuthorised" value="Se requiere autorización"/>
 		<node name="noAccountInformation" value="No se puede cargar el estado de la cuenta"/>
 		<node name="unsufficientFunds" value="Esta compra cuesta %0 y usted solo tiene %1"/>
 		<node name="zeroFunds" value="Esta compra cuesta %0"/>
@@ -792,7 +792,7 @@
 			<node name="topup" value="Redondear"/>
 			<node name="pay" value="Pagar"/>
 			<node name="refresh" value="Recargar"/>
-			<node name="authorize" value="Autorizar"/>
+			<node name="authorise" value="Autorizar"/>
 			<node name="resetPosition" value="Restablecer posición"/>
 			<node name="sendReport" value="Enviar reporte"/>
 			<node name="addToFavorites" value="Agregar a favoritos"/>

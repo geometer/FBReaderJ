@@ -100,7 +100,7 @@
 		<node name="topup" value="Համալրել հաշիվը (հաշվեկշիռ։ %s)"/>
 		<node name="topupTitle" value="Վճարում"/>
 		<node name="topupViaBrowser" value="Դիտարկիչում"/>
-		<node name="authorizationMenuTitle" value="Ընտրել գործողություն"/>
+		<node name="authorisationMenuTitle" value="Ընտրել գործողություն"/>
 		<node name="topupSummary" value="Ընթացիկ հաշիվ. %s"/>
 		<node name="basket" value="Զամբյուղ"/>
 		<node name="basketSummaryEmpty" value="Դատարկ զամբյուղ"/>
@@ -165,7 +165,7 @@
 		<node name="confirm" value="Հաստատել &#10;«%s» գրքի գնումը"/>
 		<node name="confirmSeveralBooks" value="Հաստատել %s գրքերի գնումը"/>
 		<node name="alreadyBought" value="Գիրքն արդեն գնված է"/>
-		<node name="notAuthorized" value="Պահանջվում է հեղինակացում"/>
+		<node name="notAuthorised" value="Պահանջվում է հեղինակացում"/>
 		<node name="noAccountInformation" value="Չհաջողվեց ստուգել հաշվեկշիռը"/>
 		<node name="unsufficientFunds" value="Գնման համար պահանջվում է %0, առկա է միայն %1"/>
 		<node name="zeroFunds" value="Գնման համար պահանջվում է %0"/>
@@ -792,7 +792,7 @@
 			<node name="topup" value="Հավելել հաշիվը"/>
 			<node name="pay" value="Վճարել"/>
 			<node name="refresh" value="Թարմացնել"/>
-			<node name="authorize" value="Հեղինակացում"/>
+			<node name="authorise" value="Հեղինակացում"/>
 			<node name="resetPosition" value="Ետ"/>
 			<node name="sendReport" value="Ուղարկել հաղորդագրություն"/>
 			<node name="addToFavorites" value="Ավելացնել ընտրյալքում"/>

@@ -273,7 +273,7 @@
 				<data android:host="*" android:scheme="https"/>
 			</intent-filter>
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.network.AuthorizationMenuActivity" android:process=":networkLibrary" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
+		<activity android:name="org.geometerplus.android.fbreader.network.AuthorisationMenuActivity" android:process=":networkLibrary" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.network.TopupMenuActivity" android:process=":networkLibrary" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkBookInfoActivity" android:process=":networkLibrary" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>

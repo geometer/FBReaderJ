@@ -100,7 +100,7 @@
 		<node name="topup" value="Incarcati contul (în prezent: %s)"/>
 		<node name="topupTitle" value="Incarcati contul"/>
 		<node name="topupViaBrowser" value="Pagina deschis în browser"/>
-		<node name="authorizationMenuTitle" value="Alegeti actiunea"/>
+		<node name="authorisationMenuTitle" value="Alegeti actiunea"/>
 		<node name="topupSummary" value="În prezent: %s"/>
 		<node name="basket" value="Cos"/>
 		<node name="basketSummaryEmpty" value="Nicio carte"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="Sunteti sigur ca doriti sa cumparati cartea &#10;“ %s”&#10;?"/>
 		<node name="confirmSeveralBooks" value="Sunteti sigur ca doriti sa cumparati %s carti?"/>
 		<node name="alreadyBought" value="Cartea este deja cumparata"/>
-		<node name="notAuthorized" value="Este necesara autorizatie"/>
+		<node name="notAuthorised" value="Este necesara autorizatie"/>
 		<node name="noAccountInformation" value="Nu se poate incarca situatia contului"/>
 		<node name="unsufficientFunds" value="Costul este de %0 dar aveti disponibil doar %1"/>
 		<node name="zeroFunds" value="Costul este de %0"/>
@@ -777,7 +777,7 @@
 			<node name="topup" value="Incarca"/>
 			<node name="pay" value="Plateste"/>
 			<node name="refresh" value="Actualizare"/>
-			<node name="authorize" value="Autorizeaza"/>
+			<node name="authorise" value="Autorizeaza"/>
 			<node name="resetPosition" value="Reseteaza pozitia"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="Adauga la favorite"/>

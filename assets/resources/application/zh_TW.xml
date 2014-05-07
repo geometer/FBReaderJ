@@ -100,7 +100,7 @@
 		<node name="topup" value="升級賬戶 (現為: %s)"/>
 		<node name="topupTitle" value="升級賬戶"/>
 		<node name="topupViaBrowser" value="以瀏覽器開啟本頁"/>
-		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
+		<node name="authorisationMenuTitle" value="Select action" toBeTranslated="true"/>
 		<node name="topupSummary" value="目前為: %s"/>
 		<node name="basket" value="購物籃"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="是否確定要購買&#10;“%s”&#10;?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
 		<node name="alreadyBought" value="此書已經被買過"/>
-		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
+		<node name="notAuthorised" value="Authorisation required" toBeTranslated="true"/>
 		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
@@ -777,7 +777,7 @@
 			<node name="topup" value="升級賬戶"/>
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
-			<node name="authorize" value="Authorize" toBeTranslated="true"/>
+			<node name="authorise" value="Authorise" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="收藏"/>
