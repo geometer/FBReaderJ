@@ -105,7 +105,7 @@
 		<node name="topup" value="Konto aufladen (derzeit: %s)"/>
 		<node name="topupTitle" value="Konto aufladen"/>
 		<node name="topupViaBrowser" value="Seite im Browser öffnen"/>
-		<node name="authorizationMenuTitle" value="Aktion auswählen"/>
+		<node name="authorisationMenuTitle" value="Aktion auswählen"/>
 		<node name="topupSummary" value="Derzeit: %s"/>
 		<node name="basket" value="Warenkorb"/>
 		<node name="basketSummaryEmpty" value="keine Bücher"/>
@@ -162,7 +162,7 @@
 		<node name="confirm" value="Möchten Sie das Buch&#10;“%s”&#10;wirklich kaufen?"/>
 		<node name="confirmSeveralBooks" value="Möchten Sie wirklich %s Bücher kaufen?"/>
 		<node name="alreadyBought" value="Buch wurde schon gekauft"/>
-		<node name="notAuthorized" value="Autorisierung wird benötigt"/>
+		<node name="notAuthorised" value="Autorisierung wird benötigt"/>
 		<node name="noAccountInformation" value="Konto-Status kann nicht geladen werden"/>
 		<node name="unsufficientFunds" value="Dieser Einkauf kostet %0 und Sie haben nur %1"/>
 		<node name="zeroFunds" value="Dieser Einkauf kostet %0"/>
@@ -790,7 +790,7 @@
 			<node name="topup" value="Konto aufladen"/>
 			<node name="pay" value="Bezahlen"/>
 			<node name="refresh" value="Aktualsieren"/>
-			<node name="authorize" value="Autorisieren"/>
+			<node name="authorise" value="Autorisieren"/>
 			<node name="resetPosition" value="Position zurücksetzen"/>
 			<node name="sendReport" value="Report senden"/>
 			<node name="addToFavorites" value="Buch zu den Favoriten hinzufügen"/>

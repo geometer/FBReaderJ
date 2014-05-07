@@ -59,7 +59,7 @@ class CatalogExpander extends NetworkItemsLoader {
 			} catch (NetworkCatalogItem.AuthorisationFailed f) {
 				if (myAuthenticator != null) {
 					myAuthenticator.run(f.URL);
-				}	
+				}
 			}
 		}
 	}

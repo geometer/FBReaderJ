@@ -100,7 +100,7 @@
 		<node name="topup" value="Kontua bete (unekoa: %s)"/>
 		<node name="topupTitle" value="Kontua bete"/>
 		<node name="topupViaBrowser" value="Ireki orria nabigatzailean"/>
-		<node name="authorizationMenuTitle" value="Aukeratu ekintza"/>
+		<node name="authorisationMenuTitle" value="Aukeratu ekintza"/>
 		<node name="topupSummary" value="Unekoa: %s"/>
 		<node name="basket" value="Saskia"/>
 		<node name="basketSummaryEmpty" value="Ez dago libururik"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Ziur erosi nahi duzula &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Ziur erosi nahi dituzula %s liburuak?"/>
 		<node name="alreadyBought" value="Dagoeneko erosita dago liburua"/>
-		<node name="notAuthorized" value="Baimena behar duzu"/>
+		<node name="notAuthorised" value="Baimena behar duzu"/>
 		<node name="noAccountInformation" value="Ezin izan da kontuaren egoera kargatu"/>
 		<node name="unsufficientFunds" value="Erosketa honen kostua %0 da eta %1 baino ez duzu kontuan"/>
 		<node name="zeroFunds" value="Eroskera honen kostua %0 da"/>
@@ -798,7 +798,7 @@
 			<node name="topup" value="Bete kontua"/>
 			<node name="pay" value="Ordaindu"/>
 			<node name="refresh" value="Freskatu"/>
-			<node name="authorize" value="Baimendu"/>
+			<node name="authorise" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>

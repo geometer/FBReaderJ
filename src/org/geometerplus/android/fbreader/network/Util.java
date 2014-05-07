@@ -71,7 +71,7 @@ public abstract class Util implements UserRegistrationConstants {
 		});
 	}
 
-	static Intent authorizationIntent(INetworkLink link, Uri id) {
+	static Intent authorisationIntent(INetworkLink link, Uri id) {
 		final Intent intent = new Intent(AUTHORIZATION_ACTION, id);
 		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
 		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
@@ -81,7 +81,7 @@ public abstract class Util implements UserRegistrationConstants {
 	}
 
 	private static Intent registrationIntent(INetworkLink link) {
-		return authorizationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
+		return authorisationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
 	}
 
 	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
