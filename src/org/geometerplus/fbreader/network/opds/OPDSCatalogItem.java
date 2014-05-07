@@ -75,7 +75,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	}
 
 	@Override
-	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
+	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException, AuthorisationFailed {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
 
 		myLoadingState = opdsLink.createOperationData(loader);
