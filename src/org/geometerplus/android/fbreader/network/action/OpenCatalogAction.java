@@ -23,6 +23,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
@@ -100,9 +101,10 @@ public class OpenCatalogAction extends Action {
 
 		tree.startItemsLoader(new Authenticator() {
 			public void run(String url) {
+				System.err.println("URL 0: " + url);
 				OrientationUtil.startActivity(
 					myActivity,
-					new Intent(myActivity, AuthorisationScreen.class)
+					new Intent(Intent.ACTION_VIEW, Uri.parse(url), myActivity, AuthorisationScreen.class)
 				);
 			}
 		}, resumeNotLoad);

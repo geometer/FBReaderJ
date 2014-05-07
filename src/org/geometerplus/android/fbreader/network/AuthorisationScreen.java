@@ -23,14 +23,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 
+import org.geometerplus.android.fbreader.OrientationUtil;
+
 public class AuthorisationScreen extends Activity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		// TODO: use orientation key!
+		OrientationUtil.setOrientation(this, getIntent());
 		final WebView view = new WebView(this);
 		view.getSettings().setJavaScriptEnabled(true);
 		setContentView(view);
-		view.loadUrl("http://fbreader.org/");
+		System.err.println("URL 1: " + getIntent().getData().toString());
+		view.loadUrl(getIntent().getData().toString());
 	}
 }
