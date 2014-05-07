@@ -100,7 +100,7 @@
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
 		<node name="topupViaBrowser" value="بازکردن صفحه در مرورگر"/>
-		<node name="authorizationMenuTitle" value="انتخاب عمل"/>
+		<node name="authorisationMenuTitle" value="انتخاب عمل"/>
 		<node name="topupSummary" value="الان: %s"/>
 		<node name="basket" value="سبد"/>
 		<node name="basketSummaryEmpty" value="هیچ کتابی نیست"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="آیا واقع میخواهید  “%s” را خریداری کنید؟"/>
 		<node name="confirmSeveralBooks" value="آیا واقعا میخواهید کتابهای %s را خریداری کنید"/>
 		<node name="alreadyBought" value="کتابها خریداری شدند"/>
-		<node name="notAuthorized" value="مجوز نیاز است"/>
+		<node name="notAuthorised" value="مجوز نیاز است"/>
 		<node name="noAccountInformation" value="مشخصات حساب بارگذاری نمیشود"/>
 		<node name="unsufficientFunds" value="هزینه این خرید %0 است و شما %1 دارید"/>
 		<node name="zeroFunds" value="این خرید %0 است"/>
@@ -787,7 +787,7 @@
 			<node name="topup" value="آپ بالا"/>
 			<node name="pay" value="پرداخت"/>
 			<node name="refresh" value="بازآوري"/>
-			<node name="authorize" value="اجازه"/>
+			<node name="authorise" value="اجازه"/>
 			<node name="resetPosition" value="وضعيت تنظيم مجدد"/>
 			<node name="sendReport" value="ارسال گزارش"/>
 			<node name="addToFavorites" value="افزودن به علاقندي"/>

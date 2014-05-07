@@ -100,7 +100,7 @@
 		<node name="topup" value="Пополнение счёта (баланс: %s)"/>
 		<node name="topupTitle" value="Оплата"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
-		<node name="authorizationMenuTitle" value="Выберите действие"/>
+		<node name="authorisationMenuTitle" value="Выберите действие"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="basket" value="Корзина"/>
 		<node name="basketSummaryEmpty" value="Пустая корзина"/>
@@ -165,7 +165,7 @@
 		<node name="confirm" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?"/>
 		<node name="confirmSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?"/>
 		<node name="alreadyBought" value="Книга уже куплена"/>
-		<node name="notAuthorized" value="Требуется авторизация"/>
+		<node name="notAuthorised" value="Требуется авторизация"/>
 		<node name="noAccountInformation" value="Не удалось проверить состояние счёта"/>
 		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счёте только %1"/>
 		<node name="zeroFunds" value="Для покупки требуется %0"/>
@@ -792,7 +792,7 @@
 			<node name="topup" value="Пополнить счёт"/>
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
-			<node name="authorize" value="Авторизоваться"/>
+			<node name="authorise" value="Авторизоваться"/>
 			<node name="resetPosition" value="Назад"/>
 			<node name="sendReport" value="Отправить сообщение"/>
 			<node name="addToFavorites" value="Добавить в избранное"/>

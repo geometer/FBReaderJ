@@ -106,7 +106,7 @@
 		<node name="topup" value="Arrodonir compte (actualment: %s)"/>
 		<node name="topupTitle" value="Arrodonir compte"/>
 		<node name="topupViaBrowser" value="Obrir pàgina al navegador"/>
-		<node name="authorizationMenuTitle" value="Seleccionar acció"/>
+		<node name="authorisationMenuTitle" value="Seleccionar acció"/>
 		<node name="topupSummary" value="Actualment: %s"/>
 		<node name="basket" value="Cistella"/>
 		<node name="basketSummaryEmpty" value="No hi ha llibres"/>
@@ -167,7 +167,7 @@
 		<node name="confirm" value="Confirmeu que voleu comprar &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Confirmeu que voleu comprar %s llibres?"/>
 		<node name="alreadyBought" value="Aquest llibre ja fou comprat"/>
-		<node name="notAuthorized" value="Es requereix autorització"/>
+		<node name="notAuthorised" value="Es requereix autorització"/>
 		<node name="noAccountInformation" value="No es pot carregar l'estat del compte"/>
 		<node name="unsufficientFunds" value="Aquesta compra val %0 i vostè només té %1"/>
 		<node name="zeroFunds" value="Aquesta compra val %0"/>
@@ -804,7 +804,7 @@
 			<node name="topup" value="Arrodoneix"/>
 			<node name="pay" value="Paga"/>
 			<node name="refresh" value="Recarrega"/>
-			<node name="authorize" value="Autoritza"/>
+			<node name="authorise" value="Autoritza"/>
 			<node name="resetPosition" value="Restableix posició"/>
 			<node name="sendReport" value="Envia informe"/>
 			<node name="addToFavorites" value="Afegir a favorits"/>

@@ -100,7 +100,7 @@
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
-		<node name="authorizationMenuTitle" value="Select action"/>
+		<node name="authorisationMenuTitle" value="Select action"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummaryEmpty" value="No books"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Are you sure you want to buy &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?"/>
 		<node name="alreadyBought" value="Book is already bought"/>
-		<node name="notAuthorized" value="Authorization required"/>
+		<node name="notAuthorised" value="Authorisation required"/>
 		<node name="noAccountInformation" value="Cannot load account state"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1"/>
 		<node name="zeroFunds" value="This purchase costs %0"/>
@@ -787,7 +787,7 @@
 			<node name="topup" value="Top up"/>
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
-			<node name="authorize" value="Authorize"/>
+			<node name="authorise" value="Authorise"/>
 			<node name="resetPosition" value="Reset position"/>
 			<node name="sendReport" value="Send report"/>
 			<node name="addToFavorites" value="Add to favorites"/>
