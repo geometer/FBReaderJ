@@ -43,7 +43,7 @@ class Searcher extends NetworkItemsLoader {
 	}
 
 	@Override
-	public void doLoading() throws ZLNetworkException {
+	public void load() throws ZLNetworkException {
 		final SearchItem item = (SearchItem)getTree().Item;
 		if (myPattern.equals(item.getPattern())) {
 			if (getTree().hasChildren()) {
