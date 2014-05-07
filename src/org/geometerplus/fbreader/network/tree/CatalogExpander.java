@@ -54,7 +54,13 @@ class CatalogExpander extends NetworkItemsLoader {
 		if (myResumeNotLoad) {
 			getTree().Item.resumeLoading(this);
 		} else {
-			getTree().Item.loadChildren(this);
+			try {
+				getTree().Item.loadChildren(this);
+			} catch (NetworkCatalogItem.AuthorisationFailed f) {
+				if (myAuthenticator != null) {
+					myAuthenticator.run(f.URL);
+				}
+			}
 		}
 	}
 
