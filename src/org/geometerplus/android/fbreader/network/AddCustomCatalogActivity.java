@@ -95,7 +95,11 @@ public class AddCustomCatalogActivity extends Activity {
 
 		Util.initLibrary(this, new Runnable() {
 			public void run() {
-				init(intent);
+				runOnUiThread(new Runnable() {
+					public void run() {
+						init(intent);
+					}
+				});
 			}
 		});
 	}
