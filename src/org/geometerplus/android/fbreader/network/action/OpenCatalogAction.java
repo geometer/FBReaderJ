@@ -99,7 +99,10 @@ public class OpenCatalogAction extends Action {
 			}
 		}
 
-		tree.startItemsLoader(true, resumeNotLoad);
+		tree.startItemsLoader(new Authenticator() {
+			public void run(String url) {
+			}
+		}, resumeNotLoad);
 		processExtraData(tree.Item.extraData(), new Runnable() {
 			public void run() {
 				doOpenTree(tree);
