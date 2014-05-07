@@ -100,7 +100,7 @@
 		<node name="topup" value="Папоўніць рахунак (зараз: %s)"/>
 		<node name="topupTitle" value="Папоўніць рахунак"/>
 		<node name="topupViaBrowser" value="Адчыніць бачыну ў аглядальніку"/>
-		<node name="authorizationMenuTitle" value="Абраць дзеяньне"/>
+		<node name="authorisationMenuTitle" value="Абраць дзеяньне"/>
 		<node name="topupSummary" value="Зараз: %s"/>
 		<node name="basket" value="Кошык"/>
 		<node name="basketSummaryEmpty" value="Няма кніг"/>
@@ -165,7 +165,7 @@
 		<node name="confirm" value="Вы сапраўды жадаеце купіць  «%s»?"/>
 		<node name="confirmSeveralBooks" value="Вы сапраўды жадаеце купіць %s кніг?"/>
 		<node name="alreadyBought" value="Кніга ўжо купленая"/>
-		<node name="notAuthorized" value="Патрабуецца ўпаўнаважаньне"/>
+		<node name="notAuthorised" value="Патрабуецца ўпаўнаважаньне"/>
 		<node name="noAccountInformation" value="Немагчыма заладаваць стану рахунку"/>
 		<node name="unsufficientFunds" value="Гэты набытак каштуе %0, а ў Вас толькі %1"/>
 		<node name="zeroFunds" value="Гэты набытак каштуе %0"/>
@@ -793,7 +793,7 @@
 			<node name="topup" value="Папоўніць"/>
 			<node name="pay" value="Заплаціць"/>
 			<node name="refresh" value="Абнавіць"/>
-			<node name="authorize" value="Упаўнаважыцца"/>
+			<node name="authorise" value="Упаўнаважыцца"/>
 			<node name="resetPosition" value="Скінуць пазыцыю"/>
 			<node name="sendReport" value="Даслаць справаздачу"/>
 			<node name="addToFavorites" value="Дадаць да ўпадабанага"/>

@@ -100,7 +100,7 @@
 		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="topupTitle" value="Doplnit účet"/>
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
-		<node name="authorizationMenuTitle" value="Vybrat akci"/>
+		<node name="authorisationMenuTitle" value="Vybrat akci"/>
 		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
 		<node name="basketSummaryEmpty" value="Žádné knihy"/>
@@ -167,7 +167,7 @@
 		<node name="confirm" value="Opravdu chcete zakoupit&#10;“%s”&#10;knihu?"/>
 		<node name="confirmSeveralBooks" value="Opravdu chcete zakoupit %s knih?"/>
 		<node name="alreadyBought" value="Kniha je již zakoupena"/>
-		<node name="notAuthorized" value="Vyžadována autorizace"/>
+		<node name="notAuthorised" value="Vyžadována autorizace"/>
 		<node name="noAccountInformation" value="Nelze načíst stav účtu"/>
 		<node name="unsufficientFunds" value="Tento nákup stojí %0 a vy máte pouze %1"/>
 		<node name="zeroFunds" value="Tento nákup stojí %0"/>
@@ -796,7 +796,7 @@
 			<node name="topup" value="Doplnit účet"/>
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
-			<node name="authorize" value="Authorizovat"/>
+			<node name="authorise" value="Authorisovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
 			<node name="sendReport" value="Odeslat zprávu"/>
 			<node name="addToFavorites" value="Přidat do oblíbených"/>
