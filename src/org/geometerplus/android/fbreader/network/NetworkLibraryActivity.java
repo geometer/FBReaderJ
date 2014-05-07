@@ -60,7 +60,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	private boolean mySingleCatalog;
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		AuthenticationActivity.initCredentialsCreator(this);
