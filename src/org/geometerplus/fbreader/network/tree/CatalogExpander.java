@@ -21,16 +21,17 @@ package org.geometerplus.fbreader.network.tree;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 class CatalogExpander extends NetworkItemsLoader {
+	private final Authenticator myAuthenticator;
 	private final boolean myCheckAuthentication;
 	private final boolean myResumeNotLoad;
 
-	CatalogExpander(NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
+	CatalogExpander(NetworkCatalogTree tree, Authenticator authenticator, boolean checkAuthentication, boolean resumeNotLoad) {
 		super(tree);
+		myAuthenticator = authenticator;
 		myCheckAuthentication = checkAuthentication;
 		myResumeNotLoad = resumeNotLoad;
 	}
@@ -51,11 +52,18 @@ class CatalogExpander extends NetworkItemsLoader {
 	}
 
 	@Override
-	public void doLoading() throws ZLNetworkException {
+	public void load() throws ZLNetworkException {
 		if (myResumeNotLoad) {
 			getTree().Item.resumeLoading(this);
 		} else {
-			getTree().Item.loadChildren(this);
+			try {
+				getTree().Item.loadChildren(this);
+			} catch (NetworkCatalogItem.AuthorisationFailed f) {
+				if (myAuthenticator != null) {
+					myAuthenticator.run(f.URL);
+				}	
+				System.err.println("AUTH URI XX = " + f.URL);
+			}
 		}
 	}
 

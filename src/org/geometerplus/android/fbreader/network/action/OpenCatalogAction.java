@@ -28,8 +28,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
-import org.geometerplus.android.fbreader.network.NetworkLibrarySecondaryActivity;
+import org.geometerplus.android.fbreader.network.*;
 import org.geometerplus.android.util.PackageUtil;
 
 public class OpenCatalogAction extends Action {
@@ -99,7 +98,14 @@ public class OpenCatalogAction extends Action {
 			}
 		}
 
-		tree.startItemsLoader(true, resumeNotLoad);
+		tree.startItemsLoader(new Authenticator() {
+			public void run(String url) {
+				OrientationUtil.startActivity(
+					myActivity,
+					new Intent(myActivity, AuthorisationScreen.class)
+				);
+			}
+		}, true, resumeNotLoad);
 		processExtraData(tree.Item.extraData(), new Runnable() {
 			public void run() {
 				doOpenTree(tree);

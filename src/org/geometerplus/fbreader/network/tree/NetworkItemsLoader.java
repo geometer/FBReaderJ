@@ -66,7 +66,7 @@ public abstract class NetworkItemsLoader implements Runnable {
 			}
 
 			try {
-				doLoading();
+				load();
 				onFinish(null, isLoadingInterrupted());
 			} catch (ZLNetworkException e) {
 				onFinish(e, isLoadingInterrupted());
@@ -137,5 +137,5 @@ public abstract class NetworkItemsLoader implements Runnable {
 
 	protected abstract void onFinish(ZLNetworkException exception, boolean interrupted);
 	protected abstract void doBefore() throws ZLNetworkException;
-	protected abstract void doLoading() throws ZLNetworkException;
+	protected abstract void load() throws ZLNetworkException;
 }

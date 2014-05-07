@@ -30,14 +30,14 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
 		super(parent, parent.getLink(), item, position);
 		if (!item.bookIds().isEmpty()) {
-			startItemsLoader(false, false);
+			startItemsLoader(null, false, false);
 		}
 	}
 
 	public BasketCatalogTree(RootTree parent, BasketItem item) {
 		super(parent, item.Link, item, 0);
 		if (!item.bookIds().isEmpty()) {
-			startItemsLoader(false, false);
+			startItemsLoader(null, false, false);
 		}
 	}
 
