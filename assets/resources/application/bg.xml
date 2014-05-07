@@ -100,7 +100,7 @@
 		<node name="topup" value="Зареждане на сметка (баланс: %s)"/>
 		<node name="topupTitle" value="Зареждане на сметка"/>
 		<node name="topupViaBrowser" value="Отвори в браузера"/>
-		<node name="authorizationMenuTitle" value="Избери действие"/>
+		<node name="authorisationMenuTitle" value="Избери действие"/>
 		<node name="topupSummary" value="Текуща сметка: %s"/>
 		<node name="basket" value="Кошница"/>
 		<node name="basketSummaryEmpty" value="Кошницата е празна"/>
@@ -165,7 +165,7 @@
 		<node name="confirm" value="Сигурни ли сте, че искате да купите книгата &#10;«%s»?"/>
 		<node name="confirmSeveralBooks" value="Сигурни ли сте, че искате да купите %s книги?"/>
 		<node name="alreadyBought" value="Книгата е вече купена"/>
-		<node name="notAuthorized" value="Необходима е оторизация"/>
+		<node name="notAuthorised" value="Необходима е оторизация"/>
 		<node name="noAccountInformation" value="Неустановено състояние на сметката"/>
 		<node name="unsufficientFunds" value="Крайната сума е %0, а в сметката има %1"/>
 		<node name="zeroFunds" value="Крайна сума %0"/>
@@ -792,7 +792,7 @@
 			<node name="topup" value="Зареждане на сметка"/>
 			<node name="pay" value="Плащане"/>
 			<node name="refresh" value="Обнови"/>
-			<node name="authorize" value="Оторизация"/>
+			<node name="authorise" value="Оторизация"/>
 			<node name="resetPosition" value="Назад"/>
 			<node name="sendReport" value="Изпрати съобщение"/>
 			<node name="addToFavorites" value="Добави в избрани"/>
