@@ -103,6 +103,7 @@ public class OpenCatalogAction extends Action {
 			public void run(String url) {
 				final Intent intent = new Intent(myActivity, AuthorisationScreen.class);
 				intent.setData(Uri.parse(url));
+				intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey());
 				OrientationUtil.startActivityForResult(
 					myActivity, intent, NetworkLibraryActivity.REQUEST_AUTHORISATION_SCREEN
 				);

@@ -205,6 +205,9 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 					c.setDiscard(false);
 					store.addCookie(c);
 				}
+				final NetworkTree tree =
+					getTreeByKey((FBTree.Key)data.getSerializableExtra(TREE_KEY_KEY));
+				new ReloadCatalogAction(this).run(tree);
 				break;
 			}
 		}

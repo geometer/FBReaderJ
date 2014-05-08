@@ -63,7 +63,7 @@ public class AuthorisationScreen extends Activity {
 			public void onPageFinished(WebView view, String url) {
 				final String cookies = CookieManager.getInstance().getCookie(url);
 				if (data.getHost().equals(Uri.parse(url).getHost())) {
-					AuthorisationScreen.this.setResult(RESULT_OK, new Intent().putExtra(
+					AuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
 						NetworkLibraryActivity.COOKIES_KEY, cookies
 					));
 					finish();
