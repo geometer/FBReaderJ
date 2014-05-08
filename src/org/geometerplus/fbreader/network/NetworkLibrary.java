@@ -142,8 +142,8 @@ public class NetworkLibrary {
 		final List<String> newIds;
 		if (active) {
 			newIds = new ArrayList<String>(oldIds.size() + 1);
-			newIds.addAll(oldIds);
 			newIds.add(id);
+			newIds.addAll(oldIds);
 		} else {
 			newIds = new ArrayList<String>(oldIds);
 			newIds.remove(id);
