@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,6 +29,11 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import org.apache.http.client.CookieStore;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie2;
+
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
@@ -50,6 +54,9 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	public static final int REQUEST_MANAGE_CATALOGS = 1;
 	public static final String ENABLED_CATALOG_IDS_KEY = "android.fbreader.data.enabled_catalogs";
 	public static final String DISABLED_CATALOG_IDS_KEY = "android.fbreader.data.disabled_catalogs";
+
+	public static final int REQUEST_AUTHORISATION_SCREEN = 2;
+	public static final String COOKIES_KEY = "android.fbreader.data.cookies";
 
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
@@ -160,10 +167,46 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				getListView().invalidateViews();
 			}
 		});
-		if (requestCode == REQUEST_MANAGE_CATALOGS && resultCode == RESULT_OK && data != null) {
-			final ArrayList<String> myIds = data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
-			NetworkLibrary.Instance().setActiveIds(myIds);
-			NetworkLibrary.Instance().synchronize();
+		if (resultCode != RESULT_OK || data == null) {
+			return;
+		}
+
+		switch (requestCode) {
+			case REQUEST_MANAGE_CATALOGS:
+			{
+				final ArrayList<String> myIds =
+					data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
+				NetworkLibrary.Instance().setActiveIds(myIds);
+				NetworkLibrary.Instance().synchronize();
+				break;
+			}
+			case REQUEST_AUTHORISATION_SCREEN:
+			{
+				final String cookies = data.getStringExtra(COOKIES_KEY);
+				if (cookies == null) {
+					break;
+				}
+				final CookieStore store = ZLNetworkManager.Instance().cookieStore();
+				// Cookie is a string like NAME=VALUE [; NAME=VALUE]
+				for (String pair : cookies.split(";")) {
+					final String[] parts = pair.split("=", 2);
+					if (parts.length != 2) {
+						continue;	
+					}
+					final String name = parts[0].trim();
+					final String value = parts[1].trim();
+					final BasicClientCookie2 c = new BasicClientCookie2(name, value);
+					c.setDomain("demo.fbreader.org");
+					c.setPath("/");
+					final Calendar date = Calendar.getInstance();
+					date.add(Calendar.YEAR, 1);
+					c.setExpiryDate(date.getTime());
+					c.setSecure(true);
+					c.setDiscard(false);
+					store.addCookie(c);
+				}
+				break;
+			}
 		}
 	}
 
