@@ -51,6 +51,9 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	public static final String ENABLED_CATALOG_IDS_KEY = "android.fbreader.data.enabled_catalogs";
 	public static final String DISABLED_CATALOG_IDS_KEY = "android.fbreader.data.disabled_catalogs";
 
+	public static final int REQUEST_AUTHORISATION_SCREEN = 2;
+	public static final String COOKIES_KEY = "android.fbreader.data.cookies";
+
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
@@ -160,10 +163,23 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				getListView().invalidateViews();
 			}
 		});
-		if (requestCode == REQUEST_MANAGE_CATALOGS && resultCode == RESULT_OK && data != null) {
-			final ArrayList<String> myIds = data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
-			NetworkLibrary.Instance().setActiveIds(myIds);
-			NetworkLibrary.Instance().synchronize();
+		if (resultCode != RESULT_OK || data == null) {
+			return;
+		}
+
+		switch (requestCode) {
+			case REQUEST_MANAGE_CATALOGS:
+			{
+				final ArrayList<String> myIds =
+					data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
+				NetworkLibrary.Instance().setActiveIds(myIds);
+				NetworkLibrary.Instance().synchronize();
+				break;
+			}
+			case REQUEST_AUTHORISATION_SCREEN:
+			{
+				break;
+			}
 		}
 	}
 
