@@ -36,6 +36,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	private int myIndex;
 
 	private String myNextURL;
+	private String myAuthURL;
 	private String mySkipUntilId;
 	private boolean myFoundNewIds;
 
@@ -85,6 +86,8 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 				final String rel = opdsLink.relation(link.getRel(), mime);
 				if (MimeType.APP_ATOM_XML.weakEquals(mime) && "next".equals(rel)) {
 					myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
+				} else if (MimeType.TEXT_HTML.weakEquals(mime) && "auth".equals(rel)) {
+					myAuthURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				}
 			}
 		}
@@ -99,6 +102,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			myNextURL = null;
 		}
 		myData.ResumeURI = myFoundNewIds ? myNextURL : null;
+		myData.AuthURI = myAuthURL;
 		myData.LastLoadedId = null;
 	}
 
