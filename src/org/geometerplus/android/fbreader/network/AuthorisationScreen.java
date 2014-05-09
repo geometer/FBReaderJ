@@ -20,11 +20,69 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Window;
+import android.webkit.*;
+
+import org.geometerplus.android.fbreader.OrientationUtil;
 
 public class AuthorisationScreen extends Activity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		requestWindowFeature(Window.FEATURE_PROGRESS);
+		CookieSyncManager.createInstance(getApplicationContext());
+		final Intent intent = getIntent();
+		final Uri data = intent.getData();
+		if (data == null || data.getHost() == null) {
+			finish();
+			return;
+		}
+
+		OrientationUtil.setOrientation(this, intent);
+		final WebView view = new WebView(this);
+		view.getSettings().setJavaScriptEnabled(true);
+
+		view.setWebChromeClient(new WebChromeClient() {
+			@Override
+			public void onProgressChanged(WebView view, int progress) {
+				setProgress(progress * 100);
+			}
+		});
+		view.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				setTitle(url);
+			}
+
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				final String cookies = CookieManager.getInstance().getCookie(url);
+				if (data.getHost().equals(Uri.parse(url).getHost())) {
+					AuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
+						NetworkLibraryActivity.COOKIES_KEY, cookies
+					));
+					finish();
+				}
+			}
+		});
+		setContentView(view);
+		view.loadUrl(intent.getDataString());
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		CookieSyncManager.getInstance().startSync();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		CookieSyncManager.getInstance().stopSync();
 	}
 }
