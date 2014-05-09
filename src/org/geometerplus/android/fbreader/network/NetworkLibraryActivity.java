@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,6 +29,11 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import org.apache.http.client.CookieStore;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie2;
+
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
@@ -178,6 +182,32 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			}
 			case REQUEST_AUTHORISATION_SCREEN:
 			{
+				final String cookies = data.getStringExtra(COOKIES_KEY);
+				if (cookies == null) {
+					break;
+				}
+				final CookieStore store = ZLNetworkManager.Instance().cookieStore();
+				// Cookie is a string like NAME=VALUE [; NAME=VALUE]
+				for (String pair : cookies.split(";")) {
+					final String[] parts = pair.split("=", 2);
+					if (parts.length != 2) {
+						continue;	
+					}
+					final String name = parts[0].trim();
+					final String value = parts[1].trim();
+					final BasicClientCookie2 c = new BasicClientCookie2(name, value);
+					c.setDomain(data.getData().getHost());
+					c.setPath("/");
+					final Calendar expire = Calendar.getInstance();
+					expire.add(Calendar.YEAR, 1);
+					c.setExpiryDate(expire.getTime());
+					c.setSecure(true);
+					c.setDiscard(false);
+					store.addCookie(c);
+				}
+				final NetworkTree tree =
+					getTreeByKey((FBTree.Key)data.getSerializableExtra(TREE_KEY_KEY));
+				new ReloadCatalogAction(this).run(tree);
 				break;
 			}
 		}

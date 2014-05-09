@@ -26,6 +26,7 @@
 * Multiple locations for books, fonts and backgrounds
 * Updated German localization (by Matthias Dill)
 * Updated Czech localization (by Marek Pavelka)
+* Experimental support for opds authentication (like oauth/oauth2)
 
 ===== 1.10.0.5 (Apr 22, 2014) =====
 * Fixed crash on unexisting function (LinkedList.push()) for devices with SDK <= 8
