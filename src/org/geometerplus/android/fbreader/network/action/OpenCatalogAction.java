@@ -23,13 +23,13 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
-import org.geometerplus.android.fbreader.network.NetworkLibrarySecondaryActivity;
+import org.geometerplus.android.fbreader.network.*;
 import org.geometerplus.android.util.PackageUtil;
 
 public class OpenCatalogAction extends Action {
@@ -99,10 +99,18 @@ public class OpenCatalogAction extends Action {
 			}
 		}
 
-		tree.startItemsLoader(new Authenticator() {
+		final Authenticator authenticator = new Authenticator() {
 			public void run(String url) {
+				final Intent intent = new Intent(myActivity, AuthorisationScreen.class);
+				intent.setData(Uri.parse(url));
+				intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey());
+				OrientationUtil.startActivityForResult(
+					myActivity, intent, NetworkLibraryActivity.REQUEST_AUTHORISATION_SCREEN
+				);
 			}
-		}, resumeNotLoad);
+		};
+
+		tree.startItemsLoader(authenticator, resumeNotLoad);
 		processExtraData(tree.Item.extraData(), new Runnable() {
 			public void run() {
 				doOpenTree(tree);
