@@ -196,11 +196,11 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 					final String name = parts[0].trim();
 					final String value = parts[1].trim();
 					final BasicClientCookie2 c = new BasicClientCookie2(name, value);
-					c.setDomain("demo.fbreader.org");
+					c.setDomain(data.getData().getHost());
 					c.setPath("/");
-					final Calendar date = Calendar.getInstance();
-					date.add(Calendar.YEAR, 1);
-					c.setExpiryDate(date.getTime());
+					final Calendar expire = Calendar.getInstance();
+					expire.add(Calendar.YEAR, 1);
+					c.setExpiryDate(expire.getTime());
 					c.setSecure(true);
 					c.setDiscard(false);
 					store.addCookie(c);
