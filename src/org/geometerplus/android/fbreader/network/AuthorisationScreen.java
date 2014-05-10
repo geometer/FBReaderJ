@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -61,13 +63,26 @@ public class AuthorisationScreen extends Activity {
 
 			@Override
 			public void onPageFinished(WebView view, String url) {
-				final String cookies = CookieManager.getInstance().getCookie(url);
-				if (data.getHost().equals(Uri.parse(url).getHost())) {
-					AuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
-						NetworkLibraryActivity.COOKIES_KEY, cookies
-					));
-					finish();
+				if (!data.getHost().equals(Uri.parse(url).getHost())) {
+					return;
 				}
+
+				final HashMap<String,String> cookies = new HashMap<String,String>();
+				final String cookieString = CookieManager.getInstance().getCookie(url);
+				if (cookieString != null) {
+					// cookieString is a string like NAME=VALUE [; NAME=VALUE]
+					for (String pair : cookieString.split(";")) {
+						final String[] parts = pair.split("=", 2);
+						if (parts.length != 2) {
+							continue;	
+						}
+						cookies.put(parts[0].trim(), parts[1].trim());
+					}
+				}
+				AuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
+					NetworkLibraryActivity.COOKIES_KEY, cookies
+				));
+				finish();
 			}
 		});
 		setContentView(view);
