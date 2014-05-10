@@ -96,6 +96,10 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 		return false;
 	}
 
+	public boolean canResumeLoading() {
+		return false;
+	}
+
 	public void resumeLoading(NetworkItemsLoader loader) throws ZLNetworkException {
 	}
 
