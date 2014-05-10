@@ -26,7 +26,7 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 class CatalogExpander extends NetworkItemsLoader {
 	private final Authenticator myAuthenticator;
-	private boolean myAuthenticationRequested;
+	private volatile boolean myAuthenticationRequested;
 	private final boolean myResumeNotLoad;
 
 	CatalogExpander(NetworkCatalogTree tree, Authenticator authenticator, boolean resumeNotLoad) {
