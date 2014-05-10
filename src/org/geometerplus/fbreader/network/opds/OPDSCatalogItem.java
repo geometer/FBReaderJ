@@ -95,8 +95,13 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	}
 
 	@Override
+	public final boolean canResumeLoading() {
+		return myLoadingState != null && myLoadingState.ResumeURI != null;
+	}
+
+	@Override
 	public final void resumeLoading(NetworkItemsLoader loader) throws ZLNetworkException {
-		if (myLoadingState != null) {
+		if (canResumeLoading()) {
 			myLoadingState.Loader = loader;
 			ZLNetworkRequest networkRequest = myLoadingState.resume();
 			doLoadChildren(networkRequest);
