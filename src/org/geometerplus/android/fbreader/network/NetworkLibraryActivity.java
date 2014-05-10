@@ -182,20 +182,15 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			}
 			case REQUEST_AUTHORISATION_SCREEN:
 			{
-				final String cookies = data.getStringExtra(COOKIES_KEY);
+				final CookieStore store = ZLNetworkManager.Instance().cookieStore();
+				final Map<String,String> cookies =
+					(Map<String,String>)data.getSerializableExtra(COOKIES_KEY);
 				if (cookies == null) {
 					break;
 				}
-				final CookieStore store = ZLNetworkManager.Instance().cookieStore();
-				// Cookie is a string like NAME=VALUE [; NAME=VALUE]
-				for (String pair : cookies.split(";")) {
-					final String[] parts = pair.split("=", 2);
-					if (parts.length != 2) {
-						continue;	
-					}
-					final String name = parts[0].trim();
-					final String value = parts[1].trim();
-					final BasicClientCookie2 c = new BasicClientCookie2(name, value);
+				for (Map.Entry<String,String> entry : cookies.entrySet()) {
+					final BasicClientCookie2 c =
+						new BasicClientCookie2(entry.getKey(), entry.getValue());
 					c.setDomain(data.getData().getHost());
 					c.setPath("/");
 					final Calendar expire = Calendar.getInstance();
