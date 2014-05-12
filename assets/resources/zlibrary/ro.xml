@@ -55,8 +55,8 @@
 		<node name="it" value="Italiana"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Lituaniana"/>
-		<node name="nl" value="Olandeza"/>
 		<node name="nb" value="Norvegiana"/>
+		<node name="nl" value="Olandeza"/>
 		<node name="pl" value="Poloneaza"/>
 		<node name="pt" value="Portugheza"/>
 		<node name="ro" value="Romana"/>
