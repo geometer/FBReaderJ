@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- German FBReaderJ resources, by Victor Massini -->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Ingolf Kübler 2011/07/03 -->
 <!-- Updated by Ingolf Kübler 2012/07/01 -->
-<!-- Updated by Matthias Dill 2014/04/14 -->
+<!-- Updated by Matthias Dill 2014/05/12 -->
 <resources>
 	<node name="library" value="FBReader Bibliothek">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -109,8 +109,12 @@
 		<node name="topupSummary" value="Derzeit: %s"/>
 		<node name="basket" value="Warenkorb"/>
 		<node name="basketSummaryEmpty" value="keine Bücher"/>
-		<node name="basketSummaryCountOnly" value="%0 Bücher"/>
-		<node name="basketSummary" value="%0 Bücher (%1)"/>
+		<node name="basketSummaryCountOnly" value="%0 Bücher">
+			<node condition="value 1" value="%0 Buch"/>
+		</node>
+		<node name="basketSummary" value="%0 Bücher (%1)">
+			<node condition="value 1" value="%0 Buch (%1)"/>
+		</node>
 		<node name="alreadyDownloading" value="Buch wird schon geladen"/>
 		<node name="alreadyDownloadingDemo" value="Leseprobe wird schon geladen"/>
 		<node name="stoppingCatalogLoading" value="Herunterladen abbrechen"/>
@@ -128,10 +132,10 @@
 			<node name="buy" value="Möchten Sie dieses Buch kaufen? (%s)"/>
 			<node name="openInBrowser" value="Möchten Sie diesen Katalog im Browser öffnen?"/>
 		</node>
-		<!-- used as notification title -->
 		<node name="downloadingCatalogs" value="Heruntergeladene Kataloge"/>
 		<!-- used as notification title -->
 		<node name="searchingNetwork" value="Suche nach Büchern im Netzwerk"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Katalog hinzufügen"/>
 			<node name="editUrl" value="URL eingeben"/>
@@ -174,16 +178,22 @@
 		<node name="noDescription" value="Keine Beschreibung vorhanden."/>
 		<node name="annotation" value="Anmerkung"/>
 		<node name="title" value="Titel:"/>
-		<node name="authors" value="Autor(en):"/>
+		<node name="authors" value="Autoren:">
+			<node condition="value 1" value="Autor:"/>
+		</node>
 		<node name="series" value="Serie:"/>
 		<node name="indexInSeries" value="Seriennummer:"/>
-		<node name="tags" value="Schlagwörter (Tags):"/>
+		<node name="tags" value="Schlagwörter (Tags):">
+			<node condition="value 1" value="Schlagwort (Tag):"/>
+		</node>
 		<node name="language" value="Sprache:"/>
 		<node name="name" value="Name:"/>
 		<node name="type" value="Typ:"/>
 		<node name="size" value="Größe:"/>
 		<node name="time" value="Letzte Änderung:"/>
-		<node name="sizeInBytes" value="%s Byte(s)"/>
+		<node name="sizeInBytes" value="%s Bytes">
+			<node condition="value 1" value="%s Byte"/>
+		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Katalog:"/>
 		<node name="extraLinks" value="Verwandte Themen"/>
@@ -657,21 +667,13 @@
 			</node>
 		</node>
 		<node name="tapZones" value="Tipp-Zonen">
-			<!--Tap zones-->
 			<node name="summary" value="Aktionen beim antippen"/>
-			<!--Actions on finger tap-->
 			<node name="tapZonesScheme" value="Schema">
-				<!-- Tap zones scheme -->
 				<node name="left_to_right" value="Von links nach rechts"/>
-				<!-- Left to right page scrolling -->
 				<node name="right_to_left" value="Von rechts nach links"/>
-				<!-- Right to left page scrolling -->
 				<node name="up" value="Von unten nach oben"/>
-				<!-- Down to up page scrolling -->
 				<node name="down" value="Von oben nach unten"/>
-				<!-- Up to down page scrolling -->
 				<node name="custom" value="Benutzerdefiniert…"/>
-				<!-- Custom… -->
 			</node>
 		</node>
 		<node name="dictionary" value="Wörterbuch">
@@ -753,7 +755,7 @@
 			<node name="site" value="Homepage">
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
-			<node name="email" value="Email">
+			<node name="email" value="E-Mail">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
 			<node name="twitter" value="Twitter">
@@ -879,11 +881,11 @@
 			<node name="message2" value="Sehr gut! Berühren sie nun wieder das mittlere Drittel, um die Bedienflächen und den Hinweis zu vertecken. Wenn sie während des Lesens die Bedienflächen immer anzeigen wollen, wählen sie in den Einstellungen unter “Aussehen” den Punkt “Aktionsleiste im Lesemodus anzeigen”."/>
 		</node>
 		<node name="folderList">
-			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
-				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			<node name="addFolder" value="Ordner hinzufügen"/>
+			<node name="removeDialog" value="Ordner löschen">
+				<node name="message" value="Lösche “%s” aus der Liste?"/>
 			</node>
-			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+			<node name="duplicate" value="“%s” ist bereits in der Liste vorhanden"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Ursprung"/>
