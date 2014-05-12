@@ -55,8 +55,8 @@
 		<node name="it" value="იტალიური"/>
 		<node name="ka" value="ქართული"/>
 		<node name="lt" value="ლიტვური"/>
-		<node name="nl" value="ჰოლანდიური"/>
 		<node name="nb" value="ნორვეგიული"/>
+		<node name="nl" value="ჰოლანდიური"/>
 		<node name="pl" value="პოლონური"/>
 		<node name="pt" value="პორტუგალიური"/>
 		<node name="ro" value="რუმინული"/>
