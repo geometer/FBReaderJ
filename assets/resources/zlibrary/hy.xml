@@ -56,8 +56,8 @@
 		<node name="it" value="իտալերեն"/>
 		<node name="ka" value="վրացերեն"/>
 		<node name="lt" value="լիտվաներեն"/>
-		<node name="nl" value="հոլանդերեն"/>
 		<node name="nb" value="նորվեգերեն"/>
+		<node name="nl" value="հոլանդերեն"/>
 		<node name="pl" value="լեհերեն"/>
 		<node name="pt" value="պորտուգալերեն"/>
 		<node name="ro" value="ռումիներեն"/>
