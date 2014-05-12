@@ -31,11 +31,13 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Tag;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.util.EditTagsDialogActivity;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -141,6 +143,29 @@ class EncodingPreference extends ZLStringListPreference {
 	}
 }
 
+class EditTagsPreference extends ZLStringListPreference {
+	private final Book myBook;
+
+	EditTagsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context, rootResource, resourceKey);
+		myBook = book;
+		System.out.println("EditTagsPreference: "+myBook.getTitle());
+	}
+	
+	@Override
+	protected void onClick() {
+		System.out.println("EditTagsPreference::onClick()");
+		Intent intent = new Intent(getContext(), EditTagsDialogActivity.class);
+		intent.putExtra(EditTagsDialogActivity.Key.ACTIVITY_TITLE, "Edit Tags");
+		ArrayList<String> initValues = new ArrayList<String>();
+		for(Tag tag : myBook.tags()){
+			initValues.add(tag.Name);
+		}
+		intent.putExtra(EditTagsDialogActivity.Key.TAG_LIST, initValues);
+		((EditBookInfoActivity)getContext()).startActivityForResult(intent, 001);
+	}
+}
+
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile boolean myInitialized;
@@ -184,6 +209,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
+				addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
 			}
 		});
 	}
@@ -193,4 +219,13 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		myCollection.unbind();
 		super.onStop();
 	}
+	
+	@Override
+	protected void onActivityResult(int index, int resultCode, Intent data) {
+		System.out.println("EditBookInfoActivity::onActivityResult() "+resultCode);
+		if (resultCode == RESULT_OK) {
+			ArrayList<String> tagList = new ArrayList<String>(data.getStringArrayListExtra(EditTagsDialogActivity.Key.TAG_LIST));
+			System.out.println("EditBookInfoActivity::onActivityResult() "+tagList);
+		}
+	}	
 }
