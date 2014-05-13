@@ -176,7 +176,7 @@ class EditTagsPreference extends Preference {
 			myInitTags.add(tag.Name);
 		}
 		intent.putExtra(EditTagsDialogActivity.Key.TAG_LIST, myInitTags);
-		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditTagsDialogActivity.Key.REQ_CODE);
+		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditTagsDialogActivity.REQ_CODE);
 	}
 }
 
@@ -239,7 +239,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	protected void onActivityResult(int reqCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			switch(reqCode){
-				case EditTagsDialogActivity.Key.REQ_CODE:
+				case EditTagsDialogActivity.REQ_CODE:
 					myEditTagsPreference.saveTags(data.getStringArrayListExtra(EditTagsDialogActivity.Key.TAG_LIST));
 					break;
 			}
