@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public class EditTagsDialogActivity extends ListActivity {
 	public interface Key {
+		int REQ_CODE				  = 001;
 		String TAG_LIST				  = "edit_tags.tag_list";
 		String ACTIVITY_TITLE         = "edit_tags.title";
 	}
@@ -90,8 +91,14 @@ public class EditTagsDialogActivity extends ListActivity {
 	}
 	
 	private void addTag(String tag){
-		if(!tag.equals("")){
-			myTagList.add(tag);
+		if(tag.length() != 0){
+			String[] tags = tag.split(",");
+			for(String s : tags){
+				s = s.trim();
+				if(!myTagList.contains(s)){
+					myTagList.add(s);
+				}
+			}
 			((TagsAdapter)getListAdapter()).notifyDataSetChanged();
 		}
 	}
@@ -138,7 +145,6 @@ public class EditTagsDialogActivity extends ListActivity {
 			((TextView)view.findViewById(R.id.edit_tags_item_title)).setText(getItem(position));
 
 			final View deleteButton = view.findViewById(R.id.edit_tags_item_remove);
-
 			deleteButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(final View v) {
 					showItemRemoveDialog(position);
