@@ -34,9 +34,10 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class EditTagsDialogActivity extends ListActivity {
+	public static final int REQ_CODE = 001;
 	public interface Key {
-		String TAG_LIST				  = "edit_tags.tag_list";
-		String ACTIVITY_TITLE         = "edit_tags.title";
+		final String TAG_LIST				= "edit_tags.tag_list";
+		final String ACTIVITY_TITLE         = "edit_tags.title";
 	}
 
 	private ArrayList<String> myTagList;
@@ -50,7 +51,7 @@ public class EditTagsDialogActivity extends ListActivity {
 		final Intent intent = getIntent();
 		myTagList = intent.getStringArrayListExtra(Key.TAG_LIST);
 		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
-		myResource = ZLResource.resource("dialog").getResource("folderList");
+		myResource = ZLResource.resource("dialog").getResource("editTags");
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final Button okButton = (Button)findViewById(R.id.edit_tags_dialog_button_ok);
@@ -70,6 +71,7 @@ public class EditTagsDialogActivity extends ListActivity {
 			}
 		});
 		final EditText inputField = (EditText)findViewById(R.id.edit_tags_input_field);
+		inputField.setHint(myResource.getResource("addTag").getValue());
 		inputField.setOnEditorActionListener(new TextView.OnEditorActionListener(){
 			public boolean onEditorAction (TextView v, int actionId, KeyEvent event){
 				System.out.println(actionId);
@@ -90,8 +92,14 @@ public class EditTagsDialogActivity extends ListActivity {
 	}
 	
 	private void addTag(String tag){
-		if(!tag.equals("")){
-			myTagList.add(tag);
+		if(tag.length() != 0){
+			String[] tags = tag.split(",");
+			for(String s : tags){
+				s = s.trim();
+				if(!myTagList.contains(s)){
+					myTagList.add(s);
+				}
+			}
 			((TagsAdapter)getListAdapter()).notifyDataSetChanged();
 		}
 	}
@@ -138,7 +146,6 @@ public class EditTagsDialogActivity extends ListActivity {
 			((TextView)view.findViewById(R.id.edit_tags_item_title)).setText(getItem(position));
 
 			final View deleteButton = view.findViewById(R.id.edit_tags_item_remove);
-
 			deleteButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(final View v) {
 					showItemRemoveDialog(position);
@@ -150,7 +157,6 @@ public class EditTagsDialogActivity extends ListActivity {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-			//Implement the editing a tag
 		}
 	}
 }
