@@ -17,7 +17,7 @@
 		<node name="byTag" value="Etiket">
 			<node name="summary" value="Kitapları etiketlerine göre sırala"/>
 		</node>
-		<node name="recent" value="Recent">
+		<node name="recent" value="Recent" toBeTranslated="true">
 			<node name="summary" value="Şu an okunan"/>
 		</node>
 		<node name="favorites" value="Favoriler">
