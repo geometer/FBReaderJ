@@ -28,7 +28,6 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -88,16 +87,6 @@ public class NetworkLibrary {
 
 	private final Map<String,WeakReference<ZLImage>> myImageMap =
 		Collections.synchronizedMap(new HashMap<String,WeakReference<ZLImage>>());
-
-	public List<String> languageCodes() {
-		final TreeSet<String> languageSet = new TreeSet<String>();
-		synchronized (myLinks) {
-			for (INetworkLink link : myLinks) {
-				languageSet.add(link.getLanguage());
-			}
-		}
-		return new ArrayList<String>(languageSet);
-	}
 
 	public List<String> linkIds() {
 		final ArrayList<String> ids = new ArrayList<String>();
@@ -262,6 +251,11 @@ public class NetworkLibrary {
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
 		if (db != null) {
+			System.err.println("++ LIST LINKS");
+			for (INetworkLink l : db.listLinks()) {
+				System.err.println("LNK: " + l);
+			}
+			System.err.println("-- LIST LINKS");
 			myLinks.addAll(db.listLinks());
 		}
 
