@@ -37,15 +37,20 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
-		super.readModel(model);
-		model.setLabelResolver(new BookModel.LabelResolver() {
-			public List<String> getCandidates(String id) {
-				final int index = id.indexOf("#");
-				return index > 0
-					? Collections.<String>singletonList(id.substring(0, index))
-					: Collections.<String>emptyList();
-			}
-		});
+		model.Book.File.setCached(true);
+		try {
+			super.readModel(model);
+			model.setLabelResolver(new BookModel.LabelResolver() {
+				public List<String> getCandidates(String id) {
+					final int index = id.indexOf("#");
+					return index > 0
+						? Collections.<String>singletonList(id.substring(0, index))
+						: Collections.<String>emptyList();
+				}
+			});
+		} finally {
+			model.Book.File.setCached(false);
+		}
 	}
 
 	@Override
