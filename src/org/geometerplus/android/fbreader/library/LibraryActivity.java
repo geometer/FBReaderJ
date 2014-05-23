@@ -178,9 +178,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		for (String pack : myServConns.keySet()) {
 			if (myServConns.get(pack) != null) {
 				unbindService(myServConns.get(pack));
-				myServConns.remove(pack);
 			}
 		}
+		myServConns.clear();
 		((BookCollectionShadow)myRootTree.Collection).unbind();
 		super.onDestroy();
 	}
