@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.filesystem;
 
 import java.io.*;
 import java.util.*;
+
 import org.amse.ys.zip.*;
 
 final class ZLZipEntryFile extends ZLArchiveEntryFile {
@@ -46,11 +47,7 @@ final class ZLZipEntryFile extends ZLArchiveEntryFile {
 		synchronized (ourZipFileMap) {
 			ZipFile zf = file.isCached() ? ourZipFileMap.get(file) : null;
 			if (zf == null) {
-				zf = new ZipFile(new ZipFile.InputStreamHolder() {
-					public InputStream getInputStream() throws IOException {
-						return file.getInputStream();
-					}
-				});
+				zf = new ZipFile(file);
 				if (file.isCached()) {
 					ourZipFileMap.put(file, zf);
 				}
