@@ -100,7 +100,7 @@
 		<node name="topup" value="Tank din konto op (i øjeblikket: %s)"/>
 		<node name="topupTitle" value="Tank din konto op"/>
 		<node name="topupViaBrowser" value="Åbn siden i browser"/>
-		<node name="authorizationMenuTitle" value="Vælg handling"/>
+		<node name="authorisationMenuTitle" value="Vælg handling"/>
 		<node name="topupSummary" value="I øjeblikket: %s"/>
 		<node name="basket" value="Kurv"/>
 		<node name="basketSummaryEmpty" value="Ingen bøger"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Er du sikker på du vil købe &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Er du sikker på du vil købe %s bøger?"/>
 		<node name="alreadyBought" value="Bogen er allerede købt"/>
-		<node name="notAuthorized" value="Godkendelse påkrævet"/>
+		<node name="notAuthorised" value="Godkendelse påkrævet"/>
 		<node name="noAccountInformation" value="Kan ikke indlæse kontostatus"/>
 		<node name="unsufficientFunds" value="Dette køb koster %0 og du har kun %1"/>
 		<node name="zeroFunds" value="Dette køb koster %0"/>
@@ -798,7 +798,7 @@
 			<node name="topup" value="Tank op"/>
 			<node name="pay" value="Betal"/>
 			<node name="refresh" value="Opdater"/>
-			<node name="authorize" value="Godkend"/>
+			<node name="authorise" value="Godkend"/>
 			<node name="resetPosition" value="Nulstil stilling"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Send rapport"/>

@@ -95,7 +95,11 @@ public class AddCustomCatalogActivity extends Activity {
 
 		Util.initLibrary(this, new Runnable() {
 			public void run() {
-				init(intent);
+				runOnUiThread(new Runnable() {
+					public void run() {
+						init(intent);
+					}
+				});
 			}
 		});
 	}
@@ -111,8 +115,6 @@ public class AddCustomCatalogActivity extends Activity {
 				final String scheme = uri.getScheme();
 				if ("opds".equals(scheme)) {
 					uri = Uri.parse("http" + uri.toString().substring(scheme.length()));
-				} else if ("opds-fbreader".equals(scheme)) {
-					uri = Uri.parse("https" + uri.toString().substring(scheme.length()));
 				}
 				final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
 				if (link instanceof ICustomNetworkLink) {

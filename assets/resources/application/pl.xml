@@ -100,7 +100,7 @@
 		<node name="topup" value="Doładuj konto (aktualnie: %s)"/>
 		<node name="topupTitle" value="Doładuj konto"/>
 		<node name="topupViaBrowser" value="Otwórz w przeglądarce"/>
-		<node name="authorizationMenuTitle" value="Wybierz działanie"/>
+		<node name="authorisationMenuTitle" value="Wybierz działanie"/>
 		<node name="topupSummary" value="Aktualnie: %s"/>
 		<node name="basket" value="Koszyk"/>
 		<node name="basketSummaryEmpty" value="Brak książek"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="Czy na pewno chcesz kupić książkę &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Czy na pewno chesz kupić %s ksiązki?"/>
 		<node name="alreadyBought" value="Ta książka jest już kupiona"/>
-		<node name="notAuthorized" value="Wymagana autoryzacja"/>
+		<node name="notAuthorised" value="Wymagana autoryzacja"/>
 		<node name="noAccountInformation" value="Nie można pobrać stanu konta"/>
 		<node name="unsufficientFunds" value="To zamówienie jest warte %0, a masz tylko %1"/>
 		<node name="zeroFunds" value="To zamówienie jest warte %0"/>
@@ -788,7 +788,7 @@
 			<node name="topup" value="Doładuj"/>
 			<node name="pay" value="Zapłać"/>
 			<node name="refresh" value="Odśwież"/>
-			<node name="authorize" value="Autoryzuj"/>
+			<node name="authorise" value="Autoryzuj"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>

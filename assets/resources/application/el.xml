@@ -100,7 +100,7 @@
 		<node name="topup" value="Φόρτωση χρημάτων στον λογαρισμό (αυτήν την ώρα: %s)"/>
 		<node name="topupTitle" value="Φόρτωση χρημάτων"/>
 		<node name="topupViaBrowser" value="Άνοιγμα σελίδας στο Browser"/>
-		<node name="authorizationMenuTitle" value="Επιλογή ενέργειας"/>
+		<node name="authorisationMenuTitle" value="Επιλογή ενέργειας"/>
 		<node name="topupSummary" value="Αυτή την στιγμή: %s"/>
 		<node name="basket" value="καλάθι αγοράς"/>
 		<node name="basketSummaryEmpty" value="δεν υπάρχουν βιβλία"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="Θέλετε να αγοράσετε αυτό το βιβλίο &#10;“%s”&#10; ;"/>
 		<node name="confirmSeveralBooks" value="Θέλεται να αγοράσετε αυτο τα βιβλία %s ;"/>
 		<node name="alreadyBought" value="Το βιβλίο έχει ήδη αγοραστεί"/>
-		<node name="notAuthorized" value="Απαιτήτε εξουσιοδότηση"/>
+		<node name="notAuthorised" value="Απαιτήτε εξουσιοδότηση"/>
 		<node name="noAccountInformation" value="Κατάσταση λογαριασμού δεν μπορεί να φορτοθεί"/>
 		<node name="unsufficientFunds" value="Αυτή η αγορά κοστίζει %0 ενώ εσεις έχετε μόνο %1"/>
 		<node name="zeroFunds" value="Αυτή η αγορά κοστίζει %0"/>
@@ -796,7 +796,7 @@
 			<node name="topup" value="Μεταβίβασε λεφτά στον λογιαρισμό"/>
 			<node name="pay" value="Πλήρωσε"/>
 			<node name="refresh" value="Ενημέρωσε"/>
-			<node name="authorize" value="Εξουσιοδότησε"/>
+			<node name="authorise" value="Εξουσιοδότησε"/>
 			<node name="resetPosition" value="Αναίρεση θέσης"/>
 			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="στείλε αναφορά"/>
