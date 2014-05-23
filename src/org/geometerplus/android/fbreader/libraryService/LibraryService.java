@@ -353,9 +353,9 @@ public class LibraryService extends Service {
 		for (String pack : myServConns.keySet()) {
 			if (myServConns.get(pack) != null) {
 				unbindService(myServConns.get(pack));
-				myServConns.remove(pack);
 			}
 		}
+		myServConns.clear();
 		if (myLibrary != null) {
 			final LibraryImplementation l = myLibrary;
 			myLibrary = null;

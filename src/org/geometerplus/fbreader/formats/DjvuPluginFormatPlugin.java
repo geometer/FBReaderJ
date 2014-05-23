@@ -28,7 +28,7 @@ import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
-	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
+	private final String PACKAGE = "org.geometerplus.fbreader.plugin.djvu";
 	
 	public DjvuPluginFormatPlugin() {
 		super("DjVu");
