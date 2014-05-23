@@ -17,6 +17,7 @@
  * 02110-1301, USA.
  */
 
+#include <cctype>
 #include <cstdlib>
 #include <map>
 
@@ -484,6 +485,21 @@ std::string ZLUnicodeUtil::toLower(const std::string &utf8String) {
 		return utf8String;
 	}
 
+	bool isAscii = true;
+	const int size = utf8String.size();
+	for (int i = size - 1; i >= 0; --i) {
+		if ((utf8String[i] & 0x80) != 0) {
+			isAscii = false;
+			break;
+		}
+	}
+	if (isAscii) {
+		std::string result(size, ' ');
+		for (int i = size - 1; i >= 0; --i) {
+			result[i] = std::tolower(utf8String[i]);
+		}
+		return result;
+	}
 	JNIEnv *env = AndroidUtil::getEnv();
 	jstring javaString = AndroidUtil::createJavaString(env, utf8String);
 	jstring lowerCased = AndroidUtil::Method_java_lang_String_toLowerCase->callForJavaString(javaString);
