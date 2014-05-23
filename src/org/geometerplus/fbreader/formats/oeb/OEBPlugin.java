@@ -83,10 +83,13 @@ public class OEBPlugin extends JavaFormatPlugin {
 
 	@Override
 	public String readAnnotation(ZLFile file) {
+		file.setCached(true);
 		try {
 			return new OEBAnnotationReader().readAnnotation(getOpfFile(file));
 		} catch (BookReadingException e) {
 			return null;
+		} finally {
+			file.setCached(false);
 		}
 	}
 
