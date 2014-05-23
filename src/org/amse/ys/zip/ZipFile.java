@@ -3,6 +3,8 @@ package org.amse.ys.zip;
 import java.io.*;
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.InputStreamHolder;
+
 public final class ZipFile {
 	private final static Comparator<String> ourIgnoreCaseComparator = new Comparator<String>() {
 		@Override
@@ -10,10 +12,6 @@ public final class ZipFile {
 			return s0.compareToIgnoreCase(s1);
 		}
 	};
-
-	public static interface InputStreamHolder {
-		InputStream getInputStream() throws IOException;
-	}
 
 	private final InputStreamHolder myStreamHolder;
 	private final Map<String,LocalFileHeader> myFileHeaders =
