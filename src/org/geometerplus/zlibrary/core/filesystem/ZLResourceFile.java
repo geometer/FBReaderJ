@@ -19,11 +19,21 @@
 
 package org.geometerplus.zlibrary.core.filesystem;
 
+import java.util.*;
+
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public abstract class ZLResourceFile extends ZLFile {
+	private static Map<String,ZLResourceFile> ourCache =
+		Collections.synchronizedMap(new TreeMap<String,ZLResourceFile>());
+
 	public static ZLResourceFile createResourceFile(String path) {
-		return ZLibrary.Instance().createResourceFile(path);
+		ZLResourceFile file = ourCache.get(path);
+		if (file == null) {
+			file = ZLibrary.Instance().createResourceFile(path);
+			ourCache.put(path, file);
+		}
+		return file;
 	}
 
 	static ZLResourceFile createResourceFile(ZLResourceFile parent, String name) {
