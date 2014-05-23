@@ -519,13 +519,12 @@ XHTMLTagAction *XHTMLReader::addAction(const std::string &ns, const std::string 
 }
 
 XHTMLTagAction *XHTMLReader::getAction(const std::string &tag) {
-	const std::string lTag = ZLUnicodeUtil::toLower(tag);
-	XHTMLTagAction *action = ourTagActions[lTag];
+	XHTMLTagAction *action = ourTagActions[tag];
 	if (action != 0) {
 		return action;
 	}
 	for (std::map<shared_ptr<FullNamePredicate>,XHTMLTagAction*>::const_iterator it = ourNsTagActions.begin(); it != ourNsTagActions.end(); ++it) {
-		if (it->first->accepts(*this, lTag)) {
+		if (it->first->accepts(*this, tag)) {
 			return it->second;
 		}
 	}
@@ -707,7 +706,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
 	}
 
-	const std::string sTag = ZLUnicodeUtil::toLower(tag);
+	const std::string sTag = tag;
 
 	std::vector<std::string> classesList;
 	const char *aClasses = attributeValue(attributes, "class");
