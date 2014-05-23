@@ -25,8 +25,9 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.embedding.EmbeddingInputStream;
+import org.geometerplus.zlibrary.core.util.InputStreamHolder;
 
-public abstract class ZLFile {
+public abstract class ZLFile implements InputStreamHolder {
 	private final static HashMap<String,ZLFile> ourCachedFiles = new HashMap<String,ZLFile>();
 
 	protected interface ArchiveType {
