@@ -8,18 +8,6 @@ public final class ZipFile {
 		InputStream getInputStream() throws IOException;
 	}
 
-	private static final class FileInputStreamHolder implements InputStreamHolder {
-		private final String myFilePath;
-
-		FileInputStreamHolder(String filePath) {
-			myFilePath = filePath;
-		}
-
-		public InputStream getInputStream() throws IOException {
-			return new FileInputStream(myFilePath);
-		}
-	}
-
 	private final InputStreamHolder myStreamHolder;
 	private final LinkedHashMap<String,LocalFileHeader> myFileHeaders = new LinkedHashMap<String,LocalFileHeader>() {
 		private static final long serialVersionUID = -4412796553514902113L;
@@ -36,10 +24,6 @@ public final class ZipFile {
 	};
 
 	private boolean myAllFilesAreRead;
-
-	public ZipFile(String filePath) {
-		this(new FileInputStreamHolder(filePath));
-	}
 
 	public ZipFile(InputStreamHolder streamHolder) {
 		myStreamHolder = streamHolder;
