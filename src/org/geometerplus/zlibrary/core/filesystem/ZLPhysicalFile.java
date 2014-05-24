@@ -44,9 +44,13 @@ public final class ZLPhysicalFile extends ZLFile {
 		return myFile.length();
 	}
 
+	private Boolean myIsDirectory;
 	@Override
 	public boolean isDirectory() {
-		return myFile.isDirectory();
+		if (myIsDirectory == null) {
+			myIsDirectory = myFile.isDirectory();
+		}
+		return myIsDirectory;
 	}
 
 	@Override
