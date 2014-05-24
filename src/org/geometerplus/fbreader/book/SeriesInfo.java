@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.book;
 
 import java.math.BigDecimal;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
 public final class SeriesInfo {
 	public static SeriesInfo createSeriesInfo(String title, String index) {
 		if (title == null) {
@@ -43,5 +45,22 @@ public final class SeriesInfo {
 	SeriesInfo(String title, BigDecimal index) {
 		Series = new Series(title);
 		Index = index;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		if (!(other instanceof SeriesInfo)) {
+			return false;
+		}
+		final SeriesInfo info = (SeriesInfo)other;
+		return MiscUtil.equals(Series, info.Series) && MiscUtil.equals(Index, info.Index);
+	}
+
+	@Override
+	public int hashCode() {
+		return 23 * MiscUtil.hashCode(Series) + 31 * MiscUtil.hashCode(Index);
 	}
 }
