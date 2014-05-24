@@ -1,4 +1,5 @@
-===== 1.10.2 (May ??, 2014) =====
+===== 1.10.2 (May 25, 2014) =====
+* Fixed local library duplicates issue
 * Updated German localization (by Matthias Dill)
 
 ===== 1.10.1 (May 09, 2014) =====
