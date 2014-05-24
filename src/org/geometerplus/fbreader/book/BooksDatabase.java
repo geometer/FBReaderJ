@@ -52,6 +52,7 @@ public abstract class BooksDatabase {
 	protected abstract void setExistingFlag(Collection<Book> books, boolean flag);
 	protected abstract Book loadBook(long bookId);
 	protected abstract Book loadBookByFile(long fileId, ZLFile file);
+	protected abstract void deleteBook(long bookId);
 
 	protected abstract List<Author> listAuthors(long bookId);
 	protected abstract List<Tag> listTags(long bookId);
