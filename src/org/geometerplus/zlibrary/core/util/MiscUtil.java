@@ -38,6 +38,9 @@ public abstract class MiscUtil {
 		if (list1 == null) {
 			return list2 == null || list2.isEmpty();
 		}
+		if (list2 == null) {
+			return list1.isEmpty();
+		}
 		if (list1.size() != list2.size()) {
 			return false;
 		}
