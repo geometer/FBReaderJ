@@ -2,15 +2,17 @@ package org.amse.ys.zip;
 
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.util.InputStreamHolder;
+
 final class MyBufferedInputStream extends InputStream {
-	private final ZipFile.InputStreamHolder myStreamHolder;
+	private final InputStreamHolder myStreamHolder;
 	private InputStream myFileInputStream;
 	private final byte[] myBuffer;
 	int myBytesReady;
 	int myPositionInBuffer;
 	private int myCurrentPosition;
 
-	public MyBufferedInputStream(ZipFile.InputStreamHolder streamHolder, int bufferSize) throws IOException {
+	public MyBufferedInputStream(InputStreamHolder streamHolder, int bufferSize) throws IOException {
 		myStreamHolder = streamHolder;
 		myFileInputStream = streamHolder.getInputStream();
 		myBuffer = new byte[bufferSize];
@@ -18,7 +20,7 @@ final class MyBufferedInputStream extends InputStream {
 		myPositionInBuffer = 0;
 	}
 
-	public MyBufferedInputStream(ZipFile.InputStreamHolder streamHolder) throws IOException {
+	public MyBufferedInputStream(InputStreamHolder streamHolder) throws IOException {
 		this(streamHolder, 1 << 10);
 	}
 
