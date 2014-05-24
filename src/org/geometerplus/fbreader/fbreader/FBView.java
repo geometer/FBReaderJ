@@ -392,6 +392,10 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public ZLFile getWallpaperFile() {
+		if (myViewOptions.YotaDrawOnBackScreen.getValue()) {
+			return null;
+		}
+
 		final String filePath = myViewOptions.getColorProfile().WallpaperOption.getValue();
 		if ("".equals(filePath)) {
 			return null;
@@ -429,6 +433,9 @@ public final class FBView extends ZLTextView {
 	@Override
 	public ZLColor getTextColor(ZLTextHyperlink hyperlink) {
 		final ColorProfile profile = myViewOptions.getColorProfile();
+		if (myViewOptions.YotaDrawOnBackScreen.getValue()) {
+			return profile.RegularTextOption.getValue();
+		}
 		switch (hyperlink.Type) {
 			default:
 			case FBHyperlinkType.NONE:
@@ -450,7 +457,9 @@ public final class FBView extends ZLTextView {
 	private class Footer implements FooterArea {
 		private Runnable UpdateTask = new Runnable() {
 			public void run() {
-				myReader.getViewWidget().repaint();
+				if (!myViewOptions.YotaDrawOnBackScreen.getValue()) {
+					myReader.getViewWidget().repaint();
+				}
 			}
 		};
 
@@ -663,7 +672,11 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Animation getAnimationType() {
-		return myReader.PageTurningOptions.Animation.getValue();
+		if (myViewOptions.YotaDrawOnBackScreen.getValue()) {
+			return Animation.none;
+		} else {
+			return myReader.PageTurningOptions.Animation.getValue();
+		}
 	}
 
 	@Override

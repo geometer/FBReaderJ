@@ -83,15 +83,17 @@ public class ViewOptions {
 	}
 
 	public ZLTextStyleCollection getTextStyleCollection() {
-		if (myTextStyleCollection == null) {
-			myTextStyleCollection = new ZLTextStyleCollection("Base");
+		final String screen = YotaDrawOnBackScreen.getValue() ? "Yota".intern() : "Base".intern();
+		if (myTextStyleCollection == null || myTextStyleCollection.Screen != screen) {
+			myTextStyleCollection = new ZLTextStyleCollection(screen);
 		}
 		return myTextStyleCollection;
 	}
 
 	public FooterOptions getFooterOptions() {
-		if (myFooterOptions == null) {
-			myFooterOptions = new FooterOptions();
+		final String screen = YotaDrawOnBackScreen.getValue() ? "Yota".intern() : "Base".intern();
+		if (myFooterOptions == null || myFooterOptions.Screen != screen) {
+			myFooterOptions = new FooterOptions(screen);
 		}
 		return myFooterOptions;
 	}

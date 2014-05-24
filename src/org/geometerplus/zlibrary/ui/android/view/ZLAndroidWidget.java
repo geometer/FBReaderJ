@@ -378,6 +378,18 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}.start();
 	}
 
+	public void turnPageStatic(boolean next) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		final ZLView.PageIndex pageIndex = next ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+		if (pageIndex == ZLView.PageIndex.current || !view.canScroll(pageIndex)) {
+			return;
+		}
+		myBitmapManager.shift(next);
+		view.onScrollingFinished(pageIndex);
+		repaint();
+		ZLApplication.Instance().onRepaintFinished();
+	}
+
 	@Override
 	public boolean onTrackballEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
