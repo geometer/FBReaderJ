@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.text.view.*;
 
 public final class Bookmark extends ZLTextFixedPosition {
@@ -129,6 +130,24 @@ mainLoop:
 
 	public final String ModelId;
 	public final boolean IsVisible;
+
+	private Bookmark(long bookId, Bookmark original) {
+		super(original);
+		myId = -1;
+		myBookId = bookId;
+		myBookTitle = original.myBookTitle;
+		myText = original.myText;
+		myCreationDate = original.myCreationDate;
+		myModificationDate = original.myModificationDate;
+		myAccessDate = original.myAccessDate;
+		myAccessCount = original.myAccessCount;
+		myLatestDate = original.myLatestDate;
+		myEnd = original.myEnd;
+		myLength = original.myLength;
+		myStyleId = original.myStyleId;
+		ModelId = original.ModelId;
+		IsVisible = original.IsVisible;
+	}
 
 	Bookmark(
 		long id, long bookId, String bookTitle, String text,
@@ -305,6 +324,20 @@ mainLoop:
 		if (other != null) {
 			myId = other.myId;
 		}
+	}
+
+	Bookmark transferToBook(Book book) {
+		final long bookId = book.getId();
+		return bookId != -1 ? new Bookmark(bookId, this) : null;
+	}
+
+	// not equals, we do not compare ids
+	boolean sameAs(Bookmark other) {
+		return
+			ParagraphIndex == other.ParagraphIndex &&
+			ElementIndex == other.ElementIndex &&
+			CharIndex == other.CharIndex &&
+			MiscUtil.equals(myText, other.myText);
 	}
 
 	private static class Buffer {
