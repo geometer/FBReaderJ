@@ -291,5 +291,6 @@
 		<activity android:name="group.pals.android.lib.ui.filechooser.FileChooserActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.util.FolderListDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.util.EditTagsDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
+		<activity android:name="org.geometerplus.android.util.EditAuthorsDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 	</application>
 </manifest>
