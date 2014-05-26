@@ -33,12 +33,14 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Tag;
+import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.util.EditTagsDialogActivity;
+import org.geometerplus.android.util.EditAuthorsDialogActivity;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -147,8 +149,7 @@ class EncodingPreference extends ZLStringListPreference {
 class EditTagsPreference extends Preference {
 	protected final ZLResource myResource;
 	private final Book myBook;
-	private ArrayList<String> myInitTags;
-
+	
 	EditTagsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context);
 		myBook = book;
@@ -171,12 +172,53 @@ class EditTagsPreference extends Preference {
 	protected void onClick() {
 		Intent intent = new Intent(getContext(), EditTagsDialogActivity.class);
 		intent.putExtra(EditTagsDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
-		myInitTags = new ArrayList<String>();
+		ArrayList<String> tags = new ArrayList<String>();
 		for(Tag tag : myBook.tags()){
-			myInitTags.add(tag.Name);
+			tags.add(tag.Name);
 		}
-		intent.putExtra(EditTagsDialogActivity.Key.TAG_LIST, myInitTags);
+		intent.putExtra(EditTagsDialogActivity.Key.TAG_LIST, tags);
 		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditTagsDialogActivity.REQ_CODE);
+	}
+}
+
+class EditAuthorsPreference extends Preference {
+	protected final ZLResource myResource;
+	private final Book myBook;
+
+	EditAuthorsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context);
+		myBook = book;
+		myResource = rootResource.getResource(resourceKey);
+		setTitle(myResource.getValue());
+	}
+	
+	void saveAuthors(final ArrayList<String> authors){
+		if(authors.size() == 0)
+			return;
+		
+		myBook.removeAllAuthors();
+		for(String a : authors){
+			myBook.addAuthor(a);
+		}
+		((EditBookInfoActivity)getContext()).saveBook();
+	}
+
+	@Override
+	protected void onClick() {
+		Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
+		intent.putExtra(EditAuthorsDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
+		ArrayList<String> authors = new ArrayList<String>();
+		for(Author author : myBook.authors()){
+			authors.add(author.DisplayName);
+		}
+		((EditBookInfoActivity)getContext()).saveBook();
+		ArrayList<String> allAuthors = new ArrayList<String>();
+		for(Author author : ((EditBookInfoActivity)getContext()).authors()){
+			allAuthors.add(author.DisplayName);
+		}
+		intent.putExtra(EditAuthorsDialogActivity.Key.AUTHOR_LIST, authors);
+		intent.putExtra(EditAuthorsDialogActivity.Key.ALL_AUTHOR_LIST, allAuthors);
+		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditAuthorsDialogActivity.REQ_CODE);
 	}
 }
 
@@ -185,6 +227,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private volatile boolean myInitialized;
 	
 	private EditTagsPreference myEditTagsPreference;
+	private EditAuthorsPreference myEditAuthorsPreference;
 	private Book myBook;
 
 	public EditBookInfoActivity() {
@@ -197,6 +240,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				myCollection.saveBook(myBook);
 			}
 		});
+	}
+	
+	List<Author> authors(){
+		return myCollection.authors();
 	}
 
 	@Override
@@ -220,11 +267,12 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 					return;
 				}
 				myInitialized = true;
-
+				
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
+				myEditAuthorsPreference = (EditAuthorsPreference)addPreference(new EditAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
+				myEditTagsPreference = (EditTagsPreference)addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
-				myEditTagsPreference = (EditTagsPreference)addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
 			}
 		});
 	}

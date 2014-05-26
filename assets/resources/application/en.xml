@@ -888,6 +888,12 @@
 				<node name="message" value="Remove tag “%s” from the list?"/>
 			</node>
 		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author"/>
+			<node name="removeDialog" value="Remove author">
+				<node name="message" value="Remove author “%s” from the list?"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root"/>
 			<node name="newFolder" value="New folder"/>
