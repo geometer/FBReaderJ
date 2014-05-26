@@ -314,7 +314,7 @@
 			<node name="bookPath" value="Bücher suchern in">
 				<node name="chooserTitle" value="Bücher"/>
 			</node>
-			<node name="downloadDir" value="Heruntergeladenend Büchern speichern in">
+			<node name="downloadDir" value="Heruntergeladene Büchern speichern in">
 				<node name="chooserTitle" value="Bücher"/>
 			</node>
 			<node name="fontPath" value="Schriftarten suchen in">
@@ -354,11 +354,11 @@
 				<node name="summaryOn" value="Statuszeile anzeigen wenn das Menü aktiviert wird"/>
 				<node name="summaryOff" value="Statuszeile nicht anzeigen wenn das Menü aktiviert wird"/>
 			</node>
-			<node name="fullscreenMode" value="Vollbildmodus mode">
+			<node name="fullscreenMode" value="Vollbildmodus">
 				<node name="summaryOn" value="Navigationsleiste verstecken"/>
 				<node name="summaryOff" value="Navigationsleiste anzeigen"/>
 			</node>
-			<node name="disableButtonLights" value="Beleuchtung der Hardware-Tasten während des Lesens abschalten">
+			<node name="disableButtonLights" value="Beleuchtung der Hardware-Tasten">
 				<node name="summaryOn" value="Tastenbeleuchtung abschalten (Funktioniert auf einigen Geräten nicht)"/>
 				<node name="summaryOff" value="Tastenbeleuchtung nicht abschalten"/>
 			</node>
@@ -590,7 +590,7 @@
 			<node name="backgroundColor" value="Hintergrundfarbe"/>
 			<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
 			<node name="selectionForeground" value="Ausgewählter Text"/>
-			<node name="text" value="Normalen Text"/>
+			<node name="text" value="Normaler Text"/>
 			<node name="hyperlink" value="Hyperlinks"/>
 			<node name="hyperlinkVisited" value="Besuchte Hyperlinks"/>
 			<node name="highlighting" value="Hintergrund der Suchergebnisse"/>
@@ -723,8 +723,8 @@
 				<node name="summaryOff" value="Eintrag 'Netzwerk-Bibliothek öffnen' nicht anzeigen"/>
 			</node>
 			<node name="previousBook" value="Vorheriges Buch">
-				<node name="summaryOn" value="Dialog 'Vorheriges Buch öffnen' anzeigen."/>
-				<node name="summaryOff" value="Dialog 'Vorheriges Buch öffnen' nicht anzeigen."/>
+				<node name="summaryOn" value="Dialog 'Vorheriges Buch öffnen' anzeigen"/>
+				<node name="summaryOff" value="Dialog 'Vorheriges Buch öffnen' nicht anzeigen"/>
 			</node>
 			<node name="positions" value="Letzten 3 Positionen">
 				<node name="summaryOn" value="Zeige eine Liste mit den letzten drei Positionen im Buch"/>
