@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="موافق" />
+			<node name="cancel" value="إلغاء" />
+			<node name="yes" value="نعم" />
+			<node name="no" value="لا" />
+			<node name="apply" value="تطبيق" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="خطأ في الشبكة" />
+			<node name="unknownErrorMessage" value="خطأ غير معروف" />
+			<node name="operationTimedOutMessage" value="Operation is timed out" />
+			<node name="somethingWrongMessage" value="Something goes wrong for %s" />
+			<node name="couldntCreateDirectoryMessage" value="لا يمكن إنشاء المجلد %s" />
+			<node name="couldntCreateFileMessage" value="لا يمكن إنشاء الملف %s" />
+			<node name="couldntConnectToNetworkMessage" value="لا يمكن الإتصال بالشبكة" />
+			<node name="couldntConnectMessage" value="لايمكن الإتصال بالمضيف %s" />
+			<node name="couldntResolveHostMessage" value="Couldn&apos;t resolve host %s" />
+			<node name="authenticationFailed" value="Authentication failed" />
+			<node name="unsupportedProtocol" value="Unsupported protocol" />
+			<node name="invalidURL" value="Invalid URL" />
+			<node name="hostCantBeReached" value="Host %s cannot be reached" />
+			<node name="connectionRefused" value="Connection was refused by %s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="أحمر" />
+		<node name="green" value="أخضر" />
+		<node name="blue" value="أزرق" />
+		<node name="black" value="أسود" />
+		<node name="white" value="أبيض" />
+		<node name="maroon" value="بني" />
+		<node name="olive" value="Olive" />
+		<node name="navy" value="Navy" />
+		<node name="purple" value="Purple" />
+		<node name="teal" value="أزرق مخضر" />
+		<node name="silver" value="فضي" />
+		<node name="gray" value="رمادي" />
+		<node name="lime" value="Lime" />
+		<node name="yellow" value="أصفر" />
+		<node name="magenta" value="Magenta" />
+		<node name="cyan" value="أزرق سماوي" />
+		<node name="custom..." value="Custom..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="العربية" />
+		<node name="bg" value="البلغارية"/>
+		<node name="cs" value="التشيكية" />
+		<node name="de" value="الألماني" />
+		<node name="de-traditional" value="الألماني (كتابة تقليدية)" />
+		<node name="el" value="اليونانية" />
+		<node name="en" value="الإنجليزية" />
+		<node name="eo" value="الإسبرانتو" />
+		<node name="es" value="الإسبانية" />
+		<node name="fi" value="الفنلندية" />
+		<node name="fr" value="الفرنسية" />
+		<node name="gl" value="الجاليكية" />
+		<node name="he" value="العبرية" />
+		<node name="hu" value="المجرية" />
+		<node name="id" value="الأندونيسية" />
+		<node name="it" value="الإيطالية" />
+ 		<node name="ka" value="Georgian"/>
+		<node name="lt" value="اللتوانية" />
+		<node name="nl" value="الهولندية" />
+		<node name="no" value="النرويجية" />
+		<node name="pl" value="البولندية" />
+		<node name="pt" value="البرتغالية" />
+		<node name="ro" value="الرومانية" />
+		<node name="ru" value=" الروسية" />
+		<node name="sv" value="السويدية" />
+		<node name="th" value="التايلاندية" />
+		<node name="tr" value="التركية" />
+		<node name="uk" value="الأوكرانية" />
+		<node name="vi" value="الفيتنامية" />
+		<node name="zh" value="الصينية" />
+		<node name="other" value="أخرى" />
+		<node name="multi" value="متعدد اللغات" />
+ 		<node name="system" value="النظام"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="تشغيل" />
+		<node name="off" value="إيقاف" />
+		<node name="unchanged" value="بدون تغيير" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="عمل للمفتاح" />
+	</node>
+</resources>
