@@ -211,7 +211,13 @@ class EditAuthorsPreference extends Preference {
 		for(Author author : myBook.authors()){
 			authors.add(author.DisplayName);
 		}
+		((EditBookInfoActivity)getContext()).saveBook();
+		ArrayList<String> allAuthors = new ArrayList<String>();
+		for(Author author : ((EditBookInfoActivity)getContext()).authors()){
+			allAuthors.add(author.DisplayName);
+		}
 		intent.putExtra(EditAuthorsDialogActivity.Key.AUTHOR_LIST, authors);
+		intent.putExtra(EditAuthorsDialogActivity.Key.ALL_AUTHOR_LIST, allAuthors);
 		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditAuthorsDialogActivity.REQ_CODE);
 	}
 }
@@ -235,6 +241,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			}
 		});
 	}
+	
+	List<Author> authors(){
+		return myCollection.authors();
+	}
 
 	@Override
 	protected void init(Intent intent) {
@@ -257,7 +267,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 					return;
 				}
 				myInitialized = true;
-
+				
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));

@@ -37,6 +37,7 @@ public class EditAuthorsDialogActivity extends ListActivity {
 	public static final int REQ_CODE = 001;
 	public interface Key {
 		final String AUTHOR_LIST			= "edit_authors.author_list";
+		final String ALL_AUTHOR_LIST		= "edit_authors.all_author_list";
 		final String ACTIVITY_TITLE         = "edit_authors.title";
 	}
 
@@ -50,6 +51,7 @@ public class EditAuthorsDialogActivity extends ListActivity {
 
 		final Intent intent = getIntent();
 		myAuthorList = intent.getStringArrayListExtra(Key.AUTHOR_LIST);
+		ArrayList<String> allAuthorList = intent.getStringArrayListExtra(Key.ALL_AUTHOR_LIST);
 		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
 		myResource = ZLResource.resource("dialog").getResource("editAuthors");
 
@@ -74,17 +76,15 @@ public class EditAuthorsDialogActivity extends ListActivity {
 		inputField.setHint(myResource.getResource("addAuthor").getValue());
 		inputField.setOnEditorActionListener(new TextView.OnEditorActionListener(){
 			public boolean onEditorAction (TextView v, int actionId, KeyEvent event){
-				System.out.println(actionId);
 				if(actionId == EditorInfo.IME_ACTION_DONE){
-					addAuthor(inputField.getText().toString());
+					addAuthor(inputField.getText().toString().trim());
 					inputField.setText("");
 					return false;
 				}
 				return true;
 			}
 		});
-		String[] authorsSuggestions = {};
-		inputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, authorsSuggestions));
+		inputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allAuthorList));
 		
 		final AuthorsAdapter adapter = new AuthorsAdapter();
 		setListAdapter(adapter);
@@ -93,14 +93,10 @@ public class EditAuthorsDialogActivity extends ListActivity {
 		setResult(RESULT_CANCELED);
 	}
 	
-	private void addAuthor(String tag){
-		if(tag.length() != 0){
-			String[] tags = tag.split(",");
-			for(String s : tags){
-				s = s.trim();
-				if(!myAuthorList.contains(s)){
-					myAuthorList.add(s);
-				}
+	private void addAuthor(String author){
+		if(author.length() != 0){
+			if(!myAuthorList.contains(author)){
+				myAuthorList.add(author);
 			}
 			((AuthorsAdapter)getListAdapter()).notifyDataSetChanged();
 		}
