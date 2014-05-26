@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Arabic FBReaderJ resources, by Ahmed Saidi (https://github.com/boussouira) -->
+<resources>
+	<node name="library" value="المكتبة">
+		<node name="unknownAuthor" value="مؤلف مجهول"/>
+		<node name="booksWithNoTags" value="كتب بدون وسم"/>
+		<node name="demo" value="نبذة"/>
+		<node name="byAuthor" value="المؤلفين">
+			<node name="summary" value="عرض الكتب حسب المؤلف"/>
+		</node>
+		<node name="byTitle" value="العنوان">
+			<node name="summary" value="عرض الكتب حسب العنوان"/>
+		</node>
+		<node name="bySeries" value="الرقم التسلسلي">
+			<node name="summary" value="عرض حسب الرقم التسلسلي"/>
+		</node>
+		<node name="byTag" value="الوسوم">
+			<node name="summary" value="عرض الكتب حسب الوسم"/>
+		</node>
+		<node name="recent" value="فتح حديثا">
+			<node name="summary" value="اخر الكتب التي تم فتحها"/>
+		</node>
+		<node name="favorites" value="المفضلة">
+			<node name="summary" value="الكتب المفضلة"/>
+		</node>
+		<node name="found" value="نتائج">
+			<node name="summary" value="نتائج البحث: %s"/>
+		</node>
+		<node name="fileTree" value="ملفات النظام">
+			<node name="summary" value="تصفح ملفات النظام"/>
+		</node>
+		<node name="fileTreeRoot" value="الجهاز">
+			<node name="summary" value="جميع ملفات الجهاز"/>
+		</node>
+		<node name="fileTreeCard" value="بطاقة الذاكرة">
+			<node name="summary" value="بطاقة الذاكرة الموضوعة في الجهاز"/>
+		</node>
+		<node name="fileTreeLibrary" value="مجلد المكتبة">
+			<node name="summary" value="مجلد المكتبة"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="بحث"/>
+			<node name="rescan" value="إعادة الفحص"/>
+		</node>
+		<node name="openBook" value="فتح الكتاب"/>
+		<node name="showBookInfo" value="معلومات حول الكتاب"/>
+		<node name="shareBook" value="مشاركة الكتاب"/>
+		<node name="deleteBook" value="حذف الكتاب"/>
+		<node name="addToFavorites" value="اضافة الكتاب للمفضلة"/>
+		<node name="removeFromFavorites" value="حذف من المفضلة"/>
+		<node name="removeFromRecents" value="حذف من لائحة أحدث الكتب"/>
+		<node name="markAsRead" value="تعليم كمقروء"/>
+		<node name="markAsUnread" value="تعليم كغير مقروء"/>
+	</node>
+	<node name="networkLibrary" value="مكتبة الشبكة">
+		<node name="byAuthor" value="حسب المؤلف">
+			<node name="summary" value="ترتيب الكتب حسب المؤلف"/>
+		</node>
+		<node name="byTitle" value="حسب العنوان">
+			<node name="summary" value="ترتيب الكتب حسب العنوان"/>
+		</node>
+		<node name="byDate" value="حسب التاريخ">
+			<node name="summary" value="عرض الكتب حسب تاريخ الشراء"/>
+		</node>
+		<node name="bySeries" value="حسب السلسة">
+			<node name="summary" value="عرض الطتب حسب السلسة"/>
+		</node>
+		<node name="search" value="البحث">
+			<node name="summary" value="بحث عن الكتب في %s"/>
+			<node name="summaryAllCatalogs" value="بحث عن الكتب في كل كتالوجات"/>
+			<node name="summaryInProgress" value="جاري البحث"/>
+		</node>
+		<node name="found" value="Found">
+			<node name="summary" value="نتائج البحث: %s"/>
+		</node>
+		<node name="recent" value="احدث الكتالوجات">
+			<node name="summary" value="كتلوجات زرتها حديثا"/>
+		</node>
+		<node name="openCatalog" value="فتح الكتالوج"/>
+		<node name="networkSearch" value="بحث"/>
+		<node name="showResults" value="عرض النتائج"/>
+		<node name="showBooks" value="عرض الكتب"/>
+		<node name="download" value="تحميل"/>
+		<node name="read" value="قراءة النسخة المحملة"/>
+		<node name="delete" value="حذف النسخة المحملة"/>
+		<node name="readDemo" value="قراءة عينة"/>
+		<node name="deleteDemo" value="حذف العينة"/>
+		<node name="downloadDemo" value="تحميل عينة"/>
+		<node name="buy" value="شراء (%s)"/>
+		<node name="addToBasket" value="إضافة إلى السلة"/>
+		<node name="removeFromBasket" value="حذف من السلة"/>
+		<node name="openBasket" value="فتح السلة"/>
+		<node name="clearBasket" value="تفريغ السلة"/>
+		<node name="buyAllBooks" value="شراء كل الكتب"/>
+		<node name="openInBrowser" value="فتح في المتصفح"/>
+		<node name="stopLoading" value="إيقاف التحميل"/>
+		<node name="stopSearching" value="إيقاف البحث"/>
+		<node name="signIn" value="تسجيل الدخول"/>
+		<node name="signOut" value="تسجي الخروج (%s)"/>
+		<node name="topup" value="Top up account (currently: %s)" toBeTranslated="true"/>
+		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
+		<node name="topupViaBrowser" value="فتح الصفحة في المتصفح"/>
+		<node name="authorisationMenuTitle" value="Select action" toBeTranslated="true"/>
+		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
+		<node name="basket" value="السلة"/>
+		<node name="basketSummaryEmpty" value="لا كتب"/>
+		<node name="basketSummaryCountOnly" value="%0 كتاب">
+			<node condition="value 1" value="%0 كتاب"/>
+		</node>
+		<node name="basketSummary" value="%0 كتاب (%1)">
+			<node condition="value 1" value="%0 كتاب (%1)"/>
+		</node>
+		<node name="alreadyDownloading" value="حاري تحميل الكتاب"/>
+		<node name="alreadyDownloadingDemo" value="جاري تحميل العينة"/>
+		<node name="stoppingCatalogLoading" value="إلغاء التحميل"/>
+		<node name="stoppingNetworkSearch" value="إلغاء البحث"/>
+		<node name="editCustomCatalog" value="تعديل الكتالوج"/>
+		<node name="removeCustomCatalog" value="حذف الكتالوج"/>
+		<node name="addCustomCatalog" value="إضافة كتالوج"/>
+		<node name="addCustomCatalogSummary" value="إضافة كتالوج OPDS يدويا"/>
+		<node name="disableCatalog" value="الغاء الكتالوج"/>
+		<node name="confirmQuestions">
+			<node name="read" value="هل تريد فتح النسخة المحلية؟"/>
+			<node name="download" value="هل تريد تحميل هذا الكتاب؟"/>
+			<node name="readDemo" value="هل تريد فتح عينة من  الكتاب؟"/>
+			<node name="downloadDemo" value="هل تريد تحميل عينة من الكتاب؟"/>
+			<node name="buy" value="هل تريد شراء هذا الكتاب؟ (%s)"/>
+			<node name="openInBrowser" value="هل تريد فتح هذا الكتالوج في المتصفح؟"/>
+		</node>
+		<node name="downloadingCatalogs" value="تحميل الكتالوجات"/>
+		<node name="searchingNetwork" value="بحث عن الكتب في الشبكة"/>
+		<node name="addCatalog">
+			<node name="title" value="إضافة كتالوج"/>
+			<node name="editUrl" value="إضافة رابط يجوي"/>
+		</node>
+		<node name="manageCatalogs" value="تعديل الكتالوجات">
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="تفعيل"/>
+			<node name="disabled" value="الغاء"/>
+		</node>
+		<node name="menu">
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
+			<node name="networkSearch" value="بحث"/>
+			<node name="reload" value="إعادة تحميل"/>
+			<node name="signIn" value="تسجي الدخول"/>
+			<node name="signUp" value="التسجيل"/>
+			<node name="signOut" value="تسجيل الخروج (%s)"/>
+			<node name="topup" value="Top up account" toBeTranslated="true"/>
+			<node name="addCustomCatalog" value="إضافة كتالوج"/>
+			<node name="refreshCatalogsList" value="إعادة تحميل الكتالوج"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
+			<node name="clearBasket" value="تفريغ السلة"/>
+			<node name="buyAllBooks" value="شراء كل الكتب"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Purchase book" toBeTranslated="true"/>
+		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
+		<node name="confirm" value="Are you sure you want to buy “%s”?" toBeTranslated="true"/>
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
+		<node name="alreadyBought" value="Book is already bought" toBeTranslated="true"/>
+		<node name="notAuthorised" value="Authorisation required" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
+		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="معلومات حول الكتاب"/>
+		<node name="fileInfo" value="معلومات حول الملف"/>
+		<node name="description" value="الوصف"/>
+		<node name="noDescription" value="لا يوجد أي وصف."/>
+		<node name="annotation" value="ملاحظة"/>
+		<node name="title" value="العنوان:"/>
+		<node name="authors" value="المؤلفين:">
+			<node condition="value 1" value="المؤلف:"/>
+		</node>
+		<node name="series" value="السلسة:"/>
+		<node name="indexInSeries" value="Index in series:" toBeTranslated="true"/>
+		<node name="tags" value="الوسوم:">
+			<node condition="value 1" value="الوسم:"/>
+		</node>
+		<node name="language" value="اللغة:"/>
+		<node name="name" value="الاسم:"/>
+		<node name="type" value="النوع:"/>
+		<node name="size" value="الحجم:"/>
+		<node name="time" value="آخر تحديث:"/>
+		<node name="sizeInBytes" value="%s bytes" toBeTranslated="true">
+			<node condition="value 1" value="%s byte" toBeTranslated="true"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s kB" toBeTranslated="true"/>
+		<node name="catalog" value="الكتالوج"/>
+		<node name="extraLinks" value="روابط ذات صلة"/>
+		<node name="menu">
+			<node name="edit" value="تعديل"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="تم تحميل الكتاب"/>
+		<node name="tickerError" value="خطأ في تحميل الكتاب"/>
+		<node name="contentSuccess" value="إنتهاء التحميل"/>
+		<node name="contentError" value="فشل التحميل"/>
+		<node name="downloadingStarted" value="تم البدأ في تحميل الكتاب"/>
+		<node name="alreadyDownloading" value="يتم تحميل الكتاب مسبقا"/>
+		<node name="cannotCreateDirectory" value="لا يمكن إنشاء المجلد %s"/>
+		<node name="cannotCreateFile" value="لا يمكن إنشاء الملف %s"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="عرض الشجرة"/>
+		<node name="collapseTree" value="ضغط الشجرة"/>
+		<node name="readText" value="قراءة نص الكتاب"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="هذا الكتاب"/>
+		<node name="allBooks" value="كل الكتب"/>
+		<node name="found" value="Found"/>
+		<node name="new" value="علامة مرجعية جديدة"/>
+		<node name="open" value="فتح"/>
+		<node name="edit" value="تعديل العلامة المرجعية"/>
+		<node name="delete" value="حذف العلامة المرجعية"/>
+		<node name="menu">
+			<node name="search" value="بحث"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="فتح المكتبة"/>
+		<node name="networkLibrary" value="فتح المكتبة على الشبكة"/>
+		<node name="previousBook" value="فتح الكتاب السابق"/>
+		<node name="returnTo" value="عودة الى..."/>
+		<node name="back" value="الخلف"/>
+		<node name="forward" value="الامام"/>
+		<node name="close" value="اغلاق البرنامج"/>
+	</node>
+	<node name="style" value="الستايل %s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="تعديل الستايل…"/>
+		<node name="deleteBookmark" value="حذف العلامة المرجعية"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="اسم الستايل"/>
+		<node name="invisible" value="غير مرئي">
+			<node name="summaryOn" value="لا تميز العلامة المرجعية"/>
+			<node name="summaryOff" value="تمييز العلامة المرجعية"/>
+		</node>
+		<node name="bgColor" value="لون الخلفية"/>
+	</node>
+	<node name="selection" value="Selection">
+		<node name="copyToClipboard" value="نسخ الى الحافظ"/>
+		<node name="openInDictionary" value="فتح في القاموس"/>
+		<node name="quoteFrom" value="اقتباس من %s"/>
+		<node name="textInBuffer" value="تم نسخ: %s"/>
+		<node name="bookmarkCreated" value="تم حفظ العلامة المرجعية: %s"/>
+		<node name="clearSelection" value="مسح"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="اعدادات"/>
+		<node name="bookInfo" value="معلومات حول الكتاب"/>
+		<node name="library" value="المكتبة"/>
+		<node name="toc" value="الفهرس"/>
+		<node name="day" value="مضيء"/>
+		<node name="night" value="مظلم"/>
+		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
+		<node name="networkLibrary" value="مكتبة الشبكة"/>
+		<node name="navigate" value="التنقل بين الصفحات">
+			<node name="toc" value="فهرس الكتاب"/>
+			<node name="gotoHome" value="انتقل الى البداية"/>
+			<node name="gotoPageNumber" value="انتقل الى الصفحة..."/>
+			<node name="gotoSectionStart" value="انتقل الى بداية الصفحة"/>
+			<node name="gotoSectionEnd" value="انتقل الى نهاية الصفحة"/>
+			<node name="nextTOCSection" value="Go to Next TOC Item" toBeTranslated="true"/>
+			<node name="previousTOCSection" value="Go to Previous TOC Item" toBeTranslated="true"/>
+			<node name="undo" value="الى الخلف"/>
+			<node name="redo" value="الى الأمام"/>
+		</node>
+		<node name="shareBook" value="مشاركة الكتاب"/>
+		<node name="search" value="بحث"/>
+		<node name="rotate" value="قلب الشاشة"/>
+		<node name="screenOrientation" value="اتجاه الشاشة"/>
+		<node name="screenOrientationSystem" value="حسب النظام"/>
+		<node name="screenOrientationSensor" value="حسب الجهاز"/>
+		<node name="screenOrientationPortrait" value="طول"/>
+		<node name="screenOrientationLandscape" value="عرض"/>
+		<node name="screenOrientationReversePortrait" value="طول معكوس"/>
+		<node name="screenOrientationReverseLandscape" value="عرض معكوس"/>
+		<node name="increaseFont" value="تكبير الخط"/>
+		<node name="decreaseFont" value="تصغير الخط"/>
+		<node name="toggleFullscreen" value="كل الشاشة"/>
+		<node name="bookmarks" value="العلامات المرجعية"/>
+		<node name="help" value="مساعدة"/>
+		<node name="plugins" value="تنصيب اضافة"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="اسم الملف"/>
+		<node name="title" value="العنوان"/>
+		<node name="language" value="اللغة"/>
+		<node name="encoding" value="الترميز"/>
+		<node name="authors" value="المؤلف"/>
+		<node name="tags" value="الوسوم"/>
+		<node name="series" value="السلسة"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="المجلدات">
+			<node name="summary" value="المجلدات التي يتم البحث فيها عن الملفات"/>
+			<node name="bookPath" value="أين يبحث البرنامج عن الكتب">
+				<node name="chooserTitle" value="مجلد الكتب"/>
+			</node>
+			<node name="downloadDir" value="أين يحفظ البرنامج الكتب المحملة من الانترنيت">
+				<node name="chooserTitle" value="مجلد الكتب"/>
+			</node>
+			<node name="fontPath" value="أين يبحث البرنامج عن الخطوط">
+				<node name="chooserTitle" value="مجلد الخطوط"/>
+			</node>
+			<node name="wallpaperPath" value="أين يبحث البرنامج عن صور الخلفية">
+				<node name="chooserTitle" value="مجلد الصور"/>
+			</node>
+			<node name="tempDir" value="أين يحفظ البرنامج الملفات المؤقتة">
+				<node name="chooserTitle" value="مجلد الملفات المؤقتة"/>
+			</node>
+		</node>
+		<node name="appearance" value="المظهر">
+			<node name="summary" value="إعدادات العرض، شريط المهام"/>
+			<node name="language" value="لغة واجهة البرنامج"/>
+			<node name="screenOrientation" value="اتجاه الشاشة">
+				<node name="system" value="حسب النظام"/>
+				<node name="sensor" value="حسب الجهاز"/>
+				<node name="portrait" value="طول"/>
+				<node name="landscape" value="عرض"/>
+				<node name="reversePortrait" value="طول معكوس"/>
+				<node name="reverseLandscape" value="عرض معكوس"/>
+			</node>
+			<node name="autoOrientation" value="تدوير تلقائي">
+				<node name="summaryOn" value="اتجاه الشاشة سيتغير تلقائيا مع الجهاز"/>
+				<node name="summaryOff" value="اتجاه الشاشة لن يتغير تلقائيا مع الجهاز"/>
+			</node>
+			<node name="showStatusBar" value="عرض شريط الحالة">
+				<node name="summaryOn" value="عرض شريط الحالة أثناء القراءة"/>
+				<node name="summaryOff" value="إخفاء شريط الحالة أثناء القراءة"/>
+			</node>
+			<node name="showActionBar" value="عرض شريط الأدوات">
+				<node name="summaryOn" value="عرض شريط الأدوات أثناء القراءة"/>
+				<node name="summaryOff" value="إخفاء شريط الأدوات أثناء القراءة"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="عرض شريط الحالة عن إظهار القائمة">
+				<node name="summaryOn" value="عرض شريط الحالة عن إظهار القائمة"/>
+				<node name="summaryOff" value="لا تعرض شريط الحالة عن إظهار القائمة"/>
+			</node>
+			<node name="fullscreenMode" value="وضع ملئ الشاشة">
+				<node name="summaryOn" value="اخفاء شريط التنقل"/>
+				<node name="summaryOff" value="عرض شرسط التنقل"/>
+			</node>
+			<node name="disableButtonLights" value="إطفاء ضوء أزرار الهاتف">
+				<node name="summaryOn" value="إطفاء ضوء الأزرار"/>
+				<node name="summaryOff" value="لا تحاول إطفاء ضوء الأزرار"/>
+			</node>
+			<node name="twoColumnView" value="عرض الصفحة في خانتين">
+				<node name="summaryOn" value="عرض النص في خانتين عندما يكون وضع الجهاز أفقي"/>
+				<node name="summaryOff" value="عرض النص دائما في خانة واحدة"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="تغيير شدة إضاءة الشاشة">
+				<node name="summaryOn" value="عند تحريك الأصبع فوق/أعلى على الجانب الأيسر للشاشة"/>
+				<node name="summaryOff" value="إلغاء"/>
+			</node>
+			<node name="dontTurnScreenOff" value="منع إطفاء الشاشة عند القراءة">
+				<node name="0" value="دائما"/>
+				<node name="25" value="إذا كان مستوى الشحن أعلى من 25 بالمئة"/>
+				<node name="50" value="إذا كان مستوى الشحن أعلى من 50 بالمئة"/>
+				<node name="100" value="إلغاء"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="منع إطفاء الشاشة أثناء شحن البطارية">
+				<node name="summaryOn" value="منع إطفاء الشاشة"/>
+				<node name="summaryOff" value="إطفاء الشاشة حتى أثناء شحن البطارية"/>
+			</node>
+		</node>
+		<node name="text" value="النص">
+			<node name="summary" value="الخطوط وغيرها"/>
+			<node name="fontProperties" value="خصائص الخطوط">
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="نوع الخط">
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="fontSize" value="حجم الخط"/>
+			<node name="fontSizeDifference" value="الفرق بين حجم الخط"/>
+			<node name="fontStyle" value="ستايل الخط">
+				<node name="regular" value="عادي"/>
+				<node name="bold" value="غليظ"/>
+				<node name="italic" value="مائل"/>
+				<node name="boldItalic" value="مائل وغليظ"/>
+			</node>
+			<node name="bold" value="غليظ">
+				<node name="summaryOn" value="غليظ"/>
+				<node name="summaryOff" value="عادي"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="italic" value="مائل">
+				<node name="summaryOn" value="مائل"/>
+				<node name="summaryOff" value="عادي"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="underlined" value="مسطر">
+				<node name="summaryOn" value="مسطر"/>
+				<node name="summaryOff" value="عادي"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="strikedThrough" value="مشطوب">
+				<node name="summaryOn" value="مشطوب"/>
+				<node name="summaryOff" value="عادي"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="lineSpacing" value="تباعد الأسطر">
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="alignment" value="محاذاة النص">
+				<node name="left" value="يسار"/>
+				<node name="right" value="يمين"/>
+				<node name="center" value="وسط"/>
+				<node name="justify" value="ملء"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Auto hyphenations" toBeTranslated="true">
+				<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
+			</node>
+			<node name="allowHyphenations" value="Allow Hyphenations" toBeTranslated="true">
+				<node name="summaryOn" value="hyphenate words" toBeTranslated="true"/>
+				<node name="summaryOff" value="don't hyphenate words" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="First Line Indent" toBeTranslated="true"/>
+			<node name="spaceBefore" value="Space Before" toBeTranslated="true"/>
+			<node name="spaceAfter" value="Space After" toBeTranslated="true"/>
+			<node name="leftIndent" value="Left Indent" toBeTranslated="true"/>
+			<node name="rightIndent" value="Right Indent" toBeTranslated="true"/>
+			<node name="more" value="مزيد...">
+				<node name="summary" value="اعدادات العناوين وغيرها"/>
+				<node name="Regular Paragraph" value="Regular Paragraph" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Title" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Section Title" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Poem Title" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Subtitle" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Annotation" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Epigraph" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Stanza" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Verse" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Preformatted text" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Image" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Cite" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Author" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Date" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Internal Hyperlink" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Footnote" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Emphasis" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Strong" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Subscript" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Superscript" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Code" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="StrikeThrough" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Italic" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Bold" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Definition" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Definition Description" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Header 1" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Header 2" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Header 3" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Header 4" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Header 5" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Header 6" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="External Hyperlink" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="تطبيق أو تجاهل الستايلات الموجودة في CSS"/>
+			<node name="fontFamily" value="نوع الخط">
+				<node name="summaryOn" value="استخدام نوع الخط الموجود في CSS"/>
+				<node name="summaryOff" value="تجاهل نوع الخط الموجود في CSS"/>
+			</node>
+			<node name="fontSize" value="حجم الخط">
+				<node name="summaryOn" value="تطبيق حجم الخط الموجود في CSS"/>
+				<node name="summaryOff" value="تجاهل حجم الخط الموجود في CSS"/>
+			</node>
+			<node name="textAlignment" value="محاذاة النص">
+				<node name="summaryOn" value="تطبيق محاذاة النص الموجودة في CSS"/>
+				<node name="summaryOff" value="تجاهل محاذاة النص الموجودة في CSS"/>
+			</node>
+		</node>
+		<node name="colors" value="الألوان والخلفية">
+			<node name="summary" value="إعدادات الخلفية"/>
+			<node name="background" value="الخلفية">
+				<node name="solidColor" value="لون موحد"/>
+				<node name="leather" value="Leather" toBeTranslated="true"/>
+				<node name="sepia" value="Sepia" toBeTranslated="true"/>
+				<node name="wood" value="Wood" toBeTranslated="true"/>
+			</node>
+			<node name="backgroundColor" value="لون الخلفية"/>
+			<node name="selectionBackground" value="خلفية تحديد النص"/>
+			<node name="selectionForeground" value="النص المحدد"/>
+			<node name="text" value="النص العادي"/>
+			<node name="hyperlink" value="الروابط"/>
+			<node name="hyperlinkVisited" value="الروابط التي تمت زيارتها"/>
+			<node name="highlighting" value="خلفية نتائج البحث"/>
+			<node name="footer" value="الحاشية"/>
+		</node>
+		<node name="margins" value="الهوامش">
+			<node name="summary" value="هوامش النص"/>
+			<node name="left" value="الهامش الأيسر"/>
+			<node name="right" value="الهامش الأيمن"/>
+			<node name="top" value="الهامش العلوي"/>
+			<node name="bottom" value="الهامش السفلي"/>
+			<node name="spaceBetweenColumns" value="المسافة بين الخانتين"/>
+		</node>
+		<node name="scrollBar" value="شريط تقدم القراءة">
+			<node name="summary" value="شريط التمرير والهامش"/>
+			<node name="scrollbarType" value="نوع شريط التمرير">
+				<node name="hide" value="مخفي"/>
+				<node name="show" value="شريط تمرير عمودي"/>
+				<node name="showAsProgress" value="شريط تقدم عمودي"/>
+				<node name="showAsFooter" value="شريط تقدم أفقي"/>
+			</node>
+			<node name="footerHeight" value="ارتفاع حاشية الصفحة"/>
+			<node name="footerColor" value="لون حاشية الصفحة"/>
+			<node name="tocMarks" value="إظهار علامات الفهرس">
+				<node name="summaryOn" value="عرض علامات الفهرس على شريط التقدم"/>
+				<node name="summaryOff" value="لا تعرض علامات الفهرس على شريط التقدم"/>
+			</node>
+			<node name="showProgress" value="عرض رقم الصفحة">
+				<node name="summaryOn" value="عرض رقم الصفحة في الحاشية"/>
+				<node name="summaryOff" value="لا تعرض رقم الصفحة في الحاشية"/>
+			</node>
+			<node name="showBattery" value="عرض مستوى شحن البطارية">
+				<node name="summaryOn" value="عرض مستوى شحن البطارية في الحاشية"/>
+				<node name="summaryOff" value="لا تعرض مستوى شحن البطارية في الحاشية"/>
+			</node>
+			<node name="showClock" value="عرض الساعة">
+				<node name="summaryOn" value="عرض الساعة في الحاشية"/>
+				<node name="summaryOff" value="لا تعرض الساعة في الحاشية"/>
+			</node>
+			<node name="font" value="نوع الخط"/>
+		</node>
+		<node name="scrolling" value="تمرير الصفحات">
+			<node name="summary" value="كيفية تمرير الصفحات"/>
+			<node name="fingerScrolling" value="تمرير الصفحات عن طريق اللمس">
+				<node name="byTap" value="تمرير الصفحات عن طريق النقر على الشاشة"/>
+				<node name="byFlick" value="تمرير الصفحات عن طريق تمرير الأصبع على الشاشة"/>
+				<node name="byTapAndFlick" value="كل الخيارين السابقين"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="النقر المزدوج">
+				<node name="summaryOn" value="النقر المزدوج يفتح شريط التنقل بين الصفحات"/>
+				<node name="summaryOff" value="تجاهل النقر المزدوج"/>
+			</node>
+			<node name="volumeKeys" value="تمرير الصفحات بأزرار التحكم في مستوى الصوت">
+				<node name="summaryOn" value="استخدام هذه الأزرار لتمرير الصفحات"/>
+				<node name="summaryOff" value="ترك هذه الأزرار تتحكم في مستوى الصوت فقط"/>
+			</node>
+			<node name="invertVolumeKeys" value="عكس اتجاه أزرار الصوت">
+				<node name="summaryOn" value="Louder (lower) key turns to previous (next) page" toBeTranslated="true"/>
+				<node name="summaryOff" value="Lower (louder) key turns to next (previous) page" toBeTranslated="true"/>
+			</node>
+			<node name="animation" value="تأثير تمرير الصفحات">
+				<node name="none" value="تمرير الصفحات بدون تأثيرات"/>
+				<node name="curl" value="Curl animation" toBeTranslated="true"/>
+				<node name="slide" value="Slide animation" toBeTranslated="true"/>
+				<node name="shift" value="Shift animation" toBeTranslated="true"/>
+			</node>
+			<node name="animationSpeed" value="سرعة تأثير تمرير الصفحات">
+				<node name="fast" value="سريع"/>
+				<node name="slow" value="بطيء"/>
+			</node>
+			<node name="horizontal" value="تمرير عمودي">
+				<node name="summaryOn" value="تمرير الصفحات عموديا"/>
+				<node name="summaryOff" value="تمرير الصفحات أفقيا"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Tap zones" toBeTranslated="true">
+			<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+			<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+				<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+				<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+				<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+				<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+				<node name="custom" value="Custom…" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="dictionary" value="القواميس">
+			<node name="summary" value="اعدادات القواميس"/>
+			<node name="dictionary" value="القاموس"/>
+			<node name="translator" value="المترجم"/>
+			<node name="targetLanguage" value="ترجمة الى">
+				<node name="any" value="كل اللغات"/>
+			</node>
+			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+				<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+				<node name="openDictionary" value="Long tapping selects single word, release opens dictionary" toBeTranslated="true"/>
+			</node>
+			<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+				<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+				<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="images" value="الصور">
+			<node name="summary" value="خيارات عرض الصور"/>
+			<node name="backgroundColor" value="خلفية الصور المعروضة"/>
+			<node name="tappingAction" value="الضغط المستمر على الصور">
+				<node name="doNothing" value="الضغط المستمر لا يفعل شيئا"/>
+				<node name="selectImage" value="الضغط المستمر يختار الصورة"/>
+				<node name="openImageView" value="الضغط المستمر يفتح عارض الصور"/>
+			</node>
+			<node name="fitImagesToScreen" value="الصور تملء الشاشة">
+				<node name="none" value="بدون"/>
+				<node name="covers" value="الغلاف فقط"/>
+				<node name="all" value="الكل"/>
+			</node>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="قائمة الخروج">
+			<node name="summary" value="أوامر زر العودة للخلف"/>
+			<node name="library" value="فتح المكتبة">
+				<node name="summaryOn" value="عرض خيار 'فتح المكتبة'"/>
+				<node name="summaryOff" value="لا تعرض خيار 'فتح المكتبة'"/>
+			</node>
+			<node name="networkLibrary" value="مكتبة الشبكة">
+				<node name="summaryOn" value="عرض خيار 'مكتبة الشبكة'"/>
+				<node name="summaryOff" value="لا تعرض خيار 'مكتبة الشبكة'"/>
+			</node>
+			<node name="previousBook" value="الكتاب السابق">
+				<node name="summaryOn" value="عرض خيار 'الكتاب السابق'"/>
+				<node name="summaryOff" value="لا تعرض خيار 'الكتاب السابق'"/>
+			</node>
+			<node name="positions" value="اخر 3 مواضع">
+				<node name="summaryOn" value="عرض خيار 'اخر 3 مواضع'"/>
+				<node name="summaryOff" value="لا تعرض خيار 'اخر 3 مواضع'"/>
+			</node>
+			<node name="backKeyAction" value="وضيفة زر العودة للخلف">
+				<node name="exit" value="إغلاق البرنامج"/>
+				<node name="goBack" value="عودة للخلف"/>
+				<node name="cancelMenu" value="عرض قائمة الخروج"/>
+			</node>
+			<node name="backKeyLongPressAction" value="الضغط المستمر على زر العودة للخلف">
+				<node name="exit" value="إغلاق البرنامج"/>
+				<node name="goBack" value="عودة للخلف"/>
+				<node name="cancelMenu" value="عرض قائمة الخروج"/>
+				<node name="none" value="لا شيء"/>
+			</node>
+		</node>
+		<node name="tips" value="التلميحات">
+			<node name="summary" value="اعدادات التلميحات"/>
+			<node name="showTips" value="عرض التلميحات">
+				<node name="summaryOn" value="عرص التلميحات اليومية"/>
+				<node name="summaryOff" value="لا تعرض التلميحات"/>
+			</node>
+		</node>
+		<node name="about" value="حول البرنامج">
+			<node name="summary" value="رقم الإصدار، راسلنا"/>
+			<node name="version" value="الإصدار"/>
+			<node name="site" value="موقع البرنامج">
+				<node name="url" value="http://fbreader.org/"/>
+			</node>
+			<node name="email" value="راسلنا عبر البريد الإلكتروني">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="تابعنا على تويتر">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+			<node name="facebook" value="تابعنا على الفايسبوك">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
+		</node>
+		<node name="eink" value="E-ink screen" toBeTranslated="true">
+			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
+			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="تنصيب"/>
+			<node name="update" value="تحديث"/>
+			<node name="skip" value="تجاهل"/>
+			<node name="buy" value="شراء"/>
+			<node name="buyAndDownload" value="شراء وتحميل"/>
+			<node name="continue" value="متابعة"/>
+			<node name="editUrl" value="تعديل الرابط"/>
+			<node name="tryAgain" value="إعادة المحاولة"/>
+			<node name="openBook" value="قراءة"/>
+			<node name="editInfo" value="تعديل"/>
+			<node name="reloadInfo" value="إعادة التحميل"/>
+			<node name="shareBook" value="مشاركة"/>
+			<node name="topup" value="Top up" toBeTranslated="true"/>
+			<node name="pay" value="دفع"/>
+			<node name="refresh" value="إعادة التحميل"/>
+			<node name="authorise" value="Authorise" toBeTranslated="true"/>
+			<node name="resetPosition" value="الصفحة السابقة"/>
+			<node name="sendReport" value="إرسال التقرير"/>
+			<node name="addToFavorites" value="اضافة الى المفضلة"/>
+			<node name="removeFromFavorites" value="حذف من المفضلة"/>
+			<node name="markAsRead" value="تعليم كمقروء"/>
+			<node name="markAsUnread" value="تعليم كغير مقروء"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="تنصيب الإضافة"/>
+			<node name="updateTitle" value="تحديث الإضافة"/>
+			<node name="dontAskAgain" value="لا تسأل مجددا"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="مجلد التنصيب"/>
+			<node name="message" value="هل تريد تنصيب %s؟"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="سيتم حذف هذا الكتاب نهائيا، هل تريد المتابعة؟"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="الملف موجود مسبقا، هل تريد إعادة تحميله؟"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="تحميل كتاب %s"/>
+			<node name="search" value="جاري البحث..."/>
+			<node name="loadInfo" value="جاري جمع معلومات حول الكتاب..."/>
+			<node name="loadingBook" value="جاري فتح الكتاب..."/>
+			<node name="loadingBookList" value="جاري فتح المكتبة..."/>
+			<node name="creatingBooksDatabase" value="انشاء قاعدة بيانات الكتب..."/>
+			<node name="updatingBooksDatabase" value="تحديث قاعدة بيانات الكتب..."/>
+			<node name="loadingNetworkLibrary" value="فتح المكتبة..."/>
+			<node name="authentication" value="Authentication. Please, wait..." toBeTranslated="true"/>
+			<node name="signOut" value="Signing out. Please, wait..." toBeTranslated="true"/>
+			<node name="purchaseBook" value="Purchase book. Please, wait..." toBeTranslated="true"/>
+			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..." toBeTranslated="true"/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait..." toBeTranslated="true"/>
+			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..." toBeTranslated="true"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait..." toBeTranslated="true"/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Internal server error" toBeTranslated="true"/>
+			<node name="purchaseNotEnoughMoney" value="Not enough money" toBeTranslated="true"/>
+			<node name="purchaseMissingBook" value="Missing book" toBeTranslated="true"/>
+			<node name="purchaseAlreadyPurchased" value="Already purchased" toBeTranslated="true"/>
+			<node name="bookNotPurchased" value="Book was not purchased" toBeTranslated="true"/>
+			<node name="downloadLimitExceeded" value="Download limit exceeded" toBeTranslated="true"/>
+			<node name="noUserEmail" value="No user was registered with specified e-mail address" toBeTranslated="true"/>
+			<node name="unsupportedOperation" value="Unsupported operation" toBeTranslated="true"/>
+			<node name="notAnOPDS" value="This is not an OPDS catalog" toBeTranslated="true"/>
+			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true"/>
+			<node name="cacheDirectoryError" value="Unable to create cache directory" toBeTranslated="true"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Authentication" toBeTranslated="true"/>
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
+			<node name="login" value="Username" toBeTranslated="true"/>
+			<node name="password" value="Password" toBeTranslated="true"/>
+			<node name="loginIsEmpty" value="Username should be non-empty" toBeTranslated="true"/>
+			<node name="register" value="Sign up" toBeTranslated="true"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="إضافة كاتالوج"/>
+			<node name="catalogTitle" value="العنوان"/>
+			<node name="catalogUrl" value="الرابط"/>
+			<node name="catalogSummary" value="نبذة"/>
+			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog" toBeTranslated="true"/>
+			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/" toBeTranslated="true"/>
+			<node name="catalogSummaryExample" value="E.g.: Public domain books" toBeTranslated="true"/>
+			<node name="titleIsEmpty" value="العنوان يجب أن لا يكون فارغا"/>
+			<node name="urlIsEmpty" value="الرابط يجب ان لا يكون فارغا"/>
+			<node name="invalidUrl" value="الرابط غير صحيح"/>
+			<node name="titleAlreadyExists" value="العنوان مستخدم مسبقل"/>
+			<node name="siteAlreadyExists" value="الرابط مستخدم مسبقا"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Language filter" toBeTranslated="true"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="Tip of the day" toBeTranslated="true"/>
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.  Enable tips?" toBeTranslated="true"/>
+			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
+			<node name="more" value="Next tip" toBeTranslated="true"/>
+		</node>
+		<node name="screenHint">
+			<node name="message1" value="البرنامج يشغل كامل الشاشة بشكل افتراضي. اضغط في منتصف الشاشة لإظهار أزرار التحكم. يمكنك تغيير هذا الوضع من قائمة “المظهر” في نافذة الإعدادات."/>
+			<node name="message2" value="أحسنت! الآن أعد الضغط على نفس المكان لإخفاء أزرار التحكم وهذه الرسالة." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="اضافة مجلد"/>
+			<node name="removeDialog" value="حذف مجلد">
+				<node name="message" value="حذف “%s” من اللائحة؟"/>
+			</node>
+			<node name="duplicate" value="“%s” موجود مسبقا في اللائحة"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="الجذر"/>
+			<node name="newFolder" value="مجلد جديد"/>
+			<node name="folderNameHint" value="اسم المجلد"/>
+			<node name="menu">
+				<node name="origin" value="الأصل"/>
+				<node name="reload" value="إعادة التحميل"/>
+			</node>
+			<node name="sortBy" value="فرز حسب">
+				<node name="name" value="الاسم"/>
+				<node name="size" value="الحجم"/>
+				<node name="date" value="التاريخ"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="حدث خطأ أثناء قراءة '%s'"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File not found: %s" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
+		<node name="textNotFound" value="لم يتم العثور على ما يطبق بحثك"/>
+		<node name="bookNotFound" value="لم يتم العثور على الكتاب الذي تبحث عنه"/>
+		<node name="bookmarkNotFound" value="لم يتم العثور على العلامة المرجعية التي تبحث عنها"/>
+		<node name="cannotOpenBook" value="لا يمكن فتح هذا الكتاب في الوقت الحالي"/>
+		<node name="dictionaryIsNotInstalled" value="القاموس غير منصب"/>
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
+		<node name="noFavorites" value="قائمة الكتب المفضلة لديك فارغة"/>
+		<node name="noSeries" value="لا يوجد أي كتاب في هذه السلسة"/>
+		<node name="emptyCatalog" value="Catalog is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="لم يتم العثور على الكتاب الذي تبحث عنه"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Browser" toBeTranslated="true"/>
+		<node name="defaultBrowser" value="Default Browser" toBeTranslated="true"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Unknown Error" toBeTranslated="true"/>
+		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method" toBeTranslated="true"/>
+		<node name="encryptedFile" value="DRM-protected File" toBeTranslated="true"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or enter another directory name below." toBeTranslated="true"/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins" toBeTranslated="true">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
+		<node name="litres" value="LitRes" toBeTranslated="true">
+			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+		</node>
+		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		</node>
+		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		</node>
+		<node name="widgets" value="Widgets" toBeTranslated="true">
+			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		</node>
+		<node name="pdf" value="PDF" toBeTranslated="true">
+			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
+		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+</resources>
