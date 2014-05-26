@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- English FBReaderJ resources, by Geometer Plus -->
+<!-- Arabic FBReaderJ resources, by Ahmed Saidi (https://github.com/boussouira) -->
 <resources>
 	<node name="library" value="المكتبة">
 		<node name="unknownAuthor" value="مؤلف مجهول"/>
@@ -97,11 +97,11 @@
 		<node name="stopSearching" value="إيقاف البحث"/>
 		<node name="signIn" value="تسجيل الدخول"/>
 		<node name="signOut" value="تسجي الخروج (%s)"/>
-		<node name="topup" value="Top up account (currently: %s)"/>
-		<node name="topupTitle" value="Top up account"/>
+		<node name="topup" value="Top up account (currently: %s)" toBeTranslated="true"/>
+		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="فتح الصفحة في المتصفح"/>
-		<node name="authorizationMenuTitle" value="Select action"/>
-		<node name="topupSummary" value="Currently: %s"/>
+		<node name="authorisationMenuTitle" value="Select action" toBeTranslated="true"/>
+		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
 		<node name="basket" value="السلة"/>
 		<node name="basketSummaryEmpty" value="لا كتب"/>
 		<node name="basketSummaryCountOnly" value="%0 كتاب">
@@ -128,48 +128,41 @@
 			<node name="openInBrowser" value="هل تريد فتح هذا الكتالوج في المتصفح؟"/>
 		</node>
 		<node name="downloadingCatalogs" value="تحميل الكتالوجات"/>
-		<!-- used as notification title -->
 		<node name="searchingNetwork" value="بحث عن الكتب في الشبكة"/>
-		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="إضافة كتالوج"/>
 			<node name="editUrl" value="إضافة رابط يجوي"/>
 		</node>
 		<node name="manageCatalogs" value="تعديل الكتالوجات">
-			<node name="summary" toBeTranslated="true"
-				value="Configure your catalogs list"/>
-			<node name="enabled" toBeTranslated="true" value="تفعيل"/>
-			<node name="disabled" toBeTranslated="true" value="الغاء"/>
+			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
+			<node name="enabled" value="تفعيل"/>
+			<node name="disabled" value="الغاء"/>
 		</node>
 		<node name="menu">
-			<node name="openRoot" toBeTranslated="true" value="Root catalog"/>
+			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
 			<node name="networkSearch" value="بحث"/>
 			<node name="reload" value="إعادة تحميل"/>
 			<node name="signIn" value="تسجي الدخول"/>
 			<node name="signUp" value="التسجيل"/>
 			<node name="signOut" value="تسجيل الخروج (%s)"/>
-			<node name="topup" value="Top up account"/>
+			<node name="topup" value="Top up account" toBeTranslated="true"/>
 			<node name="addCustomCatalog" value="إضافة كتالوج"/>
 			<node name="refreshCatalogsList" value="إعادة تحميل الكتالوج"/>
-			<node name="manageCatalogs" toBeTranslated="true" value="Manage catalogs"/>
-			<node name="clearBasket" toBeTranslated="true" value="Clear basket"/>
-			<node name="buyAllBooks" toBeTranslated="true" value="Buy all books"/>
-			<node name="languages" value="Language filter"/>
+			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
 			<node name="clearBasket" value="تفريغ السلة"/>
 			<node name="buyAllBooks" value="شراء كل الكتب"/>
 		</node>
 	</node>
 	<node name="buyBook">
-		<node name="title" value="Purchase book"/>
-		<node name="titleSeveralBooks" value="Purchase books"/>
-		<node name="confirm" value="Are you sure you want to buy
-“%s”?"/>
-		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?"/>
-		<node name="alreadyBought" value="Book is already bought"/>
-		<node name="notAuthorized" value="Authorization required"/>
-		<node name="noAccountInformation" value="Cannot load account state"/>
-		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1"/>
-		<node name="zeroFunds" value="This purchase costs %0"/>
+		<node name="title" value="Purchase book" toBeTranslated="true"/>
+		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
+		<node name="confirm" value="Are you sure you want to buy “%s”?" toBeTranslated="true"/>
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
+		<node name="alreadyBought" value="Book is already bought" toBeTranslated="true"/>
+		<node name="notAuthorised" value="Authorisation required" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
+		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="معلومات حول الكتاب"/>
@@ -182,7 +175,7 @@
 			<node condition="value 1" value="المؤلف:"/>
 		</node>
 		<node name="series" value="السلسة:"/>
-		<node name="indexInSeries" value="Index in series:"/>
+		<node name="indexInSeries" value="Index in series:" toBeTranslated="true"/>
 		<node name="tags" value="الوسوم:">
 			<node condition="value 1" value="الوسم:"/>
 		</node>
@@ -191,10 +184,10 @@
 		<node name="type" value="النوع:"/>
 		<node name="size" value="الحجم:"/>
 		<node name="time" value="آخر تحديث:"/>
-		<node name="sizeInBytes" value="%s bytes">
-			<node condition="value 1" value="%s byte"/>
+		<node name="sizeInBytes" value="%s bytes" toBeTranslated="true">
+			<node condition="value 1" value="%s byte" toBeTranslated="true"/>
 		</node>
-		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="sizeInKiloBytes" value="%s kB" toBeTranslated="true"/>
 		<node name="catalog" value="الكتالوج"/>
 		<node name="extraLinks" value="روابط ذات صلة"/>
 		<node name="menu">
@@ -241,8 +234,6 @@
 	<node name="highlightingStyleMenu">
 		<node name="editStyle" value="تعديل الستايل…"/>
 		<node name="deleteBookmark" value="حذف العلامة المرجعية"/>
-		<node name="style" value="الستايل %s"/>
-		<node name="deleteBookmark" value="حذف العلامة المرجعية"/>
 	</node>
 	<node name="editStyle">
 		<node name="name" value="اسم الستايل"/>
@@ -256,14 +247,12 @@
 		<node name="copyToClipboard" value="نسخ الى الحافظ"/>
 		<node name="openInDictionary" value="فتح في القاموس"/>
 		<node name="quoteFrom" value="اقتباس من %s"/>
-		<node name="textInBuffer" value="تم نسخ:
-%s"/>
-		<node name="bookmarkCreated" value="تم حفظ العلامة المرجعية:
-%s"/>
+		<node name="textInBuffer" value="تم نسخ: %s"/>
+		<node name="bookmarkCreated" value="تم حفظ العلامة المرجعية: %s"/>
 		<node name="clearSelection" value="مسح"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="اعدادات"/>
@@ -272,10 +261,8 @@
 		<node name="toc" value="الفهرس"/>
 		<node name="day" value="مضيء"/>
 		<node name="night" value="مظلم"/>
-		<node name="yotaSwitchToBackScreen"
-			value="Switch to back screen"/>
-		<node name="yotaSwitchToFrontScreen" toBeTranslated="true"
-			value="Switch to front screen"/>
+		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
 		<node name="networkLibrary" value="مكتبة الشبكة"/>
 		<node name="navigate" value="التنقل بين الصفحات">
 			<node name="toc" value="فهرس الكتاب"/>
@@ -283,8 +270,8 @@
 			<node name="gotoPageNumber" value="انتقل الى الصفحة..."/>
 			<node name="gotoSectionStart" value="انتقل الى بداية الصفحة"/>
 			<node name="gotoSectionEnd" value="انتقل الى نهاية الصفحة"/>
-			<node name="nextTOCSection" value="Go to Next TOC Item"/>
-			<node name="previousTOCSection" value="Go to Previous TOC Item"/>
+			<node name="nextTOCSection" value="Go to Next TOC Item" toBeTranslated="true"/>
+			<node name="previousTOCSection" value="Go to Previous TOC Item" toBeTranslated="true"/>
 			<node name="undo" value="الى الخلف"/>
 			<node name="redo" value="الى الأمام"/>
 		</node>
@@ -332,9 +319,6 @@
 			<node name="tempDir" value="أين يحفظ البرنامج الملفات المؤقتة">
 				<node name="chooserTitle" value="مجلد الملفات المؤقتة"/>
 			</node>
-			<node name="books" value="مجلد الكتب"/>
-			<node name="fonts" value="مجلد الخطوط"/>
-			<node name="wallpapers" value="مجلد الخلفيات"/>
 		</node>
 		<node name="appearance" value="المظهر">
 			<node name="summary" value="إعدادات العرض، شريط المهام"/>
@@ -393,26 +377,26 @@
 		<node name="text" value="النص">
 			<node name="summary" value="الخطوط وغيرها"/>
 			<node name="fontProperties" value="خصائص الخطوط">
-				<node name="summary" value="Font smoothing options"/>
-				<node name="antiAlias" value="Antialiasing">
-					<node name="summaryOn" value="Antialiasing is enabled"/>
-					<node name="summaryOff" value="Antialiasing is disabled"/>
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
 				</node>
-				<node name="deviceKerning" value="Device kerning">
-					<node name="summaryOn" value="Device kerning is enabled"/>
-					<node name="summaryOff" value="Device kerning is disabled"/>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
 				</node>
-				<node name="dithering" value="Dithering">
-					<node name="summaryOn" value="Color dithering is enabled"/>
-					<node name="summaryOff" value="Color dithering is disabled"/>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
 				</node>
-				<node name="hinting" value="Hinting">
-					<node name="summaryOn" value="Font hinting is enabled"/>
-					<node name="summaryOff" value="Font hinting is disabled"/>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
 				</node>
-				<node name="subpixel" value="Subpixel smoothing">
-					<node name="summaryOn" value="Subpixel smoothing is enabled"/>
-					<node name="summaryOff" value="Subpixel smoothing is disabled"/>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="font" value="نوع الخط">
@@ -456,119 +440,119 @@
 				<node name="justify" value="ملء"/>
 				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="autoHyphenations" value="Auto hyphenations">
-				<node name="summaryOn" value="Hyphenate words automatically"/>
-				<node name="summaryOff" value="Do not hyphenate words automatically"/>
+			<node name="autoHyphenations" value="Auto hyphenations" toBeTranslated="true">
+				<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 			</node>
-			<node name="allowHyphenations" value="Allow Hyphenations">
-				<node name="summaryOn" value="hyphenate words"/>
-				<node name="summaryOff" value="don't hyphenate words"/>
+			<node name="allowHyphenations" value="Allow Hyphenations" toBeTranslated="true">
+				<node name="summaryOn" value="hyphenate words" toBeTranslated="true"/>
+				<node name="summaryOff" value="don't hyphenate words" toBeTranslated="true"/>
 				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="firstLineIndent" value="First Line Indent"/>
-			<node name="spaceBefore" value="Space Before"/>
-			<node name="spaceAfter" value="Space After"/>
-			<node name="leftIndent" value="Left Indent"/>
-			<node name="rightIndent" value="Right Indent"/>
+			<node name="firstLineIndent" value="First Line Indent" toBeTranslated="true"/>
+			<node name="spaceBefore" value="Space Before" toBeTranslated="true"/>
+			<node name="spaceAfter" value="Space After" toBeTranslated="true"/>
+			<node name="leftIndent" value="Left Indent" toBeTranslated="true"/>
+			<node name="rightIndent" value="Right Indent" toBeTranslated="true"/>
 			<node name="more" value="مزيد...">
 				<node name="summary" value="اعدادات العناوين وغيرها"/>
-				<node name="Regular Paragraph" value="Regular Paragraph">
+				<node name="Regular Paragraph" value="Regular Paragraph" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Title" value="Title">
+				<node name="Title" value="Title" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Section Title" value="Section Title">
+				<node name="Section Title" value="Section Title" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Poem Title" value="Poem Title">
+				<node name="Poem Title" value="Poem Title" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Subtitle" value="Subtitle">
+				<node name="Subtitle" value="Subtitle" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Annotation" value="Annotation">
+				<node name="Annotation" value="Annotation" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Epigraph" value="Epigraph">
+				<node name="Epigraph" value="Epigraph" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Stanza" value="Stanza">
+				<node name="Stanza" value="Stanza" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Verse" value="Verse">
+				<node name="Verse" value="Verse" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Preformatted text" value="Preformatted text">
+				<node name="Preformatted text" value="Preformatted text" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Image" value="Image">
+				<node name="Image" value="Image" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Cite" value="Cite">
+				<node name="Cite" value="Cite" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Author" value="Author">
+				<node name="Author" value="Author" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Date" value="Date">
+				<node name="Date" value="Date" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Internal Hyperlink" value="Internal Hyperlink">
+				<node name="Internal Hyperlink" value="Internal Hyperlink" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Footnote" value="Footnote">
+				<node name="Footnote" value="Footnote" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Emphasis" value="Emphasis">
+				<node name="Emphasis" value="Emphasis" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Strong" value="Strong">
+				<node name="Strong" value="Strong" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Subscript" value="Subscript">
+				<node name="Subscript" value="Subscript" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Superscript" value="Superscript">
+				<node name="Superscript" value="Superscript" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Code" value="Code">
+				<node name="Code" value="Code" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="StrikeThrough" value="StrikeThrough">
+				<node name="StrikeThrough" value="StrikeThrough" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Italic" value="Italic">
+				<node name="Italic" value="Italic" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Bold" value="Bold">
+				<node name="Bold" value="Bold" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Definition" value="Definition">
+				<node name="Definition" value="Definition" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Definition Description" value="Definition Description">
+				<node name="Definition Description" value="Definition Description" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 1" value="Header 1">
+				<node name="Header 1" value="Header 1" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 2" value="Header 2">
+				<node name="Header 2" value="Header 2" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 3" value="Header 3">
+				<node name="Header 3" value="Header 3" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 4" value="Header 4">
+				<node name="Header 4" value="Header 4" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 5" value="Header 5">
+				<node name="Header 5" value="Header 5" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="Header 6" value="Header 6">
+				<node name="Header 6" value="Header 6" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="External Hyperlink" value="External Hyperlink">
+				<node name="External Hyperlink" value="External Hyperlink" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
 			</node>
@@ -577,7 +561,7 @@
 			<node name="summary" value="تطبيق أو تجاهل الستايلات الموجودة في CSS"/>
 			<node name="fontFamily" value="نوع الخط">
 				<node name="summaryOn" value="استخدام نوع الخط الموجود في CSS"/>
-				<node name="summaryOff"	value="تجاهل نوع الخط الموجود في CSS"/>
+				<node name="summaryOff" value="تجاهل نوع الخط الموجود في CSS"/>
 			</node>
 			<node name="fontSize" value="حجم الخط">
 				<node name="summaryOn" value="تطبيق حجم الخط الموجود في CSS"/>
@@ -592,9 +576,9 @@
 			<node name="summary" value="إعدادات الخلفية"/>
 			<node name="background" value="الخلفية">
 				<node name="solidColor" value="لون موحد"/>
-				<node name="leather" value="Leather"/>
-				<node name="sepia" value="Sepia"/>
-				<node name="wood" value="Wood"/>
+				<node name="leather" value="Leather" toBeTranslated="true"/>
+				<node name="sepia" value="Sepia" toBeTranslated="true"/>
+				<node name="wood" value="Wood" toBeTranslated="true"/>
 			</node>
 			<node name="backgroundColor" value="لون الخلفية"/>
 			<node name="selectionBackground" value="خلفية تحديد النص"/>
@@ -657,14 +641,14 @@
 				<node name="summaryOff" value="ترك هذه الأزرار تتحكم في مستوى الصوت فقط"/>
 			</node>
 			<node name="invertVolumeKeys" value="عكس اتجاه أزرار الصوت">
-				<node name="summaryOn" value="Louder (lower) key turns to previous (next) page"/>
-				<node name="summaryOff" value="Lower (louder) key turns to next (previous) page"/>
+				<node name="summaryOn" value="Louder (lower) key turns to previous (next) page" toBeTranslated="true"/>
+				<node name="summaryOff" value="Lower (louder) key turns to next (previous) page" toBeTranslated="true"/>
 			</node>
 			<node name="animation" value="تأثير تمرير الصفحات">
 				<node name="none" value="تمرير الصفحات بدون تأثيرات"/>
-				<node name="curl" value="Curl animation"/>
-				<node name="slide" value="Slide animation"/>
-				<node name="shift" value="Shift animation"/>
+				<node name="curl" value="Curl animation" toBeTranslated="true"/>
+				<node name="slide" value="Slide animation" toBeTranslated="true"/>
+				<node name="shift" value="Shift animation" toBeTranslated="true"/>
 			</node>
 			<node name="animationSpeed" value="سرعة تأثير تمرير الصفحات">
 				<node name="fast" value="سريع"/>
@@ -675,14 +659,14 @@
 				<node name="summaryOff" value="تمرير الصفحات أفقيا"/>
 			</node>
 		</node>
-		<node name="tapZones" value="Tap zones">
-			<node name="summary" value="Actions on finger tap"/>
-			<node name="tapZonesScheme" value="Tap zones scheme">
-				<node name="left_to_right" value="Left to right page scrolling"/>
-				<node name="right_to_left" value="Right to left page scrolling"/>
-				<node name="up" value="Down to up page scrolling"/>
-				<node name="down" value="Up to down page scrolling"/>
-				<node name="custom" value="Custom…"/>
+		<node name="tapZones" value="Tap zones" toBeTranslated="true">
+			<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+			<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+				<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+				<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+				<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+				<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+				<node name="custom" value="Custom…" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="dictionary" value="القواميس">
@@ -692,16 +676,15 @@
 			<node name="targetLanguage" value="ترجمة الى">
 				<node name="any" value="كل اللغات"/>
 			</node>
-			<node name="tappingAction" value="Long tapping action">
-				<node name="doNothing" value="Long tapping does nothing"/>
-				<node name="selectSingleWord" value="Long tapping selects single word"/>
-				<node name="startSelecting" value="Long tapping initiates selecting"/>
-				<node name="openDictionary"
-					value="Long tapping selects single word, release opens dictionary"/>
+			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+				<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+				<node name="openDictionary" value="Long tapping selects single word, release opens dictionary" toBeTranslated="true"/>
 			</node>
-			<node name="navigateOverAllWords" value="Navigate over all words">
-				<node name="summaryOn" value="Key navigation visits all words"/>
-				<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
+			<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+				<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+				<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="images" value="الصور">
@@ -717,12 +700,9 @@
 				<node name="covers" value="الغلاف فقط"/>
 				<node name="all" value="الكل"/>
 			</node>
-			<node name="matchBackground"
-				value="Match background intensity">
-				<node name="summaryOn" toBeTranslated="true"
-					value="Adjust image color according background"/>
-				<node name="summaryOff" toBeTranslated="true"
-					value="Do not adjust image color"/>
+			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
+				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="قائمة الخروج">
@@ -777,20 +757,15 @@
 			<node name="facebook" value="تابعنا على الفايسبوك">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
-			<node name="thirdParty" toBeTranslated="true" value="Third-party libraries"/>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
 		</node>
-		<node name="eink" toBeTranslated="true" value="E-ink screen">
-			<node name="summary" toBeTranslated="true"
-				value="Specific options for e-ink screens"/>
-			<node name="enableFastRefresh" toBeTranslated="true"
-				value="Fast refresh mode">
-				<node name="summaryOn" toBeTranslated="true"
-					value="Use fast (but not very clean) screen update"/>
-				<node name="summaryOff" toBeTranslated="true"
-					value="Use complete (clean, but slow) screen update"/>
+		<node name="eink" value="E-ink screen" toBeTranslated="true">
+			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
+			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
 			</node>
-			<node name="interval" toBeTranslated="true"
-				value="Number of fast updates between complete refreshes"/>
+			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -807,10 +782,10 @@
 			<node name="editInfo" value="تعديل"/>
 			<node name="reloadInfo" value="إعادة التحميل"/>
 			<node name="shareBook" value="مشاركة"/>
-			<node name="topup" value="Top up"/>
+			<node name="topup" value="Top up" toBeTranslated="true"/>
 			<node name="pay" value="دفع"/>
 			<node name="refresh" value="إعادة التحميل"/>
-			<node name="authorize" value="Authorize"/>
+			<node name="authorise" value="Authorise" toBeTranslated="true"/>
 			<node name="resetPosition" value="الصفحة السابقة"/>
 			<node name="sendReport" value="إرسال التقرير"/>
 			<node name="addToFavorites" value="اضافة الى المفضلة"/>
@@ -842,46 +817,43 @@
 			<node name="creatingBooksDatabase" value="انشاء قاعدة بيانات الكتب..."/>
 			<node name="updatingBooksDatabase" value="تحديث قاعدة بيانات الكتب..."/>
 			<node name="loadingNetworkLibrary" value="فتح المكتبة..."/>
-			<node name="authentication" value="Authentication. Please, wait..."/>
-			<node name="signOut" value="Signing out. Please, wait..."/>
-			<node name="purchaseBook" value="Purchase book. Please, wait..."/>
-			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..."/>
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait..."/>
-			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..."/>
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait..."/>
+			<node name="authentication" value="Authentication. Please, wait..." toBeTranslated="true"/>
+			<node name="signOut" value="Signing out. Please, wait..." toBeTranslated="true"/>
+			<node name="purchaseBook" value="Purchase book. Please, wait..." toBeTranslated="true"/>
+			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..." toBeTranslated="true"/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait..." toBeTranslated="true"/>
+			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..." toBeTranslated="true"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait..." toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
-			<node name="internalError" value="Internal server error"/>
-			<node name="purchaseNotEnoughMoney" value="Not enough money"/>
-			<node name="purchaseMissingBook" value="Missing book"/>
-			<node name="purchaseAlreadyPurchased" value="Already purchased"/>
-			<node name="bookNotPurchased" value="Book was not purchased"/>
-			<node name="downloadLimitExceeded" value="Download limit exceeded"/>
-			<node name="noUserEmail"
-				value="No user was registered
-with specified e-mail address"/>
-			<node name="unsupportedOperation" value="Unsupported operation"/>
-			<node name="notAnOPDS" value="This is not an OPDS catalog"/>
-			<node name="noRequiredInformation"
-				value="Required information is not specified in the catalog"/>
-			<node name="cacheDirectoryError" value="Unable to create cache directory"/>
+			<node name="internalError" value="Internal server error" toBeTranslated="true"/>
+			<node name="purchaseNotEnoughMoney" value="Not enough money" toBeTranslated="true"/>
+			<node name="purchaseMissingBook" value="Missing book" toBeTranslated="true"/>
+			<node name="purchaseAlreadyPurchased" value="Already purchased" toBeTranslated="true"/>
+			<node name="bookNotPurchased" value="Book was not purchased" toBeTranslated="true"/>
+			<node name="downloadLimitExceeded" value="Download limit exceeded" toBeTranslated="true"/>
+			<node name="noUserEmail" value="No user was registered with specified e-mail address" toBeTranslated="true"/>
+			<node name="unsupportedOperation" value="Unsupported operation" toBeTranslated="true"/>
+			<node name="notAnOPDS" value="This is not an OPDS catalog" toBeTranslated="true"/>
+			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true"/>
+			<node name="cacheDirectoryError" value="Unable to create cache directory" toBeTranslated="true"/>
 		</node>
 		<node name="AuthenticationDialog">
-			<node name="title" value="Authentication"/>
-			<node name="unencryptedWarning" value="Your password will be sent unencrypted"/>
-			<node name="login" value="Username"/>
-			<node name="password" value="Password"/>
-			<node name="loginIsEmpty" value="Username should be non-empty"/>
-			<node name="register" value="Sign up"/>
+			<node name="title" value="Authentication" toBeTranslated="true"/>
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
+			<node name="login" value="Username" toBeTranslated="true"/>
+			<node name="password" value="Password" toBeTranslated="true"/>
+			<node name="loginIsEmpty" value="Username should be non-empty" toBeTranslated="true"/>
+			<node name="register" value="Sign up" toBeTranslated="true"/>
 		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="إضافة كاتالوج"/>
 			<node name="catalogTitle" value="العنوان"/>
 			<node name="catalogUrl" value="الرابط"/>
 			<node name="catalogSummary" value="نبذة"/>
-			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog"/>
-			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/"/>
-			<node name="catalogSummaryExample" value="E.g.: Public domain books"/>
+			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog" toBeTranslated="true"/>
+			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/" toBeTranslated="true"/>
+			<node name="catalogSummaryExample" value="E.g.: Public domain books" toBeTranslated="true"/>
 			<node name="titleIsEmpty" value="العنوان يجب أن لا يكون فارغا"/>
 			<node name="urlIsEmpty" value="الرابط يجب ان لا يكون فارغا"/>
 			<node name="invalidUrl" value="الرابط غير صحيح"/>
@@ -889,29 +861,24 @@ with specified e-mail address"/>
 			<node name="siteAlreadyExists" value="الرابط مستخدم مسبقا"/>
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Language filter"/>
+			<node name="title" value="Language filter" toBeTranslated="true"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day"/>
-			<node name="initializationText"
-				value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.
-
-Enable tips?"/>
-			<node name="dontShowAgain" value="Don't show again"/>
-			<node name="more" value="Next tip"/>
+			<node name="title" value="Tip of the day" toBeTranslated="true"/>
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.  Enable tips?" toBeTranslated="true"/>
+			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
+			<node name="more" value="Next tip" toBeTranslated="true"/>
 		</node>
 		<node name="screenHint">
 			<node name="message1" value="البرنامج يشغل كامل الشاشة بشكل افتراضي. اضغط في منتصف الشاشة لإظهار أزرار التحكم. يمكنك تغيير هذا الوضع من قائمة “المظهر” في نافذة الإعدادات."/>
-			<node name="message2" toBeTranslated="true"
-				value="أحسنت! الآن أعد الضغط على نفس المكان لإخفاء أزرار التحكم وهذه الرسالة."/>
+			<node name="message2" value="أحسنت! الآن أعد الضغط على نفس المكان لإخفاء أزرار التحكم وهذه الرسالة." toBeTranslated="true"/>
 		</node>
 		<node name="folderList">
 			<node name="addFolder" value="اضافة مجلد"/>
 			<node name="removeDialog" value="حذف مجلد">
 				<node name="message" value="حذف “%s” من اللائحة؟"/>
 			</node>
-			<node name="duplicate" toBeTranslated="true"
-				value="“%s” موجود مسبقا في اللائحة"/>
+			<node name="duplicate" value="“%s” موجود مسبقا في اللائحة"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="الجذر"/>
@@ -926,122 +893,91 @@ Enable tips?"/>
 				<node name="size" value="الحجم"/>
 				<node name="date" value="التاريخ"/>
 			</node>
-			<node name="permissionDenied" toBeTranslated="true" value="Permission denied"/>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" toBeTranslated="true"
-			value="Error %s in native code during reading '%s'"/>
-		<node name="errorReadingFile" toBeTranslated="true"
-			value="Error occured during reading '%s'"/>
-		<node name="errorReadingZip" toBeTranslated="true"
-			value="Error occured during extracting '%s'"/>
-		<node name="pluginNotFound" toBeTranslated="true" value="No plugin for '%s'"/>
-		<node name="unknownPluginType" toBeTranslated="true"
-			value="Unknown plugin type: %s"/>
-		<node name="fileNotFound" toBeTranslated="true" value="File not found: %s"/>
-		<node name="unsupportedEncryptionMethod" toBeTranslated="true"
-			value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable"/>
-		<node name="opfFileNotFound" toBeTranslated="true"
-			value="OPF is not found in %s"/>
-		<node name="unsupportedFileFormat" toBeTranslated="true"
-			value="File format is not supported for '%s'"/>
-		<node name="errorParsingRtf" toBeTranslated="true"
-			value="Rtf parsing error in: %s"/>
-		<node name="cannotRunAndroidMarket"
-			value="Cannot access Android Market. Please, install %s manually"/>
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="حدث خطأ أثناء قراءة '%s'"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File not found: %s" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
 		<node name="textNotFound" value="لم يتم العثور على ما يطبق بحثك"/>
 		<node name="bookNotFound" value="لم يتم العثور على الكتاب الذي تبحث عنه"/>
 		<node name="bookmarkNotFound" value="لم يتم العثور على العلامة المرجعية التي تبحث عنها"/>
 		<node name="cannotOpenBook" value="لا يمكن فتح هذا الكتاب في الوقت الحالي"/>
 		<node name="dictionaryIsNotInstalled" value="القاموس غير منصب"/>
-		<node name="permissionDenied" value="Permission denied, sorry"/>
+		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 		<node name="noFavorites" value="قائمة الكتب المفضلة لديك فارغة"/>
 		<node name="noSeries" value="لا يوجد أي كتاب في هذه السلسة"/>
-		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
-		<node name="emptyBasket" value="Your basket is empty, sorry"/>
+		<node name="emptyCatalog" value="Catalog is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="لم يتم العثور على الكتاب الذي تبحث عنه"/>
-		<node name="videoServiceNotWorking" toBeTranslated="true"
-			value="Video service is not available, sorry"/>
-		<node name="videoPlayerNotFound" toBeTranslated="true"
-			value="There is no installed video player on this device, sorry"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
-		<node name="browser" value="Browser"/>
-		<node name="defaultBrowser" value="Default Browser"/>
+		<node name="browser" value="Browser" toBeTranslated="true"/>
+		<node name="defaultBrowser" value="Default Browser" toBeTranslated="true"/>
 	</node>
 	<node name="mobipocketPlugin">
-		<node name="unknown" value="Unknown Error"/>
-		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method"/>
-		<node name="encryptedFile" value="DRM-protected File"/>
+		<node name="unknown" value="Unknown Error" toBeTranslated="true"/>
+		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method" toBeTranslated="true"/>
+		<node name="encryptedFile" value="DRM-protected File" toBeTranslated="true"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="FBReader issue"/>
-			<node name="text"
-				value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or enter another directory name below."/>
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or enter another directory name below." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
-			<node name="title" value="FBReader issue"/>
-			<node name="text"
-				value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader."/>
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="error">
 		<node name="bookReading">
-			<node name="title" value="FBReader issue"/>
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="links">
-		<node name="faqPage" toBeTranslated="true"
-			value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
-	<node name="plugins" toBeTranslated="true" value="Install plugins">
-		<node name="noMorePlugins" toBeTranslated="true"
-			value="We have no new plugins at the moment, sorry"/>
-		<node name="litres" toBeTranslated="true" value="LitRes">
-			<node name="summary" toBeTranslated="true" value="Russian book store"/>
+	<node name="plugins" value="Install plugins" toBeTranslated="true">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
+		<node name="litres" value="LitRes" toBeTranslated="true">
+			<node name="summary" value="Russian book store" toBeTranslated="true"/>
 		</node>
-		<node name="tts-plus" toBeTranslated="true" value="TTS+">
-			<node name="summary" toBeTranslated="true" value="Read aloud"/>
+		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+			<node name="summary" value="Read aloud" toBeTranslated="true"/>
 		</node>
-		<node name="local-opds-scanner" toBeTranslated="true"
-			value="Local OPDS Scanner">
-			<node name="summary" toBeTranslated="true"
-				value="Look for books in the local network"/>
+		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
 		</node>
-		<node name="bookshelf" toBeTranslated="true" value="Bookshelf">
-			<node name="summary" toBeTranslated="true" value="Thumbnail library view"/>
+		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
 		</node>
-		<node name="opds-server" toBeTranslated="true" value="OPDS Server">
-			<node name="summary" toBeTranslated="true"
-				value="Serve books from your device"/>
+		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
 		</node>
-		<node name="widgets" toBeTranslated="true" value="Widgets">
-			<node name="summary" toBeTranslated="true"
-				value="Add books to your home screen"/>
+		<node name="widgets" value="Widgets" toBeTranslated="true">
+			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
 		</node>
-		<node name="pdf" toBeTranslated="true" value="PDF">
-			<node name="summary" toBeTranslated="true" value="Read books in PDF format"/>
+		<node name="pdf" value="PDF" toBeTranslated="true">
+			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">
-		<node name="encryptedSection" toBeTranslated="true" value="Encrypted section"/>
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
-		<node name="frontScreenMessage" toBeTranslated="true"
-			value="Turn the device over to read your book. To return text to this screen, press the button below."/>
-		<node name="frontScreenButton" toBeTranslated="true"
-			value="Switch to this screen"/>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="حدث خطأ أثناء قراءة '%s'"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'"/>
-		<node name="pluginNotFound" value="No plugin for '%s'"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s"/>
-		<node name="fileNotFound" value="File is not found: %s"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
+		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
 	</node>
 </resources>
