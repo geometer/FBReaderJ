@@ -22,6 +22,10 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
+===== 1.10.3 (??? ??, 2014) =====
+* Arabic FBReaderJ resources, by Ahmed Saidi (https://github.com/boussouira)
+* Updated German localization (by Matthias Dill)
+
 ===== 1.10.2 (May 25, 2014) =====
 * Fixed local library duplicates issue
 * Updated German localization (by Matthias Dill)
