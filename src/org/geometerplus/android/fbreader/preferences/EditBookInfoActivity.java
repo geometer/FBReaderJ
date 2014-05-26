@@ -269,10 +269,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				myInitialized = true;
 				
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
+				myEditAuthorsPreference = (EditAuthorsPreference)addPreference(new EditAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
+				myEditTagsPreference = (EditTagsPreference)addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
-				myEditTagsPreference = (EditTagsPreference)addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
-				myEditAuthorsPreference = (EditAuthorsPreference)addPreference(new EditAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
 			}
 		});
 	}
