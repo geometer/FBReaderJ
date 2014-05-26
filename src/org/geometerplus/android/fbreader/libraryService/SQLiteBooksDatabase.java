@@ -155,6 +155,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return book;
 	}
 
+	@Override
 	protected Book loadBookByFile(long fileId, ZLFile file) {
 		if (fileId == -1) {
 			return null;
