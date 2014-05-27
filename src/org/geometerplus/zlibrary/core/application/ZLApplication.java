@@ -91,11 +91,26 @@ public abstract class ZLApplication {
 		}
 	}
 
-	protected void runWithMessage(String key, Runnable action, Runnable postAction) {
-		if (myWindow != null) {
-			myWindow.runWithMessage(key, action, postAction);
-		} else {
+	public interface SynchronousExecutor {
+		void execute(Runnable action, Runnable uiPostAction);
+		void executeAux(String key, Runnable action);
+	}
+
+	private final SynchronousExecutor myDummyExecutor = new SynchronousExecutor() {
+		public void execute(Runnable action, Runnable uiPostAction) {
 			action.run();
+		}
+
+		public void executeAux(String key, Runnable action) {
+			action.run();
+		}
+	};
+
+	protected SynchronousExecutor createExecutor(String key) {
+		if (myWindow != null) {
+			return myWindow.createExecutor(key);
+		} else {
+			return myDummyExecutor;
 		}
 	}
 
