@@ -155,6 +155,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return book;
 	}
 
+	@Override
 	protected Book loadBookByFile(long fileId, ZLFile file) {
 		if (fileId == -1) {
 			return null;
@@ -1068,6 +1069,24 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 		return progress;
+	}
+
+	@Override
+	protected void deleteBook(long bookId) {
+		myDatabase.beginTransaction();
+		myDatabase.execSQL("DELETE FROM BookAuthor WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookLabel WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookReadingProgress WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookSeries WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookState WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookTag WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookUid WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM RecentBooks WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM VisitedHyperlinks WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM Books WHERE book_id=" + bookId);
+		myDatabase.setTransactionSuccessful();
+		myDatabase.endTransaction();
 	}
 
 	private void createTables() {

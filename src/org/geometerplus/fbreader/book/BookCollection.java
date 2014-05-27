@@ -41,6 +41,7 @@ public class BookCollection extends AbstractBookCollection {
 		Collections.synchronizedMap(new HashMap<Long,Book>());
 	private final List<String> myFilesToRescan =
 		Collections.synchronizedList(new LinkedList<String>());
+	private final DuplicateResolver myDuplicateResolver = new DuplicateResolver();
 
 	private volatile Status myStatus = Status.NotStarted;
 
@@ -76,6 +77,14 @@ public class BookCollection extends AbstractBookCollection {
 		Book book = myBooksByFile.get(bookFile);
 		if (book != null) {
 			return book;
+		}
+
+		final ZLFile otherFile = myDuplicateResolver.findDuplicate(bookFile);
+		if (otherFile != null) {
+			book = myBooksByFile.get(otherFile);
+			if (book != null) {
+				return book;
+			}
 		}
 
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
@@ -173,9 +182,18 @@ public class BookCollection extends AbstractBookCollection {
 					return false;
 				}
 
-				myBooksByFile.put(book.File, book);
-				myBooksById.put(book.getId(), book);
-				fireBookEvent(BookEvent.Added, book);
+				final ZLFile duplicate = myDuplicateResolver.findDuplicate(book.File);
+				final Book original = duplicate != null ? myBooksByFile.get(duplicate) : null;
+				if (original != null) {
+					if (new BookMergeHelper(this).merge(original, book)) {
+						fireBookEvent(BookEvent.Updated, original);
+					}
+				} else {
+					myBooksByFile.put(book.File, book);
+					myDuplicateResolver.addFile(book.File);
+					myBooksById.put(book.getId(), book);
+					fireBookEvent(BookEvent.Added, book);
+				}
 				return true;
 			} else if (force) {
 				existing.updateFrom(book);
@@ -195,6 +213,7 @@ public class BookCollection extends AbstractBookCollection {
 	public void removeBook(Book book, boolean deleteFromDisk) {
 		synchronized (myBooksByFile) {
 			myBooksByFile.remove(book.File);
+			myDuplicateResolver.removeFile(book.File);
 			myBooksById.remove(book.getId());
 
 			final List<Long> ids = myDatabase.loadRecentBookIds();
@@ -204,6 +223,7 @@ public class BookCollection extends AbstractBookCollection {
 			if (deleteFromDisk) {
 				book.File.getPhysicalFile().delete();
 			}
+			myDatabase.deleteBook(book.getId());
 		}
 		fireBookEvent(BookEvent.Removed, book);
 	}
@@ -445,6 +465,7 @@ public class BookCollection extends AbstractBookCollection {
 			for (ZLFile f : filesToRemove) {
 				synchronized (myBooksByFile) {
 					final Book book = myBooksByFile.remove(f);
+					myDuplicateResolver.removeFile(f);
 					if (book != null) {
 						myBooksById.remove(book.getId());
 						fireBookEvent(BookEvent.Removed, book);
