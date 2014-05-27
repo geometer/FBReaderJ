@@ -831,6 +831,8 @@
 			<node name="loadingNetworkBookInfo" value="Cargando información de libro. Por favor, espere…"/>
 			<node name="updatingCatalogsList" value="Actualizando lista de catálogos. Por favor, espere…"/>
 			<node name="updatingAccountInformation" value="Actualizando información de cuenta. Por favor, espere…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Error interno de servidor"/>
