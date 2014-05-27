@@ -4,14 +4,14 @@
 	android:layout_width="fill_parent"
 >
 	<LinearLayout
-		android:id="@+id/edit_tags_dialog_buttons"
+		android:id="@+id/edit_dialog_buttons"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:layout_alignParentBottom="true"
 		android:orientation="horizontal"
 	>
 		<Button
-			android:id="@+id/edit_tags_dialog_button_ok"
+			android:id="@+id/edit_dialog_button_ok"
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
 			android:text="Ok"	
 		/>
 		<Button
-			android:id="@+id/edit_tags_dialog_button_cancel"
+			android:id="@+id/edit_dialog_button_cancel"
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
 		android:id="@android:id/list"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
-		android:layout_above="@id/edit_tags_dialog_buttons"
+		android:layout_above="@id/edit_dialog_buttons"
 		android:layout_below="@id/edit_tags_input_field"
 	/>
 </RelativeLayout>

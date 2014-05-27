@@ -33,16 +33,11 @@ import android.view.inputmethod.EditorInfo;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class EditAuthorsDialogActivity extends ListActivity {
-	public static final int REQ_CODE = 001;
+public class EditAuthorsDialogActivity extends EditListDialogActivity {
+	public static final int REQ_CODE = 002;
 	public interface Key {
-		final String AUTHOR_LIST			= "edit_authors.author_list";
 		final String ALL_AUTHOR_LIST		= "edit_authors.all_author_list";
-		final String ACTIVITY_TITLE         = "edit_authors.title";
 	}
-
-	private ArrayList<String> myAuthorList;
-	private ZLResource myResource;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,28 +45,8 @@ public class EditAuthorsDialogActivity extends ListActivity {
 		setContentView(R.layout.edit_authors_dialog);
 
 		final Intent intent = getIntent();
-		myAuthorList = intent.getStringArrayListExtra(Key.AUTHOR_LIST);
 		ArrayList<String> allAuthorList = intent.getStringArrayListExtra(Key.ALL_AUTHOR_LIST);
-		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
-		myResource = ZLResource.resource("dialog").getResource("editAuthors");
 
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final Button okButton = (Button)findViewById(R.id.edit_authors_dialog_button_ok);
-		okButton.setText(buttonResource.getResource("ok").getValue());
-		okButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_OK, new Intent().putExtra(Key.AUTHOR_LIST, myAuthorList));
-				finish();
-			}
-		});
-		final Button cancelButton = (Button)findViewById(R.id.edit_authors_dialog_button_cancel);
-		cancelButton.setText(buttonResource.getResource("cancel").getValue());
-		cancelButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_CANCELED);
-				finish();
-			}
-		});
 		final AutoCompleteTextView inputField = (AutoCompleteTextView)findViewById(R.id.edit_authors_input_field);
 		inputField.setHint(myResource.getResource("addAuthor").getValue());
 		inputField.setOnEditorActionListener(new TextView.OnEditorActionListener(){
@@ -86,6 +61,8 @@ public class EditAuthorsDialogActivity extends ListActivity {
 		});
 		inputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allAuthorList));
 		
+		parseUIElements();
+		
 		final AuthorsAdapter adapter = new AuthorsAdapter();
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(adapter);
@@ -95,57 +72,21 @@ public class EditAuthorsDialogActivity extends ListActivity {
 	
 	private void addAuthor(String author){
 		if(author.length() != 0){
-			if(!myAuthorList.contains(author)){
-				myAuthorList.add(author);
+			if(!myEditList.contains(author)){
+				myEditList.add(author);
 			}
-			((AuthorsAdapter)getListAdapter()).notifyDataSetChanged();
+			((BaseAdapter)getListAdapter()).notifyDataSetChanged();
 		}
 	}
 
-	private void showItemRemoveDialog(final int index) {
-		final ZLResource resource = myResource.getResource("removeDialog");
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		new AlertDialog.Builder(EditAuthorsDialogActivity.this)
-			.setCancelable(false)
-			.setTitle(resource.getValue())
-			.setMessage(resource.getResource("message").getValue().replace("%s", myAuthorList.get(index)))
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					myAuthorList.remove(index);
-					((AuthorsAdapter)getListAdapter()).notifyDataSetChanged();
-				}
-			})
-			.setNegativeButton(buttonResource.getResource("cancel").getValue(), null)
-			.create().show();
-	}
-
-	private class AuthorsAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
-		@Override
-		public int getCount() {
-			return myAuthorList.size();
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public String getItem(int position) {
-			return myAuthorList.get(position);
-		}
-
+	private class AuthorsAdapter extends EditListAdapter {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			final View view = convertView != null
-				? convertView
-				: LayoutInflater.from(EditAuthorsDialogActivity.this).inflate(R.layout.edit_authors_item, parent, false);
+			final View view = super.getView(position, convertView, parent);
 
-			((TextView)view.findViewById(R.id.edit_authors_item_title)).setText(getItem(position));
-
-			final View deleteButton = view.findViewById(R.id.edit_authors_item_remove);
+			final View deleteButton = view.findViewById(R.id.edit_item_remove);
 			
-			if (myAuthorList.size() > 1) {
+			if (myEditList.size() > 1) {
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(final View v) {
@@ -157,10 +98,6 @@ public class EditAuthorsDialogActivity extends ListActivity {
 			}
 
 			return view;
-		}
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 		}
 	}
 }

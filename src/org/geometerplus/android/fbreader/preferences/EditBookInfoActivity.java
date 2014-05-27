@@ -39,6 +39,7 @@ import org.geometerplus.fbreader.formats.FormatPlugin;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.util.EditListDialogActivity;
 import org.geometerplus.android.util.EditTagsDialogActivity;
 import org.geometerplus.android.util.EditAuthorsDialogActivity;
 
@@ -176,7 +177,7 @@ class EditTagsPreference extends Preference {
 		for(Tag tag : myBook.tags()){
 			tags.add(tag.Name);
 		}
-		intent.putExtra(EditTagsDialogActivity.Key.TAG_LIST, tags);
+		intent.putExtra(EditListDialogActivity.Key.LIST, tags);
 		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditTagsDialogActivity.REQ_CODE);
 	}
 }
@@ -206,7 +207,7 @@ class EditAuthorsPreference extends Preference {
 	@Override
 	protected void onClick() {
 		Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
-		intent.putExtra(EditAuthorsDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
+		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
 		ArrayList<String> authors = new ArrayList<String>();
 		for(Author author : myBook.authors()){
 			authors.add(author.DisplayName);
@@ -216,7 +217,7 @@ class EditAuthorsPreference extends Preference {
 		for(Author author : ((EditBookInfoActivity)getContext()).authors()){
 			allAuthors.add(author.DisplayName);
 		}
-		intent.putExtra(EditAuthorsDialogActivity.Key.AUTHOR_LIST, authors);
+		intent.putExtra(EditListDialogActivity.Key.LIST, authors);
 		intent.putExtra(EditAuthorsDialogActivity.Key.ALL_AUTHOR_LIST, allAuthors);
 		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditAuthorsDialogActivity.REQ_CODE);
 	}
@@ -288,7 +289,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		if (resultCode == RESULT_OK) {
 			switch(reqCode){
 				case EditTagsDialogActivity.REQ_CODE:
-					myEditTagsPreference.saveTags(data.getStringArrayListExtra(EditTagsDialogActivity.Key.TAG_LIST));
+					myEditTagsPreference.saveTags(data.getStringArrayListExtra(EditListDialogActivity.Key.LIST));
+					break;
+				case EditAuthorsDialogActivity.REQ_CODE:
+					myEditAuthorsPreference.saveAuthors(data.getStringArrayListExtra(EditListDialogActivity.Key.LIST));
 					break;
 			}
 		}

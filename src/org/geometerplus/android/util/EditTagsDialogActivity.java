@@ -33,14 +33,9 @@ import android.view.inputmethod.EditorInfo;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class EditTagsDialogActivity extends ListActivity {
+public class EditTagsDialogActivity extends EditListDialogActivity {
 	public static final int REQ_CODE = 001;
-	public interface Key {
-		final String TAG_LIST				= "edit_tags.tag_list";
-		final String ACTIVITY_TITLE         = "edit_tags.title";
-	}
 
-	private ArrayList<String> myTagList;
 	private ZLResource myResource;
 
 	@Override
@@ -48,28 +43,8 @@ public class EditTagsDialogActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_tags_dialog);
 
-		final Intent intent = getIntent();
-		myTagList = intent.getStringArrayListExtra(Key.TAG_LIST);
-		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
 		myResource = ZLResource.resource("dialog").getResource("editTags");
 
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final Button okButton = (Button)findViewById(R.id.edit_tags_dialog_button_ok);
-		okButton.setText(buttonResource.getResource("ok").getValue());
-		okButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_OK, new Intent().putExtra(Key.TAG_LIST, myTagList));
-				finish();
-			}
-		});
-		final Button cancelButton = (Button)findViewById(R.id.edit_tags_dialog_button_cancel);
-		cancelButton.setText(buttonResource.getResource("cancel").getValue());
-		cancelButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_CANCELED);
-				finish();
-			}
-		});
 		final EditText inputField = (EditText)findViewById(R.id.edit_tags_input_field);
 		inputField.setHint(myResource.getResource("addTag").getValue());
 		inputField.setOnEditorActionListener(new TextView.OnEditorActionListener(){
@@ -83,69 +58,35 @@ public class EditTagsDialogActivity extends ListActivity {
 				return true;
 			}
 		});
-		
+	
+		parseUIElements();		
+
 		final TagsAdapter adapter = new TagsAdapter();
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(adapter);
 
 		setResult(RESULT_CANCELED);
 	}
-	
+
 	private void addTag(String tag){
 		if(tag.length() != 0){
 			String[] tags = tag.split(",");
 			for(String s : tags){
 				s = s.trim();
-				if(!myTagList.contains(s)){
-					myTagList.add(s);
+				if(!myEditList.contains(s)){
+					myEditList.add(s);
 				}
 			}
-			((TagsAdapter)getListAdapter()).notifyDataSetChanged();
+			((BaseAdapter)getListAdapter()).notifyDataSetChanged();
 		}
 	}
 
-	private void showItemRemoveDialog(final int index) {
-		final ZLResource resource = myResource.getResource("removeDialog");
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		new AlertDialog.Builder(EditTagsDialogActivity.this)
-			.setCancelable(false)
-			.setTitle(resource.getValue())
-			.setMessage(resource.getResource("message").getValue().replace("%s", myTagList.get(index)))
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					myTagList.remove(index);
-					((TagsAdapter)getListAdapter()).notifyDataSetChanged();
-				}
-			})
-			.setNegativeButton(buttonResource.getResource("cancel").getValue(), null)
-			.create().show();
-	}
-
-	private class TagsAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
-		@Override
-		public int getCount() {
-			return myTagList.size();
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public String getItem(int position) {
-			return myTagList.get(position);
-		}
-
+	private class TagsAdapter extends EditListAdapter {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			final View view = convertView != null
-				? convertView
-				: LayoutInflater.from(EditTagsDialogActivity.this).inflate(R.layout.edit_tags_item, parent, false);
+			final View view = super.getView(position, convertView, parent);
 
-			((TextView)view.findViewById(R.id.edit_tags_item_title)).setText(getItem(position));
-
-			final View deleteButton = view.findViewById(R.id.edit_tags_item_remove);
+			final View deleteButton = view.findViewById(R.id.edit_item_remove);
 			deleteButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(final View v) {
 					showItemRemoveDialog(position);
@@ -153,10 +94,6 @@ public class EditTagsDialogActivity extends ListActivity {
 			});
 
 			return view;
-		}
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 		}
 	}
 }
