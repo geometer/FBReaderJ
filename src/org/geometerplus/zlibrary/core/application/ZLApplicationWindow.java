@@ -25,7 +25,7 @@ public interface ZLApplicationWindow {
 	void setWindowTitle(String title);
 	void showErrorMessage(String resourceKey);
 	void showErrorMessage(String resourceKey, String parameter);
-	void runWithMessage(String key, Runnable runnable, Runnable postAction);
+	ZLApplication.SynchronousExecutor createExecutor(String key);
 	void processException(Exception e);
 
 	void refresh();
