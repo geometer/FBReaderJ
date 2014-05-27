@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,40 +20,31 @@
 package org.geometerplus.zlibrary.core.options;
 
 public final class ZLStringOption extends ZLOption {
-	private final String myDefaultValue;
-	private String myValue;
-
 	public ZLStringOption(String group, String optionName, String defaultValue) {
-		super(group, optionName);
-		myDefaultValue = defaultValue != null ? defaultValue.intern() : "";
-		myValue = myDefaultValue;
+		super(group, optionName, defaultValue);
 	}
 
 	public String getValue() {
-		if (!myIsSynchronized) {
-			String value = getConfigValue(myDefaultValue);
-			if (value != null) {
-				myValue = value;
-			}
-			myIsSynchronized = true;
+		if (mySpecialName != null && !Config.Instance().isInitialized()) {
+			return Config.Instance().getSpecialStringValue(mySpecialName, myDefaultStringValue);
+		} else {
+			return getConfigValue();
 		}
-		return myValue;
 	}
 
 	public void setValue(String value) {
 		if (value == null) {
 			return;
 		}
-		value = value.intern();
-		if (myIsSynchronized && (myValue == value)) {
-			return;
+		if (mySpecialName != null) {
+			Config.Instance().setSpecialStringValue(mySpecialName, value);
 		}
-		myValue = value;
-		if (value == myDefaultValue) {
-			unsetConfigValue();
-		} else {
-			setConfigValue(value);
+		setConfigValue(value);
+	}
+
+	public void saveSpecialValue() {
+		if (mySpecialName != null && Config.Instance().isInitialized()) {
+			Config.Instance().setSpecialStringValue(mySpecialName, getValue());
 		}
-		myIsSynchronized = true;
 	}
 }

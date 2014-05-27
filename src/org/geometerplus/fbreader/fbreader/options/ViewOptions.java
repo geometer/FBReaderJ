@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,10 @@
 package org.geometerplus.fbreader.fbreader.options;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
+
+import org.geometerplus.fbreader.fbreader.FBView;
 
 public class ViewOptions {
 	public final ZLBooleanOption TwoColumnView;
@@ -30,7 +32,15 @@ public class ViewOptions {
 	public final ZLIntegerRangeOption TopMargin;
 	public final ZLIntegerRangeOption BottomMargin;
 	public final ZLIntegerRangeOption SpaceBetweenColumns;
+	public final ZLIntegerRangeOption ScrollbarType;
 	public final ZLIntegerRangeOption FooterHeight;
+	public final ZLStringOption ColorProfileName;
+
+	public final ZLBooleanOption YotaDrawOnBackScreen;
+
+	private ColorProfile myColorProfile;
+	private ZLTextStyleCollection myTextStyleCollection;
+	private FooterOptions myFooterOptions;
 
 	public ViewOptions() {
 		final ZLibrary zlibrary = ZLibrary.Instance();
@@ -40,12 +50,51 @@ public class ViewOptions {
 		final int y = zlibrary.getHeightInPixels();
 		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
 
-		TwoColumnView = new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 42 * dpi * dpi);
-		LeftMargin = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
-		RightMargin = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
-		TopMargin = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
-		BottomMargin = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 20);
-		SpaceBetweenColumns = new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
-		FooterHeight = new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
+		TwoColumnView =
+			new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 42 * dpi * dpi);
+		LeftMargin =
+			new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
+		RightMargin =
+			new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
+		TopMargin =
+			new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
+		BottomMargin =
+			new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 20);
+		SpaceBetweenColumns =
+			new ZLIntegerRangeOption("Options", "SpaceBetweenColumns", 0, 300, 3 * horMargin);
+		ScrollbarType =
+			new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
+		FooterHeight =
+			new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
+		ColorProfileName =
+			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
+		ColorProfileName.setSpecialName("colorProfile");
+
+		YotaDrawOnBackScreen =
+			new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
+	}
+
+	public ColorProfile getColorProfile() {
+		final String name = ColorProfileName.getValue();
+		if (myColorProfile == null || !name.equals(myColorProfile.Name)) {
+			myColorProfile = ColorProfile.get(name);
+		}
+		return myColorProfile;
+	}
+
+	public ZLTextStyleCollection getTextStyleCollection() {
+		final String screen = YotaDrawOnBackScreen.getValue() ? "Yota".intern() : "Base".intern();
+		if (myTextStyleCollection == null || myTextStyleCollection.Screen != screen) {
+			myTextStyleCollection = new ZLTextStyleCollection(screen);
+		}
+		return myTextStyleCollection;
+	}
+
+	public FooterOptions getFooterOptions() {
+		final String screen = YotaDrawOnBackScreen.getValue() ? "Yota".intern() : "Base".intern();
+		if (myFooterOptions == null || myFooterOptions.Screen != screen) {
+			myFooterOptions = new FooterOptions(screen);
+		}
+		return myFooterOptions;
 	}
 }

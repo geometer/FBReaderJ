@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 public interface ZLApplicationWindow {
 	void setWindowTitle(String title);
+	void showErrorMessage(String resourceKey);
+	void showErrorMessage(String resourceKey, String parameter);
 	void runWithMessage(String key, Runnable runnable, Runnable postAction);
 	void processException(Exception e);
 

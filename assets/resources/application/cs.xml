@@ -48,6 +48,7 @@
 		<node name="deleteBook" value="Odstranit knihu"/>
 		<node name="addToFavorites" value="Přidat do oblíbených"/>
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
+		<node name="removeFromRecents" value="Odebrat ze seznamu posledních"/>
 		<node name="markAsRead" value="Označit jako přečtené"/>
 		<node name="markAsUnread" value="Označit jako nepřečtené"/>
 	</node>
@@ -99,7 +100,7 @@
 		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="topupTitle" value="Doplnit účet"/>
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
-		<node name="authorizationMenuTitle" value="Vybrat akci"/>
+		<node name="authorisationMenuTitle" value="Vybrat akci"/>
 		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
 		<node name="basketSummaryEmpty" value="Žádné knihy"/>
@@ -166,7 +167,7 @@
 		<node name="confirm" value="Opravdu chcete zakoupit&#10;“%s”&#10;knihu?"/>
 		<node name="confirmSeveralBooks" value="Opravdu chcete zakoupit %s knih?"/>
 		<node name="alreadyBought" value="Kniha je již zakoupena"/>
-		<node name="notAuthorized" value="Vyžadována autorizace"/>
+		<node name="notAuthorised" value="Vyžadována autorizace"/>
 		<node name="noAccountInformation" value="Nelze načíst stav účtu"/>
 		<node name="unsufficientFunds" value="Tento nákup stojí %0 a vy máte pouze %1"/>
 		<node name="zeroFunds" value="Tento nákup stojí %0"/>
@@ -271,8 +272,8 @@
 		<node name="toc" value="Obsah"/>
 		<node name="day" value="Den"/>
 		<node name="night" value="Noc"/>
-		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
-		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToBackScreen" value="Přepnout na zadní displej"/>
+		<node name="yotaSwitchToFrontScreen" value="Přepnout na přední displej"/>
 		<node name="networkLibrary" value="Síťová knihovna"/>
 		<node name="navigate" value="Navigace">
 			<node name="toc" value="Obsah"/>
@@ -287,8 +288,8 @@
 		</node>
 		<node name="shareBook" value="Sdílet knihu"/>
 		<node name="search" value="Hledat"/>
-		<node name="rotate" value="Otočit obrazovku"/>
-		<node name="screenOrientation" value="Orientace obrazovky"/>
+		<node name="rotate" value="Otočit displej"/>
+		<node name="screenOrientation" value="Orientace displeje"/>
 		<node name="screenOrientationSystem" value="Systém"/>
 		<node name="screenOrientationSensor" value="Podle orientace zařízení"/>
 		<node name="screenOrientationPortrait" value="Na výšku"/>
@@ -314,14 +315,26 @@
 	<node name="Preferences">
 		<node name="directories" value="Adresáře">
 			<node name="summary" value="Adresáře pro hledání souborů"/>
-			<node name="books" value="Adresář s knihami"/>
-			<node name="fonts" value="Adresář s písmy"/>
-			<node name="wallpapers" value="Adresář s tapetami"/>
+			<node name="bookPath" value="Kde hledat knihy">
+				<node name="chooserTitle" value="Adresář s knihami"/>
+			</node>
+			<node name="downloadDir" value="Kam ukládat stažené knihy">
+				<node name="chooserTitle" value="Adresář s knihami"/>
+			</node>
+			<node name="fontPath" value="Kde hledat písma">
+				<node name="chooserTitle" value="Adresář s písmy"/>
+			</node>
+			<node name="wallpaperPath" value="Kde hledat obrázky pozadí">
+				<node name="chooserTitle" value="Adresář s tapetami"/>
+			</node>
+			<node name="tempDir" value="Kam ukládat dočasné soubory">
+				<node name="chooserTitle" value="Složka dočasných souborů"/>
+			</node>
 		</node>
 		<node name="appearance" value="Vzhled">
 			<node name="summary" value="Otáčení, stavový řádek"/>
 			<node name="language" value="Jazyk rozhraní"/>
-			<node name="screenOrientation" value="Orientace obrazovky">
+			<node name="screenOrientation" value="Orientace displeje">
 				<node name="system" value="Systém"/>
 				<node name="sensor" value="Podle orientace zařízení"/>
 				<node name="portrait" value="Na výšku"/>
@@ -345,9 +358,9 @@
 				<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
 				<node name="summaryOff" value="Nezobrazovat stavový řádek, když se menu aktivuje"/>
 			</node>
-			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
-				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
-				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			<node name="fullscreenMode" value="Celoobrazovkový režim">
+				<node name="summaryOn" value="Skrýt ovládací prvky navigace"/>
+				<node name="summaryOff" value="Zobrazit ovládací prvky navigace"/>
 			</node>
 			<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
 				<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
@@ -357,8 +370,8 @@
 				<node name="summaryOn" value="Zobrazit text ve dvou sloupcích, pokud je zařízení drženo vodorovně"/>
 				<node name="summaryOff" value="Vždy zobrazovat text v jednom sloupci"/>
 			</node>
-			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
-				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
+			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu displeje">
+				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje displeje"/>
 				<node name="summaryOff" value="Zakázáno"/>
 			</node>
 			<node name="dontTurnScreenOff" value="Zabránit usínání displeje">
@@ -557,6 +570,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Použít/ignorovat hodnoty definované v CSS"/>
+			<node name="fontFamily" value="Rodina písem">
+				<node name="summaryOn" value="Použít rodinu písem definovanou v CSS"/>
+				<node name="summaryOff" value="Ignorovat rodinu písem definovanou v CSS"/>
+			</node>
 			<node name="fontSize" value="Velikost písma">
 				<node name="summaryOn" value="Použít velikost písma definovanou v CSS"/>
 				<node name="summaryOff" value="Ignorovat velikost písma definovanou v CSS"/>
@@ -748,6 +765,18 @@
 			<node name="twitter" value="Sledujte nás na twitteru">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader na Facebooku">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Knihovny třetích stran"/>
+		</node>
+		<node name="eink" value="Displej s elektronickým inkoustem">
+			<node name="summary" value="Specifické možnosti pro displej s elektronickým inkoustem"/>
+			<node name="enableFastRefresh" value="Režim rychlého obnovení">
+				<node name="summaryOn" value="Použít rychlou (ale ne moc čistou) aktualizaci displeje"/>
+				<node name="summaryOff" value="Použít kompletní (čistou, ale pomalou) aktualizaci displeje"/>
+			</node>
+			<node name="interval" value="Počet ryclých aktualizací mezi úplnými obnoveními"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -767,7 +796,7 @@
 			<node name="topup" value="Doplnit účet"/>
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
-			<node name="authorize" value="Authorizovat"/>
+			<node name="authorise" value="Authorisovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
 			<node name="sendReport" value="Odeslat zprávu"/>
 			<node name="addToFavorites" value="Přidat do oblíbených"/>
@@ -851,8 +880,44 @@
 			<node name="dontShowAgain" value="Znovu nezobrazovat"/>
 			<node name="more" value="Další tip"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader ve výchozím nastavení pracuje v režimu celé obrazovky. Klepnutím na prostřední třetinu obrazovky se zobrazí ovládání. Toto chování můžete změnit v části „Vzhled“ dialogového okna Nastavení."/>
+			<node name="message2" value="Výborně! Dalším klepnutím na prostřední třetinu obrazovky se skryje ovládání a tato nápověda. Pokud chcete ponechat během čtení ovládání na obrazovce, vyberte volbu „Zobrazit panel akcí“ v části „Vzhled“ dialogového okna Nastavení."/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Kořenová složka"/>
+			<node name="newFolder" value="Nová složka"/>
+			<node name="folderNameHint" value="Název složky"/>
+			<node name="menu">
+				<node name="origin" value="Původ"/>
+				<node name="reload" value="Znovu načíst"/>
+			</node>
+			<node name="sortBy" value="Seřadit podle">
+				<node name="name" value="Názvu"/>
+				<node name="size" value="Velikosti"/>
+				<node name="date" value="Data"/>
+			</node>
+			<node name="permissionDenied" value="Přístup byl odepřen"/>
+		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Chyba %s v nativním kódu během čtení '%s'"/>
+		<node name="errorReadingFile" value="Došlo k chybě během čtení '%s'"/>
+		<node name="errorReadingZip" value="Došlo k chybě během rozbalování '%s'"/>
+		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
+		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
+		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
+		<node name="unsupportedEncryptionMethod" value="Soubor %s je šifrovaný metodou, kterou FBReader nepodporuje. Některé stránky nelze číst."/>
+		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
+		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
+		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
 		<node name="cannotRunAndroidMarket" value="Android Market není přístupný. Nainstalujte %s ručně"/>
 		<node name="textNotFound" value="V knize není bohužel žádný vhodný text"/>
 		<node name="bookNotFound" value="V knihovně nejsou bohužel žádné vhodné knihy"/>
@@ -865,6 +930,8 @@
 		<node name="emptyCatalog" value="Katalog je bohužel prázdný"/>
 		<node name="emptyBasket" value="Váš košík je bohužel prázdný"/>
 		<node name="emptyNetworkSearchResults" value="Nebyly nalezeny žádné knihy"/>
+		<node name="videoServiceNotWorking" value="Bohužel, videoslužba není dostupná"/>
+		<node name="videoPlayerNotFound" value="Bohužel, na tomto zařízení není nainstalovaný žádný přehrávač videa"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>
@@ -878,7 +945,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Problém FBReaderu"/>
-			<node name="text" value="Adresář vyrovnávací paměti FBReaderu není přístupný pro zápis. Možná jste zapomněli vložit nebo odpojit paměťovou kartu. Opravte tento problém nebo níže vyberte jiný název adresáře."/>
+			<node name="text" value="Adresář mezipaměti FBReaderu není přístupný pro zápis. Možná jste zapomněli vložit nebo odpojit paměťovou kartu. Opravte tento problém nebo vyberte jiný adresář."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problém FBReaderu"/>
@@ -890,21 +957,38 @@
 			<node name="title" value="Problém FBReaderu"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Došlo k chybě během čtení '%s'"/>
-		<node name="errorReadingZip" value="Došlo k chybě během rozbalování '%s'"/>
-		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
-		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
-		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
-		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
-		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
-		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
-	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
+	<node name="plugins" value="Instalovat doplňky">
+		<node name="noMorePlugins" value="Bohužel, právě nemáme žádné nové doplňky"/>
+		<node name="litres" value="LitRes">
+			<node name="summary" value="Ruské knihkupectví"/>
+		</node>
+		<node name="tts-plus" value="TTS+">
+			<node name="summary" value="Čte nahlas"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner">
+			<node name="summary" value="Hledá knihy v místní síti"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf">
+			<node name="summary" value="Zobrazí knihovnu v režimu náhledů"/>
+		</node>
+		<node name="opds-server" value="OPDS Server">
+			<node name="summary" value="Dodá knihy z vašeho zařízení"/>
+		</node>
+		<node name="widgets" value="Widgety">
+			<node name="summary" value="Přidá knihy na domovskou obrazovku"/>
+		</node>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="Čte knihy ve formátu PDF"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Šifrovaná část"/>
+	</node>
 	<node name="yota">
-		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
-		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+		<node name="frontScreenMessage" value="Pro čtení knihy obraťte zařízení. Pro navrácení textu na tento displej stiskněte tlačítko dole."/>
+		<node name="frontScreenButton" value="Přepnout na tento displej"/>
 	</node>
 </resources>

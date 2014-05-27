@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,48 +24,42 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 public class ZLStringListOption extends ZLOption {
-	private final List<String> myDefaultValue;
-	private List<String> myValue;
 	private final String myDelimiter;
+	private List<String> myValue;
+	private String myStringValue;
 
 	public ZLStringListOption(String group, String optionName, List<String> defaultValue, String delimiter) {
-		super(group, optionName);
-		myDefaultValue = (defaultValue != null) ? defaultValue : Collections.<String>emptyList();
-		myValue = myDefaultValue;
+		super(group, optionName, MiscUtil.join(defaultValue, delimiter));
 		myDelimiter = delimiter;
 	}
 
 	public ZLStringListOption(String group, String optionName, String defaultValue, String delimiter) {
-		super(group, optionName);
-		myDefaultValue = (defaultValue != null) ? Collections.singletonList(defaultValue) : Collections.<String>emptyList();
-		myValue = myDefaultValue;
-		myDelimiter = delimiter;
+		this(
+			group, optionName, defaultValue != null
+				? Collections.singletonList(defaultValue)
+				: Collections.<String>emptyList(),
+			delimiter
+		);
 	}
 
 	public List<String> getValue() {
-		if (!myIsSynchronized) {
-			final String value = getConfigValue(MiscUtil.join(myDefaultValue, myDelimiter));
-			if (value != null) {
-				myValue = MiscUtil.split(value, myDelimiter);
-			}
-			myIsSynchronized = true;
+		final String stringValue = getConfigValue();
+		if (!stringValue.equals(myStringValue)) {
+			myStringValue = stringValue;
+			myValue = MiscUtil.split(stringValue, myDelimiter);
 		}
-		return Collections.unmodifiableList(myValue);
+		return myValue;
 	}
 
 	public void setValue(List<String> value) {
 		if (value == null) {
 			value = Collections.emptyList();
 		}
-		if (myIsSynchronized && (myValue.equals(value))) {
+		if (value.equals(myValue)) {
 			return;
 		}
 		myValue = new ArrayList<String>(value);
-		if (value.equals(myDefaultValue)) {
-			unsetConfigValue();
-		} else {
-			setConfigValue(MiscUtil.join(value, myDelimiter));
-		}
-		myIsSynchronized = true;
+		myStringValue = MiscUtil.join(value, myDelimiter);
+		setConfigValue(myStringValue);
 	}
 }

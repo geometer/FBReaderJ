@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,4 +33,9 @@ public interface XMLNamespaces {
 	String CalibreMetadata = "http://calibre.kovidgoyal.net/2009/metadata";
 
 	String FBReaderCatalogMetadata = "http://data.fbreader.org/catalog/metadata/";
+
+	String MarlinEpub = "http://marlin-drm.com/epub";
+	String XMLEncryption = "http://www.w3.org/2001/04/xmlenc#";
+	String XMLDigitalSignature = "http://www.w3.org/2000/09/xmldsig#";
+	String EpubContainer = "urn:oasis:names:tc:opendocument:xmlns:container";
 }

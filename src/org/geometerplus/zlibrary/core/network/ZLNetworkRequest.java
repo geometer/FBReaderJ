@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ public abstract class ZLNetworkRequest {
 	public final String PostData;
 	public final Map<String,String> PostParameters = new HashMap<String,String>();
 	public final MimeType Mime;
+	public final Map<String,String> Headers = new HashMap<String,String>();
 
 	private final boolean myIsQuiet;
 
@@ -55,6 +56,10 @@ public abstract class ZLNetworkRequest {
 
 	public void addPostParameter(String name, String value) {
 		PostParameters.put(name, value);
+	}
+
+	public void addHeader(String name, String value) {
+		Headers.put(name, value);
 	}
 
 	public String getURL() {

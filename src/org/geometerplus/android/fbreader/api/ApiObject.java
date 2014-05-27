@@ -20,6 +20,8 @@ public abstract class ApiObject implements Parcelable {
 		int DATE = 4;
 		int LONG = 5;
 		int TEXT_POSITION = 10;
+		int SERIALIZABLE = 20;
+		int PARCELABALE = 21;
 	}
 
 	static class Void extends ApiObject {
@@ -129,6 +131,44 @@ public abstract class ApiObject implements Parcelable {
 		}
 	}
 
+	static class Serializable extends ApiObject {
+		final java.io.Serializable Value;
+
+		Serializable(java.io.Serializable value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.SERIALIZABLE;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeSerializable(Value);
+		}
+	}
+
+	static class Parcelable extends ApiObject {
+		final android.os.Parcelable Value;
+
+		Parcelable(android.os.Parcelable value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.PARCELABALE;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeParcelable(Value, 0);
+		}
+	}
+
 	static class Error extends ApiObject {
 		final java.lang.String Message;
 
@@ -168,10 +208,22 @@ public abstract class ApiObject implements Parcelable {
 		return new Date(value);
 	}
 
+	static ApiObject envelope(android.os.Parcelable value) {
+		return new Parcelable(value);
+	}
+
 	static List<ApiObject> envelopeStringList(List<java.lang.String> values) {
 		final ArrayList<ApiObject> objects = new ArrayList<ApiObject>(values.size());
 		for (java.lang.String v : values) {
 			objects.add(new String(v));
+		}
+		return objects;
+	}
+
+	static List<ApiObject> envelopeSerializableList(List<? extends java.io.Serializable> values) {
+		final ArrayList<ApiObject> objects = new ArrayList<ApiObject>(values.size());
+		for (java.io.Serializable v : values) {
+			objects.add(new Serializable(v));
 		}
 		return objects;
 	}
@@ -217,6 +269,10 @@ public abstract class ApiObject implements Parcelable {
 						return new String(parcel.readString());
 					case Type.TEXT_POSITION:
 						return new TextPosition(parcel.readInt(), parcel.readInt(), parcel.readInt());
+					case Type.SERIALIZABLE:
+						return new Serializable(parcel.readSerializable());
+					case Type.PARCELABALE:
+						return new Parcelable(parcel.readParcelable(null));
 				}
 			}
 

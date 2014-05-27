@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.database.SQLException;
 import android.database.Cursor;
 
-import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
@@ -42,20 +42,15 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.util.SQLiteUtil;
 
 final class SQLiteBooksDatabase extends BooksDatabase {
-	private static BooksDatabase ourInstance;
-
-	static BooksDatabase Instance(Context context) {
-		if (ourInstance == null) {
-			ourInstance = new SQLiteBooksDatabase(context);
-		}
-		return ourInstance;
-	}
-
 	private final SQLiteDatabase myDatabase;
 
-	private SQLiteBooksDatabase(Context context) {
+	SQLiteBooksDatabase(Context context) {
 		myDatabase = context.openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
 		migrate();
+	}
+
+	public void close() {
+		myDatabase.close();
 	}
 
 	protected void executeAsTransaction(Runnable actions) {
@@ -160,6 +155,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return book;
 	}
 
+	@Override
 	protected Book loadBookByFile(long fileId, ZLFile file) {
 		if (fileId == -1) {
 			return null;
@@ -1008,7 +1004,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myStorePositionStatement.bindLong(2, position.getParagraphIndex());
 		myStorePositionStatement.bindLong(3, position.getElementIndex());
 		myStorePositionStatement.bindLong(4, position.getCharIndex());
-		myStorePositionStatement.execute();
+		myStorePositionStatement.executeInsert();
 	}
 
 	private SQLiteStatement myDeleteVisitedHyperlinksStatement;
@@ -1073,6 +1069,24 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		cursor.close();
 		return progress;
+	}
+
+	@Override
+	protected void deleteBook(long bookId) {
+		myDatabase.beginTransaction();
+		myDatabase.execSQL("DELETE FROM BookAuthor WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookLabel WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookReadingProgress WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookSeries WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookState WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookTag WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookUid WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM RecentBooks WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM VisitedHyperlinks WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM Books WHERE book_id=" + bookId);
+		myDatabase.setTransactionSuccessful();
+		myDatabase.endTransaction();
 	}
 
 	private void createTables() {
@@ -1230,7 +1244,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				statement.bindLong(4, chr);
 				statement.execute();
 			}
-			ZLConfig.Instance().removeGroup(fileName);
+			Config.Instance().removeGroup(fileName);
 		}
 		cursor.close();
 	}

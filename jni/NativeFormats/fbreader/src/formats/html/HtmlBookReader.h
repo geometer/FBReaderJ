@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 #include <stack>
 
 #include <shared_ptr.h>
+
+#include <FontMap.h>
 
 #include "HtmlReader.h"
 #include "../../bookmodel/BookReader.h"
@@ -74,6 +76,7 @@ private:
 
 	StyleSheetTable myStyleSheetTable;
 	shared_ptr<StyleSheetParser> myStyleSheetParser;
+	shared_ptr<FontMap> myFontMap;
 
 	int mySpaceCounter;
 	int myBreakCounter;

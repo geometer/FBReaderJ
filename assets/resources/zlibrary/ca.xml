@@ -61,8 +61,8 @@
 		<node name="it" value="Italià"/>
 		<node name="ka" value="Georgià"/>
 		<node name="lt" value="Lituà"/>
-		<node name="nl" value="Holandès"/>
 		<node name="nb" value="Noruec"/>
+		<node name="nl" value="Holandès"/>
 		<node name="pl" value="Polonès"/>
 		<node name="pt" value="Portuguès"/>
 		<node name="ro" value="Romanès"/>

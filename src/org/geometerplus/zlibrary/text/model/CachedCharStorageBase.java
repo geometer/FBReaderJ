@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,9 @@ abstract class CachedCharStorageBase implements CharStorage {
 	}
 
 	public char[] block(int index) {
+		if (index < 0 && index >= myArray.size()) {
+			return null;
+		}
 		char[] block = myArray.get(index).get();
 		if (block == null) {
 			try {

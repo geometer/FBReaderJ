@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,15 +85,6 @@ public class MergedInputStream extends InputStream {
 			total += myStreams[i].available();
 		}
 		return total;
-	}
-
-	@Override
-	public void reset() throws IOException {
-		myCurrentStream = myStreams[0];
-		myCurrentStreamNumber = 0;
-		for (InputStream stream : myStreams) {
-			stream.reset();
-		}
 	}
 
 	private boolean nextStream() {

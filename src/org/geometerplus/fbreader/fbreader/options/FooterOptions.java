@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,17 +22,22 @@ package org.geometerplus.fbreader.fbreader.options;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class FooterOptions {
+	public final String Screen;
+
 	public final ZLBooleanOption ShowTOCMarks;
 	public final ZLBooleanOption ShowClock;
 	public final ZLBooleanOption ShowBattery;
 	public final ZLBooleanOption ShowProgress;
 	public final ZLStringOption Font;
 
-	public FooterOptions() {
-		ShowTOCMarks = new ZLBooleanOption("Options", "FooterShowTOCMarks", true);
-		ShowClock = new ZLBooleanOption("Options", "ShowClockInFooter", true);
-		ShowBattery = new ZLBooleanOption("Options", "ShowBatteryInFooter", true);
-		ShowProgress = new ZLBooleanOption("Options", "ShowProgressInFooter", true);
-		Font = new ZLStringOption("Options", "FooterFont", "Droid Sans");
+	public FooterOptions(String screen) {
+		Screen = screen;
+		final String prefix = "Base".equals(screen) ? "" : screen + ":";
+
+		ShowTOCMarks = new ZLBooleanOption("Options", prefix + "FooterShowTOCMarks", "Base".equals(screen));
+		ShowClock = new ZLBooleanOption("Options", prefix + "ShowClockInFooter", true);
+		ShowBattery = new ZLBooleanOption("Options", prefix + "ShowBatteryInFooter", true);
+		ShowProgress = new ZLBooleanOption("Options", prefix + "ShowProgressInFooter", true);
+		Font = new ZLStringOption("Options", prefix + "FooterFont", "Droid Sans");
 	}
 }

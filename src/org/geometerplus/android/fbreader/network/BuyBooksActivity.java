@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		try {
 			if (!mgr.isAuthorised(true)) {
 				findViewById(R.id.buy_book_buttons).setVisibility(View.GONE);
-				AuthorizationMenuActivity.runMenu(this, myLink, 1);
+				AuthorisationMenuActivity.runMenu(this, myLink, 1);
 			}
 		} catch (ZLNetworkException e) {
 		}
@@ -121,7 +121,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 		myAccount = mgr.currentAccount();
 
-		setupUI(AuthorizationState.Authorized);
+		setupUI(AuthorisationState.Authorised);
 
 		NetworkLibrary.Instance().addChangeListener(this);
 	}
@@ -132,12 +132,12 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	private static enum AuthorizationState {
-		Authorized,
-		NotAuthorized
+	private static enum AuthorisationState {
+		Authorised,
+		NotAuthorised
 	};
 
-	private void setupUI(final AuthorizationState state) {
+	private void setupUI(final AuthorisationState state) {
 		runOnUiThread(new Runnable() {
 			public void run() {
 				setupUIInternal(state);
@@ -145,7 +145,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		});
 	}
 
-	private void setupUIInternal(AuthorizationState state) {
+	private void setupUIInternal(AuthorisationState state) {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 
@@ -163,13 +163,13 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		}
 
 		switch (state) {
-			case NotAuthorized:
-				textArea.setText(resource.getResource("notAuthorized").getValue());
-				okButton.setText(buttonResource.getResource("authorize").getValue());
+			case NotAuthorised:
+				textArea.setText(resource.getResource("notAuthorised").getValue());
+				okButton.setText(buttonResource.getResource("authorise").getValue());
 				cancelButton.setText(buttonResource.getResource("cancel").getValue());
 				okButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
-						AuthorizationMenuActivity.runMenu(BuyBooksActivity.this, myLink);
+						AuthorisationMenuActivity.runMenu(BuyBooksActivity.this, myLink);
 					}
 				});
 				cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +178,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 					}
 				});
 				break;
-			case Authorized:
+			case Authorised:
 				if (myAccount == null) {
 					textArea.setText(resource.getResource("noAccountInformation").getValue());
 					okButton.setText(buttonResource.getResource("refresh").getValue());
@@ -261,7 +261,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	@Override
 	protected void onResume() {
 		super.onResume();
-		updateAuthorizationState();
+		updateAuthorisationState();
 	}
 
 	private Money calculateCost() {
@@ -312,7 +312,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 						if (updated) {
 							runOnUiThread(new Runnable() {
 								public void run() {
-									setupUI(AuthorizationState.Authorized);
+									setupUI(AuthorisationState.Authorised);
 								}
 							});
 						}
@@ -371,25 +371,25 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	public void onLibraryChanged(final NetworkLibrary.ChangeListener.Code code, final Object[] params) {
 		switch (code) {
 			case SignedIn:
-				updateAuthorizationState();
+				updateAuthorisationState();
 				break;
 		}
 	}
 
-	private void updateAuthorizationState() {
+	private void updateAuthorisationState() {
 		new Thread(new Runnable() {
 			public void run() {
 				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				try {
 					if (mgr.isAuthorised(true)) {
-						setupUI(AuthorizationState.Authorized);
+						setupUI(AuthorisationState.Authorised);
 						refreshAccountInformation();
 					} else {
-						setupUI(AuthorizationState.NotAuthorized);
+						setupUI(AuthorisationState.NotAuthorised);
 					}
 				} catch (ZLNetworkException e) {
 					e.printStackTrace();
-					setupUI(AuthorizationState.NotAuthorized);
+					setupUI(AuthorisationState.NotAuthorised);
 				}
 			}
 		}).start();

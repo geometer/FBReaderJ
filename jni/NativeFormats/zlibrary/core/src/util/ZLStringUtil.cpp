@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,12 @@ void ZLStringUtil::appendNumber(std::string &str, unsigned int n) {
 	}
 }
 
+std::string ZLStringUtil::numberToString(unsigned int n) {
+	std::string str;
+	appendNumber(str, n);
+	return str;
+}
+
 void ZLStringUtil::append(std::string &str, const std::vector<std::string> &text) {
 	std::size_t len = str.length();
 	for (std::vector<std::string>::const_iterator it = text.begin(); it != text.end(); ++it) {
@@ -101,6 +107,19 @@ std::vector<std::string> ZLStringUtil::split(const std::string &str, const std::
 	}
 	result.push_back(str.substr(start, index - start));
 	return result;
+}
+
+std::string ZLStringUtil::join(const std::vector<std::string> &data, const std::string &delimiter) {
+	std::string joined;
+	bool addDelimiter = false;
+	for (std::vector<std::string>::const_iterator it = data.begin(); it != data.end(); ++it) {
+		if (addDelimiter) {
+			joined += delimiter;
+		}
+		joined += *it;
+		addDelimiter = true;
+	}
+	return joined;
 }
 
 std::string ZLStringUtil::printf(const std::string &format, const std::string &arg0) {

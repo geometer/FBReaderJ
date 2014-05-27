@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@ public class JavaBookModel extends BookModelImpl {
 
 	JavaBookModel(Book book) {
 		super(book);
-		myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
-		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
+		myInternalHyperlinks = new CachedCharStorage(32768, Paths.tempDirectory(), "links");
+		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.tempDirectory(), "cache", myImageMap, FontManager);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class JavaBookModel extends BookModelImpl {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap);
+			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.tempDirectory(), "cache" + myFootnotes.size(), myImageMap, FontManager);
 			myFootnotes.put(id, model);
 		}
 		return model;

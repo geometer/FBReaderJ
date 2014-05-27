@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,14 @@
 
 package org.geometerplus.fbreader.formats;
 
+import java.util.*;
+
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.text.model.CachedCharStorageException;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
@@ -48,13 +52,29 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	@Override
 	synchronized public void readMetaInfo(Book book) throws BookReadingException {
-		if (!readMetaInfoNative(book)) {
-			throw new BookReadingException("errorReadingFile", book.File);
+		final int code = readMetaInfoNative(book);
+		if (code != 0) {
+			throw new BookReadingException(
+				"nativeCodeFailure",
+				book.File,
+				new String[] { String.valueOf(code), book.File.getPath() }
+			);
 		}
 	}
 
-	private native boolean readMetaInfoNative(Book book);
+	private native int readMetaInfoNative(Book book);
 
+	@Override
+	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
+		final FileEncryptionInfo[] infos = readEncryptionInfosNative(book);
+		return infos != null
+			? Arrays.<FileEncryptionInfo>asList(infos)
+			: Collections.<FileEncryptionInfo>emptyList();
+	}
+
+	private native FileEncryptionInfo[] readEncryptionInfosNative(Book book);
+
+	@Override
 	synchronized public void readUids(Book book) throws BookReadingException {
 		readUidsNative(book);
 		if (book.uids().isEmpty()) {
@@ -73,12 +93,22 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
-		if (!readModelNative(model)) {
-			throw new BookReadingException("errorReadingFile", model.Book.File);
+		final int code = readModelNative(model);
+		switch (code) {
+			case 0:
+				return;
+			case 3:
+				throw new CachedCharStorageException("Cannot write file from native code");
+			default:
+				throw new BookReadingException(
+					"nativeCodeFailure",
+					model.Book.File,
+					new String[] { String.valueOf(code), model.Book.File.getPath() }
+				);
 		}
 	}
 
-	private native boolean readModelNative(BookModel model);
+	private native int readModelNative(BookModel model);
 
 	@Override
 	public ZLImage readCover(final ZLFile file) {

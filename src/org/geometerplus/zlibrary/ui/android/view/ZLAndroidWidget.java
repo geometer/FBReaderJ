@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,24 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.*;
+import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
+import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+
+import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
@@ -58,23 +68,27 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setOnLongClickListener(this);
 	}
 
+	private volatile boolean myAmendSize = false;
 	private volatile int myHDiff = 0;
-	private volatile boolean myUseHDiff = false;
+	private volatile int myHShift = 0;
 
 	public void setPreserveSize(boolean preserve) {
-		myUseHDiff = preserve;
+		myAmendSize = preserve;
 		if (!preserve) {
 			myHDiff = 0;
+			myHShift = 0;
 		}
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		if (myUseHDiff && oldw == w) {
+		if (myAmendSize && oldw == w) {
 			myHDiff += h - oldh;
+			myHShift -= getStatusBarHeight();
 		} else {
 			myHDiff = 0;
+			myHShift = 0;
 		}
 		getAnimationProvider().terminate();
 		if (myScreenIsTouched) {
@@ -94,26 +108,83 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		super.onDraw(canvas);
 
-		if (myHDiff != 0) {
-			//final Matrix m = new Matrix();
-			//m.preTranslate(0, myHDiff);
-			//canvas.setMatrix(m);
-			canvas.translate(0, myHDiff);
+		if (myHShift != 0) {
+			canvas.translate(0, myHShift);
 		}
 
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
 		} else {
 			onDrawStatic(canvas);
-			try {
-				ZLApplication.Instance().onRepaintFinished();
-			} catch (Exception ignored) {
-				// YOTA changes
-				// ignored calling from wrong UI thread exception - menu update
-				// in window
-				// called from service when p2b is active
-			}
+			ZLApplication.Instance().onRepaintFinished();
 		}
+
+		Config.Instance().runOnConnect(new Runnable() {
+			public void run() {
+				showHint(canvas);
+			}
+		});
+	}
+
+	private void showHint(final Canvas canvas) {
+		final Context context = getContext();
+		if (!(context instanceof FBReader)) {
+			return;
+		}
+
+		final ZLAndroidLibrary library = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		final ZLIntegerOption stageOption = library.ScreenHintStageOption;
+		if (!library.OldShowActionBarOption.getValue()) {
+			stageOption.setValue(3);
+		}
+		if (stageOption.getValue() >= 3) {
+			return;
+		}
+
+		final FBReader fbReader = (FBReader)context;
+		fbReader.runOnUiThread(new Runnable() {
+			public void run() {
+				String key = null;
+				if (!fbReader.barsAreShown()) {
+					if (stageOption.getValue() == 0) {
+						stageOption.setValue(1);
+					}
+					if (stageOption.getValue() == 1) {
+						key = "message1";
+					} else {
+						stageOption.setValue(3);
+					}
+				} else {
+					if (stageOption.getValue() == 1) {
+						stageOption.setValue(2);
+					}
+					if (stageOption.getValue() == 2) {
+						key = "message2";
+					}
+				}
+
+				final TextView hintView = (TextView)fbReader.findViewById(R.id.hint_view);
+				if (key != null) {
+					if (!new PageTurningOptions().Horizontal.getValue()) {
+						key = null;
+						stageOption.setValue(3);
+					}
+				}
+				if (key != null) {
+					final String text =
+						ZLResource.resource("dialog").getResource("screenHint").getResource(key).getValue();
+					final int w = getWidth();
+					final int h = getHeight();
+					final Paint paint = new Paint();
+					paint.setARGB(192, 51, 102, 153);
+					canvas.drawRect(w / 3, 0, w * 2 / 3, h, paint);
+					hintView.setVisibility(View.VISIBLE);
+					hintView.setText(text);
+				} else {
+					hintView.setVisibility(View.GONE);
+				}
+			}
+		});
 	}
 
 	private AnimationProvider myAnimationProvider;
@@ -458,9 +529,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		final ZLApplication application = ZLApplication.Instance();
+		final ZLKeyBindings bindings = application.keyBindings();
 
-		if (application.hasActionForKey(keyCode, true) ||
-			application.hasActionForKey(keyCode, false)) {
+		if (bindings.hasBinding(keyCode, true) ||
+			bindings.hasBinding(keyCode, false)) {
 			if (myKeyUnderTracking != -1) {
 				if (myKeyUnderTracking == keyCode) {
 					return true;
@@ -468,7 +540,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 					myKeyUnderTracking = -1;
 				}
 			}
-			if (application.hasActionForKey(keyCode, true)) {
+			if (bindings.hasBinding(keyCode, true)) {
 				myKeyUnderTracking = keyCode;
 				myTrackingStartTime = System.currentTimeMillis();
 				return true;
@@ -491,10 +563,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			myKeyUnderTracking = -1;
 			return true;
 		} else {
-			final ZLApplication application = ZLApplication.Instance();
+			final ZLKeyBindings bindings = ZLApplication.Instance().keyBindings();
 			return
-				application.hasActionForKey(keyCode, false) ||
-				application.hasActionForKey(keyCode, true);
+				bindings.hasBinding(keyCode, false) ||
+				bindings.hasBinding(keyCode, true);
 		}
 	}
 
@@ -545,5 +617,11 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
 		final int height = footer != null ? getHeight() - footer.getHeight() : getHeight();
 		return height - myHDiff;
+	}
+
+	private int getStatusBarHeight() {
+		final Resources res = getContext().getResources();
+		int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
+		return resourceId > 0 ? res.getDimensionPixelSize(resourceId) : 0;
 	}
 }

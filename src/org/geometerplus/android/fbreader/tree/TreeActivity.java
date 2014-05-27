@@ -1,5 +1,5 @@
 /*);
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	private ArrayList<FBTree.Key> myHistory;
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 

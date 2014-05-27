@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,20 @@ public class AllCatalogsSearchItem extends SearchItem {
 		final LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		final LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
+		boolean containsCyrillicLetters = false;
+		for (char c : pattern.toLowerCase().toCharArray()) {
+			if ("абвгдеёжзийклмнопрстуфхцчшщъыьэюя".indexOf(c) >= 0) {
+				containsCyrillicLetters = true;
+				break;
+			}
+		}
 		for (INetworkLink link : NetworkLibrary.Instance().activeLinks()) {
+			if (containsCyrillicLetters) {
+				final String siteName = link.getSiteName();
+				if ("qumran.en".equals(siteName) || "qumran.de".equals(siteName)) {
+					continue;
+				}
+			}
 			final NetworkOperationData data = link.createOperationData(loader);
 			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
 			if (request != null && MimeType.APP_ATOM_XML.weakEquals(request.Mime)) {

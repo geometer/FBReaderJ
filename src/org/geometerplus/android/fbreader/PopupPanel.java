@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,9 +90,14 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 	}
 
 	public final void storePosition() {
-		if (StartPosition != null &&
-			!StartPosition.equals(getReader().getTextView().getStartCursor())) {
-			getReader().addInvisibleBookmark(StartPosition);
+		if (StartPosition == null) {
+			return;
+		}
+
+		final FBReaderApp reader = getReader();
+		if (!StartPosition.equals(reader.getTextView().getStartCursor())) {
+			reader.addInvisibleBookmark(StartPosition);
+			reader.storePosition();
 		}
 	}
 

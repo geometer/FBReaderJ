@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ Library::~Library() {
 
 std::string Library::cacheDirectory() const {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jstring res = (jstring)AndroidUtil::StaticMethod_Paths_cacheDirectory->call();
+	jstring res = (jstring)AndroidUtil::StaticMethod_Paths_tempDirectory->call();
 	std::string str = AndroidUtil::fromJavaString(env, res);
 	if (res != 0) {
 		env->DeleteLocalRef(res);

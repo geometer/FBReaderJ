@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,14 @@ public final class MimeType {
 	public static final MimeType APP_EPUB = get("application/epub");
 	// ???
 	public static final MimeType APP_MOBIPOCKET = get("application/x-mobipocket-ebook");
+	// ???
+	//public static final MimeType APP_MOBI = get("application/mobi");
+	// ???
+	//public static final MimeType APP_FB2 = get("application/fb2");
+	// ???
+	public static final MimeType APP_FICTIONBOOK = get("application/x-fictionbook");
+	// ???
+	public static final MimeType APP_FICTIONBOOK_XML = get("application/x-fictionbook+xml");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_PDF = get("application/pdf");
 	// ???
@@ -126,19 +134,37 @@ public final class MimeType {
 	// ???
 	public static final MimeType IMAGE_XDJVU = get("image/x-djvu");
 
+	// video
+	public static final MimeType VIDEO_MP4 = get("video/mp4");
+	public static final MimeType VIDEO_WEBM = get("video/webm");
+	public static final MimeType VIDEO_OGG = get("video/ogg");
+
 	public static final MimeType UNKNOWN = get("*/*");
 	public static final MimeType NULL = new MimeType(null, null);
 
-	public static final List<MimeType> TYPES_FB2 = Collections.unmodifiableList(Arrays.asList(TEXT_FB2));
-	public static final List<MimeType> TYPES_EPUB = Collections.unmodifiableList(Arrays.asList(APP_EPUB_ZIP, APP_EPUB));
-	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.singletonList(APP_MOBIPOCKET);
-	public static final List<MimeType> TYPES_TXT = Collections.unmodifiableList(Arrays.asList(TEXT_PLAIN, APP_TXT));
-	public static final List<MimeType> TYPES_RTF = Collections.unmodifiableList(Arrays.asList(APP_RTF, TEXT_RTF));
-	public static final List<MimeType> TYPES_HTML = Collections.unmodifiableList(Arrays.asList(TEXT_HTML, APP_HTML, APP_HTMLHTM));
-	public static final List<MimeType> TYPES_PDF = Collections.singletonList(APP_PDF);
-	public static final List<MimeType> TYPES_DJVU = Collections.unmodifiableList(Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU, APP_DJVU));
-	public static final List<MimeType> TYPES_DOC = Collections.unmodifiableList(Arrays.asList(APP_MSWORD, APP_DOC));
-	public static final List<MimeType> TYPES_FB2_ZIP = Collections.singletonList(APP_FB2_ZIP);
+	public static final List<MimeType> TYPES_VIDEO
+		 = Arrays.asList(VIDEO_WEBM, VIDEO_OGG, VIDEO_MP4);
+
+	public static final List<MimeType> TYPES_FB2
+		 = Arrays.asList(APP_FICTIONBOOK, APP_FICTIONBOOK_XML, TEXT_FB2);
+	public static final List<MimeType> TYPES_EPUB
+		 = Arrays.asList(APP_EPUB_ZIP, APP_EPUB);
+	public static final List<MimeType> TYPES_MOBIPOCKET
+		 = Arrays.asList(APP_MOBIPOCKET);
+	public static final List<MimeType> TYPES_TXT
+		 = Arrays.asList(TEXT_PLAIN, APP_TXT);
+	public static final List<MimeType> TYPES_RTF
+		 = Arrays.asList(APP_RTF, TEXT_RTF);
+	public static final List<MimeType> TYPES_HTML
+		 = Arrays.asList(TEXT_HTML, APP_HTML, APP_HTMLHTM);
+	public static final List<MimeType> TYPES_PDF
+		 = Arrays.asList(APP_PDF);
+	public static final List<MimeType> TYPES_DJVU
+		 = Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU, APP_DJVU);
+	public static final List<MimeType> TYPES_DOC
+		 = Arrays.asList(APP_MSWORD, APP_DOC);
+	public static final List<MimeType> TYPES_FB2_ZIP
+		 = Arrays.asList(APP_FB2_ZIP);
 
 	public final String Name;
 

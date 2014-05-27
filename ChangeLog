@@ -1,4 +1,102 @@
-===== 1.9.4 (Dec ??, 2013) =====
+===== 1.10.3 (??? ??, 2014) =====
+* Arabic FBReaderJ resources, by Ahmed Saidi (https://github.com/boussouira)
+* Updated German localization (by Matthias Dill)
+
+===== 1.10.2 (May 25, 2014) =====
+* Fixed local library duplicates issue
+* Updated German localization (by Matthias Dill)
+
+===== 1.10.1 (May 09, 2014) =====
+* Multiple locations for books, fonts and backgrounds
+* Updated German localization (by Matthias Dill)
+* Updated Czech localization (by Marek Pavelka)
+* Experimental support for opds authentication (like oauth/oauth2)
+
+===== 1.10.0.5 (Apr 22, 2014) =====
+* Fixed crash on unexisting function (LinkedList.push()) for devices with SDK <= 8
+* Fixed problem with fullscreen mode warning (it was not possible to dismiss it on some devices)
+* Save book position in background
+
+===== 1.10.0.4 (Apr 21, 2014) =====
+* Fixed metrics == null issue
+* Fixed yota-specific class cast exception
+* Fixed NPE in FontEntry.equals()
+* Fixed NPE in ZLTextPlainModel.getTextLength()
+* Fixed skip operation on non-compressed zips
+* Fixed possible AOOB in text model
+
+===== 1.10.0.3 (Apr 21, 2014) =====
+* Fixed duplicate processing for some CSS properties
+
+===== 1.10.0.2 (Apr 21, 2014) =====
+* Fixed NPE in embedded font copying code
+
+===== 1.10.0.1 (Apr 21, 2014) =====
+* Fixed NPE if external cache dir is not defined
+
+===== 1.10 (Apr 21, 2014) =====
+* Fixed current position storing
+* New directory settings
+* Android 2.2 and higher: standard cache directory is now used
+* Experimental video support
+* CSS parsing optimization for ePubs (do not parse css files multiple times)
+* CSS support improvement: added support for space-separated classes list
+* Added CSS @import support
+* Added CSS font-family property support
+* Added ePub embedded fonts support
+* Android 3.*/4.*: FBReader works in fullscreen mode by default; hint at start added
+* Updated Czech localization (by Marek Pavelka)
+* Updated Hungarian localization (by Szabó Lajos Balázs)
+
+===== 1.9.6.1 (Feb 24, 2014) =====
+* Fixed some config vaues reading (e.g. background)
+* Updated Czech localization (by Marek Pavelka)
+
+===== 1.9.6 (Feb 23, 2014) =====
+* Config speed optimization
+* Fixed bookmarks creation & browsing problem
+* Fixed URL resolving (this also fixed bug with some catalogs created with calibre2opds)
+* Do not search on qumran sites with cyrillic patterns
+* Better network search logic
+
+===== 1.9.5.5 (Feb 4, 2014) =====
+* Fixed preference activity on Android 2.* devices
+
+===== 1.9.5.4 (Feb 3, 2014) =====
+* Preference activity in a separate process
+* Fixed re-setting config value to default operation
+
+===== 1.9.5.3 (Feb 1, 2014) =====
+* Fixed YotaPhone second screen support
+* Fixed color profile loading
+* Updated Basque localization by Ibon Idoiaga Basaras
+* Updated Czech localization (by Marek Pavelka)
+
+===== 1.9.5.2 (Feb 1, 2014) =====
+* Fixed one more possible crash on program start
+
+===== 1.9.5.1 (Jan 31, 2014) =====
+* Fixed possible crash on program start
+
+===== 1.9.5 (Jan 31, 2014) =====
+* Fixed back button behaviour
+* Fixed recent books list
+* Fixed possible crash in YotaPhone back screen service
+* New config subsystem implementation
+* Updated Czech localization (by Marek Pavelka)
+* Updated Dutch localization (by Frank Fesevur)
+* Special edition for Kindle Fire HD(X) devices
+* Better detection of catalog where FBReader can write books
+* Fixed Russian hyphenations even for devices with no koi8-r encoding
+* Special search dialog for Nook Simple Touch
+* New item "Install plugins" in the main menu
+
+===== 1.9.4-nst (Jan 12, 2013) =====
+* Special edition for Nook Simple Touch
+
+===== 1.9.4 (Dec 23, 2013) =====
+* YotaPhone back screen support
+* Fullscreen mode in android 4.4 is now optional
 * New option: adjust image color according background. For light background, adjusts too light colors to match background, for dark background adjusts too dark areas.
 * Updated Czech localization (by Marek Pavelka)
 * It is possible to load fonts from assets; PT Sans font added in ics version

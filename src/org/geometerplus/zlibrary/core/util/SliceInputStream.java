@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.core.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class SliceInputStream extends ZLInputStreamWithOffset {
+public class SliceInputStream extends InputStreamWithOffset {
 	private final int myStart;
 	private final int myLength;
 
@@ -35,7 +35,7 @@ public class SliceInputStream extends ZLInputStreamWithOffset {
 
 	@Override
 	public int read() throws IOException {
-		if (myLength >= offset()) {
+		if (offset() >= myLength) {
 			return -1;
 		}
 		return super.read();
@@ -52,18 +52,12 @@ public class SliceInputStream extends ZLInputStreamWithOffset {
 
 	@Override
 	public long skip(long n) throws IOException {
-		return super.skip(Math.min(n, myLength - offset()));
+		return super.skip(Math.min(n, Math.max(myLength - offset(), 0)));
 	}
 
 	@Override
 	public int available() throws IOException {
 		return Math.min(super.available(), Math.max(myLength - offset(), 0));
-	}
-
-	@Override
-	public void reset() throws IOException {
-		super.reset();
-		super.skip(myStart);
 	}
 
 	@Override

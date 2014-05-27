@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,8 @@ final class ZLTextElementAreaVector {
 					soul = new ZLTextHyperlinkRegionSoul(area, hyperlink);
 				} else if (area.Element instanceof ZLTextImageElement) {
 					soul = new ZLTextImageRegionSoul(area, (ZLTextImageElement)area.Element);
+				} else if (area.Element instanceof ZLTextVideoElement) {
+					soul = new ZLTextVideoRegionSoul(area, (ZLTextVideoElement)area.Element);
 				} else if (area.Element instanceof ZLTextWord && !((ZLTextWord)area.Element).isASpace()) {
 					soul = new ZLTextWordRegionSoul(area, (ZLTextWord)area.Element);
 				}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,10 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.fonts.*;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.book.Book;
@@ -41,7 +43,9 @@ public abstract class BookModel {
 				model = new JavaBookModel(book);
 				break;
 			default:
-				throw new BookReadingException("unknownPluginType", plugin.type().toString(), null);
+				throw new BookReadingException(
+					"unknownPluginType", null, new String[] { plugin.type().toString() }
+				);
 		}
 
 		plugin.readModel(model);
@@ -50,6 +54,7 @@ public abstract class BookModel {
 
 	public final Book Book;
 	public final TOCTree TOCTree = new TOCTree();
+	public final FontManager FontManager = new FontManager();
 
 	public static final class Label {
 		public final String ModelId;
@@ -90,5 +95,17 @@ public abstract class BookModel {
 			}
 		}
 		return label;
+	}
+
+	public void registerFontFamilyList(String[] families) {
+		FontManager.index(Arrays.asList(families));
+	}
+
+	public void registerFontEntry(String family, FontEntry entry) {
+		FontManager.Entries.put(family, entry);
+	}
+
+	public void registerFontEntry(String family, FileInfo normal, FileInfo bold, FileInfo italic, FileInfo boldItalic) {
+		registerFontEntry(family, new FontEntry(family, normal, bold, italic, boldItalic));
 	}
 }

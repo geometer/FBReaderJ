@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,39 +20,33 @@
 package org.geometerplus.zlibrary.core.options;
 
 public final class ZLEnumOption<T extends Enum<T>> extends ZLOption {
-	private final T myDefaultValue;
 	private T myValue;
+	private String myStringValue;
+	private Class<T> myEnumClass;
 
 	public ZLEnumOption(String group, String optionName, T defaultValue) {
-		super(group, optionName);
-		myDefaultValue = defaultValue;
-		myValue = defaultValue;
+		super(group, optionName, String.valueOf(defaultValue));
+		myEnumClass = defaultValue.getDeclaringClass();
 	}
 
 	public T getValue() {
-		if (!myIsSynchronized) {
-			final String value = getConfigValue(null);
-			if (value != null) {
-				try {
-					myValue = T.valueOf(myDefaultValue.getDeclaringClass(), value);
-				} catch (Throwable t) {
-				}
+		final String stringValue = getConfigValue();
+		if (!stringValue.equals(myStringValue)) {
+			myStringValue = stringValue;
+			try {
+				myValue = T.valueOf(myEnumClass, stringValue);
+			} catch (Throwable t) {
 			}
-			myIsSynchronized = true;
 		}
 		return myValue;
 	}
 
 	public void setValue(T value) {
-		if (myIsSynchronized && (myValue == value)) {
+		if (value == null) {
 			return;
 		}
 		myValue = value;
-		myIsSynchronized = true;
-		if (value == myDefaultValue) {
-			unsetConfigValue();
-		} else {
-			setConfigValue("" + value.toString());
-		}
+		myStringValue = String.valueOf(value);
+		setConfigValue(myStringValue);
 	}
 }

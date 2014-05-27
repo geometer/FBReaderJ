@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,30 +27,36 @@ import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
 
+import org.geometerplus.zlibrary.core.options.Config;
+
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 import org.geometerplus.android.util.ViewUtil;
 
 public class CancelActivity extends ListActivity {
-	static final String TYPE_KEY = "type";
-	static final String BOOKMARK_KEY = "bookmark";
-
 	private BookCollectionShadow myCollection;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		myCollection = new BookCollectionShadow();
-		myCollection.bindToService(this, new Runnable() {
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		// we use this local variable to be sure collection is not null inside the runnable
+		final BookCollectionShadow collection = new BookCollectionShadow();
+		myCollection = collection;
+		collection.bindToService(this, new Runnable() {
 			public void run() {
 				final ActionListAdapter adapter = new ActionListAdapter(
-					new CancelMenuHelper().getActionsList(myCollection)
+					new CancelMenuHelper().getActionsList(collection)
 				);
 				setListAdapter(adapter);
 				getListView().setOnItemClickListener(adapter);
@@ -114,11 +120,10 @@ public class CancelActivity extends ListActivity {
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Intent data = new Intent();
 			final CancelMenuHelper.ActionDescription item = getItem(position);
-			data.putExtra(TYPE_KEY, item.Type.name());
+			data.putExtra(FBReaderIntents.Key.TYPE, item.Type.name());
 			if (item instanceof CancelMenuHelper.BookmarkDescription) {
-				data.putExtra(
-					BOOKMARK_KEY,
-					SerializerUtil.serialize(((CancelMenuHelper.BookmarkDescription)item).Bookmark)
+				FBReaderIntents.putBookmarkExtra(
+					data, ((CancelMenuHelper.BookmarkDescription)item).Bookmark
 				);
 			}
 			setResult(RESULT_FIRST_USER, data);

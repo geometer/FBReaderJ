@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-    French zlibrary resources, by Pierre Senellart 
+<!--
+    French zlibrary resources, by Pierre Senellart
     Updated by Sébastien Rodriguez
     Current maintainer: Mathias Monnerville <mathias@monnerville.com>
 -->
@@ -60,8 +60,8 @@
 		<node name="it" value="Italien"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Lithuanien"/>
-		<node name="nl" value="Néerlandais"/>
 		<node name="nb" value="Norvégien"/>
+		<node name="nl" value="Néerlandais"/>
 		<node name="pl" value="Polonais"/>
 		<node name="pt" value="Portugais"/>
 		<node name="ro" value="Roumain"/>

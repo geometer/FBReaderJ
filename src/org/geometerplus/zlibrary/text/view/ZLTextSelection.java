@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -166,13 +166,13 @@ class ZLTextSelection extends ZLTextHighlighting {
 
 		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
 			if (hasPartAfterPage(page)) {
-				myView.scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+				myView.turnPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
 			}
 		} else {
 			if (hasPartBeforePage(page)) {
-				myView.scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+				myView.turnPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
 			}
@@ -298,7 +298,7 @@ class ZLTextSelection extends ZLTextHighlighting {
 		}
 
 		public void run() {
-			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+			myView.turnPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
 			expandTo(myPage, myX, myY);
 			myView.Application.getViewWidget().reset();

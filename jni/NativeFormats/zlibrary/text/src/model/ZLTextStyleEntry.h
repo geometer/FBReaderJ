@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define __ZLTEXTSTYLEENTRY_H__
 
 #include <string>
+#include <vector>
 
 #include <ZLTextParagraph.h>
 #include <ZLTextAlignmentType.h>
@@ -95,8 +96,8 @@ public:
 	ZLBoolean3 fontModifier(FontModifier modifier) const;
 	void setFontModifier(FontModifier modifier, bool on);
 
-	const std::string &fontFamily() const;
-	void setFontFamily(const std::string &fontFamily);
+	const std::vector<std::string> &fontFamilies() const;
+	void setFontFamilies(const std::vector<std::string> &fontFamilies);
 
 private:
 	const unsigned char myEntryKind;
@@ -106,7 +107,7 @@ private:
 	ZLTextAlignmentType myAlignmentType;
 	unsigned char mySupportedFontModifier;
 	unsigned char myFontModifier;
-	std::string myFontFamily;
+	std::vector<std::string> myFontFamilies;
 
 	friend class ZLTextModel;
 };
@@ -151,10 +152,12 @@ inline void ZLTextStyleEntry::setFontModifier(FontModifier modifier, bool on) {
 	}
 }
 
-inline const std::string &ZLTextStyleEntry::fontFamily() const { return myFontFamily; }
-inline void ZLTextStyleEntry::setFontFamily(const std::string &fontFamily) {
-	myFeatureMask |= 1 << FONT_FAMILY;
-	myFontFamily = fontFamily;
+inline const std::vector<std::string> &ZLTextStyleEntry::fontFamilies() const { return myFontFamilies; }
+inline void ZLTextStyleEntry::setFontFamilies(const std::vector<std::string> &fontFamilies) {
+	if (!fontFamilies.empty()) {
+		myFeatureMask |= 1 << FONT_FAMILY;
+		myFontFamilies = fontFamilies;
+	}
 }
 
 #endif /* __ZLTEXTSTYLEENTRY_H__ */

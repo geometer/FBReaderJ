@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 #include <cstring>
 
+#include <ZLLogger.h>
 #include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
 
@@ -95,9 +96,15 @@ shared_ptr<ZLInputStream> ZLFile::envelopeCompressedStream(shared_ptr<ZLInputStr
 	return base;
 }
 
-shared_ptr<ZLInputStream> ZLFile::inputStream() const {
+shared_ptr<ZLInputStream> ZLFile::inputStream(shared_ptr<EncryptionMap> encryptionMap) const {
+	shared_ptr<FileEncryptionInfo> encryptionInfo =
+		encryptionMap.isNull() ? 0 : encryptionMap->info(myPath);
+	if (!encryptionInfo.isNull()) {
+		return 0;
+	}
+
 	shared_ptr<ZLInputStream> stream;
-	
+
 	int index = ZLFSManager::Instance().findArchiveFileNameDelimiter(myPath);
 	if (index == -1) {
 		if (isDirectory()) {
@@ -236,6 +243,14 @@ bool ZLFile::isDirectory() const {
 		fillInfo();
 	}
 	return myInfo.IsDirectory;
+}
+
+ZLFile ZLFile::getContainerArchive() const {
+	const int index = ZLFSManager::Instance().findArchiveFileNameDelimiter(myPath);
+	if (index == -1) {
+		return NO_FILE;
+	}
+	return ZLFile(myPath.substr(0, index));
 }
 
 const std::string &ZLFile::mimeType() const {

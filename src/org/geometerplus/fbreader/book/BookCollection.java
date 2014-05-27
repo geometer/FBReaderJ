@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ public class BookCollection extends AbstractBookCollection {
 		Collections.synchronizedMap(new HashMap<Long,Book>());
 	private final List<String> myFilesToRescan =
 		Collections.synchronizedList(new LinkedList<String>());
+	private final DuplicateResolver myDuplicateResolver = new DuplicateResolver();
 
 	private volatile Status myStatus = Status.NotStarted;
 
@@ -64,6 +65,9 @@ public class BookCollection extends AbstractBookCollection {
 		if (plugin == null) {
 			return null;
 		}
+		if (!plugin.type().Builtin && bookFile != bookFile.getPhysicalFile()) {
+			return null;
+		}
 		try {
 			bookFile = plugin.realBookFile(bookFile);
 		} catch (BookReadingException e) {
@@ -73,6 +77,14 @@ public class BookCollection extends AbstractBookCollection {
 		Book book = myBooksByFile.get(bookFile);
 		if (book != null) {
 			return book;
+		}
+
+		final ZLFile otherFile = myDuplicateResolver.findDuplicate(bookFile);
+		if (otherFile != null) {
+			book = myBooksByFile.get(otherFile);
+			if (book != null) {
+				return book;
+			}
 		}
 
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
@@ -114,7 +126,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 
 		book = myDatabase.loadBook(id);
-		if (book == null) {
+		if (book == null || book.File == null || !book.File.exists()) {
 			return null;
 		}
 		book.loadLists(myDatabase);
@@ -130,7 +142,7 @@ public class BookCollection extends AbstractBookCollection {
 			return null;
 		}
 
-		FileInfoSet fileInfos = new FileInfoSet(myDatabase, physicalFile);
+		final FileInfoSet fileInfos = new FileInfoSet(myDatabase, physicalFile);
 		if (fileInfos.check(physicalFile, physicalFile != bookFile)) {
 			// loaded from db
 			addBook(book, false);
@@ -170,9 +182,18 @@ public class BookCollection extends AbstractBookCollection {
 					return false;
 				}
 
-				myBooksByFile.put(book.File, book);
-				myBooksById.put(book.getId(), book);
-				fireBookEvent(BookEvent.Added, book);
+				final ZLFile duplicate = myDuplicateResolver.findDuplicate(book.File);
+				final Book original = duplicate != null ? myBooksByFile.get(duplicate) : null;
+				if (original != null) {
+					if (new BookMergeHelper(this).merge(original, book)) {
+						fireBookEvent(BookEvent.Updated, original);
+					}
+				} else {
+					myBooksByFile.put(book.File, book);
+					myDuplicateResolver.addFile(book.File);
+					myBooksById.put(book.getId(), book);
+					fireBookEvent(BookEvent.Added, book);
+				}
 				return true;
 			} else if (force) {
 				existing.updateFrom(book);
@@ -192,6 +213,7 @@ public class BookCollection extends AbstractBookCollection {
 	public void removeBook(Book book, boolean deleteFromDisk) {
 		synchronized (myBooksByFile) {
 			myBooksByFile.remove(book.File);
+			myDuplicateResolver.removeFile(book.File);
 			myBooksById.remove(book.getId());
 
 			final List<Long> ids = myDatabase.loadRecentBookIds();
@@ -201,6 +223,7 @@ public class BookCollection extends AbstractBookCollection {
 			if (deleteFromDisk) {
 				book.File.getPhysicalFile().delete();
 			}
+			myDatabase.deleteBook(book.getId());
 		}
 		fireBookEvent(BookEvent.Removed, book);
 	}
@@ -358,7 +381,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	public Book getRecentBook(int index) {
-		List<Long> recentIds = myDatabase.loadRecentBookIds();
+		final List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > index ? getBookById(recentIds.get(index)) : null;
 	}
 
@@ -442,6 +465,7 @@ public class BookCollection extends AbstractBookCollection {
 			for (ZLFile f : filesToRemove) {
 				synchronized (myBooksByFile) {
 					final Book book = myBooksByFile.remove(f);
+					myDuplicateResolver.removeFile(f);
 					if (book != null) {
 						myBooksById.remove(book.getId());
 						fireBookEvent(BookEvent.Removed, book);

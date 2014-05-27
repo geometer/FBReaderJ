@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 
 #include <ZLTextModel.h>
 #include <ZLTextParagraph.h>
+#include <FontManager.h>
 
 class ZLImage;
 class Book;
@@ -81,6 +82,8 @@ public:
 
 	const shared_ptr<Book> book() const;
 
+	const FontManager &fontManager() const;
+
 	bool flush();
 
 private:
@@ -91,6 +94,7 @@ private:
 	std::map<std::string,shared_ptr<ZLTextModel> > myFootnotes;
 	std::map<std::string,Label> myInternalHyperlinks;
 	shared_ptr<HyperlinkMatcher> myHyperlinkMatcher;
+	FontManager myFontManager;
 
 friend class BookReader;
 };
@@ -99,6 +103,7 @@ inline shared_ptr<ZLTextModel> BookModel::bookTextModel() const { return myBookT
 inline shared_ptr<ContentsTree> BookModel::contentsTree() const { return myContentsTree; }
 inline const std::map<std::string,shared_ptr<ZLTextModel> > &BookModel::footnotes() const { return myFootnotes; }
 inline const std::map<std::string,BookModel::Label> &BookModel::internalHyperlinks() const { return myInternalHyperlinks; }
+inline const FontManager &BookModel::fontManager() const { return myFontManager; }
 
 inline ContentsTree::ContentsTree() : myReference(-1) {}
 inline ContentsTree::ContentsTree(ContentsTree &parent, int reference) : myReference(reference) {

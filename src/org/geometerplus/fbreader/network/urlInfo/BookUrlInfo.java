@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,36 +20,76 @@
 package org.geometerplus.fbreader.network.urlInfo;
 
 import java.io.File;
+import java.util.Arrays;
 
 import android.net.Uri;
 
-import org.geometerplus.fbreader.Paths;
-
 import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
+import org.geometerplus.fbreader.Paths;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
 public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
-	public interface Format {
-		int NONE = 0;
-		int MOBIPOCKET = 1;
-		int FB2 = 2;
-		int FB2_ZIP = 3;
-		int EPUB = 4;
+	public static final class Format implements Comparable<Format> {
+		public static final Format NONE = new Format(null, -1);
+		public static final Format MOBIPOCKET = new Format("mobi", 1);
+		public static final Format FB2 = new Format("fb2", 2);
+		public static final Format FB2_ZIP = new Format("fb2.zip", 3);
+		public static final Format EPUB = new Format("epub", 4);
+
+		public final String Extension;
+		private final int myPriority;
+
+		public Format(String extension) {
+			Extension = extension;
+			int priority = 0;
+			for (Format f : Arrays.asList(NONE, MOBIPOCKET, FB2, FB2_ZIP, EPUB)) {
+				if (f.equals(this)) {
+					priority = f.myPriority;
+					break;
+				}
+			}
+			myPriority = priority;
+		}
+
+		private Format(String extension, int priority) {
+			Extension = extension;
+			myPriority = priority;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (this == other) {
+				return true;
+			}
+			return other instanceof Format && MiscUtil.equals(Extension, ((Format)other).Extension);
+		}
+
+		@Override
+		public int hashCode() {
+			return MiscUtil.hashCode(Extension);
+		}
+
+		@Override
+		public int compareTo(Format format) {
+			return myPriority - format.myPriority;
+		}
 	}
 
-	public final int BookFormat;
+	public final Format BookFormat;
 
-	public BookUrlInfo(Type type, int format, String url, MimeType mime) {
+	public BookUrlInfo(Type type, Format format, String url, MimeType mime) {
 		super(type, url, mime);
 		BookFormat = format;
 	}
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeBookFileName(String url, int format, Type resolvedReferenceType) {
+	public static String makeBookFileName(String url, Format format, Type resolvedReferenceType) {
 		final Uri uri = Uri.parse(url);
 
 		String host = uri.getHost();
@@ -66,7 +106,7 @@ public class BookUrlInfo extends UrlInfo {
 			path.insert(0, "Demos");
 			path.insert(0, File.separator);
 		}
-		path.insert(0, Paths.mainBookDirectory());
+		path.insert(0, Paths.DownloadsDirectoryOption.getValue());
 
 		int index = path.length();
 		final String uriPath = uri.getPath();
@@ -91,21 +131,9 @@ public class BookUrlInfo extends UrlInfo {
 		}
 
 		String ext = null;
-		switch (format) {
-			case Format.EPUB:
-				ext = ".epub";
-				break;
-			case Format.MOBIPOCKET:
-				ext = ".mobi";
-				break;
-			case Format.FB2:
-				ext = ".fb2";
-				break;
-			case Format.FB2_ZIP:
-				ext = ".fb2.zip";
-				break;
+		if (format != null && !MiscUtil.isEmptyString(format.Extension)) {
+			ext = "." + format.Extension;
 		}
-
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`
 			if (j != -1) {

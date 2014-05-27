@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,6 @@ import android.os.IBinder;
 public class ApiService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
-		return new ApiServerImplementation();
+		return new ApiServerImplementation(this);
 	}
 }

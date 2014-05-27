@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -140,20 +140,24 @@ public abstract class UIUtil {
 		});
 	}
 
-	public static void showMessageText(Context context, String text) {
-		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+	public static void showMessageText(final Activity activity, final String text) {
+		activity.runOnUiThread(new Runnable() {
+			public void run() {
+				Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 
-	public static void showErrorMessage(Context context, String resourceKey) {
+	public static void showErrorMessage(Activity activity, String resourceKey) {
 		showMessageText(
-			context,
+			activity,
 			ZLResource.resource("errorMessage").getResource(resourceKey).getValue()
 		);
 	}
 
-	public static void showErrorMessage(Context context, String resourceKey, String parameter) {
+	public static void showErrorMessage(Activity activity, String resourceKey, String parameter) {
 		showMessageText(
-			context,
+			activity,
 			ZLResource.resource("errorMessage").getResource(resourceKey).getValue().replace("%s", parameter)
 		);
 	}

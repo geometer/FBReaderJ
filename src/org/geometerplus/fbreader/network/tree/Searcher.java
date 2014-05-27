@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,10 +43,19 @@ class Searcher extends NetworkItemsLoader {
 	}
 
 	@Override
-	public void doLoading() throws ZLNetworkException {
+	public void load() throws ZLNetworkException {
 		final SearchItem item = (SearchItem)getTree().Item;
 		if (myPattern.equals(item.getPattern())) {
-			myItemFound = true;
+			if (getTree().hasChildren()) {
+				myItemFound = true;
+				NetworkLibrary.Instance().fireModelChangedEvent(
+					NetworkLibrary.ChangeListener.Code.Found, getTree()
+				);
+			} else {
+				NetworkLibrary.Instance().fireModelChangedEvent(
+					NetworkLibrary.ChangeListener.Code.NotFound
+				);
+			}
 		} else {
 			item.runSearch(this, myPattern);
 		}

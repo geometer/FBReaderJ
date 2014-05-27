@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,37 +22,18 @@ package org.geometerplus.zlibrary.core.options;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 public final class ZLBoolean3Option extends ZLOption {
-	private ZLBoolean3 myValue;
-	private final ZLBoolean3 myDefaultValue;
-
 	public ZLBoolean3Option(String group, String optionName, ZLBoolean3 defaultValue) {
-		super(group, optionName);
-		myDefaultValue = defaultValue;
-		myValue = myDefaultValue;
+		super(group, optionName, defaultValue.Name);
 	}
 
 	public ZLBoolean3 getValue() {
-		if (!myIsSynchronized) {
-			String value = getConfigValue(null);
-			if (value != null) {
-				myValue = ZLBoolean3.getByName(value);
-			}
-			myIsSynchronized = true;
-		}
-		return myValue;
+		return ZLBoolean3.getByName(getConfigValue());
 	}
 
 	public void setValue(ZLBoolean3 value) {
-		if (myIsSynchronized && (myValue == value)) {
+		if (value == null) {
 			return;
 		}
-		myValue = value;
-		myIsSynchronized = true;
-
-		if (myValue == myDefaultValue) {
-			unsetConfigValue();
-		} else {
-			setConfigValue(myValue.Name);
-		}
+		setConfigValue(value.Name);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@ package org.geometerplus.android.fbreader;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
-import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.util.PackageUtil;
 
 class ShowBookmarksAction extends FBAndroidAction {
@@ -40,7 +40,7 @@ class ShowBookmarksAction extends FBAndroidAction {
 	@Override
 	protected void run(Object ... params) {
 		final Intent externalIntent =
-			new Intent("android.fbreader.action.EXTERNAL_BOOKMARKS");
+			new Intent(FBReaderIntents.Action.EXTERNAL_BOOKMARKS);
 		final Intent internalIntent =
 			new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
 		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
@@ -55,12 +55,8 @@ class ShowBookmarksAction extends FBAndroidAction {
 	}
 
 	private void startBookmarksActivity(Intent intent) {
-		intent.putExtra(
-			FBReader.BOOK_KEY, SerializerUtil.serialize(Reader.Model.Book)
-		);
-		intent.putExtra(
-			FBReader.BOOKMARK_KEY, SerializerUtil.serialize(Reader.createBookmark(20, true))
-		);
+		FBReaderIntents.putBookExtra(intent, Reader.Model.Book);
+		FBReaderIntents.putBookmarkExtra(intent, Reader.createBookmark(20, true));
 		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }

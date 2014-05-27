@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.core.options.Config;
+
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
@@ -47,24 +49,29 @@ public abstract class Util implements UserRegistrationConstants {
 		return intent;
 	}
 
-	static void initLibrary(final Activity activity) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		if (library.isInitialized()) {
-			return;
-		}
-
-		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+	static void initLibrary(final Activity activity, final Runnable action) {
+		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase(activity.getApplication());
-				}
+				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+					public void run() {
+						if (SQLiteNetworkDatabase.Instance() == null) {
+							new SQLiteNetworkDatabase(activity.getApplication());
+						}
 
-				library.initialize();
+						final NetworkLibrary library = NetworkLibrary.Instance();
+						if (!library.isInitialized()) {
+							library.initialize();
+						}
+						if (action != null) {
+							action.run();
+						}
+					}
+				}, activity);
 			}
-		}, activity);
+		});
 	}
 
-	static Intent authorizationIntent(INetworkLink link, Uri id) {
+	static Intent authorisationIntent(INetworkLink link, Uri id) {
 		final Intent intent = new Intent(AUTHORIZATION_ACTION, id);
 		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
 		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
@@ -74,7 +81,7 @@ public abstract class Util implements UserRegistrationConstants {
 	}
 
 	private static Intent registrationIntent(INetworkLink link) {
-		return authorizationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
+		return authorisationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
 	}
 
 	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
@@ -117,7 +124,7 @@ public abstract class Util implements UserRegistrationConstants {
 			activity.startService(
 				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url),
 						activity.getApplicationContext(), BookDownloaderService.class)
-					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
+					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat.Extension)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
 					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanUrl())
 					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)

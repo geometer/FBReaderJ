@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,8 @@ public:
 		STYLE_CLOSE_ENTRY = 7,
 		FIXED_HSPACE_ENTRY = 8,
 		RESET_BIDI_ENTRY = 9,
+		AUDIO_ENTRY = 10,
+		VIDEO_ENTRY = 11,
 	};
 
 protected:
@@ -175,13 +177,14 @@ public:
 */
 
 	enum Kind {
-		TEXT_PARAGRAPH,
-		TREE_PARAGRAPH,
-		EMPTY_LINE_PARAGRAPH,
-		BEFORE_SKIP_PARAGRAPH,
-		AFTER_SKIP_PARAGRAPH,
-		END_OF_SECTION_PARAGRAPH,
-		END_OF_TEXT_PARAGRAPH,
+		TEXT_PARAGRAPH = 0,
+		TREE_PARAGRAPH = 1,
+		EMPTY_LINE_PARAGRAPH = 2,
+		BEFORE_SKIP_PARAGRAPH = 3,
+		AFTER_SKIP_PARAGRAPH = 4,
+		END_OF_SECTION_PARAGRAPH = 5,
+		END_OF_TEXT_PARAGRAPH = 6,
+		ENCRYPTED_SECTION_PARAGRAPH = 7,
 	};
 
 protected:

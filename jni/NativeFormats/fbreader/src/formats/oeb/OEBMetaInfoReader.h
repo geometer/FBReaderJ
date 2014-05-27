@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 
 #include <vector>
 
-#include <ZLXMLReader.h>
+#include "OPFReader.h"
 
 class Book;
 
-class OEBMetaInfoReader : public ZLXMLReader {
+class OEBMetaInfoReader : public OPFReader {
 
 public:
 	OEBMetaInfoReader(Book &book);
@@ -35,12 +35,6 @@ public:
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
 	void characterDataHandler(const char *text, std::size_t len);
-	bool processNamespaces() const;
-	const std::vector<std::string> &externalDTDs() const;
-
-private:
-	bool testDCTag(const std::string &name, const std::string &tag) const;
-	bool isNSName(const std::string &fullName, const std::string &shortName, const std::string &fullNSId) const;
 
 private:
 	Book &myBook;

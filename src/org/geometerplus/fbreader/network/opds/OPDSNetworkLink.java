@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,30 +82,30 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		NotChecked
 	*/
 
-	ZLNetworkRequest createNetworkData(String url, MimeType mime, final OPDSCatalogItem.State result) {
+	ZLNetworkRequest createNetworkData(String url, MimeType mime, final OPDSCatalogItem.State state) {
 		if (url == null) {
 			return null;
 		}
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
+		final NetworkCatalogItem catalogItem = state.Loader.getTree().Item;
 		library.startLoading(catalogItem);
 		url = rewriteUrl(url, false);
 		return new ZLNetworkRequest(url, mime, null, false) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				if (result.Loader.confirmInterruption()) {
+				if (state.Loader.confirmInterruption()) {
 					return;
 				}
 
 				new OPDSXMLReader(
-					new OPDSFeedHandler(getURL(), result), false
+					new OPDSFeedHandler(getURL(), state), false
 				).read(inputStream);
 
-				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
+				if (state.Loader.confirmInterruption() && state.LastLoadedId != null) {
 					// reset state to load current page from the beginning
-					result.LastLoadedId = null;
+					state.LastLoadedId = null;
 				} else {
-					result.Loader.getTree().confirmAllItems();
+					state.Loader.getTree().confirmAllItems();
 				}
 			}
 

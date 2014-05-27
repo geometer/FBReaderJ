@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Bookmark;
-import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.style.StyleListActivity;
 import org.geometerplus.android.util.UIUtil;
 
@@ -55,7 +55,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 
 		final Intent intent =
 			new Intent(BaseActivity.getApplicationContext(), StyleListActivity.class);
-		intent.putExtra(FBReader.BOOKMARK_KEY, SerializerUtil.serialize(bookmark));
+		FBReaderIntents.putBookmarkExtra(intent, bookmark);
 		intent.putExtra(StyleListActivity.EXISTING_BOOKMARK_KEY, existingBookmark);
 		OrientationUtil.startActivity(BaseActivity, intent);
 	}

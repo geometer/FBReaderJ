@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   Swedish hyphenations description for FBReader (original was taken from the teTeX distribution)
 
@@ -59,12 +59,12 @@
   <pattern> cis4</pattern>
   <pattern> cy5klop</pattern>
   <pattern> d4</pattern>
-  <pattern> där3</pattern>
+  <pattern> dÃ¤r3</pattern>
   <pattern> ek1v</pattern>
   <pattern> e3l4a</pattern>
   <pattern> e2l5in</pattern>
   <pattern> en5st</pattern>
-  <pattern> e4nä</pattern>
+  <pattern> e4nÃ¤</pattern>
   <pattern> e2r3i</pattern>
   <pattern> e2s</pattern>
   <pattern> e5skad</pattern>
@@ -79,11 +79,11 @@
   <pattern> feb3r</pattern>
   <pattern> fram3</pattern>
   <pattern> fres5</pattern>
-  <pattern> fågel3</pattern>
-  <pattern> för1a</pattern>
-  <pattern> för1en</pattern>
+  <pattern> fÃ¥gel3</pattern>
+  <pattern> fÃ¶r1a</pattern>
+  <pattern> fÃ¶r1en</pattern>
   <pattern> g2</pattern>
-  <pattern> gu4lä</pattern>
+  <pattern> gu4lÃ¤</pattern>
   <pattern> gus3</pattern>
   <pattern> he2m</pattern>
   <pattern> hu5sa</pattern>
@@ -105,7 +105,7 @@
   <pattern> kort5s</pattern>
   <pattern> kring3</pattern>
   <pattern> krings2</pattern>
-  <pattern> köp5s</pattern>
+  <pattern> kÃ¶p5s</pattern>
   <pattern> l2</pattern>
   <pattern> lak5r</pattern>
   <pattern> lek5tr</pattern>
@@ -115,16 +115,16 @@
   <pattern> ma5skeri</pattern>
   <pattern> me4re</pattern>
   <pattern> minis4</pattern>
-  <pattern> mjölk5s</pattern>
+  <pattern> mjÃ¶lk5s</pattern>
   <pattern> mon2s</pattern>
-  <pattern> män5sko</pattern>
-  <pattern> mån3s</pattern>
-  <pattern> må4st</pattern>
-  <pattern> mörk5r</pattern>
+  <pattern> mÃ¤n5sko</pattern>
+  <pattern> mÃ¥n3s</pattern>
+  <pattern> mÃ¥4st</pattern>
+  <pattern> mÃ¶rk5r</pattern>
   <pattern> n4</pattern>
   <pattern> ner1</pattern>
   <pattern> no4n</pattern>
-  <pattern> nöd5r</pattern>
+  <pattern> nÃ¶d5r</pattern>
   <pattern> oc1ku</pattern>
   <pattern> ok3t</pattern>
   <pattern> o3kv</pattern>
@@ -154,12 +154,12 @@
   <pattern> re2ste</pattern>
   <pattern> runs4</pattern>
   <pattern> rym2d</pattern>
-  <pattern> röve5</pattern>
+  <pattern> rÃ¶ve5</pattern>
   <pattern> s4</pattern>
   <pattern> sa2k</pattern>
   <pattern> seg3r</pattern>
   <pattern> si5o</pattern>
-  <pattern> sjö1</pattern>
+  <pattern> sjÃ¶1</pattern>
   <pattern> sk4</pattern>
   <pattern> skott3s</pattern>
   <pattern> slut3s</pattern>
@@ -179,7 +179,7 @@
   <pattern> topp5s</pattern>
   <pattern> tred2s</pattern>
   <pattern> tre3s</pattern>
-  <pattern> trä5k</pattern>
+  <pattern> trÃ¤5k</pattern>
   <pattern> u3k</pattern>
   <pattern> ult5r</pattern>
   <pattern> ung2e</pattern>
@@ -194,17 +194,17 @@
   <pattern> var4t</pattern>
   <pattern> vatten3</pattern>
   <pattern> ved5s</pattern>
-  <pattern> vä2g</pattern>
-  <pattern> väg3s</pattern>
+  <pattern> vÃ¤2g</pattern>
+  <pattern> vÃ¤g3s</pattern>
   <pattern> x2</pattern>
   <pattern> y2a</pattern>
   <pattern> y4e</pattern>
-  <pattern> ä3ro</pattern>
-  <pattern> ång3</pattern>
-  <pattern> år4s5</pattern>
-  <pattern> å3st</pattern>
-  <pattern> åter1</pattern>
-  <pattern> ö3ro</pattern>
+  <pattern> Ã¤3ro</pattern>
+  <pattern> Ã¥ng3</pattern>
+  <pattern> Ã¥r4s5</pattern>
+  <pattern> Ã¥3st</pattern>
+  <pattern> Ã¥ter1</pattern>
+  <pattern> Ã¶3ro</pattern>
   <pattern>8'8</pattern>
   <pattern>a2b</pattern>
   <pattern>ab4bu</pattern>
@@ -237,7 +237,7 @@
   <pattern>ad2s</pattern>
   <pattern>a5ed</pattern>
   <pattern>af4fo</pattern>
-  <pattern>3affä</pattern>
+  <pattern>3affÃ¤</pattern>
   <pattern>1af3ri</pattern>
   <pattern>af4tor</pattern>
   <pattern>a1ga</pattern>
@@ -268,9 +268,9 @@
   <pattern>a1ku</pattern>
   <pattern>a5kvari</pattern>
   <pattern>ak3ve</pattern>
-  <pattern>a5kår</pattern>
-  <pattern>ak5åt</pattern>
-  <pattern>4akö</pattern>
+  <pattern>a5kÃ¥r</pattern>
+  <pattern>ak5Ã¥t</pattern>
+  <pattern>4akÃ¶</pattern>
   <pattern>a1la</pattern>
   <pattern>al5adm</pattern>
   <pattern>ali2br</pattern>
@@ -282,16 +282,16 @@
   <pattern>a4lj</pattern>
   <pattern>alk3ak</pattern>
   <pattern>al2kv</pattern>
-  <pattern>al4kä</pattern>
+  <pattern>al4kÃ¤</pattern>
   <pattern>all3st</pattern>
-  <pattern>al3lå</pattern>
+  <pattern>al3lÃ¥</pattern>
   <pattern>alms4k</pattern>
   <pattern>a1lo</pattern>
   <pattern>al5ort</pattern>
   <pattern>als5pa</pattern>
   <pattern>al3tr</pattern>
   <pattern>al4tu</pattern>
-  <pattern>al4tä</pattern>
+  <pattern>al4tÃ¤</pattern>
   <pattern>a1lu</pattern>
   <pattern>alu5s</pattern>
   <pattern>alv3s</pattern>
@@ -300,8 +300,8 @@
   <pattern>am4i</pattern>
   <pattern>am4pr</pattern>
   <pattern>am1s</pattern>
-  <pattern>am3åt</pattern>
-  <pattern>a3mö</pattern>
+  <pattern>am3Ã¥t</pattern>
+  <pattern>a3mÃ¶</pattern>
   <pattern>ana4bo</pattern>
   <pattern>an3alf</pattern>
   <pattern>an3ark</pattern>
@@ -310,7 +310,7 @@
   <pattern>an5dak</pattern>
   <pattern>andel2s</pattern>
   <pattern>an4dun</pattern>
-  <pattern>an4dän</pattern>
+  <pattern>an4dÃ¤n</pattern>
   <pattern>a4nef</pattern>
   <pattern>ang4es</pattern>
   <pattern>an3gi</pattern>
@@ -334,7 +334,7 @@
   <pattern>an4tre</pattern>
   <pattern>a1nu</pattern>
   <pattern>a5ny</pattern>
-  <pattern>a3nö</pattern>
+  <pattern>a3nÃ¶</pattern>
   <pattern>a1o</pattern>
   <pattern>a1pe</pattern>
   <pattern>a2pe </pattern>
@@ -353,7 +353,7 @@
   <pattern>aps3p</pattern>
   <pattern>apu5s</pattern>
   <pattern>a5py</pattern>
-  <pattern>a5pä</pattern>
+  <pattern>a5pÃ¤</pattern>
   <pattern>2ara</pattern>
   <pattern>a4rann</pattern>
   <pattern>a4rarv</pattern>
@@ -387,9 +387,9 @@
   <pattern>4aru</pattern>
   <pattern>a4rur</pattern>
   <pattern>a5rus</pattern>
-  <pattern>ar4väg</pattern>
+  <pattern>ar4vÃ¤g</pattern>
   <pattern>a3ry</pattern>
-  <pattern>a3rä</pattern>
+  <pattern>a3rÃ¤</pattern>
   <pattern>2asa</pattern>
   <pattern>asbe4</pattern>
   <pattern>a1sc</pattern>
@@ -417,19 +417,19 @@
   <pattern>ast5rak</pattern>
   <pattern>a5stral</pattern>
   <pattern>ast3rol</pattern>
-  <pattern>as5tör</pattern>
+  <pattern>as5tÃ¶r</pattern>
   <pattern>a3su</pattern>
   <pattern>a4sul</pattern>
   <pattern>a4sund</pattern>
   <pattern>as2ut</pattern>
   <pattern>as3v</pattern>
   <pattern>a1sy</pattern>
-  <pattern>a2s5å</pattern>
-  <pattern>a2sö</pattern>
+  <pattern>a2s5Ã¥</pattern>
+  <pattern>a2sÃ¶</pattern>
   <pattern>a1t</pattern>
   <pattern>ata5ra</pattern>
   <pattern>a5te</pattern>
-  <pattern>ati5ö</pattern>
+  <pattern>ati5Ã¶</pattern>
   <pattern>a4tj</pattern>
   <pattern>a2tr</pattern>
   <pattern>a3tral</pattern>
@@ -459,8 +459,8 @@
   <pattern>1avg</pattern>
   <pattern>2a1vi</pattern>
   <pattern>av3r</pattern>
-  <pattern>4a3vä</pattern>
-  <pattern>a5å</pattern>
+  <pattern>4a3vÃ¤</pattern>
+  <pattern>a5Ã¥</pattern>
   <pattern>1b2</pattern>
   <pattern>3ba</pattern>
   <pattern>ba4di</pattern>
@@ -488,11 +488,11 @@
   <pattern>4beld</pattern>
   <pattern>be5lu</pattern>
   <pattern>be3ly</pattern>
-  <pattern>be3lå</pattern>
-  <pattern>be5lö</pattern>
+  <pattern>be3lÃ¥</pattern>
+  <pattern>be5lÃ¶</pattern>
   <pattern>beng4</pattern>
-  <pattern>be3nå</pattern>
-  <pattern>be1rö</pattern>
+  <pattern>be3nÃ¥</pattern>
+  <pattern>be1rÃ¶</pattern>
   <pattern>be1s</pattern>
   <pattern>be3sl</pattern>
   <pattern>bes5s</pattern>
@@ -544,10 +544,10 @@
   <pattern>b3rika</pattern>
   <pattern>3brike</pattern>
   <pattern>3briks</pattern>
-  <pattern>b5rikö</pattern>
+  <pattern>b5rikÃ¶</pattern>
   <pattern>bru4st</pattern>
   <pattern>3bry</pattern>
-  <pattern>3brö</pattern>
+  <pattern>3brÃ¶</pattern>
   <pattern>4b3s</pattern>
   <pattern>b5sce</pattern>
   <pattern>bs3ch</pattern>
@@ -563,12 +563,12 @@
   <pattern>b3v</pattern>
   <pattern>3by</pattern>
   <pattern>by5r</pattern>
-  <pattern>3bä</pattern>
-  <pattern>3bå</pattern>
-  <pattern>bång3</pattern>
-  <pattern>båt2s</pattern>
-  <pattern>3bö</pattern>
-  <pattern>bör2s</pattern>
+  <pattern>3bÃ¤</pattern>
+  <pattern>3bÃ¥</pattern>
+  <pattern>bÃ¥ng3</pattern>
+  <pattern>bÃ¥t2s</pattern>
+  <pattern>3bÃ¶</pattern>
+  <pattern>bÃ¶r2s</pattern>
   <pattern>c2</pattern>
   <pattern>5cap</pattern>
   <pattern>c3c</pattern>
@@ -581,8 +581,8 @@
   <pattern>3chef</pattern>
   <pattern>5choc</pattern>
   <pattern>4cht</pattern>
-  <pattern>chäs3</pattern>
-  <pattern>chör4</pattern>
+  <pattern>chÃ¤s3</pattern>
+  <pattern>chÃ¶r4</pattern>
   <pattern>1ci</pattern>
   <pattern>ci4lu</pattern>
   <pattern>cim2</pattern>
@@ -605,9 +605,9 @@
   <pattern>ckus2</pattern>
   <pattern>ck3va</pattern>
   <pattern>ck3ve</pattern>
-  <pattern>ck3vä</pattern>
-  <pattern>ck5ä</pattern>
-  <pattern>ck3ö</pattern>
+  <pattern>ck3vÃ¤</pattern>
+  <pattern>ck5Ã¤</pattern>
+  <pattern>ck3Ã¶</pattern>
   <pattern>cle2a</pattern>
   <pattern>co2a</pattern>
   <pattern>co4m</pattern>
@@ -624,7 +624,7 @@
   <pattern>5dako</pattern>
   <pattern>da3li</pattern>
   <pattern>5dam</pattern>
-  <pattern>da3må</pattern>
+  <pattern>da3mÃ¥</pattern>
   <pattern>4dand </pattern>
   <pattern>4d1ap</pattern>
   <pattern>4darb</pattern>
@@ -643,7 +643,7 @@
   <pattern>dd3ra</pattern>
   <pattern>dd3re</pattern>
   <pattern>dd3ri</pattern>
-  <pattern>d3drä</pattern>
+  <pattern>d3drÃ¤</pattern>
   <pattern>dd2s</pattern>
   <pattern>dds3v</pattern>
   <pattern>3d2e</pattern>
@@ -654,7 +654,7 @@
   <pattern>dels5ti</pattern>
   <pattern>de5lut</pattern>
   <pattern>d4en</pattern>
-  <pattern>denti5ö</pattern>
+  <pattern>denti5Ã¶</pattern>
   <pattern>den2to</pattern>
   <pattern>de3pr</pattern>
   <pattern>5der</pattern>
@@ -671,7 +671,7 @@
   <pattern>de3tr</pattern>
   <pattern>4dex</pattern>
   <pattern>2d1f</pattern>
-  <pattern>dfö3ra</pattern>
+  <pattern>dfÃ¶3ra</pattern>
   <pattern>2d1g</pattern>
   <pattern>d3gl</pattern>
   <pattern>2d5h</pattern>
@@ -740,11 +740,11 @@
   <pattern>d3ror</pattern>
   <pattern>4drot</pattern>
   <pattern>drotts3</pattern>
-  <pattern>d3räkn</pattern>
-  <pattern>3dräkt</pattern>
-  <pattern>5drän</pattern>
-  <pattern>d3rät</pattern>
-  <pattern>d5röd</pattern>
+  <pattern>d3rÃ¤kn</pattern>
+  <pattern>3drÃ¤kt</pattern>
+  <pattern>5drÃ¤n</pattern>
+  <pattern>d3rÃ¤t</pattern>
+  <pattern>d5rÃ¶d</pattern>
   <pattern>4ds</pattern>
   <pattern>d2s1an</pattern>
   <pattern>d2se</pattern>
@@ -762,8 +762,8 @@
   <pattern>ds1l</pattern>
   <pattern>ds4lot</pattern>
   <pattern>ds4mo</pattern>
-  <pattern>d4små</pattern>
-  <pattern>ds5nå</pattern>
+  <pattern>d4smÃ¥</pattern>
+  <pattern>ds5nÃ¥</pattern>
   <pattern>d2so</pattern>
   <pattern>ds3pl</pattern>
   <pattern>ds3s4</pattern>
@@ -776,7 +776,7 @@
   <pattern>ds5tro</pattern>
   <pattern>d2su</pattern>
   <pattern>ds1v</pattern>
-  <pattern>d2sö</pattern>
+  <pattern>d2sÃ¶</pattern>
   <pattern>2d3t</pattern>
   <pattern>3du</pattern>
   <pattern>dub3ble</pattern>
@@ -784,7 +784,7 @@
   <pattern>du1s</pattern>
   <pattern>du2sc</pattern>
   <pattern>du4ste</pattern>
-  <pattern>du5sö</pattern>
+  <pattern>du5sÃ¶</pattern>
   <pattern>4dut</pattern>
   <pattern>du4vu</pattern>
   <pattern>2d1v</pattern>
@@ -794,17 +794,17 @@
   <pattern>dy4kan</pattern>
   <pattern>dy4ro</pattern>
   <pattern>4dz</pattern>
-  <pattern>4däg</pattern>
-  <pattern>dä2r</pattern>
-  <pattern>5dåg</pattern>
-  <pattern>2dås</pattern>
-  <pattern>4dåt</pattern>
-  <pattern>dé4</pattern>
-  <pattern>3dö</pattern>
-  <pattern>döds1</pattern>
-  <pattern>4dög</pattern>
-  <pattern>4döp</pattern>
-  <pattern>d5öst</pattern>
+  <pattern>4dÃ¤g</pattern>
+  <pattern>dÃ¤2r</pattern>
+  <pattern>5dÃ¥g</pattern>
+  <pattern>2dÃ¥s</pattern>
+  <pattern>4dÃ¥t</pattern>
+  <pattern>dÃ©4</pattern>
+  <pattern>3dÃ¶</pattern>
+  <pattern>dÃ¶ds1</pattern>
+  <pattern>4dÃ¶g</pattern>
+  <pattern>4dÃ¶p</pattern>
+  <pattern>d5Ã¶st</pattern>
   <pattern>e1a</pattern>
   <pattern>e2ake</pattern>
   <pattern>e4am</pattern>
@@ -826,7 +826,7 @@
   <pattern>ed2sko</pattern>
   <pattern>ed3s2l</pattern>
   <pattern>edso4</pattern>
-  <pattern>e3då</pattern>
+  <pattern>e3dÃ¥</pattern>
   <pattern>e1e</pattern>
   <pattern>e2ed</pattern>
   <pattern>e4ei</pattern>
@@ -849,7 +849,7 @@
   <pattern>eg3rin</pattern>
   <pattern>e5gru</pattern>
   <pattern>egs3</pattern>
-  <pattern>e5gå</pattern>
+  <pattern>e5gÃ¥</pattern>
   <pattern>eig2</pattern>
   <pattern>ei5gn</pattern>
   <pattern>e3ik</pattern>
@@ -858,8 +858,8 @@
   <pattern>e1isk</pattern>
   <pattern>e1jo</pattern>
   <pattern>e3ju</pattern>
-  <pattern>e3jä</pattern>
-  <pattern>e5jö</pattern>
+  <pattern>e3jÃ¤</pattern>
+  <pattern>e5jÃ¶</pattern>
   <pattern>e3ka</pattern>
   <pattern>e1ki</pattern>
   <pattern>e1kl</pattern>
@@ -875,7 +875,7 @@
   <pattern>e1kve</pattern>
   <pattern>ek5vis</pattern>
   <pattern>e1ky</pattern>
-  <pattern>e1kä</pattern>
+  <pattern>e1kÃ¤</pattern>
   <pattern>e1la</pattern>
   <pattern>el1akt</pattern>
   <pattern>el4arb</pattern>
@@ -887,14 +887,14 @@
   <pattern>el3k4</pattern>
   <pattern>el3li</pattern>
   <pattern>ell3s</pattern>
-  <pattern>el3lä</pattern>
+  <pattern>el3lÃ¤</pattern>
   <pattern>e1lo</pattern>
   <pattern>e4lob</pattern>
   <pattern>el3p</pattern>
   <pattern>el2si</pattern>
   <pattern>el5ug</pattern>
   <pattern>e5luv</pattern>
-  <pattern>2e1lä</pattern>
+  <pattern>2e1lÃ¤</pattern>
   <pattern>e1m</pattern>
   <pattern>e5mat</pattern>
   <pattern>e5mis</pattern>
@@ -906,12 +906,12 @@
   <pattern>en4ce</pattern>
   <pattern>e4ned</pattern>
   <pattern>e4nek</pattern>
-  <pattern>ene3rö</pattern>
+  <pattern>ene3rÃ¶</pattern>
   <pattern>2enj</pattern>
   <pattern>en5klo</pattern>
   <pattern>en3kn</pattern>
   <pattern>en5kr</pattern>
-  <pattern>en5kä</pattern>
+  <pattern>en5kÃ¤</pattern>
   <pattern>enning5</pattern>
   <pattern>ennings2</pattern>
   <pattern>eno2m</pattern>
@@ -921,7 +921,7 @@
   <pattern>en2sp</pattern>
   <pattern>ens4te</pattern>
   <pattern>ens4vin</pattern>
-  <pattern>en4så</pattern>
+  <pattern>en4sÃ¥</pattern>
   <pattern>ent4ha</pattern>
   <pattern>en2t1r</pattern>
   <pattern>ent4rat </pattern>
@@ -930,7 +930,7 @@
   <pattern>ent5ru</pattern>
   <pattern>e5nus</pattern>
   <pattern>2eny</pattern>
-  <pattern>2e1nä</pattern>
+  <pattern>2e1nÃ¤</pattern>
   <pattern>e1o</pattern>
   <pattern>e2og</pattern>
   <pattern>eo4i</pattern>
@@ -946,20 +946,20 @@
   <pattern>ep3s</pattern>
   <pattern>ep4tr</pattern>
   <pattern>epu3b</pattern>
-  <pattern>e3på</pattern>
+  <pattern>e3pÃ¥</pattern>
   <pattern>er1ak</pattern>
   <pattern>4eras</pattern>
   <pattern>er3d4</pattern>
   <pattern>erg4l</pattern>
   <pattern>er4gu</pattern>
-  <pattern>er4gås</pattern>
+  <pattern>er4gÃ¥s</pattern>
   <pattern>e1ri</pattern>
   <pattern>e5rib</pattern>
   <pattern>e4rinf</pattern>
   <pattern>erings3</pattern>
   <pattern>eri5stik</pattern>
   <pattern>erk4lin</pattern>
-  <pattern>erlä4</pattern>
+  <pattern>erlÃ¤4</pattern>
   <pattern>er5na</pattern>
   <pattern>e1ro</pattern>
   <pattern>e3rob</pattern>
@@ -977,8 +977,8 @@
   <pattern>e1ru</pattern>
   <pattern>e5rum</pattern>
   <pattern>e3ry</pattern>
-  <pattern>e1rä</pattern>
-  <pattern>e5råd</pattern>
+  <pattern>e1rÃ¤</pattern>
+  <pattern>e5rÃ¥d</pattern>
   <pattern>e2sal</pattern>
   <pattern>es5all</pattern>
   <pattern>es3arm</pattern>
@@ -998,7 +998,7 @@
   <pattern>e1sp</pattern>
   <pattern>es3pl</pattern>
   <pattern>es2sk</pattern>
-  <pattern>ess5lä</pattern>
+  <pattern>ess5lÃ¤</pattern>
   <pattern>es2st</pattern>
   <pattern>e3stal</pattern>
   <pattern>es5ten </pattern>
@@ -1008,17 +1008,17 @@
   <pattern>es4tr</pattern>
   <pattern>est5rer</pattern>
   <pattern>e3stru</pattern>
-  <pattern>est4rö</pattern>
-  <pattern>e3stå</pattern>
+  <pattern>est4rÃ¶</pattern>
+  <pattern>e3stÃ¥</pattern>
   <pattern>es2u</pattern>
   <pattern>e1sy</pattern>
   <pattern>eta3b</pattern>
   <pattern>e5ti</pattern>
-  <pattern>eti3ö</pattern>
+  <pattern>eti3Ã¶</pattern>
   <pattern>e1to</pattern>
   <pattern>e5tri </pattern>
   <pattern>et3ris</pattern>
-  <pattern>e5trä</pattern>
+  <pattern>e5trÃ¤</pattern>
   <pattern>et2s</pattern>
   <pattern>ets2ad</pattern>
   <pattern>ets3kr</pattern>
@@ -1033,8 +1033,8 @@
   <pattern>et5vu</pattern>
   <pattern>e1ty</pattern>
   <pattern>2etz</pattern>
-  <pattern>e1tä</pattern>
-  <pattern>etäc4</pattern>
+  <pattern>e1tÃ¤</pattern>
+  <pattern>etÃ¤c4</pattern>
   <pattern>euk4</pattern>
   <pattern>e5um </pattern>
   <pattern>e5up4</pattern>
@@ -1047,7 +1047,7 @@
   <pattern>ev3r</pattern>
   <pattern>3exp</pattern>
   <pattern>ext4r</pattern>
-  <pattern>4eä</pattern>
+  <pattern>4eÃ¤</pattern>
   <pattern>f2</pattern>
   <pattern>3fa</pattern>
   <pattern>fac4</pattern>
@@ -1056,7 +1056,7 @@
   <pattern>4farb</pattern>
   <pattern>fa3sh</pattern>
   <pattern>fa4st</pattern>
-  <pattern>fa4tö</pattern>
+  <pattern>fa4tÃ¶</pattern>
   <pattern>4fav</pattern>
   <pattern>4f3b</pattern>
   <pattern>f3d</pattern>
@@ -1073,8 +1073,8 @@
   <pattern>f3fo</pattern>
   <pattern>ff3r</pattern>
   <pattern>ffs4</pattern>
-  <pattern>f3fä</pattern>
-  <pattern>ffö5re</pattern>
+  <pattern>f3fÃ¤</pattern>
+  <pattern>ffÃ¶5re</pattern>
   <pattern>f3g2</pattern>
   <pattern>f5h</pattern>
   <pattern>3fi</pattern>
@@ -1109,7 +1109,7 @@
   <pattern>5frit</pattern>
   <pattern>fros5ta</pattern>
   <pattern>fru5str</pattern>
-  <pattern>från5</pattern>
+  <pattern>frÃ¥n5</pattern>
   <pattern>2f3s</pattern>
   <pattern>fs2k</pattern>
   <pattern>f4sl</pattern>
@@ -1135,7 +1135,7 @@
   <pattern>ft2s5i</pattern>
   <pattern>ft4sj</pattern>
   <pattern>fts4t</pattern>
-  <pattern>fts5vä</pattern>
+  <pattern>fts5vÃ¤</pattern>
   <pattern>ft5t</pattern>
   <pattern>ft1v</pattern>
   <pattern>3fu</pattern>
@@ -1145,24 +1145,24 @@
   <pattern>4fv</pattern>
   <pattern>5fy</pattern>
   <pattern>fy4ma</pattern>
-  <pattern>1fä</pattern>
-  <pattern>fäs5ti</pattern>
-  <pattern>få3tö</pattern>
-  <pattern>3fö</pattern>
-  <pattern>fö2ra</pattern>
-  <pattern>fö2ren</pattern>
-  <pattern>fö2ri</pattern>
-  <pattern>för3k</pattern>
-  <pattern>för3sm</pattern>
-  <pattern>för3su</pattern>
-  <pattern>fört4</pattern>
-  <pattern>för1ö</pattern>
+  <pattern>1fÃ¤</pattern>
+  <pattern>fÃ¤s5ti</pattern>
+  <pattern>fÃ¥3tÃ¶</pattern>
+  <pattern>3fÃ¶</pattern>
+  <pattern>fÃ¶2ra</pattern>
+  <pattern>fÃ¶2ren</pattern>
+  <pattern>fÃ¶2ri</pattern>
+  <pattern>fÃ¶r3k</pattern>
+  <pattern>fÃ¶r3sm</pattern>
+  <pattern>fÃ¶r3su</pattern>
+  <pattern>fÃ¶rt4</pattern>
+  <pattern>fÃ¶r1Ã¶</pattern>
   <pattern>ga5br</pattern>
   <pattern>3g2ag</pattern>
   <pattern>4gakt</pattern>
   <pattern>3g2al</pattern>
   <pattern>gall3s</pattern>
-  <pattern>ga5lä</pattern>
+  <pattern>ga5lÃ¤</pattern>
   <pattern>ga4no</pattern>
   <pattern>2garb</pattern>
   <pattern>4garm</pattern>
@@ -1186,8 +1186,8 @@
   <pattern>3gelis</pattern>
   <pattern>gel5st</pattern>
   <pattern>gel5y</pattern>
-  <pattern>3gelä</pattern>
-  <pattern>gel5än</pattern>
+  <pattern>3gelÃ¤</pattern>
+  <pattern>gel5Ã¤n</pattern>
   <pattern>g4em</pattern>
   <pattern>ge4nap</pattern>
   <pattern>gen5g</pattern>
@@ -1200,7 +1200,7 @@
   <pattern>1g2ent</pattern>
   <pattern>4genv</pattern>
   <pattern>ge5ny</pattern>
-  <pattern>3genä</pattern>
+  <pattern>3genÃ¤</pattern>
   <pattern>ge2o</pattern>
   <pattern>1g2era</pattern>
   <pattern>4gerarb</pattern>
@@ -1233,10 +1233,10 @@
   <pattern>gi5stral</pattern>
   <pattern>gi5st4rat</pattern>
   <pattern>3giv</pattern>
-  <pattern>gi2ö</pattern>
+  <pattern>gi2Ã¶</pattern>
   <pattern>g2jo</pattern>
   <pattern>3gjor</pattern>
-  <pattern>g3jä</pattern>
+  <pattern>g3jÃ¤</pattern>
   <pattern>2g3k2</pattern>
   <pattern>2gl</pattern>
   <pattern>g4lans</pattern>
@@ -1244,11 +1244,11 @@
   <pattern>g2las</pattern>
   <pattern>5glase</pattern>
   <pattern>glas5k</pattern>
-  <pattern>5glasö</pattern>
+  <pattern>5glasÃ¶</pattern>
   <pattern>g4lid</pattern>
   <pattern>4glj</pattern>
-  <pattern>g4lög</pattern>
-  <pattern>5glöm</pattern>
+  <pattern>g4lÃ¶g</pattern>
+  <pattern>5glÃ¶m</pattern>
   <pattern>2g1m</pattern>
   <pattern>2g1n</pattern>
   <pattern>g4nag</pattern>
@@ -1279,10 +1279,10 @@
   <pattern>gro2v</pattern>
   <pattern>4grum</pattern>
   <pattern>grus5t</pattern>
-  <pattern>grä4n</pattern>
-  <pattern>5gräns</pattern>
-  <pattern>g4rå</pattern>
-  <pattern>5grå </pattern>
+  <pattern>grÃ¤4n</pattern>
+  <pattern>5grÃ¤ns</pattern>
+  <pattern>g4rÃ¥</pattern>
+  <pattern>5grÃ¥ </pattern>
   <pattern>2g2s</pattern>
   <pattern>gs1an</pattern>
   <pattern>g5satt</pattern>
@@ -1300,7 +1300,7 @@
   <pattern>g4sme</pattern>
   <pattern>gs3n</pattern>
   <pattern>gs4ni</pattern>
-  <pattern>gs4nö</pattern>
+  <pattern>gs4nÃ¶</pattern>
   <pattern>gs1or</pattern>
   <pattern>gs3pl</pattern>
   <pattern>gs3po</pattern>
@@ -1318,21 +1318,21 @@
   <pattern>g3stol</pattern>
   <pattern>gs3tra</pattern>
   <pattern>gst4re</pattern>
-  <pattern>g3stäm</pattern>
+  <pattern>g3stÃ¤m</pattern>
   <pattern>g4sug</pattern>
   <pattern>gs1v</pattern>
   <pattern>g4s3ve</pattern>
   <pattern>gs3vi</pattern>
-  <pattern>gs3vå</pattern>
+  <pattern>gs3vÃ¥</pattern>
   <pattern>gs3yt</pattern>
-  <pattern>gs1ä</pattern>
+  <pattern>gs1Ã¤</pattern>
   <pattern>2g1t</pattern>
   <pattern>g3tr</pattern>
   <pattern>1g2u</pattern>
   <pattern>4gug</pattern>
   <pattern>guld3</pattern>
   <pattern>gul4da</pattern>
-  <pattern>4gulä</pattern>
+  <pattern>4gulÃ¤</pattern>
   <pattern>gu2ma</pattern>
   <pattern>4gup</pattern>
   <pattern>gu5ru</pattern>
@@ -1343,22 +1343,22 @@
   <pattern>4gw</pattern>
   <pattern>3gy</pattern>
   <pattern>gytt3j</pattern>
-  <pattern>g4äl</pattern>
-  <pattern>g2är</pattern>
-  <pattern>gä4s</pattern>
-  <pattern>1g2å</pattern>
-  <pattern>gårds5</pattern>
-  <pattern>2g5åri</pattern>
-  <pattern>1g2ö</pattern>
-  <pattern>4gög</pattern>
-  <pattern>gö5ro</pattern>
-  <pattern>2g5ört</pattern>
+  <pattern>g4Ã¤l</pattern>
+  <pattern>g2Ã¤r</pattern>
+  <pattern>gÃ¤4s</pattern>
+  <pattern>1g2Ã¥</pattern>
+  <pattern>gÃ¥rds5</pattern>
+  <pattern>2g5Ã¥ri</pattern>
+  <pattern>1g2Ã¶</pattern>
+  <pattern>4gÃ¶g</pattern>
+  <pattern>gÃ¶5ro</pattern>
+  <pattern>2g5Ã¶rt</pattern>
   <pattern>1h</pattern>
   <pattern>ha3bl</pattern>
   <pattern>ha5ge</pattern>
   <pattern>ha4li</pattern>
   <pattern>hal4so</pattern>
-  <pattern>halv3å</pattern>
+  <pattern>halv3Ã¥</pattern>
   <pattern>ham4st</pattern>
   <pattern>handels3</pattern>
   <pattern>hands4l</pattern>
@@ -1374,7 +1374,7 @@
   <pattern>4hd</pattern>
   <pattern>he4at</pattern>
   <pattern>he4fr</pattern>
-  <pattern>he4lä</pattern>
+  <pattern>he4lÃ¤</pattern>
   <pattern>hets1</pattern>
   <pattern>hets3t</pattern>
   <pattern>hets3v</pattern>
@@ -1383,7 +1383,7 @@
   <pattern>4hir</pattern>
   <pattern>his2sk</pattern>
   <pattern>hi4t</pattern>
-  <pattern>hjäl3s</pattern>
+  <pattern>hjÃ¤l3s</pattern>
   <pattern>h1k</pattern>
   <pattern>2hl</pattern>
   <pattern>h4le</pattern>
@@ -1407,20 +1407,20 @@
   <pattern>hys4t</pattern>
   <pattern>hys5ta</pattern>
   <pattern>hy3ster</pattern>
-  <pattern>häll2</pattern>
-  <pattern>hälls1</pattern>
-  <pattern>hälso3</pattern>
-  <pattern>hä4ri</pattern>
-  <pattern>hä4s</pattern>
-  <pattern>hä4var</pattern>
-  <pattern>hård5s4</pattern>
-  <pattern>h2ö</pattern>
-  <pattern>hö2g</pattern>
-  <pattern>hö5gen</pattern>
-  <pattern>hög5r</pattern>
-  <pattern>hörn5s</pattern>
-  <pattern>hö4s</pattern>
-  <pattern>höst5r</pattern>
+  <pattern>hÃ¤ll2</pattern>
+  <pattern>hÃ¤lls1</pattern>
+  <pattern>hÃ¤lso3</pattern>
+  <pattern>hÃ¤4ri</pattern>
+  <pattern>hÃ¤4s</pattern>
+  <pattern>hÃ¤4var</pattern>
+  <pattern>hÃ¥rd5s4</pattern>
+  <pattern>h2Ã¶</pattern>
+  <pattern>hÃ¶2g</pattern>
+  <pattern>hÃ¶5gen</pattern>
+  <pattern>hÃ¶g5r</pattern>
+  <pattern>hÃ¶rn5s</pattern>
+  <pattern>hÃ¶4s</pattern>
+  <pattern>hÃ¶st5r</pattern>
   <pattern>i1a</pattern>
   <pattern>ia3fr</pattern>
   <pattern>ia3g</pattern>
@@ -1444,13 +1444,13 @@
   <pattern>id2s</pattern>
   <pattern>ids3v</pattern>
   <pattern>i4dun</pattern>
-  <pattern>i3då</pattern>
-  <pattern>i4dö</pattern>
+  <pattern>i3dÃ¥</pattern>
+  <pattern>i4dÃ¶</pattern>
   <pattern>2i1e</pattern>
   <pattern>ifes4</pattern>
   <pattern>i5fn</pattern>
   <pattern>i1fr</pattern>
-  <pattern>3ifrån</pattern>
+  <pattern>3ifrÃ¥n</pattern>
   <pattern>i1g</pattern>
   <pattern>4igan</pattern>
   <pattern>i2geb</pattern>
@@ -1461,7 +1461,7 @@
   <pattern>i4kart</pattern>
   <pattern>i1ki</pattern>
   <pattern>i3klo</pattern>
-  <pattern>ik5län</pattern>
+  <pattern>ik5lÃ¤n</pattern>
   <pattern>ik3n</pattern>
   <pattern>i1ko</pattern>
   <pattern>ik3re</pattern>
@@ -1475,34 +1475,34 @@
   <pattern>ik5u4t</pattern>
   <pattern>ik1v</pattern>
   <pattern>i3ky</pattern>
-  <pattern>i3kå</pattern>
-  <pattern>i3kö</pattern>
+  <pattern>i3kÃ¥</pattern>
+  <pattern>i3kÃ¶</pattern>
   <pattern>i1la</pattern>
   <pattern>il4dan</pattern>
   <pattern>i2lin</pattern>
-  <pattern>il1jö</pattern>
+  <pattern>il1jÃ¶</pattern>
   <pattern>il5k</pattern>
   <pattern>il5lak</pattern>
   <pattern>il4lik</pattern>
   <pattern>ill3s2</pattern>
   <pattern>3illu</pattern>
-  <pattern>il5lär</pattern>
+  <pattern>il5lÃ¤r</pattern>
   <pattern>il2min</pattern>
   <pattern>i1lo</pattern>
   <pattern>il2tj</pattern>
   <pattern>i3lu</pattern>
   <pattern>ilufts5</pattern>
   <pattern>i4lup</pattern>
-  <pattern>i5lä</pattern>
+  <pattern>i5lÃ¤</pattern>
   <pattern>im2b3r</pattern>
   <pattern>im5sm</pattern>
   <pattern>im4so</pattern>
   <pattern>i1mu</pattern>
-  <pattern>i3mä</pattern>
-  <pattern>i5må</pattern>
-  <pattern>i5mö</pattern>
+  <pattern>i3mÃ¤</pattern>
+  <pattern>i5mÃ¥</pattern>
+  <pattern>i5mÃ¶</pattern>
   <pattern>i4nau</pattern>
-  <pattern>ind5skä</pattern>
+  <pattern>ind5skÃ¤</pattern>
   <pattern>ind5sti</pattern>
   <pattern>1indu</pattern>
   <pattern>in4ga</pattern>
@@ -1518,9 +1518,9 @@
   <pattern>1inneh</pattern>
   <pattern>5inre</pattern>
   <pattern>1inri</pattern>
-  <pattern>3inrä</pattern>
+  <pattern>3inrÃ¤</pattern>
   <pattern>in4sem</pattern>
-  <pattern>in3skrä</pattern>
+  <pattern>in3skrÃ¤</pattern>
   <pattern>in3sl</pattern>
   <pattern>ins4m</pattern>
   <pattern>in3sn</pattern>
@@ -1529,7 +1529,7 @@
   <pattern>in5spr</pattern>
   <pattern>3instink</pattern>
   <pattern>3instru</pattern>
-  <pattern>in4stå</pattern>
+  <pattern>in4stÃ¥</pattern>
   <pattern>in5te</pattern>
   <pattern>1intr</pattern>
   <pattern>in4tra</pattern>
@@ -1537,7 +1537,7 @@
   <pattern>i1nu</pattern>
   <pattern>i4nun</pattern>
   <pattern>in3ym</pattern>
-  <pattern>i1nä</pattern>
+  <pattern>i1nÃ¤</pattern>
   <pattern>i5oc</pattern>
   <pattern>i1og</pattern>
   <pattern>i3ok</pattern>
@@ -1574,7 +1574,7 @@
   <pattern>is4kun</pattern>
   <pattern>is3ky</pattern>
   <pattern>i5slam</pattern>
-  <pattern>is3län</pattern>
+  <pattern>is3lÃ¤n</pattern>
   <pattern>is3m</pattern>
   <pattern>is3n</pattern>
   <pattern>i2s3p</pattern>
@@ -1583,7 +1583,7 @@
   <pattern>is3se</pattern>
   <pattern>iss5n</pattern>
   <pattern>is4s3tr</pattern>
-  <pattern>iss3tä</pattern>
+  <pattern>iss3tÃ¤</pattern>
   <pattern>i1stal</pattern>
   <pattern>i1stans</pattern>
   <pattern>ist5att</pattern>
@@ -1595,10 +1595,10 @@
   <pattern>is5tor </pattern>
   <pattern>is5tore</pattern>
   <pattern>ist5ro</pattern>
-  <pattern>istå4</pattern>
+  <pattern>istÃ¥4</pattern>
   <pattern>is5v</pattern>
   <pattern>i3sy</pattern>
-  <pattern>i4så</pattern>
+  <pattern>i4sÃ¥</pattern>
   <pattern>i1t</pattern>
   <pattern>it5c</pattern>
   <pattern>i4tei</pattern>
@@ -1610,7 +1610,7 @@
   <pattern>it2t5op</pattern>
   <pattern>it4t3r</pattern>
   <pattern>it4tu</pattern>
-  <pattern>i2t5å</pattern>
+  <pattern>i2t5Ã¥</pattern>
   <pattern>4i1u</pattern>
   <pattern>i1va</pattern>
   <pattern>i2vak</pattern>
@@ -1618,10 +1618,10 @@
   <pattern>i4vin</pattern>
   <pattern>iv3r</pattern>
   <pattern>iv2s</pattern>
-  <pattern>i1vå</pattern>
+  <pattern>i1vÃ¥</pattern>
   <pattern>ix2t</pattern>
   <pattern>ix5tu</pattern>
-  <pattern>i1ö</pattern>
+  <pattern>i1Ã¶</pattern>
   <pattern>1ja</pattern>
   <pattern>3jakt </pattern>
   <pattern>4jarb</pattern>
@@ -1651,7 +1651,7 @@
   <pattern>3job</pattern>
   <pattern>jo4kr</pattern>
   <pattern>4jolj</pattern>
-  <pattern>jo5lö</pattern>
+  <pattern>jo5lÃ¶</pattern>
   <pattern>jor4din</pattern>
   <pattern>jord3s4</pattern>
   <pattern>3jou</pattern>
@@ -1675,21 +1675,21 @@
   <pattern>jus4t</pattern>
   <pattern>jus5ta</pattern>
   <pattern>jut4sta</pattern>
-  <pattern>jä5lo</pattern>
-  <pattern>jäl4p5r</pattern>
-  <pattern>jäl4sa</pattern>
-  <pattern>järn3sk</pattern>
-  <pattern>jär5s</pattern>
-  <pattern>5jé</pattern>
-  <pattern>jör2s</pattern>
-  <pattern>jös4t</pattern>
+  <pattern>jÃ¤5lo</pattern>
+  <pattern>jÃ¤l4p5r</pattern>
+  <pattern>jÃ¤l4sa</pattern>
+  <pattern>jÃ¤rn3sk</pattern>
+  <pattern>jÃ¤r5s</pattern>
+  <pattern>5jÃ©</pattern>
+  <pattern>jÃ¶r2s</pattern>
+  <pattern>jÃ¶s4t</pattern>
   <pattern>1k2a</pattern>
   <pattern>3ka </pattern>
   <pattern>3kad </pattern>
   <pattern>3kade </pattern>
   <pattern>ka4dr</pattern>
   <pattern>2kaf</pattern>
-  <pattern>5kafä</pattern>
+  <pattern>5kafÃ¤</pattern>
   <pattern>ka3i</pattern>
   <pattern>ka5ju</pattern>
   <pattern>2kak</pattern>
@@ -1742,15 +1742,15 @@
   <pattern>4keld</pattern>
   <pattern>kels4</pattern>
   <pattern>4kense</pattern>
-  <pattern>ke5nå</pattern>
+  <pattern>ke5nÃ¥</pattern>
   <pattern>2kep</pattern>
   <pattern>3kern</pattern>
   <pattern>ke2s</pattern>
   <pattern>kes3s</pattern>
   <pattern>4kex</pattern>
   <pattern>2k1f</pattern>
-  <pattern>kfö2</pattern>
-  <pattern>kfö3ri</pattern>
+  <pattern>kfÃ¶2</pattern>
+  <pattern>kfÃ¶3ri</pattern>
   <pattern>2k5g4</pattern>
   <pattern>2kh4</pattern>
   <pattern>kid3s</pattern>
@@ -1758,7 +1758,7 @@
   <pattern>1kig</pattern>
   <pattern>kik4s</pattern>
   <pattern>kilt4</pattern>
-  <pattern>5kimå</pattern>
+  <pattern>5kimÃ¥</pattern>
   <pattern>king3r</pattern>
   <pattern>4kinne</pattern>
   <pattern>4kins</pattern>
@@ -1768,7 +1768,7 @@
   <pattern>kiv3s</pattern>
   <pattern>4kj</pattern>
   <pattern>5kjol</pattern>
-  <pattern>k3jä</pattern>
+  <pattern>k3jÃ¤</pattern>
   <pattern>2k3k</pattern>
   <pattern>kl2</pattern>
   <pattern>1klag</pattern>
@@ -1790,8 +1790,8 @@
   <pattern>3klos</pattern>
   <pattern>1klub</pattern>
   <pattern>4kluk</pattern>
-  <pattern>1kläd</pattern>
-  <pattern>2k3läg</pattern>
+  <pattern>1klÃ¤d</pattern>
+  <pattern>2k3lÃ¤g</pattern>
   <pattern>2k1m</pattern>
   <pattern>2k2n</pattern>
   <pattern>k4nal</pattern>
@@ -1850,12 +1850,12 @@
   <pattern>kropps5</pattern>
   <pattern>kru5stad</pattern>
   <pattern>k3ryg</pattern>
-  <pattern>k5rädd </pattern>
-  <pattern>kräk5l</pattern>
-  <pattern>4kräl</pattern>
-  <pattern>k3rät</pattern>
-  <pattern>kråk5s</pattern>
-  <pattern>krå4pa</pattern>
+  <pattern>k5rÃ¤dd </pattern>
+  <pattern>krÃ¤k5l</pattern>
+  <pattern>4krÃ¤l</pattern>
+  <pattern>k3rÃ¤t</pattern>
+  <pattern>krÃ¥k5s</pattern>
+  <pattern>krÃ¥4pa</pattern>
   <pattern>2ks</pattern>
   <pattern>ksaks5</pattern>
   <pattern>k2s5as</pattern>
@@ -1865,8 +1865,8 @@
   <pattern>ks3kl</pattern>
   <pattern>ks5kra</pattern>
   <pattern>ks5kv</pattern>
-  <pattern>k3skä</pattern>
-  <pattern>k3skö</pattern>
+  <pattern>k3skÃ¤</pattern>
+  <pattern>k3skÃ¶</pattern>
   <pattern>k5slag </pattern>
   <pattern>ks2li</pattern>
   <pattern>k5sly</pattern>
@@ -1889,17 +1889,17 @@
   <pattern>k5trod</pattern>
   <pattern>kt5rog</pattern>
   <pattern>kt3rol</pattern>
-  <pattern>kt5rät</pattern>
+  <pattern>kt5rÃ¤t</pattern>
   <pattern>kt2st</pattern>
   <pattern>kt5t4</pattern>
   <pattern>k4tug</pattern>
   <pattern>k2tut</pattern>
-  <pattern>k4täl</pattern>
+  <pattern>k4tÃ¤l</pattern>
   <pattern>4kug</pattern>
   <pattern>k5ugn</pattern>
   <pattern>ku5la</pattern>
   <pattern>4kuld</pattern>
-  <pattern>3kulö</pattern>
+  <pattern>3kulÃ¶</pattern>
   <pattern>kum5pl</pattern>
   <pattern>kungs5</pattern>
   <pattern>5kunn</pattern>
@@ -1920,22 +1920,22 @@
   <pattern>1kvinn</pattern>
   <pattern>5kvire</pattern>
   <pattern>k4vo</pattern>
-  <pattern>3kväll</pattern>
-  <pattern>k1vär</pattern>
-  <pattern>k1vå</pattern>
+  <pattern>3kvÃ¤ll</pattern>
+  <pattern>k1vÃ¤r</pattern>
+  <pattern>k1vÃ¥</pattern>
   <pattern>kydds3</pattern>
   <pattern>ky4lin</pattern>
   <pattern>3kyrk</pattern>
-  <pattern>käl4m</pattern>
-  <pattern>5kämp</pattern>
-  <pattern>5känn</pattern>
-  <pattern>3käns</pattern>
-  <pattern>3kärl</pattern>
-  <pattern>4kög</pattern>
-  <pattern>köks5t</pattern>
-  <pattern>5köp </pattern>
-  <pattern>kör4l</pattern>
-  <pattern>kör4sl</pattern>
+  <pattern>kÃ¤l4m</pattern>
+  <pattern>5kÃ¤mp</pattern>
+  <pattern>5kÃ¤nn</pattern>
+  <pattern>3kÃ¤ns</pattern>
+  <pattern>3kÃ¤rl</pattern>
+  <pattern>4kÃ¶g</pattern>
+  <pattern>kÃ¶ks5t</pattern>
+  <pattern>5kÃ¶p </pattern>
+  <pattern>kÃ¶r4l</pattern>
+  <pattern>kÃ¶r4sl</pattern>
   <pattern>3la </pattern>
   <pattern>1lade </pattern>
   <pattern>2ladm</pattern>
@@ -1981,14 +1981,14 @@
   <pattern>le5ig</pattern>
   <pattern>le2kl</pattern>
   <pattern>le4kv</pattern>
-  <pattern>lem4sö</pattern>
+  <pattern>lem4sÃ¶</pattern>
   <pattern>2l5enl</pattern>
   <pattern>3ler </pattern>
   <pattern>ler5k</pattern>
   <pattern>3lern</pattern>
   <pattern>ler3ste</pattern>
   <pattern>le5s2l</pattern>
-  <pattern>le5tå</pattern>
+  <pattern>le5tÃ¥</pattern>
   <pattern>le3um</pattern>
   <pattern>le4vu</pattern>
   <pattern>2lex</pattern>
@@ -2021,21 +2021,21 @@
   <pattern>2lip</pattern>
   <pattern>lis3c</pattern>
   <pattern>li4sta</pattern>
-  <pattern>li3strö</pattern>
+  <pattern>li3strÃ¶</pattern>
   <pattern>li4vo</pattern>
   <pattern>livs1</pattern>
   <pattern>l2jak</pattern>
   <pattern>4l1jo</pattern>
   <pattern>1lju</pattern>
-  <pattern>l1jä</pattern>
-  <pattern>l5jå</pattern>
-  <pattern>l3jör</pattern>
+  <pattern>l1jÃ¤</pattern>
+  <pattern>l5jÃ¥</pattern>
+  <pattern>l3jÃ¶r</pattern>
   <pattern>2l1k</pattern>
   <pattern>l3ke</pattern>
   <pattern>l5kju</pattern>
   <pattern>l2kl</pattern>
   <pattern>lk5lag</pattern>
-  <pattern>l5klä</pattern>
+  <pattern>l5klÃ¤</pattern>
   <pattern>l2kr</pattern>
   <pattern>l3k4ra</pattern>
   <pattern>lk3t</pattern>
@@ -2060,10 +2060,10 @@
   <pattern>llust3ra</pattern>
   <pattern>ll5v</pattern>
   <pattern>l5ly</pattern>
-  <pattern>lläggs5</pattern>
-  <pattern>l5löd</pattern>
-  <pattern>llör4</pattern>
-  <pattern>ll5ört</pattern>
+  <pattern>llÃ¤ggs5</pattern>
+  <pattern>l5lÃ¶d</pattern>
+  <pattern>llÃ¶r4</pattern>
+  <pattern>ll5Ã¶rt</pattern>
   <pattern>4l1m</pattern>
   <pattern>l4mol</pattern>
   <pattern>lm3st</pattern>
@@ -2084,23 +2084,23 @@
   <pattern>l1pe</pattern>
   <pattern>l1pi</pattern>
   <pattern>l5pla</pattern>
-  <pattern>lp5lö</pattern>
+  <pattern>lp5lÃ¶</pattern>
   <pattern>lp4st</pattern>
   <pattern>4l3r</pattern>
   <pattern>2l1s</pattern>
   <pattern>l2sc</pattern>
   <pattern>l4sjo</pattern>
-  <pattern>l4sjä</pattern>
+  <pattern>l4sjÃ¤</pattern>
   <pattern>l2sk</pattern>
   <pattern>l4skensv</pattern>
   <pattern>l3ski</pattern>
   <pattern>lsk3n</pattern>
   <pattern>l5skot</pattern>
-  <pattern>l3skrä</pattern>
+  <pattern>l3skrÃ¤</pattern>
   <pattern>l3sky</pattern>
-  <pattern>l3skä</pattern>
-  <pattern>l3skå</pattern>
-  <pattern>lskå4p</pattern>
+  <pattern>l3skÃ¤</pattern>
+  <pattern>l3skÃ¥</pattern>
+  <pattern>lskÃ¥4p</pattern>
   <pattern>l3slu</pattern>
   <pattern>l4sm</pattern>
   <pattern>ls4mo</pattern>
@@ -2118,15 +2118,15 @@
   <pattern>l3sto</pattern>
   <pattern>l3sty</pattern>
   <pattern>l4styg</pattern>
-  <pattern>l3stä</pattern>
-  <pattern>l3stå</pattern>
-  <pattern>l5stö</pattern>
+  <pattern>l3stÃ¤</pattern>
+  <pattern>l3stÃ¥</pattern>
+  <pattern>l5stÃ¶</pattern>
   <pattern>l2su</pattern>
   <pattern>l5sur</pattern>
   <pattern>l2sv</pattern>
   <pattern>l4svi</pattern>
   <pattern>ls5vid</pattern>
-  <pattern>l4så</pattern>
+  <pattern>l4sÃ¥</pattern>
   <pattern>4l1t</pattern>
   <pattern>lta2tu</pattern>
   <pattern>l4tef</pattern>
@@ -2135,7 +2135,7 @@
   <pattern>l4tos</pattern>
   <pattern>lt5rati</pattern>
   <pattern>l4tret</pattern>
-  <pattern>l4trö</pattern>
+  <pattern>l4trÃ¶</pattern>
   <pattern>lt5sk</pattern>
   <pattern>ltu4</pattern>
   <pattern>lu5i</pattern>
@@ -2157,8 +2157,8 @@
   <pattern>l4vos</pattern>
   <pattern>lv3ri</pattern>
   <pattern>lv3sp</pattern>
-  <pattern>l1vä</pattern>
-  <pattern>lväv4</pattern>
+  <pattern>l1vÃ¤</pattern>
+  <pattern>lvÃ¤v4</pattern>
   <pattern>lycks5t</pattern>
   <pattern>ly4gat</pattern>
   <pattern>lyg3r</pattern>
@@ -2166,27 +2166,27 @@
   <pattern>3lyste</pattern>
   <pattern>5lystn</pattern>
   <pattern>ly4str</pattern>
-  <pattern>4läc</pattern>
-  <pattern>läg5r</pattern>
-  <pattern>1länds</pattern>
-  <pattern>5längder</pattern>
-  <pattern>lä4san</pattern>
-  <pattern>lä4sp</pattern>
-  <pattern>lätt3s</pattern>
-  <pattern>2lå </pattern>
-  <pattern>låg3s</pattern>
-  <pattern>1lång</pattern>
-  <pattern>lång3s</pattern>
-  <pattern>lå4sk</pattern>
-  <pattern>lås5te</pattern>
-  <pattern>lå4stå</pattern>
-  <pattern>3lé</pattern>
-  <pattern>4löl</pattern>
-  <pattern>4löm</pattern>
-  <pattern>3lön</pattern>
-  <pattern>3lörer</pattern>
-  <pattern>1lös</pattern>
-  <pattern>lö4vä</pattern>
+  <pattern>4lÃ¤c</pattern>
+  <pattern>lÃ¤g5r</pattern>
+  <pattern>1lÃ¤nds</pattern>
+  <pattern>5lÃ¤ngder</pattern>
+  <pattern>lÃ¤4san</pattern>
+  <pattern>lÃ¤4sp</pattern>
+  <pattern>lÃ¤tt3s</pattern>
+  <pattern>2lÃ¥ </pattern>
+  <pattern>lÃ¥g3s</pattern>
+  <pattern>1lÃ¥ng</pattern>
+  <pattern>lÃ¥ng3s</pattern>
+  <pattern>lÃ¥4sk</pattern>
+  <pattern>lÃ¥s5te</pattern>
+  <pattern>lÃ¥4stÃ¥</pattern>
+  <pattern>3lÃ©</pattern>
+  <pattern>4lÃ¶l</pattern>
+  <pattern>4lÃ¶m</pattern>
+  <pattern>3lÃ¶n</pattern>
+  <pattern>3lÃ¶rer</pattern>
+  <pattern>1lÃ¶s</pattern>
+  <pattern>lÃ¶4vÃ¤</pattern>
   <pattern>1ma</pattern>
   <pattern>ma5fr</pattern>
   <pattern>mag5n</pattern>
@@ -2203,7 +2203,7 @@
   <pattern>mash5</pattern>
   <pattern>mas3ko</pattern>
   <pattern>mask3ro</pattern>
-  <pattern>ma5skö</pattern>
+  <pattern>ma5skÃ¶</pattern>
   <pattern>mas3ti</pattern>
   <pattern>mas4v</pattern>
   <pattern>2mb</pattern>
@@ -2247,7 +2247,7 @@
   <pattern>4mink</pattern>
   <pattern>min4kr</pattern>
   <pattern>4minv</pattern>
-  <pattern>mi3nö</pattern>
+  <pattern>mi3nÃ¶</pattern>
   <pattern>mis2</pattern>
   <pattern>mi5sf</pattern>
   <pattern>mi4sp</pattern>
@@ -2269,7 +2269,7 @@
   <pattern>mn3g4</pattern>
   <pattern>mn5st</pattern>
   <pattern>mn5tu</pattern>
-  <pattern>m2n3å</pattern>
+  <pattern>m2n3Ã¥</pattern>
   <pattern>1mo</pattern>
   <pattern>m4od</pattern>
   <pattern>mo4i</pattern>
@@ -2292,19 +2292,19 @@
   <pattern>mp5p4</pattern>
   <pattern>mps4k</pattern>
   <pattern>mp5sp</pattern>
-  <pattern>m4på</pattern>
+  <pattern>m4pÃ¥</pattern>
   <pattern>2m1r</pattern>
   <pattern>4ms</pattern>
   <pattern>m4sal</pattern>
   <pattern>m4ske</pattern>
   <pattern>m3slag</pattern>
-  <pattern>ms3lä</pattern>
+  <pattern>ms3lÃ¤</pattern>
   <pattern>ms2m</pattern>
   <pattern>mste2</pattern>
   <pattern>m1sto</pattern>
   <pattern>m2str</pattern>
   <pattern>mst3rin</pattern>
-  <pattern>ms5äp</pattern>
+  <pattern>ms5Ã¤p</pattern>
   <pattern>2m1t</pattern>
   <pattern>4mud</pattern>
   <pattern>mulls3</pattern>
@@ -2319,26 +2319,26 @@
   <pattern>2m3v</pattern>
   <pattern>1myn</pattern>
   <pattern>mys4te</pattern>
-  <pattern>4mäg</pattern>
-  <pattern>mäk3</pattern>
-  <pattern>1män</pattern>
-  <pattern>mäns4</pattern>
-  <pattern>3märk</pattern>
-  <pattern>1mäs</pattern>
-  <pattern>mäs5ta</pattern>
-  <pattern>1mät</pattern>
-  <pattern>måg4</pattern>
-  <pattern>1mål </pattern>
-  <pattern>5målet </pattern>
-  <pattern>5mån </pattern>
-  <pattern>4mår</pattern>
-  <pattern>må1s</pattern>
-  <pattern>mö4bl</pattern>
-  <pattern>mö4gen </pattern>
-  <pattern>3möj</pattern>
-  <pattern>mör4kl</pattern>
-  <pattern>3mös</pattern>
-  <pattern>4möv</pattern>
+  <pattern>4mÃ¤g</pattern>
+  <pattern>mÃ¤k3</pattern>
+  <pattern>1mÃ¤n</pattern>
+  <pattern>mÃ¤ns4</pattern>
+  <pattern>3mÃ¤rk</pattern>
+  <pattern>1mÃ¤s</pattern>
+  <pattern>mÃ¤s5ta</pattern>
+  <pattern>1mÃ¤t</pattern>
+  <pattern>mÃ¥g4</pattern>
+  <pattern>1mÃ¥l </pattern>
+  <pattern>5mÃ¥let </pattern>
+  <pattern>5mÃ¥n </pattern>
+  <pattern>4mÃ¥r</pattern>
+  <pattern>mÃ¥1s</pattern>
+  <pattern>mÃ¶4bl</pattern>
+  <pattern>mÃ¶4gen </pattern>
+  <pattern>3mÃ¶j</pattern>
+  <pattern>mÃ¶r4kl</pattern>
+  <pattern>3mÃ¶s</pattern>
+  <pattern>4mÃ¶v</pattern>
   <pattern>1na</pattern>
   <pattern>3na </pattern>
   <pattern>3nad</pattern>
@@ -2390,15 +2390,15 @@
   <pattern>nd5skal</pattern>
   <pattern>nd3sn</pattern>
   <pattern>nds3or</pattern>
-  <pattern>nds5vä</pattern>
-  <pattern>nd5ås</pattern>
+  <pattern>nds5vÃ¤</pattern>
+  <pattern>nd5Ã¥s</pattern>
   <pattern>1ne</pattern>
   <pattern>3ne </pattern>
   <pattern>ne4di</pattern>
   <pattern>5nedl</pattern>
   <pattern>ne4d3r</pattern>
   <pattern>ned3s</pattern>
-  <pattern>ne4dö</pattern>
+  <pattern>ne4dÃ¶</pattern>
   <pattern>ne2gr</pattern>
   <pattern>ne5gres</pattern>
   <pattern>4nek </pattern>
@@ -2430,13 +2430,13 @@
   <pattern>ng5om</pattern>
   <pattern>ng3or</pattern>
   <pattern>ng3rad</pattern>
-  <pattern>n4grö</pattern>
+  <pattern>n4grÃ¶</pattern>
   <pattern>ng4ser</pattern>
   <pattern>ngs1k</pattern>
   <pattern>ngs3pa</pattern>
   <pattern>ngs5tim</pattern>
   <pattern>ngs3val</pattern>
-  <pattern>n4göd</pattern>
+  <pattern>n4gÃ¶d</pattern>
   <pattern>2nh</pattern>
   <pattern>1n2i</pattern>
   <pattern>4nid</pattern>
@@ -2459,7 +2459,7 @@
   <pattern>n4jar</pattern>
   <pattern>n3jun</pattern>
   <pattern>nju4s</pattern>
-  <pattern>n3jä</pattern>
+  <pattern>n3jÃ¤</pattern>
   <pattern>2nk</pattern>
   <pattern>n4kart</pattern>
   <pattern>n1ki</pattern>
@@ -2474,7 +2474,7 @@
   <pattern>nk3sp</pattern>
   <pattern>nk4tin</pattern>
   <pattern>n1ku</pattern>
-  <pattern>n1kö</pattern>
+  <pattern>n1kÃ¶</pattern>
   <pattern>2n1l</pattern>
   <pattern>2n1m</pattern>
   <pattern>2n1n</pattern>
@@ -2525,7 +2525,7 @@
   <pattern>n3s4ty</pattern>
   <pattern>n1sva</pattern>
   <pattern>ns3vi</pattern>
-  <pattern>ns3vär</pattern>
+  <pattern>ns3vÃ¤r</pattern>
   <pattern>2n1t</pattern>
   <pattern>n4tark</pattern>
   <pattern>nter5s4</pattern>
@@ -2544,13 +2544,13 @@
   <pattern>nt3ris</pattern>
   <pattern>n4tropin</pattern>
   <pattern>n4tror</pattern>
-  <pattern>n4trö</pattern>
+  <pattern>n4trÃ¶</pattern>
   <pattern>nts3c</pattern>
   <pattern>nt4se</pattern>
   <pattern>nts5kor</pattern>
   <pattern>nt4str</pattern>
   <pattern>n4tut</pattern>
-  <pattern>n3två</pattern>
+  <pattern>n3tvÃ¥</pattern>
   <pattern>nufts4</pattern>
   <pattern>4nug</pattern>
   <pattern>n5ugn</pattern>
@@ -2563,18 +2563,18 @@
   <pattern>2n1v</pattern>
   <pattern>ny5gr</pattern>
   <pattern>n5z</pattern>
-  <pattern>4nä </pattern>
-  <pattern>4näc</pattern>
-  <pattern>3näm</pattern>
-  <pattern>3nät</pattern>
-  <pattern>4når</pattern>
-  <pattern>4nög4</pattern>
-  <pattern>3nöj</pattern>
-  <pattern>nö2ja</pattern>
-  <pattern>nö5kr</pattern>
-  <pattern>4nöl</pattern>
-  <pattern>nös4</pattern>
-  <pattern>nös5ke</pattern>
+  <pattern>4nÃ¤ </pattern>
+  <pattern>4nÃ¤c</pattern>
+  <pattern>3nÃ¤m</pattern>
+  <pattern>3nÃ¤t</pattern>
+  <pattern>4nÃ¥r</pattern>
+  <pattern>4nÃ¶g4</pattern>
+  <pattern>3nÃ¶j</pattern>
+  <pattern>nÃ¶2ja</pattern>
+  <pattern>nÃ¶5kr</pattern>
+  <pattern>4nÃ¶l</pattern>
+  <pattern>nÃ¶s4</pattern>
+  <pattern>nÃ¶s5ke</pattern>
   <pattern>o1a</pattern>
   <pattern>o2ard</pattern>
   <pattern>o2b</pattern>
@@ -2594,12 +2594,12 @@
   <pattern>od2st</pattern>
   <pattern>ods4ti</pattern>
   <pattern>od5stu</pattern>
-  <pattern>o3dä</pattern>
+  <pattern>o3dÃ¤</pattern>
   <pattern>o1e</pattern>
   <pattern>offs5t</pattern>
   <pattern>o4fl</pattern>
   <pattern>o3fr</pattern>
-  <pattern>oförmå4</pattern>
+  <pattern>ofÃ¶rmÃ¥4</pattern>
   <pattern>o1g</pattern>
   <pattern>o4gav</pattern>
   <pattern>og3gr</pattern>
@@ -2609,10 +2609,10 @@
   <pattern>ognos4</pattern>
   <pattern>ogno5st</pattern>
   <pattern>o4gri</pattern>
-  <pattern>o4grö</pattern>
+  <pattern>o4grÃ¶</pattern>
   <pattern>og3se</pattern>
   <pattern>og4s3t</pattern>
-  <pattern>o4gä</pattern>
+  <pattern>o4gÃ¤</pattern>
   <pattern>o1i</pattern>
   <pattern>o4il</pattern>
   <pattern>o1j</pattern>
@@ -2625,28 +2625,28 @@
   <pattern>o1la</pattern>
   <pattern>o5lak</pattern>
   <pattern>ol5au</pattern>
-  <pattern>olfö4</pattern>
+  <pattern>olfÃ¶4</pattern>
   <pattern>1olj</pattern>
   <pattern>ol3ka</pattern>
   <pattern>olk3r</pattern>
   <pattern>ol4ku</pattern>
-  <pattern>ol4kä</pattern>
+  <pattern>ol4kÃ¤</pattern>
   <pattern>oll4si</pattern>
-  <pattern>oll5slä</pattern>
-  <pattern>ol3lä</pattern>
+  <pattern>oll5slÃ¤</pattern>
+  <pattern>ol3lÃ¤</pattern>
   <pattern>olm4s</pattern>
   <pattern>oln3s</pattern>
   <pattern>o1lo</pattern>
   <pattern>olo5kv</pattern>
   <pattern>ol4sa</pattern>
-  <pattern>ol4tå</pattern>
+  <pattern>ol4tÃ¥</pattern>
   <pattern>o1lu</pattern>
   <pattern>o4lug</pattern>
   <pattern>o4lur</pattern>
   <pattern>o1ly</pattern>
-  <pattern>o1lä</pattern>
-  <pattern>ol5år</pattern>
-  <pattern>om4brä</pattern>
+  <pattern>o1lÃ¤</pattern>
+  <pattern>ol5Ã¥r</pattern>
+  <pattern>om4brÃ¤</pattern>
   <pattern>o3men</pattern>
   <pattern>o4mord</pattern>
   <pattern>om5pa</pattern>
@@ -2655,7 +2655,7 @@
   <pattern>4omra</pattern>
   <pattern>om1sk</pattern>
   <pattern>om4ste</pattern>
-  <pattern>3omsät</pattern>
+  <pattern>3omsÃ¤t</pattern>
   <pattern>om4tr</pattern>
   <pattern>om3tv</pattern>
   <pattern>on3c</pattern>
@@ -2674,9 +2674,9 @@
   <pattern>on4tre</pattern>
   <pattern>ont4s</pattern>
   <pattern>o1ny</pattern>
-  <pattern>o1nä</pattern>
-  <pattern>on5å</pattern>
-  <pattern>o3nö</pattern>
+  <pattern>o1nÃ¤</pattern>
+  <pattern>on5Ã¥</pattern>
+  <pattern>o3nÃ¶</pattern>
   <pattern>oo4d</pattern>
   <pattern>oom5s</pattern>
   <pattern>o3or</pattern>
@@ -2689,25 +2689,25 @@
   <pattern>op4pu</pattern>
   <pattern>o3pri</pattern>
   <pattern>op4st</pattern>
-  <pattern>o3på</pattern>
+  <pattern>o3pÃ¥</pattern>
   <pattern>o5q</pattern>
   <pattern>4ora</pattern>
   <pattern>o3rak</pattern>
   <pattern>oran3g4</pattern>
   <pattern>o2rap</pattern>
   <pattern>1ordn</pattern>
-  <pattern>or4d5ä</pattern>
+  <pattern>or4d5Ã¤</pattern>
   <pattern>o4reh</pattern>
   <pattern>1orga</pattern>
   <pattern>5organi</pattern>
   <pattern>or4gr</pattern>
-  <pattern>or4gå</pattern>
+  <pattern>or4gÃ¥</pattern>
   <pattern>o1ri</pattern>
   <pattern>3orient</pattern>
   <pattern>4ork</pattern>
-  <pattern>or4mö</pattern>
+  <pattern>or4mÃ¶</pattern>
   <pattern>or4nu</pattern>
-  <pattern>or4nä</pattern>
+  <pattern>or4nÃ¤</pattern>
   <pattern>o1ro</pattern>
   <pattern>or4pl</pattern>
   <pattern>or5pr</pattern>
@@ -2719,9 +2719,9 @@
   <pattern>ort3ro</pattern>
   <pattern>o1ru</pattern>
   <pattern>o3ry</pattern>
-  <pattern>o1rä</pattern>
-  <pattern>o1rö</pattern>
-  <pattern>o3s2fä</pattern>
+  <pattern>o1rÃ¤</pattern>
+  <pattern>o1rÃ¶</pattern>
+  <pattern>o3s2fÃ¤</pattern>
   <pattern>osk4l</pattern>
   <pattern>o1skop</pattern>
   <pattern>o3som</pattern>
@@ -2733,7 +2733,7 @@
   <pattern>o5still</pattern>
   <pattern>os4tr</pattern>
   <pattern>ost5ron</pattern>
-  <pattern>ost5rö</pattern>
+  <pattern>ost5rÃ¶</pattern>
   <pattern>os3tul</pattern>
   <pattern>ota2lan</pattern>
   <pattern>4oti </pattern>
@@ -2744,18 +2744,18 @@
   <pattern>ot5run</pattern>
   <pattern>ot3sv</pattern>
   <pattern>ot5ti</pattern>
-  <pattern>ot4trä</pattern>
+  <pattern>ot4trÃ¤</pattern>
   <pattern>ott2s</pattern>
   <pattern>o1tu</pattern>
   <pattern>o5tun</pattern>
   <pattern>otvin4</pattern>
   <pattern>o1ty</pattern>
-  <pattern>o3tä</pattern>
-  <pattern>o5tå</pattern>
+  <pattern>o3tÃ¤</pattern>
+  <pattern>o5tÃ¥</pattern>
   <pattern>oun4</pattern>
   <pattern>oup4</pattern>
   <pattern>4our</pattern>
-  <pattern>ou3rö</pattern>
+  <pattern>ou3rÃ¶</pattern>
   <pattern>ou4s</pattern>
   <pattern>o3ut3t</pattern>
   <pattern>o1va</pattern>
@@ -2765,13 +2765,13 @@
   <pattern>ov4si</pattern>
   <pattern>ov3sl</pattern>
   <pattern>ovs4me</pattern>
-  <pattern>o1vä</pattern>
+  <pattern>o1vÃ¤</pattern>
   <pattern>o3we</pattern>
   <pattern>ox5</pattern>
   <pattern>oy2</pattern>
-  <pattern>o3än</pattern>
-  <pattern>o3å</pattern>
-  <pattern>o3ö</pattern>
+  <pattern>o3Ã¤n</pattern>
+  <pattern>o3Ã¥</pattern>
+  <pattern>o3Ã¶</pattern>
   <pattern>1pa</pattern>
   <pattern>4paf</pattern>
   <pattern>pag4</pattern>
@@ -2779,7 +2779,7 @@
   <pattern>pakis4</pattern>
   <pattern>pa5la</pattern>
   <pattern>pals5</pattern>
-  <pattern>pa5lä</pattern>
+  <pattern>pa5lÃ¤</pattern>
   <pattern>4pand </pattern>
   <pattern>pan4tr</pattern>
   <pattern>3pap</pattern>
@@ -2819,7 +2819,7 @@
   <pattern>pi5sta</pattern>
   <pattern>pi5sto</pattern>
   <pattern>p2j</pattern>
-  <pattern>3pjäs</pattern>
+  <pattern>3pjÃ¤s</pattern>
   <pattern>4p3k2</pattern>
   <pattern>p2l</pattern>
   <pattern>p4lac</pattern>
@@ -2849,7 +2849,7 @@
   <pattern>3pos</pattern>
   <pattern>pos4ter</pattern>
   <pattern>4pov</pattern>
-  <pattern>po4vä</pattern>
+  <pattern>po4vÃ¤</pattern>
   <pattern>2pp</pattern>
   <pattern>p4part</pattern>
   <pattern>pp5ask</pattern>
@@ -2864,10 +2864,10 @@
   <pattern>pp5lis</pattern>
   <pattern>pp5lu</pattern>
   <pattern>pp3ly</pattern>
-  <pattern>pp3lä</pattern>
-  <pattern>pp3lån</pattern>
-  <pattern>pp3låt</pattern>
-  <pattern>pp3lö</pattern>
+  <pattern>pp3lÃ¤</pattern>
+  <pattern>pp3lÃ¥n</pattern>
+  <pattern>pp3lÃ¥t</pattern>
+  <pattern>pp3lÃ¶</pattern>
   <pattern>pp5oc</pattern>
   <pattern>pp3of</pattern>
   <pattern>pp3p4</pattern>
@@ -2876,11 +2876,11 @@
   <pattern>pp3ri</pattern>
   <pattern>pp3ru</pattern>
   <pattern>pp3ry</pattern>
-  <pattern>pp3rä</pattern>
+  <pattern>pp3rÃ¤</pattern>
   <pattern>pp3tr</pattern>
   <pattern>p2pu</pattern>
   <pattern>p5py</pattern>
-  <pattern>pp3å</pattern>
+  <pattern>pp3Ã¥</pattern>
   <pattern>p2r2</pattern>
   <pattern>2pra</pattern>
   <pattern>5prax</pattern>
@@ -2897,9 +2897,9 @@
   <pattern>3pro</pattern>
   <pattern>pro3g</pattern>
   <pattern>p3ror</pattern>
-  <pattern>3präs</pattern>
-  <pattern>4prå</pattern>
-  <pattern>3pröv</pattern>
+  <pattern>3prÃ¤s</pattern>
+  <pattern>4prÃ¥</pattern>
+  <pattern>3prÃ¶v</pattern>
   <pattern>2ps</pattern>
   <pattern>p2sal</pattern>
   <pattern>3psalm</pattern>
@@ -2911,8 +2911,8 @@
   <pattern>p3sod</pattern>
   <pattern>p1s4t</pattern>
   <pattern>p4stak</pattern>
-  <pattern>p4stäv</pattern>
-  <pattern>p2sö</pattern>
+  <pattern>p4stÃ¤v</pattern>
+  <pattern>p2sÃ¶</pattern>
   <pattern>2p1t</pattern>
   <pattern>p3tri</pattern>
   <pattern>1pu</pattern>
@@ -2923,11 +2923,11 @@
   <pattern>3punk</pattern>
   <pattern>pus3t</pattern>
   <pattern>2p1v</pattern>
-  <pattern>3päl</pattern>
-  <pattern>pä5ro</pattern>
-  <pattern>på3dr</pattern>
-  <pattern>3pé</pattern>
-  <pattern>4pör</pattern>
+  <pattern>3pÃ¤l</pattern>
+  <pattern>pÃ¤5ro</pattern>
+  <pattern>pÃ¥3dr</pattern>
+  <pattern>3pÃ©</pattern>
+  <pattern>4pÃ¶r</pattern>
   <pattern>qu4</pattern>
   <pattern>3que</pattern>
   <pattern>1ra</pattern>
@@ -2937,7 +2937,7 @@
   <pattern>4radr</pattern>
   <pattern>ra4du</pattern>
   <pattern>5ra1e</pattern>
-  <pattern>2raffä</pattern>
+  <pattern>2raffÃ¤</pattern>
   <pattern>ra3fr</pattern>
   <pattern>ra5is</pattern>
   <pattern>2rak</pattern>
@@ -2959,7 +2959,7 @@
   <pattern>r4ars</pattern>
   <pattern>4rart</pattern>
   <pattern>r3arta</pattern>
-  <pattern>ra5rö</pattern>
+  <pattern>ra5rÃ¶</pattern>
   <pattern>r4as</pattern>
   <pattern>ras3h</pattern>
   <pattern>ra2st</pattern>
@@ -2978,9 +2978,9 @@
   <pattern>rd3ran</pattern>
   <pattern>rd3rat</pattern>
   <pattern>r4dul</pattern>
-  <pattern>r3dä</pattern>
-  <pattern>r3då</pattern>
-  <pattern>r4dös</pattern>
+  <pattern>r3dÃ¤</pattern>
+  <pattern>r3dÃ¥</pattern>
+  <pattern>r4dÃ¶s</pattern>
   <pattern>1re</pattern>
   <pattern>3re </pattern>
   <pattern>4reaus</pattern>
@@ -3002,7 +3002,7 @@
   <pattern>2reni</pattern>
   <pattern>2renk</pattern>
   <pattern>2renl</pattern>
-  <pattern>re3nö</pattern>
+  <pattern>re3nÃ¶</pattern>
   <pattern>re3o</pattern>
   <pattern>3rer </pattern>
   <pattern>3rern</pattern>
@@ -3013,11 +3013,11 @@
   <pattern>4retet</pattern>
   <pattern>ret3ro</pattern>
   <pattern>4rety</pattern>
-  <pattern>re5tå</pattern>
+  <pattern>re5tÃ¥</pattern>
   <pattern>2revig</pattern>
   <pattern>4rex</pattern>
   <pattern>2r1f</pattern>
-  <pattern>rfö3ri</pattern>
+  <pattern>rfÃ¶3ri</pattern>
   <pattern>2r1g</pattern>
   <pattern>rg3g2</pattern>
   <pattern>rgs5top</pattern>
@@ -3027,7 +3027,7 @@
   <pattern>4rib</pattern>
   <pattern>3rifi</pattern>
   <pattern>2rifr</pattern>
-  <pattern>r3ifrå</pattern>
+  <pattern>r3ifrÃ¥</pattern>
   <pattern>3rifu</pattern>
   <pattern>3rigt</pattern>
   <pattern>rik2s</pattern>
@@ -3043,7 +3043,7 @@
   <pattern>ri1o</pattern>
   <pattern>3riot</pattern>
   <pattern>ri5ple</pattern>
-  <pattern>ri2stä</pattern>
+  <pattern>ri2stÃ¤</pattern>
   <pattern>ri4tut</pattern>
   <pattern>ri4vis</pattern>
   <pattern>riv3s</pattern>
@@ -3051,7 +3051,7 @@
   <pattern>r4jis</pattern>
   <pattern>r3jo</pattern>
   <pattern>r5ju</pattern>
-  <pattern>r5jö</pattern>
+  <pattern>r5jÃ¶</pattern>
   <pattern>2rk</pattern>
   <pattern>rk3akt</pattern>
   <pattern>r4kek</pattern>
@@ -3059,7 +3059,7 @@
   <pattern>r1ki</pattern>
   <pattern>r3klas</pattern>
   <pattern>rk2le</pattern>
-  <pattern>r4klö</pattern>
+  <pattern>r4klÃ¶</pattern>
   <pattern>rk3n</pattern>
   <pattern>rk4ne</pattern>
   <pattern>r1ko</pattern>
@@ -3067,8 +3067,8 @@
   <pattern>rk3tr</pattern>
   <pattern>r1ku</pattern>
   <pattern>r4kup</pattern>
-  <pattern>r1kä</pattern>
-  <pattern>r5kör</pattern>
+  <pattern>r1kÃ¤</pattern>
+  <pattern>r5kÃ¶r</pattern>
   <pattern>2r1l</pattern>
   <pattern>r5laka</pattern>
   <pattern>r5lav</pattern>
@@ -3110,8 +3110,8 @@
   <pattern>ros3v</pattern>
   <pattern>ro5te</pattern>
   <pattern>2r1p</pattern>
-  <pattern>r4plö</pattern>
-  <pattern>r4pö</pattern>
+  <pattern>r4plÃ¶</pattern>
+  <pattern>r4pÃ¶</pattern>
   <pattern>4r1r</pattern>
   <pattern>rra4n</pattern>
   <pattern>rrd4</pattern>
@@ -3135,14 +3135,14 @@
   <pattern>rs4kos</pattern>
   <pattern>rskotts3</pattern>
   <pattern>r2sku</pattern>
-  <pattern>r3skö</pattern>
+  <pattern>r3skÃ¶</pattern>
   <pattern>rslags4v</pattern>
   <pattern>r4sle</pattern>
   <pattern>r4slo</pattern>
-  <pattern>r4s5lö</pattern>
+  <pattern>r4s5lÃ¶</pattern>
   <pattern>rs4mo</pattern>
   <pattern>rs5nat</pattern>
-  <pattern>rs5nä</pattern>
+  <pattern>rs5nÃ¤</pattern>
   <pattern>r1sp</pattern>
   <pattern>r2spl</pattern>
   <pattern>r2spo</pattern>
@@ -3156,11 +3156,11 @@
   <pattern>r1sto</pattern>
   <pattern>r4ston</pattern>
   <pattern>rst4r</pattern>
-  <pattern>r3strö</pattern>
+  <pattern>r3strÃ¶</pattern>
   <pattern>r3stu</pattern>
   <pattern>r1sv</pattern>
   <pattern>rs4vag</pattern>
-  <pattern>r2svä</pattern>
+  <pattern>r2svÃ¤</pattern>
   <pattern>r1sy</pattern>
   <pattern>2r1t</pattern>
   <pattern>r2taf</pattern>
@@ -3169,7 +3169,7 @@
   <pattern>r4tins</pattern>
   <pattern>r4tom</pattern>
   <pattern>r5trit</pattern>
-  <pattern>r3trä</pattern>
+  <pattern>r3trÃ¤</pattern>
   <pattern>rt3t</pattern>
   <pattern>r4tut</pattern>
   <pattern>rubb5l</pattern>
@@ -3188,41 +3188,41 @@
   <pattern>5rutig</pattern>
   <pattern>rut4ra</pattern>
   <pattern>ru4vi</pattern>
-  <pattern>5ruö</pattern>
+  <pattern>5ruÃ¶</pattern>
   <pattern>2r1v</pattern>
   <pattern>rv4sj</pattern>
-  <pattern>rv2s5kä</pattern>
+  <pattern>rv2s5kÃ¤</pattern>
   <pattern>r3w</pattern>
   <pattern>rydd5s</pattern>
   <pattern>ry5o</pattern>
-  <pattern>räck5s</pattern>
-  <pattern>4räkt</pattern>
-  <pattern>4räm</pattern>
-  <pattern>räng3s</pattern>
-  <pattern>räns5t</pattern>
-  <pattern>4räs</pattern>
-  <pattern>rä4san</pattern>
-  <pattern>räs3s</pattern>
-  <pattern>rä5sti</pattern>
-  <pattern>räv5s</pattern>
-  <pattern>råge5l</pattern>
-  <pattern>4rål</pattern>
-  <pattern>rång3s</pattern>
-  <pattern>rå5ra</pattern>
-  <pattern>rå3st</pattern>
-  <pattern>röd5el</pattern>
-  <pattern>röd5r</pattern>
-  <pattern>röd3s</pattern>
-  <pattern>2rög</pattern>
-  <pattern>r3öi</pattern>
-  <pattern>rök3s</pattern>
-  <pattern>röns4t</pattern>
-  <pattern>4röp</pattern>
-  <pattern>3rör</pattern>
-  <pattern>rör4s</pattern>
-  <pattern>rö4st</pattern>
-  <pattern>röst3r</pattern>
-  <pattern>r1övr</pattern>
+  <pattern>rÃ¤ck5s</pattern>
+  <pattern>4rÃ¤kt</pattern>
+  <pattern>4rÃ¤m</pattern>
+  <pattern>rÃ¤ng3s</pattern>
+  <pattern>rÃ¤ns5t</pattern>
+  <pattern>4rÃ¤s</pattern>
+  <pattern>rÃ¤4san</pattern>
+  <pattern>rÃ¤s3s</pattern>
+  <pattern>rÃ¤5sti</pattern>
+  <pattern>rÃ¤v5s</pattern>
+  <pattern>rÃ¥ge5l</pattern>
+  <pattern>4rÃ¥l</pattern>
+  <pattern>rÃ¥ng3s</pattern>
+  <pattern>rÃ¥5ra</pattern>
+  <pattern>rÃ¥3st</pattern>
+  <pattern>rÃ¶d5el</pattern>
+  <pattern>rÃ¶d5r</pattern>
+  <pattern>rÃ¶d3s</pattern>
+  <pattern>2rÃ¶g</pattern>
+  <pattern>r3Ã¶i</pattern>
+  <pattern>rÃ¶k3s</pattern>
+  <pattern>rÃ¶ns4t</pattern>
+  <pattern>4rÃ¶p</pattern>
+  <pattern>3rÃ¶r</pattern>
+  <pattern>rÃ¶r4s</pattern>
+  <pattern>rÃ¶4st</pattern>
+  <pattern>rÃ¶st3r</pattern>
+  <pattern>r1Ã¶vr</pattern>
   <pattern>1sa</pattern>
   <pattern>3sa </pattern>
   <pattern>3sad </pattern>
@@ -3242,7 +3242,7 @@
   <pattern>sand3s</pattern>
   <pattern>4sang</pattern>
   <pattern>2sanl</pattern>
-  <pattern>s3anlä</pattern>
+  <pattern>s3anlÃ¤</pattern>
   <pattern>san3sla</pattern>
   <pattern>2sap</pattern>
   <pattern>3s4ar </pattern>
@@ -3272,7 +3272,7 @@
   <pattern>4schm</pattern>
   <pattern>4schp</pattern>
   <pattern>3schy</pattern>
-  <pattern>3schö</pattern>
+  <pattern>3schÃ¶</pattern>
   <pattern>sci3p</pattern>
   <pattern>4s3d</pattern>
   <pattern>1se</pattern>
@@ -3288,17 +3288,17 @@
   <pattern>se5ly</pattern>
   <pattern>sem2</pattern>
   <pattern>3sen </pattern>
-  <pattern>s5ersä</pattern>
+  <pattern>s5ersÃ¤</pattern>
   <pattern>3set </pattern>
   <pattern>2sexp</pattern>
   <pattern>2s1f</pattern>
-  <pattern>s4fär </pattern>
-  <pattern>sfö2</pattern>
+  <pattern>s4fÃ¤r </pattern>
+  <pattern>sfÃ¶2</pattern>
   <pattern>4s3g2</pattern>
   <pattern>2sh</pattern>
   <pattern>5s2haw</pattern>
   <pattern>shi1s</pattern>
-  <pattern>s5hö</pattern>
+  <pattern>s5hÃ¶</pattern>
   <pattern>1si</pattern>
   <pattern>sid5s</pattern>
   <pattern>5sie</pattern>
@@ -3331,8 +3331,8 @@
   <pattern>s4ju</pattern>
   <pattern>5sjuk</pattern>
   <pattern>4sjur</pattern>
-  <pattern>själs3</pattern>
-  <pattern>3sjö</pattern>
+  <pattern>sjÃ¤ls3</pattern>
+  <pattern>3sjÃ¶</pattern>
   <pattern>4sk </pattern>
   <pattern>2ska </pattern>
   <pattern>3s2kada</pattern>
@@ -3393,7 +3393,7 @@
   <pattern>s4kru</pattern>
   <pattern>5skrub</pattern>
   <pattern>3skruv</pattern>
-  <pattern>5skräc</pattern>
+  <pattern>5skrÃ¤c</pattern>
   <pattern>sk3s</pattern>
   <pattern>2skt</pattern>
   <pattern>3skulp</pattern>
@@ -3403,12 +3403,12 @@
   <pattern>1s2ky</pattern>
   <pattern>s4kyn</pattern>
   <pattern>2skyrk</pattern>
-  <pattern>5skänk</pattern>
-  <pattern>3skärv</pattern>
-  <pattern>1skå</pattern>
-  <pattern>s4kål</pattern>
-  <pattern>5skåp </pattern>
-  <pattern>4skår</pattern>
+  <pattern>5skÃ¤nk</pattern>
+  <pattern>3skÃ¤rv</pattern>
+  <pattern>1skÃ¥</pattern>
+  <pattern>s4kÃ¥l</pattern>
+  <pattern>5skÃ¥p </pattern>
+  <pattern>4skÃ¥r</pattern>
   <pattern>2sl2</pattern>
   <pattern>4sla </pattern>
   <pattern>s5lad </pattern>
@@ -3433,15 +3433,15 @@
   <pattern>s3lust</pattern>
   <pattern>3slut</pattern>
   <pattern>slu4to</pattern>
-  <pattern>s4läk</pattern>
-  <pattern>s5läm</pattern>
-  <pattern>s5länn</pattern>
-  <pattern>3s4läp</pattern>
-  <pattern>4s3lär</pattern>
-  <pattern>s2lät</pattern>
-  <pattern>3slå </pattern>
-  <pattern>5s4lår</pattern>
-  <pattern>3s2löj</pattern>
+  <pattern>s4lÃ¤k</pattern>
+  <pattern>s5lÃ¤m</pattern>
+  <pattern>s5lÃ¤nn</pattern>
+  <pattern>3s4lÃ¤p</pattern>
+  <pattern>4s3lÃ¤r</pattern>
+  <pattern>s2lÃ¤t</pattern>
+  <pattern>3slÃ¥ </pattern>
+  <pattern>5s4lÃ¥r</pattern>
+  <pattern>3s2lÃ¶j</pattern>
   <pattern>2sm</pattern>
   <pattern>s2mak</pattern>
   <pattern>3smak </pattern>
@@ -3454,13 +3454,13 @@
   <pattern>s3mj</pattern>
   <pattern>5smug</pattern>
   <pattern>5smyg</pattern>
-  <pattern>3smäd</pattern>
-  <pattern>3smäl</pattern>
-  <pattern>4smäs</pattern>
-  <pattern>små5g</pattern>
-  <pattern>små3k</pattern>
-  <pattern>små3s</pattern>
-  <pattern>3smör</pattern>
+  <pattern>3smÃ¤d</pattern>
+  <pattern>3smÃ¤l</pattern>
+  <pattern>4smÃ¤s</pattern>
+  <pattern>smÃ¥5g</pattern>
+  <pattern>smÃ¥3k</pattern>
+  <pattern>smÃ¥3s</pattern>
+  <pattern>3smÃ¶r</pattern>
   <pattern>2s2n4</pattern>
   <pattern>3snab</pattern>
   <pattern>3s4nac</pattern>
@@ -3474,14 +3474,14 @@
   <pattern>1snitt</pattern>
   <pattern>s3niv</pattern>
   <pattern>3snut</pattern>
-  <pattern>5snäc</pattern>
-  <pattern>s4när</pattern>
-  <pattern>s4nå</pattern>
-  <pattern>5snår</pattern>
-  <pattern>3snö </pattern>
-  <pattern>snö5g</pattern>
-  <pattern>3snör</pattern>
-  <pattern>snö3s</pattern>
+  <pattern>5snÃ¤c</pattern>
+  <pattern>s4nÃ¤r</pattern>
+  <pattern>s4nÃ¥</pattern>
+  <pattern>5snÃ¥r</pattern>
+  <pattern>3snÃ¶ </pattern>
+  <pattern>snÃ¶5g</pattern>
+  <pattern>3snÃ¶r</pattern>
+  <pattern>snÃ¶3s</pattern>
   <pattern>1so</pattern>
   <pattern>3soc</pattern>
   <pattern>5sock</pattern>
@@ -3526,21 +3526,21 @@
   <pattern>spli4</pattern>
   <pattern>s4plin</pattern>
   <pattern>5split</pattern>
-  <pattern>s5plä</pattern>
+  <pattern>s5plÃ¤</pattern>
   <pattern>4spre</pattern>
   <pattern>s3pres</pattern>
   <pattern>4s3pris</pattern>
   <pattern>3sprit</pattern>
   <pattern>2spro</pattern>
   <pattern>s3pry</pattern>
-  <pattern>5sprän</pattern>
-  <pattern>3språ</pattern>
+  <pattern>5sprÃ¤n</pattern>
+  <pattern>3sprÃ¥</pattern>
   <pattern>s3ps</pattern>
-  <pattern>5spän</pattern>
-  <pattern>1s4på</pattern>
-  <pattern>3spån</pattern>
-  <pattern>3spår</pattern>
-  <pattern>3spö</pattern>
+  <pattern>5spÃ¤n</pattern>
+  <pattern>1s4pÃ¥</pattern>
+  <pattern>3spÃ¥n</pattern>
+  <pattern>3spÃ¥r</pattern>
+  <pattern>3spÃ¶</pattern>
   <pattern>4s1r</pattern>
   <pattern>4s1s</pattern>
   <pattern>s5sad</pattern>
@@ -3551,8 +3551,8 @@
   <pattern>ss3kun</pattern>
   <pattern>ss1l</pattern>
   <pattern>ss2lag </pattern>
-  <pattern>ss2lä</pattern>
-  <pattern>ss2lö</pattern>
+  <pattern>ss2lÃ¤</pattern>
+  <pattern>ss2lÃ¶</pattern>
   <pattern>ss3na</pattern>
   <pattern>sss4</pattern>
   <pattern>ss3unn</pattern>
@@ -3606,8 +3606,8 @@
   <pattern>1stit</pattern>
   <pattern>2stj</pattern>
   <pattern>s5tju</pattern>
-  <pattern>3stjäl</pattern>
-  <pattern>3stjär</pattern>
+  <pattern>3stjÃ¤l</pattern>
+  <pattern>3stjÃ¤r</pattern>
   <pattern>2stm</pattern>
   <pattern>5stoc</pattern>
   <pattern>1stol</pattern>
@@ -3635,25 +3635,25 @@
   <pattern>2strumm</pattern>
   <pattern>s3tryc</pattern>
   <pattern>5stryk</pattern>
-  <pattern>3sträc</pattern>
-  <pattern>4sträd</pattern>
-  <pattern>3sträng</pattern>
-  <pattern>5sträv</pattern>
-  <pattern>5stråk</pattern>
-  <pattern>3strål</pattern>
-  <pattern>3ström</pattern>
+  <pattern>3strÃ¤c</pattern>
+  <pattern>4strÃ¤d</pattern>
+  <pattern>3strÃ¤ng</pattern>
+  <pattern>5strÃ¤v</pattern>
+  <pattern>5strÃ¥k</pattern>
+  <pattern>3strÃ¥l</pattern>
+  <pattern>3strÃ¶m</pattern>
   <pattern>2st3s4</pattern>
   <pattern>st3t</pattern>
   <pattern>4stv</pattern>
   <pattern>s3tvis</pattern>
   <pattern>1sty</pattern>
   <pattern>2styp</pattern>
-  <pattern>1stä</pattern>
-  <pattern>3stäl</pattern>
-  <pattern>1stå</pattern>
-  <pattern>4ståg</pattern>
-  <pattern>5stål</pattern>
-  <pattern>1stö</pattern>
+  <pattern>1stÃ¤</pattern>
+  <pattern>3stÃ¤l</pattern>
+  <pattern>1stÃ¥</pattern>
+  <pattern>4stÃ¥g</pattern>
+  <pattern>5stÃ¥l</pattern>
+  <pattern>1stÃ¶</pattern>
   <pattern>1su</pattern>
   <pattern>su4b</pattern>
   <pattern>3sug</pattern>
@@ -3690,12 +3690,12 @@
   <pattern>s4vine</pattern>
   <pattern>4svis</pattern>
   <pattern>s5vitt</pattern>
-  <pattern>3sväng</pattern>
-  <pattern>5svärm </pattern>
-  <pattern>s3väs</pattern>
-  <pattern>s3vät</pattern>
-  <pattern>s5våd</pattern>
-  <pattern>3svåri</pattern>
+  <pattern>3svÃ¤ng</pattern>
+  <pattern>5svÃ¤rm </pattern>
+  <pattern>s3vÃ¤s</pattern>
+  <pattern>s3vÃ¤t</pattern>
+  <pattern>s5vÃ¥d</pattern>
+  <pattern>3svÃ¥ri</pattern>
   <pattern>4syk</pattern>
   <pattern>5syl</pattern>
   <pattern>3syn</pattern>
@@ -3706,28 +3706,28 @@
   <pattern>sys5ter</pattern>
   <pattern>syt2</pattern>
   <pattern>sy5th</pattern>
-  <pattern>1sä</pattern>
-  <pattern>s4äd</pattern>
-  <pattern>2s5ägg</pattern>
-  <pattern>s4äl</pattern>
-  <pattern>2säp</pattern>
-  <pattern>5säs</pattern>
-  <pattern>3sät</pattern>
-  <pattern>4säta</pattern>
-  <pattern>1så</pattern>
-  <pattern>5såg</pattern>
-  <pattern>4såk</pattern>
-  <pattern>2sålde</pattern>
-  <pattern>sång3</pattern>
-  <pattern>1sö</pattern>
-  <pattern>4söd</pattern>
-  <pattern>2sög</pattern>
-  <pattern>s5öga</pattern>
-  <pattern>sö4ko</pattern>
-  <pattern>4söl</pattern>
-  <pattern>4söp</pattern>
-  <pattern>sör2s</pattern>
-  <pattern>2s3ört</pattern>
+  <pattern>1sÃ¤</pattern>
+  <pattern>s4Ã¤d</pattern>
+  <pattern>2s5Ã¤gg</pattern>
+  <pattern>s4Ã¤l</pattern>
+  <pattern>2sÃ¤p</pattern>
+  <pattern>5sÃ¤s</pattern>
+  <pattern>3sÃ¤t</pattern>
+  <pattern>4sÃ¤ta</pattern>
+  <pattern>1sÃ¥</pattern>
+  <pattern>5sÃ¥g</pattern>
+  <pattern>4sÃ¥k</pattern>
+  <pattern>2sÃ¥lde</pattern>
+  <pattern>sÃ¥ng3</pattern>
+  <pattern>1sÃ¶</pattern>
+  <pattern>4sÃ¶d</pattern>
+  <pattern>2sÃ¶g</pattern>
+  <pattern>s5Ã¶ga</pattern>
+  <pattern>sÃ¶4ko</pattern>
+  <pattern>4sÃ¶l</pattern>
+  <pattern>4sÃ¶p</pattern>
+  <pattern>sÃ¶r2s</pattern>
+  <pattern>2s3Ã¶rt</pattern>
   <pattern>1ta</pattern>
   <pattern>3ta </pattern>
   <pattern>ta1ch</pattern>
@@ -3795,17 +3795,17 @@
   <pattern>5teknik</pattern>
   <pattern>5teknis</pattern>
   <pattern>4teld</pattern>
-  <pattern>5te5lö</pattern>
+  <pattern>5te5lÃ¶</pattern>
   <pattern>5tema</pattern>
   <pattern>4temo</pattern>
   <pattern>te4mu</pattern>
   <pattern>ten3g4</pattern>
   <pattern>5tensi</pattern>
   <pattern>ten3tr</pattern>
-  <pattern>te4nä</pattern>
-  <pattern>te5nör</pattern>
+  <pattern>te4nÃ¤</pattern>
+  <pattern>te5nÃ¶r</pattern>
   <pattern>5ter </pattern>
-  <pattern>5teriö</pattern>
+  <pattern>5teriÃ¶</pattern>
   <pattern>ter3k4</pattern>
   <pattern>5term</pattern>
   <pattern>5terna</pattern>
@@ -3832,7 +3832,7 @@
   <pattern>3tid</pattern>
   <pattern>5tide</pattern>
   <pattern>ti4du</pattern>
-  <pattern>4tidö</pattern>
+  <pattern>4tidÃ¶</pattern>
   <pattern>ti4ed</pattern>
   <pattern>tifts5</pattern>
   <pattern>ti2gel</pattern>
@@ -3847,7 +3847,7 @@
   <pattern>5tilj</pattern>
   <pattern>3tillst</pattern>
   <pattern>3tillv</pattern>
-  <pattern>3tillä</pattern>
+  <pattern>3tillÃ¤</pattern>
   <pattern>5time</pattern>
   <pattern>2tind</pattern>
   <pattern>2tinr</pattern>
@@ -3861,14 +3861,14 @@
   <pattern>3tiva</pattern>
   <pattern>ti4van</pattern>
   <pattern>5tivite</pattern>
-  <pattern>ti2ö</pattern>
+  <pattern>ti2Ã¶</pattern>
   <pattern>t2j</pattern>
   <pattern>4tje</pattern>
   <pattern>4tjob</pattern>
   <pattern>2tjou</pattern>
-  <pattern>4tjäl</pattern>
-  <pattern>4tjäm</pattern>
-  <pattern>3tjän</pattern>
+  <pattern>4tjÃ¤l</pattern>
+  <pattern>4tjÃ¤m</pattern>
+  <pattern>3tjÃ¤n</pattern>
   <pattern>2t3k2</pattern>
   <pattern>2t3l</pattern>
   <pattern>2t1m</pattern>
@@ -3936,19 +3936,19 @@
   <pattern>1tryc</pattern>
   <pattern>5tryck </pattern>
   <pattern>5tryggh</pattern>
-  <pattern>5trä </pattern>
-  <pattern>3träd</pattern>
-  <pattern>träds4</pattern>
-  <pattern>3träf</pattern>
-  <pattern>3träg</pattern>
-  <pattern>4träk</pattern>
-  <pattern>t3räkn</pattern>
-  <pattern>t4rän</pattern>
-  <pattern>5träni</pattern>
-  <pattern>4tråk</pattern>
-  <pattern>5tré</pattern>
-  <pattern>5tröja</pattern>
-  <pattern>t4röt</pattern>
+  <pattern>5trÃ¤ </pattern>
+  <pattern>3trÃ¤d</pattern>
+  <pattern>trÃ¤ds4</pattern>
+  <pattern>3trÃ¤f</pattern>
+  <pattern>3trÃ¤g</pattern>
+  <pattern>4trÃ¤k</pattern>
+  <pattern>t3rÃ¤kn</pattern>
+  <pattern>t4rÃ¤n</pattern>
+  <pattern>5trÃ¤ni</pattern>
+  <pattern>4trÃ¥k</pattern>
+  <pattern>5trÃ©</pattern>
+  <pattern>5trÃ¶ja</pattern>
+  <pattern>t4rÃ¶t</pattern>
   <pattern>2ts</pattern>
   <pattern>t5s4and</pattern>
   <pattern>ts5art</pattern>
@@ -3964,9 +3964,9 @@
   <pattern>ts3kl</pattern>
   <pattern>tskotts5</pattern>
   <pattern>t5slot</pattern>
-  <pattern>ts5läk</pattern>
-  <pattern>ts3nä</pattern>
-  <pattern>t3snö</pattern>
+  <pattern>ts5lÃ¤k</pattern>
+  <pattern>ts3nÃ¤</pattern>
+  <pattern>t3snÃ¶</pattern>
   <pattern>t2so</pattern>
   <pattern>ts3ord</pattern>
   <pattern>ts3pl</pattern>
@@ -4010,10 +4010,10 @@
   <pattern>t3tu</pattern>
   <pattern>t4tug</pattern>
   <pattern>tt1v</pattern>
-  <pattern>tt4vå</pattern>
+  <pattern>tt4vÃ¥</pattern>
   <pattern>t3ty</pattern>
-  <pattern>t3tä</pattern>
-  <pattern>t3tör</pattern>
+  <pattern>t3tÃ¤</pattern>
+  <pattern>t3tÃ¶r</pattern>
   <pattern>4t5ugn</pattern>
   <pattern>2tund</pattern>
   <pattern>3tunga</pattern>
@@ -4023,9 +4023,9 @@
   <pattern>tu5re</pattern>
   <pattern>2tutb</pattern>
   <pattern>t3utv</pattern>
-  <pattern>t3utö</pattern>
+  <pattern>t3utÃ¶</pattern>
   <pattern>tu4vu</pattern>
-  <pattern>5tuö</pattern>
+  <pattern>5tuÃ¶</pattern>
   <pattern>2tv</pattern>
   <pattern>t1va</pattern>
   <pattern>4tve</pattern>
@@ -4033,11 +4033,11 @@
   <pattern>3tving</pattern>
   <pattern>t3vit</pattern>
   <pattern>3tviv</pattern>
-  <pattern>t3vän</pattern>
-  <pattern>tvär3s</pattern>
-  <pattern>3tvätt</pattern>
-  <pattern>t3våg</pattern>
-  <pattern>3tvån</pattern>
+  <pattern>t3vÃ¤n</pattern>
+  <pattern>tvÃ¤r3s</pattern>
+  <pattern>3tvÃ¤tt</pattern>
+  <pattern>t3vÃ¥g</pattern>
+  <pattern>3tvÃ¥n</pattern>
   <pattern>ty5da</pattern>
   <pattern>5tyg </pattern>
   <pattern>3tyngd</pattern>
@@ -4045,23 +4045,23 @@
   <pattern>ty3pi</pattern>
   <pattern>5tys</pattern>
   <pattern>2tz</pattern>
-  <pattern>täc4ko</pattern>
-  <pattern>4t5äg</pattern>
-  <pattern>4täm</pattern>
-  <pattern>4tärm</pattern>
-  <pattern>3tävl</pattern>
-  <pattern>3tåg</pattern>
-  <pattern>tås4</pattern>
-  <pattern>4tåt</pattern>
-  <pattern>5té</pattern>
-  <pattern>4tö4d</pattern>
-  <pattern>tö5de</pattern>
-  <pattern>4tög</pattern>
-  <pattern>4töp</pattern>
-  <pattern>tö4pi</pattern>
-  <pattern>3törer</pattern>
-  <pattern>törs3t</pattern>
-  <pattern>tö4vas</pattern>
+  <pattern>tÃ¤c4ko</pattern>
+  <pattern>4t5Ã¤g</pattern>
+  <pattern>4tÃ¤m</pattern>
+  <pattern>4tÃ¤rm</pattern>
+  <pattern>3tÃ¤vl</pattern>
+  <pattern>3tÃ¥g</pattern>
+  <pattern>tÃ¥s4</pattern>
+  <pattern>4tÃ¥t</pattern>
+  <pattern>5tÃ©</pattern>
+  <pattern>4tÃ¶4d</pattern>
+  <pattern>tÃ¶5de</pattern>
+  <pattern>4tÃ¶g</pattern>
+  <pattern>4tÃ¶p</pattern>
+  <pattern>tÃ¶4pi</pattern>
+  <pattern>3tÃ¶rer</pattern>
+  <pattern>tÃ¶rs3t</pattern>
+  <pattern>tÃ¶4vas</pattern>
   <pattern>u1a</pattern>
   <pattern>u2b</pattern>
   <pattern>ub5al</pattern>
@@ -4080,7 +4080,7 @@
   <pattern>u4dy</pattern>
   <pattern>u1e</pattern>
   <pattern>u2es</pattern>
-  <pattern>uf4fä</pattern>
+  <pattern>uf4fÃ¤</pattern>
   <pattern>uf4tan</pattern>
   <pattern>uf4to</pattern>
   <pattern>4u1ga</pattern>
@@ -4105,33 +4105,33 @@
   <pattern>uks5ko</pattern>
   <pattern>uk3tris</pattern>
   <pattern>ukt5s</pattern>
-  <pattern>uk4tä</pattern>
+  <pattern>uk4tÃ¤</pattern>
   <pattern>u3ku</pattern>
   <pattern>uk3v</pattern>
   <pattern>u1la</pattern>
   <pattern>ul4di</pattern>
   <pattern>ulds2m</pattern>
   <pattern>ul4du</pattern>
-  <pattern>ul4dö</pattern>
+  <pattern>ul4dÃ¶</pattern>
   <pattern>ull3ste</pattern>
-  <pattern>ull3än</pattern>
+  <pattern>ull3Ã¤n</pattern>
   <pattern>u1lo</pattern>
   <pattern>uls5ti</pattern>
   <pattern>ul2tr</pattern>
   <pattern>u3lu</pattern>
-  <pattern>u1lä</pattern>
-  <pattern>u1lö</pattern>
-  <pattern>um4fä</pattern>
+  <pattern>u1lÃ¤</pattern>
+  <pattern>u1lÃ¶</pattern>
+  <pattern>um4fÃ¤</pattern>
   <pattern>um4so</pattern>
   <pattern>ums4t</pattern>
   <pattern>u1mu</pattern>
-  <pattern>u3mör</pattern>
+  <pattern>u3mÃ¶r</pattern>
   <pattern>5underl</pattern>
-  <pattern>1undersö</pattern>
+  <pattern>1undersÃ¶</pattern>
   <pattern>1underv</pattern>
   <pattern>un4dom</pattern>
   <pattern>und3r</pattern>
-  <pattern>un4då</pattern>
+  <pattern>un4dÃ¥</pattern>
   <pattern>un5g2ef</pattern>
   <pattern>un3gersk</pattern>
   <pattern>ung5it</pattern>
@@ -4156,7 +4156,7 @@
   <pattern>1uppg</pattern>
   <pattern>up4pin</pattern>
   <pattern>1uppla</pattern>
-  <pattern>5upplä</pattern>
+  <pattern>5upplÃ¤</pattern>
   <pattern>up4p3r</pattern>
   <pattern>upp3s</pattern>
   <pattern>upp5sp</pattern>
@@ -4169,7 +4169,7 @@
   <pattern>u4rob</pattern>
   <pattern>u4rom</pattern>
   <pattern>urs5tin</pattern>
-  <pattern>ur4stä</pattern>
+  <pattern>ur4stÃ¤</pattern>
   <pattern>u5ry</pattern>
   <pattern>u2sak</pattern>
   <pattern>us5anl</pattern>
@@ -4181,8 +4181,8 @@
   <pattern>us4kla</pattern>
   <pattern>us4kr</pattern>
   <pattern>u5sky</pattern>
-  <pattern>us4kå</pattern>
-  <pattern>us5lä</pattern>
+  <pattern>us4kÃ¥</pattern>
+  <pattern>us5lÃ¤</pattern>
   <pattern>us3n</pattern>
   <pattern>u2sp</pattern>
   <pattern>us3pen</pattern>
@@ -4191,21 +4191,21 @@
   <pattern>u3stik</pattern>
   <pattern>us5tin</pattern>
   <pattern>ust5ro</pattern>
-  <pattern>u4stä</pattern>
-  <pattern>u4stå</pattern>
+  <pattern>u4stÃ¤</pattern>
+  <pattern>u4stÃ¥</pattern>
   <pattern>us3v</pattern>
-  <pattern>u4sä</pattern>
-  <pattern>u4så</pattern>
-  <pattern>u2sö</pattern>
+  <pattern>u4sÃ¤</pattern>
+  <pattern>u4sÃ¥</pattern>
+  <pattern>u2sÃ¶</pattern>
   <pattern>u4tak</pattern>
   <pattern>1utb</pattern>
   <pattern>u4tef</pattern>
   <pattern>ute3s</pattern>
   <pattern>utik2</pattern>
   <pattern>u5til</pattern>
-  <pattern>uti3ö</pattern>
+  <pattern>uti3Ã¶</pattern>
   <pattern>ut3j</pattern>
-  <pattern>3utjäm</pattern>
+  <pattern>3utjÃ¤m</pattern>
   <pattern>utlands3</pattern>
   <pattern>u1to</pattern>
   <pattern>u3top</pattern>
@@ -4217,20 +4217,20 @@
   <pattern>1utru</pattern>
   <pattern>2utsid</pattern>
   <pattern>ut3sl</pattern>
-  <pattern>3utslä</pattern>
+  <pattern>3utslÃ¤</pattern>
   <pattern>2utt</pattern>
   <pattern>utt4j</pattern>
   <pattern>ut1v</pattern>
   <pattern>3utvec</pattern>
   <pattern>u5ty</pattern>
-  <pattern>ut3öv</pattern>
+  <pattern>ut3Ã¶v</pattern>
   <pattern>u5u</pattern>
   <pattern>2u1v</pattern>
   <pattern>u2vak</pattern>
   <pattern>u4vj</pattern>
-  <pattern>u4vä</pattern>
-  <pattern>u5å</pattern>
-  <pattern>u3ö</pattern>
+  <pattern>u4vÃ¤</pattern>
+  <pattern>u5Ã¥</pattern>
+  <pattern>u3Ã¶</pattern>
   <pattern>va5dro</pattern>
   <pattern>1vagn</pattern>
   <pattern>2v1akti</pattern>
@@ -4264,10 +4264,10 @@
   <pattern>ve2k</pattern>
   <pattern>ve3ke</pattern>
   <pattern>4veld</pattern>
-  <pattern>vensk3ä</pattern>
+  <pattern>vensk3Ã¤</pattern>
   <pattern>5ventera</pattern>
   <pattern>ve3ny</pattern>
-  <pattern>ve5nö</pattern>
+  <pattern>ve5nÃ¶</pattern>
   <pattern>4vep</pattern>
   <pattern>ver5g</pattern>
   <pattern>3verk</pattern>
@@ -4305,7 +4305,7 @@
   <pattern>2v3k2</pattern>
   <pattern>2v1l</pattern>
   <pattern>2v1m</pattern>
-  <pattern>vmörk4</pattern>
+  <pattern>vmÃ¶rk4</pattern>
   <pattern>2v1n4</pattern>
   <pattern>1vo</pattern>
   <pattern>4vok </pattern>
@@ -4327,10 +4327,10 @@
   <pattern>v2so</pattern>
   <pattern>v1st</pattern>
   <pattern>vs4te</pattern>
-  <pattern>vs5trå</pattern>
+  <pattern>vs5trÃ¥</pattern>
   <pattern>v5styc</pattern>
-  <pattern>vs3vå</pattern>
-  <pattern>v2sö</pattern>
+  <pattern>vs3vÃ¥</pattern>
+  <pattern>v2sÃ¶</pattern>
   <pattern>2v1t</pattern>
   <pattern>vu4d1</pattern>
   <pattern>v1und</pattern>
@@ -4338,26 +4338,26 @@
   <pattern>4vut</pattern>
   <pattern>2v1v</pattern>
   <pattern>3vy</pattern>
-  <pattern>3väg</pattern>
-  <pattern>vägg5s</pattern>
-  <pattern>vä4l</pattern>
-  <pattern>väll4s3</pattern>
-  <pattern>3vänl</pattern>
-  <pattern>3värde</pattern>
-  <pattern>vä4ril</pattern>
-  <pattern>4värj</pattern>
-  <pattern>5värk</pattern>
-  <pattern>3värld</pattern>
-  <pattern>2vät</pattern>
-  <pattern>3väx</pattern>
-  <pattern>5våld</pattern>
-  <pattern>vångs3</pattern>
-  <pattern>3vård</pattern>
-  <pattern>4våri</pattern>
-  <pattern>vå3ru</pattern>
-  <pattern>4vög</pattern>
-  <pattern>4vöp</pattern>
-  <pattern>3vör</pattern>
+  <pattern>3vÃ¤g</pattern>
+  <pattern>vÃ¤gg5s</pattern>
+  <pattern>vÃ¤4l</pattern>
+  <pattern>vÃ¤ll4s3</pattern>
+  <pattern>3vÃ¤nl</pattern>
+  <pattern>3vÃ¤rde</pattern>
+  <pattern>vÃ¤4ril</pattern>
+  <pattern>4vÃ¤rj</pattern>
+  <pattern>5vÃ¤rk</pattern>
+  <pattern>3vÃ¤rld</pattern>
+  <pattern>2vÃ¤t</pattern>
+  <pattern>3vÃ¤x</pattern>
+  <pattern>5vÃ¥ld</pattern>
+  <pattern>vÃ¥ngs3</pattern>
+  <pattern>3vÃ¥rd</pattern>
+  <pattern>4vÃ¥ri</pattern>
+  <pattern>vÃ¥3ru</pattern>
+  <pattern>4vÃ¶g</pattern>
+  <pattern>4vÃ¶p</pattern>
+  <pattern>3vÃ¶r</pattern>
   <pattern>1wa</pattern>
   <pattern>we2</pattern>
   <pattern>w2h</pattern>
@@ -4372,7 +4372,7 @@
   <pattern>xli4</pattern>
   <pattern>xs4</pattern>
   <pattern>xti2</pattern>
-  <pattern>x4tå</pattern>
+  <pattern>x4tÃ¥</pattern>
   <pattern>2y</pattern>
   <pattern>y1a</pattern>
   <pattern>y4bris</pattern>
@@ -4384,12 +4384,12 @@
   <pattern>yd3r</pattern>
   <pattern>yds4</pattern>
   <pattern>y4du</pattern>
-  <pattern>y4dö</pattern>
+  <pattern>y4dÃ¶</pattern>
   <pattern>y1e</pattern>
   <pattern>y1ga</pattern>
   <pattern>y1ge</pattern>
   <pattern>ygg3r</pattern>
-  <pattern>yg4gå</pattern>
+  <pattern>yg4gÃ¥</pattern>
   <pattern>ygs4p</pattern>
   <pattern>y1i</pattern>
   <pattern>y1ki</pattern>
@@ -4401,12 +4401,12 @@
   <pattern>yl4gj</pattern>
   <pattern>y3li</pattern>
   <pattern>yl5k</pattern>
-  <pattern>yl5lä</pattern>
+  <pattern>yl5lÃ¤</pattern>
   <pattern>y1lo</pattern>
   <pattern>yl4tr</pattern>
   <pattern>ym2fl</pattern>
   <pattern>ym4for</pattern>
-  <pattern>y3må</pattern>
+  <pattern>y3mÃ¥</pattern>
   <pattern>yng3r</pattern>
   <pattern>ynk5l</pattern>
   <pattern>yn4sa</pattern>
@@ -4424,7 +4424,7 @@
   <pattern>yrs4k</pattern>
   <pattern>yr5st</pattern>
   <pattern>yr5tu</pattern>
-  <pattern>y1rå3</pattern>
+  <pattern>y1rÃ¥3</pattern>
   <pattern>y5scho</pattern>
   <pattern>ys2st</pattern>
   <pattern>ys3ta</pattern>
@@ -4439,9 +4439,9 @@
   <pattern>yt5v</pattern>
   <pattern>y3va</pattern>
   <pattern>y3vi</pattern>
-  <pattern>y3vä</pattern>
+  <pattern>y3vÃ¤</pattern>
   <pattern>y5w</pattern>
-  <pattern>y5å</pattern>
+  <pattern>y5Ã¥</pattern>
   <pattern>1za</pattern>
   <pattern>1ze</pattern>
   <pattern>ze4ro</pattern>
@@ -4452,263 +4452,263 @@
   <pattern>z5s</pattern>
   <pattern>3zu</pattern>
   <pattern>z4zin</pattern>
-  <pattern>ä1a</pattern>
-  <pattern>ä2b</pattern>
-  <pattern>2äc</pattern>
-  <pattern>äck5v</pattern>
-  <pattern>ä2d</pattern>
-  <pattern>ädd3s</pattern>
-  <pattern>äd4du</pattern>
-  <pattern>äde4s</pattern>
-  <pattern>äd3r</pattern>
-  <pattern>äd5se</pattern>
-  <pattern>äd3st</pattern>
-  <pattern>ä3e</pattern>
-  <pattern>ä1ga</pattern>
-  <pattern>ä1ge</pattern>
-  <pattern>äg4go</pattern>
-  <pattern>äg1l</pattern>
-  <pattern>äg3r</pattern>
-  <pattern>äg4re</pattern>
-  <pattern>äg3se</pattern>
-  <pattern>ä3i</pattern>
-  <pattern>ä5jo</pattern>
-  <pattern>4äk</pattern>
-  <pattern>ä1ki</pattern>
-  <pattern>äk3n</pattern>
-  <pattern>äk3r</pattern>
-  <pattern>ä1la</pattern>
-  <pattern>äl4pap</pattern>
-  <pattern>äl4seg</pattern>
-  <pattern>äls5kog</pattern>
-  <pattern>äl4slu</pattern>
-  <pattern>äl2t3r</pattern>
-  <pattern>äl2tu</pattern>
-  <pattern>äl4vin</pattern>
-  <pattern>ämp3l</pattern>
-  <pattern>4ändligh</pattern>
-  <pattern>änd3r</pattern>
-  <pattern>änd1st</pattern>
-  <pattern>äng5r</pattern>
-  <pattern>änni3s</pattern>
-  <pattern>änn3s</pattern>
-  <pattern>ä4no</pattern>
-  <pattern>äns1l</pattern>
-  <pattern>än4st</pattern>
-  <pattern>äns5te</pattern>
-  <pattern>än4sv</pattern>
-  <pattern>än2t3r</pattern>
-  <pattern>ä3pe</pattern>
-  <pattern>äpp3l</pattern>
-  <pattern>ä4pr</pattern>
-  <pattern>äp4st</pattern>
-  <pattern>ä4rap</pattern>
-  <pattern>är2bre</pattern>
-  <pattern>ärg5l</pattern>
-  <pattern>är4gr</pattern>
-  <pattern>ä1ri</pattern>
-  <pattern>ärib4</pattern>
-  <pattern>är4kä</pattern>
-  <pattern>är4nis</pattern>
-  <pattern>ärn3st</pattern>
-  <pattern>är2nå</pattern>
-  <pattern>är4nö</pattern>
-  <pattern>är5ob</pattern>
-  <pattern>ä5rol</pattern>
-  <pattern>ä3rop</pattern>
-  <pattern>ä5ror</pattern>
-  <pattern>ä5ros</pattern>
-  <pattern>är2si</pattern>
-  <pattern>är4sko</pattern>
-  <pattern>är2so</pattern>
-  <pattern>är4sp</pattern>
-  <pattern>är2sv</pattern>
-  <pattern>är4tand</pattern>
-  <pattern>är2tr</pattern>
-  <pattern>ärt3s</pattern>
-  <pattern>4äs</pattern>
-  <pattern>äs3pa</pattern>
-  <pattern>äs5pi</pattern>
-  <pattern>äs4sk</pattern>
-  <pattern>äs4sp</pattern>
-  <pattern>äs3ta</pattern>
-  <pattern>äst3r</pattern>
-  <pattern>ä4stä</pattern>
-  <pattern>ä4så</pattern>
-  <pattern>2ät</pattern>
-  <pattern>ä3to</pattern>
-  <pattern>ä5tre</pattern>
-  <pattern>ät4s3k</pattern>
-  <pattern>ät5te</pattern>
-  <pattern>ät4top</pattern>
-  <pattern>ätt3r</pattern>
-  <pattern>ät4tu</pattern>
-  <pattern>ät4tv</pattern>
-  <pattern>ä1va</pattern>
-  <pattern>ä2vak</pattern>
-  <pattern>ä3vi</pattern>
-  <pattern>ä5vu</pattern>
-  <pattern>å1a</pattern>
-  <pattern>å3dj</pattern>
-  <pattern>åds4l</pattern>
-  <pattern>å1e</pattern>
-  <pattern>å1f</pattern>
-  <pattern>å1ga</pattern>
-  <pattern>å1ge</pattern>
-  <pattern>åge2l</pattern>
-  <pattern>åg3l</pattern>
-  <pattern>åg3s4k</pattern>
-  <pattern>åg3st</pattern>
-  <pattern>ågå4</pattern>
-  <pattern>å3i</pattern>
-  <pattern>å1ki</pattern>
-  <pattern>5åklag</pattern>
-  <pattern>åk4strä</pattern>
-  <pattern>å1la</pattern>
-  <pattern>1ålder</pattern>
-  <pattern>å2lin</pattern>
-  <pattern>ål3k</pattern>
-  <pattern>åll4sp</pattern>
-  <pattern>ål2s5e</pattern>
-  <pattern>ål3st</pattern>
-  <pattern>å1lä</pattern>
-  <pattern>å1m</pattern>
-  <pattern>åman4s</pattern>
-  <pattern>ånd4r</pattern>
-  <pattern>ån4du</pattern>
-  <pattern>åns4t</pattern>
-  <pattern>åns4v</pattern>
-  <pattern>å3o</pattern>
-  <pattern>å1p</pattern>
-  <pattern>å2pl</pattern>
-  <pattern>å5pla</pattern>
-  <pattern>å4pö</pattern>
-  <pattern>år4do</pattern>
-  <pattern>ård4ra</pattern>
-  <pattern>ård2s</pattern>
-  <pattern>ård4s3t</pattern>
-  <pattern>å4rel</pattern>
-  <pattern>å1ri</pattern>
-  <pattern>å5ror</pattern>
-  <pattern>5årsav</pattern>
-  <pattern>år5s2li</pattern>
-  <pattern>år2sv</pattern>
-  <pattern>år5ö</pattern>
-  <pattern>ås4ke</pattern>
-  <pattern>ås3n</pattern>
-  <pattern>åss4</pattern>
-  <pattern>ås4skr</pattern>
-  <pattern>ås4t</pattern>
-  <pattern>åte2</pattern>
-  <pattern>åt3ri</pattern>
-  <pattern>å3trå</pattern>
-  <pattern>åt2sj</pattern>
-  <pattern>ått5s</pattern>
-  <pattern>å1v</pattern>
-  <pattern>é3e</pattern>
-  <pattern>ö1a</pattern>
-  <pattern>ö2d</pattern>
-  <pattern>ö4dak</pattern>
-  <pattern>ö4dal</pattern>
-  <pattern>ö4darv</pattern>
-  <pattern>öde4s5</pattern>
-  <pattern>ö4dis</pattern>
-  <pattern>öd3ra</pattern>
-  <pattern>öd2s</pattern>
-  <pattern>öd3se</pattern>
-  <pattern>ö4du</pattern>
-  <pattern>ö4dö</pattern>
-  <pattern>ö1e</pattern>
-  <pattern>ö1ga</pattern>
-  <pattern>ög5ak</pattern>
-  <pattern>ö5gar</pattern>
-  <pattern>1ögd</pattern>
-  <pattern>ö1ge</pattern>
-  <pattern>ö5ger</pattern>
-  <pattern>ögg4</pattern>
-  <pattern>ög1l</pattern>
-  <pattern>ög2n</pattern>
-  <pattern>ögn3e</pattern>
-  <pattern>1ögo</pattern>
-  <pattern>ög3si</pattern>
-  <pattern>ög3sk</pattern>
-  <pattern>ö1i</pattern>
-  <pattern>ö3jo</pattern>
-  <pattern>öj4sv</pattern>
-  <pattern>ö4karm</pattern>
-  <pattern>ö1ki</pattern>
-  <pattern>ök3n</pattern>
-  <pattern>ök2s</pattern>
-  <pattern>ök3sl</pattern>
-  <pattern>ö1la</pattern>
-  <pattern>öl4kv</pattern>
-  <pattern>öl4kö</pattern>
-  <pattern>öl2p</pattern>
-  <pattern>ö5lä</pattern>
-  <pattern>öman4</pattern>
-  <pattern>öm2kl</pattern>
-  <pattern>ö4nal</pattern>
-  <pattern>ö2nom</pattern>
-  <pattern>öns3ke</pattern>
-  <pattern>ön4so</pattern>
-  <pattern>önst3r</pattern>
-  <pattern>ö3pe</pattern>
-  <pattern>ö4pel</pattern>
-  <pattern>ö3pi</pattern>
-  <pattern>öp5li</pattern>
-  <pattern>ö5plo</pattern>
-  <pattern>1öppn</pattern>
-  <pattern>ö4pr</pattern>
-  <pattern>ö3rande</pattern>
-  <pattern>ö3ras</pattern>
-  <pattern>ö4rask</pattern>
-  <pattern>örb4</pattern>
-  <pattern>ör3d4r</pattern>
-  <pattern>ör1eni</pattern>
-  <pattern>ö3res</pattern>
-  <pattern>ö4restr</pattern>
-  <pattern>ö3ret</pattern>
-  <pattern>ör5evig</pattern>
-  <pattern>ör3g</pattern>
-  <pattern>ö1ri</pattern>
-  <pattern>ö5rig</pattern>
-  <pattern>ö3ring</pattern>
-  <pattern>ör3int</pattern>
-  <pattern>ör5ir</pattern>
-  <pattern>ör5iv</pattern>
-  <pattern>ör4kal</pattern>
-  <pattern>ör1k2l</pattern>
-  <pattern>ör5kli</pattern>
-  <pattern>ör4nis</pattern>
-  <pattern>ör3ol</pattern>
-  <pattern>ör1or</pattern>
-  <pattern>ör2p5la</pattern>
-  <pattern>ör1s2k</pattern>
-  <pattern>ör3sl</pattern>
-  <pattern>ör4slä</pattern>
-  <pattern>ör5te</pattern>
-  <pattern>ört5s</pattern>
-  <pattern>ör1u</pattern>
-  <pattern>ör3vr</pattern>
-  <pattern>ör3y</pattern>
-  <pattern>ör1ä</pattern>
-  <pattern>örö4d</pattern>
-  <pattern>ö2sak</pattern>
-  <pattern>ös3n</pattern>
-  <pattern>ös4sj</pattern>
-  <pattern>ös2sk</pattern>
-  <pattern>ös4sp</pattern>
-  <pattern>ös3ta</pattern>
-  <pattern>öst3v</pattern>
-  <pattern>ö2tak</pattern>
-  <pattern>öts5ko</pattern>
-  <pattern>öt4st</pattern>
-  <pattern>ö1v</pattern>
-  <pattern>öve4</pattern>
-  <pattern>över1</pattern>
-  <pattern>5övere</pattern>
-  <pattern>ö2vj</pattern>
-  <pattern>öv3ra</pattern>
-  <pattern>öv3ri</pattern>
-  <pattern>öv4sk</pattern>
+  <pattern>Ã¤1a</pattern>
+  <pattern>Ã¤2b</pattern>
+  <pattern>2Ã¤c</pattern>
+  <pattern>Ã¤ck5v</pattern>
+  <pattern>Ã¤2d</pattern>
+  <pattern>Ã¤dd3s</pattern>
+  <pattern>Ã¤d4du</pattern>
+  <pattern>Ã¤de4s</pattern>
+  <pattern>Ã¤d3r</pattern>
+  <pattern>Ã¤d5se</pattern>
+  <pattern>Ã¤d3st</pattern>
+  <pattern>Ã¤3e</pattern>
+  <pattern>Ã¤1ga</pattern>
+  <pattern>Ã¤1ge</pattern>
+  <pattern>Ã¤g4go</pattern>
+  <pattern>Ã¤g1l</pattern>
+  <pattern>Ã¤g3r</pattern>
+  <pattern>Ã¤g4re</pattern>
+  <pattern>Ã¤g3se</pattern>
+  <pattern>Ã¤3i</pattern>
+  <pattern>Ã¤5jo</pattern>
+  <pattern>4Ã¤k</pattern>
+  <pattern>Ã¤1ki</pattern>
+  <pattern>Ã¤k3n</pattern>
+  <pattern>Ã¤k3r</pattern>
+  <pattern>Ã¤1la</pattern>
+  <pattern>Ã¤l4pap</pattern>
+  <pattern>Ã¤l4seg</pattern>
+  <pattern>Ã¤ls5kog</pattern>
+  <pattern>Ã¤l4slu</pattern>
+  <pattern>Ã¤l2t3r</pattern>
+  <pattern>Ã¤l2tu</pattern>
+  <pattern>Ã¤l4vin</pattern>
+  <pattern>Ã¤mp3l</pattern>
+  <pattern>4Ã¤ndligh</pattern>
+  <pattern>Ã¤nd3r</pattern>
+  <pattern>Ã¤nd1st</pattern>
+  <pattern>Ã¤ng5r</pattern>
+  <pattern>Ã¤nni3s</pattern>
+  <pattern>Ã¤nn3s</pattern>
+  <pattern>Ã¤4no</pattern>
+  <pattern>Ã¤ns1l</pattern>
+  <pattern>Ã¤n4st</pattern>
+  <pattern>Ã¤ns5te</pattern>
+  <pattern>Ã¤n4sv</pattern>
+  <pattern>Ã¤n2t3r</pattern>
+  <pattern>Ã¤3pe</pattern>
+  <pattern>Ã¤pp3l</pattern>
+  <pattern>Ã¤4pr</pattern>
+  <pattern>Ã¤p4st</pattern>
+  <pattern>Ã¤4rap</pattern>
+  <pattern>Ã¤r2bre</pattern>
+  <pattern>Ã¤rg5l</pattern>
+  <pattern>Ã¤r4gr</pattern>
+  <pattern>Ã¤1ri</pattern>
+  <pattern>Ã¤rib4</pattern>
+  <pattern>Ã¤r4kÃ¤</pattern>
+  <pattern>Ã¤r4nis</pattern>
+  <pattern>Ã¤rn3st</pattern>
+  <pattern>Ã¤r2nÃ¥</pattern>
+  <pattern>Ã¤r4nÃ¶</pattern>
+  <pattern>Ã¤r5ob</pattern>
+  <pattern>Ã¤5rol</pattern>
+  <pattern>Ã¤3rop</pattern>
+  <pattern>Ã¤5ror</pattern>
+  <pattern>Ã¤5ros</pattern>
+  <pattern>Ã¤r2si</pattern>
+  <pattern>Ã¤r4sko</pattern>
+  <pattern>Ã¤r2so</pattern>
+  <pattern>Ã¤r4sp</pattern>
+  <pattern>Ã¤r2sv</pattern>
+  <pattern>Ã¤r4tand</pattern>
+  <pattern>Ã¤r2tr</pattern>
+  <pattern>Ã¤rt3s</pattern>
+  <pattern>4Ã¤s</pattern>
+  <pattern>Ã¤s3pa</pattern>
+  <pattern>Ã¤s5pi</pattern>
+  <pattern>Ã¤s4sk</pattern>
+  <pattern>Ã¤s4sp</pattern>
+  <pattern>Ã¤s3ta</pattern>
+  <pattern>Ã¤st3r</pattern>
+  <pattern>Ã¤4stÃ¤</pattern>
+  <pattern>Ã¤4sÃ¥</pattern>
+  <pattern>2Ã¤t</pattern>
+  <pattern>Ã¤3to</pattern>
+  <pattern>Ã¤5tre</pattern>
+  <pattern>Ã¤t4s3k</pattern>
+  <pattern>Ã¤t5te</pattern>
+  <pattern>Ã¤t4top</pattern>
+  <pattern>Ã¤tt3r</pattern>
+  <pattern>Ã¤t4tu</pattern>
+  <pattern>Ã¤t4tv</pattern>
+  <pattern>Ã¤1va</pattern>
+  <pattern>Ã¤2vak</pattern>
+  <pattern>Ã¤3vi</pattern>
+  <pattern>Ã¤5vu</pattern>
+  <pattern>Ã¥1a</pattern>
+  <pattern>Ã¥3dj</pattern>
+  <pattern>Ã¥ds4l</pattern>
+  <pattern>Ã¥1e</pattern>
+  <pattern>Ã¥1f</pattern>
+  <pattern>Ã¥1ga</pattern>
+  <pattern>Ã¥1ge</pattern>
+  <pattern>Ã¥ge2l</pattern>
+  <pattern>Ã¥g3l</pattern>
+  <pattern>Ã¥g3s4k</pattern>
+  <pattern>Ã¥g3st</pattern>
+  <pattern>Ã¥gÃ¥4</pattern>
+  <pattern>Ã¥3i</pattern>
+  <pattern>Ã¥1ki</pattern>
+  <pattern>5Ã¥klag</pattern>
+  <pattern>Ã¥k4strÃ¤</pattern>
+  <pattern>Ã¥1la</pattern>
+  <pattern>1Ã¥lder</pattern>
+  <pattern>Ã¥2lin</pattern>
+  <pattern>Ã¥l3k</pattern>
+  <pattern>Ã¥ll4sp</pattern>
+  <pattern>Ã¥l2s5e</pattern>
+  <pattern>Ã¥l3st</pattern>
+  <pattern>Ã¥1lÃ¤</pattern>
+  <pattern>Ã¥1m</pattern>
+  <pattern>Ã¥man4s</pattern>
+  <pattern>Ã¥nd4r</pattern>
+  <pattern>Ã¥n4du</pattern>
+  <pattern>Ã¥ns4t</pattern>
+  <pattern>Ã¥ns4v</pattern>
+  <pattern>Ã¥3o</pattern>
+  <pattern>Ã¥1p</pattern>
+  <pattern>Ã¥2pl</pattern>
+  <pattern>Ã¥5pla</pattern>
+  <pattern>Ã¥4pÃ¶</pattern>
+  <pattern>Ã¥r4do</pattern>
+  <pattern>Ã¥rd4ra</pattern>
+  <pattern>Ã¥rd2s</pattern>
+  <pattern>Ã¥rd4s3t</pattern>
+  <pattern>Ã¥4rel</pattern>
+  <pattern>Ã¥1ri</pattern>
+  <pattern>Ã¥5ror</pattern>
+  <pattern>5Ã¥rsav</pattern>
+  <pattern>Ã¥r5s2li</pattern>
+  <pattern>Ã¥r2sv</pattern>
+  <pattern>Ã¥r5Ã¶</pattern>
+  <pattern>Ã¥s4ke</pattern>
+  <pattern>Ã¥s3n</pattern>
+  <pattern>Ã¥ss4</pattern>
+  <pattern>Ã¥s4skr</pattern>
+  <pattern>Ã¥s4t</pattern>
+  <pattern>Ã¥te2</pattern>
+  <pattern>Ã¥t3ri</pattern>
+  <pattern>Ã¥3trÃ¥</pattern>
+  <pattern>Ã¥t2sj</pattern>
+  <pattern>Ã¥tt5s</pattern>
+  <pattern>Ã¥1v</pattern>
+  <pattern>Ã©3e</pattern>
+  <pattern>Ã¶1a</pattern>
+  <pattern>Ã¶2d</pattern>
+  <pattern>Ã¶4dak</pattern>
+  <pattern>Ã¶4dal</pattern>
+  <pattern>Ã¶4darv</pattern>
+  <pattern>Ã¶de4s5</pattern>
+  <pattern>Ã¶4dis</pattern>
+  <pattern>Ã¶d3ra</pattern>
+  <pattern>Ã¶d2s</pattern>
+  <pattern>Ã¶d3se</pattern>
+  <pattern>Ã¶4du</pattern>
+  <pattern>Ã¶4dÃ¶</pattern>
+  <pattern>Ã¶1e</pattern>
+  <pattern>Ã¶1ga</pattern>
+  <pattern>Ã¶g5ak</pattern>
+  <pattern>Ã¶5gar</pattern>
+  <pattern>1Ã¶gd</pattern>
+  <pattern>Ã¶1ge</pattern>
+  <pattern>Ã¶5ger</pattern>
+  <pattern>Ã¶gg4</pattern>
+  <pattern>Ã¶g1l</pattern>
+  <pattern>Ã¶g2n</pattern>
+  <pattern>Ã¶gn3e</pattern>
+  <pattern>1Ã¶go</pattern>
+  <pattern>Ã¶g3si</pattern>
+  <pattern>Ã¶g3sk</pattern>
+  <pattern>Ã¶1i</pattern>
+  <pattern>Ã¶3jo</pattern>
+  <pattern>Ã¶j4sv</pattern>
+  <pattern>Ã¶4karm</pattern>
+  <pattern>Ã¶1ki</pattern>
+  <pattern>Ã¶k3n</pattern>
+  <pattern>Ã¶k2s</pattern>
+  <pattern>Ã¶k3sl</pattern>
+  <pattern>Ã¶1la</pattern>
+  <pattern>Ã¶l4kv</pattern>
+  <pattern>Ã¶l4kÃ¶</pattern>
+  <pattern>Ã¶l2p</pattern>
+  <pattern>Ã¶5lÃ¤</pattern>
+  <pattern>Ã¶man4</pattern>
+  <pattern>Ã¶m2kl</pattern>
+  <pattern>Ã¶4nal</pattern>
+  <pattern>Ã¶2nom</pattern>
+  <pattern>Ã¶ns3ke</pattern>
+  <pattern>Ã¶n4so</pattern>
+  <pattern>Ã¶nst3r</pattern>
+  <pattern>Ã¶3pe</pattern>
+  <pattern>Ã¶4pel</pattern>
+  <pattern>Ã¶3pi</pattern>
+  <pattern>Ã¶p5li</pattern>
+  <pattern>Ã¶5plo</pattern>
+  <pattern>1Ã¶ppn</pattern>
+  <pattern>Ã¶4pr</pattern>
+  <pattern>Ã¶3rande</pattern>
+  <pattern>Ã¶3ras</pattern>
+  <pattern>Ã¶4rask</pattern>
+  <pattern>Ã¶rb4</pattern>
+  <pattern>Ã¶r3d4r</pattern>
+  <pattern>Ã¶r1eni</pattern>
+  <pattern>Ã¶3res</pattern>
+  <pattern>Ã¶4restr</pattern>
+  <pattern>Ã¶3ret</pattern>
+  <pattern>Ã¶r5evig</pattern>
+  <pattern>Ã¶r3g</pattern>
+  <pattern>Ã¶1ri</pattern>
+  <pattern>Ã¶5rig</pattern>
+  <pattern>Ã¶3ring</pattern>
+  <pattern>Ã¶r3int</pattern>
+  <pattern>Ã¶r5ir</pattern>
+  <pattern>Ã¶r5iv</pattern>
+  <pattern>Ã¶r4kal</pattern>
+  <pattern>Ã¶r1k2l</pattern>
+  <pattern>Ã¶r5kli</pattern>
+  <pattern>Ã¶r4nis</pattern>
+  <pattern>Ã¶r3ol</pattern>
+  <pattern>Ã¶r1or</pattern>
+  <pattern>Ã¶r2p5la</pattern>
+  <pattern>Ã¶r1s2k</pattern>
+  <pattern>Ã¶r3sl</pattern>
+  <pattern>Ã¶r4slÃ¤</pattern>
+  <pattern>Ã¶r5te</pattern>
+  <pattern>Ã¶rt5s</pattern>
+  <pattern>Ã¶r1u</pattern>
+  <pattern>Ã¶r3vr</pattern>
+  <pattern>Ã¶r3y</pattern>
+  <pattern>Ã¶r1Ã¤</pattern>
+  <pattern>Ã¶rÃ¶4d</pattern>
+  <pattern>Ã¶2sak</pattern>
+  <pattern>Ã¶s3n</pattern>
+  <pattern>Ã¶s4sj</pattern>
+  <pattern>Ã¶s2sk</pattern>
+  <pattern>Ã¶s4sp</pattern>
+  <pattern>Ã¶s3ta</pattern>
+  <pattern>Ã¶st3v</pattern>
+  <pattern>Ã¶2tak</pattern>
+  <pattern>Ã¶ts5ko</pattern>
+  <pattern>Ã¶t4st</pattern>
+  <pattern>Ã¶1v</pattern>
+  <pattern>Ã¶ve4</pattern>
+  <pattern>Ã¶ver1</pattern>
+  <pattern>5Ã¶vere</pattern>
+  <pattern>Ã¶2vj</pattern>
+  <pattern>Ã¶v3ra</pattern>
+  <pattern>Ã¶v3ri</pattern>
+  <pattern>Ã¶v4sk</pattern>
 </HyphenationDescription>

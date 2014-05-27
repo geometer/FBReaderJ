@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,7 +108,8 @@ public class BookDownloaderService extends Service {
 		final int notifications = intent.getIntExtra(SHOW_NOTIFICATIONS_KEY, 0);
 
 		final String url = uri.toString();
-		final int bookFormat = intent.getIntExtra(BOOK_FORMAT_KEY, BookUrlInfo.Format.NONE);
+		final BookUrlInfo.Format bookFormat =
+			new BookUrlInfo.Format(intent.getStringExtra(BOOK_FORMAT_KEY));
 		UrlInfo.Type referenceType = (UrlInfo.Type)intent.getSerializableExtra(REFERENCE_TYPE_KEY);
 		if (referenceType == null) {
 			referenceType = UrlInfo.Type.Book;
@@ -127,7 +128,7 @@ public class BookDownloaderService extends Service {
 			return;
 		}
 
-		String fileName = BookUrlInfo.makeBookFileName(cleanURL, bookFormat, referenceType);
+		final String fileName = BookUrlInfo.makeBookFileName(cleanURL, bookFormat, referenceType);
 		if (fileName == null) {
 			doStop();
 			return;

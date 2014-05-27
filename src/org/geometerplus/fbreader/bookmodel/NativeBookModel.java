@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ public class NativeBookModel extends BookModelImpl {
 			id, language, paragraphsNumber,
 			entryIndices, entryOffsets,
 			paragraphLenghts, textSizes, paragraphKinds,
-			directoryName, fileExtension, blocksNumber, myImageMap
+			directoryName, fileExtension, blocksNumber, myImageMap, FontManager
 		);
 	}
 

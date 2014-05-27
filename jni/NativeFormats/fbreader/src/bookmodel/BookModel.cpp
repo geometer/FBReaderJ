@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ BookModel::BookModel(const shared_ptr<Book> book, jobject javaModel) : myBook(bo
 	myJavaModel = AndroidUtil::getEnv()->NewGlobalRef(javaModel);
 
 	const std::string cacheDirectory = Library::Instance().cacheDirectory();
-	myBookTextModel = new ZLTextPlainModel(std::string(), book->language(), 131072, cacheDirectory, "ncache");
+	myBookTextModel = new ZLTextPlainModel(std::string(), book->language(), 131072, cacheDirectory, "ncache", myFontManager);
 	myContentsTree = new ContentsTree();
 	/*shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(book->file(), false);
 	if (!plugin.isNull()) {

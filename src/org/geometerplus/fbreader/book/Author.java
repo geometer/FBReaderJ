@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ public final class Author implements Comparable<Author> {
 
 	public Author(String displayName, String sortKey) {
 		DisplayName = displayName;
-		SortKey = sortKey;
+		SortKey = sortKey.toLowerCase();
 	}
 
 	public static int hashCode(Author author) {
@@ -55,5 +55,10 @@ public final class Author implements Comparable<Author> {
 	public int compareTo(Author other) {
 		final int byKeys = SortKey.compareTo(other.SortKey);
 		return byKeys != 0 ? byKeys : DisplayName.compareTo(other.DisplayName);
+	}
+
+	@Override
+	public String toString() {
+		return DisplayName + " (" + SortKey + ")";
 	}
 }

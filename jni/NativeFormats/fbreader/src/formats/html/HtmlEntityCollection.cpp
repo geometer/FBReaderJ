@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,8 +64,8 @@ void CollectionReader::startElementHandler(const char *tag, const char **attribu
 		}
 		static const std::string _name = "name";
 		static const std::string _number = "number";
-		if ((_name == attributes[0]) && (_number == attributes[2])) {
-			myCollection[attributes[1]] = atoi(attributes[3]);
+		if (_name == attributes[0] && _number == attributes[2]) {
+			myCollection[attributes[1]] = std::atoi(attributes[3]);
 		}
 	}
 }

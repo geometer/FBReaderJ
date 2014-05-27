@@ -54,6 +54,7 @@
 		<node name="deleteBook" value="Esborrar llibre"/>
 		<node name="addToFavorites" value="Afegir a favorits"/>
 		<node name="removeFromFavorites" value="Treure de favorits"/>
+		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Marca com a llegit"/>
 		<node name="markAsUnread" value="Marca com a no llegit"/>
 	</node>
@@ -105,7 +106,7 @@
 		<node name="topup" value="Arrodonir compte (actualment: %s)"/>
 		<node name="topupTitle" value="Arrodonir compte"/>
 		<node name="topupViaBrowser" value="Obrir pàgina al navegador"/>
-		<node name="authorizationMenuTitle" value="Seleccionar acció"/>
+		<node name="authorisationMenuTitle" value="Seleccionar acció"/>
 		<node name="topupSummary" value="Actualment: %s"/>
 		<node name="basket" value="Cistella"/>
 		<node name="basketSummaryEmpty" value="No hi ha llibres"/>
@@ -166,7 +167,7 @@
 		<node name="confirm" value="Confirmeu que voleu comprar &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Confirmeu que voleu comprar %s llibres?"/>
 		<node name="alreadyBought" value="Aquest llibre ja fou comprat"/>
-		<node name="notAuthorized" value="Es requereix autorització"/>
+		<node name="notAuthorised" value="Es requereix autorització"/>
 		<node name="noAccountInformation" value="No es pot carregar l'estat del compte"/>
 		<node name="unsufficientFunds" value="Aquesta compra val %0 i vostè només té %1"/>
 		<node name="zeroFunds" value="Aquesta compra val %0"/>
@@ -297,7 +298,7 @@
 		<node name="toggleFullscreen" value="Pantalla completa"/>
 		<node name="bookmarks" value="Punts de llibre"/>
 		<node name="help" value="Ajuda"/>
-		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nom del fitxer"/>
@@ -311,16 +312,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Directoris">
 			<node name="summary" value="Directoris per a cercar fitxers"/>
-			<node name="books" value="Books directory" toBeTranslated="true"/>
-			<node name="fonts" value="Fonts directory" toBeTranslated="true"/>
-			<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
-			<node name="temp" value="Directori de fitxers temporals"/>
-			<node name="bookPath" value="Directoris de llibres"/>
-			<node name="fontPath" value="Directoris de fonts"/>
-			<node name="wallpaperPath" value="Directori de fons de pantalla"/>
-			<node name="books" value="Directori de llibres"/>
-			<node name="fonts" value="Directori de tipus de lletra"/>
-			<node name="wallpapers" value="Directori de fons de pantalla"/>
+			<node name="bookPath" value="Directoris de llibres">
+				<node name="chooserTitle" value="Directori de llibres"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
+				<node name="chooserTitle" value="Directori de llibres"/>
+			</node>
+			<node name="fontPath" value="Directoris de fonts">
+				<node name="chooserTitle" value="Fonts folder" toBeTranslated="true"/>
+			</node>
+			<node name="wallpaperPath" value="Directori de fons de pantalla">
+				<node name="chooserTitle" value="Images folder" toBeTranslated="true"/>
+			</node>
+			<node name="tempDir" value="Directori de fitxers temporals">
+				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="appearance" value="Aparença">
 			<node name="summary" value="Pantalla, barra d'estat, llum dels botons"/>
@@ -561,6 +567,10 @@
 		</node>
 		<node name="css" value="CSS (Fulls d'estil)">
 			<node name="summary" value="Aplicar/ignorar els valors en CSS"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Mida de la font">
 				<node name="summaryOn" value="Aplica la mida de font definida en CSS"/>
 				<node name="summaryOff" value="Ignora la mida de font definida en CSS"/>
@@ -579,13 +589,6 @@
 				<node name="wood" value="Fusta"/>
 			</node>
 			<node name="backgroundColor" value="Color de fons"/>
-			<node name="selectionBackground" value="Selection background" toBeTranslated="true"/>
-			<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
-			<node name="text" value="Regular text" toBeTranslated="true"/>
-			<node name="hyperlink" value="Hyperlink text" toBeTranslated="true"/>
-			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
-			<node name="highlighting" value="Search results background" toBeTranslated="true"/>
-			<node name="footer" value="Footer" toBeTranslated="true"/>
 			<node name="selectionBackground" value="Fons de selecció"/>
 			<node name="selectionForeground" value="Text de selecció"/>
 			<node name="text" value="Text"/>
@@ -759,6 +762,18 @@
 			<node name="twitter" value="Seguiu-nos a Twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
+		</node>
+		<node name="eink" value="E-ink screen" toBeTranslated="true">
+			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
+			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
 		</node>
 		<node name="externalFormats" value="Formats" toBeTranslated="true">
 			<node name="summary" value="Manage file formats" toBeTranslated="true"/>
@@ -789,7 +804,7 @@
 			<node name="topup" value="Arrodoneix"/>
 			<node name="pay" value="Paga"/>
 			<node name="refresh" value="Recarrega"/>
-			<node name="authorize" value="Autoritza"/>
+			<node name="authorise" value="Autoritza"/>
 			<node name="resetPosition" value="Restableix posició"/>
 			<node name="sendReport" value="Envia informe"/>
 			<node name="addToFavorites" value="Afegir a favorits"/>
@@ -874,66 +889,44 @@
 			<node name="dontShowAgain" value="No tornis a mostrar"/>
 			<node name="more" value="Següent consell"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root" toBeTranslated="true"/>
+			<node name="newFolder" value="New folder" toBeTranslated="true"/>
+			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="menu">
+				<node name="origin" value="Origin" toBeTranslated="true"/>
+				<node name="reload" value="Reload" toBeTranslated="true"/>
+			</node>
+			<node name="sortBy" value="Sort by" toBeTranslated="true">
+				<node name="name" value="Name" toBeTranslated="true"/>
+				<node name="size" value="Size" toBeTranslated="true"/>
+				<node name="date" value="Date" toBeTranslated="true"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually" toBeTranslated="true"/>
-		<node name="textNotFound" value="There is no suitable text in the book, sorry" toBeTranslated="true"/>
-		<node name="bookNotFound" value="There are no suitable books in the library, sorry" toBeTranslated="true"/>
-		<node name="bookmarkNotFound" value="There are no suitable bookmarks, sorry" toBeTranslated="true"/>
-		<node name="cannotOpenBook" value="Cannot open this book at the moment, sorry" toBeTranslated="true"/>
-		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
-		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
-		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
-		<node name="emptyCatalog" value="Catalog is empty, sorry" toBeTranslated="true"/>
-		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
-	</node>
-	<node name="external">
-		<node name="browser" value="Browser" toBeTranslated="true"/>
-		<node name="defaultBrowser" value="Default Browser" toBeTranslated="true"/>
-	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Unknown Error" toBeTranslated="true"/>
-		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method" toBeTranslated="true"/>
-		<node name="encryptedFile" value="DRM-protected File" toBeTranslated="true"/>
-	</node>
-	<node name="crash">
-		<node name="fixBooksDirectory">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or enter another directory name below." toBeTranslated="true"/>
-		</node>
-		<node name="missingNativeLibrary">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
-		</node>
-	</node>
-	<node name="error">
-		<node name="bookReading">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-		</node>
-	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
-	</node>
-	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page" toBeTranslated="true"/>
-	</node>
-	<node name="yota">
-		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
-		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
-	</node>
-	<node name="warningMessage">
-		<node name="mainBookDirEditing" value="Editing of main directory will lead to loss of data. Continue?" toBeTranslated="true"/>
-	</node>
-	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Se produjo un error durante la lectura de '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Se produjo un error durante la extracción de '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No hay plugin para '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Tipo desconocido de plugin: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="No se encuentra el archivo: %s" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF no se encuentra en %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Error de análisis RTF en: %s" toBeTranslated="true"/>
 		<node name="cannotRunAndroidMarket" value="No es posible acceder a Google Play. Por favor, instale %s manualmente " toBeTranslated="true"/>
 		<node name="textNotFound" value="Lamentablemente, no hay texto que coincida en el libro" toBeTranslated="true"/>
 		<node name="bookNotFound" value="Lamentablemente, no hay libros que coincidan en la biblioteca" toBeTranslated="true"/>
@@ -946,12 +939,16 @@
 		<node name="emptyCatalog" value="Lamentablemente, el catálogo está vacío" toBeTranslated="true"/>
 		<node name="emptyBasket" value="Lamentablemente, su cesta está vacía" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="Lamentablemente, no se encontraron libros" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="externalNotFound" value="Cannot open external application" toBeTranslated="true"/>
 		<node name="appNotFound" value="No suitable application found" toBeTranslated="true"/>
 		<node name="invalidFormat" value="Format is invalid" toBeTranslated="true"/>
 		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
 		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
 		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>
@@ -965,7 +962,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Problema de FBReader"/>
-			<node name="text" value="El directorio caché de FBReader no está accesible para escritura. Tal vez usted haya olvidado insertar o desmontar su tarjeta de memoria. Por favor, solucione este problema o ingrese otro nombre de directorio a continuación." toBeTranslated="true"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problema de FBReader"/>
@@ -977,17 +974,38 @@
 			<node name="title" value="Problema de FBReader"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Se produjo un error durante la lectura de '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Se produjo un error durante la extracción de '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No hay plugin para '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Tipo desconocido de plugin: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="No se encuentra el archivo: %s" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF no se encuentra en %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="El formato de archivo no es admitido para '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Error de análisis RTF en: %s" toBeTranslated="true"/>
-	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins" toBeTranslated="true">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
+		<node name="litres" value="LitRes" toBeTranslated="true">
+			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+		</node>
+		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		</node>
+		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		</node>
+		<node name="widgets" value="Widgets" toBeTranslated="true">
+			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		</node>
+		<node name="pdf" value="PDF" toBeTranslated="true">
+			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
+		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
 	</node>
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,12 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import java.util.Collections;
+import java.util.List;
+
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.book.Book;
@@ -41,6 +45,9 @@ public abstract class FormatPlugin {
 	public ZLFile realBookFile(ZLFile file) throws BookReadingException {
 		return file;
 	}
+	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
+		return Collections.emptyList();
+	}
 	public abstract void readMetaInfo(Book book) throws BookReadingException;
 	public abstract void readUids(Book book) throws BookReadingException;
 	public abstract void readModel(BookModel model) throws BookReadingException;
@@ -49,11 +56,18 @@ public abstract class FormatPlugin {
 	public abstract String readAnnotation(ZLFile file);
 
 	public enum Type {
-		ANY,
-		JAVA,
-		NATIVE,
-		EXTERNAL,
-		NONE
+		ANY(false),
+		JAVA(true),
+		NATIVE(true),
+		PLUGIN(false),
+		EXTERNAL(false),
+		NONE(false);
+
+		public final boolean Builtin;
+
+		Type(boolean builtin) {
+			Builtin = builtin;
+		}
 	};
 	public abstract Type type();
 

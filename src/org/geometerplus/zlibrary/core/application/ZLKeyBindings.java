@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,65 +22,59 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 
 import android.view.KeyEvent;
-import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.Paths;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
+import org.geometerplus.fbreader.Paths;
+
+import org.geometerplus.android.util.DeviceType;
+
 public final class ZLKeyBindings {
 	private static final String ACTION = "Action";
 	private static final String LONG_PRESS_ACTION = "LongPressAction";
 
 	private final String myName;
-	private final ZLStringListOption myKeysOption;
+	private ZLStringListOption myKeysOption;
 	private final TreeMap<Integer,ZLStringOption> myActionMap = new TreeMap<Integer,ZLStringOption>();
 	private final TreeMap<Integer,ZLStringOption> myLongPressActionMap = new TreeMap<Integer,ZLStringOption>();
 
-	public ZLKeyBindings(String name) {
+	public ZLKeyBindings() {
+		this("Keys");
+	}
+
+	private ZLKeyBindings(String name) {
 		myName = name;
-		final Set<String> keys = new TreeSet<String>();
-		new Reader(keys).readQuietly(ZLFile.createFileByPath("default/keymap.xml"));
-		try {
-			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
-		} catch (Exception e) {
-			// ignore
-		}
-		try {
-			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.mainBookDirectory() + "/keymap.xml"));
-		} catch (Exception e) {
-			// ignore
-		}
- 		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
+		Config.Instance().runOnConnect(new Initializer());
+	}
 
-		// this code is for migration from FBReader versions <= 1.1.2
-		ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
-		if (!"".equals(oldBackKeyOption.getValue())) {
-			bindKey(KeyEvent.KEYCODE_BACK, false, oldBackKeyOption.getValue());
-			oldBackKeyOption.setValue("");
-		}
-		oldBackKeyOption = new ZLStringOption(myName + ":" + LONG_PRESS_ACTION, "<Back>", "");
-		if (!"".equals(oldBackKeyOption.getValue())) {
-			bindKey(KeyEvent.KEYCODE_BACK, true, oldBackKeyOption.getValue());
-			oldBackKeyOption.setValue("");
-		}
+	private class Initializer implements Runnable {
+		public void run() {
+			final Set<String> keys = new TreeSet<String>();
 
-		final ZLBooleanOption volumeKeysOption =
-			new ZLBooleanOption("Scrolling", "VolumeKeys", true);
-		final ZLBooleanOption invertVolumeKeysOption =
-			new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
-		if (!volumeKeysOption.getValue()) {
-			bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ZLApplication.NoAction);
-			bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ZLApplication.NoAction);
-		} else if (invertVolumeKeysOption.getValue()) {
-			bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
-			bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+			final DeviceType deviceType = DeviceType.Instance();
+			final String keymapFilename;
+			if (deviceType == DeviceType.NOOK || deviceType == DeviceType.NOOK12) {
+				keymapFilename = "keymap-nook.xml";
+			} else {
+				keymapFilename = "keymap.xml";
+			}
+			new Reader(keys).readQuietly(ZLFile.createFileByPath("default/" + keymapFilename));
+
+			try {
+				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
+			} catch (Exception e) {
+				// ignore
+			}
+			try {
+				new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.bookPath().get(0) + "/keymap.xml"));
+			} catch (Exception e) {
+				// ignore
+			}
+			myKeysOption = new ZLStringListOption(myName, "KeyList", new ArrayList<String>(keys), ",");
 		}
-		volumeKeysOption.setValue(true);
-		invertVolumeKeysOption.setValue(false);
-		// end of migration code
 	}
 
 	private ZLStringOption createOption(int key, boolean longPress, String defaultValue) {
@@ -99,6 +93,9 @@ public final class ZLKeyBindings {
 	}
 
 	public void bindKey(int key, boolean longPress, String actionId) {
+		if (myKeysOption == null) {
+			return;
+		}
 		final String stringKey = String.valueOf(key);
 		List<String> keys = myKeysOption.getValue();
 		if (!keys.contains(stringKey)) {
@@ -112,6 +109,10 @@ public final class ZLKeyBindings {
 
 	public String getBinding(int key, boolean longPress) {
 		return getOption(key, longPress).getValue();
+	}
+
+	public boolean hasBinding(int key, boolean longPress) {
+		return !ZLApplication.NoAction.equals(getBinding(key, longPress));
 	}
 
 	private class Reader extends ZLXMLReaderAdapter {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ import android.preference.ListPreference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class ZLStringListPreference extends ListPreference {
-	private final ZLResource myResource;
+	protected final ZLResource myResource;
 
 	ZLStringListPreference(Context context, ZLResource rootResource, String resourceKey) {
 		super(context);

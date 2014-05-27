@@ -2,15 +2,17 @@ package org.amse.ys.zip;
 
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.util.InputStreamHolder;
+
 final class MyBufferedInputStream extends InputStream {
-	private final ZipFile.InputStreamHolder myStreamHolder;
+	private final InputStreamHolder myStreamHolder;
 	private InputStream myFileInputStream;
 	private final byte[] myBuffer;
 	int myBytesReady;
 	int myPositionInBuffer;
 	private int myCurrentPosition;
 
-	public MyBufferedInputStream(ZipFile.InputStreamHolder streamHolder, int bufferSize) throws IOException {
+	public MyBufferedInputStream(InputStreamHolder streamHolder, int bufferSize) throws IOException {
 		myStreamHolder = streamHolder;
 		myFileInputStream = streamHolder.getInputStream();
 		myBuffer = new byte[bufferSize];
@@ -18,7 +20,7 @@ final class MyBufferedInputStream extends InputStream {
 		myPositionInBuffer = 0;
 	}
 
-	public MyBufferedInputStream(ZipFile.InputStreamHolder streamHolder) throws IOException {
+	public MyBufferedInputStream(InputStreamHolder streamHolder) throws IOException {
 		this(streamHolder, 1 << 10);
 	}
 
@@ -35,7 +37,9 @@ final class MyBufferedInputStream extends InputStream {
 	public int read(byte[] b, int off, int len) throws IOException {
 		int ready = (len < myBytesReady) ? len : myBytesReady;
 		if (ready > 0) {
-			System.arraycopy(myBuffer, myPositionInBuffer, b, off, ready);
+			if (b != null) {
+				System.arraycopy(myBuffer, myPositionInBuffer, b, off, ready);
+			}
 			len -= ready;
 			myBytesReady -= ready;
 			myPositionInBuffer += ready;
@@ -48,7 +52,7 @@ final class MyBufferedInputStream extends InputStream {
 			}
 		}
 		myCurrentPosition += ready;
-		return (ready > 0) ? ready : -1;
+		return ready > 0 ? ready : -1;
 	}
 
 	@Override

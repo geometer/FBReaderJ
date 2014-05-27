@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,8 +58,10 @@ abstract public class ZLResource {
 		return allLanguages;
 	}
 
+	private static final ZLStringOption ourLanguageOption =
+		new ZLStringOption("LookNFeel", "Language", Language.SYSTEM_CODE);
 	public static ZLStringOption getLanguageOption() {
-		return new ZLStringOption("LookNFeel", "Language", Language.SYSTEM_CODE);
+		return ourLanguageOption;
 	}
 
 	public static ZLResource resource(String key) {
@@ -67,7 +69,10 @@ abstract public class ZLResource {
 		if (ZLTreeResource.ourRoot == null) {
 			return ZLMissingResource.Instance;
 		}
-		return ZLTreeResource.ourRoot.getResource(key);
+		try {
+			return ZLTreeResource.ourRoot.getResource(key);
+		} finally {
+		}
 	}
 
 	protected ZLResource(String name) {

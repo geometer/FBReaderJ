@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,9 @@ public abstract class MiscUtil {
 	public static <T> boolean listsEquals(List<T> list1, List<T> list2) {
 		if (list1 == null) {
 			return list2 == null || list2.isEmpty();
+		}
+		if (list2 == null) {
+			return list1.isEmpty();
 		}
 		if (list1.size() != list2.size()) {
 			return false;

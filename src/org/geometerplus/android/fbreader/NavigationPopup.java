@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ final class NavigationPopup {
 		if (myStartPosition != null &&
 			!myStartPosition.equals(myFBReader.getTextView().getStartCursor())) {
 			myFBReader.addInvisibleBookmark(myStartPosition);
+			myFBReader.storePosition();
 		}
 		myWindow.hide();
 		myWindow = null;

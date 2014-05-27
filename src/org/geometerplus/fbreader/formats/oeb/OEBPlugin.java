@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,10 +83,13 @@ public class OEBPlugin extends JavaFormatPlugin {
 
 	@Override
 	public String readAnnotation(ZLFile file) {
+		file.setCached(true);
 		try {
 			return new OEBAnnotationReader().readAnnotation(getOpfFile(file));
 		} catch (BookReadingException e) {
 			return null;
+		} finally {
+			file.setCached(false);
 		}
 	}
 

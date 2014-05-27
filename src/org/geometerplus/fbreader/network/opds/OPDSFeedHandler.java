@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	private int myIndex;
 
 	private String myNextURL;
+	private String myAuthURL;
 	private String mySkipUntilId;
 	private boolean myFoundNewIds;
 
@@ -85,6 +86,8 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 				final String rel = opdsLink.relation(link.getRel(), mime);
 				if (MimeType.APP_ATOM_XML.weakEquals(mime) && "next".equals(rel)) {
 					myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
+				} else if (MimeType.TEXT_HTML.weakEquals(mime) && "auth".equals(rel)) {
+					myAuthURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				}
 			}
 		}
@@ -99,6 +102,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			myNextURL = null;
 		}
 		myData.ResumeURI = myFoundNewIds ? myNextURL : null;
+		myData.AuthURI = myAuthURL;
 		myData.LastLoadedId = null;
 	}
 
@@ -114,7 +118,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		}
 
 		String id = null;
-		int idType = 0;
+		BookUrlInfo.Format idType = BookUrlInfo.Format.NONE;
 
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link : entry.Links) {
@@ -124,14 +128,14 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			if (rel == null && MimeType.APP_ATOM_XML.weakEquals(mime)) {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
-			int relType = BookUrlInfo.Format.NONE;
+			BookUrlInfo.Format relType = BookUrlInfo.Format.NONE;
 			if (rel == null || rel.startsWith(REL_ACQUISITION_PREFIX)
 					|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX)) {
 				relType = OPDSBookItem.formatByMimeType(mime);
 			}
-			if (relType != BookUrlInfo.Format.NONE
-					&& (id == null || idType < relType
-							|| (idType == relType && REL_ACQUISITION.equals(rel)))) {
+			if (!BookUrlInfo.Format.NONE.equals(relType)
+					&& (id == null || idType.compareTo(relType) < 0
+						|| (idType.equals(relType) && REL_ACQUISITION.equals(rel)))) {
 				id = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				idType = relType;
 			}
@@ -171,7 +175,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			final MimeType mime = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), mime);
 			if (rel == null
-					? (OPDSBookItem.formatByMimeType(mime) != BookUrlInfo.Format.NONE)
+					? (!BookUrlInfo.Format.NONE.equals(OPDSBookItem.formatByMimeType(mime)))
 					: (rel.startsWith(REL_ACQUISITION_PREFIX)
 							|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX))) {
 				hasBookLink = true;

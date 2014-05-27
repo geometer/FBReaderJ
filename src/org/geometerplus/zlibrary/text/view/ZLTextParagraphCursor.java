@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import java.util.*;
 import org.vimgadgets.linebreak.LineBreaker;
 
 import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.model.*;
 
 public final class ZLTextParagraphCursor {
@@ -58,8 +59,7 @@ public final class ZLTextParagraphCursor {
 			ZLTextHyperlink hyperlink = null;
 
 			final ArrayList<ZLTextElement> elements = myElements;
-			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
-				it.next();
+			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.next(); ) {
 				switch (it.getType()) {
 					case ZLTextParagraph.Entry.TEXT:
 						processTextEntry(it.getTextData(), it.getTextOffset(), it.getTextLength(), hyperlink);
@@ -99,6 +99,11 @@ public final class ZLTextParagraphCursor {
 								elements.add(new ZLTextImageElement(imageEntry.Id, data, image.getURI(), imageEntry.IsCover));
 							}
 						}
+						break;
+					case ZLTextParagraph.Entry.AUDIO:
+						break;
+					case ZLTextParagraph.Entry.VIDEO:
+						elements.add(new ZLTextVideoElement(it.getVideoEntry().sources()));
 						break;
 					case ZLTextParagraph.Entry.STYLE_CSS:
 					case ZLTextParagraph.Entry.STYLE_OTHER:
@@ -221,6 +226,14 @@ public final class ZLTextParagraphCursor {
 			case ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH:
 				myElements.add(new ZLTextWord(SPACE_ARRAY, 0, 1, 0));
 				break;
+			case ZLTextParagraph.Kind.ENCRYPTED_SECTION_PARAGRAPH:
+			{
+				final ZLTextStyleEntry entry = new ZLTextOtherStyleEntry();
+				entry.setFontModifier(ZLTextStyleEntry.FontModifier.FONT_MODIFIER_BOLD, true);
+				myElements.add(new ZLTextStyleElement(entry));
+				myElements.add(new ZLTextWord(ZLResource.resource("drm").getResource("encryptedSection").getValue(), 0));
+				break;
+			}
 			default:
 				break;
 		}

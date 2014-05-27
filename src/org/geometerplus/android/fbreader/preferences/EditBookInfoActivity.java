@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
-import org.geometerplus.android.fbreader.library.BookInfoActivity;
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 class BookTitlePreference extends ZLStringPreference {
@@ -167,7 +167,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	protected void onStart() {
 		super.onStart();
 
-		myBook = BookInfoActivity.bookByIntent(getIntent());
+		myBook = FBReaderIntents.getBookExtra(getIntent());
 
 		if (myBook == null) {
 			finish();

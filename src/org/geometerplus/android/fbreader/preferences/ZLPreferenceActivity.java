@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,7 +129,11 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		myScreen = getPreferenceManager().createPreferenceScreen(this);
 
 		final Intent intent = getIntent();
-		init(intent);
+		Config.Instance().runOnConnect(new Runnable() {
+			public void run() {
+				init(intent);
+			}
+		});
 		final Screen screen = myScreenMap.get(intent.getStringExtra(SCREEN_KEY));
 		setPreferenceScreen(screen != null ? screen.myScreen : myScreen);
 	}

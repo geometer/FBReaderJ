@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
@@ -88,20 +89,32 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		);
 
-		Util.initLibrary(this);
-
 		final Intent intent = getIntent();
-		final String action = intent.getAction();
-		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(action);
+		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(intent.getAction());
 		myLink = null;
+
+		Util.initLibrary(this, new Runnable() {
+			public void run() {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						init(intent);
+					}
+				});
+			}
+		});
+	}
+
+	private void init(Intent intent) {
+		final String action = intent.getAction();
 		Uri uri = null;
 		if (myEditNotAdd ||
 			Intent.ACTION_VIEW.equals(action) ||
 			Util.ADD_CATALOG_URL_ACTION.equals(action)) {
 			uri = intent.getData();
 			if (uri != null) {
-				if ("opds".equals(uri.getScheme())) {
-					uri = Uri.parse("http" + uri.toString().substring(4));
+				final String scheme = uri.getScheme();
+				if ("opds".equals(scheme)) {
+					uri = Uri.parse("http" + uri.toString().substring(scheme.length()));
 				}
 				final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
 				if (link instanceof ICustomNetworkLink) {
@@ -113,14 +126,15 @@ public class AddCustomCatalogActivity extends Activity {
 		}
 
 		if (myLink != null) {
-			setTextById(R.id.add_custom_catalog_url, myLink.getUrl(UrlInfo.Type.Catalog));
-			setTextById(R.id.add_custom_catalog_title, myLink.getTitle());
-			setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
-			setExtraFieldsVisibility(true);
-		} else if (uri != null) {
-			if ("opds".equals(uri.getScheme())) {
-				uri = Uri.parse("http" + uri.toString().substring(4));
+			if (myEditNotAdd) {
+				setTextById(R.id.add_custom_catalog_url, myLink.getUrl(UrlInfo.Type.Catalog));
+				setTextById(R.id.add_custom_catalog_title, myLink.getTitle());
+				setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
+				setExtraFieldsVisibility(true);
+			} else {
+				openCatalog(uri);
 			}
+		} else if (uri != null) {
 			loadInfoByUri(uri);
 		} else {
 			setExtraFieldsVisibility(false);
@@ -164,15 +178,18 @@ public class AddCustomCatalogActivity extends Activity {
 			library.addCustomLink(myLink);
 			library.synchronize();
 
-			final Intent intent = new Intent(
-				NetworkLibraryActivity.OPEN_CATALOG_ACTION,
-				myEditNotAdd ? null : uri,
-				AddCustomCatalogActivity.this,
-				NetworkLibraryPrimaryActivity.class
-			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
+			openCatalog(myEditNotAdd ? null : uri);
 		}
+	}
+
+	private void openCatalog(Uri uri) {
+		startActivity(new Intent(
+			FBReaderIntents.Action.OPEN_NETWORK_CATALOG,
+			uri,
+			this,
+			NetworkLibraryPrimaryActivity.class
+		).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+		finish();
 	}
 
 	private boolean isEmptyString(String s) {

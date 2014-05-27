@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,36 +37,28 @@ import android.util.DisplayMetrics;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.util.DeviceType;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", false);
-	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", true);
+	public final ZLBooleanOption OldShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", true);
+	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBarNew", false);
+	public final ZLIntegerOption ScreenHintStageOption = new ZLIntegerOption("LookNFeel", "ScreenHintStage", 0);
+	{
+		ShowStatusBarOption.setSpecialName("statusBar");
+		OldShowActionBarOption.setSpecialName("actionBar");
+		ShowActionBarOption.setSpecialName("actionBarNew");
+	}
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
-	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
-
-	public boolean isKindleFire() {
-		final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
-		return
-			Build.MODEL != null &&
-			Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
-	}
-
-	public boolean isYotaPhone() {
-		return "YotaPhone".equals(Build.BRAND);
-	}
-
-	public boolean hasButtonLightsBug() {
-		return "GT-S5830".equals(Build.MODEL);
-	}
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
 
 	private FBReader myActivity;
 	private final Application myApplication;
@@ -88,7 +80,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public AssetManager getAssets() {
 		return myApplication.getAssets();
 	}
-		
+
 	@Override
 	public ZLResourceFile createResourceFile(String path) {
 		return new AndroidAssetsFile(path);
@@ -196,6 +188,13 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
 	}
 
+	private static interface StreamStatus {
+		int UNKNOWN = -1;
+		int NULL = 0;
+		int OK = 1;
+		int EXCEPTION = 2;
+	}
+
 	private final class AndroidAssetsFile extends ZLResourceFile {
 		private final AndroidAssetsFile myParent;
 
@@ -230,30 +229,33 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			return Collections.emptyList();
 		}
 
+		private int myStreamStatus = StreamStatus.UNKNOWN;
+		private int streamStatus() {
+			if (myStreamStatus == StreamStatus.UNKNOWN) {
+				try {
+					final InputStream stream = myApplication.getAssets().open(getPath());
+					if (stream == null) {
+						myStreamStatus = StreamStatus.NULL;
+					} else {
+						stream.close();
+						myStreamStatus = StreamStatus.OK;
+					}
+				} catch (IOException e) {
+					myStreamStatus = StreamStatus.EXCEPTION;
+				}
+			}
+			return myStreamStatus;
+		}
+
 		@Override
 		public boolean isDirectory() {
-			try {
-				InputStream stream = myApplication.getAssets().open(getPath());
-				if (stream == null) {
-					return true;
-				}
-				stream.close();
-				return false;
-			} catch (IOException e) {
-				return true;
-			}
+			return streamStatus() != StreamStatus.OK;
 		}
 
 		@Override
 		public boolean exists() {
-			try {
-				InputStream stream = myApplication.getAssets().open(getPath());
-				if (stream != null) {
-					stream.close();
-					// file exists
-					return true;
-				}
-			} catch (IOException e) {
+			if (streamStatus() == StreamStatus.OK) {
+				return true;
 			}
 			try {
 				String[] names = myApplication.getAssets().list(getPath());

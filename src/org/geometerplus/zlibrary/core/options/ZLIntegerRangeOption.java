@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,60 +20,38 @@
 package org.geometerplus.zlibrary.core.options;
 
 public final class ZLIntegerRangeOption extends ZLOption {
+	private static int valueInRange(int value, int min, int max) {
+		return Math.min(max, Math.max(min, value));
+	}
+
 	public final int MinValue;
 	public final int MaxValue;
 
-	private final int myDefaultValue;
 	private int myValue;
+	private String myStringValue;
 
 	public ZLIntegerRangeOption(String group, String optionName, int minValue, int maxValue, int defaultValue) {
-		super(group, optionName);
+		super(group, optionName, String.valueOf(valueInRange(defaultValue, minValue, maxValue)));
 		MinValue = minValue;
 		MaxValue = maxValue;
-		if (defaultValue < MinValue) {
-			defaultValue = MinValue;
-		} else if (defaultValue > MaxValue) {
-			defaultValue = MaxValue;
-		}
-		myDefaultValue = defaultValue;
-		myValue = defaultValue;
 	}
 
 	public int getValue() {
-		if (!myIsSynchronized) {
-			String value = getConfigValue(null);
-			if (value != null) {
-				try {
-					int intValue = Integer.parseInt(value);
-					if (intValue < MinValue) {
-						intValue = MinValue;
-					} else if (intValue > MaxValue) {
-						intValue = MaxValue;
-					}
-					myValue = intValue;
-				} catch (NumberFormatException e) {
-				}
+		final String stringValue = getConfigValue();
+		if (!stringValue.equals(myStringValue)) {
+			myStringValue = stringValue;
+			try {
+				myValue = valueInRange(Integer.parseInt(stringValue), MinValue, MaxValue);
+			} catch (NumberFormatException e) {
 			}
-			myIsSynchronized = true;
 		}
 		return myValue;
 	}
 
 	public void setValue(int value) {
-		if (value < MinValue) {
-			value = MinValue;
-		} else if (value > MaxValue) {
-			value = MaxValue;
-		}
-		if (myIsSynchronized && (myValue == value)) {
-			return;
-		}
+		value = valueInRange(value, MinValue, MaxValue);
 		myValue = value;
-		myIsSynchronized = true;
-		if (value == myDefaultValue) {
-			unsetConfigValue();
-		} else {
-			setConfigValue("" + value);
-		}
+		myStringValue = String.valueOf(value);
+		setConfigValue(myStringValue);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,6 +97,10 @@ bool FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream, const std::
 const std::string &FormatPlugin::tryOpen(const ZLFile&) const {
 	static const std::string EMPTY = "";
 	return EMPTY;
+}
+
+std::vector<shared_ptr<FileEncryptionInfo> > FormatPlugin::readEncryptionInfos(Book &book) const {
+	return std::vector<shared_ptr<FileEncryptionInfo> >();
 }
 
 shared_ptr<const ZLImage> FormatPlugin::coverImage(const ZLFile &file) const {

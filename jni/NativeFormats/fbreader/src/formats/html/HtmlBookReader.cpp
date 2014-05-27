@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -274,7 +274,7 @@ HtmlStyleTagAction::HtmlStyleTagAction(HtmlBookReader &reader) : HtmlTagAction(r
 }
 
 void HtmlStyleTagAction::run(const HtmlReader::HtmlTag &tag) {
-	myReader.myStyleSheetParser = tag.Start ? new StyleSheetTableParser(myReader.myStyleSheetTable) : 0;
+	myReader.myStyleSheetParser = tag.Start ? new StyleSheetTableParser(myReader.myBaseDirPath, myReader.myStyleSheetTable, myReader.myFontMap, 0) : 0;
 	/*
 	if (!tag.Start) {
 		myReader.myStyleSheetTable.dump();
@@ -396,6 +396,7 @@ void HtmlBookReader::setProcessPreTag(bool process) {
 }
 
 HtmlBookReader::HtmlBookReader(const std::string &baseDirectoryPath, BookModel &model, const PlainTextFormat &format, const std::string &encoding) : HtmlReader(encoding), myBookReader(model), myBaseDirPath(baseDirectoryPath), myFormat(format), myBuildTableOfContent(true), myProcessPreTag(true) {
+	myFontMap = new FontMap();
 }
 
 HtmlBookReader::~HtmlBookReader() {
@@ -404,7 +405,7 @@ HtmlBookReader::~HtmlBookReader() {
 void HtmlBookReader::addConvertedDataToBuffer(const char *text, std::size_t len, bool convert) {
 	if (len > 0) {
 		if (myDontBreakParagraph) {
-			while ((len > 0) && isspace(*text)) {
+			while (len > 0 && std::isspace(*text)) {
 				--len;
 				++text;
 			}
@@ -433,7 +434,7 @@ bool HtmlBookReader::tagHandler(const HtmlTag &tag) {
 		if (tag.Attributes[i].Name == "ID") {
 			myBookReader.addHyperlinkLabel(tag.Attributes[i].Value);
 			break;
-		}	
+		}
 	}
 	shared_ptr<HtmlTagAction> action = myActionMap[tag.Name];
 	if (action.isNull()) {
@@ -464,7 +465,7 @@ void HtmlBookReader::preformattedCharacterDataHandler(const char *text, std::siz
 				myBookReader.beginParagraph();
 				start = ptr + 1;
 			} else if (mySpaceCounter >= 0) {
-				if (isspace((unsigned char)*ptr)) {
+				if (std::isspace((unsigned char)*ptr)) {
 					++mySpaceCounter;
 				} else {
 					myBookReader.addFixedHSpace(mySpaceCounter);
@@ -475,7 +476,7 @@ void HtmlBookReader::preformattedCharacterDataHandler(const char *text, std::siz
 		addConvertedDataToBuffer(start, end - start, convert);
 	} else if (breakType & PlainTextFormat::BREAK_PARAGRAPH_AT_LINE_WITH_INDENT) {
 		for (const char *ptr = text; ptr != end; ++ptr) {
-			if (isspace((unsigned char)*ptr)) {
+			if (std::isspace((unsigned char)*ptr)) {
 				if (*ptr == '\n') {
 					mySpaceCounter = 0;
 				} else if (mySpaceCounter >= 0) {
@@ -499,7 +500,7 @@ void HtmlBookReader::preformattedCharacterDataHandler(const char *text, std::siz
 		}
 	} else if (breakType & PlainTextFormat::BREAK_PARAGRAPH_AT_EMPTY_LINE) {
 		for (const char *ptr = start; ptr != end; ++ptr) {
-			if (isspace((unsigned char)*ptr)) {
+			if (std::isspace((unsigned char)*ptr)) {
 				if (*ptr == '\n') {
 					++myBreakCounter;
 				}
@@ -519,7 +520,7 @@ void HtmlBookReader::preformattedCharacterDataHandler(const char *text, std::siz
 
 bool HtmlBookReader::characterDataHandler(const char *text, std::size_t len, bool convert) {
 	if (!myStyleSheetParser.isNull()) {
-		myStyleSheetParser->parse(text, len);
+		myStyleSheetParser->parseString(text, len);
 		return true;
 	}
 
@@ -536,7 +537,7 @@ bool HtmlBookReader::characterDataHandler(const char *text, std::size_t len, boo
 	const char *end = text + len;
 	if (!myIsStarted) {
 		for (; ptr != end; ++ptr) {
-			if (!isspace((unsigned char)*ptr)) {
+			if (!std::isspace((unsigned char)*ptr)) {
 				myIsStarted = true;
 				break;
 			}

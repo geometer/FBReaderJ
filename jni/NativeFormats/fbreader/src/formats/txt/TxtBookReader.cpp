@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ bool TxtBookReader::characterDataHandler(std::string &str) {
 	const char *ptr = str.data();
 	const char *end = ptr + str.length();
 	for (; ptr != end; ++ptr) {
-		if (isspace((unsigned char)*ptr)) {
+		if (std::isspace((unsigned char)*ptr)) {
 			if (*ptr != '\t') {
 				++mySpaceCounter;
 			} else {

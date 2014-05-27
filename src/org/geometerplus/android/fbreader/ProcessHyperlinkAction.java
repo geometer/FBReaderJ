@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					intent.setData(Uri.parse(url));
 					intent.putExtra(
 						ImageViewActivity.BACKGROUND_COLOR_KEY,
-						Reader.ImageViewBackgroundOption.getValue().intValue()
+						Reader.ImageOptions.ImageViewBackground.getValue().intValue()
 					);
 					OrientationUtil.startActivity(BaseActivity, intent);
 				} catch (Exception e) {

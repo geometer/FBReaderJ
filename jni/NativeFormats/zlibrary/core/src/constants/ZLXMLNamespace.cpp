@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,3 +31,7 @@ const std::string ZLXMLNamespace::CalibreMetadata = "http://calibre.kovidgoyal.n
 const std::string ZLXMLNamespace::Opds = "http://opds-spec.org/2010/catalog";
 const std::string ZLXMLNamespace::DaisyNCX = "http://www.daisy.org/z3986/2005/ncx/";
 const std::string ZLXMLNamespace::Svg = "http://www.w3.org/2000/svg";
+const std::string ZLXMLNamespace::MarlinEpub = "http://marlin-drm.com/epub";
+const std::string ZLXMLNamespace::XMLEncryption = "http://www.w3.org/2001/04/xmlenc#";
+const std::string ZLXMLNamespace::XMLDigitalSignature = "http://www.w3.org/2000/09/xmldsig#";
+const std::string ZLXMLNamespace::EpubContainer = "urn:oasis:names:tc:opendocument:xmlns:container";

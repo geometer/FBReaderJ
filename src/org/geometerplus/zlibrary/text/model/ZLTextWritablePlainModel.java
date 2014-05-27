@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.Map;
 
+import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.*;
 
@@ -28,14 +29,15 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 	private char[] myCurrentDataBlock;
 	private int myBlockOffset;
 
-	public ZLTextWritablePlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, Map<String,ZLImage> imageMap) {
+	public ZLTextWritablePlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, Map<String,ZLImage> imageMap, FontManager fontManager) {
 		super(
 			id, language,
 			new int[arraySize], new int[arraySize],
 			new int[arraySize], new int[arraySize],
 			new byte[arraySize],
 			new CachedCharStorage(dataBlockSize, directoryName, extension),
-			imageMap
+			imageMap,
+			fontManager
 		);
 	}
 

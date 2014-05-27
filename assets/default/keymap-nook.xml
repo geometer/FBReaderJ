@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keymap>
+	<binding key="92" action="nextPage"/>
+	<binding key="93" action="previousPage"/>
+	<binding key="94" action="nextPage"/>
+	<binding key="95" action="previousPage"/>
+</keymap>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 	public Base64EncodedImage(MimeType mimeType, String namePostfix) {
 		// TODO: use contentType
 		super(mimeType);
-		myDirName = Paths.cacheDirectory();
+		myDirName = Paths.tempDirectory();
 		new File(myDirName).mkdirs();
 		myFileNumber = ourCounter++;
 		myNamePostfix = namePostfix;

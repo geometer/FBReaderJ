@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="FBReaderJ" default="help">
-  <loadproperties srcFile="local.properties" />
-  <property file="ant.properties" />
-  <loadproperties srcFile="project.properties" />
+	<loadproperties srcFile="local.properties" />
+	<property file="ant.properties" />
+	<loadproperties srcFile="project.properties" />
 
-  <!-- quick check on sdk.dir -->
-  <fail
-    message="sdk.dir is missing. Make sure to generate local.properties using 'android update project'"
-    unless="sdk.dir"
-  />
+	<!-- quick check on sdk.dir -->
+	<fail
+		message="sdk.dir is missing. Make sure to generate local.properties using 'android update project'"
+		unless="sdk.dir"
+	/>
 
 	<target name="init" description="Initialization...">
 		<fail message="Ant 1.7.0 or higher is required. Please upgrade your ant.">
@@ -46,8 +46,8 @@
 					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
 				</uptodate>
 				<!-- Check if libNativeFormats exists and is up to date -->
-				<available file="./libs/armeabi/libNativeFormats-v3.so" />
-				<uptodate property="libNativeFormats-build-is-not-required" targetfile="libs/armeabi/libNativeFormats-v3.so">
+				<available file="./libs/armeabi/libNativeFormats-v4.so" />
+				<uptodate property="libNativeFormats-build-is-not-required" targetfile="libs/armeabi/libNativeFormats-v4.so">
 					<srcfiles dir="jni/NativeFormats" includes="**/*.cpp,**/*.c,**/*.h"/>
 				</uptodate>
 			</and>
@@ -55,14 +55,14 @@
 		<echo message="DONE (Checking if native libraries are up-to-date)"/>
 	</target>
 
-  <target name="-pre-build" depends="init, native">
-  </target>
+	<target name="-pre-build" depends="init, native">
+	</target>
 <!--
-  <target name="-pre-compile">
-  </target>
+	<target name="-pre-compile">
+	</target>
 
-  <target name="-post-compile">
-  </target>
+	<target name="-post-compile">
+	</target>
 -->
 	<target name="clean">
 		<echo message="Deleting temporary files..." />
@@ -84,5 +84,5 @@
 		<echo message="DONE (Deleting native libraries)" />
 	</target>
 
-  <import file="${sdk.dir}/tools/ant/build.xml" />
+	<import file="${sdk.dir}/tools/ant/build.xml" />
 </project>

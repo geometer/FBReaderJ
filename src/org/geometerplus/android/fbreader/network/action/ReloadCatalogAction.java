@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,6 @@ public class ReloadCatalogAction extends CatalogAction {
 			return;
 		}
 		((NetworkCatalogTree)tree).clearCatalog();
-		((NetworkCatalogTree)tree).startItemsLoader(false, false);
+		((NetworkCatalogTree)tree).startItemsLoader(null, false);
 	}
 }

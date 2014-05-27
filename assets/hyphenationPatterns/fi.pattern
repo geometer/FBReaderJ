@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   Finnish hyphenations description for FBReader (original was taken from the TeXLive distribution)
 
@@ -20,7 +20,7 @@
 <HyphenationDescription>
   <pattern> suu2r1a2</pattern>
   <pattern> ydi2n1</pattern>
-  <pattern> ä2</pattern>
+  <pattern> Ã¤2</pattern>
   <pattern>8'8</pattern>
   <pattern>aa1e2</pattern>
   <pattern>aa1i2</pattern>
@@ -42,8 +42,8 @@
   <pattern>au1a</pattern>
   <pattern>au1e</pattern>
   <pattern>a1uu</pattern>
-  <pattern>a1ä</pattern>
-  <pattern>a1ö</pattern>
+  <pattern>a1Ã¤</pattern>
+  <pattern>a1Ã¶</pattern>
   <pattern>1ba</pattern>
   <pattern>1be</pattern>
   <pattern>1bi</pattern>
@@ -67,8 +67,8 @@
   <pattern>1d2ra</pattern>
   <pattern>1du</pattern>
   <pattern>1dy</pattern>
-  <pattern>1dä</pattern>
-  <pattern>1dö</pattern>
+  <pattern>1dÃ¤</pattern>
+  <pattern>1dÃ¶</pattern>
   <pattern>e1aa</pattern>
   <pattern>e1ai</pattern>
   <pattern>ee1a2</pattern>
@@ -77,8 +77,8 @@
   <pattern>ee1y2</pattern>
   <pattern>eu1a</pattern>
   <pattern>e1uu</pattern>
-  <pattern>e1ää</pattern>
-  <pattern>e1ö2</pattern>
+  <pattern>e1Ã¤Ã¤</pattern>
+  <pattern>e1Ã¶2</pattern>
   <pattern>1fa</pattern>
   <pattern>1fe</pattern>
   <pattern>1fi</pattern>
@@ -100,16 +100,16 @@
   <pattern>1g2ra</pattern>
   <pattern>1gu</pattern>
   <pattern>1gy</pattern>
-  <pattern>1gä</pattern>
-  <pattern>1gö</pattern>
+  <pattern>1gÃ¤</pattern>
+  <pattern>1gÃ¶</pattern>
   <pattern>1ha</pattern>
   <pattern>1he</pattern>
   <pattern>1hi</pattern>
   <pattern>1ho</pattern>
   <pattern>1hu</pattern>
   <pattern>1hy</pattern>
-  <pattern>1hä</pattern>
-  <pattern>1hö</pattern>
+  <pattern>1hÃ¤</pattern>
+  <pattern>1hÃ¶</pattern>
   <pattern>i1aa</pattern>
   <pattern>i1au</pattern>
   <pattern>ie1a</pattern>
@@ -124,16 +124,16 @@
   <pattern>iu1e</pattern>
   <pattern>iu1o</pattern>
   <pattern>i1uu</pattern>
-  <pattern>i1ää</pattern>
-  <pattern>i1öö</pattern>
+  <pattern>i1Ã¤Ã¤</pattern>
+  <pattern>i1Ã¶Ã¶</pattern>
   <pattern>1ja</pattern>
   <pattern>1je</pattern>
   <pattern>1ji</pattern>
   <pattern>1jo</pattern>
   <pattern>1ju</pattern>
   <pattern>1jy</pattern>
-  <pattern>1jä</pattern>
-  <pattern>1jö</pattern>
+  <pattern>1jÃ¤</pattern>
+  <pattern>1jÃ¶</pattern>
   <pattern>1ka</pattern>
   <pattern>1ke</pattern>
   <pattern>keus1</pattern>
@@ -147,8 +147,8 @@
   <pattern>1k2v</pattern>
   <pattern>1k2va</pattern>
   <pattern>1ky</pattern>
-  <pattern>1kä</pattern>
-  <pattern>1kö</pattern>
+  <pattern>1kÃ¤</pattern>
+  <pattern>1kÃ¶</pattern>
   <pattern>1la</pattern>
   <pattern>l2as</pattern>
   <pattern>1le</pattern>
@@ -156,16 +156,16 @@
   <pattern>1lo</pattern>
   <pattern>1lu</pattern>
   <pattern>1ly</pattern>
-  <pattern>1lä</pattern>
-  <pattern>1lö</pattern>
+  <pattern>1lÃ¤</pattern>
+  <pattern>1lÃ¶</pattern>
   <pattern>1ma</pattern>
   <pattern>1me</pattern>
   <pattern>1mi</pattern>
   <pattern>1mo</pattern>
   <pattern>1mu</pattern>
   <pattern>1my</pattern>
-  <pattern>1mä</pattern>
-  <pattern>1mö</pattern>
+  <pattern>1mÃ¤</pattern>
+  <pattern>1mÃ¶</pattern>
   <pattern>1na</pattern>
   <pattern>2n1aika</pattern>
   <pattern>2n1a2jan</pattern>
@@ -186,8 +186,8 @@
   <pattern>1nu</pattern>
   <pattern>1ny</pattern>
   <pattern>2n1y2lit</pattern>
-  <pattern>1nä</pattern>
-  <pattern>1nö</pattern>
+  <pattern>1nÃ¤</pattern>
+  <pattern>1nÃ¶</pattern>
   <pattern>o1aa</pattern>
   <pattern>oi1a</pattern>
   <pattern>oi1e</pattern>
@@ -198,8 +198,8 @@
   <pattern>ou1o</pattern>
   <pattern>o1uu</pattern>
   <pattern>o1y</pattern>
-  <pattern>o1ä</pattern>
-  <pattern>o1ö</pattern>
+  <pattern>o1Ã¤</pattern>
+  <pattern>o1Ã¶</pattern>
   <pattern>1pa</pattern>
   <pattern>1pe</pattern>
   <pattern>perus1</pattern>
@@ -210,8 +210,8 @@
   <pattern>1p2ro</pattern>
   <pattern>1pu</pattern>
   <pattern>1py</pattern>
-  <pattern>1pä</pattern>
-  <pattern>1pö</pattern>
+  <pattern>1pÃ¤</pattern>
+  <pattern>1pÃ¶</pattern>
   <pattern>q2v</pattern>
   <pattern>1q2vi</pattern>
   <pattern>1ra</pattern>
@@ -222,8 +222,8 @@
   <pattern>rtaus1</pattern>
   <pattern>1ru</pattern>
   <pattern>1ry</pattern>
-  <pattern>1rä</pattern>
-  <pattern>1rö</pattern>
+  <pattern>1rÃ¤</pattern>
+  <pattern>1rÃ¶</pattern>
   <pattern>1sa</pattern>
   <pattern>2s1ajatu</pattern>
   <pattern>2s1a2jo</pattern>
@@ -249,8 +249,8 @@
   <pattern>1sy</pattern>
   <pattern>2s1y2hti</pattern>
   <pattern>2s1y2rit</pattern>
-  <pattern>1sä</pattern>
-  <pattern>1sö</pattern>
+  <pattern>1sÃ¤</pattern>
+  <pattern>1sÃ¶</pattern>
   <pattern>1ta</pattern>
   <pattern>1te</pattern>
   <pattern>1ti</pattern>
@@ -258,8 +258,8 @@
   <pattern>ts2h</pattern>
   <pattern>1tu</pattern>
   <pattern>1ty</pattern>
-  <pattern>1tä</pattern>
-  <pattern>1tö</pattern>
+  <pattern>1tÃ¤</pattern>
+  <pattern>1tÃ¶</pattern>
   <pattern>u1aa</pattern>
   <pattern>ue1a</pattern>
   <pattern>u1ee</pattern>
@@ -273,36 +273,36 @@
   <pattern>uu1i2</pattern>
   <pattern>uu1o2</pattern>
   <pattern>u1y2</pattern>
-  <pattern>u1ä2</pattern>
-  <pattern>u1ö2</pattern>
+  <pattern>u1Ã¤2</pattern>
+  <pattern>u1Ã¶2</pattern>
   <pattern>1va</pattern>
   <pattern>1ve</pattern>
   <pattern>1vi</pattern>
   <pattern>1vo</pattern>
   <pattern>1vu</pattern>
   <pattern>1vy</pattern>
-  <pattern>1vä</pattern>
-  <pattern>1vö</pattern>
+  <pattern>1vÃ¤</pattern>
+  <pattern>1vÃ¶</pattern>
   <pattern>y1a2</pattern>
   <pattern>y1ei</pattern>
   <pattern>yli1o2p</pattern>
   <pattern>y1o2</pattern>
   <pattern>y1u2</pattern>
-  <pattern>y1ää</pattern>
-  <pattern>ä3a2</pattern>
-  <pattern>ä3o2</pattern>
-  <pattern>ä1u2</pattern>
-  <pattern>ä2y</pattern>
-  <pattern>ä2ä</pattern>
-  <pattern>ää1e</pattern>
-  <pattern>ää1i</pattern>
-  <pattern>ää3y</pattern>
-  <pattern>ä2ö</pattern>
-  <pattern>ö3a2</pattern>
-  <pattern>ö1e2</pattern>
-  <pattern>ö3o2</pattern>
-  <pattern>ö1u2</pattern>
-  <pattern>ö2y</pattern>
-  <pattern>ö2ä</pattern>
-  <pattern>ö2ö</pattern>
+  <pattern>y1Ã¤Ã¤</pattern>
+  <pattern>Ã¤3a2</pattern>
+  <pattern>Ã¤3o2</pattern>
+  <pattern>Ã¤1u2</pattern>
+  <pattern>Ã¤2y</pattern>
+  <pattern>Ã¤2Ã¤</pattern>
+  <pattern>Ã¤Ã¤1e</pattern>
+  <pattern>Ã¤Ã¤1i</pattern>
+  <pattern>Ã¤Ã¤3y</pattern>
+  <pattern>Ã¤2Ã¶</pattern>
+  <pattern>Ã¶3a2</pattern>
+  <pattern>Ã¶1e2</pattern>
+  <pattern>Ã¶3o2</pattern>
+  <pattern>Ã¶1u2</pattern>
+  <pattern>Ã¶2y</pattern>
+  <pattern>Ã¶2Ã¤</pattern>
+  <pattern>Ã¶2Ã¶</pattern>
 </HyphenationDescription>

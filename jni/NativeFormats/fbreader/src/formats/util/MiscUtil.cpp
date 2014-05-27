@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,11 @@
 
 FBTextKind MiscUtil::referenceType(const std::string &link) {
 	std::string lowerCasedLink = link;
-	bool isFileReference =
+	const bool isFileReference =
 		ZLStringUtil::stringStartsWith(lowerCasedLink, "http://") ||
 		ZLStringUtil::stringStartsWith(lowerCasedLink, "https://") ||
 		ZLStringUtil::stringStartsWith(lowerCasedLink, "ftp://");
+
 	if (!isFileReference) {
 		return ZLStringUtil::stringStartsWith(lowerCasedLink, "mailto:") ? EXTERNAL_HYPERLINK : INTERNAL_HYPERLINK;
 	}
@@ -81,7 +82,7 @@ std::string MiscUtil::decodeHtmlURL(const std::string &encoded) {
 		if ((encoded[i] == '%') && (i < len - 2)) {
 			buffer[0] = *(encoded.data() + i + 1);
 			buffer[1] = *(encoded.data() + i + 2);
-			decoded += (char)strtol(buffer, 0, 16);
+			decoded += (char)std::strtol(buffer, 0, 16);
 			i += 2;
 		} else {
 			decoded += encoded[i];

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,10 +27,8 @@ import com.yotadevices.sdk.utils.RotationAlgorithm;
 import com.yotadevices.fbreader.FBReaderYotaService;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
@@ -46,7 +42,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 
 	@Override
 	public boolean isVisible() {
-		return Reader.YotaDrawOnBackScreenOption.getValue() != mySwitchToBack;
+		return Reader.ViewOptions.YotaDrawOnBackScreen.getValue() != mySwitchToBack;
 	}
 
 	@Override
@@ -55,26 +51,26 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 	}
 
 	private void switchScreen(boolean toBack) {
-		final Context context = BaseActivity.getApplicationContext();
-		final Intent serviceIntent = new Intent(context, FBReaderYotaService.class);
 		final View mainView = BaseActivity.findViewById(R.id.main_view);
 		final View mainHiddenView = BaseActivity.findViewById(R.id.yota_main_hidden_view);
 
+		Reader.ViewOptions.YotaDrawOnBackScreen.setValue(toBack);
+		BaseActivity.refreshYotaScreen();
+
 		if (toBack) {
-			context.startService(serviceIntent);
+			Reader.getTextView().clearSelection();
+			BaseActivity.hideSelectionPanel();
 			setupHiddenView(mainHiddenView);
 			mainView.setVisibility(View.GONE);
 			mainHiddenView.setVisibility(View.VISIBLE);
-			RotationAlgorithm.getInstance(context).turnScreenOffIfRotated();
+			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).turnScreenOffIfRotated();
 		} else {
-			context.stopService(serviceIntent);
 			mainView.setVisibility(View.VISIBLE);
 			mainHiddenView.setVisibility(View.GONE);
 		}
 
-		Reader.YotaDrawOnBackScreenOption.setValue(toBack);
-		Reader.TextStyleCollection = new ZLTextStyleCollection(toBack ? "Yota" : "Base");
 		Reader.clearTextCaches();
+		BaseActivity.refresh();
 	}
 
 	private void setupHiddenView(View mainView) {

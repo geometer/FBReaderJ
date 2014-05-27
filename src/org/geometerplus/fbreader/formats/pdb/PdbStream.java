@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.ZLInputStreamWithOffset;
+import org.geometerplus.zlibrary.core.util.InputStreamWithOffset;
 
 public abstract class PdbStream extends InputStream {
-	protected final ZLInputStreamWithOffset myBase;
+	protected final InputStreamWithOffset myBase;
 	public PdbHeader myHeader;
 	protected byte[] myBuffer;
 
@@ -34,7 +34,7 @@ public abstract class PdbStream extends InputStream {
 	protected short myBufferOffset;
 
 	public PdbStream(ZLFile file) throws IOException {
-		myBase = new ZLInputStreamWithOffset(file.getInputStream());
+		myBase = new InputStreamWithOffset(file.getInputStream());
 
 		myHeader = new PdbHeader(myBase);
 

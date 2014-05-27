@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,9 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
-import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.sort.TitledEntity;
@@ -82,8 +80,49 @@ public class Book extends TitledEntity {
 		myIsSaved = false;
 	}
 
+	boolean hasSameMetainfoAs(Book other) {
+		return
+			MiscUtil.equals(getTitle(), other.getTitle()) &&
+			MiscUtil.equals(myEncoding, other.myEncoding) &&
+			MiscUtil.equals(myLanguage, other.myLanguage) &&
+			MiscUtil.equals(myAuthors, other.myAuthors) &&
+			MiscUtil.listsEquals(myTags, other.myTags) &&
+			MiscUtil.equals(mySeriesInfo, other.mySeriesInfo) &&
+			MiscUtil.equals(myUids, other.myUids);
+	}
+
+	void merge(Book other, Book base) {
+		if (!MiscUtil.equals(getTitle(), other.getTitle()) &&
+			MiscUtil.equals(getTitle(), base.getTitle())) {
+			setTitle(other.getTitle());
+		}
+		if (!MiscUtil.equals(myEncoding, other.myEncoding) &&
+			MiscUtil.equals(myEncoding, base.myEncoding)) {
+			setEncoding(other.myEncoding);
+		}
+		if (!MiscUtil.equals(myLanguage, other.myLanguage) &&
+			MiscUtil.equals(myLanguage, base.myLanguage)) {
+			setLanguage(other.myLanguage);
+		}
+		if (!MiscUtil.listsEquals(myTags, other.myTags) &&
+			MiscUtil.listsEquals(myTags, base.myTags)) {
+			myTags = other.myTags != null ? new ArrayList<Tag>(other.myTags) : null;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.equals(mySeriesInfo, other.mySeriesInfo) &&
+			MiscUtil.equals(mySeriesInfo, base.mySeriesInfo)) {
+			mySeriesInfo = other.mySeriesInfo;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.listsEquals(myUids, other.myUids) &&
+			MiscUtil.listsEquals(myUids, base.myUids)) {
+			myUids = other.myUids != null ? new ArrayList<UID>(other.myUids) : null;
+			myIsSaved = false;
+		}
+	}
+
 	public void updateFrom(Book book) {
-		if (myId != book.myId) {
+		if (book == null || myId != book.myId) {
 			return;
 		}
 		setTitle(book.getTitle());
@@ -97,12 +136,16 @@ public class Book extends TitledEntity {
 			myTags = book.myTags != null ? new ArrayList<Tag>(book.myTags) : null;
 			myIsSaved = false;
 		}
-		if (!MiscUtil.equals(myLabels, book.myLabels)) {
+		if (!MiscUtil.listsEquals(myLabels, book.myLabels)) {
 			myLabels = book.myLabels != null ? new ArrayList<String>(book.myLabels) : null;
 			myIsSaved = false;
 		}
 		if (!MiscUtil.equals(mySeriesInfo, book.mySeriesInfo)) {
 			mySeriesInfo = book.mySeriesInfo;
+			myIsSaved = false;
+		}
+		if (!MiscUtil.listsEquals(myUids, book.myUids)) {
+			myUids = book.myUids != null ? new ArrayList<UID>(book.myUids) : null;
 			myIsSaved = false;
 		}
 		setProgress(book.myProgress);
@@ -156,12 +199,6 @@ public class Book extends TitledEntity {
 			final String fileName = File.getShortName();
 			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
-		}
-		final String demoPathPrefix = Paths.mainBookDirectory() + "/Demos/";
-		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = ZLResource.resource("library").getResource("demo").getValue();
-			setTitle(getTitle() + " (" + demoTag + ")");
-			addTag(demoTag);
 		}
 	}
 
@@ -429,7 +466,7 @@ public class Book extends TitledEntity {
 			myIsSaved = false;
 		}
 	}
-	
+
 	public void setProgressWithNoCheck(RationalNumber progress) {
 		myProgress = progress;
 	}

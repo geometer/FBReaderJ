@@ -48,6 +48,7 @@
 		<node name="deleteBook" value="Обриши књигу"/>
 		<node name="addToFavorites" value="Додај у омиљене"/>
 		<node name="removeFromFavorites" value="Уклони из омиљених"/>
+		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
@@ -99,7 +100,7 @@
 		<node name="topup" value="Попуни налог (тренутно: %s)"/>
 		<node name="topupTitle" value="Попуна налога"/>
 		<node name="topupViaBrowser" value="Отвори страницу у прегледачу"/>
-		<node name="authorizationMenuTitle" value="Одабир радње"/>
+		<node name="authorisationMenuTitle" value="Одабир радње"/>
 		<node name="topupSummary" value="Тренутно: %s"/>
 		<node name="basket" value="Корпа"/>
 		<node name="basketSummaryEmpty" value="Нема књига"/>
@@ -160,7 +161,7 @@
 		<node name="confirm" value="Желите ли да купите &#10;„%s“?"/>
 		<node name="confirmSeveralBooks" value="Желите ли да купите %s књиге?"/>
 		<node name="alreadyBought" value="Већ сте купили књигу"/>
-		<node name="notAuthorized" value="Потребна је провера идентитета"/>
+		<node name="notAuthorised" value="Потребна је провера идентитета"/>
 		<node name="noAccountInformation" value="Не могу да учитам стање налога"/>
 		<node name="unsufficientFunds" value="Ова књига кошта %0 а ви имате само %1"/>
 		<node name="zeroFunds" value="Ова књига кошта %0"/>
@@ -291,7 +292,7 @@
 		<node name="toggleFullscreen" value="Цео екран"/>
 		<node name="bookmarks" value="Обележивачи"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
-		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Име датотеке"/>
@@ -305,9 +306,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Фасцикле">
 			<node name="summary" value="Фасцикле за тражење датотека."/>
-			<node name="books" value="Фасцикла са књигама"/>
-			<node name="fonts" value="Фасцикла са фонтовима"/>
-			<node name="wallpapers" value="Фасцикла са позадинама"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
+				<node name="chooserTitle" value="Фасцикла са књигама"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
+				<node name="chooserTitle" value="Фасцикла са књигама"/>
+			</node>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
+				<node name="chooserTitle" value="Фасцикла са фонтовима"/>
+			</node>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
+				<node name="chooserTitle" value="Фасцикла са позадинама"/>
+			</node>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
+				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="appearance" value="Изглед">
 			<node name="summary" value="Приказ подешавања, траке стања и осветљења дугмади."/>
@@ -548,6 +561,10 @@
 		</node>
 		<node name="css" value="CSS" toBeTranslated="true">
 			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Font size" toBeTranslated="true">
 				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
@@ -739,6 +756,18 @@
 			<node name="twitter" value="Пратите нас на Твитеру">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
+		</node>
+		<node name="eink" value="E-ink screen" toBeTranslated="true">
+			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
+			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -758,7 +787,7 @@
 			<node name="topup" value="Попуни"/>
 			<node name="pay" value="Купи"/>
 			<node name="refresh" value="Освежи"/>
-			<node name="authorize" value="Одобри"/>
+			<node name="authorise" value="Одобри"/>
 			<node name="resetPosition" value="Поништи положај"/>
 			<node name="sendReport" value="Пошаљи извештај"/>
 			<node name="addToFavorites" value="Додај у омиљене"/>
@@ -842,8 +871,44 @@
 			<node name="dontShowAgain" value="Не приказуј поново"/>
 			<node name="more" value="Следећи савет"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root" toBeTranslated="true"/>
+			<node name="newFolder" value="New folder" toBeTranslated="true"/>
+			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="menu">
+				<node name="origin" value="Origin" toBeTranslated="true"/>
+				<node name="reload" value="Reload" toBeTranslated="true"/>
+			</node>
+			<node name="sortBy" value="Sort by" toBeTranslated="true">
+				<node name="name" value="Name" toBeTranslated="true"/>
+				<node name="size" value="Size" toBeTranslated="true"/>
+				<node name="date" value="Date" toBeTranslated="true"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Грешка при читању „%s“."/>
+		<node name="errorReadingZip" value="Грешка при отпакивању „%s“."/>
+		<node name="pluginNotFound" value="Нема додатка за „%s“."/>
+		<node name="unknownPluginType" value="Непозната врста додатка: %s."/>
+		<node name="fileNotFound" value="Не могу да пронађем датотеку: %s."/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="Не могу да пронађем OPF у „%s“."/>
+		<node name="unsupportedFileFormat" value="Формат датотеке није подржан за „%s“."/>
+		<node name="errorParsingRtf" value="Грешка при рашчлањивању RTF-а у: %s."/>
 		<node name="cannotRunAndroidMarket" value="Не могу да приступим Гугл плеју. Ручно инсталирајте „%s“."/>
 		<node name="textNotFound" value="Нема траженог текста у књизи."/>
 		<node name="bookNotFound" value="Нема тражених књига у библиотеци."/>
@@ -856,6 +921,8 @@
 		<node name="emptyCatalog" value="Каталог је празан."/>
 		<node name="emptyBasket" value="Ваша корпа је празна."/>
 		<node name="emptyNetworkSearchResults" value="Нема тражених књига."/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Прегледач"/>
@@ -869,7 +936,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Проблем с FBReader-ом"/>
-			<node name="text" value="FBReader-ова привремена фасцикла није доступна за писање. Можда сте заборавили да убаците или избаците меморијску картицу. Исправите овај проблем или унесите назив друге фасцикле испод."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Проблем с FBReader-ом"/>
@@ -881,18 +948,35 @@
 			<node name="title" value="Проблем с FBReader-ом"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Грешка при читању „%s“."/>
-		<node name="errorReadingZip" value="Грешка при отпакивању „%s“."/>
-		<node name="pluginNotFound" value="Нема додатка за „%s“."/>
-		<node name="unknownPluginType" value="Непозната врста додатка: %s."/>
-		<node name="fileNotFound" value="Не могу да пронађем датотеку: %s."/>
-		<node name="opfFileNotFound" value="Не могу да пронађем OPF у „%s“."/>
-		<node name="unsupportedFileFormat" value="Формат датотеке није подржан за „%s“."/>
-		<node name="errorParsingRtf" value="Грешка при рашчлањивању RTF-а у: %s."/>
-	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins" toBeTranslated="true">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
+		<node name="litres" value="LitRes" toBeTranslated="true">
+			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+		</node>
+		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		</node>
+		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		</node>
+		<node name="widgets" value="Widgets" toBeTranslated="true">
+			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		</node>
+		<node name="pdf" value="PDF" toBeTranslated="true">
+			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

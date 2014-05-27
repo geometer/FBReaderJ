@@ -30,10 +30,10 @@
 			<node name="summary" value="Browse file system"/>
 		</node>
 		<node name="fileTreeRoot" value="Device">
-			<node name="summary" value="Full file system of the device"/>
+			<node name="summary" value="Entire file system"/>
 		</node>
 		<node name="fileTreeCard" value="Memory card">
-			<node name="summary" value="Memory card inserted into the device"/>
+			<node name="summary" value="Files on memory card, external or built-in"/>
 		</node>
 		<node name="fileTreeLibrary" value="FBReader library">
 			<node name="summary" value="FBReader books directory"/>
@@ -48,6 +48,7 @@
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
+		<node name="removeFromRecents" value="Remove from recent list"/>
 		<node name="markAsRead" value="Mark as read"/>
 		<node name="markAsUnread" value="Mark as unread"/>
 	</node>
@@ -99,7 +100,7 @@
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
-		<node name="authorizationMenuTitle" value="Select action"/>
+		<node name="authorisationMenuTitle" value="Select action"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummaryEmpty" value="No books"/>
@@ -160,7 +161,7 @@
 		<node name="confirm" value="Are you sure you want to buy &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?"/>
 		<node name="alreadyBought" value="Book is already bought"/>
-		<node name="notAuthorized" value="Authorization required"/>
+		<node name="notAuthorised" value="Authorisation required"/>
 		<node name="noAccountInformation" value="Cannot load account state"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1"/>
 		<node name="zeroFunds" value="This purchase costs %0"/>
@@ -291,7 +292,7 @@
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
 		<node name="help" value="Help"/>
-		<node name="plugins" value="Plugins"/>
+		<node name="plugins" value="Install plugins"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="File name"/>
@@ -305,9 +306,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Directories">
 			<node name="summary" value="Directories to seek for files"/>
-			<node name="books" value="Books directory"/>
-			<node name="fonts" value="Fonts directory"/>
-			<node name="wallpapers" value="Wallpapers directory"/>
+			<node name="bookPath" value="Where to seek for books">
+				<node name="chooserTitle" value="Books folder"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books">
+				<node name="chooserTitle" value="Books folder"/>
+			</node>
+			<node name="fontPath" value="Where to seek for fonts">
+				<node name="chooserTitle" value="Fonts folder"/>
+			</node>
+			<node name="wallpaperPath" value="Where to seek for background images">
+				<node name="chooserTitle" value="Images folder"/>
+			</node>
+			<node name="tempDir" value="Where to store temporary files">
+				<node name="chooserTitle" value="Temp files folder"/>
+			</node>
 		</node>
 		<node name="appearance" value="Appearance">
 			<node name="summary" value="Display settings, status bar, button lights"/>
@@ -548,6 +561,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="Apply/ignore values defined in CSS"/>
+			<node name="fontFamily" value="Font family">
+				<node name="summaryOn" value="Use font family defined in CSS"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS"/>
+			</node>
 			<node name="fontSize" value="Font size">
 				<node name="summaryOn" value="Apply font size defined in CSS"/>
 				<node name="summaryOff" value="Ignore font size defined in CSS"/>
@@ -739,6 +756,18 @@
 			<node name="twitter" value="Follow us at twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries"/>
+		</node>
+		<node name="eink" value="E-ink screen">
+			<node name="summary" value="Specific options for e-ink screens"/>
+			<node name="enableFastRefresh" value="Fast refresh mode">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -758,7 +787,7 @@
 			<node name="topup" value="Top up"/>
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
-			<node name="authorize" value="Authorize"/>
+			<node name="authorise" value="Authorise"/>
 			<node name="resetPosition" value="Reset position"/>
 			<node name="sendReport" value="Send report"/>
 			<node name="addToFavorites" value="Add to favorites"/>
@@ -842,8 +871,44 @@
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog."/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog."/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder"/>
+			<node name="removeDialog" value="Remove folder">
+				<node name="message" value="Remove “%s” from the list?"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root"/>
+			<node name="newFolder" value="New folder"/>
+			<node name="folderNameHint" value="Folder name"/>
+			<node name="menu">
+				<node name="origin" value="Origin"/>
+				<node name="reload" value="Reload"/>
+			</node>
+			<node name="sortBy" value="Sort by">
+				<node name="name" value="Name"/>
+				<node name="size" value="Size"/>
+				<node name="date" value="Date"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied"/>
+		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'"/>
+		<node name="errorReadingFile" value="Error occured during reading '%s'"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'"/>
+		<node name="pluginNotFound" value="No plugin for '%s'"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s"/>
+		<node name="fileNotFound" value="File not found: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually"/>
 		<node name="textNotFound" value="There is no suitable text in the book, sorry"/>
 		<node name="bookNotFound" value="There are no suitable books in the library, sorry"/>
@@ -856,6 +921,8 @@
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -869,7 +936,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or enter another directory name below."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader issue"/>
@@ -881,18 +948,35 @@
 			<node name="title" value="FBReader issue"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Error occured during reading '%s'"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'"/>
-		<node name="pluginNotFound" value="No plugin for '%s'"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s"/>
-		<node name="fileNotFound" value="File is not found: %s"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
-	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry"/>
+		<node name="litres" value="LitRes">
+			<node name="summary" value="Russian book store"/>
+		</node>
+		<node name="tts-plus" value="TTS+">
+			<node name="summary" value="Read aloud"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner">
+			<node name="summary" value="Look for books in the local network"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf">
+			<node name="summary" value="Thumbnail library view"/>
+		</node>
+		<node name="opds-server" value="OPDS Server">
+			<node name="summary" value="Serve books from your device"/>
+		</node>
+		<node name="widgets" value="Widgets">
+			<node name="summary" value="Add books to your home screen"/>
+		</node>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="Read books in PDF format"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below."/>

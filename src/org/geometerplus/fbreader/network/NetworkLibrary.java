@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -89,16 +88,6 @@ public class NetworkLibrary {
 	private final Map<String,WeakReference<ZLImage>> myImageMap =
 		Collections.synchronizedMap(new HashMap<String,WeakReference<ZLImage>>());
 
-	public List<String> languageCodes() {
-		final TreeSet<String> languageSet = new TreeSet<String>();
-		synchronized (myLinks) {
-			for (INetworkLink link : myLinks) {
-				languageSet.add(link.getLanguage());
-			}
-		}
-		return new ArrayList<String>(languageSet);
-	}
-
 	public List<String> linkIds() {
 		final ArrayList<String> ids = new ArrayList<String>();
 		synchronized (myLinks) {
@@ -142,8 +131,8 @@ public class NetworkLibrary {
 		final List<String> newIds;
 		if (active) {
 			newIds = new ArrayList<String>(oldIds.size() + 1);
-			newIds.addAll(oldIds);
 			newIds.add(id);
+			newIds.addAll(oldIds);
 		} else {
 			newIds = new ArrayList<String>(oldIds);
 			newIds.remove(id);
@@ -262,6 +251,11 @@ public class NetworkLibrary {
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
 		if (db != null) {
+			System.err.println("++ LIST LINKS");
+			for (INetworkLink l : db.listLinks()) {
+				System.err.println("LNK: " + l);
+			}
+			System.err.println("-- LIST LINKS");
 			myLinks.addAll(db.listLinks());
 		}
 
@@ -416,6 +410,7 @@ public class NetworkLibrary {
 			new AddCustomCatalogItemTree(myRootTree);
 		}
 
+		boolean changedCatalogsList = false;
 		int index = 1;
 		for (INetworkLink link : activeLinks()) {
 			final List<NetworkCatalogTree> trees = linkToTreeMap.remove(link);
@@ -425,13 +420,19 @@ public class NetworkLibrary {
 				}
 			} else {
 				new NetworkCatalogRootTree(myRootTree, link, index++);
+				changedCatalogsList = true;
 			}
 		}
 
 		for (List<NetworkCatalogTree> trees : linkToTreeMap.values()) {
 			for (NetworkCatalogTree t : trees) {
 				t.removeSelf();
+				changedCatalogsList = true;
 			}
+		}
+
+		if (changedCatalogsList) {
+			mySearchItem.setPattern(null);
 		}
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);

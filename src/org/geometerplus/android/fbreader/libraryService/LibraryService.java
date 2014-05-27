@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import android.os.IBinder;
 import android.os.FileObserver;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -88,12 +89,25 @@ public class LibraryService extends Service {
 		private BookCollection myCollection;
 
 		LibraryImplementation() {
-			myDatabase = SQLiteBooksDatabase.Instance(LibraryService.this);
-			reset(Paths.BookPathOption().getValue(), true);
+			myDatabase = new SQLiteBooksDatabase(LibraryService.this);
+			myCollection = new BookCollection(myDatabase, Paths.bookPath());
+			reset(true);
 		}
 
-		public void reset(List<String> bookDirectories, boolean force) {
-			if (!force && myCollection != null && bookDirectories.equals(myCollection.BookDirectories)) {
+		public void reset(final boolean force) {
+			Config.Instance().runOnConnect(new Runnable() {
+				public void run() {
+					resetInternal(force);
+				}
+			});
+		}
+
+		private void resetInternal(boolean force) {
+			final List<String> bookDirectories = Paths.bookPath();
+			if (!force &&
+				myCollection.status() != BookCollection.Status.NotStarted &&
+				bookDirectories.equals(myCollection.BookDirectories)
+			) {
 				return;
 			}
 
@@ -101,8 +115,8 @@ public class LibraryService extends Service {
 			myFileObservers.clear();
 
 			myCollection = new BookCollection(myDatabase, bookDirectories);
-			for (String path : bookDirectories) {
-				final Observer observer = new Observer(path, myCollection);
+			for (String dir : bookDirectories) {
+				final Observer observer = new Observer(dir, myCollection);
 				observer.startWatching();
 				myFileObservers.add(observer);
 			}
@@ -128,6 +142,10 @@ public class LibraryService extends Service {
 			for (FileObserver observer : myFileObservers) {
 				observer.stopWatching();
 			}
+		}
+
+		public void close() {
+			((SQLiteBooksDatabase)myDatabase).close();
 		}
 
 		public String status() {
@@ -310,8 +328,10 @@ public class LibraryService extends Service {
 	@Override
 	public void onDestroy() {
 		if (myLibrary != null) {
-			myLibrary.deactivate();
+			final LibraryImplementation l = myLibrary;
 			myLibrary = null;
+			l.deactivate();
+			l.close();
 		}
 		super.onDestroy();
 	}

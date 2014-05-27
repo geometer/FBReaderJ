@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,12 @@ public:
 	static bool stringEndsWith(const std::string &str, const std::string &end);
 
 	static void appendNumber(std::string &str, unsigned int n);
+	static std::string numberToString(unsigned int n);
 	static void append(std::string &str, const std::vector<std::string> &buffer);
 	static void stripWhiteSpaces(std::string &str);
 
 	static std::vector<std::string> split(const std::string &str, const std::string &delimiter);
+	static std::string join(const std::vector<std::string> &data, const std::string &delimiter);
 
 	static std::string printf(const std::string &format, const std::string &arg0);
 

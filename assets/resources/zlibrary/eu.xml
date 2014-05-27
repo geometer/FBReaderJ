@@ -32,11 +32,11 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Arabiera"/>
-		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="be" value="Bieloerrusiera"/>
 		<node name="bg" value="Bulgariera"/>
-		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="ca" value="Katalan"/>
 		<node name="cs" value="Txekiera"/>
-		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="da" value="Daniera"/>
 		<node name="de" value="Aleman"/>
 		<node name="de-traditional" value="Aleman (ortografia tradizionala)"/>
 		<node name="el" value="Greziera"/>
@@ -44,24 +44,24 @@
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Espainiera"/>
 		<node name="eu" value="Euskara"/>
-		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="fa" value="Persiera"/>
 		<node name="fi" value="Finlandiera"/>
 		<node name="fr" value="Frantses"/>
 		<node name="gl" value="Galiziera"/>
 		<node name="he" value="Hebreera"/>
 		<node name="hu" value="Hungariera"/>
-		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="hy" value="Armeniera"/>
 		<node name="id" value="Indonesiera"/>
 		<node name="it" value="Italiera"/>
 		<node name="ka" value="Georgiera"/>
 		<node name="lt" value="Lituaniera"/>
-		<node name="nl" value="Nederlandera"/>
 		<node name="nb" value="Norvegiera"/>
+		<node name="nl" value="Nederlandera"/>
 		<node name="pl" value="Poloniera"/>
 		<node name="pt" value="Portuges"/>
 		<node name="ro" value="Errumaniera"/>
 		<node name="ru" value="Errusiera"/>
-		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sr" value="Serbiarra"/>
 		<node name="sv" value="Suediera"/>
 		<node name="ta" value="Tamilera"/>
 		<node name="th" value="Thaiera"/>
@@ -69,8 +69,8 @@
 		<node name="uk" value="Ukrainera"/>
 		<node name="vi" value="Vietnamera"/>
 		<node name="zh" value="Txinera"/>
-		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
-		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="zh_TW" value="Chinese (tradizionala)"/>
+		<node name="any" value="Edozein"/>
 		<node name="other" value="Besteren bat"/>
 		<node name="multi" value="Eleaniztuna"/>
 		<node name="system" value="Sistema"/>

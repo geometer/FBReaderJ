@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,9 +44,13 @@ public final class ZLPhysicalFile extends ZLFile {
 		return myFile.length();
 	}
 
+	private Boolean myIsDirectory;
 	@Override
 	public boolean isDirectory() {
-		return myFile.isDirectory();
+		if (myIsDirectory == null) {
+			myIsDirectory = myFile.isDirectory();
+		}
+		return myIsDirectory;
 	}
 
 	@Override
@@ -62,14 +66,18 @@ public final class ZLPhysicalFile extends ZLFile {
 		return myFile;
 	}
 
+	private String myPath;
 	@Override
 	public String getPath() {
-		try {
-			return myFile.getCanonicalPath();
-		} catch (Exception e) {
-			// should be never thrown
-		  	return myFile.getPath();
+		if (myPath == null) {
+			try {
+				myPath = myFile.getCanonicalPath();
+			} catch (Exception e) {
+				// should be never thrown
+				myPath = myFile.getPath();
+			}
 		}
+		return myPath;
 	}
 
 	@Override

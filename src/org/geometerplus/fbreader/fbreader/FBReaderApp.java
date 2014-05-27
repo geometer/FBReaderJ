@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.fbreader;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.*;
+import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
+import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -30,55 +32,19 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
-	public ZLTextStyleCollection TextStyleCollection = new ZLTextStyleCollection("Base");
-
-	public final ZLBooleanOption YotaDrawOnBackScreenOption = new ZLBooleanOption("LookNFeel", "YotaDrawOnBack", false);
-
-	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
-		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
-	public final ZLStringOption TextSearchPatternOption =
-		new ZLStringOption("TextSearch", "Pattern", "");
-
-	public final ZLBooleanOption EnableDoubleTapOption =
-		new ZLBooleanOption("Options", "EnableDoubleTap", false);
-	public final ZLBooleanOption NavigateAllWordsOption =
-		new ZLBooleanOption("Options", "NavigateAllWords", false);
-
-	public static enum WordTappingAction {
-		doNothing, selectSingleWord, startSelecting, openDictionary
-	}
-	public final ZLEnumOption<WordTappingAction> WordTappingActionOption =
-		new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
-
-	public final ZLColorOption ImageViewBackgroundOption =
-		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
-	public final ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption =
-		new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
-	public static enum ImageTappingAction {
-		doNothing, selectImage, openImageView
-	}
-	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
-		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
-
+	public final MiscOptions MiscOptions = new MiscOptions();
+	public final ImageOptions ImageOptions = new ImageOptions();
 	public final ViewOptions ViewOptions = new ViewOptions();
-
-	public final ZLIntegerRangeOption ScrollbarTypeOption =
-		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
-
-	final ZLStringOption ColorProfileOption =
-		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
-
 	public final PageTurningOptions PageTurningOptions = new PageTurningOptions();
-	public final FooterOptions FooterOptions = new FooterOptions();
 
-	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
+	private final ZLKeyBindings myBindings = new ZLKeyBindings();
 
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
@@ -173,24 +139,6 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private ColorProfile myColorProfile;
-
-	public ColorProfile getColorProfile() {
-		if (myColorProfile == null) {
-			myColorProfile = ColorProfile.get(getColorProfileName());
-		}
-		return myColorProfile;
-	}
-
-	public String getColorProfileName() {
-		return ColorProfileOption.getValue();
-	}
-
-	public void setColorProfileName(String name) {
-		ColorProfileOption.setValue(name);
-		myColorProfile = null;
-	}
-
 	public ZLKeyBindings keyBindings() {
 		return myBindings;
 	}
@@ -219,6 +167,7 @@ public final class FBReaderApp extends ZLApplication {
 					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
 				}
 				getViewWidget().repaint();
+				storePosition();
 			}
 		}
 	}
@@ -273,7 +222,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
+	private synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
 		if (book == null) {
 			book = Collection.getRecentBook(0);
 			if (book == null || !book.File.exists()) {
@@ -285,6 +234,7 @@ public final class FBReaderApp extends ZLApplication {
 			book.addLabel(Book.READ_LABEL);
 			Collection.saveBook(book);
 		}
+
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
 				gotoBookmark(bookmark, false);
@@ -332,6 +282,17 @@ public final class FBReaderApp extends ZLApplication {
 
 		getViewWidget().reset();
 		getViewWidget().repaint();
+
+		try {
+			for (FileEncryptionInfo info : book.getPlugin().readEncryptionInfos(book)) {
+				if (info != null && !EncryptionMethod.isSupported(info.Method)) {
+					showErrorMessage("unsupportedEncryptionMethod", book.File.getPath());
+					break;
+				}
+			}
+		} catch (BookReadingException e) {
+			// ignore
+		}
 	}
 
 	private List<Bookmark> invisibleBookmarks() {
@@ -398,6 +359,7 @@ public final class FBReaderApp extends ZLApplication {
 			setView(FootnoteView);
 		}
 		getViewWidget().repaint();
+		storePosition();
 	}
 
 	public void showBookTextView() {
@@ -408,11 +370,60 @@ public final class FBReaderApp extends ZLApplication {
 		storePosition();
 	}
 
+	private class PositionSaver implements Runnable {
+		private final Book myBook;
+		private final ZLTextPosition myPosition;
+		private final RationalNumber myProgress;
+
+		PositionSaver(Book book, ZLTextView view) {
+			myBook = book;
+			myPosition = new ZLTextFixedPosition(view.getStartCursor());
+			myProgress = view.getProgress();
+		}
+
+		public void run() {
+			Collection.storePosition(myBook.getId(), myPosition);
+			myBook.setProgress(myProgress);
+			Collection.saveBook(myBook);
+		}
+	}
+
+	private class SaverThread extends Thread {
+		private final List<Runnable> myTasks =
+			Collections.synchronizedList(new LinkedList<Runnable>());
+
+		SaverThread() {
+			setPriority(MIN_PRIORITY);
+		}
+
+		void add(Runnable task) {
+			myTasks.add(task);
+		}
+
+		public void run() {
+			while (true) {
+				synchronized (myTasks) {
+					while (!myTasks.isEmpty()) {
+						myTasks.remove(0).run();
+					}
+				}
+				try {
+					sleep(500);
+				} catch (InterruptedException e) {
+				}
+			}
+		}
+	}
+
+	private volatile SaverThread mySaverThread;
+
 	public void storePosition() {
 		if (Model != null && Model.Book != null && BookTextView != null) {
-			Collection.storePosition(Model.Book.getId(), BookTextView.getStartCursor());
-			Model.Book.setProgress(BookTextView.getProgress());
-			Collection.saveBook(Model.Book);
+			if (mySaverThread == null) {
+				mySaverThread = new SaverThread();
+				mySaverThread.start();
+			}
+			mySaverThread.add(new PositionSaver(Model.Book, BookTextView));
 		}
 	}
 

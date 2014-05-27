@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,7 @@ import java.util.*;
 import java.io.File;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -41,21 +40,22 @@ public class TipsManager {
 		return ourInstance;
 	}
 
-	public ZLBooleanOption TipsAreInitializedOption =
-		new ZLBooleanOption("tips", "tipsAreInitialized", false);
-	public ZLBooleanOption ShowTipsOption =
-		new ZLBooleanOption("tips", "showTips", false);
+	public final ZLBooleanOption TipsAreInitializedOption;
+	public final ZLBooleanOption ShowTipsOption;
 
 	// time when last tip was shown, 2^16 milliseconds
-	private final ZLIntegerOption myLastShownOption =
-		new ZLIntegerOption("tips", "shownAt", 0);
+	private final ZLIntegerOption myLastShownOption;
 	// index of next tip to show
-	private final ZLIntegerOption myIndexOption =
-		new ZLIntegerOption("tips", "index", 0);
+	private final ZLIntegerOption myIndexOption;
 
 	private volatile boolean myDownloadInProgress;
 
 	private TipsManager() {
+		TipsAreInitializedOption = new ZLBooleanOption("tips", "tipsAreInitialized", false);
+		ShowTipsOption = new ZLBooleanOption("tips", "showTips", false);
+
+		myLastShownOption = new ZLIntegerOption("tips", "shownAt", 0);
+		myIndexOption = new ZLIntegerOption("tips", "index", 0);
 	}
 
 	private String getUrl() {
@@ -151,19 +151,22 @@ public class TipsManager {
 
 		myDownloadInProgress = true;
 
-		new File(Paths.networkCacheDirectory() + "/tips").mkdirs();
-		new Thread(new Runnable() {
+		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				try {
-					ZLNetworkManager.Instance().downloadToFile(
-						getUrl(), new File(getLocalFilePath())
-					);
-				} catch (ZLNetworkException e) {
-					e.printStackTrace();
-				} finally {
-					myDownloadInProgress = false;
-				}
+				final File tipsFile = new File(getLocalFilePath());
+				tipsFile.getParentFile().mkdirs();
+				new Thread(new Runnable() {
+					public void run() {
+						try {
+							ZLNetworkManager.Instance().downloadToFile(getUrl(), tipsFile);
+						} catch (ZLNetworkException e) {
+							e.printStackTrace();
+						} finally {
+							myDownloadInProgress = false;
+						}
+					}
+				}).start();
 			}
-		}).start();
+		});
 	}
 }

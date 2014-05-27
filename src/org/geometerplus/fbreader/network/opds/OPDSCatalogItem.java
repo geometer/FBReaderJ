@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	static class State extends NetworkOperationData {
+		public volatile String AuthURI;
 		public String LastLoadedId;
 		public final HashSet<String> LoadedIds = new HashSet<String>();
 
@@ -75,7 +76,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	}
 
 	@Override
-	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
+	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException, AuthorisationFailed {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
 
 		myLoadingState = opdsLink.createOperationData(loader);
@@ -83,6 +84,9 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		doLoadChildren(
 			opdsLink.createNetworkData(getCatalogUrl(), MimeType.APP_ATOM_XML, myLoadingState)
 		);
+		if (myLoadingState.AuthURI != null) {
+			throw new AuthorisationFailed(myLoadingState.AuthURI);
+		}
 	}
 
 	@Override
@@ -91,8 +95,13 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	}
 
 	@Override
+	public final boolean canResumeLoading() {
+		return myLoadingState != null && myLoadingState.ResumeURI != null;
+	}
+
+	@Override
 	public final void resumeLoading(NetworkItemsLoader loader) throws ZLNetworkException {
-		if (myLoadingState != null) {
+		if (canResumeLoading()) {
 			myLoadingState.Loader = loader;
 			ZLNetworkRequest networkRequest = myLoadingState.resume();
 			doLoadChildren(networkRequest);

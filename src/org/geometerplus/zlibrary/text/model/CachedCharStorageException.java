@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-final class CachedCharStorageException extends RuntimeException {
+public final class CachedCharStorageException extends RuntimeException {
 	private static final long serialVersionUID = -6373408730045821053L;
 
 	public CachedCharStorageException(String message) {

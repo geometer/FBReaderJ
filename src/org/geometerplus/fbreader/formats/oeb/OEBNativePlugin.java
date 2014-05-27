@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,15 +37,20 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
-		super.readModel(model);
-		model.setLabelResolver(new BookModel.LabelResolver() {
-			public List<String> getCandidates(String id) {
-				final int index = id.indexOf("#");
-				return index > 0
-					? Collections.<String>singletonList(id.substring(0, index))
-					: Collections.<String>emptyList();
-			}
-		});
+		model.Book.File.setCached(true);
+		try {
+			super.readModel(model);
+			model.setLabelResolver(new BookModel.LabelResolver() {
+				public List<String> getCandidates(String id) {
+					final int index = id.indexOf("#");
+					return index > 0
+						? Collections.<String>singletonList(id.substring(0, index))
+						: Collections.<String>emptyList();
+				}
+			});
+		} finally {
+			model.Book.File.setCached(false);
+		}
 	}
 
 	@Override

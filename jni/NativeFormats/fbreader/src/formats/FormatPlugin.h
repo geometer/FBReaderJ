@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 
 class Book;
 class BookModel;
+class FileEncryptionInfo;
 //class ZLOptionsDialog;
 //class ZLOptionsDialogTab;
 class ZLFile;
@@ -58,6 +59,7 @@ public:
 
 	virtual const std::string &tryOpen(const ZLFile &file) const;
 	virtual bool readMetaInfo(Book &book) const = 0;
+	virtual std::vector<shared_ptr<FileEncryptionInfo> > readEncryptionInfos(Book &book) const;
 	virtual bool readUids(Book &book) const = 0;
 	virtual bool readLanguageAndEncoding(Book &book) const = 0;
 	virtual bool readModel(BookModel &model) const = 0;

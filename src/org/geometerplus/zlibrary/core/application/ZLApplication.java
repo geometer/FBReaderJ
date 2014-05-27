@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,6 +77,18 @@ public abstract class ZLApplication {
 
 	public String getTitle() {
 		return myTitle;
+	}
+
+	protected void showErrorMessage(String resourceKey) {
+		if (myWindow != null) {
+			myWindow.showErrorMessage(resourceKey);
+		}
+	}
+
+	protected void showErrorMessage(String resourceKey, String parameter) {
+		if (myWindow != null) {
+			myWindow.showErrorMessage(resourceKey, parameter);
+		}
 	}
 
 	protected void runWithMessage(String key, Runnable action, Runnable postAction) {
@@ -164,11 +176,6 @@ public abstract class ZLApplication {
 
 	//may be protected
 	abstract public ZLKeyBindings keyBindings();
-
-	public final boolean hasActionForKey(int key, boolean longPress) {
-		final String actionId = keyBindings().getBinding(key, longPress);
-		return actionId != null && !NoAction.equals(actionId);
-	}
 
 	public final boolean runActionByKey(int key, boolean longPress) {
 		final String actionId = keyBindings().getBinding(key, longPress);

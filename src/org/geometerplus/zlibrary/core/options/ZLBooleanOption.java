@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,39 +21,30 @@ package org.geometerplus.zlibrary.core.options;
 
 public final class ZLBooleanOption extends ZLOption {
 	private final boolean myDefaultValue;
-	private boolean myValue;
 
 	public ZLBooleanOption(String group, String optionName, boolean defaultValue) {
-		super(group, optionName);
+		super(group, optionName, defaultValue ? "true" : "false");
 		myDefaultValue = defaultValue;
-		myValue = defaultValue;
 	}
 
 	public boolean getValue() {
-		if (!myIsSynchronized) {
-			String value = getConfigValue(null);
-			if (value != null) {
-				if ("true".equals(value)) {
-					myValue = true;
-				} else if ("false".equals(value)) {
-					myValue = false;
-				}
-			}
-			myIsSynchronized = true;
+		if (mySpecialName != null && !Config.Instance().isInitialized()) {
+			return Config.Instance().getSpecialBooleanValue(mySpecialName, myDefaultValue);
+		} else {
+			return "true".equals(getConfigValue());
 		}
-		return myValue;
 	}
 
 	public void setValue(boolean value) {
-		if (myIsSynchronized && (myValue == value)) {
-			return;
+		if (mySpecialName != null) {
+			Config.Instance().setSpecialBooleanValue(mySpecialName, value);
 		}
-		myValue = value;
-		myIsSynchronized = true;
-		if (value == myDefaultValue) {
-			unsetConfigValue();
-		} else {
-			setConfigValue(value ? "true" : "false");
+		setConfigValue(value ? "true" : "false");
+	}
+
+	public void saveSpecialValue() {
+		if (mySpecialName != null && Config.Instance().isInitialized()) {
+			Config.Instance().setSpecialBooleanValue(mySpecialName, getValue());
 		}
 	}
 }

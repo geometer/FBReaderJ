@@ -49,6 +49,7 @@
 		<node name="deleteBook" value="Cancella libro"/>
 		<node name="addToFavorites" value="Aggiungi a preferiti"/>
 		<node name="removeFromFavorites" value="Rimuovi da preferiti"/>
+		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
@@ -100,7 +101,7 @@
 		<node name="topup" value="Ricarica account (corrente: %s)"/>
 		<node name="topupTitle" value="Ricarica account"/>
 		<node name="topupViaBrowser" value="Apri pagina nel browser"/>
-		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
+		<node name="authorisationMenuTitle" value="Select action" toBeTranslated="true"/>
 		<node name="topupSummary" value="Corrente: %s"/>
 		<node name="basket" value="Basket" toBeTranslated="true"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
@@ -157,7 +158,7 @@
 		<node name="confirm" value="Sei sicuro di voler comprare il libro &#10;“%s”&#10;?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
 		<node name="alreadyBought" value="Il libro è già stato acquistato"/>
-		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
+		<node name="notAuthorised" value="Authorisation required" toBeTranslated="true"/>
 		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
@@ -282,7 +283,7 @@
 		<node name="toggleFullscreen" value="Tutto schermo"/>
 		<node name="bookmarks" value="Segnalibri"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
-		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Nome file"/>
@@ -296,9 +297,21 @@
 	<node name="Preferences">
 		<node name="directories" value="Cartelle">
 			<node name="summary" value="Cartella in cui cercare i File"/>
-			<node name="books" value="Cartella dei Libri"/>
-			<node name="fonts" value="Cartella dei Fonts"/>
-			<node name="wallpapers" value="Cartella degli Sfondi"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
+				<node name="chooserTitle" value="Cartella dei Libri"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
+				<node name="chooserTitle" value="Cartella dei Libri"/>
+			</node>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
+				<node name="chooserTitle" value="Cartella dei Fonts"/>
+			</node>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
+				<node name="chooserTitle" value="Cartella degli Sfondi"/>
+			</node>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
+				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="appearance" value="Aspetto">
 			<node name="summary" value="Rotazione, barra di stato"/>
@@ -539,6 +552,10 @@
 		</node>
 		<node name="css" value="CSS" toBeTranslated="true">
 			<node name="summary" value="Apply/ignore values defined in CSS" toBeTranslated="true"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="Font size" toBeTranslated="true">
 				<node name="summaryOn" value="Apply font size defined in CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignore font size defined in CSS" toBeTranslated="true"/>
@@ -730,6 +747,18 @@
 			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
+		</node>
+		<node name="eink" value="E-ink screen" toBeTranslated="true">
+			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
+			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -749,7 +778,7 @@
 			<node name="topup" value="Ricarica account"/>
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
-			<node name="authorize" value="Authorize" toBeTranslated="true"/>
+			<node name="authorise" value="Authorise" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="Aggiungi a preferiti"/>
@@ -833,8 +862,44 @@
 			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
 			<node name="more" value="Next tip" toBeTranslated="true"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root" toBeTranslated="true"/>
+			<node name="newFolder" value="New folder" toBeTranslated="true"/>
+			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="menu">
+				<node name="origin" value="Origin" toBeTranslated="true"/>
+				<node name="reload" value="Reload" toBeTranslated="true"/>
+			</node>
+			<node name="sortBy" value="Sort by" toBeTranslated="true">
+				<node name="name" value="Name" toBeTranslated="true"/>
+				<node name="size" value="Size" toBeTranslated="true"/>
+				<node name="date" value="Date" toBeTranslated="true"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File not found: %s" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 		<node name="cannotRunAndroidMarket" value="Non possono accedere ad Android Market. Per favore, installare manualmente %s"/>
 		<node name="textNotFound" value="Spiacente, non c'è un testo adatto all'interno del libro"/>
 		<node name="bookNotFound" value="Spiacente, non ci sono libri adatti nella libreria"/>
@@ -847,6 +912,8 @@
 		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
 		<node name="emptyBasket" value="Spiacente, il carrello è vuoto"/>
 		<node name="emptyNetworkSearchResults" value="Non sono stati trovati libri adatti"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -860,7 +927,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="La cartella della cache FBReader non è accessibile in scrittura. Può essere che si sia dimenticato di inserire o smontare la scheda di memoria. Si prega di risolvere questo problema od immettere un altro nome cartella sottostante."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
@@ -872,18 +939,35 @@
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
-	</node>
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins" toBeTranslated="true">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
+		<node name="litres" value="LitRes" toBeTranslated="true">
+			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+		</node>
+		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		</node>
+		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		</node>
+		<node name="widgets" value="Widgets" toBeTranslated="true">
+			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		</node>
+		<node name="pdf" value="PDF" toBeTranslated="true">
+			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>

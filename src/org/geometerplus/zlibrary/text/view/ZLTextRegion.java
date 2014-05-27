@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,6 +109,12 @@ public final class ZLTextRegion {
 	public static Filter HyperlinkFilter = new Filter() {
 		public boolean accepts(ZLTextRegion region) {
 			return region.getSoul() instanceof ZLTextHyperlinkRegionSoul;
+		}
+	};
+
+	public static Filter VideoFilter = new Filter() {
+		public boolean accepts(ZLTextRegion region) {
+			return region.getSoul() instanceof ZLTextVideoRegionSoul;
 		}
 	};
 

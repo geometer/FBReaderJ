@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ public abstract class NetworkItemsLoader implements Runnable {
 			}
 
 			try {
-				doLoading();
+				load();
 				onFinish(null, isLoadingInterrupted());
 			} catch (ZLNetworkException e) {
 				onFinish(e, isLoadingInterrupted());
@@ -137,5 +137,5 @@ public abstract class NetworkItemsLoader implements Runnable {
 
 	protected abstract void onFinish(ZLNetworkException exception, boolean interrupted);
 	protected abstract void doBefore() throws ZLNetworkException;
-	protected abstract void doLoading() throws ZLNetworkException;
+	protected abstract void load() throws ZLNetworkException;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class MoveCursorAction extends FBAction {
 		ZLTextRegion region = fbView.getSelectedRegion();
 		final ZLTextRegion.Filter filter =
 			(region != null && region.getSoul() instanceof ZLTextWordRegionSoul)
-				|| Reader.NavigateAllWordsOption.getValue()
+				|| Reader.MiscOptions.NavigateAllWords.getValue()
 					? ZLTextRegion.AnyRegionFilter : ZLTextRegion.ImageOrHyperlinkFilter;
 		region = fbView.nextRegion(myDirection, filter);
 		if (region != null) {
@@ -44,10 +44,10 @@ class MoveCursorAction extends FBAction {
 		} else {
 			switch (myDirection) {
 				case down:
-					fbView.scrollPage(true, FBView.ScrollingMode.SCROLL_LINES, 1);
+					fbView.turnPage(true, FBView.ScrollingMode.SCROLL_LINES, 1);
 					break;
 				case up:
-					fbView.scrollPage(false, FBView.ScrollingMode.SCROLL_LINES, 1);
+					fbView.turnPage(false, FBView.ScrollingMode.SCROLL_LINES, 1);
 					break;
 			}
 		}

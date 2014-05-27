@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +19,44 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
-import android.app.Application;
+import java.io.File;
 
-import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
+import android.app.Application;
+import android.os.Build;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+
+import org.geometerplus.fbreader.Paths;
+
+import org.geometerplus.android.fbreader.config.ConfigShadow;
 
 public abstract class ZLAndroidApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		new ZLSQLiteConfig(this);
+		final ConfigShadow config = new ConfigShadow(this);
 		new ZLAndroidImageManager();
 		new ZLAndroidLibrary(this);
+
+		config.runOnConnect(new Runnable() {
+			public void run() {
+				if ("".equals(Paths.TempDirectoryOption.getValue())) {
+					String dir = null;
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+						final File d = getExternalCacheDir();
+						if (d != null) {
+							d.mkdirs();
+							if (d.exists() && d.isDirectory()) {
+								dir = d.getPath();
+							}
+						}
+					}
+					if (dir == null) {
+						dir = Paths.mainBookDirectory() + "/.FBReader";
+					}
+					Paths.TempDirectoryOption.setValue(dir);
+				}
+			}
+		});
 	}
 }

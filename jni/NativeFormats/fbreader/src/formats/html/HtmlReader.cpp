@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ void HtmlReader::setTag(HtmlTag &tag, const std::string &name) {
 
 	const std::size_t len = tag.Name.length();
 	for (std::size_t i = 0; i < len; ++i) {
-		tag.Name[i] = toupper(tag.Name[i]);
+		tag.Name[i] = std::toupper(tag.Name[i]);
 	}
 }
 
@@ -79,9 +79,9 @@ enum SpecialType {
 
 static bool allowSymbol(SpecialType type, char ch) {
 	return
-		((type == ST_NAME) && isalpha(ch)) ||
-		((type == ST_DEC) && isdigit(ch)) ||
-		((type == ST_HEX) && isxdigit(ch));
+		(type == ST_NAME && std::isalpha(ch)) ||
+		(type == ST_DEC && std::isdigit(ch)) ||
+		(type == ST_HEX && std::isxdigit(ch));
 }
 
 static int specialSymbolNumber(SpecialType type, const std::string &txt) {
@@ -90,9 +90,9 @@ static int specialSymbolNumber(SpecialType type, const std::string &txt) {
 		case ST_NAME:
 			return HtmlEntityCollection::symbolNumber(txt);
 		case ST_DEC:
-			return strtol(txt.c_str() + 1, &end, 10);
+			return std::strtol(txt.c_str() + 1, &end, 10);
 		case ST_HEX:
-			return strtol(txt.c_str() + 2, &end, 16);
+			return std::strtol(txt.c_str() + 2, &end, 16);
 		default:
 			return 0;
 	}
@@ -157,7 +157,7 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 					if (state_special == ST_UNKNOWN) {
 						if (*ptr == '#') {
 							state_special = ST_NUM;
-						} else if (isalpha(*ptr)) {
+						} else if (std::isalpha(*ptr)) {
 							state_special = ST_NAME;
 						} else {
 							start = ptr;
@@ -166,7 +166,7 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 					} else if (state_special == ST_NUM) {
 						if (*ptr == 'x') {
 							state_special = ST_HEX;
-						} else if (isdigit(*ptr)) {
+						} else if (std::isdigit(*ptr)) {
 							state_special = ST_DEC;
 						} else {
 							start = ptr;
@@ -231,13 +231,13 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 					}
 					break;
 				case PS_TAGNAME:
-					if ((*ptr == '>') || (*ptr == '/') || isspace((unsigned char)*ptr)) {
+					if (*ptr == '>' || *ptr == '/' || std::isspace((unsigned char)*ptr)) {
 						currentString.append(start, ptr - start);
 						start = ptr + 1;
 						setTag(currentTag, currentString);
 						currentString.erase();
 						if (currentTag.Name == "") {
-							state = (*ptr == '>') ? PS_TEXT : PS_SKIPTAG;
+							state = *ptr == '>' ? PS_TEXT : PS_SKIPTAG;
 						} else {
 							if (*ptr == '>') {
 								if (!tagHandler(currentTag)) {
@@ -260,11 +260,11 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 					}
 					break;
 				case PS_ATTRIBUTENAME:
-					if ((*ptr == '>') || (*ptr == '/') || (*ptr == '=') || isspace((unsigned char)*ptr)) {
-						if ((ptr != start) || !currentString.empty()) {
+					if (*ptr == '>' || *ptr == '/' || *ptr == '=' || std::isspace((unsigned char)*ptr)) {
+						if (ptr != start || !currentString.empty()) {
 							currentString.append(start, ptr - start);
 							for (unsigned int i = 0; i < currentString.length(); ++i) {
-								currentString[i] = toupper(currentString[i]);
+								currentString[i] = std::toupper(currentString[i]);
 							}
 							currentTag.addAttribute(currentString);
 							currentString.erase();
@@ -300,8 +300,8 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 						appendString(attributeValueString, currentString);
 						state = PS_SPECIAL_IN_ATTRIBUTEVALUE;
 						state_special = ST_UNKNOWN;
-					} else if ((quotationCounter != 1) && ((*ptr == '>') || (*ptr == '/') || isspace((unsigned char)*ptr))) {
-						if ((ptr != start) || !currentString.empty()) {
+					} else if (quotationCounter != 1 && (*ptr == '>' || *ptr == '/' || std::isspace((unsigned char)*ptr))) {
+						if (ptr != start || !currentString.empty()) {
 							currentString.append(start, ptr - start);
 							appendString(attributeValueString, currentString);
 							if (attributeValueString[0] == '"') {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.fonts.FontManager;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.*;
 
@@ -40,6 +41,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	protected final Map<String,ZLImage> myImageMap;
 
 	private ArrayList<ZLTextMark> myMarks;
+
+	private final FontManager myFontManager;
 
 	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
 		private int myCounter;
@@ -64,6 +67,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		// ImageEntry
 		private ZLImageEntry myImageEntry;
 
+		// VideoEntry
+		private ZLVideoEntry myVideoEntry;
+
 		// StyleEntry
 		private ZLTextStyleEntry myStyleEntry;
 
@@ -71,9 +77,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		private short myFixedHSpaceLength;
 
 		EntryIteratorImpl(int index) {
-			myLength = myParagraphLengths[index];
-			myDataIndex = myStartEntryIndices[index];
-			myDataOffset = myStartEntryOffsets[index];
+			reset(index);
 		}
 
 		void reset(int index) {
@@ -114,6 +118,10 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			return myImageEntry;
 		}
 
+		public ZLVideoEntry getVideoEntry() {
+			return myVideoEntry;
+		}
+
 		public ZLTextStyleEntry getStyleEntry() {
 			return myStyleEntry;
 		}
@@ -122,20 +130,29 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 			return myFixedHSpaceLength;
 		}
 
-		public boolean hasNext() {
-			return myCounter < myLength;
-		}
+		public boolean next() {
+			if (myCounter >= myLength) {
+				return false;
+			}
 
-		public void next() {
 			int dataOffset = myDataOffset;
 			char[] data = myStorage.block(myDataIndex);
-			if (dataOffset == data.length) {
+			if (data == null) {
+				return false;
+			}
+			if (dataOffset >= data.length) {
 				data = myStorage.block(++myDataIndex);
+				if (data == null) {
+					return false;
+				}
 				dataOffset = 0;
 			}
 			byte type = (byte)data[dataOffset];
 			if (type == 0) {
 				data = myStorage.block(++myDataIndex);
+				if (data == null) {
+					return false;
+				}
 				dataOffset = 0;
 				type = (byte)data[0];
 			}
@@ -163,11 +180,11 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 				}
 				case ZLTextParagraph.Entry.HYPERLINK_CONTROL:
 				{
-					short kind = (short)data[dataOffset++];
+					final short kind = (short)data[dataOffset++];
 					myControlKind = (byte)kind;
 					myControlIsStart = true;
 					myHyperlinkType = (byte)(kind >> 8);
-					short labelLength = (short)data[dataOffset++];
+					final short labelLength = (short)data[dataOffset++];
 					myHyperlinkId = new String(data, dataOffset, labelLength);
 					dataOffset += labelLength;
 					break;
@@ -206,9 +223,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						entry.setAlignmentType((byte)(value & 0xFF));
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_FAMILY)) {
-						final short familyLength = (short)data[dataOffset++];
-						entry.setFontFamily(new String(data, dataOffset, familyLength));
-						dataOffset += familyLength;
+						entry.setFontFamilies(myFontManager, (short)data[dataOffset++]);
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_STYLE_MODIFIER)) {
 						final short value = (short)data[dataOffset++];
@@ -223,9 +238,28 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 				case ZLTextParagraph.Entry.RESET_BIDI:
 					// No data
 					break;
+				case ZLTextParagraph.Entry.AUDIO:
+					// No data
+					break;
+				case ZLTextParagraph.Entry.VIDEO:
+				{
+					myVideoEntry = new ZLVideoEntry();
+					final short mapSize = (short)data[dataOffset++];
+					for (short i = 0; i < mapSize; ++i) {
+						short len = (short)data[dataOffset++];
+						final String mime = new String(data, dataOffset, len);
+						dataOffset += len;
+						len = (short)data[dataOffset++];
+						final String src = new String(data, dataOffset, len);
+						dataOffset += len;
+						myVideoEntry.addSource(mime, src);
+					}
+					break;
+				}
 			}
 			++myCounter;
 			myDataOffset = dataOffset;
+			return true;
 		}
 	}
 
@@ -238,7 +272,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		int[] textSizes,
 		byte[] paragraphKinds,
 		CharStorage storage,
-		Map<String,ZLImage> imageMap
+		Map<String,ZLImage> imageMap,
+		FontManager fontManager
 	) {
 		myId = id;
 		myLanguage = language;
@@ -249,6 +284,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		myParagraphKinds = paragraphKinds;
 		myStorage = storage;
 		myImageMap = imageMap;
+		myFontManager = fontManager;
 	}
 
 	public final String getId() {
@@ -260,15 +296,15 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	}
 
 	public final ZLTextMark getFirstMark() {
-		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(0);
+		return (myMarks == null || myMarks.isEmpty()) ? null : myMarks.get(0);
 	}
 
 	public final ZLTextMark getLastMark() {
-		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
+		return (myMarks == null || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
 	}
 
 	public final ZLTextMark getNextMark(ZLTextMark position) {
-		if ((position == null) || (myMarks == null)) {
+		if (position == null || myMarks == null) {
 			return null;
 		}
 
@@ -313,8 +349,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 		final EntryIteratorImpl it = new EntryIteratorImpl(index);
 		while (true) {
 			int offset = 0;
-			while (it.hasNext()) {
-				it.next();
+			while (it.next()) {
 				if (it.getType() == ZLTextParagraph.Entry.TEXT) {
 					char[] textData = it.getTextData();
 					int textOffset = it.getTextOffset();
@@ -336,7 +371,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	}
 
 	public final List<ZLTextMark> getMarks() {
-		return (myMarks != null) ? myMarks : Collections.<ZLTextMark>emptyList();
+		return myMarks != null ? myMarks : Collections.<ZLTextMark>emptyList();
 	}
 
 	public final void removeAllMarks() {
@@ -355,6 +390,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	}
 
 	public final int getTextLength(int index) {
+		if (myTextSizes.length == 0) {
+			return 0;
+		}
 		return myTextSizes[Math.max(Math.min(index, myParagraphsNumber - 1), 0)];
 	}
 

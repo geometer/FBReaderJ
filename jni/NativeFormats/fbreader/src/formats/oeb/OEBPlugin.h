@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2013 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,14 @@ class OEBPlugin : public FormatPlugin {
 
 public:
 	static ZLFile opfFile(const ZLFile &oebFile);
+	static ZLFile epubFile(const ZLFile &oebFile);
 
 public:
 	~OEBPlugin();
 	bool providesMetaInfo() const;
 	const std::string supportedFileType() const;
 	bool readMetaInfo(Book &book) const;
+	virtual std::vector<shared_ptr<FileEncryptionInfo> > readEncryptionInfos(Book &book) const;
 	bool readUids(Book &book) const;
 	bool readLanguageAndEncoding(Book &book) const;
 	bool readModel(BookModel &model) const;

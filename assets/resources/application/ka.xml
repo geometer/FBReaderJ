@@ -48,6 +48,7 @@
 		<node name="deleteBook" value="წიგნის წაშლა"/>
 		<node name="addToFavorites" value="რჩეულებში დამატება"/>
 		<node name="removeFromFavorites" value="რჩეულებიდან წაშლა"/>
+		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 	</node>
@@ -99,7 +100,7 @@
 		<node name="topup" value="ანგარიშის შევსება (ბალანსი: %s)"/>
 		<node name="topupTitle" value="გადახდა"/>
 		<node name="topupViaBrowser" value="ბრაუზერის ფანჯარაში"/>
-		<node name="authorizationMenuTitle" value="ამოირჩიეთ ქმედება"/>
+		<node name="authorisationMenuTitle" value="ამოირჩიეთ ქმედება"/>
 		<node name="topupSummary" value="მიმდინარე ანგარიში: %s"/>
 		<node name="basket" value="კალათა"/>
 		<node name="basketSummaryEmpty" value="ცარიელი კალათა"/>
@@ -164,7 +165,7 @@
 		<node name="confirm" value="დარწმუნებული ხართ, რომ გნებავთ წიგნის შეძენა&#10;«%s»?"/>
 		<node name="confirmSeveralBooks" value="დარწმუნებული ხართ, რომ გნებავთ შეიძინოთ %s წიგნები?"/>
 		<node name="alreadyBought" value="წიგნი უკვე ნაყიდია"/>
-		<node name="notAuthorized" value="საჭიროა ავტორიზაცია"/>
+		<node name="notAuthorised" value="საჭიროა ავტორიზაცია"/>
 		<node name="noAccountInformation" value="ვერ მოხერხდა ანგარიშის შემოწმება"/>
 		<node name="unsufficientFunds" value="საყიდლად საჭიროა %0, ხოლო ანგარიშზეა მხოლოდ %1"/>
 		<node name="zeroFunds" value="ყიდვისთვის საჭიროა %0"/>
@@ -258,7 +259,7 @@
 		<node name="clearSelection" value="ნიშნულის მოხსნა"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;http://fbreader.ru/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
+		<node name="sharedFrom" value="გამოგზავნილია &lt;a href=&quot;http://ru.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;-დან"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="პარამეტრები"/>
@@ -296,7 +297,7 @@
 		<node name="toggleFullscreen" value="მთლიან ეკრანზე"/>
 		<node name="bookmarks" value="სანიშნეები"/>
 		<node name="help" value="Help" toBeTranslated="true"/>
-		<node name="plugins" value="Plugins" toBeTranslated="true"/>
+		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="ფაილი"/>
@@ -310,9 +311,21 @@
 	<node name="Preferences">
 		<node name="directories" value="კატალოგები">
 			<node name="summary" value="სად მოიძებნოს ფაილები"/>
-			<node name="books" value="კატალოგი წიგნებით"/>
-			<node name="fonts" value="კატალოგი შრიფტებით"/>
-			<node name="wallpapers" value="კატალოგი ფონის სურათებით"/>
+			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
+				<node name="chooserTitle" value="კატალოგი წიგნებით"/>
+			</node>
+			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
+				<node name="chooserTitle" value="კატალოგი წიგნებით"/>
+			</node>
+			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
+				<node name="chooserTitle" value="კატალოგი შრიფტებით"/>
+			</node>
+			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
+				<node name="chooserTitle" value="კატალოგი ფონის სურათებით"/>
+			</node>
+			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
+				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="appearance" value="გარეგნობა">
 			<node name="summary" value="ეკრანი, სტატუს ბარი, ღილაკების განათება"/>
@@ -553,6 +566,10 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="გამოიყენოს CSS ფორმატირება"/>
+			<node name="fontFamily" value="Font family" toBeTranslated="true">
+				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			</node>
 			<node name="fontSize" value="შრიფტის ზომა">
 				<node name="summaryOn" value="CSS-ში მითითებული შრიფტის ზომის გამოყენება"/>
 				<node name="summaryOff" value="CSS-ში მითითებული შრიფტის ზომის იგნორირება"/>
@@ -736,7 +753,7 @@
 			<node name="summary" value="ვერსია, კონტაქტები"/>
 			<node name="version" value="ვერსია"/>
 			<node name="site" value="ჩვენი ვებ-გვერდი">
-				<node name="url" value="http://fbreader.ru/"/>
+				<node name="url" value="http://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="მოგვწერეთ წერილი">
 				<node name="url" value="mailto:contact@geometerplus.com"/>
@@ -744,6 +761,18 @@
 			<node name="twitter" value="გამოგვყევით ტვიტერზე">
 				<node name="url" value="http://twitter.com/fbreader_ru"/>
 			</node>
+			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
+		</node>
+		<node name="eink" value="E-ink screen" toBeTranslated="true">
+			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
+			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
+				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
+				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+			</node>
+			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -763,7 +792,7 @@
 			<node name="topup" value="ანგარიშის შევსება"/>
 			<node name="pay" value="გადახდა"/>
 			<node name="refresh" value="განახლება"/>
-			<node name="authorize" value="ავტორიზაცია"/>
+			<node name="authorise" value="ავტორიზაცია"/>
 			<node name="resetPosition" value="უკან"/>
 			<node name="sendReport" value="შეტყობინების გაგზავნა"/>
 			<node name="addToFavorites" value="რჩეულებში დამატება"/>
@@ -847,8 +876,44 @@
 			<node name="dontShowAgain" value="მეტჯერ აღარ მანახო"/>
 			<node name="more" value="მეტი"/>
 		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="Root" toBeTranslated="true"/>
+			<node name="newFolder" value="New folder" toBeTranslated="true"/>
+			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="menu">
+				<node name="origin" value="Origin" toBeTranslated="true"/>
+				<node name="reload" value="Reload" toBeTranslated="true"/>
+			</node>
+			<node name="sortBy" value="Sort by" toBeTranslated="true">
+				<node name="name" value="Name" toBeTranslated="true"/>
+				<node name="size" value="Size" toBeTranslated="true"/>
+				<node name="date" value="Date" toBeTranslated="true"/>
+			</node>
+			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="შეცდომა '%s'-ს კითხვისას"/>
+		<node name="errorReadingZip" value="შეცდომა '%s'-ს განარქივებისას"/>
+		<node name="pluginNotFound" value="ვერ მოიძებნა პლაგინი '%s'-სთვის"/>
+		<node name="unknownPluginType" value="უცნობი ტიპის პლაგინი: %s"/>
+		<node name="fileNotFound" value="არ მოიძებნა ფაილი: %s"/>
+		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="არ მოიძებნა OPF %s-ში"/>
+		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
+		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
 		<node name="cannotRunAndroidMarket" value="არ ხერხდება Android Market-ის ჩართვა. სცადეთ დააყენოთ %s ხელით"/>
 		<node name="textNotFound" value="ამ წიგნში არ არის მასეთი ტექსტი"/>
 		<node name="bookNotFound" value="არ მოიძებნა შესაფერისი წიგნი"/>
@@ -861,6 +926,8 @@
 		<node name="emptyCatalog" value="კატალოგი ცარიელია"/>
 		<node name="emptyBasket" value="კალათა ცარიელია"/>
 		<node name="emptyNetworkSearchResults" value="არ მოიძებნა არცერთი წიგნი"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="ბრაუზერი"/>
@@ -874,7 +941,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader-ის პრობლემა"/>
-			<node name="text" value="FBReader ვერ ინახავს დროებით ფაილებს. შეიძლება დაგავიწყდათ მეხსიერების ბარათის ჩადება მოწყობილობაში, ან მასზე არ არის წვდომა კომპიუტერთან შეერთების გამო. გთხოვთ მოაგვაროთ ეს პრობლემა, ან შეიყვანეთ კატალოგის სხვა სახელი დროებითი ფაილებისთვის."/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader-ის პრობლემა"/>
@@ -886,18 +953,35 @@
 			<node name="title" value="FBReader-ის პრობლემა"/>
 		</node>
 	</node>
-	<node name="bookReadingException">
-		<node name="errorReadingFile" value="შეცდომა '%s'-ს კითხვისას"/>
-		<node name="errorReadingZip" value="შეცდომა '%s'-ს განარქივებისას"/>
-		<node name="pluginNotFound" value="ვერ მოიძებნა პლაგინი '%s'-სთვის"/>
-		<node name="unknownPluginType" value="უცნობი ტიპის პლაგინი: %s"/>
-		<node name="fileNotFound" value="არ მოიძებნა ფაილი: %s"/>
-		<node name="opfFileNotFound" value="არ მოიძებნა OPF %s-ში"/>
-		<node name="unsupportedFileFormat" value="'%s' ფაილის ფორმატი არ არის მხარდაჭერილი"/>
-		<node name="errorParsingRtf" value="შეცდომა RTF-ფაილის %s კითხვისას"/>
-	</node>
 	<node name="links">
-		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+		<node name="faqPage" value="http://ru.fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="Install plugins" toBeTranslated="true">
+		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
+		<node name="litres" value="LitRes" toBeTranslated="true">
+			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+		</node>
+		<node name="tts-plus" value="TTS+" toBeTranslated="true">
+			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		</node>
+		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
+			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		</node>
+		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		</node>
+		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
+			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		</node>
+		<node name="widgets" value="Widgets" toBeTranslated="true">
+			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		</node>
+		<node name="pdf" value="PDF" toBeTranslated="true">
+			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
