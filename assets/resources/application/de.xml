@@ -843,7 +843,9 @@
 			<node name="loadingNetworkBookInfo" value="Lade Buchinformation. Bitte warten…"/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten…"/>
 			<node name="updatingAccountInformation" value="Konto-Information wird aktualisiert. Bitte waren…"/>
-			<node name="extrcact" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler"/>

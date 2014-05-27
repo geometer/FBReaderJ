@@ -843,7 +843,9 @@
 			<node name="loadingNetworkBookInfo" value="წიგნის შესახებ ინფორმაციის ჩატვირთვა. გთხოვთ, დაიცადოთ…"/>
 			<node name="updatingCatalogsList" value="მიმდინარეობს კატალოგების ჩამონათვალის განახლება. გთხოვთ, დაიცადოთ…"/>
 			<node name="updatingAccountInformation" value="იტვირთება ინფორმაცია ანგარიშის შესახებ. გთხოვთ, დაიცადოთ…"/>
-			<node name="extrcact" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="სერვერსშიდა შეცდომა"/>

@@ -828,7 +828,9 @@
 			<node name="loadingNetworkBookInfo" value="书籍信息加载中，请等待…"/>
 			<node name="updatingCatalogsList" value="更新书库列表中，请稍待…"/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待…"/>
-			<node name="extrcact" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错"/>

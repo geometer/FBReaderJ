@@ -838,7 +838,9 @@
 			<node name="loadingNetworkBookInfo" value="Laster bokinformasjon. Vennligst vent…"/>
 			<node name="updatingCatalogsList" value="Oppdaterer kataloglister. Vennligst vent…"/>
 			<node name="updatingAccountInformation" value="Oppdaterer kontorinformasjon. Vennligst vent…"/>
-			<node name="extrcact" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Intern feil i tjenesten"/>
