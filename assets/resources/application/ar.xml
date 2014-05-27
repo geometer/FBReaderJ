@@ -824,6 +824,8 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait..." toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..." toBeTranslated="true"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait..." toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" toBeTranslated="true"/>

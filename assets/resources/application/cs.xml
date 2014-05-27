@@ -835,6 +835,8 @@
 			<node name="loadingNetworkBookInfo" value="Načítání informací o knize. Čekejte…"/>
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte…"/>
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>

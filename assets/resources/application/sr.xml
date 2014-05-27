@@ -826,6 +826,8 @@
 			<node name="loadingNetworkBookInfo" value="Учитавам податке о књизи…"/>
 			<node name="updatingCatalogsList" value="Ажурирам списак каталога…"/>
 			<node name="updatingAccountInformation" value="Ажурирам податке о налогу…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Грешка у унутрашњем серверу."/>
