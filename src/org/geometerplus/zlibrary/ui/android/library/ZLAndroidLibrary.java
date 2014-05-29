@@ -257,6 +257,14 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			if (streamStatus() == StreamStatus.OK) {
 				return true;
 			}
+			final String path = getPath();	
+			if ("".equals(path)) {
+				return true;
+			}
+			// a hack: we store help files in fb2 format
+			if (path.endsWith(".fb2")) {
+				return false;
+			}
 			try {
 				String[] names = myApplication.getAssets().list(getPath());
 				if (names != null && names.length != 0) {

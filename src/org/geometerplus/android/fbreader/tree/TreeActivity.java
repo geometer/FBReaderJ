@@ -130,7 +130,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 			case ALWAYS_RELOAD_BEFORE_OPENING:
 				final String messageKey = tree.getOpeningStatusMessage();
 				if (messageKey != null) {
-					UIUtil.createExecutor(TreeActivity.this, messageKey, true).execute(
+					UIUtil.createExecutor(TreeActivity.this, messageKey).execute(
 						new Runnable() {
 							public void run() {
 								tree.waitForOpening();
