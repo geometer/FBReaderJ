@@ -39,12 +39,39 @@ public class TOCTree extends ZLTree<TOCTree> {
 		return myText;
 	}
 
-	public final void setText(String text) {
-		if (text != null) {
-			myText = text.trim().replaceAll("[\t ]+", " ");
-		} else {
-			myText = null;
+	// faster replacement for
+	// return text.trim().replaceAll("[\t ]+", " ");
+	private static String trim(String text) {
+		final String trimmed = text.trim();
+		final char[] data = trimmed.toCharArray();
+		int count = 0;
+		int shift = 0;
+		boolean changed = false;
+		char space = ' ';
+		for (int i = 0; i < data.length; ++i) {
+			final char ch = data[i];
+			if (ch == ' ' || ch == '\t') {
+				++count;
+				space = ch;
+			} else {
+				if (count > 0) {
+					shift += count - 1;
+					if (shift > 0 || space == '\t') {
+						data[i - shift - 1] = ' ';
+						changed = true;
+					}
+					count = 0;
+				}
+				if (shift > 0) {
+					data[i - shift] = data[i];
+				}
+			}
 		}
+		return changed ? new String(data, 0, data.length - shift) : trimmed;
+	}
+
+	public final void setText(String text) {
+		myText = text != null ? trim(text) : null;
 	}
 
 	public Reference getReference() {
