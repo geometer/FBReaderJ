@@ -85,12 +85,12 @@ public abstract class ZLFile implements InputStreamHolder {
 			if (cached != null) {
 				return cached;
 			}
-			if (!name.startsWith("/")) {
+			if (name.length() == 0 || name.charAt(0) != '/') {
 				return ZLResourceFile.createResourceFile(name);
 			} else {
 				return new ZLPhysicalFile(name);
 			}
-		} else if ((parent instanceof ZLPhysicalFile) && (parent.getParent() == null)) {
+		} else if (parent instanceof ZLPhysicalFile && (parent.getParent() == null)) {
 			// parent is a directory
 			file = new ZLPhysicalFile(parent.getPath() + '/' + name);
 		} else if (parent instanceof ZLResourceFile) {
@@ -99,7 +99,7 @@ public abstract class ZLFile implements InputStreamHolder {
 			file = ZLArchiveEntryFile.createArchiveEntryFile(parent, name);
 		}
 
-		if (!ourCachedFiles.isEmpty() && (file != null)) {
+		if (!ourCachedFiles.isEmpty() && file != null) {
 			ZLFile cached = ourCachedFiles.get(file.getPath());
 			if (cached != null) {
 				return cached;
@@ -124,9 +124,13 @@ public abstract class ZLFile implements InputStreamHolder {
 			return cached;
 		}
 
-		if (!path.startsWith("/")) {
-			while (path.startsWith("./")) {
+		int len = path.length();
+		char first = len == 0 ? '*' : path.charAt(0);
+		if (first != '/') {
+			while (len > 1 && first == '.' && path.charAt(1) == '/') {
 				path = path.substring(2);
+				len -= 2;
+				first = len == 0 ? '*' : path.charAt(0);
 			}
 			return ZLResourceFile.createResourceFile(path);
 		}
