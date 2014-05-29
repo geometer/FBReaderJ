@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public abstract class ZLResourceFile extends ZLFile {
 	private static Map<String,ZLResourceFile> ourCache =
-		Collections.synchronizedMap(new TreeMap<String,ZLResourceFile>());
+		Collections.synchronizedMap(new HashMap<String,ZLResourceFile>());
 
 	public static ZLResourceFile createResourceFile(String path) {
 		ZLResourceFile file = ourCache.get(path);

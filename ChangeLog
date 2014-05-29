@@ -23,6 +23,7 @@
 * PDF plugin integration
 
 ===== 1.10.3 (??? ??, 2014) =====
+* ePub loading speed optimizations
 * Arabic FBReaderJ resources, by Ahmed Saidi (https://github.com/boussouira)
 * Updated German localization (by Matthias Dill)
 
