@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,20 +19,6 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.LinkedList;
-
-import android.preference.Preference;
-
-class ZLPreferenceSet {
-	private final LinkedList<Preference> myPreferences = new LinkedList<Preference>();
-
-	final void add(Preference preference) {
-		myPreferences.add(preference);
-	}
-
-	final void setEnabled(boolean enable) {
-		for (Preference preference : myPreferences) {
-			preference.setEnabled(enable);
-		}
-	}
+public interface ReloadablePreference {
+	public void reload();
 }

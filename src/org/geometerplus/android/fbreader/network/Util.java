@@ -49,12 +49,7 @@ public abstract class Util implements UserRegistrationConstants {
 		return intent;
 	}
 
-	static void initLibrary(final Activity activity) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		if (library.isInitialized()) {
-			return;
-		}
-
+	static void initLibrary(final Activity activity, final Runnable action) {
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
@@ -63,14 +58,20 @@ public abstract class Util implements UserRegistrationConstants {
 							new SQLiteNetworkDatabase(activity.getApplication());
 						}
 
-						library.initialize();
+						final NetworkLibrary library = NetworkLibrary.Instance();
+						if (!library.isInitialized()) {
+							library.initialize();
+						}
+						if (action != null) {
+							action.run();
+						}
 					}
 				}, activity);
 			}
 		});
 	}
 
-	static Intent authorizationIntent(INetworkLink link, Uri id) {
+	static Intent authorisationIntent(INetworkLink link, Uri id) {
 		final Intent intent = new Intent(AUTHORIZATION_ACTION, id);
 		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
 		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
@@ -80,7 +81,7 @@ public abstract class Util implements UserRegistrationConstants {
 	}
 
 	private static Intent registrationIntent(INetworkLink link) {
-		return authorizationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
+		return authorisationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
 	}
 
 	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {

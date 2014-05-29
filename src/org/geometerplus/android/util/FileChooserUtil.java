@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.util;
 
-import java.util.HashMap;
+import java.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,16 +35,32 @@ public abstract class FileChooserUtil {
 	private FileChooserUtil() {
 	}
 
+	public static void runFolderListDialog(
+		Activity activity,
+		int requestCode,
+		String title,
+		String fileChooserTitle,
+		List<String> initialValue,
+		boolean chooseWritableDirsOnly
+	) {
+		final Intent intent = new Intent(activity, FolderListDialogActivity.class);
+		intent.putExtra(FolderListDialogActivity.Key.ACTIVITY_TITLE, title);
+		intent.putExtra(FolderListDialogActivity.Key.CHOOSER_TITLE, fileChooserTitle);
+		intent.putExtra(FolderListDialogActivity.Key.FOLDER_LIST, new ArrayList<String>(initialValue));
+		intent.putExtra(FolderListDialogActivity.Key.WRITABLE_FOLDERS_ONLY, chooseWritableDirsOnly);
+		activity.startActivityForResult(intent, requestCode);
+	}
+
 	public static void runDirectoryChooser(
 		Activity activity,
 		int requestCode,
 		String title,
-		String initinalValue,
+		String initialValue,
 		boolean chooseWritableDirsOnly
 	) {
 		final Intent intent = new Intent(activity, FileChooserActivity.class);
 		intent.putExtra(FileChooserActivity._TextResources, textResources(title));
-		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initinalValue));
+		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initialValue));
 		intent.putExtra(FileChooserActivity._ActionBar, true);
 		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
 		intent.putExtra(FileChooserActivity._DisplayHiddenFiles, true);
@@ -59,6 +75,10 @@ public abstract class FileChooserUtil {
 
 	public static String pathFromData(Intent data) {
 		return data.getStringExtra(FileChooserActivity._FolderPath);
+	}
+
+	public static List<String> pathListFromData(Intent data) {
+		return data.getStringArrayListExtra(FolderListDialogActivity.Key.FOLDER_LIST);
 	}
 
 	private static HashMap<String,String> textResources(String title) {

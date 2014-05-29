@@ -100,7 +100,7 @@
 		<node name="topup" value="Kontua bete (unekoa: %s)"/>
 		<node name="topupTitle" value="Kontua bete"/>
 		<node name="topupViaBrowser" value="Ireki orria nabigatzailean"/>
-		<node name="authorizationMenuTitle" value="Aukeratu ekintza"/>
+		<node name="authorisationMenuTitle" value="Aukeratu ekintza"/>
 		<node name="topupSummary" value="Unekoa: %s"/>
 		<node name="basket" value="Saskia"/>
 		<node name="basketSummaryEmpty" value="Ez dago libururik"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Ziur erosi nahi duzula &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Ziur erosi nahi dituzula %s liburuak?"/>
 		<node name="alreadyBought" value="Dagoeneko erosita dago liburua"/>
-		<node name="notAuthorized" value="Baimena behar duzu"/>
+		<node name="notAuthorised" value="Baimena behar duzu"/>
 		<node name="noAccountInformation" value="Ezin izan da kontuaren egoera kargatu"/>
 		<node name="unsufficientFunds" value="Erosketa honen kostua %0 da eta %1 baino ez duzu kontuan"/>
 		<node name="zeroFunds" value="Eroskera honen kostua %0 da"/>
@@ -798,7 +798,7 @@
 			<node name="topup" value="Bete kontua"/>
 			<node name="pay" value="Ordaindu"/>
 			<node name="refresh" value="Freskatu"/>
-			<node name="authorize" value="Baimendu"/>
+			<node name="authorise" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
@@ -843,6 +843,8 @@
 			<node name="loadingNetworkBookInfo" value="Liburuaren informazioa kargatzen. Itxaron mesedez…"/>
 			<node name="updatingCatalogsList" value="Katalogoen zerrenda eguneratzen. Itxaron mesedez…"/>
 			<node name="updatingAccountInformation" value="Kontuaren informazioa eguneratzen. Itxaron mesedez…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 			<node name="extrcact" value="Fitxategia kanpoko aplikaziorako prestatzen. Itxaron apur bat…"/>
 		</node>
 		<node name="networkError">
@@ -893,6 +895,13 @@
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>
 			<node name="newFolder" value="New folder" toBeTranslated="true"/>
@@ -908,9 +917,6 @@
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 		</node>
-	</node>
-	<node name="warningMessage">
-		<node name="mainBookDirEditing" value="Direktorio nagusia aldatzerakoan datuak galduko dituzu. Jarraitu?"/>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
@@ -935,6 +941,8 @@
 		<node name="emptyCatalog" value="Katalogoa hutsik dago, barkatu"/>
 		<node name="emptyBasket" value="Saskia hutsik dago, barkatu"/>
 		<node name="emptyNetworkSearchResults" value="Ez da libururik aurkitu, barkatu"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="externalNotFound" value="Ezin da kanpoko aplikazioa ireki"/>
 		<node name="appNotFound" value="Ez da aplikazio egokirik aurkitu"/>
 		<node name="invalidFormat" value="Formatuak ez du balio"/>

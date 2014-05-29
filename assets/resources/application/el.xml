@@ -100,7 +100,7 @@
 		<node name="topup" value="Φόρτωση χρημάτων στον λογαρισμό (αυτήν την ώρα: %s)"/>
 		<node name="topupTitle" value="Φόρτωση χρημάτων"/>
 		<node name="topupViaBrowser" value="Άνοιγμα σελίδας στο Browser"/>
-		<node name="authorizationMenuTitle" value="Επιλογή ενέργειας"/>
+		<node name="authorisationMenuTitle" value="Επιλογή ενέργειας"/>
 		<node name="topupSummary" value="Αυτή την στιγμή: %s"/>
 		<node name="basket" value="καλάθι αγοράς"/>
 		<node name="basketSummaryEmpty" value="δεν υπάρχουν βιβλία"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="Θέλετε να αγοράσετε αυτό το βιβλίο &#10;“%s”&#10; ;"/>
 		<node name="confirmSeveralBooks" value="Θέλεται να αγοράσετε αυτο τα βιβλία %s ;"/>
 		<node name="alreadyBought" value="Το βιβλίο έχει ήδη αγοραστεί"/>
-		<node name="notAuthorized" value="Απαιτήτε εξουσιοδότηση"/>
+		<node name="notAuthorised" value="Απαιτήτε εξουσιοδότηση"/>
 		<node name="noAccountInformation" value="Κατάσταση λογαριασμού δεν μπορεί να φορτοθεί"/>
 		<node name="unsufficientFunds" value="Αυτή η αγορά κοστίζει %0 ενώ εσεις έχετε μόνο %1"/>
 		<node name="zeroFunds" value="Αυτή η αγορά κοστίζει %0"/>
@@ -785,7 +785,7 @@
 			<node name="topup" value="Μεταβίβασε λεφτά στον λογιαρισμό"/>
 			<node name="pay" value="Πλήρωσε"/>
 			<node name="refresh" value="Ενημέρωσε"/>
-			<node name="authorize" value="Εξουσιοδότησε"/>
+			<node name="authorise" value="Εξουσιοδότησε"/>
 			<node name="resetPosition" value="Αναίρεση θέσης"/>
 			<node name="sendReport" value="στείλε αναφορά"/>
 			<node name="addToFavorites" value="Τοποθέτησε βιβλίο στα αγαπημένα"/>
@@ -824,6 +824,8 @@
 			<node name="loadingNetworkBookInfo" value="Φόρτωση πληροφορίες βιβλίου. Παρακαλώ περιμένετε…"/>
 			<node name="updatingCatalogsList" value="Ο κατάλογος ενημερώνεται. Παρακαλώ περιμένετε…"/>
 			<node name="updatingAccountInformation" value="Πληροφορίες λογαριασμού ενημερώνονται. Παρακαλώ περιμένετε…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Εσωτερικό σφάλμα διακομιστή."/>
@@ -872,6 +874,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

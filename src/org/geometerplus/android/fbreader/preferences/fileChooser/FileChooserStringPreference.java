@@ -19,10 +19,15 @@
 
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
+import org.geometerplus.android.util.FileChooserUtil;
 
 class FileChooserStringPreference extends FileChooserPreference {
 	private final ZLStringOption myOption;
@@ -35,16 +40,36 @@ class FileChooserStringPreference extends FileChooserPreference {
 	}
 
 	@Override
+	protected void onClick() {
+		FileChooserUtil.runDirectoryChooser(
+			(Activity)getContext(),
+			myRegCode,
+			myResource.getResource("chooserTitle").getValue(),
+			getStringValue(),
+			myChooseWritableDirectoriesOnly
+		);
+	}
+
+	@Override
 	protected String getStringValue() {
 		return myOption.getValue();
 	}
 
 	@Override
-	protected void setValueInternal(String value) {
+	protected void setValueFromIntent(Intent data) {
+		final String value = FileChooserUtil.pathFromData(data);
+		if (MiscUtil.isEmptyString(value)) {
+			return;
+		}
+
 		final String currentValue = myOption.getValue();
 		if (!currentValue.equals(value)) {
 			myOption.setValue(value);
 			setSummary(value);
+		}
+
+		if (myOnValueSetAction != null) {
+			myOnValueSetAction.run();
 		}
 	}
 }

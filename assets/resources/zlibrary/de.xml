@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- German zlibrary resources, by Victor Massini-->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Matthias Dill 2014/04/14 -->
+<!-- info: http://www.localeplanet.com/icu/ -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -35,49 +36,49 @@
 		<node name="blue" value="Blau"/>
 	</node>
 	<node name="language">
-		<node name="ar" value="Arabisch"/>
-		<node name="be" value="Weissrussisch"/>
-		<node name="bg" value="Bulgarisch"/>
-		<node name="ca" value="Katalanisch"/>
-		<node name="cs" value="Tschechisch"/>
-		<node name="da" value="Dänisch"/>
+		<node name="ar" value="العربية | Arabisch"/>
+		<node name="be" value="беларуская | Weissrussisch"/>
+		<node name="bg" value="български |Bulgarisch"/>
+		<node name="ca" value="Català | Katalanisch"/>
+		<node name="cs" value="Čeština | Tschechisch"/>
+		<node name="da" value="Dansk | Dänisch"/>
 		<node name="de" value="Deutsch"/>
 		<node name="de-traditional" value="Deutsch (alte Schreibweise)"/>
-		<node name="el" value="Griechisch"/>
-		<node name="en" value="Englisch"/>
+		<node name="el" value="Ελληνικά | Griechisch"/>
+		<node name="en" value="English | Englisch"/>
 		<node name="eo" value="Esperanto"/>
-		<node name="es" value="Spanisch"/>
-		<node name="eu" value="Baskisch"/>
-		<node name="fa" value="Persisch"/>
-		<node name="fi" value="Finnisch"/>
-		<node name="fr" value="Französisch"/>
-		<node name="gl" value="Galicisch"/>
-		<node name="he" value="Hebräisch"/>
-		<node name="hu" value="Ungarisch"/>
-		<node name="hy" value="Armenisch"/>
-		<node name="id" value="Indonesisch"/>
-		<node name="it" value="Italienisch"/>
-		<node name="ka" value="Georgisch"/>
-		<node name="lt" value="Litauisch"/>
-		<node name="nl" value="Niederländisch"/>
-		<node name="nb" value="Norwegisch"/>
-		<node name="pl" value="Polnisch"/>
-		<node name="pt" value="Portugiesisch"/>
-		<node name="ro" value="Rumänisch"/>
-		<node name="ru" value="Russisch"/>
-		<node name="sr" value="Serbisch"/>
-		<node name="sv" value="Schwedisch"/>
-		<node name="ta" value="Tamilisch"/>
-		<node name="th" value="Thailändich"/>
-		<node name="tr" value="Türkisch"/>
-		<node name="uk" value="Ukrainisch"/>
-		<node name="vi" value="Vietnamesisch"/>
-		<node name="zh" value="Chinesisch"/>
-		<node name="zh_TW" value="Chinesisch (traditionell)"/>
-		<node name="any" value="Beliebig"/>
-		<node name="other" value="Andere"/>
-		<node name="multi" value="Mehrsprachig"/>
-		<node name="system" value="Systemsprache"/>
+		<node name="es" value="Español | Spanisch"/>
+		<node name="eu" value="Euskara | Baskisch"/>
+		<node name="fa" value="فارسی | Persisch"/>
+		<node name="fi" value="Suomi | Finnisch"/>
+		<node name="fr" value="Français | Französisch"/>
+		<node name="gl" value="Galego | Galicisch"/>
+		<node name="he" value="עברית | Hebräisch"/>
+		<node name="hu" value="Magyar | Ungarisch"/>
+		<node name="hy" value="Հայերէն | Armenisch"/>
+		<node name="id" value="Bahasa Indonesia | Indonesisch"/>
+		<node name="it" value="Italiano | Italienisch"/>
+		<node name="ka" value="ქართული | Georgisch"/>
+		<node name="lt" value="Lietuvių | Litauisch"/>
+		<node name="nb" value="Norsk bokmål | Norwegisch"/>
+		<node name="nl" value="Nederlands | Niederländisch"/>
+		<node name="pl" value="Polski | Polnisch"/>
+		<node name="pt" value="Português | Portugiesisch"/>
+		<node name="ro" value="Română | Rumänisch"/>
+		<node name="ru" value="русский | Russisch"/>
+		<node name="sr" value="Српски | Serbisch"/>
+		<node name="sv" value="Svenska | Schwedisch"/>
+		<node name="ta" value="தமிழ் | Tamilisch"/>
+		<node name="th" value="ไทย | Thailändich"/>
+		<node name="tr" value="Türkçe | Türkisch"/>
+		<node name="uk" value="українська | Ukrainisch"/>
+		<node name="vi" value="Tiếng Việt | Vietnamesisch"/>
+		<node name="zh" value="中文（简体中文） | Chinesisch"/>
+		<node name="zh_TW" value="中文（繁體中文） | Chinesisch (traditionell)"/>
+		<node name="any" value="Any | Beliebig"/>
+		<node name="other" value="Other | Andere"/>
+		<node name="multi" value="Multi | Mehrsprachig"/>
+		<node name="system" value="System | Systemsprache"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="ein"/>

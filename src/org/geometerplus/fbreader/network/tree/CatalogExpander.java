@@ -21,24 +21,24 @@ package org.geometerplus.fbreader.network.tree;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 class CatalogExpander extends NetworkItemsLoader {
-	private final boolean myCheckAuthentication;
+	private final Authenticator myAuthenticator;
+	private volatile boolean myAuthenticationRequested;
 	private final boolean myResumeNotLoad;
 
-	CatalogExpander(NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
+	CatalogExpander(NetworkCatalogTree tree, Authenticator authenticator, boolean resumeNotLoad) {
 		super(tree);
-		myCheckAuthentication = checkAuthentication;
+		myAuthenticator = authenticator;
 		myResumeNotLoad = resumeNotLoad;
 	}
 
 	@Override
 	public void doBefore() throws ZLNetworkException {
 		final INetworkLink link = getTree().getLink();
-		if (myCheckAuthentication && link != null && link.authenticationManager() != null) {
+		if (myAuthenticator != null && link != null && link.authenticationManager() != null) {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			try {
 				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
@@ -51,11 +51,19 @@ class CatalogExpander extends NetworkItemsLoader {
 	}
 
 	@Override
-	public void doLoading() throws ZLNetworkException {
+	public void load() throws ZLNetworkException {
+		myAuthenticationRequested = false;
 		if (myResumeNotLoad) {
 			getTree().Item.resumeLoading(this);
 		} else {
-			getTree().Item.loadChildren(this);
+			try {
+				getTree().Item.loadChildren(this);
+			} catch (NetworkCatalogItem.AuthorisationFailed f) {
+				myAuthenticationRequested = true;
+				if (myAuthenticator != null) {
+					myAuthenticator.run(f.URL);
+				}
+			}
 		}
 	}
 
@@ -65,7 +73,7 @@ class CatalogExpander extends NetworkItemsLoader {
 			getTree().clearCatalog();
 		} else {
 			getTree().removeUnconfirmedItems();
-			if (!interrupted) {
+			if (!interrupted && !myAuthenticationRequested) {
 				if (exception != null) {
 					NetworkLibrary.Instance().fireModelChangedEvent(
 						NetworkLibrary.ChangeListener.Code.NetworkError, exception.getMessage()

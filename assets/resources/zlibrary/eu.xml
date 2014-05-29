@@ -53,10 +53,10 @@
 		<node name="hy" value="Armeniera"/>
 		<node name="id" value="Indonesiera"/>
 		<node name="it" value="Italiera"/>
-		<node name="ka" value="Georgiera" />
+		<node name="ka" value="Georgiera"/>
 		<node name="lt" value="Lituaniera"/>
-		<node name="nl" value="Nederlandera"/>
 		<node name="nb" value="Norvegiera"/>
+		<node name="nl" value="Nederlandera"/>
 		<node name="pl" value="Poloniera"/>
 		<node name="pt" value="Portuges"/>
 		<node name="ro" value="Errumaniera"/>

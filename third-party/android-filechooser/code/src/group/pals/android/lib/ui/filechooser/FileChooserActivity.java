@@ -1362,6 +1362,11 @@ public class FileChooserActivity extends Activity {
                  * navigation buttons
                  */
                 createLocationButtons(path);
+				
+                /*
+                 * update UI elements
+                 */
+                updateUI(path);
 
                 if (listener != null)
                     listener.onFinish(true, path);
@@ -1391,7 +1396,6 @@ public class FileChooserActivity extends Activity {
                     mHistory.truncateAfter(mLastPath);
                     mHistory.push(dir);
                     mFullHistory.push(dir);
-                    checkUIForFolderCreation(dir);
                 }
             }
         });
@@ -1586,7 +1590,6 @@ public class FileChooserActivity extends Activity {
                         }
                     }
                 });
-                checkUIForFolderCreation(preLoc);
             } else {
                 mViewGoBack.setEnabled(false);
             }
@@ -1641,14 +1644,13 @@ public class FileChooserActivity extends Activity {
                         }
                     }
                 });
-                checkUIForFolderCreation(nextLoc);
             } else {
                 mViewGoForward.setEnabled(false);
             }
         }
     };// mBtnGoForwardOnClickListener
     
-    private void checkUIForFolderCreation(IFile dir){
+    private void updateUI(IFile dir){
         final boolean isDirectoryWriteable = ((File)dir).canWrite();
         mViewCreateFolder.setEnabled(isDirectoryWriteable);
         mBtnOk.setEnabled(

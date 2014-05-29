@@ -213,6 +213,10 @@ public class ZLNetworkManager {
 		}
 	};
 
+	public CookieStore cookieStore() {
+		return myCookieStore;
+	}
+
 	private final CookieStore myCookieStore = new CookieStore() {
 		private HashMap<Key,Cookie> myCookies;
 

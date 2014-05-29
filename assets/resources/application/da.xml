@@ -100,7 +100,7 @@
 		<node name="topup" value="Tank din konto op (i øjeblikket: %s)"/>
 		<node name="topupTitle" value="Tank din konto op"/>
 		<node name="topupViaBrowser" value="Åbn siden i browser"/>
-		<node name="authorizationMenuTitle" value="Vælg handling"/>
+		<node name="authorisationMenuTitle" value="Vælg handling"/>
 		<node name="topupSummary" value="I øjeblikket: %s"/>
 		<node name="basket" value="Kurv"/>
 		<node name="basketSummaryEmpty" value="Ingen bøger"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Er du sikker på du vil købe &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Er du sikker på du vil købe %s bøger?"/>
 		<node name="alreadyBought" value="Bogen er allerede købt"/>
-		<node name="notAuthorized" value="Godkendelse påkrævet"/>
+		<node name="notAuthorised" value="Godkendelse påkrævet"/>
 		<node name="noAccountInformation" value="Kan ikke indlæse kontostatus"/>
 		<node name="unsufficientFunds" value="Dette køb koster %0 og du har kun %1"/>
 		<node name="zeroFunds" value="Dette køb koster %0"/>
@@ -798,7 +798,7 @@
 			<node name="topup" value="Tank op"/>
 			<node name="pay" value="Betal"/>
 			<node name="refresh" value="Opdater"/>
-			<node name="authorize" value="Godkend"/>
+			<node name="authorise" value="Godkend"/>
 			<node name="resetPosition" value="Nulstil stilling"/>
 			<node name="sendReport" value="Send rapport"/>
 			<node name="addToFavorites" value="Føj til Foretrukne"/>
@@ -837,6 +837,8 @@
 			<node name="loadingNetworkBookInfo" value="Indlæser bogoplysninger. Vent venligst..."/>
 			<node name="updatingCatalogsList" value="Opdaterer katalogliste. Vent venligst..."/>
 			<node name="updatingAccountInformation" value="Opdaterer konto-oplysninger Vent venligst..."/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 			<node name="extrcact" value="Forbereder fil til ekstern app. Vent venligst..."/>
 		</node>
 		<node name="networkError">
@@ -887,6 +889,13 @@
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>
 			<node name="newFolder" value="New folder" toBeTranslated="true"/>
@@ -902,9 +911,6 @@
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 		</node>
-	</node>
-	<node name="warningMessage">
-		<node name="mainBookDirEditing" value="Redigering af hovedbiblioteket vil medføre tab af data. Vil du fortsætte?"/>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
@@ -929,6 +935,8 @@
 		<node name="emptyCatalog" value="Kataloget er desværre tomt"/>
 		<node name="emptyBasket" value="Din kurv er desværre tom"/>
 		<node name="emptyNetworkSearchResults" value="Fandt desværre ingen bøger"/>
+		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
+		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 		<node name="externalNotFound" value="Kan ikke åbne eksternt program"/>
 		<node name="appNotFound" value="Der blev ikke fundet et egnet program"/>
 		<node name="invalidFormat" value="Formatet er ugyldigt"/>

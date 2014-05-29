@@ -100,7 +100,7 @@
 		<node name="topup" value="ანგარიშის შევსება (ბალანსი: %s)"/>
 		<node name="topupTitle" value="გადახდა"/>
 		<node name="topupViaBrowser" value="ბრაუზერის ფანჯარაში"/>
-		<node name="authorizationMenuTitle" value="ამოირჩიეთ ქმედება"/>
+		<node name="authorisationMenuTitle" value="ამოირჩიეთ ქმედება"/>
 		<node name="topupSummary" value="მიმდინარე ანგარიში: %s"/>
 		<node name="basket" value="კალათა"/>
 		<node name="basketSummaryEmpty" value="ცარიელი კალათა"/>
@@ -165,7 +165,7 @@
 		<node name="confirm" value="დარწმუნებული ხართ, რომ გნებავთ წიგნის შეძენა&#10;«%s»?"/>
 		<node name="confirmSeveralBooks" value="დარწმუნებული ხართ, რომ გნებავთ შეიძინოთ %s წიგნები?"/>
 		<node name="alreadyBought" value="წიგნი უკვე ნაყიდია"/>
-		<node name="notAuthorized" value="საჭიროა ავტორიზაცია"/>
+		<node name="notAuthorised" value="საჭიროა ავტორიზაცია"/>
 		<node name="noAccountInformation" value="ვერ მოხერხდა ანგარიშის შემოწმება"/>
 		<node name="unsufficientFunds" value="საყიდლად საჭიროა %0, ხოლო ანგარიშზეა მხოლოდ %1"/>
 		<node name="zeroFunds" value="ყიდვისთვის საჭიროა %0"/>
@@ -792,7 +792,7 @@
 			<node name="topup" value="ანგარიშის შევსება"/>
 			<node name="pay" value="გადახდა"/>
 			<node name="refresh" value="განახლება"/>
-			<node name="authorize" value="ავტორიზაცია"/>
+			<node name="authorise" value="ავტორიზაცია"/>
 			<node name="resetPosition" value="უკან"/>
 			<node name="sendReport" value="შეტყობინების გაგზავნა"/>
 			<node name="addToFavorites" value="რჩეულებში დამატება"/>
@@ -831,6 +831,8 @@
 			<node name="loadingNetworkBookInfo" value="წიგნის შესახებ ინფორმაციის ჩატვირთვა. გთხოვთ, დაიცადოთ…"/>
 			<node name="updatingCatalogsList" value="მიმდინარეობს კატალოგების ჩამონათვალის განახლება. გთხოვთ, დაიცადოთ…"/>
 			<node name="updatingAccountInformation" value="იტვირთება ინფორმაცია ანგარიშის შესახებ. გთხოვთ, დაიცადოთ…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="სერვერსშიდა შეცდომა"/>
@@ -879,6 +881,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

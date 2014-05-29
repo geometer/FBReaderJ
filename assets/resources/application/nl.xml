@@ -100,7 +100,7 @@
 		<node name="topup" value="Top up account (currently: %s)" toBeTranslated="true"/>
 		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open pagina in de browser"/>
-		<node name="authorizationMenuTitle" value="Selecteer actie"/>
+		<node name="authorisationMenuTitle" value="Selecteer actie"/>
 		<node name="topupSummary" value="Momenteel: %s"/>
 		<node name="basket" value="Mandje"/>
 		<node name="basketSummaryEmpty" value="Geen boeken"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Weet je zeker dat je het boek &#10;“%s”&#10; wilt kopen?"/>
 		<node name="confirmSeveralBooks" value="Weet je zeker dat je %s boeken wilt kopen?"/>
 		<node name="alreadyBought" value="Boek is al aangescahft"/>
-		<node name="notAuthorized" value="Autorisatie vereist"/>
+		<node name="notAuthorised" value="Autorisatie vereist"/>
 		<node name="noAccountInformation" value="Kan accountstatus niet laden"/>
 		<node name="unsufficientFunds" value="Deze aankoop kost %0 en je hebt maar %1"/>
 		<node name="zeroFunds" value="Deze aankoop kost %0"/>
@@ -787,7 +787,7 @@
 			<node name="topup" value="Top up" toBeTranslated="true"/>
 			<node name="pay" value="Betalen"/>
 			<node name="refresh" value="Vernieuwen"/>
-			<node name="authorize" value="Autoriseren"/>
+			<node name="authorise" value="Autoriseren"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Verstuur rapport"/>
 			<node name="addToFavorites" value="Toevoegen aan favorieten"/>
@@ -826,6 +826,8 @@
 			<node name="loadingNetworkBookInfo" value="Boekinformatie wordt geladen. Een ogenblik…"/>
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik…"/>
 			<node name="updatingAccountInformation" value="Accountinformatie wordt bijgewerkt. Een ogenblik…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interne serverfout"/>
@@ -874,6 +876,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

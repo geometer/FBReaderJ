@@ -100,7 +100,7 @@
 		<node name="topup" value="Попуни налог (тренутно: %s)"/>
 		<node name="topupTitle" value="Попуна налога"/>
 		<node name="topupViaBrowser" value="Отвори страницу у прегледачу"/>
-		<node name="authorizationMenuTitle" value="Одабир радње"/>
+		<node name="authorisationMenuTitle" value="Одабир радње"/>
 		<node name="topupSummary" value="Тренутно: %s"/>
 		<node name="basket" value="Корпа"/>
 		<node name="basketSummaryEmpty" value="Нема књига"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Желите ли да купите &#10;„%s“?"/>
 		<node name="confirmSeveralBooks" value="Желите ли да купите %s књиге?"/>
 		<node name="alreadyBought" value="Већ сте купили књигу"/>
-		<node name="notAuthorized" value="Потребна је провера идентитета"/>
+		<node name="notAuthorised" value="Потребна је провера идентитета"/>
 		<node name="noAccountInformation" value="Не могу да учитам стање налога"/>
 		<node name="unsufficientFunds" value="Ова књига кошта %0 а ви имате само %1"/>
 		<node name="zeroFunds" value="Ова књига кошта %0"/>
@@ -787,7 +787,7 @@
 			<node name="topup" value="Попуни"/>
 			<node name="pay" value="Купи"/>
 			<node name="refresh" value="Освежи"/>
-			<node name="authorize" value="Одобри"/>
+			<node name="authorise" value="Одобри"/>
 			<node name="resetPosition" value="Поништи положај"/>
 			<node name="sendReport" value="Пошаљи извештај"/>
 			<node name="addToFavorites" value="Додај у омиљене"/>
@@ -826,6 +826,8 @@
 			<node name="loadingNetworkBookInfo" value="Учитавам податке о књизи…"/>
 			<node name="updatingCatalogsList" value="Ажурирам списак каталога…"/>
 			<node name="updatingAccountInformation" value="Ажурирам податке о налогу…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Грешка у унутрашњем серверу."/>
@@ -874,6 +876,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

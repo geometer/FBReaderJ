@@ -100,7 +100,7 @@
 		<node name="topup" value="升級賬戶 (現為: %s)"/>
 		<node name="topupTitle" value="升級賬戶"/>
 		<node name="topupViaBrowser" value="以瀏覽器開啟本頁"/>
-		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
+		<node name="authorisationMenuTitle" value="Select action" toBeTranslated="true"/>
 		<node name="topupSummary" value="目前為: %s"/>
 		<node name="basket" value="購物籃"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="是否確定要購買&#10;“%s”&#10;?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
 		<node name="alreadyBought" value="此書已經被買過"/>
-		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
+		<node name="notAuthorised" value="Authorisation required" toBeTranslated="true"/>
 		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
@@ -777,7 +777,7 @@
 			<node name="topup" value="升級賬戶"/>
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
-			<node name="authorize" value="Authorize" toBeTranslated="true"/>
+			<node name="authorise" value="Authorise" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="收藏"/>
@@ -816,6 +816,8 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="伺服器出錯"/>
@@ -864,6 +866,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

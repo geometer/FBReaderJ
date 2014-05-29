@@ -3,43 +3,21 @@ package org.amse.ys.zip;
 import java.io.*;
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.InputStreamHolder;
+
 public final class ZipFile {
-	public static interface InputStreamHolder {
-		InputStream getInputStream() throws IOException;
-	}
-
-	private static final class FileInputStreamHolder implements InputStreamHolder {
-		private final String myFilePath;
-
-		FileInputStreamHolder(String filePath) {
-			myFilePath = filePath;
-		}
-
-		public InputStream getInputStream() throws IOException {
-			return new FileInputStream(myFilePath);
-		}
-	}
-
-	private final InputStreamHolder myStreamHolder;
-	private final LinkedHashMap<String,LocalFileHeader> myFileHeaders = new LinkedHashMap<String,LocalFileHeader>() {
-		private static final long serialVersionUID = -4412796553514902113L;
-
+	private final static Comparator<String> ourIgnoreCaseComparator = new Comparator<String>() {
 		@Override
-		public LocalFileHeader get(Object key) {
-			return super.get(((String)key).toLowerCase());
-		}
-
-		@Override
-		public LocalFileHeader put(String key, LocalFileHeader value) {
-			return super.put(key.toLowerCase(), value);
+		public final int compare(String s0, String s1) {
+			return s0.compareToIgnoreCase(s1);
 		}
 	};
 
-	private boolean myAllFilesAreRead;
+	private final InputStreamHolder myStreamHolder;
+	private final Map<String,LocalFileHeader> myFileHeaders =
+		new TreeMap<String,LocalFileHeader>(ourIgnoreCaseComparator);
 
-	public ZipFile(String filePath) {
-		this(new FileInputStreamHolder(filePath));
-	}
+	private boolean myAllFilesAreRead;
 
 	public ZipFile(InputStreamHolder streamHolder) {
 		myStreamHolder = streamHolder;
@@ -117,8 +95,7 @@ public final class ZipFile {
 	}
 
 	synchronized MyBufferedInputStream getBaseStream() throws IOException {
-		MyBufferedInputStream baseStream = myStoredStreams.poll();
-		return (baseStream != null) ? baseStream : new MyBufferedInputStream(myStreamHolder);
+		return new MyBufferedInputStream(myStreamHolder);
 	}
 
 	private ZipInputStream createZipInputStream(LocalFileHeader header) throws IOException {

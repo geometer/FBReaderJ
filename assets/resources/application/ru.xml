@@ -100,7 +100,7 @@
 		<node name="topup" value="Пополнение счёта (баланс: %s)"/>
 		<node name="topupTitle" value="Оплата"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
-		<node name="authorizationMenuTitle" value="Выберите действие"/>
+		<node name="authorisationMenuTitle" value="Выберите действие"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="basket" value="Корзина"/>
 		<node name="basketSummaryEmpty" value="Пустая корзина"/>
@@ -165,7 +165,7 @@
 		<node name="confirm" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?"/>
 		<node name="confirmSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?"/>
 		<node name="alreadyBought" value="Книга уже куплена"/>
-		<node name="notAuthorized" value="Требуется авторизация"/>
+		<node name="notAuthorised" value="Требуется авторизация"/>
 		<node name="noAccountInformation" value="Не удалось проверить состояние счёта"/>
 		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счёте только %1"/>
 		<node name="zeroFunds" value="Для покупки требуется %0"/>
@@ -792,7 +792,7 @@
 			<node name="topup" value="Пополнить счёт"/>
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
-			<node name="authorize" value="Авторизоваться"/>
+			<node name="authorise" value="Авторизоваться"/>
 			<node name="resetPosition" value="Назад"/>
 			<node name="sendReport" value="Отправить сообщение"/>
 			<node name="addToFavorites" value="Добавить в избранное"/>
@@ -831,6 +831,8 @@
 			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста…"/>
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста…"/>
 			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста…"/>
+			<node name="initDRMEngine" value="Инициализация DRM. Подождите, пожалуйста…"/>
+			<node name="acquireLicense" value="Получение лицензии. Подождите, пожалуйста…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера"/>
@@ -879,6 +881,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader запускается в полноэкранном режиме. Чтобы увидеть элементы управления, нажмите на экран в средней трети. Вы можете изменить это поведение в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
 			<node name="message2" value="Отлично! Нажмите ещё раз на экран в средней трети, чтобы скрыть элементы управления и этот совет. Если вы хотите, чтобы верхнее меню оставалось на экране во время чтения, выберите «Показывать строку меню» в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Добавить каталог"/>
+			<node name="removeDialog" value="Удаление каталога">
+				<node name="message" value="Удалить «%s» из списка?"/>
+			</node>
+			<node name="duplicate" value="«%s» уже в списке"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Корень"/>

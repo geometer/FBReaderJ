@@ -100,7 +100,7 @@
 		<node name="topup" value="重新输入账号(目前: %s)"/>
 		<node name="topupTitle" value="重新输入账号"/>
 		<node name="topupViaBrowser" value="在浏览器中打开页面"/>
-		<node name="authorizationMenuTitle" value="选择操作"/>
+		<node name="authorisationMenuTitle" value="选择操作"/>
 		<node name="topupSummary" value="当前: %s"/>
 		<node name="basket" value="购物篮"/>
 		<node name="basketSummaryEmpty" value="没有书籍"/>
@@ -157,7 +157,7 @@
 		<node name="confirm" value="确认购买%s书籍?"/>
 		<node name="confirmSeveralBooks" value="确认购买%s书籍?"/>
 		<node name="alreadyBought" value="该书已经买过"/>
-		<node name="notAuthorized" value="需要授权"/>
+		<node name="notAuthorised" value="需要授权"/>
 		<node name="noAccountInformation" value="无法加载账号状态"/>
 		<node name="unsufficientFunds" value="你这次买了 %0 ，但是你现在只有 %1"/>
 		<node name="zeroFunds" value="你这次买了 %0"/>
@@ -777,7 +777,7 @@
 			<node name="topup" value="重新输入账号"/>
 			<node name="pay" value="支付"/>
 			<node name="refresh" value="刷新"/>
-			<node name="authorize" value="授权"/>
+			<node name="authorise" value="授权"/>
 			<node name="resetPosition" value="重置位置"/>
 			<node name="sendReport" value="发送报告"/>
 			<node name="addToFavorites" value="收藏到我的超爱"/>
@@ -816,6 +816,8 @@
 			<node name="loadingNetworkBookInfo" value="书籍信息加载中，请等待…"/>
 			<node name="updatingCatalogsList" value="更新书库列表中，请稍待…"/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错"/>
@@ -864,6 +866,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

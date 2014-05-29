@@ -100,7 +100,7 @@
 		<node name="topup" value="Topp opp konto (for øyeblikket: %s)"/>
 		<node name="topupTitle" value="Topp opp konto"/>
 		<node name="topupViaBrowser" value="Åpne side i nettleser"/>
-		<node name="authorizationMenuTitle" value="Velg handling"/>
+		<node name="authorisationMenuTitle" value="Velg handling"/>
 		<node name="topupSummary" value="For øyeblikket: %s"/>
 		<node name="basket" value="Kurv"/>
 		<node name="basketSummaryEmpty" value="Ingen bøker"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Er du sikker på at du ønsker å kjøpe &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Er du sikker på at du ønsker å kjøpe %s bøker?"/>
 		<node name="alreadyBought" value="Boken er allerede kjøpt"/>
-		<node name="notAuthorized" value="Tillatelse kreves"/>
+		<node name="notAuthorised" value="Tillatelse kreves"/>
 		<node name="noAccountInformation" value="Kan ikke laste kontotilstand"/>
 		<node name="unsufficientFunds" value="Dette kjøpet koster %0 og du har bare %1"/>
 		<node name="zeroFunds" value="Dette kjøpet koster %0"/>
@@ -787,7 +787,7 @@
 			<node name="topup" value="Fyll opp"/>
 			<node name="pay" value="Betal"/>
 			<node name="refresh" value="Oppfrisk"/>
-			<node name="authorize" value="Autoriser"/>
+			<node name="authorise" value="Autoriser"/>
 			<node name="resetPosition" value="Tilbakestill posisjon"/>
 			<node name="sendReport" value="Send rapport"/>
 			<node name="addToFavorites" value="Legg til i favoritter"/>
@@ -826,6 +826,8 @@
 			<node name="loadingNetworkBookInfo" value="Laster bokinformasjon. Vennligst vent…"/>
 			<node name="updatingCatalogsList" value="Oppdaterer kataloglister. Vennligst vent…"/>
 			<node name="updatingAccountInformation" value="Oppdaterer kontorinformasjon. Vennligst vent…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Intern feil i tjenesten"/>
@@ -874,6 +876,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

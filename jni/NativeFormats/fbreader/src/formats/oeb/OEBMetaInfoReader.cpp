@@ -24,7 +24,6 @@
 #include <ZLXMLNamespace.h>
 
 #include "OEBMetaInfoReader.h"
-#include "../util/EntityFilesCollector.h"
 
 #include "../../library/Book.h"
 

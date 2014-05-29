@@ -19,13 +19,17 @@
 
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
-import java.util.Collections;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
+
+import org.geometerplus.android.util.FileChooserUtil;
 
 class FileChooserStringListPreference extends FileChooserPreference {
 	private final ZLStringListOption myOption;
@@ -39,17 +43,34 @@ class FileChooserStringListPreference extends FileChooserPreference {
 	}
 
 	@Override
-	protected String getStringValue() {
-		final List<String> values = myOption.getValue();
-		return values.isEmpty() ? "" : values.get(0);
+	protected void onClick() {
+		FileChooserUtil.runFolderListDialog(
+			(Activity)getContext(),
+			myRegCode,
+			myResource.getValue(),
+			myResource.getResource("chooserTitle").getValue(),
+			myOption.getValue(),
+			myChooseWritableDirectoriesOnly
+		);
 	}
 
 	@Override
-	protected void setValueInternal(String value) {
-		final List<String> currentValues = myOption.getValue();
-		if (currentValues.size() != 1 || !currentValues.get(0).equals(value)) {
-			myOption.setValue(Collections.singletonList(value));
-			setSummary(value);
+	protected String getStringValue() {
+		return MiscUtil.join(myOption.getValue(), ", ");
+	}
+
+	@Override
+	protected void setValueFromIntent(Intent data) {
+		final List<String> value = FileChooserUtil.pathListFromData(data);
+		if (value.isEmpty()) {
+			return;
+		}
+
+		myOption.setValue(value);
+		setSummary(getStringValue());
+
+		if (myOnValueSetAction != null) {
+			myOnValueSetAction.run();
 		}
 	}
 }

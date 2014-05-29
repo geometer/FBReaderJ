@@ -40,13 +40,17 @@ public class FileUtils {
         _MapFileIcons.put(MimeTypes._RegexFileTypePlainTexts, R.drawable.afc_file_plain_text);
     }
 
-	private static boolean accessDenied(IFile file) {
-		if (android.os.Build.VERSION.SDK_INT >= 9) {
-    		return file instanceof File && !((File)file).canExecute();
-		} else {
-			return false;
-		}
-	}
+    private static boolean accessDenied(IFile f) {
+        if (!(f instanceof File)) {
+            return false;
+        }
+        final File file = (File)f;
+        if (android.os.Build.VERSION.SDK_INT >= 9) {
+            return !file.canExecute() || !file.canRead();
+        } else {
+            return !file.canRead();
+        }
+    }
 
     /**
      * Gets resource icon ID of an {@link IFile}.

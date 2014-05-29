@@ -31,6 +31,14 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class NetworkCatalogItem extends NetworkItem {
+	public static class AuthorisationFailed extends Exception {
+		public final String URL;
+
+		public AuthorisationFailed(String url) {
+			URL = url;
+		}
+	}
+
 	// bit mask for flags parameter
 	public static final int FLAG_SHOW_AUTHOR                              = 1 << 0;
 	public static final int FLAG_GROUP_BY_AUTHOR                          = 1 << 1;
@@ -82,9 +90,13 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 
 	public abstract boolean canBeOpened();
 
-	public abstract void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException;
+	public abstract void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException, AuthorisationFailed;
 
 	public boolean supportsResumeLoading() {
+		return false;
+	}
+
+	public boolean canResumeLoading() {
 		return false;
 	}
 

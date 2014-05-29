@@ -17,7 +17,7 @@
 		<node name="byTag" value="Etiket">
 			<node name="summary" value="Kitapları etiketlerine göre sırala"/>
 		</node>
-		<node name="recent" value="Recent">
+		<node name="recent" value="Recent" toBeTranslated="true">
 			<node name="summary" value="Şu an okunan"/>
 		</node>
 		<node name="favorites" value="Favoriler">
@@ -100,7 +100,7 @@
 		<node name="topup" value="Kredi hesabı (Bakiye: %s)"/>
 		<node name="topupTitle" value="Kredi hesabı"/>
 		<node name="topupViaBrowser" value="Sayfayı tarayıcıda aç"/>
-		<node name="authorizationMenuTitle" value="Eylem seç"/>
+		<node name="authorisationMenuTitle" value="Eylem seç"/>
 		<node name="topupSummary" value="Şu anda: %s"/>
 		<node name="basket" value="Sepet"/>
 		<node name="basketSummaryEmpty" value="Kitap yok"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Bu kitabı satın almak istediğinizden emin misiniz: &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Bu kitapları satın almak istediğinizden emin misiniz: %s "/>
 		<node name="alreadyBought" value="Bu kitabı zaten satın almıştınız"/>
-		<node name="notAuthorized" value="Yetkilendirme gerekli"/>
+		<node name="notAuthorised" value="Yetkilendirme gerekli"/>
 		<node name="noAccountInformation" value="Hesap durumu yüklenemiyor"/>
 		<node name="unsufficientFunds" value="Kitabın fiyatı %0 ve sizde sadece %1 var"/>
 		<node name="zeroFunds" value="Bu alımın maliyeti %0"/>
@@ -787,7 +787,7 @@
 			<node name="topup" value="Kontör"/>
 			<node name="pay" value="Öde"/>
 			<node name="refresh" value="Yenile"/>
-			<node name="authorize" value="Onay"/>
+			<node name="authorise" value="Onay"/>
 			<node name="resetPosition" value="POzisyonu sıfırla"/>
 			<node name="sendReport" value="Rapor gönder"/>
 			<node name="addToFavorites" value="Favorilere ekle"/>
@@ -826,6 +826,8 @@
 			<node name="loadingNetworkBookInfo" value="Kitap bilgisi yükleniyor. Lütfen bekleyin…"/>
 			<node name="updatingCatalogsList" value="Katalog listesi güncelleniyor. Lütfen bekleyin…"/>
 			<node name="updatingAccountInformation" value="Hesap bilgileri güncelleniyor. Lütfen bekleyint…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Sunucu hatası"/>
@@ -874,6 +876,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
+				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>

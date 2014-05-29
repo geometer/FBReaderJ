@@ -100,7 +100,7 @@
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
-		<node name="authorizationMenuTitle" value="Select action"/>
+		<node name="authorisationMenuTitle" value="Select action"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummaryEmpty" value="No books"/>
@@ -161,7 +161,7 @@
 		<node name="confirm" value="Are you sure you want to buy &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?"/>
 		<node name="alreadyBought" value="Book is already bought"/>
-		<node name="notAuthorized" value="Authorization required"/>
+		<node name="notAuthorised" value="Authorisation required"/>
 		<node name="noAccountInformation" value="Cannot load account state"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1"/>
 		<node name="zeroFunds" value="This purchase costs %0"/>
@@ -787,7 +787,7 @@
 			<node name="topup" value="Top up"/>
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
-			<node name="authorize" value="Authorize"/>
+			<node name="authorise" value="Authorise"/>
 			<node name="resetPosition" value="Reset position"/>
 			<node name="sendReport" value="Send report"/>
 			<node name="addToFavorites" value="Add to favorites"/>
@@ -826,6 +826,8 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
@@ -874,6 +876,13 @@
 		<node name="screenHint">
 			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog."/>
 			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog."/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="Add folder"/>
+			<node name="removeDialog" value="Remove folder">
+				<node name="message" value="Remove “%s” from the list?"/>
+			</node>
+			<node name="duplicate" value="“%s” is already in the list"/>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root"/>
