@@ -876,7 +876,7 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 }
 
 const std::vector<std::string> &XHTMLReader::externalDTDs() const {
-	return EntityFilesCollector::Instance().externalDTDs("xhtml");
+	return EntityFilesCollector::xhtmlDTDs();
 }
 
 bool XHTMLReader::processNamespaces() const {

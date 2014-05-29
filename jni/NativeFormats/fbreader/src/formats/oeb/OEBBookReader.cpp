@@ -35,7 +35,6 @@
 #include "NCXReader.h"
 #include "../xhtml/XHTMLReader.h"
 #include "../util/MiscUtil.h"
-#include "../util/EntityFilesCollector.h"
 #include "../../bookmodel/BookModel.h"
 
 OEBBookReader::OEBBookReader(BookModel &model) : myModelReader(model) {
