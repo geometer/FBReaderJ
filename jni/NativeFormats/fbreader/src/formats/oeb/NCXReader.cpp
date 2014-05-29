@@ -117,7 +117,7 @@ void NCXReader::characterDataHandler(const char *text, std::size_t len) {
 }
 
 const std::vector<std::string> &NCXReader::externalDTDs() const {
-	return EntityFilesCollector::Instance().externalDTDs("xhtml");
+	return EntityFilesCollector::xhtmlDTDs();
 }
 
 const std::map<int,NCXReader::NavPoint> &NCXReader::navigationMap() const {
