@@ -42,8 +42,7 @@ public class TOCTree extends ZLTree<TOCTree> {
 	// faster replacement for
 	// return text.trim().replaceAll("[\t ]+", " ");
 	private static String trim(String text) {
-		final String trimmed = text.trim();
-		final char[] data = trimmed.toCharArray();
+		final char[] data = text.toCharArray();
 		int count = 0;
 		int shift = 0;
 		boolean changed = false;
@@ -55,10 +54,15 @@ public class TOCTree extends ZLTree<TOCTree> {
 				space = ch;
 			} else {
 				if (count > 0) {
-					shift += count - 1;
-					if (shift > 0 || space == '\t') {
-						data[i - shift - 1] = ' ';
+					if (count == i) {
+						shift += count;
 						changed = true;
+					} else {
+						shift += count - 1;
+						if (shift > 0 || space == '\t') {
+							data[i - shift - 1] = ' ';
+							changed = true;
+						}
 					}
 					count = 0;
 				}
@@ -67,7 +71,11 @@ public class TOCTree extends ZLTree<TOCTree> {
 				}
 			}
 		}
-		return changed ? new String(data, 0, data.length - shift) : trimmed;
+		if (count > 0) {
+			changed = true;
+			shift += count;
+		}
+		return changed ? new String(data, 0, data.length - shift) : text;
 	}
 
 	public final void setText(String text) {
