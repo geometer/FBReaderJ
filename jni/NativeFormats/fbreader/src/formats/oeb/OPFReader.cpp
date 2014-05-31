@@ -65,5 +65,5 @@ bool OPFReader::processNamespaces() const {
 }
 
 const std::vector<std::string> &OPFReader::externalDTDs() const {
-	return EntityFilesCollector::Instance().externalDTDs("xhtml");
+	return EntityFilesCollector::xhtmlDTDs();
 }

@@ -109,7 +109,7 @@ public abstract class UIUtil {
 		}).start();
 	}
 
-	public static ZLApplication.SynchronousExecutor createExecutor(final Activity activity, final String key, final boolean minPriority) {
+	public static ZLApplication.SynchronousExecutor createExecutor(final Activity activity, final String key) {
 		return new ZLApplication.SynchronousExecutor() {
 			private final ZLResource myResource =
 				ZLResource.resource("dialog").getResource("waitMessage");
@@ -138,9 +138,7 @@ public abstract class UIUtil {
 								});
 							}
 						};
-						if (minPriority) {
-							runner.setPriority(Thread.MIN_PRIORITY);
-						}
+						runner.setPriority(Thread.MAX_PRIORITY);
 						runner.start();
 					}
 				});
