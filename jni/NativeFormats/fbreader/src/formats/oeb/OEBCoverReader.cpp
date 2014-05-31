@@ -38,7 +38,7 @@ shared_ptr<const ZLImage> OEBCoverReader::readCover(const ZLFile &file) {
 	if (myImage.isNull() && !myCoverXHTML.empty()) {
 		const ZLFile coverFile(myCoverXHTML);
 		const std::string ext = coverFile.extension();
-		if (ext == "gif" || ext == "jpeg" || ext == "jpg") {
+		if (ext == "gif" || ext == "jpeg" || ext == "jpg" || ext == "png") {
 			myImage = new ZLFileImage(coverFile, "", 0);
 		} else {
 			myImage = XHTMLImageFinder().readImage(coverFile);
@@ -91,15 +91,27 @@ void OEBCoverReader::startElementHandler(const char *tag, const char **attribute
 			if (testTag(ZLXMLNamespace::OpenPackagingFormat, META, tag)) {
 				const char *name = attributeValue(attributes, "name");
 				if (name != 0 && COVER == name) {
-					myCoverId = attributeValue(attributes, "content");
+					const char *coverId = attributeValue(attributes, "content");
+					if (coverId != 0) {
+						myCoverId = coverId;
+					}
 				}
 			}
 			break;
 		case READ_MANIFEST:
 			if (ITEM == tag) {
+				const char *href = attributeValue(attributes, "href");
+				if (href == 0) {
+					break;
+				}
+				const char *prop = attributeValue(attributes, "properties");
+				if (prop != 0 && std::string("cover-image") == prop) {
+					createImage(href);
+					break;
+				}
 				const char *id = attributeValue(attributes, "id");
 				if (id != 0 && myCoverId == id) {
-					createImage(attributeValue(attributes, "href"));
+					createImage(href);
 				}
 			}
 			break;
