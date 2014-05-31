@@ -65,7 +65,7 @@ void OEBCoverReader::startElementHandler(const char *tag, const char **attribute
 		case READ_NOTHING:
 			if (GUIDE == tag) {
 				myReadState = READ_GUIDE;
-			} else if (MANIFEST == tag && !myCoverId.empty()) {
+			} else if (MANIFEST == tag) {
 				myReadState = READ_MANIFEST;
 			} else if (testTag(ZLXMLNamespace::OpenPackagingFormat, METADATA, tag)) {
 				myReadState = READ_METADATA;
@@ -110,7 +110,7 @@ void OEBCoverReader::startElementHandler(const char *tag, const char **attribute
 					break;
 				}
 				const char *id = attributeValue(attributes, "id");
-				if (id != 0 && myCoverId == id) {
+				if (id != 0 && !myCoverId.empty() && myCoverId == id) {
 					createImage(href);
 				}
 			}
