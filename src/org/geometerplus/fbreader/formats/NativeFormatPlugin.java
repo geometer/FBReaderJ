@@ -93,9 +93,9 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
-		android.os.Debug.startMethodTracing("ep.trace", 32 * 1024 * 1024);
+		//android.os.Debug.startMethodTracing("ep.trace", 32 * 1024 * 1024);
 		final int code = readModelNative(model);
-		android.os.Debug.stopMethodTracing();
+		//android.os.Debug.stopMethodTracing();
 		switch (code) {
 			case 0:
 				return;
