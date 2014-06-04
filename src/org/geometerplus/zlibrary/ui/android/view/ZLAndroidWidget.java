@@ -324,12 +324,16 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-			new Canvas(bitmap),
+			createCanvas(bitmap),
 			getWidth(),
 			getMainAreaHeight(),
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		view.paint(context, index);
+	}
+	
+	protected Canvas createCanvas(Bitmap bitmap) {
+		return new Canvas(bitmap);
 	}
 
 	private void drawFooter(Canvas canvas) {
@@ -348,9 +352,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		if (myFooterBitmap == null) {
 			myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
+			//myFooterBitmap.setDensity(240);
 		}
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-			new Canvas(myFooterBitmap),
+			createCanvas(myFooterBitmap),
 			getWidth(),
 			footer.getHeight(),
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/root_view"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+>
+	<com.yotadevices.fbreader.YotaBackScreenWidget
+		android:id="@+id/bs_main_widget"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:focusable="true"
+		android:scrollbars="vertical"
+		android:scrollbarAlwaysDrawVerticalTrack="true"
+		android:fadeScrollbars="false"
+	/>
+
+</RelativeLayout>
