@@ -134,12 +134,12 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	}
 
 	@Override
-	public int getSpaceBefore() {
+	public int getSpaceBefore(ZLTextMetrics metrics) {
 		return 0;
 	}
 
 	@Override
-	public int getSpaceAfter() {
+	public int getSpaceAfter(ZLTextMetrics metrics) {
 		return 0;
 	}
 

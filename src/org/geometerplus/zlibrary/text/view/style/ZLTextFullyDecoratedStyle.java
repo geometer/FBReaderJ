@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.text.view.style;
 
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
+import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
@@ -53,12 +54,12 @@ public class ZLTextFullyDecoratedStyle extends ZLTextPartiallyDecoratedStyle {
 	}
 
 	@Override
-	public int getSpaceBefore() {
+	protected int getSpaceBeforeInternal(ZLTextMetrics metrics) {
 		return myFullDecoration.SpaceBeforeOption.getValue();
 	}
 
 	@Override
-	public int getSpaceAfter() {
+	protected int getSpaceAfterInternal(ZLTextMetrics metrics) {
 		return myFullDecoration.SpaceAfterOption.getValue();
 	}
 

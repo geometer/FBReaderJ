@@ -645,8 +645,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				charsPerParagraph * 1.2f);
 
 		final int strHeight = getWordHeight() + getContext().getDescent();
-		final int effectiveHeight = (int) (textHeight - (getTextStyle().getSpaceBefore()
-				+ getTextStyle().getSpaceAfter()) / charsPerParagraph);
+		final int effectiveHeight = (int) (textHeight - (getTextStyle().getSpaceBefore(metrics())
+				+ getTextStyle().getSpaceAfter(metrics())) / charsPerParagraph);
 		final int linesPerPage = effectiveHeight / strHeight;
 
 		return charsPerLine * linesPerPage;
@@ -1198,10 +1198,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		setTextStyle(storedStyle);
 
 		if (isFirstLine) {
-			info.Height += info.StartStyle.getSpaceBefore();
+			info.Height += info.StartStyle.getSpaceBefore(metrics());
 		}
 		if (info.isEndOfParagraph()) {
-			info.VSpaceAfter = getTextStyle().getSpaceAfter();
+			info.VSpaceAfter = getTextStyle().getSpaceAfter(metrics());
 		}
 
 		if (info.EndElementIndex != endIndex || endIndex == info.ParagraphCursorLength) {

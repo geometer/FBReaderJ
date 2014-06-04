@@ -40,6 +40,8 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private boolean myIsNotCached = true;
 
 	private int myFontSize;
+	private int mySpaceBefore;
+	private int mySpaceAfter;
 	private ZLTextMetrics myMetrics;
 
 	protected ZLTextDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
@@ -63,6 +65,8 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private void initMetricsCache(ZLTextMetrics metrics) {
 		myMetrics = metrics;
 		myFontSize = getFontSizeInternal(metrics);
+		mySpaceBefore = getSpaceBeforeInternal(metrics);
+		mySpaceAfter = getSpaceAfterInternal(metrics);
 	}
 
 	@Override
@@ -82,6 +86,24 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		return myFontSize;
 	}
 	protected abstract int getFontSizeInternal(ZLTextMetrics metrics);
+
+	@Override
+	public final int getSpaceBefore(ZLTextMetrics metrics) {
+		if (!metrics.equals(myMetrics)) {
+			initMetricsCache(metrics);
+		}
+		return mySpaceBefore;
+	}
+	protected abstract int getSpaceBeforeInternal(ZLTextMetrics metrics);
+
+	@Override
+	public final int getSpaceAfter(ZLTextMetrics metrics) {
+		if (!metrics.equals(myMetrics)) {
+			initMetricsCache(metrics);
+		}
+		return mySpaceAfter;
+	}
+	protected abstract int getSpaceAfterInternal(ZLTextMetrics metrics);
 
 	@Override
 	public final boolean isItalic() {

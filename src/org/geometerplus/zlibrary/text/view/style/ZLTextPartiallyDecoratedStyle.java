@@ -131,13 +131,13 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
-	public int getSpaceBefore() {
-		return Parent.getSpaceBefore();
+	protected int getSpaceBeforeInternal(ZLTextMetrics metrics) {
+		return Parent.getSpaceBefore(metrics);
 	}
 
 	@Override
-	public int getSpaceAfter() {
-		return Parent.getSpaceAfter();
+	protected int getSpaceAfterInternal(ZLTextMetrics metrics) {
+		return Parent.getSpaceAfter(metrics);
 	}
 
 	@Override

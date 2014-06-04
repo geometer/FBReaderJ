@@ -152,13 +152,27 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		// TODO: implement
 		return Parent.getVerticalShift();
 	}
-	public int getSpaceBefore() {
-		// TODO: implement
-		return Parent.getSpaceBefore();
+	@Override
+	protected int getSpaceBeforeInternal(ZLTextMetrics metrics) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontFamilyOption.getValue()) {
+			return Parent.getSpaceBefore(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_SPACE_BEFORE)) {
+			return Parent.getSpaceBefore(metrics);
+		}
+		return myEntry.getLength(LENGTH_SPACE_BEFORE, metrics);
 	}
-	public int getSpaceAfter() {
-		// TODO: implement
-		return Parent.getSpaceAfter();
+	@Override
+	protected int getSpaceAfterInternal(ZLTextMetrics metrics) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontFamilyOption.getValue()) {
+			return Parent.getSpaceAfter(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_SPACE_AFTER)) {
+			return Parent.getSpaceAfter(metrics);
+		}
+		return myEntry.getLength(LENGTH_SPACE_AFTER, metrics);
 	}
 	public byte getAlignment() {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSTextAlignmentOption.getValue()) {

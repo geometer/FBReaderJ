@@ -47,7 +47,7 @@ abstract class ZLTextViewBase extends ZLView {
 		myMetrics = null;
 	}
 
-	private ZLTextMetrics metrics() {
+	protected ZLTextMetrics metrics() {
 		// this local variable is used to guarantee null will not
 		// be returned from this method enen in multi-thread environment
 		ZLTextMetrics m = myMetrics;
