@@ -3,6 +3,7 @@
 * better cover detection for ePubs
 * Arabic FBReaderJ resources, by Ahmed Saidi (https://github.com/boussouira)
 * Updated German localization (by Matthias Dill)
+* ePub: fixed empty line support in <pre>-formatted text
 
 ===== 1.10.2 (May 25, 2014) =====
 * Fixed local library duplicates issue

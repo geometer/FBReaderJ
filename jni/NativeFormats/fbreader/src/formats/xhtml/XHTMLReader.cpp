@@ -314,7 +314,7 @@ void XHTMLTagBodyAction::doAtEnd(XHTMLReader &reader) {
 
 void XHTMLTagRestartParagraphAction::doAtStart(XHTMLReader &reader, const char**) {
 	if (reader.myCurrentParagraphIsEmpty) {
-		bookReader(reader).addData(" ");
+		bookReader(reader).addFixedHSpace(1);
 	}
 	endParagraph(reader);
 	beginParagraph(reader);
@@ -842,6 +842,9 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 		case XHTML_READ_BODY:
 			if (myPreformatted) {
 				if (*text == '\r' || *text == '\n') {
+					if (myCurrentParagraphIsEmpty) {
+						myModelReader.addFixedHSpace(1);
+					}
 					endParagraph();
 					text += 1;
 					len -= 1;
