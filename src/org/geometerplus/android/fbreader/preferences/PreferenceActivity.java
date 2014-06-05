@@ -385,6 +385,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
 		cssScreen.addOption(baseStyle.UseCSSFontSizeOption, "fontSize");
 		cssScreen.addOption(baseStyle.UseCSSTextAlignmentOption, "textAlignment");
+		cssScreen.addOption(baseStyle.UseCSSMarginsOption, "margins");
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 

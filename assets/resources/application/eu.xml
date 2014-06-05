@@ -573,6 +573,10 @@
 				<node name="summaryOn" value="Aplikatu CSSetan zehaztutako testu-lerrokatzea"/>
 				<node name="summaryOff" value="Baztertu CSSetan zehaztutako testu-lerrokatzea"/>
 			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="colors" value="Koloreak eta atzeko irudiak">
 			<node name="summary" value="Kolore ezarpenak"/>

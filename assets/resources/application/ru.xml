@@ -578,6 +578,10 @@
 				<node name="summaryOn" value="Выравнивать текст, как указано в CSS"/>
 				<node name="summaryOff" value="Игнорировать выравнивание текста, заданное в CSS"/>
 			</node>
+			<node name="margins" value="Отступы">
+				<node name="summaryOn" value="Использовать отступы, заданные в CSS"/>
+				<node name="summaryOff" value="Игнорировать отступы, заданные в CSS"/>
+			</node>
 		</node>
 		<node name="colors" value="Цвета и обои">
 			<node name="summary" value="Настройки цвета"/>
