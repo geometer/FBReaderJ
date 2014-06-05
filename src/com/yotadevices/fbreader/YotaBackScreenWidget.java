@@ -17,55 +17,63 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 
 public class YotaBackScreenWidget extends ZLAndroidWidget {
 	private Bitmap myDefaultCoverBitmap;
 	private Boolean myLastPaintWasActive;
 	private Book myLastBook;
 	private static final int BS_DENSITY = 240;
+    private float mStartY;
+    private float mStartX;
+    private boolean mIsGestureStart = false;
 
 	YotaBackScreenWidget(Context context) {
 		super(context);
 	}
-	
+
 	public YotaBackScreenWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
-	
+
 	private volatile byte[] myStoredMD5 = null;
 	private Canvas myCanvas;
 	private Boolean myBackScreenIsActive;
 	private Book myCurrentBook;
 
-	@Override
-	public synchronized void repaint() {
-		if (myCanvas == null) {
-			Bitmap myBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
-			myBitmap.setDensity(BS_DENSITY);
-			myCanvas = new Canvas(myBitmap);
-		}
-		
-		draw(myCanvas);
-//		final byte[] currentMD5 = MD5(myBitmap);
-//		if (myStoredMD5 == null || !myStoredMD5.equals(currentMD5)) {
-//			getBSDrawer().drawBitmap(0, 0, myBitmap, BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
-//			myStoredMD5 = currentMD5;
+//	@Override
+//	public synchronized void repaint() {
+//		if (myCanvas == null) {
+//			Bitmap myBitmap = Bitmap.createBitmap(getWidth(), getHeight(),
+//					Bitmap.Config.RGB_565);
+//			myCanvas = createCanvas(myBitmap);
 //		}
-	}
-	
+//
+//		draw(myCanvas);
+//		// final byte[] currentMD5 = MD5(myBitmap);
+//		// if (myStoredMD5 == null || !myStoredMD5.equals(currentMD5)) {
+//		// getBSDrawer().drawBitmap(0, 0, myBitmap,
+//		// BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
+//		// myStoredMD5 = currentMD5;
+//		// }
+//	}
+
 	@Override
 	protected Canvas createCanvas(Bitmap bitmap) {
 		Canvas canvas = new Canvas(bitmap);
 		canvas.setDensity(getContext().getResources().getDisplayMetrics().densityDpi);
 		return canvas;
 	}
-	
+
 	public void setIsBsActive(boolean isActive) {
 		myBackScreenIsActive = isActive;
 	}
-	
+
 	public void setBook(Book book) {
 		myCurrentBook = book;
 	}
@@ -75,9 +83,8 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 		if (myBackScreenIsActive) {
 			super.onDraw(canvas);
 		} else {
-			if (myLastPaintWasActive == null ||
-				myLastPaintWasActive ||
-				!MiscUtil.equals(myCurrentBook, myLastBook)) {
+			if (myLastPaintWasActive == null || myLastPaintWasActive
+					|| !MiscUtil.equals(myCurrentBook, myLastBook)) {
 				drawCover(canvas, myCurrentBook);
 			}
 		}
@@ -96,17 +103,16 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 
 			if (image != null) {
 				if (image instanceof ZLLoadableImage) {
-					final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
+					final ZLLoadableImage loadableImage = (ZLLoadableImage) image;
 					if (!loadableImage.isSynchronized()) {
 						loadableImage.synchronize();
 					}
 				}
-				final ZLAndroidImageData data =
-					((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
+				final ZLAndroidImageData data = ((ZLAndroidImageManager) ZLAndroidImageManager
+						.Instance()).getImageData(image);
 				if (data != null) {
-					coverBitmap = data.getBitmap(
-						getWidth() - 20, getHeight() - 20
-					);
+					coverBitmap = data.getBitmap(getWidth() - 20,
+							getHeight() - 20);
 				}
 			}
 		}
@@ -114,20 +120,102 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 			coverBitmap = getDefaultCoverBitmap();
 		}
 
-		canvas.drawBitmap(
-			coverBitmap,
-			(getWidth() - coverBitmap.getWidth()) / 2,
-			(getHeight() - coverBitmap.getHeight()) / 2,
-			paint
-		);
+		canvas.drawBitmap(coverBitmap,
+				(getWidth() - coverBitmap.getWidth()) / 2,
+				(getHeight() - coverBitmap.getHeight()) / 2, paint);
 	}
 
 	private Bitmap getDefaultCoverBitmap() {
 		if (myDefaultCoverBitmap == null) {
-			myDefaultCoverBitmap = BitmapFactory.decodeResource(
-				getResources(), R.drawable.fbreader_256x256
-			);
+			myDefaultCoverBitmap = BitmapFactory.decodeResource(getResources(),
+					R.drawable.fbreader_256x256);
 		}
 		return myDefaultCoverBitmap;
 	}
+	
+    private static final String DEBUG_TAG = "motion";
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        //this.mDetector.onTouchEvent(event);
+        int action = event.getActionMasked();
+
+        switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+                Log.d(DEBUG_TAG,"Action was DOWN");
+                mStartX = event.getX();
+                mStartY = event.getY();
+                mIsGestureStart = true;
+                break;
+            case (MotionEvent.ACTION_MOVE) :
+                //Log.d(DEBUG_TAG,"Action was MOVE");
+                if (!mIsGestureStart) {
+                    mStartX = event.getX();
+                    mStartY = event.getY();
+                    mIsGestureStart = true;
+                }
+                break;
+            case (MotionEvent.ACTION_UP) :
+                float endX = event.getX();
+                float endY = event.getY();
+                Log.d(DEBUG_TAG,"Action was UP");
+                Log.d(DEBUG_TAG,String.format("x1:%s,y1:%s;x2:%s,y2:%s", mStartX, mStartY, endX, endY));
+                if (mIsGestureStart) {
+                    // is gesture horizontal
+                    if (Math.abs(mStartY - endY) < 200) {
+                        if ((mStartX - endX) > 200) {
+                            Log.d(DEBUG_TAG,"Gesture right to left");
+                        	turnPageStatic(true);
+                        }
+                        if ((endX - mStartX) > 200) {
+                            Log.d(DEBUG_TAG,"Gesture left to right");
+                            turnPageStatic(false);
+                        }
+                    }
+                }
+
+                mIsGestureStart = false;
+                break;
+            case (MotionEvent.ACTION_CANCEL) :
+                Log.d(DEBUG_TAG,"Action was CANCEL");
+                break;
+            case (MotionEvent.ACTION_OUTSIDE) :
+                Log.d(DEBUG_TAG,"Movement occurred outside bounds " +
+                        "of current screen element");
+                break;
+            default :
+                break;
+        }
+
+        return super.dispatchTouchEvent(event);
+    }
+
+	// class GestureListener extends GestureDetector.SimpleOnGestureListener {
+	// private static final String DEBUG_TAG = "Gestures";
+	//
+	//
+	// // @Override
+	// // public boolean onDown(MotionEvent event) {
+	// // Log.d(DEBUG_TAG, "onDown: " + event.toString());
+	// // return true;
+	// // }
+	//
+	// @Override
+	// public boolean onFling(MotionEvent event1, MotionEvent event2,
+	// float velocityX, float velocityY) {
+	// //Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
+	// Log.d(DEBUG_TAG, "onFling: vel X:" + velocityX + ", vel Y:" + velocityY);
+	// if (Math.abs(velocityX) < 1000) {
+	// }
+	// return true;
+	// }
+	//
+	// // @Override
+	// // public boolean onScroll(MotionEvent e1, MotionEvent e2, float
+	// distanceX,
+	// // float distanceY) {
+	// // Log.d(DEBUG_TAG, "onScroll: " + e1.toString()+e2.toString());
+	// // return true;
+	// // }
+	// }
 }
