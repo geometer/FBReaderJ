@@ -67,6 +67,11 @@ public abstract class ZLTextStyleEntry {
 			Size = size;
 			Unit = unit;
 		}
+
+		@Override
+		public String toString() {
+			return Size + "." + Unit;
+		}
 	}
 
 	private short myFeatureMask;
@@ -171,5 +176,19 @@ public abstract class ZLTextStyleEntry {
 			return ZLBoolean3.B3_UNDEFINED;
 		}
 		return (myFontModifiers & modifier) == 0 ? ZLBoolean3.B3_FALSE : ZLBoolean3.B3_TRUE;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder buffer = new StringBuilder("StyleEntry[");
+		buffer.append("features: ").append(myFeatureMask).append(";");
+		if (isFeatureSupported(Feature.LENGTH_SPACE_BEFORE)) {
+			buffer.append("space-before: ").append(myLengths[Feature.LENGTH_SPACE_BEFORE]).append(";");
+		}
+		if (isFeatureSupported(Feature.LENGTH_SPACE_AFTER)) {
+			buffer.append("space-after: ").append(myLengths[Feature.LENGTH_SPACE_AFTER]).append(";");
+		}
+		buffer.append("]");
+		return buffer.toString();
 	}
 }

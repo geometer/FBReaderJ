@@ -11,6 +11,8 @@ pre {
   font-family: Monospace;
   text-align: left;
   hyphens: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 code {

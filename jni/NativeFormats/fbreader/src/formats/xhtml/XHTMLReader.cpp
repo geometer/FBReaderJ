@@ -112,13 +112,6 @@ public:
 	void doAtEnd(XHTMLReader &reader);
 };
 
-class XHTMLTagRestartParagraphAction : public XHTMLTextModeTagAction {
-
-public:
-	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
-	void doAtEnd(XHTMLReader &reader);
-};
-
 class XHTMLTagVideoAction : public XHTMLTagAction {
 
 private:
@@ -320,16 +313,6 @@ void XHTMLTagBodyAction::doAtEnd(XHTMLReader &reader) {
 	}
 }
 
-void XHTMLTagRestartParagraphAction::doAtStart(XHTMLReader &reader, const char**) {
-	if (reader.myCurrentParagraphIsEmpty) {
-		bookReader(reader).addFixedHSpace(1);
-	}
-	reader.restartParagraph();
-}
-
-void XHTMLTagRestartParagraphAction::doAtEnd(XHTMLReader&) {
-}
-
 void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
 	endParagraph(reader);
 	// TODO: increase left indent
@@ -501,7 +484,6 @@ void XHTMLTagParagraphWithControlAction::doAtEnd(XHTMLReader &reader) {
 
 void XHTMLTagPreAction::doAtStart(XHTMLReader &reader, const char**) {
 	reader.myPreformatted = true;
-	reader.pushTextKind(XHTML_TAG_P);
 	reader.pushTextKind(PREFORMATTED);
 	beginParagraph(reader);
 }
@@ -593,7 +575,7 @@ void XHTMLReader::fillTagTable() {
 
 		//addAction("base", new XHTMLTagAction());
 		//addAction("blockquote", new XHTMLTagAction());
-		addAction("br", new XHTMLTagRestartParagraphAction());
+		//addAction("br", new XHTMLTagRestartParagraphAction());
 		//addAction("center", new XHTMLTagAction());
 		addAction("div", new XHTMLTagParagraphAction());
 		addAction("dt", new XHTMLTagParagraphAction());
@@ -623,6 +605,7 @@ void XHTMLReader::fillTagTable() {
 
 XHTMLReader::XHTMLReader(BookReader &modelReader, shared_ptr<EncryptionMap> map) : myModelReader(modelReader), myEncryptionMap(map) {
 	myMarkNextImageAsCover = false;
+	//ZLLogger::Instance().registerClass("XHTML");
 }
 
 void XHTMLReader::setMarkFirstImageAsCover() {
@@ -704,6 +687,12 @@ void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
 }
 
 void XHTMLReader::startElementHandler(const char *tag, const char **attributes) {
+	const std::string sTag = ZLUnicodeUtil::toLower(tag);
+	if (sTag == "br") {
+		restartParagraph();
+		return;
+	}
+
 	myTagDataStack.push_back(new TagData());
 
 	static const std::string HASH = "#";
@@ -711,8 +700,6 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 	if (id != 0) {
 		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
 	}
-
-	const std::string sTag = ZLUnicodeUtil::toLower(tag);
 
 	std::vector<std::string> classesList;
 	const char *aClasses = attributeValue(attributes, "class");
@@ -724,12 +711,9 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 			}
 		}
 	}
-	if (classesList.empty()) {
-		classesList.push_back("");
-	}
 
-	bool breakBefore = false;
-	myTagDataStack.back()->PageBreakAfter = false;
+	bool breakBefore = myStyleSheetTable.doBreakBefore(sTag, "");
+	myTagDataStack.back()->PageBreakAfter = myStyleSheetTable.doBreakAfter(sTag, "");
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
 		// TODO: use 3-value logic (yes, no, inherit)
 		if (myStyleSheetTable.doBreakBefore(sTag, *it)) {
@@ -764,14 +748,19 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 }
 
 void XHTMLReader::endElementHandler(const char *tag) {
-	for (int i = myTagDataStack.back()->StyleEntries.size(); i > 0; --i) {
-		myModelReader.addStyleCloseEntry();
+	const std::string sTag = ZLUnicodeUtil::toLower(tag);
+	if (sTag == "br") {
+		return;
 	}
 
-	XHTMLTagAction *action = getAction(tag);
+	XHTMLTagAction *action = getAction(sTag);
 	if (action != 0 && action->isEnabled(myReadState)) {
 		action->doAtEnd(*this);
 		myNewParagraphInProgress = false;
+	}
+
+	for (int i = myTagDataStack.back()->StyleEntries.size(); i > 0; --i) {
+		myModelReader.addStyleCloseEntry();
 	}
 
 	if (myTagDataStack.back()->PageBreakAfter) {
@@ -781,7 +770,7 @@ void XHTMLReader::endElementHandler(const char *tag) {
 	myTagDataStack.pop_back();
 }
 
-void XHTMLReader::beginParagraph() {
+void XHTMLReader::beginParagraph(bool restarted) {
 	myCurrentParagraphIsEmpty = true;
 	myModelReader.beginParagraph();
 	for (std::vector<shared_ptr<TagData> >::const_iterator it = myTagDataStack.begin(); it != myTagDataStack.end(); ++it) {
@@ -790,8 +779,10 @@ void XHTMLReader::beginParagraph() {
 			myModelReader.addControl(*jt, true);
 		}
 		const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = (*it)->StyleEntries;
+		bool inheritedOnly = !restarted || it + 1 != myTagDataStack.end();
 		for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
-			addTextStyleEntry(**jt);
+			shared_ptr<ZLTextStyleEntry> entry = inheritedOnly ? (*jt)->inherited() : *jt;
+			addTextStyleEntry(*entry);
 		}
 	}
 }
@@ -801,6 +792,9 @@ void XHTMLReader::endParagraph() {
 }
 
 void XHTMLReader::restartParagraph() {
+	if (myCurrentParagraphIsEmpty) {
+		myModelReader.addFixedHSpace(1);
+	}
 	ZLTextStyleEntry spaceAfterBlocker(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
 	spaceAfterBlocker.setLength(
 		ZLTextStyleEntry::LENGTH_SPACE_AFTER,
@@ -809,7 +803,7 @@ void XHTMLReader::restartParagraph() {
 	);
 	addTextStyleEntry(spaceAfterBlocker);
 	endParagraph();
-	beginParagraph();
+	beginParagraph(true);
 	ZLTextStyleEntry spaceBeforeBlocker(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
 	spaceBeforeBlocker.setLength(
 		ZLTextStyleEntry::LENGTH_SPACE_BEFORE,
@@ -838,9 +832,6 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 		case XHTML_READ_BODY:
 			if (myPreformatted) {
 				if (*text == '\r' || *text == '\n') {
-					if (myCurrentParagraphIsEmpty) {
-						myModelReader.addFixedHSpace(1);
-					}
 					restartParagraph();
 					text += 1;
 					len -= 1;

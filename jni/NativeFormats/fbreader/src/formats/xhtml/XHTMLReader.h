@@ -98,7 +98,7 @@ private:
 
 	bool processNamespaces() const;
 
-	void beginParagraph();
+	void beginParagraph(bool restarted = false);
 	void endParagraph();
 	void restartParagraph();
 	bool addTextStyleEntry(const std::string tag, const std::string aClass);
@@ -137,7 +137,6 @@ private:
 	friend class XHTMLTagParagraphWithControlAction;
 	friend class XHTMLTagControlAction;
 	friend class XHTMLTagBodyAction;
-	friend class XHTMLTagRestartParagraphAction;
 	friend class XHTMLTagImageAction;
 	friend class XHTMLTagVideoAction;
 	friend class XHTMLTagSourceAction;
