@@ -69,19 +69,22 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 			return Parent.getFontSize(metrics);
 		}
 
+		// Yes, Parent.Parent, not Parent (parent = current tag pre-defined size,
+		// we want to override it)
+		final int baseFontSize = Parent.Parent.getFontSize(metrics);
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
-				return Parent.Parent.getFontSize(metrics);
+				return baseFontSize;
 			}
 			if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
-				return Parent.Parent.getFontSize(metrics) * 120 / 100;
+				return baseFontSize * 120 / 100;
 			}
 			if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == ZLBoolean3.B3_TRUE) {
-				return Parent.Parent.getFontSize(metrics) * 100 / 120;
+				return baseFontSize * 100 / 120;
 			}
 		}
 		if (myEntry.isFeatureSupported(LENGTH_FONT_SIZE)) {
-			return myEntry.getLength(LENGTH_FONT_SIZE, metrics);
+			return myEntry.getLength(LENGTH_FONT_SIZE, metrics, baseFontSize);
 		}
 		return Parent.getFontSize(metrics);
 	}
@@ -153,26 +156,26 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		return Parent.getVerticalShift();
 	}
 	@Override
-	protected int getSpaceBeforeInternal(ZLTextMetrics metrics) {
-		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontFamilyOption.getValue()) {
+	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
 			return Parent.getSpaceBefore(metrics);
 		}
 
 		if (!myEntry.isFeatureSupported(LENGTH_SPACE_BEFORE)) {
 			return Parent.getSpaceBefore(metrics);
 		}
-		return myEntry.getLength(LENGTH_SPACE_BEFORE, metrics);
+		return myEntry.getLength(LENGTH_SPACE_BEFORE, metrics, fontSize);
 	}
 	@Override
-	protected int getSpaceAfterInternal(ZLTextMetrics metrics) {
-		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSFontFamilyOption.getValue()) {
+	protected int getSpaceAfterInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
 			return Parent.getSpaceAfter(metrics);
 		}
 
 		if (!myEntry.isFeatureSupported(LENGTH_SPACE_AFTER)) {
 			return Parent.getSpaceAfter(metrics);
 		}
-		return myEntry.getLength(LENGTH_SPACE_AFTER, metrics);
+		return myEntry.getLength(LENGTH_SPACE_AFTER, metrics, fontSize);
 	}
 	public byte getAlignment() {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSTextAlignmentOption.getValue()) {

@@ -645,8 +645,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				charsPerParagraph * 1.2f);
 
 		final int strHeight = getWordHeight() + getContext().getDescent();
-		final int effectiveHeight = (int) (textHeight - (getTextStyle().getSpaceBefore(metrics())
-				+ getTextStyle().getSpaceAfter(metrics())) / charsPerParagraph);
+		final int effectiveHeight = (int)
+			(textHeight -
+				(getTextStyle().getSpaceBefore(metrics())
+				+ getTextStyle().getSpaceAfter(metrics()) / 2) / charsPerParagraph);
 		final int linesPerPage = effectiveHeight / strHeight;
 
 		return charsPerLine * linesPerPage;

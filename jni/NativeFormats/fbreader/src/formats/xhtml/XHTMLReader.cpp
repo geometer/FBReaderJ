@@ -60,6 +60,10 @@ void XHTMLTagAction::endParagraph(XHTMLReader &reader) {
 	reader.endParagraph();
 }
 
+void XHTMLTagAction::restartParagraph(XHTMLReader &reader) {
+	reader.restartParagraph();
+}
+
 class XHTMLGlobalTagAction : public XHTMLTagAction {
 
 private:
@@ -96,7 +100,11 @@ public:
 
 class XHTMLTagParagraphAction : public XHTMLTextModeTagAction {
 
+private:
+	const FBTextKind myTextKind;
+
 public:
+	XHTMLTagParagraphAction(FBTextKind textKind = (FBTextKind)-1);
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
 	void doAtEnd(XHTMLReader &reader);
 };
@@ -286,8 +294,14 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 void XHTMLTagLinkAction::doAtEnd(XHTMLReader&) {
 }
 
+XHTMLTagParagraphAction::XHTMLTagParagraphAction(FBTextKind textKind) : myTextKind(textKind) {
+}
+
 void XHTMLTagParagraphAction::doAtStart(XHTMLReader &reader, const char**) {
 	if (!reader.myNewParagraphInProgress) {
+		if (myTextKind != -1) {
+			bookReader(reader).pushKind(myTextKind);
+		}
 		beginParagraph(reader);
 		reader.myNewParagraphInProgress = true;
 	}
@@ -295,6 +309,9 @@ void XHTMLTagParagraphAction::doAtStart(XHTMLReader &reader, const char**) {
 
 void XHTMLTagParagraphAction::doAtEnd(XHTMLReader &reader) {
 	endParagraph(reader);
+	if (myTextKind != -1) {
+		bookReader(reader).popKind();
+	}
 }
 
 void XHTMLTagBodyAction::doAtStart(XHTMLReader &reader, const char**) {
@@ -316,8 +333,7 @@ void XHTMLTagRestartParagraphAction::doAtStart(XHTMLReader &reader, const char**
 	if (reader.myCurrentParagraphIsEmpty) {
 		bookReader(reader).addFixedHSpace(1);
 	}
-	endParagraph(reader);
-	beginParagraph(reader);
+	restartParagraph(reader);
 }
 
 void XHTMLTagRestartParagraphAction::doAtEnd(XHTMLReader&) {
@@ -496,12 +512,15 @@ void XHTMLTagParagraphWithControlAction::doAtEnd(XHTMLReader &reader) {
 
 void XHTMLTagPreAction::doAtStart(XHTMLReader &reader, const char**) {
 	reader.myPreformatted = true;
+	bookReader(reader).pushKind(XHTML_TAG_P);
+	bookReader(reader).pushKind(PREFORMATTED);
 	beginParagraph(reader);
-	bookReader(reader).addControl(PREFORMATTED, true);
 }
 
 void XHTMLTagPreAction::doAtEnd(XHTMLReader &reader) {
 	endParagraph(reader);
+	bookReader(reader).popKind();
+	bookReader(reader).popKind();
 	reader.myPreformatted = false;
 }
 
@@ -543,7 +562,7 @@ void XHTMLReader::fillTagTable() {
 		//addAction("font", new XHTMLTagAction());
 		addAction("style", new XHTMLTagStyleAction());
 
-		addAction("p", new XHTMLTagParagraphAction());
+		addAction("p", new XHTMLTagParagraphAction(XHTML_TAG_P));
 		addAction("h1", new XHTMLTagParagraphWithControlAction(H1));
 		addAction("h2", new XHTMLTagParagraphWithControlAction(H2));
 		addAction("h3", new XHTMLTagParagraphWithControlAction(H3));
@@ -787,46 +806,36 @@ void XHTMLReader::endElementHandler(const char *tag) {
 void XHTMLReader::beginParagraph() {
 	myCurrentParagraphIsEmpty = true;
 	myModelReader.beginParagraph();
-	bool doBlockSpaceBefore = false;
 	for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator it = myStyleEntryStack.begin(); it != myStyleEntryStack.end(); ++it) {
 		addTextStyleEntry(**it);
-		doBlockSpaceBefore =
-			doBlockSpaceBefore ||
-			(*it)->isFeatureSupported(ZLTextStyleEntry::LENGTH_SPACE_BEFORE);
-	}
-
-	if (doBlockSpaceBefore) {
-		ZLTextStyleEntry blockingEntry(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
-		blockingEntry.setLength(
-			ZLTextStyleEntry::LENGTH_SPACE_BEFORE,
-			0,
-			ZLTextStyleEntry::SIZE_UNIT_PIXEL
-		);
-		addTextStyleEntry(blockingEntry);
 	}
 }
 
 void XHTMLReader::endParagraph() {
-	bool doBlockSpaceAfter = false;
-	for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator it = myStyleEntryStack.begin(); it != myStyleEntryStack.end() - myStylesToRemove; ++it) {
-		doBlockSpaceAfter =
-			doBlockSpaceAfter ||
-			(*it)->isFeatureSupported(ZLTextStyleEntry::LENGTH_SPACE_AFTER);
-	}
-	if (doBlockSpaceAfter) {
-		ZLTextStyleEntry blockingEntry(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
-		blockingEntry.setLength(
-			ZLTextStyleEntry::LENGTH_SPACE_AFTER,
-			0,
-			ZLTextStyleEntry::SIZE_UNIT_PIXEL
-		);
-		addTextStyleEntry(blockingEntry);
-	}
 	for (; myStylesToRemove > 0; --myStylesToRemove) {
 		addTextStyleEntry(*myStyleEntryStack.back());
 		myStyleEntryStack.pop_back();
 	}
 	myModelReader.endParagraph();
+}
+
+void XHTMLReader::restartParagraph() {
+	ZLTextStyleEntry spaceAfterBlocker(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
+	spaceAfterBlocker.setLength(
+		ZLTextStyleEntry::LENGTH_SPACE_AFTER,
+		0,
+		ZLTextStyleEntry::SIZE_UNIT_PIXEL
+	);
+	addTextStyleEntry(spaceAfterBlocker);
+	endParagraph();
+	beginParagraph();
+	ZLTextStyleEntry spaceBeforeBlocker(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
+	spaceBeforeBlocker.setLength(
+		ZLTextStyleEntry::LENGTH_SPACE_BEFORE,
+		0,
+		ZLTextStyleEntry::SIZE_UNIT_PIXEL
+	);
+	addTextStyleEntry(spaceBeforeBlocker);
 }
 
 void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
@@ -845,11 +854,9 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 					if (myCurrentParagraphIsEmpty) {
 						myModelReader.addFixedHSpace(1);
 					}
-					endParagraph();
+					restartParagraph();
 					text += 1;
 					len -= 1;
-					beginParagraph();
-					myModelReader.addControl(PREFORMATTED, true);
 				}
 				std::size_t spaceCounter = 0;
 				while (spaceCounter < len && std::isspace((unsigned char)*(text + spaceCounter))) {

@@ -52,14 +52,9 @@ abstract class ZLTextViewBase extends ZLView {
 		// be returned from this method enen in multi-thread environment
 		ZLTextMetrics m = myMetrics;
 		if (m == null) {
-			final ZLTextStyleCollection collection = getTextStyleCollection();
-			final ZLTextBaseStyle base = collection.getBaseStyle();
 			m = new ZLTextMetrics(
 				ZLibrary.Instance().getDisplayDPI(),
-				collection.getDefaultFontSize(),
-				base.getFontSize(),
-				// TODO: font X height
-				base.getFontSize() * 15 / 10,
+				getTextStyleCollection().getDefaultFontSize(),
 				// TODO: screen area width
 				100,
 				// TODO: screen area height
@@ -156,12 +151,18 @@ abstract class ZLTextViewBase extends ZLView {
 
 	private void applyControl(ZLTextControlElement control) {
 		if (control.IsStart) {
-			final ZLTextStyleDecoration decoration =
-				getTextStyleCollection().getDecoration(control.Kind);
-			if (control instanceof ZLTextHyperlinkControlElement) {
-				setTextStyle(decoration.createDecoratedStyle(myTextStyle, ((ZLTextHyperlinkControlElement)control).Hyperlink));
+			final ZLTextNGStyleDescription description =
+				getTextStyleCollection().getDescription(control.Kind);
+			if (description != null) {
+				setTextStyle(new ZLTextNGStyle(myTextStyle, description));
 			} else {
-				setTextStyle(decoration.createDecoratedStyle(myTextStyle));
+				final ZLTextStyleDecoration decoration =
+					getTextStyleCollection().getDecoration(control.Kind);
+				if (control instanceof ZLTextHyperlinkControlElement) {
+					setTextStyle(decoration.createDecoratedStyle(myTextStyle, ((ZLTextHyperlinkControlElement)control).Hyperlink));
+				} else {
+					setTextStyle(decoration.createDecoratedStyle(myTextStyle));
+				}
 			}
 		} else {
 			setTextStyle(myTextStyle.Parent);

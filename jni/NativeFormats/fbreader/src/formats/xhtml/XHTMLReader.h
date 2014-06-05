@@ -59,6 +59,7 @@ protected:
 	static const std::string &pathPrefix(XHTMLReader &reader);	
 	static void beginParagraph(XHTMLReader &reader);
 	static void endParagraph(XHTMLReader &reader);
+	static void restartParagraph(XHTMLReader &reader);
 };
 
 class XHTMLReader : public ZLXMLReader {
@@ -93,6 +94,7 @@ private:
 
 	void beginParagraph();
 	void endParagraph();
+	void restartParagraph();
 	bool addTextStyleEntry(const std::string tag, const std::string aClass);
 	void addTextStyleEntry(const ZLTextStyleEntry &entry);
 

@@ -54,12 +54,12 @@ public class ZLTextFullyDecoratedStyle extends ZLTextPartiallyDecoratedStyle {
 	}
 
 	@Override
-	protected int getSpaceBeforeInternal(ZLTextMetrics metrics) {
+	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
 		return myFullDecoration.SpaceBeforeOption.getValue();
 	}
 
 	@Override
-	protected int getSpaceAfterInternal(ZLTextMetrics metrics) {
+	protected int getSpaceAfterInternal(ZLTextMetrics metrics, int fontSize) {
 		return myFullDecoration.SpaceAfterOption.getValue();
 	}
 

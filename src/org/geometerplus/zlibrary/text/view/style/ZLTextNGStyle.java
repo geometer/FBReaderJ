@@ -19,31 +19,32 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
-import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
-class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
-	private final ZLTextStyleDecoration myDecoration;
+public class ZLTextNGStyle extends ZLTextDecoratedStyle {
+	private final ZLTextNGStyleDescription myDescription;
 
-	ZLTextPartiallyDecoratedStyle(ZLTextStyle parent, ZLTextStyleDecoration decoration, ZLTextHyperlink hyperlink) {
-		super(parent, hyperlink);
-		myDecoration = decoration;
+	public ZLTextNGStyle(ZLTextStyle parent, ZLTextNGStyleDescription description) {
+		super(parent, parent.Hyperlink);
+		myDescription = description;
 	}
 
 	@Override
 	protected List<FontEntry> getFontEntriesInternal() {
 		final List<FontEntry> parentEntries = Parent.getFontEntries();
-		final String decoratedValue = myDecoration.FontFamilyOption.getValue();
+		final String decoratedValue = myDescription.FontFamilyOption.getValue();
 		if ("".equals(decoratedValue)) {
 			return parentEntries;
 		}
 		final FontEntry e = FontEntry.systemEntry(decoratedValue);
-		if (e.equals(parentEntries.get(parentEntries.size() - 1))) {
+		if (parentEntries.size() > 0 && e.equals(parentEntries.get(0))) {
 			return parentEntries;
 		}
 		final List<FontEntry> entries = new ArrayList<FontEntry>(parentEntries.size() + 1);
@@ -54,12 +55,12 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 
 	@Override
 	protected int getFontSizeInternal(ZLTextMetrics metrics) {
-		return Parent.getFontSize(metrics) + myDecoration.FontSizeDeltaOption.getValue();
+		return myDescription.getFontSize(metrics, Parent.getFontSize(metrics));
 	}
 
 	@Override
 	protected boolean isBoldInternal() {
-		switch (myDecoration.BoldOption.getValue()) {
+		switch (myDescription.isBold()) {
 			case B3_TRUE:
 				return true;
 			case B3_FALSE:
@@ -68,10 +69,9 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 				return Parent.isBold();
 		}
 	}
-
 	@Override
 	protected boolean isItalicInternal() {
-		switch (myDecoration.ItalicOption.getValue()) {
+		switch (myDescription.isItalic()) {
 			case B3_TRUE:
 				return true;
 			case B3_FALSE:
@@ -80,10 +80,9 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 				return Parent.isItalic();
 		}
 	}
-
 	@Override
 	protected boolean isUnderlineInternal() {
-		switch (myDecoration.UnderlineOption.getValue()) {
+		switch (myDescription.isUnderlined()) {
 			case B3_TRUE:
 				return true;
 			case B3_FALSE:
@@ -92,10 +91,9 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 				return Parent.isUnderline();
 		}
 	}
-
 	@Override
 	protected boolean isStrikeThroughInternal() {
-		switch (myDecoration.StrikeThroughOption.getValue()) {
+		switch (myDescription.isStrikedThrough()) {
 			case B3_TRUE:
 				return true;
 			case B3_FALSE:
@@ -105,55 +103,59 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 		}
 	}
 
-	@Override
 	public int getLeftIndent() {
+		// TODO: implement
 		return Parent.getLeftIndent();
 	}
-
-	@Override
 	public int getRightIndent() {
+		// TODO: implement
 		return Parent.getRightIndent();
 	}
-
-	@Override
 	public int getFirstLineIndentDelta() {
+		// TODO: implement
 		return Parent.getFirstLineIndentDelta();
 	}
-
-	@Override
 	public int getLineSpacePercent() {
+		// TODO: implement
 		return Parent.getLineSpacePercent();
 	}
-
 	@Override
 	protected int getVerticalShiftInternal() {
-		return Parent.getVerticalShift() + myDecoration.VerticalShiftOption.getValue();
+		// TODO: implement
+		return Parent.getVerticalShift();
 	}
-
 	@Override
 	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
-		return Parent.getSpaceBefore(metrics);
+		return myDescription.getSpaceBefore(metrics, Parent.getSpaceBefore(metrics), fontSize);
 	}
-
 	@Override
 	protected int getSpaceAfterInternal(ZLTextMetrics metrics, int fontSize) {
-		return Parent.getSpaceAfter(metrics);
+		return myDescription.getSpaceAfter(metrics, Parent.getSpaceAfter(metrics), fontSize);
 	}
 
 	@Override
 	public byte getAlignment() {
+		final byte defined = myDescription.getAlignment();
+		if (defined != ZLTextAlignmentType.ALIGN_UNDEFINED) {
+			return defined;
+		}
 		return Parent.getAlignment();
 	}
 
 	@Override
 	public boolean allowHyphenations() {
-		switch (myDecoration.AllowHyphenationsOption.getValue()) {
-			case B3_FALSE:
-				return false;
+		switch (myDescription.allowHyphenations()) {
 			case B3_TRUE:
 				return true;
+			case B3_FALSE:
+				return false;
 			default:
 				return Parent.allowHyphenations();
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "ZLTextNGStyle[" + myDescription.Name + "]";
 	}
 }

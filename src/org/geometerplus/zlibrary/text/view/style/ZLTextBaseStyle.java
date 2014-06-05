@@ -37,6 +37,8 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 
 	public final ZLBooleanOption UseCSSTextAlignmentOption =
 		new ZLBooleanOption("Style", "css:textAlignment", true);
+	public final ZLBooleanOption UseCSSMarginsOption =
+		new ZLBooleanOption("Style", "css:margins", true);
 	public final ZLBooleanOption UseCSSFontSizeOption =
 		new ZLBooleanOption("Style", "css:fontSize", true);
 	public final ZLBooleanOption UseCSSFontFamilyOption =

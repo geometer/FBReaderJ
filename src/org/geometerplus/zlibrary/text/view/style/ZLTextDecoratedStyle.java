@@ -65,8 +65,8 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private void initMetricsCache(ZLTextMetrics metrics) {
 		myMetrics = metrics;
 		myFontSize = getFontSizeInternal(metrics);
-		mySpaceBefore = getSpaceBeforeInternal(metrics);
-		mySpaceAfter = getSpaceAfterInternal(metrics);
+		mySpaceBefore = getSpaceBeforeInternal(metrics, myFontSize);
+		mySpaceAfter = getSpaceAfterInternal(metrics, myFontSize);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		}
 		return mySpaceBefore;
 	}
-	protected abstract int getSpaceBeforeInternal(ZLTextMetrics metrics);
+	protected abstract int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize);
 
 	@Override
 	public final int getSpaceAfter(ZLTextMetrics metrics) {
@@ -103,7 +103,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		}
 		return mySpaceAfter;
 	}
-	protected abstract int getSpaceAfterInternal(ZLTextMetrics metrics);
+	protected abstract int getSpaceAfterInternal(ZLTextMetrics metrics, int fontSize);
 
 	@Override
 	public final boolean isItalic() {

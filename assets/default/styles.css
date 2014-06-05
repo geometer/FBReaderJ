@@ -1,0 +1,100 @@
+p {
+  fbreader-id: 51;
+  fbreader-name: xhtml-tag-p;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+pre {
+  fbreader-id: 9;
+  fbreader-name: "Preformatted text";
+  font-family: Monospace;
+  text-align: left;
+  hyphens: none;
+}
+
+code {
+  fbreader-id: 21;
+  fbreader-name: "Code";
+  font-family: Monospace;
+  hyphens: none;
+}
+
+h1 {
+  fbreader-id: 31;
+  fbreader-name: "Header 1";
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  hyphens: none;
+}
+
+h2 {
+  fbreader-id: 32;
+  fbreader-name: "Header 2";
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  hyphens: none;
+}
+
+h3 {
+  fbreader-id: 33;
+  fbreader-name: "Header 3";
+  font-size: 1.17em;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+h4 {
+  fbreader-id: 34;
+  fbreader-name: "Header 4";
+  font-weight: bold;
+  margin-top: 1.33em;
+  margin-bottom: 1.33em;
+}
+
+h5 {
+  fbreader-id: 35;
+  fbreader-name: "Header 5";
+  font-size: 0.83em;
+  font-weight: bold;
+  margin-top: 1.67em;
+  margin-bottom: 1.67em;
+}
+
+h6 {
+  fbreader-id: 36;
+  fbreader-name: "Header 6";
+  font-size: 0.67em;
+  font-weight: bold;
+  margin-top: 2.33em;
+  margin-bottom: 2.33em;
+}
+
+em {
+	fbreader-id: 17;
+	fbreader-name: "Emphasis";
+	font-style: italic;
+}
+
+strong {
+	fbreader-id: 18;
+	fbreader-name: "Strong";
+	font-weight: bold;
+}
+
+i {
+	fbreader-id: 27;
+	fbreader-name: "Italic";
+	font-style: italic;
+}
+
+b {
+	fbreader-id: 28;
+	fbreader-name: "Bold";
+	font-weight: bold;
+}
