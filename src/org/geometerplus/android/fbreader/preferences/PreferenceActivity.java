@@ -286,6 +286,16 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			FBTextKind.CODE
 		};
 		for (int i = 0; i < styles.length; ++i) {
+			final ZLTextNGStyleDescription description = collection.getDescription(styles[i]);
+			if (description != null) {
+				final Screen ngScreen = moreStylesScreen.createPreferenceScreen(description.Name);
+				ngScreen.addPreference(new FontPreference(
+					this, textScreen.Resource, "font",
+					description.FontFamilyOption, true
+				));
+				continue;
+			}
+
 			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
 			if (decoration == null) {
 				continue;
