@@ -37,6 +37,9 @@ public class ZLTextNGStyleDescription {
 	public final ZLStringOption HyphenationOption;
 	public final ZLStringOption MarginTopOption;
 	public final ZLStringOption MarginBottomOption;
+	public final ZLStringOption MarginLeftOption;
+	public final ZLStringOption MarginRightOption;
+	public final ZLStringOption TextIndentOption;
 	public final ZLStringOption AlignmentOption;
 	public final ZLStringOption VerticalAlignOption;
 
@@ -55,6 +58,9 @@ public class ZLTextNGStyleDescription {
 		HyphenationOption = createOption(selector, "hyphens", valueMap);
 		MarginTopOption = createOption(selector, "margin-top", valueMap);
 		MarginBottomOption = createOption(selector, "margin-bottom", valueMap);
+		MarginLeftOption = createOption(selector, "margin-left", valueMap);
+		MarginRightOption = createOption(selector, "margin-right", valueMap);
+		TextIndentOption = createOption(selector, "text-indent", valueMap);
 		AlignmentOption = createOption(selector, "text-align", valueMap);
 		VerticalAlignOption = createOption(selector, "vertical-align", valueMap);
 	}
@@ -76,6 +82,39 @@ public class ZLTextNGStyleDescription {
 		}
 		return ZLTextStyleEntry.compute(
 			// TODO: add new length for vertical alignment
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+		);
+	}
+
+	int getLeftIndent(ZLTextMetrics metrics, int base, int fontSize) {
+		final ZLTextStyleEntry.Length length = parseLength(MarginLeftOption.getValue());
+		if (length == null) {
+			return base;
+		}
+		return ZLTextStyleEntry.compute(
+			// TODO: add new length for line indent
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+		);
+	}
+
+	int getRightIndent(ZLTextMetrics metrics, int base, int fontSize) {
+		final ZLTextStyleEntry.Length length = parseLength(MarginRightOption.getValue());
+		if (length == null) {
+			return base;
+		}
+		return ZLTextStyleEntry.compute(
+			// TODO: add new length for line indent
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+		);
+	}
+
+	int getFirstLineIndent(ZLTextMetrics metrics, int base, int fontSize) {
+		final ZLTextStyleEntry.Length length = parseLength(TextIndentOption.getValue());
+		if (length == null) {
+			return base;
+		}
+		return ZLTextStyleEntry.compute(
+			// TODO: add new length for line indent
 			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
 		);
 	}

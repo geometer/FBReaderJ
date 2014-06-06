@@ -104,17 +104,17 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 		}
 	}
 
-	public int getLeftIndent() {
-		// TODO: implement
-		return Parent.getLeftIndent();
+	@Override
+	public int getLeftIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDescription.getLeftIndent(metrics, Parent.getLeftIndent(metrics), fontSize);
 	}
-	public int getRightIndent() {
-		// TODO: implement
-		return Parent.getRightIndent();
+	@Override
+	public int getRightIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDescription.getRightIndent(metrics, Parent.getRightIndent(metrics), fontSize);
 	}
-	public int getFirstLineIndentDelta() {
-		// TODO: implement
-		return Parent.getFirstLineIndentDelta();
+	@Override
+	public int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDescription.getFirstLineIndent(metrics, Parent.getFirstLineIndent(metrics), fontSize);
 	}
 	public int getLineSpacePercent() {
 		// TODO: implement
