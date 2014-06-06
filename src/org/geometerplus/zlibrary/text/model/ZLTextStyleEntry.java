@@ -121,12 +121,9 @@ public abstract class ZLTextStyleEntry {
 		switch (length.Unit) {
 			default:
 			case SizeUnit.PIXEL:
-				return length.Size * baseFontSize / metrics.DefaultFontSize;
-			// we understand "point" as "1/2 point"
+				return length.Size;
 			case SizeUnit.POINT:
-				return length.Size
-					* metrics.DPI * baseFontSize
-					/ 72 / metrics.DefaultFontSize / 2;
+				return length.Size * metrics.DPI / 72;
 			case SizeUnit.EM_100:
 				return (length.Size * baseFontSize + 50) / 100;
 			case SizeUnit.EX_100:
