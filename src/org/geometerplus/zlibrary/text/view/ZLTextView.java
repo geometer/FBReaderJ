@@ -1061,9 +1061,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		ZLTextStyle storedStyle = getTextStyle();
 
-		info.LeftIndent = getTextStyle().getLeftIndent(metrics());
+		info.LeftIndent = storedStyle.getLeftIndent(metrics());
 		if (isFirstLine) {
-			info.LeftIndent = getTextStyle().getFirstLineIndent(metrics());
+			info.LeftIndent += storedStyle.getFirstLineIndent(metrics());
 		}
 
 		info.Width = info.LeftIndent;
@@ -1077,7 +1077,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int newWidth = info.Width;
 		int newHeight = info.Height;
 		int newDescent = info.Descent;
-		int maxWidth = page.getTextWidth();
+		int maxWidth = page.getTextWidth() - storedStyle.getRightIndent(metrics());
 		boolean wordOccurred = false;
 		boolean isVisible = false;
 		int lastSpaceWidth = 0;
