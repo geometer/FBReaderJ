@@ -155,6 +155,12 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
+	public boolean allowMicroTypography() {
+		// TODO: implement
+		return Parent.allowMicroTypography();
+	}
+
+	@Override
 	public String toString() {
 		return "ZLTextNGStyle[" + myDescription.Name + "]";
 	}
