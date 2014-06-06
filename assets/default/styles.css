@@ -1,8 +1,17 @@
+* {
+  fbreader-id: 0;
+  fbreader-name: "Regular Paragraph";
+	text-indent: 16pt;
+	hyphens: auto;
+}
+
 p {
   fbreader-id: 51;
   fbreader-name: xhtml-tag-p;
+	text-indent: 16pt;
   margin-top: 1em;
   margin-bottom: 1em;
+	hyphens: auto;
 }
 
 title {
@@ -165,6 +174,7 @@ pre {
   fbreader-name: "Preformatted text";
   font-family: Monospace;
   text-align: left;
+	text-indent: 0px;
   hyphens: none;
   margin-top: 1em;
   margin-bottom: 1em;
