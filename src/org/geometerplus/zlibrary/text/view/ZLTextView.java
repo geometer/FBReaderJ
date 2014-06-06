@@ -1064,9 +1064,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		ZLTextStyle storedStyle = getTextStyle();
 
-		info.LeftIndent = getTextStyle().getLeftIndent();
+		info.LeftIndent = getTextStyle().getLeftIndent(metrics());
 		if (isFirstLine) {
-			info.LeftIndent += getTextStyle().getFirstLineIndentDelta();
+			info.LeftIndent = getTextStyle().getFirstLineIndent(metrics());
 		}
 
 		ZLTextElement first = getFirst(paragraphCursor, info.StartElementIndex);
@@ -1357,14 +1357,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int maxWidth = page.getTextWidth();
 		switch (getTextStyle().getAlignment()) {
 			case ZLTextAlignmentType.ALIGN_RIGHT:
-				x += maxWidth - getTextStyle().getRightIndent() - info.Width;
+				x += maxWidth - getTextStyle().getRightIndent(metrics()) - info.Width;
 				break;
 			case ZLTextAlignmentType.ALIGN_CENTER:
-				x += (maxWidth - getTextStyle().getRightIndent() - info.Width) / 2;
+				x += (maxWidth - getTextStyle().getRightIndent(metrics()) - info.Width) / 2;
 				break;
 			case ZLTextAlignmentType.ALIGN_JUSTIFY:
 				if (!endOfParagraph && (paragraphCursor.getElement(info.EndElementIndex) != ZLTextElement.AfterParagraph)) {
-					fullCorrection = maxWidth - getTextStyle().getRightIndent() - info.Width;
+					fullCorrection = maxWidth - getTextStyle().getRightIndent(metrics()) - info.Width;
 				}
 				break;
 			case ZLTextAlignmentType.ALIGN_LEFT:

@@ -134,17 +134,20 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		}
 	}
 
-	public int getLeftIndent() {
+	@Override
+	public int getLeftIndentInternal(ZLTextMetrics metrics, int fontSize) {
 		// TODO: implement
-		return Parent.getLeftIndent();
+		return Parent.getLeftIndent(metrics);
 	}
-	public int getRightIndent() {
+	@Override
+	public int getRightIndentInternal(ZLTextMetrics metrics, int fontSize) {
 		// TODO: implement
-		return Parent.getRightIndent();
+		return Parent.getRightIndent(metrics);
 	}
-	public int getFirstLineIndentDelta() {
+	@Override
+	public int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {
 		// TODO: implement
-		return Parent.getFirstLineIndentDelta();
+		return Parent.getFirstLineIndent(metrics);
 	}
 	public int getLineSpacePercent() {
 		// TODO: implement

@@ -111,17 +111,17 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	}
 
 	@Override
-	public int getLeftIndent() {
+	public int getLeftIndent(ZLTextMetrics metrics) {
 		return 0;
 	}
 
 	@Override
-	public int getRightIndent() {
+	public int getRightIndent(ZLTextMetrics metrics) {
 		return 0;
 	}
 
 	@Override
-	public int getFirstLineIndentDelta() {
+	public int getFirstLineIndent(ZLTextMetrics metrics) {
 		return 0;
 	}
 

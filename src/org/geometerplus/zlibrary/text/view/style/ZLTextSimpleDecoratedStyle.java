@@ -124,18 +124,18 @@ public class ZLTextSimpleDecoratedStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
-	public int getLeftIndent() {
-		return Parent.getLeftIndent() + myDecoration.LeftIndentOption.getValue();
+	public int getLeftIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		return Parent.getLeftIndent(metrics) + myDecoration.LeftIndentOption.getValue();
 	}
 
 	@Override
-	public int getRightIndent() {
-		return Parent.getRightIndent() + myDecoration.RightIndentOption.getValue();
+	public int getRightIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		return Parent.getRightIndent(metrics) + myDecoration.RightIndentOption.getValue();
 	}
 
 	@Override
-	public int getFirstLineIndentDelta() {
-		return (getAlignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : Parent.getFirstLineIndentDelta() + myDecoration.FirstLineIndentDeltaOption.getValue();
+	public int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		return getAlignment() == ZLTextAlignmentType.ALIGN_CENTER ? 0 : Parent.getFirstLineIndent(metrics) + myDecoration.FirstLineIndentDeltaOption.getValue();
 	}
 
 	@Override
