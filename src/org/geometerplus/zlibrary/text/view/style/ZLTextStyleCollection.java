@@ -33,7 +33,6 @@ public class ZLTextStyleCollection {
 	private ZLTextBaseStyle myBaseStyle;
 	private final List<ZLTextNGStyleDescription> myDescriptionList;
 	private final ZLTextNGStyleDescription[] myDescriptionMap = new ZLTextNGStyleDescription[256];
-	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
 	public ZLTextStyleCollection(String screen) {
 		Screen = screen;
@@ -64,10 +63,6 @@ public class ZLTextStyleCollection {
 		return myDescriptionMap[kind & 0xFF];
 	}
 
-	public ZLTextStyleDecoration getDecoration(byte kind) {
-		return myDecorationMap[kind & 0xFF];
-	}
-
 	private class TextStyleReader extends ZLXMLReaderAdapter {
 		private final int myDpi = ZLibrary.Instance().getDisplayDPI();
 
@@ -77,77 +72,21 @@ public class ZLTextStyleCollection {
 		}
 
 		private int intValue(ZLStringMap attributes, String name, int defaultValue) {
-			int i = defaultValue;
-			String value = attributes.getValue(name);
+			final String value = attributes.getValue(name);
 			if (value != null) {
-				if (value.startsWith("dpi*")) {
-					try {
-						final float coe = Float.parseFloat(value.substring(4));
-						i = (int)(coe * myDpi + .5f);
-					} catch (NumberFormatException e) {
-					}
-				} else {
-					try {
-						i = Integer.parseInt(value);
-					} catch (NumberFormatException e) {
-					}
+				try {
+					return Integer.parseInt(value);
+				} catch (NumberFormatException e) {
 				}
 			}
-			return i;
-		}
-
-		private boolean booleanValue(ZLStringMap attributes, String name) {
-			return "true".equals(attributes.getValue(name));
-		}
-
-		private ZLBoolean3 b3Value(ZLStringMap attributes, String name) {
-			return ZLBoolean3.getByName(attributes.getValue(name));
+			return defaultValue;
 		}
 
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			final String BASE = "base";
-			final String STYLE = "style";
-
-			if (BASE.equals(tag)) {
-				if (Screen.equals(attributes.getValue("screen"))) {
-					myDefaultFontSize = intValue(attributes, "fontSize", 0);
-					myBaseStyle = new ZLTextBaseStyle(Screen, attributes.getValue("family"), myDefaultFontSize);
-				}
-			} else if (STYLE.equals(tag)) {
-				String idString = attributes.getValue("id");
-				String name = attributes.getValue("name");
-				if (idString != null && name != null) {
-					byte id = Byte.parseByte(idString);
-
-					final int fontSizeDelta = intValue(attributes, "fontSizeDelta", 0);
-					final ZLBoolean3 bold = b3Value(attributes, "bold");
-					final ZLBoolean3 italic = b3Value(attributes, "italic");
-					final ZLBoolean3 allowHyphenations = b3Value(attributes, "allowHyphenations");
-
-					int spaceBefore = intValue(attributes, "spaceBefore", 0);
-					int spaceAfter = intValue(attributes, "spaceAfter", 0);
-					int leftIndent = intValue(attributes, "leftIndent", 0);
-					int rightIndent = intValue(attributes, "rightIndent", 0);
-					int firstLineIndentDelta = intValue(attributes, "firstLineIndentDelta", 0);
-
-					byte alignment = ZLTextAlignmentType.ALIGN_UNDEFINED;
-					String alignmentString = attributes.getValue("alignment");
-					if (alignmentString != null) {
-						if (alignmentString.equals("left")) {
-							alignment = ZLTextAlignmentType.ALIGN_LEFT;
-						} else if (alignmentString.equals("right")) {
-							alignment = ZLTextAlignmentType.ALIGN_RIGHT;
-						} else if (alignmentString.equals("center")) {
-							alignment = ZLTextAlignmentType.ALIGN_CENTER;
-						} else if (alignmentString.equals("justify")) {
-							alignment = ZLTextAlignmentType.ALIGN_JUSTIFY;
-						}
-					}
-					final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
-
-					myDecorationMap[id & 0xFF] = new ZLTextStyleDecoration(name, null, fontSizeDelta, bold, italic, ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, 0, alignment, lineSpacePercent, allowHyphenations);
-				}
+			if ("base".equals(tag) && Screen.equals(attributes.getValue("screen"))) {
+				myDefaultFontSize = intValue(attributes, "fontSize", 0);
+				myBaseStyle = new ZLTextBaseStyle(Screen, attributes.getValue("family"), myDefaultFontSize);
 			}
 			return false;
 		}
