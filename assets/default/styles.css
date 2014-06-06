@@ -96,11 +96,54 @@ h6 {
 	margin-bottom: 2.33em;
 }
 
+annotation {
+	fbreader-id: 5;
+	fbreader-name: "Annotation";
+	font-size: 0.91em;
+	text-indent: 16pt;
+	hyphens: auto;
+}
+
+epigraph {
+	fbreader-id: 6;
+	fbreader-name: "Epigraph";
+	font-size: 0.91em;
+	font-style: italic;
+	margin-left: 64pt;
+	hyphens: auto;
+}
+
+author {
+	fbreader-id: 13;
+	fbreader-name: "Author";
+	margin-left: 32pt;
+	hyphens: none;
+}
+
+poem {
+	fbreader-id: 3;
+	fbreader-name: "Poem Title";
+	font-size: 1.09em;
+	font-weight: bold;
+	margin-top: 0.25em;
+	margin-bottom: 0.25em;
+	margin-left: 48pt;
+	hyphens: none;
+}
+
 stanza {
 	fbreader-id: 7;
 	fbreader-name: "Stanza";
 	margin-top: 0.3em;
 	margin-bottom: 0.3em;
+	text-align: left;
+	hyphens: none;
+}
+
+verse {
+	fbreader-id: 8;
+	fbreader-name: "Verse";
+	margin-left: 32pt;
 	text-align: left;
 	hyphens: none;
 }
@@ -214,4 +257,11 @@ image {
 	fbreader-name: "Image";
 	margin-top: 0.4em;
 	text-align: center;
+}
+
+date {
+	fbreader-id: 14;
+	fbreader-name: "Date";
+	margin-left: 48pt;
+	hyphens: none;
 }

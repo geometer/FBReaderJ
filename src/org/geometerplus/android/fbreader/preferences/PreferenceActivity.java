@@ -265,32 +265,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen moreStylesScreen = textScreen.createPreferenceScreen("more");
 
-		byte styles[] = {
-			FBTextKind.REGULAR,
-			//FBTextKind.XHTML_TAG_P,
-			//FBTextKind.TITLE,
-			//FBTextKind.SECTION_TITLE,
-			//FBTextKind.SUBTITLE,
-			//FBTextKind.H1,
-			//FBTextKind.H2,
-			//FBTextKind.H3,
-			//FBTextKind.H4,
-			//FBTextKind.H5,
-			//FBTextKind.H6,
-			FBTextKind.ANNOTATION,
-			FBTextKind.EPIGRAPH,
-			FBTextKind.AUTHOR,
-			FBTextKind.POEM_TITLE,
-			//FBTextKind.STANZA,
-			FBTextKind.VERSE,
-			//FBTextKind.CITE,
-		};
-		for (int i = 0; i < styles.length; ++i) {
-			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
-			if (decoration == null) {
-				continue;
-			}
-
+		/*
 			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.Name);
 			formatScreen.addPreference(new FontPreference(
 				this, textScreen.Resource, "font",
@@ -359,7 +334,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				this, textScreen.Resource, "lineSpacing",
 				spacePercentOption, spacingValues, spacingKeys
 			));
-		}
+		*/
 
 		for (ZLTextNGStyleDescription description : collection.getDescriptionList()) {
 			final Screen ngScreen = moreStylesScreen.createPreferenceScreen(description.Name);
