@@ -646,8 +646,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				charsPerParagraph * 1.2f);
 
 		final int strHeight = getWordHeight() + getContext().getDescent();
-		final int effectiveHeight = (int) (textHeight - (getTextStyle().getSpaceBefore()
-				+ getTextStyle().getSpaceAfter()) / charsPerParagraph);
+		final int effectiveHeight = (int)
+			(textHeight -
+				(getTextStyle().getSpaceBefore(metrics())
+				+ getTextStyle().getSpaceAfter(metrics()) / 2) / charsPerParagraph);
 		final int linesPerPage = effectiveHeight / strHeight;
 
 		return charsPerLine * linesPerPage;
@@ -891,7 +893,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					setTextStyle(area.Style);
 				}
 				final int areaX = area.XStart;
-				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalShift();
+				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalAlign(metrics());
 				if (element instanceof ZLTextWord) {
 					drawWord(
 						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
@@ -952,7 +954,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			final int len = info.EndCharIndex - start;
 			final ZLTextWord word = (ZLTextWord)paragraph.getElement(info.EndElementIndex);
 			drawWord(
-				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalShift(),
+				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalAlign(metrics()),
 				word, start, len, area.AddHyphenationSign,
 				mySelection.isAreaSelected(area)
 					? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
@@ -1223,10 +1225,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		setTextStyle(storedStyle);
 
 		if (isFirstLine) {
-			info.Height += info.StartStyle.getSpaceBefore();
+			info.Height += info.StartStyle.getSpaceBefore(metrics());
 		}
 		if (info.isEndOfParagraph()) {
-			info.VSpaceAfter = getTextStyle().getSpaceAfter();
+			info.VSpaceAfter = getTextStyle().getSpaceAfter(metrics());
 		}
 
 		if (info.EndElementIndex != endIndex || endIndex == info.ParagraphCursorLength) {
