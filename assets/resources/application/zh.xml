@@ -451,6 +451,9 @@
 				<node name="Regular Paragraph" value="连续段落">
 					<node name="summary" value=""/>
 				</node>
+				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
+				</node>
 				<node name="Title" value="书名">
 					<node name="summary" value=""/>
 				</node>
