@@ -33,6 +33,7 @@ public class ZLTextNGStyleDescription {
 	public final ZLStringOption FontSizeOption;
 	public final ZLStringOption FontWeightOption;
 	public final ZLStringOption FontStyleOption;
+	public final ZLStringOption TextDecorationOption;
 	public final ZLStringOption HyphenationOption;
 	public final ZLStringOption MarginTopOption;
 	public final ZLStringOption MarginBottomOption;
@@ -49,6 +50,7 @@ public class ZLTextNGStyleDescription {
 		FontSizeOption = createOption(selector, "font-size", valueMap);
 		FontWeightOption = createOption(selector, "font-weight", valueMap);
 		FontStyleOption = createOption(selector, "font-style", valueMap);
+		TextDecorationOption = createOption(selector, "text-decoration", valueMap);
 		HyphenationOption = createOption(selector, "hyphens", valueMap);
 		MarginTopOption = createOption(selector, "margin-top", valueMap);
 		MarginBottomOption = createOption(selector, "margin-bottom", valueMap);
@@ -106,10 +108,24 @@ public class ZLTextNGStyleDescription {
 		}
 	}
 	ZLBoolean3 isUnderlined() {
-		return ZLBoolean3.B3_UNDEFINED;
+		final String textDecoration = TextDecorationOption.getValue();
+		if ("underline".equals(textDecoration)) {
+			return ZLBoolean3.B3_TRUE;
+		} else if ("".equals(textDecoration)) {
+			return ZLBoolean3.B3_UNDEFINED;
+		} else {
+			return ZLBoolean3.B3_FALSE;
+		}
 	}
 	ZLBoolean3 isStrikedThrough() {
-		return ZLBoolean3.B3_UNDEFINED;
+		final String textDecoration = TextDecorationOption.getValue();
+		if ("line-through".equals(textDecoration)) {
+			return ZLBoolean3.B3_TRUE;
+		} else if ("".equals(textDecoration)) {
+			return ZLBoolean3.B3_UNDEFINED;
+		} else {
+			return ZLBoolean3.B3_FALSE;
+		}
 	}
 
 	byte getAlignment() {
