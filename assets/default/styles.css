@@ -1,14 +1,14 @@
 * {
 	fbreader-id: 0;
 	fbreader-name: "Regular Paragraph";
-	text-indent: 8pt;
+	text-indent: 10pt;
 	hyphens: auto;
 }
 
 p {
 	fbreader-id: 51;
 	fbreader-name: xhtml-tag-p;
-	text-indent: 8pt;
+	text-indent: 10pt;
 	margin-top: 1em;
 	margin-bottom: 1em;
 	hyphens: auto;
@@ -100,7 +100,7 @@ annotation {
 	fbreader-id: 5;
 	fbreader-name: "Annotation";
 	font-size: 0.91em;
-	text-indent: 8pt;
+	text-indent: 10pt;
 	hyphens: auto;
 }
 
@@ -109,14 +109,14 @@ epigraph {
 	fbreader-name: "Epigraph";
 	font-size: 0.91em;
 	font-style: italic;
-	margin-left: 32pt;
+	margin-left: 40pt;
 	hyphens: auto;
 }
 
 author {
 	fbreader-id: 13;
 	fbreader-name: "Author";
-	margin-left: 16pt;
+	margin-left: 20pt;
 	hyphens: none;
 }
 
@@ -127,7 +127,7 @@ poem {
 	font-weight: bold;
 	margin-top: 0.25em;
 	margin-bottom: 0.25em;
-	margin-left: 24pt;
+	margin-left: 30pt;
 	hyphens: none;
 }
 
@@ -143,7 +143,7 @@ stanza {
 verse {
 	fbreader-id: 8;
 	fbreader-name: "Verse";
-	margin-left: 16pt;
+	margin-left: 20pt;
 	text-align: left;
 	hyphens: none;
 }
@@ -261,6 +261,6 @@ image {
 date {
 	fbreader-id: 14;
 	fbreader-name: "Date";
-	margin-left: 24pt;
+	margin-left: 30pt;
 	hyphens: none;
 }
