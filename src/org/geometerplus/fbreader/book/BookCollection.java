@@ -178,7 +178,7 @@ public class BookCollection extends AbstractBookCollection {
 		synchronized (myBooksByFile) {
 			final Book existing = myBooksByFile.get(book.File);
 			if (existing == null) {
-				if (book.getId() == -1 && !book.save(myDatabase, true)) {	
+				if (book.getId() == -1 && !book.save(myDatabase, true)) {
 					return false;
 				}
 
@@ -197,7 +197,7 @@ public class BookCollection extends AbstractBookCollection {
 				return true;
 			} else if (force) {
 				existing.updateFrom(book);
-				if (existing.save(myDatabase, false)) {	
+				if (existing.save(myDatabase, false)) {
 					fireBookEvent(BookEvent.Updated, existing);
 					return true;
 				}
@@ -634,7 +634,7 @@ public class BookCollection extends AbstractBookCollection {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean saveCover(Book book, String url) {
 		if (getBookById(book.getId()) == null) {
