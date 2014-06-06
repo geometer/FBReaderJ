@@ -563,6 +563,10 @@
 				<node name="summaryOn" value="使用CSS中定义的文字排列"/>
 				<node name="summaryOff" value="忽略CSS中定义的文字排列"/>
 			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="colors" value="颜色 &amp; 墙纸">
 			<node name="summary" value="设置颜色"/>

@@ -70,6 +70,7 @@ public class OEBPlugin extends JavaFormatPlugin {
 	public void readModel(BookModel model) throws BookReadingException {
 		model.Book.File.setCached(true);
 		new OEBBookReader(model).readBook(getOpfFile(model.Book.File));
+		model.Book.File.setCached(false);
 	}
 
 	@Override
