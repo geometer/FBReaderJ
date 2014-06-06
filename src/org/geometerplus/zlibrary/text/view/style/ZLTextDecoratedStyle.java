@@ -35,11 +35,13 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private boolean myIsBold;
 	private boolean myIsUnderline;
 	private boolean myIsStrikeThrough;
-	private int myVerticalShift;
 
 	private boolean myIsNotCached = true;
 
 	private int myFontSize;
+	private int mySpaceBefore;
+	private int mySpaceAfter;
+	private int myVerticalAlign;
 	private ZLTextMetrics myMetrics;
 
 	protected ZLTextDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
@@ -55,7 +57,6 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		myIsBold = isBoldInternal();
 		myIsUnderline = isUnderlineInternal();
 		myIsStrikeThrough = isStrikeThroughInternal();
-		myVerticalShift = getVerticalShiftInternal();
 
 		myIsNotCached = false;
 	}
@@ -63,6 +64,9 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private void initMetricsCache(ZLTextMetrics metrics) {
 		myMetrics = metrics;
 		myFontSize = getFontSizeInternal(metrics);
+		mySpaceBefore = getSpaceBeforeInternal(metrics, myFontSize);
+		mySpaceAfter = getSpaceAfterInternal(metrics, myFontSize);
+		myVerticalAlign = getVerticalAlignInternal(metrics, myFontSize);
 	}
 
 	@Override
@@ -82,6 +86,24 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		return myFontSize;
 	}
 	protected abstract int getFontSizeInternal(ZLTextMetrics metrics);
+
+	@Override
+	public final int getSpaceBefore(ZLTextMetrics metrics) {
+		if (!metrics.equals(myMetrics)) {
+			initMetricsCache(metrics);
+		}
+		return mySpaceBefore;
+	}
+	protected abstract int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize);
+
+	@Override
+	public final int getSpaceAfter(ZLTextMetrics metrics) {
+		if (!metrics.equals(myMetrics)) {
+			initMetricsCache(metrics);
+		}
+		return mySpaceAfter;
+	}
+	protected abstract int getSpaceAfterInternal(ZLTextMetrics metrics, int fontSize);
 
 	@Override
 	public final boolean isItalic() {
@@ -120,11 +142,11 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	protected abstract boolean isStrikeThroughInternal();
 
 	@Override
-	public final int getVerticalShift() {
-		if (myIsNotCached) {
-			initCache();
+	public final int getVerticalAlign(ZLTextMetrics metrics) {
+		if (!metrics.equals(myMetrics)) {
+			initMetricsCache(metrics);
 		}
-		return myVerticalShift;
+		return myVerticalAlign;
 	}
-	protected abstract int getVerticalShiftInternal();
+	protected abstract int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize);
 }

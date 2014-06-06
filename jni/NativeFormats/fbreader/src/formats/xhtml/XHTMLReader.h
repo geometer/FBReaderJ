@@ -30,6 +30,7 @@
 
 #include "../css/StyleSheetTable.h"
 #include "../css/StyleSheetParser.h"
+#include "../../bookmodel/FBTextKind.h"
 
 class ZLFile;
 
@@ -59,6 +60,12 @@ protected:
 	static const std::string &pathPrefix(XHTMLReader &reader);	
 	static void beginParagraph(XHTMLReader &reader);
 	static void endParagraph(XHTMLReader &reader);
+};
+
+struct TagData {
+	std::vector<FBTextKind> TextKinds;
+	std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
+	bool PageBreakAfter;
 };
 
 class XHTMLReader : public ZLXMLReader {
@@ -91,10 +98,13 @@ private:
 
 	bool processNamespaces() const;
 
-	void beginParagraph();
+	void beginParagraph(bool restarted = false);
 	void endParagraph();
+	void restartParagraph();
 	bool addTextStyleEntry(const std::string tag, const std::string aClass);
 	void addTextStyleEntry(const ZLTextStyleEntry &entry);
+
+	void pushTextKind(FBTextKind kind);
 
 private:
 	mutable std::map<std::string,std::string> myFileNumbers;
@@ -108,10 +118,7 @@ private:
 	bool myNewParagraphInProgress;
 	StyleSheetTable myStyleSheetTable;
 	shared_ptr<FontMap> myFontMap;
-	std::vector<int> myCSSStack;
-	std::vector<shared_ptr<ZLTextStyleEntry> > myStyleEntryStack;
-	int myStylesToRemove;
-	std::vector<bool> myDoPageBreakAfterStack;
+	std::vector<shared_ptr<TagData> > myTagDataStack;
 	bool myCurrentParagraphIsEmpty;
 	shared_ptr<StyleSheetSingleStyleParser> myStyleParser;
 	shared_ptr<StyleSheetTableParser> myTableParser;
@@ -127,8 +134,9 @@ private:
 	friend class XHTMLTagHyperlinkAction;
 	friend class XHTMLTagPreAction;
 	friend class XHTMLTagParagraphAction;
+	friend class XHTMLTagParagraphWithControlAction;
+	friend class XHTMLTagControlAction;
 	friend class XHTMLTagBodyAction;
-	friend class XHTMLTagRestartParagraphAction;
 	friend class XHTMLTagImageAction;
 	friend class XHTMLTagVideoAction;
 	friend class XHTMLTagSourceAction;

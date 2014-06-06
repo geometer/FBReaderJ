@@ -47,19 +47,14 @@ abstract class ZLTextViewBase extends ZLView {
 		myMetrics = null;
 	}
 
-	private ZLTextMetrics metrics() {
+	protected ZLTextMetrics metrics() {
 		// this local variable is used to guarantee null will not
 		// be returned from this method enen in multi-thread environment
 		ZLTextMetrics m = myMetrics;
 		if (m == null) {
-			final ZLTextStyleCollection collection = getTextStyleCollection();
-			final ZLTextBaseStyle base = collection.getBaseStyle();
 			m = new ZLTextMetrics(
 				ZLibrary.Instance().getDisplayDPI(),
-				collection.getDefaultFontSize(),
-				base.getFontSize(),
-				// TODO: font X height
-				base.getFontSize() * 15 / 10,
+				getTextStyleCollection().getDefaultFontSize(),
 				// TODO: screen area width
 				100,
 				// TODO: screen area height
@@ -73,7 +68,7 @@ abstract class ZLTextViewBase extends ZLView {
 	final int getWordHeight() {
 		if (myWordHeight == -1) {
 			final ZLTextStyle textStyle = myTextStyle;
-			myWordHeight = getContext().getStringHeight() * textStyle.getLineSpacePercent() / 100 + textStyle.getVerticalShift();
+			myWordHeight = getContext().getStringHeight() * textStyle.getLineSpacePercent() / 100 + textStyle.getVerticalAlign(metrics());
 		}
 		return myWordHeight;
 	}
@@ -156,12 +151,16 @@ abstract class ZLTextViewBase extends ZLView {
 
 	private void applyControl(ZLTextControlElement control) {
 		if (control.IsStart) {
-			final ZLTextStyleDecoration decoration =
-				getTextStyleCollection().getDecoration(control.Kind);
-			if (control instanceof ZLTextHyperlinkControlElement) {
-				setTextStyle(decoration.createDecoratedStyle(myTextStyle, ((ZLTextHyperlinkControlElement)control).Hyperlink));
+			final ZLTextHyperlink hyperlink = control instanceof ZLTextHyperlinkControlElement
+				? ((ZLTextHyperlinkControlElement)control).Hyperlink : null;
+			final ZLTextNGStyleDescription description =
+				getTextStyleCollection().getDescription(control.Kind);
+			if (description != null) {
+				setTextStyle(new ZLTextNGStyle(myTextStyle, description, hyperlink));
 			} else {
-				setTextStyle(decoration.createDecoratedStyle(myTextStyle));
+				final ZLTextStyleDecoration decoration =
+					getTextStyleCollection().getDecoration(control.Kind);
+				setTextStyle(new ZLTextSimpleDecoratedStyle(myTextStyle, decoration, hyperlink));
 			}
 		} else {
 			setTextStyle(myTextStyle.Parent);
@@ -212,7 +211,8 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	final int getElementHeight(ZLTextElement element) {
-		if (element instanceof ZLTextWord) {
+		if (element instanceof ZLTextWord ||
+			element instanceof ZLTextFixedHSpaceElement) {
 			return getWordHeight();
 		} else if (element instanceof ZLTextImageElement) {
 			final ZLTextImageElement imageElement = (ZLTextImageElement)element;

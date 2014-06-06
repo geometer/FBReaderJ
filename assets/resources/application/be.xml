@@ -579,6 +579,10 @@
 				<node name="summaryOn" value="Ужыць раўнаваньне тэксту з CSS"/>
 				<node name="summaryOff" value="Праіґнараваць раўнаваньне тэксту з CSS"/>
 			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="colors" value="Колеры й шпалеры">
 			<node name="summary" value="Налады колераў"/>
