@@ -59,13 +59,18 @@ public abstract class ZLTextStyleEntry {
 		byte PERCENT                          = 4;
 	}
 
-	private class Length {
+	public static class Length {
 		public final short Size;
 		public final byte Unit;
 
-		Length(short size, byte unit) {
+		public Length(short size, byte unit) {
 			Size = size;
 			Unit = unit;
+		}
+
+		@Override
+		public String toString() {
+			return Size + "." + Unit;
 		}
 	}
 
@@ -93,7 +98,7 @@ public abstract class ZLTextStyleEntry {
 		myLengths[featureId] = new Length(size, unit);
 	}
 
-	private int fullSize(ZLTextMetrics metrics, int featureId) {
+	private static int fullSize(ZLTextMetrics metrics, int fontSize, int featureId) {
 		switch (featureId) {
 			default:
 			case Feature.LENGTH_LEFT_INDENT:
@@ -104,26 +109,31 @@ public abstract class ZLTextStyleEntry {
 			case Feature.LENGTH_SPACE_AFTER:
 				return metrics.FullHeight;
 			case Feature.LENGTH_FONT_SIZE:
-				return metrics.FontSize;
+				return fontSize;
 		}
 	}
 
-	public final int getLength(int featureId, ZLTextMetrics metrics) {
-		switch (myLengths[featureId].Unit) {
+	public final int getLength(int featureId, ZLTextMetrics metrics, int baseFontSize) {
+		return compute(myLengths[featureId], metrics, baseFontSize, featureId);
+	}
+
+	public static int compute(Length length, ZLTextMetrics metrics, int baseFontSize, int featureId) {
+		switch (length.Unit) {
 			default:
 			case SizeUnit.PIXEL:
-				return myLengths[featureId].Size * metrics.FontSize / metrics.DefaultFontSize;
+				return length.Size * baseFontSize / metrics.DefaultFontSize;
 			// we understand "point" as "1/2 point"
 			case SizeUnit.POINT:
-				return myLengths[featureId].Size
-					* metrics.DPI * metrics.FontSize
+				return length.Size
+					* metrics.DPI * baseFontSize
 					/ 72 / metrics.DefaultFontSize / 2;
 			case SizeUnit.EM_100:
-				return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
+				return (length.Size * baseFontSize + 50) / 100;
 			case SizeUnit.EX_100:
-				return (myLengths[featureId].Size * metrics.FontXHeight + 50) / 100;
+				// TODO 1.5 font size => height of X
+				return (length.Size * baseFontSize * 3 / 2 + 50) / 100;
 			case SizeUnit.PERCENT:
-				return (myLengths[featureId].Size * fullSize(metrics, featureId) + 50) / 100;
+				return (length.Size * fullSize(metrics, baseFontSize, featureId) + 50) / 100;
 		}
 	}
 
@@ -166,5 +176,19 @@ public abstract class ZLTextStyleEntry {
 			return ZLBoolean3.B3_UNDEFINED;
 		}
 		return (myFontModifiers & modifier) == 0 ? ZLBoolean3.B3_FALSE : ZLBoolean3.B3_TRUE;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder buffer = new StringBuilder("StyleEntry[");
+		buffer.append("features: ").append(myFeatureMask).append(";");
+		if (isFeatureSupported(Feature.LENGTH_SPACE_BEFORE)) {
+			buffer.append("space-before: ").append(myLengths[Feature.LENGTH_SPACE_BEFORE]).append(";");
+		}
+		if (isFeatureSupported(Feature.LENGTH_SPACE_AFTER)) {
+			buffer.append("space-after: ").append(myLengths[Feature.LENGTH_SPACE_AFTER]).append(";");
+		}
+		buffer.append("]");
+		return buffer.toString();
 	}
 }
