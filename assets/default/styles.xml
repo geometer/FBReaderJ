@@ -3,25 +3,14 @@
 	<base screen="Base" family="sans-serif" fontSize="18"/>
 	<base screen="Yota" family="PT Sans" fontSize="21"/>
 	<style id="0" name="Regular Paragraph" firstLineIndentDelta="dpi*0.12" allowHyphenations="true"/>
-	<style id="1" name="Title" fontSizeDelta="10" bold="true" spaceBefore="2" spaceAfter="7" alignment="center" allowHyphenations="false"/>
 	<style id="3" name="Poem Title" fontSizeDelta="2" bold="true" spaceBefore="6" spaceAfter="6" leftIndent="40" allowHyphenations="false"/>
-	<style id="2" name="Section Title" fontSizeDelta="6" bold="true" spaceAfter="5" alignment="center" allowHyphenations="false"/>
 	<style id="5" name="Annotation" fontSizeDelta="-2" firstLineIndentDelta="dpi*0.12" allowHyphenations="true"/>
 	<style id="6" name="Epigraph" fontSizeDelta="-2" italic="true" leftIndent="80" allowHyphenations="true"/>
-	<style id="4" name="Subtitle" bold="true" allowHyphenations="true"/>
 	<style id="13" name="Author" leftIndent="20" allowHyphenations="false"/>
 	<style id="14" name="Date" leftIndent="40" allowHyphenations="false"/>
-	<style id="7" name="Stanza" spaceBefore="6" spaceAfter="6" alignment="left" allowHyphenations="false"/>
 	<style id="8" name="Verse" leftIndent="20" alignment="left" allowHyphenations="false"/>
-	<style id="10" name="Image" spaceBefore="8" alignment="center"/>
 
-	<style id="12" partial="true" name="Cite" italic="true"/>
-	<style id="15" partial="true" name="Internal Hyperlink" allowHyphenations="false" underline="true"/>
-	<style id="37" partial="true" name="External Hyperlink" allowHyphenations="false" underline="true"/>
 	<style id="16" partial="true" name="Footnote" fontSizeDelta="-5" vShift="7" allowHyphenations="false"/>
-	<style id="29" partial="true" name="Definition" italic="true"/>
-	<style id="30" partial="true" name="Definition Description" italic="true"/>
 	<style id="19" partial="true" name="Subscript" fontSizeDelta="-4" vShift="-4" allowHyphenations="false"/>
 	<style id="20" partial="true" name="Superscript" fontSizeDelta="-4" vShift="10" allowHyphenations="false"/>
-	<style id="22" partial="true" name="StrikeThrough" strikeThrough="true"/>
 </DefaultStyles>
