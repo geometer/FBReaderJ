@@ -5,23 +5,6 @@ p {
   margin-bottom: 1em;
 }
 
-pre {
-  fbreader-id: 9;
-  fbreader-name: "Preformatted text";
-  font-family: Monospace;
-  text-align: left;
-  hyphens: none;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-code {
-  fbreader-id: 21;
-  fbreader-name: "Code";
-  font-family: Monospace;
-  hyphens: none;
-}
-
 title {
 	fbreader-id: 1;
 	fbreader-name: Title;
@@ -47,22 +30,6 @@ subtitle {
 	fbreader-id: 4;
 	fbreader-name: "Subtitle";
 	font-weight: bold;
-}
-
-stanza {
-	fbreader-id: 7;
-	fbreader-name: "Stanza";
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
-	text-align: left;
-	hyphens: none;
-}
-
-image {
-	fbreader-id: 10;
-	fbreader-name: "Image";
-	margin-top: 0.4em;
-	text-align: center;
 }
 
 h1 {
@@ -120,21 +87,52 @@ h6 {
   margin-bottom: 2.33em;
 }
 
-em {
-	fbreader-id: 17;
-	fbreader-name: "Emphasis";
+stanza {
+	fbreader-id: 7;
+	fbreader-name: "Stanza";
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	text-align: left;
+	hyphens: none;
+}
+
+cite {
+	fbreader-id: 12;
+	fbreader-name: "Cite";
 	font-style: italic;
 }
 
-strong {
-	fbreader-id: 18;
-	fbreader-name: "Strong";
-	font-weight: bold;
+a.internal {
+	fbreader-id: 15;
+	fbreader-name: "Internal Hyperlink";
+	hyphens: none;
+	text-decoration: underline;
+}
+
+a.external {
+	fbreader-id: 37;
+	fbreader-name: "External Hyperlink";
+	hyphens: none;
+	text-decoration: underline;
+}
+
+footnote {
+	fbreader-id: 16;
+	fbreader-name: "Footnote";
+	font-size: 0.7em;
+	vertical-align: 0.5em;
+	hyphens: none;
 }
 
 i {
 	fbreader-id: 27;
 	fbreader-name: "Italic";
+	font-style: italic;
+}
+
+em {
+	fbreader-id: 17;
+	fbreader-name: "Emphasis";
 	font-style: italic;
 }
 
@@ -144,29 +142,10 @@ b {
 	font-weight: bold;
 }
 
-a.internal {
-	fbreader-id: 15;
-	fbreader-name: "Internal Hyperlink";
-	hyphens: none;
-}
-
-a.internal {
-	fbreader-id: 37;
-	fbreader-name: "External Hyperlink";
-	hyphens: none;
-	text-decoration: underline;
-}
-
-strike {
-	fbreader-id: 22;
-	fbreader-name: "StrikeThrough";
-	text-decoration: line-through;
-}
-
-cite {
-	fbreader-id: 12;
-	fbreader-name: "Cite";
-	font-style: italic;
+strong {
+	fbreader-id: 18;
+	fbreader-name: "Strong";
+	font-weight: bold;
 }
 
 dfn {
@@ -181,12 +160,27 @@ dd {
 	font-style: italic;
 }
 
-footnote {
-	fbreader-id: 16;
-	fbreader-name: "Footnote";
-	font-size: 0.7em;
-	vertical-align: 0.5em;
-	hyphens: none;
+pre {
+  fbreader-id: 9;
+  fbreader-name: "Preformatted text";
+  font-family: Monospace;
+  text-align: left;
+  hyphens: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+code {
+  fbreader-id: 21;
+  fbreader-name: "Code";
+  font-family: Monospace;
+  hyphens: none;
+}
+
+strike {
+	fbreader-id: 22;
+	fbreader-name: "StrikeThrough";
+	text-decoration: line-through;
 }
 
 sup {
@@ -203,4 +197,11 @@ sub {
 	font-size: 0.7em;
 	vertical-align: -0.5em;
 	hyphens: none;
+}
+
+image {
+	fbreader-id: 10;
+	fbreader-name: "Image";
+	margin-top: 0.4em;
+	text-align: center;
 }
