@@ -578,6 +578,10 @@
 				<node name="summaryOn" value="Подравни текста, според указанията в CSS"/>
 				<node name="summaryOff" value="Игнорирай подравняването на текста, указано в CSS"/>
 			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="colors" value="Цветове и тапети">
 			<node name="summary" value="Настройки на цвета"/>

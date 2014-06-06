@@ -566,6 +566,10 @@
 				<node name="summaryOn" value="Appliquer l'alignement du texte défini dans le CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignorer l'alignement du texte défini dans le CSS" toBeTranslated="true"/>
 			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="colors" value="Couleurs &amp; fonds d'écran">
 			<node name="summary" value="Paramètres des couleurs"/>

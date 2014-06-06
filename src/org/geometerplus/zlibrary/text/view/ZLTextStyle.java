@@ -45,9 +45,9 @@ public abstract class ZLTextStyle {
 	public abstract int getRightIndent();
 	public abstract int getFirstLineIndentDelta();
 	public abstract int getLineSpacePercent();
-	public abstract int getVerticalShift();
-	public abstract int getSpaceBefore();
-	public abstract int getSpaceAfter();
+	public abstract int getVerticalAlign(ZLTextMetrics metrics);
+	public abstract int getSpaceBefore(ZLTextMetrics metrics);
+	public abstract int getSpaceAfter(ZLTextMetrics metrics);
 	public abstract byte getAlignment();
 
 	public abstract boolean allowHyphenations();

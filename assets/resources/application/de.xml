@@ -578,6 +578,10 @@
 				<node name="summaryOn" value="Verwende in CSS definierte Ausrichtung"/>
 				<node name="summaryOff" value="Ignoriere in CSS definierte Ausrichtung"/>
 			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="colors" value="Farben &amp; Hintergründe">
 			<node name="summary" value="Farben festlegen"/>

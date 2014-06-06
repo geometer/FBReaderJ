@@ -563,6 +563,10 @@
 				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
 			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="colors" value="Χρώματα &amp; Φόντα">
 			<node name="summary" value="Επιλογή χρωμάτων."/>
