@@ -579,6 +579,10 @@
 				<node name="summaryOn" value="Aplica l'alineació del text definida en CSS"/>
 				<node name="summaryOff" value="Ignora l'alineació del text definida en CSS"/>
 			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="colors" value="Colors i fons de pantalla">
 			<node name="summary" value="Configuració de color"/>

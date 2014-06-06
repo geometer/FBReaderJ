@@ -23,6 +23,8 @@
 #include <string>
 #include <vector>
 
+#include <shared_ptr.h>
+
 #include <ZLTextParagraph.h>
 #include <ZLTextAlignmentType.h>
 #include <ZLBoolean3.h>
@@ -98,6 +100,8 @@ public:
 
 	const std::vector<std::string> &fontFamilies() const;
 	void setFontFamilies(const std::vector<std::string> &fontFamilies);
+
+	shared_ptr<ZLTextStyleEntry> inherited() const;
 
 private:
 	const unsigned char myEntryKind;
