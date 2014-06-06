@@ -92,8 +92,7 @@ public class ZLTextNGStyleDescription {
 			return base;
 		}
 		return ZLTextStyleEntry.compute(
-			// TODO: add new length for line indent
-			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_LEFT_INDENT
 		);
 	}
 
@@ -103,8 +102,7 @@ public class ZLTextNGStyleDescription {
 			return base;
 		}
 		return ZLTextStyleEntry.compute(
-			// TODO: add new length for line indent
-			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_RIGHT_INDENT
 		);
 	}
 
@@ -114,8 +112,7 @@ public class ZLTextNGStyleDescription {
 			return base;
 		}
 		return ZLTextStyleEntry.compute(
-			// TODO: add new length for line indent
-			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FIRST_LINE_INDENT
 		);
 	}
 
