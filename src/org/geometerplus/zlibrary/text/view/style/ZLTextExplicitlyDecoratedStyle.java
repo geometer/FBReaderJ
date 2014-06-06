@@ -136,18 +136,36 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 
 	@Override
 	public int getLeftIndentInternal(ZLTextMetrics metrics, int fontSize) {
-		// TODO: implement
-		return Parent.getLeftIndent(metrics);
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getLeftIndent(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_LEFT_INDENT)) {
+			return Parent.getLeftIndent(metrics);
+		}
+		return myEntry.getLength(LENGTH_LEFT_INDENT, metrics, fontSize);
 	}
 	@Override
 	public int getRightIndentInternal(ZLTextMetrics metrics, int fontSize) {
-		// TODO: implement
-		return Parent.getRightIndent(metrics);
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getRightIndent(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_RIGHT_INDENT)) {
+			return Parent.getRightIndent(metrics);
+		}
+		return myEntry.getLength(LENGTH_RIGHT_INDENT, metrics, fontSize);
 	}
 	@Override
 	public int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {
-		// TODO: implement
-		return Parent.getFirstLineIndent(metrics);
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getFirstLineIndent(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_FIRST_LINE_INDENT)) {
+			return Parent.getFirstLineIndent(metrics);
+		}
+		return myEntry.getLength(LENGTH_FIRST_LINE_INDENT, metrics, fontSize);
 	}
 	public int getLineSpacePercent() {
 		// TODO: implement
