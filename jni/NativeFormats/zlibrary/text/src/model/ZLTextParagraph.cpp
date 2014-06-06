@@ -45,7 +45,7 @@ short ZLTextStyleEntry::length(Feature featureId, const Metrics &metrics) const 
 				default:
 				case LENGTH_LEFT_INDENT:
 				case LENGTH_RIGHT_INDENT:
-				case LENGTH_FIRST_LINE_INDENT_DELTA:
+				case LENGTH_FIRST_LINE_INDENT:
 					return (myLengths[featureId].Size * metrics.FullWidth + 50) / 100;
 				case LENGTH_SPACE_BEFORE:
 				case LENGTH_SPACE_AFTER:
