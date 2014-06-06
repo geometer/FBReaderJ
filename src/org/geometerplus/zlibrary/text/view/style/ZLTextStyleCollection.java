@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
-import java.util.Map;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -31,6 +31,7 @@ public class ZLTextStyleCollection {
 	public final String Screen;
 	private int myDefaultFontSize;
 	private ZLTextBaseStyle myBaseStyle;
+	private final List<ZLTextNGStyleDescription> myDescriptionList;
 	private final ZLTextNGStyleDescription[] myDescriptionMap = new ZLTextNGStyleDescription[256];
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
@@ -38,6 +39,9 @@ public class ZLTextStyleCollection {
 		Screen = screen;
 		final Map<Integer,ZLTextNGStyleDescription> descriptions =
 			new SimpleCSSReader().read(ZLResourceFile.createResourceFile("default/styles.css"));
+		myDescriptionList = Collections.unmodifiableList(
+			new ArrayList<ZLTextNGStyleDescription>(descriptions.values())
+		);
 		for (Map.Entry<Integer,ZLTextNGStyleDescription> entry : descriptions.entrySet()) {
 			myDescriptionMap[entry.getKey() & 0xFF] = entry.getValue();
 		}
@@ -50,6 +54,10 @@ public class ZLTextStyleCollection {
 
 	public ZLTextBaseStyle getBaseStyle() {
 		return myBaseStyle;
+	}
+
+	public List<ZLTextNGStyleDescription> getDescriptionList() {
+		return myDescriptionList;
 	}
 
 	public ZLTextNGStyleDescription getDescription(byte kind) {
