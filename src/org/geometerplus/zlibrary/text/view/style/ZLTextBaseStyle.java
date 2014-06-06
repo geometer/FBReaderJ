@@ -131,7 +131,7 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	}
 
 	@Override
-	public int getVerticalShift() {
+	public int getVerticalAlign(ZLTextMetrics metrics) {
 		return 0;
 	}
 

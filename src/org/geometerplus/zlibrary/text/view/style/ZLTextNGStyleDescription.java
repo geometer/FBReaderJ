@@ -38,6 +38,7 @@ public class ZLTextNGStyleDescription {
 	public final ZLStringOption MarginTopOption;
 	public final ZLStringOption MarginBottomOption;
 	public final ZLStringOption AlignmentOption;
+	public final ZLStringOption VerticalAlignOption;
 
 	private static ZLStringOption createOption(String selector, String name, Map<String,String> valueMap) {
 		return new ZLStringOption("Style", selector + "::" + name, valueMap.get(name));
@@ -55,6 +56,7 @@ public class ZLTextNGStyleDescription {
 		MarginTopOption = createOption(selector, "margin-top", valueMap);
 		MarginBottomOption = createOption(selector, "margin-bottom", valueMap);
 		AlignmentOption = createOption(selector, "text-align", valueMap);
+		VerticalAlignOption = createOption(selector, "vertical-align", valueMap);
 	}
 
 	int getFontSize(ZLTextMetrics metrics, int baseFontSize) {
@@ -64,6 +66,17 @@ public class ZLTextNGStyleDescription {
 		}
 		return ZLTextStyleEntry.compute(
 			length, metrics, baseFontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+		);
+	}
+
+	int getVerticalAlign(ZLTextMetrics metrics, int base, int fontSize) {
+		final ZLTextStyleEntry.Length length = parseLength(VerticalAlignOption.getValue());
+		if (length == null) {
+			return base;
+		}
+		return ZLTextStyleEntry.compute(
+			// TODO: add new length for vertical alignment
+			length, metrics, fontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
 		);
 	}
 

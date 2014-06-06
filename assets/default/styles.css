@@ -180,3 +180,27 @@ dd {
 	fbreader-name: "Definition Description";
 	font-style: italic;
 }
+
+footnote {
+	fbreader-id: 16;
+	fbreader-name: "Footnote";
+	font-size: 0.7em;
+	vertical-align: 0.5em;
+	hyphens: none;
+}
+
+sup {
+	fbreader-id: 20;
+	fbreader-name: "Superscript";
+	font-size: 0.7em;
+	vertical-align: 0.5em;
+	hyphens: none;
+}
+
+sub {
+	fbreader-id: 19;
+	fbreader-name: "Subscript";
+	font-size: 0.7em;
+	vertical-align: -0.5em;
+	hyphens: none;
+}

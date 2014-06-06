@@ -151,9 +151,9 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		return Parent.getLineSpacePercent();
 	}
 	@Override
-	protected int getVerticalShiftInternal() {
+	protected int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize) {
 		// TODO: implement
-		return Parent.getVerticalShift();
+		return Parent.getVerticalAlign(metrics);
 	}
 	@Override
 	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {

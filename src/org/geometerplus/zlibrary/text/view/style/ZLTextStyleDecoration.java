@@ -34,12 +34,12 @@ public class ZLTextStyleDecoration {
 	public final ZLBoolean3Option ItalicOption;
 	public final ZLBoolean3Option UnderlineOption;
 	public final ZLBoolean3Option StrikeThroughOption;
-	public final ZLIntegerOption VerticalShiftOption;
+	public final ZLIntegerOption VerticalAlignOption;
 	public final ZLBoolean3Option AllowHyphenationsOption;
 
 	private final String myName;
 
-	public ZLTextStyleDecoration(String name, String fontFamily, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int verticalShift, ZLBoolean3 allowHyphenations) {
+	public ZLTextStyleDecoration(String name, String fontFamily, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int verticalAlign, ZLBoolean3 allowHyphenations) {
 		myName = name;
 		FontFamilyOption = new ZLStringOption(STYLE, name + ":fontFamily", fontFamily);
 		FontSizeDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
@@ -47,7 +47,7 @@ public class ZLTextStyleDecoration {
 		ItalicOption = new ZLBoolean3Option(STYLE, name + ":italic", italic);
 		UnderlineOption = new ZLBoolean3Option(STYLE, name + ":underline", underline);
 		StrikeThroughOption = new ZLBoolean3Option(STYLE, name + ":strikeThrough", strikeThrough);
-		VerticalShiftOption = new ZLIntegerOption(STYLE, name + ":vShift", verticalShift);
+		VerticalAlignOption = new ZLIntegerOption(STYLE, name + ":vShift", verticalAlign);
 		AllowHyphenationsOption = new ZLBoolean3Option(STYLE, name + ":allowHyphenations", allowHyphenations);
 	}
 

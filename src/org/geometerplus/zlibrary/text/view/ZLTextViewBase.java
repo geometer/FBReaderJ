@@ -68,7 +68,7 @@ abstract class ZLTextViewBase extends ZLView {
 	final int getWordHeight() {
 		if (myWordHeight == -1) {
 			final ZLTextStyle textStyle = myTextStyle;
-			myWordHeight = getContext().getStringHeight() * textStyle.getLineSpacePercent() / 100 + textStyle.getVerticalShift();
+			myWordHeight = getContext().getStringHeight() * textStyle.getLineSpacePercent() / 100 + textStyle.getVerticalAlign(metrics());
 		}
 		return myWordHeight;
 	}
@@ -154,7 +154,11 @@ abstract class ZLTextViewBase extends ZLView {
 			final ZLTextNGStyleDescription description =
 				getTextStyleCollection().getDescription(control.Kind);
 			if (description != null) {
-				setTextStyle(new ZLTextNGStyle(myTextStyle, description));
+				if (control instanceof ZLTextHyperlinkControlElement) {
+					setTextStyle(new ZLTextNGStyle(myTextStyle, description, ((ZLTextHyperlinkControlElement)control).Hyperlink));
+				} else {
+					setTextStyle(new ZLTextNGStyle(myTextStyle, description, null));
+				}
 			} else {
 				final ZLTextStyleDecoration decoration =
 					getTextStyleCollection().getDecoration(control.Kind);

@@ -32,7 +32,7 @@ public class ZLTextStyleCollection {
 	private int myDefaultFontSize;
 	private ZLTextBaseStyle myBaseStyle;
 	private final ZLTextNGStyleDescription[] myDescriptionMap = new ZLTextNGStyleDescription[256];
-	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
+	private final ZLTextFullStyleDecoration[] myDecorationMap = new ZLTextFullStyleDecoration[256];
 
 	public ZLTextStyleCollection(String screen) {
 		Screen = screen;
@@ -56,7 +56,7 @@ public class ZLTextStyleCollection {
 		return myDescriptionMap[kind & 0xFF];
 	}
 
-	public ZLTextStyleDecoration getDecoration(byte kind) {
+	public ZLTextFullStyleDecoration getDecoration(byte kind) {
 		return myDecorationMap[kind & 0xFF];
 	}
 
@@ -109,45 +109,36 @@ public class ZLTextStyleCollection {
 			} else if (STYLE.equals(tag)) {
 				String idString = attributes.getValue("id");
 				String name = attributes.getValue("name");
-				if ((idString != null) && (name != null)) {
+				if (idString != null && name != null) {
 					byte id = Byte.parseByte(idString);
-					ZLTextStyleDecoration decoration;
 
-					final String fontFamily = attributes.getValue("family");
 					final int fontSizeDelta = intValue(attributes, "fontSizeDelta", 0);
 					final ZLBoolean3 bold = b3Value(attributes, "bold");
 					final ZLBoolean3 italic = b3Value(attributes, "italic");
-					final int verticalShift = intValue(attributes, "vShift", 0);
 					final ZLBoolean3 allowHyphenations = b3Value(attributes, "allowHyphenations");
 
-					if (booleanValue(attributes, "partial")) {
-						decoration = new ZLTextStyleDecoration(name, fontFamily, fontSizeDelta, bold, italic, ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED, verticalShift, allowHyphenations);
-					} else {
-						int spaceBefore = intValue(attributes, "spaceBefore", 0);
-						int spaceAfter = intValue(attributes, "spaceAfter", 0);
-						int leftIndent = intValue(attributes, "leftIndent", 0);
-						int rightIndent = intValue(attributes, "rightIndent", 0);
-						int firstLineIndentDelta = intValue(attributes, "firstLineIndentDelta", 0);
+					int spaceBefore = intValue(attributes, "spaceBefore", 0);
+					int spaceAfter = intValue(attributes, "spaceAfter", 0);
+					int leftIndent = intValue(attributes, "leftIndent", 0);
+					int rightIndent = intValue(attributes, "rightIndent", 0);
+					int firstLineIndentDelta = intValue(attributes, "firstLineIndentDelta", 0);
 
-						byte alignment = ZLTextAlignmentType.ALIGN_UNDEFINED;
-						String alignmentString = attributes.getValue("alignment");
-						if (alignmentString != null) {
-							if (alignmentString.equals("left")) {
-								alignment = ZLTextAlignmentType.ALIGN_LEFT;
-							} else if (alignmentString.equals("right")) {
-								alignment = ZLTextAlignmentType.ALIGN_RIGHT;
-							} else if (alignmentString.equals("center")) {
-								alignment = ZLTextAlignmentType.ALIGN_CENTER;
-							} else if (alignmentString.equals("justify")) {
-								alignment = ZLTextAlignmentType.ALIGN_JUSTIFY;
-							}
+					byte alignment = ZLTextAlignmentType.ALIGN_UNDEFINED;
+					String alignmentString = attributes.getValue("alignment");
+					if (alignmentString != null) {
+						if (alignmentString.equals("left")) {
+							alignment = ZLTextAlignmentType.ALIGN_LEFT;
+						} else if (alignmentString.equals("right")) {
+							alignment = ZLTextAlignmentType.ALIGN_RIGHT;
+						} else if (alignmentString.equals("center")) {
+							alignment = ZLTextAlignmentType.ALIGN_CENTER;
+						} else if (alignmentString.equals("justify")) {
+							alignment = ZLTextAlignmentType.ALIGN_JUSTIFY;
 						}
-						final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
-
-						decoration = new ZLTextFullStyleDecoration(name, fontFamily, fontSizeDelta, bold, italic, ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
+					final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
 
-					myDecorationMap[id & 0xFF] = decoration;
+					myDecorationMap[id & 0xFF] = new ZLTextFullStyleDecoration(name, null, fontSizeDelta, bold, italic, ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, 0, alignment, lineSpacePercent, allowHyphenations);
 				}
 			}
 			return false;

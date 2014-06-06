@@ -26,13 +26,14 @@ import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
+import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
 public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 	private final ZLTextNGStyleDescription myDescription;
 
-	public ZLTextNGStyle(ZLTextStyle parent, ZLTextNGStyleDescription description) {
-		super(parent, parent.Hyperlink);
+	public ZLTextNGStyle(ZLTextStyle parent, ZLTextNGStyleDescription description, ZLTextHyperlink hyperlink) {
+		super(parent, hyperlink);
 		myDescription = description;
 	}
 
@@ -120,9 +121,8 @@ public class ZLTextNGStyle extends ZLTextDecoratedStyle {
 		return Parent.getLineSpacePercent();
 	}
 	@Override
-	protected int getVerticalShiftInternal() {
-		// TODO: implement
-		return Parent.getVerticalShift();
+	protected int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDescription.getVerticalAlign(metrics, Parent.getVerticalAlign(metrics), fontSize);
 	}
 	@Override
 	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {

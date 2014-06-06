@@ -296,13 +296,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				continue;
 			}
 
-			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
+			final ZLTextFullStyleDecoration decoration = collection.getDecoration(styles[i]);
 			if (decoration == null) {
 				continue;
 			}
-			ZLTextFullStyleDecoration fullDecoration =
-				decoration instanceof ZLTextFullStyleDecoration
-					? (ZLTextFullStyleDecoration)decoration : null;
 
 			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.getName());
 			formatScreen.addPreference(new FontPreference(
@@ -329,53 +326,49 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				this, textScreen.Resource, "strikedThrough",
 				decoration.StrikeThroughOption
 			));
-			if (fullDecoration != null) {
-				final String[] allAlignments = { "unchanged", "left", "right", "center", "justify" };
-				formatScreen.addPreference(new ZLChoicePreference(
-					this, textScreen.Resource, "alignment",
-					fullDecoration.AlignmentOption, allAlignments
-				));
-			}
+			final String[] allAlignments = { "unchanged", "left", "right", "center", "justify" };
+			formatScreen.addPreference(new ZLChoicePreference(
+				this, textScreen.Resource, "alignment",
+				decoration.AlignmentOption, allAlignments
+			));
 			formatScreen.addPreference(new ZLBoolean3Preference(
 				this, textScreen.Resource, "allowHyphenations",
 				decoration.AllowHyphenationsOption
 			));
-			if (fullDecoration != null) {
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("spaceBefore"),
-					fullDecoration.SpaceBeforeOption
-				));
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("spaceAfter"),
-					fullDecoration.SpaceAfterOption
-				));
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("leftIndent"),
-					fullDecoration.LeftIndentOption
-				));
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("rightIndent"),
-					fullDecoration.RightIndentOption
-				));
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("firstLineIndent"),
-					fullDecoration.FirstLineIndentDeltaOption
-				));
-				final ZLIntegerOption spacePercentOption = fullDecoration.LineSpacePercentOption;
-				final int[] spacingValues = new int[17];
-				final String[] spacingKeys = new String[17];
-				spacingValues[0] = -1;
-				spacingKeys[0] = "unchanged";
-				for (int j = 1; j < spacingValues.length; ++j) {
-					final int val = 4 + j;
-					spacingValues[j] = 10 * val;
-					spacingKeys[j] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
-				}
-				formatScreen.addPreference(new ZLIntegerChoicePreference(
-					this, textScreen.Resource, "lineSpacing",
-					spacePercentOption, spacingValues, spacingKeys
-				));
+			formatScreen.addPreference(new ZLIntegerRangePreference(
+				this, textScreen.Resource.getResource("spaceBefore"),
+				decoration.SpaceBeforeOption
+			));
+			formatScreen.addPreference(new ZLIntegerRangePreference(
+				this, textScreen.Resource.getResource("spaceAfter"),
+				decoration.SpaceAfterOption
+			));
+			formatScreen.addPreference(new ZLIntegerRangePreference(
+				this, textScreen.Resource.getResource("leftIndent"),
+				decoration.LeftIndentOption
+			));
+			formatScreen.addPreference(new ZLIntegerRangePreference(
+				this, textScreen.Resource.getResource("rightIndent"),
+				decoration.RightIndentOption
+			));
+			formatScreen.addPreference(new ZLIntegerRangePreference(
+				this, textScreen.Resource.getResource("firstLineIndent"),
+				decoration.FirstLineIndentDeltaOption
+			));
+			final ZLIntegerOption spacePercentOption = decoration.LineSpacePercentOption;
+			final int[] spacingValues = new int[17];
+			final String[] spacingKeys = new String[17];
+			spacingValues[0] = -1;
+			spacingKeys[0] = "unchanged";
+			for (int j = 1; j < spacingValues.length; ++j) {
+				final int val = 4 + j;
+				spacingValues[j] = 10 * val;
+				spacingKeys[j] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
 			}
+			formatScreen.addPreference(new ZLIntegerChoicePreference(
+				this, textScreen.Resource, "lineSpacing",
+				spacePercentOption, spacingValues, spacingKeys
+			));
 		}
 
 		final PreferenceSet footerPreferences = new PreferenceSet.Enabler() {

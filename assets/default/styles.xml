@@ -9,8 +9,4 @@
 	<style id="13" name="Author" leftIndent="20" allowHyphenations="false"/>
 	<style id="14" name="Date" leftIndent="40" allowHyphenations="false"/>
 	<style id="8" name="Verse" leftIndent="20" alignment="left" allowHyphenations="false"/>
-
-	<style id="16" partial="true" name="Footnote" fontSizeDelta="-5" vShift="7" allowHyphenations="false"/>
-	<style id="19" partial="true" name="Subscript" fontSizeDelta="-4" vShift="-4" allowHyphenations="false"/>
-	<style id="20" partial="true" name="Superscript" fontSizeDelta="-4" vShift="10" allowHyphenations="false"/>
 </DefaultStyles>

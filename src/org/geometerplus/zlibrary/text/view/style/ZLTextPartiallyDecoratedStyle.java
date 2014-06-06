@@ -126,8 +126,8 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
-	protected int getVerticalShiftInternal() {
-		return Parent.getVerticalShift() + myDecoration.VerticalShiftOption.getValue();
+	protected int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize) {
+		return Parent.getVerticalAlign(metrics) + myDecoration.VerticalAlignOption.getValue();
 	}
 
 	@Override
