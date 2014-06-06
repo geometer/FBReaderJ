@@ -71,6 +71,7 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 
 		// Yes, Parent.Parent, not Parent (parent = current tag pre-defined size,
 		// we want to override it)
+		// TODO: use _previous_tag_value_
 		final int baseFontSize = Parent.Parent.getFontSize(metrics);
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
