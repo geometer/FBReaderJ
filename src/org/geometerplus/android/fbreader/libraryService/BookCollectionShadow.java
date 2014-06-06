@@ -31,7 +31,6 @@ import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
