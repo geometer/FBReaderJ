@@ -30,7 +30,7 @@ public abstract class ZLTextStyleEntry {
 	public interface Feature {
 		int LENGTH_LEFT_INDENT                = 0;
 		int LENGTH_RIGHT_INDENT               = 1;
-		int LENGTH_FIRST_LINE_INDENT_DELTA    = 2;
+		int LENGTH_FIRST_LINE_INDENT          = 2;
 		int LENGTH_SPACE_BEFORE               = 3;
 		int LENGTH_SPACE_AFTER                = 4;
 		int LENGTH_FONT_SIZE                  = 5;
@@ -103,7 +103,7 @@ public abstract class ZLTextStyleEntry {
 			default:
 			case Feature.LENGTH_LEFT_INDENT:
 			case Feature.LENGTH_RIGHT_INDENT:
-			case Feature.LENGTH_FIRST_LINE_INDENT_DELTA:
+			case Feature.LENGTH_FIRST_LINE_INDENT:
 				return metrics.FullWidth;
 			case Feature.LENGTH_SPACE_BEFORE:
 			case Feature.LENGTH_SPACE_AFTER:
