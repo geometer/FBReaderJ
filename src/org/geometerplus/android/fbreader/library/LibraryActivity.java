@@ -95,9 +95,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				return null;
 			}
 			try {
-				final String s = myServices.get(appData).readBitmap(f.getPath());
-				final byte[] encodeByte = Base64.decode(s, Base64.DEFAULT);
-				final Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+				final Bitmap bitmap = myServices.get(appData).readBitmap(f.getPath());
 				return new ZLBitmapImage(bitmap);
 			} catch (Exception e) {
 				e.printStackTrace();
