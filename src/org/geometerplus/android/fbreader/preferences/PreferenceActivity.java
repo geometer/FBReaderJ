@@ -93,11 +93,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		final Runnable libraryUpdater = new Runnable() {
 			public void run() {
-				final BookCollectionShadow collection = new BookCollectionShadow();
-				collection.bindToService(PreferenceActivity.this, new Runnable() {
+				final BookCollectionShadow bookCollection = new BookCollectionShadow();
+				bookCollection.bindToService(PreferenceActivity.this, new Runnable() {
 					public void run() {
-						collection.reset(false);
-						collection.unbind();
+						bookCollection.reset(false);
+						bookCollection.unbind();
 					}
 				});
 			}
@@ -255,52 +255,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen moreStylesScreen = textScreen.createPreferenceScreen("more");
 
-		byte styles[] = {
-			FBTextKind.REGULAR,
-			FBTextKind.TITLE,
-			FBTextKind.SECTION_TITLE,
-			FBTextKind.SUBTITLE,
-			FBTextKind.H1,
-			FBTextKind.H2,
-			FBTextKind.H3,
-			FBTextKind.H4,
-			FBTextKind.H5,
-			FBTextKind.H6,
-			FBTextKind.ANNOTATION,
-			FBTextKind.EPIGRAPH,
-			FBTextKind.AUTHOR,
-			FBTextKind.POEM_TITLE,
-			FBTextKind.STANZA,
-			FBTextKind.VERSE,
-			FBTextKind.CITE,
-			FBTextKind.INTERNAL_HYPERLINK,
-			FBTextKind.EXTERNAL_HYPERLINK,
-			FBTextKind.FOOTNOTE,
-			FBTextKind.ITALIC,
-			FBTextKind.EMPHASIS,
-			FBTextKind.BOLD,
-			FBTextKind.STRONG,
-			FBTextKind.DEFINITION,
-			FBTextKind.DEFINITION_DESCRIPTION,
-			FBTextKind.PREFORMATTED,
-			FBTextKind.CODE
-		};
-		for (int i = 0; i < styles.length; ++i) {
-			final ZLTextNGStyleDescription description = collection.getDescription(styles[i]);
-			if (description != null) {
-				final Screen ngScreen = moreStylesScreen.createPreferenceScreen(description.Name);
-				ngScreen.addPreference(new FontPreference(
-					this, textScreen.Resource, "font",
-					description.FontFamilyOption, true
-				));
-				continue;
-			}
-
-			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
-			if (decoration == null) {
-				continue;
-			}
-
+		/*
 			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.Name);
 			formatScreen.addPreference(new FontPreference(
 				this, textScreen.Resource, "font",
@@ -368,6 +323,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			formatScreen.addPreference(new ZLIntegerChoicePreference(
 				this, textScreen.Resource, "lineSpacing",
 				spacePercentOption, spacingValues, spacingKeys
+			));
+		*/
+
+		for (ZLTextNGStyleDescription description : collection.getDescriptionList()) {
+			final Screen ngScreen = moreStylesScreen.createPreferenceScreen(description.Name);
+			ngScreen.addPreference(new FontPreference(
+				this, textScreen.Resource, "font",
+				description.FontFamilyOption, true
 			));
 		}
 

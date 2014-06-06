@@ -157,10 +157,6 @@ abstract class ZLTextViewBase extends ZLView {
 				getTextStyleCollection().getDescription(control.Kind);
 			if (description != null) {
 				setTextStyle(new ZLTextNGStyle(myTextStyle, description, hyperlink));
-			} else {
-				final ZLTextStyleDecoration decoration =
-					getTextStyleCollection().getDecoration(control.Kind);
-				setTextStyle(new ZLTextSimpleDecoratedStyle(myTextStyle, decoration, hyperlink));
 			}
 		} else {
 			setTextStyle(myTextStyle.Parent);
@@ -203,7 +199,7 @@ abstract class ZLTextViewBase extends ZLView {
 		} else if (element instanceof ZLTextVideoElement) {
 			return Math.min(300, getTextColumnWidth());
 		} else if (element == ZLTextElement.Indent) {
-			return myTextStyle.getFirstLineIndentDelta();
+			return myTextStyle.getFirstLineIndent(metrics());
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
 			return getContext().getSpaceWidth() * ((ZLTextFixedHSpaceElement)element).Length;
 		}
