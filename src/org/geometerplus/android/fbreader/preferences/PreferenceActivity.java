@@ -258,10 +258,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		/*
 			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.Name);
-			formatScreen.addPreference(new FontPreference(
-				this, textScreen.Resource, "font",
-				decoration.FontFamilyOption, true
-			));
 			formatScreen.addPreference(new ZLIntegerRangePreference(
 				this, textScreen.Resource.getResource("fontSizeDifference"),
 				decoration.FontSizeDeltaOption
