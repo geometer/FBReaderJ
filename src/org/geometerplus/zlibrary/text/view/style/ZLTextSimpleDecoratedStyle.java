@@ -23,14 +23,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
+import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
-import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
+import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
-class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
-	private final ZLTextStyleDecoration myDecoration;
+public class ZLTextSimpleDecoratedStyle extends ZLTextDecoratedStyle {
+	protected final ZLTextStyleDecoration myDecoration;
 
-	ZLTextPartiallyDecoratedStyle(ZLTextStyle parent, ZLTextStyleDecoration decoration, ZLTextHyperlink hyperlink) {
+	public ZLTextSimpleDecoratedStyle(ZLTextStyle parent, ZLTextStyleDecoration decoration, ZLTextHyperlink hyperlink) {
 		super(parent, hyperlink);
 		myDecoration = decoration;
 	}
@@ -55,6 +56,11 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected int getFontSizeInternal(ZLTextMetrics metrics) {
 		return Parent.getFontSize(metrics) + myDecoration.FontSizeDeltaOption.getValue();
+	}
+
+	@Override
+	protected int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize) {
+		return Parent.getVerticalAlign(metrics) + myDecoration.VerticalAlignOption.getValue();
 	}
 
 	@Override
@@ -106,46 +112,6 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
-	public int getLeftIndent() {
-		return Parent.getLeftIndent();
-	}
-
-	@Override
-	public int getRightIndent() {
-		return Parent.getRightIndent();
-	}
-
-	@Override
-	public int getFirstLineIndentDelta() {
-		return Parent.getFirstLineIndentDelta();
-	}
-
-	@Override
-	public int getLineSpacePercent() {
-		return Parent.getLineSpacePercent();
-	}
-
-	@Override
-	protected int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize) {
-		return Parent.getVerticalAlign(metrics) + myDecoration.VerticalAlignOption.getValue();
-	}
-
-	@Override
-	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
-		return Parent.getSpaceBefore(metrics);
-	}
-
-	@Override
-	protected int getSpaceAfterInternal(ZLTextMetrics metrics, int fontSize) {
-		return Parent.getSpaceAfter(metrics);
-	}
-
-	@Override
-	public byte getAlignment() {
-		return Parent.getAlignment();
-	}
-
-	@Override
 	public boolean allowHyphenations() {
 		switch (myDecoration.AllowHyphenationsOption.getValue()) {
 			case B3_FALSE:
@@ -155,5 +121,42 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 			default:
 				return Parent.allowHyphenations();
 		}
+	}
+
+	@Override
+	public int getLeftIndent() {
+		return Parent.getLeftIndent() + myDecoration.LeftIndentOption.getValue();
+	}
+
+	@Override
+	public int getRightIndent() {
+		return Parent.getRightIndent() + myDecoration.RightIndentOption.getValue();
+	}
+
+	@Override
+	public int getFirstLineIndentDelta() {
+		return (getAlignment() == ZLTextAlignmentType.ALIGN_CENTER) ? 0 : Parent.getFirstLineIndentDelta() + myDecoration.FirstLineIndentDeltaOption.getValue();
+	}
+
+	@Override
+	public int getLineSpacePercent() {
+		int value = myDecoration.LineSpacePercentOption.getValue();
+		return (value != -1) ? value : Parent.getLineSpacePercent();
+	}
+
+	@Override
+	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDecoration.SpaceBeforeOption.getValue();
+	}
+
+	@Override
+	protected int getSpaceAfterInternal(ZLTextMetrics metrics, int fontSize) {
+		return myDecoration.SpaceAfterOption.getValue();
+	}
+
+	@Override
+	public byte getAlignment() {
+		byte value = (byte)myDecoration.AlignmentOption.getValue();
+		return (value == ZLTextAlignmentType.ALIGN_UNDEFINED) ? Parent.getAlignment() : value;
 	}
 }

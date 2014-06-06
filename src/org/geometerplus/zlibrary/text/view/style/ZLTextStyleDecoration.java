@@ -25,8 +25,11 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
+
 public class ZLTextStyleDecoration {
-	static final String STYLE = "Style";
+	private static final String STYLE = "Style";
+
+	public final String Name;
 
 	public final ZLStringOption FontFamilyOption;
 	public final ZLIntegerRangeOption FontSizeDeltaOption;
@@ -37,10 +40,19 @@ public class ZLTextStyleDecoration {
 	public final ZLIntegerOption VerticalAlignOption;
 	public final ZLBoolean3Option AllowHyphenationsOption;
 
-	private final String myName;
+	public final ZLIntegerRangeOption SpaceBeforeOption;
+	public final ZLIntegerRangeOption SpaceAfterOption;
+	public final ZLIntegerRangeOption LeftIndentOption;
+	public final ZLIntegerRangeOption RightIndentOption;
+	public final ZLIntegerRangeOption FirstLineIndentDeltaOption;
 
-	public ZLTextStyleDecoration(String name, String fontFamily, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int verticalAlign, ZLBoolean3 allowHyphenations) {
-		myName = name;
+	public final ZLIntegerRangeOption AlignmentOption;
+
+	public final ZLIntegerOption LineSpacePercentOption;
+
+	public ZLTextStyleDecoration(String name, String fontFamily, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int spaceBefore, int spaceAfter, int leftIndent,int rightIndent, int firstLineIndentDelta, int verticalAlign, byte alignment, int lineSpace, ZLBoolean3 allowHyphenations) {
+		Name = name;
+
 		FontFamilyOption = new ZLStringOption(STYLE, name + ":fontFamily", fontFamily);
 		FontSizeDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
 		BoldOption = new ZLBoolean3Option(STYLE, name + ":bold", bold);
@@ -49,17 +61,13 @@ public class ZLTextStyleDecoration {
 		StrikeThroughOption = new ZLBoolean3Option(STYLE, name + ":strikeThrough", strikeThrough);
 		VerticalAlignOption = new ZLIntegerOption(STYLE, name + ":vShift", verticalAlign);
 		AllowHyphenationsOption = new ZLBoolean3Option(STYLE, name + ":allowHyphenations", allowHyphenations);
-	}
 
-	public ZLTextStyle createDecoratedStyle(ZLTextStyle base) {
-		return createDecoratedStyle(base, null);
-	}
-
-	public ZLTextStyle createDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
-		return new ZLTextPartiallyDecoratedStyle(base, this, hyperlink);
-	}
-
-	public String getName() {
-		return myName;
+		SpaceBeforeOption = new ZLIntegerRangeOption(STYLE, name + ":spaceBefore", -10, 100, spaceBefore);
+		SpaceAfterOption = new ZLIntegerRangeOption(STYLE, name + ":spaceAfter", -10, 100, spaceAfter);
+		LeftIndentOption = new ZLIntegerRangeOption(STYLE, name + ":leftIndent", -300, 300, leftIndent);
+		RightIndentOption = new ZLIntegerRangeOption(STYLE, name + ":rightIndent", -300, 300, rightIndent);
+		FirstLineIndentDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":firstLineIndentDelta", -300, 300, firstLineIndentDelta);
+		AlignmentOption = new ZLIntegerRangeOption(STYLE, name + ":alignment", 0, 4, alignment);
+		LineSpacePercentOption = new ZLIntegerOption(STYLE, name + ":lineSpacePercent", lineSpace);
 	}
 }

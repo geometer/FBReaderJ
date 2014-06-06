@@ -32,7 +32,7 @@ public class ZLTextStyleCollection {
 	private int myDefaultFontSize;
 	private ZLTextBaseStyle myBaseStyle;
 	private final ZLTextNGStyleDescription[] myDescriptionMap = new ZLTextNGStyleDescription[256];
-	private final ZLTextFullStyleDecoration[] myDecorationMap = new ZLTextFullStyleDecoration[256];
+	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
 	public ZLTextStyleCollection(String screen) {
 		Screen = screen;
@@ -56,7 +56,7 @@ public class ZLTextStyleCollection {
 		return myDescriptionMap[kind & 0xFF];
 	}
 
-	public ZLTextFullStyleDecoration getDecoration(byte kind) {
+	public ZLTextStyleDecoration getDecoration(byte kind) {
 		return myDecorationMap[kind & 0xFF];
 	}
 
@@ -138,7 +138,7 @@ public class ZLTextStyleCollection {
 					}
 					final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
 
-					myDecorationMap[id & 0xFF] = new ZLTextFullStyleDecoration(name, null, fontSizeDelta, bold, italic, ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, 0, alignment, lineSpacePercent, allowHyphenations);
+					myDecorationMap[id & 0xFF] = new ZLTextStyleDecoration(name, null, fontSizeDelta, bold, italic, ZLBoolean3.B3_UNDEFINED, ZLBoolean3.B3_UNDEFINED, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, 0, alignment, lineSpacePercent, allowHyphenations);
 				}
 			}
 			return false;

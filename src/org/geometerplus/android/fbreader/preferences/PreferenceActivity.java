@@ -296,12 +296,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				continue;
 			}
 
-			final ZLTextFullStyleDecoration decoration = collection.getDecoration(styles[i]);
+			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
 			if (decoration == null) {
 				continue;
 			}
 
-			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.getName());
+			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.Name);
 			formatScreen.addPreference(new FontPreference(
 				this, textScreen.Resource, "font",
 				decoration.FontFamilyOption, true
