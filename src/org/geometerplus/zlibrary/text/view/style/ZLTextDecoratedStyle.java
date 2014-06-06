@@ -126,6 +126,5 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		}
 		return myVerticalShift;
 	}
-
 	protected abstract int getVerticalShiftInternal();
 }
