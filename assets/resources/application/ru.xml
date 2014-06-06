@@ -466,6 +466,9 @@
 				<node name="Regular Paragraph" value="Обычный текст">
 					<node name="summary" value=""/>
 				</node>
+				<node name="xhtml-tag-p" value="Текст ePub">
+					<node name="summary" value="Содержимое тега &lt;p&gt; в файлах XHTML"/>
+				</node>
 				<node name="Title" value="Заголовок">
 					<node name="summary" value=""/>
 				</node>
