@@ -21,13 +21,11 @@ package org.geometerplus.zlibrary.text.model;
 
 public final class ZLTextMetrics {
 	public final int DPI;
-	public final int DefaultFontSize;
 	public final int FullWidth;
 	public final int FullHeight;
 
-	public ZLTextMetrics(int dpi, int defaultFontSize, int fullWidth, int fullHeight) {
+	public ZLTextMetrics(int dpi, int fullWidth, int fullHeight) {
 		DPI = dpi;
-		DefaultFontSize = defaultFontSize;
 		FullWidth = fullWidth;
 		FullHeight = fullHeight;
 	}
@@ -43,13 +41,12 @@ public final class ZLTextMetrics {
 		final ZLTextMetrics oo = (ZLTextMetrics)o;
 		return
 			DPI == oo.DPI &&
-			DefaultFontSize == oo.DefaultFontSize &&
 			FullWidth == oo.FullWidth &&
 			FullHeight == oo.FullHeight;
 	}
 
 	@Override
 	public int hashCode() {
-		return DPI + 13 * (DefaultFontSize + 13 * (FullHeight + 13 * FullWidth));
+		return DPI + 13 * (FullHeight + 13 * FullWidth);
 	}
 }
