@@ -83,6 +83,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/text/src/model/ZLCachedMemoryAllocator.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextParagraph.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLTextStyleEntry.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLVideoEntry.cpp \
 	NativeFormats/zlibrary/text/src/fonts/FontManager.cpp \
 	NativeFormats/zlibrary/text/src/fonts/FontMap.cpp \

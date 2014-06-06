@@ -573,6 +573,10 @@
 				<node name="summaryOn" value="Apply text alignment defined in CSS"/>
 				<node name="summaryOff" value="Ignore text alignment defined in CSS"/>
 			</node>
+			<node name="margins" value="Margins">
+				<node name="summaryOn" value="Apply margins defined in CSS"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS"/>
+			</node>
 		</node>
 		<node name="colors" value="Colors &amp; wallpapers">
 			<node name="summary" value="Color settings"/>
