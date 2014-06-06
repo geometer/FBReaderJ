@@ -203,7 +203,7 @@ abstract class ZLTextViewBase extends ZLView {
 		} else if (element instanceof ZLTextVideoElement) {
 			return Math.min(300, getTextColumnWidth());
 		} else if (element == ZLTextElement.Indent) {
-			return myTextStyle.getFirstLineIndentDelta();
+			return myTextStyle.getFirstLineIndent(metrics());
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
 			return getContext().getSpaceWidth() * ((ZLTextFixedHSpaceElement)element).Length;
 		}
