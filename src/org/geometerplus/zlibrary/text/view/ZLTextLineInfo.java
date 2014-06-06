@@ -35,7 +35,9 @@ final class ZLTextLineInfo {
 	int Width;
 	int Height;
 	int Descent;
+	int VSpaceBefore;
 	int VSpaceAfter;
+	boolean PreviousInfoUsed;
 	int SpaceCounter;
 	ZLTextStyle StartStyle;
 
@@ -57,6 +59,14 @@ final class ZLTextLineInfo {
 		return EndElementIndex == ParagraphCursorLength;
 	}
 
+	void adjust(ZLTextLineInfo previous) {
+		if (!PreviousInfoUsed && previous != null) {
+			Height -= Math.min(previous.VSpaceAfter, VSpaceBefore);
+			PreviousInfoUsed = true;
+		}
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		ZLTextLineInfo info = (ZLTextLineInfo)o;
 		return
@@ -65,6 +75,7 @@ final class ZLTextLineInfo {
 			(StartCharIndex == info.StartCharIndex);
 	}
 
+	@Override
 	public int hashCode() {
 		return ParagraphCursor.hashCode() + StartElementIndex + 239 * StartCharIndex;
 	}
