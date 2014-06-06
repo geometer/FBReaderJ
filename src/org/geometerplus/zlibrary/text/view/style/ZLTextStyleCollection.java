@@ -22,14 +22,11 @@ package org.geometerplus.zlibrary.text.view.style;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
 public class ZLTextStyleCollection {
 	public final String Screen;
-	private int myDefaultFontSize;
 	private ZLTextBaseStyle myBaseStyle;
 	private final List<ZLTextNGStyleDescription> myDescriptionList;
 	private final ZLTextNGStyleDescription[] myDescriptionMap = new ZLTextNGStyleDescription[256];
@@ -47,10 +44,6 @@ public class ZLTextStyleCollection {
 		new TextStyleReader().readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
 	}
 
-	public int getDefaultFontSize() {
-		return myDefaultFontSize;
-	}
-
 	public ZLTextBaseStyle getBaseStyle() {
 		return myBaseStyle;
 	}
@@ -64,8 +57,6 @@ public class ZLTextStyleCollection {
 	}
 
 	private class TextStyleReader extends ZLXMLReaderAdapter {
-		private final int myDpi = ZLibrary.Instance().getDisplayDPI();
-
 		@Override
 		public boolean dontCacheAttributeValues() {
 			return true;
@@ -85,8 +76,11 @@ public class ZLTextStyleCollection {
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("base".equals(tag) && Screen.equals(attributes.getValue("screen"))) {
-				myDefaultFontSize = intValue(attributes, "fontSize", 0);
-				myBaseStyle = new ZLTextBaseStyle(Screen, attributes.getValue("family"), myDefaultFontSize);
+				myBaseStyle = new ZLTextBaseStyle(
+					Screen,
+					attributes.getValue("family"),
+					intValue(attributes, "fontSize", 0)
+				);
 			}
 			return false;
 		}

@@ -54,7 +54,6 @@ abstract class ZLTextViewBase extends ZLView {
 		if (m == null) {
 			m = new ZLTextMetrics(
 				ZLibrary.Instance().getDisplayDPI(),
-				getTextStyleCollection().getDefaultFontSize(),
 				// TODO: screen area width
 				100,
 				// TODO: screen area height
