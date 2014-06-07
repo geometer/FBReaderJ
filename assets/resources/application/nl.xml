@@ -405,7 +405,6 @@
 				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
 			</node>
 			<node name="fontSize" value="Lettergrootte"/>
-			<node name="fontSizeDifference" value="Lettergrootte verschil"/>
 			<node name="fontStyle" value="Letterstijl">
 				<node name="regular" value="Normaal"/>
 				<node name="bold" value="Vet"/>
@@ -456,6 +455,7 @@
 			<node name="spaceAfter" value="Ruimte achter"/>
 			<node name="leftIndent" value="Links inspringen"/>
 			<node name="rightIndent" value="Rechts inspringen"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Meer stijlen">
 				<node name="summary" value="Aangepaste instellingen voor titels, paragrafen, etc."/>
 				<node name="Regular Paragraph" value="Normale paragraaf">
@@ -1009,5 +1009,9 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Draai het apparaat om om je boek te lezen. Om terug te gaan naar dit scherm, druk op de knop hieronder."/>
 		<node name="frontScreenButton" value="Schakel naar dit scherm"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
 	</node>
 </resources>

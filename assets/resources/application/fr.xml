@@ -398,7 +398,6 @@
 				<node name="unchanged" value="&lt;inchangé&gt;"/>
 			</node>
 			<node name="fontSize" value="Taille de police"/>
-			<node name="fontSizeDifference" value="Différence de taille"/>
 			<node name="fontStyle" value="Style de police">
 				<node name="regular" value="Normale"/>
 				<node name="bold" value="Gras"/>
@@ -449,6 +448,7 @@
 			<node name="spaceAfter" value="Espace après"/>
 			<node name="leftIndent" value="Indentation à gauche"/>
 			<node name="rightIndent" value="Indentation à droite"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Plus de styles">
 				<node name="summary" value="Paramètres de configuration des titres, épigraphes etc."/>
 				<node name="Regular Paragraph" value="Paragraphe normal">
@@ -1002,5 +1002,9 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
 	</node>
 </resources>

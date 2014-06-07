@@ -411,7 +411,6 @@
 				<node name="unchanged" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="fontSize" value="Памер шрыфту"/>
-			<node name="fontSizeDifference" value="Адрозьненьне памеру шрыфту"/>
 			<node name="fontStyle" value="Стыль шрыфту">
 				<node name="regular" value="Звычайны"/>
 				<node name="bold" value="Тоўсты"/>
@@ -462,6 +461,7 @@
 			<node name="spaceAfter" value="Прастора перад"/>
 			<node name="leftIndent" value="Левы водступ"/>
 			<node name="rightIndent" value="Правы водступ"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Больш стыляў">
 				<node name="summary" value="Падзяляць налады на назвы, эпіґрафы і гэтак далей"/>
 				<node name="Regular Paragraph" value="Звычайны абзац">
@@ -1015,5 +1015,9 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
 	</node>
 </resources>

@@ -405,7 +405,6 @@
 				<node name="unchanged" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="fontSize" value="Font size"/>
-			<node name="fontSizeDifference" value="Font size difference"/>
 			<node name="fontStyle" value="Font style">
 				<node name="regular" value="Regular"/>
 				<node name="bold" value="Bold"/>
@@ -432,7 +431,7 @@
 				<node name="summaryOff" value="regular"/>
 				<node name="unchanged" value="&lt;unchanged&gt;"/>
 			</node>
-			<node name="lineSpacing" value="Line Spacing">
+			<node name="lineSpacing" value="Line spacing">
 				<node name="unchanged" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="alignment" value="Alignment">
@@ -446,16 +445,17 @@
 				<node name="summaryOn" value="Hyphenate words automatically"/>
 				<node name="summaryOff" value="Do not hyphenate words automatically"/>
 			</node>
-			<node name="allowHyphenations" value="Allow Hyphenations">
+			<node name="allowHyphenations" value="Allow hyphenations">
 				<node name="summaryOn" value="hyphenate words"/>
 				<node name="summaryOff" value="don't hyphenate words"/>
 				<node name="unchanged" value="&lt;unchanged&gt;"/>
 			</node>
-			<node name="firstLineIndent" value="First Line Indent"/>
-			<node name="spaceBefore" value="Space Before"/>
-			<node name="spaceAfter" value="Space After"/>
-			<node name="leftIndent" value="Left Indent"/>
-			<node name="rightIndent" value="Right Indent"/>
+			<node name="firstLineIndent" value="First line indent"/>
+			<node name="spaceBefore" value="Space before paragraph"/>
+			<node name="spaceAfter" value="Space after paragraph"/>
+			<node name="leftIndent" value="Left indent"/>
+			<node name="rightIndent" value="Right indent"/>
+			<node name="verticalAlignment" value="Vertical alignment"/>
 			<node name="more" value="More styles">
 				<node name="summary" value="Separate settings for titles, epigraphs, etc."/>
 				<node name="Regular Paragraph" value="Regular Paragraph">
@@ -1009,5 +1009,9 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below."/>
 		<node name="frontScreenButton" value="Switch to this screen"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
 	</node>
 </resources>
