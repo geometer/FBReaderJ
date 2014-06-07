@@ -402,7 +402,7 @@
 				</node>
 			</node>
 			<node name="font" value="Породица фонтова">
-				<node name="unchanged" value="&lt;непромењено&gt;"/>
+				<node name="inherit" value="&lt;непромењено&gt;"/>
 			</node>
 			<node name="fontSize" value="Величина фонта"/>
 			<node name="fontStyle" value="Стил фонта">
@@ -412,43 +412,39 @@
 				<node name="boldItalic" value="Масни курзив"/>
 			</node>
 			<node name="bold" value="Масно">
-				<node name="summaryOn" value="Масно"/>
-				<node name="summaryOff" value="Нормал"/>
-				<node name="unchanged" value="&lt;непромењено&gt;"/>
+				<node name="bold" value="Масно"/>
+				<node name="normal" value="Нормал"/>
+				<node name="inherit" value="&lt;непромењено&gt;"/>
 			</node>
 			<node name="italic" value="Курзив">
-				<node name="summaryOn" value="Курзив"/>
-				<node name="summaryOff" value="Нормал"/>
-				<node name="unchanged" value="&lt;непромењено&gt;"/>
+				<node name="italic" value="Курзив"/>
+				<node name="normal" value="Нормал"/>
+				<node name="inherit" value="&lt;непромењено&gt;"/>
 			</node>
-			<node name="underlined" value="Подвучено">
-				<node name="summaryOn" value="Подвучено"/>
-				<node name="summaryOff" value="Нормал"/>
-				<node name="unchanged" value="&lt;непромењено&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Прецртано">
-				<node name="summaryOn" value="Прецртано"/>
-				<node name="summaryOff" value="Нормал"/>
-				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="Подвучено"/>
+				<node name="line-through" value="Прецртано"/>
 			</node>
 			<node name="lineSpacing" value="Размак између редова">
-				<node name="unchanged" value="&lt;непромењено&gt;"/>
+				<node name="inherit" value="&lt;непромењено&gt;"/>
 			</node>
 			<node name="alignment" value="Поравнање">
 				<node name="left" value="Лево"/>
 				<node name="right" value="Десно"/>
 				<node name="center" value="Средина"/>
 				<node name="justify" value="Обострано"/>
-				<node name="unchanged" value="&lt;непромењено&gt;"/>
+				<node name="inherit" value="&lt;непромењено&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Хифенација">
 				<node name="summaryOn" value="Дели речи на слогове."/>
 				<node name="summaryOff" value="Не дели речи на слогове."/>
 			</node>
 			<node name="allowHyphenations" value="Хифенација">
-				<node name="summaryOn" value="Дели речи на слогове"/>
-				<node name="summaryOff" value="Не дели речи на слогове"/>
-				<node name="unchanged" value="&lt;непромењено&gt;"/>
+				<node name="auto" value="Дели речи на слогове"/>
+				<node name="none" value="Не дели речи на слогове"/>
+				<node name="inherit" value="&lt;непромењено&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Увлачење првог реда"/>
 			<node name="spaceBefore" value="Размак пре"/>
@@ -461,7 +457,7 @@
 				<node name="Regular Paragraph" value="Обичан пасус">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Наслов">

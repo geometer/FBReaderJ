@@ -402,7 +402,7 @@
 				</node>
 			</node>
 			<node name="font" value="Lettertype">
-				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				<node name="inherit" value="&lt;ongewijzigd&gt;"/>
 			</node>
 			<node name="fontSize" value="Lettergrootte"/>
 			<node name="fontStyle" value="Letterstijl">
@@ -412,43 +412,39 @@
 				<node name="boldItalic" value="Vet Cursief"/>
 			</node>
 			<node name="bold" value="Vet">
-				<node name="summaryOn" value="vet"/>
-				<node name="summaryOff" value="normaal"/>
-				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				<node name="bold" value="vet"/>
+				<node name="normal" value="normaal"/>
+				<node name="inherit" value="&lt;ongewijzigd&gt;"/>
 			</node>
 			<node name="italic" value="Cursief">
-				<node name="summaryOn" value="cursief"/>
-				<node name="summaryOff" value="normaal"/>
-				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				<node name="italic" value="cursief"/>
+				<node name="normal" value="normaal"/>
+				<node name="inherit" value="&lt;ongewijzigd&gt;"/>
 			</node>
-			<node name="underlined" value="Onderstreept">
-				<node name="summaryOn" value="onderstreept"/>
-				<node name="summaryOff" value="normaal"/>
-				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Doorgehaald">
-				<node name="summaryOn" value="doorgehaald"/>
-				<node name="summaryOff" value="normaal"/>
-				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="onderstreept"/>
+				<node name="line-through" value="doorgehaald"/>
 			</node>
 			<node name="lineSpacing" value="Regelafstand">
-				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				<node name="inherit" value="&lt;ongewijzigd&gt;"/>
 			</node>
 			<node name="alignment" value="Uitlijning">
 				<node name="left" value="Links"/>
 				<node name="right" value="Rechts"/>
 				<node name="center" value="Gecentreerd"/>
 				<node name="justify" value="Uitvullen"/>
-				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				<node name="inherit" value="&lt;ongewijzigd&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Automatisch afbreken">
 				<node name="summaryOn" value="Woorden automatisch afbreken"/>
 				<node name="summaryOff" value="Woorden niet automatisch afbreken"/>
 			</node>
 			<node name="allowHyphenations" value="Afbreken">
-				<node name="summaryOn" value="woorden afbreken"/>
-				<node name="summaryOff" value="woorden niet afbreken"/>
-				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				<node name="auto" value="woorden afbreken"/>
+				<node name="none" value="woorden niet afbreken"/>
+				<node name="inherit" value="&lt;ongewijzigd&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Eerste regel inspringen"/>
 			<node name="spaceBefore" value="Ruimte voor"/>
@@ -461,7 +457,7 @@
 				<node name="Regular Paragraph" value="Normale paragraaf">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Titel">

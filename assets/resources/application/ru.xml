@@ -407,7 +407,7 @@
 				</node>
 			</node>
 			<node name="font" value="Шрифт">
-				<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="&lt;не менять&gt;"/>
 			</node>
 			<node name="fontSize" value="Размер шрифта"/>
 			<node name="fontStyle" value="Начертание">
@@ -417,43 +417,39 @@
 				<node name="boldItalic" value="жирный курсив"/>
 			</node>
 			<node name="bold" value="Жирный шрифт">
-				<node name="summaryOn" value="использовать жирное начертание"/>
-				<node name="summaryOff" value="использовать нормальное начертание"/>
-				<node name="unchanged" value="не менять"/>
+				<node name="bold" value="использовать жирное начертание"/>
+				<node name="normal" value="использовать нормальное начертание"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="italic" value="Курсив">
-				<node name="summaryOn" value="использовать курсивное начертание"/>
-				<node name="summaryOff" value="использовать нормальное начертание"/>
-				<node name="unchanged" value="не менять"/>
+				<node name="italic" value="использовать курсивное начертание"/>
+				<node name="normal" value="использовать нормальное начертание"/>
+				<node name="inherit" value="не менять"/>
 			</node>
-			<node name="underlined" value="Подчёркнутый">
-				<node name="summaryOn" value="включить"/>
-				<node name="summaryOff" value="выключить"/>
-				<node name="unchanged" value="не менять"/>
-			</node>
-			<node name="strikedThrough" value="Зачёркнутый">
-				<node name="summaryOn" value="включить"/>
-				<node name="summaryOff" value="выключить"/>
-				<node name="unchanged" value="не менять"/>
+			<node name="textDecoration" value="Дополнительные эффекты">
+				<node name="inherit" value="&lt;не менять&gt;"/>
+				<node name="none" value="без эффектов"/>
+				<node name="underline" value="подчеркнутый"/>
+				<node name="line-through" value="зачёркнутый"/>
 			</node>
 			<node name="lineSpacing" value="Интервал">
-				<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="&lt;не менять&gt;"/>
 			</node>
 			<node name="alignment" value="Выравнивание">
 				<node name="left" value="левое"/>
 				<node name="right" value="правое"/>
 				<node name="center" value="по центру"/>
 				<node name="justify" value="по краям"/>
-				<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="&lt;не менять&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Переносы">
 				<node name="summaryOn" value="Автоматически расставлять переносы"/>
 				<node name="summaryOff" value="Не расставлять переносы"/>
 			</node>
 			<node name="allowHyphenations" value="Переносы">
-				<node name="summaryOn" value="разрешить переносы"/>
-				<node name="summaryOff" value="запретить переносы"/>
-				<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="auto" value="разрешить переносы"/>
+				<node name="none" value="запретить переносы"/>
+				<node name="inherit" value="&lt;не менять&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Красная строка"/>
 			<node name="spaceBefore" value="Пропуск перед"/>

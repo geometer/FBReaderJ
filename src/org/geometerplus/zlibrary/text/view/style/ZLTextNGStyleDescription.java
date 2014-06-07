@@ -160,7 +160,7 @@ public class ZLTextNGStyleDescription {
 		final String textDecoration = TextDecorationOption.getValue();
 		if ("underline".equals(textDecoration)) {
 			return ZLBoolean3.B3_TRUE;
-		} else if ("".equals(textDecoration)) {
+		} else if ("".equals(textDecoration) || "inherit".equals(textDecoration)) {
 			return ZLBoolean3.B3_UNDEFINED;
 		} else {
 			return ZLBoolean3.B3_FALSE;
@@ -170,7 +170,7 @@ public class ZLTextNGStyleDescription {
 		final String textDecoration = TextDecorationOption.getValue();
 		if ("line-through".equals(textDecoration)) {
 			return ZLBoolean3.B3_TRUE;
-		} else if ("".equals(textDecoration)) {
+		} else if ("".equals(textDecoration) || "inherit".equals(textDecoration)) {
 			return ZLBoolean3.B3_UNDEFINED;
 		} else {
 			return ZLBoolean3.B3_FALSE;

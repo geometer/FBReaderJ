@@ -395,7 +395,7 @@
 				</node>
 			</node>
 			<node name="font" value="Famille de police">
-				<node name="unchanged" value="&lt;inchangé&gt;"/>
+				<node name="inherit" value="&lt;inchangé&gt;"/>
 			</node>
 			<node name="fontSize" value="Taille de police"/>
 			<node name="fontStyle" value="Style de police">
@@ -405,43 +405,39 @@
 				<node name="boldItalic" value="Gras italique"/>
 			</node>
 			<node name="bold" value="Gras">
-				<node name="summaryOn" value="gras"/>
-				<node name="summaryOff" value="normale"/>
-				<node name="unchanged" value="&lt;inchangé&gt;"/>
+				<node name="bold" value="gras"/>
+				<node name="normal" value="normale"/>
+				<node name="inherit" value="&lt;inchangé&gt;"/>
 			</node>
 			<node name="italic" value="Italique">
-				<node name="summaryOn" value="italique"/>
-				<node name="summaryOff" value="normale"/>
-				<node name="unchanged" value="&lt;inchangé&gt;"/>
+				<node name="italic" value="italique"/>
+				<node name="normal" value="normale"/>
+				<node name="inherit" value="&lt;inchangé&gt;"/>
 			</node>
-			<node name="underlined" value="Soulignée">
-				<node name="summaryOn" value="Soulignée"/>
-				<node name="summaryOff" value="Régulière"/>
-				<node name="unchanged" value="&lt;inchangé&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Barrée">
-				<node name="summaryOn" value="Barrée"/>
-				<node name="summaryOff" value="Normale"/>
-				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="Soulignée"/>
+				<node name="line-through" value="Barrée"/>
 			</node>
 			<node name="lineSpacing" value="Espacement de lignes">
-				<node name="unchanged" value="&lt;inchangé&gt;"/>
+				<node name="inherit" value="&lt;inchangé&gt;"/>
 			</node>
 			<node name="alignment" value="Alignement">
 				<node name="left" value="Gauche"/>
 				<node name="right" value="Droite"/>
 				<node name="center" value="Centré"/>
 				<node name="justify" value="Justifié"/>
-				<node name="unchanged" value="&lt;inchangé&gt;"/>
+				<node name="inherit" value="&lt;inchangé&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Césures automatiques">
 				<node name="summaryOn" value="Mettre automatiquement les traits d'union entre les mots"/>
 				<node name="summaryOff" value="Ne pas appliquer les césures automatiquement"/>
 			</node>
 			<node name="allowHyphenations" value="Autoriser les césures">
-				<node name="summaryOn" value="couper les mots"/>
-				<node name="summaryOff" value="ne pas couper les mots"/>
-				<node name="unchanged" value="&lt;inchangé&gt;"/>
+				<node name="auto" value="couper les mots"/>
+				<node name="none" value="ne pas couper les mots"/>
+				<node name="inherit" value="&lt;inchangé&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Indentation de la première ligne"/>
 			<node name="spaceBefore" value="Espace avant"/>
@@ -454,7 +450,7 @@
 				<node name="Regular Paragraph" value="Paragraphe normal">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Titre">
