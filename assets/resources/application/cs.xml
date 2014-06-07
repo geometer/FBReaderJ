@@ -414,7 +414,6 @@
 				<node name="unchanged" value="&lt;nezměněno&gt;"/>
 			</node>
 			<node name="fontSize" value="Velikost písma"/>
-			<node name="fontSizeDifference" value="Rozlišovat velikost"/>
 			<node name="fontStyle" value="Řez písma">
 				<node name="regular" value="Obyčejné"/>
 				<node name="bold" value="Tučné"/>
@@ -465,6 +464,7 @@
 			<node name="spaceAfter" value="Mezera za"/>
 			<node name="leftIndent" value="Odsazení vlevo"/>
 			<node name="rightIndent" value="Odsazení vpravo"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Další styly">
 				<node name="summary" value="Oddělené nastavení pro názvy, mota atd."/>
 				<node name="Regular Paragraph" value="Běžný odstavec">
@@ -999,5 +999,9 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Pro čtení knihy obraťte zařízení. Pro navrácení textu na tento displej stiskněte tlačítko dole."/>
 		<node name="frontScreenButton" value="Přepnout na tento displej"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
 	</node>
 </resources>
