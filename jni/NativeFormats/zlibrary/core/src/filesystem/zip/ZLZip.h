@@ -58,7 +58,11 @@ public:
 	void collectFileNames(std::vector<std::string> &names) const;
 
 private:
+	bool isValid() const;
+
+private:
 	const std::string myContainerName;
+	std::size_t myLastModifiedTime;
 	std::map<std::string,Info> myInfoMap;
 };
 
