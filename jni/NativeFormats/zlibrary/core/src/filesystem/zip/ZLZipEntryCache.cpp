@@ -19,6 +19,7 @@
 
 #include <AndroidUtil.h>
 #include <ZLLogger.h>
+#include <ZLFile.h>
 
 #include "ZLZip.h"
 #include "ZLZipHeader.h"
@@ -34,6 +35,12 @@ shared_ptr<ZLZipEntryCache> ZLZipEntryCache::cache(const std::string &containerN
 	for (std::size_t i = 0; i < ourStorageSize; ++i) {
 		shared_ptr<ZLZipEntryCache> cache = ourStoredCaches[i];
 		if (!cache.isNull() && cache->myContainerName == containerName) {
+			//ZLLogger::Instance().println("ZipEntryCache", "cache found for " + containerName);
+			if (!cache->isValid()) {
+				//ZLLogger::Instance().println("ZipEntryCache", "cache is not valid for " + containerName);
+				cache = new ZLZipEntryCache(containerName, containerStream);
+				ourStoredCaches[i] = cache;
+			}
 			return cache;
 		}
 	}
@@ -48,6 +55,7 @@ ZLZipEntryCache::Info::Info() : Offset(-1) {
 
 ZLZipEntryCache::ZLZipEntryCache(const std::string &containerName, ZLInputStream &containerStream) : myContainerName(containerName) {
 	//ZLLogger::Instance().println("ZipEntryCache", "creating cache for " + containerName);
+	myLastModifiedTime = ZLFile(containerName).lastModified();
 	if (!containerStream.open()) {
 		return;
 	}
@@ -73,6 +81,10 @@ ZLZipEntryCache::ZLZipEntryCache(const std::string &containerName, ZLInputStream
 		}
 	}
 	containerStream.close();
+}
+
+bool ZLZipEntryCache::isValid() const {
+	return myLastModifiedTime == ZLFile(myContainerName).lastModified();
 }
 
 ZLZipEntryCache::Info ZLZipEntryCache::info(const std::string &entryName) const {
