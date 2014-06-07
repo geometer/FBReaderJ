@@ -6,6 +6,7 @@
 * ePub: fixed empty line support in <pre>-formatted text
 * ePub: added support for CSS margin-top/margin-bottom properties
 * New CSS-like style for default style definitions
+* fixed possible crash on ePub files updated while program is running
 
 ===== 1.10.2 (May 25, 2014) =====
 * Fixed local library duplicates issue
