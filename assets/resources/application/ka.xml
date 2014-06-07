@@ -407,7 +407,7 @@
 				</node>
 			</node>
 			<node name="font" value="შრიფტი">
-				<node name="unchanged" value="&lt;არ შეცვალო&gt;"/>
+				<node name="inherit" value="&lt;არ შეცვალო&gt;"/>
 			</node>
 			<node name="fontSize" value="შრიფტის ზომა"/>
 			<node name="fontStyle" value="შრიფტის სტილი">
@@ -417,43 +417,39 @@
 				<node name="boldItalic" value="მსუყე დახრილი"/>
 			</node>
 			<node name="bold" value="მსუყე შრიფტი">
-				<node name="summaryOn" value="მსუყე სტილის გამოყენება"/>
-				<node name="summaryOff" value="ნორმალური სტილის გამოყენება"/>
-				<node name="unchanged" value="შეუცვლელად"/>
+				<node name="bold" value="მსუყე სტილის გამოყენება"/>
+				<node name="normal" value="ნორმალური სტილის გამოყენება"/>
+				<node name="inherit" value="შეუცვლელად"/>
 			</node>
 			<node name="italic" value="დახრილი">
-				<node name="summaryOn" value="დახრილი სტილის გამოყენება"/>
-				<node name="summaryOff" value="ნორმალური სტილის გამოყენება"/>
-				<node name="unchanged" value="შეუცვლელად"/>
+				<node name="italic" value="დახრილი სტილის გამოყენება"/>
+				<node name="normal" value="ნორმალური სტილის გამოყენება"/>
+				<node name="inherit" value="შეუცვლელად"/>
 			</node>
-			<node name="underlined" value="ხაზგასმული">
-				<node name="summaryOn" value="ჩართვა"/>
-				<node name="summaryOff" value="გამორთვა"/>
-				<node name="unchanged" value="შეუცვლელად"/>
-			</node>
-			<node name="strikedThrough" value="გადახაზული">
-				<node name="summaryOn" value="ჩართვა"/>
-				<node name="summaryOff" value="გამორთვა"/>
-				<node name="unchanged" value="შეუცვლელად"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="ჩართვა"/>
+				<node name="line-through" value="ჩართვა"/>
 			</node>
 			<node name="lineSpacing" value="ინტერვალი">
-				<node name="unchanged" value="&lt;შეუცვლელად&gt;"/>
+				<node name="inherit" value="&lt;შეუცვლელად&gt;"/>
 			</node>
 			<node name="alignment" value="სწორება">
 				<node name="left" value="მარცხნივ"/>
 				<node name="right" value="მარჯვნივ"/>
 				<node name="center" value="ცენტრში"/>
 				<node name="justify" value="გვერდებზე"/>
-				<node name="unchanged" value="&lt;შეუცვლელად&gt;"/>
+				<node name="inherit" value="&lt;შეუცვლელად&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="გადატანები">
 				<node name="summaryOn" value="გადატანების ავტომატური დაყენება"/>
 				<node name="summaryOff" value="გადატანების გარეშე"/>
 			</node>
 			<node name="allowHyphenations" value="გადატანები">
-				<node name="summaryOn" value="გაადტანები დაშვებულია"/>
-				<node name="summaryOff" value="გადატანები დაუშვებელია"/>
-				<node name="unchanged" value="&lt;შეუცვლელად&gt;"/>
+				<node name="auto" value="გაადტანები დაშვებულია"/>
+				<node name="none" value="გადატანები დაუშვებელია"/>
+				<node name="inherit" value="&lt;შეუცვლელად&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="აბზაცის პირველი სტრიქონი"/>
 			<node name="spaceBefore" value="დაშორება თავში"/>
@@ -466,7 +462,7 @@
 				<node name="Regular Paragraph" value="ჩვეულებრივი ტექსტი">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="სათაური">

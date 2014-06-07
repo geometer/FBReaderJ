@@ -411,7 +411,7 @@
 				</node>
 			</node>
 			<node name="font" value="Rodina písem">
-				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				<node name="inherit" value="&lt;nezměněno&gt;"/>
 			</node>
 			<node name="fontSize" value="Velikost písma"/>
 			<node name="fontStyle" value="Řez písma">
@@ -421,43 +421,39 @@
 				<node name="boldItalic" value="Tučná kurzíva"/>
 			</node>
 			<node name="bold" value="Tučné">
-				<node name="summaryOn" value="tučné"/>
-				<node name="summaryOff" value="obyčejné"/>
-				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				<node name="bold" value="tučné"/>
+				<node name="normal" value="obyčejné"/>
+				<node name="inherit" value="&lt;nezměněno&gt;"/>
 			</node>
 			<node name="italic" value="Kurzíva">
-				<node name="summaryOn" value="kurzíva"/>
-				<node name="summaryOff" value="obyčejné"/>
-				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				<node name="italic" value="kurzíva"/>
+				<node name="normal" value="obyčejné"/>
+				<node name="inherit" value="&lt;nezměněno&gt;"/>
 			</node>
-			<node name="underlined" value="Podtržené">
-				<node name="summaryOn" value="podtržené"/>
-				<node name="summaryOff" value="obyčejné"/>
-				<node name="unchanged" value="&lt;nezměněno&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Přeškrtnuté">
-				<node name="summaryOn" value="přeškrtnuté"/>
-				<node name="summaryOff" value="obyčejné"/>
-				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="podtržené"/>
+				<node name="line-through" value="přeškrtnuté"/>
 			</node>
 			<node name="lineSpacing" value="Řádkování">
-				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				<node name="inherit" value="&lt;nezměněno&gt;"/>
 			</node>
 			<node name="alignment" value="Zarovnání">
 				<node name="left" value="Vlevo"/>
 				<node name="right" value="Vpravo"/>
 				<node name="center" value="Na střed"/>
 				<node name="justify" value="Do bloku"/>
-				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				<node name="inherit" value="&lt;nezměněno&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Automatické dělení slov">
 				<node name="summaryOn" value="Dělit slova automaticky"/>
 				<node name="summaryOff" value="Nedělit slova automaticky"/>
 			</node>
 			<node name="allowHyphenations" value="Povolit dělení slov">
-				<node name="summaryOn" value="dělit slova"/>
-				<node name="summaryOff" value="nedělit slova"/>
-				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				<node name="auto" value="dělit slova"/>
+				<node name="none" value="nedělit slova"/>
+				<node name="inherit" value="&lt;nezměněno&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Odsazení prvního řádku"/>
 			<node name="spaceBefore" value="Mezera před"/>
@@ -470,7 +466,7 @@
 				<node name="Regular Paragraph" value="Běžný odstavec">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Název">

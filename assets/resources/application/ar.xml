@@ -400,7 +400,7 @@
 				</node>
 			</node>
 			<node name="font" value="نوع الخط">
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="fontSize" value="حجم الخط"/>
 			<node name="fontStyle" value="ستايل الخط">
@@ -410,43 +410,39 @@
 				<node name="boldItalic" value="مائل وغليظ"/>
 			</node>
 			<node name="bold" value="غليظ">
-				<node name="summaryOn" value="غليظ"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="bold" value="غليظ"/>
+				<node name="normal" value="عادي"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="italic" value="مائل">
-				<node name="summaryOn" value="مائل"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="italic" value="مائل"/>
+				<node name="normal" value="عادي"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="underlined" value="مسطر">
-				<node name="summaryOn" value="مسطر"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
-			</node>
-			<node name="strikedThrough" value="مشطوب">
-				<node name="summaryOn" value="مشطوب"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="مسطر"/>
+				<node name="line-through" value="مشطوب"/>
 			</node>
 			<node name="lineSpacing" value="تباعد الأسطر">
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="alignment" value="محاذاة النص">
 				<node name="left" value="يسار"/>
 				<node name="right" value="يمين"/>
 				<node name="center" value="وسط"/>
 				<node name="justify" value="ملء"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Auto hyphenations" toBeTranslated="true">
 				<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 			</node>
 			<node name="allowHyphenations" value="Allow hyphenations" toBeTranslated="true">
-				<node name="summaryOn" value="hyphenate words" toBeTranslated="true"/>
-				<node name="summaryOff" value="don't hyphenate words" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="auto" value="hyphenate words" toBeTranslated="true"/>
+				<node name="none" value="don't hyphenate words" toBeTranslated="true"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="First line indent" toBeTranslated="true"/>
 			<node name="spaceBefore" tobeTranslated="true" value="Space before"/>
@@ -459,7 +455,7 @@
 				<node name="Regular Paragraph" value="Regular Paragraph" toBeTranslated="true">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Title" toBeTranslated="true">

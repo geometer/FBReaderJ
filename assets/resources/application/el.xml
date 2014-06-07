@@ -392,7 +392,7 @@
 				</node>
 			</node>
 			<node name="font" value="Γραμματοσειρά">
-				<node name="unchanged" value="&lt;αμετάβλητη&gt;"/>
+				<node name="inherit" value="&lt;αμετάβλητη&gt;"/>
 			</node>
 			<node name="fontSize" value="Μέγεθος γραμματοσειράς"/>
 			<node name="fontStyle" value="Κόψιμό γραφής">
@@ -402,43 +402,39 @@
 				<node name="boldItalic" value="Παχύ &amp; Πλάγιο"/>
 			</node>
 			<node name="bold" value="Παχύ">
-				<node name="summaryOn" value="Παχύ"/>
-				<node name="summaryOff" value="Κανονικό"/>
-				<node name="unchanged" value="&lt;αμετάβλητο&gt;"/>
+				<node name="bold" value="Παχύ"/>
+				<node name="normal" value="Κανονικό"/>
+				<node name="inherit" value="&lt;αμετάβλητο&gt;"/>
 			</node>
 			<node name="italic" value="Πλάγια">
-				<node name="summaryOn" value="Πλάγια"/>
-				<node name="summaryOff" value="Κανονικά"/>
-				<node name="unchanged" value="&lt;αμετάβλητο&gt;"/>
+				<node name="italic" value="Πλάγια"/>
+				<node name="normal" value="Κανονικά"/>
+				<node name="inherit" value="&lt;αμετάβλητο&gt;"/>
 			</node>
-			<node name="underlined" value="Υπογεγραμμένο">
-				<node name="summaryOn" value="υπογεγραμμένο"/>
-				<node name="summaryOff" value="κανονικό"/>
-				<node name="unchanged" value="&lt;αμετάβλητο&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Διαγραμμένο">
-				<node name="summaryOn" value="διαγραμμένο"/>
-				<node name="summaryOff" value="κανονικό"/>
-				<node name="unchanged" value="&lt;αμετάβλητο&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="υπογεγραμμένο"/>
+				<node name="line-through" value="διαγραμμένο"/>
 			</node>
 			<node name="lineSpacing" value="Απόσταση γραμμών">
-				<node name="unchanged" value="&lt;αμετάβλητη&gt;"/>
+				<node name="inherit" value="&lt;αμετάβλητη&gt;"/>
 			</node>
 			<node name="alignment" value="Προσανατολισμός">
 				<node name="left" value="αριστερά"/>
 				<node name="right" value="δεξιά"/>
 				<node name="center" value="στην μέση"/>
 				<node name="justify" value="σε μπλοκς"/>
-				<node name="unchanged" value="&lt;αμετάβλητος&gt;"/>
+				<node name="inherit" value="&lt;αμετάβλητος&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Αυτόματος χωρισμός">
 				<node name="summaryOn" value="Αυτόματος χωρισμός συλλαβών."/>
 				<node name="summaryOff" value="Μη αυτόματος χωρισμός συλλαβών.."/>
 			</node>
 			<node name="allowHyphenations" value="Επιτρεπτός χωρισμός">
-				<node name="summaryOn" value="χωρισμός λέξης"/>
-				<node name="summaryOff" value="μη χωρισμού λέξης"/>
-				<node name="unchanged" value="&lt;αμετάβλητος&gt;"/>
+				<node name="auto" value="χωρισμός λέξης"/>
+				<node name="none" value="μη χωρισμού λέξης"/>
+				<node name="inherit" value="&lt;αμετάβλητος&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Τοποθεσίας πρώτης γραμμής"/>
 			<node name="spaceBefore" value="Απόσταση πρίν"/>
@@ -451,7 +447,7 @@
 				<node name="Regular Paragraph" value="Κανονικλη παράγραφος">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Τίτλος">
