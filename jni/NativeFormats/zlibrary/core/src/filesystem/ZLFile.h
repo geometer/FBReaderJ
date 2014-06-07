@@ -49,7 +49,7 @@ public:
 		//TAR = 0x0200,
 		ARCHIVE = 0xff00,
 	};
-	
+
 private:
 	ZLFile();
 
@@ -58,7 +58,8 @@ public:
 	~ZLFile();
 
 	bool exists() const;
-	std::size_t size() const;	
+	std::size_t size() const;
+	std::size_t lastModified() const;
 
 	void forceArchiveType(ArchiveType type) const;
 

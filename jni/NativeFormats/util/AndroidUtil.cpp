@@ -95,6 +95,7 @@ shared_ptr<ObjectMethod> AndroidUtil::Method_ZLFile_getInputStream;
 shared_ptr<StringMethod> AndroidUtil::Method_ZLFile_getPath;
 shared_ptr<BooleanMethod> AndroidUtil::Method_ZLFile_isDirectory;
 shared_ptr<LongMethod> AndroidUtil::Method_ZLFile_size;
+shared_ptr<LongMethod> AndroidUtil::Method_ZLFile_lastModified;
 
 shared_ptr<Constructor> AndroidUtil::Constructor_FileInfo;
 shared_ptr<Constructor> AndroidUtil::Constructor_FileEncryptionInfo;
@@ -177,6 +178,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_ZLFile_getInputStream = new ObjectMethod(Class_ZLFile, "getInputStream", Class_java_io_InputStream, "()");
 	Method_ZLFile_getPath = new StringMethod(Class_ZLFile, "getPath", "()");
 	Method_ZLFile_size = new LongMethod(Class_ZLFile, "size", "()");
+	Method_ZLFile_lastModified = new LongMethod(Class_ZLFile, "lastModified", "()");
 
 	Constructor_FileInfo = new Constructor(Class_FileInfo, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/drm/FileEncryptionInfo;)V");
 	Constructor_FileEncryptionInfo = new Constructor(Class_FileEncryptionInfo, "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
