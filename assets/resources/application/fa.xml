@@ -402,7 +402,7 @@
 				</node>
 			</node>
 			<node name="font" value="خانواده فونت">
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="fontSize" value="سايز فونت"/>
 			<node name="fontStyle" value="سبك فونت">
@@ -412,43 +412,39 @@
 				<node name="boldItalic" value="حروف كج برجسته"/>
 			</node>
 			<node name="bold" value="برجسته">
-				<node name="summaryOn" value="برجسته"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="bold" value="برجسته"/>
+				<node name="normal" value="عادي"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="italic" value="حروف كج">
-				<node name="summaryOn" value="حروف كج"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="italic" value="حروف كج"/>
+				<node name="normal" value="عادي"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="underlined" value="زيرخط كشيده">
-				<node name="summaryOn" value="زير خط  كشيده"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
-			</node>
-			<node name="strikedThrough" value="حذف شده">
-				<node name="summaryOn" value="حذف شده"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="زير خط كشيده"/>
+				<node name="line-through" value="حذف شده"/>
 			</node>
 			<node name="lineSpacing" value="فاصله گذاري خطوط">
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="alignment" value="هم ترازي">
 				<node name="left" value="چپ"/>
 				<node name="right" value="راست"/>
 				<node name="center" value="مركز"/>
 				<node name="justify" value="فاصله بندي كردن"/>
-				<node name="unchanged" value="&lt;تغيير نيافته&gt;"/>
+				<node name="inherit" value="&lt;تغيير نيافته&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="فاصله گذاري خودكار">
 				<node name="summaryOn" value="فاصله گذاري خودكار كلمات"/>
 				<node name="summaryOff" value="عدم فاصله گذاري خودكار كلمات"/>
 			</node>
 			<node name="allowHyphenations" value="بگذار فاصله گذاري ها انجام شود">
-				<node name="summaryOn" value="كلمات را فاصله گذاري كن"/>
-				<node name="summaryOff" value="كلمات را فاصله گذاري نكن"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="auto" value="كلمات را فاصله گذاري كن"/>
+				<node name="none" value="كلمات را فاصله گذاري نكن"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="تو بردن خط اول"/>
 			<node name="spaceBefore" value="قبل فاصله"/>
@@ -461,7 +457,7 @@
 				<node name="Regular Paragraph" value="پاراگراف عادي">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="عنوان">

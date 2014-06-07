@@ -407,7 +407,7 @@
 				</node>
 			</node>
 			<node name="font" value="Familia tipográfica">
-				<node name="unchanged" value="&lt;sin cambios&gt;"/>
+				<node name="inherit" value="&lt;sin cambios&gt;"/>
 			</node>
 			<node name="fontSize" value="Tamaño de fuente"/>
 			<node name="fontStyle" value="Estilo de fuente">
@@ -417,43 +417,39 @@
 				<node name="boldItalic" value="Negrita cursiva"/>
 			</node>
 			<node name="bold" value="Negrita">
-				<node name="summaryOn" value="negrita"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sin cambios&gt;"/>
+				<node name="bold" value="negrita"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sin cambios&gt;"/>
 			</node>
 			<node name="italic" value="Cursiva">
-				<node name="summaryOn" value="cursiva"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sin cambios&gt;"/>
+				<node name="italic" value="cursiva"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sin cambios&gt;"/>
 			</node>
-			<node name="underlined" value="Subrayada">
-				<node name="summaryOn" value="subrayada"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sin cambios&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Tachada">
-				<node name="summaryOn" value="tachada"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sin cambios&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="subrayada"/>
+				<node name="line-through" value="tachada"/>
 			</node>
 			<node name="lineSpacing" value="Interlineado">
-				<node name="unchanged" value="&lt;sin cambios&gt;"/>
+				<node name="inherit" value="&lt;sin cambios&gt;"/>
 			</node>
 			<node name="alignment" value="Alineación">
 				<node name="left" value="Izquierda"/>
 				<node name="right" value="Derecha"/>
 				<node name="center" value="Centrado"/>
 				<node name="justify" value="Justificado"/>
-				<node name="unchanged" value="&lt;sin cambios&gt;"/>
+				<node name="inherit" value="&lt;sin cambios&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Separación automática de sílabas">
 				<node name="summaryOn" value="Separar sílabas automáticamente"/>
 				<node name="summaryOff" value="No separar sílabas automáticamente"/>
 			</node>
 			<node name="allowHyphenations" value="Permitir separación de sílabas">
-				<node name="summaryOn" value="separar sílabas"/>
-				<node name="summaryOff" value="no separar sílabas"/>
-				<node name="unchanged" value="&lt;sin cambios&gt;"/>
+				<node name="auto" value="separar sílabas"/>
+				<node name="none" value="no separar sílabas"/>
+				<node name="inherit" value="&lt;sin cambios&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Sangría de la primera linea"/>
 			<node name="spaceBefore" value="Espacio antes"/>
@@ -466,7 +462,7 @@
 				<node name="Regular Paragraph" value="Párrafo normal">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Título">

@@ -392,7 +392,7 @@
 				</node>
 			</node>
 			<node name="font" value="字型">
-				<node name="unchanged" value="&lt;不變&gt;"/>
+				<node name="inherit" value="&lt;不變&gt;"/>
 			</node>
 			<node name="fontSize" value="字體"/>
 			<node name="fontStyle" value="字體樣式">
@@ -402,43 +402,39 @@
 				<node name="boldItalic" value="粗斜體"/>
 			</node>
 			<node name="bold" value="粗體">
-				<node name="summaryOn" value="粗體"/>
-				<node name="summaryOff" value="正常"/>
-				<node name="unchanged" value="&lt;不變&gt;"/>
+				<node name="bold" value="粗體"/>
+				<node name="normal" value="正常"/>
+				<node name="inherit" value="&lt;不變&gt;"/>
 			</node>
 			<node name="italic" value="斜體">
-				<node name="summaryOn" value="斜體"/>
-				<node name="summaryOff" value="正常"/>
-				<node name="unchanged" value="&lt;不變&gt;"/>
+				<node name="italic" value="斜體"/>
+				<node name="normal" value="正常"/>
+				<node name="inherit" value="&lt;不變&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined" toBeTranslated="true">
-				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;不變&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;不變&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="underlined" toBeTranslated="true"/>
+				<node name="line-through" value="striked through" toBeTranslated="true"/>
 			</node>
 			<node name="lineSpacing" value="行距">
-				<node name="unchanged" value="&lt;不變&gt;"/>
+				<node name="inherit" value="&lt;不變&gt;"/>
 			</node>
 			<node name="alignment" value="對齊">
 				<node name="left" value="左"/>
 				<node name="right" value="右"/>
 				<node name="center" value="居中"/>
 				<node name="justify" value="對齊"/>
-				<node name="unchanged" value="&lt;不變&gt;"/>
+				<node name="inherit" value="&lt;不變&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="自動斷字">
 				<node name="summaryOn" value="自動斷字"/>
 				<node name="summaryOff" value="不要自動斷字"/>
 			</node>
 			<node name="allowHyphenations" value="允許斷字">
-				<node name="summaryOn" value="斷字"/>
-				<node name="summaryOff" value="不要斷字"/>
-				<node name="unchanged" value="&lt;不變&gt;"/>
+				<node name="auto" value="斷字"/>
+				<node name="none" value="不要斷字"/>
+				<node name="inherit" value="&lt;不變&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="首行縮進"/>
 			<node name="spaceBefore" value="段前距"/>
@@ -451,7 +447,7 @@
 				<node name="Regular Paragraph" value="正常段落">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="標題">

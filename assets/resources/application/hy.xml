@@ -407,7 +407,7 @@
 				</node>
 			</node>
 			<node name="font" value="Տառատեսակ">
-				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+				<node name="inherit" value="&lt;անփոփոխ&gt;"/>
 			</node>
 			<node name="fontSize" value="Տառաչափը"/>
 			<node name="fontStyle" value="Ոճը">
@@ -417,43 +417,39 @@
 				<node name="boldItalic" value="թավ շեղ"/>
 			</node>
 			<node name="bold" value="Թավ">
-				<node name="summaryOn" value="գործածել թավ նկարվածք"/>
-				<node name="summaryOff" value="գործածել ուղիղ նկարվածք"/>
-				<node name="unchanged" value="անփոփոխ"/>
+				<node name="bold" value="գործածել թավ նկարվածք"/>
+				<node name="normal" value="գործածել ուղիղ նկարվածք"/>
+				<node name="inherit" value="անփոփոխ"/>
 			</node>
 			<node name="italic" value="Շեղ">
-				<node name="summaryOn" value="գործածել շեղ նկարվածք"/>
-				<node name="summaryOff" value="գործածել ուղիղ նկարվածք"/>
-				<node name="unchanged" value="անփոփոխ"/>
+				<node name="italic" value="գործածել շեղ նկարվածք"/>
+				<node name="normal" value="գործածել ուղիղ նկարվածք"/>
+				<node name="inherit" value="անփոփոխ"/>
 			</node>
-			<node name="underlined" value="Ընդգծված">
-				<node name="summaryOn" value="միացնել"/>
-				<node name="summaryOff" value="անջատել"/>
-				<node name="unchanged" value="անփոփոխ"/>
-			</node>
-			<node name="strikedThrough" value="Վրագծել">
-				<node name="summaryOn" value="միացնել"/>
-				<node name="summaryOff" value="անջատել"/>
-				<node name="unchanged" value="անփոփոխ"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="միացնել"/>
+				<node name="line-through" value="միացնել"/>
 			</node>
 			<node name="lineSpacing" value="Տողամիջոց">
-				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+				<node name="inherit" value="&lt;անփոփոխ&gt;"/>
 			</node>
 			<node name="alignment" value="Հավասարեցում">
 				<node name="left" value="ձախից"/>
 				<node name="right" value="աջից"/>
 				<node name="center" value="կենտրոնով"/>
 				<node name="justify" value="եզրերով"/>
-				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+				<node name="inherit" value="&lt;անփոփոխ&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Ինքնաշխատ տողադարձում">
 				<node name="summaryOn" value="Միացնել ինքնաբար վանկատումը"/>
 				<node name="summaryOff" value="Անջատել ինքնաբար վանկատումը"/>
 			</node>
 			<node name="allowHyphenations" value="Տողադարձում">
-				<node name="summaryOn" value="թույլատրել տողադարձումը"/>
-				<node name="summaryOff" value="արգելել տողադարձումը"/>
-				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+				<node name="auto" value="թույլատրել տողադարձումը"/>
+				<node name="none" value="արգելել տողադարձումը"/>
+				<node name="inherit" value="&lt;անփոփոխ&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Կարմիր տող"/>
 			<node name="spaceBefore" value="Բացատ սկզբում"/>
@@ -466,7 +462,7 @@
 				<node name="Regular Paragraph" value="Կանոնավոր պարբերություն">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Վերնագիր">

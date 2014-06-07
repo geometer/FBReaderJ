@@ -408,7 +408,7 @@
 				</node>
 			</node>
 			<node name="font" value="Ґарнітура">
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="fontSize" value="Памер шрыфту"/>
 			<node name="fontStyle" value="Стыль шрыфту">
@@ -418,43 +418,39 @@
 				<node name="boldItalic" value="Тоўсты курсіўны"/>
 			</node>
 			<node name="bold" value="Тоўсты">
-				<node name="summaryOn" value="тоўсты"/>
-				<node name="summaryOff" value="звычайны"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="bold" value="тоўсты"/>
+				<node name="normal" value="звычайны"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="italic" value="Курсіўны">
-				<node name="summaryOn" value="курсіўны"/>
-				<node name="summaryOff" value="звычайны"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="italic" value="курсіўны"/>
+				<node name="normal" value="звычайны"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
-			<node name="underlined" value="Падкрэсьлены">
-				<node name="summaryOn" value="падкрэсьлены"/>
-				<node name="summaryOff" value="звычайны"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Закрэсьлены">
-				<node name="summaryOn" value="закрэсьлены"/>
-				<node name="summaryOff" value="звычайны"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="падкрэсьлены"/>
+				<node name="line-through" value="закрэсьлены"/>
 			</node>
 			<node name="lineSpacing" value="Міжрадковая адлегласьць">
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="alignment" value="Раўнаваньне">
 				<node name="left" value="Выраўнаваць зьлева"/>
 				<node name="right" value="Выраўнаваць справа"/>
 				<node name="center" value="Цэнтраваць"/>
 				<node name="justify" value="Выпрастаць"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Самарушныя пераносы">
 				<node name="summaryOn" value="Пераносіць словы самарушна"/>
 				<node name="summaryOff" value="Не пераносіць словы самарушна"/>
 			</node>
 			<node name="allowHyphenations" value="Дазволіць пераносы">
-				<node name="summaryOn" value="пераносіць словы"/>
-				<node name="summaryOff" value="не пераносіць словы"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="auto" value="пераносіць словы"/>
+				<node name="none" value="не пераносіць словы"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Водступ першага радка"/>
 			<node name="spaceBefore" value="Прастора пасьля"/>
@@ -467,7 +463,7 @@
 				<node name="Regular Paragraph" value="Звычайны абзац">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Назва">

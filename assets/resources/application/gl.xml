@@ -392,7 +392,7 @@
 				</node>
 			</node>
 			<node name="font" value="Tipo de letra">
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="fontSize" value="Tamaño da letra"/>
 			<node name="fontStyle" value="Estilo da letra">
@@ -402,43 +402,39 @@
 				<node name="boldItalic" value="Cursiva negriña"/>
 			</node>
 			<node name="bold" value="Negriña">
-				<node name="summaryOn" value="negriña"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="bold" value="negriña"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="italic" value="Cursiva">
-				<node name="summaryOn" value="cursiva"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="italic" value="cursiva"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined" toBeTranslated="true">
-				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="underlined" toBeTranslated="true"/>
+				<node name="line-through" value="striked through" toBeTranslated="true"/>
 			</node>
 			<node name="lineSpacing" value="Interliñado">
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="alignment" value="Aliñamento">
 				<node name="left" value="Esquerda"/>
 				<node name="right" value="Dereita"/>
 				<node name="center" value="Centrado"/>
 				<node name="justify" value="Xustificado"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Guionizado automático">
 				<node name="summaryOn" value="Guionizar automaticamente as palabras "/>
 				<node name="summaryOff" value="Non guionizar as palabras automaticamente"/>
 			</node>
 			<node name="allowHyphenations" value="Permitir guionizados">
-				<node name="summaryOn" value="guionizar palabras"/>
-				<node name="summaryOff" value="non guionizar palabras"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="auto" value="guionizar palabras"/>
+				<node name="none" value="non guionizar palabras"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Sangrar a primeira liña"/>
 			<node name="spaceBefore" value="Espazo antes"/>
@@ -451,7 +447,7 @@
 				<node name="Regular Paragraph" value="Parágrafo normal">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Título">

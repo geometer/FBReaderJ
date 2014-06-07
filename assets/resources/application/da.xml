@@ -402,7 +402,7 @@
 				</node>
 			</node>
 			<node name="font" value="Skrifttype-familie">
-				<node name="unchanged" value="&lt;uændret&gt;"/>
+				<node name="inherit" value="&lt;uændret&gt;"/>
 			</node>
 			<node name="fontSize" value="Skriftstørrelse"/>
 			<node name="fontStyle" value="Skrifttype-stil">
@@ -412,43 +412,39 @@
 				<node name="boldItalic" value="Fed kursiv"/>
 			</node>
 			<node name="bold" value="Fed">
-				<node name="summaryOn" value="fed"/>
-				<node name="summaryOff" value="almindelig"/>
-				<node name="unchanged" value="&lt;uændret&gt;"/>
+				<node name="bold" value="fed"/>
+				<node name="normal" value="almindelig"/>
+				<node name="inherit" value="&lt;uændret&gt;"/>
 			</node>
 			<node name="italic" value="Kursiv">
-				<node name="summaryOn" value="kursiv"/>
-				<node name="summaryOff" value="almindelig"/>
-				<node name="unchanged" value="&lt;uændret&gt;"/>
+				<node name="italic" value="kursiv"/>
+				<node name="normal" value="almindelig"/>
+				<node name="inherit" value="&lt;uændret&gt;"/>
 			</node>
-			<node name="underlined" value="Understreget">
-				<node name="summaryOn" value="understreget"/>
-				<node name="summaryOff" value="almindelig"/>
-				<node name="unchanged" value="&lt;uændret&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Gennemstregede">
-				<node name="summaryOn" value="gennemstregede"/>
-				<node name="summaryOff" value="almindelig"/>
-				<node name="unchanged" value="&lt;uændret&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="understreget"/>
+				<node name="line-through" value="gennemstregede"/>
 			</node>
 			<node name="lineSpacing" value="Linjeafstand">
-				<node name="unchanged" value="&lt;uændret&gt;"/>
+				<node name="inherit" value="&lt;uændret&gt;"/>
 			</node>
 			<node name="alignment" value="Justering">
 				<node name="left" value="Venstre"/>
 				<node name="right" value="Højre"/>
 				<node name="center" value="Center"/>
 				<node name="justify" value="Margenjustering"/>
-				<node name="unchanged" value="&lt;uændret&gt;"/>
+				<node name="inherit" value="&lt;uændret&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Auto-bindestreg">
 				<node name="summaryOn" value="Indsæt bindestreg automatisk"/>
 				<node name="summaryOff" value="Indsæt ikke bindestreg automatisk"/>
 			</node>
 			<node name="allowHyphenations" value="Tillad bindestreg">
-				<node name="summaryOn" value="Indsæt bindestreg"/>
-				<node name="summaryOff" value="Indsæt ikke bindestreg automatisk"/>
-				<node name="unchanged" value="&lt;uændret&gt;"/>
+				<node name="auto" value="Indsæt bindestreg"/>
+				<node name="none" value="Indsæt ikke bindestreg automatisk"/>
+				<node name="inherit" value="&lt;uændret&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Første linje indrykket"/>
 			<node name="spaceBefore" value="Afstand før"/>
@@ -461,7 +457,7 @@
 				<node name="Regular Paragraph" value="Almindelig paragraf">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Titel">

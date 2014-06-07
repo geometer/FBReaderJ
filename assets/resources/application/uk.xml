@@ -392,7 +392,7 @@
 				</node>
 			</node>
 			<node name="font" value="Родина шрифту">
-				<node name="unchanged" value="&lt;не міняти&gt;"/>
+				<node name="inherit" value="&lt;не міняти&gt;"/>
 			</node>
 			<node name="fontSize" value="Розмір шрифту"/>
 			<node name="fontStyle" value="Стиль шрифту">
@@ -402,43 +402,39 @@
 				<node name="boldItalic" value="Жирний курсив"/>
 			</node>
 			<node name="bold" value="Жирний">
-				<node name="summaryOn" value="жирний"/>
-				<node name="summaryOff" value="звичайний"/>
-				<node name="unchanged" value="&lt;не міняти&gt;"/>
+				<node name="bold" value="жирний"/>
+				<node name="normal" value="звичайний"/>
+				<node name="inherit" value="&lt;не міняти&gt;"/>
 			</node>
 			<node name="italic" value="Курсив">
-				<node name="summaryOn" value="курсив"/>
-				<node name="summaryOff" value="звичайний"/>
-				<node name="unchanged" value="&lt;не міняти&gt;"/>
+				<node name="italic" value="курсив"/>
+				<node name="normal" value="звичайний"/>
+				<node name="inherit" value="&lt;не міняти&gt;"/>
 			</node>
-			<node name="underlined" value="Підкреслений">
-				<node name="summaryOn" value="підкреслений"/>
-				<node name="summaryOff" value="звичайний"/>
-				<node name="unchanged" value="&lt;не міняти&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Закреслений">
-				<node name="summaryOn" value="закреслений"/>
-				<node name="summaryOff" value="звичайний"/>
-				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="підкреслений"/>
+				<node name="line-through" value="закреслений"/>
 			</node>
 			<node name="lineSpacing" value="Інтервал">
-				<node name="unchanged" value="&lt;не міняти&gt;"/>
+				<node name="inherit" value="&lt;не міняти&gt;"/>
 			</node>
 			<node name="alignment" value="Вирівнювання">
 				<node name="left" value="ліве"/>
 				<node name="right" value="праве"/>
 				<node name="center" value="по центру"/>
 				<node name="justify" value="по краях"/>
-				<node name="unchanged" value="&lt;не міняти&gt;"/>
+				<node name="inherit" value="&lt;не міняти&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Перенесення">
 				<node name="summaryOn" value="Переносити слова автоматично"/>
 				<node name="summaryOff" value="Не переносити слова автоматично"/>
 			</node>
 			<node name="allowHyphenations" value="Перенесення">
-				<node name="summaryOn" value="переносити слова"/>
-				<node name="summaryOff" value="не переносити слова"/>
-				<node name="unchanged" value="&lt;не міняти&gt;"/>
+				<node name="auto" value="переносити слова"/>
+				<node name="none" value="не переносити слова"/>
+				<node name="inherit" value="&lt;не міняти&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Червона стрічка"/>
 			<node name="spaceBefore" value="Пропуск перед"/>
@@ -451,7 +447,7 @@
 				<node name="Regular Paragraph" value="звичайного тексту">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="заголовку">

@@ -257,32 +257,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen moreStylesScreen = textScreen.createPreferenceScreen("more");
 
 		/*
-			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.Name);
-			formatScreen.addPreference(new ZLBoolean3Preference(
-				this, textScreen.Resource, "bold",
-				decoration.BoldOption
-			));
-			formatScreen.addPreference(new ZLBoolean3Preference(
-				this, textScreen.Resource, "italic",
-				decoration.ItalicOption
-			));
-			formatScreen.addPreference(new ZLBoolean3Preference(
-				this, textScreen.Resource, "underlined",
-				decoration.UnderlineOption
-			));
-			formatScreen.addPreference(new ZLBoolean3Preference(
-				this, textScreen.Resource, "strikedThrough",
-				decoration.StrikeThroughOption
-			));
-			final String[] allAlignments = { "unchanged", "left", "right", "center", "justify" };
-			formatScreen.addPreference(new ZLChoicePreference(
-				this, textScreen.Resource, "alignment",
-				decoration.AlignmentOption, allAlignments
-			));
-			formatScreen.addPreference(new ZLBoolean3Preference(
-				this, textScreen.Resource, "allowHyphenations",
-				decoration.AllowHyphenationsOption
-			));
 			final ZLIntegerOption spacePercentOption = decoration.LineSpacePercentOption;
 			final int[] spacingValues = new int[17];
 			final String[] spacingKeys = new String[17];
@@ -310,10 +284,31 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				StringPreference.Constraint.POSITIVE_LENGTH,
 				textScreen.Resource, "fontSize"
 			));
-			//public final ZLStringOption FontWeightOption;
-			//public final ZLStringOption FontStyleOption;
-			//public final ZLStringOption TextDecorationOption;
-			//public final ZLStringOption HyphenationOption;
+			ngScreen.addPreference(new ZLStringChoicePreference(
+				this, textScreen.Resource, "bold",
+				description.FontWeightOption,
+				new String[] { "inherit", "normal", "bold" }
+			));
+			ngScreen.addPreference(new ZLStringChoicePreference(
+				this, textScreen.Resource, "italic",
+				description.FontStyleOption,
+				new String[] { "inherit", "normal", "italic" }
+			));
+			ngScreen.addPreference(new ZLStringChoicePreference(
+				this, textScreen.Resource, "textDecoration",
+				description.TextDecorationOption,
+				new String[] { "inherit", "none", "underline", "line-through" }
+			));
+			ngScreen.addPreference(new ZLStringChoicePreference(
+				this, textScreen.Resource, "allowHyphenations",
+				description.HyphenationOption,
+				new String[] { "inherit", "none", "auto" }
+			));
+			ngScreen.addPreference(new ZLStringChoicePreference(
+				this, textScreen.Resource, "alignment",
+				description.AlignmentOption,
+				new String[] { "inherit", "left", "right", "center", "justify" }
+			));
 			ngScreen.addPreference(new StringPreference(
 				this, description.MarginTopOption,
 				StringPreference.Constraint.LENGTH,
@@ -339,7 +334,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				StringPreference.Constraint.LENGTH,
 				textScreen.Resource, "firstLineIndent"
 			));
-			//public final ZLStringOption AlignmentOption;
 			ngScreen.addPreference(new StringPreference(
 				this, description.VerticalAlignOption,
 				StringPreference.Constraint.LENGTH,

@@ -392,7 +392,7 @@
 				</node>
 			</node>
 			<node name="font" value="Familia de fonturi">
-				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+				<node name="inherit" value="&lt;neschimbat&gt;"/>
 			</node>
 			<node name="fontSize" value="Dimensiunea fontului"/>
 			<node name="fontStyle" value="Stilul fontului">
@@ -402,43 +402,39 @@
 				<node name="boldItalic" value="Ingrosat Cursiv"/>
 			</node>
 			<node name="bold" value="Ingrosat">
-				<node name="summaryOn" value="ingrosat"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+				<node name="bold" value="ingrosat"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;neschimbat&gt;"/>
 			</node>
 			<node name="italic" value="Cursiv">
-				<node name="summaryOn" value="cursiv"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+				<node name="italic" value="cursiv"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;neschimbat&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined" toBeTranslated="true">
-				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;neschimbat&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="underlined" toBeTranslated="true"/>
+				<node name="line-through" value="striked through" toBeTranslated="true"/>
 			</node>
 			<node name="lineSpacing" value="Spatiere linii">
-				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+				<node name="inherit" value="&lt;neschimbat&gt;"/>
 			</node>
 			<node name="alignment" value="Aliniere">
 				<node name="left" value="Stânga"/>
 				<node name="right" value="Dreapta"/>
 				<node name="center" value="Centru"/>
 				<node name="justify" value="Aliniere stanga si dreapta"/>
-				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+				<node name="inherit" value="&lt;neschimbat&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Despartire în silabe automata">
 				<node name="summaryOn" value="Despartire în silabe cuvinte în mod automat"/>
 				<node name="summaryOff" value="Nu despartiti în silabe cuvintele în mod automat"/>
 			</node>
 			<node name="allowHyphenations" value="Permiteti despartire în silabe">
-				<node name="summaryOn" value="Desparte în silabe cuvintele"/>
-				<node name="summaryOff" value="nu desparti cuvintele în silabe"/>
-				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+				<node name="auto" value="Desparte în silabe cuvintele"/>
+				<node name="none" value="nu desparti cuvintele în silabe"/>
+				<node name="inherit" value="&lt;neschimbat&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Aliniaza prima linie"/>
 			<node name="spaceBefore" value="Spatiu înainte"/>
@@ -451,7 +447,7 @@
 				<node name="Regular Paragraph" value="Paragraf normal">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Titlu">

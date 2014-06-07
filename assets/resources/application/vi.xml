@@ -392,7 +392,7 @@
 				</node>
 			</node>
 			<node name="font" value="Họ phông">
-				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
 			<node name="fontSize" value="Cỡ phông"/>
 			<node name="fontStyle" value="Kiểu phông">
@@ -402,43 +402,39 @@
 				<node name="boldItalic" value="Đậm nghiêng"/>
 			</node>
 			<node name="bold" value="Đậm">
-				<node name="summaryOn" value="đậm"/>
-				<node name="summaryOff" value="thường"/>
-				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				<node name="bold" value="đậm"/>
+				<node name="normal" value="thường"/>
+				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
 			<node name="italic" value="Nghiêng">
-				<node name="summaryOn" value="nghiêng"/>
-				<node name="summaryOff" value="thường"/>
-				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				<node name="italic" value="nghiêng"/>
+				<node name="normal" value="thường"/>
+				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined" toBeTranslated="true">
-				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="underlined" toBeTranslated="true"/>
+				<node name="line-through" value="striked through" toBeTranslated="true"/>
 			</node>
 			<node name="lineSpacing" value="Cách dòng">
-				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
 			<node name="alignment" value="Thẳng hàng">
 				<node name="left" value="Trái"/>
 				<node name="right" value="Phải"/>
 				<node name="center" value="Giữa"/>
 				<node name="justify" value="Căn chỉnh"/>
-				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Tự động Tách từ">
 				<node name="summaryOn" value="Tách từ một cách tự động"/>
 				<node name="summaryOff" value="Không tách từ một cách tự động"/>
 			</node>
 			<node name="allowHyphenations" value="Cho phép Tách từ">
-				<node name="summaryOn" value="tách từ"/>
-				<node name="summaryOff" value="không tách từ"/>
-				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+				<node name="auto" value="tách từ"/>
+				<node name="none" value="không tách từ"/>
+				<node name="inherit" value="&lt;giữ nguyên&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Lùi Dòng Đầu"/>
 			<node name="spaceBefore" value="Khoảng trống trước"/>
@@ -451,7 +447,7 @@
 				<node name="Regular Paragraph" value="Đoạn văn Thường">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Tiêu đề">
