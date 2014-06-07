@@ -407,7 +407,7 @@
 				</node>
 			</node>
 			<node name="font" value="Шрифт">
-				<node name="inherit" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="fontSize" value="Размер шрифта"/>
 			<node name="fontStyle" value="Начертание">
@@ -427,20 +427,20 @@
 				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="textDecoration" value="Дополнительные эффекты">
-				<node name="inherit" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="не менять"/>
 				<node name="none" value="без эффектов"/>
 				<node name="underline" value="подчеркнутый"/>
 				<node name="line-through" value="зачёркнутый"/>
 			</node>
 			<node name="lineSpacing" value="Интервал">
-				<node name="inherit" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="alignment" value="Выравнивание">
 				<node name="left" value="левое"/>
 				<node name="right" value="правое"/>
 				<node name="center" value="по центру"/>
 				<node name="justify" value="по краям"/>
-				<node name="inherit" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="autoHyphenations" value="Переносы">
 				<node name="summaryOn" value="Автоматически расставлять переносы"/>
@@ -449,14 +449,14 @@
 			<node name="allowHyphenations" value="Переносы">
 				<node name="auto" value="разрешить переносы"/>
 				<node name="none" value="запретить переносы"/>
-				<node name="inherit" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="firstLineIndent" value="Красная строка"/>
 			<node name="spaceBefore" value="Пропуск перед"/>
 			<node name="spaceAfter" value="Пропуск после"/>
 			<node name="leftIndent" value="Отступ слева"/>
 			<node name="rightIndent" value="Отступ справа"/>
-			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
+			<node name="verticalAlignment" value="Смещение по вертикали"/>
 			<node name="more" value="Другие стили">
 				<node name="summary" value="Отдельные настройки для заголовков, эпиграфов и т.д."/>
 				<node name="Regular Paragraph" value="Обычный текст">
