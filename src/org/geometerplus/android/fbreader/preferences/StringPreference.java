@@ -37,12 +37,16 @@ import org.geometerplus.zlibrary.ui.android.R;
 public class StringPreference extends DialogPreference {
 	public static class Constraint {
 		public static final Constraint LENGTH = new Constraint(
-			"(-{0,1}([0-9]*\\.){0,1}[0-9]+(%|em|ex|px|pt)|)",
+			"-{0,1}([0-9]*\\.){0,1}[0-9]+(%|em|ex|px|pt)|",
 			"length"
 		);
 		public static final Constraint POSITIVE_LENGTH = new Constraint(
-			"(([0-9]*\\.){0,1}[0-9]+(%|em|ex|px|pt)|)",
+			"([0-9]*\\.){0,1}[0-9]+(%|em|ex|px|pt)|",
 			"positiveLength"
+		);
+		public static final Constraint PERCENT = new Constraint(
+			"([1-9][0-9]{1,2}%)|",
+			"percent"
 		);
 
 		private final Pattern myPattern;
