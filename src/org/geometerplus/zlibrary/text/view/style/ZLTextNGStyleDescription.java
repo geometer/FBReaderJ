@@ -42,6 +42,7 @@ public class ZLTextNGStyleDescription {
 	public final ZLStringOption TextIndentOption;
 	public final ZLStringOption AlignmentOption;
 	public final ZLStringOption VerticalAlignOption;
+	public final ZLStringOption LineHeightOption;
 
 	private static ZLStringOption createOption(String selector, String name, Map<String,String> valueMap) {
 		return new ZLStringOption("Style", selector + "::" + name, valueMap.get(name));
@@ -63,6 +64,7 @@ public class ZLTextNGStyleDescription {
 		TextIndentOption = createOption(selector, "text-indent", valueMap);
 		AlignmentOption = createOption(selector, "text-align", valueMap);
 		VerticalAlignOption = createOption(selector, "vertical-align", valueMap);
+		LineHeightOption = createOption(selector, "line-height", valueMap);
 	}
 
 	int getFontSize(ZLTextMetrics metrics, int baseFontSize) {
