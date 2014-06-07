@@ -31,17 +31,13 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.Tag;
-import org.geometerplus.fbreader.book.Author;
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.util.EditListDialogActivity;
-import org.geometerplus.android.util.EditTagsDialogActivity;
-import org.geometerplus.android.util.EditAuthorsDialogActivity;
+import org.geometerplus.android.util.*;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
