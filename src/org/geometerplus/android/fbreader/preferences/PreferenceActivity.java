@@ -267,10 +267,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		/*
 			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.Name);
-			formatScreen.addPreference(new ZLIntegerRangePreference(
-				this, textScreen.Resource.getResource("fontSizeDifference"),
-				decoration.FontSizeDeltaOption
-			));
 			formatScreen.addPreference(new ZLBoolean3Preference(
 				this, textScreen.Resource, "bold",
 				decoration.BoldOption
@@ -296,26 +292,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				this, textScreen.Resource, "allowHyphenations",
 				decoration.AllowHyphenationsOption
 			));
-			formatScreen.addPreference(new ZLIntegerRangePreference(
-				this, textScreen.Resource.getResource("spaceBefore"),
-				decoration.SpaceBeforeOption
-			));
-			formatScreen.addPreference(new ZLIntegerRangePreference(
-				this, textScreen.Resource.getResource("spaceAfter"),
-				decoration.SpaceAfterOption
-			));
-			formatScreen.addPreference(new ZLIntegerRangePreference(
-				this, textScreen.Resource.getResource("leftIndent"),
-				decoration.LeftIndentOption
-			));
-			formatScreen.addPreference(new ZLIntegerRangePreference(
-				this, textScreen.Resource.getResource("rightIndent"),
-				decoration.RightIndentOption
-			));
-			formatScreen.addPreference(new ZLIntegerRangePreference(
-				this, textScreen.Resource.getResource("firstLineIndent"),
-				decoration.FirstLineIndentDeltaOption
-			));
 			final ZLIntegerOption spacePercentOption = decoration.LineSpacePercentOption;
 			final int[] spacingValues = new int[17];
 			final String[] spacingKeys = new String[17];
@@ -337,6 +313,46 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			ngScreen.addPreference(new FontPreference(
 				this, textScreen.Resource, "font",
 				description.FontFamilyOption, true
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.FontSizeOption,
+				StringPreference.Constraint.POSITIVE_LENGTH,
+				textScreen.Resource, "fontSize"
+			));
+			//public final ZLStringOption FontWeightOption;
+			//public final ZLStringOption FontStyleOption;
+			//public final ZLStringOption TextDecorationOption;
+			//public final ZLStringOption HyphenationOption;
+			ngScreen.addPreference(new StringPreference(
+				this, description.MarginTopOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "spaceBefore"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.MarginBottomOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "spaceAfter"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.MarginLeftOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "leftIndent"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.MarginRightOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "rightIndent"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.TextIndentOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "firstLineIndent"
+			));
+			//public final ZLStringOption AlignmentOption;
+			ngScreen.addPreference(new StringPreference(
+				this, description.VerticalAlignOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "verticalAlignment"
 			));
 		}
 
