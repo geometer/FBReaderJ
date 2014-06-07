@@ -404,7 +404,7 @@
 				</node>
 			</node>
 			<node name="font" value="Família de fontes">
-				<node name="unchanged" value="&lt;sem alteração&gt;"/>
+				<node name="inherit" value="&lt;sem alteração&gt;"/>
 			</node>
 			<node name="fontSize" value="Tamanho da fonte"/>
 			<node name="fontStyle" value="Estilo da fonte">
@@ -414,43 +414,39 @@
 				<node name="boldItalic" value="Negrito Itálico"/>
 			</node>
 			<node name="bold" value="Negrito">
-				<node name="summaryOn" value="negrito"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sem alteração&gt;"/>
+				<node name="bold" value="negrito"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sem alteração&gt;"/>
 			</node>
 			<node name="italic" value="Itálico">
-				<node name="summaryOn" value="itálico"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sem alteração&gt;"/>
+				<node name="italic" value="itálico"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sem alteração&gt;"/>
 			</node>
-			<node name="underlined" value="Sublinhado">
-				<node name="summaryOn" value="sublinhado"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sem alteração&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Riscado por">
-				<node name="summaryOn" value="Riscado por"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sem alteração&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="sublinhado"/>
+				<node name="line-through" value="Riscado por"/>
 			</node>
 			<node name="lineSpacing" value="Espaçamento entre linhas">
-				<node name="unchanged" value="&lt;sem alteração&gt;"/>
+				<node name="inherit" value="&lt;sem alteração&gt;"/>
 			</node>
 			<node name="alignment" value="Alinhamento">
 				<node name="left" value="Esquerda"/>
 				<node name="right" value="Direita"/>
 				<node name="center" value="Centro"/>
 				<node name="justify" value="Justificar"/>
-				<node name="unchanged" value="&lt;sem alteração&gt;"/>
+				<node name="inherit" value="&lt;sem alteração&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Auto hyphenations">
 				<node name="summaryOn" value="Hifenizar palavras automaticamente"/>
 				<node name="summaryOff" value="Não hifenizar palavras automaticamente"/>
 			</node>
 			<node name="allowHyphenations" value="Permitir hifenizações">
-				<node name="summaryOn" value="hifenizar palavras"/>
-				<node name="summaryOff" value="não hifenizar palavras"/>
-				<node name="unchanged" value="&lt;sem alteração&gt;"/>
+				<node name="auto" value="hifenizar palavras"/>
+				<node name="none" value="não hifenizar palavras"/>
+				<node name="inherit" value="&lt;sem alteração&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Recuo da primeira linha"/>
 			<node name="spaceBefore" value="Espaçamento Anterior"/>
@@ -463,7 +459,7 @@
 				<node name="Regular Paragraph" value="Parágrafo normal">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Título">
