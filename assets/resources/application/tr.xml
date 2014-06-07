@@ -402,7 +402,7 @@
 				</node>
 			</node>
 			<node name="font" value="Font ailesi">
-				<node name="unchanged" value="&lt;eski hali&gt;"/>
+				<node name="inherit" value="&lt;eski hali&gt;"/>
 			</node>
 			<node name="fontSize" value="Font büyüklüğü"/>
 			<node name="fontStyle" value="Font stili">
@@ -412,43 +412,39 @@
 				<node name="boldItalic" value="Kalın ve eğik"/>
 			</node>
 			<node name="bold" value="Kalın">
-				<node name="summaryOn" value="kalın"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;eski hali&gt;"/>
+				<node name="bold" value="kalın"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;eski hali&gt;"/>
 			</node>
 			<node name="italic" value="Eğik">
-				<node name="summaryOn" value="eğik"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;eski hali&gt;"/>
+				<node name="italic" value="eğik"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;eski hali&gt;"/>
 			</node>
-			<node name="underlined" value="Altı çizili">
-				<node name="summaryOn" value="altı çizili"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;eski hali&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Üzeri çizilmiş">
-				<node name="summaryOn" value="üzeri çizilmiş"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;eski hali&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="altı çizili"/>
+				<node name="line-through" value="üzeri çizilmiş"/>
 			</node>
 			<node name="lineSpacing" value="Satır Aralığı">
-				<node name="unchanged" value="&lt;eski hali&gt;"/>
+				<node name="inherit" value="&lt;eski hali&gt;"/>
 			</node>
 			<node name="alignment" value="Hizalama">
 				<node name="left" value="Sola dayalı"/>
 				<node name="right" value="Sağa dayalı"/>
 				<node name="center" value="Ortalanmış"/>
 				<node name="justify" value="İki yana dayalı"/>
-				<node name="unchanged" value="&lt;eski hali&gt;"/>
+				<node name="inherit" value="&lt;eski hali&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Otomatik heceleme">
 				<node name="summaryOn" value="Satır sonlarındaki kelimeleri otomatik hecele"/>
 				<node name="summaryOff" value="Kelimeleri otomatik heceleme"/>
 			</node>
 			<node name="allowHyphenations" value="Hecelemeye izin ver">
-				<node name="summaryOn" value="Kelimeleri hecele"/>
-				<node name="summaryOff" value="kelimeleri heceleme"/>
-				<node name="unchanged" value="&lt;eski hali&gt;"/>
+				<node name="auto" value="Kelimeleri hecele"/>
+				<node name="none" value="kelimeleri heceleme"/>
+				<node name="inherit" value="&lt;eski hali&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="İlk Satır Girintisi"/>
 			<node name="spaceBefore" value="Boşluk önce"/>
@@ -461,7 +457,7 @@
 				<node name="Regular Paragraph" value="Normal Paragraf">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="İsim">

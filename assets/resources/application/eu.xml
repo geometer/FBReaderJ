@@ -402,7 +402,7 @@
 				</node>
 			</node>
 			<node name="font" value="Letra-tipoaren familia">
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="fontSize" value="Letra-tipoaren tamaina"/>
 			<node name="fontStyle" value="Letra-tipo estiloa">
@@ -412,43 +412,39 @@
 				<node name="boldItalic" value="Lodia etzana"/>
 			</node>
 			<node name="bold" value="Lodia">
-				<node name="summaryOn" value="lodia"/>
-				<node name="summaryOff" value="normala"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="bold" value="lodia"/>
+				<node name="normal" value="normala"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="italic" value="Etzana">
-				<node name="summaryOn" value="etzana"/>
-				<node name="summaryOff" value="normala"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="italic" value="etzana"/>
+				<node name="normal" value="normala"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
-			<node name="underlined" value="Azpimarratua">
-				<node name="summaryOn" value="azpimarratua"/>
-				<node name="summaryOff" value="normala"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Marratua">
-				<node name="summaryOn" value="marratua"/>
-				<node name="summaryOff" value="normala"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="azpimarratua"/>
+				<node name="line-through" value="marratua"/>
 			</node>
 			<node name="lineSpacing" value="Lerro arteko tartea">
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="alignment" value="Lerrokatzea">
 				<node name="left" value="Ezkerrera"/>
 				<node name="right" value="Eskumara"/>
 				<node name="center" value="Erdira"/>
 				<node name="justify" value="Justifikatua"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Bereizi hitzak automatikoki">
 				<node name="summaryOn" value="Bereizi hitzak automatikoki"/>
 				<node name="summaryOff" value="Ez bereizi hitzak automatikoki"/>
 			</node>
 			<node name="allowHyphenations" value="Bereizi hitzak">
-				<node name="summaryOn" value="Bereizi hitzak"/>
-				<node name="summaryOff" value="Ez bereizi hitzak"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="auto" value="Bereizi hitzak"/>
+				<node name="none" value="Ez bereizi hitzak"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Lehenengo lerroko koska"/>
 			<node name="spaceBefore" value="Hutsunea lehenago"/>
@@ -461,7 +457,7 @@
 				<node name="Regular Paragraph" value="Paragrafo arrunta">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="ePub paragraph" toBeTranslated="true">
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
 					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Izenburua">
