@@ -395,7 +395,6 @@
 				<node name="unchanged" value="&lt;不变&gt;"/>
 			</node>
 			<node name="fontSize" value="字体大小"/>
-			<node name="fontSizeDifference" value="大小差异"/>
 			<node name="fontStyle" value="字型">
 				<node name="regular" value="正常"/>
 				<node name="bold" value="加粗"/>
@@ -446,6 +445,7 @@
 			<node name="spaceAfter" value="段后距"/>
 			<node name="leftIndent" value="左缩进"/>
 			<node name="rightIndent" value="右缩进"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="更多样式">
 				<node name="summary" value="分别设定标题、段落等."/>
 				<node name="Regular Paragraph" value="连续段落">
@@ -980,5 +980,9 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
 	</node>
 </resources>
