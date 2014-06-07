@@ -74,10 +74,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		final Intent intent = getIntent();
 		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myBook = FBReaderIntents.getBookExtra(intent);
-		
-		for(Tag t : myBook.tags()){
-			System.out.println(myBook.getTitle()+", tags "+t.Name);
-		}
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
 	}
