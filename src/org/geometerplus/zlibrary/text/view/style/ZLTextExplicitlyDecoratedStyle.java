@@ -158,7 +158,7 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		return myEntry.getLength(LENGTH_RIGHT_INDENT, metrics, fontSize);
 	}
 	@Override
-	public int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {
+	protected int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
 			return Parent.getFirstLineIndent(metrics);
 		}
@@ -168,7 +168,8 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		}
 		return myEntry.getLength(LENGTH_FIRST_LINE_INDENT, metrics, fontSize);
 	}
-	public int getLineSpacePercent() {
+	@Override
+	protected int getLineSpacePercentInternal() {
 		// TODO: implement
 		return Parent.getLineSpacePercent();
 	}

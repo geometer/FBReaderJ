@@ -254,24 +254,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		textScreen.addOption(baseStyle.AutoHyphenationOption, "autoHyphenations");
 
 		final Screen moreStylesScreen = textScreen.createPreferenceScreen("more");
-
-		/*
-			final ZLIntegerOption spacePercentOption = decoration.LineSpacePercentOption;
-			final int[] spacingValues = new int[17];
-			final String[] spacingKeys = new String[17];
-			spacingValues[0] = -1;
-			spacingKeys[0] = "unchanged";
-			for (int j = 1; j < spacingValues.length; ++j) {
-				final int val = 4 + j;
-				spacingValues[j] = 10 * val;
-				spacingKeys[j] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
-			}
-			formatScreen.addPreference(new ZLIntegerChoicePreference(
-				this, textScreen.Resource, "lineSpacing",
-				spacePercentOption, spacingValues, spacingKeys
-			));
-		*/
-
 		for (ZLTextNGStyleDescription description : collection.getDescriptionList()) {
 			final Screen ngScreen = moreStylesScreen.createPreferenceScreen(description.Name);
 			ngScreen.addPreference(new FontPreference(
@@ -307,6 +289,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				this, textScreen.Resource, "alignment",
 				description.AlignmentOption,
 				new String[] { "inherit", "left", "right", "center", "justify" }
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.LineHeightOption,
+				StringPreference.Constraint.PERCENT,
+				textScreen.Resource, "lineSpacing"
 			));
 			ngScreen.addPreference(new StringPreference(
 				this, description.MarginTopOption,

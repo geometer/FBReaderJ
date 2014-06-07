@@ -35,6 +35,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private boolean myIsBold;
 	private boolean myIsUnderline;
 	private boolean myIsStrikeThrough;
+	private int myLineSpacePercent;
 
 	private boolean myIsNotCached = true;
 
@@ -60,6 +61,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		myIsBold = isBoldInternal();
 		myIsUnderline = isUnderlineInternal();
 		myIsStrikeThrough = isStrikeThroughInternal();
+		myLineSpacePercent = getLineSpacePercentInternal();
 
 		myIsNotCached = false;
 	}
@@ -182,4 +184,13 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		return myFirstLineIndent;
 	}
 	protected abstract int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize);
+
+	@Override
+	public final int getLineSpacePercent() {
+		if (myIsNotCached) {
+			initCache();
+		}
+		return myLineSpacePercent;
+	}
+	protected abstract int getLineSpacePercentInternal();
 }
