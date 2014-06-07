@@ -57,6 +57,7 @@ public abstract class ZLTextStyleEntry {
 		byte EM_100                           = 2;
 		byte EX_100                           = 3;
 		byte PERCENT                          = 4;
+		// TODO: add IN, CM, MM, PICA ("pc", = 12 POINT)
 	}
 
 	public static class Length {
