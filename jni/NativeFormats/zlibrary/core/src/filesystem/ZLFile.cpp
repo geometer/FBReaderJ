@@ -238,6 +238,13 @@ std::size_t ZLFile::size() const {
 	return myInfo.Size;
 }
 
+std::size_t ZLFile::lastModified() const {
+	if (!myInfoIsFilled) {
+		fillInfo();
+	}
+	return myInfo.MTime;
+}
+
 bool ZLFile::isDirectory() const {
 	if (!myInfoIsFilled) {
 		fillInfo();
