@@ -1,11 +1,11 @@
-* {
+p {
 	fbreader-id: 0;
 	fbreader-name: "Regular Paragraph";
 	text-indent: 10pt;
 	hyphens: auto;
 }
 
-p {
+p.xhtml {
 	fbreader-id: 51;
 	fbreader-name: xhtml-tag-p;
 	text-indent: 10pt;
