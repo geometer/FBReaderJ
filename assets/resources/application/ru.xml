@@ -1014,5 +1014,6 @@
 	<node name="hint">
 		<node name="positiveLength" value="Например: 20px, 10pt, 0.8em, 1ex, 120%"/>
 		<node name="length" value="Например: -2px, 10pt, -0.8em, 1.1ex, -40%"/>
+		<node name="percent" value="Например: 125%"/>
 	</node>
 </resources>
