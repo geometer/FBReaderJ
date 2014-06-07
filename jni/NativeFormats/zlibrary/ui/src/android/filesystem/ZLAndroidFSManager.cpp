@@ -93,6 +93,7 @@ ZLFileInfo ZLAndroidFSManager::fileInfo(const std::string &path) const {
 	if (exists) {
 		info.Exists = true;
 		info.Size = AndroidUtil::Method_ZLFile_size->call(javaFile);
+		info.MTime = AndroidUtil::Method_ZLFile_lastModified->call(javaFile);
 	}
 	env->DeleteLocalRef(javaFile);
 
