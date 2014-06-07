@@ -151,6 +151,11 @@ public abstract class ZLFile implements InputStreamHolder {
 	public abstract ZLPhysicalFile getPhysicalFile();
 	public abstract InputStream getInputStream() throws IOException;
 
+	public long lastModified() {
+		final ZLFile physicalFile = getPhysicalFile();
+		return physicalFile != null ? physicalFile.lastModified() : 0;
+	}
+
 	public final InputStream getInputStream(FileEncryptionInfo encryptionInfo) throws IOException {
 		if (encryptionInfo == null) {
 			return getInputStream();
