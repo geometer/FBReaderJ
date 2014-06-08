@@ -952,8 +952,6 @@
 		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
 		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
 		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>
@@ -1014,8 +1012,8 @@
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%" toBeTranslated="true"/>
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>
