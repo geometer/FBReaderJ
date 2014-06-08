@@ -803,11 +803,6 @@
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorise" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
-			<node name="sendReport" value="Send report" toBeTranslated="true"/>
-			<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
-			<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
@@ -952,8 +947,6 @@
 		<node name="formatExists" value="Formatua dagoneko %s(e)k du"/>
 		<node name="unzipFailed" value="Ezin izan da liburua deskonprimatu"/>
 		<node name="noPlugin" value="Gehigarria instalatu fitxategi-mota hau irakurtzeko"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Nabigatzailea"/>
@@ -1014,8 +1007,8 @@
 		<node name="frontScreenButton" value="Pantaila honetara aldatu"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%" toBeTranslated="true"/>
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>
