@@ -31,10 +31,12 @@ class SimpleCSSReader {
 		EXPECT_SELECTOR,
 		EXPECT_OPEN_BRACKET,
 		EXPECT_NAME,
-		EXPECT_VALUE
+		EXPECT_VALUE,
+		READ_COMMENT,
 	}
 
 	private State myState;
+	private State mySavedState;
 	private Map<Integer,ZLTextNGStyleDescription> myDescriptionMap;
 	private Map<String,String> myCurrentMap;
 	private String mySelector;
@@ -68,7 +70,18 @@ class SimpleCSSReader {
 	}
 
 	private void processToken(String token) {
+		if (myState != State.READ_COMMENT && token.startsWith("/*")) {
+			mySavedState = myState;
+			myState = State.READ_COMMENT;
+			return;
+		}
+
 		switch (myState) {
+			case READ_COMMENT:
+				if (token.endsWith("*/")) {
+					myState = mySavedState;
+				}
+				break;
 			case EXPECT_SELECTOR:
 				mySelector = token;
 				myState = State.EXPECT_OPEN_BRACKET;
