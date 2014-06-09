@@ -35,7 +35,7 @@ public abstract class ZLSingleImage implements ZLImage {
 	public final MimeType mimeType() {
 		return myMimeType;
 	}
-	
+
 	@Override
 	public boolean saveToFile(String url) {
 		final InputStream inputStream = inputStream();
