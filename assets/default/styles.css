@@ -11,8 +11,8 @@ p.xhtml {
 	fbreader-id: 51;
 	fbreader-name: xhtml-tag-p;
 	text-indent: 10pt;
-	margin-top: 1em;
-	margin-bottom: 1em;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 	hyphens: auto;
 }
 
@@ -48,8 +48,8 @@ h1 {
 	fbreader-name: "Header 1";
 	font-size: 2em;
 	font-weight: bold;
-	margin-top: 0.67em;
-	margin-bottom: 0.67em;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 	hyphens: none;
 }
 
@@ -58,8 +58,8 @@ h2 {
 	fbreader-name: "Header 2";
 	font-size: 1.5em;
 	font-weight: bold;
-	margin-top: 0.83em;
-	margin-bottom: 0.83em;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 	hyphens: none;
 }
 
@@ -68,16 +68,16 @@ h3 {
 	fbreader-name: "Header 3";
 	font-size: 1.17em;
 	font-weight: bold;
-	margin-top: 1em;
-	margin-bottom: 1em;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 }
 
 h4 {
 	fbreader-id: 34;
 	fbreader-name: "Header 4";
 	font-weight: bold;
-	margin-top: 1.33em;
-	margin-bottom: 1.33em;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 }
 
 h5 {
@@ -85,8 +85,8 @@ h5 {
 	fbreader-name: "Header 5";
 	font-size: 0.83em;
 	font-weight: bold;
-	margin-top: 1.67em;
-	margin-bottom: 1.67em;
+	margin-top: 0.22em;
+	margin-bottom: 0.22em;
 }
 
 h6 {
@@ -94,8 +94,8 @@ h6 {
 	fbreader-name: "Header 6";
 	font-size: 0.67em;
 	font-weight: bold;
-	margin-top: 2.33em;
-	margin-bottom: 2.33em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
 }
 
 annotation {
