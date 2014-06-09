@@ -22,6 +22,9 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
+===== 1.10.3.2 (Jun 09, 2014) =====
+* ePub styles: decreased default spacings
+
 ===== 1.10.3 (Jun 08, 2014) =====
 * ePub loading speed optimizations
 * ePub: added support for CSS margin-top/margin-bottom properties
