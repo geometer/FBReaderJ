@@ -94,7 +94,7 @@ static void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
 }
 
 extern "C"
-JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfoNative(JNIEnv* env, jobject thiz, jobject javaBook) {
+JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetainfoNative(JNIEnv* env, jobject thiz, jobject javaBook) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
 	if (plugin.isNull()) {
 		return 1;
@@ -102,7 +102,7 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
 
-	if (!plugin->readMetaInfo(*book)) {
+	if (!plugin->readMetainfo(*book)) {
 		return 2;
 	}
 

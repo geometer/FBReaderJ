@@ -51,8 +51,8 @@ public class NativeFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	synchronized public void readMetaInfo(Book book) throws BookReadingException {
-		final int code = readMetaInfoNative(book);
+	synchronized public void readMetainfo(Book book) throws BookReadingException {
+		final int code = readMetainfoNative(book);
 		if (code != 0) {
 			throw new BookReadingException(
 				"nativeCodeFailure",
@@ -62,7 +62,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 		}
 	}
 
-	private native int readMetaInfoNative(Book book);
+	private native int readMetainfoNative(Book book);
 
 	@Override
 	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {

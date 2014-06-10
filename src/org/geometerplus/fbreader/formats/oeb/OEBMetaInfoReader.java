@@ -44,7 +44,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myBook.setLanguage(null);
 	}
 
-	void readMetaInfo(ZLFile file) throws BookReadingException {
+	void readMetainfo(ZLFile file) throws BookReadingException {
 		myReadState = ReadState.Nothing;
 		mySeriesTitle = "";
 		mySeriesIndex = null;
