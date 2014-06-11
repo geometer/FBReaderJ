@@ -23,6 +23,7 @@ import android.widget.FrameLayout;
 import com.yotadevices.sdk.*;
 import com.yotadevices.sdk.utils.EinkUtils;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
@@ -125,28 +126,28 @@ public class FBReaderYotaService extends BSActivity {
 //		}
 	}
 
-	@Override
-	protected void onVolumeButtonsEvent(Constants.VolumeButtonsEvent event) {
-		super.onVolumeButtonsEvent(event);
-
-		String action = null;
-		switch (event) {
-			case VOLUME_MINUS_UP:
-				action = myBindings.getBinding(KeyEvent.KEYCODE_VOLUME_DOWN, false);
-				break;
-			case VOLUME_PLUS_UP:
-				action = myBindings.getBinding(KeyEvent.KEYCODE_VOLUME_UP, false);
-				break;
-			default:
-				break;
-		}
-
-		if (ActionCode.VOLUME_KEY_SCROLL_FORWARD.equals(action)) {
-			Widget.turnPageStatic(true);
-		} else if (ActionCode.VOLUME_KEY_SCROLL_BACK.equals(action)) {
-			Widget.turnPageStatic(false);
-		}
-	}
+//	@Override
+//	protected void onVolumeButtonsEvent(Constants.VolumeButtonsEvent event) {
+//		super.onVolumeButtonsEvent(event);
+//
+//		String action = null;
+//		switch (event) {
+//			case VOLUME_MINUS_UP:
+//				action = myBindings.getBinding(KeyEvent.KEYCODE_VOLUME_DOWN, false);
+//				break;
+//			case VOLUME_PLUS_UP:
+//				action = myBindings.getBinding(KeyEvent.KEYCODE_VOLUME_UP, false);
+//				break;
+//			default:
+//				break;
+//		}
+//
+//		if (ActionCode.VOLUME_KEY_SCROLL_FORWARD.equals(action)) {
+//			Widget.turnPageStatic(true);
+//		} else if (ActionCode.VOLUME_KEY_SCROLL_BACK.equals(action)) {
+//			Widget.turnPageStatic(false);
+//		}
+//	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
@@ -155,6 +156,10 @@ public class FBReaderYotaService extends BSActivity {
 		} else {
 			myBackScreenIsActive = new ViewOptions().YotaDrawOnBackScreen.getValue();
 		}
+		
+		if (ZLApplication.Instance()==null && ZLApplication.Instance().getCurrentView() == null)
+			return;
+		
 		myCurrentBook = FBReaderIntents.getBookExtra(intent);
 
 		initBookView(true);
@@ -178,11 +183,11 @@ public class FBReaderYotaService extends BSActivity {
 //		}
 //	}
 
-	private void handleGesture(Constants.Gestures action) {
-		if (action == Constants.Gestures.GESTURES_BS_RL) {
-			Widget.turnPageStatic(true);
-		} else if (action == Constants.Gestures.GESTURES_BS_LR) {
-			Widget.turnPageStatic(false);
-		}
-	}
+//	private void handleGesture(Constants.Gestures action) {
+//		if (action == Constants.Gestures.GESTURES_BS_RL) {
+//			Widget.turnPageStatic(true);
+//		} else if (action == Constants.Gestures.GESTURES_BS_LR) {
+//			Widget.turnPageStatic(false);
+//		}
+//	}
 }

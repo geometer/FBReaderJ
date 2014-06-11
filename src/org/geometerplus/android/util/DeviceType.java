@@ -31,13 +31,16 @@ public enum DeviceType {
 	NOOK12,
 	EKEN_M001,
 	PAN_DIGITAL,
-	SAMSUNG_GT_S5830;
+	SAMSUNG_GT_S5830,
+	YOTA_PHONE2;
 
 	private static DeviceType ourInstance;
 	public static DeviceType Instance() {
 		if (ourInstance == null) {
 			if ("YotaPhone".equals(Build.BRAND)) {
 				ourInstance = YOTA_PHONE;
+			} else if ("GENERIC".equals(Build.BRAND)) {
+				ourInstance = YOTA_PHONE2;
 			} else if ("GT-S5830".equals(Build.MODEL)) {
 				ourInstance = SAMSUNG_GT_S5830;
 			} else if ("Amazon".equals(Build.MANUFACTURER)) {

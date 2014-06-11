@@ -158,7 +158,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 							action.run();
 						}
 						hideBars();
-						if (DeviceType.Instance() == DeviceType.YOTA_PHONE) {
+						if ((DeviceType.Instance() == DeviceType.YOTA_PHONE) || (DeviceType.Instance() == DeviceType.YOTA_PHONE2)) {
 							refreshYotaScreen();
 						}
 					}
@@ -318,10 +318,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
-
+		
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
+				boolean startedFromBs = getIntent() != null && FBReaderIntents.Action.START_FROM_BS.equals(getIntent().getAction());
+				if (startedFromBs || myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
 				}
 			}
@@ -346,6 +347,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 		} else if (FBReaderIntents.Action.PLUGIN.equals(action)) {
 			new RunPluginAction(this, myFBReaderApp, data).run();
+		} else if (FBReaderIntents.Action.START_FROM_BS.equals(action)) {
+			new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
@@ -1015,10 +1018,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	public void refreshYotaScreen() {
-		if (DeviceType.Instance() != DeviceType.YOTA_PHONE) {
+		//TODO вернуть как только сможем определять
+		/*
+		if ((DeviceType.Instance() == DeviceType.YOTA_PHONE) || (DeviceType.Instance() == DeviceType.YOTA_PHONE2)) {
 			return;
 		}
-
+*/
 		if (!myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 			boolean isServiceRunning = false;
 			final String serviceClassName = FBReaderYotaService.class.getName();

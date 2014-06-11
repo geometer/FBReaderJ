@@ -36,10 +36,11 @@ public abstract class MenuData {
 		if (ourNodes == null) {
 			ourNodes = new ArrayList<MenuNode>();
 			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_LIBRARY, R.drawable.ic_menu_library));
-			if (DeviceType.Instance() == DeviceType.YOTA_PHONE) {
+			//TODO вернуть как только сможем определять девайс
+			//if ((DeviceType.Instance() == DeviceType.YOTA_PHONE) || (DeviceType.Instance() == DeviceType.YOTA_PHONE2)) {
 				ourNodes.add(new MenuNode.Item(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, R.drawable.ic_menu_p2b));
 				//ourNodes.add(new MenuNode.Item(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, R.drawable.ic_menu_p2b));
-			}
+			//}
 			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_NETWORK_LIBRARY, R.drawable.ic_menu_networklibrary));
 			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_TOC, R.drawable.ic_menu_toc));
 			ourNodes.add(new MenuNode.Item(ActionCode.SHOW_BOOKMARKS, R.drawable.ic_menu_bookmarks));
