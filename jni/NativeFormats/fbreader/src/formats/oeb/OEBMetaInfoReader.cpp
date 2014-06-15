@@ -154,7 +154,7 @@ void OEBMetaInfoReader::endElementHandler(const char *tag) {
 	myReadState = READ_METADATA;
 }
 
-bool OEBMetaInfoReader::readMetaInfo(const ZLFile &file) {
+bool OEBMetaInfoReader::readMetainfo(const ZLFile &file) {
 	myReadState = READ_NONE;
 	if (!readDocument(file)) {
 		ZLLogger::Instance().println("epub", "Failure while reading info from " + file.path());
