@@ -58,7 +58,7 @@ public:
 	//virtual FormatInfoPage *createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file);
 
 	virtual const std::string &tryOpen(const ZLFile &file) const;
-	virtual bool readMetaInfo(Book &book) const = 0;
+	virtual bool readMetainfo(Book &book) const = 0;
 	virtual std::vector<shared_ptr<FileEncryptionInfo> > readEncryptionInfos(Book &book) const;
 	virtual bool readUids(Book &book) const = 0;
 	virtual bool readLanguageAndEncoding(Book &book) const = 0;

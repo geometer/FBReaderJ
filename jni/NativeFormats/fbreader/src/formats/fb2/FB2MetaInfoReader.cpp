@@ -213,7 +213,7 @@ void FB2MetaInfoReader::endElementHandler(int tag) {
 	}
 }
 
-bool FB2MetaInfoReader::readMetaInfo() {
+bool FB2MetaInfoReader::readMetainfo() {
 	myReadState = READ_NOTHING;
 	myBuffer.erase();
 	for (int i = 0; i < 3; ++i) {

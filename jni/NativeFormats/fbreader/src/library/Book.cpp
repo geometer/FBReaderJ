@@ -65,7 +65,7 @@ shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 	}
 
 	shared_ptr<Book> book = new Book(file, 0);
-	if (!plugin->readMetaInfo(*book)) {
+	if (!plugin->readMetainfo(*book)) {
 		return 0;	
 	}
 
