@@ -32,7 +32,7 @@ public:
 	~OEBPlugin();
 	bool providesMetaInfo() const;
 	const std::string supportedFileType() const;
-	bool readMetaInfo(Book &book) const;
+	bool readMetainfo(Book &book) const;
 	virtual std::vector<shared_ptr<FileEncryptionInfo> > readEncryptionInfos(Book &book) const;
 	bool readUids(Book &book) const;
 	bool readLanguageAndEncoding(Book &book) const;

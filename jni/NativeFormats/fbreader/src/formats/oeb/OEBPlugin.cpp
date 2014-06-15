@@ -124,9 +124,9 @@ ZLFile OEBPlugin::opfFile(const ZLFile &oebFile) {
 	return ZLFile::NO_FILE;
 }
 
-bool OEBPlugin::readMetaInfo(Book &book) const {
+bool OEBPlugin::readMetainfo(Book &book) const {
 	const ZLFile &file = book.file();
-	return OEBMetaInfoReader(book).readMetaInfo(opfFile(file));
+	return OEBMetaInfoReader(book).readMetainfo(opfFile(file));
 }
 
 std::vector<shared_ptr<FileEncryptionInfo> > OEBPlugin::readEncryptionInfos(Book &book) const {

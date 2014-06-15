@@ -30,8 +30,8 @@ const std::string FB2Plugin::supportedFileType() const {
 	return "fb2";
 }
 
-bool FB2Plugin::readMetaInfo(Book &book) const {
-	return FB2MetaInfoReader(book).readMetaInfo();
+bool FB2Plugin::readMetainfo(Book &book) const {
+	return FB2MetaInfoReader(book).readMetainfo();
 }
 
 bool FB2Plugin::readUids(Book &book) const {
