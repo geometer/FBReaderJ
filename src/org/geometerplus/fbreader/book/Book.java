@@ -78,7 +78,7 @@ public class Book extends TitledEntity {
 		myId = -1;
 		final FormatPlugin plugin = getPlugin(file);
 		File = plugin.realBookFile(file);
-		readMetaInfo(plugin);
+		readMetainfo(plugin);
 		myIsSaved = false;
 	}
 
@@ -159,7 +159,7 @@ public class Book extends TitledEntity {
 
 	public void reloadInfoFromFile() {
 		try {
-			readMetaInfo();
+			readMetainfo();
 		} catch (BookReadingException e) {
 			// ignore
 		}
@@ -177,11 +177,11 @@ public class Book extends TitledEntity {
 		return getPlugin(File);
 	}
 
-	void readMetaInfo() throws BookReadingException {
-		readMetaInfo(getPlugin());
+	void readMetainfo() throws BookReadingException {
+		readMetainfo(getPlugin());
 	}
 
-	private void readMetaInfo(FormatPlugin plugin) throws BookReadingException {
+	private void readMetainfo(FormatPlugin plugin) throws BookReadingException {
 		String oldxml = SerializerUtil.serialize(this);
 		myEncoding = null;
 		myLanguage = null;
@@ -204,7 +204,7 @@ public class Book extends TitledEntity {
 				e.printStackTrace();
 			}
 		} else {
-			plugin.readMetaInfo(this);
+			plugin.readMetainfo(this);
 		}
 		if (myUids == null || myUids.isEmpty()) {
 			plugin.readUids(this);
