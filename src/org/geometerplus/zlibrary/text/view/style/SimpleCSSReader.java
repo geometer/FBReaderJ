@@ -21,10 +21,9 @@ package org.geometerplus.zlibrary.text.view.style;
 
 import java.io.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 class SimpleCSSReader {
 	private enum State {
@@ -52,7 +51,7 @@ class SimpleCSSReader {
 			final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				for (String token : smartSplit(line)) {
+				for (String token : MiscUtil.smartSplit(line)) {
 					processToken(token);
 				}
 			}
@@ -117,14 +116,5 @@ class SimpleCSSReader {
 				myState = State.EXPECT_NAME;
 				break;
 		}
-	}
-
-	private static List<String> smartSplit(String line) {
-		final List<String> tokens = new LinkedList<String>();
-		final Matcher m = Pattern.compile("([^\"\\s:;]+|\".+?\")").matcher(line);
-		while (m.find()) {
-			tokens.add(m.group(1).replace("\"", ""));
-		}
-		return tokens;
 	}
 }
