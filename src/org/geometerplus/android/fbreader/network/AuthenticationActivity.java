@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -66,30 +65,30 @@ public class AuthenticationActivity extends Activity {
 	static final String ERROR_KEY = "error";
 	static final String CUSTOM_AUTH_KEY = "customAuth";
 
-	static void initCredentialsCreator(Context context) {
+	static void initCredentialsCreator(Activity activity) {
 		final ZLNetworkManager manager = ZLNetworkManager.Instance();
 		if (manager.getCredentialsCreator() == null) {
-			manager.setCredentialsCreator(new CredentialsCreator(context));
+			manager.setCredentialsCreator(new CredentialsCreator(activity));
 		}
 	}
 
 	static class CredentialsCreator extends ZLNetworkManager.CredentialsCreator {
-		private final Context myContext;
+		private final Activity myActivity;
 
-		CredentialsCreator(Context context) {
-			myContext = context.getApplicationContext();
+		CredentialsCreator(Activity activity) {
+			myActivity = activity;
 		}
 
 		@Override
 		protected void startAuthenticationDialog(String host, String area, String scheme, String username) {
 			final Intent intent = new Intent();
-			intent.setClass(myContext, AuthenticationActivity.class);
+			intent.setClass(myActivity, AuthenticationActivity.class);
 			intent.putExtra(HOST_KEY, host);
 			intent.putExtra(AREA_KEY, area);
 			intent.putExtra(SCHEME_KEY, scheme);
 			intent.putExtra(USERNAME_KEY, username);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			myContext.startActivity(intent);
+			myActivity.startActivity(intent);
 		}
 	}
 
