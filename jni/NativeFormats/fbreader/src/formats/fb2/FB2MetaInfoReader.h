@@ -30,7 +30,7 @@ class FB2MetaInfoReader : public FB2Reader {
 
 public:
 	FB2MetaInfoReader(Book &book);
-	bool readMetaInfo();
+	bool readMetainfo();
 
 	void startElementHandler(int tag, const char **attributes);
 	void endElementHandler(int tag);
