@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -73,22 +74,22 @@ public class AuthenticationActivity extends Activity {
 	}
 
 	static class CredentialsCreator extends ZLNetworkManager.CredentialsCreator {
-		private final Activity myActivity;
+		private final Context myContext;
 
 		CredentialsCreator(Activity activity) {
-			myActivity = activity;
+			myContext = activity.getApplicationContext();
 		}
 
 		@Override
 		protected void startAuthenticationDialog(String host, String area, String scheme, String username) {
 			final Intent intent = new Intent();
-			intent.setClass(myActivity, AuthenticationActivity.class);
+			intent.setClass(myContext, AuthenticationActivity.class);
 			intent.putExtra(HOST_KEY, host);
 			intent.putExtra(AREA_KEY, area);
 			intent.putExtra(SCHEME_KEY, scheme);
 			intent.putExtra(USERNAME_KEY, username);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			myActivity.startActivity(intent);
+			myContext.startActivity(intent);
 		}
 	}
 
