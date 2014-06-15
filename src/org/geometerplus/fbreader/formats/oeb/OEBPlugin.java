@@ -57,8 +57,8 @@ public class OEBPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
-		new OEBMetaInfoReader(book).readMetaInfo(getOpfFile(book.File));
+	public void readMetainfo(Book book) throws BookReadingException {
+		new OEBMetaInfoReader(book).readMetainfo(getOpfFile(book.File));
 	}
 
 	@Override
