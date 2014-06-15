@@ -48,8 +48,8 @@ bool DocPlugin::acceptsFile(const ZLFile &file) const {
 	return file.extension() == "doc";
 }
 
-bool DocPlugin::readMetaInfo(Book &book) const {
-	if (!DocMetaInfoReader(book).readMetaInfo()) {
+bool DocPlugin::readMetainfo(Book &book) const {
+	if (!DocMetaInfoReader(book).readMetainfo()) {
 		return false;
 	}
 

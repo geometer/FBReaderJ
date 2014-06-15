@@ -37,7 +37,7 @@ const std::string RtfPlugin::supportedFileType() const {
 	return "rtf";
 }
 
-bool RtfPlugin::readMetaInfo(Book &book) const {
+bool RtfPlugin::readMetainfo(Book &book) const {
 	if (!RtfDescriptionReader(book).readDocument(book.file())) {
 		return false;
 	}
