@@ -24,6 +24,8 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
@@ -72,6 +74,17 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 
 	@Override
 	protected boolean authenticate(Map<String,String> params) {
+		return GooglePlayServicesUtil.isGooglePlayServicesAvailable(myActivity)
+			== ConnectionResult.SUCCESS
+			? authenticateToken(params)
+			: authenticateWeb(params);
+	}
+
+	private boolean authenticateWeb(Map<String,String> params) {
+		return false;
+	}
+
+	private boolean authenticateToken(Map<String,String> params) {
 		return false;
 	}
 }
