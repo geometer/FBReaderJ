@@ -19,6 +19,43 @@
 
 package org.geometerplus.android.fbreader.network;
 
-public class BearerAuthenticator {
+import java.util.Calendar;
+import java.util.Map;
 
+import android.content.Intent;
+
+import org.apache.http.client.CookieStore;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie2;
+
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+
+public class BearerAuthenticator {
+	static boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
+				if (resultCode == NetworkLibraryActivity.RESULT_OK) {
+					final CookieStore store = ZLNetworkManager.Instance().cookieStore();
+					final Map<String,String> cookies =
+						(Map<String,String>)data.getSerializableExtra(NetworkLibraryActivity.COOKIES_KEY);
+					if (cookies == null) {
+						return true;
+					}
+					for (Map.Entry<String,String> entry : cookies.entrySet()) {
+						final BasicClientCookie2 c =
+							new BasicClientCookie2(entry.getKey(), entry.getValue());
+						c.setDomain(data.getData().getHost());
+						c.setPath("/");
+						final Calendar expire = Calendar.getInstance();
+						expire.add(Calendar.YEAR, 1);
+						c.setExpiryDate(expire.getTime());
+						c.setSecure(true);
+						c.setDiscard(false);
+						store.addCookie(c);
+					}
+				}
+				return true;
+		}
+		return false;
+	}
 }
