@@ -31,7 +31,6 @@ import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	static class State extends NetworkOperationData {
-		public volatile String AuthURI;
 		public String LastLoadedId;
 		public final HashSet<String> LoadedIds = new HashSet<String>();
 
@@ -76,7 +75,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	}
 
 	@Override
-	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException, AuthorisationFailed {
+	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException{
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
 
 		myLoadingState = opdsLink.createOperationData(loader);
@@ -84,9 +83,6 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		doLoadChildren(
 			opdsLink.createNetworkData(getCatalogUrl(), MimeType.APP_ATOM_XML, myLoadingState)
 		);
-		if (myLoadingState.AuthURI != null) {
-			throw new AuthorisationFailed(myLoadingState.AuthURI);
-		}
 	}
 
 	@Override
