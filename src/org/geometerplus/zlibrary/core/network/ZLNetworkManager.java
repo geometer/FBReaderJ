@@ -327,7 +327,7 @@ public class ZLNetworkManager {
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
 			for (Map.Entry<String,String> header : request.Headers.entrySet()) {
 				httpRequest.setHeader(header.getKey(), header.getValue());
-			}	
+			}
 			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest, request.isQuiet()));
 			HttpResponse response = null;
 			IOException lastException = null;
