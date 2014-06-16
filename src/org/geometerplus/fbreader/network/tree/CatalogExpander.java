@@ -25,20 +25,19 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 class CatalogExpander extends NetworkItemsLoader {
-	private final Authenticator myAuthenticator;
-	private volatile boolean myAuthenticationRequested;
+	private final boolean myAuthenticate;
 	private final boolean myResumeNotLoad;
 
-	CatalogExpander(NetworkCatalogTree tree, Authenticator authenticator, boolean resumeNotLoad) {
+	CatalogExpander(NetworkCatalogTree tree, boolean authenticate, boolean resumeNotLoad) {
 		super(tree);
-		myAuthenticator = authenticator;
+		myAuthenticate = authenticate;
 		myResumeNotLoad = resumeNotLoad;
 	}
 
 	@Override
 	public void doBefore() throws ZLNetworkException {
 		final INetworkLink link = getTree().getLink();
-		if (myAuthenticator != null && link != null && link.authenticationManager() != null) {
+		if (myAuthenticate && link != null && link.authenticationManager() != null) {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			try {
 				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
@@ -52,18 +51,10 @@ class CatalogExpander extends NetworkItemsLoader {
 
 	@Override
 	public void load() throws ZLNetworkException {
-		myAuthenticationRequested = false;
 		if (myResumeNotLoad) {
 			getTree().Item.resumeLoading(this);
 		} else {
-			try {
-				getTree().Item.loadChildren(this);
-			} catch (NetworkCatalogItem.AuthorisationFailed f) {
-				myAuthenticationRequested = true;
-				if (myAuthenticator != null) {
-					myAuthenticator.run(f.URL);
-				}
-			}
+			getTree().Item.loadChildren(this);
 		}
 	}
 
@@ -73,7 +64,7 @@ class CatalogExpander extends NetworkItemsLoader {
 			getTree().clearCatalog();
 		} else {
 			getTree().removeUnconfirmedItems();
-			if (!interrupted && !myAuthenticationRequested) {
+			if (!interrupted) {
 				if (exception != null) {
 					NetworkLibrary.Instance().fireModelChangedEvent(
 						NetworkLibrary.ChangeListener.Code.NetworkError, exception.getMessage()

@@ -56,7 +56,7 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		return true;
 	}
 
-	public void readMetaInfo() throws BookReadingException {
+	public void readMetainfo() throws BookReadingException {
 		myReadState = READ_NOTHING;
 		myAuthorNames[0] = "";
 		myAuthorNames[1] = "";

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,8 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.util;
+package org.geometerplus.android.fbreader.network;
 
-public class ZLUnicodeUtil {
-	public static int utf8Length(byte[] buffer, int str, int len) {
-		final int last = str + len;
-		int counter = 0;
-		while (str < last) {
-			final int bt = buffer[str];
-			if ((bt & 0x80) == 0) {
-				++str;
-			} else if ((bt & 0x20) == 0) {
-				str += 2;
-			} else if ((bt & 0x10) == 0) {
-				str += 3;
-			} else {
-				str += 4;
-			}
-			++counter;
-		}
-		return counter;
-	}
+public class BearerAuthenticator {
+
 }

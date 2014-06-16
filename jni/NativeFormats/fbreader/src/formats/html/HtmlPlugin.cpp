@@ -34,7 +34,7 @@ const std::string HtmlPlugin::supportedFileType() const {
 	return "HTML";
 }
 
-bool HtmlPlugin::readMetaInfo(Book &book) const {
+bool HtmlPlugin::readMetainfo(Book &book) const {
 	shared_ptr<ZLInputStream> stream = book.file().inputStream();
 	if (stream.isNull()) {
 		return false;

@@ -29,7 +29,7 @@ class DocMetaInfoReader {
 public:
 	DocMetaInfoReader(Book &book);
 	~DocMetaInfoReader();
-	bool readMetaInfo();
+	bool readMetainfo();
 
 	/*
 	void startElementHandler(int tag, const char **attributes);
