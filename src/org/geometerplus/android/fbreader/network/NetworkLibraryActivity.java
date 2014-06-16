@@ -55,7 +55,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	public static final String ENABLED_CATALOG_IDS_KEY = "android.fbreader.data.enabled_catalogs";
 	public static final String DISABLED_CATALOG_IDS_KEY = "android.fbreader.data.disabled_catalogs";
 
-	public static final int REQUEST_AUTHORISATION_SCREEN = 2;
+	public static final int REQUEST_WEB_AUTHORISATION_SCREEN = 2;
 	public static final String COOKIES_KEY = "android.fbreader.data.cookies";
 
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
@@ -180,7 +180,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				NetworkLibrary.Instance().synchronize();
 				break;
 			}
-			case REQUEST_AUTHORISATION_SCREEN:
+			case REQUEST_WEB_AUTHORISATION_SCREEN:
 			{
 				final CookieStore store = ZLNetworkManager.Instance().cookieStore();
 				final Map<String,String> cookies =
