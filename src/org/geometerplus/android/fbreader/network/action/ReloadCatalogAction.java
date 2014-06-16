@@ -55,6 +55,6 @@ public class ReloadCatalogAction extends CatalogAction {
 			return;
 		}
 		((NetworkCatalogTree)tree).clearCatalog();
-		((NetworkCatalogTree)tree).startItemsLoader(null, false);
+		((NetworkCatalogTree)tree).startItemsLoader(false, false);
 	}
 }
