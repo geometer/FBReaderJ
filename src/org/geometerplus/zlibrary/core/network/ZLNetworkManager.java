@@ -26,6 +26,7 @@ import java.net.*;
 
 import org.apache.http.*;
 import org.apache.http.auth.*;
+import org.apache.http.client.AuthenticationHandler;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
@@ -154,7 +155,12 @@ public class ZLNetworkManager {
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
 	}
 
+	public static abstract class BearerAuthenticator {
+		abstract protected boolean authenticate(Map<String,String> params);
+	}
+
 	private volatile CredentialsCreator myCredentialsCreator;
+	private volatile BearerAuthenticator myBearerAuthenticator;
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
@@ -280,6 +286,14 @@ public class ZLNetworkManager {
 		return myCredentialsCreator;
 	}
 
+	public void setBearerAuthenticator(BearerAuthenticator authenticator) {
+		myBearerAuthenticator = authenticator;
+	}
+
+	public BearerAuthenticator getBearerAuthenticator() {
+		return myBearerAuthenticator;
+	}
+
 	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
 		perform(request, 30000, 15000);
 	}
@@ -296,7 +310,32 @@ public class ZLNetworkManager {
 			final HttpParams params = new BasicHttpParams();
 			HttpConnectionParams.setSoTimeout(params, socketTimeout);
 			HttpConnectionParams.setConnectionTimeout(params, connectionTimeout);
-			httpClient = new DefaultHttpClient(params);
+			httpClient = new DefaultHttpClient(params) {
+				protected AuthenticationHandler createTargetAuthenticationHandler() {
+					final AuthenticationHandler base = super.createTargetAuthenticationHandler();
+					return new AuthenticationHandler() {
+						public Map<String,Header> getChallenges(HttpResponse response, HttpContext context) throws MalformedChallengeException {
+							return base.getChallenges(response, context);
+						}
+
+						public boolean isAuthenticationRequested(HttpResponse response, HttpContext context) {
+							return base.isAuthenticationRequested(response, context);
+						}
+
+						public AuthScheme selectScheme(Map<String,Header> challenges, HttpResponse response, HttpContext context) throws AuthenticationException {
+							try {
+								return base.selectScheme(challenges, response, context);
+							} catch (AuthenticationException e) {
+								final Header bearerHeader = challenges.get("bearer");
+								if (bearerHeader != null) {
+									throw new BearerAuthenticationException(bearerHeader.getValue());
+								}
+								throw e;
+							}
+						}
+					};
+				}
+			};
 			final HttpRequestBase httpRequest;
 			if (request.PostData != null) {
 				httpRequest = new HttpPost(request.URL);
@@ -333,7 +372,7 @@ public class ZLNetworkManager {
 			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
 				try {
-					response = httpClient.execute(httpRequest, httpContext);
+					response = execute(httpClient, httpRequest, httpContext);
 					entity = response.getEntity();
 					lastException = null;
 					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
@@ -346,6 +385,7 @@ public class ZLNetworkManager {
 						}
 					}
 				} catch (IOException e) {
+					e.printStackTrace();
 					lastException = e;
 				}
 			}
@@ -404,6 +444,17 @@ public class ZLNetworkManager {
 				} catch (IOException e) {
 				}
 			}
+		}
+	}
+
+	private HttpResponse execute(DefaultHttpClient client, HttpRequestBase request, HttpContext context) throws IOException {
+		try {
+			return client.execute(request, context);
+		} catch (BearerAuthenticationException e) {
+			if (myBearerAuthenticator != null && myBearerAuthenticator.authenticate(e.Params)) {
+				return client.execute(request, context);
+			}
+			throw e;
 		}
 	}
 
