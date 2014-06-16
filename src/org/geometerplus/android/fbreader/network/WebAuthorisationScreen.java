@@ -31,7 +31,7 @@ import android.webkit.*;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
 
-public class AuthorisationScreen extends Activity {
+public class WebAuthorisationScreen extends Activity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -79,7 +79,7 @@ public class AuthorisationScreen extends Activity {
 						cookies.put(parts[0].trim(), parts[1].trim());
 					}
 				}
-				AuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
+				WebAuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
 					NetworkLibraryActivity.COOKIES_KEY, cookies
 				));
 				finish();
