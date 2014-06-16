@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network;
 import java.util.Calendar;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import org.apache.http.client.CookieStore;
@@ -30,7 +31,11 @@ import org.apache.http.impl.cookie.BasicClientCookie2;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
-public class BearerAuthenticator {
+public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
+	public static void initBearerAuthenticator(Activity activity) {
+		ZLNetworkManager.Instance().setBearerAuthenticator(new BearerAuthenticator(activity));
+	}
+
 	static boolean onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
@@ -56,6 +61,17 @@ public class BearerAuthenticator {
 				}
 				return true;
 		}
+		return false;
+	}
+
+	private final Activity myActivity;
+
+	private BearerAuthenticator(Activity activity) {
+		myActivity = activity;
+	}
+
+	@Override
+	protected boolean authenticate(Map<String,String> params) {
 		return false;
 	}
 }
