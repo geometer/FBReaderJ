@@ -119,6 +119,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	public void onResume() {
 		super.onResume();
+		BearerAuthenticator.initBearerAuthenticator(this);
 		getListView().setOnCreateContextMenuListener(this);
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
