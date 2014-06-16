@@ -47,12 +47,18 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 			(BearerAuthenticator)ZLNetworkManager.Instance().getBearerAuthenticator();
 		switch (requestCode) {
 			case NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER:
+				if (resultCode != NetworkLibraryActivity.RESULT_OK || data == null) {
+					return true;
+				}
 				synchronized (ba) {
 					ba.myAccount = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
 					ba.notifyAll();
 				}
 				return true;
 			case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
+				if (resultCode != NetworkLibraryActivity.RESULT_OK || data == null) {
+					return true;
+				}
 				synchronized (ba) {
 					final CookieStore store = ZLNetworkManager.Instance().cookieStore();
 					final Map<String,String> cookies =
