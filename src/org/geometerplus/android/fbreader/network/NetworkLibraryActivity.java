@@ -29,10 +29,6 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import org.apache.http.client.CookieStore;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.cookie.BasicClientCookie2;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
@@ -170,6 +166,11 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				getListView().invalidateViews();
 			}
 		});
+
+		if (BearerAuthenticator.onActivityResult(requestCode, resultCode, data)) {
+			return;
+		}
+
 		if (resultCode != RESULT_OK || data == null) {
 			return;
 		}
@@ -181,31 +182,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 					data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
 				NetworkLibrary.Instance().setActiveIds(myIds);
 				NetworkLibrary.Instance().synchronize();
-				break;
-			}
-			case REQUEST_WEB_AUTHORISATION_SCREEN:
-			{
-				final CookieStore store = ZLNetworkManager.Instance().cookieStore();
-				final Map<String,String> cookies =
-					(Map<String,String>)data.getSerializableExtra(COOKIES_KEY);
-				if (cookies == null) {
-					break;
-				}
-				for (Map.Entry<String,String> entry : cookies.entrySet()) {
-					final BasicClientCookie2 c =
-						new BasicClientCookie2(entry.getKey(), entry.getValue());
-					c.setDomain(data.getData().getHost());
-					c.setPath("/");
-					final Calendar expire = Calendar.getInstance();
-					expire.add(Calendar.YEAR, 1);
-					c.setExpiryDate(expire.getTime());
-					c.setSecure(true);
-					c.setDiscard(false);
-					store.addCookie(c);
-				}
-				final NetworkTree tree =
-					getTreeByKey((FBTree.Key)data.getSerializableExtra(TREE_KEY_KEY));
-				new ReloadCatalogAction(this).run(tree);
 				break;
 			}
 		}

@@ -109,6 +109,11 @@ public class AddCustomCatalogActivity extends Activity {
 		super.onResume();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		BearerAuthenticator.onActivityResult(requestCode, resultCode, data);
+	}
+
 	private void init(Intent intent) {
 		final String action = intent.getAction();
 		Uri uri = null;
