@@ -209,8 +209,8 @@ public class NetworkCatalogTree extends NetworkTree {
 		return Item.getStringId();
 	}
 
-	public void startItemsLoader(Authenticator authenticator, boolean resumeNotLoad) {
-		new CatalogExpander(this, authenticator, resumeNotLoad).start();
+	public void startItemsLoader(boolean authenticate, boolean resumeNotLoad) {
+		new CatalogExpander(this, authenticate, resumeNotLoad).start();
 	}
 
 	public synchronized void clearCatalog() {
@@ -240,7 +240,7 @@ public class NetworkCatalogTree extends NetworkTree {
 			&& !NetworkLibrary.Instance().isLoadingInProgress(this)
 			&& Item.canResumeLoading()) {
 			myLastTotalChildren = currentTotal;
-			startItemsLoader(null, true);
+			startItemsLoader(false, true);
 		}
 	}
 }
