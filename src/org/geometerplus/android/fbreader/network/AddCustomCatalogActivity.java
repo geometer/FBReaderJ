@@ -107,6 +107,7 @@ public class AddCustomCatalogActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		BearerAuthenticator.initBearerAuthenticator(this);
 	}
 
 	@Override
