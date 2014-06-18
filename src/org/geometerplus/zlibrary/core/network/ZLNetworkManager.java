@@ -156,7 +156,7 @@ public class ZLNetworkManager {
 	}
 
 	public static abstract class BearerAuthenticator {
-		abstract protected boolean authenticate(Map<String,String> params);
+		abstract protected boolean authenticate(URI uri, Map<String,String> params);
 	}
 
 	private volatile CredentialsCreator myCredentialsCreator;
@@ -362,6 +362,7 @@ public class ZLNetworkManager {
 				httpRequest = new HttpGet(request.URL);
 			}
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
+			httpRequest.setHeader("X-Accept-Auto-Login", "True");
 			httpRequest.setHeader("Accept-Encoding", "gzip");
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
 			for (Map.Entry<String,String> header : request.Headers.entrySet()) {
@@ -451,7 +452,8 @@ public class ZLNetworkManager {
 		try {
 			return client.execute(request, context);
 		} catch (BearerAuthenticationException e) {
-			if (myBearerAuthenticator != null && myBearerAuthenticator.authenticate(e.Params)) {
+			if (myBearerAuthenticator != null
+				&& myBearerAuthenticator.authenticate(request.getURI(), e.Params)) {
 				return client.execute(request, context);
 			}
 			throw e;
