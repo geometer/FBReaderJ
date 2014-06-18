@@ -19,6 +19,9 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -27,8 +30,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.*;
 
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
@@ -45,65 +48,90 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 	static boolean onActivityResult(int requestCode, int resultCode, Intent data) {
 		final BearerAuthenticator ba =
 			(BearerAuthenticator)ZLNetworkManager.Instance().getBearerAuthenticator();
-		switch (requestCode) {
-			case NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER:
-				if (resultCode != NetworkLibraryActivity.RESULT_OK || data == null) {
-					return true;
-				}
+		boolean processed = true;
+		try {
+			switch (requestCode) {
+				default:
+					processed = false;
+					break;
+				case NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER:
+					if (resultCode == Activity.RESULT_OK && data != null) {
+						ba.myAccount = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+					}
+					break;
+				case NetworkLibraryActivity.REQUEST_AUTHORISATION:
+					if (resultCode == Activity.RESULT_OK) {
+						ba.myAuthorizationConfirmed = true;
+					}
+					break;
+				case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
+					if (resultCode == Activity.RESULT_OK && data != null) {
+						final CookieStore store = ZLNetworkManager.Instance().cookieStore();
+						final Map<String,String> cookies =
+							(Map<String,String>)data.getSerializableExtra(NetworkLibraryActivity.COOKIES_KEY);
+						if (cookies != null) {
+							for (Map.Entry<String,String> entry : cookies.entrySet()) {
+								final BasicClientCookie2 c =
+									new BasicClientCookie2(entry.getKey(), entry.getValue());
+								c.setDomain(data.getData().getHost());
+								c.setPath("/");
+								final Calendar expire = Calendar.getInstance();
+								expire.add(Calendar.YEAR, 1);
+								c.setExpiryDate(expire.getTime());
+								c.setSecure(true);
+								c.setDiscard(false);
+								store.addCookie(c);
+							}
+						}
+					}
+					break;
+			}
+		} finally {
+			if (processed) {
 				synchronized (ba) {
-					ba.myAccount = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
 					ba.notifyAll();
 				}
-				return true;
-			case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
-				if (resultCode != NetworkLibraryActivity.RESULT_OK || data == null) {
-					return true;
-				}
-				synchronized (ba) {
-					final CookieStore store = ZLNetworkManager.Instance().cookieStore();
-					final Map<String,String> cookies =
-						(Map<String,String>)data.getSerializableExtra(NetworkLibraryActivity.COOKIES_KEY);
-					if (cookies == null) {
-						return true;
-					}
-					for (Map.Entry<String,String> entry : cookies.entrySet()) {
-						final BasicClientCookie2 c =
-							new BasicClientCookie2(entry.getKey(), entry.getValue());
-						c.setDomain(data.getData().getHost());
-						c.setPath("/");
-						final Calendar expire = Calendar.getInstance();
-						expire.add(Calendar.YEAR, 1);
-						c.setExpiryDate(expire.getTime());
-						c.setSecure(true);
-						c.setDiscard(false);
-						store.addCookie(c);
-					}
-					ba.notifyAll();
-				}
-				return true;
+			}
+			return processed;
 		}
-		return false;
 	}
 
 	private final Activity myActivity;
 	private volatile String myAccount;
+	private volatile boolean myAuthorizationConfirmed;
 
 	private BearerAuthenticator(Activity activity) {
 		myActivity = activity;
 	}
 
 	@Override
-	protected boolean authenticate(Map<String,String> params) {
+	protected boolean authenticate(URI uri, Map<String,String> params) {
+		if (!"https".equalsIgnoreCase(uri.getScheme())) {
+			return false;
+		}
 		return GooglePlayServicesUtil.isGooglePlayServicesAvailable(myActivity)
 			== ConnectionResult.SUCCESS
-			? authenticateToken(params)
-			: authenticateWeb(params);
+			? authenticateToken(uri, params)
+			: authenticateWeb(uri, params);
 	}
 
-	private boolean authenticateWeb(Map<String,String> params) {
+	private String url(URI base, Map<String,String> params, String key) {
+		final String path = params.get(key);
+		if (path == null) {
+			return null;
+		}
+		try {
+			final URI relative = new URI(path);
+			return relative.isAbsolute() ? null : base.resolve(relative).toString();
+		} catch (URISyntaxException e) {
+			return null;
+		}
+	}
+
+	private boolean authenticateWeb(URI uri, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
-		final String authUrl = params.get("auth-url-web");
-		final String completeUrl = params.get("complete-url-web");
+		final String authUrl = url(uri, params, "auth-url-web");
+		final String completeUrl = url(uri, params, "complete-url-web");
 		if (authUrl == null || completeUrl == null) {
 			return false;
 		}
@@ -111,18 +139,52 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 		final Intent intent = new Intent(myActivity, WebAuthorisationScreen.class);
 		intent.setData(Uri.parse(authUrl));
 		intent.putExtra(NetworkLibraryActivity.COMPLETE_URL_KEY, completeUrl);
-		OrientationUtil.startActivityForResult(
-			myActivity, intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN
-		);
-		startWaiting();
+		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
 		return true;
 	}
 
-	private boolean authenticateToken(Map<String,String> params) {
+	private boolean registerAccessToken(String clientId, String authUrl, String authToken) {
+		String accessToken = null;
+		try {
+			accessToken = GoogleAuthUtil.getToken(myActivity, myAccount, String.format(
+				"oauth2:server:client_id:%s:api_scope:%s", clientId, Scopes.DRIVE_FULL
+			), null);
+			System.err.println("ACCESS TOKEN = " + accessToken);
+			final String result = runTokenAuthorization(authUrl, authToken, accessToken);
+			System.err.println("AUTHENTICATION RESULT 2 = " + result);
+			return true;
+		} catch (UserRecoverableAuthException e) {
+			myAuthorizationConfirmed = false;
+			startActivityAndWait(e.getIntent(), NetworkLibraryActivity.REQUEST_AUTHORISATION);
+			return myAuthorizationConfirmed && registerAccessToken(clientId, authUrl, authToken);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	private String runTokenAuthorization(String authUrl, String authToken, String accessToken) {
+		final StringBuilder buffer = new StringBuilder();
+		final ZLNetworkRequest request = new ZLNetworkRequest(authUrl) {
+			public void handleStream(InputStream stream, int length) throws IOException {
+				final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+				buffer.append(reader.readLine());
+			}
+		};
+		request.addPostParameter("auth", authToken);
+		request.addPostParameter("access", accessToken);
+		try {
+			ZLNetworkManager.Instance().perform(request);
+		} catch (ZLNetworkException e) {
+			e.printStackTrace();
+		}
+		return buffer.toString().trim();
+	}
+
+	private boolean authenticateToken(URI uri, Map<String,String> params) {
 		System.err.println("+++ TOKEN AUTH +++");
 		try {
-			final String authUrl = params.get("auth-url-token");
+			final String authUrl = url(uri, params, "auth-url-token");
 			final String clientId = params.get("client-id");
 			if (authUrl == null || clientId == null) {
 				return false;
@@ -131,24 +193,30 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 			final Intent intent = AccountManager.newChooseAccountIntent(
 				null, null, new String[] { "com.google" }, false, null, null, null, null
 			);
-			myActivity.startActivityForResult(
-				intent, NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER
-			);
-			startWaiting();
+			startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER);
+			if (myAccount == null) {
+				return false;
+			}
 			final String authToken = GoogleAuthUtil.getToken(
 				myActivity, myAccount, String.format("audience:server:client_id:%s", clientId)
 			);
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(authUrl, authToken, true) {
-			});
+			final String result = runTokenAuthorization(authUrl, authToken, null);
+			System.err.println("AUTHENTICATION RESULT 1 = " + result);
+			if ("SUCCESS".equals(result)) {
+				return true;
+			}
+			return registerAccessToken(clientId, authUrl, authToken);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
+		} finally {
+			System.err.println("--- TOKEN AUTH ---");
 		}
-		System.err.println("--- TOKEN AUTH ---");
-		return true;
 	}
 
-	private void startWaiting() {
+	private void startActivityAndWait(Intent intent, int requestCode) {
 		synchronized (this) {
+			OrientationUtil.startActivityForResult(myActivity, intent, requestCode);
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -156,13 +224,3 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 		}
 	}
 }
-//					String accessToken = null;
-//					try {
-//						//accessToken = GoogleAuthUtil.getToken(myActivity, "geometer@fbreader.org", "oauth2:server:client_id:420992307317-f6a2v16e96rfeargv2avtr4otfa7dmc5.apps.googleusercontent.com:api_scope:https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive", null);
-//						accessToken = GoogleAuthUtil.getToken(myActivity, "geometer@fbreader.org", "oauth2:server:client_id:420992307317-i60n5g5pa7a56caung72gahebnpk2ktv.apps.googleusercontent.com:api_scope:https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive", null);
-//					} catch (UserRecoverableAuthException e) {
-//						myActivity.startActivity(e.getIntent());
-//					}
-					//System.err.println("ACCESS TOKEN = " + accessToken);
-				/*
-				*/

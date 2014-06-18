@@ -26,6 +26,7 @@ class BearerAuthenticationException extends RuntimeException {
 	public final Map<String,String> Params = new HashMap<String,String>();
 
 	BearerAuthenticationException(String challenge) {
+		super("Authentication failed");
 		if (challenge != null && "bearer".equalsIgnoreCase(challenge.substring(0, 6))) {
 			for (String param : challenge.substring(6).split(",")) {
 				final int index = param.indexOf("=");
