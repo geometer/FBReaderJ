@@ -908,8 +908,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	@Override
-	public void runWithMessage(String key, Runnable action, Runnable postAction) {
-		UIUtil.runWithMessage(this, key, action, postAction, false);
+	public FBReaderApp.SynchronousExecutor createExecutor(String key) {
+		return UIUtil.createExecutor(this, key);
 	}
 
 	private int myBatteryLevel;

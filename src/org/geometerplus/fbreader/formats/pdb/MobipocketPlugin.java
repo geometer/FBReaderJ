@@ -40,7 +40,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
+	public void readMetainfo(Book book) throws BookReadingException {
 		InputStream stream = null;
 		try {
 			stream = book.File.getInputStream();

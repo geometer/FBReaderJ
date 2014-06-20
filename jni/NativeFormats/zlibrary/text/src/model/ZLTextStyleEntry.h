@@ -23,6 +23,8 @@
 #include <string>
 #include <vector>
 
+#include <shared_ptr.h>
+
 #include <ZLTextParagraph.h>
 #include <ZLTextAlignmentType.h>
 #include <ZLBoolean3.h>
@@ -61,7 +63,7 @@ public:
 	enum Feature {
 		LENGTH_LEFT_INDENT =                0,
 		LENGTH_RIGHT_INDENT =               1,
-		LENGTH_FIRST_LINE_INDENT_DELTA =    2,
+		LENGTH_FIRST_LINE_INDENT =          2,
 		LENGTH_SPACE_BEFORE =               3,
 		LENGTH_SPACE_AFTER =                4,
 		LENGTH_FONT_SIZE =                  5,
@@ -98,6 +100,8 @@ public:
 
 	const std::vector<std::string> &fontFamilies() const;
 	void setFontFamilies(const std::vector<std::string> &fontFamilies);
+
+	shared_ptr<ZLTextStyleEntry> inherited() const;
 
 private:
 	const unsigned char myEntryKind;

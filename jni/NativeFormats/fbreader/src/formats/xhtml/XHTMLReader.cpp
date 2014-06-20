@@ -96,19 +96,16 @@ public:
 
 class XHTMLTagParagraphAction : public XHTMLTextModeTagAction {
 
+private:
+	const FBTextKind myTextKind;
+
 public:
+	XHTMLTagParagraphAction(FBTextKind textKind = (FBTextKind)-1);
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
 	void doAtEnd(XHTMLReader &reader);
 };
 
 class XHTMLTagBodyAction : public XHTMLGlobalTagAction {
-
-public:
-	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
-	void doAtEnd(XHTMLReader &reader);
-};
-
-class XHTMLTagRestartParagraphAction : public XHTMLTextModeTagAction {
 
 public:
 	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
@@ -286,15 +283,19 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 void XHTMLTagLinkAction::doAtEnd(XHTMLReader&) {
 }
 
+XHTMLTagParagraphAction::XHTMLTagParagraphAction(FBTextKind textKind) : myTextKind(textKind) {
+}
+
 void XHTMLTagParagraphAction::doAtStart(XHTMLReader &reader, const char**) {
 	if (!reader.myNewParagraphInProgress) {
-		beginParagraph(reader);
+		reader.pushTextKind(myTextKind);
+		reader.beginParagraph();
 		reader.myNewParagraphInProgress = true;
 	}
 }
 
 void XHTMLTagParagraphAction::doAtEnd(XHTMLReader &reader) {
-	endParagraph(reader);
+	reader.endParagraph();
 }
 
 void XHTMLTagBodyAction::doAtStart(XHTMLReader &reader, const char**) {
@@ -310,17 +311,6 @@ void XHTMLTagBodyAction::doAtEnd(XHTMLReader &reader) {
 	if (reader.myBodyCounter <= 0) {
 		reader.myReadState = XHTML_READ_NOTHING;
 	}
-}
-
-void XHTMLTagRestartParagraphAction::doAtStart(XHTMLReader &reader, const char**) {
-	if (reader.myCurrentParagraphIsEmpty) {
-		bookReader(reader).addData(" ");
-	}
-	endParagraph(reader);
-	beginParagraph(reader);
-}
-
-void XHTMLTagRestartParagraphAction::doAtEnd(XHTMLReader&) {
 }
 
 void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
@@ -436,13 +426,12 @@ XHTMLTagControlAction::XHTMLTagControlAction(FBTextKind control) : myControl(con
 }
 
 void XHTMLTagControlAction::doAtStart(XHTMLReader &reader, const char**) {
-	bookReader(reader).pushKind(myControl);
+	reader.pushTextKind(myControl);
 	bookReader(reader).addControl(myControl, true);
 }
 
 void XHTMLTagControlAction::doAtEnd(XHTMLReader &reader) {
 	bookReader(reader).addControl(myControl, false);
-	bookReader(reader).popKind();
 }
 
 void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
@@ -485,19 +474,18 @@ void XHTMLTagParagraphWithControlAction::doAtStart(XHTMLReader &reader, const ch
 	if (myControl == TITLE && bookReader(reader).model().bookTextModel()->paragraphsNumber() > 1) {
 		bookReader(reader).insertEndOfSectionParagraph();
 	}
-	bookReader(reader).pushKind(myControl);
+	reader.pushTextKind(myControl);
 	beginParagraph(reader);
 }
 
 void XHTMLTagParagraphWithControlAction::doAtEnd(XHTMLReader &reader) {
 	endParagraph(reader);
-	bookReader(reader).popKind();
 }
 
 void XHTMLTagPreAction::doAtStart(XHTMLReader &reader, const char**) {
 	reader.myPreformatted = true;
+	reader.pushTextKind(PREFORMATTED);
 	beginParagraph(reader);
-	bookReader(reader).addControl(PREFORMATTED, true);
 }
 
 void XHTMLTagPreAction::doAtEnd(XHTMLReader &reader) {
@@ -543,7 +531,7 @@ void XHTMLReader::fillTagTable() {
 		//addAction("font", new XHTMLTagAction());
 		addAction("style", new XHTMLTagStyleAction());
 
-		addAction("p", new XHTMLTagParagraphAction());
+		addAction("p", new XHTMLTagParagraphAction(XHTML_TAG_P));
 		addAction("h1", new XHTMLTagParagraphWithControlAction(H1));
 		addAction("h2", new XHTMLTagParagraphWithControlAction(H2));
 		addAction("h3", new XHTMLTagParagraphWithControlAction(H3));
@@ -587,7 +575,7 @@ void XHTMLReader::fillTagTable() {
 
 		//addAction("base", new XHTMLTagAction());
 		//addAction("blockquote", new XHTMLTagAction());
-		addAction("br", new XHTMLTagRestartParagraphAction());
+		//addAction("br", new XHTMLTagRestartParagraphAction());
 		//addAction("center", new XHTMLTagAction());
 		addAction("div", new XHTMLTagParagraphAction());
 		addAction("dt", new XHTMLTagParagraphAction());
@@ -617,6 +605,7 @@ void XHTMLReader::fillTagTable() {
 
 XHTMLReader::XHTMLReader(BookReader &modelReader, shared_ptr<EncryptionMap> map) : myModelReader(modelReader), myEncryptionMap(map) {
 	myMarkNextImageAsCover = false;
+	//ZLLogger::Instance().registerClass("XHTML");
 }
 
 void XHTMLReader::setMarkFirstImageAsCover() {
@@ -641,11 +630,8 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 
 	myStyleSheetTable.clear();
 	myFontMap = new FontMap();
-	myCSSStack.clear();
-	myStyleEntryStack.clear();
-	myStylesToRemove = 0;
+	myTagDataStack.clear();
 
-	myDoPageBreakAfterStack.clear();
 	myStyleParser = new StyleSheetSingleStyleParser(myPathPrefix);
 	myTableParser.reset();
 
@@ -656,7 +642,7 @@ bool XHTMLReader::addTextStyleEntry(const std::string tag, const std::string aCl
 	shared_ptr<ZLTextStyleEntry> entry = myStyleSheetTable.control(tag, aClass);
 	if (!entry.isNull()) {
 		addTextStyleEntry(*entry);
-		myStyleEntryStack.push_back(entry);
+		myTagDataStack.back()->StyleEntries.push_back(entry);
 		return true;
 	}
 	return false;
@@ -701,13 +687,19 @@ void XHTMLReader::addTextStyleEntry(const ZLTextStyleEntry &entry) {
 }
 
 void XHTMLReader::startElementHandler(const char *tag, const char **attributes) {
+	const std::string sTag = ZLUnicodeUtil::toLower(tag);
+	if (sTag == "br") {
+		restartParagraph();
+		return;
+	}
+
+	myTagDataStack.push_back(new TagData());
+
 	static const std::string HASH = "#";
 	const char *id = attributeValue(attributes, "id");
 	if (id != 0) {
 		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
 	}
-
-	const std::string sTag = ZLUnicodeUtil::toLower(tag);
 
 	std::vector<std::string> classesList;
 	const char *aClasses = attributeValue(attributes, "class");
@@ -719,12 +711,9 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 			}
 		}
 	}
-	if (classesList.empty()) {
-		classesList.push_back("");
-	}
 
-	bool breakBefore = false;
-	bool breakAfter = false;
+	bool breakBefore = myStyleSheetTable.doBreakBefore(sTag, "");
+	myTagDataStack.back()->PageBreakAfter = myStyleSheetTable.doBreakAfter(sTag, "");
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
 		// TODO: use 3-value logic (yes, no, inherit)
 		if (myStyleSheetTable.doBreakBefore(sTag, *it)) {
@@ -732,20 +721,18 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		}
 		// TODO: use 3-value logic (yes, no, inherit)
 		if (myStyleSheetTable.doBreakAfter(sTag, *it)) {
-			breakAfter = true;
+			myTagDataStack.back()->PageBreakAfter = true;
 		}
 	}
 	if (breakBefore) {
 		myModelReader.insertEndOfSectionParagraph();
 	}
-	myDoPageBreakAfterStack.push_back(breakAfter);
 
 	XHTMLTagAction *action = getAction(sTag);
 	if (action != 0 && action->isEnabled(myReadState)) {
 		action->doAtStart(*this, attributes);
 	}
 
-	const int sizeBefore = myStyleEntryStack.size();
 	addTextStyleEntry(sTag, "");
 	for (std::vector<std::string>::const_iterator it = classesList.begin(); it != classesList.end(); ++it) {
 		addTextStyleEntry("", *it);
@@ -755,78 +742,81 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 			//ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
 			shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseSingleEntry(style);
 			addTextStyleEntry(*entry);
-			myStyleEntryStack.push_back(entry);
+			myTagDataStack.back()->StyleEntries.push_back(entry);
 		}
 	}
-	myCSSStack.push_back(myStyleEntryStack.size() - sizeBefore);
 }
 
 void XHTMLReader::endElementHandler(const char *tag) {
-	for (int i = myCSSStack.back(); i > 0; --i) {
-		myModelReader.addStyleCloseEntry();
+	const std::string sTag = ZLUnicodeUtil::toLower(tag);
+	if (sTag == "br") {
+		return;
 	}
-	myStylesToRemove = myCSSStack.back();
-	myCSSStack.pop_back();
 
-	XHTMLTagAction *action = getAction(tag);
+	XHTMLTagAction *action = getAction(sTag);
 	if (action != 0 && action->isEnabled(myReadState)) {
 		action->doAtEnd(*this);
 		myNewParagraphInProgress = false;
 	}
 
-	for (; myStylesToRemove > 0; --myStylesToRemove) {
-		myStyleEntryStack.pop_back();
+	for (int i = myTagDataStack.back()->StyleEntries.size(); i > 0; --i) {
+		myModelReader.addStyleCloseEntry();
 	}
 
-	if (myDoPageBreakAfterStack.back()) {
+	if (myTagDataStack.back()->PageBreakAfter) {
 		myModelReader.insertEndOfSectionParagraph();
 	}
-	myDoPageBreakAfterStack.pop_back();
+
+	myTagDataStack.pop_back();
 }
 
-void XHTMLReader::beginParagraph() {
+void XHTMLReader::beginParagraph(bool restarted) {
 	myCurrentParagraphIsEmpty = true;
 	myModelReader.beginParagraph();
-	bool doBlockSpaceBefore = false;
-	for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator it = myStyleEntryStack.begin(); it != myStyleEntryStack.end(); ++it) {
-		addTextStyleEntry(**it);
-		doBlockSpaceBefore =
-			doBlockSpaceBefore ||
-			(*it)->isFeatureSupported(ZLTextStyleEntry::LENGTH_SPACE_BEFORE);
-	}
-
-	if (doBlockSpaceBefore) {
-		ZLTextStyleEntry blockingEntry(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
-		blockingEntry.setLength(
-			ZLTextStyleEntry::LENGTH_SPACE_BEFORE,
-			0,
-			ZLTextStyleEntry::SIZE_UNIT_PIXEL
-		);
-		addTextStyleEntry(blockingEntry);
+	for (std::vector<shared_ptr<TagData> >::const_iterator it = myTagDataStack.begin(); it != myTagDataStack.end(); ++it) {
+		const std::vector<FBTextKind> &kinds = (*it)->TextKinds;
+		for (std::vector<FBTextKind>::const_iterator jt = kinds.begin(); jt != kinds.end(); ++jt) {
+			myModelReader.addControl(*jt, true);
+		}
+		const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = (*it)->StyleEntries;
+		bool inheritedOnly = !restarted || it + 1 != myTagDataStack.end();
+		for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
+			shared_ptr<ZLTextStyleEntry> entry = inheritedOnly ? (*jt)->inherited() : *jt;
+			addTextStyleEntry(*entry);
+		}
 	}
 }
 
 void XHTMLReader::endParagraph() {
-	bool doBlockSpaceAfter = false;
-	for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator it = myStyleEntryStack.begin(); it != myStyleEntryStack.end() - myStylesToRemove; ++it) {
-		doBlockSpaceAfter =
-			doBlockSpaceAfter ||
-			(*it)->isFeatureSupported(ZLTextStyleEntry::LENGTH_SPACE_AFTER);
-	}
-	if (doBlockSpaceAfter) {
-		ZLTextStyleEntry blockingEntry(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
-		blockingEntry.setLength(
-			ZLTextStyleEntry::LENGTH_SPACE_AFTER,
-			0,
-			ZLTextStyleEntry::SIZE_UNIT_PIXEL
-		);
-		addTextStyleEntry(blockingEntry);
-	}
-	for (; myStylesToRemove > 0; --myStylesToRemove) {
-		addTextStyleEntry(*myStyleEntryStack.back());
-		myStyleEntryStack.pop_back();
-	}
 	myModelReader.endParagraph();
+}
+
+void XHTMLReader::restartParagraph() {
+	if (myCurrentParagraphIsEmpty) {
+		myModelReader.addFixedHSpace(1);
+	}
+	ZLTextStyleEntry spaceAfterBlocker(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
+	spaceAfterBlocker.setLength(
+		ZLTextStyleEntry::LENGTH_SPACE_AFTER,
+		0,
+		ZLTextStyleEntry::SIZE_UNIT_PIXEL
+	);
+	addTextStyleEntry(spaceAfterBlocker);
+	endParagraph();
+	beginParagraph(true);
+	ZLTextStyleEntry spaceBeforeBlocker(ZLTextStyleEntry::STYLE_OTHER_ENTRY);
+	spaceBeforeBlocker.setLength(
+		ZLTextStyleEntry::LENGTH_SPACE_BEFORE,
+		0,
+		ZLTextStyleEntry::SIZE_UNIT_PIXEL
+	);
+	addTextStyleEntry(spaceBeforeBlocker);
+}
+
+void XHTMLReader::pushTextKind(FBTextKind kind) {
+	if (kind != -1) {
+		myTagDataStack.back()->TextKinds.push_back(kind);
+	}
 }
 
 void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
@@ -842,11 +832,9 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 		case XHTML_READ_BODY:
 			if (myPreformatted) {
 				if (*text == '\r' || *text == '\n') {
-					endParagraph();
+					restartParagraph();
 					text += 1;
 					len -= 1;
-					beginParagraph();
-					myModelReader.addControl(PREFORMATTED, true);
 				}
 				std::size_t spaceCounter = 0;
 				while (spaceCounter < len && std::isspace((unsigned char)*(text + spaceCounter))) {
@@ -876,7 +864,7 @@ void XHTMLReader::characterDataHandler(const char *text, std::size_t len) {
 }
 
 const std::vector<std::string> &XHTMLReader::externalDTDs() const {
-	return EntityFilesCollector::Instance().externalDTDs("xhtml");
+	return EntityFilesCollector::xhtmlDTDs();
 }
 
 bool XHTMLReader::processNamespaces() const {

@@ -227,7 +227,7 @@
 			</intent-filter>
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.network.AuthorisationScreen" android:process=":networkLibrary" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize" android:exported="false"/>
+		<activity android:name="org.geometerplus.android.fbreader.network.WebAuthorisationScreen" android:process=":networkLibrary" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkLibraryPrimaryActivity" android:process=":networkLibrary" android:launchMode="singleTask" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.network.NetworkSearchActivity"/>
 			<intent-filter>
@@ -294,5 +294,6 @@
 		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
 		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
 		<meta-data android:name="com.yotadevices.BS_TITLE" android:value="FBReader"/>
+		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
 	</application>
 </manifest>

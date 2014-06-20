@@ -32,7 +32,7 @@ class FontPreference extends ZLStringListPreference implements ReloadablePrefere
 	private final ZLStringOption myOption;
 	private final boolean myIncludeDummyValue;
 
-	private static String UNCHANGED = "unchanged";
+	private static String UNCHANGED = "inherit";
 
 	FontPreference(Context context, ZLResource resource, String resourceKey, ZLStringOption option, boolean includeDummyValue) {
 		super(context, resource, resourceKey);

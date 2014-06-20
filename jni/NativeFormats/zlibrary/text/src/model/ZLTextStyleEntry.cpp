@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.util;
+#include "ZLTextStyleEntry.h"
 
-public class ZLUnicodeUtil {
-	public static int utf8Length(byte[] buffer, int str, int len) {
-		final int last = str + len;
-		int counter = 0;
-		while (str < last) {
-			final int bt = buffer[str];
-			if ((bt & 0x80) == 0) {
-				++str;
-			} else if ((bt & 0x20) == 0) {
-				str += 2;
-			} else if ((bt & 0x10) == 0) {
-				str += 3;
-			} else {
-				str += 4;
-			}
-			++counter;
-		}
-		return counter;
+shared_ptr<ZLTextStyleEntry> ZLTextStyleEntry::inherited() const {
+	ZLTextStyleEntry *clone = new ZLTextStyleEntry(myEntryKind);
+	clone->myFeatureMask = myFeatureMask & ~(1 << LENGTH_SPACE_BEFORE) & ~(1 << LENGTH_SPACE_AFTER);
+	for (int i = 0; i < NUMBER_OF_LENGTHS; ++i) {
+		clone->myLengths[i] = myLengths[i];
 	}
+	clone->myAlignmentType = myAlignmentType;
+	clone->mySupportedFontModifier = mySupportedFontModifier;
+	clone->myFontModifier = myFontModifier;
+	clone->myFontFamilies = myFontFamilies;
+	return clone;
 }

@@ -402,10 +402,9 @@
 				</node>
 			</node>
 			<node name="font" value="Letra-tipoaren familia">
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="fontSize" value="Letra-tipoaren tamaina"/>
-			<node name="fontSizeDifference" value="Letra-tipoen tamaina ezberdintasuna"/>
 			<node name="fontStyle" value="Letra-tipo estiloa">
 				<node name="regular" value="Normala"/>
 				<node name="bold" value="Lodia"/>
@@ -413,53 +412,53 @@
 				<node name="boldItalic" value="Lodia etzana"/>
 			</node>
 			<node name="bold" value="Lodia">
-				<node name="summaryOn" value="lodia"/>
-				<node name="summaryOff" value="normala"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="bold" value="lodia"/>
+				<node name="normal" value="normala"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="italic" value="Etzana">
-				<node name="summaryOn" value="etzana"/>
-				<node name="summaryOff" value="normala"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="italic" value="etzana"/>
+				<node name="normal" value="normala"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
-			<node name="underlined" value="Azpimarratua">
-				<node name="summaryOn" value="azpimarratua"/>
-				<node name="summaryOff" value="normala"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Marratua">
-				<node name="summaryOn" value="marratua"/>
-				<node name="summaryOff" value="normala"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="azpimarratua"/>
+				<node name="line-through" value="marratua"/>
 			</node>
 			<node name="lineSpacing" value="Lerro arteko tartea">
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="alignment" value="Lerrokatzea">
 				<node name="left" value="Ezkerrera"/>
 				<node name="right" value="Eskumara"/>
 				<node name="center" value="Erdira"/>
 				<node name="justify" value="Justifikatua"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Bereizi hitzak automatikoki">
 				<node name="summaryOn" value="Bereizi hitzak automatikoki"/>
 				<node name="summaryOff" value="Ez bereizi hitzak automatikoki"/>
 			</node>
 			<node name="allowHyphenations" value="Bereizi hitzak">
-				<node name="summaryOn" value="Bereizi hitzak"/>
-				<node name="summaryOff" value="Ez bereizi hitzak"/>
-				<node name="unchanged" value="&lt;aldaketarik gabe&gt;"/>
+				<node name="auto" value="Bereizi hitzak"/>
+				<node name="none" value="Ez bereizi hitzak"/>
+				<node name="inherit" value="&lt;aldaketarik gabe&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Lehenengo lerroko koska"/>
 			<node name="spaceBefore" value="Hutsunea lehenago"/>
 			<node name="spaceAfter" value="Hutsunea ostean"/>
 			<node name="leftIndent" value="Koska ezkerrera"/>
 			<node name="rightIndent" value="Koska eskumara"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Estilo gehiago">
 				<node name="summary" value="Izenburu, epigrafe, eta abarren hobespen bereziak"/>
 				<node name="Regular Paragraph" value="Paragrafo arrunta">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Izenburua">
 					<node name="summary" value=""/>
@@ -572,6 +571,10 @@
 			<node name="textAlignment" value="Lerrokatzea">
 				<node name="summaryOn" value="Aplikatu CSSetan zehaztutako testu-lerrokatzea"/>
 				<node name="summaryOff" value="Baztertu CSSetan zehaztutako testu-lerrokatzea"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Koloreak eta atzeko irudiak">
@@ -800,11 +803,6 @@
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorise" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
-			<node name="sendReport" value="Send report" toBeTranslated="true"/>
-			<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
-			<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
@@ -843,6 +841,8 @@
 			<node name="loadingNetworkBookInfo" value="Liburuaren informazioa kargatzen. Itxaron mesedez…"/>
 			<node name="updatingCatalogsList" value="Katalogoen zerrenda eguneratzen. Itxaron mesedez…"/>
 			<node name="updatingAccountInformation" value="Kontuaren informazioa eguneratzen. Itxaron mesedez…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 			<node name="extrcact" value="Fitxategia kanpoko aplikaziorako prestatzen. Itxaron apur bat…"/>
 		</node>
 		<node name="networkError">
@@ -947,8 +947,6 @@
 		<node name="formatExists" value="Formatua dagoneko %s(e)k du"/>
 		<node name="unzipFailed" value="Ezin izan da liburua deskonprimatu"/>
 		<node name="noPlugin" value="Gehigarria instalatu fitxategi-mota hau irakurtzeko"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Nabigatzailea"/>
@@ -1007,5 +1005,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Eman buelta gailuari liburua irakurtzeko. Testua pantailara itzul daiten, sakatu beheko botoia."/>
 		<node name="frontScreenButton" value="Pantaila honetara aldatu"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

@@ -31,7 +31,7 @@ import android.webkit.*;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
 
-public class AuthorisationScreen extends Activity {
+public class WebAuthorisationScreen extends Activity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -44,6 +44,7 @@ public class AuthorisationScreen extends Activity {
 			finish();
 			return;
 		}
+		final String completeUrl = intent.getStringExtra(NetworkLibraryActivity.COMPLETE_URL_KEY);
 
 		OrientationUtil.setOrientation(this, intent);
 		final WebView view = new WebView(this);
@@ -59,30 +60,24 @@ public class AuthorisationScreen extends Activity {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				setTitle(url);
-			}
-
-			@Override
-			public void onPageFinished(WebView view, String url) {
-				if (!data.getHost().equals(Uri.parse(url).getHost())) {
-					return;
-				}
-
-				final HashMap<String,String> cookies = new HashMap<String,String>();
-				final String cookieString = CookieManager.getInstance().getCookie(url);
-				if (cookieString != null) {
-					// cookieString is a string like NAME=VALUE [; NAME=VALUE]
-					for (String pair : cookieString.split(";")) {
-						final String[] parts = pair.split("=", 2);
-						if (parts.length != 2) {
-							continue;	
+				if (url != null && url.equals(completeUrl)) {
+					final HashMap<String,String> cookies = new HashMap<String,String>();
+					final String cookieString = CookieManager.getInstance().getCookie(url);
+					if (cookieString != null) {
+						// cookieString is a string like NAME=VALUE [; NAME=VALUE]
+						for (String pair : cookieString.split(";")) {
+							final String[] parts = pair.split("=", 2);
+							if (parts.length != 2) {
+								continue;
+							}
+							cookies.put(parts[0].trim(), parts[1].trim());
 						}
-						cookies.put(parts[0].trim(), parts[1].trim());
 					}
+					WebAuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
+						NetworkLibraryActivity.COOKIES_KEY, cookies
+					));
+					finish();
 				}
-				AuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
-					NetworkLibraryActivity.COOKIES_KEY, cookies
-				));
-				finish();
 			}
 		});
 		setContentView(view);

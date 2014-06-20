@@ -44,6 +44,11 @@ public final class ZLPhysicalFile extends ZLFile {
 		return myFile.length();
 	}
 
+	@Override
+	public long lastModified() {
+		return myFile.lastModified();
+	}
+
 	private Boolean myIsDirectory;
 	@Override
 	public boolean isDirectory() {
