@@ -402,10 +402,9 @@
 				</node>
 			</node>
 			<node name="font" value="خانواده فونت">
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="fontSize" value="سايز فونت"/>
-			<node name="fontSizeDifference" value="تفاوت سايز فونت"/>
 			<node name="fontStyle" value="سبك فونت">
 				<node name="regular" value="عادي"/>
 				<node name="bold" value="برجسته"/>
@@ -413,53 +412,53 @@
 				<node name="boldItalic" value="حروف كج برجسته"/>
 			</node>
 			<node name="bold" value="برجسته">
-				<node name="summaryOn" value="برجسته"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="bold" value="برجسته"/>
+				<node name="normal" value="عادي"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="italic" value="حروف كج">
-				<node name="summaryOn" value="حروف كج"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="italic" value="حروف كج"/>
+				<node name="normal" value="عادي"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="underlined" value="زيرخط كشيده">
-				<node name="summaryOn" value="زير خط  كشيده"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
-			</node>
-			<node name="strikedThrough" value="حذف شده">
-				<node name="summaryOn" value="حذف شده"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="زير خط كشيده"/>
+				<node name="line-through" value="حذف شده"/>
 			</node>
 			<node name="lineSpacing" value="فاصله گذاري خطوط">
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="alignment" value="هم ترازي">
 				<node name="left" value="چپ"/>
 				<node name="right" value="راست"/>
 				<node name="center" value="مركز"/>
 				<node name="justify" value="فاصله بندي كردن"/>
-				<node name="unchanged" value="&lt;تغيير نيافته&gt;"/>
+				<node name="inherit" value="&lt;تغيير نيافته&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="فاصله گذاري خودكار">
 				<node name="summaryOn" value="فاصله گذاري خودكار كلمات"/>
 				<node name="summaryOff" value="عدم فاصله گذاري خودكار كلمات"/>
 			</node>
 			<node name="allowHyphenations" value="بگذار فاصله گذاري ها انجام شود">
-				<node name="summaryOn" value="كلمات را فاصله گذاري كن"/>
-				<node name="summaryOff" value="كلمات را فاصله گذاري نكن"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="auto" value="كلمات را فاصله گذاري كن"/>
+				<node name="none" value="كلمات را فاصله گذاري نكن"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="تو بردن خط اول"/>
 			<node name="spaceBefore" value="قبل فاصله"/>
 			<node name="spaceAfter" value="بعد فاصله"/>
 			<node name="leftIndent" value="تو بردن سمت چپ"/>
 			<node name="rightIndent" value="تو بردن سمت راست"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="سبك هاي بيشتر">
 				<node name="summary" value="تنظیمات جداگانه برای عناوین، نوشته ها، و غیره"/>
 				<node name="Regular Paragraph" value="پاراگراف عادي">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="عنوان">
 					<node name="summary" value=""/>
@@ -572,6 +571,10 @@
 			<node name="textAlignment" value="هم ترازي متن ">
 				<node name="summaryOn" value="اجراي هم ترازي متن تعريف شده در CSS"/>
 				<node name="summaryOff" value="رد هم ترازي متن تعريف شده در CSS"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="رنگ ها &amp; والپيپر">
@@ -826,6 +829,8 @@
 			<node name="loadingNetworkBookInfo" value="در حال بارگذاري اطلاعات كتاب. لطفاً صبر كنيد..."/>
 			<node name="updatingCatalogsList" value="در حال آپديت ليست كاتالوگ. لطفاً صبر كنيد..."/>
 			<node name="updatingAccountInformation" value="در حال آپديت اطلاعات كاربري. لطفاً صبر كنيد..."/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="خطاي سرور داخلي"/>
@@ -981,5 +986,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

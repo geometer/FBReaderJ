@@ -407,10 +407,9 @@
 				</node>
 			</node>
 			<node name="font" value="Տառատեսակ">
-				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+				<node name="inherit" value="&lt;անփոփոխ&gt;"/>
 			</node>
 			<node name="fontSize" value="Տառաչափը"/>
-			<node name="fontSizeDifference" value="Չափը"/>
 			<node name="fontStyle" value="Ոճը">
 				<node name="regular" value="ուղիղ"/>
 				<node name="bold" value="թավ"/>
@@ -418,53 +417,53 @@
 				<node name="boldItalic" value="թավ շեղ"/>
 			</node>
 			<node name="bold" value="Թավ">
-				<node name="summaryOn" value="գործածել թավ նկարվածք"/>
-				<node name="summaryOff" value="գործածել ուղիղ նկարվածք"/>
-				<node name="unchanged" value="անփոփոխ"/>
+				<node name="bold" value="գործածել թավ նկարվածք"/>
+				<node name="normal" value="գործածել ուղիղ նկարվածք"/>
+				<node name="inherit" value="անփոփոխ"/>
 			</node>
 			<node name="italic" value="Շեղ">
-				<node name="summaryOn" value="գործածել շեղ նկարվածք"/>
-				<node name="summaryOff" value="գործածել ուղիղ նկարվածք"/>
-				<node name="unchanged" value="անփոփոխ"/>
+				<node name="italic" value="գործածել շեղ նկարվածք"/>
+				<node name="normal" value="գործածել ուղիղ նկարվածք"/>
+				<node name="inherit" value="անփոփոխ"/>
 			</node>
-			<node name="underlined" value="Ընդգծված">
-				<node name="summaryOn" value="միացնել"/>
-				<node name="summaryOff" value="անջատել"/>
-				<node name="unchanged" value="անփոփոխ"/>
-			</node>
-			<node name="strikedThrough" value="Վրագծել">
-				<node name="summaryOn" value="միացնել"/>
-				<node name="summaryOff" value="անջատել"/>
-				<node name="unchanged" value="անփոփոխ"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="միացնել"/>
+				<node name="line-through" value="միացնել"/>
 			</node>
 			<node name="lineSpacing" value="Տողամիջոց">
-				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+				<node name="inherit" value="&lt;անփոփոխ&gt;"/>
 			</node>
 			<node name="alignment" value="Հավասարեցում">
 				<node name="left" value="ձախից"/>
 				<node name="right" value="աջից"/>
 				<node name="center" value="կենտրոնով"/>
 				<node name="justify" value="եզրերով"/>
-				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+				<node name="inherit" value="&lt;անփոփոխ&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Ինքնաշխատ տողադարձում">
 				<node name="summaryOn" value="Միացնել ինքնաբար վանկատումը"/>
 				<node name="summaryOff" value="Անջատել ինքնաբար վանկատումը"/>
 			</node>
 			<node name="allowHyphenations" value="Տողադարձում">
-				<node name="summaryOn" value="թույլատրել տողադարձումը"/>
-				<node name="summaryOff" value="արգելել տողադարձումը"/>
-				<node name="unchanged" value="&lt;անփոփոխ&gt;"/>
+				<node name="auto" value="թույլատրել տողադարձումը"/>
+				<node name="none" value="արգելել տողադարձումը"/>
+				<node name="inherit" value="&lt;անփոփոխ&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Կարմիր տող"/>
 			<node name="spaceBefore" value="Բացատ սկզբում"/>
 			<node name="spaceAfter" value="Բացատ վերջում"/>
 			<node name="leftIndent" value="Հավասարեցնել ձախից"/>
 			<node name="rightIndent" value="Հավասարեցնել աջից"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Այլ ոճեր">
 				<node name="summary" value="Առանձին կարգավորումներ վերնագրերի, բնաբանների և այլնի համար"/>
 				<node name="Regular Paragraph" value="Կանոնավոր պարբերություն">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Վերնագիր">
 					<node name="summary" value=""/>
@@ -577,6 +576,10 @@
 			<node name="textAlignment" value="Հավասարեցնել գրվածքը">
 				<node name="summaryOn" value="Հավասարեցնել գրվածքը, ինչպես տրվում է CSS-ում"/>
 				<node name="summaryOff" value="Մերժել գրվածքի հավասարեցումը՝ տրված CSS-ում"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Գունավորում և պաստառներ">
@@ -831,6 +834,8 @@
 			<node name="loadingNetworkBookInfo" value="Բեռնվում են գրքի տվյալները, սպասեք..."/>
 			<node name="updatingCatalogsList" value="Թարմացվում է գրացուցակների ցանկը, սպասեք..."/>
 			<node name="updatingAccountInformation" value="Բեռնվում են հաշվի մասին տվյալները, սպասեք..."/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Սպասարկչի ներքին սխալ"/>
@@ -986,5 +991,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

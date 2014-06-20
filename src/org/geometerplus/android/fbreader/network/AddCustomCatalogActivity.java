@@ -50,7 +50,7 @@ public class AddCustomCatalogActivity extends Activity {
 	private INetworkLink.Type myType = INetworkLink.Type.Custom;
 
 	@Override
-	public void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
@@ -102,6 +102,17 @@ public class AddCustomCatalogActivity extends Activity {
 				});
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		BearerAuthenticator.initBearerAuthenticator(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		BearerAuthenticator.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private void init(Intent intent) {

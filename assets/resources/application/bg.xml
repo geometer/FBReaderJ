@@ -407,10 +407,9 @@
 				</node>
 			</node>
 			<node name="font" value="Шрифт">
-				<node name="unchanged" value="&lt;без промяна&gt;"/>
+				<node name="inherit" value="&lt;без промяна&gt;"/>
 			</node>
 			<node name="fontSize" value="Размер на шрифта"/>
-			<node name="fontSizeDifference" value="Размер"/>
 			<node name="fontStyle" value="Стил">
 				<node name="regular" value="нормален"/>
 				<node name="bold" value="удебелен"/>
@@ -418,53 +417,53 @@
 				<node name="boldItalic" value="удебелен курсив"/>
 			</node>
 			<node name="bold" value="Удебелен">
-				<node name="summaryOn" value="удебелен"/>
-				<node name="summaryOff" value="нормален"/>
-				<node name="unchanged" value="без промяна"/>
+				<node name="bold" value="удебелен"/>
+				<node name="normal" value="нормален"/>
+				<node name="inherit" value="без промяна"/>
 			</node>
 			<node name="italic" value="Курсив">
-				<node name="summaryOn" value="курсив"/>
-				<node name="summaryOff" value="нормален"/>
-				<node name="unchanged" value="без промяна"/>
+				<node name="italic" value="курсив"/>
+				<node name="normal" value="нормален"/>
+				<node name="inherit" value="без промяна"/>
 			</node>
-			<node name="underlined" value="Подчертан">
-				<node name="summaryOn" value="подчертан"/>
-				<node name="summaryOff" value="нормален"/>
-				<node name="unchanged" value="без промяна"/>
-			</node>
-			<node name="strikedThrough" value="Зачертан">
-				<node name="summaryOn" value="зачертан"/>
-				<node name="summaryOff" value="нормален"/>
-				<node name="unchanged" value="без промяна"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="подчертан"/>
+				<node name="line-through" value="зачертан"/>
 			</node>
 			<node name="lineSpacing" value="Междуредово отстояние">
-				<node name="unchanged" value="&lt;без промяна&gt;"/>
+				<node name="inherit" value="&lt;без промяна&gt;"/>
 			</node>
 			<node name="alignment" value="Подравняване">
 				<node name="left" value="ляво"/>
 				<node name="right" value="дясно"/>
 				<node name="center" value="център"/>
 				<node name="justify" value="двустранно подравняване"/>
-				<node name="unchanged" value="&lt;без промяна&gt;"/>
+				<node name="inherit" value="&lt;без промяна&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Автоматично пренасяне">
 				<node name="summaryOn" value="автоматично пренасяне"/>
 				<node name="summaryOff" value="изключи автоматичното пренасяне"/>
 			</node>
 			<node name="allowHyphenations" value="Пренасяне">
-				<node name="summaryOn" value="пренасяне"/>
-				<node name="summaryOff" value="изключи пренасянето"/>
-				<node name="unchanged" value="&lt;без промяна&gt;"/>
+				<node name="auto" value="пренасяне"/>
+				<node name="none" value="изключи пренасянето"/>
+				<node name="inherit" value="&lt;без промяна&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Отстояние от първия ред"/>
 			<node name="spaceBefore" value="Отстояние преди"/>
 			<node name="spaceAfter" value="Отстояние след"/>
 			<node name="leftIndent" value="Ляв отстъп"/>
 			<node name="rightIndent" value="Десен отстъп"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Други стилове">
 				<node name="summary" value="Отделни настройки за заглавия, епиграфи и т.н."/>
 				<node name="Regular Paragraph" value="Стандартен параграф">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Заглавие">
 					<node name="summary" value=""/>
@@ -577,6 +576,10 @@
 			<node name="textAlignment" value="Подравняване на текста">
 				<node name="summaryOn" value="Подравни текста, според указанията в CSS"/>
 				<node name="summaryOff" value="Игнорирай подравняването на текста, указано в CSS"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Цветове и тапети">
@@ -831,6 +834,8 @@
 			<node name="loadingNetworkBookInfo" value="Зареждане на информация за книгата. Моля, изчакайте…"/>
 			<node name="updatingCatalogsList" value="Обновяване на списъка с каталози. Моля, изчакайте…"/>
 			<node name="updatingAccountInformation" value="Обновяване на информацията за акаунта. Моля, изчакайте…"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Грешка на сървъра"/>
@@ -986,5 +991,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

@@ -400,10 +400,9 @@
 				</node>
 			</node>
 			<node name="font" value="نوع الخط">
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="fontSize" value="حجم الخط"/>
-			<node name="fontSizeDifference" value="الفرق بين حجم الخط"/>
 			<node name="fontStyle" value="ستايل الخط">
 				<node name="regular" value="عادي"/>
 				<node name="bold" value="غليظ"/>
@@ -411,53 +410,53 @@
 				<node name="boldItalic" value="مائل وغليظ"/>
 			</node>
 			<node name="bold" value="غليظ">
-				<node name="summaryOn" value="غليظ"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="bold" value="غليظ"/>
+				<node name="normal" value="عادي"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="italic" value="مائل">
-				<node name="summaryOn" value="مائل"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="italic" value="مائل"/>
+				<node name="normal" value="عادي"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="underlined" value="مسطر">
-				<node name="summaryOn" value="مسطر"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
-			</node>
-			<node name="strikedThrough" value="مشطوب">
-				<node name="summaryOn" value="مشطوب"/>
-				<node name="summaryOff" value="عادي"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="مسطر"/>
+				<node name="line-through" value="مشطوب"/>
 			</node>
 			<node name="lineSpacing" value="تباعد الأسطر">
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="alignment" value="محاذاة النص">
 				<node name="left" value="يسار"/>
 				<node name="right" value="يمين"/>
 				<node name="center" value="وسط"/>
 				<node name="justify" value="ملء"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Auto hyphenations" toBeTranslated="true">
 				<node name="summaryOn" value="Hyphenate words automatically" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not hyphenate words automatically" toBeTranslated="true"/>
 			</node>
-			<node name="allowHyphenations" value="Allow Hyphenations" toBeTranslated="true">
-				<node name="summaryOn" value="hyphenate words" toBeTranslated="true"/>
-				<node name="summaryOff" value="don't hyphenate words" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;بدون تغيير&gt;"/>
+			<node name="allowHyphenations" value="Allow hyphenations" toBeTranslated="true">
+				<node name="auto" value="hyphenate words" toBeTranslated="true"/>
+				<node name="none" value="don't hyphenate words" toBeTranslated="true"/>
+				<node name="inherit" value="&lt;بدون تغيير&gt;"/>
 			</node>
-			<node name="firstLineIndent" value="First Line Indent" toBeTranslated="true"/>
-			<node name="spaceBefore" value="Space Before" toBeTranslated="true"/>
-			<node name="spaceAfter" value="Space After" toBeTranslated="true"/>
-			<node name="leftIndent" value="Left Indent" toBeTranslated="true"/>
-			<node name="rightIndent" value="Right Indent" toBeTranslated="true"/>
+			<node name="firstLineIndent" value="First line indent" toBeTranslated="true"/>
+			<node name="spaceBefore" tobeTranslated="true" value="Space before"/>
+			<node name="spaceAfter" tobetranslated="true" value="Space after"/>
+			<node name="leftIndent" tobetranslated="true" value="Left indent"/>
+			<node name="rightIndent" tobeTranslated="true" value="Right indent"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="مزيد...">
 				<node name="summary" value="اعدادات العناوين وغيرها"/>
 				<node name="Regular Paragraph" value="Regular Paragraph" toBeTranslated="true">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Title" toBeTranslated="true">
 					<node name="summary" value=""/>
@@ -570,6 +569,10 @@
 			<node name="textAlignment" value="محاذاة النص">
 				<node name="summaryOn" value="تطبيق محاذاة النص الموجودة في CSS"/>
 				<node name="summaryOff" value="تجاهل محاذاة النص الموجودة في CSS"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="الألوان والخلفية">
@@ -824,6 +827,8 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait..." toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..." toBeTranslated="true"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait..." toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" toBeTranslated="true"/>
@@ -979,5 +984,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

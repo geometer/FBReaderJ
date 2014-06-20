@@ -392,10 +392,9 @@
 				</node>
 			</node>
 			<node name="font" value="Tipo de letra">
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="fontSize" value="Tamaño da letra"/>
-			<node name="fontSizeDifference" value="Diferenza de tamaño da letra"/>
 			<node name="fontStyle" value="Estilo da letra">
 				<node name="regular" value="Normal"/>
 				<node name="bold" value="Negriña"/>
@@ -403,53 +402,53 @@
 				<node name="boldItalic" value="Cursiva negriña"/>
 			</node>
 			<node name="bold" value="Negriña">
-				<node name="summaryOn" value="negriña"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="bold" value="negriña"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="italic" value="Cursiva">
-				<node name="summaryOn" value="cursiva"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="italic" value="cursiva"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined" toBeTranslated="true">
-				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="underlined" toBeTranslated="true"/>
+				<node name="line-through" value="striked through" toBeTranslated="true"/>
 			</node>
 			<node name="lineSpacing" value="Interliñado">
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="alignment" value="Aliñamento">
 				<node name="left" value="Esquerda"/>
 				<node name="right" value="Dereita"/>
 				<node name="center" value="Centrado"/>
 				<node name="justify" value="Xustificado"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Guionizado automático">
 				<node name="summaryOn" value="Guionizar automaticamente as palabras "/>
 				<node name="summaryOff" value="Non guionizar as palabras automaticamente"/>
 			</node>
 			<node name="allowHyphenations" value="Permitir guionizados">
-				<node name="summaryOn" value="guionizar palabras"/>
-				<node name="summaryOff" value="non guionizar palabras"/>
-				<node name="unchanged" value="&lt;sen cambios&gt;"/>
+				<node name="auto" value="guionizar palabras"/>
+				<node name="none" value="non guionizar palabras"/>
+				<node name="inherit" value="&lt;sen cambios&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Sangrar a primeira liña"/>
 			<node name="spaceBefore" value="Espazo antes"/>
 			<node name="spaceAfter" value="Espazo despois"/>
 			<node name="leftIndent" value="Sangrar á esquerda"/>
 			<node name="rightIndent" value="Sangrar á dereita"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Máis estilos">
 				<node name="summary" value="Separar as preferencias por títulos, epígrafes, etc."/>
 				<node name="Regular Paragraph" value="Parágrafo normal">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Título">
 					<node name="summary" value=""/>
@@ -562,6 +561,10 @@
 			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
 				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Cores e fondos de pantalla">
@@ -816,6 +819,8 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="Actualizando a lista de catálogos. Agarde…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
+			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Produciuse un erro interno no servidor"/>
@@ -971,5 +976,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

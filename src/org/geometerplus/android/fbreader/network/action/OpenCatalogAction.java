@@ -99,18 +99,7 @@ public class OpenCatalogAction extends Action {
 			}
 		}
 
-		final Authenticator authenticator = new Authenticator() {
-			public void run(String url) {
-				final Intent intent = new Intent(myActivity, AuthorisationScreen.class);
-				intent.setData(Uri.parse(url));
-				intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey());
-				OrientationUtil.startActivityForResult(
-					myActivity, intent, NetworkLibraryActivity.REQUEST_AUTHORISATION_SCREEN
-				);
-			}
-		};
-
-		tree.startItemsLoader(authenticator, resumeNotLoad);
+		tree.startItemsLoader(true, resumeNotLoad);
 		processExtraData(tree.Item.extraData(), new Runnable() {
 			public void run() {
 				doOpenTree(tree);

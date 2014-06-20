@@ -260,9 +260,7 @@ cycle:
 
 	public static List<String> xhtmlDTDs() {
 		if (ourExternalDTDs.isEmpty()) {
-			ourExternalDTDs.add("formats/xhtml/xhtml-lat1.ent");
-			ourExternalDTDs.add("formats/xhtml/xhtml-special.ent");
-			ourExternalDTDs.add("formats/xhtml/xhtml-symbol.ent");
+			ourExternalDTDs.add("formats/xhtml/xhtml-merged.ent");
 		}
 		return ourExternalDTDs;
 	}

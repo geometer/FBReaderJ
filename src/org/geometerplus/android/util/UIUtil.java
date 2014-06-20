@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public abstract class UIUtil {
@@ -108,36 +109,58 @@ public abstract class UIUtil {
 		}).start();
 	}
 
-	public static void runWithMessage(final Activity activity, String key, final Runnable action, final Runnable postAction, final boolean minPriority) {
-		final String message =
-			ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
-		activity.runOnUiThread(new Runnable() {
-			public void run() {
-				final ProgressDialog progress = ProgressDialog.show(activity, null, message, true, false);
+	public static ZLApplication.SynchronousExecutor createExecutor(final Activity activity, final String key) {
+		return new ZLApplication.SynchronousExecutor() {
+			private final ZLResource myResource =
+				ZLResource.resource("dialog").getResource("waitMessage");
+			private final String myMessage = myResource.getResource(key).getValue();	
+			private volatile ProgressDialog myProgress;
 
-				final Thread runner = new Thread() {
+			public void execute(final Runnable action, final Runnable uiPostAction) {
+				activity.runOnUiThread(new Runnable() {
 					public void run() {
-						action.run();
-						activity.runOnUiThread(new Runnable() {
+						myProgress = ProgressDialog.show(activity, null, myMessage, true, false);
+						final Thread runner = new Thread() {
 							public void run() {
-								try {
-									progress.dismiss();
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-								if (postAction != null) {
-									postAction.run();
-								}
+								action.run();
+								activity.runOnUiThread(new Runnable() {
+									public void run() {
+										try {
+											myProgress.dismiss();
+											myProgress = null;
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
+										if (uiPostAction != null) {
+											uiPostAction.run();
+										}
+									}
+								});
 							}
-						});
+						};
+						runner.setPriority(Thread.MAX_PRIORITY);
+						runner.start();
 					}
-				};
-				if (minPriority) {
-					runner.setPriority(Thread.MIN_PRIORITY);
-				}
-				runner.start();
+				});
 			}
-		});
+
+			private void setMessage(final ProgressDialog progress, final String message) {
+				if (progress == null) {
+					return;
+				}
+				activity.runOnUiThread(new Runnable() {
+					public void run() {
+						progress.setMessage(message);
+					}
+				});
+			}
+
+			public void executeAux(String key, Runnable runnable) {
+				setMessage(myProgress, myResource.getResource(key).getValue());
+				runnable.run();
+				setMessage(myProgress, myMessage);
+			}
+		};
 	}
 
 	public static void showMessageText(final Activity activity, final String text) {
