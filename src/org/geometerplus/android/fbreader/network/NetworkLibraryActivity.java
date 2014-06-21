@@ -168,7 +168,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			}
 		});
 
-		if (BearerAuthenticator.onActivityResult(requestCode, resultCode, data)) {
+		if (BearerAuthenticator.onActivityResult(this, requestCode, resultCode, data)) {
 			return;
 		}
 
