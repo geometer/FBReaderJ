@@ -91,7 +91,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onResume() {
 		super.onResume();
 
+		BearerAuthenticator.initBearerAuthenticator(this);
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		BearerAuthenticator.onActivityResult(this, requestCode, resultCode, data);
 	}
 
 	private volatile boolean myInitializerStarted;
