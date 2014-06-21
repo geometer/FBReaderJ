@@ -112,7 +112,7 @@ public class AddCustomCatalogActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		BearerAuthenticator.onActivityResult(requestCode, resultCode, data);
+		BearerAuthenticator.onActivityResult(this, requestCode, resultCode, data);
 	}
 
 	private void init(Intent intent) {
