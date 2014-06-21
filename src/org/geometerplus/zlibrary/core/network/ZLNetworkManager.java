@@ -358,7 +358,9 @@ public class ZLNetworkManager {
 				httpRequest = new HttpGet(request.URL);
 			}
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
-			httpRequest.setHeader("X-Accept-Auto-Login", "True");
+			if (!request.isQuiet()) {
+				httpRequest.setHeader("X-Accept-Auto-Login", "True");
+			}
 			httpRequest.setHeader("Accept-Encoding", "gzip");
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
 			for (Map.Entry<String,String> header : request.Headers.entrySet()) {
