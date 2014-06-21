@@ -22,13 +22,13 @@ package org.geometerplus.android.fbreader.network;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Calendar;
-import java.util.Map;
+import java.util.*;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.*;
@@ -41,13 +41,22 @@ import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
 
 public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
+	private static Map<Activity,BearerAuthenticator> ourAuthenticators =
+		Collections.synchronizedMap(new HashMap<Activity,BearerAuthenticator>());
+
 	public static void initBearerAuthenticator(Activity activity) {
-		ZLNetworkManager.Instance().setBearerAuthenticator(new BearerAuthenticator(activity));
+		synchronized (ourAuthenticators) {
+			BearerAuthenticator ba = ourAuthenticators.get(activity);
+			if (ba == null) {
+				ba = new BearerAuthenticator(activity);
+				ourAuthenticators.put(activity, ba);
+			}
+			ZLNetworkManager.Instance().setBearerAuthenticator(ba);
+		}
 	}
 
-	static boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-		final BearerAuthenticator ba =
-			(BearerAuthenticator)ZLNetworkManager.Instance().getBearerAuthenticator();
+	static boolean onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+		final BearerAuthenticator ba = ourAuthenticators.get(activity);
 		boolean processed = true;
 		try {
 			switch (requestCode) {
@@ -106,6 +115,7 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 
 	@Override
 	protected boolean authenticate(URI uri, Map<String,String> params) {
+		System.err.println("AUTHENTICATE FOR " + uri);
 		if (!"https".equalsIgnoreCase(uri.getScheme())) {
 			return false;
 		}
@@ -145,13 +155,14 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 	}
 
 	private boolean registerAccessToken(String clientId, String authUrl, String authToken) {
-		String accessToken = null;
+		String code = null;
 		try {
-			accessToken = GoogleAuthUtil.getToken(myActivity, myAccount, String.format(
-				"oauth2:server:client_id:%s:api_scope:%s", clientId, Scopes.DRIVE_FULL
+			code = GoogleAuthUtil.getToken(myActivity, myAccount, String.format(
+				"oauth2:server:client_id:%s:api_scope:%s", clientId,
+				TextUtils.join(" ", new Object[] { Scopes.DRIVE_FULL, Scopes.PROFILE })
 			), null);
-			System.err.println("ACCESS TOKEN = " + accessToken);
-			final String result = runTokenAuthorization(authUrl, authToken, accessToken);
+			System.err.println("ACCESS TOKEN = " + code);
+			final String result = runTokenAuthorization(authUrl, authToken, code);
 			System.err.println("AUTHENTICATION RESULT 2 = " + result);
 			return true;
 		} catch (UserRecoverableAuthException e) {
@@ -163,7 +174,7 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 		}
 	}
 
-	private String runTokenAuthorization(String authUrl, String authToken, String accessToken) {
+	private String runTokenAuthorization(String authUrl, String authToken, String code) {
 		final StringBuilder buffer = new StringBuilder();
 		final ZLNetworkRequest request = new ZLNetworkRequest(authUrl) {
 			public void handleStream(InputStream stream, int length) throws IOException {
@@ -172,7 +183,7 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 			}
 		};
 		request.addPostParameter("auth", authToken);
-		request.addPostParameter("access", accessToken);
+		request.addPostParameter("code", code);
 		try {
 			ZLNetworkManager.Instance().perform(request);
 		} catch (ZLNetworkException e) {
@@ -200,6 +211,7 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 			final String authToken = GoogleAuthUtil.getToken(
 				myActivity, myAccount, String.format("audience:server:client_id:%s", clientId)
 			);
+			System.err.println("AUTH TOKEN = " + authToken);
 			final String result = runTokenAuthorization(authUrl, authToken, null);
 			System.err.println("AUTHENTICATION RESULT 1 = " + result);
 			if ("SUCCESS".equals(result)) {
