@@ -290,10 +290,6 @@ public class ZLNetworkManager {
 		myBearerAuthenticator = authenticator;
 	}
 
-	public BearerAuthenticator getBearerAuthenticator() {
-		return myBearerAuthenticator;
-	}
-
 	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
 		perform(request, 30000, 15000);
 	}
