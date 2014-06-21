@@ -29,9 +29,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.*;
 
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
@@ -119,10 +116,7 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 		if (!"https".equalsIgnoreCase(uri.getScheme())) {
 			return false;
 		}
-		return GooglePlayServicesUtil.isGooglePlayServicesAvailable(myActivity)
-			== ConnectionResult.SUCCESS
-			? authenticateToken(uri, params)
-			: authenticateWeb(uri, params);
+		return authenticateWeb(uri, params);
 	}
 
 	private String url(URI base, Map<String,String> params, String key) {
@@ -152,78 +146,6 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
 		return true;
-	}
-
-	private boolean registerAccessToken(String clientId, String authUrl, String authToken) {
-		String code = null;
-		try {
-			code = GoogleAuthUtil.getToken(myActivity, myAccount, String.format(
-				"oauth2:server:client_id:%s:api_scope:%s", clientId,
-				TextUtils.join(" ", new Object[] { Scopes.DRIVE_FULL, Scopes.PROFILE })
-			), null);
-			System.err.println("ACCESS TOKEN = " + code);
-			final String result = runTokenAuthorization(authUrl, authToken, code);
-			System.err.println("AUTHENTICATION RESULT 2 = " + result);
-			return true;
-		} catch (UserRecoverableAuthException e) {
-			myAuthorizationConfirmed = false;
-			startActivityAndWait(e.getIntent(), NetworkLibraryActivity.REQUEST_AUTHORISATION);
-			return myAuthorizationConfirmed && registerAccessToken(clientId, authUrl, authToken);
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	private String runTokenAuthorization(String authUrl, String authToken, String code) {
-		final StringBuilder buffer = new StringBuilder();
-		final ZLNetworkRequest request = new ZLNetworkRequest(authUrl) {
-			public void handleStream(InputStream stream, int length) throws IOException {
-				final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-				buffer.append(reader.readLine());
-			}
-		};
-		request.addPostParameter("auth", authToken);
-		request.addPostParameter("code", code);
-		try {
-			ZLNetworkManager.Instance().perform(request);
-		} catch (ZLNetworkException e) {
-			e.printStackTrace();
-		}
-		return buffer.toString().trim();
-	}
-
-	private boolean authenticateToken(URI uri, Map<String,String> params) {
-		System.err.println("+++ TOKEN AUTH +++");
-		try {
-			final String authUrl = url(uri, params, "auth-url-token");
-			final String clientId = params.get("client-id");
-			if (authUrl == null || clientId == null) {
-				return false;
-			}
-
-			final Intent intent = AccountManager.newChooseAccountIntent(
-				null, null, new String[] { "com.google" }, false, null, null, null, null
-			);
-			startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER);
-			if (myAccount == null) {
-				return false;
-			}
-			final String authToken = GoogleAuthUtil.getToken(
-				myActivity, myAccount, String.format("audience:server:client_id:%s", clientId)
-			);
-			System.err.println("AUTH TOKEN = " + authToken);
-			final String result = runTokenAuthorization(authUrl, authToken, null);
-			System.err.println("AUTHENTICATION RESULT 1 = " + result);
-			if ("SUCCESS".equals(result)) {
-				return true;
-			}
-			return registerAccessToken(clientId, authUrl, authToken);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			System.err.println("--- TOKEN AUTH ---");
-		}
 	}
 
 	private void startActivityAndWait(Intent intent, int requestCode) {
