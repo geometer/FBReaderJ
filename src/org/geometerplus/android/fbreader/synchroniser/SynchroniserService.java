@@ -27,6 +27,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class SynchroniserService extends Service implements Runnable {
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
+	private volatile Thread mySynchronizationThread;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -37,6 +38,23 @@ public class SynchroniserService extends Service implements Runnable {
 	@Override
 	public void run() {
 		System.err.println("SYNCHRONIZER BINDED TO LIBRARY");
+		synchronized(this) {
+			if (mySynchronizationThread == null) {
+				mySynchronizationThread = new Thread() {
+					public void run() {
+						System.err.println("HELLO THREAD");
+						try {
+							mySynchronizationThread.sleep(5000);
+						} catch (InterruptedException e) {
+						}
+						System.err.println("BYE-BYE THREAD");
+						mySynchronizationThread = null;
+					}
+				};
+				mySynchronizationThread.setPriority(Thread.MIN_PRIORITY);
+				mySynchronizationThread.start();
+			}
+		}
 	}
 
 	@Override

@@ -251,11 +251,6 @@ public class NetworkLibrary {
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
 		if (db != null) {
-			System.err.println("++ LIST LINKS");
-			for (INetworkLink l : db.listLinks()) {
-				System.err.println("LNK: " + l);
-			}
-			System.err.println("-- LIST LINKS");
 			myLinks.addAll(db.listLinks());
 		}
 
