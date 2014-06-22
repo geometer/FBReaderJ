@@ -29,8 +29,7 @@ import android.app.*;
 import android.content.*;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.PowerManager;
+import android.os.*;
 import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
@@ -64,6 +63,7 @@ import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.synchroniser.SynchroniserService;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.*;
 
@@ -210,6 +210,17 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	private String myMenuLanguage;
 
 	final DataService.Connection DataConnection = new DataService.Connection();
+	private final ServiceConnection mySynchroniserConnection = new ServiceConnection() {
+		@Override
+		public void onServiceConnected(ComponentName componentName, IBinder binder) {
+			System.err.println("SynchroniserService CONNECTED");
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName componentName) {
+			System.err.println("SynchroniserService DISCONNECTED");
+		}
+	};
 
 	private boolean myIsPaused = false;
 	private AlertDialog myDialogToShow = null;
@@ -646,6 +657,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	protected void onResume() {
 		super.onResume();
 
+		bindService(
+			new Intent(this, SynchroniserService.class),
+			mySynchroniserConnection,
+			SynchroniserService.BIND_AUTO_CREATE
+		);
+
 		myStartTimer = true;
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
@@ -742,6 +759,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			setButtonLight(true);
 		}
 		myFBReaderApp.onWindowClosing();
+		unbindService(mySynchroniserConnection);
 		super.onPause();
 	}
 
