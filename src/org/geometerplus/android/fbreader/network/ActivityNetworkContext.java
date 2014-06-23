@@ -26,6 +26,7 @@ import java.util.*;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -40,23 +41,20 @@ import org.apache.http.impl.cookie.BasicClientCookie2;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
 
-public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
-	private static Map<Activity,BearerAuthenticator> ourAuthenticators =
-		Collections.synchronizedMap(new HashMap<Activity,BearerAuthenticator>());
+public final class ActivityNetworkContext extends AndroidNetworkContext {
+	private final Activity myActivity;
+	private volatile String myAccount;
+	private volatile boolean myAuthorizationConfirmed;
 
-	public static void initBearerAuthenticator(Activity activity) {
-		synchronized (ourAuthenticators) {
-			BearerAuthenticator ba = ourAuthenticators.get(activity);
-			if (ba == null) {
-				ba = new BearerAuthenticator(activity);
-				ourAuthenticators.put(activity, ba);
-			}
-			ZLNetworkManager.Instance().setBearerAuthenticator(ba);
-		}
+	public ActivityNetworkContext(Activity activity) {
+		myActivity = activity;
 	}
 
-	static boolean onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-		final BearerAuthenticator ba = ourAuthenticators.get(activity);
+	public Context getContext() {
+		return myActivity;
+	}
+
+	public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
 		boolean processed = true;
 		try {
 			switch (requestCode) {
@@ -65,17 +63,17 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 					break;
 				case NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER:
 					if (resultCode == Activity.RESULT_OK && data != null) {
-						ba.myAccount = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+						myAccount = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_AUTHORISATION:
 					if (resultCode == Activity.RESULT_OK) {
-						ba.myAuthorizationConfirmed = true;
+						myAuthorizationConfirmed = true;
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
 					if (resultCode == Activity.RESULT_OK && data != null) {
-						final CookieStore store = ZLNetworkManager.Instance().cookieStore();
+						final CookieStore store = cookieStore();
 						final Map<String,String> cookies =
 							(Map<String,String>)data.getSerializableExtra(NetworkLibraryActivity.COOKIES_KEY);
 						if (cookies != null) {
@@ -97,32 +95,12 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 			}
 		} finally {
 			if (processed) {
-				synchronized (ba) {
-					ba.notifyAll();
+				synchronized (this) {
+					notifyAll();
 				}
 			}
 			return processed;
 		}
-	}
-
-	private final Activity myActivity;
-	private volatile String myAccount;
-	private volatile boolean myAuthorizationConfirmed;
-
-	private BearerAuthenticator(Activity activity) {
-		myActivity = activity;
-	}
-
-	@Override
-	protected boolean authenticate(URI uri, Map<String,String> params) {
-		System.err.println("AUTHENTICATE FOR " + uri);
-		if (!"https".equalsIgnoreCase(uri.getScheme())) {
-			return false;
-		}
-		return GooglePlayServicesUtil.isGooglePlayServicesAvailable(myActivity)
-			== ConnectionResult.SUCCESS
-			? authenticateToken(uri, params)
-			: authenticateWeb(uri, params);
 	}
 
 	private String url(URI base, Map<String,String> params, String key) {
@@ -138,7 +116,8 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 		}
 	}
 
-	private boolean authenticateWeb(URI uri, Map<String,String> params) {
+	@Override
+	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
 		final String authUrl = url(uri, params, "auth-url-web");
 		final String completeUrl = url(uri, params, "complete-url-web");
@@ -184,15 +163,12 @@ public class BearerAuthenticator extends ZLNetworkManager.BearerAuthenticator {
 		};
 		request.addPostParameter("auth", authToken);
 		request.addPostParameter("code", code);
-		try {
-			ZLNetworkManager.Instance().perform(request);
-		} catch (ZLNetworkException e) {
-			e.printStackTrace();
-		}
+		performQuietly(request);
 		return buffer.toString().trim();
 	}
 
-	private boolean authenticateToken(URI uri, Map<String,String> params) {
+	@Override
+	protected boolean authenticateToken(URI uri, Map<String,String> params) {
 		System.err.println("+++ TOKEN AUTH +++");
 		try {
 			final String authUrl = url(uri, params, "auth-url-token");
