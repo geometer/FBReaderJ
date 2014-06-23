@@ -78,7 +78,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	synchronized public void readUids(Book book) throws BookReadingException {
 		readUidsNative(book);
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createSHA256Uid(book.File));
+			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
 	}
 
