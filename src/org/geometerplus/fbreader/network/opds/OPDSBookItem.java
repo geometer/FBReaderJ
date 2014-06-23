@@ -33,14 +33,14 @@ import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
-	public static OPDSBookItem create(INetworkLink link, String url) {
+	public static OPDSBookItem create(ZLNetworkContext nc, INetworkLink link, String url) {
 		if (link == null || url == null) {
 			return null;
 		}
 
 		final CreateBookHandler handler = new CreateBookHandler(link, url);
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
+			nc.perform(new ZLNetworkRequest(url) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					new OPDSXMLReader(handler, true).read(inputStream);
@@ -252,18 +252,18 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	@Override
-	public synchronized void loadFullInformation() throws ZLNetworkException {
+	public synchronized boolean loadFullInformation(ZLNetworkContext nc) {
 		if (myInformationIsFull) {
-			return;
+			return true;
 		}
 
 		final String url = getUrl(UrlInfo.Type.SingleEntry);
 		if (url == null) {
 			myInformationIsFull = true;
-			return;
+			return true;
 		}
 
-		ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
+		return nc.performQuietly(new ZLNetworkRequest(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				new OPDSXMLReader(new LoadInfoHandler(url), true).read(inputStream);

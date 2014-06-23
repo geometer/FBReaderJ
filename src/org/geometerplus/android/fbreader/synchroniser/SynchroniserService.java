@@ -31,8 +31,10 @@ import org.json.simple.JSONValue;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.network.ServiceNetworkContext;
 
 public class SynchroniserService extends Service implements IBookCollection.Listener, Runnable {
+	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private static volatile Thread ourSynchronizationThread;
 
@@ -119,14 +121,6 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			processResponse(JSONValue.parse(buffer.toString()));
 		}
 
-		final void perform() {
-			try {
-				ZLNetworkManager.Instance().perform(this);
-			} catch (ZLNetworkException e) {
-				e.printStackTrace();
-			}
-		}
-
 		protected abstract void processResponse(Object response);
 	}
 
@@ -137,11 +131,11 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			return;
 		}
 		System.err.println("SHA-1: " + uid.Id);
-		new Request("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
+		myNetworkContext.performQuietly(new Request("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
 			public void processResponse(Object response) {
 				System.err.println("RESPONSE = " + response);
 			}
-		}.perform();
+		});
 	}
 
 	@Override
