@@ -22,29 +22,30 @@ package org.geometerplus.android.fbreader.network;
 import java.net.URI;
 import java.util.Map;
 
-import android.app.Service;
 import android.content.Context;
 
-public final class ServiceNetworkContext extends AndroidNetworkContext {
-	private final Service myService;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
-	public ServiceNetworkContext(Service service) {
-		myService = service;
-	}
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 
-	public Context getContext() {
-		return myService;
-	}
-
+public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
-	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
-		// TODO: implement
-		return false;
+	public boolean authenticate(URI uri, Map<String,String> params) {
+		System.err.println("REQUESTED AUTH FOR " + uri);
+		for (Object o : cookieStore().getCookies()) {
+			System.err.println("AUTH COOKIE: " + o);
+		}
+		if (!"https".equalsIgnoreCase(uri.getScheme())) {
+			return false;
+		}
+		return GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext())
+			== ConnectionResult.SUCCESS
+			? authenticateToken(uri, params)
+			: authenticateWeb(uri, params);
 	}
 
-	@Override
-	protected boolean authenticateToken(URI uri, Map<String,String> params) {
-		// TODO: implement
-		return false;
-	}
+	protected abstract Context getContext();
+	protected abstract boolean authenticateWeb(URI uri, Map<String,String> params);
+	protected abstract boolean authenticateToken(URI uri, Map<String,String> params);
 }
