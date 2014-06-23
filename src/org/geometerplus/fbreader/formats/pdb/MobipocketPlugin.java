@@ -126,7 +126,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	@Override
 	public void readUids(Book book) throws BookReadingException {
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createSHA256Uid(book.File));
+			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
 	}
 
