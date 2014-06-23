@@ -34,7 +34,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class SynchroniserService extends Service implements IBookCollection.Listener, Runnable {
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
-	private volatile Thread mySynchronizationThread;
+	private static volatile Thread ourSynchronizationThread;
 
 	private final List<Book> myQueue = Collections.synchronizedList(new LinkedList<Book>());
 	private final Set<Book> myProcessed = new HashSet<Book>();
@@ -55,10 +55,15 @@ public class SynchroniserService extends Service implements IBookCollection.List
 	public synchronized void run() {
 		System.err.println("SYNCHRONIZER BINDED TO LIBRARY");
 		myCollection.addListener(this);
-		if (mySynchronizationThread == null) {
-			mySynchronizationThread = new Thread() {
+		if (ourSynchronizationThread == null) {
+			ourSynchronizationThread = new Thread() {
 				public void run() {
 					System.err.println("HELLO THREAD");
+					try {
+						ourSynchronizationThread.sleep(5000);
+					} catch (InterruptedException e) {
+					}
+					System.err.println("START SYNCRONIZING");
 					for (BookQuery q = new BookQuery(new Filter.Empty(), 20);; q = q.next()) {
 						final List<Book> books = myCollection.books(q);
 						if (books.isEmpty()) {
@@ -78,11 +83,11 @@ public class SynchroniserService extends Service implements IBookCollection.List
 						uploadBookToServer(book);
 					}
 					System.err.println("BYE-BYE THREAD");
-					mySynchronizationThread = null;
+					ourSynchronizationThread = null;
 				}
 			};
-			mySynchronizationThread.setPriority(Thread.MIN_PRIORITY);
-			mySynchronizationThread.start();
+			ourSynchronizationThread.setPriority(Thread.MIN_PRIORITY);
+			ourSynchronizationThread.start();
 		}
 	}
 
@@ -97,10 +102,10 @@ public class SynchroniserService extends Service implements IBookCollection.List
 	}
 
 	private static abstract class Request extends ZLNetworkRequest {
-		private final static String BASE_URL = "https://books.fbreader.org/app/";
+		private final static String BASE_URL = "https://demo.fbreader.org/app/";
 
 		Request(String app, Object data) {
-			super(BASE_URL + app, toJSON(data), true);
+			super(BASE_URL + app, toJSON(data), false);
 		}
 
 		@Override
