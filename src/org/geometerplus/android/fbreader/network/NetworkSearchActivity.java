@@ -24,6 +24,7 @@ import android.app.SearchManager;
 import android.os.Bundle;
 import android.content.Intent;
 
+import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -50,7 +51,7 @@ public class NetworkSearchActivity extends Activity {
 					final String pattern = intent.getStringExtra(SearchManager.QUERY);
 					final MimeType mime = searchTree.getMimeType();
 					if (MimeType.APP_ATOM_XML.weakEquals(mime)) {
-						searchTree.startItemsLoader(pattern);
+						searchTree.startItemsLoader(new QuietNetworkContext(), pattern);
 					} else if (MimeType.TEXT_HTML.weakEquals(mime)) {
 						Util.openInBrowser(this, searchTree.getUrl(pattern));
 					}

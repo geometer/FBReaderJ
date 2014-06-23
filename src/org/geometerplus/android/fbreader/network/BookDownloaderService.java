@@ -41,6 +41,8 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class BookDownloaderService extends Service {
+	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
+
 	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
@@ -340,7 +342,7 @@ public class BookDownloaderService extends Service {
 			public void run() {
 				boolean success = false;
 				try {
-					ZLNetworkManager.Instance().perform(request);
+					myNetworkContext.perform(request);
 					success = true;
 				} catch (ZLNetworkException e) {
 					// TODO: show error message to User

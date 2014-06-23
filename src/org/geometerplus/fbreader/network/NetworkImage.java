@@ -26,7 +26,7 @@ import android.net.Uri;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -197,11 +197,7 @@ public final class NetworkImage extends ZLLoadableImage {
 			if (doFast) {
 				return;
 			}
-
-			try {
-				ZLNetworkManager.Instance().downloadToFile(Url, imageFile);
-			} catch (ZLNetworkException e) {
-			}
+			new QuietNetworkContext().downloadToFileQuietly(Url, imageFile);
 		} finally {
 			setSynchronized();
 		}

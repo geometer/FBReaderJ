@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
@@ -28,8 +29,8 @@ class CatalogExpander extends NetworkItemsLoader {
 	private final boolean myAuthenticate;
 	private final boolean myResumeNotLoad;
 
-	CatalogExpander(NetworkCatalogTree tree, boolean authenticate, boolean resumeNotLoad) {
-		super(tree);
+	CatalogExpander(ZLNetworkContext nc, NetworkCatalogTree tree, boolean authenticate, boolean resumeNotLoad) {
+		super(nc, tree);
 		myAuthenticate = authenticate;
 		myResumeNotLoad = resumeNotLoad;
 	}
