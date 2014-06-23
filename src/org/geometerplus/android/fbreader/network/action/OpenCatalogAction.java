@@ -25,6 +25,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
+
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
@@ -33,8 +35,11 @@ import org.geometerplus.android.fbreader.network.*;
 import org.geometerplus.android.util.PackageUtil;
 
 public class OpenCatalogAction extends Action {
-	public OpenCatalogAction(Activity activity) {
+	private final ZLNetworkContext myNetworkContext;
+
+	public OpenCatalogAction(Activity activity, ZLNetworkContext nc) {
 		super(activity, ActionCode.OPEN_CATALOG, "openCatalog", -1);
+		myNetworkContext = nc;
 	}
 
 	@Override
@@ -99,7 +104,7 @@ public class OpenCatalogAction extends Action {
 			}
 		}
 
-		tree.startItemsLoader(true, resumeNotLoad);
+		tree.startItemsLoader(myNetworkContext, true, resumeNotLoad);
 		processExtraData(tree.Item.extraData(), new Runnable() {
 			public void run() {
 				doOpenTree(tree);

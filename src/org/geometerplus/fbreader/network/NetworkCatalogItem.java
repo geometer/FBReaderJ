@@ -22,9 +22,7 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.*;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
@@ -147,7 +145,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	 */
 	protected final void doLoadChildren(NetworkOperationData data, ZLNetworkRequest networkRequest) throws ZLNetworkException {
 		if (networkRequest != null) {
-			ZLNetworkManager.Instance().perform(networkRequest);
+			data.Loader.NetworkContext.perform(networkRequest);
 			data.Loader.confirmInterruption();
 		}
 	}
