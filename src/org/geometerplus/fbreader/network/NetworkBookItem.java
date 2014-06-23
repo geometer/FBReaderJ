@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 import java.io.File;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
@@ -120,7 +121,8 @@ public class NetworkBookItem extends NetworkItem {
 		return true;
 	}
 
-	public void loadFullInformation() throws ZLNetworkException {
+	public boolean loadFullInformation(ZLNetworkContext nc) {
+		return true;
 	}
 
 	public NetworkCatalogItem createRelatedCatalogItem(RelatedUrlInfo info) {

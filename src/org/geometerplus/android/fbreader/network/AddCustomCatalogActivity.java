@@ -49,6 +49,8 @@ public class AddCustomCatalogActivity extends Activity {
 	private boolean myEditNotAdd;
 	private INetworkLink.Type myType = INetworkLink.Type.Custom;
 
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -93,7 +95,7 @@ public class AddCustomCatalogActivity extends Activity {
 		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(intent.getAction());
 		myLink = null;
 
-		Util.initLibrary(this, new Runnable() {
+		Util.initLibrary(this, myNetworkContext, new Runnable() {
 			public void run() {
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -105,14 +107,8 @@ public class AddCustomCatalogActivity extends Activity {
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		BearerAuthenticator.initBearerAuthenticator(this);
-	}
-
-	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		BearerAuthenticator.onActivityResult(this, requestCode, resultCode, data);
+		myNetworkContext.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private void init(Intent intent) {
@@ -282,7 +278,7 @@ public class AddCustomCatalogActivity extends Activity {
 			public void run() {
 				try {
 					myError = null;
-					myLink.reloadInfo(false, false);
+					myLink.reloadInfo(myNetworkContext, false, false);
 				} catch (ZLNetworkException e) {
 					myError = e.getMessage();
 				}

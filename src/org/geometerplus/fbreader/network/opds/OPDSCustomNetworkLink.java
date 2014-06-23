@@ -101,13 +101,13 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 		return false;
 	}
 
-	public void reloadInfo(final boolean urlsOnly, boolean quietly) throws ZLNetworkException {
+	public void reloadInfo(ZLNetworkContext nc, final boolean urlsOnly, boolean quietly) throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
 
 		ZLNetworkException error = null;
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog), quietly) {
+			nc.perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog), quietly) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					final OPDSCatalogInfoHandler info = new OPDSCatalogInfoHandler(getURL(), OPDSCustomNetworkLink.this, opensearchDescriptionURLs);
@@ -144,7 +144,7 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 				});
 			}
 			try {
-				ZLNetworkManager.Instance().perform(requests);
+				nc.perform(requests);
 			} catch (ZLNetworkException e) {
 				// we do ignore errors in opensearch description loading/parsing
 				e.printStackTrace();

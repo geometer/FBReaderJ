@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
 
+import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -191,7 +192,7 @@ public abstract class NetworkBookActions {
 				book.Link.getBasketItem().remove(book);
 				return true;
 			case ActionCode.OPEN_BASKET:
-				new OpenCatalogAction(activity)
+				new OpenCatalogAction(activity, new QuietNetworkContext())
 					.run(NetworkLibrary.Instance().getFakeBasketTree(book.Link.getBasketItem()));
 				return true;
 		}

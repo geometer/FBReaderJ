@@ -24,7 +24,7 @@ import java.io.File;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.Paths;
@@ -157,13 +157,8 @@ public class TipsManager {
 				tipsFile.getParentFile().mkdirs();
 				new Thread(new Runnable() {
 					public void run() {
-						try {
-							ZLNetworkManager.Instance().downloadToFile(getUrl(), tipsFile);
-						} catch (ZLNetworkException e) {
-							e.printStackTrace();
-						} finally {
-							myDownloadInProgress = false;
-						}
+						new QuietNetworkContext().downloadToFileQuietly(getUrl(), tipsFile);
+						myDownloadInProgress = false;
 					}
 				}).start();
 			}
