@@ -345,7 +345,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookHash() {
-		final UID uid = BookUtil.createSHA256Uid(getReader().Model.Book.File);
+		final UID uid = BookUtil.createUid(getReader().Model.Book.File, "SHA-256");
 		return uid != null ? uid.Id : null;
 	}
 
