@@ -29,6 +29,7 @@ import android.os.IBinder;
 import org.json.simple.JSONValue;
 
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.ServiceNetworkContext;
@@ -43,6 +44,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 
 	@Override
 	public IBinder onBind(Intent intent) {
+		SQLiteCookieDatabase.init(this);
 		myCollection.bindToService(this, this);
 		return null;
 	}

@@ -26,6 +26,7 @@ import java.util.*;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -37,7 +38,19 @@ import org.apache.http.impl.cookie.BasicClientCookie2;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
 
-public final class ActivityNetworkContext extends ZLNetworkContext {
+public final class ActivityNetworkContext extends AndroidNetworkContext {
+	private final Activity myActivity;
+	private volatile String myAccount;
+	private volatile boolean myAuthorizationConfirmed;
+
+	public ActivityNetworkContext(Activity activity) {
+		myActivity = activity;
+	}
+
+	public Context getContext() {
+		return myActivity;
+	}
+
 	public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
 		boolean processed = true;
 		try {
@@ -87,23 +100,6 @@ public final class ActivityNetworkContext extends ZLNetworkContext {
 		}
 	}
 
-	private final Activity myActivity;
-	private volatile String myAccount;
-	private volatile boolean myAuthorizationConfirmed;
-
-	public ActivityNetworkContext(Activity activity) {
-		myActivity = activity;
-	}
-
-	@Override
-	public boolean authenticate(URI uri, Map<String,String> params) {
-		System.err.println("AUTHENTICATE FOR " + uri);
-		if (!"https".equalsIgnoreCase(uri.getScheme())) {
-			return false;
-		}
-		return authenticateWeb(uri, params);
-	}
-
 	private String url(URI base, Map<String,String> params, String key) {
 		final String path = params.get(key);
 		if (path == null) {
@@ -117,7 +113,8 @@ public final class ActivityNetworkContext extends ZLNetworkContext {
 		}
 	}
 
-	private boolean authenticateWeb(URI uri, Map<String,String> params) {
+	@Override
+	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
 		final String authUrl = url(uri, params, "auth-url-web");
 		final String completeUrl = url(uri, params, "complete-url-web");
