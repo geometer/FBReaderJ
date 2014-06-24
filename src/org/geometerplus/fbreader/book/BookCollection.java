@@ -637,7 +637,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	@Override
-	public Bitmap getCover(Book book, int width, int height) {
+	public Bitmap getCover(Book book, int maxWidth, int maxHeight) {
 		if (getBookById(book.getId()) == null) {
 			return null;
 		}
@@ -647,7 +647,19 @@ public class BookCollection extends AbstractBookCollection {
 			return null;
 		}
 
-		return Bitmap.createScaledBitmap(rawBitmap, width, height, false);
+		return getResizedBitmap(rawBitmap, maxWidth, maxHeight);
+	}
+
+	private Bitmap getResizedBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+		final int realWidth = bitmap.getWidth();
+		final int realHeight = bitmap.getHeight();
+		float aspect = Math.max((float) realWidth / maxWidth, (float) realHeight / maxHeight);
+		if (aspect <= 1) {
+			return bitmap;
+		}
+		final int scaleWidth = (int) (realWidth / aspect);
+		final int scaleHeight = (int) (realHeight / aspect);
+		return Bitmap.createScaledBitmap(bitmap, scaleWidth, scaleHeight, false);
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {

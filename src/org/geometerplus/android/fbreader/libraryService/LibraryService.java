@@ -266,8 +266,8 @@ public class LibraryService extends Service {
 		}
 
 		@Override
-		public Bitmap getCover(String book, int width, int height) {
-			return myCollection.getCover(SerializerUtil.deserializeBook(book), width, height);
+		public Bitmap getCover(String book, int maxWidth, int maxHeight) {
+			return myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 		}
 
 		public List<String> bookmarks(String query) {

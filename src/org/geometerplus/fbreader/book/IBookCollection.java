@@ -81,7 +81,7 @@ public interface IBookCollection {
 	boolean isHyperlinkVisited(Book book, String linkId);
 	void markHyperlinkAsVisited(Book book, String linkId);
 
-	Bitmap getCover(Book book, int width, int height);
+	Bitmap getCover(Book book, int maxWidth, int maxHeight);
 	
 	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);
