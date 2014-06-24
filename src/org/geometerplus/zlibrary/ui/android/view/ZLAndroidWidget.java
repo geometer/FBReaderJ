@@ -101,11 +101,15 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	protected void onDraw(final Canvas canvas) {
 		final Context context = getContext();
-		if (context instanceof FBReader) {
+        if ((context instanceof FBReader)) {
 			((FBReader)context).createWakeLock();
-		} else {
-			System.err.println("A surprise: view's context is not an FBReader");
 		}
+
+//		if ((context instanceof FBReader)) {
+//			((FBReader)context).createWakeLock();
+//		} else {
+//			System.err.println("A surprise: view's context is not an FBReader");
+//		}
 		super.onDraw(canvas);
 
 		if (myHShift != 0) {

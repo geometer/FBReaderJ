@@ -28,7 +28,7 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 	private Bitmap myDefaultCoverBitmap;
 	private Boolean myLastPaintWasActive;
 	private Book myLastBook;
-	private static final int BS_DENSITY = 240;
+
     private float mStartY;
     private float mStartX;
     private boolean mIsGestureStart = false;
@@ -41,27 +41,8 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 		super(context, attrs);
 	}
 
-	private volatile byte[] myStoredMD5 = null;
-	private Canvas myCanvas;
 	private Boolean myBackScreenIsActive;
 	private Book myCurrentBook;
-
-//	@Override
-//	public synchronized void repaint() {
-//		if (myCanvas == null) {
-//			Bitmap myBitmap = Bitmap.createBitmap(getWidth(), getHeight(),
-//					Bitmap.Config.RGB_565);
-//			myCanvas = createCanvas(myBitmap);
-//		}
-//
-//		draw(myCanvas);
-//		// final byte[] currentMD5 = MD5(myBitmap);
-//		// if (myStoredMD5 == null || !myStoredMD5.equals(currentMD5)) {
-//		// getBSDrawer().drawBitmap(0, 0, myBitmap,
-//		// BSDrawer.Waveform.WAVEFORM_GC_PARTIAL);
-//		// myStoredMD5 = currentMD5;
-//		// }
-//	}
 
 	@Override
 	protected Canvas createCanvas(Bitmap bitmap) {
@@ -189,33 +170,4 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 
         return super.dispatchTouchEvent(event);
     }
-
-	// class GestureListener extends GestureDetector.SimpleOnGestureListener {
-	// private static final String DEBUG_TAG = "Gestures";
-	//
-	//
-	// // @Override
-	// // public boolean onDown(MotionEvent event) {
-	// // Log.d(DEBUG_TAG, "onDown: " + event.toString());
-	// // return true;
-	// // }
-	//
-	// @Override
-	// public boolean onFling(MotionEvent event1, MotionEvent event2,
-	// float velocityX, float velocityY) {
-	// //Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
-	// Log.d(DEBUG_TAG, "onFling: vel X:" + velocityX + ", vel Y:" + velocityY);
-	// if (Math.abs(velocityX) < 1000) {
-	// }
-	// return true;
-	// }
-	//
-	// // @Override
-	// // public boolean onScroll(MotionEvent e1, MotionEvent e2, float
-	// distanceX,
-	// // float distanceY) {
-	// // Log.d(DEBUG_TAG, "onScroll: " + e1.toString()+e2.toString());
-	// // return true;
-	// // }
-	// }
 }

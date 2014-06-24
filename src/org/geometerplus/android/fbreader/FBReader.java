@@ -58,7 +58,6 @@ import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.httpd.DataService;
-import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
@@ -932,8 +931,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	public ZLViewWidget getViewWidget() {
 		if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
-			if (com.yotadevices.fbreader.FBReaderYotaService.Widget != null) {
-				return com.yotadevices.fbreader.FBReaderYotaService.Widget;
+			if (com.yotadevices.fbreader.FBReaderYotaService.mWidget != null) {
+				return com.yotadevices.fbreader.FBReaderYotaService.mWidget;
 			}
 		}
 		return myMainView;
