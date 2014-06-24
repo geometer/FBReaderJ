@@ -371,12 +371,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public synchronized Bitmap getCover(Book book) {
+	public synchronized Bitmap getCover(Book book, int width, int height) {
 		if (myInterface == null) {
 			return null;
 		}
 		try {
-			return myInterface.getCover(SerializerUtil.serialize(book));
+			return myInterface.getCover(SerializerUtil.serialize(book), width, height);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return null;

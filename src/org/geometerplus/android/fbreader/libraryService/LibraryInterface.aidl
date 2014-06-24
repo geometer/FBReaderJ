@@ -41,7 +41,7 @@ interface LibraryInterface {
 	boolean isHyperlinkVisited(in String book, in String linkId);
 	void markHyperlinkAsVisited(in String book, in String linkId);
 
-	Bitmap getCover(in String book);
+	Bitmap getCover(in String book, in int width, in int height);
 
 	List<String> bookmarks(in String query);
 	String saveBookmark(in String bookmark);

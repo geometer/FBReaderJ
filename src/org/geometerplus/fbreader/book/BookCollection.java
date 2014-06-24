@@ -637,12 +637,17 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	@Override
-	public Bitmap getCover(Book book) {
+	public Bitmap getCover(Book book, int width, int height) {
 		if (getBookById(book.getId()) == null) {
 			return null;
 		}
 
-		return BookUtil.getCover(book).getBitmap();
+		final Bitmap rawBitmap = BookUtil.getCover(book).getBitmap();
+		if (rawBitmap == null) {
+			return null;
+		}
+
+		return Bitmap.createScaledBitmap(rawBitmap, width, height, false);
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
