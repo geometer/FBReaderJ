@@ -93,11 +93,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		final Runnable libraryUpdater = new Runnable() {
 			public void run() {
-				final BookCollectionShadow collection = new BookCollectionShadow();
-				collection.bindToService(PreferenceActivity.this, new Runnable() {
+				final BookCollectionShadow bookCollection = new BookCollectionShadow();
+				bookCollection.bindToService(PreferenceActivity.this, new Runnable() {
 					public void run() {
-						collection.reset(false);
-						collection.unbind();
+						bookCollection.reset(false);
+						bookCollection.unbind();
 					}
 				});
 			}
@@ -254,118 +254,77 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		textScreen.addOption(baseStyle.AutoHyphenationOption, "autoHyphenations");
 
 		final Screen moreStylesScreen = textScreen.createPreferenceScreen("more");
-
-		byte styles[] = {
-			FBTextKind.REGULAR,
-			FBTextKind.TITLE,
-			FBTextKind.SECTION_TITLE,
-			FBTextKind.SUBTITLE,
-			FBTextKind.H1,
-			FBTextKind.H2,
-			FBTextKind.H3,
-			FBTextKind.H4,
-			FBTextKind.H5,
-			FBTextKind.H6,
-			FBTextKind.ANNOTATION,
-			FBTextKind.EPIGRAPH,
-			FBTextKind.AUTHOR,
-			FBTextKind.POEM_TITLE,
-			FBTextKind.STANZA,
-			FBTextKind.VERSE,
-			FBTextKind.CITE,
-			FBTextKind.INTERNAL_HYPERLINK,
-			FBTextKind.EXTERNAL_HYPERLINK,
-			FBTextKind.FOOTNOTE,
-			FBTextKind.ITALIC,
-			FBTextKind.EMPHASIS,
-			FBTextKind.BOLD,
-			FBTextKind.STRONG,
-			FBTextKind.DEFINITION,
-			FBTextKind.DEFINITION_DESCRIPTION,
-			FBTextKind.PREFORMATTED,
-			FBTextKind.CODE
-		};
-		for (int i = 0; i < styles.length; ++i) {
-			final ZLTextStyleDecoration decoration = collection.getDecoration(styles[i]);
-			if (decoration == null) {
-				continue;
-			}
-			ZLTextFullStyleDecoration fullDecoration =
-				decoration instanceof ZLTextFullStyleDecoration
-					? (ZLTextFullStyleDecoration)decoration : null;
-
-			final Screen formatScreen = moreStylesScreen.createPreferenceScreen(decoration.getName());
-			formatScreen.addPreference(new FontPreference(
+		for (ZLTextNGStyleDescription description : collection.getDescriptionList()) {
+			final Screen ngScreen = moreStylesScreen.createPreferenceScreen(description.Name);
+			ngScreen.addPreference(new FontPreference(
 				this, textScreen.Resource, "font",
-				decoration.FontFamilyOption, true
+				description.FontFamilyOption, true
 			));
-			formatScreen.addPreference(new ZLIntegerRangePreference(
-				this, textScreen.Resource.getResource("fontSizeDifference"),
-				decoration.FontSizeDeltaOption
+			ngScreen.addPreference(new StringPreference(
+				this, description.FontSizeOption,
+				StringPreference.Constraint.POSITIVE_LENGTH,
+				textScreen.Resource, "fontSize"
 			));
-			formatScreen.addPreference(new ZLBoolean3Preference(
+			ngScreen.addPreference(new ZLStringChoicePreference(
 				this, textScreen.Resource, "bold",
-				decoration.BoldOption
+				description.FontWeightOption,
+				new String[] { "inherit", "normal", "bold" }
 			));
-			formatScreen.addPreference(new ZLBoolean3Preference(
+			ngScreen.addPreference(new ZLStringChoicePreference(
 				this, textScreen.Resource, "italic",
-				decoration.ItalicOption
+				description.FontStyleOption,
+				new String[] { "inherit", "normal", "italic" }
 			));
-			formatScreen.addPreference(new ZLBoolean3Preference(
-				this, textScreen.Resource, "underlined",
-				decoration.UnderlineOption
+			ngScreen.addPreference(new ZLStringChoicePreference(
+				this, textScreen.Resource, "textDecoration",
+				description.TextDecorationOption,
+				new String[] { "inherit", "none", "underline", "line-through" }
 			));
-			formatScreen.addPreference(new ZLBoolean3Preference(
-				this, textScreen.Resource, "strikedThrough",
-				decoration.StrikeThroughOption
-			));
-			if (fullDecoration != null) {
-				final String[] allAlignments = { "unchanged", "left", "right", "center", "justify" };
-				formatScreen.addPreference(new ZLChoicePreference(
-					this, textScreen.Resource, "alignment",
-					fullDecoration.AlignmentOption, allAlignments
-				));
-			}
-			formatScreen.addPreference(new ZLBoolean3Preference(
+			ngScreen.addPreference(new ZLStringChoicePreference(
 				this, textScreen.Resource, "allowHyphenations",
-				decoration.AllowHyphenationsOption
+				description.HyphenationOption,
+				new String[] { "inherit", "none", "auto" }
 			));
-			if (fullDecoration != null) {
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("spaceBefore"),
-					fullDecoration.SpaceBeforeOption
-				));
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("spaceAfter"),
-					fullDecoration.SpaceAfterOption
-				));
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("leftIndent"),
-					fullDecoration.LeftIndentOption
-				));
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("rightIndent"),
-					fullDecoration.RightIndentOption
-				));
-				formatScreen.addPreference(new ZLIntegerRangePreference(
-					this, textScreen.Resource.getResource("firstLineIndent"),
-					fullDecoration.FirstLineIndentDeltaOption
-				));
-				final ZLIntegerOption spacePercentOption = fullDecoration.LineSpacePercentOption;
-				final int[] spacingValues = new int[17];
-				final String[] spacingKeys = new String[17];
-				spacingValues[0] = -1;
-				spacingKeys[0] = "unchanged";
-				for (int j = 1; j < spacingValues.length; ++j) {
-					final int val = 4 + j;
-					spacingValues[j] = 10 * val;
-					spacingKeys[j] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
-				}
-				formatScreen.addPreference(new ZLIntegerChoicePreference(
-					this, textScreen.Resource, "lineSpacing",
-					spacePercentOption, spacingValues, spacingKeys
-				));
-			}
+			ngScreen.addPreference(new ZLStringChoicePreference(
+				this, textScreen.Resource, "alignment",
+				description.AlignmentOption,
+				new String[] { "inherit", "left", "right", "center", "justify" }
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.LineHeightOption,
+				StringPreference.Constraint.PERCENT,
+				textScreen.Resource, "lineSpacing"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.MarginTopOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "spaceBefore"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.MarginBottomOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "spaceAfter"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.MarginLeftOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "leftIndent"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.MarginRightOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "rightIndent"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.TextIndentOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "firstLineIndent"
+			));
+			ngScreen.addPreference(new StringPreference(
+				this, description.VerticalAlignOption,
+				StringPreference.Constraint.LENGTH,
+				textScreen.Resource, "verticalAlignment"
+			));
 		}
 
 		final PreferenceSet footerPreferences = new PreferenceSet.Enabler() {
@@ -385,6 +344,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
 		cssScreen.addOption(baseStyle.UseCSSFontSizeOption, "fontSize");
 		cssScreen.addOption(baseStyle.UseCSSTextAlignmentOption, "textAlignment");
+		cssScreen.addOption(baseStyle.UseCSSMarginsOption, "margins");
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 

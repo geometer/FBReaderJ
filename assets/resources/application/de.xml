@@ -407,10 +407,9 @@
 				</node>
 			</node>
 			<node name="font" value="Schriftart">
-				<node name="unchanged" value="&lt;unverändert&gt;"/>
+				<node name="inherit" value="&lt;unverändert&gt;"/>
 			</node>
 			<node name="fontSize" value="Schriftgröße"/>
-			<node name="fontSizeDifference" value="Größenunterschied"/>
 			<node name="fontStyle" value="Schriftschnitt">
 				<node name="regular" value="Normal"/>
 				<node name="bold" value="Fett"/>
@@ -418,53 +417,53 @@
 				<node name="boldItalic" value="Fett &amp; Kursiv"/>
 			</node>
 			<node name="bold" value="Fett">
-				<node name="summaryOn" value="Fett"/>
-				<node name="summaryOff" value="Normal"/>
-				<node name="unchanged" value="&lt;unverändert&gt;"/>
+				<node name="bold" value="Fett"/>
+				<node name="normal" value="Normal"/>
+				<node name="inherit" value="&lt;unverändert&gt;"/>
 			</node>
 			<node name="italic" value="Kursiv">
-				<node name="summaryOn" value="Kursiv"/>
-				<node name="summaryOff" value="Normal"/>
-				<node name="unchanged" value="&lt;unverändert&gt;"/>
+				<node name="italic" value="Kursiv"/>
+				<node name="normal" value="Normal"/>
+				<node name="inherit" value="&lt;unverändert&gt;"/>
 			</node>
-			<node name="underlined" value="Unterstreichen">
-				<node name="summaryOn" value="untertrichen"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;unverändert&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Durchstreichen">
-				<node name="summaryOn" value="durchgestrichen"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;unverändert&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="untertrichen"/>
+				<node name="line-through" value="durchgestrichen"/>
 			</node>
 			<node name="lineSpacing" value="Zeilenabstand">
-				<node name="unchanged" value="&lt;unverändert&gt;"/>
+				<node name="inherit" value="&lt;unverändert&gt;"/>
 			</node>
 			<node name="alignment" value="Ausrichtung">
 				<node name="left" value="Links"/>
 				<node name="right" value="Rechts"/>
 				<node name="center" value="Zentriert"/>
 				<node name="justify" value="Blocksatz"/>
-				<node name="unchanged" value="&lt;unverändert&gt;"/>
+				<node name="inherit" value="&lt;unverändert&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Automatisch trennen">
 				<node name="summaryOn" value="Automatische Silbentrennung"/>
 				<node name="summaryOff" value="Keine automatische Silbentrennung"/>
 			</node>
 			<node name="allowHyphenations" value="Trennen erlauben">
-				<node name="summaryOn" value="Wörter trennen"/>
-				<node name="summaryOff" value="Wörter nicht trennen"/>
-				<node name="unchanged" value="&lt;unverändert&gt;"/>
+				<node name="auto" value="Wörter trennen"/>
+				<node name="none" value="Wörter nicht trennen"/>
+				<node name="inherit" value="&lt;unverändert&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Einzug erste Zeile"/>
 			<node name="spaceBefore" value="Abstand vor"/>
 			<node name="spaceAfter" value="Abstand nach"/>
 			<node name="leftIndent" value="Einzug linker Rand"/>
 			<node name="rightIndent" value="Einzug rechter Rand"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Weitere Formatierungen…">
 				<node name="summary" value="Detaillierte Einstellungen für Überschiften, Inhalte, etc."/>
 				<node name="Regular Paragraph" value="Normaler Absatz">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Titel">
 					<node name="summary" value=""/>
@@ -577,6 +576,10 @@
 			<node name="textAlignment" value="Textausrichtung">
 				<node name="summaryOn" value="Verwende in CSS definierte Ausrichtung"/>
 				<node name="summaryOff" value="Ignoriere in CSS definierte Ausrichtung"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Farben &amp; Hintergründe">
@@ -988,5 +991,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Bitte das Gerät wenden um das Buch zu lesen. Um auf diesen Bildschirm zurückzukehren, die untere Schaltfläche betätigen."/>
 		<node name="frontScreenButton" value="Auf diesen Bildschirm wechseln"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

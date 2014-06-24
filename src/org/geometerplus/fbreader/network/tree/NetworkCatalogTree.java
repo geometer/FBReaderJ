@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.network.tree;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -209,8 +211,8 @@ public class NetworkCatalogTree extends NetworkTree {
 		return Item.getStringId();
 	}
 
-	public void startItemsLoader(Authenticator authenticator, boolean resumeNotLoad) {
-		new CatalogExpander(this, authenticator, resumeNotLoad).start();
+	public void startItemsLoader(ZLNetworkContext nc, boolean authenticate, boolean resumeNotLoad) {
+		new CatalogExpander(nc, this, authenticate, resumeNotLoad).start();
 	}
 
 	public synchronized void clearCatalog() {
@@ -240,7 +242,7 @@ public class NetworkCatalogTree extends NetworkTree {
 			&& !NetworkLibrary.Instance().isLoadingInProgress(this)
 			&& Item.canResumeLoading()) {
 			myLastTotalChildren = currentTotal;
-			startItemsLoader(null, true);
+			startItemsLoader(new QuietNetworkContext(), false, true);
 		}
 	}
 }

@@ -110,7 +110,7 @@ public class BookCollection extends AbstractBookCollection {
 			if (book == null) {
 				book = new Book(bookFile);
 			} else {
-				book.readMetaInfo();
+				book.readMetainfo();
 			}
 		} catch (BookReadingException e) {
 			return null;
@@ -152,7 +152,7 @@ public class BookCollection extends AbstractBookCollection {
 		fileInfos.save();
 
 		try {
-			book.readMetaInfo();
+			book.readMetainfo();
 			// loaded from db
 			addBook(book, false);
 			return book;
@@ -179,7 +179,7 @@ public class BookCollection extends AbstractBookCollection {
 		synchronized (myBooksByFile) {
 			final Book existing = myBooksByFile.get(book.File);
 			if (existing == null) {
-				if (book.getId() == -1 && !book.save(myDatabase, true)) {	
+				if (book.getId() == -1 && !book.save(myDatabase, true)) {
 					return false;
 				}
 
@@ -198,7 +198,7 @@ public class BookCollection extends AbstractBookCollection {
 				return true;
 			} else if (force) {
 				existing.updateFrom(book);
-				if (existing.save(myDatabase, false)) {	
+				if (existing.save(myDatabase, false)) {
 					fireBookEvent(BookEvent.Updated, existing);
 					return true;
 				}
@@ -509,7 +509,7 @@ public class BookCollection extends AbstractBookCollection {
 				}
 				if (!fileInfos.check(file, true)) {
 					try {
-						book.readMetaInfo();
+						book.readMetainfo();
 						saveBook(book);
 					} catch (BookReadingException e) {
 						doAdd = false;
@@ -612,7 +612,7 @@ public class BookCollection extends AbstractBookCollection {
 			final Book book = orphanedBooksByFileId.get(fileId);
 			if (book != null) {
 				if (doReadMetaInfo) {
-					book.readMetaInfo();
+					book.readMetainfo();
 				}
 				newBooks.add(book);
 				return;
@@ -635,7 +635,7 @@ public class BookCollection extends AbstractBookCollection {
 			}
 		}
 	}
-	
+
 	@Override
 	public Bitmap getCover(Book book) {
 		if (getBookById(book.getId()) == null) {

@@ -60,6 +60,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private final BookDownloaderServiceConnection myConnection = new BookDownloaderServiceConnection();
 
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -90,8 +92,12 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		myNetworkContext.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private volatile boolean myInitializerStarted;
@@ -109,13 +115,14 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				if (SQLiteNetworkDatabase.Instance() == null) {
 					new SQLiteNetworkDatabase(getApplication());
 				}
-				library.initialize();
+				library.initialize(myNetworkContext);
 			}
 
 			if (myBook == null) {
 				final Uri url = getIntent().getData();
 				if (url != null && "litres-book".equals(url.getScheme())) {
 					myBook = OPDSBookItem.create(
+						myNetworkContext,
 						library.getLinkBySiteName("litres.ru"),
 						url.toString().replace("litres-book://", "http://")
 					);
@@ -205,7 +212,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 						final NetworkCatalogItem catalogItem =
 							myBook.createRelatedCatalogItem(relatedInfo);
 						if (catalogItem != null) {
-							new OpenCatalogAction(NetworkBookInfoActivity.this)
+							new OpenCatalogAction(NetworkBookInfoActivity.this, myNetworkContext)
 								.run(NetworkLibrary.Instance().getFakeCatalogTree(catalogItem));
 						} else if (MimeType.TEXT_HTML.equals(relatedInfo.Mime)) {
 							Util.openInBrowser(NetworkBookInfoActivity.this, relatedInfo.Url);

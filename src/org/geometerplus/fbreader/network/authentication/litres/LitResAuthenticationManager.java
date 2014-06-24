@@ -33,6 +33,7 @@ import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResAuthenticationManager extends NetworkAuthenticationManager {
+	private final ZLNetworkContext myNetworkContext = new QuietNetworkContext();
 	private volatile boolean myFullyInitialized;
 
 	private final ZLStringOption mySidOption;
@@ -159,7 +160,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				request.addPostParameter(entry.getKey(), entry.getValue());
 			}
 			request.addPostParameter("sid", sid);
-			ZLNetworkManager.Instance().perform(request);
+			myNetworkContext.perform(request);
 			initUser(null, xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 			return true;
 		} catch (ZLNetworkException e) {
@@ -190,7 +191,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			}
 			request.addPostParameter("login", username);
 			request.addPostParameter("pwd", password);
-			ZLNetworkManager.Instance().perform(request);
+			myNetworkContext.perform(request);
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
 			initUser(null, xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 		} catch (ZLNetworkException e) {
@@ -242,7 +243,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		try {
 			final LitResNetworkRequest request = new LitResNetworkRequest(reference.Url, xmlReader);
 			request.addPostParameter("sid", sid);
-			ZLNetworkManager.Instance().perform(request);
+			myNetworkContext.perform(request);
 		} catch (ZLNetworkException e) {
 			exception = e;
 		}
@@ -313,7 +314,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 			ZLNetworkException exception = null;
 			try {
-				ZLNetworkManager.Instance().perform(networkRequest);
+				myNetworkContext.perform(networkRequest);
 			} catch (ZLNetworkException e) {
 				exception = e;
 			}
@@ -369,7 +370,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		requests.add(accountRequest);
 
 		try {
-			ZLNetworkManager.Instance().perform(requests);
+			myNetworkContext.perform(requests);
 			final boolean hasMorePages;
 			synchronized (this) {
 				myInitializedDataSid = sid;
@@ -380,7 +381,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			if (hasMorePages) {
 				for (int page = 1; ; ++page) {
 					final LitResNetworkRequest r = loadPurchasedBooksRequest(sid, page);
-					ZLNetworkManager.Instance().perform(r);
+					myNetworkContext.perform(r);
 					synchronized (this) {
 						if (loadPurchasedBooksOnSuccess(r, false) < BOOKS_PER_PAGE) {
 							break;
@@ -401,7 +402,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	@Override
 	public void refreshAccountInformation() throws ZLNetworkException {
 		final LitResNetworkRequest accountRequest = loadAccountRequest(mySidOption.getValue());
-		ZLNetworkManager.Instance().perform(accountRequest);
+		myNetworkContext.perform(accountRequest);
 		synchronized (this) {
 			myAccount = new Money(((LitResPurchaseXMLReader)accountRequest.Reader).Account, "RUB");
 		}
@@ -463,7 +464,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		final LitResPasswordRecoveryXMLReader xmlReader = new LitResPasswordRecoveryXMLReader(Link.getSiteName());
 		final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
 		request.addPostParameter("mail", email);
-		ZLNetworkManager.Instance().perform(request);
+		myNetworkContext.perform(request);
 	}
 
 	@Override

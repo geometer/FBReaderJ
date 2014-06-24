@@ -26,6 +26,7 @@ import java.net.*;
 
 import org.apache.http.*;
 import org.apache.http.auth.*;
+import org.apache.http.client.AuthenticationHandler;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
@@ -154,7 +155,11 @@ public class ZLNetworkManager {
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
 	}
 
-	private volatile CredentialsCreator myCredentialsCreator;
+	static interface BearerAuthenticator {
+		boolean authenticate(URI uri, Map<String,String> params);
+	}
+
+	volatile CredentialsCreator myCredentialsCreator;
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
@@ -213,11 +218,7 @@ public class ZLNetworkManager {
 		}
 	};
 
-	public CookieStore cookieStore() {
-		return myCookieStore;
-	}
-
-	private final CookieStore myCookieStore = new CookieStore() {
+	final CookieStore CookieStore = new CookieStore() {
 		private HashMap<Key,Cookie> myCookies;
 
 		public synchronized void addCookie(Cookie cookie) {
@@ -280,23 +281,44 @@ public class ZLNetworkManager {
 		return myCredentialsCreator;
 	}
 
-	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
-		perform(request, 30000, 15000);
-	}
-
-	private void perform(ZLNetworkRequest request, int socketTimeout, int connectionTimeout) throws ZLNetworkException {
+	void perform(ZLNetworkRequest request, BearerAuthenticator authenticator, int socketTimeout, int connectionTimeout) throws ZLNetworkException {
 		boolean success = false;
 		DefaultHttpClient httpClient = null;
 		HttpEntity entity = null;
 		try {
 			final HttpContext httpContext = new BasicHttpContext();
-			httpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
+			httpContext.setAttribute(ClientContext.COOKIE_STORE, CookieStore);
 
 			request.doBefore();
 			final HttpParams params = new BasicHttpParams();
 			HttpConnectionParams.setSoTimeout(params, socketTimeout);
 			HttpConnectionParams.setConnectionTimeout(params, connectionTimeout);
-			httpClient = new DefaultHttpClient(params);
+			httpClient = new DefaultHttpClient(params) {
+				protected AuthenticationHandler createTargetAuthenticationHandler() {
+					final AuthenticationHandler base = super.createTargetAuthenticationHandler();
+					return new AuthenticationHandler() {
+						public Map<String,Header> getChallenges(HttpResponse response, HttpContext context) throws MalformedChallengeException {
+							return base.getChallenges(response, context);
+						}
+
+						public boolean isAuthenticationRequested(HttpResponse response, HttpContext context) {
+							return base.isAuthenticationRequested(response, context);
+						}
+
+						public AuthScheme selectScheme(Map<String,Header> challenges, HttpResponse response, HttpContext context) throws AuthenticationException {
+							try {
+								return base.selectScheme(challenges, response, context);
+							} catch (AuthenticationException e) {
+								final Header bearerHeader = challenges.get("bearer");
+								if (bearerHeader != null) {
+									throw new BearerAuthenticationException(bearerHeader.getValue());
+								}
+								throw e;
+							}
+						}
+					};
+				}
+			};
 			final HttpRequestBase httpRequest;
 			if (request.PostData != null) {
 				httpRequest = new HttpPost(request.URL);
@@ -323,17 +345,20 @@ public class ZLNetworkManager {
 				httpRequest = new HttpGet(request.URL);
 			}
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
+			if (!request.isQuiet()) {
+				httpRequest.setHeader("X-Accept-Auto-Login", "True");
+			}
 			httpRequest.setHeader("Accept-Encoding", "gzip");
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
 			for (Map.Entry<String,String> header : request.Headers.entrySet()) {
 				httpRequest.setHeader(header.getKey(), header.getValue());
-			}	
+			}
 			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest, request.isQuiet()));
 			HttpResponse response = null;
 			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
 				try {
-					response = httpClient.execute(httpRequest, httpContext);
+					response = execute(httpClient, httpRequest, httpContext, authenticator);
 					entity = response.getEntity();
 					lastException = null;
 					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
@@ -346,6 +371,7 @@ public class ZLNetworkManager {
 						}
 					}
 				} catch (IOException e) {
+					e.printStackTrace();
 					lastException = e;
 				}
 			}
@@ -407,57 +433,14 @@ public class ZLNetworkManager {
 		}
 	}
 
-	public void perform(List<? extends ZLNetworkRequest> requests) throws ZLNetworkException {
-		if (requests.size() == 0) {
-			return;
-		}
-		if (requests.size() == 1) {
-			perform(requests.get(0));
-			return;
-		}
-		HashSet<String> errors = new HashSet<String>();
-		// TODO: implement concurrent execution !!!
-		for (ZLNetworkRequest r : requests) {
-			try {
-				perform(r);
-			} catch (ZLNetworkException e) {
-				e.printStackTrace();
-				errors.add(e.getMessage());
+	private HttpResponse execute(DefaultHttpClient client, HttpRequestBase request, HttpContext context, BearerAuthenticator authenticator) throws IOException {
+		try {
+			return client.execute(request, context);
+		} catch (BearerAuthenticationException e) {
+			if (authenticator.authenticate(request.getURI(), e.Params)) {
+				return client.execute(request, context);
 			}
+			throw e;
 		}
-		if (errors.size() > 0) {
-			StringBuilder message = new StringBuilder();
-			for (String e : errors) {
-				if (message.length() != 0) {
-					message.append(", ");
-				}
-				message.append(e);
-			}
-			throw new ZLNetworkException(true, message.toString());
-		}
-	}
-
-	public final void downloadToFile(String url, final File outFile) throws ZLNetworkException {
-		downloadToFile(url, outFile, 8192);
-	}
-
-	public final void downloadToFile(String url, final File outFile, final int bufferSize) throws ZLNetworkException {
-		perform(new ZLNetworkRequest(url) {
-			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				OutputStream outStream = new FileOutputStream(outFile);
-				try {
-					final byte[] buffer = new byte[bufferSize];
-					while (true) {
-						final int size = inputStream.read(buffer);
-						if (size <= 0) {
-							break;
-						}
-						outStream.write(buffer, 0, size);
-					}
-				} finally {
-					outStream.close();
-				}
-			}
-		}, 0, 0);
 	}
 }

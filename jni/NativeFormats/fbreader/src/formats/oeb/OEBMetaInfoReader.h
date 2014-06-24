@@ -30,7 +30,7 @@ class OEBMetaInfoReader : public OPFReader {
 
 public:
 	OEBMetaInfoReader(Book &book);
-	bool readMetaInfo(const ZLFile &file);
+	bool readMetainfo(const ZLFile &file);
 
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);

@@ -57,8 +57,8 @@ public class OEBPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
-		new OEBMetaInfoReader(book).readMetaInfo(getOpfFile(book.File));
+	public void readMetainfo(Book book) throws BookReadingException {
+		new OEBMetaInfoReader(book).readMetainfo(getOpfFile(book.File));
 	}
 
 	@Override
@@ -70,6 +70,7 @@ public class OEBPlugin extends JavaFormatPlugin {
 	public void readModel(BookModel model) throws BookReadingException {
 		model.Book.File.setCached(true);
 		new OEBBookReader(model).readBook(getOpfFile(model.Book.File));
+		model.Book.File.setCached(false);
 	}
 
 	@Override

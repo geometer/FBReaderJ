@@ -402,10 +402,9 @@
 				</node>
 			</node>
 			<node name="font" value="Font family">
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="fontSize" value="Font size"/>
-			<node name="fontSizeDifference" value="Font size difference"/>
 			<node name="fontStyle" value="Font style">
 				<node name="regular" value="Regular"/>
 				<node name="bold" value="Bold"/>
@@ -413,53 +412,53 @@
 				<node name="boldItalic" value="Bold Italic"/>
 			</node>
 			<node name="bold" value="Bold">
-				<node name="summaryOn" value="bold"/>
-				<node name="summaryOff" value="regular"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="bold" value="bold"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="italic" value="Italic">
-				<node name="summaryOn" value="italic"/>
-				<node name="summaryOff" value="regular"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="italic" value="italic"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined">
-				<node name="summaryOn" value="underlined"/>
-				<node name="summaryOff" value="regular"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+			<node name="textDecoration" value="Text decoration">
+				<node name="inherit" value="&lt;unchanged&gt;"/>
+				<node name="none" value="no decorations"/>
+				<node name="underline" value="underlined"/>
+				<node name="line-through" value="striked through"/>
 			</node>
-			<node name="strikedThrough" value="Striked through">
-				<node name="summaryOn" value="striked through"/>
-				<node name="summaryOff" value="regular"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
-			</node>
-			<node name="lineSpacing" value="Line Spacing">
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+			<node name="lineSpacing" value="Line spacing">
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="alignment" value="Alignment">
 				<node name="left" value="Left"/>
 				<node name="right" value="Right"/>
 				<node name="center" value="Center"/>
 				<node name="justify" value="Justify"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Auto hyphenations">
 				<node name="summaryOn" value="Hyphenate words automatically"/>
 				<node name="summaryOff" value="Do not hyphenate words automatically"/>
 			</node>
-			<node name="allowHyphenations" value="Allow Hyphenations">
-				<node name="summaryOn" value="hyphenate words"/>
-				<node name="summaryOff" value="don't hyphenate words"/>
-				<node name="unchanged" value="&lt;unchanged&gt;"/>
+			<node name="allowHyphenations" value="Allow hyphenations">
+				<node name="auto" value="hyphenate words"/>
+				<node name="none" value="don't hyphenate words"/>
+				<node name="inherit" value="&lt;unchanged&gt;"/>
 			</node>
-			<node name="firstLineIndent" value="First Line Indent"/>
-			<node name="spaceBefore" value="Space Before"/>
-			<node name="spaceAfter" value="Space After"/>
-			<node name="leftIndent" value="Left Indent"/>
-			<node name="rightIndent" value="Right Indent"/>
+			<node name="firstLineIndent" value="First line indent"/>
+			<node name="spaceBefore" value="Space before paragraph"/>
+			<node name="spaceAfter" value="Space after paragraph"/>
+			<node name="leftIndent" value="Left indent"/>
+			<node name="rightIndent" value="Right indent"/>
+			<node name="verticalAlignment" value="Vertical alignment"/>
 			<node name="more" value="More styles">
 				<node name="summary" value="Separate settings for titles, epigraphs, etc."/>
 				<node name="Regular Paragraph" value="Regular Paragraph">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph">
+					<node name="summary" value="&lt;p&gt; XHTML tag content"/>
 				</node>
 				<node name="Title" value="Title">
 					<node name="summary" value=""/>
@@ -572,6 +571,10 @@
 			<node name="textAlignment" value="Text alignment">
 				<node name="summaryOn" value="Apply text alignment defined in CSS"/>
 				<node name="summaryOff" value="Ignore text alignment defined in CSS"/>
+			</node>
+			<node name="margins" value="Margins">
+				<node name="summaryOn" value="Apply margins defined in CSS"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Colors &amp; wallpapers">
@@ -983,5 +986,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below."/>
 		<node name="frontScreenButton" value="Switch to this screen"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="E.g.: 125%%"/>
 	</node>
 </resources>

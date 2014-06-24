@@ -30,7 +30,7 @@ DocMetaInfoReader::DocMetaInfoReader(Book &book) : myBook(book) {
 	myBook.removeAllTags();
 }
 
-bool DocMetaInfoReader::readMetaInfo() {
+bool DocMetaInfoReader::readMetainfo() {
 	myBook.removeAllAuthors();
 	myBook.setTitle(myBook.file().name(true));
 	myBook.removeAllTags();

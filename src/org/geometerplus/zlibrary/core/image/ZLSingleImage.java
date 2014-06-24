@@ -38,7 +38,7 @@ public abstract class ZLSingleImage implements ZLImage {
 	public final MimeType mimeType() {
 		return myMimeType;
 	}
-	
+
 	@Override
 	public Bitmap getBitmap() {
 		final InputStream inputStream = inputStream();

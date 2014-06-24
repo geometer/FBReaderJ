@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -56,7 +57,7 @@ public abstract class SearchItem extends NetworkCatalogItem {
 	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 	}
 
-	public abstract void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException;
+	public abstract void runSearch(ZLNetworkContext context, NetworkItemsLoader loader, String pattern) throws ZLNetworkException;
 
 	@Override
 	public String getStringId() {
