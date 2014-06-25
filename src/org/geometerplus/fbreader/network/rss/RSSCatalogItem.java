@@ -52,7 +52,7 @@ public class RSSCatalogItem extends NetworkURLCatalogItem {
 		final RSSNetworkLink rssLink = (RSSNetworkLink)Link;
 		myLoadingState = rssLink.createOperationData(loader);
 
-		doLoadChildren(rssLink.createNetworkData(getCatalogUrl(), MimeType.APP_RSS_XML, myLoadingState));
+		doLoadChildren(rssLink.createNetworkData(getCatalogUrl(), myLoadingState));
 	}
 
 	private void doLoadChildren(ZLNetworkRequest networkRequest) throws ZLNetworkException {

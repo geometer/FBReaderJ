@@ -105,10 +105,10 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		return writer.toString();
 	}
 
-	private static abstract class Request extends ZLNetworkRequest {
+	private static abstract class JsonRequest extends ZLNetworkRequest.PostWithBody {
 		private final static String BASE_URL = "https://demo.fbreader.org/app/";
 
-		Request(String app, Object data) {
+		JsonRequest(String app, Object data) {
 			super(BASE_URL + app, toJSON(data), false);
 		}
 
@@ -133,7 +133,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			return;
 		}
 		System.err.println("SHA-1: " + uid.Id);
-		myNetworkContext.performQuietly(new Request("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
+		myNetworkContext.performQuietly(new JsonRequest("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
 			public void processResponse(Object response) {
 				System.err.println("RESPONSE = " + response);
 			}
