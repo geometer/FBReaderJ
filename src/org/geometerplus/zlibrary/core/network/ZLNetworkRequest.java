@@ -19,12 +19,9 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.io.InputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 import java.util.HashMap;
-
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public abstract class ZLNetworkRequest {
 	public static abstract class Get extends ZLNetworkRequest {
@@ -63,9 +60,9 @@ public abstract class ZLNetworkRequest {
 	}
 
 	public static abstract class FileUpload extends ZLNetworkRequest {
-		public final ZLFile File;
+		final File File;
 
-		protected FileUpload(String url, ZLFile file, boolean quiet) {
+		protected FileUpload(String url, File file, boolean quiet) {
 			super(url, quiet);
 			File = file;
 		}

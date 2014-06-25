@@ -35,14 +35,13 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.*;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
@@ -346,10 +345,11 @@ public class ZLNetworkManager {
 				}
 				((HttpPost)httpRequest).setEntity(new UrlEncodedFormEntity(list, "utf-8"));
 			} else if (request instanceof ZLNetworkRequest.FileUpload) {
-				final ZLFile file = ((ZLNetworkRequest.FileUpload)request).File;
+				final ZLNetworkRequest.FileUpload uploadRequest = (ZLNetworkRequest.FileUpload)request;
+				final File file = ((ZLNetworkRequest.FileUpload)request).File;
 				httpRequest = new HttpPost(request.URL);
 				final MultipartEntity data = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-				data.addPart("file", new InputStreamBody(file.getInputStream(), file.getPath()));
+				data.addPart("file", new FileBody(uploadRequest.File));
 				((HttpPost)httpRequest).setEntity(data);
 			} else {
 				throw new ZLNetworkException(true, "Unknown request type");
@@ -364,29 +364,16 @@ public class ZLNetworkManager {
 				httpRequest.setHeader(header.getKey(), header.getValue());
 			}
 			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest, request.isQuiet()));
-			HttpResponse response = null;
-			IOException lastException = null;
-			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
-				try {
-					response = execute(httpClient, httpRequest, httpContext, authenticator);
-					entity = response.getEntity();
-					lastException = null;
-					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-						final AuthState state = (AuthState)httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
-						if (state != null) {
-							final AuthScopeKey key = new AuthScopeKey(state.getAuthScope());
-							if (myCredentialsCreator.removeCredentials(key)) {
-								entity = null;
-							}
-						}
+			final HttpResponse response = execute(httpClient, httpRequest, httpContext, authenticator);
+			entity = response.getEntity();
+			if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+				final AuthState state = (AuthState)httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
+				if (state != null) {
+					final AuthScopeKey key = new AuthScopeKey(state.getAuthScope());
+					if (myCredentialsCreator.removeCredentials(key)) {
+						entity = null;
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
-					lastException = e;
 				}
-			}
-			if (lastException != null) {
-				throw lastException;
 			}
 			final int responseCode = response.getStatusLine().getStatusCode();
 
