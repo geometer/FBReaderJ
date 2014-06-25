@@ -55,7 +55,7 @@ public class AllCatalogsSearchItem extends SearchItem {
 			}
 			final NetworkOperationData data = link.createOperationData(loader);
 			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
-			if (request != null && MimeType.APP_ATOM_XML.weakEquals(request.Mime)) {
+			if (request != null) {
 				dataList.add(data);
 				requestList.add(request);
 			}
