@@ -28,6 +28,7 @@ import android.os.IBinder;
 
 import org.json.simple.JSONValue;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
@@ -84,7 +85,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 						}
 						myProcessed.add(book);
 						System.err.println("Processing " + book.getTitle() + " [" + book.File.getPath() + "]");
-						uploadBookToServer(book);
+						uploadBookToServer(book.File.getPhysicalFile());
 					}
 					System.err.println("BYE-BYE THREAD");
 					ourSynchronizationThread = null;
@@ -105,10 +106,11 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		return writer.toString();
 	}
 
-	private static abstract class Request extends ZLNetworkRequest {
-		private final static String BASE_URL = "https://demo.fbreader.org/app/";
+	private final static String DOMAIN = "demo.fbreader.org";
+	private final static String BASE_URL = "https://" + DOMAIN + "/app/";
 
-		Request(String app, Object data) {
+	private static abstract class JsonRequest extends ZLNetworkRequest.PostWithBody {
+		JsonRequest(String app, Object data) {
 			super(BASE_URL + app, toJSON(data), false);
 		}
 
@@ -126,18 +128,61 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		protected abstract void processResponse(Object response);
 	}
 
-	private void uploadBookToServer(Book book) {
-		final UID uid = BookUtil.createUid(book.File.getPhysicalFile(), "SHA-1");
+	private static final class UploadRequest extends ZLNetworkRequest.FileUpload {
+		UploadRequest(File file) {
+			super(BASE_URL + "book.upload", file, false);
+		}
+
+		@Override
+		public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
+			final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+			final StringBuilder buffer = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				buffer.append(line);
+			}
+			final Object response = JSONValue.parse(buffer.toString());
+			if (response instanceof Map && ((Map)response).isEmpty()) {
+				System.err.println("UPLOADED SUCCESSFULLY");
+			} else {
+				System.err.println("UPLOAD FAILURE: " + response);
+			}
+		}
+	}
+
+	private void uploadBookToServer(ZLPhysicalFile file) {
+		final UID uid = BookUtil.createUid(file, "SHA-1");
 		if (uid == null) {
 			System.err.println("Failed: SHA-1 checksum not computed");
 			return;
 		}
-		System.err.println("SHA-1: " + uid.Id);
-		myNetworkContext.performQuietly(new Request("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
-			public void processResponse(Object response) {
-				System.err.println("RESPONSE = " + response);
+		final Map<String,Object> result = new HashMap<String,Object>();
+		final JsonRequest verificationRequest =
+			new JsonRequest("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
+				@Override
+				public void processResponse(Object response) {
+					result.put("result", response);
+				}
+			};
+		myNetworkContext.performQuietly(verificationRequest);
+		final String csrfToken = myNetworkContext.getCookieValue(DOMAIN, "csrftoken");
+		final Object response = result.get("result");
+		if (response == null) {
+			System.err.println("UNEXPECTED ERROR: NO RESPONSE");
+		} else if (!(response instanceof List)) {
+			System.err.println("UNEXPECTED RESPONSE: " + response);
+		} else if (!((List)response).isEmpty()) {
+			System.err.println("BOOK ALREADY UPLOADED");
+		} else {
+			try {
+				final UploadRequest uploadRequest = new UploadRequest(file.javaFile());
+				uploadRequest.addHeader("Referer", verificationRequest.getURL());
+				uploadRequest.addHeader("X-CSRFToken", csrfToken);
+				myNetworkContext.perform(uploadRequest);
+			} catch (ZLNetworkException e) {
+				e.printStackTrace();
 			}
-		});
+		}
 	}
 
 	@Override

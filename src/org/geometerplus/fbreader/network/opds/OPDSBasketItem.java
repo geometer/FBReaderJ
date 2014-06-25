@@ -58,6 +58,6 @@ class OPDSBasketItem extends BasketItem {
 		url = url.replace("{ids}", MiscUtil.join(ids, ","));
 
 		final OPDSCatalogItem.State state = opdsLink.createOperationData(loader);
-		doLoadChildren(state, opdsLink.createNetworkData(url, MimeType.APP_ATOM_XML, state));
+		doLoadChildren(state, opdsLink.createNetworkData(url, state));
 	}
 }
