@@ -38,7 +38,7 @@ public class SingleCatalogSearchItem extends SearchItem {
 		final NetworkOperationData data = Link.createOperationData(loader);
 		ZLNetworkRequest request = Link.simpleSearchRequest(pattern, data);
 		// TODO: possible infinite loop, use "continue link" instead
-		while (request != null && MimeType.APP_ATOM_XML.weakEquals(request.Mime)) {
+		while (request != null) {
 			nc.perform(request);
 			if (loader.confirmInterruption()) {
 				return;
