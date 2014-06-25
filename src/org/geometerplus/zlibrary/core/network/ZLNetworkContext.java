@@ -84,7 +84,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 	}
 
 	private final void downloadToFile(String url, final File outFile, final int bufferSize) throws ZLNetworkException {
-		myManager.perform(new ZLNetworkRequest(url) {
+		myManager.perform(new ZLNetworkRequest.Get(url) {
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				OutputStream outStream = new FileOutputStream(outFile);
 				try {

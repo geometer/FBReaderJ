@@ -155,7 +155,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 
 	private String runTokenAuthorization(String authUrl, String authToken, String code) {
 		final StringBuilder buffer = new StringBuilder();
-		final ZLNetworkRequest request = new ZLNetworkRequest(authUrl) {
+		final ZLNetworkRequest.PostWithMap request = new ZLNetworkRequest.PostWithMap(authUrl) {
 			public void handleStream(InputStream stream, int length) throws IOException {
 				final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 				buffer.append(reader.readLine());

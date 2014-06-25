@@ -44,7 +44,7 @@ public class OPDSLinkReader {
 
 		final File dirFile = new File(Paths.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
-			nc.perform(new ZLNetworkRequest(CATALOGS_URL) {
+			nc.perform(new ZLNetworkRequest.Get(CATALOGS_URL) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					xmlReader.read(inputStream);
