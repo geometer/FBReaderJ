@@ -107,7 +107,7 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 
 		ZLNetworkException error = null;
 		try {
-			nc.perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog), quietly) {
+			nc.perform(new ZLNetworkRequest.Get(getUrl(UrlInfo.Type.Catalog), quietly) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					final OPDSCatalogInfoHandler info = new OPDSCatalogInfoHandler(getURL(), OPDSCustomNetworkLink.this, opensearchDescriptionURLs);
@@ -136,7 +136,7 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 		if (!opensearchDescriptionURLs.isEmpty()) {
 			LinkedList<ZLNetworkRequest> requests = new LinkedList<ZLNetworkRequest>();
 			for (String url : opensearchDescriptionURLs) {
-				requests.add(new ZLNetworkRequest(url, quietly) {
+				requests.add(new ZLNetworkRequest.Get(url, quietly) {
 					@Override
 					public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 						new OpenSearchXMLReader(getURL(), descriptions).read(inputStream);
