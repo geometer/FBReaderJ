@@ -29,6 +29,7 @@ import android.view.*;
 import android.widget.*;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -38,6 +39,8 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 	public interface Key {
 		final String ALL_AUTHOR_LIST		= "edit_authors.all_author_list";
 	}
+	private AutoCompleteTextView myInputField;
+	private int myEditPosition = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,38 +50,55 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 		final Intent intent = getIntent();
 		ArrayList<String> allAuthorList = intent.getStringArrayListExtra(Key.ALL_AUTHOR_LIST);
 
-		final AutoCompleteTextView inputField = (AutoCompleteTextView)findViewById(R.id.edit_authors_input_field);
-		inputField.setHint(myResource.getResource("addAuthor").getValue());
-		inputField.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+		myInputField = (AutoCompleteTextView)findViewById(R.id.edit_authors_input_field);
+		myInputField.setHint(myResource.getResource("addAuthor").getValue());
+		myInputField.setOnEditorActionListener(new TextView.OnEditorActionListener(){
 			public boolean onEditorAction (TextView v, int actionId, KeyEvent event){
 				if(actionId == EditorInfo.IME_ACTION_DONE){
-					addAuthor(inputField.getText().toString().trim());
-					inputField.setText("");
+					addAuthor(myInputField.getText().toString().trim(), myEditPosition);
+					myInputField.setText("");
+					myEditPosition = -1;
 					return false;
 				}
 				return true;
 			}
 		});
-		inputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allAuthorList));
+		myInputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allAuthorList));
 		
 		parseUIElements();
 		
 		final AuthorsAdapter adapter = new AuthorsAdapter();
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(adapter);
+		getListView().setOnItemLongClickListener(adapter);
 
 		setResult(RESULT_CANCELED);
 	}
 	
-	private void addAuthor(String author){
-		if(author.length() != 0){
-			if(!myEditList.contains(author)){
-				myEditList.add(author);
+	private void addAuthor(String author, int position){
+		if(author.length() != 0 && author.matches("[A-Za-z0-9_\\- ]*")){
+			if(position < 0){
+				if(!myEditList.contains(author)){
+					myEditList.add(author);
+				}
+			}else{
+				myEditList.set(position, author);
 			}
 			((BaseAdapter)getListAdapter()).notifyDataSetChanged();
 		}
 	}
 
+	@Override
+	protected void onLongClick(int position){
+		myEditPosition = position;
+		String s = (String)getListAdapter().getItem(position);
+		myInputField.setText(s);
+		myInputField.setSelection(myInputField.getText().length());
+		myInputField.requestFocus();
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.showSoftInput(myInputField, InputMethodManager.SHOW_IMPLICIT);
+	}
+	
 	private class AuthorsAdapter extends EditListAdapter {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {

@@ -29,6 +29,7 @@ import android.view.*;
 import android.widget.*;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -51,7 +52,6 @@ public class EditListDialogActivity extends ListActivity {
 		myEditList = intent.getStringArrayListExtra(Key.LIST);
 		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
 		myResource = ZLResource.resource("dialog").getResource("editAuthors");
-		
 		setResult(RESULT_CANCELED);
 	}
 	
@@ -97,7 +97,10 @@ public class EditListDialogActivity extends ListActivity {
 			.create().show();
 	}
 	
-	protected class EditListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+	protected void onLongClick(int position){
+	}
+	
+	protected class EditListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		@Override
 		public int getCount() {
 			return myEditList.size();
@@ -126,6 +129,12 @@ public class EditListDialogActivity extends ListActivity {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+		}
+
+		@Override
+		public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id){
+			onLongClick(position);
+			return true;
 		}
 	}
 }
