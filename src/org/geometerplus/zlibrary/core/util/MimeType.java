@@ -75,6 +75,8 @@ public final class MimeType {
 	public static final MimeType APP_FICTIONBOOK = get("application/x-fictionbook");
 	// ???
 	public static final MimeType APP_FICTIONBOOK_XML = get("application/x-fictionbook+xml");
+	// unofficial, used by FBReder book network
+	public static final MimeType APP_FB2_XML = get("application/fb2+xml");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_PDF = get("application/pdf");
 	// ???
@@ -93,7 +95,7 @@ public final class MimeType {
 	public static final MimeType APP_DOC = get("application/doc");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_MSWORD = get("application/msword");
-	// unofficial, used by data.fbreader.org LitRes catalog
+	// unofficial, used by data.fbreader.org LitRes catalog & FBReader book nework
 	public static final MimeType APP_FB2_ZIP = get("application/fb2+zip");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_ATOM_XML = get("application/atom+xml");
@@ -146,7 +148,7 @@ public final class MimeType {
 		 = Arrays.asList(VIDEO_WEBM, VIDEO_OGG, VIDEO_MP4);
 
 	public static final List<MimeType> TYPES_FB2
-		 = Arrays.asList(APP_FICTIONBOOK, APP_FICTIONBOOK_XML, TEXT_FB2);
+		 = Arrays.asList(APP_FICTIONBOOK, APP_FICTIONBOOK_XML, APP_FB2_XML, TEXT_FB2);
 	public static final List<MimeType> TYPES_EPUB
 		 = Arrays.asList(APP_EPUB_ZIP, APP_EPUB);
 	public static final List<MimeType> TYPES_MOBIPOCKET
