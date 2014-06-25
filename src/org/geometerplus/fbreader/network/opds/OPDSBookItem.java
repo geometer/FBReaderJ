@@ -40,7 +40,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 
 		final CreateBookHandler handler = new CreateBookHandler(link, url);
 		try {
-			nc.perform(new ZLNetworkRequest(url) {
+			nc.perform(new ZLNetworkRequest.Get(url) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					new OPDSXMLReader(handler, true).read(inputStream);
@@ -263,7 +263,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			return true;
 		}
 
-		return nc.performQuietly(new ZLNetworkRequest(url) {
+		return nc.performQuietly(new ZLNetworkRequest.Get(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				new OPDSXMLReader(new LoadInfoHandler(url), true).read(inputStream);
