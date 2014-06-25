@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.apache.http.client.CookieStore;
+import org.apache.http.cookie.Cookie;
 
 public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthenticator {
 	private final ZLNetworkManager myManager = ZLNetworkManager.Instance();
@@ -34,6 +35,15 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 
 	protected CookieStore cookieStore() {
 		return myManager.CookieStore;
+	}
+
+	public String getCookieValue(String domain, String name) {
+		for (Cookie c : cookieStore().getCookies()) {
+			if (domain.equals(c.getDomain()) && name.equals(c.getName())) {
+				return c.getValue();
+			}
+		}
+		return null;
 	}
 
 	public boolean performQuietly(ZLNetworkRequest request) {
