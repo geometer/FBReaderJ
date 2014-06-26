@@ -40,7 +40,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
+	public void readMetainfo(Book book) throws BookReadingException {
 		InputStream stream = null;
 		try {
 			stream = book.File.getInputStream();
@@ -126,7 +126,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	@Override
 	public void readUids(Book book) throws BookReadingException {
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createSHA256Uid(book.File));
+			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
 	}
 

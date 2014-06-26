@@ -22,9 +22,16 @@
 * Multiple directories for user's fonts and wallpapers
 * PDF plugin integration
 
-===== 1.10.3 (??? ??, 2014) =====
+===== 1.10.3.2 (Jun 09, 2014) =====
+* ePub styles: decreased default spacings
+
+===== 1.10.3 (Jun 08, 2014) =====
 * ePub loading speed optimizations
+* ePub: added support for CSS margin-top/margin-bottom properties
+* ePub: fixed empty line support in <pre>-formatted text
+* New CSS-like style for default style definitions
 * better cover detection for ePubs
+* fixed possible crash on ePub files updated while program is running
 * Arabic FBReaderJ resources, by Ahmed Saidi (https://github.com/boussouira)
 * Updated German localization (by Matthias Dill)
 

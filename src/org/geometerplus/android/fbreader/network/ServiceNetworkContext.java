@@ -17,8 +17,34 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.android.fbreader.network;
 
-public interface Authenticator {
-	void run(String url);
+import java.net.URI;
+import java.util.Map;
+
+import android.app.Service;
+import android.content.Context;
+
+public final class ServiceNetworkContext extends AndroidNetworkContext {
+	private final Service myService;
+
+	public ServiceNetworkContext(Service service) {
+		myService = service;
+	}
+
+	public Context getContext() {
+		return myService;
+	}
+
+	@Override
+	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
+		// TODO: implement
+		return false;
+	}
+
+	@Override
+	protected boolean authenticateToken(URI uri, Map<String,String> params) {
+		// TODO: implement
+		return false;
+	}
 }

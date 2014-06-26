@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.preferences;
+#include "ZLTextStyleEntry.h"
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import android.content.Context;
-
-class ZLStringOptionPreference extends ZLStringPreference {
-	private final ZLStringOption myOption;
-
-	ZLStringOptionPreference(Context context, ZLStringOption option, ZLResource rootResource, String resourceKey) {
-		super(context, rootResource, resourceKey);
-		myOption = option;
-		super.setValue(myOption.getValue());
+shared_ptr<ZLTextStyleEntry> ZLTextStyleEntry::inherited() const {
+	ZLTextStyleEntry *clone = new ZLTextStyleEntry(myEntryKind);
+	clone->myFeatureMask = myFeatureMask & ~(1 << LENGTH_SPACE_BEFORE) & ~(1 << LENGTH_SPACE_AFTER);
+	for (int i = 0; i < NUMBER_OF_LENGTHS; ++i) {
+		clone->myLengths[i] = myLengths[i];
 	}
-
-	@Override
-	protected void setValue(String value) {
-		super.setValue(value);
-		myOption.setValue(value);
-	}
+	clone->myAlignmentType = myAlignmentType;
+	clone->mySupportedFontModifier = mySupportedFontModifier;
+	clone->myFontModifier = myFontModifier;
+	clone->myFontFamilies = myFontFamilies;
+	return clone;
 }

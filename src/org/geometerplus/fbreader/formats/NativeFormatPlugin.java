@@ -51,8 +51,8 @@ public class NativeFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	synchronized public void readMetaInfo(Book book) throws BookReadingException {
-		final int code = readMetaInfoNative(book);
+	synchronized public void readMetainfo(Book book) throws BookReadingException {
+		final int code = readMetainfoNative(book);
 		if (code != 0) {
 			throw new BookReadingException(
 				"nativeCodeFailure",
@@ -62,7 +62,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 		}
 	}
 
-	private native int readMetaInfoNative(Book book);
+	private native int readMetainfoNative(Book book);
 
 	@Override
 	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
@@ -78,7 +78,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	synchronized public void readUids(Book book) throws BookReadingException {
 		readUidsNative(book);
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createSHA256Uid(book.File));
+			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
 	}
 
@@ -93,9 +93,9 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	@Override
 	synchronized public void readModel(BookModel model) throws BookReadingException {
-		android.os.Debug.startMethodTracing("ep.trace", 32 * 1024 * 1024);
+		//android.os.Debug.startMethodTracing("ep.trace", 32 * 1024 * 1024);
 		final int code = readModelNative(model);
-		android.os.Debug.stopMethodTracing();
+		//android.os.Debug.stopMethodTracing();
 		switch (code) {
 			case 0:
 				return;

@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.List;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
@@ -57,6 +58,6 @@ class OPDSBasketItem extends BasketItem {
 		url = url.replace("{ids}", MiscUtil.join(ids, ","));
 
 		final OPDSCatalogItem.State state = opdsLink.createOperationData(loader);
-		doLoadChildren(state, opdsLink.createNetworkData(url, MimeType.APP_ATOM_XML, state));
+		doLoadChildren(state, opdsLink.createNetworkData(url, state));
 	}
 }

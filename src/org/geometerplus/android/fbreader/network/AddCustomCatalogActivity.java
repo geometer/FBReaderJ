@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
@@ -49,11 +50,14 @@ public class AddCustomCatalogActivity extends Activity {
 	private boolean myEditNotAdd;
 	private INetworkLink.Type myType = INetworkLink.Type.Custom;
 
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+
 	@Override
-	public void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
+		SQLiteCookieDatabase.init(this);
 		AuthenticationActivity.initCredentialsCreator(this);
 
 		setContentView(R.layout.add_custom_catalog);
@@ -93,7 +97,7 @@ public class AddCustomCatalogActivity extends Activity {
 		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(intent.getAction());
 		myLink = null;
 
-		Util.initLibrary(this, new Runnable() {
+		Util.initLibrary(this, myNetworkContext, new Runnable() {
 			public void run() {
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -102,6 +106,11 @@ public class AddCustomCatalogActivity extends Activity {
 				});
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		myNetworkContext.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private void init(Intent intent) {
@@ -271,7 +280,7 @@ public class AddCustomCatalogActivity extends Activity {
 			public void run() {
 				try {
 					myError = null;
-					myLink.reloadInfo(false, false);
+					myLink.reloadInfo(myNetworkContext, false, false);
 				} catch (ZLNetworkException e) {
 					myError = e.getMessage();
 				}

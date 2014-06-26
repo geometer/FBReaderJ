@@ -19,43 +19,67 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.io.InputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
-
 public abstract class ZLNetworkRequest {
+	public static abstract class Get extends ZLNetworkRequest {
+		protected Get(String url) {
+			this(url, false);
+		}
+
+		protected Get(String url, boolean quiet) {
+			super(url, quiet);
+		}
+	}
+
+	public static abstract class PostWithMap extends ZLNetworkRequest {
+		public final Map<String,String> PostParameters = new HashMap<String,String>();
+
+		protected PostWithMap(String url) {
+			this(url, false);
+		}
+
+		protected PostWithMap(String url, boolean quiet) {
+			super(url, quiet);
+		}
+
+		public void addPostParameter(String name, String value) {
+			PostParameters.put(name, value);
+		}
+	}
+
+	public static abstract class PostWithBody extends ZLNetworkRequest {
+		public final String Body;
+
+		protected PostWithBody(String url, String body, boolean quiet) {
+			super(url, quiet);
+			Body = body;
+		}
+	}
+
+	public static abstract class FileUpload extends ZLNetworkRequest {
+		final File File;
+
+		protected FileUpload(String url, File file, boolean quiet) {
+			super(url, quiet);
+			File = file;
+		}
+	}
+
 	String URL;
-	public final String PostData;
-	public final Map<String,String> PostParameters = new HashMap<String,String>();
-	public final MimeType Mime;
 	public final Map<String,String> Headers = new HashMap<String,String>();
 
 	private final boolean myIsQuiet;
 
-	protected ZLNetworkRequest(String url) {
+	private ZLNetworkRequest(String url) {
 		this(url, false);
 	}
 
-	protected ZLNetworkRequest(String url, boolean quiet) {
-		this(url, null, quiet);
-	}
-
-	protected ZLNetworkRequest(String url, String postData, boolean quiet) {
-		this(url, MimeType.NULL, postData, quiet);
-	}
-
-	protected ZLNetworkRequest(String url, MimeType mime, String postData, boolean quiet) {
+	private ZLNetworkRequest(String url, boolean quiet) {
 		URL = url;
-		Mime = mime;
-		PostData = postData;
 		myIsQuiet = quiet;
-	}
-
-	public void addPostParameter(String name, String value) {
-		PostParameters.put(name, value);
 	}
 
 	public void addHeader(String name, String value) {
@@ -73,7 +97,8 @@ public abstract class ZLNetworkRequest {
 	public void doBefore() throws ZLNetworkException {
 	}
 
-	public abstract void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException;
+	public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
+}
 
 	public void doAfter(boolean success) throws ZLNetworkException {
 	}

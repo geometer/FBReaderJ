@@ -69,19 +69,23 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 			return Parent.getFontSize(metrics);
 		}
 
+		// Yes, Parent.Parent, not Parent (parent = current tag pre-defined size,
+		// we want to override it)
+		// TODO: use _previous_tag_value_
+		final int baseFontSize = Parent.Parent.getFontSize(metrics);
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
 			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
-				return Parent.Parent.getFontSize(metrics);
+				return baseFontSize;
 			}
 			if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
-				return Parent.Parent.getFontSize(metrics) * 120 / 100;
+				return baseFontSize * 120 / 100;
 			}
 			if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == ZLBoolean3.B3_TRUE) {
-				return Parent.Parent.getFontSize(metrics) * 100 / 120;
+				return baseFontSize * 100 / 120;
 			}
 		}
 		if (myEntry.isFeatureSupported(LENGTH_FONT_SIZE)) {
-			return myEntry.getLength(LENGTH_FONT_SIZE, metrics);
+			return myEntry.getLength(LENGTH_FONT_SIZE, metrics, baseFontSize);
 		}
 		return Parent.getFontSize(metrics);
 	}
@@ -131,34 +135,70 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextDecoratedStyle impleme
 		}
 	}
 
-	public int getLeftIndent() {
-		// TODO: implement
-		return Parent.getLeftIndent();
+	@Override
+	public int getLeftIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getLeftIndent(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_LEFT_INDENT)) {
+			return Parent.getLeftIndent(metrics);
+		}
+		return myEntry.getLength(LENGTH_LEFT_INDENT, metrics, fontSize);
 	}
-	public int getRightIndent() {
-		// TODO: implement
-		return Parent.getRightIndent();
+	@Override
+	public int getRightIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getRightIndent(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_RIGHT_INDENT)) {
+			return Parent.getRightIndent(metrics);
+		}
+		return myEntry.getLength(LENGTH_RIGHT_INDENT, metrics, fontSize);
 	}
-	public int getFirstLineIndentDelta() {
-		// TODO: implement
-		return Parent.getFirstLineIndentDelta();
+	@Override
+	protected int getFirstLineIndentInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getFirstLineIndent(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_FIRST_LINE_INDENT)) {
+			return Parent.getFirstLineIndent(metrics);
+		}
+		return myEntry.getLength(LENGTH_FIRST_LINE_INDENT, metrics, fontSize);
 	}
-	public int getLineSpacePercent() {
+	@Override
+	protected int getLineSpacePercentInternal() {
 		// TODO: implement
 		return Parent.getLineSpacePercent();
 	}
 	@Override
-	protected int getVerticalShiftInternal() {
+	protected int getVerticalAlignInternal(ZLTextMetrics metrics, int fontSize) {
 		// TODO: implement
-		return Parent.getVerticalShift();
+		return Parent.getVerticalAlign(metrics);
 	}
-	public int getSpaceBefore() {
-		// TODO: implement
-		return Parent.getSpaceBefore();
+	@Override
+	protected int getSpaceBeforeInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getSpaceBefore(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_SPACE_BEFORE)) {
+			return Parent.getSpaceBefore(metrics);
+		}
+		return myEntry.getLength(LENGTH_SPACE_BEFORE, metrics, fontSize);
 	}
-	public int getSpaceAfter() {
-		// TODO: implement
-		return Parent.getSpaceAfter();
+	@Override
+	protected int getSpaceAfterInternal(ZLTextMetrics metrics, int fontSize) {
+		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSMarginsOption.getValue()) {
+			return Parent.getSpaceAfter(metrics);
+		}
+
+		if (!myEntry.isFeatureSupported(LENGTH_SPACE_AFTER)) {
+			return Parent.getSpaceAfter(metrics);
+		}
+		return myEntry.getLength(LENGTH_SPACE_AFTER, metrics, fontSize);
 	}
 	public byte getAlignment() {
 		if (myEntry instanceof ZLTextCSSStyleEntry && !BaseStyle.UseCSSTextAlignmentOption.getValue()) {

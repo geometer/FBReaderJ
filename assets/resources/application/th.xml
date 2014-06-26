@@ -392,10 +392,9 @@
 				</node>
 			</node>
 			<node name="font" value="รูปแบบอักษร">
-				<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				<node name="inherit" value="&lt;ยกเลิก&gt;"/>
 			</node>
 			<node name="fontSize" value="ขนาดอักษร"/>
-			<node name="fontSizeDifference" value="ความแตกต่างของขนาดตัวอักษร"/>
 			<node name="fontStyle" value="รูปแบบของตัวอักษร">
 				<node name="regular" value="ปกติ"/>
 				<node name="bold" value="ตัวหนา"/>
@@ -403,53 +402,53 @@
 				<node name="boldItalic" value="ตัวหนาและเอียง"/>
 			</node>
 			<node name="bold" value="ตัวหนา">
-				<node name="summaryOn" value="ตัวหนา"/>
-				<node name="summaryOff" value="ปกติ"/>
-				<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				<node name="bold" value="ตัวหนา"/>
+				<node name="normal" value="ปกติ"/>
+				<node name="inherit" value="&lt;ยกเลิก&gt;"/>
 			</node>
 			<node name="italic" value="ตัวเอียง">
-				<node name="summaryOn" value="ตัวเอียง"/>
-				<node name="summaryOff" value="ปกติ"/>
-				<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				<node name="italic" value="ตัวเอียง"/>
+				<node name="normal" value="ปกติ"/>
+				<node name="inherit" value="&lt;ยกเลิก&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined" toBeTranslated="true">
-				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
-				<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="underlined" toBeTranslated="true"/>
+				<node name="line-through" value="striked through" toBeTranslated="true"/>
 			</node>
 			<node name="lineSpacing" value="ระยะห่างระหว่างบรรทัด">
-				<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				<node name="inherit" value="&lt;ยกเลิก&gt;"/>
 			</node>
 			<node name="alignment" value="การจัดตำแหน่ง">
 				<node name="left" value="ชิดซ้าย"/>
 				<node name="right" value="ชิดขวา"/>
 				<node name="center" value="กึ่งกลาง"/>
 				<node name="justify" value="จัดบรรทัดให้เท่ากัน"/>
-				<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				<node name="inherit" value="&lt;ยกเลิก&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="เพิ่มยัติภังค์อัตโนมัติ">
 				<node name="summaryOn" value="เพิ่มยัติภังค์อัตโนมัติ"/>
 				<node name="summaryOff" value="ไม่เพิ่มยัติภังค์อัตโนมัติ"/>
 			</node>
 			<node name="allowHyphenations" value="อนุญาตให้ใช้ยัติภังค์">
-				<node name="summaryOn" value="คำยัติภังค์"/>
-				<node name="summaryOff" value="ไม่ใช้คำยัติภังค์"/>
-				<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				<node name="auto" value="คำยัติภังค์"/>
+				<node name="none" value="ไม่ใช้คำยัติภังค์"/>
+				<node name="inherit" value="&lt;ยกเลิก&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="การเยื้องบรรทัดแรกของย่อหน้า"/>
 			<node name="spaceBefore" value="ช่องว่างด้านหน้า"/>
 			<node name="spaceAfter" value="ช่องว่างด้านหลัง"/>
 			<node name="leftIndent" value="เยื้องซ้าย"/>
 			<node name="rightIndent" value="เยื้องขวา"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="รูปแบบอื่น">
 				<node name="summary" value="แยกการตั้งค่าของชื่อเรื่อง, คำอ้างอิง, อื่นๆ"/>
 				<node name="Regular Paragraph" value="ย่อหน้า">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="ชื่อเรื่อง">
 					<node name="summary" value=""/>
@@ -562,6 +561,10 @@
 			<node name="textAlignment" value="Text alignment" toBeTranslated="true">
 				<node name="summaryOn" value="Apply text alignment defined in CSS" toBeTranslated="true"/>
 				<node name="summaryOff" value="Ignore text alignment defined in CSS" toBeTranslated="true"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="สี &amp; วอลล์เปเปอร์">
@@ -992,5 +995,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

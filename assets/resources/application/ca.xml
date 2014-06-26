@@ -408,10 +408,9 @@
 				</node>
 			</node>
 			<node name="font" value="Família tipogràfica">
-				<node name="unchanged" value="&lt;sense canvis&gt;"/>
+				<node name="inherit" value="&lt;sense canvis&gt;"/>
 			</node>
 			<node name="fontSize" value="Mida de la font"/>
-			<node name="fontSizeDifference" value="Diferència de mida de la font"/>
 			<node name="fontStyle" value="Estil de la font">
 				<node name="regular" value="Normal"/>
 				<node name="bold" value="Negreta"/>
@@ -419,53 +418,53 @@
 				<node name="boldItalic" value="Negreta cursiva"/>
 			</node>
 			<node name="bold" value="Negreta">
-				<node name="summaryOn" value="negreta"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sense canvis&gt;"/>
+				<node name="bold" value="negreta"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sense canvis&gt;"/>
 			</node>
 			<node name="italic" value="Cursiva">
-				<node name="summaryOn" value="cursiva"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sense canvis&gt;"/>
+				<node name="italic" value="cursiva"/>
+				<node name="normal" value="normal"/>
+				<node name="inherit" value="&lt;sense canvis&gt;"/>
 			</node>
-			<node name="underlined" value="Subratllada">
-				<node name="summaryOn" value="subratllada"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sense canvis&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Ratllada">
-				<node name="summaryOn" value="ratllada"/>
-				<node name="summaryOff" value="normal"/>
-				<node name="unchanged" value="&lt;sense canvis&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="subratllada"/>
+				<node name="line-through" value="ratllada"/>
 			</node>
 			<node name="lineSpacing" value="Interliniat">
-				<node name="unchanged" value="&lt;sense canvis&gt;"/>
+				<node name="inherit" value="&lt;sense canvis&gt;"/>
 			</node>
 			<node name="alignment" value="Aliniació">
 				<node name="left" value="Esquerra"/>
 				<node name="right" value="Dreta"/>
 				<node name="center" value="Centrat"/>
 				<node name="justify" value="Justificat"/>
-				<node name="unchanged" value="&lt;sense canvis&gt;"/>
+				<node name="inherit" value="&lt;sense canvis&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Separació automàtica de síl·labes">
 				<node name="summaryOn" value="Separa les síl·labes automàticament"/>
 				<node name="summaryOff" value="No separis les síl·labes automàticament"/>
 			</node>
 			<node name="allowHyphenations" value="Permetre la separació de síl·labes">
-				<node name="summaryOn" value="Separa les síl·labes"/>
-				<node name="summaryOff" value="No separis les síl·labes"/>
-				<node name="unchanged" value="&lt;sense canvis&gt;"/>
+				<node name="auto" value="Separa les síl·labes"/>
+				<node name="none" value="No separis les síl·labes"/>
+				<node name="inherit" value="&lt;sense canvis&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Sagnar la primera línia"/>
 			<node name="spaceBefore" value="Espai abans"/>
 			<node name="spaceAfter" value="Espai després"/>
 			<node name="leftIndent" value="Sagnar a l'esquerra"/>
 			<node name="rightIndent" value="Sagnar a la dreta"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="Més estils">
 				<node name="summary" value="Separar les opcions per títols, epígrafs, etc."/>
 				<node name="Regular Paragraph" value="Paràgraf normal">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Títol">
 					<node name="summary" value=""/>
@@ -578,6 +577,10 @@
 			<node name="textAlignment" value="Alineació del text">
 				<node name="summaryOn" value="Aplica l'alineació del text definida en CSS"/>
 				<node name="summaryOff" value="Ignora l'alineació del text definida en CSS"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Colors i fons de pantalla">
@@ -950,8 +953,6 @@
 		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
 		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
 		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>
@@ -1010,5 +1011,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
 		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

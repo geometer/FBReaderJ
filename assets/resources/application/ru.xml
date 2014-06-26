@@ -407,10 +407,9 @@
 				</node>
 			</node>
 			<node name="font" value="Шрифт">
-				<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="fontSize" value="Размер шрифта"/>
-			<node name="fontSizeDifference" value="Размер"/>
 			<node name="fontStyle" value="Начертание">
 				<node name="regular" value="нормальное"/>
 				<node name="bold" value="жирное"/>
@@ -418,53 +417,53 @@
 				<node name="boldItalic" value="жирный курсив"/>
 			</node>
 			<node name="bold" value="Жирный шрифт">
-				<node name="summaryOn" value="использовать жирное начертание"/>
-				<node name="summaryOff" value="использовать нормальное начертание"/>
-				<node name="unchanged" value="не менять"/>
+				<node name="bold" value="использовать жирное начертание"/>
+				<node name="normal" value="использовать нормальное начертание"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="italic" value="Курсив">
-				<node name="summaryOn" value="использовать курсивное начертание"/>
-				<node name="summaryOff" value="использовать нормальное начертание"/>
-				<node name="unchanged" value="не менять"/>
+				<node name="italic" value="использовать курсивное начертание"/>
+				<node name="normal" value="использовать нормальное начертание"/>
+				<node name="inherit" value="не менять"/>
 			</node>
-			<node name="underlined" value="Подчёркнутый">
-				<node name="summaryOn" value="включить"/>
-				<node name="summaryOff" value="выключить"/>
-				<node name="unchanged" value="не менять"/>
-			</node>
-			<node name="strikedThrough" value="Зачёркнутый">
-				<node name="summaryOn" value="включить"/>
-				<node name="summaryOff" value="выключить"/>
-				<node name="unchanged" value="не менять"/>
+			<node name="textDecoration" value="Дополнительные эффекты">
+				<node name="inherit" value="не менять"/>
+				<node name="none" value="без эффектов"/>
+				<node name="underline" value="подчеркнутый"/>
+				<node name="line-through" value="зачёркнутый"/>
 			</node>
 			<node name="lineSpacing" value="Интервал">
-				<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="alignment" value="Выравнивание">
 				<node name="left" value="левое"/>
 				<node name="right" value="правое"/>
 				<node name="center" value="по центру"/>
 				<node name="justify" value="по краям"/>
-				<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="autoHyphenations" value="Переносы">
 				<node name="summaryOn" value="Автоматически расставлять переносы"/>
 				<node name="summaryOff" value="Не расставлять переносы"/>
 			</node>
 			<node name="allowHyphenations" value="Переносы">
-				<node name="summaryOn" value="разрешить переносы"/>
-				<node name="summaryOff" value="запретить переносы"/>
-				<node name="unchanged" value="&lt;не менять&gt;"/>
+				<node name="auto" value="разрешить переносы"/>
+				<node name="none" value="запретить переносы"/>
+				<node name="inherit" value="не менять"/>
 			</node>
 			<node name="firstLineIndent" value="Красная строка"/>
 			<node name="spaceBefore" value="Пропуск перед"/>
 			<node name="spaceAfter" value="Пропуск после"/>
 			<node name="leftIndent" value="Отступ слева"/>
 			<node name="rightIndent" value="Отступ справа"/>
+			<node name="verticalAlignment" value="Смещение по вертикали"/>
 			<node name="more" value="Другие стили">
 				<node name="summary" value="Отдельные настройки для заголовков, эпиграфов и т.д."/>
 				<node name="Regular Paragraph" value="Обычный текст">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="Текст ePub">
+					<node name="summary" value="Содержимое тега &lt;p&gt; в файлах XHTML"/>
 				</node>
 				<node name="Title" value="Заголовок">
 					<node name="summary" value=""/>
@@ -577,6 +576,10 @@
 			<node name="textAlignment" value="Выравнивание текста">
 				<node name="summaryOn" value="Выравнивать текст, как указано в CSS"/>
 				<node name="summaryOff" value="Игнорировать выравнивание текста, заданное в CSS"/>
+			</node>
+			<node name="margins" value="Отступы">
+				<node name="summaryOn" value="Использовать отступы, заданные в CSS"/>
+				<node name="summaryOff" value="Игнорировать отступы, заданные в CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Цвета и обои">
@@ -1007,5 +1010,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Переверните телефон, чтобы увидеть текст книги. Если вы хотите читать на этом экране, нажмите на кнопку."/>
 		<node name="frontScreenButton" value="Читать здесь"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="Например: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="Например: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="Например: 125%%"/>
 	</node>
 </resources>

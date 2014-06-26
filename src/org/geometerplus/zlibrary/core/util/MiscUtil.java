@@ -20,6 +20,8 @@
 package org.geometerplus.zlibrary.core.util;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class MiscUtil {
 	public static <T> boolean equals(T o0, T o1) {
@@ -92,5 +94,15 @@ public abstract class MiscUtil {
 			return Collections.emptyList();
 		}
 		return Arrays.asList(str.split(delimiter));
+	}
+
+	// splits str on any space symbols, keeps quoted substrings
+	public static List<String> smartSplit(String str) {
+		final List<String> tokens = new LinkedList<String>();
+		final Matcher m = Pattern.compile("([^\"\\s:;]+|\".+?\")").matcher(str);
+		while (m.find()) {
+			tokens.add(m.group(1).replace("\"", ""));
+		}
+		return tokens;
 	}
 }

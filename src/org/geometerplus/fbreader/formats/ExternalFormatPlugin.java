@@ -84,9 +84,9 @@ public class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
+	public void readMetainfo(Book book) throws BookReadingException {
 		if (myInfoReader != null) {
-			myInfoReader.readMetaInfo(book);
+			myInfoReader.readMetainfo(book);
 		}
 	}
 

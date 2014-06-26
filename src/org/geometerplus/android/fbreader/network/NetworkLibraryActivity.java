@@ -29,10 +29,6 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import org.apache.http.client.CookieStore;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.cookie.BasicClientCookie2;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
@@ -55,8 +51,11 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	public static final String ENABLED_CATALOG_IDS_KEY = "android.fbreader.data.enabled_catalogs";
 	public static final String DISABLED_CATALOG_IDS_KEY = "android.fbreader.data.disabled_catalogs";
 
-	public static final int REQUEST_AUTHORISATION_SCREEN = 2;
+	public static final int REQUEST_ACCOUNT_PICKER = 2;
+	public static final int REQUEST_AUTHORISATION = 3;
+	public static final int REQUEST_WEB_AUTHORISATION_SCREEN = 4;
 	public static final String COOKIES_KEY = "android.fbreader.data.cookies";
+	public static final String COMPLETE_URL_KEY = "android.fbreader.data.complete.url";
 
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
@@ -65,6 +64,8 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	final List<Action> myListClickActions = new ArrayList<Action>();
 	private Intent myDeferredIntent;
 	private boolean mySingleCatalog;
+
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -84,7 +85,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		if (getCurrentTree() instanceof RootTree) {
 			mySingleCatalog = intent.getBooleanExtra("SingleCatalog", false);
 			if (!NetworkLibrary.Instance().isInitialized()) {
-				Util.initLibrary(this, new Runnable() {
+				Util.initLibrary(this, myNetworkContext, new Runnable() {
 					public void run() {
 						NetworkLibrary.Instance().runBackgroundUpdate(false);
 						if (intent != null) {
@@ -145,7 +146,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				final NetworkTree tree =
 					NetworkLibrary.Instance().getCatalogTreeByUrl(uri.toString());
 				if (tree != null) {
-					checkAndRun(new OpenCatalogAction(this), tree);
+					checkAndRun(new OpenCatalogAction(this, myNetworkContext), tree);
 					return true;
 				}
 			}
@@ -167,6 +168,11 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				getListView().invalidateViews();
 			}
 		});
+
+		if (myNetworkContext.onActivityResult(requestCode, resultCode, data)) {
+			return;
+		}
+
 		if (resultCode != RESULT_OK || data == null) {
 			return;
 		}
@@ -178,31 +184,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 					data.getStringArrayListExtra(ENABLED_CATALOG_IDS_KEY);
 				NetworkLibrary.Instance().setActiveIds(myIds);
 				NetworkLibrary.Instance().synchronize();
-				break;
-			}
-			case REQUEST_AUTHORISATION_SCREEN:
-			{
-				final CookieStore store = ZLNetworkManager.Instance().cookieStore();
-				final Map<String,String> cookies =
-					(Map<String,String>)data.getSerializableExtra(COOKIES_KEY);
-				if (cookies == null) {
-					break;
-				}
-				for (Map.Entry<String,String> entry : cookies.entrySet()) {
-					final BasicClientCookie2 c =
-						new BasicClientCookie2(entry.getKey(), entry.getValue());
-					c.setDomain(data.getData().getHost());
-					c.setPath("/");
-					final Calendar expire = Calendar.getInstance();
-					expire.add(Calendar.YEAR, 1);
-					c.setExpiryDate(expire.getTime());
-					c.setSecure(true);
-					c.setDiscard(false);
-					store.addCookie(c);
-				}
-				final NetworkTree tree =
-					getTreeByKey((FBTree.Key)data.getSerializableExtra(TREE_KEY_KEY));
-				new ReloadCatalogAction(this).run(tree);
 				break;
 			}
 		}
@@ -247,7 +228,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
 		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
 		myOptionsMenuActions.add(new ManageCatalogsAction(this));
-		myOptionsMenuActions.add(new ReloadCatalogAction(this));
+		myOptionsMenuActions.add(new ReloadCatalogAction(this, myNetworkContext));
 		myOptionsMenuActions.add(new SignInAction(this));
 		myOptionsMenuActions.add(new SignUpAction(this));
 		myOptionsMenuActions.add(new SignOutAction(this));
@@ -258,7 +239,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	}
 
 	private void fillContextMenuList() {
-		myContextMenuActions.add(new OpenCatalogAction(this));
+		myContextMenuActions.add(new OpenCatalogAction(this, myNetworkContext));
 		myContextMenuActions.add(new OpenInBrowserAction(this));
 		myContextMenuActions.add(new RunSearchAction(this, true));
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
@@ -273,12 +254,12 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	}
 
 	private void fillListClickList() {
-		myListClickActions.add(new OpenCatalogAction(this));
+		myListClickActions.add(new OpenCatalogAction(this, myNetworkContext));
 		myListClickActions.add(new OpenInBrowserAction(this));
 		myListClickActions.add(new RunSearchAction(this, true));
 		myListClickActions.add(new AddCustomCatalogAction(this));
 		myListClickActions.add(new TopupAction(this));
-		myListClickActions.add(new ShowBookInfoAction(this));
+		myListClickActions.add(new ShowBookInfoAction(this, myNetworkContext));
 		myListClickActions.add(new ManageCatalogsAction(this));
 	}
 
@@ -449,7 +430,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
-					Util.initLibrary(NetworkLibraryActivity.this, null);
+					Util.initLibrary(NetworkLibraryActivity.this, myNetworkContext, null);
 				} else {
 					finish();
 				}

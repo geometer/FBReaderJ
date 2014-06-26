@@ -78,11 +78,11 @@ public abstract class BookUtil {
 		return true;
 	}
 
-	public static UID createSHA256Uid(ZLFile file) {
+	public static UID createUid(ZLFile file, String algorithm) {
 		InputStream stream = null;
 
 		try {
-			final MessageDigest hash = MessageDigest.getInstance("SHA-256");
+			final MessageDigest hash = MessageDigest.getInstance(algorithm);
 			stream = file.getInputStream();
 
 			final byte[] buffer = new byte[2048];
@@ -98,7 +98,7 @@ public abstract class BookUtil {
 			for (byte b : hash.digest()) {
 				f.format("%02X", b & 0xFF);
 			}
-			return new UID("SHA-256", f.toString());
+			return new UID(algorithm, f.toString());
 		} catch (IOException e) {
 			return null;
 		} catch (NoSuchAlgorithmException e) {

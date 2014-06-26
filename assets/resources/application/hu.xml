@@ -392,10 +392,9 @@
 				</node>
 			</node>
 			<node name="font" value="Betűtípus">
-				<node name="unchanged" value="&lt;változatlan&gt;"/>
+				<node name="inherit" value="&lt;változatlan&gt;"/>
 			</node>
 			<node name="fontSize" value="Betűméret"/>
-			<node name="fontSizeDifference" value="Méretkülönbség"/>
 			<node name="fontStyle" value="Betűstílus">
 				<node name="regular" value="Normál"/>
 				<node name="bold" value="Félkövér"/>
@@ -403,53 +402,53 @@
 				<node name="boldItalic" value="Félkövér és dőlt"/>
 			</node>
 			<node name="bold" value="Félkövér">
-				<node name="summaryOn" value="félkövér"/>
-				<node name="summaryOff" value="normál"/>
-				<node name="unchanged" value="&lt;változatlan&gt;"/>
+				<node name="bold" value="félkövér"/>
+				<node name="normal" value="normál"/>
+				<node name="inherit" value="&lt;változatlan&gt;"/>
 			</node>
 			<node name="italic" value="Dőlt">
-				<node name="summaryOn" value="dőlt"/>
-				<node name="summaryOff" value="normál"/>
-				<node name="unchanged" value="&lt;változatlan&gt;"/>
+				<node name="italic" value="dőlt"/>
+				<node name="normal" value="normál"/>
+				<node name="inherit" value="&lt;változatlan&gt;"/>
 			</node>
-			<node name="underlined" value="Aláhúzott">
-				<node name="summaryOn" value="aláhúzott"/>
-				<node name="summaryOff" value="normál"/>
-				<node name="unchanged" value="&lt;változatlan&gt;"/>
-			</node>
-			<node name="strikedThrough" value="Áthúzott">
-				<node name="summaryOn" value="áthúzott"/>
-				<node name="summaryOff" value="normál"/>
-				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
+				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
+				<node name="none" value="no decorations" toBeTranslated="true"/>
+				<node name="underline" value="aláhúzott"/>
+				<node name="line-through" value="áthúzott"/>
 			</node>
 			<node name="lineSpacing" value="Sorköz">
-				<node name="unchanged" value="&lt;változatlan&gt;"/>
+				<node name="inherit" value="&lt;változatlan&gt;"/>
 			</node>
 			<node name="alignment" value="Igazítás">
 				<node name="left" value="Balra"/>
 				<node name="right" value="Jobbra"/>
 				<node name="center" value="Középre"/>
 				<node name="justify" value="Sorkizárt"/>
-				<node name="unchanged" value="&lt;változatlan&gt;"/>
+				<node name="inherit" value="&lt;változatlan&gt;"/>
 			</node>
 			<node name="autoHyphenations" value="Automatikus elválasztás">
 				<node name="summaryOn" value="Automatikusan válassza el a szavakat"/>
 				<node name="summaryOff" value="Automatikus elválasztás kikapcsolva"/>
 			</node>
 			<node name="allowHyphenations" value="Elválasztás engedélyezése">
-				<node name="summaryOn" value="válassza el a szavakat"/>
-				<node name="summaryOff" value="ne válassza el a szavakat"/>
-				<node name="unchanged" value="&lt;változatlan&gt;"/>
+				<node name="auto" value="válassza el a szavakat"/>
+				<node name="none" value="ne válassza el a szavakat"/>
+				<node name="inherit" value="&lt;változatlan&gt;"/>
 			</node>
 			<node name="firstLineIndent" value="Első sor behúzása"/>
 			<node name="spaceBefore" value="Térköz előtte"/>
 			<node name="spaceAfter" value="Térköz utána"/>
 			<node name="leftIndent" value="Bal oldali behúzás"/>
 			<node name="rightIndent" value="Jobb oldali behúzás"/>
+			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
 			<node name="more" value="További formázás">
 				<node name="summary" value="Különálló beállítások címekhez, mottókhoz stb."/>
 				<node name="Regular Paragraph" value="Normál bekezdés">
 					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
+					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
 				</node>
 				<node name="Title" value="Cím">
 					<node name="summary" value=""/>
@@ -562,6 +561,10 @@
 			<node name="textAlignment" value="Szöveg elrendezése">
 				<node name="summaryOn" value="CSS-ben szereplő elrendezés használata"/>
 				<node name="summaryOff" value="CSS-ben szereplő elrendezés figyelmen kívül hagyása"/>
+			</node>
+			<node name="margins" value="Margins" toBeTranslated="true">
+				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
 			</node>
 		</node>
 		<node name="colors" value="Színek és háttérképek">
@@ -992,5 +995,10 @@
 	<node name="yota">
 		<node name="frontScreenMessage" value="Fordítsa meg az eszközt az olvasáshoz. Ehhez a képernyőhöz való visszatéréshez nyomja meg az alsó gombot."/>
 		<node name="frontScreenButton" value="Váltás erre a kijelzőre"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
+		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
+		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
 	</node>
 </resources>

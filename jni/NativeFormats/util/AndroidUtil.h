@@ -117,6 +117,7 @@ public:
 	static shared_ptr<StringMethod> Method_ZLFile_getPath;
 	static shared_ptr<BooleanMethod> Method_ZLFile_isDirectory;
 	static shared_ptr<LongMethod> Method_ZLFile_size;
+	static shared_ptr<LongMethod> Method_ZLFile_lastModified;
 
 	static shared_ptr<Constructor> Constructor_FileInfo;
 	static shared_ptr<Constructor> Constructor_FileEncryptionInfo;

@@ -24,6 +24,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.fbreader.network.*;
@@ -49,7 +50,7 @@ public abstract class Util implements UserRegistrationConstants {
 		return intent;
 	}
 
-	static void initLibrary(final Activity activity, final Runnable action) {
+	static void initLibrary(final Activity activity, final ZLNetworkContext nc, final Runnable action) {
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				UIUtil.wait("loadingNetworkLibrary", new Runnable() {
@@ -60,7 +61,7 @@ public abstract class Util implements UserRegistrationConstants {
 
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						if (!library.isInitialized()) {
-							library.initialize();
+							library.initialize(nc);
 						}
 						if (action != null) {
 							action.run();
