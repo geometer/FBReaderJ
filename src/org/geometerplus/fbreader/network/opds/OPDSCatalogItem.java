@@ -81,7 +81,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		myLoadingState = opdsLink.createOperationData(loader);
 
 		doLoadChildren(
-			opdsLink.createNetworkData(getCatalogUrl(), MimeType.APP_ATOM_XML, myLoadingState)
+			opdsLink.createNetworkData(getCatalogUrl(), myLoadingState)
 		);
 	}
 

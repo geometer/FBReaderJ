@@ -17,29 +17,34 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.network;
+package org.geometerplus.android.fbreader.network;
 
-import java.util.HashMap;
+import java.net.URI;
 import java.util.Map;
 
-class BearerAuthenticationException extends RuntimeException {
-	public final Map<String,String> Params = new HashMap<String,String>();
+import android.app.Service;
+import android.content.Context;
 
-	BearerAuthenticationException(String challenge) {
-		super("Authentication failed");
-		if (challenge != null && "bearer".equalsIgnoreCase(challenge.substring(0, 6))) {
-			for (String param : challenge.substring(6).split(",")) {
-				final int index = param.indexOf("=");
-				if (index != -1) {
-					final String key = param.substring(0, index).trim();
-					String value = param.substring(index + 1).trim();
-					final int len = value.length();
-					if (len > 1 && value.charAt(0) == '"' && value.charAt(len - 1) == '"') {
-						value = value.substring(1, len - 1);
-					}
-					Params.put(key, value);
-				}
-			}
-		}
+public final class ServiceNetworkContext extends AndroidNetworkContext {
+	private final Service myService;
+
+	public ServiceNetworkContext(Service service) {
+		myService = service;
+	}
+
+	public Context getContext() {
+		return myService;
+	}
+
+	@Override
+	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
+		// TODO: implement
+		return false;
+	}
+
+	@Override
+	protected boolean authenticateToken(URI uri, Map<String,String> params) {
+		// TODO: implement
+		return false;
 	}
 }

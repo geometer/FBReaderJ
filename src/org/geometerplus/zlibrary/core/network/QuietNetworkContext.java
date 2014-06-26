@@ -19,27 +19,22 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.util.HashMap;
+import java.io.File;
+import java.net.URI;
 import java.util.Map;
 
-class BearerAuthenticationException extends RuntimeException {
-	public final Map<String,String> Params = new HashMap<String,String>();
+public class QuietNetworkContext extends ZLNetworkContext {
+	@Override
+	public boolean authenticate(URI uri, Map<String,String> params) {
+		return false;
+	}
 
-	BearerAuthenticationException(String challenge) {
-		super("Authentication failed");
-		if (challenge != null && "bearer".equalsIgnoreCase(challenge.substring(0, 6))) {
-			for (String param : challenge.substring(6).split(",")) {
-				final int index = param.indexOf("=");
-				if (index != -1) {
-					final String key = param.substring(0, index).trim();
-					String value = param.substring(index + 1).trim();
-					final int len = value.length();
-					if (len > 1 && value.charAt(0) == '"' && value.charAt(len - 1) == '"') {
-						value = value.substring(1, len - 1);
-					}
-					Params.put(key, value);
-				}
-			}
+	public final boolean downloadToFileQuietly(String url, final File outFile) {
+		try {
+			downloadToFile(url, outFile);
+			return true;
+		} catch (ZLNetworkException e) {
+			return false;
 		}
 	}
 }

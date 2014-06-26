@@ -35,7 +35,7 @@ public class AllCatalogsSearchItem extends SearchItem {
 	}
 
 	@Override
-	public void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
+	public void runSearch(ZLNetworkContext nc, NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
 		final LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		final LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
@@ -55,14 +55,14 @@ public class AllCatalogsSearchItem extends SearchItem {
 			}
 			final NetworkOperationData data = link.createOperationData(loader);
 			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
-			if (request != null && MimeType.APP_ATOM_XML.weakEquals(request.Mime)) {
+			if (request != null) {
 				dataList.add(data);
 				requestList.add(request);
 			}
 		}
 
 		while (!requestList.isEmpty()) {
-			ZLNetworkManager.Instance().perform(requestList);
+			nc.perform(requestList);
 
 			requestList.clear();
 

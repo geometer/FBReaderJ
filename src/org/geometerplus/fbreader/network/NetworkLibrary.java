@@ -22,13 +22,13 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 import java.lang.ref.WeakReference;
 
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
@@ -236,13 +236,13 @@ public class NetworkLibrary {
 		return myIsInitialized;
 	}
 
-	public synchronized void initialize() {
+	public synchronized void initialize(ZLNetworkContext nc) {
 		if (myIsInitialized) {
 			return;
 		}
 
 		try {
-			myLinks.addAll(OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CacheMode.LOAD));
+			myLinks.addAll(OPDSLinkReader.loadOPDSLinks(nc, OPDSLinkReader.CacheMode.LOAD));
 		} catch (ZLNetworkException e) {
 			removeAllLoadedLinks();
 			fireModelChangedEvent(ChangeListener.Code.InitializationFailed, e.getMessage());
@@ -251,11 +251,6 @@ public class NetworkLibrary {
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
 		if (db != null) {
-			System.err.println("++ LIST LINKS");
-			for (INetworkLink l : db.listLinks()) {
-				System.err.println("LNK: " + l);
-			}
-			System.err.println("-- LIST LINKS");
 			myLinks.addAll(db.listLinks());
 		}
 
@@ -315,10 +310,11 @@ public class NetworkLibrary {
 	}
 
 	private void runBackgroundUpdateInternal(boolean force) throws ZLNetworkException {
+		final ZLNetworkContext quietContext = new QuietNetworkContext();
 		synchronized (myUpdateLock) {
 			final OPDSLinkReader.CacheMode mode =
 				force ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
-			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(mode);
+			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(quietContext, mode);
 			if (!loadedLinks.isEmpty()) {
 				removeAllLoadedLinks();
 				myLinks.addAll(loadedLinks);
@@ -332,7 +328,7 @@ public class NetworkLibrary {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (force || customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
 						try {
-							customLink.reloadInfo(true, true);
+							customLink.reloadInfo(quietContext, true, true);
 							NetworkDatabase.Instance().saveLink(customLink);
 						} catch (Throwable t) {
 							// ignore
