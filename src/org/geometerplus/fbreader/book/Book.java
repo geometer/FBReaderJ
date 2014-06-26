@@ -197,11 +197,15 @@ public class Book extends TitledEntity {
 		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
 		if (fplugin != null) {
 			try {
-				String xml = MetaInfoUtil.PMIReader.readMetaInfo(oldxml, ((PluginFormatPlugin)fplugin).getPackage());
-				Book book = SerializerUtil.deserializeBook(xml);
-				updateFrom(book);
-			} catch (NullPointerException e) {
-				e.printStackTrace();
+				plugin.readMetaInfo(this);
+			} catch (UnsupportedOperationException e1) {
+				try {
+					String xml = MetaInfoUtil.PMIReader.readMetaInfo(oldxml, ((PluginFormatPlugin)fplugin).getPackage());
+					Book book = SerializerUtil.deserializeBook(xml);
+					updateFrom(book);
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
 			}
 		} else {
 			plugin.readMetaInfo(this);

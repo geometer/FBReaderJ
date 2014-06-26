@@ -40,11 +40,6 @@ public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
-		//TODO
-	}
-
-	@Override
 	public String readAnnotation(ZLFile file) {
 		//TODO
 		return null;
