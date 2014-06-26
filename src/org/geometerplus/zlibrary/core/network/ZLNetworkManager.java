@@ -33,15 +33,18 @@ import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.*;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public class ZLNetworkManager {
 	private static ZLNetworkManager ourManager;
@@ -320,29 +323,36 @@ public class ZLNetworkManager {
 				}
 			};
 			final HttpRequestBase httpRequest;
-			if (request.PostData != null) {
+			if (request instanceof ZLNetworkRequest.Get) {
+				httpRequest = new HttpGet(request.URL);
+			} else if (request instanceof ZLNetworkRequest.PostWithBody) {
 				httpRequest = new HttpPost(request.URL);
-				((HttpPost)httpRequest).setEntity(new StringEntity(request.PostData, "utf-8"));
+				((HttpPost)httpRequest).setEntity(new StringEntity(((ZLNetworkRequest.PostWithBody)request).Body, "utf-8"));
 				/*
 					httpConnection.setRequestProperty(
 						"Content-Length",
-						Integer.toString(request.PostData.getBytes().length)
-					);
-					httpConnection.setRequestProperty(
-						"Content-Type",
-						"application/x-www-form-urlencoded"
+						Integer.toString(request.Body.getBytes().length)
 					);
 				*/
-			} else if (!request.PostParameters.isEmpty()) {
+			} else if (request instanceof ZLNetworkRequest.PostWithMap) {
+				final Map<String,String> parameters =
+					((ZLNetworkRequest.PostWithMap)request).PostParameters;
 				httpRequest = new HttpPost(request.URL);
 				final List<BasicNameValuePair> list =
-					new ArrayList<BasicNameValuePair>(request.PostParameters.size());
-				for (Map.Entry<String,String> entry : request.PostParameters.entrySet()) {
+					new ArrayList<BasicNameValuePair>(parameters.size());
+				for (Map.Entry<String,String> entry : parameters.entrySet()) {
 					list.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
 				}
 				((HttpPost)httpRequest).setEntity(new UrlEncodedFormEntity(list, "utf-8"));
+			} else if (request instanceof ZLNetworkRequest.FileUpload) {
+				final ZLNetworkRequest.FileUpload uploadRequest = (ZLNetworkRequest.FileUpload)request;
+				final File file = ((ZLNetworkRequest.FileUpload)request).File;
+				httpRequest = new HttpPost(request.URL);
+				final MultipartEntity data = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+				data.addPart("file", new FileBody(uploadRequest.File));
+				((HttpPost)httpRequest).setEntity(data);
 			} else {
-				httpRequest = new HttpGet(request.URL);
+				throw new ZLNetworkException(true, "Unknown request type");
 			}
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
 			if (!request.isQuiet()) {
@@ -354,29 +364,16 @@ public class ZLNetworkManager {
 				httpRequest.setHeader(header.getKey(), header.getValue());
 			}
 			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest, request.isQuiet()));
-			HttpResponse response = null;
-			IOException lastException = null;
-			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
-				try {
-					response = execute(httpClient, httpRequest, httpContext, authenticator);
-					entity = response.getEntity();
-					lastException = null;
-					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-						final AuthState state = (AuthState)httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
-						if (state != null) {
-							final AuthScopeKey key = new AuthScopeKey(state.getAuthScope());
-							if (myCredentialsCreator.removeCredentials(key)) {
-								entity = null;
-							}
-						}
+			final HttpResponse response = execute(httpClient, httpRequest, httpContext, authenticator);
+			entity = response.getEntity();
+			if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+				final AuthState state = (AuthState)httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
+				if (state != null) {
+					final AuthScopeKey key = new AuthScopeKey(state.getAuthScope());
+					if (myCredentialsCreator.removeCredentials(key)) {
+						entity = null;
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
-					lastException = e;
 				}
-			}
-			if (lastException != null) {
-				throw lastException;
 			}
 			final int responseCode = response.getStatusLine().getStatusCode();
 

@@ -46,7 +46,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 		myPredefinedId = predefinedId;
 	}
 	
-	ZLNetworkRequest createNetworkData(String url, MimeType mime, final RSSCatalogItem.State result) {
+	ZLNetworkRequest createNetworkData(String url, final RSSCatalogItem.State result) {
 		if (url == null) {
 			return null;
 		}
@@ -55,7 +55,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
 		library.startLoading(catalogItem);
 
-		return new ZLNetworkRequest(url, mime, null, false) {
+		return new ZLNetworkRequest.Get(url, false) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
@@ -100,8 +100,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 	}
 
 	@Override
-	public ZLNetworkRequest simpleSearchRequest(String pattern,
-			NetworkOperationData data) {
+	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
 		return null;
 	}
 
