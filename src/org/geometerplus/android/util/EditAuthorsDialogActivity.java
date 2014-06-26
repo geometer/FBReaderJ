@@ -63,7 +63,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 				return true;
 			}
 		});
-		myInputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allAuthorList));
+		myInputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, allAuthorList));
 		
 		parseUIElements();
 		
