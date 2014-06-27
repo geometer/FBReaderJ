@@ -19,10 +19,11 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.util.*;
-import java.util.zip.GZIPInputStream;
 import java.io.*;
 import java.net.*;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.http.*;
 import org.apache.http.auth.*;
@@ -348,7 +349,11 @@ public class ZLNetworkManager {
 				final ZLNetworkRequest.FileUpload uploadRequest = (ZLNetworkRequest.FileUpload)request;
 				final File file = ((ZLNetworkRequest.FileUpload)request).File;
 				httpRequest = new HttpPost(request.URL);
-				final MultipartEntity data = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+				final MultipartEntity data = new MultipartEntity(
+					HttpMultipartMode.BROWSER_COMPATIBLE,
+					null,
+					Charset.forName("utf-8")
+				);
 				data.addPart("file", new FileBody(uploadRequest.File));
 				((HttpPost)httpRequest).setEntity(data);
 			} else {
