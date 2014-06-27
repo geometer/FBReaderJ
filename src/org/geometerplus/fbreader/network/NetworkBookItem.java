@@ -83,6 +83,7 @@ public class NetworkBookItem extends NetworkItem {
 	//public final String Date;
 	public final LinkedList<AuthorData> Authors;
 	public final LinkedList<String> Tags;
+	public final List<String> Identifiers = new LinkedList<String>();
 	public final String SeriesTitle;
 	public final float IndexInSeries;
 
