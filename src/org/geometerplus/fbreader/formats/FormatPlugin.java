@@ -48,7 +48,7 @@ public abstract class FormatPlugin {
 	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
 		return Collections.emptyList();
 	}
-	public void readMetaInfo(Book book) throws BookReadingException {
+	public void readMetainfo(Book book) throws BookReadingException {
 		throw new UnsupportedOperationException();
 	}
 	public abstract void readUids(Book book) throws BookReadingException;

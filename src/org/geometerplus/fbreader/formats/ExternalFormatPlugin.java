@@ -127,7 +127,7 @@ public class ExternalFormatPlugin extends FormatPlugin {
 			return;
 		}
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createSHA256Uid(book.File));
+			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
 	}
 }

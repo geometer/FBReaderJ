@@ -197,7 +197,7 @@ public class Book extends TitledEntity {
 		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
 		if (fplugin != null) {
 			try {
-				plugin.readMetaInfo(this);
+				plugin.readMetainfo(this);
 			} catch (UnsupportedOperationException e1) {
 				try {
 					String xml = MetaInfoUtil.PMIReader.readMetaInfo(oldxml, ((PluginFormatPlugin)fplugin).getPackage());

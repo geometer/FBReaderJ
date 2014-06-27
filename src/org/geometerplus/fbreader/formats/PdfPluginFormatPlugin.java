@@ -46,7 +46,7 @@ public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
+	public void readMetainfo(Book book) throws BookReadingException {
 		try {
 			PDFDocument doc = new PDFDocument(book.File.getUrl().replaceAll("file://", ""));
 			PDFDocInfo info = doc.getDocumentInfo();
@@ -71,7 +71,7 @@ public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 	@Override
 	public void readUids(Book book) throws BookReadingException {
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createSHA256Uid(book.File));
+			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
 	}
 }
