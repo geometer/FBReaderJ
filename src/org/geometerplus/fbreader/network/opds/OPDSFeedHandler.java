@@ -182,6 +182,9 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 		NetworkItem item;
 		if (hasBookLink) {
 			item = new OPDSBookItem((OPDSNetworkLink)myData.Link, entry, myBaseURL, myIndex++);
+			for (String identifier : entry.DCIdentifiers) {
+				((OPDSBookItem)item).Identifiers.add(identifier);
+			}
 		} else {
 			item = readCatalogItem(entry);
 		}
