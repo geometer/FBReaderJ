@@ -142,10 +142,22 @@ public class SynchroniserService extends Service implements IBookCollection.List
 				buffer.append(line);
 			}
 			final Object response = JSONValue.parse(buffer.toString());
-			if (response instanceof Map && ((Map)response).isEmpty()) {
-				System.err.println("UPLOADED SUCCESSFULLY");
+			String id = null;
+			String error = null;
+			try {
+				if (response instanceof Map) {
+					id = (String)((Map)response).get("id");
+					error = (String)((Map)response).get("error");
+				}
+			} catch (Exception e) {
+				// ignore
+			}
+			if (error != null) {
+				System.err.println("UPLOAD FAILURE: " + error);
+			} else if (id != null) {
+				System.err.println("UPLOADED SUCCESSFULLY: " + id);
 			} else {
-				System.err.println("UPLOAD FAILURE: " + response);
+				System.err.println("UNEXPECED RESPONSE: " + response);
 			}
 		}
 	}
@@ -164,24 +176,30 @@ public class SynchroniserService extends Service implements IBookCollection.List
 					result.put("result", response);
 				}
 			};
-		myNetworkContext.performQuietly(verificationRequest);
+		try {
+			myNetworkContext.perform(verificationRequest);
+		} catch (ZLNetworkException e) {
+			e.printStackTrace();
+		}
 		final String csrfToken = myNetworkContext.getCookieValue(DOMAIN, "csrftoken");
 		final Object response = result.get("result");
-		if (response == null) {
-			System.err.println("UNEXPECTED ERROR: NO RESPONSE");
-		} else if (!(response instanceof List)) {
-			System.err.println("UNEXPECTED RESPONSE: " + response);
-		} else if (!((List)response).isEmpty()) {
-			System.err.println("BOOK ALREADY UPLOADED");
-		} else {
-			try {
-				final UploadRequest uploadRequest = new UploadRequest(file.javaFile());
-				uploadRequest.addHeader("Referer", verificationRequest.getURL());
-				uploadRequest.addHeader("X-CSRFToken", csrfToken);
-				myNetworkContext.perform(uploadRequest);
-			} catch (ZLNetworkException e) {
-				e.printStackTrace();
+		try {
+			final List responseList = (List)response;
+			if (responseList.isEmpty()) {
+				try {
+					final UploadRequest uploadRequest = new UploadRequest(file.javaFile());
+					uploadRequest.addHeader("Referer", verificationRequest.getURL());
+					uploadRequest.addHeader("X-CSRFToken", csrfToken);
+					myNetworkContext.perform(uploadRequest);
+				} catch (ZLNetworkException e) {
+					e.printStackTrace();
+				}
+			} else {
+				final Map<String,String> firstBookInfo = (Map<String,String>)responseList.get(0);
+				System.err.println("BOOK ALREADY UPLOADED: " + firstBookInfo.get("id"));
 			}
+		} catch (Exception e) {
+			System.err.println("UNEXPECTED RESPONSE: " + response);
 		}
 	}
 
