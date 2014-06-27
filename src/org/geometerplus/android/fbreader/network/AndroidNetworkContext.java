@@ -29,10 +29,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
 	public boolean authenticate(URI uri, Map<String,String> params) {
-		System.err.println("REQUESTED AUTH FOR " + uri);
-		for (Object o : cookieStore().getCookies()) {
-			System.err.println("AUTH COOKIE: " + o);
-		}
 		if (!"https".equalsIgnoreCase(uri.getScheme())) {
 			return false;
 		}
