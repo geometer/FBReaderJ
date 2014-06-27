@@ -176,7 +176,11 @@ public class SynchroniserService extends Service implements IBookCollection.List
 					result.put("result", response);
 				}
 			};
-		myNetworkContext.performQuietly(verificationRequest);
+		try {
+			myNetworkContext.perform(verificationRequest);
+		} catch (ZLNetworkException e) {
+			e.printStackTrace();
+		}
 		final String csrfToken = myNetworkContext.getCookieValue(DOMAIN, "csrftoken");
 		final Object response = result.get("result");
 		try {
