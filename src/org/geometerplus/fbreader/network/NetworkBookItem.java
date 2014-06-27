@@ -197,7 +197,14 @@ public class NetworkBookItem extends NetworkItem {
 		return (BookBuyUrlInfo)reference(UrlInfo.Type.BookBuyInBrowser);
 	}
 
+	private static final String HASH_PREFIX = "sha1:";
 	public String localCopyFileName() {
+		System.err.println("Looking for file name");
+		for (String identifier : Identifiers) {
+			if (identifier.startsWith(HASH_PREFIX)) {
+				System.err.println("hash: " + identifier.substring(HASH_PREFIX.length()));
+			}
+		}
 		final boolean hasBuyReference = buyInfo() != null;
 		BookUrlInfo reference = null;
 		String fileName = null;
