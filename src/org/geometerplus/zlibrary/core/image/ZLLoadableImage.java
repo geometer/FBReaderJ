@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.image;
 
+import android.graphics.Bitmap;
+
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLLoadableImage extends ZLSingleImage {
@@ -51,10 +53,10 @@ public abstract class ZLLoadableImage extends ZLSingleImage {
 	public abstract String getId();
 
 	@Override
-	public boolean saveToFile(String url) {
+	public Bitmap getBitmap() {
 		if (!isSynchronized()) {
 			synchronize();
 		}
-		return super.saveToFile(url);
+		return super.getBitmap();
 	}
 }

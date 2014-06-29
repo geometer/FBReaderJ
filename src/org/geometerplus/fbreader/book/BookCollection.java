@@ -22,9 +22,10 @@ package org.geometerplus.fbreader.book;
 import java.io.File;
 import java.util.*;
 
+import android.graphics.Bitmap;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -647,17 +648,29 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	@Override
-	public boolean saveCover(Book book, String url) {
+	public Bitmap getCover(Book book, int maxWidth, int maxHeight) {
 		if (getBookById(book.getId()) == null) {
-			return false;
+			return null;
 		}
 
-		final ZLImage image = BookUtil.getCover(book);
-		if (image == null) {
-			return false;
+		final Bitmap rawBitmap = BookUtil.getCover(book).getBitmap();
+		if (rawBitmap == null) {
+			return null;
 		}
 
-		return image.saveToFile(url);
+		return resized(rawBitmap, maxWidth, maxHeight);
+	}
+
+	private Bitmap resized(Bitmap bitmap, int maxWidth, int maxHeight) {
+		final int realWidth = bitmap.getWidth();
+		final int realHeight = bitmap.getHeight();
+		if (realWidth <= maxWidth && realHeight <= maxHeight) {
+			return bitmap;
+		}
+		float aspect = Math.max((float)realWidth / maxWidth, (float)realHeight / maxHeight);
+		final int scaledWidth = (int)(realWidth / aspect);
+		final int scaledHeight = (int)(realHeight / aspect);
+		return Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false);
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
