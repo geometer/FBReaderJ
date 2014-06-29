@@ -134,7 +134,7 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 }
 
 bool OEBBookReader::coverIsSingleImage() const {
-	return 
+	return
 		COVER_IMAGE == myCoverFileType ||
 		(COVER == myCoverFileType &&
 			ZLStringUtil::stringStartsWith(myCoverMimeType, "image/"));

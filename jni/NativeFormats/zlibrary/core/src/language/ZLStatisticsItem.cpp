@@ -19,7 +19,7 @@
 
 #include "ZLStatisticsItem.h"
 
-ZLMapBasedStatisticsItem::ZLMapBasedStatisticsItem(const std::map<ZLCharSequence, std::size_t>::const_iterator it, std::size_t index) : 	ZLStatisticsItem(index), 
+ZLMapBasedStatisticsItem::ZLMapBasedStatisticsItem(const std::map<ZLCharSequence, std::size_t>::const_iterator it, std::size_t index) : 	ZLStatisticsItem(index),
 																																myIterator(it) {
 }
 
