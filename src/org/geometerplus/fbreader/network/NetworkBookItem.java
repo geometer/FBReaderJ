@@ -83,6 +83,7 @@ public class NetworkBookItem extends NetworkItem {
 	//public final String Date;
 	public final LinkedList<AuthorData> Authors;
 	public final LinkedList<String> Tags;
+	public final List<String> Identifiers = new LinkedList<String>();
 	public final String SeriesTitle;
 	public final float IndexInSeries;
 
@@ -196,7 +197,14 @@ public class NetworkBookItem extends NetworkItem {
 		return (BookBuyUrlInfo)reference(UrlInfo.Type.BookBuyInBrowser);
 	}
 
+	private static final String HASH_PREFIX = "sha1:";
 	public String localCopyFileName() {
+		System.err.println("Looking for file name");
+		for (String identifier : Identifiers) {
+			if (identifier.startsWith(HASH_PREFIX)) {
+				System.err.println("hash: " + identifier.substring(HASH_PREFIX.length()));
+			}
+		}
 		final boolean hasBuyReference = buyInfo() != null;
 		BookUrlInfo reference = null;
 		String fileName = null;

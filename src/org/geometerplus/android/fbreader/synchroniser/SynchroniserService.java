@@ -42,6 +42,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 
 	private final List<Book> myQueue = Collections.synchronizedList(new LinkedList<Book>());
 	private final Set<Book> myProcessed = new HashSet<Book>();
+	private final Set<String> myHashesFromServer = new HashSet<String>();
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -63,32 +64,45 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		if (ourSynchronizationThread == null) {
 			ourSynchronizationThread = new Thread() {
 				public void run() {
-					System.err.println("HELLO THREAD");
 					try {
-						ourSynchronizationThread.sleep(5000);
-					} catch (InterruptedException e) {
-					}
-					System.err.println("START SYNCRONIZING");
-					for (BookQuery q = new BookQuery(new Filter.Empty(), 20);; q = q.next()) {
-						final List<Book> books = myCollection.books(q);
-						if (books.isEmpty()) {
-							break;
+						System.err.println("HELLO THREAD");
+						myHashesFromServer.clear();
+						try {
+							myNetworkContext.perform(new JsonRequest("all.hashes", null) {
+								@Override
+								public void processResponse(Object response) {
+									myHashesFromServer.addAll((List)response);
+								}
+							});
+							System.err.println("RECEIVED: " + myHashesFromServer.size() + " HASHES");
+						} catch (Exception e) {
+							e.printStackTrace();
+							System.err.println("DO NOT SYNCHRONIZE: ALL HASHES REQUEST FAILED");
+							return;
 						}
-						for (Book b : books) {
-							addBook(b);
+						System.err.println("START SYNCRONIZATION");
+						for (BookQuery q = new BookQuery(new Filter.Empty(), 20);; q = q.next()) {
+							final List<Book> books = myCollection.books(q);
+							if (books.isEmpty()) {
+								break;
+							}
+							for (Book b : books) {
+								addBook(b);
+							}
 						}
-					}
-					while (!myQueue.isEmpty()) {
-						final Book book = myQueue.remove(0);
-						if (myProcessed.contains(book)) {
-							continue;
+						while (!myQueue.isEmpty()) {
+							final Book book = myQueue.remove(0);
+							if (myProcessed.contains(book)) {
+								continue;
+							}
+							myProcessed.add(book);
+							System.err.println("Processing " + book.getTitle() + " [" + book.File.getPath() + "]");
+							uploadBookToServer(book.File.getPhysicalFile());
 						}
-						myProcessed.add(book);
-						System.err.println("Processing " + book.getTitle() + " [" + book.File.getPath() + "]");
-						uploadBookToServer(book.File.getPhysicalFile());
+					} finally {
+						System.err.println("BYE-BYE THREAD");
+						ourSynchronizationThread = null;
 					}
-					System.err.println("BYE-BYE THREAD");
-					ourSynchronizationThread = null;
 				}
 			};
 			ourSynchronizationThread.setPriority(Thread.MIN_PRIORITY);
@@ -128,7 +142,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		protected abstract void processResponse(Object response);
 	}
 
-	private static final class UploadRequest extends ZLNetworkRequest.FileUpload {
+	private final class UploadRequest extends ZLNetworkRequest.FileUpload {
 		UploadRequest(File file) {
 			super(BASE_URL + "book.upload", file, false);
 		}
@@ -142,10 +156,25 @@ public class SynchroniserService extends Service implements IBookCollection.List
 				buffer.append(line);
 			}
 			final Object response = JSONValue.parse(buffer.toString());
-			if (response instanceof Map && ((Map)response).isEmpty()) {
-				System.err.println("UPLOADED SUCCESSFULLY");
+			String id = null;
+			List<String> hashes = null;
+			String error = null;
+			try {
+				if (response instanceof Map) {
+					id = (String)((Map)response).get("id");
+					hashes = (List<String>)((Map)response).get("hashes");
+					error = (String)((Map)response).get("error");
+				}
+			} catch (Exception e) {
+				// ignore
+			}
+			if (error != null) {
+				System.err.println("UPLOAD FAILURE: " + error);
+			} else if (id != null && hashes != null) {
+				System.err.println("UPLOADED SUCCESSFULLY: " + id);
+				myHashesFromServer.addAll(hashes);
 			} else {
-				System.err.println("UPLOAD FAILURE: " + response);
+				System.err.println("UNEXPECED RESPONSE: " + response);
 			}
 		}
 	}
@@ -156,6 +185,10 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			System.err.println("Failed: SHA-1 checksum not computed");
 			return;
 		}
+		if (myHashesFromServer.contains(uid.Id.toLowerCase())) {
+			System.err.println("HASH ALREADY IN THE TABLE");
+			return;
+		}
 		final Map<String,Object> result = new HashMap<String,Object>();
 		final JsonRequest verificationRequest =
 			new JsonRequest("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
@@ -164,24 +197,32 @@ public class SynchroniserService extends Service implements IBookCollection.List
 					result.put("result", response);
 				}
 			};
-		myNetworkContext.performQuietly(verificationRequest);
+		try {
+			myNetworkContext.perform(verificationRequest);
+		} catch (ZLNetworkException e) {
+			e.printStackTrace();
+		}
 		final String csrfToken = myNetworkContext.getCookieValue(DOMAIN, "csrftoken");
 		final Object response = result.get("result");
-		if (response == null) {
-			System.err.println("UNEXPECTED ERROR: NO RESPONSE");
-		} else if (!(response instanceof List)) {
-			System.err.println("UNEXPECTED RESPONSE: " + response);
-		} else if (!((List)response).isEmpty()) {
-			System.err.println("BOOK ALREADY UPLOADED");
-		} else {
-			try {
-				final UploadRequest uploadRequest = new UploadRequest(file.javaFile());
-				uploadRequest.addHeader("Referer", verificationRequest.getURL());
-				uploadRequest.addHeader("X-CSRFToken", csrfToken);
-				myNetworkContext.perform(uploadRequest);
-			} catch (ZLNetworkException e) {
-				e.printStackTrace();
+		try {
+			final List<Map<String,Object>> responseList = (List<Map<String,Object>>)response;
+			if (responseList.isEmpty()) {
+				try {
+					final UploadRequest uploadRequest = new UploadRequest(file.javaFile());
+					uploadRequest.addHeader("Referer", verificationRequest.getURL());
+					uploadRequest.addHeader("X-CSRFToken", csrfToken);
+					myNetworkContext.perform(uploadRequest);
+				} catch (ZLNetworkException e) {
+					e.printStackTrace();
+				}
+			} else {
+				for (Map<String,Object> bookInfo : responseList) {
+					System.err.println("BOOK ALREADY UPLOADED: " + bookInfo.get("id"));
+					myHashesFromServer.addAll((List<String>)bookInfo.get("hashes"));
+				}
 			}
+		} catch (Exception e) {
+			System.err.println("UNEXPECTED RESPONSE: " + response);
 		}
 	}
 
