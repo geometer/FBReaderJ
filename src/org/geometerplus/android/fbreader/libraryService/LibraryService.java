@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader.libraryService;
 import java.util.*;
 
 import android.app.Service;
-import android.content.Intent;
+import android.content.*;
 import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.FileObserver;
@@ -44,7 +44,7 @@ import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
-	
+
 	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
 	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
 
