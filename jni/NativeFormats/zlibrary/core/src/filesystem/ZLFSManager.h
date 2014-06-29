@@ -39,11 +39,11 @@ public:
 
 protected:
 	static ZLFSManager *ourInstance;
-	
+
 protected:
 	ZLFSManager();
 	virtual ~ZLFSManager();
-	
+
 public:
 	void normalize(std::string &path) const;
 	virtual std::string resolveSymlink(const std::string &path) const = 0;

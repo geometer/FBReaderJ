@@ -80,7 +80,7 @@ shared_ptr<Tag> Tag::cloneSubTag(shared_ptr<Tag> tag, shared_ptr<Tag> oldparent,
 	}
 
 	if (levels.empty()) {
-		return 0;		
+		return 0;
 	}
 
 	shared_ptr<Tag> res = newparent;
