@@ -24,12 +24,12 @@ import java.io.IOException;
 
 import android.graphics.*;
 
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.image.ZLStreamImage;
 
 final class InputStreamImageData extends ZLAndroidImageData {
-	private final ZLSingleImage myImage;
+	private final ZLStreamImage myImage;
 
-	InputStreamImageData(ZLSingleImage image) {
+	InputStreamImageData(ZLStreamImage image) {
 		myImage = image;
 	}
 

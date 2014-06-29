@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.*;
 
-public class ZLFileImage extends ZLSingleImage {
+public class ZLFileImage implements ZLStreamImage {
 	public static final String SCHEME = "imagefile";
 
 	public static final String ENCODING_NONE = "";
@@ -56,6 +56,7 @@ public class ZLFileImage extends ZLSingleImage {
 		}
 	}
 
+	private final MimeType myMimeType;
 	private final ZLFile myFile;
 	private final String myEncoding;
 	private final int[] myOffsets;
@@ -67,7 +68,7 @@ public class ZLFileImage extends ZLSingleImage {
 	}
 
 	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
-		super(mimeType);
+		myMimeType = mimeType;
 		myFile = file;
 		myEncoding = encoding != null ? encoding : ENCODING_NONE;
 		myOffsets = offsets;
