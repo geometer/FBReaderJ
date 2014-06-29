@@ -614,7 +614,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			}
 		}
 	}
-			
+
 	public List<MenuNode> getMainMenuContent() {
 		final List<MenuNode> nodes = MenuData.topLevelNodes();
 		final List<MenuNode> copies = new ArrayList<MenuNode>(nodes.size());

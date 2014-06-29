@@ -36,7 +36,7 @@ class FileTypeMobipocket extends FileTypePalm {
 		}
 		final String extension = file.getExtension();
 		return
-			("mobi".equalsIgnoreCase(extension) || "azw3".equalsIgnoreCase(extension)) && 
+			("mobi".equalsIgnoreCase(extension) || "azw3".equalsIgnoreCase(extension)) &&
 			"BOOKMOBI".equals(palmFileType(file));
 	}
 
