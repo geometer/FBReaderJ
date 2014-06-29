@@ -75,19 +75,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			return;
 		}
 
-		@Override
-		public String readMetaInfo(String book, String appData) {
-			if (myServices.get(appData) == null) {
-				return null;
-			}
-			try {
-				return myServices.get(appData).readMetaInfo(book);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-
 		@TargetApi(8)
 		@Override
 		public ZLSingleImage readImage(ZLFile f, String appData) {

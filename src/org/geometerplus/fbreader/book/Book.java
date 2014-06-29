@@ -199,13 +199,6 @@ public class Book extends TitledEntity {
 			try {
 				plugin.readMetainfo(this);
 			} catch (UnsupportedOperationException e1) {
-				try {
-					String xml = MetaInfoUtil.PMIReader.readMetaInfo(oldxml, ((PluginFormatPlugin)fplugin).getPackage());
-					Book book = SerializerUtil.deserializeBook(xml);
-					updateFrom(book);
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
 			}
 		} else {
 			plugin.readMetainfo(this);
