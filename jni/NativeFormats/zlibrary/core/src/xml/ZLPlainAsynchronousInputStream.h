@@ -31,7 +31,7 @@ public:
 private:
 	bool processInputInternal(Handler &handler);
 
-private: 
+private:
 	// disable copying
 	ZLPlainAsynchronousInputStream(const ZLPlainAsynchronousInputStream &);
 	const ZLPlainAsynchronousInputStream &operator = (const ZLPlainAsynchronousInputStream &);
