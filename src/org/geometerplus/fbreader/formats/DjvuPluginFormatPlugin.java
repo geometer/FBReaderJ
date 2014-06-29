@@ -19,12 +19,9 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
@@ -37,18 +34,5 @@ public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
 	@Override
 	public String getPackage() {
 		return PACKAGE;
-	}
-
-	@Override
-	public String readAnnotation(ZLFile file) {
-		//TODO
-		return null;
-	}
-
-	@Override
-	public void readUids(Book book) throws BookReadingException {
-		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
-		}
 	}
 }

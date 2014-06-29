@@ -22,14 +22,14 @@ package org.geometerplus.fbreader.formats;
 import java.io.IOException;
 import java.util.Collections;
 
-import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
-import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.pdfparse.exception.EParseError;
 import org.pdfparse.model.PDFDocInfo;
 import org.pdfparse.model.PDFDocument;
+
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.fbreader.book.Author;
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 import android.util.Log;
 
@@ -59,19 +59,6 @@ public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public String readAnnotation(ZLFile file) {
-		//TODO
-		return null;
-	}
-
-	@Override
-	public void readUids(Book book) throws BookReadingException {
-		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
 	}
 }
