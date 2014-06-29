@@ -19,9 +19,9 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
-
 import android.graphics.Bitmap;
+
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLLoadableImage extends ZLSingleImage {
 	private volatile boolean myIsSynchronized;

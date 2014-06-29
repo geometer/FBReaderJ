@@ -21,10 +21,10 @@ package org.geometerplus.zlibrary.core.image;
 
 import java.io.*;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLSingleImage implements ZLImage {
 	private final MimeType myMimeType;
