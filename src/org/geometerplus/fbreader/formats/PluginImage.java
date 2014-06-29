@@ -21,9 +21,8 @@ package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.fbreader.book.MetaInfoUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
-
 
 public class PluginImage extends ZLImageProxy {
 	private final ZLFile myFile;
@@ -35,7 +34,7 @@ public class PluginImage extends ZLImageProxy {
 	}
 
 	@Override
-	public ZLSingleImage getRealImage() {
+	public ZLImage getRealImage() {
 		return MetaInfoUtil.PMIReader.readImage(myFile, myAppData);
 	}
 

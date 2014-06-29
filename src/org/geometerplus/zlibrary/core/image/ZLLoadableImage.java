@@ -19,14 +19,8 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
-
-public abstract class ZLLoadableImage extends ZLSingleImage {
+public abstract class ZLLoadableImage implements ZLImage {
 	private volatile boolean myIsSynchronized;
-
-	public ZLLoadableImage(MimeType mimeType) {
-		super(mimeType);
-	}
 
 	public final boolean isSynchronized() {
 		return myIsSynchronized;

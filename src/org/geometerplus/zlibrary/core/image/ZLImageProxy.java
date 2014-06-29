@@ -19,31 +19,16 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import java.io.InputStream;
-
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLImageProxy extends ZLLoadableImage {
-	private ZLSingleImage myImage;
+	private ZLImage myImage;
 
-	public ZLImageProxy(MimeType mimeType) {
-		super(mimeType);
-	}
-
-	public ZLImageProxy() {
-		this(MimeType.IMAGE_AUTO);
-	}
-
-	public abstract ZLSingleImage getRealImage();
+	public abstract ZLImage getRealImage();
 
 	public String getURI() {
 		final ZLImage image = getRealImage();
 		return image != null ? image.getURI() : "image proxy";
-	}
-
-	@Override
-	public final InputStream inputStream() {
-		return myImage != null ? myImage.inputStream() : null;
 	}
 
 	@Override
