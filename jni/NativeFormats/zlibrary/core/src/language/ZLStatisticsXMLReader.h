@@ -36,7 +36,7 @@ public:
 
 private:
 	shared_ptr<ZLArrayBasedStatistics> myStatisticsPtr;
-	
+
 private:
 	static const std::string ITEM_TAG;
 	static const std::string STATISTICS_TAG;

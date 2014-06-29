@@ -67,7 +67,7 @@ protected:
 		FONT_ITALIC,
 		FONT_UNDERLINED
 	};
-		
+
 	virtual void addCharData(const char *data, std::size_t len, bool convert) = 0;
 	virtual void insertImage(const std::string &mimeType, const std::string &fileName, std::size_t startOffset, std::size_t size) = 0;
 	virtual void setEncoding(int code) = 0;
@@ -91,7 +91,7 @@ protected:
 		bool Underlined;
 		ZLTextAlignmentType Alignment;
 		DestinationType Destination;
-	
+
 		bool ReadDataAsHex;
 	};
 
@@ -109,7 +109,7 @@ private:
 	int myBinaryDataSize;
 	std::string myNextImageMimeType;
 
-	int myIsInterrupted;	
+	int myIsInterrupted;
 
 friend class RtfNewParagraphCommand;
 friend class RtfFontPropertyCommand;
