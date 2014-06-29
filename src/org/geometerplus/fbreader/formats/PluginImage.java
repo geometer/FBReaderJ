@@ -19,10 +19,11 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.book.MetaInfoUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+
+import org.geometerplus.fbreader.book.MetaInfoUtil;
 
 public class PluginImage extends ZLImageProxy {
 	private final ZLFile myFile;
