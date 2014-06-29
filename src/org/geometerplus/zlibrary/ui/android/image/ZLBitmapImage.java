@@ -19,32 +19,25 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.image.*;
+import java.io.InputStream;
 
-public final class ZLAndroidImageManager extends ZLImageManager {
-	@Override
-	public ZLAndroidImageData getImageData(ZLImage image) {
-		if (image instanceof ZLStreamImage) {
-			return new InputStreamImageData((ZLStreamImage)image);
-		} else if (image instanceof ZLBitmapImage) {
-			// TODO: implement
-			return null;
-		} else if (image instanceof ZLImageProxy) {
-			return getImageData(((ZLImageProxy)image).getRealImage());
-		} else {
-			// unknown image type or null
-			return null;
-		}
+import org.geometerplus.zlibrary.core.image.ZLImage;
+
+import android.graphics.Bitmap;
+
+public class ZLBitmapImage implements ZLImage {
+	private final Bitmap myBitmap;
+
+	public ZLBitmapImage(Bitmap bitmap) {
+		myBitmap = bitmap;
 	}
 
-	private ZLAndroidImageLoader myLoader;
+	public Bitmap getBitmap() {
+		return myBitmap;
+	}
 
 	@Override
-	protected void startImageLoading(ZLLoadableImage image, Runnable postLoadingRunnable) {
-		if (myLoader == null) {
-			myLoader = new ZLAndroidImageLoader();
-		}
-		myLoader.startImageLoading(image, postLoadingRunnable);
+	public String getURI() {
+		return "bitmap image";
 	}
 }
