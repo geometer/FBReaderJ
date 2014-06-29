@@ -29,7 +29,7 @@ ZLCharSequence::ZLCharSequence(const char *ptr, std::size_t size) : mySize(size)
 	myHead = new char[mySize];
 	for (std::size_t count = 0; count < mySize; ++count){
 		myHead[count] = ptr[count];
-	} 
+	}
 }
 
 ZLCharSequence::ZLCharSequence(const ZLCharSequence& other) : mySize(other.mySize) {
@@ -48,11 +48,11 @@ ZLCharSequence::ZLCharSequence(const std::string &hexSequence) {
 	myHead = new char[mySize];
 	for (std::size_t count = 0; count < mySize; ++count){
 		char a = hexSequence[count * 5 + 2];
-		char b = hexSequence[count * 5 + 3];		
-		a -= (a >= 97) ? 87 : 48; 
+		char b = hexSequence[count * 5 + 3];
+		a -= (a >= 97) ? 87 : 48;
 		b -= (b >= 97) ? 87 : 48;
 		myHead[count] = a*16 + b;
-	} 
+	}
 }
 
 ZLCharSequence& ZLCharSequence::operator= (const ZLCharSequence& other) {
@@ -72,20 +72,20 @@ ZLCharSequence& ZLCharSequence::operator= (const ZLCharSequence& other) {
 		}
 	}
 	return *this;
-}	
+}
 
-std::string ZLCharSequence::toHexSequence() const { 
+std::string ZLCharSequence::toHexSequence() const {
 	std::string result;
 	static const char table[] = "0123456789abcdef";
 	for (std::size_t count = 0;; ++count) {
 		result += "0x";
 		result += table[(myHead[count] >> 4) & 0x0F];
 		result += table[myHead[count] & 0x0F];
-		if (count == mySize-1) { 
+		if (count == mySize-1) {
 			return result;
 		}
 		result += " ";
-	} 
+	}
 	return result;
 }
 

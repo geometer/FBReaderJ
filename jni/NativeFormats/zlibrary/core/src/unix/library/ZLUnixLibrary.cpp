@@ -35,7 +35,7 @@ const std::string ZLibrary::PathDelimiter(":");
 const std::string ZLibrary::EndOfLine("\n");
 
 /*void ZLibrary::initLocale() {
-	const char *locale = setlocale(LC_MESSAGES, ""); 
+	const char *locale = setlocale(LC_MESSAGES, "");
 	if (locale != 0) {
 		std::string sLocale = locale;
 		const int dotIndex = sLocale.find('.');
