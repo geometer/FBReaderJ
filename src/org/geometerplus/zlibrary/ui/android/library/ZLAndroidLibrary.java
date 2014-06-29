@@ -257,7 +257,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			if (streamStatus() == StreamStatus.OK) {
 				return true;
 			}
-			final String path = getPath();	
+			final String path = getPath();
 			if ("".equals(path)) {
 				return true;
 			}
