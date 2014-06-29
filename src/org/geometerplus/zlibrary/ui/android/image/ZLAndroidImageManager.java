@@ -19,7 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.image.*;
 
 public final class ZLAndroidImageManager extends ZLImageManager {
