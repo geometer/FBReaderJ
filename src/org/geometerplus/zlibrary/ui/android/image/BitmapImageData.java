@@ -19,8 +19,8 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 final class BitmapImageData extends ZLAndroidImageData {
 	private final Bitmap myBitmap;
@@ -30,6 +30,19 @@ final class BitmapImageData extends ZLAndroidImageData {
 	}
 
 	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
-		return myBitmap;
+		if (myBitmap == null) {
+			return null;
+		}
+		final int scaleFactor = options.inSampleSize;
+		if (scaleFactor <= 1) {
+			return myBitmap;
+		}
+		try {
+			return Bitmap.createScaledBitmap(
+				myBitmap, myBitmap.getWidth() / scaleFactor, myBitmap.getHeight() / scaleFactor, false
+			);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
