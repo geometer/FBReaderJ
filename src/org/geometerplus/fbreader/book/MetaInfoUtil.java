@@ -26,6 +26,6 @@ public class MetaInfoUtil {
 	public static interface PluginMetaInfoReader {
 		public ZLImage readImage(ZLFile f, String appData);
 	}
-	
+
 	public static PluginMetaInfoReader PMIReader;
 }

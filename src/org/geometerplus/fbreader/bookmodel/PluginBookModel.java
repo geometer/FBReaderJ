@@ -36,7 +36,7 @@ public class PluginBookModel extends BookModelImpl {
 	public ZLTextModel getFootnoteModel(String id) {
 		return null;
 	}
-	
+
 	@Override
 	public boolean isValid() {
 		return false;

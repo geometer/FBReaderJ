@@ -37,7 +37,7 @@ public abstract class PluginFormatPlugin extends FormatPlugin {
 	}
 
 	public abstract String getPackage();
-	
+
 	@Override
 	public Type type() {
 		return Type.PLUGIN;

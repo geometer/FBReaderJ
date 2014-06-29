@@ -35,7 +35,7 @@ import android.util.Log;
 
 public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
-	
+
 	public PdfPluginFormatPlugin() {
 		super("PDF");
 	}
@@ -67,7 +67,7 @@ public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 		//TODO
 		return null;
 	}
-	
+
 	@Override
 	public void readUids(Book book) throws BookReadingException {
 		if (book.uids().isEmpty()) {

@@ -45,7 +45,7 @@ public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {
 		public boolean openFile(ZLFile f, String appData);
 	}
-	
+
 	public interface PluginFileOpener {
 		public void openFile(String appData, Book book, Bookmark bookmark);
 	}
@@ -56,7 +56,7 @@ public final class FBReaderApp extends ZLApplication {
 	public void setExternalFileOpener(ExternalFileOpener o) {
 		myExternalFileOpener = o;
 	}
-	
+
 	public boolean externalFileOpenerIsSet() {
 		return myExternalFileOpener != null;
 	}
@@ -68,7 +68,7 @@ public final class FBReaderApp extends ZLApplication {
 	public boolean pluginFileOpenerIsSet() {
 		return myPluginFileOpener != null;
 	}
-	
+
 	public PluginFileOpener getPluginFileOpener() {
 		return myPluginFileOpener;
 	}

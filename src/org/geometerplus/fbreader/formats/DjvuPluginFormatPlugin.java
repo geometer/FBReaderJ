@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
 	private final String PACKAGE = "org.geometerplus.fbreader.plugin.djvu";
-	
+
 	public DjvuPluginFormatPlugin() {
 		super("DjVu");
 	}
@@ -44,7 +44,7 @@ public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
 		//TODO
 		return null;
 	}
-	
+
 	@Override
 	public void readUids(Book book) throws BookReadingException {
 		if (book.uids().isEmpty()) {
