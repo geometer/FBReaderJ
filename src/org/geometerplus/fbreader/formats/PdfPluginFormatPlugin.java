@@ -26,7 +26,6 @@ import org.pdfparse.exception.EParseError;
 import org.pdfparse.model.PDFDocInfo;
 import org.pdfparse.model.PDFDocument;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;

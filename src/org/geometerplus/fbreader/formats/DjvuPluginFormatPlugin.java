@@ -19,11 +19,6 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
-
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
-
 public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
 	private final String PACKAGE = "org.geometerplus.fbreader.plugin.djvu";
 
