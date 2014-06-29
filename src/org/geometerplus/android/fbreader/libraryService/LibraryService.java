@@ -23,6 +23,7 @@ import java.util.*;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.FileObserver;
 
@@ -265,8 +266,8 @@ public class LibraryService extends Service {
 		}
 
 		@Override
-		public boolean saveCover(String book, String url) {
-			return myCollection.saveCover(SerializerUtil.deserializeBook(book), url);
+		public Bitmap getCover(String book, int maxWidth, int maxHeight) {
+			return myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 		}
 
 		public List<String> bookmarks(String query) {
