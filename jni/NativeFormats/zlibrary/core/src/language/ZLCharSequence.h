@@ -25,17 +25,17 @@
 class ZLCharSequence {
 
 public:
-	ZLCharSequence(); 
-	ZLCharSequence(const char *ptr, std::size_t size); 
+	ZLCharSequence();
+	ZLCharSequence(const char *ptr, std::size_t size);
 	ZLCharSequence(const std::string &hexSequence);
 	ZLCharSequence(const ZLCharSequence &other);
-	~ZLCharSequence();		
- 
+	~ZLCharSequence();
+
 	std::size_t getSize() const;
 	const char &operator [] (std::size_t index) const;
 	ZLCharSequence &operator = (const ZLCharSequence& other);
-		
-	std::string toHexSequence() const; 
+
+	std::string toHexSequence() const;
 
 	// returns
 	//   an integer < 0 if the sequence is less than other
@@ -43,7 +43,7 @@ public:
 	//   0 if the sequence is equal to other
 	int compareTo(const ZLCharSequence &other) const;
 
-private: 
+private:
 	std::size_t mySize;
 	char *myHead;
 };

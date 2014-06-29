@@ -363,7 +363,7 @@ void ZLTextModel::addVideoEntry(const ZLVideoEntry &entry) {
 
 	std::size_t len = 4;
 	for (std::map<std::string,std::string>::const_iterator it = sources.begin(); it != sources.end(); ++it) {
-		len += 2 * (ZLUnicodeUtil::utf8Length(it->first) + ZLUnicodeUtil::utf8Length(it->second)) + 4;	
+		len += 2 * (ZLUnicodeUtil::utf8Length(it->first) + ZLUnicodeUtil::utf8Length(it->second)) + 4;
 	}
 
 	myLastEntryStart = myAllocator->allocate(len);

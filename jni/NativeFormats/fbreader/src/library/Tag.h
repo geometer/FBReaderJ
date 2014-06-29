@@ -43,7 +43,7 @@ public:
 	static void setTagId(shared_ptr<Tag>, int tagId);
 
 	static shared_ptr<Tag> cloneSubTag(shared_ptr<Tag> tag, shared_ptr<Tag> oldparent, shared_ptr<Tag> newparent);
-	
+
 	static void collectAncestors(shared_ptr<Tag> tag, TagList &parents);
 
 	static void collectTagNames(std::vector<std::string> &tags);
@@ -70,7 +70,7 @@ public:
 
 	int tagId() const;
 	std::size_t level() const;
-	
+
 private:
 	const std::string myName;
 	mutable std::string myFullName;
@@ -78,7 +78,7 @@ private:
 	shared_ptr<Tag> myParent;
 	TagList myChildren;
 	const std::size_t myLevel;
-	
+
 	int myTagId;
 
 	mutable jobject myJavaTag;

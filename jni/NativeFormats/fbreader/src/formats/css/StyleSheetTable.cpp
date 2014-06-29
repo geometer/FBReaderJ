@@ -199,7 +199,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 
 	const std::string &fontSize = value(styles, "font-size");
 	if (!fontSize.empty()) {
-		bool doSetFontSize = true; 
+		bool doSetFontSize = true;
 		short size = 100;
 		ZLTextStyleEntry::SizeUnit unit = ZLTextStyleEntry::SIZE_UNIT_PERCENT;
 		if (fontSize == "xx-small") {
