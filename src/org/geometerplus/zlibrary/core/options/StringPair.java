@@ -39,7 +39,7 @@ final class StringPair {
 			return Group.equals(pair.Group) && Name.equals(pair.Name);
 		} catch (ClassCastException e) {
 			return false;
-		} 
+		}
 	}
 
 	@Override
