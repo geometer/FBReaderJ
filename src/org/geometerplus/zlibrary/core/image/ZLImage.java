@@ -19,9 +19,6 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import android.graphics.Bitmap;
-
 public interface ZLImage {
 	String getURI();
-	Bitmap getBitmap();
 }

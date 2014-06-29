@@ -25,12 +25,8 @@ import org.geometerplus.zlibrary.core.image.*;
 public final class ZLAndroidImageManager extends ZLImageManager {
 	@Override
 	public ZLAndroidImageData getImageData(ZLImage image) {
-		if (image instanceof ZLSingleImage) {
-			final ZLSingleImage singleImage = (ZLSingleImage)image;
-			if (MimeType.IMAGE_PALM.equals(singleImage.mimeType())) {
-				return null;
-			}
-			return new InputStreamImageData(singleImage);
+		if (image instanceof ZLStreamImage) {
+			return new InputStreamImageData((ZLStreamImage)image);
 		} else {
 			// TODO
 			return null;
