@@ -139,7 +139,7 @@ class BookMergeHelper {
 				result = true;
 			}
 		}
-		
+
 		return result;
 	}
 }
