@@ -182,7 +182,6 @@ public class Book extends TitledEntity {
 	}
 
 	private void readMetainfo(FormatPlugin plugin) throws BookReadingException {
-		String oldxml = SerializerUtil.serialize(this);
 		myEncoding = null;
 		myLanguage = null;
 		setTitle(null);
