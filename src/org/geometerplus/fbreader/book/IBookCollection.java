@@ -21,11 +21,10 @@ package org.geometerplus.fbreader.book;
 
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import android.graphics.Bitmap;
+
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 public interface IBookCollection {
 	public enum Status {
@@ -82,7 +81,7 @@ public interface IBookCollection {
 	void markHyperlinkAsVisited(Book book, String linkId);
 
 	Bitmap getCover(Book book, int maxWidth, int maxHeight);
-	
+
 	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);
