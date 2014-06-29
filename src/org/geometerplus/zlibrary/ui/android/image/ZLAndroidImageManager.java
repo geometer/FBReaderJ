@@ -28,8 +28,7 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 		if (image instanceof ZLStreamImage) {
 			return new InputStreamImageData((ZLStreamImage)image);
 		} else if (image instanceof ZLBitmapImage) {
-			// TODO: implement
-			return null;
+			return BitmapImageData.get((ZLBitmapImage)image);
 		} else if (image instanceof ZLImageProxy) {
 			return getImageData(((ZLImageProxy)image).getRealImage());
 		} else {
