@@ -29,6 +29,9 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
 
@@ -642,24 +645,9 @@ public class BookCollection extends AbstractBookCollection {
 			return null;
 		}
 
-		final Bitmap rawBitmap = BookUtil.getCover(book).getBitmap();
-		if (rawBitmap == null) {
-			return null;
-		}
-
-		return resized(rawBitmap, maxWidth, maxHeight);
-	}
-
-	private Bitmap resized(Bitmap bitmap, int maxWidth, int maxHeight) {
-		final int realWidth = bitmap.getWidth();
-		final int realHeight = bitmap.getHeight();
-		if (realWidth <= maxWidth && realHeight <= maxHeight) {
-			return bitmap;
-		}
-		float aspect = Math.max((float)realWidth / maxWidth, (float)realHeight / maxHeight);
-		final int scaledWidth = (int)(realWidth / aspect);
-		final int scaledHeight = (int)(realHeight / aspect);
-		return Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false);
+		final ZLAndroidImageManager manager = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+		final ZLAndroidImageData data = manager.getImageData(BookUtil.getCover(book));
+		return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
