@@ -147,7 +147,7 @@ public class NetworkLibrary {
 	}
 
 	List<INetworkLink> activeLinks() {
-		final Map<String,INetworkLink> linksById = new TreeMap<String,INetworkLink>(); 
+		final Map<String,INetworkLink> linksById = new TreeMap<String,INetworkLink>();
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
 				final String id = link.getUrl(UrlInfo.Type.Catalog);
