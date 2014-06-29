@@ -123,7 +123,7 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 	int quotationCounter = 0;
 	HtmlTag currentTag;
 	char endOfComment[2] = "\0";
-	
+
 	const std::size_t BUFSIZE = 2048;
 	char *buffer = new char[BUFSIZE];
 	std::size_t length;
@@ -362,7 +362,7 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 					break;
 			}
 		}
-		offset += length; 
+		offset += length;
 	} while (length == BUFSIZE);
 endOfProcessing:
 	delete[] buffer;

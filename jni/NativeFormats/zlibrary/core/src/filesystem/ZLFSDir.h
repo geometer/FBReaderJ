@@ -23,7 +23,7 @@
 #include "ZLDir.h"
 
 class ZLFSDir : public ZLDir {
-	
+
 protected:
 	ZLFSDir(const std::string &path);
 
