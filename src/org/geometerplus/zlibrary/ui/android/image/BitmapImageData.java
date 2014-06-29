@@ -23,16 +23,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 final class BitmapImageData extends ZLAndroidImageData {
+	static BitmapImageData get(ZLBitmapImage image) {
+		final Bitmap bitmap = image.getBitmap();
+		return bitmap != null ? new BitmapImageData(bitmap) : null;
+	}
+
 	private final Bitmap myBitmap;
 
-	BitmapImageData(ZLBitmapImage image) {
-		myBitmap = image != null ? image.getBitmap() : null;
+	private BitmapImageData(Bitmap bitmap) {
+		myBitmap = bitmap;
 	}
 
 	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
-		if (myBitmap == null) {
-			return null;
-		}
 		final int scaleFactor = options.inSampleSize;
 		if (scaleFactor <= 1) {
 			return myBitmap;
