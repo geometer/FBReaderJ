@@ -29,11 +29,11 @@ import android.os.Build;
 public abstract class TitledEntity {
 	private String myTitle;
 	private String mySortKey;
-	
+
 	public TitledEntity(String title) {
 		myTitle = title;
 	}
-	
+
 	public String getTitle() {
 		return myTitle != null ? myTitle : "";
 	}
@@ -50,9 +50,9 @@ public abstract class TitledEntity {
 	protected void resetSortKey() {
 		mySortKey = null;
 	}
-	
+
 	public abstract String getLanguage();
-	
+
 	public String getSortKey() {
 		if (null == mySortKey) {
 			try {
@@ -63,7 +63,7 @@ public abstract class TitledEntity {
 		}
 		return mySortKey;
 	}
-	
+
 	private final static Map<String, String[]> ARTICLES = new HashMap<String, String[]>();
 	// English articles
 	private final static String[] EN_ARTICLES = new String[] {
@@ -88,7 +88,7 @@ public abstract class TitledEntity {
 	private final static String[] SP_ARTICLES = new String[] {
 		"el ", "la ", "los ", "las ", "un ", "unos ", "una ", "unas "
 	};
-	
+
 	static {
 		ARTICLES.put("en", EN_ARTICLES);
 		ARTICLES.put("fr", FR_ARTICLES);
@@ -148,7 +148,7 @@ public abstract class TitledEntity {
 		if (result.startsWith("a is")) {
 			return result;
 		}
-		
+
 		if (null != ARTICLES.get(language)) {
 			for (String a : ARTICLES.get(language)) {
 				if (result.startsWith(a)) {

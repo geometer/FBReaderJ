@@ -1043,7 +1043,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 		return links;
 	}
-	
+
 	private SQLiteStatement mySaveProgessStatement;
 	@Override
 	protected void saveBookProgress(long bookId, RationalNumber progress) {
@@ -1489,7 +1489,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, '', 245*256*256 + 121*256 + 0)"); // #f57900
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, '', 114*256*256 + 159*256 + 207)"); // #729fcf
 	}
-	
+
 	private void updateTables25() {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS BookReadingProgress(" +
@@ -1497,7 +1497,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"numerator INTEGER NOT NULL," +
 				"denominator INTEGER NOT NULL)");
 	}
-	
+
 	private void updateTables26() {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS BookSynchronizationInfo(" +
