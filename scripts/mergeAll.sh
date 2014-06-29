@@ -3,9 +3,6 @@
 git checkout tags-master
 git merge master
 
-git checkout cover_transfer_and_saving
-git merge master
-
 git checkout ice-cream-sandwich
 git merge master
 
