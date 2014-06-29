@@ -51,4 +51,9 @@ public class FB2NativePlugin extends NativeFormatPlugin {
 	public void detectLanguageAndEncoding(Book book) {
 		book.setEncoding("auto");
 	}
+
+	@Override
+	public String readAnnotation(ZLFile file) {
+		return new FB2AnnotationReader().readAnnotation(file);
+	}
 }

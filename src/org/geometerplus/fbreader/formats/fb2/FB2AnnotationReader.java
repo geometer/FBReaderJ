@@ -55,19 +55,14 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 	}
 
 	@Override
-	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
-		switch (FB2Tag.getTagByName(tagName)) {
-			case FB2Tag.BODY:
-				return true;
-			case FB2Tag.ANNOTATION:
-				myReadState = READ_ANNOTATION;
-				break;
-			default:
-				if (myReadState == READ_ANNOTATION) {
-					// TODO: add tag to buffer
-					myBuffer.append(" ");
-				}
-				break;
+	public boolean startElementHandler(String tag, ZLStringMap attributes) {
+		if ("body".equalsIgnoreCase(tag)) {
+			return true;
+		} else if ("annotation".equalsIgnoreCase(tag)) {
+			myReadState = READ_ANNOTATION;
+		} else if (myReadState == READ_ANNOTATION) {
+			// TODO: add tag to buffer
+			myBuffer.append(" ");
 		}
 		return false;
 	}
@@ -77,16 +72,13 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 		if (myReadState != READ_ANNOTATION) {
 			return false;
 		}
-		switch (FB2Tag.getTagByName(tag)) {
-			case FB2Tag.ANNOTATION:
-				return true;
-			case FB2Tag.P:
-				myBuffer.append("\n");
-				break;
-			default:
-				// TODO: add tag to buffer
-				myBuffer.append(" ");
-				break;
+		if ("annotation".equalsIgnoreCase(tag)) {
+			return true;
+		} else if ("p".equalsIgnoreCase(tag)) {
+			myBuffer.append("\n");
+		} else {
+			// TODO: add tag to buffer
+			myBuffer.append(" ");
 		}
 		return false;
 	}
