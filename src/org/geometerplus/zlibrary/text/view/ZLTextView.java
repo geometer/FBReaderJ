@@ -925,8 +925,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					context.drawLine(xStart, yEnd, xEnd, yEnd);
 					context.drawLine(xEnd, yEnd, xEnd, yStart);
 					context.drawLine(xEnd, yStart, xStart, yStart);
-					final int l = xStart + (xEnd - xStart) * 7 / 16; 
-					final int r = xStart + (xEnd - xStart) * 10 / 16; 
+					final int l = xStart + (xEnd - xStart) * 7 / 16;
+					final int r = xStart + (xEnd - xStart) * 10 / 16;
 					final int t = yStart + (yEnd - yStart) * 2 / 6;
 					final int b = yStart + (yEnd - yStart) * 4 / 6;
 					final int c = yStart + (yEnd - yStart) / 2;
@@ -1650,7 +1650,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private static class ParagraphSize {
 		public int Height;
 		public int TopMargin;
-		public int BottomMargin;	
+		public int BottomMargin;
 	}
 
 	private ParagraphSize paragraphSize(ZLTextPage page, ZLTextWordCursor cursor, boolean beforeCurrentPosition, int unit) {
