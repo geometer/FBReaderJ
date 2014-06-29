@@ -19,10 +19,7 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import java.io.*;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -37,15 +34,5 @@ public abstract class ZLSingleImage implements ZLImage {
 
 	public final MimeType mimeType() {
 		return myMimeType;
-	}
-
-	@Override
-	public Bitmap getBitmap() {
-		final InputStream inputStream = inputStream();
-		if (inputStream == null) {
-			return null;
-		}
-
-		return BitmapFactory.decodeStream(inputStream);
 	}
 }
