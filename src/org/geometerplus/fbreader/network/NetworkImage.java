@@ -24,19 +24,19 @@ import java.io.*;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
 
-public final class NetworkImage extends ZLLoadableImage {
+public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage {
+	private MimeType myMimeType;
 	public final String Url;
 
 	public NetworkImage(String url, MimeType mimeType) {
-		super(mimeType);
+		myMimeType = mimeType;
 		Url = url;
 		new File(Paths.networkCacheDirectory()).mkdirs();
 	}
@@ -134,7 +134,7 @@ public final class NetworkImage extends ZLLoadableImage {
 	}
 
 	public String getFilePath() {
-		return makeImageFilePath(Url, mimeType());
+		return makeImageFilePath(Url, myMimeType);
 	}
 
 	@Override
@@ -218,7 +218,7 @@ public final class NetworkImage extends ZLLoadableImage {
 			if (file == null) {
 				return null;
 			}
-			myFileImage = new ZLFileImage(mimeType(), file);
+			myFileImage = new ZLFileImage(myMimeType, file);
 		}
 		return myFileImage.inputStream();
 	}

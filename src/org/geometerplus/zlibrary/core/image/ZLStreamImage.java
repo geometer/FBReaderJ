@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.fb2;
+package org.geometerplus.zlibrary.core.image;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import java.io.InputStream;
 
-public class FB2CoverReader {
-	public FB2CoverImage readCover(ZLFile file) {
-		return new FB2CoverImage(file);
-	}
+public interface ZLStreamImage extends ZLImage {
+	public abstract InputStream inputStream();
 }

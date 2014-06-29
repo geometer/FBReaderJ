@@ -153,13 +153,13 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			}
 
 			@Override
-			public ZLSingleImage getRealImage() {
+			public ZLImage getRealImage() {
 				return readCoverInternal(file);
 			}
 		};
 	}
 
-	private ZLSingleImage readCoverInternal(ZLFile file) {
+	private ZLImage readCoverInternal(ZLFile file) {
 		InputStream stream = null;
 		try {
 			stream = file.getInputStream();
