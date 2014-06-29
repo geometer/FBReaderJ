@@ -299,7 +299,7 @@ public class Book extends TitledEntity {
 			}
 		}
 
-		addAuthor(new Author(strippedName, strippedKey.toLowerCase()));
+		addAuthor(new Author(strippedName, strippedKey));
 	}
 
 	public long getId() {
