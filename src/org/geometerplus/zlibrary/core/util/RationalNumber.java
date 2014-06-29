@@ -29,7 +29,7 @@ public class RationalNumber {
 
 	public final long Numerator;
 	public final long Denominator;
-	
+
 	private RationalNumber(long numerator, long denominator) {
 		final long gcd = GCD(numerator, denominator);
 		if (gcd > 1) {
@@ -43,11 +43,11 @@ public class RationalNumber {
 		Numerator = numerator;
 		Denominator = denominator;
 	}
-	
+
 	public float toFloat() {
 		return 1.0f * Numerator / Denominator;
 	}
-	
+
 	private long GCD(long a, long b) {
 		if (a < 0) {
 			a = -a;
@@ -64,7 +64,7 @@ public class RationalNumber {
 		}
 		return a + b;
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
 		if (this == other) {
@@ -76,7 +76,7 @@ public class RationalNumber {
 		final RationalNumber otherNumber = (RationalNumber)other;
 		return otherNumber.Numerator == Numerator && otherNumber.Denominator == Denominator;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return (int)(37 * Numerator + Denominator);
