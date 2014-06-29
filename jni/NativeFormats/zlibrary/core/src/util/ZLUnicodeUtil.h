@@ -40,7 +40,7 @@ public:
 		BREAKABLE_BEFORE,
 		BREAKABLE_AFTER
 	};
-	
+
 	static bool isUtf8String(const char *str, int len);
 	static bool isUtf8String(const std::string &str);
 	static void cleanUtf8String(std::string &str);

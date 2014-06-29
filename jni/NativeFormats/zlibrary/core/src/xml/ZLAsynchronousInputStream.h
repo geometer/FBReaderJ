@@ -58,7 +58,7 @@ private:
 	bool myInitialized;
 	bool myEof;
 
-private: 
+private:
 	// disable copying
 	ZLAsynchronousInputStream(const ZLAsynchronousInputStream &);
 	const ZLAsynchronousInputStream &operator = (const ZLAsynchronousInputStream &);

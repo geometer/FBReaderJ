@@ -46,7 +46,7 @@ public:
 
 protected:
 	virtual std::string delimiter() const = 0;
-	
+
 private:
 	std::string myPath;
 

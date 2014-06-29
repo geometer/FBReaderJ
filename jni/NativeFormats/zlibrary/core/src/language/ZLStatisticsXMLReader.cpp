@@ -21,8 +21,8 @@
 #include <string>
 #include <map>
 
-#include <ZLFile.h> 
-#include <ZLInputStream.h> 
+#include <ZLFile.h>
+#include <ZLInputStream.h>
 
 #include "ZLCharSequence.h"
 #include "ZLStatistics.h"
@@ -64,5 +64,5 @@ shared_ptr<ZLArrayBasedStatistics> ZLStatisticsXMLReader::readStatistics(const s
 
 	statisticsMap.insert(std::make_pair(fileName, myStatisticsPtr));
 
-	return myStatisticsPtr; 
+	return myStatisticsPtr;
 }
