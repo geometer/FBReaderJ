@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.fbreader.book.Book;
+
 public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
 	private final String PACKAGE = "org.geometerplus.fbreader.plugin.djvu";
 
@@ -29,5 +31,10 @@ public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
 	@Override
 	public String getPackage() {
 		return PACKAGE;
+	}
+
+	@Override
+	public void readMetainfo(Book book) {
+		// TODO: implement
 	}
 }
