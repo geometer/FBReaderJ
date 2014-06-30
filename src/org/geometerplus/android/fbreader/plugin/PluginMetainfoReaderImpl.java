@@ -35,9 +35,6 @@ import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 class PluginMetainfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
 	public final Map<String,MetaInfoReader> Readers = new HashMap<String,MetaInfoReader>();
 
-	public void openFile(ZLFile f, String appData, String bookmark, long bookId) {
-	}
-
 	@TargetApi(8)
 	@Override
 	public ZLBitmapImage readImage(ZLFile f, String packageName) {
