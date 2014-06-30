@@ -45,18 +45,14 @@ public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 	}
 
 	@Override
-	public void readMetainfo(Book book) throws BookReadingException {
+	public void readMetainfo(Book book) {
 		try {
-			PDFDocument doc = new PDFDocument(book.File.getUrl().replaceAll("file://", ""));
-			PDFDocInfo info = doc.getDocumentInfo();
+			final PDFDocument doc = new PDFDocument(book.File.getPath());
+			final PDFDocInfo info = doc.getDocumentInfo();
 			book.setTitle(info.getTitle());
 			Log.d("PDFPARSE", info.getTitle());
 			book.setAuthors(Collections.singletonList(new Author(info.getAuthor(), "")));
-		} catch (EParseError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
