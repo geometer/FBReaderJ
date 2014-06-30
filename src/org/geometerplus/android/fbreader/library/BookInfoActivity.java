@@ -24,14 +24,10 @@ import java.text.DateFormat;
 import java.util.*;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -50,15 +46,13 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-import org.geometerplus.android.fbreader.library.LibraryActivity.PluginMetaInfoReaderImpl;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
+import org.geometerplus.android.fbreader.plugin.PluginConnectionPool;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity implements IBookCollection.Listener {
@@ -70,8 +64,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 	private Book myBook;
 	private boolean myDontReloadBook;
 
-	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
-	private List<ServiceConnection> myServiceConnections = new LinkedList<ServiceConnection>();
+	private final PluginConnectionPool myPool = new PluginConnectionPool(this);
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
@@ -90,23 +83,11 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		setContentView(R.layout.book_info);
 
 		if (MetaInfoUtil.PMIReader == null) {
-			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
-			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-				final ServiceConnection servConn = new ServiceConnection() {
-					public void onServiceConnected(ComponentName className, IBinder binder) {
-						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
-						setupCover(myBook);
-					}
-
-					public void onServiceDisconnected(ComponentName className) {
-						myServices.remove(pack);
-					}
-				};
-				myServiceConnections.add(servConn);
-				Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
-				i.setPackage(pack);
-				bindService(i, servConn, Context.BIND_AUTO_CREATE);
-			}
+			MetaInfoUtil.PMIReader = myPool.createMetainfoReader(new Runnable() {
+				public void run() {
+					setupCover(myBook);
+				}
+			});
 		}
 	}
 
@@ -177,9 +158,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		myCollection.removeListener(this);
 		myCollection.unbind();
 
-		for (ServiceConnection connection : myServiceConnections) {
-			unbindService(connection);
-		}
+		myPool.clear();
 
 		super.onDestroy();
 	}
