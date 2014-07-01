@@ -33,14 +33,14 @@ import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
-public class ExternalFormatPlugin extends FormatPlugin {
+public class ExternalProgramFormatPlugin extends FormatPlugin {
 	private FormatPlugin myInfoReader;
 
-	public ExternalFormatPlugin(String fileType) {
+	public ExternalProgramFormatPlugin(String fileType) {
 		super(fileType);
 	}
 
-	public ExternalFormatPlugin(String fileType, FormatPlugin ir) {
+	public ExternalProgramFormatPlugin(String fileType, FormatPlugin ir) {
 		super(fileType);
 		myInfoReader = ir;
 	}
@@ -80,7 +80,7 @@ public class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public Type type() {
-		return Type.EXTERNAL;
+		return Type.EXTERNAL_PROGRAM;
 	}
 
 	@Override

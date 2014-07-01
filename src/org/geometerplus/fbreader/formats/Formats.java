@@ -142,6 +142,6 @@ public abstract class Formats {
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
 		if (pkg.equals(PLUGIN_OPTION)) return FormatPlugin.Type.PLUGIN;
 		if (pkg.equals("")) return FormatPlugin.Type.NONE;
-		return FormatPlugin.Type.EXTERNAL;
+		return FormatPlugin.Type.EXTERNAL_PROGRAM;
 	}
 }

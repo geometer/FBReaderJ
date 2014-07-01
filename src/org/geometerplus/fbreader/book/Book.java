@@ -208,7 +208,7 @@ public class Book extends TitledEntity {
 
 		if (isTitleEmpty()) {
 			final String fileName = File.getShortName();
-			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL ? -1 : fileName.lastIndexOf('.'));
+			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL_PROGRAM ? -1 : fileName.lastIndexOf('.'));
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
 	}
