@@ -59,8 +59,8 @@ public abstract class FormatPlugin {
 		ANY(false),
 		JAVA(true),
 		NATIVE(true),
-		PLUGIN(false),
 		EXTERNAL(false),
+		EXTERNAL_PROGRAM(false),
 		NONE(false);
 
 		public final boolean Builtin;
