@@ -19,6 +19,12 @@
 
 package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.BookUtil;
+
 public abstract class ExternalFormatPlugin extends FormatPlugin {
 	protected ExternalFormatPlugin(String fileType) {
 		super(fileType);
@@ -26,6 +32,27 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public Type type() {
-		return EXTERNAL;
+		return Type.EXTERNAL;
+	}
+
+	@Override
+	public AutoEncodingCollection supportedEncodings() {
+		return new AutoEncodingCollection();
+	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) {
+	}
+
+	@Override
+	public String readAnnotation(ZLFile file) {
+		return null;
+	}
+
+	@Override
+	public void readUids(Book book) {
+		if (book.uids().isEmpty()) {
+			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
+		}
 	}
 }
