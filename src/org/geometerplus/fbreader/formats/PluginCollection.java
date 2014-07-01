@@ -93,7 +93,7 @@ public class PluginCollection {
 					p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 				}
 				if (p == null) {
-					p = getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+					p = getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
 				}
 				return p;
 			}
