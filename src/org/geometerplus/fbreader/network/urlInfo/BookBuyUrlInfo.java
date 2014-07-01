@@ -27,8 +27,8 @@ public class BookBuyUrlInfo extends BookUrlInfo {
 
 	public final Money Price;
 
-	public BookBuyUrlInfo(Type type, Format format, String url, MimeType mime, Money price) {
-		super(type, format, url, mime);
+	public BookBuyUrlInfo(Type type, String url, MimeType mime, Money price) {
+		super(type, url, mime);
 		Price = price;
 	}
 }
