@@ -185,7 +185,7 @@ public final class FBReaderApp extends ZLApplication {
 			}, postAction);
 			return;
 		}
-		if (p.type() == FormatPlugin.Type.PLUGIN) {
+		if (p.type() == FormatPlugin.Type.EXTERNAL) {
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
@@ -203,7 +203,7 @@ public final class FBReaderApp extends ZLApplication {
 			final SynchronousExecutor executor = createExecutor("loadingBook");
 			executor.execute(new Runnable() {
 				public void run() {
-					final PluginFormatPlugin pfp = (PluginFormatPlugin)p;
+					final ExternalFormatPlugin pfp = (ExternalFormatPlugin)p;
 					myPluginFileOpener.openFile(pfp.getPackage(), bookToOpen, bm);
 				}
 			}, postAction);

@@ -57,7 +57,7 @@ class FormatPreference extends ListPreference {
 		myScreen = scr;
 		myIsJava = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.JAVA) != null;
 		myIsNative = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.NATIVE) != null;
-		myIsPlugin = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.PLUGIN) != null;
+		myIsPlugin = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.EXTERNAL) != null;
 		myIsPredefined = Formats.getPredefinedFormats().contains(formatName);
 		myResource = resource.getResource(resourceKey);
 		final String emptySummary = myResource.getResource("appNotSet").getValue();

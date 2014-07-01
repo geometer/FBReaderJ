@@ -118,7 +118,7 @@ public abstract class Formats {
 			if (p instanceof NativeFormatPlugin) {
 				return new ZLStringOption("Formats", filetypeToOption(filetype), NATIVE_OPTION);
 			}
-			if (p instanceof PluginFormatPlugin) {
+			if (p instanceof ExternalFormatPlugin) {
 				return new ZLStringOption("Formats", filetypeToOption(filetype), PLUGIN_OPTION);
 			}
 			return new ZLStringOption("Formats", filetypeToOption(filetype), "");
@@ -140,7 +140,7 @@ public abstract class Formats {
 		String pkg = filetypeOption(filetype).getValue();
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
-		if (pkg.equals(PLUGIN_OPTION)) return FormatPlugin.Type.PLUGIN;
+		if (pkg.equals(PLUGIN_OPTION)) return FormatPlugin.Type.EXTERNAL;
 		if (pkg.equals("")) return FormatPlugin.Type.NONE;
 		return FormatPlugin.Type.EXTERNAL_PROGRAM;
 	}

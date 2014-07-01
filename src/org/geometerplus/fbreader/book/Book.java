@@ -193,7 +193,7 @@ public class Book extends TitledEntity {
 		myIsSaved = false;
 
 		final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
-		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
 		if (fplugin != null) {
 			try {
 				plugin.readMetainfo(this);

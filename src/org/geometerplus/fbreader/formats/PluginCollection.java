@@ -57,8 +57,8 @@ public class PluginCollection {
 
 	private PluginCollection() {
 		addPlugin(new MobipocketPlugin());
-		addPlugin(new PdfPluginFormatPlugin());
-		addPlugin(new DjvuPluginFormatPlugin());
+		addPlugin(new PdfExternalFormatPlugin());
+		addPlugin(new DjvuExternalFormatPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
@@ -73,8 +73,8 @@ public class PluginCollection {
 
 	public List<String> getPluginPackages() {
 		ArrayList<String> list = new ArrayList<String>();
-		for (FormatPlugin p : myPlugins.get(FormatPlugin.Type.PLUGIN)) {
-			list.add(((PluginFormatPlugin)p).getPackage());
+		for (FormatPlugin p : myPlugins.get(FormatPlugin.Type.EXTERNAL)) {
+			list.add(((ExternalFormatPlugin)p).getPackage());
 		}
 		return list;
 	}
@@ -109,7 +109,7 @@ public class PluginCollection {
 					p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 				}
 				if (p == null) {
-					p = getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+					p = getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
 				}
 				return p;
 			}

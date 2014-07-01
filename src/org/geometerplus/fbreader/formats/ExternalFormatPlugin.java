@@ -28,8 +28,8 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 
-public abstract class PluginFormatPlugin extends FormatPlugin {
-	public PluginFormatPlugin(String fileType) {
+public abstract class ExternalFormatPlugin extends FormatPlugin {
+	public ExternalFormatPlugin(String fileType) {
 		super(fileType);
 	}
 
@@ -37,7 +37,7 @@ public abstract class PluginFormatPlugin extends FormatPlugin {
 
 	@Override
 	public Type type() {
-		return Type.PLUGIN;
+		return Type.EXTERNAL;
 	}
 
 	@Override
