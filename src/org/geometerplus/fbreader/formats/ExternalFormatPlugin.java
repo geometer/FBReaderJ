@@ -26,6 +26,6 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public Type type() {
-		return EXTERNAL;
+		return Type.EXTERNAL;
 	}
 }
