@@ -22,15 +22,12 @@ package org.geometerplus.fbreader.formats.external;
 import java.io.IOException;
 import java.util.Collections;
 
-import org.pdfparse.exception.EParseError;
 import org.pdfparse.model.PDFDocInfo;
 import org.pdfparse.model.PDFDocument;
 
 import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-
-import android.util.Log;
 
 public class PDFPlugin extends ExternalFormatPlugin {
 	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
@@ -50,7 +47,6 @@ public class PDFPlugin extends ExternalFormatPlugin {
 			final PDFDocument doc = new PDFDocument(book.File.getPath());
 			final PDFDocInfo info = doc.getDocumentInfo();
 			book.setTitle(info.getTitle());
-			Log.d("PDFPARSE", info.getTitle());
 			book.setAuthors(Collections.singletonList(new Author(info.getAuthor(), "")));
 		} catch (Exception e) {
 			e.printStackTrace();
