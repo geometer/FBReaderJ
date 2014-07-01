@@ -138,7 +138,7 @@ public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage
 	}
 
 	@Override
-	public int sourceType() {
+	public SourceType sourceType() {
 		return SourceType.NETWORK;
 	}
 
