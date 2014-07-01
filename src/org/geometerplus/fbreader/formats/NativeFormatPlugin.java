@@ -35,7 +35,7 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.fb2.FB2NativePlugin;
 import org.geometerplus.fbreader.formats.oeb.OEBNativePlugin;
 
-public class NativeFormatPlugin extends FormatPlugin {
+public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	public static NativeFormatPlugin create(String fileType) {
 		if ("fb2".equals(fileType)) {
 			return new FB2NativePlugin();
@@ -116,8 +116,8 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public ZLImage readCover(final ZLFile file) {
 		return new ZLImageProxy() {
 			@Override
-			public int sourceType() {
-				return SourceType.DISK;
+			public SourceType sourceType() {
+				return SourceType.FILE;
 			}
 
 			@Override

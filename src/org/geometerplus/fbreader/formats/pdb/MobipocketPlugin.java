@@ -148,8 +148,8 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			}
 
 			@Override
-			public int sourceType() {
-				return SourceType.DISK;
+			public SourceType sourceType() {
+				return SourceType.FILE;
 			}
 
 			@Override

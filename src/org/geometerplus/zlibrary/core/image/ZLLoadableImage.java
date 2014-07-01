@@ -34,11 +34,12 @@ public abstract class ZLLoadableImage implements ZLImage {
 		ZLImageManager.Instance().startImageLoading(this, postSynchronizationAction);
 	}
 
-	public static interface SourceType {
-		int DISK = 0;
-		int NETWORK = 1;
+	public static enum SourceType {
+		FILE,
+		NETWORK,
+		SERVICE;
 	};
-	public abstract int sourceType();
+	public abstract SourceType sourceType();
 
 	public abstract void synchronize();
 	public abstract void synchronizeFast();
