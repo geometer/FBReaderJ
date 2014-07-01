@@ -63,6 +63,15 @@ public class FileTypeCollection {
 		return null;
 	}
 
+	public FileType typeForMime(MimeType mime) {
+		for (FileType type : types()) {
+			if (type.mimeTypes().contains(mime)) {
+				return type;
+			}
+		}
+		return null;
+	}
+
 	public MimeType mimeType(ZLFile file) {
 		for (FileType type : types()) {
 			final MimeType mime = type.mimeType(file);
