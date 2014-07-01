@@ -19,17 +19,14 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.filetypes.*;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ArrayList;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public abstract class Formats {
-
 	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;MS Word document;PDF;DjVu";
 
 	public static String JAVA_OPTION = "fbreader_java";
@@ -53,12 +50,6 @@ public abstract class Formats {
 		return listFromString(PREDEFINED_FILETYPES.toLowerCase());
 	}
 
-	public static ArrayList<String> getAllFormats() {
-		ArrayList<String> l = listFromString(PREDEFINED_FILETYPES.toLowerCase());
-		l.add("fb2.zip");
-		return l;
-	}
-
 	private static ArrayList<String> listFromString(String s) {
 		if (!s.equals("")) {
 			return new ArrayList<String>(Arrays.asList(s.split(";")));
@@ -76,34 +67,11 @@ public abstract class Formats {
 		return true;
 	}
 
-	/*
-	public static FileType getExistingFileType(String extension) {
-		for (String s : getPredefinedFormats()) {
-			FileType type = FileTypeCollection.Instance.typeById(s);
-			if (type.acceptsExtension(extension) || s.equals(type.Id)) {
-				return type;
-			}
-		}
-		for (String s : getCustomFormats()) {
-			FileType type = FileTypeCollection.Instance.typeById(s);
-			if (type.acceptsExtension(extension) || s.equals(type.Id)) {
-				return type;
-			}
-		}
-		return null;
-	}
-	*/
-
 	public static boolean addFormat(String filetype) {
 		filetype = filetype.toLowerCase();
 		if (!isValid(filetype)) {
 			return false;
 		}
-		/*
-		if (getExistingFileType(filetype) != null) {
-			return false;
-		}
-		*/
 		ZLStringOption formats = new ZLStringOption("Formats", "ExternalFormats", "");
 		if (formats.getValue().equals("")) {
 			formats.setValue(filetype);
