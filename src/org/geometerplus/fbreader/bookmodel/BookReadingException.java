@@ -27,10 +27,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public final class BookReadingException extends Exception {
-	public static void throwForFile(String resourceId, ZLFile file) throws BookReadingException {
-		throw new BookReadingException(resourceId, file);
-	}
-
 	private static String getResourceText(String resourceId, String ... params) {
 		String message = ZLResource.resource("errorMessage").getResource(resourceId).getValue();
 		for (String p : params) {
