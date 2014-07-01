@@ -137,13 +137,13 @@ public abstract class Formats {
 			return getStatus("fb2");
 		}
 		if (filetypeOption(filetype) == null) {
-			return FormatPlugin.Type.NONE;
+			return null;
 		}
 		String pkg = filetypeOption(filetype).getValue();
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
 		if (pkg.equals(PLUGIN_OPTION)) return FormatPlugin.Type.EXTERNAL;
-		if (pkg.equals("")) return FormatPlugin.Type.NONE;
+		if (pkg.equals("")) return null;
 		return FormatPlugin.Type.EXTERNAL_PROGRAM;
 	}
 }

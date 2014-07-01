@@ -94,13 +94,11 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
-		if (fileType == null) {
+		if (fileType == null || formatType == null) {
 			return null;
 		}
 
 		switch (formatType) {
-			case NONE:
-				return null;
 			case EXTERNAL_PROGRAM:
 				return getOrCreateExternalProgramPlugin(fileType);
 			case ANY:
