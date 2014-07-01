@@ -19,13 +19,10 @@
 
 package org.geometerplus.fbreader.formats.external;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import org.pdfparse.model.PDFDocInfo;
 import org.pdfparse.model.PDFDocument;
 
-import org.geometerplus.fbreader.book.Author;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
@@ -43,11 +40,17 @@ public class PDFPlugin extends ExternalFormatPlugin {
 
 	@Override
 	public void readMetainfo(Book book) {
+		final ZLFile file = book.File;
+		if (file != file.getPhysicalFile()) {
+			// TODO: throw BookReadingException
+			System.err.println("Only physical PDF files are supported");
+			return;
+		}
 		try {
 			final PDFDocument doc = new PDFDocument(book.File.getPath());
 			final PDFDocInfo info = doc.getDocumentInfo();
 			book.setTitle(info.getTitle());
-			book.setAuthors(Collections.singletonList(new Author(info.getAuthor(), "")));
+			book.addAuthor(info.getAuthor());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
