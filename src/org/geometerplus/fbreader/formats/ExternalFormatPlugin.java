@@ -21,8 +21,8 @@ package org.geometerplus.fbreader.formats;
 
 import java.io.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
