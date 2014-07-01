@@ -88,8 +88,6 @@ public class PluginCollection {
 		}
 
 		switch (formatType) {
-			case NONE:
-				return null;
 			case ANY:
 			{
 				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
