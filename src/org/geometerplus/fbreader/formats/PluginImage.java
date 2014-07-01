@@ -25,11 +25,11 @@ import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 import org.geometerplus.fbreader.book.MetaInfoUtil;
 
-public class PluginImage extends ZLImageProxy {
+final class PluginImage extends ZLImageProxy {
 	private final ZLFile myFile;
 	private final String myAppData;
 
-	public PluginImage(ZLFile file, String data) {
+	PluginImage(ZLFile file, String data) {
 		myFile = file;
 		myAppData = data;
 	}
@@ -40,8 +40,8 @@ public class PluginImage extends ZLImageProxy {
 	}
 
 	@Override
-	public int sourceType() {
-		return SourceType.DISK;
+	public SourceType sourceType() {
+		return SourceType.SERVICE;
 	}
 
 	@Override

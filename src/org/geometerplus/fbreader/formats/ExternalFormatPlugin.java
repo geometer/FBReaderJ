@@ -42,7 +42,7 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public void readModel(BookModel model) {
-		// TODO: throw an "unsupported operation" exception
+		// TODO
 	}
 
 	@Override

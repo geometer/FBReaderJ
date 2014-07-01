@@ -116,8 +116,8 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public ZLImage readCover(final ZLFile file) {
 		return new ZLImageProxy() {
 			@Override
-			public int sourceType() {
-				return SourceType.DISK;
+			public SourceType sourceType() {
+				return SourceType.FILE;
 			}
 
 			@Override
