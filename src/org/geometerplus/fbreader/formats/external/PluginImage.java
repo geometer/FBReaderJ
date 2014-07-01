@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.formats.external;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-public class PdfExternalFormatPlugin extends ExternalFormatPlugin {
-	public PdfExternalFormatPlugin() {
-		super("PDF");
+final class PluginImage extends ZLImageProxy {
+	private final ZLFile myFile;
+
+	PluginImage(ZLFile file) {
+		myFile = file;
 	}
 
 	@Override
-	public void readMetainfo(Book book) {
+	public ZLImage getRealImage() {
 		// TODO: implement
+		return null;
+	}
+
+	@Override
+	public SourceType sourceType() {
+		return SourceType.SERVICE;
+	}
+
+	@Override
+	public String getId() {
+		return myFile.getPath();
 	}
 }

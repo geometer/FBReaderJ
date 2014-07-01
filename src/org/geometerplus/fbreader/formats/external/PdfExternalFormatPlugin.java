@@ -17,13 +17,13 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.formats.external;
 
 import org.geometerplus.fbreader.book.Book;
 
-public class DjvuExternalFormatPlugin extends ExternalFormatPlugin {
-	public DjvuExternalFormatPlugin() {
-		super("DjVu");
+public class PdfExternalFormatPlugin extends ExternalFormatPlugin {
+	public PdfExternalFormatPlugin() {
+		super("PDF");
 	}
 
 	@Override
