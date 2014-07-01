@@ -40,6 +40,7 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.fbreader.formats.external.ExternalProgramFormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {

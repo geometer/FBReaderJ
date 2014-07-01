@@ -32,10 +32,10 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 import android.util.Log;
 
-public class PdfExternalFormatPlugin extends ExternalFormatPlugin {
+public class PDFPlugin extends ExternalFormatPlugin {
 	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
 
-	public PdfExternalFormatPlugin() {
+	public PDFPlugin() {
 		super("PDF");
 	}
 

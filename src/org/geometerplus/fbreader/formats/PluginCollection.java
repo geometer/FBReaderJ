@@ -58,8 +58,8 @@ public class PluginCollection {
 
 	private PluginCollection() {
 		addPlugin(new MobipocketPlugin());
-		addPlugin(new PdfExternalFormatPlugin());
-		addPlugin(new DjvuExternalFormatPlugin());
+		addPlugin(new DjVuPlugin());
+		addPlugin(new PDFPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
