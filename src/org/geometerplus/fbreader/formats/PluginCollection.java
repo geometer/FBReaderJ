@@ -83,7 +83,7 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
-		if (fileType == null) {
+		if (fileType == null || formatType == null) {
 			return null;
 		}
 
