@@ -188,7 +188,7 @@ public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage
 			final File imageFile = new File(path);
 			if (imageFile.exists()) {
 				final long diff = System.currentTimeMillis() - imageFile.lastModified();
-				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
+				final long valid = 24 * 60 * 60 * 1000; // one day in milliseconds; FIXME: hardcoded const
 				if (diff >= 0 && diff <= valid) {
 					return;
 				}
