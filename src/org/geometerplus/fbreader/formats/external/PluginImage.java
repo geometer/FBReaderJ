@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,42 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.formats.external;
 
-import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.BookUtil;
+final class PluginImage extends ZLImageProxy {
+	private final ZLFile myFile;
 
-public abstract class ExternalFormatPlugin extends FormatPlugin {
-	protected ExternalFormatPlugin(String fileType) {
-		super(fileType);
+	PluginImage(ZLFile file) {
+		myFile = file;
 	}
 
 	@Override
-	public Type type() {
-		return Type.EXTERNAL;
-	}
-
-	@Override
-	public AutoEncodingCollection supportedEncodings() {
-		return new AutoEncodingCollection();
-	}
-
-	@Override
-	public void detectLanguageAndEncoding(Book book) {
-	}
-
-	@Override
-	public String readAnnotation(ZLFile file) {
+	public ZLImage getRealImage() {
+		// TODO: implement
 		return null;
 	}
 
 	@Override
-	public void readUids(Book book) {
-		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
-		}
+	public SourceType sourceType() {
+		return SourceType.SERVICE;
+	}
+
+	@Override
+	public String getId() {
+		return myFile.getPath();
 	}
 }

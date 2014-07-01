@@ -17,15 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.formats.external;
 
-public abstract class JavaFormatPlugin extends BuiltinFormatPlugin {
-	protected JavaFormatPlugin(String fileType) {
-		super(fileType);
+import org.geometerplus.fbreader.book.Book;
+
+public class DjvuExternalFormatPlugin extends ExternalFormatPlugin {
+	public DjvuExternalFormatPlugin() {
+		super("DjVu");
 	}
 
 	@Override
-	public Type type() {
-		return Type.JAVA;
+	public void readMetainfo(Book book) {
+		// TODO: implement
 	}
 }
