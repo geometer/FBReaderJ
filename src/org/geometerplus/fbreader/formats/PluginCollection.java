@@ -25,6 +25,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
+import org.geometerplus.fbreader.formats.external.DjVuPlugin;
+import org.geometerplus.fbreader.formats.external.PDFPlugin;
 
 public class PluginCollection {
 	static {
@@ -57,6 +59,8 @@ public class PluginCollection {
 
 	private PluginCollection() {
 		addPlugin(new MobipocketPlugin());
+		addPlugin(new DjVuPlugin());
+		addPlugin(new PDFPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
