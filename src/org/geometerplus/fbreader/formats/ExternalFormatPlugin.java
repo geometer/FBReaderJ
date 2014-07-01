@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 
 public abstract class ExternalFormatPlugin extends FormatPlugin {
-	public ExternalFormatPlugin(String fileType) {
+	protected ExternalFormatPlugin(String fileType) {
 		super(fileType);
 	}
 
