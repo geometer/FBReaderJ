@@ -30,6 +30,8 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
@@ -43,11 +45,14 @@ public class BookUrlInfo extends UrlInfo {
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
 	public static boolean isMimeSupported(MimeType mime) {
-		return
-			MimeType.TYPES_FB2.contains(mime) ||
-			MimeType.TYPES_FB2_ZIP.contains(mime) ||
-			MimeType.TYPES_EPUB.contains(mime) ||
-			MimeType.TYPES_MOBIPOCKET.contains(mime);
+		if (mime == null) {
+			return false;
+		}
+		final FileType type = FileTypeCollection.Instance.typeForMime(mime);
+		if (type == null) {
+			return false;
+		}
+		return PluginCollection.Instance().getPlugin(type, FormatPlugin.Type.ANY) != null;
 	}
 
 	private static int mimePriority(MimeType mime) {
