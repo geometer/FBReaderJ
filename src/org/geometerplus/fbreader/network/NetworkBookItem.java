@@ -154,7 +154,7 @@ public class NetworkBookItem extends NetworkItem {
 				continue;
 			}
 			final BookUrlInfo br = (BookUrlInfo)r;
-			if (reference == null || br.BookFormat.compareTo(reference.BookFormat) > 0) {
+			if (reference == null || BookUrlInfo.isMimeBetterThan(br.Mime, reference.Mime)) {
 				reference = br;
 			}
 		}
@@ -217,7 +217,7 @@ public class NetworkBookItem extends NetworkItem {
 			if ((type == UrlInfo.Type.Book ||
 				 type == UrlInfo.Type.BookConditional ||
 				 (!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) &&
-				(reference == null || br.BookFormat.compareTo(reference.BookFormat) > 0)) {
+				(reference == null || BookUrlInfo.isMimeBetterThan(br.Mime, reference.Mime))) {
 				String name = br.localCopyFileName(UrlInfo.Type.Book);
 				if (name != null) {
 					reference = br;
