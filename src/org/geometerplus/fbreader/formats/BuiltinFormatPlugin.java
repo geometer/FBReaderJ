@@ -19,13 +19,13 @@
 
 package org.geometerplus.fbreader.formats;
 
-public abstract class JavaFormatPlugin extends BuiltinFormatPlugin {
-	protected JavaFormatPlugin(String fileType) {
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+
+public abstract class BuiltinFormatPlugin extends FormatPlugin {
+	protected BuiltinFormatPlugin(String fileType) {
 		super(fileType);
 	}
 
-	@Override
-	public Type type() {
-		return Type.JAVA;
-	}
+	public abstract void readModel(BookModel model) throws BookReadingException;
 }
