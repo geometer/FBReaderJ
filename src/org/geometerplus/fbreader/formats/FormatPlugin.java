@@ -54,18 +54,11 @@ public abstract class FormatPlugin {
 	public abstract String readAnnotation(ZLFile file);
 
 	public enum Type {
-		ANY(false),
-		JAVA(true),
-		NATIVE(true),
-		EXTERNAL(false),
-		EXTERNAL_PROGRAM(false),
-		NONE(false);
-
-		public final boolean Builtin;
-
-		Type(boolean builtin) {
-			Builtin = builtin;
-		}
+		ANY,
+		JAVA,
+		NATIVE,
+		EXTERNAL,
+		EXTERNAL_PROGRAM;
 	};
 	public abstract Type type();
 
