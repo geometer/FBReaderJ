@@ -26,6 +26,8 @@ import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+
 public abstract class Formats {
 	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;MS Word document;PDF;DjVu";
 

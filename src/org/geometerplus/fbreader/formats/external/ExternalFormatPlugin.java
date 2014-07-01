@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.formats.external;
 
 import java.io.*;
 
@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public abstract class ExternalFormatPlugin extends FormatPlugin {
 	protected ExternalFormatPlugin(String fileType) {

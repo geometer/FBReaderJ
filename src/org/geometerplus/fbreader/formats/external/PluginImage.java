@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,35 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.formats.external;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-public class DjvuExternalFormatPlugin extends ExternalFormatPlugin {
-	private final String PACKAGE = "org.geometerplus.fbreader.plugin.djvu";
+import org.geometerplus.fbreader.book.MetaInfoUtil;
 
-	public DjvuExternalFormatPlugin() {
-		super("DjVu");
+final class PluginImage extends ZLImageProxy {
+	private final ZLFile myFile;
+	private final String myAppData;
+
+	PluginImage(ZLFile file, String data) {
+		myFile = file;
+		myAppData = data;
 	}
 
 	@Override
-	public String getPackage() {
-		return PACKAGE;
+	public ZLImage getRealImage() {
+		return MetaInfoUtil.PMIReader.readImage(myFile, myAppData);
 	}
 
 	@Override
-	public void readMetainfo(Book book) {
-		// TODO: implement
+	public SourceType sourceType() {
+		return SourceType.SERVICE;
+	}
+
+	@Override
+	public String getId() {
+		return myFile.getPath();
 	}
 }
