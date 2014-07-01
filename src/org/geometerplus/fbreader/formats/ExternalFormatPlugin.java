@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
+import org.geometerplus.fbreader.bookmodel.BookModel;
 
 public abstract class ExternalFormatPlugin extends FormatPlugin {
 	protected ExternalFormatPlugin(String fileType) {
@@ -33,6 +34,16 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 	@Override
 	public Type type() {
 		return Type.EXTERNAL;
+	}
+
+	@Override
+	public void readModel(BookModel model) {
+		// TODO
+	}
+
+	@Override
+	public PluginImage readCover(ZLFile file) {
+		return new PluginImage(file);
 	}
 
 	@Override

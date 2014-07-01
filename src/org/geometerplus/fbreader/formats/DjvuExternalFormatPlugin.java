@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.image;
+package org.geometerplus.fbreader.formats;
 
-public abstract class ZLLoadableImage implements ZLImage {
-	private volatile boolean myIsSynchronized;
+import org.geometerplus.fbreader.book.Book;
 
-	public final boolean isSynchronized() {
-		return myIsSynchronized;
+public class DjvuExternalFormatPlugin extends ExternalFormatPlugin {
+	public DjvuExternalFormatPlugin() {
+		super("DjVu");
 	}
 
-	protected final void setSynchronized() {
-		myIsSynchronized = true;
+	@Override
+	public void readMetainfo(Book book) {
+		// TODO: implement
 	}
-
-	public void startSynchronization(Runnable postSynchronizationAction) {
-		ZLImageManager.Instance().startImageLoading(this, postSynchronizationAction);
-	}
-
-	public static enum SourceType {
-		FILE,
-		NETWORK,
-		SERVICE;
-	};
-	public abstract SourceType sourceType();
-
-	public abstract void synchronize();
-	public abstract void synchronizeFast();
-	public abstract String getId();
 }

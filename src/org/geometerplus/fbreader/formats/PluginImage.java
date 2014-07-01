@@ -17,31 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.image;
+package org.geometerplus.fbreader.formats;
 
-public abstract class ZLLoadableImage implements ZLImage {
-	private volatile boolean myIsSynchronized;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-	public final boolean isSynchronized() {
-		return myIsSynchronized;
+final class PluginImage extends ZLImageProxy {
+	private final ZLFile myFile;
+
+	PluginImage(ZLFile file) {
+		myFile = file;
 	}
 
-	protected final void setSynchronized() {
-		myIsSynchronized = true;
+	@Override
+	public ZLImage getRealImage() {
+		// TODO: implement
+		return null;
 	}
 
-	public void startSynchronization(Runnable postSynchronizationAction) {
-		ZLImageManager.Instance().startImageLoading(this, postSynchronizationAction);
+	@Override
+	public SourceType sourceType() {
+		return SourceType.SERVICE;
 	}
 
-	public static enum SourceType {
-		FILE,
-		NETWORK,
-		SERVICE;
-	};
-	public abstract SourceType sourceType();
-
-	public abstract void synchronize();
-	public abstract void synchronizeFast();
-	public abstract String getId();
+	@Override
+	public String getId() {
+		return myFile.getPath();
+	}
 }
