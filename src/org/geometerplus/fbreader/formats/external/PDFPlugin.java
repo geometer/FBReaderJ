@@ -21,9 +21,9 @@ package org.geometerplus.fbreader.formats.external;
 
 import org.geometerplus.fbreader.book.Book;
 
-public class DjvuExternalFormatPlugin extends ExternalFormatPlugin {
-	public DjvuExternalFormatPlugin() {
-		super("DjVu");
+public class PDFPlugin extends ExternalFormatPlugin {
+	public PDFPlugin() {
+		super("PDF");
 	}
 
 	@Override
