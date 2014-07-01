@@ -101,7 +101,7 @@ public class PluginCollection {
 			case NONE:
 				return null;
 			case EXTERNAL_PROGRAM:
-				return getOrCreateExternalPlugin(fileType);
+				return getOrCreateExternalProgramPlugin(fileType);
 			case ANY:
 			{
 				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
@@ -129,7 +129,7 @@ public class PluginCollection {
 		}
 	}
 
-	private FormatPlugin getOrCreateExternalPlugin(FileType fileType) {
+	private FormatPlugin getOrCreateExternalProgramPlugin(FileType fileType) {
 		boolean exists = true;
 		final List<FormatPlugin> list = myPlugins.get(FormatPlugin.Type.EXTERNAL_PROGRAM);
 		if (list == null) {
