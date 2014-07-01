@@ -260,14 +260,15 @@ public class Book extends TitledEntity {
 	}
 
 	public void addAuthor(String name, String sortKey) {
-		String strippedName = name;
-		strippedName.trim();
+		if (name == null) {
+			return;
+		}
+		String strippedName = name.trim();
 		if (strippedName.length() == 0) {
 			return;
 		}
 
-		String strippedKey = sortKey;
-		strippedKey.trim();
+		String strippedKey = sortKey != null ? sortKey.trim() : "";
 		if (strippedKey.length() == 0) {
 			int index = strippedName.lastIndexOf(' ');
 			if (index == -1) {
@@ -290,6 +291,13 @@ public class Book extends TitledEntity {
 
 	@Override
 	public void setTitle(String title) {
+		if (title == null) {
+			return;
+		}
+		title = title.trim();
+		if (title.length() == 0) {
+			return;
+		}
 		if (!getTitle().equals(title)) {
 			super.setTitle(title);
 			myIsSaved = false;
