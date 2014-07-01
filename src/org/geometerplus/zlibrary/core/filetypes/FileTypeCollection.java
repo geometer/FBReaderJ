@@ -64,6 +64,9 @@ public class FileTypeCollection {
 	}
 
 	public FileType typeForMime(MimeType mime) {
+		if (mime == null) {
+			return null;
+		}
 		for (FileType type : types()) {
 			if (type.mimeTypes().contains(mime)) {
 				return type;
