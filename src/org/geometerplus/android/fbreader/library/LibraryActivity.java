@@ -19,32 +19,20 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.HashMap;
-
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.util.Base64;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.book.*;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -52,7 +40,7 @@ import org.geometerplus.android.util.*;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
+import org.geometerplus.android.fbreader.plugin.PluginConnectionPool;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, IBookCollection.Listener {
@@ -61,35 +49,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	private volatile RootTree myRootTree;
 	private Book mySelectedBook;
 
-	private HashMap<String, MetaInfoReader> myServices = new HashMap<String, MetaInfoReader>();
-	private HashMap<String, ServiceConnection> myServConns = new HashMap<String, ServiceConnection>();
-
-	public static class PluginMetaInfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
-		private HashMap<String, MetaInfoReader> myServices;
-
-		public PluginMetaInfoReaderImpl(HashMap<String, MetaInfoReader> services) {
-			myServices = services;
-		}
-
-		public void openFile(ZLFile f, String appData, String bookmark, long bookId) {
-			return;
-		}
-
-		@TargetApi(8)
-		@Override
-		public ZLSingleImage readImage(ZLFile f, String appData) {
-			if (myServices.get(appData) == null) {
-				return null;
-			}
-			try {
-				final Bitmap bitmap = myServices.get(appData).readBitmap(f.getPath());
-				return new ZLBitmapImage(bitmap);
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-	}
+	private final PluginConnectionPool myPool = new PluginConnectionPool(this);
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -110,22 +70,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		getListView().setOnCreateContextMenuListener(this);
 
 		if (MetaInfoUtil.PMIReader == null) {
-			MetaInfoUtil.PMIReader = new PluginMetaInfoReaderImpl(myServices);
-			for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-				ServiceConnection servConn = new ServiceConnection() {
-					public void onServiceConnected(ComponentName className, IBinder binder) {
-						myServices.put(pack, MetaInfoReader.Stub.asInterface(binder));
-					}
-
-					public void onServiceDisconnected(ComponentName className) {
-						myServices.remove(pack);
-					}
-				};
-				myServConns.put(pack, servConn);
-				Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
-				i.setPackage(pack);
-				bindService(i, servConn, Context.BIND_AUTO_CREATE);
-			}
+			MetaInfoUtil.PMIReader = myPool.createMetainfoReader(null);
 		}
 
 		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
@@ -160,12 +105,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected void onDestroy() {
 		myRootTree.Collection.removeListener(this);
-		for (String pack : myServConns.keySet()) {
-			if (myServConns.get(pack) != null) {
-				unbindService(myServConns.get(pack));
-			}
-		}
-		myServConns.clear();
+		myPool.clear();
 		((BookCollectionShadow)myRootTree.Collection).unbind();
 		super.onDestroy();
 	}

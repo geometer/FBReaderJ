@@ -17,36 +17,48 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.formats.external;
 
-import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
-import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 
-public class DjvuPluginFormatPlugin extends PluginFormatPlugin {
-	private final String PACKAGE = "org.geometerplus.fbreader.plugin.djvu";
-	
-	public DjvuPluginFormatPlugin() {
-		super("DjVu");
+public abstract class ExternalFormatPlugin extends FormatPlugin {
+	protected ExternalFormatPlugin(String fileType) {
+		super(fileType);
+	}
+
+	public abstract String getPackage();
+
+	@Override
+	public Type type() {
+		return Type.EXTERNAL;
 	}
 
 	@Override
-	public String getPackage() {
-		return PACKAGE;
+	public PluginImage readCover(ZLFile file) {
+		return new PluginImage(file, getPackage());
+	}
+
+	@Override
+	public AutoEncodingCollection supportedEncodings() {
+		return new AutoEncodingCollection();
+	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) {
 	}
 
 	@Override
 	public String readAnnotation(ZLFile file) {
-		//TODO
 		return null;
 	}
-	
+
 	@Override
-	public void readUids(Book book) throws BookReadingException {
+	public void readUids(Book book) {
 		if (book.uids().isEmpty()) {
 			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}

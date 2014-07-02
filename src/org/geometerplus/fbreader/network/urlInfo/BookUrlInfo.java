@@ -24,72 +24,57 @@ import java.util.Arrays;
 
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.core.filetypes.FileType;
+import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.PluginCollection;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
 public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
-	public static final class Format implements Comparable<Format> {
-		public static final Format NONE = new Format(null, -1);
-		public static final Format MOBIPOCKET = new Format("mobi", 1);
-		public static final Format FB2 = new Format("fb2", 2);
-		public static final Format FB2_ZIP = new Format("fb2.zip", 3);
-		public static final Format EPUB = new Format("epub", 4);
-
-		public final String Extension;
-		private final int myPriority;
-
-		public Format(String extension) {
-			Extension = extension;
-			int priority = 0;
-			for (Format f : Arrays.asList(NONE, MOBIPOCKET, FB2, FB2_ZIP, EPUB)) {
-				if (f.equals(this)) {
-					priority = f.myPriority;
-					break;
-				}
-			}
-			myPriority = priority;
-		}
-
-		private Format(String extension, int priority) {
-			Extension = extension;
-			myPriority = priority;
-		}
-
-		@Override
-		public boolean equals(Object other) {
-			if (this == other) {
-				return true;
-			}
-			return other instanceof Format && MiscUtil.equals(Extension, ((Format)other).Extension);
-		}
-
-		@Override
-		public int hashCode() {
-			return MiscUtil.hashCode(Extension);
-		}
-
-		@Override
-		public int compareTo(Format format) {
-			return myPriority - format.myPriority;
-		}
-	}
-
-	public final Format BookFormat;
-
-	public BookUrlInfo(Type type, Format format, String url, MimeType mime) {
+	public BookUrlInfo(Type type, String url, MimeType mime) {
 		super(type, url, mime);
-		BookFormat = format;
 	}
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeBookFileName(String url, Format format, Type resolvedReferenceType) {
+	public static boolean isMimeSupported(MimeType mime) {
+		if (mime == null) {
+			return false;
+		}
+		final FileType type = FileTypeCollection.Instance.typeForMime(mime);
+		if (type == null) {
+			return false;
+		}
+		return PluginCollection.Instance().getPlugin(type, FormatPlugin.Type.ANY) != null;
+	}
+
+	private static int mimePriority(MimeType mime) {
+		if (mime == null) {
+			return -1;
+		} else if (MimeType.TYPES_MOBIPOCKET.contains(mime)) {
+			return 1;
+		} else if (MimeType.TYPES_FB2.contains(mime)) {
+			return 2;
+		} else if (MimeType.TYPES_FB2_ZIP.contains(mime)) {
+			return 3;
+		} else if (MimeType.TYPES_EPUB.contains(mime)) {
+			return 4;
+		}
+		return 0;
+	}
+
+	public static boolean isMimeBetterThan(MimeType mime0, MimeType mime1) {
+		return mimePriority(mime0) > mimePriority(mime1);
+	}
+
+	public static String makeBookFileName(String url, MimeType mime, Type resolvedReferenceType) {
 		final Uri uri = Uri.parse(url);
 
 		String host = uri.getHost();
@@ -130,10 +115,9 @@ public class BookUrlInfo extends UrlInfo {
 			++index;
 		}
 
-		String ext = null;
-		if (format != null && !MiscUtil.isEmptyString(format.Extension)) {
-			ext = "." + format.Extension;
-		}
+		final FileType type = mime != null ? FileTypeCollection.Instance.typeForMime(mime) : null;
+		String ext = type != null ? "." + type.defaultExtension(mime) : null;
+
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`
 			if (j != -1) {
@@ -180,7 +164,7 @@ public class BookUrlInfo extends UrlInfo {
 	}
 
 	public final String makeBookFileName(Type resolvedReferenceType) {
-		return makeBookFileName(cleanUrl(), BookFormat, resolvedReferenceType);
+		return makeBookFileName(cleanUrl(), Mime, resolvedReferenceType);
 	}
 
 	public final String localCopyFileName(Type resolvedReferenceType) {
@@ -192,6 +176,6 @@ public class BookUrlInfo extends UrlInfo {
 	}
 
 	public String toString() {
-		return "BookReference[type=" + InfoType + ";format=" + BookFormat + ";URL=" + Url + "]";
+		return "BookReference[type=" + InfoType + ";mime=" + Mime + ";URL=" + Url + "]";
 	}
 }

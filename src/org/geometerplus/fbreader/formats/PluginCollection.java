@@ -24,10 +24,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
-import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
-import org.geometerplus.fbreader.formats.fb2.FB2ZipExternalPlugin;
-import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
+import org.geometerplus.fbreader.formats.external.*;
 
 public class PluginCollection {
 	static {
@@ -59,12 +57,9 @@ public class PluginCollection {
 	}
 
 	private PluginCollection() {
-		addPlugin(new FB2Plugin());
 		addPlugin(new MobipocketPlugin());
-		addPlugin(new OEBPlugin());
-		addPlugin(new FB2ZipExternalPlugin());
-		addPlugin(new PdfPluginFormatPlugin());
-		addPlugin(new DjvuPluginFormatPlugin());
+		addPlugin(new DjVuPlugin());
+		addPlugin(new PDFPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
@@ -79,8 +74,8 @@ public class PluginCollection {
 
 	public List<String> getPluginPackages() {
 		ArrayList<String> list = new ArrayList<String>();
-		for (FormatPlugin p : myPlugins.get(FormatPlugin.Type.PLUGIN)) {
-			list.add(((PluginFormatPlugin)p).getPackage());
+		for (FormatPlugin p : myPlugins.get(FormatPlugin.Type.EXTERNAL)) {
+			list.add(((ExternalFormatPlugin)p).getPackage());
 		}
 		return list;
 	}
@@ -92,22 +87,20 @@ public class PluginCollection {
 		}
 		return getPlugin(fileType, Formats.getStatus(fileType.Id));
 	}
-	
+
 	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
 		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
 		return getPlugin(fileType, formatType);
 	}
 
 	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
-		if (fileType == null) {
+		if (fileType == null || formatType == null) {
 			return null;
 		}
 
 		switch (formatType) {
-			case NONE:
-				return null;
-			case EXTERNAL:
-				return getOrCreateExternalPlugin(fileType);
+			case EXTERNAL_PROGRAM:
+				return getOrCreateExternalProgramPlugin(fileType);
 			case ANY:
 			{
 				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
@@ -115,7 +108,7 @@ public class PluginCollection {
 					p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 				}
 				if (p == null) {
-					p = getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+					p = getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
 				}
 				return p;
 			}
@@ -135,9 +128,9 @@ public class PluginCollection {
 		}
 	}
 
-	private FormatPlugin getOrCreateExternalPlugin(FileType fileType) {
+	private FormatPlugin getOrCreateExternalProgramPlugin(FileType fileType) {
 		boolean exists = true;
-		final List<FormatPlugin> list = myPlugins.get(FormatPlugin.Type.EXTERNAL);
+		final List<FormatPlugin> list = myPlugins.get(FormatPlugin.Type.EXTERNAL_PROGRAM);
 		if (list == null) {
 			exists = false;
 		}
@@ -155,9 +148,9 @@ public class PluginCollection {
 			builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
 		}
 		if (builtInPlugin != null) {
-			plugin = new ExternalFormatPlugin(fileType.Id, builtInPlugin);
+			plugin = new ExternalProgramFormatPlugin(fileType.Id, builtInPlugin);
 		} else {
-			plugin = new ExternalFormatPlugin(fileType.Id);
+			plugin = new ExternalProgramFormatPlugin(fileType.Id);
 		}
 		addPlugin(plugin);
 		return plugin;

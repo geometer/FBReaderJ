@@ -1,26 +1,5 @@
-===== 2.0 beta 14 (Nov 22, 2013) =====
-* All changes from 1.9.3
-
-===== 2.0 beta 13 (Nov 02, 2013) =====
-* Fixed adding of new books to the library
-
-===== 2.0 beta 12 (Nov 01, 2013) =====
-* All changes for 1.9.1
-* Compatible with PDF plugin 0.9.3
-
-===== 2.0 beta 11 (Oct 24, 2013) =====
-* All changes for 1.9
-* Compatible with PDF plugin 0.9.2
-
-===== 2.0 beta 8 (Feb 23, 2013) =====
-* All changes for 1.7.2
-* No obfuscation (bug reports are easier to understand)
-* Fixed PDF plugin communication
-
-===== 2.0 beta 7 (Feb 18, 2013) =====
-* 'Open book in external program' feature
-* Multiple directories for user's fonts and wallpapers
-* PDF plugin integration
+===== 2.0 (Jul ??, 2014) =====
+* download from OPDS for all supported file types
 
 ===== 1.10.3.2 (Jun 09, 2014) =====
 * ePub styles: decreased default spacings

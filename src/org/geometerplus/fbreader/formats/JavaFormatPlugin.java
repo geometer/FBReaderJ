@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.formats;
 
-public abstract class JavaFormatPlugin extends FormatPlugin {
+public abstract class JavaFormatPlugin extends BuiltinFormatPlugin {
 	protected JavaFormatPlugin(String fileType) {
 		super(fileType);
 	}

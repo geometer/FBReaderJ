@@ -45,7 +45,7 @@ class ZLAndroidImageLoader {
 		myOnImageSyncRunnables.put(image.getId(), runnables);
 
 		final ExecutorService pool =
-			image.sourceType() == ZLLoadableImage.SourceType.DISK
+			image.sourceType() == ZLLoadableImage.SourceType.FILE
 				? mySinglePool : myPool;
 		pool.execute(new Runnable() {
 			public void run() {

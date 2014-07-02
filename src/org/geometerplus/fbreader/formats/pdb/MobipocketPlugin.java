@@ -148,18 +148,18 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			}
 
 			@Override
-			public int sourceType() {
-				return SourceType.DISK;
+			public SourceType sourceType() {
+				return SourceType.FILE;
 			}
 
 			@Override
-			public ZLSingleImage getRealImage() {
+			public ZLImage getRealImage() {
 				return readCoverInternal(file);
 			}
 		};
 	}
 
-	private ZLSingleImage readCoverInternal(ZLFile file) {
+	private ZLImage readCoverInternal(ZLFile file) {
 		InputStream stream = null;
 		try {
 			stream = file.getInputStream();

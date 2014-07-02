@@ -38,7 +38,7 @@ public abstract class MenuNode implements Cloneable, Serializable {
 		public static final long serialVersionUID = 43L;
 
 		public final Integer IconId;
-	
+
 		public Item(String code, Integer iconId) {
 			super(code);
 			IconId = iconId;

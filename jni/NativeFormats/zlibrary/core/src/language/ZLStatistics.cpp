@@ -80,15 +80,15 @@ int ZLStatistics::correlation(const ZLStatistics& candidate, const ZLStatistics&
 	const unsigned long long patternSum = pattern.getVolume();
 	const unsigned long long candidateSum2 = candidate.getSquaresVolume();
 	const unsigned long long patternSum2 = pattern.getSquaresVolume();
-	
+
 	shared_ptr<ZLStatisticsItem> ptrA = candidate.begin();
 	shared_ptr<ZLStatisticsItem> ptrB = pattern.begin();
 	const shared_ptr<ZLStatisticsItem> endA = candidate.end();
 	const shared_ptr<ZLStatisticsItem> endB = pattern.end();
-	
+
 	std::size_t count = 0;
 	long long correlationSum = 0;
-	while ((*ptrA != *endA) && (*ptrB != *endB)) {				
+	while ((*ptrA != *endA) && (*ptrB != *endB)) {
 		++count;
 		const int comparison = ptrA->sequence().compareTo(ptrB->sequence());
 		if (comparison < 0) {
@@ -141,10 +141,10 @@ int ZLStatistics::correlation(const ZLStatistics& candidate, const ZLStatistics&
 	}
 	int candidateMult = 1000000 / patternMult;
 
-	const long long quotient1 = (patternMult * numerator / patternDispersion); 
+	const long long quotient1 = (patternMult * numerator / patternDispersion);
 	const long long quotient2 = (candidateMult * numerator / candidateDispersion);
 	const int sign = (numerator >= 0) ? 1 : -1;
-	
+
 	return sign * quotient1 * quotient2;
 }
 
@@ -155,7 +155,7 @@ ZLMapBasedStatistics::ZLMapBasedStatistics() : ZLStatistics() {
 ZLMapBasedStatistics::ZLMapBasedStatistics(const Dictionary &dictionary) {
 	if (!dictionary.empty()) {
 		myCharSequenceSize = dictionary.begin()->first.getSize();
-		myVolumesAreUpToDate = false; 
+		myVolumesAreUpToDate = false;
 		myDictionary = dictionary;
 	} else {
 		myCharSequenceSize = 0;
@@ -191,7 +191,7 @@ ZLMapBasedStatistics ZLMapBasedStatistics::top(std::size_t amount) const {
 	tempVector.resize(myDictionary.size());
 	std::copy(myDictionary.begin(), myDictionary.end(), tempVector.begin());
 	std::sort(tempVector.rbegin(), tempVector.rend(), LessFrequency());
-	Vector::const_iterator it = tempVector.begin(); 
+	Vector::const_iterator it = tempVector.begin();
 	while (amount != 0) {
 		dictionary[it->first] = it->second;
 		++it;
@@ -213,7 +213,7 @@ void ZLMapBasedStatistics::retain(const ZLMapBasedStatistics &other) {
 		const Dictionary::iterator endA = myDictionary.end();
 		const Dictionary::const_iterator endB = other.myDictionary.end();
 
-		while ((itA != endA) && (itB != endB)) {				
+		while ((itA != endA) && (itB != endB)) {
 			const int comparison = itA->first.compareTo(itB->first);
 			if (comparison < 0) {
 				myDictionary.erase(itA++);
@@ -230,7 +230,7 @@ void ZLMapBasedStatistics::retain(const ZLMapBasedStatistics &other) {
 		if (itA != endA) {
 			myDictionary.erase(itA, endA);
 		}
-		myVolumesAreUpToDate = true;	
+		myVolumesAreUpToDate = true;
 	} else {
 		*this = ZLMapBasedStatistics();
 	}
@@ -241,7 +241,7 @@ void ZLMapBasedStatistics::scaleToShort() {
 	const std::size_t maxShort = 65535;
 	if (maxFrequency > maxShort) {
 		const std::size_t devider = maxFrequency / maxShort + 1;
-		Dictionary::iterator it = myDictionary.begin(); 
+		Dictionary::iterator it = myDictionary.begin();
 		const Dictionary::iterator end = myDictionary.end();
 		while (it != end) {
 			if (it->second < devider) {
@@ -272,7 +272,7 @@ ZLArrayBasedStatistics::ZLArrayBasedStatistics(std::size_t charSequenceSize, std
 	mySequences = new char[myCharSequenceSize * size];
 	myFrequencies = new unsigned short[size];
 }
- 
+
 ZLArrayBasedStatistics::~ZLArrayBasedStatistics() {
 	if (mySequences != 0) {
 		delete[] mySequences;
@@ -285,7 +285,7 @@ void ZLArrayBasedStatistics::insert(const ZLCharSequence &charSequence, std::siz
 		return;
 	}
 	for (std::size_t i = 0; i < myCharSequenceSize; ++i) {
-		mySequences[myBack * myCharSequenceSize + i] = charSequence[i]; 
+		mySequences[myBack * myCharSequenceSize + i] = charSequence[i];
 	}
 	myFrequencies[myBack] = (unsigned short) frequency;
 	++myBack;
@@ -334,6 +334,6 @@ ZLArrayBasedStatistics& ZLArrayBasedStatistics::operator= (const ZLArrayBasedSta
 	} else {
 		mySequences = 0;
 		myFrequencies = 0;
-	} 
+	}
 	return *this;
 }

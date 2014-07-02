@@ -19,46 +19,13 @@
 
 package org.geometerplus.fbreader.formats;
 
-import java.io.*;
-
-import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.encodings.*;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-
-import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.Paths;
 
-public abstract class PluginFormatPlugin extends FormatPlugin {
-	public PluginFormatPlugin(String fileType) {
+public abstract class BuiltinFormatPlugin extends FormatPlugin {
+	protected BuiltinFormatPlugin(String fileType) {
 		super(fileType);
 	}
 
-	public abstract String getPackage();
-	
-	@Override
-	public Type type() {
-		return Type.PLUGIN;
-	}
-
-	@Override
-	public void readModel(BookModel model) throws BookReadingException {
-		// TODO: throw an "unsupported operation" exception
-	}
-
-	@Override
-	public ZLImage readCover(ZLFile file) {
-		return new PluginImage(file, getPackage());
-	}
-
-	@Override
-	public EncodingCollection supportedEncodings() {
-		return new AutoEncodingCollection();
-	}
-
-	@Override
-	public void detectLanguageAndEncoding(Book book) {
-	}
+	public abstract void readModel(BookModel model) throws BookReadingException;
 }

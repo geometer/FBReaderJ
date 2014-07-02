@@ -19,17 +19,16 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.filetypes.*;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ArrayList;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.filetypes.FileType;
 import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
 public abstract class Formats {
-
 	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;MS Word document;PDF;DjVu";
 
 	public static String JAVA_OPTION = "fbreader_java";
@@ -53,12 +52,6 @@ public abstract class Formats {
 		return listFromString(PREDEFINED_FILETYPES.toLowerCase());
 	}
 
-	public static ArrayList<String> getAllFormats() {
-		ArrayList<String> l = listFromString(PREDEFINED_FILETYPES.toLowerCase());
-		l.add("fb2.zip");
-		return l;
-	}
-
 	private static ArrayList<String> listFromString(String s) {
 		if (!s.equals("")) {
 			return new ArrayList<String>(Arrays.asList(s.split(";")));
@@ -76,34 +69,11 @@ public abstract class Formats {
 		return true;
 	}
 
-	/*
-	public static FileType getExistingFileType(String extension) {
-		for (String s : getPredefinedFormats()) {
-			FileType type = FileTypeCollection.Instance.typeById(s);
-			if (type.acceptsExtension(extension) || s.equals(type.Id)) {
-				return type;
-			}
-		}
-		for (String s : getCustomFormats()) {
-			FileType type = FileTypeCollection.Instance.typeById(s);
-			if (type.acceptsExtension(extension) || s.equals(type.Id)) {
-				return type;
-			}
-		}
-		return null;
-	}
-	*/
-
 	public static boolean addFormat(String filetype) {
 		filetype = filetype.toLowerCase();
 		if (!isValid(filetype)) {
 			return false;
 		}
-		/*
-		if (getExistingFileType(filetype) != null) {
-			return false;
-		}
-		*/
 		ZLStringOption formats = new ZLStringOption("Formats", "ExternalFormats", "");
 		if (formats.getValue().equals("")) {
 			formats.setValue(filetype);
@@ -150,7 +120,7 @@ public abstract class Formats {
 			if (p instanceof NativeFormatPlugin) {
 				return new ZLStringOption("Formats", filetypeToOption(filetype), NATIVE_OPTION);
 			}
-			if (p instanceof PluginFormatPlugin) {
+			if (p instanceof ExternalFormatPlugin) {
 				return new ZLStringOption("Formats", filetypeToOption(filetype), PLUGIN_OPTION);
 			}
 			return new ZLStringOption("Formats", filetypeToOption(filetype), "");
@@ -167,13 +137,13 @@ public abstract class Formats {
 			return getStatus("fb2");
 		}
 		if (filetypeOption(filetype) == null) {
-			return FormatPlugin.Type.NONE;
+			return null;
 		}
 		String pkg = filetypeOption(filetype).getValue();
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
-		if (pkg.equals(PLUGIN_OPTION)) return FormatPlugin.Type.PLUGIN;
-		if (pkg.equals("")) return FormatPlugin.Type.NONE;
-		return FormatPlugin.Type.EXTERNAL;
+		if (pkg.equals(PLUGIN_OPTION)) return FormatPlugin.Type.EXTERNAL;
+		if (pkg.equals("")) return null;
+		return FormatPlugin.Type.EXTERNAL_PROGRAM;
 	}
 }

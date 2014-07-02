@@ -182,7 +182,6 @@ public class Book extends TitledEntity {
 	}
 
 	private void readMetainfo(FormatPlugin plugin) throws BookReadingException {
-		String oldxml = SerializerUtil.serialize(this);
 		myEncoding = null;
 		myLanguage = null;
 		setTitle(null);
@@ -194,7 +193,7 @@ public class Book extends TitledEntity {
 		myIsSaved = false;
 
 		final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
-		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
 		if (fplugin != null) {
 			try {
 				plugin.readMetainfo(this);
@@ -209,7 +208,7 @@ public class Book extends TitledEntity {
 
 		if (isTitleEmpty()) {
 			final String fileName = File.getShortName();
-			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL ? -1 : fileName.lastIndexOf('.'));
+			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL_PROGRAM ? -1 : fileName.lastIndexOf('.'));
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
 	}
@@ -279,14 +278,15 @@ public class Book extends TitledEntity {
 	}
 
 	public void addAuthor(String name, String sortKey) {
-		String strippedName = name;
-		strippedName.trim();
+		if (name == null) {
+			return;
+		}
+		String strippedName = name.trim();
 		if (strippedName.length() == 0) {
 			return;
 		}
 
-		String strippedKey = sortKey;
-		strippedKey.trim();
+		String strippedKey = sortKey != null ? sortKey.trim() : "";
 		if (strippedKey.length() == 0) {
 			int index = strippedName.lastIndexOf(' ');
 			if (index == -1) {
@@ -300,7 +300,7 @@ public class Book extends TitledEntity {
 			}
 		}
 
-		addAuthor(new Author(strippedName, strippedKey.toLowerCase()));
+		addAuthor(new Author(strippedName, strippedKey));
 	}
 
 	public long getId() {
@@ -309,6 +309,13 @@ public class Book extends TitledEntity {
 
 	@Override
 	public void setTitle(String title) {
+		if (title == null) {
+			return;
+		}
+		title = title.trim();
+		if (title.length() == 0) {
+			return;
+		}
 		if (!getTitle().equals(title)) {
 			super.setTitle(title);
 			myIsSaved = false;

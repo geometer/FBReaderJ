@@ -48,7 +48,7 @@ BookModel::~BookModel() {
 void BookModel::setHyperlinkMatcher(shared_ptr<HyperlinkMatcher> matcher) {
 	myHyperlinkMatcher = matcher;
 }
-	
+
 BookModel::Label BookModel::label(const std::string &id) const {
 	if (!myHyperlinkMatcher.isNull()) {
 		return myHyperlinkMatcher->match(myInternalHyperlinks, id);

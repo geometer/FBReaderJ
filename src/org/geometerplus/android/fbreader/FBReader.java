@@ -58,6 +58,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.httpd.DataService;
@@ -543,8 +544,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					Log.d("fbreader", "killing plugin");
 					if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
 						final FormatPlugin p = PluginCollection.Instance().getPlugin(myFBReaderApp.Model.Book.File);
-						if (p.type() == FormatPlugin.Type.PLUGIN) {
-							String pack = ((PluginFormatPlugin)p).getPackage();
+						if (p.type() == FormatPlugin.Type.EXTERNAL) {
+							String pack = ((ExternalFormatPlugin)p).getPackage();
 							final Intent i = new Intent("android.fbreader.action.KILL_PLUGIN");
 							i.setPackage(pack);
 							Log.d("fbreader", pack);
@@ -716,7 +717,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
 				final FormatPlugin p = PluginCollection.Instance().getPlugin(myFBReaderApp.Model.Book.File);
 				Log.d("fbj", "onresume: current book is: " + myFBReaderApp.Model.Book.File.getPath());
-				if (p.type() == FormatPlugin.Type.PLUGIN) {
+				if (p.type() == FormatPlugin.Type.EXTERNAL) {
 					if (!myNeedToSkipPlugin) {
 						Log.d("fbj", "opening book from onresume");
 						getCollection().bindToService(this, new Runnable() {
@@ -835,7 +836,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 				if (resultCode != RESULT_DO_NOTHING && data != null) {

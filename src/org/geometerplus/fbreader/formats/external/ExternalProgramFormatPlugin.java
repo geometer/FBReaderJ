@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+package org.geometerplus.fbreader.formats.external;
 
 import java.io.*;
 
@@ -30,17 +30,18 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
-import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.Formats;
 
-public class ExternalFormatPlugin extends FormatPlugin {
+public class ExternalProgramFormatPlugin extends FormatPlugin {
 	private FormatPlugin myInfoReader;
 
-	public ExternalFormatPlugin(String fileType) {
+	public ExternalProgramFormatPlugin(String fileType) {
 		super(fileType);
 	}
 
-	public ExternalFormatPlugin(String fileType, FormatPlugin ir) {
+	public ExternalProgramFormatPlugin(String fileType, FormatPlugin ir) {
 		super(fileType);
 		myInfoReader = ir;
 	}
@@ -80,7 +81,7 @@ public class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public Type type() {
-		return Type.EXTERNAL;
+		return Type.EXTERNAL_PROGRAM;
 	}
 
 	@Override
@@ -88,11 +89,6 @@ public class ExternalFormatPlugin extends FormatPlugin {
 		if (myInfoReader != null) {
 			myInfoReader.readMetainfo(book);
 		}
-	}
-
-	@Override
-	public void readModel(BookModel model) throws BookReadingException {
-		// TODO: throw an "unsupported operation" exception
 	}
 
 	@Override

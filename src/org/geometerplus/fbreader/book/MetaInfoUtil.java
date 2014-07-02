@@ -21,12 +21,11 @@ package org.geometerplus.fbreader.book;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
 public class MetaInfoUtil {
 	public static interface PluginMetaInfoReader {
-		public ZLSingleImage readImage(ZLFile f, String appData);
+		public ZLImage readImage(ZLFile f, String appData);
 	}
-	
+
 	public static PluginMetaInfoReader PMIReader;
 }

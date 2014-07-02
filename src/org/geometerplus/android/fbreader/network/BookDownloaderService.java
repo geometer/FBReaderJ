@@ -31,8 +31,9 @@ import android.widget.Toast;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
@@ -43,7 +44,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 public class BookDownloaderService extends Service {
 	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
 
-	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
+	public static final String BOOK_MIME = "fbreader.book.mime";
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
 	public static final String TITLE_KEY = "org.geometerplus.android.fbreader.network.Title";
@@ -110,8 +111,7 @@ public class BookDownloaderService extends Service {
 		final int notifications = intent.getIntExtra(SHOW_NOTIFICATIONS_KEY, 0);
 
 		final String url = uri.toString();
-		final BookUrlInfo.Format bookFormat =
-			new BookUrlInfo.Format(intent.getStringExtra(BOOK_FORMAT_KEY));
+		final MimeType mime = MimeType.get(intent.getStringExtra(BOOK_MIME));
 		UrlInfo.Type referenceType = (UrlInfo.Type)intent.getSerializableExtra(REFERENCE_TYPE_KEY);
 		if (referenceType == null) {
 			referenceType = UrlInfo.Type.Book;
@@ -130,7 +130,7 @@ public class BookDownloaderService extends Service {
 			return;
 		}
 
-		final String fileName = BookUrlInfo.makeBookFileName(cleanURL, bookFormat, referenceType);
+		final String fileName = BookUrlInfo.makeBookFileName(cleanURL, mime, referenceType);
 		if (fileName == null) {
 			doStop();
 			return;

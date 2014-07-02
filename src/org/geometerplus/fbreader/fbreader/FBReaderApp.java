@@ -37,15 +37,16 @@ import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
-import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.fbreader.options.*;
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.fbreader.formats.external.ExternalProgramFormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {
 		public boolean openFile(ZLFile f, String appData);
 	}
-	
+
 	public interface PluginFileOpener {
 		public void openFile(String appData, Book book, Bookmark bookmark);
 	}
@@ -56,7 +57,7 @@ public final class FBReaderApp extends ZLApplication {
 	public void setExternalFileOpener(ExternalFileOpener o) {
 		myExternalFileOpener = o;
 	}
-	
+
 	public boolean externalFileOpenerIsSet() {
 		return myExternalFileOpener != null;
 	}
@@ -68,7 +69,7 @@ public final class FBReaderApp extends ZLApplication {
 	public boolean pluginFileOpenerIsSet() {
 		return myPluginFileOpener != null;
 	}
-	
+
 	public PluginFileOpener getPluginFileOpener() {
 		return myPluginFileOpener;
 	}
@@ -170,11 +171,11 @@ public final class FBReaderApp extends ZLApplication {
 		Collection.saveBook(bookToOpen);
 		final FormatPlugin p = PluginCollection.Instance().getPlugin(bookToOpen.File);
 		if (p == null) return;
-		if (p.type() == FormatPlugin.Type.EXTERNAL) {
+		if (p.type() == FormatPlugin.Type.EXTERNAL_PROGRAM) {
 			final SynchronousExecutor executor = createExecutor("extract");
 			executor.execute(new Runnable() {
 				public void run() {
-					final ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
+					final ZLFile f = ((ExternalProgramFormatPlugin)p).prepareFile(bookToOpen.File);
 					if (myExternalFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue())) {
 						Collection.addBookToRecentList(bookToOpen);
 						closeWindow();
@@ -185,7 +186,7 @@ public final class FBReaderApp extends ZLApplication {
 			}, postAction);
 			return;
 		}
-		if (p.type() == FormatPlugin.Type.PLUGIN) {
+		if (p.type() == FormatPlugin.Type.EXTERNAL) {
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
@@ -203,7 +204,7 @@ public final class FBReaderApp extends ZLApplication {
 			final SynchronousExecutor executor = createExecutor("loadingBook");
 			executor.execute(new Runnable() {
 				public void run() {
-					final PluginFormatPlugin pfp = (PluginFormatPlugin)p;
+					final ExternalFormatPlugin pfp = (ExternalFormatPlugin)p;
 					myPluginFileOpener.openFile(pfp.getPackage(), bookToOpen, bm);
 				}
 			}, postAction);

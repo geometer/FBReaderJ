@@ -28,7 +28,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class FormatPlugin {
@@ -48,28 +47,18 @@ public abstract class FormatPlugin {
 	public List<FileEncryptionInfo> readEncryptionInfos(Book book) {
 		return Collections.emptyList();
 	}
-	public void readMetainfo(Book book) throws BookReadingException {
-		throw new UnsupportedOperationException();
-	}
+	public abstract void readMetainfo(Book book) throws BookReadingException;
 	public abstract void readUids(Book book) throws BookReadingException;
-	public abstract void readModel(BookModel model) throws BookReadingException;
 	public abstract void detectLanguageAndEncoding(Book book) throws BookReadingException;
 	public abstract ZLImage readCover(ZLFile file);
 	public abstract String readAnnotation(ZLFile file);
 
 	public enum Type {
-		ANY(false),
-		JAVA(true),
-		NATIVE(true),
-		PLUGIN(false),
-		EXTERNAL(false),
-		NONE(false);
-
-		public final boolean Builtin;
-
-		Type(boolean builtin) {
-			Builtin = builtin;
-		}
+		ANY,
+		JAVA,
+		NATIVE,
+		EXTERNAL,
+		EXTERNAL_PROGRAM;
 	};
 	public abstract Type type();
 

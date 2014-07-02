@@ -22,31 +22,22 @@ package org.geometerplus.zlibrary.ui.android.image;
 import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
-public class ZLBitmapImage extends ZLSingleImage {
-	private Bitmap myBitmap = null;
-	
-	public ZLBitmapImage(Bitmap b) {
-		super(MimeType.IMAGE_AUTO);
-		myBitmap = b;
+public class ZLBitmapImage implements ZLImage {
+	private final Bitmap myBitmap;
+
+	public ZLBitmapImage(Bitmap bitmap) {
+		myBitmap = bitmap;
 	}
-	
+
 	public Bitmap getBitmap() {
 		return myBitmap;
 	}
-	
-	@Override
-	public String getURI() {
-		return null;
-	}
 
 	@Override
-	public InputStream inputStream() {
-		return null;
+	public String getURI() {
+		return "bitmap image";
 	}
 }

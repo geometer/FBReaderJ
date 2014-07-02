@@ -17,22 +17,42 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.fb2;
+package org.geometerplus.fbreader.formats.external;
+
+import org.pdfparse.model.PDFDocInfo;
+import org.pdfparse.model.PDFDocument;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-
 import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.formats.*;
 
-public class FB2ZipExternalPlugin extends ExternalFormatPlugin {
-	public FB2ZipExternalPlugin() {
-		super("fb2.zip", new FB2Plugin());
+public class PDFPlugin extends ExternalFormatPlugin {
+	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
+
+	public PDFPlugin() {
+		super("PDF");
 	}
 
-	public ZLFile prepareFile(ZLFile file) {
-		return super.prepareFile(FB2Util.getRealFB2File(file));
+	@Override
+	public String getPackage() {
+		return PACKAGE;
+	}
+
+	@Override
+	public void readMetainfo(Book book) {
+		final ZLFile file = book.File;
+		if (file != file.getPhysicalFile()) {
+			// TODO: throw BookReadingException
+			System.err.println("Only physical PDF files are supported");
+			return;
+		}
+		try {
+			final PDFDocument doc = new PDFDocument(book.File.getPath());
+			final PDFDocInfo info = doc.getDocumentInfo();
+			book.setTitle(info.getTitle());
+			book.addAuthor(info.getAuthor());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
