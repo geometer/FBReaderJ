@@ -53,10 +53,6 @@ public abstract class BookModel {
 		return model;
 	}
 
-	public static BookModel createPluginModel(Book book) {
-		return new PluginBookModel(book);
-	}
-
 	public final Book Book;
 	public final TOCTree TOCTree = new TOCTree();
 	public final FontManager FontManager = new FontManager();
@@ -112,9 +108,5 @@ public abstract class BookModel {
 
 	public void registerFontEntry(String family, FileInfo normal, FileInfo bold, FileInfo italic, FileInfo boldItalic) {
 		registerFontEntry(family, new FontEntry(family, normal, bold, italic, boldItalic));
-	}
-
-	public boolean isValid() {
-		return true;
 	}
 }

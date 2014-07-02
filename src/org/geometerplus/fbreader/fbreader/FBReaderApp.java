@@ -151,7 +151,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-		if (Model != null && Model.isValid()) {
+		if (Model != null) {
 			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
 			}
@@ -190,7 +190,7 @@ public final class FBReaderApp extends ZLApplication {
 			BookTextView.setModel(null);
 			FootnoteView.setModel(null);
 			clearTextCaches();
-			Model = BookModel.createPluginModel(bookToOpen);
+			Model = null;
 			final Bookmark bm;
 			if (bookmark != null) {
 				bm = bookmark;
@@ -209,9 +209,6 @@ public final class FBReaderApp extends ZLApplication {
 				}
 			}, postAction);
 			return;
-		}
-		if (Model != null && !Model.isValid()) {
-			Model = null;
 		}
 		final SynchronousExecutor executor = createExecutor("loadingBook");
 		executor.execute(new Runnable() {
@@ -508,7 +505,7 @@ public final class FBReaderApp extends ZLApplication {
 	private volatile SaverThread mySaverThread;
 
 	public void storePosition() {
-		if (Model != null && Model.isValid() && Model.Book != null && BookTextView != null) {
+		if (Model != null && Model.Book != null && BookTextView != null) {
 			if (mySaverThread == null) {
 				mySaverThread = new SaverThread();
 				mySaverThread.start();
@@ -558,7 +555,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void addInvisibleBookmark(ZLTextWordCursor cursor) {
-		if (cursor != null && Model != null && Model.Book != null && Model.isValid() && getTextView() == BookTextView) {
+		if (cursor != null && Model != null && Model.Book != null && getTextView() == BookTextView) {
 			updateInvisibleBookmarksList(Bookmark.createBookmark(
 				Model.Book,
 				getTextView().getModel().getId(),
