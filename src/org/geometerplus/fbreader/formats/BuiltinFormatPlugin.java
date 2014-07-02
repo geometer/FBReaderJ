@@ -17,8 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.image;
+package org.geometerplus.fbreader.formats;
 
-public interface ZLImage {
-	String getURI();
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+
+public abstract class BuiltinFormatPlugin extends FormatPlugin {
+	protected BuiltinFormatPlugin(String fileType) {
+		super(fileType);
+	}
+
+	public abstract void readModel(BookModel model) throws BookReadingException;
 }

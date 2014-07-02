@@ -21,13 +21,10 @@ package org.geometerplus.zlibrary.core.image;
 
 import java.io.*;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
-
-public abstract class ZLBase64EncodedImage extends ZLSingleImage {
+public abstract class ZLBase64EncodedImage implements ZLStreamImage {
 	private boolean myIsDecoded;
 
-	protected ZLBase64EncodedImage(MimeType mimeType) {
-		super(mimeType);
+	protected ZLBase64EncodedImage() {
 	}
 
 	protected static byte decodeByte(byte encodedByte) {

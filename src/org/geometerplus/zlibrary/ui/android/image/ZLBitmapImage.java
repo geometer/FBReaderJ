@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.fb2;
+package org.geometerplus.zlibrary.ui.android.image;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import java.io.InputStream;
 
-public class FB2CoverReader {
-	public FB2CoverImage readCover(ZLFile file) {
-		return new FB2CoverImage(file);
+import org.geometerplus.zlibrary.core.image.ZLImage;
+
+import android.graphics.Bitmap;
+
+public class ZLBitmapImage implements ZLImage {
+	private final Bitmap myBitmap;
+
+	public ZLBitmapImage(Bitmap bitmap) {
+		myBitmap = bitmap;
+	}
+
+	public Bitmap getBitmap() {
+		return myBitmap;
+	}
+
+	@Override
+	public String getURI() {
+		return "bitmap image";
 	}
 }

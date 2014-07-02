@@ -17,37 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.oeb;
+package org.geometerplus.fbreader.formats.external;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-class OEBCoverReader {
-	private static class OEBCoverImage extends ZLImageProxy {
-		private final ZLFile myFile;
+final class PluginImage extends ZLImageProxy {
+	private final ZLFile myFile;
 
-		OEBCoverImage(ZLFile file) {
-			myFile = file;
-		}
-
-		@Override
-		public ZLSingleImage getRealImage() {
-			return new OEBCoverBackgroundReader().readCover(myFile);
-		}
-
-		@Override
-		public int sourceType() {
-			return SourceType.DISK;
-		}
-
-		@Override
-		public String getId() {
-			return myFile.getPath();
-		}
+	PluginImage(ZLFile file) {
+		myFile = file;
 	}
 
-	public ZLImageProxy readCover(ZLFile file) {
-		return new OEBCoverImage(file);
+	@Override
+	public ZLImage getRealImage() {
+		// TODO: implement
+		return null;
+	}
+
+	@Override
+	public SourceType sourceType() {
+		return SourceType.SERVICE;
+	}
+
+	@Override
+	public String getId() {
+		return myFile.getPath();
 	}
 }

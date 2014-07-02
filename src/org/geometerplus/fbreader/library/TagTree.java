@@ -130,5 +130,5 @@ public final class TagTree extends FilteredTree {
 	@Override
 	protected boolean createSubtree(Book book) {
 		return createBookWithAuthorsSubtree(book);
-	} 
+	}
 }

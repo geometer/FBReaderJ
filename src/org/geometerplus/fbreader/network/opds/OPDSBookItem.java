@@ -152,9 +152,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			} else if (referenceType == UrlInfo.Type.TOC) {
 				urls.addInfo(new UrlInfo(referenceType, href, mime));
 			} else if (referenceType != null) {
-				final BookUrlInfo.Format format = formatByMimeType(mime);
-				if (!BookUrlInfo.Format.NONE.equals(format)) {
-					urls.addInfo(new BookUrlInfo(referenceType, format, href, mime));
+				if (BookUrlInfo.isMimeSupported(mime)) {
+					urls.addInfo(new BookUrlInfo(referenceType, href, mime));
 				}
 			}
 		}
@@ -194,28 +193,14 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		boolean added = false;
 		for (String f : opdsLink.Formats) {
 			final MimeType mime = MimeType.get(f);
-			final BookUrlInfo.Format format = formatByMimeType(mime);
-			if (!BookUrlInfo.Format.NONE.equals(format)) {
-				urls.addInfo(new BookBuyUrlInfo(type, format, href, mime, price));
+			if (BookUrlInfo.isMimeSupported(mime)) {
+				urls.addInfo(new BookBuyUrlInfo(type, href, mime, price));
 				added = true;
 			}
 		}
 		if (!added && addWithoutFormat) {
-			urls.addInfo(new BookBuyUrlInfo(type, BookUrlInfo.Format.NONE, href, MimeType.NULL, price));
+			urls.addInfo(new BookBuyUrlInfo(type, href, MimeType.NULL, price));
 		}
-	}
-
-	static BookUrlInfo.Format formatByMimeType(MimeType mime) {
-		if (MimeType.TYPES_FB2.contains(mime)) {
-			return BookUrlInfo.Format.FB2;
-		} else if (MimeType.TYPES_FB2_ZIP.contains(mime)) {
-			return BookUrlInfo.Format.FB2_ZIP;
-		} else if (MimeType.TYPES_EPUB.contains(mime)) {
-			return BookUrlInfo.Format.EPUB;
-		} else if (MimeType.TYPES_MOBIPOCKET.contains(mime)) {
-			return BookUrlInfo.Format.MOBIPOCKET;
-		}
-		return BookUrlInfo.Format.NONE;
 	}
 
 	public OPDSBookItem(
