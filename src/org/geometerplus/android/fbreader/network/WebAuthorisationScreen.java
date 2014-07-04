@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+//import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.Window;
 import android.webkit.*;
@@ -79,6 +80,14 @@ public class WebAuthorisationScreen extends Activity {
 					finish();
 				}
 			}
+
+			/*
+			public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+				System.err.println("onReceivedSslError: " + error);
+				//super.onReceivedSslError(view, handler, error);
+				handler.proceed();
+			}
+			*/
 		});
 		setContentView(view);
 		view.loadUrl(intent.getDataString());
