@@ -38,6 +38,7 @@ public class EditListDialogActivity extends ListActivity {
 	public static final int REQ_CODE = 001;
 	public interface Key {
 		final String LIST					= "edit_list.list";
+		final String ALL_ITEMS_LIST			= "edit_list.all_items_list";
 		final String ACTIVITY_TITLE         = "edit_list.title";
 	}
 

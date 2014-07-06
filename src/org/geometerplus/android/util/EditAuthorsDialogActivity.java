@@ -36,9 +36,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public class EditAuthorsDialogActivity extends EditListDialogActivity {
 	public static final int REQ_CODE = 002;
-	public interface Key {
-		final String ALL_AUTHOR_LIST		= "edit_authors.all_author_list";
-	}
+	
+	private final String AUTHOR_NAME_FILTER = "[\\p{L}0-9_\\-& ]*";
 	private AutoCompleteTextView myInputField;
 	private int myEditPosition = -1;
 
@@ -48,7 +47,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 		setContentView(R.layout.edit_authors_dialog);
 
 		final Intent intent = getIntent();
-		ArrayList<String> allAuthorList = intent.getStringArrayListExtra(Key.ALL_AUTHOR_LIST);
+		ArrayList<String> allAuthorList = intent.getStringArrayListExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST);
 
 		myInputField = (AutoCompleteTextView)findViewById(R.id.edit_authors_input_field);
 		myInputField.setHint(myResource.getResource("addAuthor").getValue());
@@ -76,7 +75,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 	}
 	
 	private void addAuthor(String author, int position){
-		if(author.length() != 0 && author.matches("[\\p{L}0-9_\\- ]*")){
+		if(author.length() != 0 && author.matches(AUTHOR_NAME_FILTER)){
 			if(position < 0){
 				if(!myEditList.contains(author)){
 					myEditList.add(author);

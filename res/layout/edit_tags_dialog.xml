@@ -27,12 +27,13 @@
 			android:layout_gravity="center"
 		/>
 	</LinearLayout>
-	<EditText
+	<AutoCompleteTextView
 		android:id="@+id/edit_tags_input_field"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:singleLine="true"
 		android:imeOptions="actionDone"
+		android:completionThreshold="1"
 		android:layout_alignParentTop="true"
 	/>
 	<ListView

@@ -37,8 +37,9 @@ import org.geometerplus.zlibrary.ui.android.R;
 public class EditTagsDialogActivity extends EditListDialogActivity {
 	public static final int REQ_CODE = 001;
 
+	private final String TAG_NAME_FILTER = "[\\p{L}0-9_\\-& ]*";
 	private ZLResource myResource;
-	private EditText myInputField;
+	private AutoCompleteTextView myInputField;
 	private int myEditPosition = -1;
 
 	@Override
@@ -47,8 +48,11 @@ public class EditTagsDialogActivity extends EditListDialogActivity {
 		setContentView(R.layout.edit_tags_dialog);
 
 		myResource = ZLResource.resource("dialog").getResource("editTags");
+		
+		final Intent intent = getIntent();
+		ArrayList<String> allTagsList = intent.getStringArrayListExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST);
 
-		myInputField = (EditText)findViewById(R.id.edit_tags_input_field);
+		myInputField = (AutoCompleteTextView)findViewById(R.id.edit_tags_input_field);
 		myInputField.setHint(myResource.getResource("addTag").getValue());
 		myInputField.setOnEditorActionListener(new TextView.OnEditorActionListener(){
 			public boolean onEditorAction (TextView v, int actionId, KeyEvent event){
@@ -62,6 +66,7 @@ public class EditTagsDialogActivity extends EditListDialogActivity {
 				return true;
 			}
 		});
+		myInputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, allTagsList));
 	
 		parseUIElements();		
 
@@ -79,13 +84,13 @@ public class EditTagsDialogActivity extends EditListDialogActivity {
 			if(position < 0){
 				for(String s : tags){
 					s = s.trim();
-					if(!myEditList.contains(s) && s.matches("[A-Za-z0-9_\\- ]*")){
+					if(!myEditList.contains(s) && s.matches(TAG_NAME_FILTER)){
 						myEditList.add(s);
 					}
 				}
 			}else{
 				String s = tags[0].trim();
-				if(s.matches("[A-Za-z0-9_\\- ]*")){
+				if(s.matches(TAG_NAME_FILTER)){
 					myEditList.set(position, s);
 				}
 			}
