@@ -30,11 +30,12 @@ import android.widget.*;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.content.DialogInterface.OnClickListener;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class EditListDialogActivity extends ListActivity {
+public abstract class EditListDialogActivity extends ListActivity {
 	public static final int REQ_CODE = 001;
 	public interface Key {
 		final String LIST					= "edit_list.list";
@@ -43,6 +44,7 @@ public class EditListDialogActivity extends ListActivity {
 	}
 
 	protected ArrayList<String> myEditList;
+	private ArrayList<String> myContextMenuItems = new ArrayList<String>();
 	protected ZLResource myResource;
 
 	@Override
@@ -52,8 +54,11 @@ public class EditListDialogActivity extends ListActivity {
 		final Intent intent = getIntent();
 		myEditList = intent.getStringArrayListExtra(Key.LIST);
 		setTitle(intent.getStringExtra(Key.ACTIVITY_TITLE));
-		myResource = ZLResource.resource("dialog").getResource("editAuthors");
 		setResult(RESULT_CANCELED);
+
+		ZLResource editListResource = ZLResource.resource("dialog").getResource("editList");
+		myContextMenuItems.add(editListResource.getResource("edit").getValue());
+		myContextMenuItems.add(editListResource.getResource("remove").getValue());
 	}
 	
 	protected void parseUIElements(){
@@ -81,6 +86,9 @@ public class EditListDialogActivity extends ListActivity {
 	}
 
 	protected void showItemRemoveDialog(final int index) {
+		if(index < 0 || myResource == null)
+			return;
+
 		final ZLResource resource = myResource.getResource("removeDialog");
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		new AlertDialog.Builder(EditListDialogActivity.this)
@@ -98,7 +106,28 @@ public class EditListDialogActivity extends ListActivity {
 			.create().show();
 	}
 	
+	protected void showItemContextMenuDialog(final int position){
+		new AlertDialog.Builder(EditListDialogActivity.this)
+			.setTitle(myEditList.get(position))
+			.setItems(myContextMenuItems.toArray(new String[myContextMenuItems.size()]), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					onChooseContextMenu(which, position);
+				}
+			}).create().show();
+	}
+	
+	abstract protected void onChooseContextMenu(int index, int itemPosition);
+
+	protected void onClick(int position){
+		showItemContextMenuDialog(position);
+	}
+	
 	protected void onLongClick(int position){
+		//can be overriden in children
+	}
+	
+	protected void deleteItem(int position){
+		showItemRemoveDialog(position);
 	}
 	
 	protected class EditListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
@@ -124,12 +153,12 @@ public class EditListDialogActivity extends ListActivity {
 				: LayoutInflater.from(EditListDialogActivity.this).inflate(R.layout.edit_list_dialog_item, parent, false);
 
 			((TextView)view.findViewById(R.id.edit_item_title)).setText(getItem(position));
-
 			return view;
 		}
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+			onClick(position);
 		}
 
 		@Override

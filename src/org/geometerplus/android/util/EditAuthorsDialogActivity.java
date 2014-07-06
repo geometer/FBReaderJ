@@ -46,6 +46,8 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_authors_dialog);
 
+		myResource = ZLResource.resource("dialog").getResource("editAuthors");
+		
 		final Intent intent = getIntent();
 		ArrayList<String> allAuthorList = intent.getStringArrayListExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST);
 
@@ -88,7 +90,18 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 	}
 
 	@Override
-	protected void onLongClick(int position){
+	protected void onChooseContextMenu(int index, int itemPosition){
+		switch(index){
+			case 0:
+				editAuthor(itemPosition);
+				break;
+			case 1:
+				deleteItem(itemPosition);
+				break; 
+		}
+	}	
+	
+	private void editAuthor(int position){
 		myEditPosition = position;
 		String s = (String)getListAdapter().getItem(position);
 		myInputField.setText(s);
@@ -97,7 +110,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.showSoftInput(myInputField, InputMethodManager.SHOW_IMPLICIT);
 	}
-	
+
 	private class AuthorsAdapter extends EditListAdapter {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
@@ -109,7 +122,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(final View v) {
-						showItemRemoveDialog(position);
+						deleteItem(position);
 					}
 				});
 			}else{

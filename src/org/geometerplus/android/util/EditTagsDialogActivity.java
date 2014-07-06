@@ -38,7 +38,6 @@ public class EditTagsDialogActivity extends EditListDialogActivity {
 	public static final int REQ_CODE = 001;
 
 	private final String TAG_NAME_FILTER = "[\\p{L}0-9_\\-& ]*";
-	private ZLResource myResource;
 	private AutoCompleteTextView myInputField;
 	private int myEditPosition = -1;
 
@@ -56,7 +55,6 @@ public class EditTagsDialogActivity extends EditListDialogActivity {
 		myInputField.setHint(myResource.getResource("addTag").getValue());
 		myInputField.setOnEditorActionListener(new TextView.OnEditorActionListener(){
 			public boolean onEditorAction (TextView v, int actionId, KeyEvent event){
-				System.out.println(actionId);
 				if(actionId == EditorInfo.IME_ACTION_DONE){
 					addTag(myInputField.getText().toString(), myEditPosition);
 					myInputField.setText("");
@@ -99,7 +97,18 @@ public class EditTagsDialogActivity extends EditListDialogActivity {
 	}
 	
 	@Override
-	protected void onLongClick(int position){
+	protected void onChooseContextMenu(int index, int itemPosition){
+		switch(index){
+			case 0:
+				editTag(itemPosition);
+				break;
+			case 1:
+				deleteItem(itemPosition);
+				break; 
+		}
+	}
+	
+	private void editTag(int position){
 		myEditPosition = position;
 		String s = (String)getListAdapter().getItem(position);
 		myInputField.setText(s);
@@ -117,7 +126,7 @@ public class EditTagsDialogActivity extends EditListDialogActivity {
 			final View deleteButton = view.findViewById(R.id.edit_item_remove);
 			deleteButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(final View v) {
-					showItemRemoveDialog(position);
+					deleteItem(position);
 				}
 			});
 
