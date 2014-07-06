@@ -76,7 +76,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 	}
 	
 	private void addAuthor(String author, int position){
-		if(author.length() != 0 && author.matches("[A-Za-z0-9_\\- ]*")){
+		if(author.length() != 0 && author.matches("[\\p{L}0-9_\\- ]*")){
 			if(position < 0){
 				if(!myEditList.contains(author)){
 					myEditList.add(author);
