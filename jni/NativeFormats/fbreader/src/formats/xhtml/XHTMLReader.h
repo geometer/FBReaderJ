@@ -50,14 +50,14 @@ class XHTMLTagAction {
 
 public:
 	virtual ~XHTMLTagAction();
-	
+
 	virtual void doAtStart(XHTMLReader &reader, const char **xmlattributes) = 0;
 	virtual void doAtEnd(XHTMLReader &reader) = 0;
 	virtual bool isEnabled(XHTMLReadingState state) = 0;
 
 protected:
-	static BookReader &bookReader(XHTMLReader &reader);	
-	static const std::string &pathPrefix(XHTMLReader &reader);	
+	static BookReader &bookReader(XHTMLReader &reader);
+	static const std::string &pathPrefix(XHTMLReader &reader);
 	static void beginParagraph(XHTMLReader &reader);
 	static void endParagraph(XHTMLReader &reader);
 };

@@ -297,7 +297,7 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 			for (std::vector<std::string>::const_iterator jt = ids.begin(); jt != ids.end(); ++jt) {
 				if (ZLStringUtil::stringStartsWith(*jt, "url(") &&
 						ZLStringUtil::stringEndsWith(*jt, ")")) {
-					path = ZLFile(url2FullPath(*jt)).path();	
+					path = ZLFile(url2FullPath(*jt)).path();
 					break;
 				}
 			}
@@ -349,7 +349,7 @@ void StyleSheetParserWithCache::importCSS(const std::string &path) {
 		StyleSheetParserWithCache importParser(fileToImport, myPathPrefix, myFontMap, myEncryptionMap);
 		importParser.myProcessedFiles.insert(myProcessedFiles.begin(), myProcessedFiles.end());
 		importParser.parseStream(stream);
-		myEntries.insert(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end()); 
+		myEntries.insert(myEntries.end(), importParser.myEntries.begin(), importParser.myEntries.end());
 	}
 	myProcessedFiles.insert(fileToImport.path());
 }

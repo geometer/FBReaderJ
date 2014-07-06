@@ -4,7 +4,7 @@
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Ingolf Kübler 2011/07/03 -->
 <!-- Updated by Ingolf Kübler 2012/07/01 -->
-<!-- Updated by Matthias Dill 2014/05/12 -->
+<!-- Updated by Matthias Dill 2014/06/10 -->
 <resources>
 	<node name="library" value="FBReader Bibliothek">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -426,9 +426,9 @@
 				<node name="normal" value="Normal"/>
 				<node name="inherit" value="&lt;unverändert&gt;"/>
 			</node>
-			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
-				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
-				<node name="none" value="no decorations" toBeTranslated="true"/>
+			<node name="textDecoration" value="Text Verzierung">
+				<node name="inherit" value="&lt;unverändert&gt;"/>
+				<node name="none" value="keine Verzierung"/>
 				<node name="underline" value="untertrichen"/>
 				<node name="line-through" value="durchgestrichen"/>
 			</node>
@@ -456,14 +456,14 @@
 			<node name="spaceAfter" value="Abstand nach"/>
 			<node name="leftIndent" value="Einzug linker Rand"/>
 			<node name="rightIndent" value="Einzug rechter Rand"/>
-			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
+			<node name="verticalAlignment" value="Vertikale Ausrichtung"/>
 			<node name="more" value="Weitere Formatierungen…">
 				<node name="summary" value="Detaillierte Einstellungen für Überschiften, Inhalte, etc."/>
 				<node name="Regular Paragraph" value="Normaler Absatz">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
-					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
+				<node name="xhtml-tag-p" value="EPub Abschnitt">
+					<node name="summary" value="&lt;p&gt; XHTML Tag Inhalt"/>
 				</node>
 				<node name="Title" value="Titel">
 					<node name="summary" value=""/>
@@ -577,9 +577,9 @@
 				<node name="summaryOn" value="Verwende in CSS definierte Ausrichtung"/>
 				<node name="summaryOff" value="Ignoriere in CSS definierte Ausrichtung"/>
 			</node>
-			<node name="margins" value="Margins" toBeTranslated="true">
-				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			<node name="margins" value="Ränder">
+				<node name="summaryOn" value="Verwende in CSS definierte Ränder"/>
+				<node name="summaryOff" value="Ignoriere in CSS definierte Ränder"/>
 			</node>
 		</node>
 		<node name="colors" value="Farben &amp; Hintergründe">
@@ -834,8 +834,8 @@
 			<node name="loadingNetworkBookInfo" value="Lade Buchinformation. Bitte warten…"/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten…"/>
 			<node name="updatingAccountInformation" value="Konto-Information wird aktualisiert. Bitte waren…"/>
-			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialisiere das Rechtemanagement. Bitte warten…"/>
+			<node name="acquireLicense" value="Empfange Lizenz. Bitte warten…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler"/>
@@ -993,8 +993,8 @@
 		<node name="frontScreenButton" value="Auf diesen Bildschirm wechseln"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+		<node name="positiveLength" value="z.B.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="z.B.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="z.B.: 125%%"/>
 	</node>
 </resources>

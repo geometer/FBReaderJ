@@ -17,8 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.image;
+package org.geometerplus.fbreader.formats.external;
 
-public interface ZLImage {
-	String getURI();
+import org.geometerplus.fbreader.book.Book;
+
+public class DjVuPlugin extends ExternalFormatPlugin {
+	public DjVuPlugin() {
+		super("DjVu");
+	}
+
+	@Override
+	public void readMetainfo(Book book) {
+		// TODO: implement
+	}
 }

@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.Window;
 import android.webkit.*;
@@ -77,6 +78,15 @@ public class WebAuthorisationScreen extends Activity {
 						NetworkLibraryActivity.COOKIES_KEY, cookies
 					));
 					finish();
+				}
+			}
+
+			public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+				if (android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.ECLAIR_MR1) {
+					// hack for auth problem in android 2.1
+					handler.proceed();
+				} else {
+					super.onReceivedSslError(view, handler, error);
 				}
 			}
 		});

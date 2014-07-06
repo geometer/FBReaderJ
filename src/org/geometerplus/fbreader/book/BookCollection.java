@@ -22,11 +22,15 @@ package org.geometerplus.fbreader.book;
 import java.io.File;
 import java.util.*;
 
+import android.graphics.Bitmap;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
@@ -65,7 +69,7 @@ public class BookCollection extends AbstractBookCollection {
 		if (plugin == null) {
 			return null;
 		}
-		if (!plugin.type().Builtin && bookFile != bookFile.getPhysicalFile()) {
+		if (!(plugin instanceof BuiltinFormatPlugin) && bookFile != bookFile.getPhysicalFile()) {
 			return null;
 		}
 		try {
@@ -636,17 +640,14 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	@Override
-	public boolean saveCover(Book book, String url) {
+	public Bitmap getCover(Book book, int maxWidth, int maxHeight) {
 		if (getBookById(book.getId()) == null) {
-			return false;
+			return null;
 		}
 
-		final ZLImage image = BookUtil.getCover(book);
-		if (image == null) {
-			return false;
-		}
-
-		return image.saveToFile(url);
+		final ZLAndroidImageManager manager = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+		final ZLAndroidImageData data = manager.getImageData(BookUtil.getCover(book));
+		return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {

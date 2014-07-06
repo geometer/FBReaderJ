@@ -74,7 +74,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 26;
+		final int currentVersion = 27;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -134,6 +134,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables24();
 			case 25:
 				updateTables25();
+			case 26:
+				updateTables26();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -1041,7 +1043,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 		return links;
 	}
-	
+
 	private SQLiteStatement mySaveProgessStatement;
 	@Override
 	protected void saveBookProgress(long bookId, RationalNumber progress) {
@@ -1074,6 +1076,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected void deleteBook(long bookId) {
 		myDatabase.beginTransaction();
+		myDatabase.execSQL("DELETE FROM BookSynchronizationInfo WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookAuthor WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookLabel WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookReadingProgress WHERE book_id=" + bookId);
@@ -1486,12 +1489,20 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, '', 245*256*256 + 121*256 + 0)"); // #f57900
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, '', 114*256*256 + 159*256 + 207)"); // #729fcf
 	}
-	
+
 	private void updateTables25() {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS BookReadingProgress(" +
 				"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
 				"numerator INTEGER NOT NULL," +
 				"denominator INTEGER NOT NULL)");
+	}
+
+	private void updateTables26() {
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookSynchronizationInfo(" +
+				"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"synchronization_time INTEGER NOT NULL," +
+				"hash TEXT(40) NOT NULL)");
 	}
 }

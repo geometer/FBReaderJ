@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.fonts.*;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.formats.BuiltinFormatPlugin;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 public abstract class BookModel {
@@ -48,7 +49,7 @@ public abstract class BookModel {
 				);
 		}
 
-		plugin.readModel(model);
+		((BuiltinFormatPlugin)plugin).readModel(model);
 		return model;
 	}
 
