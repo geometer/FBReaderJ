@@ -2,6 +2,7 @@ default.properties
 build.properties
 local.properties
 .gradle
+.idea
 bin/
 build/
 gen/

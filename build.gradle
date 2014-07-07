@@ -12,7 +12,7 @@ apply plugin: 'android'
 android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
-    project.archivesBaseName = "YD_Reader";
+    project.archivesBaseName = "YD_FBReader";
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
