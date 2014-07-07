@@ -168,12 +168,17 @@ class EditTagsPreference extends Preference {
 	@Override
 	protected void onClick() {
 		Intent intent = new Intent(getContext(), EditTagsDialogActivity.class);
-		intent.putExtra(EditTagsDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
+		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
 		ArrayList<String> tags = new ArrayList<String>();
 		for(Tag tag : myBook.tags()){
 			tags.add(tag.Name);
 		}
+		ArrayList<String> allTags = new ArrayList<String>();
+		for(Tag tag : ((EditBookInfoActivity)getContext()).tags()){
+			allTags.add(tag.Name);
+		}
 		intent.putExtra(EditListDialogActivity.Key.LIST, tags);
+		intent.putExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST, allTags);
 		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditTagsDialogActivity.REQ_CODE);
 	}
 }
@@ -214,7 +219,7 @@ class EditAuthorsPreference extends Preference {
 			allAuthors.add(author.DisplayName);
 		}
 		intent.putExtra(EditListDialogActivity.Key.LIST, authors);
-		intent.putExtra(EditAuthorsDialogActivity.Key.ALL_AUTHOR_LIST, allAuthors);
+		intent.putExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST, allAuthors);
 		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditAuthorsDialogActivity.REQ_CODE);
 	}
 }
@@ -241,6 +246,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	
 	List<Author> authors(){
 		return myCollection.authors();
+	}
+	
+	List<Tag> tags(){
+		return myCollection.tags();
 	}
 
 	@Override

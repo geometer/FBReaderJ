@@ -17,7 +17,6 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:layout_gravity="center"
-			android:text="Ok"	
 		/>
 		<Button
 			android:id="@+id/edit_dialog_button_cancel"
@@ -26,15 +25,15 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:layout_gravity="center"
-			android:text="Cancel"
 		/>
 	</LinearLayout>
-	<EditText
+	<AutoCompleteTextView
 		android:id="@+id/edit_tags_input_field"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:singleLine="true"
 		android:imeOptions="actionDone"
+		android:completionThreshold="1"
 		android:layout_alignParentTop="true"
 	/>
 	<ListView

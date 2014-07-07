@@ -36,9 +36,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 public class EditAuthorsDialogActivity extends EditListDialogActivity {
 	public static final int REQ_CODE = 002;
-	public interface Key {
-		final String ALL_AUTHOR_LIST		= "edit_authors.all_author_list";
-	}
+	
+	private final String AUTHOR_NAME_FILTER = "[\\p{L}0-9_\\-& ]*";
 	private AutoCompleteTextView myInputField;
 	private int myEditPosition = -1;
 
@@ -47,8 +46,10 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_authors_dialog);
 
+		myResource = ZLResource.resource("dialog").getResource("editAuthors");
+		
 		final Intent intent = getIntent();
-		ArrayList<String> allAuthorList = intent.getStringArrayListExtra(Key.ALL_AUTHOR_LIST);
+		ArrayList<String> allAuthorList = intent.getStringArrayListExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST);
 
 		myInputField = (AutoCompleteTextView)findViewById(R.id.edit_authors_input_field);
 		myInputField.setHint(myResource.getResource("addAuthor").getValue());
@@ -63,7 +64,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 				return true;
 			}
 		});
-		myInputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allAuthorList));
+		myInputField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, allAuthorList));
 		
 		parseUIElements();
 		
@@ -76,7 +77,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 	}
 	
 	private void addAuthor(String author, int position){
-		if(author.length() != 0 && author.matches("[A-Za-z0-9_\\- ]*")){
+		if(author.length() != 0 && author.matches(AUTHOR_NAME_FILTER)){
 			if(position < 0){
 				if(!myEditList.contains(author)){
 					myEditList.add(author);
@@ -89,7 +90,18 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 	}
 
 	@Override
-	protected void onLongClick(int position){
+	protected void onChooseContextMenu(int index, int itemPosition){
+		switch(index){
+			case 0:
+				editAuthor(itemPosition);
+				break;
+			case 1:
+				deleteItem(itemPosition);
+				break; 
+		}
+	}	
+	
+	private void editAuthor(int position){
 		myEditPosition = position;
 		String s = (String)getListAdapter().getItem(position);
 		myInputField.setText(s);
@@ -98,7 +110,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.showSoftInput(myInputField, InputMethodManager.SHOW_IMPLICIT);
 	}
-	
+
 	private class AuthorsAdapter extends EditListAdapter {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
@@ -110,7 +122,7 @@ public class EditAuthorsDialogActivity extends EditListDialogActivity {
 				deleteButton.setVisibility(View.VISIBLE);
 				deleteButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(final View v) {
-						showItemRemoveDialog(position);
+						deleteItem(position);
 					}
 				});
 			}else{
