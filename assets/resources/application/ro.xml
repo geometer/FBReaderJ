@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Romanian FBReaderJ resources maryhit -->
+<!-- Updated by girlea_alex@yahoo.com, Jul 6 of 2014 -->
 <resources>
 	<node name="library" value="Biblioteca">
 		<node name="unknownAuthor" value="Autor necunoscut"/>
@@ -48,9 +49,9 @@
 		<node name="deleteBook" value="Stergere cartea"/>
 		<node name="addToFavorites" value="Adauga la favorite"/>
 		<node name="removeFromFavorites" value="Sterge din favorite"/>
-		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
-		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="removeFromRecents" value="Eliminati din lista recenta"/>
+		<node name="markAsRead" value="Marcati ca citit"/>
+		<node name="markAsUnread" value="Marcati ca necitit"/>
 	</node>
 	<node name="networkLibrary" value="Reteaua de biblioteci Online">
 		<node name="byAuthor" value="Dupa autor">
@@ -131,10 +132,10 @@
 			<node name="title" value="Adauga Catalog"/>
 			<node name="editUrl" value="Editeaza URL manual"/>
 		</node>
-		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
-			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
-			<node name="enabled" value="Enabled" toBeTranslated="true"/>
-			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		<node name="manageCatalogs" value="Gestionare registre">
+			<node name="summary" value="Configurare lista de registre"/>
+			<node name="enabled" value="Activat"/>
+			<node name="disabled" value="Dezactivat"/>
 		</node>
 		<node name="menu">
 			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
@@ -178,8 +179,8 @@
 		<node name="type" value="Tip:"/>
 		<node name="size" value="Dimensiune:"/>
 		<node name="time" value="Ultima modificare:"/>
-		<node name="sizeInBytes" value=" %s octet (e)"/>
-		<node name="sizeInKiloBytes" value=" %s kB"/>
+		<node name="sizeInBytes" value="%s octet (e)"/>
+		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Catalog:"/>
 		<node name="extraLinks" value="Link-uri utile"/>
 		<node name="menu">
@@ -193,8 +194,8 @@
 		<node name="contentError" value="Descarcare esuata"/>
 		<node name="downloadingStarted" value="Descarcarea cartii a inceput"/>
 		<node name="alreadyDownloading" value="Cartea deja se descarcata"/>
-		<node name="cannotCreateDirectory" value="Nu se poate crea directorul%s"/>
-		<node name="cannotCreateFile" value="Nu se poate crea fisierul%s"/>
+		<node name="cannotCreateDirectory" value="Nu se poate crea directorul %s"/>
+		<node name="cannotCreateFile" value="Nu se poate crea fisierul %s"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Deschide arbore"/>
@@ -238,7 +239,7 @@
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Copiati în clipboard"/>
 		<node name="openInDictionary" value="Open in dictionar"/>
-		<node name="quoteFrom" value="Citat de la%s"/>
+		<node name="quoteFrom" value="Citat de la %s"/>
 		<node name="textInBuffer" value="Copiat în clipboard:&#10;%s"/>
 		<node name="bookmarkCreated" value="Bookmark creat:&#10;%s"/>
 		<node name="clearSelection" value="Sterge"/>
@@ -795,7 +796,7 @@
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalati dictionar"/>
-			<node name="message" value="Doriti sa instalati%s?"/>
+			<node name="message" value="Doriti sa instalati %s?"/>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Fisierul cartii va fi sters ireversibil. Sunteti sigur?"/>
@@ -804,7 +805,7 @@
 			<node name="message" value="Fisierul exista deja. Doriti reincarcarea lui?"/>
 		</node>
 		<node name="waitMessage">
-			<node name="downloadingFile" value="Descarcare carte%s"/>
+			<node name="downloadingFile" value="Descarcare carte %s"/>
 			<node name="search" value="Cautarea a inceput. Va rugam asteptati…"/>
 			<node name="loadInfo" value="Se incarca informatiile necesare. Va rugam asteptati…"/>
 			<node name="loadingBook" value="Se deschide cartea. Va rugam asteptati…"/>
@@ -867,57 +868,57 @@
 			<node name="more" value="Urmatorul sfat"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
-			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message1" value="FBReader functioneaza in modul ecran complet implicit. O treime din ecran pentru a afisa controalele. Puteti schimba acest comportament in “Aparitie” sectiune de dialog Setari."/>
+			<node name="message2" value="Bine facut! Acum atingeti din nou al treilea centru pentru a ascunde comenzile si acest indiciul. Daca doriti sa pastrati comenzile de pe ecran in timpul citirii, selectati “Arata bara de actiune” optiune in “Aparitie” sectiune de dialog Setari."/>
 		</node>
 		<node name="folderList">
-			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
-				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			<node name="addFolder" value="Adauga dosar"/>
+			<node name="removeDialog" value="Sterge dosar">
+				<node name="message" value="Sterge “%s” din lista?"/>
 			</node>
-			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+			<node name="duplicate" value="“%s” este in continuare in lista"/>
 		</node>
 		<node name="fileChooser">
-			<node name="root" value="Root" toBeTranslated="true"/>
-			<node name="newFolder" value="New folder" toBeTranslated="true"/>
-			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="root" value="Radacina"/>
+			<node name="newFolder" value="Dosar nou"/>
+			<node name="folderNameHint" value="Nume dosar"/>
 			<node name="menu">
-				<node name="origin" value="Origin" toBeTranslated="true"/>
-				<node name="reload" value="Reload" toBeTranslated="true"/>
+				<node name="origin" value="Origine"/>
+				<node name="reload" value="Reincarca"/>
 			</node>
-			<node name="sortBy" value="Sort by" toBeTranslated="true">
-				<node name="name" value="Name" toBeTranslated="true"/>
-				<node name="size" value="Size" toBeTranslated="true"/>
-				<node name="date" value="Date" toBeTranslated="true"/>
+			<node name="sortBy" value="Sortare dupa">
+				<node name="name" value="Nume"/>
+				<node name="size" value="Marime"/>
+				<node name="date" value="Data"/>
 			</node>
-			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+			<node name="permissionDenied" value="Acces interzis"/>
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File not found: %s" toBeTranslated="true"/>
-		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
-		<node name="cannotRunAndroidMarket" value="Nu pot accesa Android Market. Va rugam instalati%s manual"/>
-		<node name="textNotFound" value="Nu exista nici un text adecvat în carte, imi pare rau"/>
+		<node name="nativeCodeFailure" value="Eroare %s in codul nativ in timpul lecturii '%s'"/>
+		<node name="errorReadingFile" value="A apărut o eroare in timpul citirii '%s'"/>
+		<node name="errorReadingZip" value="A apărut o eroare în timpul extragerii '%s'"/>
+		<node name="pluginNotFound" value="Nu este plugin pentru '%s'"/>
+		<node name="unknownPluginType" value="Tip plugin necunoscut: %s"/>   
+		<node name="fileNotFound" value="Fisierul nu a fost gasit: %s"/>
+		<node name="unsupportedEncryptionMethod" value="Fisierul %s este criptat cu metoda care nu este sustinuta de FBReader. Unele pagini nu pot fi citite"/>
+		<node name="opfFileNotFound" value="OPF nu se gaseste in %s"/>
+		<node name="unsupportedFileFormat" value="Formatul de fisier nu este acceptat pentru '%s'"/>
+		<node name="errorParsingRtf" value="Rtf eroare de analiza în: %s"/>
+		<node name="cannotRunAndroidMarket" value="Nu pot accesa Android Market. Va rugam instalati %s manual"/>
+		<node name="textNotFound" value="Nu exista nici un text adecvat în carte, îmi pare rau"/>
 		<node name="bookNotFound" value="Nu exista carti adecvate în biblioteca, îmi pare rau"/>
-		<node name="bookmarkNotFound" value="Nu exista marcaje adecvate, imi pare rau"/>
-		<node name="cannotOpenBook" value="Nu pot deschide aceasta carte în acest moment, imi pare rau"/>
-		<node name="dictionaryIsNotInstalled" value="Dictionarul nu este instalat, imi pare rau"/>
+		<node name="bookmarkNotFound" value="Nu exista marcaje adecvate, îmi pare rau"/>
+		<node name="cannotOpenBook" value="Nu pot deschide aceasta carte în acest moment, îmi pare rau"/>
+		<node name="dictionaryIsNotInstalled" value="Dictionarul nu este instalat, îmi pare rau"/>
 		<node name="permissionDenied" value="Permisiune refuzata, îmi pare rau"/>
 		<node name="noFavorites" value="Lista ta de favorite este goala, îmi pare rau"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="Nu exista carti in serie, ne pare rau"/>
 		<node name="emptyCatalog" value="Catalogul este gol, îmi pare rau"/>
 		<node name="emptyBasket" value="Cosul Dvs. este gol, îmi pare rau"/>
 		<node name="emptyNetworkSearchResults" value="Nu s-a gasit nici o carte"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="Servicii video nedisponibile, ne pare rau"/>
+		<node name="videoPlayerNotFound" value="Nu exista nici un player video instalat pe acest aparat, ne pare rau"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -946,36 +947,36 @@
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
-	<node name="plugins" value="Install plugins" toBeTranslated="true">
-		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
-		<node name="litres" value="LitRes" toBeTranslated="true">
-			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+	<node name="plugins" value="Instalare plugin-uri">
+		<node name="noMorePlugins" value="Nu avem, plugin-uri noi in acest moment, ne pare rau"/>
+		<node name="litres" value="LitRes">
+			<node name="summary" value="Librarie Rusa"/>
 		</node>
-		<node name="tts-plus" value="TTS+" toBeTranslated="true">
-			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		<node name="tts-plus" value="TTS+">
+			<node name="summary" value="Citit cu voce tare"/>
 		</node>
-		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
-			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		<node name="local-opds-scanner" value="OPDS Scanare locala">
+			<node name="summary" value="Uita-te pentru carti in reteaua locala"/>
 		</node>
-		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
+		<node name="bookshelf" value="Raft">
 			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
 		</node>
-		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
-			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		<node name="opds-server" value="Server OPDS">
+			<node name="summary" value="Serviti carti de pe dispozitivul dvs."/>
 		</node>
-		<node name="widgets" value="Widgets" toBeTranslated="true">
-			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		<node name="widgets" value="Widget-uri">
+			<node name="summary" value="Adaugati carti in ecranul de start"/>
 		</node>
-		<node name="pdf" value="PDF" toBeTranslated="true">
-			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="Citire carti in formatul PDF"/>
 		</node>
 	</node>
 	<node name="drm">
 		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
 	</node>
 	<node name="yota">
-		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
-		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+		<node name="frontScreenMessage" value="Intoarceti aparatul pe pentru a citi cartea. Pentru a reveni textul la acest ecran, apasati butonul de mai jos."/>
+		<node name="frontScreenButton" value="Comutare la acest ecran"/>
 	</node>
 	<node name="hint">
 		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
