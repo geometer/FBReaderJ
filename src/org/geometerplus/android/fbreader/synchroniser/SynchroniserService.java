@@ -155,10 +155,12 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			List<String> hashes = null;
 			String error = null;
 			try {
-				if (response instanceof Map) {
-					id = (String)((Map)response).get("id");
-					hashes = (List<String>)((Map)response).get("hashes");
-					error = (String)((Map)response).get("error");
+				final List<Map> responseList = (List<Map>)response;
+				if (responseList.size() == 1) {
+					final Map resultMap = (Map)responseList.get(0).get("result");
+					id = (String)resultMap.get("id");
+					hashes = (List<String>)resultMap.get("hashes");
+					error = (String)resultMap.get("error");
 				}
 			} catch (Exception e) {
 				// ignore
