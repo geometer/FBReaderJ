@@ -138,7 +138,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		try {
 			code = GoogleAuthUtil.getToken(myActivity, myAccount, String.format(
 				"oauth2:server:client_id:%s:api_scope:%s", clientId,
-				TextUtils.join(" ", new Object[] { Scopes.DRIVE_FULL, Scopes.PROFILE })
+				TextUtils.join(" ", new Object[] { Scopes.DRIVE_FILE, Scopes.PROFILE })
 			), null);
 			System.err.println("ACCESS TOKEN = " + code);
 			final String result = runTokenAuthorization(authUrl, authToken, code);
