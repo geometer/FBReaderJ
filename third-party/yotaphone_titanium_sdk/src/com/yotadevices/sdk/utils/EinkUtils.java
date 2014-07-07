@@ -73,20 +73,20 @@ public class EinkUtils {
     }
 
     public static void setViewWaveform(View view, Drawer.Waveform waveform) {
-         view.setEpdViewWaveFormMode(waveform.ordinal());
+//         view.setEpdViewWaveFormMode(waveform.ordinal());
     }
 
     public static Drawer.Waveform getViewWaveform(View view) {
-        //return null;
-        return Drawer.Waveform.values()[view.getEpdViewWaveformMode()];
+        return null;
+//        return Drawer.Waveform.values()[view.getEpdViewWaveformMode()];
     }
 
     public static void setViewDithering(View view) {
-        view.setEpdViewDithering(View.DITHER_ATKINSON);
+//        view.setEpdViewDithering(View.DITHER_ATKINSON);
     }
 
     public static int getViewDithering(View view) {
-        //return 0;
-        return view.getEpdViewDithering();
+        return 0;
+//        return view.getEpdViewDithering();
     }
 }
