@@ -290,7 +290,7 @@
 		<service android:name="group.pals.android.lib.ui.filechooser.services.LocalFileProvider" android:exported="false"/>
 		<activity android:name="group.pals.android.lib.ui.filechooser.FileChooserActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.util.FolderListDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
-		<service android:name="com.yotadevices.fbreader.FBReaderYotaService" android:exported="true" android:launchMode="singleTask"/>
+		<service android:name="com.yotadevices.yotaphone2.fbreader.FBReaderYotaService" android:exported="true" android:launchMode="singleTask"/>
 		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
 		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
 		<meta-data android:name="com.yotadevices.BS_TITLE" android:value="FBReader"/>

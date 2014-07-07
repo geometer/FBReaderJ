@@ -33,7 +33,7 @@ import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yotadevices.fbreader.FBReaderYotaService;
+import com.yotadevices.yotaphone2.fbreader.FBReaderYotaService;
 
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -931,8 +931,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	public ZLViewWidget getViewWidget() {
 		if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
-			if (com.yotadevices.fbreader.FBReaderYotaService.mWidget != null) {
-				return com.yotadevices.fbreader.FBReaderYotaService.mWidget;
+			if (com.yotadevices.yotaphone2.fbreader.FBReaderYotaService.mWidget != null) {
+				return com.yotadevices.yotaphone2.fbreader.FBReaderYotaService.mWidget;
 			}
 		}
 		return myMainView;
