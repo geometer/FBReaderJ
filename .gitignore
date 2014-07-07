@@ -1,7 +1,9 @@
 default.properties
 build.properties
 local.properties
+.gradle
 bin/
+build/
 gen/
 scripts/resources/*.diff
 obj/
