@@ -1,0 +1,14 @@
+=========   Version 0.0.1 ===============
+
+    - Added support general functional ( BSActivity, BSDcrower, BSNotification)
+    - Added unit test
+    - Added Settings Constants
+
+=========   Version 0.0.2 ===============
+
+    - Refactoring BSNotificationManager
+
+=========   Version 0.0.3 ===============
+
+	- Refactoring BSDrawer
+	- Change packageName to com.yotadevices.platinum

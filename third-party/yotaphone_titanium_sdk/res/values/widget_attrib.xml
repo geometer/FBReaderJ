@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BackscreenWidgetInfo">
+        <attr name="size">
+            <flag name="large" value="1" />
+            <flag name="medium" value="2" />
+            <flag name="medium_half" value="4" />
+            <flag name="small" value="8" />
+            <flag name="tiny" value="16" />
+        </attr>
+    </declare-styleable>
+</resources>

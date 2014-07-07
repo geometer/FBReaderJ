@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="status_bar_height">0px</dimen>
+    <dimen name="navigation_panel_height">80px</dimen>
+
+</resources>

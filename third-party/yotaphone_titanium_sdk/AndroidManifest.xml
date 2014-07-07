@@ -1,0 +1,20 @@
+<!--
+	Copyright 2012-2013 Yota Devices LLC, Russia
+
+	This source code is Yota Devices LLC Confidential Proprietary
+	This software is protected by copyright. All rights and titles are reserved.
+	You shall not use, copy, distribute, modify, decompile, disassemble or reverse
+	engineer the software. Otherwise this violation would be treated by law and
+	would be subject to legal prosecution. Legal use of the software provides
+	receipt of a license from the right holder only.-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yotadevices.platinum"
+    android:versionCode="2"
+    android:versionName="0.0.3" >
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
+
+</manifest>

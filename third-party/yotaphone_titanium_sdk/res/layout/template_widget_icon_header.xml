@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/template_widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black">
+
+    <ImageView
+        android:id="@+id/template_widget_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/template_icon"/>
+
+    <TextView
+        android:id="@+id/template_widget_title"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginLeft="6.6dp"
+        android:layout_toLeftOf="@+id/template_widget_title_date"
+        android:layout_toRightOf="@id/template_widget_icon"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:singleLine="true"
+        android:text="100%"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/template_widget_title_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/template_widget_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="6.6dp"
+        android:layout_marginRight="2dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:text="date"
+        android:textColor="@android:color/white"
+        android:textSize="12dp" />
+
+    <FrameLayout
+        android:id="@+id/template_widget_line"
+        android:layout_width="fill_parent"
+        android:layout_height="1.4dp"
+        android:layout_below="@id/template_widget_title"
+        android:layout_marginTop="6dp"
+        android:background="@android:color/white" />
+
+    <FrameLayout
+        android:id="@+id/template_widget_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/template_widget_line" />
+
+</RelativeLayout>
