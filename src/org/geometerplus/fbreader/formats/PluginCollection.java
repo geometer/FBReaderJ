@@ -99,8 +99,6 @@ public class PluginCollection {
 		}
 
 		switch (formatType) {
-			case EXTERNAL_PROGRAM:
-				return getOrCreateExternalProgramPlugin(fileType);
 			case ANY:
 			{
 				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
@@ -126,34 +124,6 @@ public class PluginCollection {
 				return null;
 			}
 		}
-	}
-
-	private FormatPlugin getOrCreateExternalProgramPlugin(FileType fileType) {
-		boolean exists = true;
-		final List<FormatPlugin> list = myPlugins.get(FormatPlugin.Type.EXTERNAL_PROGRAM);
-		if (list == null) {
-			exists = false;
-		}
-		if (exists) {
-			for (FormatPlugin p : list) {
-				if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
-					return p;
-				}
-			}
-		}
-
-		FormatPlugin plugin;
-		FormatPlugin builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
-		if (builtInPlugin == null) {
-			builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
-		}
-		if (builtInPlugin != null) {
-			plugin = new ExternalProgramFormatPlugin(fileType.Id, builtInPlugin);
-		} else {
-			plugin = new ExternalProgramFormatPlugin(fileType.Id);
-		}
-		addPlugin(plugin);
-		return plugin;
 	}
 
 	private native NativeFormatPlugin[] nativePlugins();
