@@ -41,10 +41,13 @@ public class PDFPlugin extends ExternalFormatPlugin {
 		}
 		try {
 			final PDFDocument doc = new PDFDocument(book.File.getPath());
-			final PDFDocInfo info = doc.getDocumentInfo();
-			book.setTitle(info.getTitle());
-			book.addAuthor(info.getAuthor());
-		} catch (Exception e) {
+			// TODO: solution for rc4 encryption
+			if (!doc.isEncrypted()) {
+				final PDFDocInfo info = doc.getDocumentInfo();
+				book.setTitle(info.getTitle());
+				book.addAuthor(info.getAuthor());
+			}
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}
