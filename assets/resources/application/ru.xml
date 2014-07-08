@@ -892,6 +892,22 @@
 			</node>
 			<node name="duplicate" value="«%s» уже в списке"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Изменить"/>
+			<node name="remove" value="Удалить"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Добавить категорию"/>
+			<node name="removeDialog" value="Убрать категорию">
+				<node name="message" value="Убрать «%s» из списка?"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Добавить автора"/>
+			<node name="removeDialog" value="Убрать автора">
+				<node name="message" value="Убрать %s из списка?"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Корень"/>
 			<node name="newFolder" value="Новый каталог"/>
