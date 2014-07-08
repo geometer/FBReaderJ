@@ -786,8 +786,8 @@
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="Adauga la favorite"/>
 			<node name="removeFromFavorites" value="Sterge din favorite"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+			<node name="markAsRead" value="Marcati ca citit"/>
+			<node name="markAsUnread" value="Marcati ca necitit"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -972,7 +972,7 @@
 		</node>
 	</node>
 	<node name="drm">
-		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
+		<node name="encryptedSection" value="Sectiune criptata"/>
 	</node>
 	<node name="yota">
 		<node name="frontScreenMessage" value="Intoarceti aparatul pe pentru a citi cartea. Pentru a reveni textul la acest ecran, apasati butonul de mai jos."/>
