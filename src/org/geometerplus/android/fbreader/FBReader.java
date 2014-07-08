@@ -21,10 +21,10 @@ package org.geometerplus.android.fbreader;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.util.*;
 
+import android.annotation.TargetApi;
 import android.app.*;
 import android.content.*;
 import android.graphics.Color;
@@ -957,17 +957,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	}
 
 	private void setButtonLight(boolean enabled) {
-		try {
-			final WindowManager.LayoutParams attrs = getWindow().getAttributes();
-			final Class<?> cls = attrs.getClass();
-			final Field fld = cls.getField("buttonBrightness");
-			if (fld != null && "float".equals(fld.getType().toString())) {
-				fld.setFloat(attrs, enabled ? -1.0f : 0.0f);
-				getWindow().setAttributes(attrs);
-			}
-		} catch (NoSuchFieldException e) {
-		} catch (IllegalAccessException e) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+			setButtonLightInternal(enabled);
 		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.FROYO)
+	private void setButtonLightInternal(boolean enabled) {
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.buttonBrightness = enabled ? -1.0f : 0.0f;
+		getWindow().setAttributes(attrs);
 	}
 
 	private PowerManager.WakeLock myWakeLock;
