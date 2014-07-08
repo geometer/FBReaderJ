@@ -956,11 +956,6 @@
 		<node name="emptyNetworkSearchResults" value="Fandt desværre ingen bøger"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
-		<node name="externalNotFound" value="Kan ikke åbne eksternt program"/>
-		<node name="appNotFound" value="Der blev ikke fundet et egnet program"/>
-		<node name="invalidFormat" value="Formatet er ugyldigt"/>
-		<node name="formatExists" value="Filtypen understøttes allerede af %s"/>
-		<node name="unzipFailed" value="Det mislykkedes at udpakke bogen til ekstern brug"/>
 		<node name="noPlugin" value="Installer plugin for at læse denne filtype"/>
 	</node>
 	<node name="external">

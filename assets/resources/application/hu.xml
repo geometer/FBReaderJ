@@ -933,11 +933,6 @@
 		<node name="emptyCatalog" value="A katalógus üres"/>
 		<node name="emptyBasket" value="A kosár sajnos üres"/>
 		<node name="emptyNetworkSearchResults" value="Nem található megfelelő könyv"/>
-		<node name="externalNotFound" value="Cannot open external application" toBeTranslated="true"/>
-		<node name="appNotFound" value="No suitable application found" toBeTranslated="true"/>
-		<node name="invalidFormat" value="Format is invalid" toBeTranslated="true"/>
-		<node name="formatExists" value="Extension already supported by %s" toBeTranslated="true"/>
-		<node name="unzipFailed" value="Failed to unzip book for external use" toBeTranslated="true"/>
 		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
