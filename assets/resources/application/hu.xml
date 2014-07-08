@@ -762,17 +762,6 @@
 			</node>
 			<node name="interval" value="Gyors frissítések száma teljes újratöltések között"/>
 		</node>
-		<node name="externalFormats" value="Formats" toBeTranslated="true">
-			<node name="summary" value="Manage file formats" toBeTranslated="true"/>
-			<node name="format">
-				<node name="appNotSet" value="Not chosen" toBeTranslated="true"/>
-				<node name="java" value="FBReader (java)" toBeTranslated="true"/>
-				<node name="native" value="FBReader (native)" toBeTranslated="true"/>
-				<node name="plugin" value="FBReader %s plugin" toBeTranslated="true"/>
-				<node name="delete" value="remove this format" toBeTranslated="true"/>
-				<node name="addNewFormat" value="add new format" toBeTranslated="true"/>
-			</node>
-		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">

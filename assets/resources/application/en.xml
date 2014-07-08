@@ -772,17 +772,6 @@
 			</node>
 			<node name="interval" value="Number of fast updates between complete refreshes"/>
 		</node>
-		<node name="externalFormats" value="Formats">
-			<node name="summary" value="Manage file formats"/>
-			<node name="format" value="">
-				<node name="appNotSet" value="Not chosen"/>
-				<node name="java" value="FBReader (java)"/>
-				<node name="native" value="FBReader (native)"/>
-				<node name="plugin" value="FBReader %s plugin"/>
-				<node name="delete" value="remove this format"/>
-				<node name="addNewFormat" value="add new format"/>
-			</node>
-		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
