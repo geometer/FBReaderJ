@@ -36,8 +36,6 @@ import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.filetypes.FileType;
-import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -69,52 +67,6 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
-	private class ExtFileOpener implements FBReaderApp.ExternalFileOpener {
-		private void showErrorDialog(final String errName) {
-			runOnUiThread(new Runnable() {
-				public void run() {
-					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
-					final AlertDialog dialog = new AlertDialog.Builder(FBReader.this)
-						.setTitle(title)
-						.setIcon(0)
-						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						})
-						.create();
-					if (myIsPaused) {
-						myDialogToShow = dialog;
-					} else {
-						dialog.show();
-					}
-				}
-			});
-		}
-
-		public boolean openFile(ZLFile f, String appData) {
-			if (f == null) {
-				showErrorDialog("unzipFailed");
-				return false;
-			}
-			String extension = f.getExtension();
-			Uri uri = Uri.parse("file://" + f.getPath());
-			Intent launchIntent = new Intent(Intent.ACTION_VIEW);
-			launchIntent.setPackage(appData);
-			launchIntent.setData(uri);
-			FileType ft = FileTypeCollection.Instance.typeForFile(f);
-			for (MimeType type : ft.mimeTypes()) {
-				launchIntent.setDataAndType(uri, type.Name);
-				try {
-					startActivity(launchIntent);
-					return true;
-				} catch (ActivityNotFoundException e) {
-				}
-			}
-			showErrorDialog("externalNotFound");
-			return false;
-		}
-	}
-
 	private class PluginFileOpener implements FBReaderApp.PluginFileOpener {
 		private void showErrorDialog(final String errName, final String appData) {
 			runOnUiThread(new Runnable() {
@@ -372,12 +324,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.setWindow(this);
 		myFBReaderApp.initWindow();
 
-		//		if (!myFBReaderApp.externalFileOpenerIsSet()) {
-		myFBReaderApp.setExternalFileOpener(new ExtFileOpener());
-		//		}
-		//		if (!myFBReaderApp.pluginFileOpenerIsSet()) {
 		myFBReaderApp.setPluginFileOpener(new PluginFileOpener());
-		//		}
 
 		myNeedToOpenFile = true;
 		myIntentToOpen = getIntent();
