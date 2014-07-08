@@ -848,7 +848,6 @@
 			<node name="updatingAccountInformation" value="Kontuaren informazioa eguneratzen. Itxaron mesedez…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
-			<node name="extract" value="Fitxategia kanpoko aplikaziorako prestatzen. Itxaron apur bat…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Zerbitzariaren barneko errorea"/>
