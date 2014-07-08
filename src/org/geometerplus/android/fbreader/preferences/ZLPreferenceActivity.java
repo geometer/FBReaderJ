@@ -61,11 +61,6 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			return preference;
 		}
 
-
-		public boolean removePreference(Preference preference) {
-			return myScreen.removePreference(preference);
-		}
-
 		public Preference addOption(ZLBooleanOption option, String resourceKey) {
 			return addPreference(
 				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
