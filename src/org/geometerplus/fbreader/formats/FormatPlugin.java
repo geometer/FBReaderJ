@@ -57,8 +57,7 @@ public abstract class FormatPlugin {
 		ANY,
 		JAVA,
 		NATIVE,
-		EXTERNAL,
-		EXTERNAL_PROGRAM;
+		EXTERNAL;
 	};
 	public abstract Type type();
 
