@@ -81,11 +81,7 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(ZLFile file) {
-		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
-		if (fileType == null) {
-			return null;
-		}
-		return getPlugin(fileType, Formats.getStatus(fileType.Id));
+		return getPlugin(file, FormatPlugin.Type.ANY);
 	}
 
 	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
