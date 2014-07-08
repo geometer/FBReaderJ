@@ -80,7 +80,7 @@ public class PopupWindow extends LinearLayout {
 
 		setVisibility(View.GONE);
 
-		if (android.os.Build.VERSION.SDK_INT >= 11) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			initAnimator();
 		}
 	}
@@ -126,7 +126,7 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private void showInternal() {
-		if (myAnimated && android.os.Build.VERSION.SDK_INT >= 11) {
+		if (myAnimated && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			showAnimatedInternal();
 		} else {
 			setVisibility(View.VISIBLE);
@@ -159,7 +159,7 @@ public class PopupWindow extends LinearLayout {
 	}
 
 	private void hideInternal() {
-		if (myAnimated && android.os.Build.VERSION.SDK_INT >= 11) {
+		if (myAnimated && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			hideAnimatedInternal();
 		} else {
 			setVisibility(View.GONE);
