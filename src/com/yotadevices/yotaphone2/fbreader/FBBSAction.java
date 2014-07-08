@@ -6,9 +6,9 @@ import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public abstract class FBBSAction extends FBAction {
-    private BSActivity mBSActivity;
+    protected FBReaderYotaService mBSActivity;
 
-    public FBBSAction(BSActivity bsActivity, FBReaderApp fbreader) {
+    public FBBSAction(FBReaderYotaService bsActivity, FBReaderApp fbreader) {
         super(fbreader);
         mBSActivity = bsActivity;
     }

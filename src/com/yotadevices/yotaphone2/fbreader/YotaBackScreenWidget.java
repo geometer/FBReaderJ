@@ -111,7 +111,7 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 	
     private static final String DEBUG_TAG = "motion";
 
-    @Override
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         //this.mDetector.onTouchEvent(event);
         int action = event.getActionMasked();
@@ -164,5 +164,5 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
         }
 
         return super.dispatchTouchEvent(event);
-    }
+    }*/
 }

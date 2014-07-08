@@ -15,9 +15,11 @@ import android.util.Log;
 import android.view.View;
 
 import com.yotadevices.sdk.BSActivity;
+import com.yotadevices.yotaphone2.fbreader.actions.ToggleBarsAction;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
@@ -39,6 +41,9 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     private View mRootView;
     private int mBatteryLevel;
 
+    private BSReadingActionBar mActionBar;
+    private BSReadingStatusBar mStatusBar;
+
     @Override
     public void onBSCreate() {
         super.onBSCreate();
@@ -48,7 +53,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         }
 
         myFBReaderApp.setWindow(this);
-
+        myFBReaderApp.replaceAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, myFBReaderApp));
         myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.setValue(true);
         mRootView = getBSDrawer().getBSLayoutInflater().inflate(R.layout.bs_main, null);
         mWidget = (YotaBackScreenWidget) mRootView.findViewById(R.id.bs_main_widget);
@@ -195,5 +200,31 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     private void setBatteryLevel(int level) {
         mBatteryLevel = level;
+    }
+
+    public void showActionBar() {
+        if (mActionBar == null) {
+            mActionBar = new BSReadingActionBar(getBSDrawer().getBSContext(), mRootView);
+        }
+        mActionBar.show();
+    }
+
+    public void showStatusBar() {
+        if (mStatusBar == null) {
+            mStatusBar = new BSReadingStatusBar(getBSDrawer().getBSContext(), mRootView);
+        }
+        mStatusBar.show();
+    }
+
+    public void hideActionBar() {
+        if (mActionBar != null) {
+            mActionBar.hide();
+        }
+    }
+
+    public void hideStatusBar() {
+        if (mStatusBar != null) {
+            mStatusBar.hide();
+        }
     }
 }

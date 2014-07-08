@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="78dp"
+    android:background="@android:color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_height="54dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="4.6dp"
+                android:layout_height="7.3dp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Back to page 274"
+                android:singleLine="true"
+                android:fontFamily="PT Sans Pro"
+                android:textColor="@android:color/black"
+                android:textStyle="italic|bold"
+                android:textSize="14dp"
+                android:gravity="left|center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="214 of 497"
+                android:singleLine="true"
+                android:fontFamily="PT Sans Pro"
+                android:textColor="@android:color/black"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="18 pages left"
+                android:fontFamily="PT Sans Pro"
+                android:textColor="@android:color/black"
+                android:textSize="14dp"
+                android:textStyle="italic|bold"
+                android:singleLine="true"
+                android:gravity="right|center_vertical"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

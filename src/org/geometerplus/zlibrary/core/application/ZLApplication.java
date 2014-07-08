@@ -160,6 +160,11 @@ public abstract class ZLApplication {
 		myIdToActionMap.remove(actionId);
 	}
 
+    public final void replaceAction(String actionId, ZLAction action) {
+        removeAction(actionId);
+        addAction(actionId, action);
+    }
+
 	public final void runAction(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
