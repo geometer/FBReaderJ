@@ -23,6 +23,7 @@ import java.util.*;
 
 import android.content.Context;
 import android.content.Intent;
+import android.preference.Preference;
 
 import org.geometerplus.zlibrary.core.encodings.Encoding;
 import org.geometerplus.zlibrary.core.language.Language;
@@ -30,12 +31,13 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.util.*;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -141,10 +143,94 @@ class EncodingPreference extends ZLStringListPreference {
 	}
 }
 
+class EditTagsPreference extends Preference {
+	protected final ZLResource myResource;
+	private final Book myBook;
+
+	EditTagsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context);
+		myBook = book;
+		myResource = rootResource.getResource(resourceKey);
+		setTitle(myResource.getValue());
+	}
+
+	void saveTags(final ArrayList<String> tags) {
+		if(tags.size() == 0)
+			return;
+
+		myBook.removeAllTags();
+		for (String t : tags) {
+			myBook.addTag(t);
+		}
+		((EditBookInfoActivity)getContext()).saveBook();
+	}
+
+	@Override
+	protected void onClick() {
+		Intent intent = new Intent(getContext(), EditTagsDialogActivity.class);
+		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
+		ArrayList<String> tags = new ArrayList<String>();
+		for (Tag tag : myBook.tags()) {
+			tags.add(tag.Name);
+		}
+		ArrayList<String> allTags = new ArrayList<String>();
+		for (Tag tag : ((EditBookInfoActivity)getContext()).tags()) {
+			allTags.add(tag.Name);
+		}
+		intent.putExtra(EditListDialogActivity.Key.LIST, tags);
+		intent.putExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST, allTags);
+		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditTagsDialogActivity.REQ_CODE);
+	}
+}
+
+class EditAuthorsPreference extends Preference {
+	protected final ZLResource myResource;
+	private final Book myBook;
+
+	EditAuthorsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context);
+		myBook = book;
+		myResource = rootResource.getResource(resourceKey);
+		setTitle(myResource.getValue());
+	}
+
+	void saveAuthors(final ArrayList<String> authors) {
+		if (authors.size() == 0) {
+			return;
+		}
+
+		myBook.removeAllAuthors();
+		for (String a : authors) {
+			myBook.addAuthor(a);
+		}
+		((EditBookInfoActivity)getContext()).saveBook();
+	}
+
+	@Override
+	protected void onClick() {
+		final Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
+		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
+		final ArrayList<String> authors = new ArrayList<String>();
+		for (Author author : myBook.authors()) {
+			authors.add(author.DisplayName);
+		}
+		((EditBookInfoActivity)getContext()).saveBook();
+		final ArrayList<String> allAuthors = new ArrayList<String>();
+		for (Author author : ((EditBookInfoActivity)getContext()).authors()) {
+			allAuthors.add(author.DisplayName);
+		}
+		intent.putExtra(EditListDialogActivity.Key.LIST, authors);
+		intent.putExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST, allAuthors);
+		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditAuthorsDialogActivity.REQ_CODE);
+	}
+}
+
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile boolean myInitialized;
 
+	private EditTagsPreference myEditTagsPreference;
+	private EditAuthorsPreference myEditAuthorsPreference;
 	private Book myBook;
 
 	public EditBookInfoActivity() {
@@ -157,6 +243,14 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				myCollection.saveBook(myBook);
 			}
 		});
+	}
+
+	List<Author> authors() {
+		return myCollection.authors();
+	}
+
+	List<Tag> tags() {
+		return myCollection.tags();
 	}
 
 	@Override
@@ -182,6 +276,8 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				myInitialized = true;
 
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
+				myEditAuthorsPreference = (EditAuthorsPreference)addPreference(new EditAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
+				myEditTagsPreference = (EditTagsPreference)addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
 			}
@@ -192,5 +288,19 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	protected void onStop() {
 		myCollection.unbind();
 		super.onStop();
+	}
+
+	@Override
+	protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			switch (reqCode) {
+				case EditTagsDialogActivity.REQ_CODE:
+					myEditTagsPreference.saveTags(data.getStringArrayListExtra(EditListDialogActivity.Key.LIST));
+					break;
+				case EditAuthorsDialogActivity.REQ_CODE:
+					myEditAuthorsPreference.saveAuthors(data.getStringArrayListExtra(EditListDialogActivity.Key.LIST));
+					break;
+			}
+		}
 	}
 }
