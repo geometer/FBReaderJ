@@ -146,21 +146,21 @@ class EncodingPreference extends ZLStringListPreference {
 class EditTagsPreference extends Preference {
 	protected final ZLResource myResource;
 	private final Book myBook;
-	
+
 	EditTagsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context);
 		myBook = book;
 		myResource = rootResource.getResource(resourceKey);
 		setTitle(myResource.getValue());
 	}
-	
-	void saveTags(final ArrayList<String> tags){
+
+	void saveTags(final ArrayList<String> tags) {
 		if(tags.size() == 0)
 			return;
-		
+
 		myBook.removeAllTags();
-		for(String s : tags){
-			myBook.addTag(s);
+		for (String t : tags) {
+			myBook.addTag(t);
 		}
 		((EditBookInfoActivity)getContext()).saveBook();
 	}
@@ -170,11 +170,11 @@ class EditTagsPreference extends Preference {
 		Intent intent = new Intent(getContext(), EditTagsDialogActivity.class);
 		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
 		ArrayList<String> tags = new ArrayList<String>();
-		for(Tag tag : myBook.tags()){
+		for (Tag tag : myBook.tags()) {
 			tags.add(tag.Name);
 		}
 		ArrayList<String> allTags = new ArrayList<String>();
-		for(Tag tag : ((EditBookInfoActivity)getContext()).tags()){
+		for (Tag tag : ((EditBookInfoActivity)getContext()).tags()) {
 			allTags.add(tag.Name);
 		}
 		intent.putExtra(EditListDialogActivity.Key.LIST, tags);
@@ -193,13 +193,14 @@ class EditAuthorsPreference extends Preference {
 		myResource = rootResource.getResource(resourceKey);
 		setTitle(myResource.getValue());
 	}
-	
-	void saveAuthors(final ArrayList<String> authors){
-		if(authors.size() == 0)
+
+	void saveAuthors(final ArrayList<String> authors) {
+		if (authors.size() == 0) {
 			return;
-		
+		}
+
 		myBook.removeAllAuthors();
-		for(String a : authors){
+		for (String a : authors) {
 			myBook.addAuthor(a);
 		}
 		((EditBookInfoActivity)getContext()).saveBook();
@@ -207,15 +208,15 @@ class EditAuthorsPreference extends Preference {
 
 	@Override
 	protected void onClick() {
-		Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
+		final Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
 		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
-		ArrayList<String> authors = new ArrayList<String>();
-		for(Author author : myBook.authors()){
+		final ArrayList<String> authors = new ArrayList<String>();
+		for (Author author : myBook.authors()) {
 			authors.add(author.DisplayName);
 		}
 		((EditBookInfoActivity)getContext()).saveBook();
-		ArrayList<String> allAuthors = new ArrayList<String>();
-		for(Author author : ((EditBookInfoActivity)getContext()).authors()){
+		final ArrayList<String> allAuthors = new ArrayList<String>();
+		for (Author author : ((EditBookInfoActivity)getContext()).authors()) {
 			allAuthors.add(author.DisplayName);
 		}
 		intent.putExtra(EditListDialogActivity.Key.LIST, authors);
@@ -227,7 +228,7 @@ class EditAuthorsPreference extends Preference {
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile boolean myInitialized;
-	
+
 	private EditTagsPreference myEditTagsPreference;
 	private EditAuthorsPreference myEditAuthorsPreference;
 	private Book myBook;
@@ -243,12 +244,12 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			}
 		});
 	}
-	
-	List<Author> authors(){
+
+	List<Author> authors() {
 		return myCollection.authors();
 	}
-	
-	List<Tag> tags(){
+
+	List<Tag> tags() {
 		return myCollection.tags();
 	}
 
@@ -273,7 +274,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 					return;
 				}
 				myInitialized = true;
-				
+
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
 				myEditAuthorsPreference = (EditAuthorsPreference)addPreference(new EditAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
 				myEditTagsPreference = (EditTagsPreference)addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
@@ -288,11 +289,11 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		myCollection.unbind();
 		super.onStop();
 	}
-	
+
 	@Override
 	protected void onActivityResult(int reqCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			switch(reqCode){
+			switch (reqCode) {
 				case EditTagsDialogActivity.REQ_CODE:
 					myEditTagsPreference.saveTags(data.getStringArrayListExtra(EditListDialogActivity.Key.LIST));
 					break;
@@ -301,5 +302,5 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 					break;
 			}
 		}
-	}	
+	}
 }
