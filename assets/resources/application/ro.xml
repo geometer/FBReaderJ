@@ -878,6 +878,22 @@
 			</node>
 			<node name="duplicate" value="“%s” este in continuare in lista"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit" toBeTranslated="true"/>
+			<node name="remove" value="Remove" toBeTranslated="true"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
+				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove author" toBeTranslated="true">
+				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Radacina"/>
 			<node name="newFolder" value="Dosar nou"/>
@@ -899,7 +915,7 @@
 		<node name="errorReadingFile" value="A apărut o eroare in timpul citirii '%s'"/>
 		<node name="errorReadingZip" value="A apărut o eroare în timpul extragerii '%s'"/>
 		<node name="pluginNotFound" value="Nu este plugin pentru '%s'"/>
-		<node name="unknownPluginType" value="Tip plugin necunoscut: %s"/>   
+		<node name="unknownPluginType" value="Tip plugin necunoscut: %s"/>
 		<node name="fileNotFound" value="Fisierul nu a fost gasit: %s"/>
 		<node name="unsupportedEncryptionMethod" value="Fisierul %s este criptat cu metoda care nu este sustinuta de FBReader. Unele pagini nu pot fi citite"/>
 		<node name="opfFileNotFound" value="OPF nu se gaseste in %s"/>
