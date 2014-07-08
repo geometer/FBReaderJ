@@ -24,8 +24,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.filetypes.FileType;
-import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
@@ -192,23 +190,14 @@ public class Book extends TitledEntity {
 
 		myIsSaved = false;
 
-		final FileType fileType = FileTypeCollection.Instance.typeForFile(File);
-		final FormatPlugin fplugin = PluginCollection.Instance().getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
-		if (fplugin != null) {
-			try {
-				plugin.readMetainfo(this);
-			} catch (UnsupportedOperationException e1) {
-			}
-		} else {
-			plugin.readMetainfo(this);
-		}
+		plugin.readMetainfo(this);
 		if (myUids == null || myUids.isEmpty()) {
 			plugin.readUids(this);
 		}
 
 		if (isTitleEmpty()) {
 			final String fileName = File.getShortName();
-			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL_PROGRAM ? -1 : fileName.lastIndexOf('.'));
+			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
 	}
