@@ -30,13 +30,12 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.book.*;
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -147,96 +146,9 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private volatile boolean myInitialized;
 
 	private Book myBook;
-	private AuthorListPreference myAuthorListPreference;
-	private TagListPreference myTagListPreference;
-
-	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
-		new HashMap<Integer,ZLActivityPreference>();
 
 	public EditBookInfoActivity() {
 		super("BookInfo");
-	}
-
-	private class AuthorsHolder implements ZLActivityPreference.ListHolder {
-		public List<String> getValue() {
-			List<Author> authors = myBook.authors();
-			List<String> res = new ArrayList<String>();
-			for (Author a : authors) {
-				String s = a.DisplayName + BaseStringListActivity.StringItem.Divider + a.SortKey;
-				res.add(s);
-			}
-			return res;
-		}
-
-		public List<String> getDisplayValue() {
-			List<Author> authors = myBook.authors();
-			List<String> res = new ArrayList<String>();
-			for (Author a : authors) {
-				String s = a.DisplayName;
-				res.add(s);
-			}
-			return res;
-		}
-
-		public void setValue(List<String> l) {
-			List<Author> authors = new ArrayList<Author>();
-			for (String s : l) {
-				int index = s.indexOf(BaseStringListActivity.StringItem.Divider);
-				if (index != -1) {
-					Author a = new Author(s.substring(0, index), s.substring(index + 1).toLowerCase());
-					authors.add(a);
-				} else {
-					Author a = new Author(s, "");
-					authors.add(a);
-				}
-			}
-			myBook.setAuthors(authors);
-			//((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
-		}
-	}
-
-	private class TagsHolder implements ZLActivityPreference.ListHolder {
-		private List<String> myValues;
-
-		public synchronized List<String> getValue() {
-			if (myValues == null) {
-				myValues = new LinkedList<String>();
-				for (Tag t : myBook.tags()) {
-					myValues.add(t.toString("/"));
-				}
-			}
-			return myValues;
-		}
-
-		public synchronized List<String> getDisplayValue() {
-			return getValue();
-		}
-
-		public synchronized void setValue(List<String> tags) {
-			if (!tags.equals(myValues)) {
-				myValues = null;
-				myBook.removeAllTags();
-				for (String t : tags) {
-					myBook.addTag(Tag.getTag(t.split("/")));
-				}
-				//((EditBookInfoActivity)getContext()).setBookStatus(FBReader.RESULT_REPAINT);
-			}
-		}
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		ZLActivityPreference p = myActivityPrefs.get(requestCode);
-		if (resultCode == RESULT_OK) {
-			p.setValue(data);
-		}
-		saveBook();
-		myCollection.bindToService(this, new Runnable() {
-			public void run() {
-				myAuthorListPreference.setAuthors(myCollection.authors());
-				myTagListPreference.setTags(myCollection.tags());
-			}
-		});
 	}
 
 	void saveBook() {
@@ -269,21 +181,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				}
 				myInitialized = true;
 
-				myAuthorListPreference = new AuthorListPreference(
-						EditBookInfoActivity.this, new AuthorsHolder(), myActivityPrefs,
-						Resource, "authors"
-						);
-				myAuthorListPreference.setAuthors(myCollection.authors());
-
-				myTagListPreference = new TagListPreference(
-						EditBookInfoActivity.this, new TagsHolder(), myActivityPrefs,
-						Resource, "tags"
-						);
-				myTagListPreference.setTags(myCollection.tags());
-
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
-				addPreference(myAuthorListPreference);
-				addPreference(myTagListPreference);
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
 			}
