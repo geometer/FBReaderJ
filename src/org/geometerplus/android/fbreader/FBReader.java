@@ -40,7 +40,6 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
