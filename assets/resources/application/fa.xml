@@ -830,7 +830,6 @@
 			<node name="loadingNetworkBookInfo" value="در حال بارگذاري اطلاعات كتاب. لطفاً صبر كنيد..."/>
 			<node name="updatingCatalogsList" value="در حال آپديت ليست كاتالوگ. لطفاً صبر كنيد..."/>
 			<node name="updatingAccountInformation" value="در حال آپديت اطلاعات كاربري. لطفاً صبر كنيد..."/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>

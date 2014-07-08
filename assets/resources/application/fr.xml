@@ -823,7 +823,6 @@
 			<node name="loadingNetworkBookInfo" value="Chargement des informations du livre, veuillez patienter…"/>
 			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier…"/>
 			<node name="updatingAccountInformation" value="Mise à jour des informations du compte, veuillez patienter…"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>

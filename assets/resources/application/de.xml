@@ -835,7 +835,6 @@
 			<node name="loadingNetworkBookInfo" value="Lade Buchinformation. Bitte warten…"/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten…"/>
 			<node name="updatingAccountInformation" value="Konto-Information wird aktualisiert. Bitte waren…"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialisiere das Rechtemanagement. Bitte warten…"/>
 			<node name="acquireLicense" value="Empfange Lizenz. Bitte warten…"/>
 		</node>

@@ -828,7 +828,6 @@
 			<node name="loadingNetworkBookInfo" value="Φόρτωση πληροφορίες βιβλίου. Παρακαλώ περιμένετε…"/>
 			<node name="updatingCatalogsList" value="Ο κατάλογος ενημερώνεται. Παρακαλώ περιμένετε…"/>
 			<node name="updatingAccountInformation" value="Πληροφορίες λογαριασμού ενημερώνονται. Παρακαλώ περιμένετε…"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>

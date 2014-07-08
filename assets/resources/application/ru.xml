@@ -835,7 +835,6 @@
 			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста…"/>
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста…"/>
 			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста…"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Инициализация DRM. Подождите, пожалуйста…"/>
 			<node name="acquireLicense" value="Получение лицензии. Подождите, пожалуйста…"/>
 		</node>

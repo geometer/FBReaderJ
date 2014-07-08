@@ -838,7 +838,6 @@
 			<node name="updatingAccountInformation" value="Actualizando información de cuenta. Por favor, espere…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Error interno de servidor" toBeTranslated="true"/>

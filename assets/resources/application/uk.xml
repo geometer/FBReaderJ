@@ -820,7 +820,6 @@
 			<node name="loadingNetworkBookInfo" value="Завантаження інформації про книгу. Зачекайте, будь ласка……"/>
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка…"/>
 			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка……"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>

@@ -836,7 +836,6 @@
 			<node name="loadingNetworkBookInfo" value="Ладаваньне інфармацыі кнігі. Калі ласка, пачакайце…"/>
 			<node name="updatingCatalogsList" value="Абнаўленьне сьпісу каталёґу. Калі ласка, пачакайце…"/>
 			<node name="updatingAccountInformation" value="Абнаўленьне інфармацыі рахунку. Калі ласка, пачакайце…"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>

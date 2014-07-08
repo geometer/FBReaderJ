@@ -830,7 +830,6 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…"/>
 		</node>

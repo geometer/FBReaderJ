@@ -843,7 +843,6 @@
 			<node name="updatingAccountInformation" value="Opdaterer konto-oplysninger Vent venligst..."/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
-			<node name="extract" value="Forbereder fil til ekstern app. Vent venligst..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Intern serverfejl"/>

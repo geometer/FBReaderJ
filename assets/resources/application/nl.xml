@@ -830,7 +830,6 @@
 			<node name="loadingNetworkBookInfo" value="Boekinformatie wordt geladen. Een ogenblik…"/>
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik…"/>
 			<node name="updatingAccountInformation" value="Accountinformatie wordt bijgewerkt. Een ogenblik…"/>
-			<node name="extract" value="Preparing file for external app. Please, wait…" toBeTranslated="true"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
 		</node>
