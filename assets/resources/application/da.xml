@@ -772,17 +772,6 @@
 			</node>
 			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
 		</node>
-		<node name="externalFormats" value="Formater">
-			<node name="summary" value="Håndtere filformater"/>
-			<node name="format" value="">
-				<node name="appNotSet" value="Ikke valgt"/>
-				<node name="java" value="FB-Læser (java)"/>
-				<node name="native" value="FB-Læser (oprindelig)"/>
-				<node name="plugin" value="FB-Læser %s plugin"/>
-				<node name="delete" value="Fjern dette format"/>
-				<node name="addNewFormat" value="Tilføj nyt format"/>
-			</node>
-		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">

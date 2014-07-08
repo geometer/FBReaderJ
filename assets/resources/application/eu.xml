@@ -772,17 +772,6 @@
 			</node>
 			<node name="interval" value="Osoan berritu arteko berritze azkarren kopurua"/>
 		</node>
-		<node name="externalFormats" value="Formatuak">
-			<node name="summary" value="Kudeatu fitxategiek formatuak"/>
-			<node name="format" value="">
-				<node name="appNotSet" value="Aukeratu gabe"/>
-				<node name="java" value="FBReader (java)"/>
-				<node name="native" value="FBReader (jatorrizkoa)"/>
-				<node name="plugin" value="FBReader %s gehigarria"/>
-				<node name="delete" value="kendu formatua"/>
-				<node name="addNewFormat" value="gehitu formatu berria"/>
-			</node>
-		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
