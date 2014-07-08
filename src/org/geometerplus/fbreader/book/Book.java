@@ -227,13 +227,6 @@ public class Book extends TitledEntity {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
 	}
 
-	public void setAuthors(List<Author> list) {
-		myAuthors = null;
-		for (Author s : list) {
-			addAuthor(s.DisplayName, s.SortKey);
-		}
-	}
-
 	void addAuthorWithNoCheck(Author author) {
 		if (myAuthors == null) {
 			myAuthors = new ArrayList<Author>();
