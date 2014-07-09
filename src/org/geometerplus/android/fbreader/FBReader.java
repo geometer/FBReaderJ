@@ -61,6 +61,7 @@ import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.plugin.PluginUtil;
 import org.geometerplus.android.fbreader.synchroniser.SynchroniserService;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.*;
@@ -103,8 +104,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 
 		public void openFile(final ExternalFormatPlugin plugin, Book book, Bookmark bookmark) {
-			final Intent launchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
-			launchIntent.setPackage(plugin.packageName());
+			final Intent launchIntent = PluginUtil.createIntent(plugin, "android.fbreader.action.VIEW_PLUGIN");
 			//			Uri uri = Uri.parse("file://" + book.File.getPath());
 			//			launchIntent.setData(uri);
 			FBReaderIntents.putBookExtra(launchIntent, book);
@@ -491,10 +491,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
 						final FormatPlugin p = PluginCollection.Instance().getPlugin(myFBReaderApp.Model.Book.File);
 						if (p.type() == FormatPlugin.Type.EXTERNAL) {
-							String pack = ((ExternalFormatPlugin)p).packageName();
-							final Intent i = new Intent("android.fbreader.action.KILL_PLUGIN");
-							i.setPackage(pack);
-							Log.d("fbreader", pack);
+							final Intent i = PluginUtil.createIntent((ExternalFormatPlugin)p, "android.fbreader.action.KILL_PLUGIN");
 							try {
 								startActivity(i);
 							} catch (ActivityNotFoundException e) {
