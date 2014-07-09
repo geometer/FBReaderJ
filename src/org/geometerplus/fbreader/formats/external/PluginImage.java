@@ -25,9 +25,11 @@ import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 final class PluginImage extends ZLImageProxy {
 	private final ZLFile myFile;
+	private final ExternalFormatPlugin myPlugin;
 
-	PluginImage(ZLFile file) {
+	PluginImage(ZLFile file, ExternalFormatPlugin plugin) {
 		myFile = file;
+		myPlugin = plugin;
 	}
 
 	@Override
