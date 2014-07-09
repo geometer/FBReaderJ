@@ -36,6 +36,8 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 		return Type.EXTERNAL;
 	}
 
+	public abstract String packageName();
+
 	@Override
 	public PluginImage readCover(ZLFile file) {
 		return new PluginImage(file, this);
