@@ -31,12 +31,12 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 		super(fileType);
 	}
 
-	public abstract String getPackage();
-
 	@Override
 	public Type type() {
 		return Type.EXTERNAL;
 	}
+
+	public abstract String packageName();
 
 	@Override
 	public PluginImage readCover(ZLFile file) {

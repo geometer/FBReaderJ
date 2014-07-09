@@ -27,15 +27,13 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public class PDFPlugin extends ExternalFormatPlugin {
-	private final String PACKAGE = "org.geometerplus.fbreader.plugin.pdf";
-
 	public PDFPlugin() {
 		super("PDF");
 	}
 
 	@Override
-	public String getPackage() {
-		return PACKAGE;
+	public String packageName() {
+		return "org.geometerplus.fbreader.plugin.pdf";
 	}
 
 	@Override

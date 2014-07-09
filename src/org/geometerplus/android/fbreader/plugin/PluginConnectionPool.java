@@ -48,7 +48,7 @@ public final class PluginConnectionPool {
 			final ServiceConnection connection = reader.createConnection(plugin, onConnection);
 			myConnections.add(connection);
 			Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
-			i.setPackage(plugin.getPackage());
+			i.setPackage(plugin.packageName());
 			myContext.bindService(i, connection, Context.BIND_AUTO_CREATE);
 		}
 		return reader;

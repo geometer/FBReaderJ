@@ -43,7 +43,7 @@ import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface PluginFileOpener {
-		public void openFile(String appData, Book book, Bookmark bookmark);
+		public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark);
 	}
 
 	protected PluginFileOpener myPluginFileOpener;
@@ -172,7 +172,7 @@ public final class FBReaderApp extends ZLApplication {
 			executor.execute(new Runnable() {
 				public void run() {
 					final ExternalFormatPlugin pfp = (ExternalFormatPlugin)p;
-					myPluginFileOpener.openFile(pfp.getPackage(), bookToOpen, bm);
+					myPluginFileOpener.openFile(pfp, bookToOpen, bm);
 				}
 			}, postAction);
 			return;

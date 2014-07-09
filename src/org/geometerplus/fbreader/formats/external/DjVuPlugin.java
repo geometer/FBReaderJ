@@ -22,15 +22,13 @@ package org.geometerplus.fbreader.formats.external;
 import org.geometerplus.fbreader.book.Book;
 
 public class DjVuPlugin extends ExternalFormatPlugin {
-	private final String PACKAGE = "org.geometerplus.fbreader.plugin.djvu";
-
 	public DjVuPlugin() {
 		super("DjVu");
 	}
 
 	@Override
-	public String getPackage() {
-		return PACKAGE;
+	public String packageName() {
+		return "org.geometerplus.fbreader.plugin.djvu";
 	}
 
 	@Override

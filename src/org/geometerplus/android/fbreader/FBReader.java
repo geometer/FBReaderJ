@@ -67,7 +67,7 @@ import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
 	private class PluginFileOpener implements FBReaderApp.PluginFileOpener {
-		private void showErrorDialog(final String errName, final String appData) {
+		private void showErrorDialog(final String errName, final ExternalFormatPlugin plugin) {
 			runOnUiThread(new Runnable() {
 				public void run() {
 					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
@@ -77,7 +77,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								Intent i = new Intent(Intent.ACTION_VIEW);
-								i.setData(Uri.parse("market://search?q=" + appData));
+								i.setData(Uri.parse("market://search?q=" + plugin.packageName()));
 								startActivity(i);
 							}
 						})
@@ -102,9 +102,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 		}
 
-		public void openFile(final String appData, Book book, Bookmark bookmark) {
+		public void openFile(final ExternalFormatPlugin plugin, Book book, Bookmark bookmark) {
 			final Intent launchIntent = new Intent("android.fbreader.action.VIEW_PLUGIN");
-			launchIntent.setPackage(appData);
+			launchIntent.setPackage(plugin.packageName());
 			//			Uri uri = Uri.parse("file://" + book.File.getPath());
 			//			launchIntent.setData(uri);
 			FBReaderIntents.putBookExtra(launchIntent, book);
@@ -115,7 +115,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					try {
 						Log.e("CALLER", "FORRESULT");
 						String date = DateFormat.getDateTimeInstance().format(new Date());
-						new ZLStringOption("Security", "PluginCalled", "").setValue(appData + date);
+						new ZLStringOption("Security", "PluginCalled", "").setValue(plugin.packageName() + date);
 						launchIntent.putExtra("SECURITY_CODE", date);
 						startActivity(launchIntent);
 						overridePendingTransition(0, 0);
@@ -123,7 +123,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								showErrorDialog("noPlugin", appData);
+								showErrorDialog("noPlugin", plugin);
 							}});
 					}
 				}
@@ -491,7 +491,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
 						final FormatPlugin p = PluginCollection.Instance().getPlugin(myFBReaderApp.Model.Book.File);
 						if (p.type() == FormatPlugin.Type.EXTERNAL) {
-							String pack = ((ExternalFormatPlugin)p).getPackage();
+							String pack = ((ExternalFormatPlugin)p).packageName();
 							final Intent i = new Intent("android.fbreader.action.KILL_PLUGIN");
 							i.setPackage(pack);
 							Log.d("fbreader", pack);
