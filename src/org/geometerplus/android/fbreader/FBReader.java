@@ -104,7 +104,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 
 		public void openFile(final ExternalFormatPlugin plugin, Book book, Bookmark bookmark) {
-			final Intent launchIntent = PluginUtil.createIntent(plugin, PluginUtil.VIEW_ACTION);
+			final Intent launchIntent = PluginUtil.createIntent(plugin, PluginUtil.ACTION_VIEW);
 			FBReaderIntents.putBookExtra(launchIntent, book);
 			FBReaderIntents.putBookmarkExtra(launchIntent, bookmark);
 			launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -489,7 +489,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
 						final FormatPlugin p = PluginCollection.Instance().getPlugin(myFBReaderApp.Model.Book.File);
 						if (p.type() == FormatPlugin.Type.EXTERNAL) {
-							final Intent i = PluginUtil.createIntent((ExternalFormatPlugin)p, PluginUtil.KILL_ACTION);
+							final Intent i = PluginUtil.createIntent((ExternalFormatPlugin)p, PluginUtil.ACTION_KILL);
 							try {
 								startActivity(i);
 							} catch (ActivityNotFoundException e) {

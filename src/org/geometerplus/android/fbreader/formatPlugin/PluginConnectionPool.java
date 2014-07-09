@@ -47,7 +47,7 @@ public final class PluginConnectionPool {
 		for (final ExternalFormatPlugin plugin : PluginCollection.Instance().getExternalPlugins()) {
 			final ServiceConnection connection = reader.createConnection(plugin, onConnection);
 			myConnections.add(connection);
-			final Intent i = PluginUtil.createIntent(plugin, PluginUtil.CONNECT_COVER_SERVICE_ACTION);
+			final Intent i = PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE);
 			myContext.bindService(i, connection, Context.BIND_AUTO_CREATE);
 		}
 		return reader;
