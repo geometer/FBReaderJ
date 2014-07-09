@@ -27,6 +27,11 @@ public class DjVuPlugin extends ExternalFormatPlugin {
 	}
 
 	@Override
+	public String packageName() {
+		return "org.geometerplus.fbreader.plugin.djvu";
+	}
+
+	@Override
 	public void readMetainfo(Book book) {
 		// TODO: implement
 	}
