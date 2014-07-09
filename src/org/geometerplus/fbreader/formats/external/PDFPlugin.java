@@ -32,6 +32,11 @@ public class PDFPlugin extends ExternalFormatPlugin {
 	}
 
 	@Override
+	public String packageName() {
+		return "org.geometerplus.fbreader.plugin.pdf";
+	}
+
+	@Override
 	public void readMetainfo(Book book) {
 		final ZLFile file = book.File;
 		if (file != file.getPhysicalFile()) {
