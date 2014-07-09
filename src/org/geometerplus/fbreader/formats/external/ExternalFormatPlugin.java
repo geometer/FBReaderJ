@@ -40,7 +40,7 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public PluginImage readCover(ZLFile file) {
-		return new PluginImage(file, getPackage());
+		return new PluginImage(file, this);
 	}
 
 	@Override

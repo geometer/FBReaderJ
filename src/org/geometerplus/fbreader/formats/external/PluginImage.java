@@ -27,16 +27,16 @@ import org.geometerplus.fbreader.book.MetaInfoUtil;
 
 final class PluginImage extends ZLImageProxy {
 	private final ZLFile myFile;
-	private final String myAppData;
+	private final ExternalFormatPlugin myPlugin;
 
-	PluginImage(ZLFile file, String data) {
+	PluginImage(ZLFile file, ExternalFormatPlugin plugin) {
 		myFile = file;
-		myAppData = data;
+		myPlugin = plugin;
 	}
 
 	@Override
 	public ZLImage getRealImage() {
-		return MetaInfoUtil.PMIReader.readImage(myFile, myAppData);
+		return MetaInfoUtil.PMIReader.readImage(myFile, myPlugin);
 	}
 
 	@Override

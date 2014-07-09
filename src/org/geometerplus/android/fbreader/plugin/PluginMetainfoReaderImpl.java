@@ -30,15 +30,17 @@ import android.os.IBinder;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 import org.geometerplus.fbreader.book.MetaInfoUtil;
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
 
 class PluginMetainfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
-	public final Map<String,MetaInfoReader> Readers = new HashMap<String,MetaInfoReader>();
+	public final Map<ExternalFormatPlugin,MetaInfoReader> Readers =
+		new HashMap<ExternalFormatPlugin,MetaInfoReader>();
 
 	@TargetApi(8)
 	@Override
-	public ZLBitmapImage readImage(ZLFile f, String packageName) {
-		final MetaInfoReader reader = Readers.get(packageName);
+	public ZLBitmapImage readImage(ZLFile f, ExternalFormatPlugin plugin) {
+		final MetaInfoReader reader = Readers.get(plugin);
 		try {
 			return reader != null ? new ZLBitmapImage(reader.readBitmap(f.getPath())) : null;
 		} catch (Exception e) {
@@ -47,17 +49,17 @@ class PluginMetainfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
 		}
 	}
 
-	public ServiceConnection createConnection(final String packageName, final Runnable onConnected) {
+	public ServiceConnection createConnection(final ExternalFormatPlugin plugin, final Runnable onConnected) {
 		return new ServiceConnection() {
 			public void onServiceConnected(ComponentName className, IBinder binder) {
-				Readers.put(packageName, MetaInfoReader.Stub.asInterface(binder));
+				Readers.put(plugin, MetaInfoReader.Stub.asInterface(binder));
 				if (onConnected != null) {
 					onConnected.run();
 				}
 			}
 
 			public void onServiceDisconnected(ComponentName className) {
-				Readers.remove(packageName);
+				Readers.remove(plugin);
 			}
 		};
 	}

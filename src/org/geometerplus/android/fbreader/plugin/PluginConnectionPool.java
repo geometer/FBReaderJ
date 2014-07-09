@@ -25,6 +25,7 @@ import java.util.List;
 import android.content.*;
 
 import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
 public final class PluginConnectionPool {
 	private final Context myContext;
@@ -43,11 +44,11 @@ public final class PluginConnectionPool {
 
 	public synchronized PluginMetainfoReaderImpl createMetainfoReader(Runnable onConnection) {
 		final PluginMetainfoReaderImpl reader = new PluginMetainfoReaderImpl();
-		for (final String pack : PluginCollection.Instance().getPluginPackages()) {
-			final ServiceConnection connection = reader.createConnection(pack, onConnection);
+		for (final ExternalFormatPlugin plugin : PluginCollection.Instance().getExternalPlugins()) {
+			final ServiceConnection connection = reader.createConnection(plugin, onConnection);
 			myConnections.add(connection);
 			Intent i = new Intent("org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
-			i.setPackage(pack);
+			i.setPackage(plugin.getPackage());
 			myContext.bindService(i, connection, Context.BIND_AUTO_CREATE);
 		}
 		return reader;

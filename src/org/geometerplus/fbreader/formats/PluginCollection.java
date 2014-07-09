@@ -72,10 +72,10 @@ public class PluginCollection {
 		list.add(plugin);
 	}
 
-	public List<String> getPluginPackages() {
-		ArrayList<String> list = new ArrayList<String>();
-		for (FormatPlugin p : myPlugins.get(FormatPlugin.Type.EXTERNAL)) {
-			list.add(((ExternalFormatPlugin)p).getPackage());
+	public List<ExternalFormatPlugin> getExternalPlugins() {
+		final List<ExternalFormatPlugin> list = new ArrayList<ExternalFormatPlugin>();
+		for (FormatPlugin plugin : myPlugins.get(FormatPlugin.Type.EXTERNAL)) {
+			list.add((ExternalFormatPlugin)plugin);
 		}
 		return list;
 	}

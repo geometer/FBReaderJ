@@ -22,9 +22,11 @@ package org.geometerplus.fbreader.book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+
 public class MetaInfoUtil {
 	public static interface PluginMetaInfoReader {
-		public ZLImage readImage(ZLFile f, String appData);
+		public ZLImage readImage(ZLFile f, ExternalFormatPlugin plugin);
 	}
 
 	public static PluginMetaInfoReader PMIReader;
