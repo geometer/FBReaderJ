@@ -6,7 +6,14 @@
     android:background="@android:color/white">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp">
+        android:layout_height="24dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+        <com.yotadevices.yotaphone2.fbreader.view.GaugeView
+            android:id="@+id/gauge_view"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

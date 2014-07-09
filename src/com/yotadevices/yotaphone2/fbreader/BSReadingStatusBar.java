@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.yotadevices.yotaphone2.fbreader.view.GaugeView;
+
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class BSReadingStatusBar {
@@ -15,6 +17,7 @@ public class BSReadingStatusBar {
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
     private final View mRootView;
+    private final View mPopupView;
 
     private final static int STATUS_BAR_HEIGHT = 117;
 
@@ -22,11 +25,13 @@ public class BSReadingStatusBar {
         mContext = ctx;
         mRootView = root;
         mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = mLayoutInflater.inflate(R.layout.bs_status_bar_reading_mode, null);
+        mPopupView = mLayoutInflater.inflate(R.layout.bs_status_bar_reading_mode, null);
+        GaugeView gauge = (GaugeView)mPopupView.findViewById(R.id.gauge_view);
+        gauge.init();
 
         mPopup = new android.widget.PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));
-        mPopup.setContentView(layout);
+        mPopup.setContentView(mPopupView);
         mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         mPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
     }

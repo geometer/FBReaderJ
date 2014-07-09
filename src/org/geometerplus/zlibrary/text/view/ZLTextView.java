@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.util.RationalNumber;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
+import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -68,7 +69,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		super(application);
 	}
 
-	public synchronized void setModel(ZLTextModel model) {
+    @Override
+    public FooterArea getFooterArea() {
+        return null;
+    }
+
+    public synchronized void setModel(ZLTextModel model) {
 		ZLTextParagraphCursorCache.clear();
 
 		mySelection.clear();

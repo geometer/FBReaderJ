@@ -64,7 +64,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
 
-	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
+	public ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
 		myCanvas = canvas;
 		myWidth = width - scrollbarWidth;
 		myHeight = height;

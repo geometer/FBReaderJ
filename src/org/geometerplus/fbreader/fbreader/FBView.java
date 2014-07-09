@@ -625,7 +625,8 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public Footer getFooterArea() {
-		if (myViewOptions.ScrollbarType.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
+		if (myViewOptions.ScrollbarType.getValue() == SCROLLBAR_SHOW_AS_FOOTER &&
+                !myViewOptions.YotaDrawOnBackScreen.getValue()) {
 			if (myFooter == null) {
 				myFooter = new Footer();
 				myReader.addTimerTask(myFooter.UpdateTask, 15000);
