@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.plugin;
+package org.geometerplus.android.fbreader.formatPlugin;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -47,7 +47,7 @@ public final class PluginConnectionPool {
 		for (final ExternalFormatPlugin plugin : PluginCollection.Instance().getExternalPlugins()) {
 			final ServiceConnection connection = reader.createConnection(plugin, onConnection);
 			myConnections.add(connection);
-			final Intent i = PluginUtil.createIntent(plugin, "org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader");
+			final Intent i = PluginUtil.createIntent(plugin, "org.geometerplus.android.fbreader.formatPlugin.metainfoservice.MetaInfoReader");
 			myContext.bindService(i, connection, Context.BIND_AUTO_CREATE);
 		}
 		return reader;

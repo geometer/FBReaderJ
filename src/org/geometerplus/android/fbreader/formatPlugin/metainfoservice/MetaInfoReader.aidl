@@ -1,4 +1,4 @@
-package org.geometerplus.android.fbreader.plugin.metainfoservice;
+package org.geometerplus.android.fbreader.formatPlugin.metainfoservice;
 
 import android.graphics.Bitmap;
 

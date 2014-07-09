@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.plugin;
+package org.geometerplus.android.fbreader.formatPlugin;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 import org.geometerplus.fbreader.book.MetaInfoUtil;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
-import org.geometerplus.android.fbreader.plugin.metainfoservice.MetaInfoReader;
+import org.geometerplus.android.fbreader.formatPlugin.metainfoservice.MetaInfoReader;
 
 class PluginMetainfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
 	public final Map<ExternalFormatPlugin,MetaInfoReader> Readers =

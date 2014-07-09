@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
-import org.geometerplus.android.fbreader.plugin.PluginConnectionPool;
+import org.geometerplus.android.fbreader.formatPlugin.PluginConnectionPool;
 
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
