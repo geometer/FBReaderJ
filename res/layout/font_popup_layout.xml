@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_marginLeft="282dp"
+        android:layout_width="24.6dp"
+        android:layout_height="8.6dp"
+        android:src="@drawable/popup_triangle"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
+        android:orientation="vertical"
+        android:background="@android:color/black">
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="37.3dp">
+            <include layout="@layout/font_list_item"
+                android:layout_width="45.3dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font1" />
+            <include layout="@layout/font_list_item"
+                android:layout_width="73.3dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font2" />
+            <include layout="@layout/font_list_item"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font3" />
+            <include layout="@layout/font_list_item"
+                android:layout_width="72.6dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font4" />
+            <include layout="@layout/font_list_item"
+                android:layout_width="52.6dp"
+                android:layout_height="match_parent"
+                android:id="@+id/font5" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -22,6 +22,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.TurnPageAction;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -52,9 +53,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (myFBReaderApp == null) {
             myFBReaderApp = new FBReaderApp(new BookCollectionShadow());
         }
-
         myFBReaderApp.setWindow(this);
-        myFBReaderApp.replaceAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, myFBReaderApp));
         myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.setValue(true);
         mRootView = getBSDrawer().getBSLayoutInflater().inflate(R.layout.bs_main, null);
         mWidget = (YotaBackScreenWidget) mRootView.findViewById(R.id.bs_main_widget);
@@ -64,6 +63,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     @Override
     public void onBSResume() {
         super.onBSResume();
+
         registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         setBSContentView(mRootView);
         hideActionBar();
@@ -106,6 +106,11 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     protected void onHandleIntent(Intent intent) {
         if (intent.hasExtra(KEY_BACK_SCREEN_IS_ACTIVE)) {
             boolean isActive = intent.getBooleanExtra(KEY_BACK_SCREEN_IS_ACTIVE, false);
+            if (isActive) {
+                myFBReaderApp.addAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, myFBReaderApp));
+                myFBReaderApp.addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(myFBReaderApp, true));
+                myFBReaderApp.addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(myFBReaderApp, false));
+            }
             mWidget.setIsBsActive(isActive);
             mWidget.repaint();
         } else {
@@ -213,7 +218,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     }
 
     public void showStatusBar() {
-//        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE);
+        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE);
         if (mStatusBar == null) {
             mStatusBar = new BSReadingStatusBar(getBSDrawer().getBSContext(), mRootView);
         }
@@ -230,7 +235,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (mStatusBar != null) {
             mStatusBar.hide();
         }
-//        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION |
-//                Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR);
+        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION |
+                Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR);
     }
 }

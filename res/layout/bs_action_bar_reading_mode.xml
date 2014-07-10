@@ -1,12 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="48dp"
     android:background="@android:color/white">
-    <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/logo_action"
+                android:layout_marginLeft="12.6dp"
+                android:src="@drawable/r_logo"
+                android:layout_gravity="center_vertical"
+                android:layout_width="19.3dp"
+                android:layout_height="47dp" />
+            <LinearLayout
+                android:layout_marginLeft="6dp"
+                android:layout_width="198dp"
+                android:layout_height="47dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/book_author"
+                    android:text="Author"
+                    android:fontFamily="PT Sans Pro"
+                    android:textSize="16dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/book_title"
+                    android:text="Book title"
+                    android:fontFamily="PT Sans Pro"
+                    android:textSize="16dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/font_action"
+                android:src="@drawable/font_action"
+                android:layout_marginLeft="46dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="26dp"
+                android:layout_height="47dp" />
+            <ImageView
+                android:id="@+id/bookmark_action"
+                android:src="@drawable/bookmark_action"
+                android:layout_marginLeft="26dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="12dp"
+                android:layout_height="47dp" />
+        </LinearLayout>
+    <ImageView
         android:layout_width="match_parent"
-        android:text="Hello, world!"
-        android:textSize="40sp"
-        android:layout_height="wrap_content" />
+        android:layout_height="1dp"
+        android:scaleType="matrix"
+        android:src="@drawable/single_line_360_length"
+        android:layout_gravity="bottom"/>
 </LinearLayout>

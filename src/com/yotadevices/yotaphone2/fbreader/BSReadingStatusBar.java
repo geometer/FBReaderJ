@@ -20,6 +20,7 @@ public class BSReadingStatusBar {
     private final View mPopupView;
 
     private final static int STATUS_BAR_HEIGHT = 117;
+    private final static int SYSTEM_NAVIGATION_BAR = 80;
 
     public BSReadingStatusBar(Context ctx, View root) {
         mContext = ctx;
@@ -37,7 +38,7 @@ public class BSReadingStatusBar {
     }
 
     public void show() {
-        int yOffset = mRootView.getHeight() - STATUS_BAR_HEIGHT;
+        int yOffset = mRootView.getHeight() - (STATUS_BAR_HEIGHT + SYSTEM_NAVIGATION_BAR);
         mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, yOffset);
     }
 

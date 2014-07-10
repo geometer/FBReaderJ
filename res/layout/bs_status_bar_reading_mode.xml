@@ -4,9 +4,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="78dp"
     android:background="@android:color/white">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:scaleType="matrix"
+        android:src="@drawable/single_line_360_length"
+        android:layout_gravity="top"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="22dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
         <com.yotadevices.yotaphone2.fbreader.view.GaugeView
