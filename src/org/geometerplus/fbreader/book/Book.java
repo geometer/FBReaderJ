@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.book;
 
-import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -52,9 +51,6 @@ public class Book extends TitledEntity {
 	public volatile boolean HasBookmark;
 
 	private volatile boolean myIsSaved;
-
-	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
-	private WeakReference<ZLImage> myCover;
 
 	Book(long id, ZLFile file, String title, String encoding, String language) {
 		super(title);
@@ -583,25 +579,6 @@ public class Book extends TitledEntity {
 				database.addVisitedHyperlink(myId, linkId);
 			}
 		}
-	}
-
-	synchronized ZLImage getCover() {
-		if (myCover == NULL_IMAGE) {
-			return null;
-		} else if (myCover != null) {
-			final ZLImage image = myCover.get();
-			if (image != null) {
-				return image;
-			}
-		}
-		ZLImage image = null;
-		try {
-			image = getPlugin().readCover(File);
-		} catch (BookReadingException e) {
-			// ignore
-		}
-		myCover = image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE;
-		return image;
 	}
 
 	@Override
