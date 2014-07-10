@@ -153,7 +153,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			}
 
 			@Override
-			public ZLImage getRealImage() {
+			protected ZLImage retrieveRealImage() {
 				return readCoverInternal(file);
 			}
 		};

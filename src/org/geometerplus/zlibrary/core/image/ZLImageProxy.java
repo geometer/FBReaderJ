@@ -22,18 +22,19 @@ package org.geometerplus.zlibrary.core.image;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLImageProxy extends ZLLoadableImage {
-	private ZLImage myImage;
+	private volatile ZLImage myImage;
 
-	public abstract ZLImage getRealImage();
+	public final ZLImage getRealImage() {
+		return myImage;
+	}
 
 	public String getURI() {
-		final ZLImage image = getRealImage();
-		return image != null ? image.getURI() : "image proxy";
+		return myImage != null ? myImage.getURI() : "image proxy";
 	}
 
 	@Override
 	public final synchronized void synchronize() {
-		myImage = getRealImage();
+		myImage = retrieveRealImage();
 		setSynchronized();
 	}
 
@@ -41,4 +42,6 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 	public final void synchronizeFast() {
 		setSynchronized();
 	}
+
+	protected abstract ZLImage retrieveRealImage();
 }
