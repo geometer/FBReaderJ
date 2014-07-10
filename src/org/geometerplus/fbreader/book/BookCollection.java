@@ -22,15 +22,11 @@ package org.geometerplus.fbreader.book;
 import java.io.File;
 import java.util.*;
 
-import android.graphics.Bitmap;
-
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
@@ -649,14 +645,8 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	@Override
-	public Bitmap getCover(Book book, int maxWidth, int maxHeight) {
-		if (getBookById(book.getId()) == null) {
-			return null;
-		}
-
-		final ZLAndroidImageManager manager = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-		final ZLAndroidImageData data = manager.getImageData(BookUtil.getCover(book));
-		return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
+	public ZLImage getCover(Book book, int maxWidth, int maxHeight) {
+		return BookUtil.getCover(book);
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
