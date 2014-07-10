@@ -112,5 +112,4 @@ public abstract class BookUtil {
 			}
 		}
 	}
-
 }
