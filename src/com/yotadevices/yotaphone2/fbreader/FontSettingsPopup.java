@@ -26,7 +26,7 @@ public class FontSettingsPopup {
     private final View mPopupView;
 
     private final static int ACTION_BAR_HEIGHT = 59;
-    private final float[] mFontSizes = {14, 16, 20, 21.3f, 24};
+    private final static float[] FONT_SIZES = {14, 16, 20, 21.3f, 24};
 
     public FontSettingsPopup(Context ctx, View root) {
         mContext = ctx;
@@ -36,23 +36,23 @@ public class FontSettingsPopup {
 
         LinearLayout lv = (LinearLayout)mPopupView.findViewById(R.id.font1);
         TextView tv = (TextView)lv.findViewById(R.id.font_example);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, mFontSizes[0]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[0]);
 
         lv = (LinearLayout)mPopupView.findViewById(R.id.font2);
         tv = (TextView)lv.findViewById(R.id.font_example);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, mFontSizes[1]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[1]);
 
         lv = (LinearLayout)mPopupView.findViewById(R.id.font3);
         tv = (TextView)lv.findViewById(R.id.font_example);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, mFontSizes[2]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[2]);
 
         lv = (LinearLayout)mPopupView.findViewById(R.id.font4);
         tv = (TextView)lv.findViewById(R.id.font_example);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, mFontSizes[3]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[3]);
 
         lv = (LinearLayout)mPopupView.findViewById(R.id.font5);
         tv = (TextView)lv.findViewById(R.id.font_example);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, mFontSizes[4]);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, FONT_SIZES[4]);
 
         mPopup = new android.widget.PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));

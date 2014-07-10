@@ -210,7 +210,7 @@ public class GaugeView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mGaugeBitmap = Bitmap.createBitmap(mContext.getResources().getDisplayMetrics(),
+        mGaugeBitmap = Bitmap.createBitmap(getContext().getResources().getDisplayMetrics(),
                 getWidth(), getHeight(), Bitmap.Config.RGB_565);
     }
 

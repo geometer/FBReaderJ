@@ -212,7 +212,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     public void showActionBar() {
         if (mActionBar == null) {
-            mActionBar = new BSReadingActionBar(getBSDrawer().getBSContext(), mRootView);
+            mActionBar = new BSReadingActionBar(getBSDrawer().getBSContext(), mRootView, myFBReaderApp);
         }
         mActionBar.show();
     }
@@ -220,7 +220,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     public void showStatusBar() {
         setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE);
         if (mStatusBar == null) {
-            mStatusBar = new BSReadingStatusBar(getBSDrawer().getBSContext(), mRootView);
+            mStatusBar = new BSReadingStatusBar(getBSDrawer().getBSContext(), mRootView, myFBReaderApp);
         }
         mStatusBar.show();
     }

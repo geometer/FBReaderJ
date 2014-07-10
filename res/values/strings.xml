@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="empty_string"></string>
+    <string name="of">of</string>
+    <string name="pages_left">pages left</string>
+    <string name="back_to_page">Back to page</string>
 </resources>
