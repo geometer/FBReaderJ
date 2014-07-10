@@ -28,10 +28,14 @@ import android.os.IBinder;
 import android.os.FileObserver;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
@@ -267,7 +271,15 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(String book, int maxWidth, int maxHeight) {
-			return myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
+			final ZLImage image =
+				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
+			if (image == null) {
+				return null;
+			}
+			final ZLAndroidImageManager manager =
+				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+			final ZLAndroidImageData data = manager.getImageData(image);
+			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
 		}
 
 		public List<String> bookmarks(String query) {
