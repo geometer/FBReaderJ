@@ -20,6 +20,6 @@
         android:id="@+id/line"
         android:src="@drawable/single_line_50_length"
         android:layout_width="33.3dp"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:layout_height="2.6dp"/>
 </LinearLayout>

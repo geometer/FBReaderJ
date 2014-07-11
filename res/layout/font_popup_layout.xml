@@ -69,7 +69,7 @@
                     android:id="@+id/serif_line"
                     android:src="@drawable/single_line_50_length"
                     android:layout_width="59dp"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:layout_height="2.6dp"
                     android:scaleType="fitXY"/>
             </LinearLayout>
@@ -94,7 +94,7 @@
                     android:src="@drawable/single_line_50_length"
                     android:layout_width="58dp"
                     android:layout_gravity="right"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:layout_height="2.6dp"
                     android:scaleType="fitXY"/>
             </LinearLayout>
@@ -113,7 +113,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/theme_whie"
+                    android:id="@+id/theme_white"
                     android:fontFamily="PT Serif Pro"
                     android:textStyle="bold"
                     android:text="White"
@@ -127,7 +127,7 @@
                     android:id="@+id/theme_white_line"
                     android:src="@drawable/single_line_50_length"
                     android:layout_width="46dp"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:layout_height="2.6dp"
                     android:scaleType="fitXY"/>
             </LinearLayout>
@@ -152,7 +152,7 @@
                     android:src="@drawable/single_line_50_length"
                     android:layout_width="40dp"
                     android:layout_gravity="right"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:layout_height="2.6dp"
                     android:scaleType="fitXY"/>
             </LinearLayout>

@@ -29,11 +29,13 @@ public class BSReadingActionBar {
 
     private TextView mAuthor;
     private TextView mTitle;
+    private final FontSettingsPopup.OnFontChangeListener mFontListener;
 
-    public BSReadingActionBar(Context ctx, View root, FBReaderApp readerApp) {
+    public BSReadingActionBar(Context ctx, View root, FBReaderApp readerApp, FontSettingsPopup.OnFontChangeListener listener) {
         mContext = ctx;
         mRootView = root;
         mReader = readerApp;
+        mFontListener = listener;
         mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = mLayoutInflater.inflate(R.layout.bs_action_bar_reading_mode, null);
         mFontIcon = (ImageView)layout.findViewById(R.id.font_action);
@@ -76,11 +78,15 @@ public class BSReadingActionBar {
         mPopup.dismiss();
     }
 
+    public boolean isShowing() {
+        return mPopup.isShowing();
+    }
+
     private View.OnClickListener fontClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (mFontSettingsPopup == null) {
-                mFontSettingsPopup = new FontSettingsPopup(mContext, mRootView);
+                mFontSettingsPopup = new FontSettingsPopup(mContext, mRootView, mReader, mFontListener);
             }
             if (mFontSettingsPopup.isShowing()) {
                 mFontSettingsPopup.hide();

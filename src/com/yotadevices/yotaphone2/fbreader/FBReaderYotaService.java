@@ -212,7 +212,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     public void showActionBar() {
         if (mActionBar == null) {
-            mActionBar = new BSReadingActionBar(getBSDrawer().getBSContext(), mRootView, myFBReaderApp);
+            mActionBar = new BSReadingActionBar(getBSDrawer().getBSContext(), mRootView, myFBReaderApp, mOnFontChangedListener);
         }
         mActionBar.show();
     }
@@ -238,4 +238,20 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION |
                 Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR);
     }
+
+    public BSReadingActionBar geActionBar() {
+        return mActionBar;
+    }
+
+    public BSReadingStatusBar getStatusBar() {
+        return mStatusBar;
+    }
+
+    private FontSettingsPopup.OnFontChangeListener mOnFontChangedListener = new FontSettingsPopup.OnFontChangeListener() {
+        @Override
+        public void fontChanged() {
+            hideActionBar();
+            hideStatusBar();
+        }
+    };
 }

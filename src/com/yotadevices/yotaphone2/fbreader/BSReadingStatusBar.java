@@ -73,4 +73,9 @@ public class BSReadingStatusBar {
     public void hide() {
         mPopup.dismiss();
     }
+
+    public boolean isShowing() {
+        return mPopup.isShowing();
+    }
+
 }
