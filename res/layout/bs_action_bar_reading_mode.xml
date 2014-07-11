@@ -25,6 +25,7 @@
                 <TextView
                     android:id="@+id/book_author"
                     android:text="Author"
+                    android:singleLine="true"
                     android:fontFamily="PT Sans Pro"
                     android:textSize="16dp"
                     android:textColor="@android:color/black"
@@ -33,6 +34,7 @@
                 <TextView
                     android:id="@+id/book_title"
                     android:text="Book title"
+                    android:singleLine="true"
                     android:fontFamily="PT Sans Pro"
                     android:textSize="16dp"
                     android:textColor="@android:color/black"

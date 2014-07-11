@@ -10,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
+
+import java.util.List;
 
 public class BSReadingActionBar {
     private final PopupWindow mPopup;
@@ -37,8 +40,19 @@ public class BSReadingActionBar {
         mFontIcon.setOnClickListener(fontClickListener);
         mAuthor = (TextView)layout.findViewById(R.id.book_author);
         mTitle =  (TextView)layout.findViewById(R.id.book_title);
-        
+
         Book currentBook = mReader.Collection.getRecentBook(0);
+        StringBuilder authorString = new StringBuilder();
+        List<Author> authors = currentBook.authors();
+        if (authors.size() > 0) {
+            for (int i = 0; i < authors.size() - 1; ++i) {
+                authorString.append(authors.get(i).DisplayName);
+                authorString.append(", ");
+            }
+        }
+        authorString.append(authors.get(authors.size()-1));
+        mAuthor.setText(authorString.toString());
+        mTitle.setText(currentBook.getTitle());
 
         mPopup = new PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));
