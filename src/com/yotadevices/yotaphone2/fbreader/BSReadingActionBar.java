@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class BSReadingActionBar {
     private final View mRootView;
 
     private final ImageView mFontIcon;
+    private final ImageView mBookmarkIcon;
     private FontSettingsPopup mFontSettingsPopup;
     private final FBReaderApp mReader;
 
@@ -40,6 +43,9 @@ public class BSReadingActionBar {
         View layout = mLayoutInflater.inflate(R.layout.bs_action_bar_reading_mode, null);
         mFontIcon = (ImageView)layout.findViewById(R.id.font_action);
         mFontIcon.setOnClickListener(fontClickListener);
+        mBookmarkIcon = (ImageView)layout.findViewById(R.id.bookmark_action);
+        mBookmarkIcon.setOnClickListener(mBookmarkClickListener);
+
         mAuthor = (TextView)layout.findViewById(R.id.book_author);
         mTitle =  (TextView)layout.findViewById(R.id.book_title);
 
@@ -64,10 +70,37 @@ public class BSReadingActionBar {
     }
 
     private void updateData() {
+        final ZLTextView textView = mReader.getTextView();
+        if (textView.hasBookmarks()) {
+            mBookmarkIcon.setImageResource(R.drawable.bookmark_action_enabled);
+            mBookmarkIcon.setTag(true);
+        } else {
+            mBookmarkIcon.setImageResource(R.drawable.bookmark_action);
+            mBookmarkIcon.setTag(false);
+        }
+    }
 
+    public void addBookmark() {
+        final Bookmark bookmark = mReader.createBookmark(20, true);
+        mReader.Collection.saveBookmark(bookmark);
+        mBookmarkIcon.setImageResource(R.drawable.bookmark_action_enabled);
+        mBookmarkIcon.setTag(true);
+        mFontListener.fontChanged();
+    }
+
+    public void deleteBookmar() {
+        final ZLTextView textView = mReader.getTextView();
+        if (textView.hasBookmarks()) {
+            final Bookmark bookmark = textView.getCurrentBookmarkHighlighting().getBookmark();
+            mReader.Collection.deleteBookmark(bookmark);
+            mBookmarkIcon.setImageResource(R.drawable.bookmark_action);
+            mBookmarkIcon.setTag(false);
+            mFontListener.fontChanged();
+        }
     }
 
     public void show() {
+        updateData();
         mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
     }
 
@@ -93,6 +126,19 @@ public class BSReadingActionBar {
             }
             else {
                 mFontSettingsPopup.show();
+            }
+        }
+    };
+
+    private View.OnClickListener mBookmarkClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            boolean hasBookmar = (Boolean)v.getTag();
+            if (hasBookmar) {
+                deleteBookmar();
+            }
+            else {
+                addBookmark();
             }
         }
     };

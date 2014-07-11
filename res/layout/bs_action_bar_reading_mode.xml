@@ -46,14 +46,16 @@
                 android:src="@drawable/font_action"
                 android:layout_marginLeft="46dp"
                 android:layout_gravity="center_vertical"
-                android:layout_width="26dp"
+                android:scaleType="center"
+                android:layout_width="35dp"
                 android:layout_height="47dp" />
             <ImageView
                 android:id="@+id/bookmark_action"
                 android:src="@drawable/bookmark_action"
-                android:layout_marginLeft="26dp"
+                android:layout_marginLeft="3dp"
                 android:layout_gravity="center_vertical"
-                android:layout_width="12dp"
+                android:scaleType="center"
+                android:layout_width="40dp"
                 android:layout_height="47dp" />
         </LinearLayout>
     <ImageView
