@@ -153,8 +153,15 @@ public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage
 	}
 
 	@Override
-	public void synchronize() {
-		synchronizeInternal(false);
+	public Runnable synchronizeAction(final Runnable postAction) {
+		return new Runnable() {
+			public void run() {
+				synchronizeInternal(false);
+				if (postAction != null) {
+					postAction.run();
+				}
+			}
+		};
 	}
 
 	@Override
@@ -162,7 +169,7 @@ public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage
 		synchronizeInternal(true);
 	}
 
-	private final void synchronizeInternal(boolean doFast) {
+	private final synchronized void synchronizeInternal(boolean doFast) {
 		if (isSynchronized()) {
 			return;
 		}

@@ -49,7 +49,7 @@ class ZLAndroidImageLoader {
 				? mySinglePool : myPool;
 		pool.execute(new Runnable() {
 			public void run() {
-				image.synchronize();
+				image.synchronizeAction(null).run();
 				myImageSynchronizedHandler.fireMessage(image.getId());
 			}
 		});
