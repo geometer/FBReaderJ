@@ -33,20 +33,11 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 	}
 
 	@Override
-	public final Runnable synchronizeAction(final Runnable postAction) {
-		return new Runnable() {
-			public void run() {
-				synchronized (ZLImageProxy.this) {
-					if (myImage == null) {
-						myImage = retrieveRealImage();
-						setSynchronized();
-					}
-					if (postAction != null) {
-						postAction.run();
-					}
-				}
-			}
-		};
+	public final synchronized void synchronize() {
+		if (myImage == null) {
+			myImage = retrieveRealImage();
+			setSynchronized();
+		}
 	}
 
 	@Override

@@ -31,25 +31,29 @@ import android.os.Message;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 class ZLAndroidImageLoader {
-	void startImageLoading(final ZLLoadableImage image, Runnable postLoadingRunnable) {
-		LinkedList<Runnable> runnables = myOnImageSyncRunnables.get(image.getId());
-		if (runnables != null) {
-			if (!runnables.contains(postLoadingRunnable)) {
-				runnables.add(postLoadingRunnable);
+	void startImageLoading(final ZLLoadableImage image, Runnable postAction) {
+		synchronized (myOnImageSyncRunnables) {
+			LinkedList<Runnable> runnables = myOnImageSyncRunnables.get(image.getId());
+			if (runnables != null) {
+				if (postAction != null && !runnables.contains(postAction)) {
+					runnables.add(postAction);
+				}
+				return;
 			}
-			return;
-		}
 
-		runnables = new LinkedList<Runnable>();
-		runnables.add(postLoadingRunnable);
-		myOnImageSyncRunnables.put(image.getId(), runnables);
+			runnables = new LinkedList<Runnable>();
+			if (postAction != null) {
+				runnables.add(postAction);
+			}
+			myOnImageSyncRunnables.put(image.getId(), runnables);
+		}
 
 		final ExecutorService pool =
 			image.sourceType() == ZLLoadableImage.SourceType.FILE
 				? mySinglePool : myPool;
 		pool.execute(new Runnable() {
 			public void run() {
-				image.synchronizeAction(null).run();
+				image.synchronize();
 				myImageSynchronizedHandler.fireMessage(image.getId());
 			}
 		});
@@ -76,7 +80,10 @@ class ZLAndroidImageLoader {
 		@Override
 		public void handleMessage(Message message) {
 			final String imageUrl = (String)message.obj;
-			final LinkedList<Runnable> runables = myOnImageSyncRunnables.remove(imageUrl);
+			final LinkedList<Runnable> runables;
+			synchronized (myOnImageSyncRunnables) {
+				runables = myOnImageSyncRunnables.remove(imageUrl);
+			}
 			for (Runnable runnable : runables) {
 				runnable.run();
 			}
