@@ -55,4 +55,9 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 	}
 
 	protected abstract ZLImage retrieveRealImage();
+
+	@Override
+	public String toString() {
+		return getClass().getName() + "[" + getId() + "; synchronized=" + isSynchronized() + "]";
+	}
 }
