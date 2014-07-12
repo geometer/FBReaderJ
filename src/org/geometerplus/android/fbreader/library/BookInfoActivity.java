@@ -140,12 +140,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void setupCover(Book book) {
 		final ImageView coverView = (ImageView)findViewById(R.id.book_cover);
 
-		final DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-		final int maxHeight = metrics.heightPixels * 2 / 3;
-		final int maxWidth = maxHeight * 2 / 3;
-
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
@@ -158,14 +152,34 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		if (image instanceof ZLLoadableImage) {
 			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
 			if (!loadableImage.isSynchronized()) {
-				loadableImage.synchronize();
+				loadableImage.synchronizeAction(new Runnable() {
+					public void run() {
+						runOnUiThread(new Runnable() {
+							public void run() {
+								setCover(coverView, image);
+							}
+						});
+					}
+				}).run();
+				return;
 			}
 		}
+
+		setCover(coverView, image);
+	}
+
+	private void setCover(ImageView coverView, ZLImage image) {
 		final ZLAndroidImageData data =
 			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
 		if (data == null) {
 			return;
 		}
+
+		final DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+		final int maxHeight = metrics.heightPixels * 2 / 3;
+		final int maxWidth = maxHeight * 2 / 3;
 
 		final Bitmap coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
 		if (coverBitmap == null) {
