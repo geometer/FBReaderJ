@@ -40,7 +40,6 @@ import org.geometerplus.android.util.*;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.formatPlugin.PluginConnectionPool;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, IBookCollection.Listener {
@@ -48,8 +47,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	private volatile RootTree myRootTree;
 	private Book mySelectedBook;
-
-	private final PluginConnectionPool myPool = new PluginConnectionPool(this);
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -70,7 +67,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		getListView().setOnCreateContextMenuListener(this);
 
 		if (MetaInfoUtil.PMIReader == null) {
-			MetaInfoUtil.PMIReader = myPool.createMetainfoReader();
+			MetaInfoUtil.PMIReader = ImageSynchronizer.createMetainfoReader();
 		}
 
 		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
@@ -105,7 +102,6 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	protected void onDestroy() {
 		myRootTree.Collection.removeListener(this);
-		myPool.clear();
 		((BookCollectionShadow)myRootTree.Collection).unbind();
 		super.onDestroy();
 	}

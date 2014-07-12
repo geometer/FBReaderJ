@@ -24,10 +24,13 @@ import java.util.LinkedList;
 
 import android.app.Activity;
 import android.app.Service;
-import android.content.Context;
-import android.content.ServiceConnection;
+import android.content.*;
 
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+
+import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 
 public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
 	private final Context myContext;
@@ -52,5 +55,16 @@ public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
 			myContext.unbindService(connection);
 		}
 		myConnections.clear();
+	}
+
+	public synchronized PluginMetainfoReaderImpl createMetainfoReader() {
+		final PluginMetainfoReaderImpl reader = new PluginMetainfoReaderImpl();
+		for (final ExternalFormatPlugin plugin : PluginCollection.Instance().getExternalPlugins()) {
+			final ServiceConnection connection = reader.createConnection(plugin);
+			myConnections.add(connection);
+			final Intent i = PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE);
+			myContext.bindService(i, connection, Context.BIND_AUTO_CREATE);
+		}
+		return reader;
 	}
 }

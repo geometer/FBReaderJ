@@ -34,20 +34,18 @@ import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.*;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
-import org.geometerplus.android.fbreader.formatPlugin.PluginConnectionPool;
 
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
-	private final PluginConnectionPool myPool = new PluginConnectionPool(this);
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private static final class Observer extends FileObserver {
 		private static final int MASK =
@@ -339,20 +337,20 @@ public class LibraryService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		if (MetaInfoUtil.PMIReader == null) {
-			MetaInfoUtil.PMIReader = myPool.createMetainfoReader();
+			MetaInfoUtil.PMIReader = myImageSynchronizer.createMetainfoReader();
 		}
 		myLibrary = new LibraryImplementation();
 	}
 
 	@Override
 	public void onDestroy() {
-		myPool.clear();
 		if (myLibrary != null) {
 			final LibraryImplementation l = myLibrary;
 			myLibrary = null;
 			l.deactivate();
 			l.close();
 		}
+		myImageSynchronizer.clear();
 		super.onDestroy();
 	}
 }
