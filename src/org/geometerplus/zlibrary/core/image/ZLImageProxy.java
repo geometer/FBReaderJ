@@ -33,9 +33,20 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 	}
 
 	@Override
-	public final synchronized void synchronize() {
-		myImage = retrieveRealImage();
-		setSynchronized();
+	public final Runnable synchronizeAction(final Runnable postAction) {
+		return new Runnable() {
+			public void run() {
+				synchronized (ZLImageProxy.this) {
+					if (myImage == null) {
+						myImage = retrieveRealImage();
+						setSynchronized();
+					}
+					if (postAction != null) {
+						postAction.run();
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -44,4 +55,9 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 	}
 
 	protected abstract ZLImage retrieveRealImage();
+
+	@Override
+	public String toString() {
+		return getClass().getName() + "[" + getId() + "; synchronized=" + isSynchronized() + "]";
+	}
 }
