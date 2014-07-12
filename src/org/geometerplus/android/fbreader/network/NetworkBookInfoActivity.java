@@ -38,8 +38,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.*;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.*;
@@ -59,6 +58,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private final BookDownloaderServiceConnection myConnection = new BookDownloaderServiceConnection();
+
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 
@@ -172,6 +173,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public void onDestroy() {
+		myImageSynchronizer.clear();
+
 		super.onDestroy();
 	}
 
@@ -322,7 +325,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 			if (cover instanceof ZLLoadableImage) {
 				final ZLLoadableImage img = (ZLLoadableImage)cover;
-				img.startSynchronization(new Runnable() {
+				img.startSynchronization(myImageSynchronizer, new Runnable() {
 					public void run() {
 						img.synchronizeFast();
 						final ZLAndroidImageData data = mgr.getImageData(img);

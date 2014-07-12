@@ -29,6 +29,7 @@ import android.widget.*;
 
 import com.mobeta.android.dslv.DragSortListView;
 
+import org.geometerplus.zlibrary.ui.android.image.AndroidImageSynchronizer;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.android.fbreader.FBReader;
@@ -37,6 +38,8 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 import org.geometerplus.android.util.ViewUtil;
 
 public class CatalogManagerActivity extends ListActivity {
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
+
 	private final List<Item> myAllItems = new ArrayList<Item>();
 	private final List<Item> mySelectedItems = new ArrayList<Item>();
 
@@ -84,6 +87,13 @@ public class CatalogManagerActivity extends ListActivity {
 		}
 
 		setListAdapter(new CatalogsListAdapter());
+	}
+
+	@Override
+	protected void onDestroy() {
+		myImageSynchronizer.clear();
+
+		super.onDestroy();
 	}
 
 	@Override
@@ -185,7 +195,7 @@ public class CatalogManagerActivity extends ListActivity {
 				if (myCoverManager == null) {
 					view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 					final int coverHeight = view.getMeasuredHeight();
-					myCoverManager = new CoverManager(CatalogManagerActivity.this, coverHeight * 15 / 22, coverHeight);
+					myCoverManager = new CoverManager(CatalogManagerActivity.this, myImageSynchronizer, coverHeight * 15 / 22, coverHeight);
 					view.requestLayout();
 				}
 
