@@ -150,22 +150,18 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		}
 
 		if (image instanceof ZLLoadableImage) {
-			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
-			if (!loadableImage.isSynchronized()) {
-				loadableImage.synchronizeAction(new Runnable() {
-					public void run() {
-						runOnUiThread(new Runnable() {
-							public void run() {
-								setCover(coverView, image);
-							}
-						});
-					}
-				}).run();
-				return;
-			}
+			((ZLLoadableImage)image).synchronizeAction(new Runnable() {
+				public void run() {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							setCover(coverView, image);
+						}
+					});
+				}
+			}).run();
+		} else {
+			setCover(coverView, image);
 		}
-
-		setCover(coverView, image);
 	}
 
 	private void setCover(ImageView coverView, ZLImage image) {
