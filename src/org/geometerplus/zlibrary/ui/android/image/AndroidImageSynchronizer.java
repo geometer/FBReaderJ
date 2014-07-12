@@ -19,20 +19,29 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Service;
 import android.content.*;
+import android.os.IBinder;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
+import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
+
+import org.geometerplus.fbreader.book.MetaInfoUtil;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
+import org.geometerplus.android.fbreader.formatPlugin.metainfoservice.MetaInfoReader;
 
-public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
+public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer, MetaInfoUtil.PluginMetaInfoReader {
+	public final Map<ExternalFormatPlugin,MetaInfoReader> Readers =
+		new HashMap<ExternalFormatPlugin,MetaInfoReader>();
+
 	private final Context myContext;
 	private final List<ServiceConnection> myConnections = new LinkedList<ServiceConnection>();
 
@@ -57,14 +66,37 @@ public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
 		myConnections.clear();
 	}
 
-	public synchronized PluginMetainfoReaderImpl createMetainfoReader() {
-		final PluginMetainfoReaderImpl reader = new PluginMetainfoReaderImpl();
+	public synchronized MetaInfoUtil.PluginMetaInfoReader createMetainfoReader() {
 		for (final ExternalFormatPlugin plugin : PluginCollection.Instance().getExternalPlugins()) {
-			final ServiceConnection connection = reader.createConnection(plugin);
+			final ServiceConnection connection = createConnection(plugin);
 			myConnections.add(connection);
 			final Intent i = PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE);
 			myContext.bindService(i, connection, Context.BIND_AUTO_CREATE);
 		}
-		return reader;
+		return this;
+	}
+
+	private ServiceConnection createConnection(final ExternalFormatPlugin plugin) {
+		return new ServiceConnection() {
+			public void onServiceConnected(ComponentName className, IBinder binder) {
+				Readers.put(plugin, MetaInfoReader.Stub.asInterface(binder));
+			}
+
+			public void onServiceDisconnected(ComponentName className) {
+				Readers.remove(plugin);
+			}
+		};
+	}
+
+	@TargetApi(8)
+	@Override
+	public ZLBitmapImage readImage(ZLFile f, ExternalFormatPlugin plugin) {
+		final MetaInfoReader reader = Readers.get(plugin);
+		try {
+			return reader != null ? new ZLBitmapImage(reader.readBitmap(f.getPath())) : null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
