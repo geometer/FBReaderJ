@@ -20,6 +20,10 @@
 package org.geometerplus.zlibrary.core.image;
 
 public abstract class ZLLoadableImage implements ZLImage {
+	public interface Synchronizer {
+		void startImageLoading(ZLLoadableImage image, Runnable postAction);
+	}
+
 	private volatile boolean myIsSynchronized;
 
 	public final boolean isSynchronized() {
@@ -30,8 +34,8 @@ public abstract class ZLLoadableImage implements ZLImage {
 		myIsSynchronized = true;
 	}
 
-	public void startSynchronization(Runnable postSynchronizationAction) {
-		ZLImageManager.Instance().startImageLoading(this, postSynchronizationAction);
+	public void startSynchronization(Synchronizer synchronizer, Runnable postAction) {
+		synchronizer.startImageLoading(this, postAction);
 	}
 
 	public static enum SourceType {
