@@ -28,8 +28,8 @@ import android.widget.ImageView;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -48,11 +48,13 @@ public class CoverManager {
 	private final ExecutorService myPool = Executors.newFixedThreadPool(1, new MinPriorityThreadFactory());
 
 	private final Activity myActivity;
+	private final ZLLoadableImage.Synchronizer myImageSynchronizer;
 	private final int myCoverWidth;
 	private final int myCoverHeight;
 
-	public CoverManager(Activity activity, int coverWidth, int coverHeight) {
+	public CoverManager(Activity activity, ZLLoadableImage.Synchronizer synchronizer, int coverWidth, int coverHeight) {
 		myActivity = activity;
+		myImageSynchronizer = synchronizer;
 		myCoverWidth = coverWidth;
 		myCoverHeight = coverHeight;
 	}
@@ -119,7 +121,10 @@ public class CoverManager {
 				if (img.isSynchronized()) {
 					setCoverForView(holder, img);
 				} else {
-					img.startSynchronization(holder.new CoverSyncRunnable(img));
+					img.startSynchronization(
+						myImageSynchronizer,
+						holder.new CoverSyncRunnable(img)
+					);
 				}
 			} else if (cover != null) {
 				coverBitmap = getBitmap(cover);
