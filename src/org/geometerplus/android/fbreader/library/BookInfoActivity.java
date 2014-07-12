@@ -42,8 +42,7 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.*;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
@@ -62,6 +61,9 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private Book myBook;
 	private boolean myDontReloadBook;
+
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
+
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
 	@Override
@@ -144,6 +146,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 	protected void onDestroy() {
 		myCollection.removeListener(this);
 		myCollection.unbind();
+		myImageSynchronizer.clear();
 
 		super.onDestroy();
 	}
@@ -187,7 +190,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		}
 
 		if (image instanceof ZLLoadableImage) {
-			((ZLLoadableImage)image).startSynchronization(new Runnable() {
+			((ZLLoadableImage)image).startSynchronization(myImageSynchronizer, new Runnable() {
 				public void run() {
 					runOnUiThread(new Runnable() {
 						public void run() {
