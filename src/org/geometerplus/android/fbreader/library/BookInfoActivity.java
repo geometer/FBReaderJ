@@ -187,7 +187,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		}
 
 		if (image instanceof ZLLoadableImage) {
-			((ZLLoadableImage)image).synchronizeAction(new Runnable() {
+			((ZLLoadableImage)image).startSynchronization(new Runnable() {
 				public void run() {
 					runOnUiThread(new Runnable() {
 						public void run() {
@@ -195,7 +195,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 						}
 					});
 				}
-			}).run();
+			});
 		} else {
 			setCover(coverView, image);
 		}
