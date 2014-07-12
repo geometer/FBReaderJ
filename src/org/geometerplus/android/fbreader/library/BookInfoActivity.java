@@ -150,7 +150,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		}
 
 		if (image instanceof ZLLoadableImage) {
-			((ZLLoadableImage)image).synchronizeAction(new Runnable() {
+			((ZLLoadableImage)image).startSynchronization(new Runnable() {
 				public void run() {
 					runOnUiThread(new Runnable() {
 						public void run() {
@@ -158,7 +158,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 						}
 					});
 				}
-			}).run();
+			});
 		} else {
 			setCover(coverView, image);
 		}
