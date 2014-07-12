@@ -19,8 +19,7 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
 import android.app.Activity;
 import android.app.Service;
