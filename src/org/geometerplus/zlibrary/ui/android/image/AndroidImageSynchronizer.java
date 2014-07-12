@@ -19,29 +19,29 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import org.geometerplus.zlibrary.core.image.*;
+import android.app.Activity;
+import android.app.Service;
+import android.content.Context;
 
-public final class ZLAndroidImageManager extends ZLImageManager {
-	@Override
-	public ZLAndroidImageData getImageData(ZLImage image) {
-		if (image instanceof ZLStreamImage) {
-			return new InputStreamImageData((ZLStreamImage)image);
-		} else if (image instanceof ZLBitmapImage) {
-			return BitmapImageData.get((ZLBitmapImage)image);
-		} else if (image instanceof ZLImageProxy) {
-			return getImageData(((ZLImageProxy)image).getRealImage());
-		} else {
-			// unknown image type or null
-			return null;
-		}
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+
+public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
+	private final Context myContext;
+
+	public AndroidImageSynchronizer(Activity activity) {
+		myContext = activity;
 	}
 
-	private ZLAndroidImageLoader myLoader;
+	public AndroidImageSynchronizer(Service service) {
+		myContext = service;
+	}
 
-	protected void startImageLoading(ZLLoadableImage image, Runnable postLoadingRunnable) {
-		if (myLoader == null) {
-			myLoader = new ZLAndroidImageLoader();
-		}
-		myLoader.startImageLoading(image, postLoadingRunnable);
+	@Override
+	public void startImageLoading(ZLLoadableImage image, Runnable postAction) {
+		final ZLAndroidImageManager manager = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+		manager.startImageLoading(image, postAction);
+	}
+
+	public void clear() {
 	}
 }
