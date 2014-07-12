@@ -31,7 +31,6 @@ public abstract class ZLImageManager {
 	}
 
 	public abstract ZLImageData getImageData(ZLImage image);
-	protected abstract void startImageLoading(ZLLoadableImage image, Runnable postLoadingRunnable);
 
 	protected final static class PalmImageHeader {
 		public final int Width;
