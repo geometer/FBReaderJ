@@ -19,14 +19,19 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
+import java.util.List;
+import java.util.LinkedList;
+
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
+import android.content.ServiceConnection;
 
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
 	private final Context myContext;
+	private final List<ServiceConnection> myConnections = new LinkedList<ServiceConnection>();
 
 	public AndroidImageSynchronizer(Activity activity) {
 		myContext = activity;
@@ -42,6 +47,10 @@ public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
 		manager.startImageLoading(image, postAction);
 	}
 
-	public void clear() {
+	public synchronized void clear() {
+		for (ServiceConnection connection : myConnections) {
+			myContext.unbindService(connection);
+		}
+		myConnections.clear();
 	}
 }
