@@ -49,13 +49,10 @@ class PluginMetainfoReaderImpl implements MetaInfoUtil.PluginMetaInfoReader {
 		}
 	}
 
-	public ServiceConnection createConnection(final ExternalFormatPlugin plugin, final Runnable onConnected) {
+	public ServiceConnection createConnection(final ExternalFormatPlugin plugin) {
 		return new ServiceConnection() {
 			public void onServiceConnected(ComponentName className, IBinder binder) {
 				Readers.put(plugin, MetaInfoReader.Stub.asInterface(binder));
-				if (onConnected != null) {
-					onConnected.run();
-				}
 			}
 
 			public void onServiceDisconnected(ComponentName className) {

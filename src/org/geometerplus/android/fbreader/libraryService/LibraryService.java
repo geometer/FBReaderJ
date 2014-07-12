@@ -339,7 +339,7 @@ public class LibraryService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		if (MetaInfoUtil.PMIReader == null) {
-			MetaInfoUtil.PMIReader = myPool.createMetainfoReader(null);
+			MetaInfoUtil.PMIReader = myPool.createMetainfoReader();
 		}
 		myLibrary = new LibraryImplementation();
 	}

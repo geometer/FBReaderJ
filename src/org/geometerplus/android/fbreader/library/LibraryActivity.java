@@ -70,7 +70,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		getListView().setOnCreateContextMenuListener(this);
 
 		if (MetaInfoUtil.PMIReader == null) {
-			MetaInfoUtil.PMIReader = myPool.createMetainfoReader(null);
+			MetaInfoUtil.PMIReader = myPool.createMetainfoReader();
 		}
 
 		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
