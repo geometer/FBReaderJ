@@ -41,7 +41,7 @@ public abstract class ZLLoadableImage implements ZLImage {
 	};
 	public abstract SourceType sourceType();
 
-	public abstract Runnable synchronizeAction(Runnable postAction);
+	public abstract void synchronize();
 	public abstract void synchronizeFast();
 	public abstract String getId();
 }
