@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.image;
 public abstract class ZLImageProxy implements ZLImage {
 	public interface Synchronizer {
 		void startImageLoading(ZLImageProxy image, Runnable postAction);
+		void synchronize(ZLImageProxy image);
 	}
 
 	private volatile boolean myIsSynchronized;
@@ -46,7 +47,6 @@ public abstract class ZLImageProxy implements ZLImage {
 	public abstract SourceType sourceType();
 
 	public abstract ZLImage getRealImage();
-	public abstract void synchronize(Synchronizer synchronizer);
 	public abstract String getId();
 
 	@Override
