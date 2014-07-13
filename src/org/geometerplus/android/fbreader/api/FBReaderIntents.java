@@ -59,6 +59,11 @@ public abstract class FBReaderIntents {
 			.setPackage(DEFAULT_PACKAGE);
 	}
 
+	public static Intent serviceIntent(String action) {
+		return new Intent(action)
+			.setPackage(DEFAULT_PACKAGE);
+	}
+
 	public static void putBookExtra(Intent intent, String key, Book book) {
 		intent.putExtra(key, SerializerUtil.serialize(book));
 	}
