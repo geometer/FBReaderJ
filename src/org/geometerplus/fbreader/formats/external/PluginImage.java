@@ -24,10 +24,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 public final class PluginImage extends ZLImageProxy {
-	public interface Synchronizer extends ZLImageProxy.Synchronizer {
-		void setRealImage(PluginImage image);
-	}
-
 	public final ZLFile File;
 	public final ExternalFormatPlugin Plugin;
 	private volatile ZLImage myImage;
@@ -47,13 +43,6 @@ public final class PluginImage extends ZLImageProxy {
 	@Override
 	public final ZLImage getRealImage() {
 		return myImage;
-	}
-
-	@Override
-	public final synchronized void synchronize(ZLImageProxy.Synchronizer synchronizer) {
-		if (synchronizer instanceof Synchronizer) {
-			((Synchronizer)synchronizer).setRealImage(this);
-		}
 	}
 
 	@Override
