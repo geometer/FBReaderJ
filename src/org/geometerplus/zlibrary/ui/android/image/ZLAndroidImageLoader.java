@@ -28,10 +28,10 @@ import java.util.concurrent.ThreadFactory;
 import android.os.Handler;
 import android.os.Message;
 
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 class ZLAndroidImageLoader {
-	void startImageLoading(final ZLLoadableImage.Synchronizer synchronizer, final ZLLoadableImage image, Runnable postAction) {
+	void startImageLoading(final ZLImageProxy.Synchronizer synchronizer, final ZLImageProxy image, Runnable postAction) {
 		synchronized (myOnImageSyncRunnables) {
 			LinkedList<Runnable> runnables = myOnImageSyncRunnables.get(image.getId());
 			if (runnables != null) {
@@ -49,7 +49,7 @@ class ZLAndroidImageLoader {
 		}
 
 		final ExecutorService pool =
-			image.sourceType() == ZLLoadableImage.SourceType.FILE
+			image.sourceType() == ZLImageProxy.SourceType.FILE
 				? mySinglePool : myPool;
 		pool.execute(new Runnable() {
 			public void run() {

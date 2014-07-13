@@ -24,7 +24,7 @@ import java.util.concurrent.Future;
 import android.widget.ImageView;
 import android.graphics.Bitmap;
 
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -58,10 +58,10 @@ class CoverHolder {
 	}
 
 	class CoverSyncRunnable implements Runnable {
-		private final ZLLoadableImage myImage;
+		private final ZLImageProxy myImage;
 		private final FBTree.Key myKey;
 
-		CoverSyncRunnable(ZLLoadableImage image) {
+		CoverSyncRunnable(ZLImageProxy image) {
 			myImage = image;
 			synchronized (CoverHolder.this) {
 				myKey = Key;
@@ -101,10 +101,10 @@ class CoverHolder {
 	}
 
 	class CoverBitmapRunnable implements Runnable {
-		private final ZLLoadableImage myImage;
+		private final ZLImageProxy myImage;
 		private final FBTree.Key myKey;
 
-		CoverBitmapRunnable(ZLLoadableImage image) {
+		CoverBitmapRunnable(ZLImageProxy image) {
 			myImage = image;
 			synchronized (CoverHolder.this) {
 				myKey = Key;
