@@ -93,15 +93,12 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 		myIsInitialized = true;
 
 		for (final ExternalFormatPlugin plugin : PluginCollection.Instance().getExternalPlugins()) {
-			final ServiceConnection connection = createConnection(plugin);
-			myConnections.add(connection);
-			final Intent i = PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE);
-			myContext.bindService(i, connection, Context.BIND_AUTO_CREATE);
+			createConnection(plugin);
 		}
 	}
 
-	private ServiceConnection createConnection(final ExternalFormatPlugin plugin) {
-		return new ServiceConnection() {
+	private void createConnection(final ExternalFormatPlugin plugin) {
+		final ServiceConnection connection = new ServiceConnection() {
 			public void onServiceConnected(ComponentName className, IBinder binder) {
 				Readers.put(plugin, CoverReader.Stub.asInterface(binder));
 			}
@@ -110,5 +107,11 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 				Readers.remove(plugin);
 			}
 		};
+		myConnections.add(connection);
+		myContext.bindService(
+			PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE),
+			connection,
+			Context.BIND_AUTO_CREATE
+		);
 	}
 }
