@@ -19,44 +19,10 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
+public abstract class ZLImageSelfSynchronizableProxy extends ZLImageProxy {
+	public abstract void synchronize();
 
-public abstract class ZLImageFileProxy extends ZLImageSelfSynchronizableProxy {
-	protected final ZLFile File;
-	private volatile ZLImage myImage;
-
-	protected ZLImageFileProxy(ZLFile file) {
-		File = file;
-	}
-
-	@Override
-	public final ZLImage getRealImage() {
-		return myImage;
-	}
-
-	@Override
-	public String getURI() {
-		return "cover:" + File.getPath();
-	}
-
-	@Override
-	public final synchronized void synchronize() {
-		if (myImage == null) {
-			myImage = retrieveRealImage();
-			setSynchronized();
-		}
-	}
-
-	@Override
-	public SourceType sourceType() {
-		return SourceType.FILE;
-	}
-
-	@Override
-	public String getId() {
-		return File.getPath();
-	}
-
-	protected abstract ZLImage retrieveRealImage();
+	public final void synchronize(Synchronizer synchronizer) {
+		synchronize();
+	} 
 }
