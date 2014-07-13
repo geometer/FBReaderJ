@@ -36,13 +36,13 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.external.PluginImage;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
-import org.geometerplus.android.fbreader.formatPlugin.metainfoservice.MetaInfoReader;
+import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
 public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
 	private volatile boolean myIsInitialized;
 
-	public final Map<ExternalFormatPlugin,MetaInfoReader> Readers =
-		new HashMap<ExternalFormatPlugin,MetaInfoReader>();
+	public final Map<ExternalFormatPlugin,CoverReader> Readers =
+		new HashMap<ExternalFormatPlugin,CoverReader>();
 
 	private final Context myContext;
 	private final List<ServiceConnection> myConnections = new LinkedList<ServiceConnection>();
@@ -85,7 +85,7 @@ public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
 	private ServiceConnection createConnection(final ExternalFormatPlugin plugin) {
 		return new ServiceConnection() {
 			public void onServiceConnected(ComponentName className, IBinder binder) {
-				Readers.put(plugin, MetaInfoReader.Stub.asInterface(binder));
+				Readers.put(plugin, CoverReader.Stub.asInterface(binder));
 			}
 
 			public void onServiceDisconnected(ComponentName className) {
@@ -96,7 +96,7 @@ public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
 
 	@Override
 	public ZLBitmapImage readPluginImage(ZLFile f, ExternalFormatPlugin plugin) {
-		final MetaInfoReader reader = Readers.get(plugin);
+		final CoverReader reader = Readers.get(plugin);
 		try {
 			return reader != null ? new ZLBitmapImage(reader.readBitmap(f.getPath())) : null;
 		} catch (Exception e) {
