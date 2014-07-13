@@ -26,9 +26,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.ServiceConnection;
 
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
+public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	private final Context myContext;
 	private final List<ServiceConnection> myConnections = new LinkedList<ServiceConnection>();
 
@@ -41,7 +41,7 @@ public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
 	}
 
 	@Override
-	public void startImageLoading(ZLLoadableImage image, Runnable postAction) {
+	public void startImageLoading(ZLImageProxy image, Runnable postAction) {
 		final ZLAndroidImageManager manager = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 		manager.startImageLoading(this, image, postAction);
 	}

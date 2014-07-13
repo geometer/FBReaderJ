@@ -36,7 +36,7 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -152,8 +152,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			return;
 		}
 
-		if (image instanceof ZLLoadableImage) {
-			((ZLLoadableImage)image).startSynchronization(myImageSynchronizer, new Runnable() {
+		if (image instanceof ZLImageProxy) {
+			((ZLImageProxy)image).startSynchronization(myImageSynchronizer, new Runnable() {
 				public void run() {
 					runOnUiThread(new Runnable() {
 						public void run() {
