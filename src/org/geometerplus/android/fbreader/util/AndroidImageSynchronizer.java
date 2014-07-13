@@ -26,11 +26,9 @@ import android.app.Service;
 import android.content.*;
 import android.os.IBinder;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.image.ZLImageSelfSynchronizableProxy;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.formats.PluginCollection;
