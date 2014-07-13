@@ -157,7 +157,6 @@ public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage
 		synchronizeInternal(false);
 	}
 
-	@Override
 	public void synchronizeFast() {
 		synchronizeInternal(true);
 	}
