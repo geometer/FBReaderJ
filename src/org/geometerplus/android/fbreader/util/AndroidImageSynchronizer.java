@@ -61,6 +61,16 @@ public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
 		manager.startImageLoading(this, image, postAction);
 	}
 
+	@Override
+	public void setRealImage(PluginImage image) {
+		final CoverReader reader = Readers.get(image.Plugin);
+		try {
+			image.setRealImage(reader != null ? new ZLBitmapImage(reader.readBitmap(image.File.getPath())) : null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public synchronized void clear() {
 		for (ServiceConnection connection : myConnections) {
 			myContext.unbindService(connection);
@@ -92,15 +102,5 @@ public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
 				Readers.remove(plugin);
 			}
 		};
-	}
-
-	@Override
-	public void setRealImage(PluginImage image) {
-		final CoverReader reader = Readers.get(image.Plugin);
-		try {
-			image.setRealImage(reader != null ? new ZLBitmapImage(reader.readBitmap(image.File.getPath())) : null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }
