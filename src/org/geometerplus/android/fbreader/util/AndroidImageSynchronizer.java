@@ -29,9 +29,11 @@ import android.os.IBinder;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.image.ZLImageSelfSynchronizableProxy;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.external.PluginImage;
+import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
 public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
@@ -95,8 +97,18 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 			((ZLImageSelfSynchronizableProxy)image).synchronize();
 			postAction.run();
 		} else if (image instanceof PluginImage) {
-			// TODO: implement
-			postAction.run();
+			final PluginImage pluginImage = (PluginImage)image;
+			final Connection connection = getConnection(pluginImage.Plugin);
+			connection.runOrAddAction(new Runnable() {
+				public void run() {
+					try {
+						pluginImage.setRealImage(new ZLBitmapImage(connection.Reader.readBitmap(pluginImage.File.getPath())));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					postAction.run();
+				}
+			});
 		} else {
 			throw new RuntimeException("Cannot synchronize " + image.getClass());
 		}
@@ -107,5 +119,19 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 			myContext.unbindService(connection);
 		}
 		myConnections.clear();
+	}
+
+	private synchronized Connection getConnection(ExternalFormatPlugin plugin) {
+		Connection connection = myConnections.get(plugin);
+		if (connection == null) {
+			connection = new Connection(plugin);
+			myConnections.put(plugin, connection);
+			myContext.bindService(
+				PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE),
+				connection,
+				Context.BIND_AUTO_CREATE
+			);
+		}
+		return connection;
 	}
 }
