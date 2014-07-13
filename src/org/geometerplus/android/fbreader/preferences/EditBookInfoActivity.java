@@ -144,16 +144,48 @@ class EncodingPreference extends ZLStringListPreference {
 }
 
 class EditTagsPreference extends Preference {
+	private static final int SUMMARY_LEN = 3;
 	protected final ZLResource myResource;
 	private final Book myBook;
+	private ArrayList<String> myTagsList;
 
 	EditTagsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context);
 		myBook = book;
 		myResource = rootResource.getResource(resourceKey);
-		setTitle(myResource.getValue());
-	}
+		updateTagsList();
 
+		setTitle(myResource.getValue());
+		setSummary(getTagsSummary());
+	}
+	
+	private void updateTagsList(){
+		myTagsList = new ArrayList<String>();
+		if(myBook != null){
+			for (Tag tag : myBook.tags()) {
+				myTagsList.add(tag.Name);
+			}
+		}
+	}
+	
+	private String getTagsSummary(){
+		String tagsStr = new String();
+		int i = 0;
+		for(String t : myTagsList){
+			if(i < SUMMARY_LEN){
+				if(i != 0) tagsStr +=", ";
+				tagsStr += t;
+				i++;
+			}else{
+				break;
+			}
+		}
+		if(myTagsList.size() > SUMMARY_LEN){
+			tagsStr += "...";
+		}
+		return tagsStr;
+	}
+	
 	void saveTags(final ArrayList<String> tags) {
 		if(tags.size() == 0)
 			return;
@@ -163,37 +195,68 @@ class EditTagsPreference extends Preference {
 			myBook.addTag(t);
 		}
 		((EditBookInfoActivity)getContext()).saveBook();
+		updateTagsList();
+		setSummary(getTagsSummary());
 	}
 
 	@Override
 	protected void onClick() {
 		Intent intent = new Intent(getContext(), EditTagsDialogActivity.class);
 		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
-		ArrayList<String> tags = new ArrayList<String>();
-		for (Tag tag : myBook.tags()) {
-			tags.add(tag.Name);
-		}
+		
 		ArrayList<String> allTags = new ArrayList<String>();
 		for (Tag tag : ((EditBookInfoActivity)getContext()).tags()) {
 			allTags.add(tag.Name);
 		}
-		intent.putExtra(EditListDialogActivity.Key.LIST, tags);
+		intent.putExtra(EditListDialogActivity.Key.LIST, myTagsList);
 		intent.putExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST, allTags);
 		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditTagsDialogActivity.REQ_CODE);
 	}
 }
 
 class EditAuthorsPreference extends Preference {
+	private static final int SUMMARY_LEN = 2;
 	protected final ZLResource myResource;
 	private final Book myBook;
+	private ArrayList<String> myAuthorsList;
 
 	EditAuthorsPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context);
 		myBook = book;
 		myResource = rootResource.getResource(resourceKey);
+		updateAuthorsList();
+		
 		setTitle(myResource.getValue());
+		setSummary(getAuthorsSummary());
 	}
 
+	private void updateAuthorsList(){
+		myAuthorsList = new ArrayList<String>();
+		if(myBook != null){
+			for (Author author : myBook.authors()) {
+				myAuthorsList.add(author.DisplayName);
+			}
+		}
+	}
+	
+	private String getAuthorsSummary(){
+		String authorsStr = new String();
+		int i = 0;
+		for(String t : myAuthorsList){
+			if(i < SUMMARY_LEN){
+				if(i != 0) authorsStr +=", ";
+				authorsStr += t;
+				i++;
+			}else{
+				break;
+			}
+		}
+		if(myAuthorsList.size() > SUMMARY_LEN){
+			authorsStr += "...";
+		}
+		return authorsStr;
+	}
+	
 	void saveAuthors(final ArrayList<String> authors) {
 		if (authors.size() == 0) {
 			return;
@@ -204,22 +267,21 @@ class EditAuthorsPreference extends Preference {
 			myBook.addAuthor(a);
 		}
 		((EditBookInfoActivity)getContext()).saveBook();
+		updateAuthorsList();
+		setSummary(getAuthorsSummary());
 	}
 
 	@Override
 	protected void onClick() {
 		final Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
 		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
-		final ArrayList<String> authors = new ArrayList<String>();
-		for (Author author : myBook.authors()) {
-			authors.add(author.DisplayName);
-		}
+		
 		((EditBookInfoActivity)getContext()).saveBook();
 		final ArrayList<String> allAuthors = new ArrayList<String>();
 		for (Author author : ((EditBookInfoActivity)getContext()).authors()) {
 			allAuthors.add(author.DisplayName);
 		}
-		intent.putExtra(EditListDialogActivity.Key.LIST, authors);
+		intent.putExtra(EditListDialogActivity.Key.LIST, myAuthorsList);
 		intent.putExtra(EditListDialogActivity.Key.ALL_ITEMS_LIST, allAuthors);
 		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditAuthorsDialogActivity.REQ_CODE);
 	}
