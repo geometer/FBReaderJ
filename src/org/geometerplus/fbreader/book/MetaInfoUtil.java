@@ -28,6 +28,4 @@ public class MetaInfoUtil {
 	public static interface PluginMetaInfoReader {
 		public ZLImage readImage(ZLFile f, ExternalFormatPlugin plugin);
 	}
-
-	public static PluginMetaInfoReader PMIReader;
 }

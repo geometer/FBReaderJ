@@ -36,7 +36,7 @@ final class PluginImage extends ZLImageProxy {
 
 	@Override
 	protected ZLImage retrieveRealImage(Synchronizer synchronizer) {
-		return MetaInfoUtil.PMIReader.readImage(myFile, myPlugin);
+		return ((MetaInfoUtil.PluginMetaInfoReader)synchronizer).readImage(myFile, myPlugin);
 	}
 
 	@Override

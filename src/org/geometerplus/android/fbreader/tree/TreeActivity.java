@@ -53,6 +53,8 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+		ImageSynchronizer.initialize();
 	}
 
 	@Override

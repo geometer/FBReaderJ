@@ -80,9 +80,7 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
 
-		if (MetaInfoUtil.PMIReader == null) {
-			MetaInfoUtil.PMIReader = myImageSynchronizer.createMetainfoReader();
-		}
+		myImageSynchronizer.initialize();
 	}
 
 	@Override
@@ -123,7 +121,6 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 				if (myBook != null) {
 					myBook.reloadInfoFromFile();
 					setupBookInfo(myBook);
-					setupCover(myBook);
 					myDontReloadBook = false;
 					myCollection.bindToService(BookInfoActivity.this, new Runnable() {
 						public void run() {

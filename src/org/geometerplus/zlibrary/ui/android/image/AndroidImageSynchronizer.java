@@ -39,6 +39,8 @@ import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.metainfoservice.MetaInfoReader;
 
 public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer, MetaInfoUtil.PluginMetaInfoReader {
+	private volatile boolean myIsInitialized;
+
 	public final Map<ExternalFormatPlugin,MetaInfoReader> Readers =
 		new HashMap<ExternalFormatPlugin,MetaInfoReader>();
 
@@ -66,14 +68,18 @@ public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer, M
 		myConnections.clear();
 	}
 
-	public synchronized MetaInfoUtil.PluginMetaInfoReader createMetainfoReader() {
+	public synchronized void initialize() {
+		if (myIsInitialized) {
+			return;
+		}
+		myIsInitialized = true;
+
 		for (final ExternalFormatPlugin plugin : PluginCollection.Instance().getExternalPlugins()) {
 			final ServiceConnection connection = createConnection(plugin);
 			myConnections.add(connection);
 			final Intent i = PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE);
 			myContext.bindService(i, connection, Context.BIND_AUTO_CREATE);
 		}
-		return this;
 	}
 
 	private ServiceConnection createConnection(final ExternalFormatPlugin plugin) {

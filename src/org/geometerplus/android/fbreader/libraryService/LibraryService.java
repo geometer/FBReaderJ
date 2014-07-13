@@ -336,9 +336,7 @@ public class LibraryService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		if (MetaInfoUtil.PMIReader == null) {
-			MetaInfoUtil.PMIReader = myImageSynchronizer.createMetainfoReader();
-		}
+		myImageSynchronizer.initialize();
 		myLibrary = new LibraryImplementation();
 	}
 
