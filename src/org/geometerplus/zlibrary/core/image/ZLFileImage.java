@@ -43,7 +43,6 @@ public class ZLFileImage implements ZLStreamImage {
 				lengths[i] = Integer.parseInt(data[3 + count + i]);
 			}
 			return new ZLFileImage(
-				MimeType.IMAGE_AUTO,
 				ZLFile.createFileByPath(data[0]),
 				data[1],
 				offsets,
@@ -56,19 +55,13 @@ public class ZLFileImage implements ZLStreamImage {
 		}
 	}
 
-	private final MimeType myMimeType;
 	private final ZLFile myFile;
 	private final String myEncoding;
 	private final int[] myOffsets;
 	private final int[] myLengths;
 	private final FileEncryptionInfo myEncryptionInfo;
 
-	public ZLFileImage(String mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
-		this(MimeType.get(mimeType), file, encoding, offsets, lengths, encryptionInfo);
-	}
-
-	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
-		myMimeType = mimeType;
+	public ZLFileImage(ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
 		myFile = file;
 		myEncoding = encoding != null ? encoding : ENCODING_NONE;
 		myOffsets = offsets;
@@ -76,16 +69,12 @@ public class ZLFileImage implements ZLStreamImage {
 		myEncryptionInfo = encryptionInfo;
 	}
 
-	public ZLFileImage(String mimeType, ZLFile file, String encoding, int offset, int length) {
-		this(MimeType.get(mimeType), file, encoding, offset, length);
+	public ZLFileImage(ZLFile file, String encoding, int offset, int length) {
+		this(file, encoding, new int[] { offset }, new int[] { length }, null);
 	}
 
-	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int offset, int length) {
-		this(mimeType, file, encoding, new int[] { offset }, new int[] { length }, null);
-	}
-
-	public ZLFileImage(MimeType mimeType, ZLFile file) {
-		this(mimeType, file, ENCODING_NONE, 0, (int)file.size());
+	public ZLFileImage(ZLFile file) {
+		this(file, ENCODING_NONE, 0, (int)file.size());
 	}
 
 	public String getURI() {

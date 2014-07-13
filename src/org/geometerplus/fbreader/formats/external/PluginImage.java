@@ -21,13 +21,14 @@ package org.geometerplus.fbreader.formats.external;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.fbreader.book.MetaInfoUtil;
 
-final class PluginImage extends ZLImageProxy {
+final class PluginImage extends ZLLoadableImage {
 	private final ZLFile myFile;
 	private final ExternalFormatPlugin myPlugin;
+	private volatile ZLImage myImage;
 
 	PluginImage(ZLFile file, ExternalFormatPlugin plugin) {
 		myFile = file;
@@ -35,13 +36,26 @@ final class PluginImage extends ZLImageProxy {
 	}
 
 	@Override
-	protected ZLImage retrieveRealImage(Synchronizer synchronizer) {
-		return ((MetaInfoUtil.PluginMetaInfoReader)synchronizer).readImage(myFile, myPlugin);
+	public final ZLImage getRealImage() {
+		return myImage;
+	}
+
+	@Override
+	public final synchronized void synchronize(Synchronizer synchronizer) {
+		if (myImage == null) {
+			myImage = ((MetaInfoUtil.PluginMetaInfoReader)synchronizer).readImage(myFile, myPlugin);
+			setSynchronized();
+		}
 	}
 
 	@Override
 	public SourceType sourceType() {
 		return SourceType.SERVICE;
+	}
+
+	@Override
+	public String getURI() {
+		return "cover:" + myFile.getPath();
 	}
 
 	@Override
