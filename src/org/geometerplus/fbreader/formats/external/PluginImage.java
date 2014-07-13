@@ -33,7 +33,7 @@ final class PluginImage extends ZLImageProxy {
 	}
 
 	@Override
-	protected ZLImage retrieveRealImage() {
+	protected ZLImage retrieveRealImage(Synchronizer synchronizer) {
 		// TODO: implement
 		return null;
 	}

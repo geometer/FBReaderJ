@@ -126,7 +126,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 			}
 
 			@Override
-			protected ZLImage retrieveRealImage() {
+			protected ZLImage retrieveRealImage(Synchronizer synchronizer) {
 				final ZLImage[] box = new ZLImage[1];
 				readCoverInternal(file, box);
 				return box[0];

@@ -153,7 +153,7 @@ public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage
 	}
 
 	@Override
-	public void synchronize() {
+	public void synchronize(Synchronizer synchronizer) {
 		synchronizeInternal(false);
 	}
 
