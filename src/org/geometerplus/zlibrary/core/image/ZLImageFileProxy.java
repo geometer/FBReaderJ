@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.core.image;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-public abstract class ZLImageFileProxy extends ZLLoadableImage {
+public abstract class ZLImageFileProxy extends ZLImageProxy {
 	protected final ZLFile File;
 	private volatile ZLImage myImage;
 
