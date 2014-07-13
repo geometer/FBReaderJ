@@ -28,6 +28,7 @@ import android.os.IBinder;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+import org.geometerplus.zlibrary.core.image.ZLImageSelfSynchronizableProxy;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
@@ -38,7 +39,7 @@ import org.geometerplus.fbreader.formats.external.PluginImage;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
-public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
+public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	private volatile boolean myIsInitialized;
 
 	public final Map<ExternalFormatPlugin,CoverReader> Readers =
@@ -62,12 +63,19 @@ public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
 	}
 
 	@Override
-	public void setRealImage(PluginImage image) {
-		final CoverReader reader = Readers.get(image.Plugin);
-		try {
-			image.setRealImage(reader != null ? new ZLBitmapImage(reader.readBitmap(image.File.getPath())) : null);
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void synchronize(ZLImageProxy image) {
+		if (image instanceof ZLImageSelfSynchronizableProxy) {
+			((ZLImageSelfSynchronizableProxy)image).synchronize();
+		} else if (image instanceof PluginImage) {
+			final PluginImage pluginImage = (PluginImage)image;
+			final CoverReader reader = Readers.get(pluginImage.Plugin);
+			if (reader != null) {
+				try {
+					pluginImage.setRealImage(new ZLBitmapImage(reader.readBitmap(pluginImage.File.getPath())));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

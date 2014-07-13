@@ -21,8 +21,4 @@ package org.geometerplus.zlibrary.core.image;
 
 public abstract class ZLImageSelfSynchronizableProxy extends ZLImageProxy {
 	public abstract void synchronize();
-
-	public final void synchronize(Synchronizer synchronizer) {
-		synchronize();
-	} 
 }
