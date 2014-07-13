@@ -31,13 +31,13 @@ import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
-import org.geometerplus.fbreader.book.MetaInfoUtil;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.fbreader.formats.external.PluginImage;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.metainfoservice.MetaInfoReader;
 
-public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer, MetaInfoUtil.PluginMetaInfoReader {
+public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
 	private volatile boolean myIsInitialized;
 
 	public final Map<ExternalFormatPlugin,MetaInfoReader> Readers =
@@ -94,7 +94,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer, Meta
 	}
 
 	@Override
-	public ZLBitmapImage readImage(ZLFile f, ExternalFormatPlugin plugin) {
+	public ZLBitmapImage readPluginImage(ZLFile f, ExternalFormatPlugin plugin) {
 		final MetaInfoReader reader = Readers.get(plugin);
 		try {
 			return reader != null ? new ZLBitmapImage(reader.readBitmap(f.getPath())) : null;
