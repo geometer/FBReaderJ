@@ -33,7 +33,7 @@ import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -324,8 +324,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (cover instanceof ZLLoadableImage) {
-				final ZLLoadableImage img = (ZLLoadableImage)cover;
+			if (cover instanceof ZLImageProxy) {
+				final ZLImageProxy img = (ZLImageProxy)cover;
 				img.startSynchronization(myImageSynchronizer, new Runnable() {
 					public void run() {
 						if (img instanceof NetworkImage) {

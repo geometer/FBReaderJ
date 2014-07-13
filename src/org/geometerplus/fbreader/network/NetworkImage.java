@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
 
-public final class NetworkImage extends ZLLoadableImage {
+public final class NetworkImage extends ZLImageProxy {
 	private MimeType myMimeType;
 	public final String Url;
 
