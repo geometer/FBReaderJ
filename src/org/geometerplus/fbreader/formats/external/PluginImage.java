@@ -23,7 +23,10 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-final class PluginImage extends ZLImageProxy {
+public final class PluginImage extends ZLImageProxy {
+	public interface Synchronizer extends ZLImageProxy.Synchronizer {
+	}
+
 	private final ZLFile myFile;
 	private final ExternalFormatPlugin myPlugin;
 	private volatile ZLImage myImage;
@@ -39,7 +42,7 @@ final class PluginImage extends ZLImageProxy {
 	}
 
 	@Override
-	public final synchronized void synchronize(Synchronizer synchronizer) {
+	public final synchronized void synchronize(ZLImageProxy.Synchronizer synchronizer) {
 		// TODO: implement
 	}
 
