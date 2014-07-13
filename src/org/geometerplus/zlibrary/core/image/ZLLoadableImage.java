@@ -45,7 +45,12 @@ public abstract class ZLLoadableImage implements ZLImage {
 	};
 	public abstract SourceType sourceType();
 
-	public abstract void synchronize();
+	public abstract void synchronize(Synchronizer synchronizer);
 	public abstract void synchronizeFast();
 	public abstract String getId();
+
+	@Override
+	public String toString() {
+		return getClass().getName() + "[" + getId() + "; synchronized=" + isSynchronized() + "]";
+	}
 }

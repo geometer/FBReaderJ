@@ -31,7 +31,7 @@ import android.os.Message;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 class ZLAndroidImageLoader {
-	void startImageLoading(final ZLLoadableImage image, Runnable postAction) {
+	void startImageLoading(final ZLLoadableImage.Synchronizer synchronizer, final ZLLoadableImage image, Runnable postAction) {
 		synchronized (myOnImageSyncRunnables) {
 			LinkedList<Runnable> runnables = myOnImageSyncRunnables.get(image.getId());
 			if (runnables != null) {
@@ -53,7 +53,7 @@ class ZLAndroidImageLoader {
 				? mySinglePool : myPool;
 		pool.execute(new Runnable() {
 			public void run() {
-				image.synchronize();
+				image.synchronize(synchronizer);
 				myImageSynchronizedHandler.fireMessage(image.getId());
 			}
 		});
