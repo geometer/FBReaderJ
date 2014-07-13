@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.io.*;
+import java.io.File;
 
 import android.net.Uri;
 
@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
 
-public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage {
+public final class NetworkImage extends ZLLoadableImage {
 	private MimeType myMimeType;
 	public final String Url;
 
@@ -202,9 +202,9 @@ public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage
 		}
 	}
 
-	private ZLFileImage myFileImage;
+	private volatile ZLFileImage myFileImage;
 	@Override
-	public InputStream inputStream() {
+	public ZLFileImage getRealImage() {
 		if (myFileImage == null) {
 			if (!isSynchronized()) {
 				return null;
@@ -217,8 +217,8 @@ public final class NetworkImage extends ZLLoadableImage implements ZLStreamImage
 			if (file == null) {
 				return null;
 			}
-			myFileImage = new ZLFileImage(myMimeType, file);
+			myFileImage = new ZLFileImage(file);
 		}
-		return myFileImage.inputStream();
+		return myFileImage;
 	}
 }

@@ -45,6 +45,7 @@ public abstract class ZLLoadableImage implements ZLImage {
 	};
 	public abstract SourceType sourceType();
 
+	public abstract ZLImage getRealImage();
 	public abstract void synchronize(Synchronizer synchronizer);
 	public abstract String getId();
 

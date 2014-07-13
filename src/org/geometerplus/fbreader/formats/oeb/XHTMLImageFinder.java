@@ -35,7 +35,7 @@ class XHTMLImageFinder extends ZLXMLReaderAdapter {
 
 		final String ext = coverFile.getExtension();
 		if ("gif".equals(ext) || "jpg".equals(ext) || "jpeg".equals(ext)) {
-			return new ZLFileImage(MimeType.IMAGE_AUTO, coverFile);
+			return new ZLFileImage(coverFile);
 		} else {
 			return new XHTMLImageFinder().readImage(coverFile);
 		}
@@ -68,7 +68,6 @@ class XHTMLImageFinder extends ZLXMLReaderAdapter {
 
 		if (href != null) {
 			myImage = new ZLFileImage(
-				MimeType.IMAGE_AUTO,
 				ZLFile.createFileByPath(myXHTMLPathPrefix + MiscUtil.decodeHtmlReference(href))
 			);
 			return true;
