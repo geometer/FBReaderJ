@@ -71,8 +71,6 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 		}
 	}
 
-	private volatile boolean myIsInitialized;
-
 	private final Context myContext;
 	private final Map<ExternalFormatPlugin,Connection> myConnections =
 		new HashMap<ExternalFormatPlugin,Connection>();
@@ -94,6 +92,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	@Override
 	public void synchronize(ZLImageProxy image, final Runnable postAction) {
 		if (image.isSynchronized()) {
+			// TODO: also check if image is under synchronization
 			postAction.run();
 		} else if (image instanceof ZLImageSelfSynchronizableProxy) {
 			((ZLImageSelfSynchronizableProxy)image).synchronize();
