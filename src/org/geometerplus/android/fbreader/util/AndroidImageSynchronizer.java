@@ -95,13 +95,12 @@ public class AndroidImageSynchronizer implements PluginImage.Synchronizer {
 	}
 
 	@Override
-	public ZLBitmapImage readPluginImage(ZLFile f, ExternalFormatPlugin plugin) {
-		final CoverReader reader = Readers.get(plugin);
+	public void setRealImage(PluginImage image) {
+		final CoverReader reader = Readers.get(image.Plugin);
 		try {
-			return reader != null ? new ZLBitmapImage(reader.readBitmap(f.getPath())) : null;
+			image.setRealImage(reader != null ? new ZLBitmapImage(reader.readBitmap(image.File.getPath())) : null);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		}
 	}
 }

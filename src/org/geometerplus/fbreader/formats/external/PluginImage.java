@@ -25,16 +25,23 @@ import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 public final class PluginImage extends ZLImageProxy {
 	public interface Synchronizer extends ZLImageProxy.Synchronizer {
-		ZLImage readPluginImage(ZLFile file, ExternalFormatPlugin plugin);
+		void setRealImage(PluginImage image);
 	}
 
-	private final ZLFile myFile;
-	private final ExternalFormatPlugin myPlugin;
+	public final ZLFile File;
+	public final ExternalFormatPlugin Plugin;
 	private volatile ZLImage myImage;
 
 	PluginImage(ZLFile file, ExternalFormatPlugin plugin) {
-		myFile = file;
-		myPlugin = plugin;
+		File = file;
+		Plugin = plugin;
+	}
+
+	public final synchronized void setRealImage(ZLImage image) {
+		if (image != null && !isSynchronized()) {
+			myImage = image;
+			setSynchronized();
+		}
 	}
 
 	@Override
@@ -44,9 +51,8 @@ public final class PluginImage extends ZLImageProxy {
 
 	@Override
 	public final synchronized void synchronize(ZLImageProxy.Synchronizer synchronizer) {
-		if (myImage == null && synchronizer instanceof Synchronizer) {
-			myImage = ((Synchronizer)synchronizer).readPluginImage(myFile, myPlugin);
-			setSynchronized();
+		if (synchronizer instanceof Synchronizer) {
+			((Synchronizer)synchronizer).setRealImage(this);
 		}
 	}
 
@@ -57,11 +63,11 @@ public final class PluginImage extends ZLImageProxy {
 
 	@Override
 	public String getURI() {
-		return "cover:" + myFile.getPath();
+		return "cover:" + File.getPath();
 	}
 
 	@Override
 	public String getId() {
-		return myFile.getPath();
+		return File.getPath();
 	}
 }
