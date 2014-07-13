@@ -25,7 +25,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
-import org.geometerplus.fbreader.formats.external.*;
+import org.geometerplus.fbreader.formats.external.DjVuPlugin;
+import org.geometerplus.fbreader.formats.external.PDFPlugin;
 
 public class PluginCollection {
 	static {
@@ -70,14 +71,6 @@ public class PluginCollection {
 			myPlugins.put(type, list);
 		}
 		list.add(plugin);
-	}
-
-	public List<ExternalFormatPlugin> getExternalPlugins() {
-		final List<ExternalFormatPlugin> list = new ArrayList<ExternalFormatPlugin>();
-		for (FormatPlugin plugin : myPlugins.get(FormatPlugin.Type.EXTERNAL)) {
-			list.add((ExternalFormatPlugin)plugin);
-		}
-		return list;
 	}
 
 	public FormatPlugin getPlugin(ZLFile file) {
