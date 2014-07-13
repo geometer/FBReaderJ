@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,8 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.xhtml;
+package org.geometerplus.zlibrary.core.image;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-
-public abstract class XHTMLTagAction {
-	protected abstract void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes);
-	protected abstract void doAtEnd(XHTMLReader reader);
-};
+public abstract class ZLImageSelfSynchronizableProxy extends ZLImageProxy {
+	public abstract void synchronize();
+}

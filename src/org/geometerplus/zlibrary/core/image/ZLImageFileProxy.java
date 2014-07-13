@@ -19,37 +19,44 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-public abstract class ZLLoadableImage implements ZLImage {
-	public interface Synchronizer {
-		void startImageLoading(ZLLoadableImage image, Runnable postAction);
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.MimeType;
+
+public abstract class ZLImageFileProxy extends ZLImageSelfSynchronizableProxy {
+	protected final ZLFile File;
+	private volatile ZLImage myImage;
+
+	protected ZLImageFileProxy(ZLFile file) {
+		File = file;
 	}
-
-	private volatile boolean myIsSynchronized;
-
-	public final boolean isSynchronized() {
-		return myIsSynchronized;
-	}
-
-	protected final void setSynchronized() {
-		myIsSynchronized = true;
-	}
-
-	public void startSynchronization(Synchronizer synchronizer, Runnable postAction) {
-		synchronizer.startImageLoading(this, postAction);
-	}
-
-	public static enum SourceType {
-		FILE,
-		NETWORK,
-		SERVICE;
-	};
-	public abstract SourceType sourceType();
-
-	public abstract void synchronize(Synchronizer synchronizer);
-	public abstract String getId();
 
 	@Override
-	public String toString() {
-		return getClass().getName() + "[" + getId() + "; synchronized=" + isSynchronized() + "]";
+	public final ZLImage getRealImage() {
+		return myImage;
 	}
+
+	@Override
+	public String getURI() {
+		return "cover:" + File.getPath();
+	}
+
+	@Override
+	public final synchronized void synchronize() {
+		if (myImage == null) {
+			myImage = retrieveRealImage();
+			setSynchronized();
+		}
+	}
+
+	@Override
+	public SourceType sourceType() {
+		return SourceType.FILE;
+	}
+
+	@Override
+	public String getId() {
+		return File.getPath();
+	}
+
+	protected abstract ZLImage retrieveRealImage();
 }
