@@ -28,8 +28,8 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 			return new InputStreamImageData((ZLStreamImage)image);
 		} else if (image instanceof ZLBitmapImage) {
 			return BitmapImageData.get((ZLBitmapImage)image);
-		} else if (image instanceof ZLLoadableImage) {
-			return getImageData(((ZLLoadableImage)image).getRealImage());
+		} else if (image instanceof ZLImageProxy) {
+			return getImageData(((ZLImageProxy)image).getRealImage());
 		} else {
 			// unknown image type or null
 			return null;
@@ -38,7 +38,7 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 
 	private ZLAndroidImageLoader myLoader;
 
-	protected void startImageLoading(ZLLoadableImage.Synchronizer syncronizer, ZLLoadableImage image, Runnable postLoadingRunnable) {
+	protected void startImageLoading(ZLImageProxy.Synchronizer syncronizer, ZLImageProxy image, Runnable postLoadingRunnable) {
 		if (myLoader == null) {
 			myLoader = new ZLAndroidImageLoader();
 		}
