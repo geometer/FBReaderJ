@@ -31,6 +31,7 @@ public abstract class FBReaderIntents {
 		String API_CALLBACK             = "android.fbreader.action.API_CALLBACK";
 		String VIEW                     = "android.fbreader.action.VIEW";
 		String CANCEL_MENU              = "android.fbreader.action.CANCEL_MENU";
+		String CONFIG_SERVICE           = "android.fbreader.action.CONFIG_SERVICE";
 		String LIBRARY_SERVICE          = "android.fbreader.action.LIBRARY_SERVICE";
 		String BOOK_INFO                = "android.fbreader.action.BOOK_INFO";
 		String LIBRARY                  = "android.fbreader.action.LIBRARY";
