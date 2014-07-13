@@ -38,13 +38,44 @@ import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
 public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
+	private static final class Connection implements ServiceConnection {
+		private final ExternalFormatPlugin myPlugin;
+		private volatile CoverReader Reader;
+		private final List<Runnable> myPostActions = new LinkedList<Runnable>();
+
+		Connection(ExternalFormatPlugin plugin) {
+			myPlugin = plugin;
+		}
+
+		synchronized void runOrAddAction(Runnable action) {
+			if (Reader != null) {
+				action.run();
+			} else {
+				myPostActions.add(action);
+			}
+		}
+
+		public synchronized void onServiceConnected(ComponentName className, IBinder binder) {
+			Reader = CoverReader.Stub.asInterface(binder);
+			for (Runnable action : myPostActions) {
+				try {
+					action.run();
+				} catch (Throwable t) {
+				}
+			}
+			myPostActions.clear();
+		}
+
+		public synchronized void onServiceDisconnected(ComponentName className) {
+			Reader = null;
+		}
+	}
+
 	private volatile boolean myIsInitialized;
 
-	public final Map<ExternalFormatPlugin,CoverReader> Readers =
-		new HashMap<ExternalFormatPlugin,CoverReader>();
-
 	private final Context myContext;
-	private final List<ServiceConnection> myConnections = new LinkedList<ServiceConnection>();
+	private final Map<ExternalFormatPlugin,Connection> myConnections =
+		new HashMap<ExternalFormatPlugin,Connection>();
 
 	public AndroidImageSynchronizer(Activity activity) {
 		myContext = activity;
@@ -61,58 +92,48 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	}
 
 	@Override
-	public void synchronize(ZLImageProxy image, Runnable postAction) {
-		if (image instanceof ZLImageSelfSynchronizableProxy) {
+	public void synchronize(ZLImageProxy image, final Runnable postAction) {
+		if (image.isSynchronized()) {
+			postAction.run();
+		} else if (image instanceof ZLImageSelfSynchronizableProxy) {
 			((ZLImageSelfSynchronizableProxy)image).synchronize();
+			postAction.run();
 		} else if (image instanceof PluginImage) {
 			final PluginImage pluginImage = (PluginImage)image;
-			final CoverReader reader = Readers.get(pluginImage.Plugin);
-			if (reader != null) {
-				try {
-					pluginImage.setRealImage(new ZLBitmapImage(reader.readBitmap(pluginImage.File.getPath())));
-				} catch (Exception e) {
-					e.printStackTrace();
+			final Connection connection = getConnection(pluginImage.Plugin);
+			connection.runOrAddAction(new Runnable() {
+				public void run() {
+					try {
+						pluginImage.setRealImage(new ZLBitmapImage(connection.Reader.readBitmap(pluginImage.File.getPath())));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					postAction.run();
 				}
-			}
+			});
 		} else {
 			throw new RuntimeException("Cannot synchronize " + image.getClass());
 		}
-		postAction.run();
 	}
 
 	public synchronized void clear() {
-		for (ServiceConnection connection : myConnections) {
+		for (ServiceConnection connection : myConnections.values()) {
 			myContext.unbindService(connection);
 		}
 		myConnections.clear();
 	}
 
-	public synchronized void initialize() {
-		if (myIsInitialized) {
-			return;
+	private synchronized Connection getConnection(ExternalFormatPlugin plugin) {
+		Connection connection = myConnections.get(plugin);
+		if (connection == null) {
+			connection = new Connection(plugin);
+			myConnections.put(plugin, connection);
+			myContext.bindService(
+				PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE),
+				connection,
+				Context.BIND_AUTO_CREATE
+			);
 		}
-		myIsInitialized = true;
-
-		for (final ExternalFormatPlugin plugin : PluginCollection.Instance().getExternalPlugins()) {
-			createConnection(plugin);
-		}
-	}
-
-	private void createConnection(final ExternalFormatPlugin plugin) {
-		final ServiceConnection connection = new ServiceConnection() {
-			public void onServiceConnected(ComponentName className, IBinder binder) {
-				Readers.put(plugin, CoverReader.Stub.asInterface(binder));
-			}
-
-			public void onServiceDisconnected(ComponentName className) {
-				Readers.remove(plugin);
-			}
-		};
-		myConnections.add(connection);
-		myContext.bindService(
-			PluginUtil.createIntent(plugin, PluginUtil.ACTION_CONNECT_COVER_SERVICE),
-			connection,
-			Context.BIND_AUTO_CREATE
-		);
+		return connection;
 	}
 }

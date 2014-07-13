@@ -338,7 +338,6 @@ public class LibraryService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		myImageSynchronizer.initialize();
 		myLibrary = new LibraryImplementation();
 	}
 
