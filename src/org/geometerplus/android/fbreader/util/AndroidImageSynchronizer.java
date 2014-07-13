@@ -61,7 +61,7 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	}
 
 	@Override
-	public void synchronize(ZLImageProxy image) {
+	public void synchronize(ZLImageProxy image, Runnable postAction) {
 		if (image instanceof ZLImageSelfSynchronizableProxy) {
 			((ZLImageSelfSynchronizableProxy)image).synchronize();
 		} else if (image instanceof PluginImage) {
@@ -74,7 +74,10 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 					e.printStackTrace();
 				}
 			}
+		} else {
+			throw new RuntimeException("Cannot synchronize " + image.getClass());
 		}
+		postAction.run();
 	}
 
 	public synchronized void clear() {
