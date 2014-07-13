@@ -158,7 +158,7 @@ class EditTagsPreference extends Preference {
 		setTitle(myResource.getValue());
 		setSummary(getTagsSummary());
 	}
-	
+
 	private void updateTagsList(){
 		myTagsList = new ArrayList<String>();
 		if(myBook != null){
@@ -167,7 +167,7 @@ class EditTagsPreference extends Preference {
 			}
 		}
 	}
-	
+
 	private String getTagsSummary(){
 		String tagsStr = new String();
 		int i = 0;
@@ -185,7 +185,7 @@ class EditTagsPreference extends Preference {
 		}
 		return tagsStr;
 	}
-	
+
 	void saveTags(final ArrayList<String> tags) {
 		if(tags.size() == 0)
 			return;
@@ -203,7 +203,7 @@ class EditTagsPreference extends Preference {
 	protected void onClick() {
 		Intent intent = new Intent(getContext(), EditTagsDialogActivity.class);
 		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
-		
+
 		ArrayList<String> allTags = new ArrayList<String>();
 		for (Tag tag : ((EditBookInfoActivity)getContext()).tags()) {
 			allTags.add(tag.Name);
@@ -225,7 +225,7 @@ class EditAuthorsPreference extends Preference {
 		myBook = book;
 		myResource = rootResource.getResource(resourceKey);
 		updateAuthorsList();
-		
+
 		setTitle(myResource.getValue());
 		setSummary(getAuthorsSummary());
 	}
@@ -238,7 +238,7 @@ class EditAuthorsPreference extends Preference {
 			}
 		}
 	}
-	
+
 	private String getAuthorsSummary(){
 		String authorsStr = new String();
 		int i = 0;
@@ -256,7 +256,7 @@ class EditAuthorsPreference extends Preference {
 		}
 		return authorsStr;
 	}
-	
+
 	void saveAuthors(final ArrayList<String> authors) {
 		if (authors.size() == 0) {
 			return;
@@ -275,7 +275,7 @@ class EditAuthorsPreference extends Preference {
 	protected void onClick() {
 		final Intent intent = new Intent(getContext(), EditAuthorsDialogActivity.class);
 		intent.putExtra(EditListDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
-		
+
 		((EditBookInfoActivity)getContext()).saveBook();
 		final ArrayList<String> allAuthors = new ArrayList<String>();
 		for (Author author : ((EditBookInfoActivity)getContext()).authors()) {
