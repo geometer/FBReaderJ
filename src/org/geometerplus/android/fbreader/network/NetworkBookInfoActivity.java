@@ -327,7 +327,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				final ZLLoadableImage img = (ZLLoadableImage)cover;
 				img.startSynchronization(myImageSynchronizer, new Runnable() {
 					public void run() {
-						img.synchronizeFast();
+						if (img instanceof NetworkImage) {
+							((NetworkImage)img).synchronizeFast();
+						}
 						final ZLAndroidImageData data = mgr.getImageData(img);
 						if (data != null) {
 							final Bitmap coverBitmap = data.getBitmap(maxWidth, maxHeight);
