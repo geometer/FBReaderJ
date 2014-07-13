@@ -26,7 +26,8 @@ import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.image.*;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.book.*;
@@ -34,6 +35,7 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 /**
  * @author ASazonov
