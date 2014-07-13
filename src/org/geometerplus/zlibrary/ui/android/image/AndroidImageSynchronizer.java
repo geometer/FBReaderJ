@@ -27,7 +27,7 @@ import android.content.*;
 import android.os.IBinder;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.metainfoservice.MetaInfoReader;
 
-public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer, MetaInfoUtil.PluginMetaInfoReader {
+public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer, MetaInfoUtil.PluginMetaInfoReader {
 	private volatile boolean myIsInitialized;
 
 	public final Map<ExternalFormatPlugin,MetaInfoReader> Readers =
@@ -55,7 +55,7 @@ public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer, M
 	}
 
 	@Override
-	public void startImageLoading(ZLLoadableImage image, Runnable postAction) {
+	public void startImageLoading(ZLImageProxy image, Runnable postAction) {
 		final ZLAndroidImageManager manager = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 		manager.startImageLoading(this, image, postAction);
 	}

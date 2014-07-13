@@ -21,11 +21,11 @@ package org.geometerplus.fbreader.formats.external;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
 import org.geometerplus.fbreader.book.MetaInfoUtil;
 
-final class PluginImage extends ZLLoadableImage {
+final class PluginImage extends ZLImageProxy {
 	private final ZLFile myFile;
 	private final ExternalFormatPlugin myPlugin;
 	private volatile ZLImage myImage;
