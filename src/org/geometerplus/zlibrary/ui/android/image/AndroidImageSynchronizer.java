@@ -43,7 +43,7 @@ public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer {
 	@Override
 	public void startImageLoading(ZLLoadableImage image, Runnable postAction) {
 		final ZLAndroidImageManager manager = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-		manager.startImageLoading(image, postAction);
+		manager.startImageLoading(this, image, postAction);
 	}
 
 	public synchronized void clear() {
