@@ -135,7 +135,11 @@
 				<action android:name="android.fbreader.action.LIBRARY_SERVICE"/>
 			</intent-filter>
 		</service>
-		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService" android:exported="false"/>
+		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService">
+			<intent-filter>
+				<action android:name="android.fbreader.action.CONFIG_SERVICE"/>
+			</intent-filter>
+		</service>
 		<service android:name="org.geometerplus.android.fbreader.synchroniser.SynchroniserService" android:launchMode="singleTask" android:process=":synchroniser" android:exported="false"/>
 		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:theme="@style/FBReader.Activity" android:process=":library" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>

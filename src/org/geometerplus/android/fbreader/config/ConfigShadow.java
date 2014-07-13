@@ -28,7 +28,11 @@ import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.options.Config;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
+
 public final class ConfigShadow extends Config implements ServiceConnection {
+	static final String OPTION_CHANGE_EVENT_ACTION = "fbreader.config_service.option_change_event";
+
 	private final Context myContext;
 	private volatile ConfigInterface myInterface;
 	private final List<Runnable> myDeferredActions = new LinkedList<Runnable>();
@@ -50,7 +54,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	public ConfigShadow(Context context) {
 		myContext = context;
 		context.bindService(
-			new Intent(context, ConfigService.class),
+			FBReaderIntents.defaultIntent(FBReaderIntents.Action.CONFIG_SERVICE),
 			this,
 			Service.BIND_AUTO_CREATE
 		);
@@ -183,7 +187,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	// method from ServiceConnection interface
 	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
 		myInterface = ConfigInterface.Stub.asInterface(service);
-		myContext.registerReceiver(myReceiver, new IntentFilter(SQLiteConfig.OPTION_CHANGE_EVENT_ACTION));
+		myContext.registerReceiver(myReceiver, new IntentFilter(OPTION_CHANGE_EVENT_ACTION));
 		while (!myDeferredActions.isEmpty()) {
 			myDeferredActions.remove(0).run();
 		}
