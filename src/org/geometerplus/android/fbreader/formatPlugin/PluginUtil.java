@@ -24,6 +24,8 @@ import android.content.Intent;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
 public abstract class PluginUtil {
+	public static final String ACTION_CONNECT_COVER_SERVICE = "android.fbreader.action.plugin.CONNECT_COVER_SERVICE";
+
 	public static Intent createIntent(ExternalFormatPlugin plugin, String action) {
 		return new Intent(action).setPackage(plugin.packageName());
 	}
