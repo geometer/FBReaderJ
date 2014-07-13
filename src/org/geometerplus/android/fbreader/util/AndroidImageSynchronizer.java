@@ -23,18 +23,54 @@ import java.util.*;
 
 import android.app.Activity;
 import android.app.Service;
-import android.content.Context;
-import android.content.ServiceConnection;
+import android.content.*;
+import android.os.IBinder;
 
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.image.ZLImageSelfSynchronizableProxy;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.external.PluginImage;
+import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
 public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
+	private static final class Connection implements ServiceConnection {
+		private final ExternalFormatPlugin myPlugin;
+		private volatile CoverReader Reader;
+		private final List<Runnable> myPostActions = new LinkedList<Runnable>();
+
+		Connection(ExternalFormatPlugin plugin) {
+			myPlugin = plugin;
+		}
+
+		synchronized void runOrAddAction(Runnable action) {
+			if (Reader != null) {
+				action.run();
+			} else {
+				myPostActions.add(action);
+			}
+		}
+
+		public synchronized void onServiceConnected(ComponentName className, IBinder binder) {
+			Reader = CoverReader.Stub.asInterface(binder);
+			for (Runnable action : myPostActions) {
+				try {
+					action.run();
+				} catch (Throwable t) {
+				}
+			}
+			myPostActions.clear();
+		}
+
+		public synchronized void onServiceDisconnected(ComponentName className) {
+			Reader = null;
+		}
+	}
+
 	private final Context myContext;
-	private final List<ServiceConnection> myConnections = new LinkedList<ServiceConnection>();
+	private final Map<ExternalFormatPlugin,Connection> myConnections =
+		new HashMap<ExternalFormatPlugin,Connection>();
 
 	public AndroidImageSynchronizer(Activity activity) {
 		myContext = activity;
@@ -51,19 +87,23 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	}
 
 	@Override
-	public void synchronize(ZLImageProxy image, Runnable postAction) {
-		if (image instanceof ZLImageSelfSynchronizableProxy) {
+	public void synchronize(ZLImageProxy image, final Runnable postAction) {
+		if (image.isSynchronized()) {
+			// TODO: also check if image is under synchronization
+			postAction.run();
+		} else if (image instanceof ZLImageSelfSynchronizableProxy) {
 			((ZLImageSelfSynchronizableProxy)image).synchronize();
+			postAction.run();
 		} else if (image instanceof PluginImage) {
 			// TODO: implement
+			postAction.run();
 		} else {
 			throw new RuntimeException("Cannot synchronize " + image.getClass());
 		}
-		postAction.run();
 	}
 
 	public synchronized void clear() {
-		for (ServiceConnection connection : myConnections) {
+		for (ServiceConnection connection : myConnections.values()) {
 			myContext.unbindService(connection);
 		}
 		myConnections.clear();
