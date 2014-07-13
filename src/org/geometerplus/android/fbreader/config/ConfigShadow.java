@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.config;
 
 import java.util.*;
 
+import android.app.Service;
 import android.content.*;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -51,7 +52,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 		context.bindService(
 			new Intent(context, ConfigService.class),
 			this,
-			ConfigService.BIND_AUTO_CREATE
+			Service.BIND_AUTO_CREATE
 		);
 	}
 
