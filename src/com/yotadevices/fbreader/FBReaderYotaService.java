@@ -136,7 +136,11 @@ public class FBReaderYotaService extends BSActivity {
 					if (image instanceof ZLImageProxy) {
 						final ZLImageProxy proxy = (ZLImageProxy)image;
 						if (!proxy.isSynchronized()) {
-							proxy.synchronize(myImageSynchronizer);
+							myImageSynchronizer.synchronize(proxy, new Runnable() {
+								public void run() {
+									// TODO: move code below to this runnable
+								}
+							});
 						}
 					}
 					final ZLAndroidImageData data =
