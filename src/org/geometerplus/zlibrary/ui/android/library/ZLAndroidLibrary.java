@@ -76,12 +76,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		myActivity = activity;
 	}
 
-	public void finish() {
-		if (myActivity != null && !myActivity.isFinishing()) {
-			myActivity.finish();
-		}
-	}
-
 	public AssetManager getAssets() {
 		return myApplication.getAssets();
 	}
