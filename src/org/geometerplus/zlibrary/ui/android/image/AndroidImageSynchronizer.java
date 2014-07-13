@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.ui.android.image;
 
 import java.util.*;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Service;
 import android.content.*;
@@ -94,7 +93,6 @@ public class AndroidImageSynchronizer implements ZLLoadableImage.Synchronizer, M
 		};
 	}
 
-	@TargetApi(8)
 	@Override
 	public ZLBitmapImage readImage(ZLFile f, ExternalFormatPlugin plugin) {
 		final MetaInfoReader reader = Readers.get(plugin);
