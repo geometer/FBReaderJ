@@ -22,12 +22,11 @@ import com.yotadevices.sdk.utils.EinkUtils;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.image.*;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 import org.geometerplus.fbreader.book.*;
@@ -42,6 +41,8 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 public class FBReaderYotaService extends BSActivity {
 	public static final String KEY_BACK_SCREEN_IS_ACTIVE =
 		"com.yotadevices.fbreader.backScreenIsActive";
+
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	public static ZLAndroidWidget Widget;
 	private Canvas myCanvas;
@@ -66,6 +67,7 @@ public class FBReaderYotaService extends BSActivity {
 	@Override
 	public void onBSDestroy() {
 		Widget = null;
+		myImageSynchronizer.clear();
 		super.onBSDestroy();
 	}
 	
@@ -129,10 +131,10 @@ public class FBReaderYotaService extends BSActivity {
 				final ZLImage image = BookUtil.getCover(currentBook);
 
 				if (image != null) {
-					if (image instanceof ZLLoadableImage) {
-						final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
-						if (!loadableImage.isSynchronized()) {
-							loadableImage.synchronize();
+					if (image instanceof ZLImageProxy) {
+						final ZLImageProxy proxy = (ZLImageProxy)image;
+						if (!proxy.isSynchronized()) {
+							proxy.synchronize(myImageSynchronizer);
 						}
 					}
 					final ZLAndroidImageData data =
