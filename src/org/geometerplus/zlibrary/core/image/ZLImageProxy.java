@@ -40,10 +40,5 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 		}
 	}
 
-	@Override
-	public final void synchronizeFast() {
-		setSynchronized();
-	}
-
 	protected abstract ZLImage retrieveRealImage(Synchronizer synchronizer);
 }
