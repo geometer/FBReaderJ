@@ -924,6 +924,9 @@
 			</node>
 			<node name="permissionDenied" value="Zugriff verweigert"/>
 		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Fehler %s während des Lesens von '%s'"/>
