@@ -92,10 +92,14 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 	public void synchronize(ZLImageProxy image, final Runnable postAction) {
 		if (image.isSynchronized()) {
 			// TODO: also check if image is under synchronization
-			postAction.run();
+			if (postAction != null) {
+				postAction.run();
+			}
 		} else if (image instanceof ZLImageSelfSynchronizableProxy) {
 			((ZLImageSelfSynchronizableProxy)image).synchronize();
-			postAction.run();
+			if (postAction != null) {
+				postAction.run();
+			}
 		} else if (image instanceof PluginImage) {
 			final PluginImage pluginImage = (PluginImage)image;
 			final Connection connection = getConnection(pluginImage.Plugin);
@@ -106,7 +110,9 @@ public class AndroidImageSynchronizer implements ZLImageProxy.Synchronizer {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					postAction.run();
+					if (postAction != null) {
+						postAction.run();
+					}
 				}
 			});
 		} else {
