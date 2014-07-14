@@ -34,8 +34,11 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
+
+import org.geometerplus.android.util.PackageUtil;
 
 class PluginFileOpener implements FBReaderApp.PluginFileOpener {
 	private final FBReader myReader;
@@ -44,21 +47,21 @@ class PluginFileOpener implements FBReaderApp.PluginFileOpener {
 		myReader = reader;
 	}
 
-	private void showErrorDialog(final String errName, final ExternalFormatPlugin plugin) {
+	private void showErrorDialog(final ExternalFormatPlugin plugin) {
 		myReader.runOnUiThread(new Runnable() {
 			public void run() {
-				final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
+				final String title = ZLResource.resource("errorMessage").getResource("noPlugin").getValue();
 				final AlertDialog dialog = new AlertDialog.Builder(myReader)
 					.setTitle(title)
 					.setIcon(0)
 					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("market://search?q=" + plugin.packageName()));
-							myReader.startActivity(i);
+							PackageUtil.installFromMarket(myReader, plugin.packageName());
 						}
 					})
 					.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							myReader.onPluginNotFound();
 						}
@@ -96,7 +99,7 @@ class PluginFileOpener implements FBReaderApp.PluginFileOpener {
 					myReader.runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							showErrorDialog("noPlugin", plugin);
+							showErrorDialog(plugin);
 						}
 					});
 				}
