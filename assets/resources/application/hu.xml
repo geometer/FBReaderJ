@@ -908,6 +908,9 @@
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
 		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="%s hiba a natív kódban '%s' olvasása közben"/>
