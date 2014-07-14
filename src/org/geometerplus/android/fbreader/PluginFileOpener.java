@@ -50,7 +50,10 @@ class PluginFileOpener implements FBReaderApp.PluginFileOpener {
 	private void showErrorDialog(final ExternalFormatPlugin plugin) {
 		myReader.runOnUiThread(new Runnable() {
 			public void run() {
-				final String title = ZLResource.resource("errorMessage").getResource("noPlugin").getValue();
+				final String title =
+					ZLResource.resource("errorMessage").getResource("noPlugin").getValue()
+						.replace("%s", plugin.supportedFileType());
+				
 				final AlertDialog dialog = new AlertDialog.Builder(myReader)
 					.setTitle(title)
 					.setIcon(0)

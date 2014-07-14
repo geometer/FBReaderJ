@@ -943,7 +943,7 @@
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
-		<node name="noPlugin" value="Please install plugin to read this file type"/>
+		<node name="noPlugin" value="Plugin for %s files is not installed"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry"/>
 	</node>
