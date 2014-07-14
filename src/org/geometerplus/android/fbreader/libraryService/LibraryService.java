@@ -42,10 +42,13 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
+import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
+
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private static final class Observer extends FileObserver {
 		private static final int MASK =
@@ -350,6 +353,7 @@ public class LibraryService extends Service {
 			l.deactivate();
 			l.close();
 		}
+		myImageSynchronizer.clear();
 		super.onDestroy();
 	}
 }
