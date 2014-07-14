@@ -29,6 +29,7 @@ import android.os.FileObserver;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -275,6 +276,9 @@ public class LibraryService extends Service {
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
 				return null;
+			}
+			if (image instanceof ZLImageProxy) {
+				myImageSynchronizer.synchronize((ZLImageProxy)image, null);
 			}
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
