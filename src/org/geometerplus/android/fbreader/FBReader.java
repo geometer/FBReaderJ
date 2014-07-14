@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.text.DateFormat;
 import java.util.*;
 
 import android.annotation.TargetApi;
@@ -38,7 +37,6 @@ import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.Config;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -65,72 +63,10 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.synchroniser.SynchroniserService;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
+
 import org.geometerplus.android.util.*;
 
 public final class FBReader extends Activity implements ZLApplicationWindow {
-	private class PluginFileOpener implements FBReaderApp.PluginFileOpener {
-		private void showErrorDialog(final String errName, final ExternalFormatPlugin plugin) {
-			runOnUiThread(new Runnable() {
-				public void run() {
-					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
-					final AlertDialog dialog = new AlertDialog.Builder(FBReader.this)
-						.setTitle(title)
-						.setIcon(0)
-						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								Intent i = new Intent(Intent.ACTION_VIEW);
-								i.setData(Uri.parse("market://search?q=" + plugin.packageName()));
-								startActivity(i);
-							}
-						})
-						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								onPluginAbsent();
-							}
-						})
-						.setOnCancelListener(new DialogInterface.OnCancelListener() {
-							@Override
-							public void onCancel(DialogInterface dialog) {
-								onPluginAbsent();
-							}
-						})
-						.create();
-					if (myIsPaused) {
-						myDialogToShow = dialog;
-					} else {
-						dialog.show();
-					}
-				}
-			});
-		}
-
-		public void openFile(final ExternalFormatPlugin plugin, Book book, Bookmark bookmark) {
-			final Intent launchIntent = PluginUtil.createIntent(plugin, PluginUtil.ACTION_VIEW);
-			FBReaderIntents.putBookExtra(launchIntent, book);
-			FBReaderIntents.putBookmarkExtra(launchIntent, bookmark);
-			launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			Config.Instance().runOnConnect(new Runnable() {
-				public void run() {
-					try {
-						Log.e("CALLER", "FORRESULT");
-						String date = DateFormat.getDateTimeInstance().format(new Date());
-						new ZLStringOption("Security", "PluginCalled", "").setValue(plugin.packageName() + date);
-						launchIntent.putExtra("SECURITY_CODE", date);
-						startActivity(launchIntent);
-						overridePendingTransition(0, 0);
-					} catch (ActivityNotFoundException e) {
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								showErrorDialog("noPlugin", plugin);
-							}
-						});
-					}
-				}
-			});
-		}
-	}
-
 	static final int ACTION_BAR_COLOR = Color.DKGRAY;
 
 	public static final int REQUEST_PREFERENCES = 1;
@@ -174,8 +110,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	};
 
-	private boolean myIsPaused = false;
-	private AlertDialog myDialogToShow = null;
+	boolean myIsPaused = false;
+	AlertDialog myDialogToShow = null;
 
 	private boolean myNeedToOpenFile = false;
 	private Intent myIntentToOpen = null;
@@ -213,9 +149,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		myBook = FBReaderIntents.getBookExtra(intent);
 		final Bookmark bookmark = FBReaderIntents.getBookmarkExtra(intent);
-		if (bookmark == null) {
-			Log.d("bookmark", "null!!!!1111");
-		}
 		if (myBook == null) {
 			final Uri data = intent.getData();
 			if (data != null) {
@@ -323,7 +256,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.setWindow(this);
 		myFBReaderApp.initWindow();
 
-		myFBReaderApp.setPluginFileOpener(new PluginFileOpener());
+		myFBReaderApp.setPluginFileOpener(new PluginFileOpener(this));
 
 		myNeedToOpenFile = true;
 		myIntentToOpen = getIntent();
@@ -923,7 +856,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		return true;
 	}
 
-	protected void onPluginAbsent() {
+	protected void onPluginNotFound() {
 		myFBReaderApp.Model = null;
 		getCollection().bindToService(this, new Runnable() {
 			public void run() {
