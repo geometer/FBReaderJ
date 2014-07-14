@@ -923,6 +923,9 @@
 			</node>
 			<node name="permissionDenied" value="Нет доступа"/>
 		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Модуль для чтения файлов %s не установлен. Установить прямо сейчас?"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Ошибка %s в нативном коде при чтении '%s'"/>
