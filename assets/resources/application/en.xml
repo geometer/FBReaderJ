@@ -918,6 +918,9 @@
 			</node>
 			<node name="permissionDenied" value="Permission denied"/>
 		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'"/>
