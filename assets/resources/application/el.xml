@@ -944,7 +944,6 @@
 		<node name="emptyCatalog" value="Ο κατάλογος είναι άδειος."/>
 		<node name="emptyBasket" value="Το καλάθι αγοράς είναι άδειο."/>
 		<node name="emptyNetworkSearchResults" value="Δυστυχώς δεν βρέθηκαν βιβλία."/>
-		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>

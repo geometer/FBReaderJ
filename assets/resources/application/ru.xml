@@ -951,7 +951,6 @@
 		<node name="emptyCatalog" value="Каталог пуст"/>
 		<node name="emptyBasket" value="В корзине нет книг"/>
 		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги"/>
-		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Просмотр видео не работает"/>
 		<node name="videoPlayerNotFound" value="Не удалось отыскать видеопроигрыватель"/>
 	</node>

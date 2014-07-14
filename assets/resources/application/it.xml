@@ -937,7 +937,6 @@
 		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
 		<node name="emptyBasket" value="Spiacente, il carrello è vuoto"/>
 		<node name="emptyNetworkSearchResults" value="Non sono stati trovati libri adatti"/>
-		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>

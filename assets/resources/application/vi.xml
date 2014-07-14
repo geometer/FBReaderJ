@@ -936,7 +936,6 @@
 		<node name="emptyCatalog" value="Danh mục rỗng"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
-		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>

@@ -955,7 +955,6 @@
 		<node name="emptyCatalog" value="Katalog je bohužel prázdný"/>
 		<node name="emptyBasket" value="Váš košík je bohužel prázdný"/>
 		<node name="emptyNetworkSearchResults" value="Nebyly nalezeny žádné knihy"/>
-		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Bohužel, videoslužba není dostupná"/>
 		<node name="videoPlayerNotFound" value="Bohužel, na tomto zařízení není nainstalovaný žádný přehrávač videa"/>
 	</node>

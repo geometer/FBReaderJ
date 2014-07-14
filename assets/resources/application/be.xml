@@ -952,7 +952,6 @@
 		<node name="emptyCatalog" value="Каталёґ пусты, прабачце"/>
 		<node name="emptyBasket" value="Ваш кошык пусты, прабачце"/>
 		<node name="emptyNetworkSearchResults" value="Кнігі ня знойдзеныя, прабачце"/>
-		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
 	</node>

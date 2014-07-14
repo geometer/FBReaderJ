@@ -937,7 +937,6 @@
 		<node name="emptyCatalog" value="Catalogul este gol, îmi pare rau"/>
 		<node name="emptyBasket" value="Cosul Dvs. este gol, îmi pare rau"/>
 		<node name="emptyNetworkSearchResults" value="Nu s-a gasit nici o carte"/>
-		<node name="noPlugin" value="Please install plugin to read this file type" toBeTranslated="true"/>
 		<node name="videoServiceNotWorking" value="Servicii video nedisponibile, ne pare rau"/>
 		<node name="videoPlayerNotFound" value="Nu exista nici un player video instalat pe acest aparat, ne pare rau"/>
 	</node>
