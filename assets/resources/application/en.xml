@@ -919,6 +919,9 @@
 			</node>
 			<node name="permissionDenied" value="Permission denied"/>
 		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'"/>
@@ -943,7 +946,6 @@
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
-		<node name="noPlugin" value="Plugin for %s files is not installed"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry"/>
 	</node>

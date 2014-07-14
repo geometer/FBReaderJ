@@ -50,20 +50,22 @@ class PluginFileOpener implements FBReaderApp.PluginFileOpener {
 	private void showErrorDialog(final ExternalFormatPlugin plugin) {
 		myReader.runOnUiThread(new Runnable() {
 			public void run() {
+				final ZLResource dialogResource = ZLResource.resource("dialog");
+				final ZLResource buttonResource = dialogResource.getResource("button");
 				final String title =
-					ZLResource.resource("errorMessage").getResource("noPlugin").getValue()
+					dialogResource.getResource("missingPlugin").getResource("title").getValue()
 						.replace("%s", plugin.supportedFileType());
 				
 				final AlertDialog dialog = new AlertDialog.Builder(myReader)
 					.setTitle(title)
 					.setIcon(0)
-					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							PackageUtil.installFromMarket(myReader, plugin.packageName());
 						}
 					})
-					.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					.setNegativeButton(buttonResource.getResource("no").getValue(), new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							myReader.onPluginNotFound();
