@@ -30,6 +30,8 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
+import java.util.HashMap;
+
 /**
  * @author ASazonov
  */
@@ -55,6 +57,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         }
         myFBReaderApp.setWindow(this);
         myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.setValue(true);
+        myFBReaderApp.pushNewActionMap(new HashMap<String, ZLApplication.ZLAction>());
         mRootView = getBSDrawer().getBSLayoutInflater().inflate(R.layout.bs_main, null);
         mWidget = (YotaBackScreenWidget) mRootView.findViewById(R.id.bs_main_widget);
         mWidget.setIsBsActive(true);
