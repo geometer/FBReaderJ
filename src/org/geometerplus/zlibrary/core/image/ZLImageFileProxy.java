@@ -19,29 +19,44 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-public abstract class ZLLoadableImage implements ZLImage {
-	private volatile boolean myIsSynchronized;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
-	public final boolean isSynchronized() {
-		return myIsSynchronized;
+public abstract class ZLImageFileProxy extends ZLImageSelfSynchronizableProxy {
+	protected final ZLFile File;
+	private volatile ZLImage myImage;
+
+	protected ZLImageFileProxy(ZLFile file) {
+		File = file;
 	}
 
-	protected final void setSynchronized() {
-		myIsSynchronized = true;
+	@Override
+	public final ZLImage getRealImage() {
+		return myImage;
 	}
 
-	public void startSynchronization(Runnable postSynchronizationAction) {
-		ZLImageManager.Instance().startImageLoading(this, postSynchronizationAction);
+	@Override
+	public String getURI() {
+		return "cover:" + File.getPath();
 	}
 
-	public static enum SourceType {
-		FILE,
-		NETWORK,
-		SERVICE;
-	};
-	public abstract SourceType sourceType();
+	@Override
+	public final synchronized void synchronize() {
+		if (myImage == null) {
+			myImage = retrieveRealImage();
+			setSynchronized();
+		}
+	}
 
-	public abstract void synchronize();
-	public abstract void synchronizeFast();
-	public abstract String getId();
+	@Override
+	public SourceType sourceType() {
+		return SourceType.FILE;
+	}
+
+	@Override
+	public String getId() {
+		return File.getPath();
+	}
+
+	protected abstract ZLImage retrieveRealImage();
 }

@@ -140,21 +140,11 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public ZLImage readCover(final ZLFile file) {
-		return new ZLImageProxy() {
+	public ZLImage readCover(ZLFile file) {
+		return new ZLImageFileProxy(file) {
 			@Override
-			public String getId() {
-				return file.getPath();
-			}
-
-			@Override
-			public SourceType sourceType() {
-				return SourceType.FILE;
-			}
-
-			@Override
-			public ZLImage getRealImage() {
-				return readCoverInternal(file);
+			protected ZLImage retrieveRealImage() {
+				return readCoverInternal(File);
 			}
 		};
 	}
@@ -233,7 +223,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			if (start >= 0) {
 				int len = myMobipocketStream.getImageLength(coverIndex);
 				if (len > 0) {
-					return new ZLFileImage(MimeType.IMAGE_AUTO, file, ZLFileImage.ENCODING_NONE, start, len);
+					return new ZLFileImage(file, ZLFileImage.ENCODING_NONE, start, len);
 				}
 			}
 			return null;

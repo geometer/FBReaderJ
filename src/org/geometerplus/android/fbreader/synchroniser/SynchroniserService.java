@@ -68,7 +68,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 						System.err.println("HELLO THREAD");
 						myHashesFromServer.clear();
 						try {
-							myNetworkContext.perform(new JsonRequest("all.hashes", null) {
+							myNetworkContext.perform(new PostRequest("all.hashes", null) {
 								@Override
 								public void processResponse(Object response) {
 									myHashesFromServer.addAll((List)response);
@@ -110,22 +110,17 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		}
 	}
 
-	private static String toJSON(Object object) {
-		final StringWriter writer = new StringWriter();
-		try {
-			JSONValue.writeJSONString(object, writer);
-		} catch (IOException e) {
-			throw new RuntimeException("JSON serialization failed", e);
-		}
-		return writer.toString();
-	}
-
 	private final static String DOMAIN = "demo.fbreader.org";
 	private final static String BASE_URL = "https://" + DOMAIN + "/app/";
 
-	private static abstract class JsonRequest extends ZLNetworkRequest.PostWithBody {
-		JsonRequest(String app, Object data) {
-			super(BASE_URL + app, toJSON(data), false);
+	private static abstract class PostRequest extends ZLNetworkRequest.PostWithMap {
+		PostRequest(String app, Map<String,String> data) {
+			super(BASE_URL + app, false);
+			if (data != null) {
+				for (Map.Entry<String, String> entry : data.entrySet()) {
+					addPostParameter(entry.getKey(), entry.getValue());
+				}
+			}
 		}
 
 		@Override
@@ -160,10 +155,12 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			List<String> hashes = null;
 			String error = null;
 			try {
-				if (response instanceof Map) {
-					id = (String)((Map)response).get("id");
-					hashes = (List<String>)((Map)response).get("hashes");
-					error = (String)((Map)response).get("error");
+				final List<Map> responseList = (List<Map>)response;
+				if (responseList.size() == 1) {
+					final Map resultMap = (Map)responseList.get(0).get("result");
+					id = (String)resultMap.get("id");
+					hashes = (List<String>)resultMap.get("hashes");
+					error = (String)resultMap.get("error");
 				}
 			} catch (Exception e) {
 				// ignore
@@ -190,8 +187,8 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			return;
 		}
 		final Map<String,Object> result = new HashMap<String,Object>();
-		final JsonRequest verificationRequest =
-			new JsonRequest("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
+		final PostRequest verificationRequest =
+			new PostRequest("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
 				@Override
 				public void processResponse(Object response) {
 					result.put("result", response);

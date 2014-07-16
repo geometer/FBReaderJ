@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.xhtml;
+package org.geometerplus.android.fbreader.formatPlugin;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import android.content.Intent;
 
-public abstract class XHTMLTagAction {
-	protected abstract void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes);
-	protected abstract void doAtEnd(XHTMLReader reader);
-};
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+
+public abstract class PluginUtil {
+	public static final String ACTION_VIEW = "android.fbreader.action.plugin.VIEW";
+	public static final String ACTION_CONNECT_COVER_SERVICE = "android.fbreader.action.plugin.CONNECT_COVER_SERVICE";
+
+	public static Intent createIntent(ExternalFormatPlugin plugin, String action) {
+		return new Intent(action).setPackage(plugin.packageName());
+	}
+}

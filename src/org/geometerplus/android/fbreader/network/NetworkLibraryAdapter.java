@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
+import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 import org.geometerplus.android.fbreader.covers.CoverManager;
 
@@ -52,7 +53,8 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			if (myCoverManager == null) {
 				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 				final int coverHeight = view.getMeasuredHeight();
-				myCoverManager = new CoverManager(getActivity(), coverHeight * 15 / 32, coverHeight);
+				final TreeActivity activity = getActivity();
+				myCoverManager = new CoverManager(activity, activity.ImageSynchronizer, coverHeight * 15 / 32, coverHeight);
 				view.requestLayout();
 			}
 		}
