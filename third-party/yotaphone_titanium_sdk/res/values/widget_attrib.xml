@@ -8,5 +8,6 @@
             <flag name="small" value="8" />
             <flag name="tiny" value="16" />
         </attr>
+        <attr name="icon_frontscreen" format="reference" />
     </declare-styleable>
 </resources>

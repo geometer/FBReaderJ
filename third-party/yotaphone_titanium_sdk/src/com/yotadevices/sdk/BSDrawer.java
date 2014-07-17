@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
  */
 public class BSDrawer extends Drawer {
 
+    private static final int DPI = 240;
     private static final int BS_SCREEN_WIDTH = 540;
     private static final int BS_SCREEN_HEIGHT = 960;
 

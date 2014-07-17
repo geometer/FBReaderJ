@@ -24,8 +24,8 @@ public class BSReadingStatusBar {
     private final FBReaderApp mReader;
 
     private final static int STATUS_BAR_HEIGHT = 117;
-    private final static int SYSTEM_NAVIGATION_BAR = 80;
-
+    //private final static int SYSTEM_NAVIGATION_BAR = 80;
+    private final static int SYSTEM_NAVIGATION_BAR = 0;
     private TextView mBackToPage;
     private TextView mTotalPages;
     private TextView mPagesLeft;

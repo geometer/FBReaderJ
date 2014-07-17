@@ -34,7 +34,12 @@ public abstract class Drawer {
         WAVEFORM_DEFAULT, WAVEFORM_A2, WAVEFORM_DU, WAVEFORM_GC_PARTIAL, WAVEFORM_GC_FULL, WAVEFORM_GL, WAVEFORM_GLR, WAVEFORM_GLD;
     }
 
-
+    public enum Dithering {
+        /**
+         * @hide
+         */
+        DITHER_DEFAULT, DITHER_NONE, DITHER_ATKINSON, DITHER_ATKINSON_BINARY, DITHER_FLOYD_STEINBERG, DITHER_FLOYD_STEINBERG_BINARY;
+    }
 
     public abstract void addViewToBS(View v, ViewGroup.LayoutParams lp);
 

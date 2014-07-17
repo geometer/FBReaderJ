@@ -49,7 +49,8 @@ public abstract class BSActivity extends InfiniteIntentService {
     /** Record inner state BSActivity */
     private BSRecord mRecord;
 
-    final Handler mIncomingHandler = new BSAcivityIncomingMessagesHandler(this);
+    private final Handler mIncomingHandler = new BSAcivityIncomingMessagesHandler(this);
+    private final Handler h = new Handler(); // for UI thread actions
 
     /**
      * Target we publish for clients to send messages to IncomingHandler.
@@ -487,6 +488,18 @@ public abstract class BSActivity extends InfiniteIntentService {
 
     int getSsytemBSUiVisibility() {
         return mSystemUiVisibility;
+    }
+
+    /**
+     * Runs the specified action on the UI thread. If the current thread is the
+     * UI thread, then the action is executed immediately. If the current thread
+     * is not the UI thread, the action is posted to the event queue of the UI
+     * thread. Parameters: action the action to run on the UI thread
+     * 
+     * @param action
+     */
+    public void runOnUiThread(Runnable action) {
+        h.post(action);
     }
 
     /**

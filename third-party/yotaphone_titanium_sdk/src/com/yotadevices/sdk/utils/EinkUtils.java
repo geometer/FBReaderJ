@@ -1,9 +1,9 @@
 package com.yotadevices.sdk.utils;
 
-import com.yotadevices.sdk.Drawer;
-
 import android.graphics.Bitmap;
 import android.view.View;
+
+import com.yotadevices.sdk.Drawer;
 
 /*
  *
@@ -73,20 +73,37 @@ public class EinkUtils {
     }
 
     public static void setViewWaveform(View view, Drawer.Waveform waveform) {
-//         view.setEpdViewWaveFormMode(waveform.ordinal());
+        if (view!=null) {
+            view.setEpdViewWaveFormMode(waveform.ordinal());
+        }
     }
 
     public static Drawer.Waveform getViewWaveform(View view) {
-        return null;
-//        return Drawer.Waveform.values()[view.getEpdViewWaveformMode()];
+        if (view!=null) {
+            return Drawer.Waveform.values()[view.getEpdViewWaveformMode()];
+        } else {
+            return Drawer.Waveform.WAVEFORM_DEFAULT;
+        }
     }
 
-    public static void setViewDithering(View view) {
-//        view.setEpdViewDithering(View.DITHER_ATKINSON);
+    public static void disableViewDithering(View view) {
+        if (view!=null) {
+            view.setEpdViewDithering(Drawer.Dithering.DITHER_NONE.ordinal());
+        }
     }
 
-    public static int getViewDithering(View view) {
-        return 0;
-//        return view.getEpdViewDithering();
+    public static void setViewDithering(View view, Drawer.Dithering dithering) {
+        if (view!=null) {
+            view.setEpdViewDithering(dithering.ordinal());
+        }
     }
+
+    public static Drawer.Dithering getViewDithering(View view) {
+        if (view!=null) {
+            return Drawer.Dithering.values()[view.getEpdViewDithering()];
+        } else {
+            return Drawer.Dithering.DITHER_DEFAULT;
+        }
+    }
+
 }

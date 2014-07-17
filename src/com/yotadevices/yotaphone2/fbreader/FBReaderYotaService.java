@@ -16,6 +16,8 @@ import android.view.View;
 
 import com.yotadevices.sdk.BSActivity;
 import com.yotadevices.sdk.Constants;
+import com.yotadevices.sdk.Drawer;
+import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.actions.ToggleBarsAction;
 
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -68,6 +70,8 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
         registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         setBSContentView(mRootView);
+        //EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_GLR);
+        //EinkUtils.disableViewDithering(mRootView);
         hideActionBar();
         hideStatusBar();
 
@@ -220,7 +224,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     }
 
     public void showStatusBar() {
-        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE);
+        //setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE);
         if (mStatusBar == null) {
             mStatusBar = new BSReadingStatusBar(getBSDrawer().getBSContext(), mRootView, myFBReaderApp);
         }
@@ -237,8 +241,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (mStatusBar != null) {
             mStatusBar.hide();
         }
-        setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION |
-                Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR);
+        //setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION | Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_HIDE_STATUS_BAR);
     }
 
     public BSReadingActionBar geActionBar() {
