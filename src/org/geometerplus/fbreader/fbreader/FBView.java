@@ -226,7 +226,7 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerLongPress(int x, int y) {
-		if (super.onFingerLongPress(x, y)) {
+		if (super.onFingerLongPress(x, y) || myReader.ViewOptions.YotaDrawOnBackScreen.getValue()) {
 			return true;
 		}
 
