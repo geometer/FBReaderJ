@@ -65,10 +65,10 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 			setupHiddenView(mainHiddenView);
 			mainView.setVisibility(View.GONE);
 			mainHiddenView.setVisibility(View.VISIBLE);
-            Reader.pushNewActionMap(new HashMap<String, ZLApplication.ZLAction>());
+            Reader.setBackScreenActionMap();
 			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).turnScreenOffIfRotated();
 		} else {
-            Reader.popActionMap();
+            Reader.setFrontScreenActionMap();
             FBReaderApp.Instance().setWindow(BaseActivity);
             //FBReaderApp.Instance().initWindow();
 			mainView.setVisibility(View.VISIBLE);

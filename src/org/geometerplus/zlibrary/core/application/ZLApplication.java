@@ -39,12 +39,12 @@ public abstract class ZLApplication {
 	private volatile String myTitle;
 
     private HashMap<String,ZLAction> myIdToActionMap;
+    private final HashMap<String,ZLAction> myFrontScreenActionMap = new HashMap<String,ZLAction>();
+    private final HashMap<String,ZLAction> myBackScreenActionMap = new HashMap<String,ZLAction>();
     private final Stack<HashMap<String,ZLAction> > myStackofActionMaps = new Stack<HashMap<String, ZLAction>>();
 
     protected ZLApplication() {
-        final HashMap<String,ZLAction> frontScreenActionMap = new HashMap<String,ZLAction>();
-        pushNewActionMap(frontScreenActionMap);
-
+        myIdToActionMap = myFrontScreenActionMap;
 		ourInstance = this;
 	}
 
@@ -164,17 +164,12 @@ public abstract class ZLApplication {
 		myIdToActionMap.remove(actionId);
 	}
 
-    public final void pushNewActionMap(HashMap<String,ZLAction> actionMap) {
-        myStackofActionMaps.push(actionMap);
-        myIdToActionMap = actionMap;
+    public final void setFrontScreenActionMap() {
+        myIdToActionMap = myFrontScreenActionMap;
     }
 
-    public final void popActionMap() {
-        if (myStackofActionMaps.size() > 1) {
-            myStackofActionMaps.pop();
-            myIdToActionMap = myStackofActionMaps.peek();
-        }
-        //always leave one action map
+    public final void setBackScreenActionMap() {
+        myIdToActionMap = myBackScreenActionMap;
     }
 
 	public final void runAction(String actionId) {
