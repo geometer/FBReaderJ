@@ -67,9 +67,14 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     @Override
     public void onBSResume() {
         super.onBSResume();
-
         registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         setBSContentView(mRootView);
+
+        myFBReaderApp.setBackScreenActionMap();
+        myFBReaderApp.addAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, myFBReaderApp));
+        myFBReaderApp.addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(myFBReaderApp, true));
+        myFBReaderApp.addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(myFBReaderApp, false));
+
         hideActionBar();
         hideStatusBar();
         EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_FLOYD_STEINBERG_BINARY);
@@ -112,6 +117,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (intent.hasExtra(KEY_BACK_SCREEN_IS_ACTIVE)) {
             boolean isActive = intent.getBooleanExtra(KEY_BACK_SCREEN_IS_ACTIVE, false);
             if (isActive) {
+                myFBReaderApp.setBackScreenActionMap();
                 myFBReaderApp.addAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, myFBReaderApp));
                 myFBReaderApp.addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(myFBReaderApp, true));
                 myFBReaderApp.addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(myFBReaderApp, false));
