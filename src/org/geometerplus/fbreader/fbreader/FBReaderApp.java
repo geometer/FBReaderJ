@@ -58,6 +58,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final IBookCollection Collection;
 
 	public FBReaderApp(IBookCollection collection) {
+        setFrontScreenActionMap();
 		Collection = collection;
 
 		collection.addListener(new IBookCollection.Listener() {
@@ -83,6 +84,8 @@ public final class FBReaderApp extends ZLApplication {
 			public void onBuildEvent(IBookCollection.Status status) {
 			}
 		});
+
+        setFrontScreenActionMap();
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));

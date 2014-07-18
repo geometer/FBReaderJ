@@ -280,7 +280,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (myFBReaderApp.getPopupById(SelectionPopup.ID) == null) {
 			new SelectionPopup(myFBReaderApp);
 		}
-
+        myFBReaderApp.setFrontScreenActionMap();
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoAction(this, myFBReaderApp));

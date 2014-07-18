@@ -44,7 +44,7 @@ public abstract class ZLApplication {
     private final Stack<HashMap<String,ZLAction> > myStackofActionMaps = new Stack<HashMap<String, ZLAction>>();
 
     protected ZLApplication() {
-        myIdToActionMap = myFrontScreenActionMap;
+        setFrontScreenActionMap();
 		ourInstance = this;
 	}
 
