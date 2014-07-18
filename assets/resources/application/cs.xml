@@ -897,19 +897,19 @@
 			<node name="duplicate" value="“%s” již je na seznamu"/>
 		</node>
 		<node name="editList">
-			<node name="edit" value="Edit" toBeTranslated="true"/>
-			<node name="remove" value="Remove" toBeTranslated="true"/>
+			<node name="edit" value="Upravit"/>
+			<node name="remove" value="Odebrat"/>
 		</node>
 		<node name="editTags">
-			<node name="addTag" value="Add tag" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
-				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			<node name="addTag" value="Přidat štítek"/>
+			<node name="removeDialog" value="Odebrat štítek">
+				<node name="message" value="Odebrat štítek “%s” ze seznamu?"/>
 			</node>
 		</node>
 		<node name="editAuthors">
-			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove author" toBeTranslated="true">
-				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			<node name="addAuthor" value="Přidat autora"/>
+			<node name="removeDialog" value="Odebrat autora">
+				<node name="message" value="Odebrat autora “%s” ze seznamu?"/>
 			</node>
 		</node>
 		<node name="fileChooser">
@@ -928,7 +928,7 @@
 			<node name="permissionDenied" value="Přístup byl odepřen"/>
 		</node>
 		<node name="missingPlugin">
-			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
+			<node name="title" value="Doplněk pro soubory %s není nainstalován. Nainstalovat ho nyní?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
