@@ -1,6 +1,7 @@
 package com.yotadevices.sdk.utils;
 
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.view.View;
 
 import com.yotadevices.sdk.Drawer;
@@ -106,4 +107,25 @@ public class EinkUtils {
         }
     }
 
+    public static void performSingleUpdate(View view, Drawer.Waveform waveform) {
+        performSingleUpdate(view, waveform, Drawer.Dithering.DITHER_DEFAULT);
+    }
+
+    public static void performSingleUpdate(final View view, final Drawer.Waveform waveform, final Drawer.Dithering dithering) {
+        final Drawer.Waveform previousWaveform = getViewWaveform(view);
+        final Drawer.Dithering previousDithring = getViewDithering(view);
+        if (view!=null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setViewWaveform(view, waveform);
+                    setViewDithering(view, dithering);
+                    view.invalidate();
+                    setViewWaveform(view, previousWaveform);
+                    setViewDithering(view, previousDithring);
+                }
+            }, 200);
+
+        }
+    }
 }

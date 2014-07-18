@@ -29,8 +29,8 @@ android {
         applicationId "org.geometerplus.zlibrary.ui.android"
         minSdkVersion 19
         targetSdkVersion 19
-        versionCode 1
-        versionName "1.0"
+        versionCode 1100324
+        versionName "1.10.3.24"
     }
     signingConfigs {
         release {

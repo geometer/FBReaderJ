@@ -18,4 +18,9 @@ public class BackscreenLauncherConstants {
     // Options values for widget display
     public static final int WIDGET_BACK_SCREEN = 0;
     public static final int WIDGET_FRONT_SCREEN = 1;
+
+    // widget is visible
+    public static final String ACTION_APPWIDGET_VISIBILITY_CHANGED = "com.yotadevices.yotaphone.action.APPWIDGET_VISIBILITY_CHANGED";
+    public static final String ACTION_APPWIDGET_EXTRA_VISIBLE = "com.yotadevices.yotaphone.extras.VISIBLE";
+    public static final String ACTION_APPWIDGET_EXTRA_INVISIBLE = "com.yotadevices.yotaphone.extras.INVISIBLE";
 }

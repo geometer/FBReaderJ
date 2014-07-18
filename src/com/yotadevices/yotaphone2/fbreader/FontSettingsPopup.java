@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.yotadevices.sdk.Drawer;
+import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.view.GaugeView;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -133,6 +135,7 @@ public class FontSettingsPopup {
         setupFontStyle();
         setupTheme();
         mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, ACTION_BAR_HEIGHT);
+        EinkUtils.performSingleUpdate(mPopupView, Drawer.Waveform.WAVEFORM_GC_FULL);
     }
 
     private void setupFontStyle() {

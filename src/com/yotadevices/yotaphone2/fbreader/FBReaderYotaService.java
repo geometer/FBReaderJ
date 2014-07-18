@@ -70,10 +70,9 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
         registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         setBSContentView(mRootView);
-        //EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_GLR);
-        //EinkUtils.disableViewDithering(mRootView);
         hideActionBar();
         hideStatusBar();
+        EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_FLOYD_STEINBERG_BINARY);
 
         getCollection().bindToService(this, new Runnable() {
             public void run() {

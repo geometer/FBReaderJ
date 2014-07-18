@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.yotadevices.sdk.Drawer;
+import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.view.GaugeView;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;

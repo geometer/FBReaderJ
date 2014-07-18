@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.yotadevices.sdk.Drawer;
+import com.yotadevices.sdk.utils.EinkUtils;
+
 import org.geometerplus.fbreader.book.Author;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Bookmark;
