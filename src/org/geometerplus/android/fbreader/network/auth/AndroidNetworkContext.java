@@ -17,28 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.android.fbreader.network.auth;
 
 import java.net.URI;
 import java.util.Map;
 
-import android.app.Service;
 import android.content.Context;
 
-public final class ServiceNetworkContext extends AndroidNetworkContext {
-	private final Service myService;
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 
-	public ServiceNetworkContext(Service service) {
-		myService = service;
-	}
-
-	public Context getContext() {
-		return myService;
-	}
-
+public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
-	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
-		// TODO: implement
-		return false;
+	public boolean authenticate(URI uri, Map<String,String> params) {
+		if (!"https".equalsIgnoreCase(uri.getScheme())) {
+			return false;
+		}
+		return authenticateWeb(uri, params);
 	}
+
+	protected abstract Context getContext();
+	protected abstract boolean authenticateWeb(URI uri, Map<String,String> params);
 }
