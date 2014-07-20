@@ -315,7 +315,7 @@ public class ZLNetworkManager {
 							} catch (AuthenticationException e) {
 								final Header bearerHeader = challenges.get("bearer");
 								if (bearerHeader != null) {
-									throw new BearerAuthenticationException(bearerHeader.getValue());
+									throw new BearerAuthenticationException(response.getEntity());
 								}
 								throw e;
 							}
