@@ -142,9 +142,9 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 				TextUtils.join(" ", new Object[] { Scopes.DRIVE_FILE, Scopes.PROFILE })
 			), null);
 			System.err.println("ACCESS TOKEN = " + code);
-			final String result = runTokenAuthorization(authUrl, authToken, code);
+			final boolean result = runTokenAuthorization(authUrl, authToken, code);
 			System.err.println("AUTHENTICATION RESULT 2 = " + result);
-			return true;
+			return result;
 		} catch (UserRecoverableAuthException e) {
 			myAuthorizationConfirmed = false;
 			startActivityAndWait(e.getIntent(), NetworkLibraryActivity.REQUEST_AUTHORISATION);
@@ -154,7 +154,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		}
 	}
 
-	private String runTokenAuthorization(String authUrl, String authToken, String code) {
+	private boolean runTokenAuthorization(String authUrl, String authToken, String code) {
 		final StringBuilder buffer = new StringBuilder();
 		final ZLNetworkRequest.PostWithMap request = new ZLNetworkRequest.PostWithMap(authUrl) {
 			public void handleStream(InputStream stream, int length) throws IOException {
@@ -165,7 +165,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		request.addPostParameter("auth", authToken);
 		request.addPostParameter("code", code);
 		performQuietly(request);
-		return buffer.toString().trim();
+		return "SUCCESS".equals(buffer.toString().trim());
 	}
 
 	@Override
@@ -189,12 +189,9 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 				myActivity, myAccount, String.format("audience:server:client_id:%s", clientId)
 			);
 			System.err.println("AUTH TOKEN = " + authToken);
-			final String result = runTokenAuthorization(authUrl, authToken, null);
+			final boolean result = runTokenAuthorization(authUrl, authToken, null);
 			System.err.println("AUTHENTICATION RESULT 1 = " + result);
-			if ("SUCCESS".equals(result)) {
-				return true;
-			}
-			return registerAccessToken(clientId, authUrl, authToken);
+			return result || registerAccessToken(clientId, authUrl, authToken);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
