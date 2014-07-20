@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.android.fbreader.network.auth;
 
 import java.io.*;
 import java.net.URI;
@@ -40,6 +40,7 @@ import org.apache.http.impl.cookie.BasicClientCookie2;
 
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public final class ActivityNetworkContext extends AndroidNetworkContext {
 	private final Activity myActivity;

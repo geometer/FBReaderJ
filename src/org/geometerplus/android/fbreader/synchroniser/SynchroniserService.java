@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.network.ServiceNetworkContext;
+import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
 public class SynchroniserService extends Service implements IBookCollection.Listener, Runnable {
 	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
