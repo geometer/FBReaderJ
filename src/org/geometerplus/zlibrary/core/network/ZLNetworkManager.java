@@ -160,7 +160,10 @@ public class ZLNetworkManager {
 	}
 
 	static interface BearerAuthenticator {
-		Map<String,String> authenticate(URI uri, Map<String,String> params);
+		Map<String,String> authenticate(URI uri, String realm, Map<String,String> params);
+
+		String getAccountName(String host, String realm);
+		void setAccountName(String host, String realm, String accountName);
 	}
 
 	volatile CredentialsCreator myCredentialsCreator;
@@ -315,7 +318,18 @@ public class ZLNetworkManager {
 							} catch (AuthenticationException e) {
 								final Header bearerHeader = challenges.get("bearer");
 								if (bearerHeader != null) {
-									throw new BearerAuthenticationException(response.getEntity());
+									String realm = null;
+									for (HeaderElement elt : bearerHeader.getElements()) {
+										final String name = elt.getName();
+										if (name == null) {
+											continue;
+										}
+										if ("realm".equals(name) || name.endsWith(" realm")) {
+											realm = elt.getValue();
+											break;
+										}
+									}
+									throw new BearerAuthenticationException(realm, response.getEntity());
 								}
 								throw e;
 							}
@@ -440,9 +454,9 @@ public class ZLNetworkManager {
 			return client.execute(request, context);
 		} catch (BearerAuthenticationException e) {
 			final Map<String,String> response =
-				authenticator.authenticate(request.getURI(), e.Params);
+				authenticator.authenticate(request.getURI(), e.Realm, e.Params);
 			if (!response.containsKey("error")) {
-				System.err.println("AUTHENTICATED AS " + response.get("user"));
+				authenticator.setAccountName(request.getURI().getHost(), e.Realm, response.get("user"));
 				return client.execute(request, context);
 			}
 			throw e;

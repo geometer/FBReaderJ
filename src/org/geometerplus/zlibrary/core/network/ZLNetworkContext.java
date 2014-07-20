@@ -27,6 +27,8 @@ import java.util.List;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
 public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthenticator {
 	private final ZLNetworkManager myManager = ZLNetworkManager.Instance();
 
@@ -44,6 +46,17 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public String getAccountName(String host, String realm) {
+		final String accountName = getAccountOption(host, realm).getValue();
+		return "".equals(accountName) ? null : accountName;
+	}
+
+	@Override
+	public void setAccountName(String host, String realm, String accountName) {
+		getAccountOption(host, realm).setValue(accountName != null ? accountName : "");
 	}
 
 	public boolean performQuietly(ZLNetworkRequest request) {
@@ -111,5 +124,9 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 				}
 			}
 		}, this, 0, 0);
+	}
+
+	private ZLStringOption getAccountOption(String host, String realm) {
+		return new ZLStringOption("auth", host + ":" + realm, "");
 	}
 }
