@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.android.fbreader.network.auth;
 
 import java.util.HashMap;
 
@@ -31,6 +31,7 @@ import android.view.Window;
 import android.webkit.*;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class WebAuthorisationScreen extends Activity {
 	@Override
