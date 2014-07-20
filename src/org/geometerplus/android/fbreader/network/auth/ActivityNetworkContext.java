@@ -119,12 +119,12 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	@Override
-	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
+	protected Map<String,String> authenticateWeb(URI uri, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
 		final String authUrl = url(uri, params, "auth-url-web");
 		final String completeUrl = url(uri, params, "complete-url-web");
 		if (authUrl == null || completeUrl == null) {
-			return false;
+			return errorMap("No data for web authentication");
 		}
 
 		final Intent intent = new Intent(myActivity, WebAuthorisationScreen.class);
@@ -132,30 +132,32 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		intent.putExtra(NetworkLibraryActivity.COMPLETE_URL_KEY, completeUrl);
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
-		return true;
+		// TODO: put user email into map
+		return Collections.singletonMap("user", "unknown@mail");
 	}
 
-	private boolean registerAccessToken(String clientId, String authUrl, String authToken) {
+	private Map<String,String> registerAccessToken(String clientId, String authUrl, String authToken) {
 		String code = null;
 		try {
 			code = GoogleAuthUtil.getToken(myActivity, myAccount, String.format(
 				"oauth2:server:client_id:%s:api_scope:%s", clientId,
 				TextUtils.join(" ", new Object[] { Scopes.DRIVE_FILE, Scopes.PROFILE })
 			), null);
-			System.err.println("ACCESS TOKEN = " + code);
-			final boolean result = runTokenAuthorization(authUrl, authToken, code);
-			System.err.println("AUTHENTICATION RESULT 2 = " + result);
-			return result;
+			return runTokenAuthorization(authUrl, authToken, code);
 		} catch (UserRecoverableAuthException e) {
 			myAuthorizationConfirmed = false;
 			startActivityAndWait(e.getIntent(), NetworkLibraryActivity.REQUEST_AUTHORISATION);
-			return myAuthorizationConfirmed && registerAccessToken(clientId, authUrl, authToken);
+			if (myAuthorizationConfirmed) {
+				return registerAccessToken(clientId, authUrl, authToken);
+			} else {
+				return errorMap("Authorization failed");
+			}
 		} catch (Exception e) {
-			return false;
+			return errorMap(e);
 		}
 	}
 
-	private boolean runTokenAuthorization(String authUrl, String authToken, String code) {
+	private Map<String,String> runTokenAuthorization(String authUrl, String authToken, String code) {
 		final Map<String,String> response = new HashMap<String,String>();
 		final StringBuilder buffer = new StringBuilder();
 		final ZLNetworkRequest.PostWithMap request = new ZLNetworkRequest.PostWithMap(authUrl) {
@@ -166,17 +168,17 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		request.addPostParameter("auth", authToken);
 		request.addPostParameter("code", code);
 		performQuietly(request);
-		return response.containsKey("user");
+		return response;
 	}
 
 	@Override
-	protected boolean authenticateToken(URI uri, Map<String,String> params) {
+	protected Map<String,String> authenticateToken(URI uri, Map<String,String> params) {
 		System.err.println("+++ TOKEN AUTH +++");
 		try {
 			final String authUrl = url(uri, params, "auth-url-token");
 			final String clientId = params.get("client-id");
 			if (authUrl == null || clientId == null) {
-				return false;
+				return errorMap("No data for token authentication");
 			}
 
 			final Intent intent = AccountManager.newChooseAccountIntent(
@@ -184,18 +186,21 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 			);
 			startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER);
 			if (myAccount == null) {
-				return false;
+				return errorMap("No selected account");
 			}
 			final String authToken = GoogleAuthUtil.getToken(
 				myActivity, myAccount, String.format("audience:server:client_id:%s", clientId)
 			);
 			System.err.println("AUTH TOKEN = " + authToken);
-			final boolean result = runTokenAuthorization(authUrl, authToken, null);
+			final Map<String,String> result = runTokenAuthorization(authUrl, authToken, null);
 			System.err.println("AUTHENTICATION RESULT 1 = " + result);
-			return result || registerAccessToken(clientId, authUrl, authToken);
+			if (result.containsKey("user")) {
+				return result;
+			}
+			return registerAccessToken(clientId, authUrl, authToken);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return errorMap(e);
 		} finally {
 			System.err.println("--- TOKEN AUTH ---");
 		}
