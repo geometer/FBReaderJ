@@ -125,13 +125,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 
 		@Override
 		public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
-			final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-			final StringBuilder buffer = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				buffer.append(line);
-			}
-			processResponse(JSONValue.parse(buffer.toString()));
+			processResponse(JSONValue.parse(new InputStreamReader(stream)));
 		}
 
 		protected abstract void processResponse(Object response);
@@ -144,13 +138,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 
 		@Override
 		public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
-			final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-			final StringBuilder buffer = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				buffer.append(line);
-			}
-			final Object response = JSONValue.parse(buffer.toString());
+			final Object response = JSONValue.parse(new InputStreamReader(stream));
 			String id = null;
 			List<String> hashes = null;
 			String error = null;
