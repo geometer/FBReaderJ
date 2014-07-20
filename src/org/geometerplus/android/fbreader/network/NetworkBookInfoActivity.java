@@ -51,6 +51,7 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
+import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 import org.geometerplus.android.util.UIUtil;
 
