@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.network.auth;
 
-import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -37,7 +36,6 @@ import com.google.android.gms.common.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie2;
-import org.json.simple.JSONValue;
 
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
@@ -123,7 +121,8 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		System.err.println("+++ WEB AUTH +++");
 		final String authUrl = url(uri, params, "auth-url-web");
 		final String completeUrl = url(uri, params, "complete-url-web");
-		if (authUrl == null || completeUrl == null) {
+		final String verificationUrl = url(uri, params, "verification-url");
+		if (authUrl == null || completeUrl == null || verificationUrl == null) {
 			return errorMap("No data for web authentication");
 		}
 
@@ -132,8 +131,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		intent.putExtra(NetworkLibraryActivity.COMPLETE_URL_KEY, completeUrl);
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
-		// TODO: put user email into map
-		return Collections.singletonMap("user", "unknown@mail");
+		return verify(verificationUrl);
 	}
 
 	private Map<String,String> registerAccessToken(String clientId, String authUrl, String authToken) {
@@ -158,18 +156,17 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	private Map<String,String> runTokenAuthorization(String authUrl, String authToken, String code) {
-		final Map<String,String> response = new HashMap<String,String>();
-		final StringBuilder buffer = new StringBuilder();
-		final ZLNetworkRequest.PostWithMap request = new ZLNetworkRequest.PostWithMap(authUrl) {
-			public void handleStream(InputStream stream, int length) throws IOException {
-				response.putAll((Map)JSONValue.parse(new InputStreamReader(stream)));
+		final Map<String,String> result = new HashMap<String,String>();
+		final JsonRequest request = new JsonRequest(authUrl) {
+			public void processResponse(Object response) {
+				result.putAll((Map)response);
 			}
 		};
 		request.addPostParameter("auth", authToken);
 		request.addPostParameter("code", code);
 		performQuietly(request);
-		System.err.println("AUTHORIZATION RESULT = " + response);
-		return response;
+		System.err.println("AUTHORIZATION RESULT = " + result);
+		return result;
 	}
 
 	@Override
