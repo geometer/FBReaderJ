@@ -37,6 +37,7 @@ import com.google.android.gms.common.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie2;
+import org.json.simple.JSONValue;
 
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
@@ -155,17 +156,17 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	private boolean runTokenAuthorization(String authUrl, String authToken, String code) {
+		final Map<String,String> response = new HashMap<String,String>();
 		final StringBuilder buffer = new StringBuilder();
 		final ZLNetworkRequest.PostWithMap request = new ZLNetworkRequest.PostWithMap(authUrl) {
 			public void handleStream(InputStream stream, int length) throws IOException {
-				final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-				buffer.append(reader.readLine());
+				response.putAll((Map)JSONValue.parse(new InputStreamReader(stream)));
 			}
 		};
 		request.addPostParameter("auth", authToken);
 		request.addPostParameter("code", code);
 		performQuietly(request);
-		return "SUCCESS".equals(buffer.toString().trim());
+		return response.containsKey("user");
 	}
 
 	@Override
