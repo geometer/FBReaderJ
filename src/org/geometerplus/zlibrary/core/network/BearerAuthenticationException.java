@@ -27,10 +27,12 @@ import org.apache.http.HttpEntity;
 import org.json.simple.JSONValue;
 
 class BearerAuthenticationException extends RuntimeException {
+	public final String Realm;
 	public final Map<String,String> Params = new HashMap<String,String>();
 
-	BearerAuthenticationException(HttpEntity entity) {
+	BearerAuthenticationException(String realm, HttpEntity entity) {
 		super("Authentication failed");
+		Realm = realm;
 		try {
 			Params.putAll((Map)JSONValue.parse(new InputStreamReader(entity.getContent())));
 		} catch (Exception e) {
