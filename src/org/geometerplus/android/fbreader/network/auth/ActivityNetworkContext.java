@@ -168,6 +168,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		request.addPostParameter("auth", authToken);
 		request.addPostParameter("code", code);
 		performQuietly(request);
+		System.err.println("AUTHORIZATION RESULT = " + response);
 		return response;
 	}
 
@@ -193,7 +194,6 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 			);
 			System.err.println("AUTH TOKEN = " + authToken);
 			final Map<String,String> result = runTokenAuthorization(authUrl, authToken, null);
-			System.err.println("AUTHENTICATION RESULT 1 = " + result);
 			if (result.containsKey("user")) {
 				return result;
 			}
