@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network.auth;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.Map;
 
 import android.content.Context;
@@ -28,13 +29,22 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 
 public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
-	public boolean authenticate(URI uri, Map<String,String> params) {
+	public Map<String,String> authenticate(URI uri, Map<String,String> params) {
 		if (!"https".equalsIgnoreCase(uri.getScheme())) {
-			return false;
+			return Collections.singletonMap("error", "Connection is not secure");
 		}
 		return authenticateWeb(uri, params);
 	}
 
 	protected abstract Context getContext();
-	protected abstract boolean authenticateWeb(URI uri, Map<String,String> params);
+	protected abstract Map<String,String> authenticateWeb(URI uri, Map<String,String> params);
+
+	protected Map<String,String> errorMap(String message) {
+		return Collections.singletonMap("error", message);
+	}
+
+	protected Map<String,String> errorMap(Throwable exception) {
+		final String message = exception.getMessage();
+		return errorMap(message != null ? message : exception.getClass().getName());
+	}
 }

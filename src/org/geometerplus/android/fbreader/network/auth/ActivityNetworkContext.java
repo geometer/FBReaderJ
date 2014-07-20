@@ -115,12 +115,12 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	@Override
-	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
+	protected Map<String,String> authenticateWeb(URI uri, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
 		final String authUrl = url(uri, params, "auth-url-web");
 		final String completeUrl = url(uri, params, "complete-url-web");
 		if (authUrl == null || completeUrl == null) {
-			return false;
+			return errorMap("No data for web authentication");
 		}
 
 		final Intent intent = new Intent(myActivity, WebAuthorisationScreen.class);
@@ -128,7 +128,8 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		intent.putExtra(NetworkLibraryActivity.COMPLETE_URL_KEY, completeUrl);
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
-		return true;
+		// TODO: put user email into map
+		return Collections.singletonMap("user", "unknown@mail");
 	}
 
 	private void startActivityAndWait(Intent intent, int requestCode) {

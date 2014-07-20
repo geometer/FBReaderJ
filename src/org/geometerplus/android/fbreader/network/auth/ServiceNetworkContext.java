@@ -37,8 +37,8 @@ public final class ServiceNetworkContext extends AndroidNetworkContext {
 	}
 
 	@Override
-	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
+	protected Map<String,String> authenticateWeb(URI uri, Map<String,String> params) {
 		// TODO: implement
-		return false;
+		return errorMap("Not implemented yet");
 	}
 }

@@ -160,7 +160,7 @@ public class ZLNetworkManager {
 	}
 
 	static interface BearerAuthenticator {
-		boolean authenticate(URI uri, Map<String,String> params);
+		Map<String,String> authenticate(URI uri, Map<String,String> params);
 	}
 
 	volatile CredentialsCreator myCredentialsCreator;
@@ -439,7 +439,10 @@ public class ZLNetworkManager {
 		try {
 			return client.execute(request, context);
 		} catch (BearerAuthenticationException e) {
-			if (authenticator.authenticate(request.getURI(), e.Params)) {
+			final Map<String,String> response =
+				authenticator.authenticate(request.getURI(), e.Params);
+			if (!response.containsKey("error")) {
+				System.err.println("AUTHENTICATED AS " + response.get("user"));
 				return client.execute(request, context);
 			}
 			throw e;
