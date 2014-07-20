@@ -20,12 +20,12 @@
 package org.geometerplus.android.fbreader.network.auth;
 
 import java.net.URI;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 import android.content.Context;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
@@ -46,5 +46,15 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	protected Map<String,String> errorMap(Throwable exception) {
 		final String message = exception.getMessage();
 		return errorMap(message != null ? message : exception.getClass().getName());
+	}
+
+	protected Map<String,String> verify(final String verificationUrl) {
+		final Map<String,String> result = new HashMap<String,String>();
+		performQuietly(new JsonRequest(verificationUrl) {
+			public void processResponse(Object response) {
+				result.putAll((Map)response);
+			}
+		});
+		return result;
 	}
 }

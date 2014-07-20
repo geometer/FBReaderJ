@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.network.auth;
 
-import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -119,7 +118,8 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		System.err.println("+++ WEB AUTH +++");
 		final String authUrl = url(uri, params, "auth-url-web");
 		final String completeUrl = url(uri, params, "complete-url-web");
-		if (authUrl == null || completeUrl == null) {
+		final String verificationUrl = url(uri, params, "verification-url");
+		if (authUrl == null || completeUrl == null || verificationUrl == null) {
 			return errorMap("No data for web authentication");
 		}
 
@@ -128,8 +128,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		intent.putExtra(NetworkLibraryActivity.COMPLETE_URL_KEY, completeUrl);
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
-		// TODO: put user email into map
-		return Collections.singletonMap("user", "unknown@mail");
+		return verify(verificationUrl);
 	}
 
 	private void startActivityAndWait(Intent intent, int requestCode) {
