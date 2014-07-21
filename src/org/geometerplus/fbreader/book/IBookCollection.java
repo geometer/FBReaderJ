@@ -73,6 +73,8 @@ public interface IBookCollection {
 	boolean saveBook(Book book);
 	void removeBook(Book book, boolean deleteFromDisk);
 
+	String getHash(Book book);
+
 	ZLTextPosition getStoredPosition(long bookId);
 	void storePosition(long bookId, ZLTextPosition position);
 
