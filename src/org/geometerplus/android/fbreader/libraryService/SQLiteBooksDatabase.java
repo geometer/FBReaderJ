@@ -1073,10 +1073,23 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return progress;
 	}
 
+	private SQLiteStatement myGetHashStatement;
+	//@Override
+	String getHash(long bookId, long lastModified) {
+		if (myGetHashStatement == null) {
+			myGetHashStatement = myDatabase.compileStatement(
+				"SELECT hash FROM BookHash WHERE bookId = ? AND timestamp > ?"
+			);
+		}
+		myGetHashStatement.bindLong(1, bookId);
+		myGetHashStatement.bindLong(2, lastModified);
+		return myGetHashStatement.simpleQueryForString();
+	}
+
 	@Override
 	protected void deleteBook(long bookId) {
 		myDatabase.beginTransaction();
-		myDatabase.execSQL("DELETE FROM BookSynchronizationInfo WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM BookHash WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookAuthor WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookLabel WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookReadingProgress WHERE book_id=" + bookId);
@@ -1493,16 +1506,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	private void updateTables25() {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS BookReadingProgress(" +
-				"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"book_id INTEGER PRIMARY KEY REFERENCES Books(book_id)," +
 				"numerator INTEGER NOT NULL," +
 				"denominator INTEGER NOT NULL)");
 	}
 
 	private void updateTables26() {
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookSynchronizationInfo");
 		myDatabase.execSQL(
-			"CREATE TABLE IF NOT EXISTS BookSynchronizationInfo(" +
-				"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
-				"synchronization_time INTEGER NOT NULL," +
+			"CREATE TABLE IF NOT EXISTS BookHash(" +
+				"book_id INTEGER PRIMARY KEY REFERENCES Books(book_id)," +
+				"timestamp INTEGER NOT NULL," +
 				"hash TEXT(40) NOT NULL)");
 	}
 }
