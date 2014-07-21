@@ -129,4 +129,5 @@ public abstract class BooksDatabase {
 
 	protected abstract String getHash(long bookId, long lastModified);
 	protected abstract void setHash(long bookId, String hash);
+	protected abstract List<Long> bookIdsByHash(String hash);
 }
