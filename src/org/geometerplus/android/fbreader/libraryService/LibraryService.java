@@ -320,6 +320,10 @@ public class LibraryService extends Service {
 		public void rescan(String path) {
 			myCollection.rescan(path);
 		}
+
+		public String getHash(String book) {
+			return myCollection.getHash(SerializerUtil.deserializeBook(book));
+		}
 	}
 
 	private volatile LibraryImplementation myLibrary;
