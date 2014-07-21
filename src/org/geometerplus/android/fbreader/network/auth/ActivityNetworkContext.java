@@ -105,7 +105,10 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	private String url(URI base, Map<String,String> params, String key) {
-		final String path = params.get(key);
+		return url(base, params.get(key));
+	}
+
+	private String url(URI base, String path) {
 		if (path == null) {
 			return null;
 		}
@@ -121,11 +124,12 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	protected Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
 		final String account = getAccountName(uri.getHost(), realm);
-		final String authUrl;
+		String authUrl = url(uri, params, "auth-url-web");
 		if (account != null) {
-			authUrl = url(uri, params, "auth-url-web-with-email").replace("{email}", account);
-		} else {
-			authUrl = url(uri, params, "auth-url-web");
+			final String urlWithAccount = params.get("auth-url-web-with-email");
+			if (urlWithAccount != null) {
+				authUrl = url(uri, urlWithAccount.replace("{email}", account));
+			}
 		}
 		final String completeUrl = url(uri, params, "complete-url-web");
 		final String verificationUrl = url(uri, params, "verification-url");
