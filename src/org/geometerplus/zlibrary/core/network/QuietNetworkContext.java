@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class QuietNetworkContext extends ZLNetworkContext {
 	@Override
-	public Map<String,String> authenticate(URI uri, Map<String,String> params) {
+	public Map<String,String> authenticate(URI uri, String realm, Map<String,String> params) {
 		return Collections.singletonMap("error", "Required authorization");
 	}
 
