@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
 public class AddCatalogMenuActivity extends MenuActivity {
@@ -56,7 +57,7 @@ public class AddCatalogMenuActivity extends MenuActivity {
 	@Override
 	protected void runItem(final PluginApi.MenuActionInfo info) {
 		try {
-			startActivity(new Intent(getAction(), info.getId()));
+			startActivity(FBReaderIntents.defaultIntent(getAction()).setData(info.getId()));
 		} catch (ActivityNotFoundException e) {
 		}
 		finish();
