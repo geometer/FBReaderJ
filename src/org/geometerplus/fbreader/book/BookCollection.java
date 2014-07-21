@@ -711,4 +711,22 @@ public class BookCollection extends AbstractBookCollection {
 		myDatabase.saveStyle(style);
 		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
 	}
+
+	public String getHash(Book book) {
+		final ZLPhysicalFile file = book.File.getPhysicalFile();
+		if (file == null) {
+			return null;
+		}
+		String hash = myDatabase.getHash(book.getId(), file.javaFile().lastModified());
+		System.err.println("HASH FOR " + book + " FROM DB = " + hash);
+		if (hash == null) {
+			final UID uid = BookUtil.createUid(file, "SHA-1");
+			if (uid == null) {
+				return null;
+			}
+			hash = uid.Id.toLowerCase();
+			myDatabase.setHash(book.getId(), hash);
+		}
+		return hash;
+	}
 }

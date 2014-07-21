@@ -322,6 +322,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		return Collections.emptyList();
 	}
 
+	public String getHash(Book book) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return myInterface.getHash(SerializerUtil.serialize(book));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
 	public synchronized ZLTextPosition getStoredPosition(long bookId) {
 		if (myInterface == null) {
 			return null;
