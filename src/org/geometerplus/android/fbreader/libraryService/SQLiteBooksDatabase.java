@@ -840,7 +840,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindString(2, name != null ? name : "");
 		final ZLColor bgColor = style.getBackgroundColor();
 		statement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
-		statement.executeInsert();
+		statement.execute();
 	}
 
 	@Override
@@ -920,7 +920,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindLong(2, position.getParagraphIndex());
 		statement.bindLong(3, position.getElementIndex());
 		statement.bindLong(4, position.getCharIndex());
-		statement.executeInsert();
+		statement.execute();
 	}
 
 	private void deleteVisitedHyperlinks(long bookId) {
@@ -996,7 +996,20 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindLong(1, bookId);
 		statement.bindLong(2, System.currentTimeMillis());
 		statement.bindString(3, hash);
-		statement.executeInsert();
+		statement.execute();
+	}
+
+	@Override
+	protected List<Long> bookIdsByHash(String hash) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM BookHash WHERE hash=?", new String[] { hash }
+		);
+		final List<Long> bookIds = new LinkedList<Long>();
+		while (cursor.moveToNext()) {
+			bookIds.add(cursor.getLong(0));
+		}
+		cursor.close();
+		return bookIds;
 	}
 
 	@Override
