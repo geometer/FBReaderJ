@@ -23,8 +23,7 @@ import java.util.*;
 import java.math.BigDecimal;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
+import android.database.sqlite.*;
 import android.database.SQLException;
 import android.database.Cursor;
 
@@ -975,14 +974,29 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return progress;
 	}
 
-	//@Override
-	String getHash(long bookId, long lastModified) {
+	@Override
+	protected String getHash(long bookId, long lastModified) {
 		final SQLiteStatement statement = get(
-			"SELECT hash FROM BookHash WHERE bookId=? AND timestamp>?"
+			"SELECT hash FROM BookHash WHERE book_id=? AND timestamp>?"
 		);
 		statement.bindLong(1, bookId);
 		statement.bindLong(2, lastModified);
-		return statement.simpleQueryForString();
+		try {
+			return statement.simpleQueryForString();
+		} catch (SQLiteDoneException e) {
+			return null;
+		}
+	}
+
+	@Override
+	protected void setHash(long bookId, String hash) {
+		final SQLiteStatement statement = get(
+			"INSERT OR REPLACE INTO BookHash (book_id,timestamp,hash) VALUES (?,?,?)"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindLong(2, System.currentTimeMillis());
+		statement.bindString(3, hash);
+		statement.executeInsert();
 	}
 
 	@Override

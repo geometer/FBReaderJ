@@ -52,4 +52,6 @@ interface LibraryInterface {
 	void saveHighlightingStyle(in String style);
 
 	void rescan(in String path);
+
+	String getHash(in String book);
 }

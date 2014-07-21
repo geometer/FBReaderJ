@@ -97,7 +97,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 							}
 							myProcessed.add(book);
 							System.err.println("Processing " + book.getTitle() + " [" + book.File.getPath() + "]");
-							uploadBookToServer(book.File.getPhysicalFile());
+							uploadBookToServer(book);
 						}
 					} finally {
 						System.err.println("BYE-BYE THREAD");
@@ -164,19 +164,23 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		}
 	}
 
-	private void uploadBookToServer(ZLPhysicalFile file) {
-		final UID uid = BookUtil.createUid(file, "SHA-1");
-		if (uid == null) {
-			System.err.println("Failed: SHA-1 checksum not computed");
+	private void uploadBookToServer(Book book) {
+		final ZLPhysicalFile file = book.File.getPhysicalFile();
+		if (file == null) {
 			return;
 		}
-		if (myHashesFromServer.contains(uid.Id.toLowerCase())) {
+		final String hash = myCollection.getHash(book);
+		if (hash == null) {
+			System.err.println("Failed: checksum not computed");
+			return;
+		}
+		if (myHashesFromServer.contains(hash)) {
 			System.err.println("HASH ALREADY IN THE TABLE");
 			return;
 		}
 		final Map<String,Object> result = new HashMap<String,Object>();
 		final PostRequest verificationRequest =
-			new PostRequest("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
+			new PostRequest("books.by.hash", Collections.singletonMap("sha1", hash)) {
 				@Override
 				public void processResponse(Object response) {
 					result.put("result", response);
