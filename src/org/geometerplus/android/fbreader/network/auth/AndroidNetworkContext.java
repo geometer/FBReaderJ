@@ -29,15 +29,15 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
-	public Map<String,String> authenticate(URI uri, Map<String,String> params) {
+	public Map<String,String> authenticate(URI uri, String realm, Map<String,String> params) {
 		if (!"https".equalsIgnoreCase(uri.getScheme())) {
 			return Collections.singletonMap("error", "Connection is not secure");
 		}
-		return authenticateWeb(uri, params);
+		return authenticateWeb(uri, realm, params);
 	}
 
 	protected abstract Context getContext();
-	protected abstract Map<String,String> authenticateWeb(URI uri, Map<String,String> params);
+	protected abstract Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params);
 
 	protected Map<String,String> errorMap(String message) {
 		return Collections.singletonMap("error", message);

@@ -40,8 +40,9 @@ import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public final class ActivityNetworkContext extends AndroidNetworkContext {
 	private final Activity myActivity;
-	private volatile String myAccount;
 	private volatile boolean myAuthorizationConfirmed;
+
+	private volatile String myAccountName;
 
 	public ActivityNetworkContext(Activity activity) {
 		myActivity = activity;
@@ -60,7 +61,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 					break;
 				case NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER:
 					if (resultCode == Activity.RESULT_OK && data != null) {
-						myAccount = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+						myAccountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_AUTHORISATION:
@@ -101,7 +102,10 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	private String url(URI base, Map<String,String> params, String key) {
-		final String path = params.get(key);
+		return url(base, params.get(key));
+	}
+
+	private String url(URI base, String path) {
 		if (path == null) {
 			return null;
 		}
@@ -114,9 +118,16 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	@Override
-	protected Map<String,String> authenticateWeb(URI uri, Map<String,String> params) {
+	protected Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
-		final String authUrl = url(uri, params, "auth-url-web");
+		final String account = getAccountName(uri.getHost(), realm);
+		String authUrl = url(uri, params, "auth-url-web");
+		if (account != null) {
+			final String urlWithAccount = params.get("auth-url-web-with-email");
+			if (urlWithAccount != null) {
+				authUrl = url(uri, urlWithAccount.replace("{email}", account));
+			}
+		}
 		final String completeUrl = url(uri, params, "complete-url-web");
 		final String verificationUrl = url(uri, params, "verification-url");
 		if (authUrl == null || completeUrl == null || verificationUrl == null) {
