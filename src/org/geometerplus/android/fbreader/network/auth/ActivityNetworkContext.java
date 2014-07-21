@@ -204,14 +204,12 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 			final String authToken = GoogleAuthUtil.getToken(
 				myActivity, account, String.format("audience:server:client_id:%s", clientId)
 			);
-			System.err.println("AUTH TOKEN = " + authToken);
 			final Map<String,String> result = runTokenAuthorization(authUrl, authToken, null);
 			if (result.containsKey("user")) {
 				return result;
 			}
 			return registerAccessToken(account, clientId, authUrl, authToken);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return errorMap(e);
 		} finally {
 			System.err.println("--- TOKEN AUTH ---");
