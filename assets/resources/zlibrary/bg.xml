@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Bulgarian FBReaderJ resources, by Ники Арсов -->
+<!-- Updated by Георги Георгиев, 22.07.2014 -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -32,28 +34,28 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="арабски"/>
-		<node name="be" value="Belarusian" toBeTranslated="true"/>
+		<node name="be" value="белоруски"/>
 		<node name="bg" value="български"/>
-		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="ca" value="каталунски"/>
 		<node name="cs" value="чешки"/>
-		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="da" value="датски"/>
 		<node name="de" value="немски"/>
 		<node name="de-traditional" value="немски (традиционен)"/>
 		<node name="el" value="гръцки"/>
 		<node name="en" value="английски"/>
 		<node name="eo" value="есперанто"/>
 		<node name="es" value="испански"/>
-		<node name="eu" value="Basque" toBeTranslated="true"/>
-		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="eu" value="баскски"/>
+		<node name="fa" value="персийски"/>
 		<node name="fi" value="фински"/>
 		<node name="fr" value="френски"/>
 		<node name="gl" value="галски"/>
 		<node name="he" value="иврит"/>
 		<node name="hu" value="унгаски"/>
-		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="hy" value="арменски"/>
 		<node name="id" value="индонезийски"/>
 		<node name="it" value="италиански"/>
-		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="ka" value="грузински"/>
 		<node name="lt" value="литовски"/>
 		<node name="nb" value="норвежски"/>
 		<node name="nl" value="холандски"/>
@@ -61,7 +63,7 @@
 		<node name="pt" value="португалски"/>
 		<node name="ro" value="румънски"/>
 		<node name="ru" value="руски"/>
-		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sr" value="сръбски"/>
 		<node name="sv" value="шведски"/>
 		<node name="ta" value="тамилски"/>
 		<node name="th" value="тайски"/>
@@ -69,11 +71,11 @@
 		<node name="uk" value="украински"/>
 		<node name="vi" value="виетнамски"/>
 		<node name="zh" value="китайски"/>
-		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
-		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="zh_TW" value="китайски (традиционен)"/>
+		<node name="any" value="кой да е"/>
 		<node name="other" value="друг"/>
 		<node name="multi" value="многоезичен"/>
-		<node name="system" value="System" toBeTranslated="true"/>
+		<node name="system" value="системен"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="включи"/>
