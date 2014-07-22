@@ -195,6 +195,10 @@ public class LibraryService extends Service {
 			return SerializerUtil.serialize(myCollection.getBookByUid(new UID(type, id)));
 		}
 
+		public String getBookByHash(String hash) {
+			return SerializerUtil.serialize(myCollection.getBookByHash(hash));
+		}
+
 		public List<String> authors() {
 			final List<Author> authors = myCollection.authors();
 			final List<String> strings = new ArrayList<String>(authors.size());
