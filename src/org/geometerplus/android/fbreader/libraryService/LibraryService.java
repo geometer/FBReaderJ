@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.os.FileObserver;
 
@@ -31,16 +32,13 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
-
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
-
 import org.geometerplus.android.fbreader.api.TextPosition;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
@@ -285,8 +283,16 @@ public class LibraryService extends Service {
 			}
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+			if (((ZLImageProxy)image).isSynchronized()) {
+				return getSignal();
+			}
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
+		}
+
+		@Override
+		public Bitmap getSignal() {
+			return BitmapFactory.decodeResource(getResources(), R.drawable.refresh);
 		}
 
 		public List<String> bookmarks(String query) {
