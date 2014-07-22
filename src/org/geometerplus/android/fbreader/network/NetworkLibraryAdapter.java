@@ -67,6 +67,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		final int status = (tree instanceof NetworkBookTree)
 			? NetworkBookActions.getBookStatus(
 				((NetworkBookTree)tree).Book,
+				((NetworkLibraryActivity)getActivity()).BookCollection,
 				((NetworkLibraryActivity)getActivity()).Connection
 			  )
 			: 0;

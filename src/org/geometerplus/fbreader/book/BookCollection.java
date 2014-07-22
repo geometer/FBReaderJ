@@ -170,6 +170,16 @@ public class BookCollection extends AbstractBookCollection {
 		return bookId != null ? getBookById(bookId) : null;
 	}
 
+	public Book getBookByHash(String hash) {
+		for (long id : myDatabase.bookIdsByHash(hash)) {
+			final Book book = getBookById(id);
+			if (book.File.exists()) {
+				return book;
+			}
+		}
+		return null;
+	}
+
 	private boolean addBook(Book book, boolean force) {
 		if (book == null) {
 			return false;
