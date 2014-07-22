@@ -11,6 +11,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 
@@ -49,6 +51,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     private BSReadingActionBar mActionBar;
     private BSReadingStatusBar mStatusBar;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     public void onBSCreate() {
@@ -159,7 +162,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                     public void run() {
                         action.run();
                         if (uiPostAction != null) {
-                            uiPostAction.run();
+                            mHandler.post(uiPostAction);
                         }
                     }
                 };

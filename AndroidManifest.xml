@@ -51,10 +51,6 @@
 		</service>
 		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-			<intent-filter>
 				<action android:name="android.fbreader.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
@@ -120,6 +116,32 @@
 			</intent-filter>
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
 		</activity>
+
+        <activity-alias
+            android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name="org.geometerplus.android.fbreader.FBReaderLauncher"
+            android:targetActivity="org.geometerplus.android.fbreader.FBReader"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name="com.yotadevices.yotaphone2.fbreader.YotaReader"
+            android:label="Yota Reader"
+            android:icon="@drawable/fbreader"
+            android:targetActivity="org.geometerplus.android.fbreader.FBReader"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
 		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CANCEL_MENU"/>
