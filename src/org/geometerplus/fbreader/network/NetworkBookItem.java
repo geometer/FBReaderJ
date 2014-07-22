@@ -22,9 +22,12 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 import java.io.File;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.IBookCollection;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -130,8 +133,8 @@ public class NetworkBookItem extends NetworkItem {
 		return null;
 	}
 
-	public Status getStatus() {
-		if (localCopyFileName() != null) {
+	public Status getStatus(IBookCollection collection) {
+		if (localCopyFileName(collection) != null) {
 			return Status.Downloaded;
 		} else if (reference(UrlInfo.Type.Book) != null) {
 			return Status.ReadyForDownload;
@@ -198,13 +201,22 @@ public class NetworkBookItem extends NetworkItem {
 	}
 
 	private static final String HASH_PREFIX = "sha1:";
-	public String localCopyFileName() {
-		System.err.println("Looking for file name");
-		for (String identifier : Identifiers) {
-			if (identifier.startsWith(HASH_PREFIX)) {
-				System.err.println("hash: " + identifier.substring(HASH_PREFIX.length()));
+	public String localCopyFileName(IBookCollection collection) {
+		if (collection != null) {
+			for (String identifier : Identifiers) {
+				if (identifier.startsWith(HASH_PREFIX)) {
+					final String hash = identifier.substring(HASH_PREFIX.length());
+					final Book book = collection.getBookByHash(hash);
+					if (book != null) {
+						final ZLPhysicalFile file = book.File.getPhysicalFile();
+						if (file != null) {
+							return file.getPath();
+						}
+					}
+				}
 			}
 		}
+
 		final boolean hasBuyReference = buyInfo() != null;
 		BookUrlInfo reference = null;
 		String fileName = null;
