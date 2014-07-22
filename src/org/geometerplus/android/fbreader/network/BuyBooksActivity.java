@@ -42,7 +42,11 @@ import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.BookBuyUrlInfo;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+
 public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeListener {
+	private final BookCollectionShadow myBookCollection = new BookCollectionShadow();
+
 	public static void run(Activity activity, NetworkBookTree tree) {
 		run(activity, Collections.singletonList(tree));
 	}
@@ -74,6 +78,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		super.onCreate(bundle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
+		myBookCollection.bindToService(this, null);
 		myLibrary = NetworkLibrary.Instance();
 
 		final List<NetworkTree.Key> keys =
@@ -236,7 +241,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 						);
 						okButton.setText(buttonResource.getResource("buy").getValue());
 						cancelButton.setText(buttonResource.getResource("cancel").getValue());
-					} else if (myBooks.get(0).getStatus() == NetworkBookItem.Status.CanBePurchased) {
+					} else if (myBooks.get(0).getStatus(myBookCollection) == NetworkBookItem.Status.CanBePurchased) {
 						textArea.setText(
 							resource.getResource("confirm").getValue().replace("%s", myBooks.get(0).Title)
 						);
@@ -255,6 +260,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	@Override
 	protected void onDestroy() {
 		NetworkLibrary.Instance().removeChangeListener(this);
+		myBookCollection.unbind();
 		super.onDestroy();
 	}
 
@@ -267,7 +273,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	private Money calculateCost() {
 		Money cost = Money.ZERO;
 		for (NetworkBookItem b : myBooks) {
-			if (b.getStatus() != NetworkBookItem.Status.CanBePurchased) {
+			if (b.getStatus(myBookCollection) != NetworkBookItem.Status.CanBePurchased) {
 				continue;
 			}
 			final BookBuyUrlInfo info = b.buyInfo();
@@ -334,7 +340,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 				try {
 					final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 					for (final NetworkBookItem b : myBooks) {
-						if (b.getStatus() != NetworkBookItem.Status.CanBePurchased) {
+						if (b.getStatus(myBookCollection) != NetworkBookItem.Status.CanBePurchased) {
 							continue;
 						}
 						mgr.purchaseBook(b);
