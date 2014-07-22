@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Bulgarian FBReaderJ resources, by Ники Арсов -->
+<!-- Updated by Георги Георгиев, 22.07.2014 -->
 <resources>
 	<node name="library" value="FBReader: библиотека">
 		<node name="unknownAuthor" value="Неизвестен автор"/>
@@ -40,7 +41,7 @@
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Търсене"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="rescan" value="Ресканиране"/>
 		</node>
 		<node name="openBook" value="Отвори книгата"/>
 		<node name="showBookInfo" value="Информация за книгата"/>
@@ -48,9 +49,9 @@
 		<node name="deleteBook" value="Изтрий книгата"/>
 		<node name="addToFavorites" value="Добави в избрани"/>
 		<node name="removeFromFavorites" value="Премахни от избрани"/>
-		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
-		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="removeFromRecents" value="Премахни от списък Последни"/>
+		<node name="markAsRead" value="Маркирай като прочетено"/>
+		<node name="markAsUnread" value="Маркирай като непрочетено"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: мрежова библиотека">
 		<node name="byAuthor" value="Автор">
@@ -73,8 +74,8 @@
 		<node name="found" value="Намерено">
 			<node name="summary" value="Резултати от тъсенето: %s"/>
 		</node>
-		<node name="recent" value="Recent catalogs" toBeTranslated="true">
-			<node name="summary" value="Catalogs you visited recently" toBeTranslated="true"/>
+		<node name="recent" value="Последни каталози">
+			<node name="summary" value="Каталози, които сте посетили последно"/>
 		</node>
 		<node name="openCatalog" value="Отвори каталога"/>
 		<node name="networkSearch" value="Търси"/>
@@ -122,7 +123,7 @@
 		<node name="removeCustomCatalog" value="Премахни каталога"/>
 		<node name="addCustomCatalog" value="Добави каталог"/>
 		<node name="addCustomCatalogSummary" value="Добави OPDS каталог ръчно"/>
-		<node name="disableCatalog" value="Disable catalog" toBeTranslated="true"/>
+		<node name="disableCatalog" value="Деактивирай каталог"/>
 		<node name="confirmQuestions">
 			<node name="read" value="Искате ли да прочетете локално копие?"/>
 			<node name="download" value="Искате ли да свалите книгата?"/>
@@ -139,13 +140,13 @@
 			<node name="title" value="Добавяне на каталог"/>
 			<node name="editUrl" value="Въведи адрес ръчно"/>
 		</node>
-		<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true">
-			<node name="summary" value="Configure your catalogs list" toBeTranslated="true"/>
-			<node name="enabled" value="Enabled" toBeTranslated="true"/>
-			<node name="disabled" value="Disabled" toBeTranslated="true"/>
+		<node name="manageCatalogs" value="Организиране на каталози">
+			<node name="summary" value="Конфигуриране на списъка ви с каталози"/>
+			<node name="enabled" value="Активиран"/>
+			<node name="disabled" value="Деактивиран"/>
 		</node>
 		<node name="menu">
-			<node name="openRoot" value="Root catalog" toBeTranslated="true"/>
+			<node name="openRoot" value="Основен каталог"/>
 			<node name="networkSearch" value="Търсене в межата"/>
 			<node name="reload" value="Обнови"/>
 			<node name="signIn" value="Вход"/>
@@ -154,7 +155,7 @@
 			<node name="topup" value="Зареди сметката"/>
 			<node name="addCustomCatalog" value="Добави каталог"/>
 			<node name="refreshCatalogsList" value="Обнови каталозите"/>
-			<node name="manageCatalogs" value="Manage catalogs" toBeTranslated="true"/>
+			<node name="manageCatalogs" value="Организация на каталози"/>
 			<node name="clearBasket" value="Изчисти кошницата"/>
 			<node name="buyAllBooks" value="Купи всички книги"/>
 		</node>
@@ -237,18 +238,18 @@
 		<node name="forward" value="Напред"/>
 		<node name="close" value="Затвори FBReader"/>
 	</node>
-	<node name="style" value="Style %s" toBeTranslated="true"/>
+	<node name="style" value="Стил %s"/>
 	<node name="highlightingStyleMenu">
-		<node name="editStyle" value="Edit style…" toBeTranslated="true"/>
+		<node name="editStyle" value="Редактирай стил…"/>
 		<node name="deleteBookmark" value="Премахни отбелязването"/>
 	</node>
 	<node name="editStyle">
-		<node name="name" value="Style name" toBeTranslated="true"/>
-		<node name="invisible" value="Invisible" toBeTranslated="true">
-			<node name="summaryOn" value="Do not highlight bookmarks" toBeTranslated="true"/>
-			<node name="summaryOff" value="Highlight bookmarks" toBeTranslated="true"/>
+		<node name="name" value="Име на стил"/>
+		<node name="invisible" value="Невидим">
+			<node name="summaryOn" value="Не осветявай белязки"/>
+			<node name="summaryOff" value="Осветявай белязки"/>
 		</node>
-		<node name="bgColor" value="Background color" toBeTranslated="true"/>
+		<node name="bgColor" value="Фонов цвят"/>
 	</node>
 	<node name="selection" value="Етикет">
 		<node name="copyToClipboard" value="Копирай в буфера"/>
@@ -268,8 +269,8 @@
 		<node name="toc" value="Съдържание"/>
 		<node name="day" value="Ден"/>
 		<node name="night" value="Нощ"/>
-		<node name="yotaSwitchToBackScreen" value="Switch to back screen" toBeTranslated="true"/>
-		<node name="yotaSwitchToFrontScreen" value="Switch to front screen" toBeTranslated="true"/>
+		<node name="yotaSwitchToBackScreen" value="Превключи към заден екран"/>
+		<node name="yotaSwitchToFrontScreen" value="Превключи към преден екран"/>
 		<node name="networkLibrary" value="Мрежова библиотека"/>
 		<node name="navigate" value="Напред">
 			<node name="toc" value="Заглавие"/>
@@ -296,8 +297,8 @@
 		<node name="decreaseFont" value="Намали шрифта"/>
 		<node name="toggleFullscreen" value="На цял екран"/>
 		<node name="bookmarks" value="Отбелязани"/>
-		<node name="help" value="Help" toBeTranslated="true"/>
-		<node name="plugins" value="Install plugins" toBeTranslated="true"/>
+		<node name="help" value="Помощ"/>
+		<node name="plugins" value="Допълнителни модули"/>
 	</node>
 	<node name="BookInfo">
 		<node name="fileName" value="Файл"/>
@@ -311,25 +312,25 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталози">
 			<node name="summary" value="Търси в каталозите"/>
-			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
+			<node name="bookPath" value="Къде да търся книги">
 				<node name="chooserTitle" value="Каталог с книги"/>
 			</node>
-			<node name="downloadDir" value="Where to store downloaded books" toBeTranslated="true">
+			<node name="downloadDir" value="Къде да съхранявам свалени книги">
 				<node name="chooserTitle" value="Каталог с книги"/>
 			</node>
-			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
+			<node name="fontPath" value="Къде да търся шрифтове">
 				<node name="chooserTitle" value="Каталог с шрифтове"/>
 			</node>
-			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
+			<node name="wallpaperPath" value="Къде да търся фонови изображения">
 				<node name="chooserTitle" value="Каталог с тапети"/>
 			</node>
-			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
-				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
+			<node name="tempDir" value="Къде да съхранявам временни файлове">
+				<node name="chooserTitle" value="Директория за временни файлове"/>
 			</node>
 		</node>
 		<node name="appearance" value="Външен вид">
 			<node name="summary" value="Екран за настройки, статус бар, светещи бутони"/>
-			<node name="language" value="Interface language" toBeTranslated="true"/>
+			<node name="language" value="Език на интерфейса"/>
 			<node name="screenOrientation" value="Ориентация на екрана">
 				<node name="system" value="системна"/>
 				<node name="sensor" value="зависи от ориентацията на устройството"/>
@@ -354,17 +355,17 @@
 				<node name="summaryOn" value="Покажи лентата на състоянието, когато менюто се появява на екрана"/>
 				<node name="summaryOff" value="Не показвай лентата на състоянието, когато менюто се появява на екрана"/>
 			</node>
-			<node name="fullscreenMode" value="Fullscreen mode" toBeTranslated="true">
-				<node name="summaryOn" value="Hide navigation controls" toBeTranslated="true"/>
-				<node name="summaryOff" value="Show navigation controls" toBeTranslated="true"/>
+			<node name="fullscreenMode" value="Режим цял екран">
+				<node name="summaryOn" value="Скрий навигационните контроли"/>
+				<node name="summaryOff" value="Покажи навигационните контроли"/>
 			</node>
 			<node name="disableButtonLights" value="Изключване на светещите бутони по време на четене">
 				<node name="summaryOn" value="Изключване на светещите бутони (не работи на всички устройства)"/>
 				<node name="summaryOff" value="Не изключвай светещите бутони"/>
 			</node>
-			<node name="twoColumnView" value="Two column view" toBeTranslated="true">
-				<node name="summaryOn" value="Display text in two columns when device is held horizontally" toBeTranslated="true"/>
-				<node name="summaryOff" value="Always display text in one column" toBeTranslated="true"/>
+			<node name="twoColumnView" value="Изглед в две колони">
+				<node name="summaryOn" value="Показвай текста в две колони когато устройството е хоризонтално"/>
+				<node name="summaryOff" value="Винаги показвай текста в една колона"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Настройка на яркостта на екрана">
 				<node name="summaryOn" value="С приплъзване нагоре/надолу по левия край на екрана"/>
@@ -426,9 +427,9 @@
 				<node name="normal" value="нормален"/>
 				<node name="inherit" value="без промяна"/>
 			</node>
-			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
-				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
-				<node name="none" value="no decorations" toBeTranslated="true"/>
+			<node name="textDecoration" value="Ефекти на текста">
+				<node name="inherit" value="&lt;непроменено&gt;"/>
+				<node name="none" value="без ефекти"/>
 				<node name="underline" value="подчертан"/>
 				<node name="line-through" value="зачертан"/>
 			</node>
@@ -456,14 +457,14 @@
 			<node name="spaceAfter" value="Отстояние след"/>
 			<node name="leftIndent" value="Ляв отстъп"/>
 			<node name="rightIndent" value="Десен отстъп"/>
-			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
+			<node name="verticalAlignment" value="Вертикално подравняване"/>
 			<node name="more" value="Други стилове">
 				<node name="summary" value="Отделни настройки за заглавия, епиграфи и т.н."/>
 				<node name="Regular Paragraph" value="Стандартен параграф">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
-					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
+				<node name="xhtml-tag-p" value="EPub Параграф">
+					<node name="summary" value="&lt;p&gt; XHTML съдържание на таг"/>
 				</node>
 				<node name="Title" value="Заглавие">
 					<node name="summary" value=""/>
@@ -565,9 +566,9 @@
 		</node>
 		<node name="css" value="CSS">
 			<node name="summary" value="CSS форматиране"/>
-			<node name="fontFamily" value="Font family" toBeTranslated="true">
-				<node name="summaryOn" value="Use font family defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore font family defined in CSS" toBeTranslated="true"/>
+			<node name="fontFamily" value="Шрифтова фамилия">
+				<node name="summaryOn" value="Използвай шрифтова фамилия, дефинирана в CSS"/>
+				<node name="summaryOff" value="Игнорирай шрифтова фамилия, дефинирана в CSS"/>
 			</node>
 			<node name="fontSize" value="Размер на шрифта">
 				<node name="summaryOn" value="Използвай размера на шрифта, зададен в CSS"/>
@@ -577,9 +578,9 @@
 				<node name="summaryOn" value="Подравни текста, според указанията в CSS"/>
 				<node name="summaryOff" value="Игнорирай подравняването на текста, указано в CSS"/>
 			</node>
-			<node name="margins" value="Margins" toBeTranslated="true">
-				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			<node name="margins" value="Граници">
+				<node name="summaryOn" value="Приложи граници, дефинирани в CSS"/>
+				<node name="summaryOff" value="Игнорирай граници, дефинирани в CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Цветове и тапети">
@@ -605,7 +606,7 @@
 			<node name="right" value="Дясна граница"/>
 			<node name="top" value="Горна граница"/>
 			<node name="bottom" value="Долна граница"/>
-			<node name="spaceBetweenColumns" value="Space between columns" toBeTranslated="true"/>
+			<node name="spaceBetweenColumns" value="Разстояние между колоните"/>
 		</node>
 		<node name="scrollBar" value="Скрол бар">
 			<node name="summary" value="Индикатор на прочетените страници"/>
@@ -683,8 +684,8 @@
 			<node name="summary" value="Настройки на речника"/>
 			<node name="dictionary" value="Речник"/>
 			<node name="translator" value="Преводач"/>
-			<node name="targetLanguage" value="Translate to" toBeTranslated="true">
-				<node name="any" value="all languages" toBeTranslated="true"/>
+			<node name="targetLanguage" value="Преведи на">
+				<node name="any" value="всички езици"/>
 			</node>
 			<node name="tappingAction" value="Действие при продължителен натиск по екрана">
 				<node name="doNothing" value="Не се извършва действие"/>
@@ -710,9 +711,9 @@
 				<node name="covers" value="Само корицата"/>
 				<node name="all" value="Всички изображения"/>
 			</node>
-			<node name="matchBackground" value="Match background intensity" toBeTranslated="true">
-				<node name="summaryOn" value="Adjust image color according background" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not adjust image color" toBeTranslated="true"/>
+			<node name="matchBackground" value="Напасвай фоновия интензитет">
+				<node name="summaryOn" value="Настройвай цвят на изображение според фона"/>
+				<node name="summaryOff" value="Не настройвай цвят на изображение"/>
 			</node>
 		</node>
 		<node name="cancelMenu" value="Меню за изход">
@@ -764,18 +765,18 @@
 			<node name="twitter" value="Пoследвайте ни в Twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+			<node name="facebook" value="FBReader във фейсбук">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
-			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
+			<node name="thirdParty" value="Библиотеки от външни източници"/>
 		</node>
-		<node name="eink" value="E-ink screen" toBeTranslated="true">
-			<node name="summary" value="Specific options for e-ink screens" toBeTranslated="true"/>
-			<node name="enableFastRefresh" value="Fast refresh mode" toBeTranslated="true">
-				<node name="summaryOn" value="Use fast (but not very clean) screen update" toBeTranslated="true"/>
-				<node name="summaryOff" value="Use complete (clean, but slow) screen update" toBeTranslated="true"/>
+		<node name="eink" value="E-ink екран">
+			<node name="summary" value="Специфични настройки за e-ink екрани"/>
+			<node name="enableFastRefresh" value="Режим за бързо опресняване">
+				<node name="summaryOn" value="Използвай бързо (но не много чисто) опресняване на екрана"/>
+				<node name="summaryOff" value="Използвай пълно (чисто, но бавно) опресняване на екрана"/>
 			</node>
-			<node name="interval" value="Number of fast updates between complete refreshes" toBeTranslated="true"/>
+			<node name="interval" value="Брой бързи опреснявания между пълните"/>
 		</node>
 	</node>
 	<node name="dialog">
@@ -800,8 +801,8 @@
 			<node name="sendReport" value="Изпрати съобщение"/>
 			<node name="addToFavorites" value="Добави в избрани"/>
 			<node name="removeFromFavorites" value="Премахни от избрани"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+			<node name="markAsRead" value="Отбележи като прочетено"/>
+			<node name="markAsUnread" value="Отбележи като непрочетено"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Инсталиране на програма"/>
@@ -834,8 +835,8 @@
 			<node name="loadingNetworkBookInfo" value="Зареждане на информация за книгата. Моля, изчакайте…"/>
 			<node name="updatingCatalogsList" value="Обновяване на списъка с каталози. Моля, изчакайте…"/>
 			<node name="updatingAccountInformation" value="Обновяване на информацията за акаунта. Моля, изчакайте…"/>
-			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Инициализиране на DRM енджин. Моля, изчакайте…"/>
+			<node name="acquireLicense" value="Получаване на лиценз. Моля, изчакайте…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Грешка на сървъра"/>
@@ -882,59 +883,59 @@
 			<node name="more" value="Още"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader works in fullscreen mode by default. Tap center third of the screen to show controls. You can change this behaviour in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
-			<node name="message2" value="Well done! Now tap the center third again to hide the controls and this hint. If you want to keep controls on the screen during reading, select “Show action bar” option in “Appearance” section of the Settings dialog." toBeTranslated="true"/>
+			<node name="message1" value="FBReader стартира в пълноекранен режим по подразбиране. Чукнете централната третина на екрана за да се покажат контролите. Можете да промените това действие в секция “Показване” на диалога Настройки."/>
+			<node name="message2" value="Браво! Сега чукнете централната третина отново за да скриете контролите и този съвет. Ако искате да запазите контролите на екрана по време на четене, селектирайте опцията “Покажи лента с действия” в секция “Показване” на диалога Настройки."/>
 		</node>
 		<node name="folderList">
-			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
-				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			<node name="addFolder" value="Добави папка"/>
+			<node name="removeDialog" value="Премахни папка">
+				<node name="message" value="Премахване “%s” от списъка?"/>
 			</node>
-			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+			<node name="duplicate" value="“%s” е вече в списъка"/>
 		</node>
 		<node name="editList">
-			<node name="edit" value="Edit" toBeTranslated="true"/>
-			<node name="remove" value="Remove" toBeTranslated="true"/>
+			<node name="edit" value="Редактирай"/>
+			<node name="remove" value="Премахни"/>
 		</node>
 		<node name="editTags">
-			<node name="addTag" value="Add tag" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
-				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			<node name="addTag" value="Добави категория"/>
+			<node name="removeDialog" value="Премахни категория">
+				<node name="message" value="Премахване “%s” от списъка?"/>
 			</node>
 		</node>
 		<node name="editAuthors">
-			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove author" toBeTranslated="true">
-				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			<node name="addAuthor" value="Добави автор"/>
+			<node name="removeDialog" value="Премахни автор">
+				<node name="message" value="Премахване автор “%s” от списъка?"/>
 			</node>
 		</node>
 		<node name="fileChooser">
-			<node name="root" value="Root" toBeTranslated="true"/>
-			<node name="newFolder" value="New folder" toBeTranslated="true"/>
-			<node name="folderNameHint" value="Folder name" toBeTranslated="true"/>
+			<node name="root" value="Основна"/>
+			<node name="newFolder" value="Нова папка"/>
+			<node name="folderNameHint" value="Име на папка"/>
 			<node name="menu">
-				<node name="origin" value="Origin" toBeTranslated="true"/>
-				<node name="reload" value="Reload" toBeTranslated="true"/>
+				<node name="origin" value="Източник"/>
+				<node name="reload" value="Презареди"/>
 			</node>
-			<node name="sortBy" value="Sort by" toBeTranslated="true">
-				<node name="name" value="Name" toBeTranslated="true"/>
-				<node name="size" value="Size" toBeTranslated="true"/>
-				<node name="date" value="Date" toBeTranslated="true"/>
+			<node name="sortBy" value="Сортирай по">
+				<node name="name" value="Име"/>
+				<node name="size" value="Размер"/>
+				<node name="date" value="Дата"/>
 			</node>
-			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+			<node name="permissionDenied" value="Няма достъп"/>
 		</node>
 		<node name="missingPlugin">
 			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="nativeCodeFailure" value="Error %s in native code during reading '%s'" toBeTranslated="true"/>
+		<node name="nativeCodeFailure" value="Грешка %s в кода по време на четене '%s'"/>
 		<node name="errorReadingFile" value="Грешка при четенето на '%s'"/>
 		<node name="errorReadingZip" value="Грешка при разархивирането на '%s'"/>
 		<node name="pluginNotFound" value="Няма плъгин за '%s'"/>
 		<node name="unknownPluginType" value="Неизвестен тип плъгин: %s"/>
 		<node name="fileNotFound" value="Липсващ файл: %s"/>
-		<node name="unsupportedEncryptionMethod" value="File %s is encrypted with method that is not supported by FBReader. Some pages are not readable" toBeTranslated="true"/>
+		<node name="unsupportedEncryptionMethod" value="Файл %s е криптиран с метод, който не е поддържан от FBReader. Някои страници са нечетими"/>
 		<node name="opfFileNotFound" value="OPF файлът не е намерен в %s"/>
 		<node name="unsupportedFileFormat" value="Файловият формат '%s' не се поддържа"/>
 		<node name="errorParsingRtf" value="Грешка при четенето на RTF файла %s"/>
@@ -946,12 +947,12 @@
 		<node name="dictionaryIsNotInstalled" value="Речникът не е инсталиран"/>
 		<node name="permissionDenied" value="Файлът е недостъпен"/>
 		<node name="noFavorites" value="Списъкът с фаворити е празен"/>
-		<node name="noSeries" value="There are no books in series, sorry" toBeTranslated="true"/>
+		<node name="noSeries" value="Няма книги от сериите"/>
 		<node name="emptyCatalog" value="Каталогът е празен"/>
 		<node name="emptyBasket" value="Кошчето е празно"/>
 		<node name="emptyNetworkSearchResults" value="Книгата не е намерена"/>
-		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
-		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+		<node name="videoServiceNotWorking" value="Видео услугата не е достъпна"/>
+		<node name="videoPlayerNotFound" value="На това устройство няма инсталиран видео плейър"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Браузер"/>
@@ -965,7 +966,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Проблем с FBReader"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
+			<node name="text" value="Кешовата директория на FBReader е недостъпна за запис. Може би сте забравили да поставите карта или да изключите от компютъра. Моля оправете го или изберете друга директория."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Проблем с FBReader"/>
@@ -980,40 +981,40 @@
 	<node name="links">
 		<node name="faqPage" value="http://fbreader.org/faq-page"/>
 	</node>
-	<node name="plugins" value="Install plugins" toBeTranslated="true">
-		<node name="noMorePlugins" value="We have no new plugins at the moment, sorry" toBeTranslated="true"/>
-		<node name="litres" value="LitRes" toBeTranslated="true">
-			<node name="summary" value="Russian book store" toBeTranslated="true"/>
+	<node name="plugins" value="Инсталиране на допълнителни модули">
+		<node name="noMorePlugins" value="Няма нови модули към момента"/>
+		<node name="litres" value="LitRes">
+			<node name="summary" value="Руски магазин за книги"/>
 		</node>
-		<node name="tts-plus" value="TTS+" toBeTranslated="true">
-			<node name="summary" value="Read aloud" toBeTranslated="true"/>
+		<node name="tts-plus" value="TTS+">
+			<node name="summary" value="Чети на глас"/>
 		</node>
-		<node name="local-opds-scanner" value="Local OPDS Scanner" toBeTranslated="true">
-			<node name="summary" value="Look for books in the local network" toBeTranslated="true"/>
+		<node name="local-opds-scanner" value="Локален OPDS сканер">
+			<node name="summary" value="Търси книги в локалната мрежа"/>
 		</node>
-		<node name="bookshelf" value="Bookshelf" toBeTranslated="true">
-			<node name="summary" value="Thumbnail library view" toBeTranslated="true"/>
+		<node name="bookshelf" value="Книжна лавица">
+			<node name="summary" value="Thumbnail library view"/>
 		</node>
-		<node name="opds-server" value="OPDS Server" toBeTranslated="true">
-			<node name="summary" value="Serve books from your device" toBeTranslated="true"/>
+		<node name="opds-server" value="OPDS Сървър">
+			<node name="summary" value="Обслужване книги от вашето устройство"/>
 		</node>
-		<node name="widgets" value="Widgets" toBeTranslated="true">
-			<node name="summary" value="Add books to your home screen" toBeTranslated="true"/>
+		<node name="widgets" value="Джунджурийки">
+			<node name="summary" value="Добавяне книги към вашият хоум скрийн"/>
 		</node>
-		<node name="pdf" value="PDF" toBeTranslated="true">
-			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="Чети книги в PDF формат"/>
 		</node>
 	</node>
 	<node name="drm">
-		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
+		<node name="encryptedSection" value="Криптирана секция"/>
 	</node>
 	<node name="yota">
-		<node name="frontScreenMessage" value="Turn the device over to read your book. To return text to this screen, press the button below." toBeTranslated="true"/>
-		<node name="frontScreenButton" value="Switch to this screen" toBeTranslated="true"/>
+		<node name="frontScreenMessage" value="Обърнете устройството за да четете книгата си. За да върнете текста до този екран, натиснете бутона отдолу."/>
+		<node name="frontScreenButton" value="Превключи към този екран"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+		<node name="positiveLength" value="Например: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="Например: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="Например: 125%%"/>
 	</node>
 </resources>
