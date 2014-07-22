@@ -882,8 +882,8 @@
 			<node name="more" value="Ещё"/>
 		</node>
 		<node name="screenHint">
-			<node name="message1" value="FBReader запускается в полноэкранном режиме. Чтобы увидеть элементы управления, нажмите на экран в средней трети. Вы можете изменить это поведение в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
-			<node name="message2" value="Отлично! Нажмите ещё раз на экран в средней трети, чтобы скрыть элементы управления и этот совет. Если вы хотите, чтобы верхнее меню оставалось на экране во время чтения, выберите «Показывать строку меню» в разделе «Внешний вид» диалога настроек." toBeTranslated="true"/>
+			<node name="message1" value="FBReader запускается в полноэкранном режиме. Чтобы увидеть элементы управления, нажмите на экран в средней трети. Вы можете изменить это поведение в разделе «Внешний вид» диалога настроек."/>
+			<node name="message2" value="Отлично! Нажмите ещё раз на экран в средней трети, чтобы скрыть элементы управления и этот совет. Если вы хотите, чтобы верхнее меню оставалось на экране во время чтения, выберите «Показывать строку меню» в разделе «Внешний вид» диалога настроек."/>
 		</node>
 		<node name="folderList">
 			<node name="addFolder" value="Добавить каталог"/>
@@ -891,6 +891,22 @@
 				<node name="message" value="Удалить «%s» из списка?"/>
 			</node>
 			<node name="duplicate" value="«%s» уже в списке"/>
+		</node>
+		<node name="editList">
+			<node name="edit" value="Изменить"/>
+			<node name="remove" value="Удалить"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Добавить категорию"/>
+			<node name="removeDialog" value="Убрать категорию">
+				<node name="message" value="Убрать «%s» из списка?"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Добавить автора"/>
+			<node name="removeDialog" value="Убрать автора">
+				<node name="message" value="Убрать %s из списка?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Корень"/>
@@ -906,6 +922,9 @@
 				<node name="date" value="по дате"/>
 			</node>
 			<node name="permissionDenied" value="Нет доступа"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Модуль для чтения файлов %s не установлен. Установить прямо сейчас?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

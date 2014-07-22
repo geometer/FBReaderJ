@@ -23,8 +23,7 @@ import java.util.*;
 import java.math.BigDecimal;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
+import android.database.sqlite.*;
 import android.database.SQLException;
 import android.database.Cursor;
 
@@ -43,6 +42,8 @@ import org.geometerplus.android.util.SQLiteUtil;
 
 final class SQLiteBooksDatabase extends BooksDatabase {
 	private final SQLiteDatabase myDatabase;
+	private final HashMap<String,SQLiteStatement> myStatements =
+		new HashMap<String,SQLiteStatement>();
 
 	SQLiteBooksDatabase(Context context) {
 		myDatabase = context.openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
@@ -74,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 26;
+		final int currentVersion = 27;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -134,6 +135,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables24();
 			case 25:
 				updateTables25();
+			case 26:
+				updateTables26();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -330,79 +333,63 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		);
 	}
 
-	private SQLiteStatement myUpdateBookInfoStatement;
 	@Override
 	protected void updateBookInfo(long bookId, long fileId, String encoding, String language, String title) {
-		if (myUpdateBookInfoStatement == null) {
-			myUpdateBookInfoStatement = myDatabase.compileStatement(
-				"UPDATE OR IGNORE Books SET file_id = ?, encoding = ?, language = ?, title = ? WHERE book_id = ?"
-			);
-		}
-		myUpdateBookInfoStatement.bindLong(1, fileId);
-		SQLiteUtil.bindString(myUpdateBookInfoStatement, 2, encoding);
-		SQLiteUtil.bindString(myUpdateBookInfoStatement, 3, language);
-		myUpdateBookInfoStatement.bindString(4, title);
-		myUpdateBookInfoStatement.bindLong(5, bookId);
-		myUpdateBookInfoStatement.execute();
+		final SQLiteStatement statement = get(
+			"UPDATE OR IGNORE Books SET file_id=?, encoding=?, language=?, title=? WHERE book_id=?"
+		);
+		statement.bindLong(1, fileId);
+		SQLiteUtil.bindString(statement, 2, encoding);
+		SQLiteUtil.bindString(statement, 3, language);
+		statement.bindString(4, title);
+		statement.bindLong(5, bookId);
+		statement.execute();
 	}
 
-	private SQLiteStatement myInsertBookInfoStatement;
 	@Override
 	protected long insertBookInfo(ZLFile file, String encoding, String language, String title) {
-		if (myInsertBookInfoStatement == null) {
-			myInsertBookInfoStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO Books (encoding,language,title,file_id) VALUES (?,?,?,?)"
-			);
-		}
-		SQLiteUtil.bindString(myInsertBookInfoStatement, 1, encoding);
-		SQLiteUtil.bindString(myInsertBookInfoStatement, 2, language);
-		myInsertBookInfoStatement.bindString(3, title);
+		final SQLiteStatement statement = get(
+			"INSERT OR IGNORE INTO Books (encoding,language,title,file_id) VALUES (?,?,?,?)"
+		);
+		SQLiteUtil.bindString(statement, 1, encoding);
+		SQLiteUtil.bindString(statement, 2, language);
+		statement.bindString(3, title);
 		final FileInfoSet infoSet = new FileInfoSet(this, file);
-		myInsertBookInfoStatement.bindLong(4, infoSet.getId(file));
-		return myInsertBookInfoStatement.executeInsert();
+		statement.bindLong(4, infoSet.getId(file));
+		return statement.executeInsert();
 	}
 
-	private SQLiteStatement myDeleteBookAuthorsStatement;
 	protected void deleteAllBookAuthors(long bookId) {
-		if (myDeleteBookAuthorsStatement == null) {
-			myDeleteBookAuthorsStatement = myDatabase.compileStatement(
-				"DELETE FROM BookAuthor WHERE book_id = ?"
-			);
-		}
-		myDeleteBookAuthorsStatement.bindLong(1, bookId);
-		myDeleteBookAuthorsStatement.execute();
+		final SQLiteStatement statement = get("DELETE FROM BookAuthor WHERE book_id=?");
+		statement.bindLong(1, bookId);
+		statement.execute();
 	}
 
-	private SQLiteStatement myGetAuthorIdStatement;
-	private SQLiteStatement myInsertAuthorStatement;
-	private SQLiteStatement myInsertBookAuthorStatement;
 	protected void saveBookAuthorInfo(long bookId, long index, Author author) {
-		if (myGetAuthorIdStatement == null) {
-			myGetAuthorIdStatement = myDatabase.compileStatement(
-				"SELECT author_id FROM Authors WHERE name = ? AND sort_key = ?"
-			);
-			myInsertAuthorStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO Authors (name,sort_key) VALUES (?,?)"
-			);
-			myInsertBookAuthorStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO BookAuthor (book_id,author_id,author_index) VALUES (?,?,?)"
-			);
-		}
+		final SQLiteStatement getAuthorIdStatement = get(
+			"SELECT author_id FROM Authors WHERE name=? AND sort_key=?"
+		);
+		final SQLiteStatement insertAuthorStatement = get(
+			"INSERT OR IGNORE INTO Authors (name,sort_key) VALUES (?,?)"
+		);
+		final SQLiteStatement insertBookAuthorStatement = get(
+			"INSERT OR REPLACE INTO BookAuthor (book_id,author_id,author_index) VALUES (?,?,?)"
+		);
 
 		long authorId;
 		try {
-			myGetAuthorIdStatement.bindString(1, author.DisplayName);
-			myGetAuthorIdStatement.bindString(2, author.SortKey);
-			authorId = myGetAuthorIdStatement.simpleQueryForLong();
+			getAuthorIdStatement.bindString(1, author.DisplayName);
+			getAuthorIdStatement.bindString(2, author.SortKey);
+			authorId = getAuthorIdStatement.simpleQueryForLong();
 		} catch (SQLException e) {
-			myInsertAuthorStatement.bindString(1, author.DisplayName);
-			myInsertAuthorStatement.bindString(2, author.SortKey);
-			authorId = myInsertAuthorStatement.executeInsert();
+			insertAuthorStatement.bindString(1, author.DisplayName);
+			insertAuthorStatement.bindString(2, author.SortKey);
+			authorId = insertAuthorStatement.executeInsert();
 		}
-		myInsertBookAuthorStatement.bindLong(1, bookId);
-		myInsertBookAuthorStatement.bindLong(2, authorId);
-		myInsertBookAuthorStatement.bindLong(3, index);
-		myInsertBookAuthorStatement.execute();
+		insertBookAuthorStatement.bindLong(1, bookId);
+		insertBookAuthorStatement.bindLong(2, authorId);
+		insertBookAuthorStatement.bindLong(3, index);
+		insertBookAuthorStatement.execute();
 	}
 
 	protected List<Author> listAuthors(long bookId) {
@@ -419,17 +406,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
-	private SQLiteStatement myGetTagIdStatement;
-	private SQLiteStatement myCreateTagIdStatement;
 	private long getTagId(Tag tag) {
-		if (myGetTagIdStatement == null) {
-			myGetTagIdStatement = myDatabase.compileStatement(
-				"SELECT tag_id FROM Tags WHERE parent_id = ? AND name = ?"
-			);
-			myCreateTagIdStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO Tags (parent_id,name) VALUES (?,?)"
-			);
-		}
+		final SQLiteStatement getTagIdStatement = get(
+			"SELECT tag_id FROM Tags WHERE parent_id=? AND name=?"
+		);
 		{
 			final Long id = myIdByTag.get(tag);
 			if (id != null) {
@@ -437,49 +417,44 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 		}
 		if (tag.Parent != null) {
-			myGetTagIdStatement.bindLong(1, getTagId(tag.Parent));
+			getTagIdStatement.bindLong(1, getTagId(tag.Parent));
 		} else {
-			myGetTagIdStatement.bindNull(1);
+			getTagIdStatement.bindNull(1);
 		}
-		myGetTagIdStatement.bindString(2, tag.Name);
+		getTagIdStatement.bindString(2, tag.Name);
 		long id;
 		try {
-			id = myGetTagIdStatement.simpleQueryForLong();
+			id = getTagIdStatement.simpleQueryForLong();
 		} catch (SQLException e) {
+			final SQLiteStatement createTagIdStatement = get(
+				"INSERT OR IGNORE INTO Tags (parent_id,name) VALUES (?,?)"
+			);
 			if (tag.Parent != null) {
-				myCreateTagIdStatement.bindLong(1, getTagId(tag.Parent));
+				createTagIdStatement.bindLong(1, getTagId(tag.Parent));
 			} else {
-				myCreateTagIdStatement.bindNull(1);
+				createTagIdStatement.bindNull(1);
 			}
-			myCreateTagIdStatement.bindString(2, tag.Name);
-			id = myCreateTagIdStatement.executeInsert();
+			createTagIdStatement.bindString(2, tag.Name);
+			id = createTagIdStatement.executeInsert();
 		}
 		myIdByTag.put(tag, id);
 		myTagById.put(id, tag);
 		return id;
 	}
 
-	private SQLiteStatement myDeleteBookTagsStatement;
 	protected void deleteAllBookTags(long bookId) {
-		if (myDeleteBookTagsStatement == null) {
-			myDeleteBookTagsStatement = myDatabase.compileStatement(
-				"DELETE FROM BookTag WHERE book_id = ?"
-			);
-		}
-		myDeleteBookTagsStatement.bindLong(1, bookId);
-		myDeleteBookTagsStatement.execute();
+		final SQLiteStatement statement = get("DELETE FROM BookTag WHERE book_id=?");
+		statement.bindLong(1, bookId);
+		statement.execute();
 	}
 
-	private SQLiteStatement myInsertBookTagStatement;
 	protected void saveBookTagInfo(long bookId, Tag tag) {
-		if (myInsertBookTagStatement == null) {
-			myInsertBookTagStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO BookTag (book_id,tag_id) VALUES (?,?)"
-			);
-		}
-		myInsertBookTagStatement.bindLong(1, bookId);
-		myInsertBookTagStatement.bindLong(2, getTagId(tag));
-		myInsertBookTagStatement.execute();
+		final SQLiteStatement statement = get(
+			"INSERT OR IGNORE INTO BookTag (book_id,tag_id) VALUES (?,?)"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindLong(2, getTagId(tag));
+		statement.execute();
 	}
 
 	private Tag getTagById(long id) {
@@ -527,31 +502,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return names;
 	}
 
-	private SQLiteStatement myDeleteBookUidsStatement;
 	protected void deleteAllBookUids(long bookId) {
-		if (myDeleteBookUidsStatement == null) {
-			myDeleteBookUidsStatement = myDatabase.compileStatement(
-				"DELETE FROM BookUid WHERE book_id = ?"
-			);
-		}
-		myDeleteBookUidsStatement.bindLong(1, bookId);
-		myDeleteBookUidsStatement.execute();
+		final SQLiteStatement statement = get("DELETE FROM BookUid WHERE book_id = ?");
+		statement.bindLong(1, bookId);
+		statement.execute();
 	}
 
-	private SQLiteStatement myInsertBookUidStatement;
 	@Override
 	protected void saveBookUid(long bookId, UID uid) {
-		if (myInsertBookUidStatement == null) {
-			myInsertBookUidStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO BookUid (book_id,type,uid) VALUES (?,?,?)"
-			);
-		}
-
-		synchronized (myInsertBookUidStatement) {
-			myInsertBookUidStatement.bindLong(1, bookId);
-			myInsertBookUidStatement.bindString(2, uid.Type);
-			myInsertBookUidStatement.bindString(3, uid.Id);
-			myInsertBookUidStatement.execute();
+		final SQLiteStatement statement = get(
+			"INSERT OR IGNORE INTO BookUid (book_id,type,uid) VALUES (?,?,?)"
+		);
+		synchronized (statement) {
+			statement.bindLong(1, bookId);
+			statement.bindString(2, uid.Type);
+			statement.bindString(3, uid.Id);
+			statement.execute();
 		}
 	}
 
@@ -577,45 +543,36 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return bookId;
 	}
 
-	private SQLiteStatement myGetSeriesIdStatement;
-	private SQLiteStatement myInsertSeriesStatement;
-	private SQLiteStatement myInsertBookSeriesStatement;
-	private SQLiteStatement myDeleteBookSeriesStatement;
 	protected void saveBookSeriesInfo(long bookId, SeriesInfo seriesInfo) {
-		if (myGetSeriesIdStatement == null) {
-			myGetSeriesIdStatement = myDatabase.compileStatement(
-				"SELECT series_id FROM Series WHERE name = ?"
-			);
-			myInsertSeriesStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO Series (name) VALUES (?)"
-			);
-			myInsertBookSeriesStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO BookSeries (book_id,series_id,book_index) VALUES (?,?,?)"
-			);
-			myDeleteBookSeriesStatement = myDatabase.compileStatement(
-				"DELETE FROM BookSeries WHERE book_id = ?"
-			);
-		}
-
 		if (seriesInfo == null) {
-			myDeleteBookSeriesStatement.bindLong(1, bookId);
-			myDeleteBookSeriesStatement.execute();
+			final SQLiteStatement statement = get("DELETE FROM BookSeries WHERE book_id=?");
+			statement.bindLong(1, bookId);
+			statement.execute();
 		} else {
 			long seriesId;
 			try {
-				myGetSeriesIdStatement.bindString(1, seriesInfo.Series.getTitle());
-				seriesId = myGetSeriesIdStatement.simpleQueryForLong();
+				final SQLiteStatement getSeriesIdStatement = get(
+					"SELECT series_id FROM Series WHERE name = ?"
+				);
+				getSeriesIdStatement.bindString(1, seriesInfo.Series.getTitle());
+				seriesId = getSeriesIdStatement.simpleQueryForLong();
 			} catch (SQLException e) {
-				myInsertSeriesStatement.bindString(1, seriesInfo.Series.getTitle());
-				seriesId = myInsertSeriesStatement.executeInsert();
+				final SQLiteStatement insertSeriesStatement = get(
+					"INSERT OR IGNORE INTO Series (name) VALUES (?)"
+				);
+				insertSeriesStatement.bindString(1, seriesInfo.Series.getTitle());
+				seriesId = insertSeriesStatement.executeInsert();
 			}
-			myInsertBookSeriesStatement.bindLong(1, bookId);
-			myInsertBookSeriesStatement.bindLong(2, seriesId);
+			final SQLiteStatement insertBookSeriesStatement = get(
+				"INSERT OR REPLACE INTO BookSeries (book_id,series_id,book_index) VALUES (?,?,?)"
+			);
+			insertBookSeriesStatement.bindLong(1, bookId);
+			insertBookSeriesStatement.bindLong(2, seriesId);
 			SQLiteUtil.bindString(
-				myInsertBookSeriesStatement, 3,
+				insertBookSeriesStatement, 3,
 				seriesInfo.Index != null ? seriesInfo.Index.toPlainString() : null
 			);
-			myInsertBookSeriesStatement.execute();
+			insertBookSeriesStatement.execute();
 		}
 	}
 
@@ -629,39 +586,26 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return info;
 	}
 
-	private SQLiteStatement myRemoveFileInfoStatement;
 	protected void removeFileInfo(long fileId) {
 		if (fileId == -1) {
 			return;
 		}
-		if (myRemoveFileInfoStatement == null) {
-			myRemoveFileInfoStatement = myDatabase.compileStatement(
-				"DELETE FROM Files WHERE file_id = ?"
-			);
-		}
-		myRemoveFileInfoStatement.bindLong(1, fileId);
-		myRemoveFileInfoStatement.execute();
+		final SQLiteStatement statement = get("DELETE FROM Files WHERE file_id=?");
+		statement.bindLong(1, fileId);
+		statement.execute();
 	}
 
-	private SQLiteStatement myInsertFileInfoStatement;
-	private SQLiteStatement myUpdateFileInfoStatement;
 	protected void saveFileInfo(FileInfo fileInfo) {
 		final long id = fileInfo.Id;
 		SQLiteStatement statement;
 		if (id == -1) {
-			if (myInsertFileInfoStatement == null) {
-				myInsertFileInfoStatement = myDatabase.compileStatement(
-					"INSERT OR IGNORE INTO Files (name,parent_id,size) VALUES (?,?,?)"
-				);
-			}
-			statement = myInsertFileInfoStatement;
+			statement = get(
+				"INSERT OR IGNORE INTO Files (name,parent_id,size) VALUES (?,?,?)"
+			);
 		} else {
-			if (myUpdateFileInfoStatement == null) {
-				myUpdateFileInfoStatement = myDatabase.compileStatement(
-					"UPDATE Files SET name = ?, parent_id = ?, size = ? WHERE file_id = ?"
-				);
-			}
-			statement = myUpdateFileInfoStatement;
+			statement = get(
+				"UPDATE Files SET name=?, parent_id=?, size=? WHERE file_id=?"
+			);
 		}
 		statement.bindString(1, fileInfo.Name);
 		final FileInfo parent = fileInfo.Parent;
@@ -764,19 +708,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return infos;
 	}
 
-	private SQLiteStatement mySaveRecentBookStatement;
 	protected void saveRecentBookIds(final List<Long> ids) {
-		if (mySaveRecentBookStatement == null) {
-			mySaveRecentBookStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO RecentBooks (book_id) VALUES (?)"
-			);
-		}
+		final SQLiteStatement statement = get(
+			"INSERT OR IGNORE INTO RecentBooks (book_id) VALUES (?)"
+		);
 		executeAsTransaction(new Runnable() {
 			public void run() {
 				myDatabase.delete("RecentBooks", null, null);
 				for (long id : ids) {
-					mySaveRecentBookStatement.bindLong(1, id);
-					mySaveRecentBookStatement.execute();
+					statement.bindLong(1, id);
+					statement.execute();
 				}
 			}
 		});
@@ -795,33 +736,27 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	private SQLiteStatement mySetLabelStatement;
 	@Override
 	protected void setLabel(long bookId, String label) {
 		myDatabase.execSQL("INSERT OR IGNORE INTO Labels (name) VALUES (?)", new Object[] { label });
-		if (mySetLabelStatement == null) {
-			mySetLabelStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO BookLabel(label_id,book_id)" +
-				" SELECT label_id,? FROM Labels WHERE name=?"
-			);
-		}
-		mySetLabelStatement.bindLong(1, bookId);
-		mySetLabelStatement.bindString(2, label);
-		mySetLabelStatement.execute();
+		final SQLiteStatement statement = get(
+			"INSERT OR IGNORE INTO BookLabel(label_id,book_id)" +
+			" SELECT label_id,? FROM Labels WHERE name=?"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindString(2, label);
+		statement.execute();
 	}
 
-	private SQLiteStatement myRemoveLabelStatement;
 	@Override
 	protected void removeLabel(long bookId, String label) {
-		if (myRemoveLabelStatement == null) {
-			myRemoveLabelStatement = myDatabase.compileStatement(
-				"DELETE FROM BookLabel WHERE book_id=? AND label_id IN" +
-				" (SELECT label_id FROM Labels WHERE name=?)"
-			);
-		}
-		myRemoveLabelStatement.bindLong(1, bookId);
-		myRemoveLabelStatement.bindString(2, label);
-		myRemoveLabelStatement.execute();
+		final SQLiteStatement statement = get(
+			"DELETE FROM BookLabel WHERE book_id=? AND label_id IN" +
+			" (SELECT label_id FROM Labels WHERE name=?)"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindString(2, label);
+		statement.execute();
 	}
 
 	@Override
@@ -896,40 +831,29 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
-	private SQLiteStatement myInsertStyleStatement;
 	protected void saveStyle(HighlightingStyle style) {
-		if (myInsertStyleStatement == null) {
-			myInsertStyleStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color) VALUES (?,?,?)"
-			);
-		}
-		myInsertStyleStatement.bindLong(1, style.Id);
+		final SQLiteStatement statement = get(
+			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color) VALUES (?,?,?)"
+		);
+		statement.bindLong(1, style.Id);
 		final String name = style.getName();
-		myInsertStyleStatement.bindString(2, name != null ? name : "");
+		statement.bindString(2, name != null ? name : "");
 		final ZLColor bgColor = style.getBackgroundColor();
-		myInsertStyleStatement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
-		myInsertStyleStatement.executeInsert();
+		statement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
+		statement.execute();
 	}
 
-	private SQLiteStatement myInsertBookmarkStatement;
-	private SQLiteStatement myUpdateBookmarkStatement;
 	@Override
 	protected long saveBookmark(Bookmark bookmark) {
 		SQLiteStatement statement;
 		if (bookmark.getId() == -1) {
-			if (myInsertBookmarkStatement == null) {
-				myInsertBookmarkStatement = myDatabase.compileStatement(
-					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-				);
-			}
-			statement = myInsertBookmarkStatement;
+			statement = get(
+				"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character,visible,style_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+			);
 		} else {
-			if (myUpdateBookmarkStatement == null) {
-				myUpdateBookmarkStatement = myDatabase.compileStatement(
-					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ?, style_id = ? WHERE bookmark_id = ?"
-				);
-			}
-			statement = myUpdateBookmarkStatement;
+			statement = get(
+				"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?, visible = ?, style_id = ? WHERE bookmark_id = ?"
+			);
 		}
 
 		statement.bindLong(1, bookmark.getBookId());
@@ -955,7 +879,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindLong(14, bookmark.IsVisible ? 1 : 0);
 		statement.bindLong(15, bookmark.getStyleId());
 
-		if (statement == myInsertBookmarkStatement) {
+		if (bookmark.getId() == -1) {
 			return statement.executeInsert();
 		} else {
 			final long id = bookmark.getId();
@@ -965,16 +889,11 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 	}
 
-	private SQLiteStatement myDeleteBookmarkStatement;
 	@Override
 	protected void deleteBookmark(Bookmark bookmark) {
-		if (myDeleteBookmarkStatement == null) {
-			myDeleteBookmarkStatement = myDatabase.compileStatement(
-				"DELETE FROM Bookmarks WHERE bookmark_id = ?"
-			);
-		}
-		myDeleteBookmarkStatement.bindLong(1, bookmark.getId());
-		myDeleteBookmarkStatement.execute();
+		final SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE bookmark_id=?");
+		statement.bindLong(1, bookmark.getId());
+		statement.execute();
 	}
 
 	protected ZLTextPosition getStoredPosition(long bookId) {
@@ -993,43 +912,30 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		return position;
 	}
 
-	private SQLiteStatement myStorePositionStatement;
 	protected void storePosition(long bookId, ZLTextPosition position) {
-		if (myStorePositionStatement == null) {
-			myStorePositionStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char) VALUES (?,?,?,?)"
-			);
-		}
-		myStorePositionStatement.bindLong(1, bookId);
-		myStorePositionStatement.bindLong(2, position.getParagraphIndex());
-		myStorePositionStatement.bindLong(3, position.getElementIndex());
-		myStorePositionStatement.bindLong(4, position.getCharIndex());
-		myStorePositionStatement.executeInsert();
+		final SQLiteStatement statement = get(
+			"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char) VALUES (?,?,?,?)"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindLong(2, position.getParagraphIndex());
+		statement.bindLong(3, position.getElementIndex());
+		statement.bindLong(4, position.getCharIndex());
+		statement.execute();
 	}
 
-	private SQLiteStatement myDeleteVisitedHyperlinksStatement;
 	private void deleteVisitedHyperlinks(long bookId) {
-		if (myDeleteVisitedHyperlinksStatement == null) {
-			myDeleteVisitedHyperlinksStatement = myDatabase.compileStatement(
-				"DELETE FROM VisitedHyperlinks WHERE book_id = ?"
-			);
-		}
-
-		myDeleteVisitedHyperlinksStatement.bindLong(1, bookId);
-		myDeleteVisitedHyperlinksStatement.execute();
+		final SQLiteStatement statement = get("DELETE FROM VisitedHyperlinks WHERE book_id=?");
+		statement.bindLong(1, bookId);
+		statement.execute();
 	}
 
-	private SQLiteStatement myStoreVisitedHyperlinksStatement;
 	protected void addVisitedHyperlink(long bookId, String hyperlinkId) {
-		if (myStoreVisitedHyperlinksStatement == null) {
-			myStoreVisitedHyperlinksStatement = myDatabase.compileStatement(
-				"INSERT OR IGNORE INTO VisitedHyperlinks(book_id,hyperlink_id) VALUES (?,?)"
-			);
-		}
-
-		myStoreVisitedHyperlinksStatement.bindLong(1, bookId);
-		myStoreVisitedHyperlinksStatement.bindString(2, hyperlinkId);
-		myStoreVisitedHyperlinksStatement.execute();
+		final SQLiteStatement statement = get(
+			"INSERT OR IGNORE INTO VisitedHyperlinks(book_id,hyperlink_id) VALUES (?,?)"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindString(2, hyperlinkId);
+		statement.execute();
 	}
 
 	protected Collection<String> loadVisitedHyperlinks(long bookId) {
@@ -1041,26 +947,23 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 		return links;
 	}
-	
-	private SQLiteStatement mySaveProgessStatement;
+
 	@Override
 	protected void saveBookProgress(long bookId, RationalNumber progress) {
-		if (mySaveProgessStatement == null) {
-			mySaveProgessStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO BookReadingProgress (book_id,numerator,denominator) VALUES (?,?,?)"
-			);
-		}
-		mySaveProgessStatement.bindLong(1, bookId);
-		mySaveProgessStatement.bindLong(2, progress.Numerator);
-		mySaveProgessStatement.bindLong(3, progress.Denominator);
-		mySaveProgessStatement.execute();
+		final SQLiteStatement statement = get(
+			"INSERT OR REPLACE INTO BookReadingProgress (book_id,numerator,denominator) VALUES (?,?,?)"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindLong(2, progress.Numerator);
+		statement.bindLong(3, progress.Denominator);
+		statement.execute();
 	}
 
 	@Override
 	protected RationalNumber getProgress(long bookId) {
 		final RationalNumber progress;
 		final Cursor cursor = myDatabase.rawQuery(
-			"SELECT numerator,denominator FROM BookReadingProgress WHERE book_id = " + bookId, null
+			"SELECT numerator,denominator FROM BookReadingProgress WHERE book_id=" + bookId, null
 		);
 		if (cursor.moveToNext()) {
 			progress = RationalNumber.create(cursor.getLong(0), cursor.getLong(1));
@@ -1072,8 +975,47 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
+	protected String getHash(long bookId, long lastModified) {
+		final SQLiteStatement statement = get(
+			"SELECT hash FROM BookHash WHERE book_id=? AND timestamp>?"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindLong(2, lastModified);
+		try {
+			return statement.simpleQueryForString();
+		} catch (SQLiteDoneException e) {
+			return null;
+		}
+	}
+
+	@Override
+	protected void setHash(long bookId, String hash) {
+		final SQLiteStatement statement = get(
+			"INSERT OR REPLACE INTO BookHash (book_id,timestamp,hash) VALUES (?,?,?)"
+		);
+		statement.bindLong(1, bookId);
+		statement.bindLong(2, System.currentTimeMillis());
+		statement.bindString(3, hash);
+		statement.execute();
+	}
+
+	@Override
+	protected List<Long> bookIdsByHash(String hash) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM BookHash WHERE hash=?", new String[] { hash }
+		);
+		final List<Long> bookIds = new LinkedList<Long>();
+		while (cursor.moveToNext()) {
+			bookIds.add(cursor.getLong(0));
+		}
+		cursor.close();
+		return bookIds;
+	}
+
+	@Override
 	protected void deleteBook(long bookId) {
 		myDatabase.beginTransaction();
+		myDatabase.execSQL("DELETE FROM BookHash WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookAuthor WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookLabel WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookReadingProgress WHERE book_id=" + bookId);
@@ -1486,12 +1428,30 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (2, '', 245*256*256 + 121*256 + 0)"); // #f57900
 		myDatabase.execSQL("INSERT OR REPLACE INTO HighlightingStyle (style_id, name, bg_color) VALUES (3, '', 114*256*256 + 159*256 + 207)"); // #729fcf
 	}
-	
+
 	private void updateTables25() {
 		myDatabase.execSQL(
 			"CREATE TABLE IF NOT EXISTS BookReadingProgress(" +
-				"book_id INTEGER PRIMARY KEY NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"book_id INTEGER PRIMARY KEY REFERENCES Books(book_id)," +
 				"numerator INTEGER NOT NULL," +
 				"denominator INTEGER NOT NULL)");
+	}
+
+	private void updateTables26() {
+		myDatabase.execSQL("DROP TABLE IF EXISTS BookSynchronizationInfo");
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookHash(" +
+				"book_id INTEGER PRIMARY KEY REFERENCES Books(book_id)," +
+				"timestamp INTEGER NOT NULL," +
+				"hash TEXT(40) NOT NULL)");
+	}
+
+	private SQLiteStatement get(String sql) {
+		SQLiteStatement statement = myStatements.get(sql);
+		if (statement == null) {
+			statement = myDatabase.compileStatement(sql);
+			myStatements.put(sql, statement);
+		}
+		return statement;
 	}
 }

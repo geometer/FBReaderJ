@@ -109,7 +109,7 @@ public class StringPreference extends DialogPreference {
 		}
 
         @Override
-        public void afterTextChanged(Editable s) {        
+        public void afterTextChanged(Editable s) {
 			final AlertDialog dialog = (AlertDialog)getDialog();
 			final Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
 			okButton.setEnabled(myConstraint.matches(myEditor.getText().toString()));

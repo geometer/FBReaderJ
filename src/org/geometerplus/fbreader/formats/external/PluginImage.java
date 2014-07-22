@@ -17,12 +17,46 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.fb2;
+package org.geometerplus.fbreader.formats.external;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-public class FB2CoverReader {
-	public FB2CoverImage readCover(ZLFile file) {
-		return new FB2CoverImage(file);
+public final class PluginImage extends ZLImageProxy {
+	public final ZLFile File;
+	public final ExternalFormatPlugin Plugin;
+	private volatile ZLImage myImage;
+
+	PluginImage(ZLFile file, ExternalFormatPlugin plugin) {
+		File = file;
+		Plugin = plugin;
+	}
+
+	public final synchronized void setRealImage(ZLImage image) {
+		if (image != null && !isSynchronized()) {
+			myImage = image;
+			setSynchronized();
+		}
+	}
+
+	@Override
+	public final ZLImage getRealImage() {
+		return myImage;
+	}
+
+	@Override
+	public SourceType sourceType() {
+		return SourceType.SERVICE;
+	}
+
+	@Override
+	public String getURI() {
+		return "cover:" + File.getPath();
+	}
+
+	@Override
+	public String getId() {
+		return File.getPath();
 	}
 }

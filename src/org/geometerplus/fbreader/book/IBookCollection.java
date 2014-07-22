@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.book;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 public interface IBookCollection {
@@ -62,6 +62,7 @@ public interface IBookCollection {
 	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
 	Book getBookByUid(UID uid);
+	Book getBookByHash(String hash);
 
 	List<String> labels();
 	List<Author> authors();
@@ -73,14 +74,16 @@ public interface IBookCollection {
 	boolean saveBook(Book book);
 	void removeBook(Book book, boolean deleteFromDisk);
 
+	String getHash(Book book);
+
 	ZLTextPosition getStoredPosition(long bookId);
 	void storePosition(long bookId, ZLTextPosition position);
 
 	boolean isHyperlinkVisited(Book book, String linkId);
 	void markHyperlinkAsVisited(Book book, String linkId);
 
-	boolean saveCover(Book book, String url);
-	
+	ZLImage getCover(Book book, int maxWidth, int maxHeight);
+
 	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);
 	void deleteBookmark(Bookmark bookmark);

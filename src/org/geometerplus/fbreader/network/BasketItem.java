@@ -147,7 +147,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 				if (info == null) {
 					return null;
 				}
-				if (b.getStatus() == NetworkBookItem.Status.CanBePurchased) {
+				if (b.getStatus(null) == NetworkBookItem.Status.CanBePurchased) {
 					if (info.Price == null) {
 						return null;
 					}

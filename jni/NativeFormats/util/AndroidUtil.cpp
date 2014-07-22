@@ -183,7 +183,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Constructor_FileInfo = new Constructor(Class_FileInfo, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/drm/FileEncryptionInfo;)V");
 	Constructor_FileEncryptionInfo = new Constructor(Class_FileEncryptionInfo, "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 
-	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;[I[ILorg/geometerplus/zlibrary/core/drm/FileEncryptionInfo;)V");
+	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;[I[ILorg/geometerplus/zlibrary/core/drm/FileEncryptionInfo;)V");
 
 	StaticMethod_Paths_tempDirectory = new StaticObjectMethod(Class_Paths, "tempDirectory", Class_java_lang_String, "()");
 
@@ -234,7 +234,6 @@ jobject AndroidUtil::createJavaEncryptionInfo(JNIEnv *env, shared_ptr<FileEncryp
 }
 
 jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
-	JString javaMimeType(env, image.mimeType());
 	jobject javaFile = createJavaFile(env, image.file().path());
 	JString javaEncoding(env, image.encoding());
 
@@ -250,7 +249,7 @@ jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
 	jobject javaEncryptionInfo = createJavaEncryptionInfo(env, image.encryptionInfo());
 
 	jobject javaImage = Constructor_ZLFileImage->call(
-		javaMimeType.j(), javaFile, javaEncoding.j(),
+		javaFile, javaEncoding.j(),
 		javaOffsets, javaSizes, javaEncryptionInfo
 	);
 

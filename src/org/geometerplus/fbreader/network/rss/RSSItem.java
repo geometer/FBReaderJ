@@ -24,10 +24,9 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.fbreader.network.atom.ATOMEntry;
 
 public class RSSItem extends ATOMEntry {
-	
 	public String SeriesTitle;
 	public float SeriesIndex;
-	
+
 	protected RSSItem(ZLStringMap attributes) {
 		super(attributes);
 	}

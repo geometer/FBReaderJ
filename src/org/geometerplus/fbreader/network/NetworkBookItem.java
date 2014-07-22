@@ -22,9 +22,12 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 import java.io.File;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.IBookCollection;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -83,6 +86,7 @@ public class NetworkBookItem extends NetworkItem {
 	//public final String Date;
 	public final LinkedList<AuthorData> Authors;
 	public final LinkedList<String> Tags;
+	public final List<String> Identifiers = new LinkedList<String>();
 	public final String SeriesTitle;
 	public final float IndexInSeries;
 
@@ -129,8 +133,8 @@ public class NetworkBookItem extends NetworkItem {
 		return null;
 	}
 
-	public Status getStatus() {
-		if (localCopyFileName() != null) {
+	public Status getStatus(IBookCollection collection) {
+		if (localCopyFileName(collection) != null) {
 			return Status.Downloaded;
 		} else if (reference(UrlInfo.Type.Book) != null) {
 			return Status.ReadyForDownload;
@@ -153,7 +157,7 @@ public class NetworkBookItem extends NetworkItem {
 				continue;
 			}
 			final BookUrlInfo br = (BookUrlInfo)r;
-			if (reference == null || br.BookFormat.compareTo(reference.BookFormat) > 0) {
+			if (reference == null || BookUrlInfo.isMimeBetterThan(br.Mime, reference.Mime)) {
 				reference = br;
 			}
 		}
@@ -196,7 +200,23 @@ public class NetworkBookItem extends NetworkItem {
 		return (BookBuyUrlInfo)reference(UrlInfo.Type.BookBuyInBrowser);
 	}
 
-	public String localCopyFileName() {
+	private static final String HASH_PREFIX = "sha1:";
+	public String localCopyFileName(IBookCollection collection) {
+		if (collection != null) {
+			for (String identifier : Identifiers) {
+				if (identifier.startsWith(HASH_PREFIX)) {
+					final String hash = identifier.substring(HASH_PREFIX.length());
+					final Book book = collection.getBookByHash(hash);
+					if (book != null) {
+						final ZLPhysicalFile file = book.File.getPhysicalFile();
+						if (file != null) {
+							return file.getPath();
+						}
+					}
+				}
+			}
+		}
+
 		final boolean hasBuyReference = buyInfo() != null;
 		BookUrlInfo reference = null;
 		String fileName = null;
@@ -209,7 +229,7 @@ public class NetworkBookItem extends NetworkItem {
 			if ((type == UrlInfo.Type.Book ||
 				 type == UrlInfo.Type.BookConditional ||
 				 (!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) &&
-				(reference == null || br.BookFormat.compareTo(reference.BookFormat) > 0)) {
+				(reference == null || BookUrlInfo.isMimeBetterThan(br.Mime, reference.Mime))) {
 				String name = br.localCopyFileName(UrlInfo.Type.Book);
 				if (name != null) {
 					reference = br;

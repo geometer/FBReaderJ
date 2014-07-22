@@ -21,6 +21,7 @@ interface LibraryInterface {
 	String getBookByFile(in String file);
 	String getBookById(in long id);
 	String getBookByUid(in String type, in String id);
+	String getBookByHash(in String hash);
 	String getRecentBook(in int index);
 
 	List<String> authors();
@@ -35,13 +36,15 @@ interface LibraryInterface {
 	void removeBook(in String book, in boolean deleteFromDisk);
 	void addBookToRecentList(in String book);
 
+	String getHash(in String book);
+
 	TextPosition getStoredPosition(in long bookId);
 	void storePosition(in long bookId, in TextPosition position);
 
 	boolean isHyperlinkVisited(in String book, in String linkId);
 	void markHyperlinkAsVisited(in String book, in String linkId);
 
-	boolean saveCover(in String book, in String url);
+	Bitmap getCover(in String book, in int maxWidth, in int maxHeight);
 
 	List<String> bookmarks(in String query);
 	String saveBookmark(in String bookmark);

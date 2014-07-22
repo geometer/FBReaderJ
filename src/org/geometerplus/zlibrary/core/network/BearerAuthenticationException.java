@@ -19,27 +19,23 @@
 
 package org.geometerplus.zlibrary.core.network;
 
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.HttpEntity;
+import org.json.simple.JSONValue;
+
 class BearerAuthenticationException extends RuntimeException {
+	public final String Realm;
 	public final Map<String,String> Params = new HashMap<String,String>();
 
-	BearerAuthenticationException(String challenge) {
+	BearerAuthenticationException(String realm, HttpEntity entity) {
 		super("Authentication failed");
-		if (challenge != null && "bearer".equalsIgnoreCase(challenge.substring(0, 6))) {
-			for (String param : challenge.substring(6).split(",")) {
-				final int index = param.indexOf("=");
-				if (index != -1) {
-					final String key = param.substring(0, index).trim();
-					String value = param.substring(index + 1).trim();
-					final int len = value.length();
-					if (len > 1 && value.charAt(0) == '"' && value.charAt(len - 1) == '"') {
-						value = value.substring(1, len - 1);
-					}
-					Params.put(key, value);
-				}
-			}
+		Realm = realm;
+		try {
+			Params.putAll((Map)JSONValue.parse(new InputStreamReader(entity.getContent())));
+		} catch (Exception e) {
 		}
 	}
 }

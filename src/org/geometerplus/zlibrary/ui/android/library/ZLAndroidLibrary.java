@@ -71,12 +71,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		myActivity = activity;
 	}
 
-	public void finish() {
-		if (myActivity != null && !myActivity.isFinishing()) {
-			myActivity.finish();
-		}
-	}
-
 	public AssetManager getAssets() {
 		return myApplication.getAssets();
 	}
@@ -257,7 +251,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			if (streamStatus() == StreamStatus.OK) {
 				return true;
 			}
-			final String path = getPath();	
+			final String path = getPath();
 			if ("".equals(path)) {
 				return true;
 			}

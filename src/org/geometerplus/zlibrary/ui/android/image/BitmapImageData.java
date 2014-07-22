@@ -17,16 +17,34 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.xhtml;
+package org.geometerplus.zlibrary.ui.android.image;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
-class XHTMLTagParagraphAction extends XHTMLTagAction {
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		reader.getModelReader().beginParagraph();
+final class BitmapImageData extends ZLAndroidImageData {
+	static BitmapImageData get(ZLBitmapImage image) {
+		final Bitmap bitmap = image.getBitmap();
+		return bitmap != null ? new BitmapImageData(bitmap) : null;
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
-		reader.getModelReader().endParagraph();
+	private final Bitmap myBitmap;
+
+	private BitmapImageData(Bitmap bitmap) {
+		myBitmap = bitmap;
+	}
+
+	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
+		final int scaleFactor = options.inSampleSize;
+		if (scaleFactor <= 1) {
+			return myBitmap;
+		}
+		try {
+			return Bitmap.createScaledBitmap(
+				myBitmap, myBitmap.getWidth() / scaleFactor, myBitmap.getHeight() / scaleFactor, false
+			);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

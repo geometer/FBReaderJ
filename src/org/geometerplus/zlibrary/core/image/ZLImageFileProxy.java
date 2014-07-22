@@ -17,37 +17,46 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.oeb;
+package org.geometerplus.zlibrary.core.image;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
-import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
-class OEBCoverReader {
-	private static class OEBCoverImage extends ZLImageProxy {
-		private final ZLFile myFile;
+public abstract class ZLImageFileProxy extends ZLImageSelfSynchronizableProxy {
+	protected final ZLFile File;
+	private volatile ZLImage myImage;
 
-		OEBCoverImage(ZLFile file) {
-			myFile = file;
-		}
+	protected ZLImageFileProxy(ZLFile file) {
+		File = file;
+	}
 
-		@Override
-		public ZLSingleImage getRealImage() {
-			return new OEBCoverBackgroundReader().readCover(myFile);
-		}
+	@Override
+	public final ZLImage getRealImage() {
+		return myImage;
+	}
 
-		@Override
-		public int sourceType() {
-			return SourceType.DISK;
-		}
+	@Override
+	public String getURI() {
+		return "cover:" + File.getPath();
+	}
 
-		@Override
-		public String getId() {
-			return myFile.getPath();
+	@Override
+	public final synchronized void synchronize() {
+		if (myImage == null) {
+			myImage = retrieveRealImage();
+			setSynchronized();
 		}
 	}
 
-	public ZLImageProxy readCover(ZLFile file) {
-		return new OEBCoverImage(file);
+	@Override
+	public SourceType sourceType() {
+		return SourceType.FILE;
 	}
+
+	@Override
+	public String getId() {
+		return File.getPath();
+	}
+
+	protected abstract ZLImage retrieveRealImage();
 }

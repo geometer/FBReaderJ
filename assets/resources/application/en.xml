@@ -920,6 +920,22 @@
 			</node>
 			<node name="duplicate" value="“%s” is already in the list"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit"/>
+			<node name="remove" value="Remove"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag"/>
+			<node name="removeDialog" value="Remove tag">
+				<node name="message" value="Remove tag “%s” from the list?"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author"/>
+			<node name="removeDialog" value="Remove author">
+				<node name="message" value="Remove author “%s” from the list?"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root"/>
 			<node name="newFolder" value="New folder"/>
@@ -934,6 +950,9 @@
 				<node name="date" value="Date"/>
 			</node>
 			<node name="permissionDenied" value="Permission denied"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

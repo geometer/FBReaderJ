@@ -17,16 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.xhtml;
+package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
-class XHTMLTagRestartParagraphAction extends XHTMLTagAction {
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		reader.getModelReader().beginParagraph();
-		reader.getModelReader().endParagraph();
+public abstract class BuiltinFormatPlugin extends FormatPlugin {
+	protected BuiltinFormatPlugin(String fileType) {
+		super(fileType);
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
-	}
+	public abstract void readModel(BookModel model) throws BookReadingException;
 }

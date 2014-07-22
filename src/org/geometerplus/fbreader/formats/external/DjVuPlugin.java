@@ -17,25 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.xhtml;
+package org.geometerplus.fbreader.formats.external;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.fbreader.book.Book;
 
-import org.geometerplus.fbreader.bookmodel.BookReader;
-
-class XHTMLTagItemAction extends XHTMLTagAction {
-	private final char[] BULLET = { '\u2022', '\240' };
-
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		final BookReader modelReader = reader.getModelReader();
-		modelReader.endParagraph();
-		// TODO: increase left indent
-		modelReader.beginParagraph();
-		// TODO: replace bullet sign by number inside OL tag
-		modelReader.addData(BULLET);
+public class DjVuPlugin extends ExternalFormatPlugin {
+	public DjVuPlugin() {
+		super("DjVu");
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
-		reader.getModelReader().endParagraph();
+	@Override
+	public String packageName() {
+		return "org.geometerplus.fbreader.plugin.djvu";
+	}
+
+	@Override
+	public void readMetainfo(Book book) {
+		// TODO: implement
 	}
 }

@@ -24,9 +24,9 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
-import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
-import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
+import org.geometerplus.fbreader.formats.external.DjVuPlugin;
+import org.geometerplus.fbreader.formats.external.PDFPlugin;
 
 public class PluginCollection {
 	static {
@@ -58,9 +58,9 @@ public class PluginCollection {
 	}
 
 	private PluginCollection() {
-		addPlugin(new FB2Plugin());
 		addPlugin(new MobipocketPlugin());
-		addPlugin(new OEBPlugin());
+		addPlugin(new DjVuPlugin());
+		addPlugin(new PDFPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
@@ -83,13 +83,11 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
-		if (fileType == null) {
+		if (fileType == null || formatType == null) {
 			return null;
 		}
 
 		switch (formatType) {
-			case NONE:
-				return null;
 			case ANY:
 			{
 				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
@@ -97,7 +95,7 @@ public class PluginCollection {
 					p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 				}
 				if (p == null) {
-					p = getPlugin(fileType, FormatPlugin.Type.PLUGIN);
+					p = getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
 				}
 				return p;
 			}

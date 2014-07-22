@@ -19,42 +19,6 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
-
-public abstract class ZLLoadableImage extends ZLSingleImage {
-	private volatile boolean myIsSynchronized;
-
-	public ZLLoadableImage(MimeType mimeType) {
-		super(mimeType);
-	}
-
-	public final boolean isSynchronized() {
-		return myIsSynchronized;
-	}
-
-	protected final void setSynchronized() {
-		myIsSynchronized = true;
-	}
-
-	public void startSynchronization(Runnable postSynchronizationAction) {
-		ZLImageManager.Instance().startImageLoading(this, postSynchronizationAction);
-	}
-
-	public static interface SourceType {
-		int DISK = 0;
-		int NETWORK = 1;
-	};
-	public abstract int sourceType();
-
+public abstract class ZLImageSelfSynchronizableProxy extends ZLImageProxy {
 	public abstract void synchronize();
-	public abstract void synchronizeFast();
-	public abstract String getId();
-
-	@Override
-	public boolean saveToFile(String url) {
-		if (!isSynchronized()) {
-			synchronize();
-		}
-		return super.saveToFile(url);
-	}
 }

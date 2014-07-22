@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,34 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.zlibrary.core.image;
 
-import java.net.URI;
-import java.util.Map;
+import java.io.InputStream;
 
-import android.app.Service;
-import android.content.Context;
-
-public final class ServiceNetworkContext extends AndroidNetworkContext {
-	private final Service myService;
-
-	public ServiceNetworkContext(Service service) {
-		myService = service;
-	}
-
-	public Context getContext() {
-		return myService;
-	}
-
-	@Override
-	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
-		// TODO: implement
-		return false;
-	}
-
-	@Override
-	protected boolean authenticateToken(URI uri, Map<String,String> params) {
-		// TODO: implement
-		return false;
-	}
+public interface ZLStreamImage extends ZLImage {
+	public abstract InputStream inputStream();
 }

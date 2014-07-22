@@ -19,10 +19,11 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.util.*;
-import java.util.zip.GZIPInputStream;
 import java.io.*;
 import java.net.*;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.http.*;
 import org.apache.http.auth.*;
@@ -159,7 +160,10 @@ public class ZLNetworkManager {
 	}
 
 	static interface BearerAuthenticator {
-		boolean authenticate(URI uri, Map<String,String> params);
+		Map<String,String> authenticate(URI uri, String realm, Map<String,String> params);
+
+		String getAccountName(String host, String realm);
+		void setAccountName(String host, String realm, String accountName);
 	}
 
 	volatile CredentialsCreator myCredentialsCreator;
@@ -314,7 +318,18 @@ public class ZLNetworkManager {
 							} catch (AuthenticationException e) {
 								final Header bearerHeader = challenges.get("bearer");
 								if (bearerHeader != null) {
-									throw new BearerAuthenticationException(bearerHeader.getValue());
+									String realm = null;
+									for (HeaderElement elt : bearerHeader.getElements()) {
+										final String name = elt.getName();
+										if (name == null) {
+											continue;
+										}
+										if ("realm".equals(name) || name.endsWith(" realm")) {
+											realm = elt.getValue();
+											break;
+										}
+									}
+									throw new BearerAuthenticationException(realm, response.getEntity());
 								}
 								throw e;
 							}
@@ -348,7 +363,11 @@ public class ZLNetworkManager {
 				final ZLNetworkRequest.FileUpload uploadRequest = (ZLNetworkRequest.FileUpload)request;
 				final File file = ((ZLNetworkRequest.FileUpload)request).File;
 				httpRequest = new HttpPost(request.URL);
-				final MultipartEntity data = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+				final MultipartEntity data = new MultipartEntity(
+					HttpMultipartMode.BROWSER_COMPATIBLE,
+					null,
+					Charset.forName("utf-8")
+				);
 				data.addPart("file", new FileBody(uploadRequest.File));
 				((HttpPost)httpRequest).setEntity(data);
 			} else {
@@ -434,7 +453,10 @@ public class ZLNetworkManager {
 		try {
 			return client.execute(request, context);
 		} catch (BearerAuthenticationException e) {
-			if (authenticator.authenticate(request.getURI(), e.Params)) {
+			final Map<String,String> response =
+				authenticator.authenticate(request.getURI(), e.Realm, e.Params);
+			if (!response.containsKey("error")) {
+				authenticator.setAccountName(request.getURI().getHost(), e.Realm, response.get("user"));
 				return client.execute(request, context);
 			}
 			throw e;

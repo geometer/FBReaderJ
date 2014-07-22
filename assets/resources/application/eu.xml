@@ -772,17 +772,6 @@
 			</node>
 			<node name="interval" value="Osoan berritu arteko berritze azkarren kopurua"/>
 		</node>
-		<node name="externalFormats" value="Formatuak">
-			<node name="summary" value="Kudeatu fitxategiek formatuak"/>
-			<node name="format" value="">
-				<node name="appNotSet" value="Aukeratu gabe"/>
-				<node name="java" value="FBReader (java)"/>
-				<node name="native" value="FBReader (jatorrizkoa)"/>
-				<node name="plugin" value="FBReader %s gehigarria"/>
-				<node name="delete" value="kendu formatua"/>
-				<node name="addNewFormat" value="gehitu formatu berria"/>
-			</node>
-		</node>
 	</node>
 	<node name="dialog">
 		<node name="button">
@@ -803,6 +792,11 @@
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorise" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
+			<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
@@ -843,7 +837,6 @@
 			<node name="updatingAccountInformation" value="Kontuaren informazioa eguneratzen. Itxaron mesedez…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
-			<node name="extrcact" value="Fitxategia kanpoko aplikaziorako prestatzen. Itxaron apur bat…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Zerbitzariaren barneko errorea"/>
@@ -900,6 +893,22 @@
 			</node>
 			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit" toBeTranslated="true"/>
+			<node name="remove" value="Remove" toBeTranslated="true"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
+				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove author" toBeTranslated="true">
+				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>
 			<node name="newFolder" value="New folder" toBeTranslated="true"/>
@@ -914,6 +923,9 @@
 				<node name="date" value="Date" toBeTranslated="true"/>
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -941,12 +953,6 @@
 		<node name="emptyNetworkSearchResults" value="Ez da libururik aurkitu, barkatu"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
-		<node name="externalNotFound" value="Ezin da kanpoko aplikazioa ireki"/>
-		<node name="appNotFound" value="Ez da aplikazio egokirik aurkitu"/>
-		<node name="invalidFormat" value="Formatuak ez du balio"/>
-		<node name="formatExists" value="Formatua dagoneko %s(e)k du"/>
-		<node name="unzipFailed" value="Ezin izan da liburua deskonprimatu"/>
-		<node name="noPlugin" value="Gehigarria instalatu fitxategi-mota hau irakurtzeko"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Nabigatzailea"/>

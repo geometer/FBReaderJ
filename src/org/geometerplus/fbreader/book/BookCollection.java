@@ -65,7 +65,7 @@ public class BookCollection extends AbstractBookCollection {
 		if (plugin == null) {
 			return null;
 		}
-		if (!plugin.type().Builtin && bookFile != bookFile.getPhysicalFile()) {
+		if (!(plugin instanceof BuiltinFormatPlugin) && bookFile != bookFile.getPhysicalFile()) {
 			return null;
 		}
 		try {
@@ -168,6 +168,16 @@ public class BookCollection extends AbstractBookCollection {
 		}
 		final Long bookId = myDatabase.bookIdByUid(uid);
 		return bookId != null ? getBookById(bookId) : null;
+	}
+
+	public Book getBookByHash(String hash) {
+		for (long id : myDatabase.bookIdsByHash(hash)) {
+			final Book book = getBookById(id);
+			if (book.File.exists()) {
+				return book;
+			}
+		}
+		return null;
 	}
 
 	private boolean addBook(Book book, boolean force) {
@@ -636,17 +646,8 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	@Override
-	public boolean saveCover(Book book, String url) {
-		if (getBookById(book.getId()) == null) {
-			return false;
-		}
-
-		final ZLImage image = BookUtil.getCover(book);
-		if (image == null) {
-			return false;
-		}
-
-		return image.saveToFile(url);
+	public ZLImage getCover(Book book, int maxWidth, int maxHeight) {
+		return BookUtil.getCover(book);
 	}
 
 	public List<Bookmark> bookmarks(BookmarkQuery query) {
@@ -719,5 +720,23 @@ public class BookCollection extends AbstractBookCollection {
 		myStyles.put(style.Id, style);
 		myDatabase.saveStyle(style);
 		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
+	}
+
+	public String getHash(Book book) {
+		final ZLPhysicalFile file = book.File.getPhysicalFile();
+		if (file == null) {
+			return null;
+		}
+		String hash = myDatabase.getHash(book.getId(), file.javaFile().lastModified());
+		System.err.println("HASH FOR " + book + " FROM DB = " + hash);
+		if (hash == null) {
+			final UID uid = BookUtil.createUid(file, "SHA-1");
+			if (uid == null) {
+				return null;
+			}
+			hash = uid.Id.toLowerCase();
+			myDatabase.setHash(book.getId(), hash);
+		}
+		return hash;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2014 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.xhtml;
+package org.geometerplus.android.fbreader.network.auth;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import java.io.*;
 
-import org.geometerplus.fbreader.bookmodel.*;
+import org.json.simple.JSONValue;
 
-class XHTMLTagPreAction extends XHTMLTagAction {
-	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
-		reader.myPreformatted = true;
-		final BookReader modelReader = reader.getModelReader();
-		modelReader.beginParagraph();
-		modelReader.addControl(FBTextKind.CODE, true);
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+
+public abstract class JsonRequest extends ZLNetworkRequest.PostWithMap {
+	public JsonRequest(String url) {
+		super(url);
 	}
 
-	protected void doAtEnd(XHTMLReader reader) {
-		final BookReader modelReader = reader.getModelReader();
-		modelReader.addControl(FBTextKind.CODE, false);
-		modelReader.endParagraph();
-		reader.myPreformatted = false;
+	@Override
+	public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
+		processResponse(JSONValue.parse(new InputStreamReader(stream)));
 	}
+
+	protected abstract void processResponse(Object response);
 }

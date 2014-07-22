@@ -32,28 +32,28 @@
 	</node>
 	<node name="language">
 		<node name="ar" value="Araba"/>
-		<node name="be" value="Belarusian" toBeTranslated="true"/>
-		<node name="bg" value="Bulgarian" toBeTranslated="true"/>
-		<node name="ca" value="Catalan" toBeTranslated="true"/>
+		<node name="be" value="Belarusa"/>
+		<node name="bg" value="Bulgara"/>
+		<node name="ca" value="Catalana"/>
 		<node name="cs" value="Ceha"/>
-		<node name="da" value="Danish" toBeTranslated="true"/>
+		<node name="da" value="Daneza"/>
 		<node name="de" value="Germana"/>
 		<node name="de-traditional" value="Germana (ortografia traditionala)"/>
 		<node name="el" value="Greaca"/>
 		<node name="en" value="Engleza"/>
 		<node name="eo" value="Esperanto"/>
 		<node name="es" value="Spaniola"/>
-		<node name="eu" value="Basque" toBeTranslated="true"/>
-		<node name="fa" value="Persian" toBeTranslated="true"/>
+		<node name="eu" value="Basca"/>
+		<node name="fa" value="Persiana"/>
 		<node name="fi" value="Finlandeza"/>
 		<node name="fr" value="Franceza"/>
-		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="gl" value="Galiciana"/>
 		<node name="he" value="Ebraica"/>
 		<node name="hu" value="Ungara"/>
-		<node name="hy" value="Armenian" toBeTranslated="true"/>
+		<node name="hy" value="Armeana"/>
 		<node name="id" value="Indoneziana"/>
 		<node name="it" value="Italiana"/>
-		<node name="ka" value="Georgian" toBeTranslated="true"/>
+		<node name="ka" value="Georgiana"/>
 		<node name="lt" value="Lituaniana"/>
 		<node name="nb" value="Norvegiana"/>
 		<node name="nl" value="Olandeza"/>
@@ -61,19 +61,19 @@
 		<node name="pt" value="Portugheza"/>
 		<node name="ro" value="Romana"/>
 		<node name="ru" value="Rusa"/>
-		<node name="sr" value="Serbian" toBeTranslated="true"/>
+		<node name="sr" value="Sirba"/>
 		<node name="sv" value="Suedeza"/>
-		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="ta" value="Tamila"/>
 		<node name="th" value="Tailandeza"/>
 		<node name="tr" value="Turca"/>
 		<node name="uk" value="Ucrainiana"/>
 		<node name="vi" value="Vietnameza"/>
 		<node name="zh" value="Chineza"/>
-		<node name="zh_TW" value="Chinese (traditional)" toBeTranslated="true"/>
-		<node name="any" value="Any" toBeTranslated="true"/>
+		<node name="zh_TW" value="Chineza(traditionala)"/>
+		<node name="any" value="Oricare"/>
 		<node name="other" value="Altele"/>
 		<node name="multi" value="Multi limba"/>
-		<node name="system" value="System" toBeTranslated="true"/>
+		<node name="system" value="Sistem"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="deschis"/>

@@ -126,4 +126,8 @@ public abstract class BooksDatabase {
 
 	protected abstract Collection<String> loadVisitedHyperlinks(long bookId);
 	protected abstract void addVisitedHyperlink(long bookId, String hyperlinkId);
+
+	protected abstract String getHash(long bookId, long lastModified);
+	protected abstract void setHash(long bookId, String hash);
+	protected abstract List<Long> bookIdsByHash(String hash);
 }
