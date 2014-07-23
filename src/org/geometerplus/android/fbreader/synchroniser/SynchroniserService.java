@@ -37,11 +37,25 @@ import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
 public class SynchroniserService extends Service implements IBookCollection.Listener, Runnable {
 	enum SyncStatus {
-		AlreadyUploaded,
-		Uploaded,
-		ToBeDeleted,
-		Failure,
-		HashNotComputed
+		AlreadyUploaded(Book.SYNCHRONIZED_LABEL),
+		Uploaded(Book.SYNCHRONIZED_LABEL),
+		ToBeDeleted(Book.SYNC_DELETED_LABEL),
+		Failure(Book.SYNC_FAILURE_LABEL),
+		FailedPreviuousTime(null),
+		HashNotComputed(null);
+
+		private static final List<String> AllLabels = Arrays.asList(
+			Book.SYNCHRONIZED_LABEL,
+			Book.SYNC_FAILURE_LABEL,
+			Book.SYNC_DELETED_LABEL,
+			Book.SYNC_TOSYNC_LABEL
+		);
+
+		public final String Label;
+
+		SyncStatus(String label) {
+			Label = label;
+		}
 	}
 
 	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
@@ -110,6 +124,16 @@ public class SynchroniserService extends Service implements IBookCollection.List
 							myProcessed.add(book);
 							++count;
 							final SyncStatus status = uploadBookToServer(book);
+							if (status.Label != null) {
+								for (String label : SyncStatus.AllLabels) {
+									if (status.Label.equals(label)) {
+										book.addLabel(label);
+									} else {
+										book.removeLabel(label);
+									}
+								}
+								myCollection.saveBook(book);
+							}
 							final Integer sc = statusCounts.get(status);
 							statusCounts.put(status, sc != null ? sc + 1 : 1);
 						}
@@ -190,12 +214,12 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		final String hash = myCollection.getHash(book);
 		if (hash == null) {
 			return SyncStatus.HashNotComputed;
-		}
-		if (myActualHashesFromServer.contains(hash)) {
+		} else if (myActualHashesFromServer.contains(hash)) {
 			return SyncStatus.AlreadyUploaded;
-		}
-		if (myDeletedHashesFromServer.contains(hash)) {
+		} else if (myDeletedHashesFromServer.contains(hash)) {
 			return SyncStatus.ToBeDeleted;
+		} else if (book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
+			return SyncStatus.FailedPreviuousTime;
 		}
 		final Map<String,Object> result = new HashMap<String,Object>();
 		final PostRequest verificationRequest =
