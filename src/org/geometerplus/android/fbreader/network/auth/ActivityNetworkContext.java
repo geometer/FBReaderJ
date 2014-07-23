@@ -17,9 +17,8 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.android.fbreader.network.auth;
 
-import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -40,11 +39,13 @@ import org.apache.http.impl.cookie.BasicClientCookie2;
 
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public final class ActivityNetworkContext extends AndroidNetworkContext {
 	private final Activity myActivity;
-	private volatile String myAccount;
 	private volatile boolean myAuthorizationConfirmed;
+
+	private volatile String myAccountName;
 
 	public ActivityNetworkContext(Activity activity) {
 		myActivity = activity;
@@ -63,7 +64,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 					break;
 				case NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER:
 					if (resultCode == Activity.RESULT_OK && data != null) {
-						myAccount = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+						myAccountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_AUTHORISATION:
@@ -104,7 +105,10 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	private String url(URI base, Map<String,String> params, String key) {
-		final String path = params.get(key);
+		return url(base, params.get(key));
+	}
+
+	private String url(URI base, String path) {
 		if (path == null) {
 			return null;
 		}
@@ -117,12 +121,20 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	@Override
-	protected boolean authenticateWeb(URI uri, Map<String,String> params) {
+	protected Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
-		final String authUrl = url(uri, params, "auth-url-web");
+		final String account = getAccountName(uri.getHost(), realm);
+		String authUrl = url(uri, params, "auth-url-web");
+		if (account != null) {
+			final String urlWithAccount = params.get("auth-url-web-with-email");
+			if (urlWithAccount != null) {
+				authUrl = url(uri, urlWithAccount.replace("{email}", account));
+			}
+		}
 		final String completeUrl = url(uri, params, "complete-url-web");
-		if (authUrl == null || completeUrl == null) {
-			return false;
+		final String verificationUrl = url(uri, params, "verification-url");
+		if (authUrl == null || completeUrl == null || verificationUrl == null) {
+			return errorMap("No data for web authentication");
 		}
 
 		final Intent intent = new Intent(myActivity, WebAuthorisationScreen.class);
@@ -130,73 +142,75 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		intent.putExtra(NetworkLibraryActivity.COMPLETE_URL_KEY, completeUrl);
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
-		return true;
+		return verify(verificationUrl);
 	}
 
-	private boolean registerAccessToken(String clientId, String authUrl, String authToken) {
+	private Map<String,String> registerAccessToken(String account, String clientId, String authUrl, String authToken) {
 		String code = null;
 		try {
-			code = GoogleAuthUtil.getToken(myActivity, myAccount, String.format(
+			code = GoogleAuthUtil.getToken(myActivity, account, String.format(
 				"oauth2:server:client_id:%s:api_scope:%s", clientId,
 				TextUtils.join(" ", new Object[] { Scopes.DRIVE_FILE, Scopes.PROFILE })
 			), null);
-			System.err.println("ACCESS TOKEN = " + code);
-			final String result = runTokenAuthorization(authUrl, authToken, code);
-			System.err.println("AUTHENTICATION RESULT 2 = " + result);
-			return true;
+			return runTokenAuthorization(authUrl, authToken, code);
 		} catch (UserRecoverableAuthException e) {
 			myAuthorizationConfirmed = false;
 			startActivityAndWait(e.getIntent(), NetworkLibraryActivity.REQUEST_AUTHORISATION);
-			return myAuthorizationConfirmed && registerAccessToken(clientId, authUrl, authToken);
+			if (myAuthorizationConfirmed) {
+				return registerAccessToken(account, clientId, authUrl, authToken);
+			} else {
+				return errorMap("Authorization failed");
+			}
 		} catch (Exception e) {
-			return false;
+			return errorMap(e);
 		}
 	}
 
-	private String runTokenAuthorization(String authUrl, String authToken, String code) {
-		final StringBuilder buffer = new StringBuilder();
-		final ZLNetworkRequest.PostWithMap request = new ZLNetworkRequest.PostWithMap(authUrl) {
-			public void handleStream(InputStream stream, int length) throws IOException {
-				final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-				buffer.append(reader.readLine());
+	private Map<String,String> runTokenAuthorization(String authUrl, String authToken, String code) {
+		final Map<String,String> result = new HashMap<String,String>();
+		final JsonRequest request = new JsonRequest(authUrl) {
+			public void processResponse(Object response) {
+				result.putAll((Map)response);
 			}
 		};
 		request.addPostParameter("auth", authToken);
 		request.addPostParameter("code", code);
 		performQuietly(request);
-		return buffer.toString().trim();
+		System.err.println("AUTHORIZATION RESULT = " + result);
+		return result;
 	}
 
 	@Override
-	protected boolean authenticateToken(URI uri, Map<String,String> params) {
+	protected Map<String,String> authenticateToken(URI uri, String realm, Map<String,String> params) {
 		System.err.println("+++ TOKEN AUTH +++");
 		try {
 			final String authUrl = url(uri, params, "auth-url-token");
 			final String clientId = params.get("client-id");
 			if (authUrl == null || clientId == null) {
-				return false;
+				return errorMap("No data for token authentication");
 			}
 
-			final Intent intent = AccountManager.newChooseAccountIntent(
-				null, null, new String[] { "com.google" }, false, null, null, null, null
-			);
-			startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER);
-			if (myAccount == null) {
-				return false;
+			String account = getAccountName(uri.getHost(), realm);
+			if (account == null) {
+				final Intent intent = AccountManager.newChooseAccountIntent(
+					null, null, new String[] { "com.google" }, false, null, null, null, null
+				);
+				startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER);
+				account = myAccountName;
+			}
+			if (account == null) {
+				return errorMap("No selected account");
 			}
 			final String authToken = GoogleAuthUtil.getToken(
-				myActivity, myAccount, String.format("audience:server:client_id:%s", clientId)
+				myActivity, account, String.format("audience:server:client_id:%s", clientId)
 			);
-			System.err.println("AUTH TOKEN = " + authToken);
-			final String result = runTokenAuthorization(authUrl, authToken, null);
-			System.err.println("AUTHENTICATION RESULT 1 = " + result);
-			if ("SUCCESS".equals(result)) {
-				return true;
+			final Map<String,String> result = runTokenAuthorization(authUrl, authToken, null);
+			if (result.containsKey("user")) {
+				return result;
 			}
-			return registerAccessToken(clientId, authUrl, authToken);
+			return registerAccessToken(account, clientId, authUrl, authToken);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			return errorMap(e);
 		} finally {
 			System.err.println("--- TOKEN AUTH ---");
 		}

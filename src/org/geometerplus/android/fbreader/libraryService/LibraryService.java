@@ -29,6 +29,7 @@ import android.os.FileObserver;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -41,10 +42,13 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.TextPosition;
+import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
+
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private static final class Observer extends FileObserver {
 		private static final int MASK =
@@ -191,6 +195,10 @@ public class LibraryService extends Service {
 			return SerializerUtil.serialize(myCollection.getBookByUid(new UID(type, id)));
 		}
 
+		public String getBookByHash(String hash) {
+			return SerializerUtil.serialize(myCollection.getBookByHash(hash));
+		}
+
 		public List<String> authors() {
 			final List<Author> authors = myCollection.authors();
 			final List<String> strings = new ArrayList<String>(authors.size());
@@ -276,6 +284,9 @@ public class LibraryService extends Service {
 			if (image == null) {
 				return null;
 			}
+			if (image instanceof ZLImageProxy) {
+				myImageSynchronizer.synchronize((ZLImageProxy)image, null);
+			}
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 			final ZLAndroidImageData data = manager.getImageData(image);
@@ -313,6 +324,10 @@ public class LibraryService extends Service {
 		public void rescan(String path) {
 			myCollection.rescan(path);
 		}
+
+		public String getHash(String book) {
+			return myCollection.getHash(SerializerUtil.deserializeBook(book));
+		}
 	}
 
 	private volatile LibraryImplementation myLibrary;
@@ -346,6 +361,7 @@ public class LibraryService extends Service {
 			l.deactivate();
 			l.close();
 		}
+		myImageSynchronizer.clear();
 		super.onDestroy();
 	}
 }

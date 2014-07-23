@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.network.ServiceNetworkContext;
+import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
 public class SynchroniserService extends Service implements IBookCollection.Listener, Runnable {
 	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
@@ -42,7 +42,8 @@ public class SynchroniserService extends Service implements IBookCollection.List
 
 	private final List<Book> myQueue = Collections.synchronizedList(new LinkedList<Book>());
 	private final Set<Book> myProcessed = new HashSet<Book>();
-	private final Set<String> myHashesFromServer = new HashSet<String>();
+	private final Set<String> myActualHashesFromServer = new HashSet<String>();
+	private final Set<String> myDeletedHashesFromServer = new HashSet<String>();
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -66,21 +67,24 @@ public class SynchroniserService extends Service implements IBookCollection.List
 				public void run() {
 					try {
 						System.err.println("HELLO THREAD");
-						myHashesFromServer.clear();
+						myActualHashesFromServer.clear();
+						myDeletedHashesFromServer.clear();
 						try {
 							myNetworkContext.perform(new PostRequest("all.hashes", null) {
 								@Override
 								public void processResponse(Object response) {
-									myHashesFromServer.addAll((List)response);
+									final Map<String,List<String>> map = (Map<String,List<String>>)response;
+									myActualHashesFromServer.addAll(map.get("actual"));
+									myDeletedHashesFromServer.addAll(map.get("deleted"));
 								}
 							});
-							System.err.println("RECEIVED: " + myHashesFromServer.size() + " HASHES");
+							System.err.println(String.format("RECEIVED: %s/%s HASHES", myActualHashesFromServer.size(), myDeletedHashesFromServer.size()));
 						} catch (Exception e) {
 							e.printStackTrace();
 							System.err.println("DO NOT SYNCHRONIZE: ALL HASHES REQUEST FAILED");
 							return;
 						}
-						System.err.println("START SYNCRONIZATION");
+						System.err.println("START SYNCRONIZATION " + new Date());
 						for (BookQuery q = new BookQuery(new Filter.Empty(), 20);; q = q.next()) {
 							final List<Book> books = myCollection.books(q);
 							if (books.isEmpty()) {
@@ -97,10 +101,10 @@ public class SynchroniserService extends Service implements IBookCollection.List
 							}
 							myProcessed.add(book);
 							System.err.println("Processing " + book.getTitle() + " [" + book.File.getPath() + "]");
-							uploadBookToServer(book.File.getPhysicalFile());
+							uploadBookToServer(book);
 						}
 					} finally {
-						System.err.println("BYE-BYE THREAD");
+						System.err.println("BYE-BYE THREAD " + new Date());
 						ourSynchronizationThread = null;
 					}
 				}
@@ -125,13 +129,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 
 		@Override
 		public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
-			final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-			final StringBuilder buffer = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				buffer.append(line);
-			}
-			processResponse(JSONValue.parse(buffer.toString()));
+			processResponse(JSONValue.parse(new InputStreamReader(stream)));
 		}
 
 		protected abstract void processResponse(Object response);
@@ -144,13 +142,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 
 		@Override
 		public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
-			final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-			final StringBuilder buffer = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				buffer.append(line);
-			}
-			final Object response = JSONValue.parse(buffer.toString());
+			final Object response = JSONValue.parse(new InputStreamReader(stream));
 			String id = null;
 			List<String> hashes = null;
 			String error = null;
@@ -169,29 +161,37 @@ public class SynchroniserService extends Service implements IBookCollection.List
 				System.err.println("UPLOAD FAILURE: " + error);
 			} else if (id != null && hashes != null) {
 				System.err.println("UPLOADED SUCCESSFULLY: " + id);
-				myHashesFromServer.addAll(hashes);
+				myActualHashesFromServer.addAll(hashes);
 			} else {
 				System.err.println("UNEXPECED RESPONSE: " + response);
 			}
 		}
 	}
 
-	private void uploadBookToServer(ZLPhysicalFile file) {
-		final UID uid = BookUtil.createUid(file, "SHA-1");
-		if (uid == null) {
-			System.err.println("Failed: SHA-1 checksum not computed");
+	private void uploadBookToServer(Book book) {
+		final ZLPhysicalFile file = book.File.getPhysicalFile();
+		if (file == null) {
 			return;
 		}
-		if (myHashesFromServer.contains(uid.Id.toLowerCase())) {
-			System.err.println("HASH ALREADY IN THE TABLE");
+		final String hash = myCollection.getHash(book);
+		if (hash == null) {
+			System.err.println("Failed: checksum not computed");
+			return;
+		}
+		if (myActualHashesFromServer.contains(hash)) {
+			System.err.println("BOOK ALREADY UPLOADED");
+			return;
+		}
+		if (myDeletedHashesFromServer.contains(hash)) {
+			System.err.println("BOOK ALREADY UPLOADED AND DELETED");
 			return;
 		}
 		final Map<String,Object> result = new HashMap<String,Object>();
 		final PostRequest verificationRequest =
-			new PostRequest("books.by.hash", Collections.singletonMap("sha1", uid.Id)) {
+			new PostRequest("book.status.by.hash", Collections.singletonMap("sha1", hash)) {
 				@Override
 				public void processResponse(Object response) {
-					result.put("result", response);
+					result.putAll((Map)response);
 				}
 			};
 		try {
@@ -200,10 +200,9 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			e.printStackTrace();
 		}
 		final String csrfToken = myNetworkContext.getCookieValue(DOMAIN, "csrftoken");
-		final Object response = result.get("result");
 		try {
-			final List<Map<String,Object>> responseList = (List<Map<String,Object>>)response;
-			if (responseList.isEmpty()) {
+			final String status = (String)result.get("status");
+			if ("not found".equals(status)) {
 				try {
 					final UploadRequest uploadRequest = new UploadRequest(file.javaFile());
 					uploadRequest.addHeader("Referer", verificationRequest.getURL());
@@ -213,13 +212,17 @@ public class SynchroniserService extends Service implements IBookCollection.List
 					e.printStackTrace();
 				}
 			} else {
-				for (Map<String,Object> bookInfo : responseList) {
-					System.err.println("BOOK ALREADY UPLOADED: " + bookInfo.get("id"));
-					myHashesFromServer.addAll((List<String>)bookInfo.get("hashes"));
+				final List<String> hashes = (List<String>)result.get("hashes");
+				if ("found".equals(status)) {
+					System.err.println("BOOK ALREADY UPLOADED");
+					myActualHashesFromServer.addAll(hashes);
+				} else /* if ("deleted".equals(status)) */ {
+					System.err.println("BOOK ALREADY UPLOADED AND DELETED");
+					myDeletedHashesFromServer.addAll(hashes);
 				}
 			}
 		} catch (Exception e) {
-			System.err.println("UNEXPECTED RESPONSE: " + response);
+			System.err.println("UNEXPECTED RESPONSE: " + result);
 		}
 	}
 

@@ -41,7 +41,9 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.action.*;
+import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 import org.geometerplus.android.util.UIUtil;
@@ -57,6 +59,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	public static final String COOKIES_KEY = "android.fbreader.data.cookies";
 	public static final String COMPLETE_URL_KEY = "android.fbreader.data.complete.url";
 
+	final BookCollectionShadow BookCollection = new BookCollectionShadow();
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
@@ -70,6 +73,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		BookCollection.bindToService(this, null);
 
 		AuthenticationActivity.initCredentialsCreator(this);
 
@@ -136,6 +140,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	public void onDestroy() {
+		BookCollection.unbind();
 		super.onDestroy();
 	}
 
@@ -265,7 +270,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	private List<? extends Action> getContextMenuActions(NetworkTree tree) {
 		return tree instanceof NetworkBookTree
-			? NetworkBookActions.getContextMenuActions(this, (NetworkBookTree)tree, Connection)
+			? NetworkBookActions.getContextMenuActions(this, (NetworkBookTree)tree, BookCollection, Connection)
 			: myContextMenuActions;
 	}
 

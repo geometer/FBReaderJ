@@ -17,25 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.network;
+package org.geometerplus.android.fbreader.network.auth;
 
-import java.io.File;
-import java.net.URI;
-import java.util.Collections;
-import java.util.Map;
+import java.io.*;
 
-public class QuietNetworkContext extends ZLNetworkContext {
+import org.json.simple.JSONValue;
+
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+
+public abstract class JsonRequest extends ZLNetworkRequest.PostWithMap {
+	public JsonRequest(String url) {
+		super(url);
+	}
+
 	@Override
-	public Map<String,String> authenticate(URI uri, String realm, Map<String,String> params) {
-		return Collections.singletonMap("error", "Required authorization");
+	public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
+		processResponse(JSONValue.parse(new InputStreamReader(stream)));
 	}
 
-	public final boolean downloadToFileQuietly(String url, final File outFile) {
-		try {
-			downloadToFile(url, outFile);
-			return true;
-		} catch (ZLNetworkException e) {
-			return false;
-		}
-	}
+	protected abstract void processResponse(Object response);
 }
