@@ -737,7 +737,6 @@ public class BookCollection extends AbstractBookCollection {
 			return null;
 		}
 		String hash = myDatabase.getHash(book.getId(), file.javaFile().lastModified());
-		System.err.println("HASH FOR " + book + " FROM DB = " + hash);
 		if (hash == null) {
 			final UID uid = BookUtil.createUid(file, "SHA-1");
 			if (uid == null) {
