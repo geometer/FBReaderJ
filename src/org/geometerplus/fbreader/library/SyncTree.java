@@ -19,14 +19,23 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import java.util.Arrays;
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Filter;
 
-public class FileFirstLevelTree extends FirstLevelTree {
-	FileFirstLevelTree(RootTree root) {
-		super(root, ROOT_FILE);
+public class SyncTree extends FirstLevelTree {
+	private final List<String> myLabels = Arrays.asList(
+		Book.SYNCHRONIZED_LABEL,
+		Book.SYNC_FAILURE_LABEL,
+		Book.SYNC_DELETED_LABEL
+	);
+
+	SyncTree(RootTree root) {
+		super(root, ROOT_SYNC);
 	}
 
 	@Override
@@ -42,22 +51,27 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	@Override
 	public void waitForOpening() {
 		clear();
-		for (String dir : Paths.BookPathOption.getValue()) {
-			addChild(dir, "fileTreeLibrary", dir);
-		}
-		addChild("/", "fileTreeRoot", null);
-		addChild(Paths.cardDirectory(), "fileTreeCard", null);
-	}
 
-	private void addChild(String path, String resourceKey, String summary) {
-		final ZLFile file = ZLFile.createFileByPath(path);
-		if (file != null) {
-			final ZLResource resource = resource().getResource(resourceKey);
-			new FileTree(
+		final ZLResource baseResource = resource().getResource(ROOT_SYNC);
+		Filter others = null;
+
+		for (String label : myLabels) {
+			final Filter filter = new Filter.ByLabel(label);
+			if (Collection.hasBooks(filter)) {
+				new SyncLabelTree(this, label, filter, baseResource.getResource(label));
+			}
+			if (others == null) {
+				others = new Filter.Not(filter);
+			} else {
+				others = new Filter.And(others, new Filter.Not(filter));
+			}
+		}
+		if (Collection.hasBooks(others)) {
+			new SyncLabelTree(
 				this,
-				file,
-				resource.getValue(),
-				summary != null ? summary : resource.getResource("summary").getValue()
+				Book.SYNC_TOSYNC_LABEL,
+				others,
+				baseResource.getResource(Book.SYNC_TOSYNC_LABEL)
 			);
 		}
 	}
