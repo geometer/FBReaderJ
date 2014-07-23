@@ -140,4 +140,16 @@ public abstract class Filter {
 			return First.matches(book) || Second.matches(book);
 		}
 	}
+
+	public final static class Not extends Filter {
+		public final Filter Base;
+
+		public Not(Filter base) {
+			Base = base;
+		}
+
+		public boolean matches(Book book) {
+			return !Base.matches(book);
+		}
+	}
 }

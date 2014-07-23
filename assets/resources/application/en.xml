@@ -26,6 +26,21 @@
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
+		<node name="sync" value="Synchronization">
+			<node name="summary" value="Books by synchronization status"/>
+			<node name="sync-success" value="Synchronized">
+				<node name="summary" value="Books uploaded to the server"/>
+			</node>
+			<node name="sync-failure" value="Synchronization failed">
+				<node name="summary" value="Long tap this item to select action"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server">
+				<node name="summary" value="Long tap this item to select action"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronized yet">
+				<node name="summary" value="Books to be uploaded to the server"/>
+			</node>
+		</node>
 		<node name="fileTree" value="File tree">
 			<node name="summary" value="Browse file system"/>
 		</node>
