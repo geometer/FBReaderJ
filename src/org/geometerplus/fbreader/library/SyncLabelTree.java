@@ -19,19 +19,44 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Filter;
 
-public class FileFirstLevelTree extends FirstLevelTree {
-	FileFirstLevelTree(RootTree root) {
-		super(root, ROOT_FILE);
+public class SyncLabelTree extends FilteredTree {
+	private final String myLabel;
+	private final ZLResource myResource;
+
+	SyncLabelTree(SyncTree parent, String label, Filter filter, ZLResource resource) {
+		super(parent, filter, -1);
+		myLabel = label;
+		myResource = resource;
+	}
+
+	@Override
+	public String getName() {
+		return myResource.getValue();
 	}
 
 	@Override
 	public String getTreeTitle() {
-		return getName();
+		return getSummary();
+	}
+
+	@Override
+	public String getSummary() {
+		return myResource.getResource("summary").getValue();
+	}
+
+	@Override
+	protected String getStringId() {
+		return "@SyncLabelTree " + myLabel;
+	}
+
+	@Override
+	public boolean isSelectable() {
+		return false;
 	}
 
 	@Override
@@ -40,25 +65,7 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	}
 
 	@Override
-	public void waitForOpening() {
-		clear();
-		for (String dir : Paths.BookPathOption.getValue()) {
-			addChild(dir, "fileTreeLibrary", dir);
-		}
-		addChild("/", "fileTreeRoot", null);
-		addChild(Paths.cardDirectory(), "fileTreeCard", null);
-	}
-
-	private void addChild(String path, String resourceKey, String summary) {
-		final ZLFile file = ZLFile.createFileByPath(path);
-		if (file != null) {
-			final ZLResource resource = resource().getResource(resourceKey);
-			new FileTree(
-				this,
-				file,
-				resource.getValue(),
-				summary != null ? summary : resource.getResource("summary").getValue()
-			);
-		}
+	protected boolean createSubtree(Book book) {
+		return createBookWithAuthorsSubtree(book);
 	}
 }
