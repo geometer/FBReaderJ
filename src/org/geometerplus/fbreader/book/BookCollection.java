@@ -636,7 +636,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	@Override
-	public ZLImage getCover(Book book, int maxWidth, int maxHeight) {
+	public ZLImage getCover(Book book, int maxWidth, int maxHeight, boolean[] delayed) {
 		return BookUtil.getCover(book);
 	}
 

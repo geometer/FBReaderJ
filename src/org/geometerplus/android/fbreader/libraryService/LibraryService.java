@@ -24,7 +24,6 @@ import java.util.*;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.os.FileObserver;
 
@@ -34,7 +33,6 @@ import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.fbreader.Paths;
@@ -272,9 +270,9 @@ public class LibraryService extends Service {
 		}
 
 		@Override
-		public Bitmap getCover(String book, int maxWidth, int maxHeight) {
+		public Bitmap getCover(String book, int maxWidth, int maxHeight, boolean[] delayed) {
 			final ZLImage image =
-				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
+				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight, delayed);
 			if (image == null) {
 				return null;
 			}
@@ -284,15 +282,12 @@ public class LibraryService extends Service {
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 			if (((ZLImageProxy)image).isSynchronized()) {
-				return getSignal();
+				delayed[0] = false;
+				return null;
 			}
+			delayed[0] = true;
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
-		}
-
-		@Override
-		public Bitmap getSignal() {
-			return BitmapFactory.decodeResource(getResources(), R.drawable.refresh);
 		}
 
 		public List<String> bookmarks(String query) {

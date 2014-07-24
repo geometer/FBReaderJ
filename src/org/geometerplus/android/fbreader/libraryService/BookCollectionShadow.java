@@ -385,12 +385,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public synchronized ZLImage getCover(Book book, int maxWidth, int maxHeight) {
+	public synchronized ZLImage getCover(Book book, int maxWidth, int maxHeight, boolean[] delayed) {
 		if (myInterface == null) {
 			return null;
 		}
 		try {
-			return new ZLBitmapImage(myInterface.getCover(SerializerUtil.serialize(book), maxWidth, maxHeight));
+			return new ZLBitmapImage(myInterface.getCover(SerializerUtil.serialize(book), maxWidth, maxHeight, delayed));
 		} catch (RemoteException e) {
 			return null;
 		}
