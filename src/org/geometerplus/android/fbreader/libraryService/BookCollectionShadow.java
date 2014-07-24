@@ -208,6 +208,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized Book getBookByHash(String hash) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return SerializerUtil.deserializeBook(myInterface.getBookByHash(hash));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
 	public synchronized List<Author> authors() {
 		if (myInterface == null) {
 			return Collections.emptyList();

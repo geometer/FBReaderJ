@@ -49,6 +49,7 @@ import org.geometerplus.fbreader.network.urlInfo.RelatedUrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
@@ -60,6 +61,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	private NetworkBookItem myBook;
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
+	private final BookCollectionShadow myBookCollection = new BookCollectionShadow();
 	private final BookDownloaderServiceConnection myConnection = new BookDownloaderServiceConnection();
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
@@ -70,6 +72,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+		myBookCollection.bindToService(this, null);
 
 		SQLiteCookieDatabase.init(this);
 
@@ -177,6 +180,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	@Override
 	public void onDestroy() {
 		myImageSynchronizer.clear();
+		myBookCollection.unbind();
 
 		super.onDestroy();
 	}
@@ -367,7 +371,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				R.id.network_book_button2,
 				R.id.network_book_button3,
 		};
-		final List<NetworkBookActions.NBAction> actions = NetworkBookActions.getContextMenuActions(this, myTree, myConnection);
+		final List<NetworkBookActions.NBAction> actions = NetworkBookActions.getContextMenuActions(this, myTree, myBookCollection, myConnection);
 
 		final boolean skipSecondButton =
 			actions.size() < buttons.length &&

@@ -62,6 +62,7 @@ public interface IBookCollection {
 	Book getBookByFile(ZLFile file);
 	Book getBookById(long id);
 	Book getBookByUid(UID uid);
+	Book getBookByHash(String hash);
 
 	List<String> labels();
 	List<Author> authors();
