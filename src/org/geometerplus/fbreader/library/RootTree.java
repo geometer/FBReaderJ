@@ -31,6 +31,7 @@ public class RootTree extends LibraryTree {
 		new TitleListTree(this);
 		new SeriesListTree(this);
 		new TagListTree(this);
+		new SyncTree(this);
 		new FileFirstLevelTree(this);
 	}
 
