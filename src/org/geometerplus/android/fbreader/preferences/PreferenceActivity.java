@@ -81,6 +81,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FooterOptions footerOptions = viewOptions.getFooterOptions();
 		final PageTurningOptions pageTurningOptions = new PageTurningOptions();
 		final ImageOptions imageOptions = new ImageOptions();
+		final SyncOptions syncOptions = new SyncOptions();
 		final ColorProfile profile = viewOptions.getColorProfile();
 		final ZLTextStyleCollection collection = viewOptions.getTextStyleCollection();
 		final ZLKeyBindings keyBindings = new ZLKeyBindings();
@@ -120,6 +121,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption, null
 		));
+
+		final Screen syncScreen = createPreferenceScreen("sync");
+		final PreferenceSet syncPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				return syncOptions.Enabled.getValue();
+			}
+		};
+		syncScreen.addPreference(new ZLBooleanPreference(
+			this, syncOptions.Enabled, syncScreen.Resource, "enable"
+		) {
+			@Override
+			protected void onClick() {
+				super.onClick();
+				syncPreferences.run();
+			}
+		});
+		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks"));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
