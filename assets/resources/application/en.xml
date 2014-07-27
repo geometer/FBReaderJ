@@ -330,26 +330,17 @@
 				<node name="wifi" value="If device is connected via Wi-Fi"/>
 				<node name="never" value="Never"/>
 			</node>
-			<node name="uploadCurrentBook" value="Upload current book to server">
-				<node name="summaryOn" value="Automatically upload book I read to server"/>
-				<node name="summaryOff" value="Do not upload book I read to server"/>
-			</node>
-			<node name="downloadAllBooks" value="Downnload all books from server">
-				<node name="always" value="Always"/>
-				<node name="wifi" value="If device is connected via Wi-Fi"/>
-				<node name="never" value="Never"/>
-			</node>
-			<node name="downloadActiveBooks" value="Download books recently opened on other devices from server">
-				<node name="summaryOn" value="Automatically download recent books from server"/>
-				<node name="summaryOff" value="Do not download recent books from server"/>
-			</node>
 			<node name="positions" value="Reading positions">
 				<node name="summaryOn" value="Automatically synchronise reading positions"/>
 				<node name="summaryOff" value="Do not synchronise reading positions"/>
 			</node>
-			<node name="bookmarks">
+			<node name="bookmarks" value="Bookamrks">
+				<node name="summaryOn" value="Automatically synchronise bookmarks"/>
+				<node name="summaryOff" value="Do not synchronise bookmarks"/>
 			</node>
-			<node name="metainfo">
+			<node name="metainfo" value="Metainfo (title, tags, etc.)">
+				<node name="summaryOn" value="Automatically synchronise book metainfo"/>
+				<node name="summaryOff" value="Do not synchronise book metainfo"/>
 			</node>
 		</node>
 		<node name="directories" value="Directories">
