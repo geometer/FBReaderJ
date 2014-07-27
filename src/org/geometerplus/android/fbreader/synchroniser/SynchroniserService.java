@@ -212,14 +212,14 @@ public class SynchroniserService extends Service implements IBookCollection.List
 	private SyncStatus uploadBookToServer(Book book) {
 		final ZLPhysicalFile file = book.File.getPhysicalFile();
 		final String hash = myCollection.getHash(book);
+		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
 			return SyncStatus.HashNotComputed;
 		} else if (myActualHashesFromServer.contains(hash)) {
 			return SyncStatus.AlreadyUploaded;
-		} else if (myDeletedHashesFromServer.contains(hash) &&
-					!book.labels().contains(Book.SYNC_TOSYNC_LABEL)) {
+		} else if (!force && myDeletedHashesFromServer.contains(hash)) {
 			return SyncStatus.ToBeDeleted;
-		} else if (book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
+		} else if (!force && book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
 			return SyncStatus.FailedPreviuousTime;
 		}
 		final Map<String,Object> result = new HashMap<String,Object>();
@@ -239,7 +239,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		final String csrfToken = myNetworkContext.getCookieValue(DOMAIN, "csrftoken");
 		try {
 			final String status = (String)result.get("status");
-			if ("not found".equals(status)) {
+			if ((force && !"found".equals(status)) || "not found".equals(status)) {
 				try {
 					final UploadRequest uploadRequest = new UploadRequest(file.javaFile());
 					uploadRequest.addHeader("Referer", verificationRequest.getURL());
