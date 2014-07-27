@@ -325,23 +325,15 @@
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server"/>
 				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server"/>
 			</node>
-			<node name="uploadAllBooks" value="Upload all books to server">
+			<node name="values">
 				<node name="always" value="Always"/>
 				<node name="viaWifi" value="If device is connected via Wi-Fi"/>
 				<node name="never" value="Never"/>
 			</node>
-			<node name="positions" value="Reading positions">
-				<node name="summaryOn" value="Automatically synchronise reading positions"/>
-				<node name="summaryOff" value="Do not synchronise reading positions"/>
-			</node>
-			<node name="bookmarks" value="Bookamrks">
-				<node name="summaryOn" value="Automatically synchronise bookmarks"/>
-				<node name="summaryOff" value="Do not synchronise bookmarks"/>
-			</node>
-			<node name="metainfo" value="Metainfo (title, tags, etc.)">
-				<node name="summaryOn" value="Automatically synchronise book metainfo"/>
-				<node name="summaryOff" value="Do not synchronise book metainfo"/>
-			</node>
+			<node name="uploadAllBooks" value="Upload all books to server"/>
+			<node name="positions" value="Reading positions"/>
+			<node name="bookmarks" value="Bookmarks"/>
+			<node name="metainfo" value="Metainfo (title, tags, etc.)"/>
 		</node>
 		<node name="directories" value="Directories">
 			<node name="summary" value="Directories to seek for files"/>

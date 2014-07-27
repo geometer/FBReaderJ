@@ -29,8 +29,8 @@ class FontStylePreference extends ZLStringListPreference {
 	private final ZLBooleanOption myItalicOption;
 	private final String[] myValues = { "regular", "bold", "italic", "boldItalic" };
 
-	FontStylePreference(Context context, ZLResource resource, String resourceKey, ZLBooleanOption boldOption, ZLBooleanOption italicOption) {
-		super(context, resource, resourceKey);
+	FontStylePreference(Context context, ZLResource resource, ZLBooleanOption boldOption, ZLBooleanOption italicOption) {
+		super(context, resource);
 
 		myBoldOption = boldOption;
 		myItalicOption = italicOption;
