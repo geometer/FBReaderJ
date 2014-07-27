@@ -40,10 +40,10 @@ import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 
 import org.geometerplus.android.util.PackageUtil;
 
-class PluginFileOpener implements FBReaderApp.PluginFileOpener {
+class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 	private final FBReader myReader;
 
-	PluginFileOpener(FBReader reader) {
+	ExternalFileOpener(FBReader reader) {
 		myReader = reader;
 	}
 

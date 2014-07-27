@@ -256,7 +256,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.setWindow(this);
 		myFBReaderApp.initWindow();
 
-		myFBReaderApp.setPluginFileOpener(new PluginFileOpener(this));
+		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
 
 		myNeedToOpenFile = true;
 		myIntentToOpen = getIntent();
