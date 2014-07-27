@@ -55,7 +55,7 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 				final String title =
 					dialogResource.getResource("missingPlugin").getResource("title").getValue()
 						.replace("%s", plugin.supportedFileType());
-				
+
 				final AlertDialog dialog = new AlertDialog.Builder(myReader)
 					.setTitle(title)
 					.setIcon(0)
