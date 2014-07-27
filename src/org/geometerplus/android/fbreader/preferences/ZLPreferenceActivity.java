@@ -73,9 +73,15 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			);
 		}
 
-		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String resourceKey) {
+		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String key) {
 			return addPreference(
-				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource, resourceKey)
+				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource.getResource(key))
+			);
+		}
+
+		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String key, String valuesKey) {
+			return addPreference(
+				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource.getResource(key), Resource.getResource(valuesKey))
 			);
 		}
 	}
