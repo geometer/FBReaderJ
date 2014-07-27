@@ -68,8 +68,8 @@ class BookLanguagePreference extends LanguagePreference {
 		return new ArrayList<Language>(set);
 	}
 
-	BookLanguagePreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
-		super(context, rootResource, resourceKey, languages());
+	BookLanguagePreference(Context context, ZLResource resource, Book book) {
+		super(context, resource, languages());
 		myBook = book;
 		final String language = myBook.getLanguage();
 		if (language == null || !setInitialValue(language)) {
@@ -91,8 +91,8 @@ class BookLanguagePreference extends LanguagePreference {
 class EncodingPreference extends ZLStringListPreference {
 	private final Book myBook;
 
-	EncodingPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
-		super(context, rootResource, resourceKey);
+	EncodingPreference(Context context, ZLResource resource, Book book) {
+		super(context, resource);
 		myBook = book;
 
 		final FormatPlugin plugin;
@@ -340,8 +340,8 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
 				myEditAuthorsPreference = (EditAuthorsPreference)addPreference(new EditAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
 				myEditTagsPreference = (EditTagsPreference)addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
-				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource, "language", myBook));
-				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource, "encoding", myBook));
+				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource.getResource("language"), myBook));
+				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource.getResource("encoding"), myBook));
 			}
 		});
 	}
