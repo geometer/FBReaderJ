@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
@@ -155,14 +157,17 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	//
 	// Context menu
 	//
-	private static final int OPEN_BOOK_ITEM_ID = 0;
-	private static final int SHOW_BOOK_INFO_ITEM_ID = 1;
-	private static final int SHARE_BOOK_ITEM_ID = 2;
-	private static final int ADD_TO_FAVORITES_ITEM_ID = 3;
-	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 4;
-	private static final int MARK_AS_READ_ITEM_ID = 5;
-	private static final int MARK_AS_UNREAD_ITEM_ID = 6;
-	private static final int DELETE_BOOK_ITEM_ID = 7;
+	private interface ItemId {
+		int OpenBook              = 0;
+		int ShowBookInfo          = 1;
+		int ShareBook             = 2;
+		int AddToFavorites        = 3;
+		int RemoveFromFavorites   = 4;
+		int MarkAsRead            = 5;
+		int MarkAsUnread          = 6;
+		int DeleteBook            = 7;
+		int SyncAgain             = 8;
+	}
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -175,24 +180,28 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	private void createBookContextMenu(ContextMenu menu, Book book) {
 		final ZLResource resource = LibraryTree.resource();
+		final List<String> labels = book.labels();
 		menu.setHeaderTitle(book.getTitle());
-		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
-		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
+		menu.add(0, ItemId.OpenBook, 0, resource.getResource("openBook").getValue());
+		menu.add(0, ItemId.ShowBookInfo, 0, resource.getResource("showBookInfo").getValue());
 		if (book.File.getPhysicalFile() != null) {
-			menu.add(0, SHARE_BOOK_ITEM_ID, 0, resource.getResource("shareBook").getValue());
+			menu.add(0, ItemId.ShareBook, 0, resource.getResource("shareBook").getValue());
 		}
-		if (book.labels().contains(Book.FAVORITE_LABEL)) {
-			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
+		if (labels.contains(Book.FAVORITE_LABEL)) {
+			menu.add(0, ItemId.RemoveFromFavorites, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
-			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
+			menu.add(0, ItemId.AddToFavorites, 0, resource.getResource("addToFavorites").getValue());
 		}
-		if (book.labels().contains(Book.READ_LABEL)) {
-			menu.add(0, MARK_AS_UNREAD_ITEM_ID, 0, resource.getResource("markAsUnread").getValue());
+		if (labels.contains(Book.READ_LABEL)) {
+			menu.add(0, ItemId.MarkAsUnread, 0, resource.getResource("markAsUnread").getValue());
 		} else {
-			menu.add(0, MARK_AS_READ_ITEM_ID, 0, resource.getResource("markAsRead").getValue());
+			menu.add(0, ItemId.MarkAsRead, 0, resource.getResource("markAsRead").getValue());
 		}
 		if (BookUtil.canRemoveBookFile(book)) {
-			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
+			menu.add(0, ItemId.DeleteBook, 0, resource.getResource("deleteBook").getValue());
+		}
+		if (labels.contains(Book.SYNC_FAILURE_LABEL) || labels.contains(Book.SYNC_DELETED_LABEL)) {
+			menu.add(0, ItemId.SyncAgain, 0, resource.getResource("syncAgain").getValue());
 		}
 	}
 
@@ -208,38 +217,47 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	private boolean onContextItemSelected(int itemId, Book book) {
 		switch (itemId) {
-			case OPEN_BOOK_ITEM_ID:
+			case ItemId.OpenBook:
 				FBReader.openBookActivity(this, book, null);
 				return true;
-			case SHOW_BOOK_INFO_ITEM_ID:
+			case ItemId.ShowBookInfo:
 				showBookInfo(book);
 				return true;
-			case SHARE_BOOK_ITEM_ID:
+			case ItemId.ShareBook:
 				FBUtil.shareBook(this, book);
 				return true;
-			case ADD_TO_FAVORITES_ITEM_ID:
+			case ItemId.AddToFavorites:
 				book.addLabel(Book.FAVORITE_LABEL);
 				myRootTree.Collection.saveBook(book);
 				return true;
-			case REMOVE_FROM_FAVORITES_ITEM_ID:
+			case ItemId.RemoveFromFavorites:
 				book.removeLabel(Book.FAVORITE_LABEL);
 				myRootTree.Collection.saveBook(book);
 				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
 					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 				}
 				return true;
-			case MARK_AS_READ_ITEM_ID:
+			case ItemId.MarkAsRead:
 				book.addLabel(Book.READ_LABEL);
 				myRootTree.Collection.saveBook(book);
 				getListView().invalidateViews();
 				return true;
-			case MARK_AS_UNREAD_ITEM_ID:
+			case ItemId.MarkAsUnread:
 				book.removeLabel(Book.READ_LABEL);
 				myRootTree.Collection.saveBook(book);
 				getListView().invalidateViews();
 				return true;
-			case DELETE_BOOK_ITEM_ID:
+			case ItemId.DeleteBook:
 				tryToDeleteBook(book);
+				return true;
+			case ItemId.SyncAgain:
+				book.removeLabel(Book.SYNC_FAILURE_LABEL);
+				book.removeLabel(Book.SYNC_DELETED_LABEL);
+				book.addLabel(Book.SYNC_TOSYNC_LABEL);
+				myRootTree.Collection.saveBook(book);
+				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
+					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+				}
 				return true;
 		}
 		return false;
