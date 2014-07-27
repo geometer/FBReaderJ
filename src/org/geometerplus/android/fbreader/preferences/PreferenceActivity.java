@@ -73,6 +73,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		config.requestAllValuesForGroup("Files");
 		config.requestAllValuesForGroup("Scrolling");
 		config.requestAllValuesForGroup("Colors");
+		config.requestAllValuesForGroup("Sync");
 		setResult(FBReader.RESULT_REPAINT);
 
 		final ViewOptions viewOptions = new ViewOptions();
@@ -139,8 +140,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		});
 		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks"));
 		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions"));
-		syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo"));
-		syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks"));
+		//syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo"));
+		//syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks"));
+		syncPreferences.run();
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
