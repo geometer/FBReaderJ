@@ -139,15 +139,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				syncPreferences.run();
 			}
 		});
-		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks"));
-		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions"));
-		//syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo"));
-		//syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks", "values"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions", "values"));
+		//syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo", "values"));
+		//syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks", "values"));
 		syncPreferences.run();
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
-			this, appearanceScreen.Resource, "language", ZLResource.interfaceLanguages()
+			this, appearanceScreen.Resource.getResource("language"), ZLResource.interfaceLanguages()
 		) {
 			@Override
 			protected void init() {
@@ -167,7 +167,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
-			this, appearanceScreen.Resource, "screenOrientation",
+			this, appearanceScreen.Resource.getResource("screenOrientation"),
 			androidLibrary.getOrientationOption(), androidLibrary.allOrientations()
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
@@ -193,8 +193,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		appearanceScreen.addPreference(new BatteryLevelToTurnScreenOffPreference(
 			this,
 			androidLibrary.BatteryLevelToTurnScreenOffOption,
-			appearanceScreen.Resource,
-			"dontTurnScreenOff"
+			appearanceScreen.Resource.getResource("dontTurnScreenOff")
 		));
 		/*
 		appearanceScreen.addPreference(new ZLBooleanPreference(
@@ -255,19 +254,16 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 
-		final FontPreference fontPreference = new FontPreference(
-			this, textScreen.Resource, "font",
+		fontReloader.add(textScreen.addPreference(new FontPreference(
+			this, textScreen.Resource.getResource("font"),
 			baseStyle.FontFamilyOption, false
-		);
-		textScreen.addPreference(fontPreference);
-		fontReloader.add(fontPreference);
-
+		)));
 		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
 			baseStyle.FontSizeOption
 		));
 		textScreen.addPreference(new FontStylePreference(
-			this, textScreen.Resource, "fontStyle",
+			this, textScreen.Resource.getResource("fontStyle"),
 			baseStyle.BoldOption, baseStyle.ItalicOption
 		));
 		final ZLIntegerRangeOption spaceOption = baseStyle.LineSpaceOption;
@@ -277,12 +273,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			spacings[i] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
 		}
 		textScreen.addPreference(new ZLChoicePreference(
-			this, textScreen.Resource, "lineSpacing",
+			this, textScreen.Resource.getResource("lineSpacing"),
 			spaceOption, spacings
 		));
 		final String[] alignments = { "left", "right", "center", "justify" };
 		textScreen.addPreference(new ZLChoicePreference(
-			this, textScreen.Resource, "alignment",
+			this, textScreen.Resource.getResource("alignment"),
 			baseStyle.AlignmentOption, alignments
 		));
 		textScreen.addOption(baseStyle.AutoHyphenationOption, "autoHyphenations");
@@ -291,7 +287,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		for (ZLTextNGStyleDescription description : collection.getDescriptionList()) {
 			final Screen ngScreen = moreStylesScreen.createPreferenceScreen(description.Name);
 			ngScreen.addPreference(new FontPreference(
-				this, textScreen.Resource, "font",
+				this, textScreen.Resource.getResource("font"),
 				description.FontFamilyOption, true
 			));
 			ngScreen.addPreference(new StringPreference(
@@ -300,27 +296,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				textScreen.Resource, "fontSize"
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "bold",
+				this, textScreen.Resource.getResource("bold"),
 				description.FontWeightOption,
 				new String[] { "inherit", "normal", "bold" }
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "italic",
+				this, textScreen.Resource.getResource("italic"),
 				description.FontStyleOption,
 				new String[] { "inherit", "normal", "italic" }
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "textDecoration",
+				this, textScreen.Resource.getResource("textDecoration"),
 				description.TextDecorationOption,
 				new String[] { "inherit", "none", "underline", "line-through" }
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "allowHyphenations",
+				this, textScreen.Resource.getResource("allowHyphenations"),
 				description.HyphenationOption,
 				new String[] { "inherit", "none", "auto" }
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "alignment",
+				this, textScreen.Resource.getResource("alignment"),
 				description.AlignmentOption,
 				new String[] { "inherit", "left", "right", "center", "justify" }
 			));
@@ -383,7 +379,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
 		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
-			this, profile, colorsScreen.Resource, "background"
+			this, profile, colorsScreen.Resource.getResource("background")
 		) {
 			@Override
 			protected void onDialogClosed(boolean result) {
@@ -432,7 +428,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
 		statusLineScreen.addPreference(new ZLChoicePreference(
-			this, statusLineScreen.Resource, "scrollbarType",
+			this, statusLineScreen.Resource.getResource("scrollbarType"),
 			viewOptions.ScrollbarType, scrollBarTypes
 		) {
 			@Override
@@ -453,7 +449,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowBattery, "showBattery"));
 		footerPreferences.add(statusLineScreen.addPreference(new FontPreference(
-			this, statusLineScreen.Resource, "font",
+			this, statusLineScreen.Resource.getResource("font"),
 			footerOptions.Font, false
 		)));
 		footerPreferences.run();
@@ -543,7 +539,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			Language.ANY_CODE, dictionaryScreen.Resource.getResource("targetLanguage")
 		));
 		final LanguagePreference targetLanguagePreference = new LanguagePreference(
-			this, dictionaryScreen.Resource, "targetLanguage", languages
+			this, dictionaryScreen.Resource.getResource("targetLanguage"), languages
 		) {
 			@Override
 			protected void init() {
@@ -560,8 +556,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			public void run() {
 				dictionaryScreen.addPreference(new DictionaryPreference(
 					PreferenceActivity.this,
-					dictionaryScreen.Resource,
-					"dictionary",
+					dictionaryScreen.Resource.getResource("dictionary"),
 					DictionaryUtil.singleWordTranslatorOption(),
 					DictionaryUtil.dictionaryInfos(PreferenceActivity.this, true)
 				) {
@@ -575,8 +570,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				});
 				dictionaryScreen.addPreference(new DictionaryPreference(
 					PreferenceActivity.this,
-					dictionaryScreen.Resource,
-					"translator",
+					dictionaryScreen.Resource.getResource("translator"),
 					DictionaryUtil.multiWordTranslatorOption(),
 					DictionaryUtil.dictionaryInfos(PreferenceActivity.this, false)
 				));
@@ -609,13 +603,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final String[] backKeyActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
-			this, cancelMenuScreen.Resource, "backKeyAction",
+			this, cancelMenuScreen.Resource.getResource("backKeyAction"),
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, false), backKeyActions
 		));
 		final String[] backKeyLongPressActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
-			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
+			this, cancelMenuScreen.Resource.getResource("backKeyLongPressAction"),
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 

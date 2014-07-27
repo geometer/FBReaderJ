@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 class ZLChoicePreference extends ZLStringListPreference {
 	private final ZLIntegerRangeOption myOption;
 
-	ZLChoicePreference(Context context, ZLResource resource, String resourceKey, ZLIntegerRangeOption option, String[] valueResourceKeys) {
-		super(context, resource, resourceKey);
+	ZLChoicePreference(Context context, ZLResource resource, ZLIntegerRangeOption option, String[] valueResourceKeys) {
+		super(context, resource);
 
 		assert(option.MaxValue - option.MinValue + 1 == valueResourceKeys.length);
 
