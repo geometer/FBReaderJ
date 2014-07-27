@@ -46,14 +46,10 @@ public final class FBReaderApp extends ZLApplication {
 		public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark);
 	}
 
-	protected PluginFileOpener myPluginFileOpener;
+	private PluginFileOpener myPluginFileOpener;
 
 	public void setPluginFileOpener(PluginFileOpener o) {
 		myPluginFileOpener = o;
-	}
-
-	public PluginFileOpener getPluginFileOpener() {
-		return myPluginFileOpener;
 	}
 
 	public final MiscOptions MiscOptions = new MiscOptions();
