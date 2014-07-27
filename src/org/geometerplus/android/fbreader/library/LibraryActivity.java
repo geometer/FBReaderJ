@@ -52,23 +52,22 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (myRootTree == null) {
-			myRootTree = new RootTree(new BookCollectionShadow());
-		}
-		myRootTree.Collection.addListener(this);
-
 		mySelectedBook = FBReaderIntents.getBookExtra(getIntent());
 
 		new LibraryTreeAdapter(this);
 
-		init(getIntent());
-
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
 
-		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
+		deleteRootTree();
+
+		final BookCollectionShadow collection = new BookCollectionShadow();
+		collection.bindToService(this, new Runnable() {
 			public void run() {
-				setProgressBarIndeterminateVisibility(!myRootTree.Collection.status().IsCompleted);
+				setProgressBarIndeterminateVisibility(!collection.status().IsCompleted);
+				myRootTree = new RootTree(collection);
+				collection.addListener(LibraryActivity.this);
+				init(getIntent());
 			}
 		});
 	}
@@ -86,19 +85,21 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
-	@Override
 	protected LibraryTree getTreeByKey(FBTree.Key key) {
 		return key != null ? myRootTree.getLibraryTree(key) : myRootTree;
 	}
 
+	private synchronized void deleteRootTree() {
+		if (myRootTree != null) {
+			myRootTree.Collection.removeListener(this);
+			((BookCollectionShadow)myRootTree.Collection).unbind();
+			myRootTree = null;
+		}
+	}
+
 	@Override
 	protected void onDestroy() {
-		myRootTree.Collection.removeListener(this);
-		((BookCollectionShadow)myRootTree.Collection).unbind();
+		deleteRootTree();
 		super.onDestroy();
 	}
 
