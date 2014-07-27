@@ -30,10 +30,10 @@ public class SyncOptions {
 	}
 	public final ZLEnumOption<SyncCondition> UploadAllBooks =
 		new ZLEnumOption<SyncCondition>("Sync", "UploadAllBooks", SyncCondition.viaWifi);
-	public final ZLBooleanOption Positions =
-		new ZLBooleanOption("Sync", "Positions", true);
-	public final ZLBooleanOption Bookmarks =
-		new ZLBooleanOption("Sync", "Bookmarks", true);
-	public final ZLBooleanOption Metainfo =
-		new ZLBooleanOption("Sync", "Metainfo", true);
+	public final ZLEnumOption<SyncCondition> Positions =
+		new ZLEnumOption<SyncCondition>("Sync", "Positions", SyncCondition.always);
+	public final ZLEnumOption<SyncCondition> Bookmarks =
+		new ZLEnumOption<SyncCondition>("Sync", "Bookmarks", SyncCondition.always);
+	public final ZLEnumOption<SyncCondition> Metainfo =
+		new ZLEnumOption<SyncCondition>("Sync", "Metainfo", SyncCondition.always);
 }
