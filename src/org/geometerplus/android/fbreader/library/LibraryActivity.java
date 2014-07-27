@@ -83,6 +83,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			}
 		} else {
 			super.onNewIntent(intent);
+			invalidateOptionsMenu();
 		}
 	}
 
