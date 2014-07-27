@@ -32,8 +32,8 @@ class ZLBoolean3Preference extends ZLStringListPreference {
 
 	private final ZLBoolean3Option myOption;
 
-	ZLBoolean3Preference(Context context, ZLResource resource, String resourceKey, ZLBoolean3Option option) {
-		super(context, resource, resourceKey);
+	ZLBoolean3Preference(Context context, ZLResource resource, ZLBoolean3Option option) {
+		super(context, resource);
 
 		myOption = option;
 		setList(new String[] { ON, OFF, UNCHANGED });

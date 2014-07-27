@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 class ZLStringChoicePreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;
 
-	ZLStringChoicePreference(Context context, ZLResource rootResource, String resourceKey, ZLStringOption option, String[] values) {
-		super(context, rootResource, resourceKey);
+	ZLStringChoicePreference(Context context, ZLResource resource, ZLStringOption option, String[] values) {
+		super(context, resource);
 		setList(values);
 		setInitialValue(option.getValue());
 		myOption = option;
