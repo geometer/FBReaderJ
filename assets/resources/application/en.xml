@@ -53,10 +53,8 @@
 		<node name="fileTreeLibrary" value="FBReader library">
 			<node name="summary" value="FBReader books directory"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Search"/>
-			<node name="rescan" value="Rescan"/>
-		</node>
+		<node name="localSearch" value="Search"/>
+		<node name="rescan" value="Rescan"/>
 		<node name="openBook" value="Open book"/>
 		<node name="showBookInfo" value="Book info"/>
 		<node name="shareBook" value="Share book"/>
@@ -66,6 +64,8 @@
 		<node name="removeFromRecents" value="Remove from recent list"/>
 		<node name="markAsRead" value="Mark as read"/>
 		<node name="markAsUnread" value="Mark as unread"/>
+		<node name="deleteAll" value="Delete all"/>
+		<node name="syncAgain" value="Synchronise again"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
 		<node name="byAuthor" value="By author">
@@ -848,6 +848,10 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="The book file will be removed irreversibly. Are you sure?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="File already exists. Redownload?"/>
