@@ -25,12 +25,12 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Filter;
 
 public class SyncLabelTree extends FilteredTree {
-	private final String myLabel;
+	public final String Label;
 	private final ZLResource myResource;
 
 	SyncLabelTree(SyncTree parent, String label, Filter filter, ZLResource resource) {
 		super(parent, filter, -1);
-		myLabel = label;
+		Label = label;
 		myResource = resource;
 	}
 
@@ -51,7 +51,7 @@ public class SyncLabelTree extends FilteredTree {
 
 	@Override
 	protected String getStringId() {
-		return "@SyncLabelTree " + myLabel;
+		return "@SyncLabelTree " + Label;
 	}
 
 	@Override

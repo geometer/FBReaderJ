@@ -216,7 +216,8 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			return SyncStatus.HashNotComputed;
 		} else if (myActualHashesFromServer.contains(hash)) {
 			return SyncStatus.AlreadyUploaded;
-		} else if (myDeletedHashesFromServer.contains(hash)) {
+		} else if (myDeletedHashesFromServer.contains(hash) &&
+					!book.labels().contains(Book.SYNC_TOSYNC_LABEL)) {
 			return SyncStatus.ToBeDeleted;
 		} else if (book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
 			return SyncStatus.FailedPreviuousTime;
