@@ -28,8 +28,8 @@ class ZLIntegerChoicePreference extends ZLStringListPreference {
 	private final ZLIntegerOption myOption;
 	private final int[] myValues;
 
-	ZLIntegerChoicePreference(Context context, ZLResource resource, String resourceKey, ZLIntegerOption option, int[] values, String[] valueResourceKeys) {
-		super(context, resource, resourceKey);
+	ZLIntegerChoicePreference(Context context, ZLResource resource, ZLIntegerOption option, int[] values, String[] valueResourceKeys) {
+		super(context, resource);
 		assert(values.length == valueResourceKeys.length);
 
 		myOption = option;
