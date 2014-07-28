@@ -65,7 +65,8 @@
 		<node name="markAsRead" value="Mark as read"/>
 		<node name="markAsUnread" value="Mark as unread"/>
 		<node name="deleteAll" value="Delete all"/>
-		<node name="syncAgain" value="Synchronise again"/>
+		<node name="uploadAgain" value="Upload again"/>
+		<node name="tryAgain" value="Try again"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
 		<node name="byAuthor" value="By author">
