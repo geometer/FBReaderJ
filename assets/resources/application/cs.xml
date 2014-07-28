@@ -26,6 +26,21 @@
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Strom souborů">
 			<node name="summary" value="Procházet systém souborů"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="Knihovna FBReaderu">
 			<node name="summary" value="Adresář s knihami pro FBReader"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Místní hledání"/>
-			<node name="rescan" value="Prohledat znovu"/>
-		</node>
+		<node name="localSearch" value="Místní hledání"/>
+		<node name="rescan" value="Prohledat znovu"/>
 		<node name="openBook" value="Otevřít knihu"/>
 		<node name="showBookInfo" value="Informace o knize"/>
 		<node name="shareBook" value="Sdílet knihu"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Odebrat ze seznamu posledních"/>
 		<node name="markAsRead" value="Označit jako přečtené"/>
 		<node name="markAsUnread" value="Označit jako nepřečtené"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
 		<node name="byAuthor" value="Podle autora">
@@ -313,6 +329,22 @@
 		<node name="series" value="Série"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Adresáře">
 			<node name="summary" value="Adresáře pro hledání souborů"/>
 			<node name="bookPath" value="Kde hledat knihy">
@@ -818,6 +850,10 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Soubor s knihou bude nevratně odebrán. Opravdu chcete pokračovat?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Soubor již existuje. Stáhnout ho znovu?"/>

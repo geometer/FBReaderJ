@@ -26,6 +26,21 @@
 		<node name="found" value="Aurkituta">
 			<node name="summary" value="%s bilaketaren emaitzak"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Fitxategi zuhaitza">
 			<node name="summary" value="Fitxategi-sistema arakatu"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="FBReader liburutegia">
 			<node name="summary" value="FBReadereko liburuen direktorioa"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Bilatu"/>
-			<node name="rescan" value="Berreskaneatu"/>
-		</node>
+		<node name="localSearch" value="Bilatu"/>
+		<node name="rescan" value="Berreskaneatu"/>
 		<node name="openBook" value="Zabaldu liburua"/>
 		<node name="showBookInfo" value="Liburuaren infoa"/>
 		<node name="shareBook" value="Partekatu liburua"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Kendu azkenaldikoen zerrendatik"/>
 		<node name="markAsRead" value="Markatu irakurria bezala"/>
 		<node name="markAsUnread" value="Markatu irakurri gabea bezala"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReadereko sare-liburutegia">
 		<node name="byAuthor" value="Egileagatik">
@@ -304,6 +320,22 @@
 		<node name="series" value="Saila"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Direktorioak">
 			<node name="summary" value="Fitxategiak bilatzeko direktorioak"/>
 			<node name="bookPath" value="Liburuen direktorioak">
@@ -792,11 +824,6 @@
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorise" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
-			<node name="sendReport" value="Send report" toBeTranslated="true"/>
-			<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
-			<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
-			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
-			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
@@ -815,6 +842,10 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Liburuaren fitxategia behin betiko ezabatuko da. Ziur zaude?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Fitxategia dagoeneko badago. Berriro deskargatu?"/>
