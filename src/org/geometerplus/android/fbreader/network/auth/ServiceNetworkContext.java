@@ -25,7 +25,7 @@ import java.util.Map;
 import android.app.Service;
 import android.content.Context;
 
-public final class ServiceNetworkContext extends AndroidNetworkContext {
+public class ServiceNetworkContext extends AndroidNetworkContext {
 	private final Service myService;
 
 	public ServiceNetworkContext(Service service) {
