@@ -331,9 +331,9 @@
 				<node name="never" value="Never"/>
 			</node>
 			<node name="uploadAllBooks" value="Upload all books to server"/>
-			<node name="positions" value="Reading positions"/>
-			<node name="bookmarks" value="Bookmarks"/>
-			<node name="metainfo" value="Metainfo (title, tags, etc.)"/>
+			<node name="positions" value="Synchronise reading positions"/>
+			<node name="bookmarks" value="Synchronise bookmarks"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)"/>
 		</node>
 		<node name="directories" value="Directories">
 			<node name="summary" value="Directories to seek for files"/>
