@@ -163,13 +163,15 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		int MarkAsRead            = 5;
 		int MarkAsUnread          = 6;
 		int DeleteBook            = 7;
-		int SyncAgain             = 8;
+		int UploadAgain           = 8;
+		int TryAgain              = 9;
 	}
 	private interface OptionsItemId {
 		int Search                = 0;
 		int Rescan                = 1;
-		int SyncAgain             = 2;
-		int DeleteAll             = 3;
+		int UploadAgain           = 2;
+		int TryAgain              = 3;
+		int DeleteAll             = 4;
 	}
 
 	@Override
@@ -203,8 +205,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		if (BookUtil.canRemoveBookFile(book)) {
 			menu.add(0, ContextItemId.DeleteBook, 0, resource.getResource("deleteBook").getValue());
 		}
-		if (labels.contains(Book.SYNC_FAILURE_LABEL) || labels.contains(Book.SYNC_DELETED_LABEL)) {
-			menu.add(0, ContextItemId.SyncAgain, 0, resource.getResource("syncAgain").getValue());
+		if (labels.contains(Book.SYNC_DELETED_LABEL)) {
+			menu.add(0, ContextItemId.UploadAgain, 0, resource.getResource("uploadAgain").getValue());
+		}
+		if (labels.contains(Book.SYNC_FAILURE_LABEL)) {
+			menu.add(0, ContextItemId.TryAgain, 0, resource.getResource("tryAgain").getValue());
 		}
 	}
 
@@ -260,7 +265,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			case ContextItemId.DeleteBook:
 				tryToDeleteBook(book);
 				return true;
-			case ContextItemId.SyncAgain:
+			case ContextItemId.UploadAgain:
+			case ContextItemId.TryAgain:
 				syncAgain(book);
 				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
 					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
@@ -279,7 +285,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, OptionsItemId.Search, "localSearch", R.drawable.ic_menu_search);
 		addMenuItem(menu, OptionsItemId.Rescan, "rescan", R.drawable.ic_menu_refresh);
-		addMenuItem(menu, OptionsItemId.SyncAgain, "syncAgain", -1);
+		addMenuItem(menu, OptionsItemId.UploadAgain, "uploadAgain", -1);
+		addMenuItem(menu, OptionsItemId.TryAgain, "tryAgain", -1);
 		addMenuItem(menu, OptionsItemId.DeleteAll, "deleteAll", -1);
 		return true;
 	}
@@ -288,21 +295,23 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 
-		boolean enableSyncAgain = false;
+		boolean enableUploadAgain = false;
+		boolean enableTryAgain = false;
 		boolean enableDeleteAll = false;
 		final LibraryTree tree = getCurrentTree();
 		if (tree instanceof SyncLabelTree) {
 			final String label = ((SyncLabelTree)tree).Label;
 			if (Book.SYNC_DELETED_LABEL.equals(label)) {
-				enableSyncAgain = true;
+				enableUploadAgain = true;
 				enableDeleteAll = true;
 			} else if (Book.SYNC_FAILURE_LABEL.equals(label)) {
-				enableSyncAgain = true;
+				enableTryAgain = true;
 			}
 		}
 
 		menu.findItem(OptionsItemId.Rescan).setEnabled(myRootTree.Collection.status().IsCompleted);
-		menu.findItem(OptionsItemId.SyncAgain).setVisible(enableSyncAgain);
+		menu.findItem(OptionsItemId.UploadAgain).setVisible(enableUploadAgain);
+		menu.findItem(OptionsItemId.TryAgain).setVisible(enableTryAgain);
 		menu.findItem(OptionsItemId.DeleteAll).setVisible(enableDeleteAll);
 
 		return true;
@@ -326,7 +335,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 					openTree(myRootTree);
 				}
 				return true;
-			case OptionsItemId.SyncAgain:
+			case OptionsItemId.UploadAgain:
+			case OptionsItemId.TryAgain:
 				for (FBTree tree : getCurrentTree().subtrees()) {
 					if (tree instanceof BookTree) {
 						syncAgain(((BookTree)tree).Book);
