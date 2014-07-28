@@ -32,10 +32,10 @@
 				<node name="summary" value="Books uploaded to the server"/>
 			</node>
 			<node name="sync-failure" value="Synchronisation failed">
-				<node name="summary" value="Long tap this item to select action"/>
+				<node name="summary" value="Books not uploaded to the server due some problems"/>
 			</node>
 			<node name="sync-deleted" value="Deleted from server">
-				<node name="summary" value="Long tap this item to select action"/>
+				<node name="summary" value="Books not accessible from the server more"/>
 			</node>
 			<node name="sync-tosync" value="Not synchronised yet">
 				<node name="summary" value="Books to be uploaded to the server"/>

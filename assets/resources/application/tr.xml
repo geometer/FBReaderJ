@@ -26,6 +26,21 @@
 		<node name="found" value="Bulunan">
 			<node name="summary" value="%s için arama sonuçları"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Dosya ağacı">
 			<node name="summary" value="Dosya sistemini tara"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="FBReader Kitaplığı">
 			<node name="summary" value="FBReader kitap dizini"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Ara"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-		</node>
+		<node name="localSearch" value="Ara"/>
+		<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		<node name="openBook" value="Oku"/>
 		<node name="showBookInfo" value="Kitabın künyesi"/>
 		<node name="shareBook" value="Kitabı paylaş"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader ağ kitaplığı">
 		<node name="byAuthor" value="Yazarlar">
@@ -304,6 +320,22 @@
 		<node name="series" value="Series" toBeTranslated="true"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Dizinler">
 			<node name="summary" value="Taranacak dizinler"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -810,6 +842,10 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Bu kitap geri dönüşü olmayan biçimde silinecek. Emin misiniz?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Bu dosya zaten var, yeniden indirilsin mi?"/>
