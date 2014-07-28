@@ -26,6 +26,21 @@
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s"/>
 		</node>
+		<node name="sync" value="Синхронизация">
+			<node name="summary" value="Как книги синхронизированы с сервером"/>
+			<node name="sync-success" value="Синхронизированные">
+				<node name="summary" value="Книги, загруженные на сервер"/>
+			</node>
+			<node name="sync-failure" value="Ошибки синхронизации">
+				<node name="summary" value="Книги, которые не удалось загрузить"/>
+			</node>
+			<node name="sync-deleted" value="Удалены с сервера">
+				<node name="summary" value="Книги, которых больше нет на сервере"/>
+			</node>
+			<node name="sync-tosync" value="Не синхронизированные">
+				<node name="summary" value="Книги, которые пока не загружены на сервер"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Файловая система">
 			<node name="summary" value="Файлы на моём устройстве"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="Библиотека FBReader">
 			<node name="summary" value="Просмотр каталога с книгами"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Поиск"/>
-			<node name="rescan" value="Пересканировать"/>
-		</node>
+		<node name="localSearch" value="Поиск"/>
+		<node name="rescan" value="Пересканировать"/>
 		<node name="openBook" value="Читать книгу"/>
 		<node name="showBookInfo" value="Информация о книге"/>
 		<node name="shareBook" value="Поделиться книгой"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Удалить из списка недавних"/>
 		<node name="markAsRead" value="Пометить как прочтённое"/>
 		<node name="markAsUnread" value="Пометить как непрочтённое"/>
+		<node name="deleteAll" value="Удалить все"/>
+		<node name="uploadAgain" value="Загрузить снова"/>
+		<node name="tryAgain" value="Попробовать снова"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
 		<node name="byAuthor" value="По авторам">
@@ -309,6 +325,22 @@
 		<node name="series" value="Серия"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Синхронизация">
+			<node name="summary" value="Настройки книжной сети"/>
+			<node name="enable" value="Включить синхронизацию">
+				<node name="summaryOn" value="Синхронизировать мою библиотеку с сервером книжной сети"/>
+				<node name="summaryOff" value="Не синхронизировать мою библиотеку с сервером книжной сети"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Всегда"/>
+				<node name="viaWifi" value="При подключении через Wi-Fi"/>
+				<node name="never" value="Никогда"/>
+			</node>
+			<node name="uploadAllBooks" value="Загружать все книги на сервер"/>
+			<node name="positions" value="Синхронизировать позиции"/>
+			<node name="bookmarks" value="Синхронизировать закладки"/>
+			<node name="metainfo" value="Синхронизировать информацию о книге (название, категории, и т.п.)"/>
+		</node>
 		<node name="directories" value="Каталоги">
 			<node name="summary" value="Где искать файлы"/>
 			<node name="bookPath" value="Где лежат книги">
@@ -814,6 +846,10 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Файл книги будет удален необратимо. Продолжать?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Файл уже есть на устройстве. Загрузить заново?"/>
