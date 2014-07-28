@@ -62,8 +62,6 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		}
 	}
 
-	private final ConnectivityManager myConnectivityManager =
-		(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
 	private final SyncOptions mySyncOptions = new SyncOptions();
 
 	private static final class SyncronizationDisabledException extends RuntimeException {
@@ -140,11 +138,23 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			case never:
 				return false;
 			case always:
-				return myConnectivityManager.getActiveNetworkInfo().isConnected();
+			{
+				final ConnectivityManager cm =
+					(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+				return cm != null && cm.getActiveNetworkInfo().isConnected();
+			}
 			case viaWifi:
 			{
-				final NetworkInfo info = myConnectivityManager.getActiveNetworkInfo();
-				return info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI;
+				final ConnectivityManager cm =
+					(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+				if (cm == null) {
+					return false;
+				}
+				final NetworkInfo info = cm.getActiveNetworkInfo();
+				return
+					info != null &&
+					info.isConnected() &&
+					info.getType() == ConnectivityManager.TYPE_WIFI;
 			}
 		}
 	}
