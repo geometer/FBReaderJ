@@ -165,6 +165,10 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		if (ourSynchronizationThread == null) {
 			ourSynchronizationThread = new Thread() {
 				public void run() {
+					try {
+						sleep(10000);
+					} catch (InterruptedException e) {
+					}
 					final long start = System.currentTimeMillis();
 					int count = 0;
 					final Map<SyncStatus,Integer> statusCounts = new HashMap<SyncStatus,Integer>();
