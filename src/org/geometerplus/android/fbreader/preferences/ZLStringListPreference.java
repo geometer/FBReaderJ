@@ -25,19 +25,22 @@ import android.preference.ListPreference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class ZLStringListPreference extends ListPreference {
-	protected final ZLResource myResource;
+	protected final ZLResource myValuesResource;
 
-	ZLStringListPreference(Context context, ZLResource rootResource, String resourceKey) {
+	ZLStringListPreference(Context context, ZLResource resource) {
+		this(context, resource, resource);
+	}
+
+	ZLStringListPreference(Context context, ZLResource resource, ZLResource valuesResource) {
 		super(context);
-
-		myResource = rootResource.getResource(resourceKey);
-		setTitle(myResource.getValue());
+		setTitle(resource.getValue());
+		myValuesResource = valuesResource;
 	}
 
 	protected final void setList(String[] values) {
 		String[] texts = new String[values.length];
 		for (int i = 0; i < values.length; ++i) {
-			final ZLResource resource = myResource.getResource(values[i]);
+			final ZLResource resource = myValuesResource.getResource(values[i]);
 			texts[i] = resource.hasValue() ? resource.getValue() : values[i];
 		}
 		setLists(values, texts);

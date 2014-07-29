@@ -17,26 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.preferences;
+package org.geometerplus.android.fbreader;
 
-import android.content.Context;
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
+class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
+	private final FBReader myReader;
 
-class ZLStringChoicePreference extends ZLStringListPreference {
-	private final ZLStringOption myOption;
-
-	ZLStringChoicePreference(Context context, ZLResource resource, ZLStringOption option, String[] values) {
-		super(context, resource);
-		setList(values);
-		setInitialValue(option.getValue());
-		myOption = option;
+	ExternalFileOpener(FBReader reader) {
+		myReader = reader;
 	}
 
-	@Override
-	protected void onDialogClosed(boolean result) {
-		super.onDialogClosed(result);
-		myOption.setValue(getValue());
+	public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark) {
 	}
 }

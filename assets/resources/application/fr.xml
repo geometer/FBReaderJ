@@ -29,6 +29,21 @@
 		<node name="found" value="Trouvé(s)">
 			<node name="summary" value="Résultats de la recherche : %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Système de fichiers">
 			<node name="summary" value="Parcourir le système de fichiers"/>
 		</node>
@@ -41,10 +56,8 @@
 		<node name="fileTreeLibrary" value="Bibliothèque FBReader">
 			<node name="summary" value="Répertoire des livres FBReader"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Recherche locale"/>
-			<node name="rescan" value="Chercher à nouveau" toBeTranslated="true"/>
-		</node>
+		<node name="localSearch" value="Recherche locale"/>
+		<node name="rescan" value="Chercher à nouveau" toBeTranslated="true"/>
 		<node name="openBook" value="Ouvrir ce livre"/>
 		<node name="showBookInfo" value="Info livre"/>
 		<node name="shareBook" value="Partager ce livre"/>
@@ -54,6 +67,9 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Marquer comme lu" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Marquer comme non lu" toBeTranslated="true"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Librairie réseau">
 		<node name="byAuthor" value="Par auteur">
@@ -297,6 +313,22 @@
 		<node name="series" value="Série"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Répertoires">
 			<node name="summary" value="Emplacements des livres et des polices"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -802,6 +834,10 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Le livre va être supprimé de façon définitive. Etes-vous sûr?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Le fichier existe déjà. Le re-télécharger ?"/>

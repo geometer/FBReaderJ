@@ -27,8 +27,12 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 class ZLEnumPreference<T extends Enum<T>> extends ZLStringListPreference {
 	private final ZLEnumOption<T> myOption;
 
-	ZLEnumPreference(Context context, ZLEnumOption<T> option, ZLResource resource, String resourceKey) {
-		super(context, resource, resourceKey);
+	ZLEnumPreference(Context context, ZLEnumOption<T> option, ZLResource resource) {
+		this(context, option, resource, resource);
+	}
+
+	ZLEnumPreference(Context context, ZLEnumOption<T> option, ZLResource resource, ZLResource valuesResource) {
+		super(context, resource, valuesResource);
 		myOption = option;
 
 		final T initialValue = option.getValue();

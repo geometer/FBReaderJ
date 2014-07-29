@@ -26,6 +26,21 @@
 		<node name="found" value="搜尋結果">
 			<node name="summary" value="%s 的搜尋結果"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="檔案">
 			<node name="summary" value="瀏覽檔案目錄"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="FBReader 書目">
 			<node name="summary" value="FBReader 書藉目錄"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="本地搜尋"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-		</node>
+		<node name="localSearch" value="本地搜尋"/>
+		<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		<node name="openBook" value="打開書藉"/>
 		<node name="showBookInfo" value="書藉資訊"/>
 		<node name="shareBook" value="Share book" toBeTranslated="true"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="作者">
@@ -294,6 +310,22 @@
 		<node name="series" value="系列"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="目錄">
 			<node name="summary" value="文件目錄"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -799,6 +831,10 @@
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="確認刪除此檔案?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="檔案已存在，確認重新下載?"/>

@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.util.*;
+
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
@@ -52,23 +54,22 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (myRootTree == null) {
-			myRootTree = new RootTree(new BookCollectionShadow());
-		}
-		myRootTree.Collection.addListener(this);
-
 		mySelectedBook = FBReaderIntents.getBookExtra(getIntent());
 
 		new LibraryTreeAdapter(this);
 
-		init(getIntent());
-
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnCreateContextMenuListener(this);
 
-		((BookCollectionShadow)myRootTree.Collection).bindToService(this, new Runnable() {
+		deleteRootTree();
+
+		final BookCollectionShadow collection = new BookCollectionShadow();
+		collection.bindToService(this, new Runnable() {
 			public void run() {
-				setProgressBarIndeterminateVisibility(!myRootTree.Collection.status().IsCompleted);
+				setProgressBarIndeterminateVisibility(!collection.status().IsCompleted);
+				myRootTree = new RootTree(collection);
+				collection.addListener(LibraryActivity.this);
+				init(getIntent());
 			}
 		});
 	}
@@ -86,19 +87,21 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
-	@Override
 	protected LibraryTree getTreeByKey(FBTree.Key key) {
 		return key != null ? myRootTree.getLibraryTree(key) : myRootTree;
 	}
 
+	private synchronized void deleteRootTree() {
+		if (myRootTree != null) {
+			myRootTree.Collection.removeListener(this);
+			((BookCollectionShadow)myRootTree.Collection).unbind();
+			myRootTree = null;
+		}
+	}
+
 	@Override
 	protected void onDestroy() {
-		myRootTree.Collection.removeListener(this);
-		((BookCollectionShadow)myRootTree.Collection).unbind();
+		deleteRootTree();
 		super.onDestroy();
 	}
 
@@ -151,17 +154,25 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		return true;
 	}
 
-	//
-	// Context menu
-	//
-	private static final int OPEN_BOOK_ITEM_ID = 0;
-	private static final int SHOW_BOOK_INFO_ITEM_ID = 1;
-	private static final int SHARE_BOOK_ITEM_ID = 2;
-	private static final int ADD_TO_FAVORITES_ITEM_ID = 3;
-	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 4;
-	private static final int MARK_AS_READ_ITEM_ID = 5;
-	private static final int MARK_AS_UNREAD_ITEM_ID = 6;
-	private static final int DELETE_BOOK_ITEM_ID = 7;
+	private interface ContextItemId {
+		int OpenBook              = 0;
+		int ShowBookInfo          = 1;
+		int ShareBook             = 2;
+		int AddToFavorites        = 3;
+		int RemoveFromFavorites   = 4;
+		int MarkAsRead            = 5;
+		int MarkAsUnread          = 6;
+		int DeleteBook            = 7;
+		int UploadAgain           = 8;
+		int TryAgain              = 9;
+	}
+	private interface OptionsItemId {
+		int Search                = 0;
+		int Rescan                = 1;
+		int UploadAgain           = 2;
+		int TryAgain              = 3;
+		int DeleteAll             = 4;
+	}
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -174,24 +185,31 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	private void createBookContextMenu(ContextMenu menu, Book book) {
 		final ZLResource resource = LibraryTree.resource();
+		final List<String> labels = book.labels();
 		menu.setHeaderTitle(book.getTitle());
-		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
-		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
+		menu.add(0, ContextItemId.OpenBook, 0, resource.getResource("openBook").getValue());
+		menu.add(0, ContextItemId.ShowBookInfo, 0, resource.getResource("showBookInfo").getValue());
 		if (book.File.getPhysicalFile() != null) {
-			menu.add(0, SHARE_BOOK_ITEM_ID, 0, resource.getResource("shareBook").getValue());
+			menu.add(0, ContextItemId.ShareBook, 0, resource.getResource("shareBook").getValue());
 		}
-		if (book.labels().contains(Book.FAVORITE_LABEL)) {
-			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
+		if (labels.contains(Book.FAVORITE_LABEL)) {
+			menu.add(0, ContextItemId.RemoveFromFavorites, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
-			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
+			menu.add(0, ContextItemId.AddToFavorites, 0, resource.getResource("addToFavorites").getValue());
 		}
-		if (book.labels().contains(Book.READ_LABEL)) {
-			menu.add(0, MARK_AS_UNREAD_ITEM_ID, 0, resource.getResource("markAsUnread").getValue());
+		if (labels.contains(Book.READ_LABEL)) {
+			menu.add(0, ContextItemId.MarkAsUnread, 0, resource.getResource("markAsUnread").getValue());
 		} else {
-			menu.add(0, MARK_AS_READ_ITEM_ID, 0, resource.getResource("markAsRead").getValue());
+			menu.add(0, ContextItemId.MarkAsRead, 0, resource.getResource("markAsRead").getValue());
 		}
 		if (BookUtil.canRemoveBookFile(book)) {
-			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
+			menu.add(0, ContextItemId.DeleteBook, 0, resource.getResource("deleteBook").getValue());
+		}
+		if (labels.contains(Book.SYNC_DELETED_LABEL)) {
+			menu.add(0, ContextItemId.UploadAgain, 0, resource.getResource("uploadAgain").getValue());
+		}
+		if (labels.contains(Book.SYNC_FAILURE_LABEL)) {
+			menu.add(0, ContextItemId.TryAgain, 0, resource.getResource("tryAgain").getValue());
 		}
 	}
 
@@ -205,40 +223,54 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		return super.onContextItemSelected(item);
 	}
 
+	private void syncAgain(Book book) {
+		book.removeLabel(Book.SYNC_FAILURE_LABEL);
+		book.removeLabel(Book.SYNC_DELETED_LABEL);
+		book.addLabel(Book.SYNC_TOSYNC_LABEL);
+		myRootTree.Collection.saveBook(book);
+	}
+
 	private boolean onContextItemSelected(int itemId, Book book) {
 		switch (itemId) {
-			case OPEN_BOOK_ITEM_ID:
+			case ContextItemId.OpenBook:
 				FBReader.openBookActivity(this, book, null);
 				return true;
-			case SHOW_BOOK_INFO_ITEM_ID:
+			case ContextItemId.ShowBookInfo:
 				showBookInfo(book);
 				return true;
-			case SHARE_BOOK_ITEM_ID:
+			case ContextItemId.ShareBook:
 				FBUtil.shareBook(this, book);
 				return true;
-			case ADD_TO_FAVORITES_ITEM_ID:
+			case ContextItemId.AddToFavorites:
 				book.addLabel(Book.FAVORITE_LABEL);
 				myRootTree.Collection.saveBook(book);
 				return true;
-			case REMOVE_FROM_FAVORITES_ITEM_ID:
+			case ContextItemId.RemoveFromFavorites:
 				book.removeLabel(Book.FAVORITE_LABEL);
 				myRootTree.Collection.saveBook(book);
 				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
 					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 				}
 				return true;
-			case MARK_AS_READ_ITEM_ID:
+			case ContextItemId.MarkAsRead:
 				book.addLabel(Book.READ_LABEL);
 				myRootTree.Collection.saveBook(book);
 				getListView().invalidateViews();
 				return true;
-			case MARK_AS_UNREAD_ITEM_ID:
+			case ContextItemId.MarkAsUnread:
 				book.removeLabel(Book.READ_LABEL);
 				myRootTree.Collection.saveBook(book);
 				getListView().invalidateViews();
 				return true;
-			case DELETE_BOOK_ITEM_ID:
+			case ContextItemId.DeleteBook:
 				tryToDeleteBook(book);
+				return true;
+			case ContextItemId.UploadAgain:
+			case ContextItemId.TryAgain:
+				syncAgain(book);
+				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
+					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+				}
 				return true;
 		}
 		return false;
@@ -251,20 +283,42 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
-		addMenuItem(menu, 2, "rescan", R.drawable.ic_menu_refresh);
+		addMenuItem(menu, OptionsItemId.Search, "localSearch", R.drawable.ic_menu_search);
+		addMenuItem(menu, OptionsItemId.Rescan, "rescan", R.drawable.ic_menu_refresh);
+		addMenuItem(menu, OptionsItemId.UploadAgain, "uploadAgain", -1);
+		addMenuItem(menu, OptionsItemId.TryAgain, "tryAgain", -1);
+		addMenuItem(menu, OptionsItemId.DeleteAll, "deleteAll", -1);
 		return true;
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		menu.findItem(2).setEnabled(myRootTree.Collection.status().IsCompleted);
+
+		boolean enableUploadAgain = false;
+		boolean enableTryAgain = false;
+		boolean enableDeleteAll = false;
+		final LibraryTree tree = getCurrentTree();
+		if (tree instanceof SyncLabelTree) {
+			final String label = ((SyncLabelTree)tree).Label;
+			if (Book.SYNC_DELETED_LABEL.equals(label)) {
+				enableUploadAgain = true;
+				enableDeleteAll = true;
+			} else if (Book.SYNC_FAILURE_LABEL.equals(label)) {
+				enableTryAgain = true;
+			}
+		}
+
+		menu.findItem(OptionsItemId.Rescan).setEnabled(myRootTree.Collection.status().IsCompleted);
+		menu.findItem(OptionsItemId.UploadAgain).setVisible(enableUploadAgain);
+		menu.findItem(OptionsItemId.TryAgain).setVisible(enableTryAgain);
+		menu.findItem(OptionsItemId.DeleteAll).setVisible(enableDeleteAll);
+
 		return true;
 	}
 
 	private MenuItem addMenuItem(Menu menu, int id, String resourceKey, int iconId) {
-		final String label = LibraryTree.resource().getResource("menu").getResource(resourceKey).getValue();
+		final String label = LibraryTree.resource().getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, id, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
 		item.setIcon(iconId);
@@ -273,14 +327,33 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
-			case 1:
+			case OptionsItemId.Search:
 				return onSearchRequested();
-			case 2:
+			case OptionsItemId.Rescan:
 				if (myRootTree.Collection.status().IsCompleted) {
 					((BookCollectionShadow)myRootTree.Collection).reset(true);
 					openTree(myRootTree);
 				}
 				return true;
+			case OptionsItemId.UploadAgain:
+			case OptionsItemId.TryAgain:
+				for (FBTree tree : getCurrentTree().subtrees()) {
+					if (tree instanceof BookTree) {
+						syncAgain(((BookTree)tree).Book);
+					}
+				}
+				getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+				return true;
+			case OptionsItemId.DeleteAll:
+			{
+				final List<Book> books = new LinkedList<Book>();
+				for (FBTree tree : getCurrentTree().subtrees()) {
+					if (tree instanceof BookTree) {
+						books.add(((BookTree)tree).Book);
+					}
+				}
+				tryToDeleteBooks(books);
+			}
 			default:
 				return true;
 		}
@@ -290,35 +363,58 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 	// Book deletion
 	//
 	private class BookDeleter implements DialogInterface.OnClickListener {
-		private final Book myBook;
+		private final List<Book> myBooks;
 
-		BookDeleter(Book book) {
-			myBook = book;
+		BookDeleter(List<Book> books) {
+			myBooks = new ArrayList<Book>(books);
 		}
 
 		public void onClick(DialogInterface dialog, int which) {
 			if (getCurrentTree() instanceof FileTree) {
-				getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), myBook.File));
+				for (Book book : myBooks) {
+					getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), book.File));
+					myRootTree.Collection.removeBook(book, true);
+				}
 				getListView().invalidateViews();
-			} else if (getCurrentTree().onBookEvent(BookEvent.Removed, myBook)) {
-				getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+			} else {
+				boolean doReplace = false;
+				for (Book book : myBooks) {
+					doReplace |= getCurrentTree().onBookEvent(BookEvent.Removed, book);
+					myRootTree.Collection.removeBook(book, true);
+				}
+				if (doReplace) {
+					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
+				}
 			}
-
-			myRootTree.Collection.removeBook(myBook, true);
 		}
 	}
 
-	private void tryToDeleteBook(Book book) {
+	private void tryToDeleteBooks(List<Book> books) {
+		final int size = books.size();
+		if (size == 0) {
+			return;
+		}
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
-		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
+		final ZLResource boxResource = dialogResource.getResource(
+			size == 1 ? "deleteBookBox" : "deleteMultipleBookBox"
+		);
+		final String title = size == 1
+			? books.get(0).getTitle()
+			: boxResource.getResource("title").getValue();
+		final String message =
+			boxResource.getResource("message").getValue(size).replaceAll("%s", String.valueOf(size));
 		new AlertDialog.Builder(this)
-			.setTitle(book.getTitle())
-			.setMessage(boxResource.getResource("message").getValue())
+			.setTitle(title)
+			.setMessage(message)
 			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book))
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(books))
 			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
 			.create().show();
+	}
+
+	private void tryToDeleteBook(Book book) {
+		tryToDeleteBooks(Collections.singletonList(book));
 	}
 
 	private void startBookSearch(final String pattern) {
