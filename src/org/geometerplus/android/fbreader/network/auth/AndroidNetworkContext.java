@@ -19,16 +19,20 @@
 
 package org.geometerplus.android.fbreader.network.auth;
 
+import java.io.*;
 import java.net.URI;
 import java.util.*;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+
+import org.geometerplus.android.util.FileUtil;
 
 public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
@@ -64,5 +68,10 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 			}
 		});
 		return result;
+	}
+
+	@Override
+	protected OutputStream createOutputStream(File file) throws IOException {
+		return FileUtil.createOutputStream(getContext(), file);
 	}
 }

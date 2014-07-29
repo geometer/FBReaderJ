@@ -41,6 +41,7 @@ import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
+import org.geometerplus.android.util.FileUtil;
 
 public class BookDownloaderService extends Service {
 	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
@@ -141,7 +142,7 @@ public class BookDownloaderService extends Service {
 		if (index != -1) {
 			final String dir = fileName.substring(0, index);
 			final File dirFile = new File(dir);
-			if (!dirFile.exists() && !dirFile.mkdirs()) {
+			if (!dirFile.exists() && !FileUtil.mkdirs(BookDownloaderService.this, dirFile)) {
 				showMessage("cannotCreateDirectory", dirFile.getPath());
 				doStop();
 				return;
@@ -296,7 +297,7 @@ public class BookDownloaderService extends Service {
 				}
 				final OutputStream outStream;
 				try {
-					outStream = new FileOutputStream(file);
+					outStream = FileUtil.createOutputStream(BookDownloaderService.this, file);
 				} catch (FileNotFoundException ex) {
 					throw new ZLNetworkException(ZLNetworkException.ERROR_CREATE_FILE, file.getPath());
 				}

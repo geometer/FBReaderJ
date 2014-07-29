@@ -106,6 +106,8 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 		}
 	}
 
+	protected abstract OutputStream createOutputStream(File file) throws IOException;
+
 	public final void downloadToFile(String url, final File outFile) throws ZLNetworkException {
 		downloadToFile(url, outFile, 8192);
 	}
@@ -113,7 +115,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 	private final void downloadToFile(String url, final File outFile, final int bufferSize) throws ZLNetworkException {
 		perform(new ZLNetworkRequest.Get(url) {
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				OutputStream outStream = new FileOutputStream(outFile);
+				OutputStream outStream = createOutputStream(outFile);
 				try {
 					final byte[] buffer = new byte[bufferSize];
 					while (true) {

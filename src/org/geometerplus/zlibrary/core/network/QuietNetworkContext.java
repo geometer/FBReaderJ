@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.io.File;
+import java.io.*;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
@@ -37,5 +37,10 @@ public class QuietNetworkContext extends ZLNetworkContext {
 		} catch (ZLNetworkException e) {
 			return false;
 		}
+	}
+
+	@Override
+	protected OutputStream createOutputStream(File file) throws IOException {
+		return new FileOutputStream(file);
 	}
 }

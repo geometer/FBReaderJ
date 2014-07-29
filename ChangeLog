@@ -2,6 +2,7 @@
 * Uses ACCESS_NETWORK_STATE permission to detect if device is connected to the internet over WiFi
 * Download from OPDS for all supported file types
 * Tags and authors editing
+* A hack for downloading files to external card in Android Kitkat (4.4)
 * Updated Bulgarian localization (by Георги Георгиев)
 * Updated Czech localization (by Marek Pavelka)
 * Updated German localization (by Matthias Dill)
