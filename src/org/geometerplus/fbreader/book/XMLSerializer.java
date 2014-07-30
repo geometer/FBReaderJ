@@ -112,6 +112,10 @@ class XMLSerializer extends AbstractSerializer {
 			appendTag(buffer, "filter", true,
 				"type", "has-bookmark"
 			);
+		} else if (filter instanceof Filter.HasPhysicalFile) {
+			appendTag(buffer, "filter", true,
+				"type", "has-physical-file"
+			);
 		} else {
 			throw new RuntimeException("Unsupported filter type: " + filter.getClass());
 		}
@@ -765,6 +769,8 @@ class XMLSerializer extends AbstractSerializer {
 						myFilter = new Filter.ByTitlePrefix(attributes.getValue("prefix"));
 					} else if ("has-bookmark".equals(type)) {
 						myFilter = new Filter.HasBookmark();
+					} else if ("has-physical-file".equals(type)) {
+						myFilter = new Filter.HasPhysicalFile();
 					} else {
 						// we create empty filter for all other types
 						// to keep a door to add new filters in a future
