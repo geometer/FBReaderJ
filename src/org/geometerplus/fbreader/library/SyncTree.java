@@ -53,18 +53,14 @@ public class SyncTree extends FirstLevelTree {
 		clear();
 
 		final ZLResource baseResource = resource().getResource(ROOT_SYNC);
-		Filter others = null;
+		Filter others = new Filter.HasPhysicalFile();
 
 		for (String label : myLabels) {
 			final Filter filter = new Filter.ByLabel(label);
 			if (Collection.hasBooks(filter)) {
 				new SyncLabelTree(this, label, filter, baseResource.getResource(label));
 			}
-			if (others == null) {
-				others = new Filter.Not(filter);
-			} else {
-				others = new Filter.And(others, new Filter.Not(filter));
-			}
+			others = new Filter.And(others, new Filter.Not(filter));
 		}
 		if (Collection.hasBooks(others)) {
 			new SyncLabelTree(
