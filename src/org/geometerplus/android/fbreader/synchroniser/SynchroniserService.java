@@ -44,6 +44,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		Uploaded(Book.SYNCHRONIZED_LABEL),
 		ToBeDeleted(Book.SYNC_DELETED_LABEL),
 		Failure(Book.SYNC_FAILURE_LABEL),
+		ServerError(null),
 		SyncronizationDisabled(null),
 		FailedPreviuousTime(null),
 		HashNotComputed(null);
@@ -312,7 +313,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			myNetworkContext.perform(verificationRequest);
 		} catch (ZLNetworkException e) {
 			e.printStackTrace();
-			return SyncStatus.Failure;
+			return SyncStatus.ServerError;
 		}
 		final String csrfToken = myNetworkContext.getCookieValue(DOMAIN, "csrftoken");
 		try {
@@ -326,7 +327,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 					return uploadRequest.Success ? SyncStatus.Uploaded : SyncStatus.Failure;
 				} catch (ZLNetworkException e) {
 					e.printStackTrace();
-					return SyncStatus.Failure;
+					return SyncStatus.ServerError;
 				}
 			} else {
 				final List<String> hashes = (List<String>)result.get("hashes");
@@ -340,7 +341,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			}
 		} catch (Exception e) {
 			System.err.println("UNEXPECTED RESPONSE: " + result);
-			return SyncStatus.Failure;
+			return SyncStatus.ServerError;
 		}
 	}
 
