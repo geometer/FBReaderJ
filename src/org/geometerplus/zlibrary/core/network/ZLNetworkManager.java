@@ -449,17 +449,18 @@ public class ZLNetworkManager {
 		}
 	}
 
-	private HttpResponse execute(DefaultHttpClient client, HttpRequestBase request, HttpContext context, BearerAuthenticator authenticator) throws IOException {
+	private HttpResponse execute(DefaultHttpClient client, HttpRequestBase request, HttpContext context, BearerAuthenticator authenticator) throws IOException, ZLNetworkException {
 		try {
 			return client.execute(request, context);
 		} catch (BearerAuthenticationException e) {
 			final Map<String,String> response =
 				authenticator.authenticate(request.getURI(), e.Realm, e.Params);
-			if (!response.containsKey("error")) {
-				authenticator.setAccountName(request.getURI().getHost(), e.Realm, response.get("user"));
-				return client.execute(request, context);
+			final String error = response.get("error");
+			if (error != null) {
+				throw new ZLNetworkException(true, error);
 			}
-			throw e;
+			authenticator.setAccountName(request.getURI().getHost(), e.Realm, response.get("user"));
+			return client.execute(request, context);
 		}
 	}
 }
