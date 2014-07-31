@@ -30,7 +30,6 @@ public class ZLNetworkException extends Exception {
 	public static final String ERROR_CONNECT_TO_NETWORK = "couldntConnectToNetworkMessage";
 	public static final String ERROR_UNSUPPORTED_PROTOCOL = "unsupportedProtocol";
 	public static final String ERROR_INVALID_URL = "invalidURL";
-	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
 
 	// Messages with one parameter:
 	public static final String ERROR_SOMETHING_WRONG = "somethingWrongMessage";
@@ -45,54 +44,40 @@ public class ZLNetworkException extends Exception {
 		return ZLResource.resource("dialog").getResource("networkError");
 	}
 
-	private static String errorMessage(String key) {
-		if (key == null) {
-			return "null";
+	protected static String errorMessage(String code) {
+		return code != null ? getResource().getResource(code).getValue() : "null";
+	}
+
+	public static ZLNetworkException forCode(String code, String arg, Throwable cause) {
+		final String message;
+		if (code == null) {
+			message = "null";
+		} else {
+			if (arg == null) {
+				arg = "null";
+			}
+			message = getResource().getResource(code).getValue().replace("%s", arg);
 		}
-		return getResource().getResource(key).getValue();
+		return new ZLNetworkException(message, cause);
 	}
 
-	private static String errorMessage(String key, String arg) {
-		if (key == null) {
-			return "null";
-		}
-		if (arg == null) {
-			arg = "null";
-		}
-		return getResource().getResource(key).getValue().replace("%s", arg);
+	public static ZLNetworkException forCode(String code, Throwable cause) {
+		return new ZLNetworkException(errorMessage(code), cause);
 	}
 
-	final private String myCode;
-
-	public ZLNetworkException(boolean useAsMessage, String str, Throwable cause) {
-		super(useAsMessage ? str : errorMessage(str), cause);
-		myCode = useAsMessage ? null : str;
+	public static ZLNetworkException forCode(String code, String arg) {
+		return forCode(code, arg, null);
 	}
 
-	public ZLNetworkException(boolean useAsMessage, String str) {
-		super(useAsMessage ? str : errorMessage(str));
-		myCode = useAsMessage ? null : str;
+	public static ZLNetworkException forCode(String code) {
+		return forCode(code, (Throwable)null);
 	}
 
-	public ZLNetworkException(String code, Throwable cause) {
-		this(false, code, cause);
+	public ZLNetworkException(String message) {
+		super(message);
 	}
 
-	public ZLNetworkException(String code) {
-		this(false, code);
-	}
-
-	public ZLNetworkException(String code, String arg, Throwable cause) {
-		super(errorMessage(code, arg), cause);
-		myCode = code;
-	}
-
-	public ZLNetworkException(String code, String arg) {
-		super(errorMessage(code, arg));
-		myCode = code;
-	}
-
-	public String getCode() {
-		return myCode;
+	public ZLNetworkException(String message, Throwable cause) {
+		super(message, cause);
 	}
 }

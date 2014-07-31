@@ -86,7 +86,7 @@ public abstract class NetworkAuthenticationManager {
 	}
 
 	public void initialize() throws ZLNetworkException {
-		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
+		throw ZLNetworkException.forCode(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 	// returns true if link must be purchased before downloading
@@ -95,7 +95,7 @@ public abstract class NetworkAuthenticationManager {
 	}
 
 	public void purchaseBook(NetworkBookItem book) throws ZLNetworkException {
-		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
+		throw ZLNetworkException.forCode(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 	public List<NetworkBookItem> purchasedBooks() {
@@ -125,6 +125,6 @@ public abstract class NetworkAuthenticationManager {
 	}
 
 	public void recoverPassword(String email) throws ZLNetworkException {
-		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
+		throw ZLNetworkException.forCode(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 }
