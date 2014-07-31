@@ -54,7 +54,7 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	public ConfigShadow(Context context) {
 		myContext = context;
 		context.bindService(
-			FBReaderIntents.serviceIntent(FBReaderIntents.Action.CONFIG_SERVICE),
+			FBReaderIntents.internalIntent(FBReaderIntents.Action.CONFIG_SERVICE),
 			this,
 			Service.BIND_AUTO_CREATE
 		);

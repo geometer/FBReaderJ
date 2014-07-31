@@ -74,7 +74,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 				myOnBindActions.add(onBindAction);
 			}
 			context.bindService(
-				FBReaderIntents.serviceIntent(FBReaderIntents.Action.LIBRARY_SERVICE),
+				FBReaderIntents.internalIntent(FBReaderIntents.Action.LIBRARY_SERVICE),
 				this,
 				LibraryService.BIND_AUTO_CREATE
 			);
