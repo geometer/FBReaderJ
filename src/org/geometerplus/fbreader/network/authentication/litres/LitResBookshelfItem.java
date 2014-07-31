@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.network.ZLNetworkAuthenticationException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
@@ -175,7 +176,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 		// TODO: Maybe it's better to call isAuthorised(true) directly
 		// and let exception fly through???
 		if (!mgr.mayBeAuthorised(true)) {
-			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+			throw new ZLNetworkAuthenticationException();
 		}
 		try {
 			if (myForceReload) {

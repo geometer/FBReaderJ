@@ -114,10 +114,10 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 					new OPDSXMLReader(info, false).read(inputStream);
 
 					if (!info.FeedStarted) {
-						throw new ZLNetworkException(NetworkException.ERROR_NOT_AN_OPDS);
+						throw ZLNetworkException.forCode(NetworkException.ERROR_NOT_AN_OPDS);
 					}
 					if (info.Title == null) {
-						throw new ZLNetworkException(NetworkException.ERROR_NO_REQUIRED_INFORMATION);
+						throw ZLNetworkException.forCode(NetworkException.ERROR_NO_REQUIRED_INFORMATION);
 					}
 					setUrl(UrlInfo.Type.Image, info.Icon, MimeType.IMAGE_AUTO);
 					if (info.DirectOpenSearchDescription != null) {
