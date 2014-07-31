@@ -53,15 +53,12 @@ public abstract class FBReaderIntents {
 		String TYPE                     = "fbreader.type";
 	}
 
-	public static Intent defaultIntent(String action) {
-		return new Intent(action)
-			.addCategory(Intent.CATEGORY_DEFAULT)
-			.setPackage(DEFAULT_PACKAGE);
+	public static Intent defaultInternalIntent(String action) {
+		return internalIntent(action).addCategory(Intent.CATEGORY_DEFAULT);
 	}
 
-	public static Intent serviceIntent(String action) {
-		return new Intent(action)
-			.setPackage(DEFAULT_PACKAGE);
+	public static Intent internalIntent(String action) {
+		return new Intent(action).setPackage(DEFAULT_PACKAGE);
 	}
 
 	public static void putBookExtra(Intent intent, String key, Book book) {

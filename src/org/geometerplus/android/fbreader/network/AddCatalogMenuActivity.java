@@ -57,7 +57,7 @@ public class AddCatalogMenuActivity extends MenuActivity {
 	@Override
 	protected void runItem(final PluginApi.MenuActionInfo info) {
 		try {
-			startActivity(FBReaderIntents.defaultIntent(getAction()).setData(info.getId()));
+			startActivity(FBReaderIntents.defaultInternalIntent(getAction()).setData(info.getId()));
 		} catch (ActivityNotFoundException e) {
 		}
 		finish();
