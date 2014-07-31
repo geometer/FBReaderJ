@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network.authentication.litres;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.network.ZLNetworkAuthenticationException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
@@ -40,7 +41,7 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.toLowerCase().intern();
 		if (TAG_AUTHORIZATION_FAILED == tag) {
-			setException(new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED));
+			setException(new ZLNetworkAuthenticationException());
 		} else if (TAG_AUTHORIZATION_OK == tag) {
 			FirstName = attributes.getValue("first-name");
 			LastName = attributes.getValue("first-name");
@@ -52,7 +53,7 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 			}
 			CanRebill = stringCanRebill != null && !"0".equals(stringCanRebill) && !"no".equalsIgnoreCase(stringCanRebill);
 		} else {
-			setException(new ZLNetworkException(ZLNetworkException.ERROR_SOMETHING_WRONG, HostName));
+			setException(ZLNetworkException.forCode(ZLNetworkException.ERROR_SOMETHING_WRONG, HostName));
 		}
 		return true;
 	}
