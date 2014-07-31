@@ -371,7 +371,7 @@ public class ZLNetworkManager {
 				data.addPart("file", new FileBody(uploadRequest.File));
 				((HttpPost)httpRequest).setEntity(data);
 			} else {
-				throw new ZLNetworkException(true, "Unknown request type");
+				throw new ZLNetworkException("Unknown request type");
 			}
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
 			if (!request.isQuiet()) {
@@ -416,9 +416,9 @@ public class ZLNetworkManager {
 				success = true;
 			} else {
 				if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
-					throw new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED);
+					throw new ZLNetworkAuthenticationException();
 				} else {
-					throw new ZLNetworkException(true, response.getStatusLine().toString());
+					throw new ZLNetworkException(response.getStatusLine().toString());
 				}
 			}
 		} catch (ZLNetworkException e) {
@@ -431,10 +431,10 @@ public class ZLNetworkManager {
 			} else {
 				code = ZLNetworkException.ERROR_CONNECT_TO_HOST;
 			}
-			throw new ZLNetworkException(code, ZLNetworkUtil.hostFromUrl(request.URL), e);
+			throw ZLNetworkException.forCode(code, ZLNetworkUtil.hostFromUrl(request.URL), e);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ZLNetworkException(true, e.getMessage(), e);
+			throw new ZLNetworkException(e.getMessage(), e);
 		} finally {
 			request.doAfter(success);
 			if (httpClient != null) {
@@ -457,7 +457,7 @@ public class ZLNetworkManager {
 				authenticator.authenticate(request.getURI(), e.Realm, e.Params);
 			final String error = response.get("error");
 			if (error != null) {
-				throw new ZLNetworkException(true, error);
+				throw new ZLNetworkAuthenticationException(error, e);
 			}
 			authenticator.setAccountName(request.getURI().getHost(), e.Realm, response.get("user"));
 			return client.execute(request, context);

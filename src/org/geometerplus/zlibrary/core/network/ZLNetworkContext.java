@@ -102,7 +102,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 				}
 				message.append(e);
 			}
-			throw new ZLNetworkException(true, message.toString());
+			throw new ZLNetworkException(message.toString());
 		}
 	}
 
