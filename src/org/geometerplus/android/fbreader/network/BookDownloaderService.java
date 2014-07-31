@@ -299,7 +299,7 @@ public class BookDownloaderService extends Service {
 				try {
 					outStream = new FileOutputStream(file);
 				} catch (FileNotFoundException ex) {
-					throw new ZLNetworkException(ZLNetworkException.ERROR_CREATE_FILE, file.getPath());
+					throw ZLNetworkException.forCode(ZLNetworkException.ERROR_CREATE_FILE, file.getPath());
 				}
 				try {
 					final byte[] buffer = new byte[8192];
