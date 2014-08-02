@@ -40,6 +40,7 @@ public class WebAuthorisationScreen extends Activity {
 
 		requestWindowFeature(Window.FEATURE_PROGRESS);
 		CookieSyncManager.createInstance(getApplicationContext());
+		CookieManager.getInstance().removeAllCookie();
 		final Intent intent = getIntent();
 		final Uri data = intent.getData();
 		if (data == null || data.getHost() == null) {
@@ -93,17 +94,5 @@ public class WebAuthorisationScreen extends Activity {
 		});
 		setContentView(view);
 		view.loadUrl(intent.getDataString());
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		CookieSyncManager.getInstance().startSync();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		CookieSyncManager.getInstance().stopSync();
 	}
 }
