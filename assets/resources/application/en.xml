@@ -324,6 +324,7 @@
 			<node name="summary" value="Book network settings"/>
 			<node name="enable" value="Enable synchronisation">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s"/>
 				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server"/>
 			</node>
 			<node name="values">
