@@ -28,7 +28,6 @@ import java.util.zip.GZIPInputStream;
 import org.apache.http.*;
 import org.apache.http.auth.*;
 import org.apache.http.client.AuthenticationHandler;
-import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
@@ -48,6 +47,10 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 public class ZLNetworkManager {
+	public static interface CookieStore extends org.apache.http.client.CookieStore {
+		void clearDomain(String domain);
+	}
+
 	private static ZLNetworkManager ourManager;
 
 	public static ZLNetworkManager Instance() {
@@ -259,6 +262,15 @@ public class ZLNetworkManager {
 				return true;
 			}
 			return false;
+		}
+
+		public synchronized void clearDomain(String domain) {
+			myCookies = null;
+
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.removeForDomain(domain);
+			}
 		}
 
 		public synchronized List<Cookie> getCookies() {
