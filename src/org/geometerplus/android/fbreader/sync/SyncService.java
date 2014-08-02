@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.synchroniser;
+package org.geometerplus.android.fbreader.sync;
 
 import java.io.*;
 import java.util.*;
@@ -39,8 +39,8 @@ import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
-public class SynchroniserService extends Service implements IBookCollection.Listener, Runnable {
-	enum SyncStatus {
+public class SyncService extends Service implements IBookCollection.Listener, Runnable {
+	private enum Status {
 		AlreadyUploaded(Book.SYNCHRONIZED_LABEL),
 		Uploaded(Book.SYNCHRONIZED_LABEL),
 		ToBeDeleted(Book.SYNC_DELETED_LABEL),
@@ -59,7 +59,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 
 		public final String Label;
 
-		SyncStatus(String label) {
+		Status(String label) {
 			Label = label;
 		}
 	}
@@ -180,7 +180,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 					}
 					final long start = System.currentTimeMillis();
 					int count = 0;
-					final Map<SyncStatus,Integer> statusCounts = new HashMap<SyncStatus,Integer>();
+					final Map<Status,Integer> statusCounts = new HashMap<Status,Integer>();
 					try {
 						clearHashTables();
 						for (BookQuery q = new BookQuery(new Filter.Empty(), 20);; q = q.next()) {
@@ -199,9 +199,9 @@ public class SynchroniserService extends Service implements IBookCollection.List
 							}
 							myProcessed.add(book);
 							++count;
-							final SyncStatus status = uploadBookToServer(book);
+							final Status status = uploadBookToServer(book);
 							if (status.Label != null) {
-								for (String label : SyncStatus.AllLabels) {
+								for (String label : Status.AllLabels) {
 									if (status.Label.equals(label)) {
 										book.addLabel(label);
 									} else {
@@ -216,7 +216,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 					} finally {
 						System.err.println("SYNCHRONIZATION FINISHED IN " + (System.currentTimeMillis() - start) + "msecs");
 						System.err.println("TOTAL BOOKS PROCESSED: " + count);
-						for (SyncStatus value : SyncStatus.values()) {
+						for (Status value : Status.values()) {
 							System.err.println("STATUS " + value + ": " + statusCounts.get(value));
 						}
 						ourSynchronizationThread = null;
@@ -282,29 +282,29 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		}
 	}
 
-	private SyncStatus uploadBookToServer(Book book) {
+	private Status uploadBookToServer(Book book) {
 		try {
 			return uploadBookToServerInternal(book);
 		} catch (SyncronizationDisabledException e) {
-			return SyncStatus.SyncronizationDisabled;
+			return Status.SyncronizationDisabled;
 		}
 	}
 
-	private SyncStatus uploadBookToServerInternal(Book book) {
+	private Status uploadBookToServerInternal(Book book) {
 		final File file = book.File.getPhysicalFile().javaFile();
 		if (file.length() > 20 * 1024 * 1024) {
-			return SyncStatus.Failure;
+			return Status.Failure;
 		}
 		final String hash = myCollection.getHash(book);
 		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
-			return SyncStatus.HashNotComputed;
+			return Status.HashNotComputed;
 		} else if (myActualHashesFromServer.contains(hash)) {
-			return SyncStatus.AlreadyUploaded;
+			return Status.AlreadyUploaded;
 		} else if (!force && myDeletedHashesFromServer.contains(hash)) {
-			return SyncStatus.ToBeDeleted;
+			return Status.ToBeDeleted;
 		} else if (!force && book.labels().contains(Book.SYNC_FAILURE_LABEL)) {
-			return SyncStatus.FailedPreviuousTime;
+			return Status.FailedPreviuousTime;
 		}
 
 		initHashTables();
@@ -321,7 +321,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			myNetworkContext.perform(verificationRequest);
 		} catch (ZLNetworkException e) {
 			e.printStackTrace();
-			return SyncStatus.ServerError;
+			return Status.ServerError;
 		}
 		final String csrfToken = myNetworkContext.getCookieValue(SyncOptions.DOMAIN, "csrftoken");
 		try {
@@ -332,24 +332,24 @@ public class SynchroniserService extends Service implements IBookCollection.List
 					uploadRequest.addHeader("Referer", verificationRequest.getURL());
 					uploadRequest.addHeader("X-CSRFToken", csrfToken);
 					myNetworkContext.perform(uploadRequest);
-					return uploadRequest.Success ? SyncStatus.Uploaded : SyncStatus.Failure;
+					return uploadRequest.Success ? Status.Uploaded : Status.Failure;
 				} catch (ZLNetworkException e) {
 					e.printStackTrace();
-					return SyncStatus.ServerError;
+					return Status.ServerError;
 				}
 			} else {
 				final List<String> hashes = (List<String>)result.get("hashes");
 				if ("found".equals(status)) {
 					myActualHashesFromServer.addAll(hashes);
-					return SyncStatus.AlreadyUploaded;
+					return Status.AlreadyUploaded;
 				} else /* if ("deleted".equals(status)) */ {
 					myDeletedHashesFromServer.addAll(hashes);
-					return SyncStatus.ToBeDeleted;
+					return Status.ToBeDeleted;
 				}
 			}
 		} catch (Exception e) {
 			System.err.println("UNEXPECTED RESPONSE: " + result);
-			return SyncStatus.ServerError;
+			return Status.ServerError;
 		}
 	}
 
