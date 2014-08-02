@@ -286,7 +286,10 @@ public class SynchroniserService extends Service implements IBookCollection.List
 	}
 
 	private SyncStatus uploadBookToServerInternal(Book book) {
-		final ZLPhysicalFile file = book.File.getPhysicalFile();
+		final File file = book.File.getPhysicalFile().javaFile();
+		if (file.length() > 20 * 1024 * 1024) {
+			return SyncStatus.Failure;
+		}
 		final String hash = myCollection.getHash(book);
 		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
@@ -320,7 +323,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			final String status = (String)result.get("status");
 			if ((force && !"found".equals(status)) || "not found".equals(status)) {
 				try {
-					final UploadRequest uploadRequest = new UploadRequest(file.javaFile());
+					final UploadRequest uploadRequest = new UploadRequest(file);
 					uploadRequest.addHeader("Referer", verificationRequest.getURL());
 					uploadRequest.addHeader("X-CSRFToken", csrfToken);
 					myNetworkContext.perform(uploadRequest);
