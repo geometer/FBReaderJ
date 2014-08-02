@@ -50,6 +50,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
@@ -142,34 +143,39 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		) {
 			@Override
 			protected void onClick() {
-				superOnClick();
+				super.onClick();
+				syncPreferences.run();
 				if (!isChecked()) {
 					return;
 				}
 
 				new Thread() {
 					public void run() {
-						try {
-							myNetworkContext.perform(
-								new JsonRequest(SyncOptions.URL + "login/test") {
-									@Override
-									public void processResponse(Object response) {
-										// TODO: update message
+						UIUtil.createExecutor(PreferenceActivity.this, "tryConnect")
+							.execute(new Runnable() {
+								public void run() {
+									try {
+										myNetworkContext.perform(
+											new JsonRequest(SyncOptions.URL + "login/test") {
+												@Override
+												public void processResponse(Object response) {
+													// TODO: update message
+												}
+											}
+										);
+									} catch (ZLNetworkException e) {
+										e.printStackTrace();
+										runOnUiThread(new Runnable() {
+											public void run() {
+												forceValue(false);
+												syncPreferences.run();
+											}
+										});
 									}
 								}
-							);
-						} catch (ZLNetworkException e) {
-							e.printStackTrace();
-							setChecked(false);
-							superOnClick();
-						}
+							}, null);
 					}
 				}.start();
-			}
-
-			private void superOnClick() {
-				super.onClick();
-				syncPreferences.run();
 			}
 		});
 		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks", "values"));
