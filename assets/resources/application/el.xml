@@ -848,6 +848,7 @@
 			<node name="message" value="Το αρχείο υπα΄ρχει ήδη. Λήψη ξανά?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Η λήψη του βιβλίου ξεκίνησε %s"/>
 			<node name="search" value="Η ανάζητηση εκτελείτε. Παρακαλώ περιμένετε…"/>
 			<node name="loadInfo" value="Η πληροφορία φορτώνεται. Παρακαλώ περιμένετε…"/>
