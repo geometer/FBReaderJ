@@ -326,7 +326,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		final int maxHeight = metrics.heightPixels * 2 / 3;
 		final int maxWidth = maxHeight * 2 / 3;
 		Bitmap coverBitmap = null;
-		final ZLImage cover = NetworkTree.createCover(myBook);
+		final ZLImage cover = NetworkTree.createCover(myBook, false);
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
