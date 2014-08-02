@@ -24,8 +24,7 @@ import java.util.*;
 
 import android.content.Context;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.network.*;
 
 public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
