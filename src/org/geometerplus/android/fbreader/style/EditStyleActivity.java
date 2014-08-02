@@ -91,7 +91,7 @@ public class EditStyleActivity extends PreferenceActivity {
 		private ZLColor mySavedBgColor;
 
 		InvisiblePreference() {
-			super(EditStyleActivity.this, myRootResource, "invisible");
+			super(EditStyleActivity.this, myRootResource.getResource("invisible"));
 			setChecked(myStyle.getBackgroundColor() == null);
 		}
 

@@ -65,7 +65,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 		public Preference addOption(ZLBooleanOption option, String resourceKey) {
 			return addPreference(
-				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
+				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource.getResource(resourceKey))
 			);
 		}
 
@@ -109,7 +109,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 	public Preference addOption(ZLBooleanOption option, String resourceKey) {
 		ZLBooleanPreference preference =
-			new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
+			new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource.getResource(resourceKey));
 		myScreen.addPreference(preference);
 		return preference;
 	}
