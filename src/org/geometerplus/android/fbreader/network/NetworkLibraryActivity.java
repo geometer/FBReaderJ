@@ -68,7 +68,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	private Intent myDeferredIntent;
 	private boolean mySingleCatalog;
 
-	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+	final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 
 	@Override
 	protected void onCreate(Bundle icicle) {
