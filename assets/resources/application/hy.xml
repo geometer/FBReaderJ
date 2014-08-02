@@ -855,6 +855,7 @@
 			<node name="message" value="Նիշքն արդեն իսկ սարքավորումում է, կրկի՞ն բեռնել։"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Բեռնվում է %s գիրքը"/>
 			<node name="search" value="Որոնվում է, սպասեք..."/>
 			<node name="loadInfo" value="Տվյալները բեռնվում են, սպասեք..."/>
