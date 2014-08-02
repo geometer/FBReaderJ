@@ -503,7 +503,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected void deleteAllBookUids(long bookId) {
-		final SQLiteStatement statement = get("DELETE FROM BookUid WHERE book_id = ?");
+		final SQLiteStatement statement = get("DELETE FROM BookUid WHERE book_id=?");
 		statement.bindLong(1, bookId);
 		statement.execute();
 	}
@@ -1214,8 +1214,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor = myDatabase.rawQuery(
 			"SELECT book_id,file_name FROM Books", null
 		);
-		final SQLiteStatement deleteStatement = myDatabase.compileStatement("DELETE FROM Books WHERE book_id = ?");
-		final SQLiteStatement updateStatement = myDatabase.compileStatement("UPDATE OR IGNORE Books SET file_id = ? WHERE book_id = ?");
+		final SQLiteStatement deleteStatement = myDatabase.compileStatement("DELETE FROM Books WHERE book_id=?");
+		final SQLiteStatement updateStatement = myDatabase.compileStatement("UPDATE OR IGNORE Books SET file_id=? WHERE book_id=?");
 		while (cursor.moveToNext()) {
 			final long bookId = cursor.getLong(0);
 			final long fileId = infoSet.getId(ZLFile.createFileByPath(cursor.getString(1)));
