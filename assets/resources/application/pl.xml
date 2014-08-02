@@ -841,6 +841,7 @@
 			<node name="message" value="Plik już istnieje. Pobrać ponownie?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Pobieranie książki %s"/>
 			<node name="search" value="Wyszukiwanie. Proszę czekać…"/>
 			<node name="loadInfo" value="Wczytywanie informacji. Proszę czekać…"/>

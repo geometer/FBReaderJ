@@ -851,6 +851,7 @@
 			<node name="message" value="Bestand bestaat al. Opnieuw downloaden?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Boek %s wordt gedownload"/>
 			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>
 			<node name="loadInfo" value="Informatie wordt geladen. Een ogenblik…"/>

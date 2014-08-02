@@ -851,6 +851,7 @@
 			<node name="message" value="Датотека већ постоји. Поново је преузети?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Преузимам књигу „%s“…"/>
 			<node name="search" value="Тражим…"/>
 			<node name="loadInfo" value="Учитавам податке…"/>

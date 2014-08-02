@@ -841,6 +841,7 @@
 			<node name="message" value="A fájl már létezik. Újra letölti?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Könyv letöltése %s"/>
 			<node name="search" value="Keresés. Egy kis türelmet…"/>
 			<node name="loadInfo" value="Információ letöltése. Egy kis türelmet…"/>

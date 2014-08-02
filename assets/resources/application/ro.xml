@@ -842,6 +842,7 @@
 			<node name="message" value="Fisierul exista deja. Doriti reincarcarea lui?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Descarcare carte %s"/>
 			<node name="search" value="Cautarea a inceput. Va rugam asteptati…"/>
 			<node name="loadInfo" value="Se incarca informatiile necesare. Va rugam asteptati…"/>

@@ -841,6 +841,7 @@
 			<node name="message" value="มีไฟล์นี้อยู่แล้วในระบบ ต้องการที่จะดาวน์โหลดใหม่หรือไม่?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="กำลังดาวน์โหลดหนังสือ %s"/>
 			<node name="search" value="กำลังค้นหา, กรุณารอสักครู่…"/>
 			<node name="loadInfo" value="Loading information. Please, wait…" toBeTranslated="true"/>
