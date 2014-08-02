@@ -34,8 +34,8 @@ import org.geometerplus.android.util.FileChooserUtil;
 class FileChooserStringListPreference extends FileChooserPreference {
 	private final ZLStringListOption myOption;
 
-	FileChooserStringListPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringListOption option, int regCode, Runnable onValueSetAction) {
-		super(context, rootResource, resourceKey, false, regCode, onValueSetAction);
+	FileChooserStringListPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringListOption option, int requestCode, Runnable onValueSetAction) {
+		super(context, rootResource, resourceKey, false, requestCode, onValueSetAction);
 
 		myOption = option;
 
@@ -46,7 +46,7 @@ class FileChooserStringListPreference extends FileChooserPreference {
 	protected void onClick() {
 		FileChooserUtil.runFolderListDialog(
 			(Activity)getContext(),
-			myRegCode,
+			myRequestCode,
 			myResource.getValue(),
 			myResource.getResource("chooserTitle").getValue(),
 			myOption.getValue(),
