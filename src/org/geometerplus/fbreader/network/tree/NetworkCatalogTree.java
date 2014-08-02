@@ -106,7 +106,7 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	protected ZLImage createCover() {
-		return createCover(Item);
+		return createCover(Item, true);
 	}
 
 	public boolean isContentValid() {
