@@ -49,6 +49,7 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 public class ZLNetworkManager {
 	public static interface CookieStore extends org.apache.http.client.CookieStore {
 		void clearDomain(String domain);
+		void reset();
 	}
 
 	private static ZLNetworkManager ourManager;
@@ -271,6 +272,10 @@ public class ZLNetworkManager {
 			if (db != null) {
 				db.removeForDomain(domain);
 			}
+		}
+
+		public synchronized void reset() {
+			myCookies = null;
 		}
 
 		public synchronized List<Cookie> getCookies() {
