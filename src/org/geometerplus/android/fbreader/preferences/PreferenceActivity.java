@@ -153,6 +153,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					return;
 				}
 
+				//myNetworkContext.removeCookiesForDomain(SyncOptions.DOMAIN);
+				//myNetworkContext.setAccountName(SyncOptions.DOMAIN, SyncOptions.REALM, null);
+
 				UIUtil.createExecutor(PreferenceActivity.this, "tryConnect").execute(new Runnable() {
 					public void run() {
 						try {

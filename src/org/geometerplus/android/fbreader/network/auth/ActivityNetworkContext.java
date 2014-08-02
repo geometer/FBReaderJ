@@ -33,7 +33,6 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.*;
 
-import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie2;
 
@@ -74,7 +73,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 					break;
 				case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
 					if (resultCode == Activity.RESULT_OK && data != null) {
-						final CookieStore store = cookieStore();
+						final ZLNetworkManager.CookieStore store = cookieStore();
 						final Map<String,String> cookies =
 							(Map<String,String>)data.getSerializableExtra(NetworkLibraryActivity.COOKIES_KEY);
 						if (cookies != null) {
