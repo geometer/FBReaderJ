@@ -42,6 +42,10 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 		myManager.CookieStore.clearDomain(domain);
 	}
 
+	public void reloadCookie() {
+		myManager.CookieStore.reset();
+	}
+
 	public String getCookieValue(String domain, String name) {
 		for (Cookie c : cookieStore().getCookies()) {
 			if (domain.equals(c.getDomain()) && name.equals(c.getName())) {

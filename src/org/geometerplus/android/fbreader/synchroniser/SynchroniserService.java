@@ -32,6 +32,7 @@ import org.json.simple.JSONValue;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
@@ -69,10 +70,17 @@ public class SynchroniserService extends Service implements IBookCollection.List
 	}
 
 	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this) {
+		private String myAccountName;
+
 		@Override
 		protected void perform(ZLNetworkRequest request, int socketTimeout, int connectionTimeout) throws ZLNetworkException {
 			if (!canPerformRequest()) {
 				throw new SyncronizationDisabledException();
+			}
+			final String accountName = getAccountName(SyncOptions.DOMAIN, SyncOptions.REALM);
+			if (!MiscUtil.equals(myAccountName, accountName)) {
+				reloadCookie();
+				myAccountName = accountName;
 			}
 			super.perform(request, socketTimeout, connectionTimeout);
 		}
