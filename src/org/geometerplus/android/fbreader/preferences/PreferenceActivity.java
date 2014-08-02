@@ -143,7 +143,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, syncOptions.Enabled, syncScreen.Resource.getResource("enable")
 		) {
 			{
-				setOnSummary(myNetworkContext.getAccountName(SyncOptions.DOMAIN, SyncOptions.REALM));
+				if (isChecked()) {
+					setOnSummary(myNetworkContext.getAccountName(SyncOptions.DOMAIN, SyncOptions.REALM));
+				}
 			}
 
 			@Override
@@ -151,11 +153,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				super.onClick();
 				syncPreferences.run();
 				if (!isChecked()) {
+					setOnSummary(null);
 					return;
 				}
 
-				//myNetworkContext.removeCookiesForDomain(SyncOptions.DOMAIN);
-				//myNetworkContext.setAccountName(SyncOptions.DOMAIN, SyncOptions.REALM, null);
+				myNetworkContext.removeCookiesForDomain(SyncOptions.DOMAIN);
+				myNetworkContext.setAccountName(SyncOptions.DOMAIN, SyncOptions.REALM, null);
 
 				UIUtil.createExecutor(PreferenceActivity.this, "tryConnect").execute(new Runnable() {
 					public void run() {
