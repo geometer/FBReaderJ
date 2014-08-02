@@ -850,6 +850,7 @@
 			<node name="message" value="Filen finnes allerede. Last ned på nytt?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Laster ned boken %s"/>
 			<node name="search" value="Søker. Vennligst vent…"/>
 			<node name="loadInfo" value="Laster informasjon. Vennligst vent…"/>

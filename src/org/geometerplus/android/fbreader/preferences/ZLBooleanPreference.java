@@ -38,4 +38,9 @@ class ZLBooleanPreference extends ZLCheckBoxPreference {
 		super.onClick();
 		myOption.setValue(isChecked());
 	}
+
+	protected void forceValue(boolean value) {
+		setChecked(value);
+		myOption.setValue(value);
+	}
 }

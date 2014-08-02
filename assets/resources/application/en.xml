@@ -850,6 +850,7 @@
 			<node name="message" value="File already exists. Redownload?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…"/>
 			<node name="downloadingFile" value="Downloading book %s"/>
 			<node name="search" value="Searching. Please, wait…"/>
 			<node name="loadInfo" value="Loading information. Please, wait…"/>

@@ -855,6 +855,7 @@
 			<node name="message" value="ფაილი უკვე არის მოწყობილობაში. ახლიდან გადმოიწეროს?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="იტვირთება წიგნი %s"/>
 			<node name="search" value="მიმდინარეობს ძებნა. გთხოვთ, დაიცადოთ…"/>
 			<node name="loadInfo" value="იტვირთება ინფორმაცია. გთხოვთ, დაიცადოთ…"/>
