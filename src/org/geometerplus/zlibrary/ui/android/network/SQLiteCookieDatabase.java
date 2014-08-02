@@ -92,6 +92,26 @@ public class SQLiteCookieDatabase extends CookieDatabase {
 	}
 
 	@Override
+	protected void removeForDomain(String domain) {
+		if (domain == null) {
+			return;
+		}
+
+		SQLiteStatement statement = myDatabase.compileStatement(
+			"DELETE FROM CookiePort WHERE cookie_id IN " +
+			"(SELECT cookie_id FROM Cookie WHERE host=?)"
+		);
+		statement.bindString(1, domain);
+		statement.execute();
+
+		statement = myDatabase.compileStatement(
+			"DELETE FROM Cookie WHERE host=?"
+		);
+		statement.bindString(1, domain);
+		statement.execute();
+	}
+
+	@Override
 	protected void removeAll() {
 		myDatabase.execSQL("DELETE FROM CookiePort");
 		myDatabase.execSQL("DELETE FROM Cookie");
