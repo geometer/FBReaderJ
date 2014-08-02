@@ -37,6 +37,7 @@ public abstract class CookieDatabase {
 
 	protected abstract void removeObsolete(Date date);
 	protected abstract void removeAll();
+	protected abstract void removeForDomain(String domain);
 	protected abstract void saveCookies(List<Cookie> cookies);
 	protected abstract List<Cookie> loadCookies();
 }
