@@ -151,7 +151,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					public void run() {
 						try {
 							myNetworkContext.perform(
-								new JsonRequest("https://demo.fbreader.org/login/test") {
+								new JsonRequest(SyncOptions.URL + "login/test") {
 									@Override
 									public void processResponse(Object response) {
 										// TODO: update message
