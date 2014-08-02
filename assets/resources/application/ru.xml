@@ -855,6 +855,7 @@
 			<node name="message" value="Файл уже есть на устройстве. Загрузить заново?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Устанавливается соединение. Подождите, пожалуйста…"/>
 			<node name="downloadingFile" value="Загужается книга %s"/>
 			<node name="search" value="Идет поиск. Подождите, пожалуйста…"/>
 			<node name="loadInfo" value="Загружается информация. Подождите, пожалуйста…"/>

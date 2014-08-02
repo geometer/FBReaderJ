@@ -850,6 +850,7 @@
 			<node name="message" value="فايل در ديسك موجود است. مجددا دانلود شود؟"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="دانلود كتاب %s"/>
 			<node name="search" value="در حال جستجو. لطفاً صبر كنيد..."/>
 			<node name="loadInfo" value="درحال بارگذاري اطلاعات. لطفاً صبر كنيد..."/>
