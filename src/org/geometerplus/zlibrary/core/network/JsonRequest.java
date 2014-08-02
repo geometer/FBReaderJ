@@ -17,14 +17,11 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network.auth;
+package org.geometerplus.zlibrary.core.network;
 
 import java.io.*;
 
 import org.json.simple.JSONValue;
-
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 public abstract class JsonRequest extends ZLNetworkRequest.PostWithMap {
 	public JsonRequest(String url) {

@@ -28,6 +28,8 @@ import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.JsonRequest;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -45,12 +47,14 @@ import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
-	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this);
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
 
 	public PreferenceActivity() {
 		super("Preferences");
@@ -58,6 +62,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (myNetworkContext.onActivityResult(requestCode, resultCode, data)) {
+			return;
+		}
+
 		if (resultCode == RESULT_OK) {
 			myChooserCollection.update(requestCode, data);
 		}
@@ -134,6 +142,24 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		) {
 			@Override
 			protected void onClick() {
+				if (isChecked()) {
+					new Thread() {
+						public void run() {
+							try {
+								myNetworkContext.perform(
+									new JsonRequest("https://demo.fbreader.org/login/test") {
+										@Override
+										public void processResponse(Object response) {
+											// TODO: update message
+										}
+									}
+								);
+							} catch (ZLNetworkException e) {
+								e.printStackTrace();
+							}
+						}
+					}.start();
+				}
 				super.onClick();
 				syncPreferences.run();
 			}
