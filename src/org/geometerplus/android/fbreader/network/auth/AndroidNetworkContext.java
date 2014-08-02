@@ -27,8 +27,7 @@ import android.content.Context;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.network.*;
 
 public abstract class AndroidNetworkContext extends ZLNetworkContext {
 	@Override
