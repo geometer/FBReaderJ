@@ -220,12 +220,9 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		}
 	}
 
-	private final static String DOMAIN = "demo.fbreader.org";
-	private final static String BASE_URL = "https://" + DOMAIN + "/app/";
-
 	private static abstract class PostRequest extends ZLNetworkRequest.PostWithMap {
 		PostRequest(String app, Map<String,String> data) {
-			super(BASE_URL + app, false);
+			super(SyncOptions.URL + "app/" + app, false);
 			if (data != null) {
 				for (Map.Entry<String, String> entry : data.entrySet()) {
 					addPostParameter(entry.getKey(), entry.getValue());
@@ -245,7 +242,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 		boolean Success = false;
 
 		UploadRequest(File file) {
-			super(BASE_URL + "book.upload", file, false);
+			super(SyncOptions.URL + "app/book.upload", file, false);
 		}
 
 		@Override
@@ -318,7 +315,7 @@ public class SynchroniserService extends Service implements IBookCollection.List
 			e.printStackTrace();
 			return SyncStatus.ServerError;
 		}
-		final String csrfToken = myNetworkContext.getCookieValue(DOMAIN, "csrftoken");
+		final String csrfToken = myNetworkContext.getCookieValue(SyncOptions.DOMAIN, "csrftoken");
 		try {
 			final String status = (String)result.get("status");
 			if ((force && !"found".equals(status)) || "not found".equals(status)) {
