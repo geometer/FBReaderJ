@@ -143,24 +143,32 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		) {
 			@Override
 			protected void onClick() {
-				if (isChecked()) {
-					new Thread() {
-						public void run() {
-							try {
-								myNetworkContext.perform(
-									new JsonRequest("https://demo.fbreader.org/login/test") {
-										@Override
-										public void processResponse(Object response) {
-											// TODO: update message
-										}
-									}
-								);
-							} catch (ZLNetworkException e) {
-								e.printStackTrace();
-							}
-						}
-					}.start();
+				superOnClick();
+				if (!isChecked()) {
+					return;
 				}
+
+				new Thread() {
+					public void run() {
+						try {
+							myNetworkContext.perform(
+								new JsonRequest("https://demo.fbreader.org/login/test") {
+									@Override
+									public void processResponse(Object response) {
+										// TODO: update message
+									}
+								}
+							);
+						} catch (ZLNetworkException e) {
+							e.printStackTrace();
+							setChecked(false);
+							superOnClick();
+						}
+					}
+				}.start();
+			}
+
+			private void superOnClick() {
 				super.onClick();
 				syncPreferences.run();
 			}
