@@ -329,6 +329,7 @@
 			<node name="summary" value="Настройки книжной сети"/>
 			<node name="enable" value="Включить синхронизацию">
 				<node name="summaryOn" value="Синхронизировать мою библиотеку с сервером книжной сети"/>
+				<node name="summaryOnWithAccount" value="Синхронизировать библиотеку от имени %s"/>
 				<node name="summaryOff" value="Не синхронизировать мою библиотеку с сервером книжной сети"/>
 			</node>
 			<node name="values">
