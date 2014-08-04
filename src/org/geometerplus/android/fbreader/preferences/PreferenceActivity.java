@@ -28,6 +28,8 @@ import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.JsonRequest;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -45,12 +47,15 @@ import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
-	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this);
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
 
 	public PreferenceActivity() {
 		super("Preferences");
@@ -58,6 +63,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (myNetworkContext.onActivityResult(requestCode, resultCode, data)) {
+			return;
+		}
+
 		if (resultCode == RESULT_OK) {
 			myChooserCollection.update(requestCode, data);
 		}
@@ -130,12 +139,60 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		};
 		syncScreen.addPreference(new ZLBooleanPreference(
-			this, syncOptions.Enabled, syncScreen.Resource, "enable"
+			this, syncOptions.Enabled, syncScreen.Resource.getResource("enable")
 		) {
+			{
+				if (isChecked()) {
+					setOnSummary(myNetworkContext.getAccountName(SyncOptions.DOMAIN, SyncOptions.REALM));
+				}
+			}
+
 			@Override
 			protected void onClick() {
 				super.onClick();
 				syncPreferences.run();
+
+				myNetworkContext.removeCookiesForDomain(SyncOptions.DOMAIN);
+				myNetworkContext.setAccountName(SyncOptions.DOMAIN, SyncOptions.REALM, null);
+
+				if (!isChecked()) {
+					setOnSummary(null);
+					return;
+				}
+
+				UIUtil.createExecutor(PreferenceActivity.this, "tryConnect").execute(new Runnable() {
+					public void run() {
+						try {
+							myNetworkContext.perform(
+								new JsonRequest(SyncOptions.URL + "login/test") {
+									@Override
+									public void processResponse(Object response) {
+										setOnSummary((String)((Map)response).get("user"));
+									}
+								}
+							);
+						} catch (ZLNetworkException e) {
+							e.printStackTrace();
+							runOnUiThread(new Runnable() {
+								public void run() {
+									forceValue(false);
+									syncPreferences.run();
+								}
+							});
+						}
+					}
+				}, null);
+			}
+
+			private void setOnSummary(String account) {
+				final String summary = account != null
+					? Resource.getResource("summaryOnWithAccount").getValue().replace("%s", account)
+					: Resource.getResource("summaryOn").getValue();
+				runOnUiThread(new Runnable() {
+					public void run() {
+						setSummaryOn(summary);
+					}
+				});
 			}
 		});
 		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks", "values"));
@@ -172,14 +229,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			viewOptions.TwoColumnView,
-			appearanceScreen.Resource,
-			"twoColumnView"
+			appearanceScreen.Resource.getResource("twoColumnView")
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			miscOptions.AllowScreenBrightnessAdjustment,
-			appearanceScreen.Resource,
-			"allowScreenBrightnessAdjustment"
+			appearanceScreen.Resource.getResource("allowScreenBrightnessAdjustment")
 		) {
 			private final int myLevel = androidLibrary.ScreenBrightnessLevelOption.getValue();
 
@@ -198,8 +253,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			androidLibrary.DontTurnScreenOffDuringChargingOption,
-			appearanceScreen.Resource,
-			"dontTurnScreenOffDuringCharging"
+			appearanceScreen.Resource.getResource("dontTurnScreenOffDuringCharging")
 		));
 		 */
 		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
@@ -216,7 +270,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			};
 
 			einkScreen.addPreference(new ZLBooleanPreference(
-				this, einkOptions.EnableFastRefresh, einkScreen.Resource, "enableFastRefresh"
+				this, einkOptions.EnableFastRefresh,
+				einkScreen.Resource.getResource("enableFastRefresh")
 			) {
 				@Override
 				protected void onClick() {
@@ -466,7 +521,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		};
 		scrollingScreen.addPreference(new ZLCheckBoxPreference(
-			this, scrollingScreen.Resource, "volumeKeys"
+			this, scrollingScreen.Resource.getResource("volumeKeys")
 		) {
 			{
 				setChecked(keyBindings.hasBinding(KeyEvent.KEYCODE_VOLUME_UP, false));
@@ -486,7 +541,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 		volumeKeysPreferences.add(scrollingScreen.addPreference(new ZLCheckBoxPreference(
-			this, scrollingScreen.Resource, "invertVolumeKeys"
+			this, scrollingScreen.Resource.getResource("invertVolumeKeys")
 		) {
 			{
 				setChecked(ActionCode.VOLUME_KEY_SCROLL_FORWARD.equals(
@@ -567,8 +622,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				dictionaryScreen.addPreference(new ZLBooleanPreference(
 					PreferenceActivity.this,
 					miscOptions.NavigateAllWords,
-					dictionaryScreen.Resource,
-					"navigateOverAllWords"
+					dictionaryScreen.Resource.getResource("navigateOverAllWords")
 				));
 				dictionaryScreen.addOption(miscOptions.WordTappingAction, "tappingAction");
 				dictionaryScreen.addPreference(targetLanguagePreference);

@@ -27,7 +27,6 @@ public abstract class NetworkException extends ZLNetworkException {
 	public static final String ERROR_INTERNAL = "internalError";
 	public static final String ERROR_PURCHASE_NOT_ENOUGH_MONEY = "purchaseNotEnoughMoney";
 	public static final String ERROR_PURCHASE_MISSING_BOOK = "purchaseMissingBook";
-	public static final String ERROR_PURCHASE_ALREADY_PURCHASED = "purchaseAlreadyPurchased";
 	public static final String ERROR_BOOK_NOT_PURCHASED = "bookNotPurchased";
 	public static final String ERROR_DOWNLOAD_LIMIT_EXCEEDED = "downloadLimitExceeded";
 

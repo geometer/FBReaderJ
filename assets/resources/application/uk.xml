@@ -314,6 +314,7 @@
 			<node name="summary" value="Book network settings" toBeTranslated="true"/>
 			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
 			</node>
 			<node name="values">
@@ -840,6 +841,7 @@
 			<node name="message" value="Файл вже є на пристрої. Завантажити заново?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Завантажується книга %s"/>
 			<node name="search" value="Йде пошук. Зачекайте, будь ласка…"/>
 			<node name="loadInfo" value="Завантаження інформації. Зачекайте, будь ласка…"/>

@@ -17,24 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network.auth;
+package org.geometerplus.zlibrary.core.network;
 
-import java.io.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.json.simple.JSONValue;
+public class ZLNetworkAuthenticationException extends ZLNetworkException {
+	public static final String ERROR_AUTHENTICATION_FAILED = "authenticationFailed";
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
-
-public abstract class JsonRequest extends ZLNetworkRequest.PostWithMap {
-	public JsonRequest(String url) {
-		super(url);
+	public ZLNetworkAuthenticationException() {
+		super(errorMessage(ERROR_AUTHENTICATION_FAILED));
 	}
 
-	@Override
-	public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
-		processResponse(JSONValue.parse(new InputStreamReader(stream)));
+	public ZLNetworkAuthenticationException(String message) {
+		super(message);
 	}
 
-	protected abstract void processResponse(Object response);
+	public ZLNetworkAuthenticationException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

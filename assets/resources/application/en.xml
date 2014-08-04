@@ -324,6 +324,7 @@
 			<node name="summary" value="Book network settings"/>
 			<node name="enable" value="Enable synchronisation">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s"/>
 				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server"/>
 			</node>
 			<node name="values">
@@ -850,6 +851,7 @@
 			<node name="message" value="File already exists. Redownload?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…"/>
 			<node name="downloadingFile" value="Downloading book %s"/>
 			<node name="search" value="Searching. Please, wait…"/>
 			<node name="loadInfo" value="Loading information. Please, wait…"/>

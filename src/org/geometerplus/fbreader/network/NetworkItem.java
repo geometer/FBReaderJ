@@ -82,12 +82,4 @@ public abstract class NetworkItem {
 		}
 		return myURLs.getUrl(type);
 	}
-
-	public String getImageUrl() {
-		if (myURLs == null) {
-			return null;
-		}
-		final String cover = myURLs.getUrl(UrlInfo.Type.Image);
-		return cover != null ? cover : myURLs.getUrl(UrlInfo.Type.Thumbnail);
-	}
 }

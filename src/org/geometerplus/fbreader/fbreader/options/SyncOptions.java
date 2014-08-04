@@ -22,6 +22,10 @@ package org.geometerplus.fbreader.fbreader.options;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class SyncOptions {
+	public static final String DOMAIN = "demo.fbreader.org";
+	public static final String URL = "https://" + DOMAIN + "/";
+	public static final String REALM = "FBReader book network";
+
 	public final ZLBooleanOption Enabled =
 		new ZLBooleanOption("Sync", "Enabled", false);
 

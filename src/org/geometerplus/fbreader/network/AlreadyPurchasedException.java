@@ -17,27 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.network;
+package org.geometerplus.fbreader.network;
 
-import java.util.List;
-import java.util.Date;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.apache.http.cookie.Cookie;
+public class AlreadyPurchasedException extends ZLNetworkException {
+	public static final String ERROR_PURCHASE_ALREADY_PURCHASED = "purchaseAlreadyPurchased";
 
-public abstract class CookieDatabase {
-	private static CookieDatabase ourInstance;
-
-	public static CookieDatabase getInstance() {
-		return ourInstance;
+	public AlreadyPurchasedException() {
+		super(errorMessage(ERROR_PURCHASE_ALREADY_PURCHASED));
 	}
-
-	protected CookieDatabase() {
-		ourInstance = this;
-	}
-
-	protected abstract void removeObsolete(Date date);
-	protected abstract void removeAll();
-	protected abstract void removeForDomain(String domain);
-	protected abstract void saveCookies(List<Cookie> cookies);
-	protected abstract List<Cookie> loadCookies();
 }

@@ -314,6 +314,7 @@
 			<node name="summary" value="Book network settings" toBeTranslated="true"/>
 			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
 			</node>
 			<node name="values">
@@ -848,6 +849,7 @@
 			<node name="message" value="Το αρχείο υπα΄ρχει ήδη. Λήψη ξανά?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Η λήψη του βιβλίου ξεκίνησε %s"/>
 			<node name="search" value="Η ανάζητηση εκτελείτε. Παρακαλώ περιμένετε…"/>
 			<node name="loadInfo" value="Η πληροφορία φορτώνεται. Παρακαλώ περιμένετε…"/>

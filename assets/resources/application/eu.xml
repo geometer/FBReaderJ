@@ -324,6 +324,7 @@
 			<node name="summary" value="Book network settings" toBeTranslated="true"/>
 			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
 			</node>
 			<node name="values">
@@ -824,6 +825,11 @@
 			<node name="refresh" value="Freskatu"/>
 			<node name="authorise" value="Baimendu"/>
 			<node name="resetPosition" value="Berrezarri posizioa"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
+			<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
+			<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
+			<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
 			<node name="enterPosition" value="Idatzi orri zenbakia"/>
 			<node name="sendReport" value="Bidali txostena"/>
 			<node name="addToFavorites" value="Gehitu gogokoetara"/>
@@ -851,6 +857,7 @@
 			<node name="message" value="Fitxategia dagoeneko badago. Berriro deskargatu?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Deskargatzen liburua %s"/>
 			<node name="search" value="Bilatzen. Itxaron, mesedez…"/>
 			<node name="loadInfo" value="Informazioa kargatzen. Itxaron mesedez…"/>

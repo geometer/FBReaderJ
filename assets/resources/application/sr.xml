@@ -324,6 +324,7 @@
 			<node name="summary" value="Book network settings" toBeTranslated="true"/>
 			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
 				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
 				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
 			</node>
 			<node name="values">
@@ -850,6 +851,7 @@
 			<node name="message" value="Датотека већ постоји. Поново је преузети?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Преузимам књигу „%s“…"/>
 			<node name="search" value="Тражим…"/>
 			<node name="loadInfo" value="Учитавам податке…"/>

@@ -24,7 +24,6 @@ import java.io.*;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -35,8 +34,16 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 	protected ZLNetworkContext() {
 	}
 
-	protected CookieStore cookieStore() {
+	protected ZLNetworkManager.CookieStore cookieStore() {
 		return myManager.CookieStore;
+	}
+
+	public void removeCookiesForDomain(String domain) {
+		myManager.CookieStore.clearDomain(domain);
+	}
+
+	public void reloadCookie() {
+		myManager.CookieStore.reset();
 	}
 
 	public String getCookieValue(String domain, String name) {
@@ -102,7 +109,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 				}
 				message.append(e);
 			}
-			throw new ZLNetworkException(true, message.toString());
+			throw new ZLNetworkException(message.toString());
 		}
 	}
 

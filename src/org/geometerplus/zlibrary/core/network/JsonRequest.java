@@ -19,25 +19,19 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.util.List;
-import java.util.Date;
+import java.io.*;
 
-import org.apache.http.cookie.Cookie;
+import org.json.simple.JSONValue;
 
-public abstract class CookieDatabase {
-	private static CookieDatabase ourInstance;
-
-	public static CookieDatabase getInstance() {
-		return ourInstance;
+public abstract class JsonRequest extends ZLNetworkRequest.PostWithMap {
+	public JsonRequest(String url) {
+		super(url);
 	}
 
-	protected CookieDatabase() {
-		ourInstance = this;
+	@Override
+	public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
+		processResponse(JSONValue.parse(new InputStreamReader(stream)));
 	}
 
-	protected abstract void removeObsolete(Date date);
-	protected abstract void removeAll();
-	protected abstract void removeForDomain(String domain);
-	protected abstract void saveCookies(List<Cookie> cookies);
-	protected abstract List<Cookie> loadCookies();
+	protected abstract void processResponse(Object response);
 }
