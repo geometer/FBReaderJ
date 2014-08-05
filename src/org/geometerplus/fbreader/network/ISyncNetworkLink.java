@@ -17,29 +17,11 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network.action;
+package org.geometerplus.fbreader.network;
 
-import android.app.Activity;
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
-
-public class DisableCatalogAction extends Action {
-	public DisableCatalogAction(Activity activity) {
-		super(activity, ActionCode.DISABLE_CATALOG, "disableCatalog", -1);
-	}
-
-	@Override
-	public boolean isVisible(NetworkTree tree) {
-		return
-			tree instanceof NetworkCatalogRootTree &&
-			tree.getLink().getType() != INetworkLink.Type.Sync;
-	}
-
-	@Override
-	public void run(NetworkTree tree) {
-		NetworkLibrary.Instance().setLinkActive(tree.getLink(), false);
-		NetworkLibrary.Instance().synchronize();
-		// TODO: invalidate view
-	}
+public interface ISyncNetworkLink extends INetworkLink {
+	boolean isLoggedIn(ZLNetworkContext context);
+	void logout(ZLNetworkContext context);
 }

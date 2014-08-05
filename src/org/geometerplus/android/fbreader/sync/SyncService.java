@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
+import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
@@ -77,7 +78,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 			if (!canPerformRequest()) {
 				throw new SyncronizationDisabledException();
 			}
-			final String accountName = getAccountName(SyncOptions.DOMAIN, SyncOptions.REALM);
+			final String accountName = SyncUtil.getAccountName(this);
 			if (!MiscUtil.equals(myAccountName, accountName)) {
 				reloadCookie();
 				myAccountName = accountName;
@@ -230,7 +231,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 
 	private static abstract class PostRequest extends ZLNetworkRequest.PostWithMap {
 		PostRequest(String app, Map<String,String> data) {
-			super(SyncOptions.URL + "app/" + app, false);
+			super(SyncOptions.BASE_URL + "app/" + app, false);
 			if (data != null) {
 				for (Map.Entry<String, String> entry : data.entrySet()) {
 					addPostParameter(entry.getKey(), entry.getValue());
@@ -250,7 +251,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		boolean Success = false;
 
 		UploadRequest(File file) {
-			super(SyncOptions.URL + "app/book.upload", file, false);
+			super(SyncOptions.BASE_URL + "app/book.upload", file, false);
 		}
 
 		@Override
