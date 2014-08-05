@@ -26,6 +26,21 @@
 		<node name="found" value="Βρέθηκαν">
 			<node name="summary" value="Αποτελέσματα για: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Αρχείο δέντρων">
 			<node name="summary" value="Αναζήτηση αρχείου δέντρων"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="βιβλιοθήκη FBReader">
 			<node name="summary" value="κατάλογος αρχείων FBReader"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="τοπική αναζήτηση"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-		</node>
+		<node name="localSearch" value="τοπική αναζήτηση"/>
+		<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		<node name="openBook" value="Άνοιξε βιβλιο για ανάγνωση"/>
 		<node name="showBookInfo" value="Πληροφορίες για το βιβλίο"/>
 		<node name="shareBook" value="μοιράσου το βιβλίο"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="δικτυακή βιβλιοθήκη FBReader">
 		<node name="byAuthor" value="Κατηγοριοποίηση ανά συγγραφείς">
@@ -294,6 +310,23 @@
 		<node name="series" value="Τόμος"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Ευρετήρια">
 			<node name="summary" value="Ευρετήρια, στα οποία θα γίνει η αναζήτηση."/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -808,10 +841,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="Το βιβλίο θα διαγραφτεί αμετάκλητα. Είσαστε σίγουροι?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Το αρχείο υπα΄ρχει ήδη. Λήψη ξανά?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Η λήψη του βιβλίου ξεκίνησε %s"/>
 			<node name="search" value="Η ανάζητηση εκτελείτε. Παρακαλώ περιμένετε…"/>
 			<node name="loadInfo" value="Η πληροφορία φορτώνεται. Παρακαλώ περιμένετε…"/>
@@ -885,6 +923,22 @@
 			</node>
 			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit" toBeTranslated="true"/>
+			<node name="remove" value="Remove" toBeTranslated="true"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
+				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove author" toBeTranslated="true">
+				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>
 			<node name="newFolder" value="New folder" toBeTranslated="true"/>
@@ -899,6 +953,9 @@
 				<node name="date" value="Date" toBeTranslated="true"/>
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

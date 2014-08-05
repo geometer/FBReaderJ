@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+>
+	<LinearLayout
+		android:id="@+id/edit_dialog_buttons"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_alignParentBottom="true"
+		android:orientation="horizontal"
+	>
+		<Button
+			android:id="@+id/edit_dialog_button_ok"
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:layout_gravity="center"
+		/>
+		<Button
+			android:id="@+id/edit_dialog_button_cancel"
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:layout_gravity="center"
+		/>
+	</LinearLayout>
+	<AutoCompleteTextView
+		android:id="@+id/edit_authors_input_field"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:singleLine="true"
+		android:imeOptions="actionDone"
+		android:completionThreshold="1"
+		android:layout_alignParentTop="true"
+	/>
+	<ListView
+		android:id="@android:id/list"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:layout_above="@id/edit_dialog_buttons"
+		android:layout_below="@id/edit_authors_input_field"
+	/>
+</RelativeLayout>

@@ -34,12 +34,12 @@ public class SingleCatalogSearchItem extends SearchItem {
 	}
 
 	@Override
-	public void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
+	public void runSearch(ZLNetworkContext nc, NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
 		final NetworkOperationData data = Link.createOperationData(loader);
 		ZLNetworkRequest request = Link.simpleSearchRequest(pattern, data);
 		// TODO: possible infinite loop, use "continue link" instead
-		while (request != null && MimeType.APP_ATOM_XML.weakEquals(request.Mime)) {
-			ZLNetworkManager.Instance().perform(request);
+		while (request != null) {
+			nc.perform(request);
 			if (loader.confirmInterruption()) {
 				return;
 			}

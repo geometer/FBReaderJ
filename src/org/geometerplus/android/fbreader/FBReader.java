@@ -59,6 +59,7 @@ import org.geometerplus.fbreader.tips.TipsManager;
 import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.sync.SyncService;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.*;
@@ -96,6 +97,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	private volatile boolean myActionBarIsVisible;
 
 	final DataService.Connection DataConnection = new DataService.Connection();
+	private final ServiceConnection mySyncConnection = new ServiceConnection() {
+		@Override
+		public void onServiceConnected(ComponentName componentName, IBinder binder) {
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName componentName) {
+		}
+	};
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -191,7 +201,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			public void run() {
 				runOnUiThread(new Runnable() {
 					public void run() {
-						new TipRunner().start();
+						//new TipRunner().start();
 						DictionaryUtil.init(FBReader.this, null);
 						final Intent intent = getIntent();
 						if (intent != null && FBReaderIntents.Action.PLUGIN.equals(intent.getAction())) {
@@ -471,6 +481,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	protected void onResume() {
 		super.onResume();
 
+		bindService(
+			new Intent(this, SyncService.class),
+			mySyncConnection,
+			SyncService.BIND_AUTO_CREATE
+		);
+
 		myStartTimer = true;
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
@@ -522,6 +538,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			setButtonLight(true);
 		}
 		myFBReaderApp.onWindowClosing();
+		unbindService(mySyncConnection);
 		super.onPause();
 	}
 
@@ -919,7 +936,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	public void close() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
+		finish();
 	}
 
 	@Override

@@ -19,24 +19,24 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.io.*;
+import java.io.File;
 
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
 
-public final class NetworkImage extends ZLLoadableImage {
+public final class NetworkImage extends ZLImageSelfSynchronizableProxy {
+	private MimeType myMimeType;
 	public final String Url;
 
 	public NetworkImage(String url, MimeType mimeType) {
-		super(mimeType);
+		myMimeType = mimeType;
 		Url = url;
 		new File(Paths.networkCacheDirectory()).mkdirs();
 	}
@@ -134,11 +134,11 @@ public final class NetworkImage extends ZLLoadableImage {
 	}
 
 	public String getFilePath() {
-		return makeImageFilePath(Url, mimeType());
+		return makeImageFilePath(Url, myMimeType);
 	}
 
 	@Override
-	public int sourceType() {
+	public SourceType sourceType() {
 		return SourceType.NETWORK;
 	}
 
@@ -157,12 +157,11 @@ public final class NetworkImage extends ZLLoadableImage {
 		synchronizeInternal(false);
 	}
 
-	@Override
 	public void synchronizeFast() {
 		synchronizeInternal(true);
 	}
 
-	private final void synchronizeInternal(boolean doFast) {
+	private final synchronized void synchronizeInternal(boolean doFast) {
 		if (isSynchronized()) {
 			return;
 		}
@@ -188,7 +187,7 @@ public final class NetworkImage extends ZLLoadableImage {
 			final File imageFile = new File(path);
 			if (imageFile.exists()) {
 				final long diff = System.currentTimeMillis() - imageFile.lastModified();
-				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
+				final long valid = 24 * 60 * 60 * 1000; // one day in milliseconds; FIXME: hardcoded const
 				if (diff >= 0 && diff <= valid) {
 					return;
 				}
@@ -197,19 +196,15 @@ public final class NetworkImage extends ZLLoadableImage {
 			if (doFast) {
 				return;
 			}
-
-			try {
-				ZLNetworkManager.Instance().downloadToFile(Url, imageFile);
-			} catch (ZLNetworkException e) {
-			}
+			new QuietNetworkContext().downloadToFileQuietly(Url, imageFile);
 		} finally {
 			setSynchronized();
 		}
 	}
 
-	private ZLFileImage myFileImage;
+	private volatile ZLFileImage myFileImage;
 	@Override
-	public InputStream inputStream() {
+	public ZLFileImage getRealImage() {
 		if (myFileImage == null) {
 			if (!isSynchronized()) {
 				return null;
@@ -222,8 +217,8 @@ public final class NetworkImage extends ZLLoadableImage {
 			if (file == null) {
 				return null;
 			}
-			myFileImage = new ZLFileImage(mimeType(), file);
+			myFileImage = new ZLFileImage(file);
 		}
-		return myFileImage.inputStream();
+		return myFileImage;
 	}
 }

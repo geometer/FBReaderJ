@@ -41,7 +41,9 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.action.*;
+import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 import org.geometerplus.android.util.UIUtil;
@@ -57,6 +59,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	public static final String COOKIES_KEY = "android.fbreader.data.cookies";
 	public static final String COMPLETE_URL_KEY = "android.fbreader.data.complete.url";
 
+	final BookCollectionShadow BookCollection = new BookCollectionShadow();
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
@@ -65,9 +68,12 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	private Intent myDeferredIntent;
 	private boolean mySingleCatalog;
 
+	final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		BookCollection.bindToService(this, null);
 
 		AuthenticationActivity.initCredentialsCreator(this);
 
@@ -83,7 +89,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		if (getCurrentTree() instanceof RootTree) {
 			mySingleCatalog = intent.getBooleanExtra("SingleCatalog", false);
 			if (!NetworkLibrary.Instance().isInitialized()) {
-				Util.initLibrary(this, new Runnable() {
+				Util.initLibrary(this, myNetworkContext, new Runnable() {
 					public void run() {
 						NetworkLibrary.Instance().runBackgroundUpdate(false);
 						if (intent != null) {
@@ -119,7 +125,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	public void onResume() {
 		super.onResume();
-		BearerAuthenticator.initBearerAuthenticator(this);
 		getListView().setOnCreateContextMenuListener(this);
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
@@ -135,6 +140,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	public void onDestroy() {
+		BookCollection.unbind();
 		super.onDestroy();
 	}
 
@@ -145,7 +151,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 				final NetworkTree tree =
 					NetworkLibrary.Instance().getCatalogTreeByUrl(uri.toString());
 				if (tree != null) {
-					checkAndRun(new OpenCatalogAction(this), tree);
+					checkAndRun(new OpenCatalogAction(this, myNetworkContext), tree);
 					return true;
 				}
 			}
@@ -168,7 +174,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 			}
 		});
 
-		if (BearerAuthenticator.onActivityResult(requestCode, resultCode, data)) {
+		if (myNetworkContext.onActivityResult(requestCode, resultCode, data)) {
 			return;
 		}
 
@@ -227,7 +233,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
 		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
 		myOptionsMenuActions.add(new ManageCatalogsAction(this));
-		myOptionsMenuActions.add(new ReloadCatalogAction(this));
+		myOptionsMenuActions.add(new ReloadCatalogAction(this, myNetworkContext));
 		myOptionsMenuActions.add(new SignInAction(this));
 		myOptionsMenuActions.add(new SignUpAction(this));
 		myOptionsMenuActions.add(new SignOutAction(this));
@@ -238,7 +244,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	}
 
 	private void fillContextMenuList() {
-		myContextMenuActions.add(new OpenCatalogAction(this));
+		myContextMenuActions.add(new OpenCatalogAction(this, myNetworkContext));
 		myContextMenuActions.add(new OpenInBrowserAction(this));
 		myContextMenuActions.add(new RunSearchAction(this, true));
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
@@ -253,18 +259,18 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	}
 
 	private void fillListClickList() {
-		myListClickActions.add(new OpenCatalogAction(this));
+		myListClickActions.add(new OpenCatalogAction(this, myNetworkContext));
 		myListClickActions.add(new OpenInBrowserAction(this));
 		myListClickActions.add(new RunSearchAction(this, true));
 		myListClickActions.add(new AddCustomCatalogAction(this));
 		myListClickActions.add(new TopupAction(this));
-		myListClickActions.add(new ShowBookInfoAction(this));
+		myListClickActions.add(new ShowBookInfoAction(this, myNetworkContext));
 		myListClickActions.add(new ManageCatalogsAction(this));
 	}
 
 	private List<? extends Action> getContextMenuActions(NetworkTree tree) {
 		return tree instanceof NetworkBookTree
-			? NetworkBookActions.getContextMenuActions(this, (NetworkBookTree)tree, Connection)
+			? NetworkBookActions.getContextMenuActions(this, (NetworkBookTree)tree, BookCollection, Connection)
 			: myContextMenuActions;
 	}
 
@@ -430,7 +436,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
-					Util.initLibrary(NetworkLibraryActivity.this, null);
+					Util.initLibrary(NetworkLibraryActivity.this, myNetworkContext, null);
 				} else {
 					finish();
 				}

@@ -28,6 +28,8 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
+
 import org.geometerplus.android.fbreader.OrientationUtil;
 
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
@@ -63,7 +65,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 		public Preference addOption(ZLBooleanOption option, String resourceKey) {
 			return addPreference(
-				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
+				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource.getResource(resourceKey))
 			);
 		}
 
@@ -73,9 +75,15 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			);
 		}
 
-		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String resourceKey) {
+		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String key) {
 			return addPreference(
-				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource, resourceKey)
+				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource.getResource(key))
+			);
+		}
+
+		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String key, String valuesKey) {
+			return addPreference(
+				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource.getResource(key), Resource.getResource(valuesKey))
 			);
 		}
 	}
@@ -101,7 +109,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 	public Preference addOption(ZLBooleanOption option, String resourceKey) {
 		ZLBooleanPreference preference =
-			new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
+			new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource.getResource(resourceKey));
 		myScreen.addPreference(preference);
 		return preference;
 	}
@@ -119,6 +127,8 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		super.onCreate(bundle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		SQLiteCookieDatabase.init(this);
 
 		myScreen = getPreferenceManager().createPreferenceScreen(this);
 

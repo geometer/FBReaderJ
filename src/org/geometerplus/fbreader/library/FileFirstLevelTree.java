@@ -26,7 +26,7 @@ import org.geometerplus.fbreader.Paths;
 
 public class FileFirstLevelTree extends FirstLevelTree {
 	FileFirstLevelTree(RootTree root) {
-		super(root, ROOT_FILE_TREE);
+		super(root, ROOT_FILE);
 	}
 
 	@Override

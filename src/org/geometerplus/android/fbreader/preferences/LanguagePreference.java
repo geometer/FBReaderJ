@@ -28,9 +28,9 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class LanguagePreference extends ZLStringListPreference {
 	LanguagePreference(
-		Context context, ZLResource rootResource, String resourceKey, List<Language> languages
+		Context context, ZLResource resource, List<Language> languages
 	) {
-		super(context, rootResource, resourceKey);
+		super(context, resource);
 
 		final int size = languages.size();
 		String[] codes = new String[size];

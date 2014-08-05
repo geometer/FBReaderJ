@@ -21,5 +21,4 @@ package org.geometerplus.zlibrary.core.image;
 
 public interface ZLImage {
 	String getURI();
-	boolean saveToFile(String url);
 }

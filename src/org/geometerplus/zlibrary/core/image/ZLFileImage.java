@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.*;
 
-public class ZLFileImage extends ZLSingleImage {
+public class ZLFileImage implements ZLStreamImage {
 	public static final String SCHEME = "imagefile";
 
 	public static final String ENCODING_NONE = "";
@@ -43,7 +43,6 @@ public class ZLFileImage extends ZLSingleImage {
 				lengths[i] = Integer.parseInt(data[3 + count + i]);
 			}
 			return new ZLFileImage(
-				MimeType.IMAGE_AUTO,
 				ZLFile.createFileByPath(data[0]),
 				data[1],
 				offsets,
@@ -62,12 +61,7 @@ public class ZLFileImage extends ZLSingleImage {
 	private final int[] myLengths;
 	private final FileEncryptionInfo myEncryptionInfo;
 
-	public ZLFileImage(String mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
-		this(MimeType.get(mimeType), file, encoding, offsets, lengths, encryptionInfo);
-	}
-
-	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
-		super(mimeType);
+	public ZLFileImage(ZLFile file, String encoding, int[] offsets, int[] lengths, FileEncryptionInfo encryptionInfo) {
 		myFile = file;
 		myEncoding = encoding != null ? encoding : ENCODING_NONE;
 		myOffsets = offsets;
@@ -75,16 +69,12 @@ public class ZLFileImage extends ZLSingleImage {
 		myEncryptionInfo = encryptionInfo;
 	}
 
-	public ZLFileImage(String mimeType, ZLFile file, String encoding, int offset, int length) {
-		this(MimeType.get(mimeType), file, encoding, offset, length);
+	public ZLFileImage(ZLFile file, String encoding, int offset, int length) {
+		this(file, encoding, new int[] { offset }, new int[] { length }, null);
 	}
 
-	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int offset, int length) {
-		this(mimeType, file, encoding, new int[] { offset }, new int[] { length }, null);
-	}
-
-	public ZLFileImage(MimeType mimeType, ZLFile file) {
-		this(mimeType, file, ENCODING_NONE, 0, (int)file.size());
+	public ZLFileImage(ZLFile file) {
+		this(file, ENCODING_NONE, 0, (int)file.size());
 	}
 
 	public String getURI() {

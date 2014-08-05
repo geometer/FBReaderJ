@@ -33,6 +33,7 @@ import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResAuthenticationManager extends NetworkAuthenticationManager {
+	private final ZLNetworkContext myNetworkContext = new QuietNetworkContext();
 	private volatile boolean myFullyInitialized;
 
 	private final ZLStringOption mySidOption;
@@ -152,20 +153,19 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			final Map<String,String> params = new HashMap<String,String>();
 			final String url = parseUrl(Link.getUrl(UrlInfo.Type.SignIn), params);
 			if (url == null) {
-				throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
+				throw ZLNetworkException.forCode(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 			}
 			final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
 			for (Map.Entry<String,String> entry : params.entrySet()) {
 				request.addPostParameter(entry.getKey(), entry.getValue());
 			}
 			request.addPostParameter("sid", sid);
-			ZLNetworkManager.Instance().perform(request);
+			myNetworkContext.perform(request);
 			initUser(null, xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 			return true;
+		} catch (ZLNetworkAuthenticationException e) {
+			throw e;
 		} catch (ZLNetworkException e) {
-			if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
-				throw e;
-			}
 			logOut(false);
 			return false;
 		}
@@ -176,7 +176,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		final Map<String,String> params = new HashMap<String,String>();
 		final String url = parseUrl(Link.getUrl(UrlInfo.Type.SignIn), params);
 		if (url == null) {
-			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
+			throw ZLNetworkException.forCode(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
 		synchronized (this) {
 			UserNameOption.setValue(username);
@@ -190,7 +190,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			}
 			request.addPostParameter("login", username);
 			request.addPostParameter("pwd", password);
-			ZLNetworkManager.Instance().perform(request);
+			myNetworkContext.perform(request);
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
 			initUser(null, xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 		} catch (ZLNetworkException e) {
@@ -228,12 +228,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			sid = mySidOption.getValue();
 		}
 		if (sid.length() == 0) {
-			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+			throw new ZLNetworkAuthenticationException();
 		}
 
 		final BookUrlInfo reference = book.reference(UrlInfo.Type.BookBuy);
 		if (reference == null) {
-			throw new ZLNetworkException(NetworkException.ERROR_BOOK_NOT_PURCHASED); // TODO: more correct error message???
+			throw ZLNetworkException.forCode(NetworkException.ERROR_BOOK_NOT_PURCHASED); // TODO: more correct error message???
 		}
 
 		final LitResPurchaseXMLReader xmlReader = new LitResPurchaseXMLReader(Link.getSiteName());
@@ -242,7 +242,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		try {
 			final LitResNetworkRequest request = new LitResNetworkRequest(reference.Url, xmlReader);
 			request.addPostParameter("sid", sid);
-			ZLNetworkManager.Instance().perform(request);
+			myNetworkContext.perform(request);
 		} catch (ZLNetworkException e) {
 			exception = e;
 		}
@@ -252,16 +252,15 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				myAccount = new Money(xmlReader.Account, "RUB");
 			}
 			if (exception != null) {
-				final String code = exception.getCode();
-				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(code)) {
+				if (exception instanceof ZLNetworkAuthenticationException) {
 					logOut(false);
-				} else if (NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED.equals(code)) {
+				} else if (exception instanceof AlreadyPurchasedException) {
 					myPurchasedBooks.addToStart(book);
 				}
 				throw exception;
 			}
 			if (xmlReader.BookId == null || !xmlReader.BookId.equals(book.Id)) {
-				throw new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, Link.getSiteName());
+				throw ZLNetworkException.forCode(NetworkException.ERROR_SOMETHING_WRONG, Link.getSiteName());
 			}
 			myPurchasedBooks.addToStart(book);
 			final BasketItem basket = book.Link.getBasketItem();
@@ -302,25 +301,25 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			synchronized (this) {
 				final String sid = mySidOption.getValue();
 				if (sid.length() == 0) {
-					throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+					throw new ZLNetworkAuthenticationException();
 				}
 				if (!sid.equals(myInitializedDataSid)) {
 					logOut(false);
-					throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+					throw new ZLNetworkAuthenticationException();
 				}
 				networkRequest = loadPurchasedBooksRequest(sid, page);
 			}
 
 			ZLNetworkException exception = null;
 			try {
-				ZLNetworkManager.Instance().perform(networkRequest);
+				myNetworkContext.perform(networkRequest);
 			} catch (ZLNetworkException e) {
 				exception = e;
 			}
 
 			synchronized (this) {
 				if (exception != null) {
-					if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(exception.getCode())) {
+					if (exception instanceof ZLNetworkAuthenticationException) {
 						logOut(false);
 					}
 					throw exception;
@@ -354,7 +353,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		synchronized (this) {
 			sid = mySidOption.getValue();
 			if (sid.length() == 0) {
-				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+				throw new ZLNetworkAuthenticationException();
 			}
 			if (sid.equals(myInitializedDataSid) || !isAuthorised(true)) {
 				return;
@@ -369,7 +368,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		requests.add(accountRequest);
 
 		try {
-			ZLNetworkManager.Instance().perform(requests);
+			myNetworkContext.perform(requests);
 			final boolean hasMorePages;
 			synchronized (this) {
 				myInitializedDataSid = sid;
@@ -380,7 +379,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			if (hasMorePages) {
 				for (int page = 1; ; ++page) {
 					final LitResNetworkRequest r = loadPurchasedBooksRequest(sid, page);
-					ZLNetworkManager.Instance().perform(r);
+					myNetworkContext.perform(r);
 					synchronized (this) {
 						if (loadPurchasedBooksOnSuccess(r, false) < BOOKS_PER_PAGE) {
 							break;
@@ -401,7 +400,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	@Override
 	public void refreshAccountInformation() throws ZLNetworkException {
 		final LitResNetworkRequest accountRequest = loadAccountRequest(mySidOption.getValue());
-		ZLNetworkManager.Instance().perform(accountRequest);
+		myNetworkContext.perform(accountRequest);
 		synchronized (this) {
 			myAccount = new Money(((LitResPurchaseXMLReader)accountRequest.Reader).Account, "RUB");
 		}
@@ -458,12 +457,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public void recoverPassword(String email) throws ZLNetworkException {
 		final String url = Link.getUrl(UrlInfo.Type.RecoverPassword);
 		if (url == null) {
-			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
+			throw ZLNetworkException.forCode(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
 		final LitResPasswordRecoveryXMLReader xmlReader = new LitResPasswordRecoveryXMLReader(Link.getSiteName());
 		final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
 		request.addPostParameter("mail", email);
-		ZLNetworkManager.Instance().perform(request);
+		myNetworkContext.perform(request);
 	}
 
 	@Override

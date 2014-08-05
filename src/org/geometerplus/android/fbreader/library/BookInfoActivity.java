@@ -36,7 +36,7 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -52,6 +52,7 @@ import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
+import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener, IBookCollection.Listener {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
@@ -61,6 +62,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private Book myBook;
 	private boolean myDontReloadBook;
+
+	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
+
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
 	@Override
@@ -114,6 +118,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	protected void onDestroy() {
 		myCollection.removeListener(this);
 		myCollection.unbind();
+		myImageSynchronizer.clear();
 
 		super.onDestroy();
 	}
@@ -140,12 +145,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void setupCover(Book book) {
 		final ImageView coverView = (ImageView)findViewById(R.id.book_cover);
 
-		final DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-		final int maxHeight = metrics.heightPixels * 2 / 3;
-		final int maxWidth = maxHeight * 2 / 3;
-
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
@@ -155,17 +154,33 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			return;
 		}
 
-		if (image instanceof ZLLoadableImage) {
-			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
-			if (!loadableImage.isSynchronized()) {
-				loadableImage.synchronize();
-			}
+		if (image instanceof ZLImageProxy) {
+			((ZLImageProxy)image).startSynchronization(myImageSynchronizer, new Runnable() {
+				public void run() {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							setCover(coverView, image);
+						}
+					});
+				}
+			});
+		} else {
+			setCover(coverView, image);
 		}
+	}
+
+	private void setCover(ImageView coverView, ZLImage image) {
 		final ZLAndroidImageData data =
 			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
 		if (data == null) {
 			return;
 		}
+
+		final DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+		final int maxHeight = metrics.heightPixels * 2 / 3;
+		final int maxWidth = maxHeight * 2 / 3;
 
 		final Bitmap coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
 		if (coverBitmap == null) {

@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.library;
 
 import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 
 public class RootTree extends LibraryTree {
 	public RootTree(IBookCollection collection) {
@@ -31,6 +32,9 @@ public class RootTree extends LibraryTree {
 		new TitleListTree(this);
 		new SeriesListTree(this);
 		new TagListTree(this);
+		if (new SyncOptions().Enabled.getValue()) {
+			new SyncTree(this);
+		}
 		new FileFirstLevelTree(this);
 	}
 

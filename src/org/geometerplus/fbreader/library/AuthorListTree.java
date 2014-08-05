@@ -67,7 +67,7 @@ public class AuthorListTree extends FirstLevelTree {
 	}
 
 	private boolean createAuthorSubtree(Author author) {
-		final AuthorTree temp = new AuthorTree(Collection, author);
+    		final AuthorTree temp = new AuthorTree(Collection, author);
 		int position = Collections.binarySearch(subtrees(), temp);
 		if (position >= 0) {
 			return false;

@@ -31,17 +31,21 @@ import android.widget.Toast;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
 public class BookDownloaderService extends Service {
-	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
+	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this);
+
+	public static final String BOOK_MIME = "fbreader.book.mime";
 	public static final String REFERENCE_TYPE_KEY = "org.geometerplus.android.fbreader.network.ReferenceType";
 	public static final String CLEAN_URL_KEY = "org.geometerplus.android.fbreader.network.CleanURL";
 	public static final String TITLE_KEY = "org.geometerplus.android.fbreader.network.Title";
@@ -108,8 +112,7 @@ public class BookDownloaderService extends Service {
 		final int notifications = intent.getIntExtra(SHOW_NOTIFICATIONS_KEY, 0);
 
 		final String url = uri.toString();
-		final BookUrlInfo.Format bookFormat =
-			new BookUrlInfo.Format(intent.getStringExtra(BOOK_FORMAT_KEY));
+		final MimeType mime = MimeType.get(intent.getStringExtra(BOOK_MIME));
 		UrlInfo.Type referenceType = (UrlInfo.Type)intent.getSerializableExtra(REFERENCE_TYPE_KEY);
 		if (referenceType == null) {
 			referenceType = UrlInfo.Type.Book;
@@ -128,7 +131,7 @@ public class BookDownloaderService extends Service {
 			return;
 		}
 
-		final String fileName = BookUrlInfo.makeBookFileName(cleanURL, bookFormat, referenceType);
+		final String fileName = BookUrlInfo.makeBookFileName(cleanURL, mime, referenceType);
 		if (fileName == null) {
 			doStop();
 			return;
@@ -282,7 +285,7 @@ public class BookDownloaderService extends Service {
 			}
 		};
 
-		final ZLNetworkRequest request = new ZLNetworkRequest(urlString) {
+		final ZLNetworkRequest request = new ZLNetworkRequest.Get(urlString) {
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 
@@ -295,7 +298,7 @@ public class BookDownloaderService extends Service {
 				try {
 					outStream = new FileOutputStream(file);
 				} catch (FileNotFoundException ex) {
-					throw new ZLNetworkException(ZLNetworkException.ERROR_CREATE_FILE, file.getPath());
+					throw ZLNetworkException.forCode(ZLNetworkException.ERROR_CREATE_FILE, file.getPath());
 				}
 				try {
 					final byte[] buffer = new byte[8192];
@@ -339,7 +342,7 @@ public class BookDownloaderService extends Service {
 			public void run() {
 				boolean success = false;
 				try {
-					ZLNetworkManager.Instance().perform(request);
+					myNetworkContext.perform(request);
 					success = true;
 				} catch (ZLNetworkException e) {
 					// TODO: show error message to User

@@ -36,7 +36,7 @@ import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNetworkLink {
 	private final String myPredefinedId;
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
-	
+
 	public RSSNetworkLink(
 		int id, String predefinedId,
 		String siteName, String title, String summary,
@@ -45,17 +45,17 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 		super(id, siteName, title, summary, language, infos);
 		myPredefinedId = predefinedId;
 	}
-	
-	ZLNetworkRequest createNetworkData(String url, MimeType mime, final RSSCatalogItem.State result) {
+
+	ZLNetworkRequest createNetworkData(String url, final RSSCatalogItem.State result) {
 		if (url == null) {
 			return null;
 		}
-		
+
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
 		library.startLoading(catalogItem);
 
-		return new ZLNetworkRequest(url, mime, null, false) {
+		return new ZLNetworkRequest.Get(url, false) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
@@ -64,7 +64,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 				}
 
 				new RSSXMLReader(new RSSChannelHandler(getURL(), result), false).read(inputStream);
-				
+
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
 					result.LastLoadedId = null;
 				} else {
@@ -83,7 +83,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 	public RSSCatalogItem.State createOperationData(NetworkItemsLoader loader) {
 		return new RSSCatalogItem.State(this, loader);
 	}
-	
+
 	public final void setExtraData(Map<String,String> extraData) {
 		myExtraData.clear();
 		myExtraData.putAll(extraData);
@@ -100,8 +100,7 @@ public class RSSNetworkLink extends AbstractNetworkLink implements IPredefinedNe
 	}
 
 	@Override
-	public ZLNetworkRequest simpleSearchRequest(String pattern,
-			NetworkOperationData data) {
+	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
 		return null;
 	}
 

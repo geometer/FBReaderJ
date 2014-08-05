@@ -26,6 +26,21 @@
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Strom souborů">
 			<node name="summary" value="Procházet systém souborů"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="Knihovna FBReaderu">
 			<node name="summary" value="Adresář s knihami pro FBReader"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Místní hledání"/>
-			<node name="rescan" value="Prohledat znovu"/>
-		</node>
+		<node name="localSearch" value="Místní hledání"/>
+		<node name="rescan" value="Prohledat znovu"/>
 		<node name="openBook" value="Otevřít knihu"/>
 		<node name="showBookInfo" value="Informace o knize"/>
 		<node name="shareBook" value="Sdílet knihu"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Odebrat ze seznamu posledních"/>
 		<node name="markAsRead" value="Označit jako přečtené"/>
 		<node name="markAsUnread" value="Označit jako nepřečtené"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
 		<node name="byAuthor" value="Podle autora">
@@ -313,6 +329,23 @@
 		<node name="series" value="Série"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Adresáře">
 			<node name="summary" value="Adresáře pro hledání souborů"/>
 			<node name="bookPath" value="Kde hledat knihy">
@@ -430,9 +463,9 @@
 				<node name="normal" value="obyčejné"/>
 				<node name="inherit" value="&lt;nezměněno&gt;"/>
 			</node>
-			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
-				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
-				<node name="none" value="no decorations" toBeTranslated="true"/>
+			<node name="textDecoration" value="Text s ozdobnými efekty">
+				<node name="inherit" value="&lt;nezměněno&gt;"/>
+				<node name="none" value="bez ozdobných efektů"/>
 				<node name="underline" value="podtržené"/>
 				<node name="line-through" value="přeškrtnuté"/>
 			</node>
@@ -460,14 +493,14 @@
 			<node name="spaceAfter" value="Mezera za"/>
 			<node name="leftIndent" value="Odsazení vlevo"/>
 			<node name="rightIndent" value="Odsazení vpravo"/>
-			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
+			<node name="verticalAlignment" value="Svislé zarovnání"/>
 			<node name="more" value="Další styly">
 				<node name="summary" value="Oddělené nastavení pro názvy, mota atd."/>
 				<node name="Regular Paragraph" value="Běžný odstavec">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
-					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
+				<node name="xhtml-tag-p" value="Odstavec EPub">
+					<node name="summary" value="Obsah kódu značky XHTML &lt;p&gt;"/>
 				</node>
 				<node name="Title" value="Název">
 					<node name="summary" value=""/>
@@ -581,9 +614,9 @@
 				<node name="summaryOn" value="Použít zarovnání textu definované v CSS"/>
 				<node name="summaryOff" value="Ignorovat zarovnání textu definované v CSS"/>
 			</node>
-			<node name="margins" value="Margins" toBeTranslated="true">
-				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			<node name="margins" value="Okraje">
+				<node name="summaryOn" value="Použít okraje definované v CSS"/>
+				<node name="summaryOff" value="Ignorovat okraje definované v CSS"/>
 			</node>
 		</node>
 		<node name="colors" value="Barvy a pozadí">
@@ -819,10 +852,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="Soubor s knihou bude nevratně odebrán. Opravdu chcete pokračovat?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Soubor již existuje. Stáhnout ho znovu?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>
 			<node name="loadInfo" value="Načítání informací. Čekejte…"/>
@@ -838,8 +876,8 @@
 			<node name="loadingNetworkBookInfo" value="Načítání informací o knize. Čekejte…"/>
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte…"/>
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte…"/>
-			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Inicializace modulu DRM. Čekejte…"/>
+			<node name="acquireLicense" value="Načítání licence. Čekejte…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
@@ -890,11 +928,27 @@
 			<node name="message2" value="Výborně! Dalším klepnutím na prostřední třetinu obrazovky se skryje ovládání a tato nápověda. Pokud chcete ponechat během čtení ovládání na obrazovce, vyberte volbu „Zobrazit panel akcí“ v části „Vzhled“ dialogového okna Nastavení."/>
 		</node>
 		<node name="folderList">
-			<node name="addFolder" value="Add folder" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove folder" toBeTranslated="true">
-				<node name="message" value="Remove “%s” from the list?" toBeTranslated="true"/>
+			<node name="addFolder" value="Přidat složku"/>
+			<node name="removeDialog" value="Odebrat složku">
+				<node name="message" value="Odebrat “%s” ze seznamu?"/>
 			</node>
-			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
+			<node name="duplicate" value="“%s” již je na seznamu"/>
+		</node>
+		<node name="editList">
+			<node name="edit" value="Upravit"/>
+			<node name="remove" value="Odebrat"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Přidat štítek"/>
+			<node name="removeDialog" value="Odebrat štítek">
+				<node name="message" value="Odebrat štítek “%s” ze seznamu?"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Přidat autora"/>
+			<node name="removeDialog" value="Odebrat autora">
+				<node name="message" value="Odebrat autora “%s” ze seznamu?"/>
+			</node>
 		</node>
 		<node name="fileChooser">
 			<node name="root" value="Kořenová složka"/>
@@ -910,6 +964,9 @@
 				<node name="date" value="Data"/>
 			</node>
 			<node name="permissionDenied" value="Přístup byl odepřen"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Doplněk pro soubory %s není nainstalován. Nainstalovat ho nyní?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -997,8 +1054,8 @@
 		<node name="frontScreenButton" value="Přepnout na tento displej"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+		<node name="positiveLength" value="Např.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="Např.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="Např.: 125%%"/>
 	</node>
 </resources>

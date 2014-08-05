@@ -4,7 +4,7 @@
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Ingolf Kübler 2011/07/03 -->
 <!-- Updated by Ingolf Kübler 2012/07/01 -->
-<!-- Updated by Matthias Dill 2014/05/12 -->
+<!-- Updated by Matthias Dill 2014/06/10 -->
 <resources>
 	<node name="library" value="FBReader Bibliothek">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -31,6 +31,21 @@
 		<node name="found" value="Gefunden">
 			<node name="summary" value="Suchergebnisse für: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Dateibaum">
 			<node name="summary" value="Dateibaum durchsuchen"/>
 		</node>
@@ -43,10 +58,8 @@
 		<node name="fileTreeLibrary" value="FBReader Bibliothek">
 			<node name="summary" value="FBReader Buchverzeichnis"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Lokale Suche"/>
-			<node name="rescan" value="Neu einlesen"/>
-		</node>
+		<node name="localSearch" value="Lokale Suche"/>
+		<node name="rescan" value="Neu einlesen"/>
 		<node name="openBook" value="Buch zum lesen öffnen"/>
 		<node name="showBookInfo" value="Information über das Buch"/>
 		<node name="shareBook" value="Buch teilen"/>
@@ -56,6 +69,9 @@
 		<node name="removeFromRecents" value="Buch aus der Historie löschen"/>
 		<node name="markAsRead" value="Als gelesen markieren"/>
 		<node name="markAsUnread" value="Als ungelesen markieren"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader Netzwerk-Bibliothek">
 		<node name="byAuthor" value="Nach Autoren gruppiert">
@@ -309,6 +325,23 @@
 		<node name="series" value="Serie"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Verzeichnisse">
 			<node name="summary" value="Verzeichnisse in denen Dateien gesucht werden"/>
 			<node name="bookPath" value="Bücher suchern in">
@@ -426,9 +459,9 @@
 				<node name="normal" value="Normal"/>
 				<node name="inherit" value="&lt;unverändert&gt;"/>
 			</node>
-			<node name="textDecoration" value="Text decoration" toBeTranslated="true">
-				<node name="inherit" value="&lt;unchanged&gt;" toBeTranslated="true"/>
-				<node name="none" value="no decorations" toBeTranslated="true"/>
+			<node name="textDecoration" value="Text Verzierung">
+				<node name="inherit" value="&lt;unverändert&gt;"/>
+				<node name="none" value="keine Verzierung"/>
 				<node name="underline" value="untertrichen"/>
 				<node name="line-through" value="durchgestrichen"/>
 			</node>
@@ -456,14 +489,14 @@
 			<node name="spaceAfter" value="Abstand nach"/>
 			<node name="leftIndent" value="Einzug linker Rand"/>
 			<node name="rightIndent" value="Einzug rechter Rand"/>
-			<node name="verticalAlignment" value="Vertical alignment" toBeTranslated="true"/>
+			<node name="verticalAlignment" value="Vertikale Ausrichtung"/>
 			<node name="more" value="Weitere Formatierungen…">
 				<node name="summary" value="Detaillierte Einstellungen für Überschiften, Inhalte, etc."/>
 				<node name="Regular Paragraph" value="Normaler Absatz">
 					<node name="summary" value=""/>
 				</node>
-				<node name="xhtml-tag-p" value="EPub Paragraph" toBeTranslated="true">
-					<node name="summary" value="&lt;p&gt; XHTML tag content" toBeTranslated="true"/>
+				<node name="xhtml-tag-p" value="EPub Abschnitt">
+					<node name="summary" value="&lt;p&gt; XHTML Tag Inhalt"/>
 				</node>
 				<node name="Title" value="Titel">
 					<node name="summary" value=""/>
@@ -577,9 +610,9 @@
 				<node name="summaryOn" value="Verwende in CSS definierte Ausrichtung"/>
 				<node name="summaryOff" value="Ignoriere in CSS definierte Ausrichtung"/>
 			</node>
-			<node name="margins" value="Margins" toBeTranslated="true">
-				<node name="summaryOn" value="Apply margins defined in CSS" toBeTranslated="true"/>
-				<node name="summaryOff" value="Ignore margins defined in CSS" toBeTranslated="true"/>
+			<node name="margins" value="Ränder">
+				<node name="summaryOn" value="Verwende in CSS definierte Ränder"/>
+				<node name="summaryOff" value="Ignoriere in CSS definierte Ränder"/>
 			</node>
 		</node>
 		<node name="colors" value="Farben &amp; Hintergründe">
@@ -815,10 +848,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="Die Buchdatei wird unwiderruflich gelöscht. Sind Sie sicher?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Datei existiert bereits. Erneut herunterladen?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Buch wird geladen %s"/>
 			<node name="search" value="Suche läuft. Bitte warten…"/>
 			<node name="loadInfo" value="Information wird geladen. Bitte warten…"/>
@@ -834,8 +872,8 @@
 			<node name="loadingNetworkBookInfo" value="Lade Buchinformation. Bitte warten…"/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten…"/>
 			<node name="updatingAccountInformation" value="Konto-Information wird aktualisiert. Bitte waren…"/>
-			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…" toBeTranslated="true"/>
-			<node name="acquireLicense" value="Acquiring license. Please, wait…" toBeTranslated="true"/>
+			<node name="initDRMEngine" value="Initialisiere das Rechtemanagement. Bitte warten…"/>
+			<node name="acquireLicense" value="Empfange Lizenz. Bitte warten…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler"/>
@@ -892,6 +930,22 @@
 			</node>
 			<node name="duplicate" value="“%s” ist bereits in der Liste vorhanden"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit" toBeTranslated="true"/>
+			<node name="remove" value="Remove" toBeTranslated="true"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
+				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove author" toBeTranslated="true">
+				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Ursprung"/>
 			<node name="newFolder" value="Neuer Ordner"/>
@@ -906,6 +960,9 @@
 				<node name="date" value="Datum"/>
 			</node>
 			<node name="permissionDenied" value="Zugriff verweigert"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -993,8 +1050,8 @@
 		<node name="frontScreenButton" value="Auf diesen Bildschirm wechseln"/>
 	</node>
 	<node name="hint">
-		<node name="positiveLength" value="E.g.: 20px, 10pt, 0.8em, 1ex, 120%%" toBeTranslated="true"/>
-		<node name="length" value="E.g.: -2px, 10pt, -0.8em, 1.1ex, -40%%" toBeTranslated="true"/>
-		<node name="percent" value="E.g.: 125%%" toBeTranslated="true"/>
+		<node name="positiveLength" value="z.B.: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="z.B.: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="z.B.: 125%%"/>
 	</node>
 </resources>

@@ -26,6 +26,21 @@
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation">
+			<node name="summary" value="Books by synchronisation status"/>
+			<node name="sync-success" value="Synchronised">
+				<node name="summary" value="Books uploaded to the server"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed">
+				<node name="summary" value="Books not uploaded to the server due some problems"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server">
+				<node name="summary" value="Books not accessible from the server more"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet">
+				<node name="summary" value="Books to be uploaded to the server"/>
+			</node>
+		</node>
 		<node name="fileTree" value="File tree">
 			<node name="summary" value="Browse file system"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="FBReader library">
 			<node name="summary" value="FBReader books directory"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Search"/>
-			<node name="rescan" value="Rescan"/>
-		</node>
+		<node name="localSearch" value="Search"/>
+		<node name="rescan" value="Rescan"/>
 		<node name="openBook" value="Open book"/>
 		<node name="showBookInfo" value="Book info"/>
 		<node name="shareBook" value="Share book"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Remove from recent list"/>
 		<node name="markAsRead" value="Mark as read"/>
 		<node name="markAsUnread" value="Mark as unread"/>
+		<node name="deleteAll" value="Delete all"/>
+		<node name="uploadAgain" value="Upload again"/>
+		<node name="tryAgain" value="Try again"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
 		<node name="byAuthor" value="By author">
@@ -304,6 +320,23 @@
 		<node name="series" value="Series"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation">
+			<node name="summary" value="Book network settings"/>
+			<node name="enable" value="Enable synchronisation">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi"/>
+				<node name="never" value="Never"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server"/>
+			<node name="positions" value="Synchronise reading positions"/>
+			<node name="bookmarks" value="Synchronise bookmarks"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)"/>
+		</node>
 		<node name="directories" value="Directories">
 			<node name="summary" value="Directories to seek for files"/>
 			<node name="bookPath" value="Where to seek for books">
@@ -810,10 +843,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="The book file will be removed irreversibly. Are you sure?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="File already exists. Redownload?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…"/>
 			<node name="downloadingFile" value="Downloading book %s"/>
 			<node name="search" value="Searching. Please, wait…"/>
 			<node name="loadInfo" value="Loading information. Please, wait…"/>
@@ -887,6 +925,22 @@
 			</node>
 			<node name="duplicate" value="“%s” is already in the list"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit"/>
+			<node name="remove" value="Remove"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag"/>
+			<node name="removeDialog" value="Remove tag">
+				<node name="message" value="Remove tag “%s” from the list?"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author"/>
+			<node name="removeDialog" value="Remove author">
+				<node name="message" value="Remove author “%s” from the list?"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root"/>
 			<node name="newFolder" value="New folder"/>
@@ -901,6 +955,9 @@
 				<node name="date" value="Date"/>
 			</node>
 			<node name="permissionDenied" value="Permission denied"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?"/>
 		</node>
 	</node>
 	<node name="errorMessage">

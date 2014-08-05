@@ -59,8 +59,11 @@
     <orderEntry type="library" exported="" name="open-dictionary-api-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-4.4.52" level="project" />
     <orderEntry type="library" exported="" name="nanohttpd-2.0.5" level="project" />
+    <orderEntry type="library" exported="" name="pdfparse" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="json-simple-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="LingvoIntegration_2.5.2.12" level="project" />
+    <orderEntry type="library" exported="" name="httpmime-4.2.5" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
     <orderEntry type="module" module-name="yotaphone_titanium_sdk" exported="" />
     <orderEntry type="module" module-name="AmbilWarna" exported="" />

@@ -25,7 +25,7 @@ public class DecoratedBookUrlInfo extends BookUrlInfo {
 	private final String myCleanUrl;
 
 	public DecoratedBookUrlInfo(BookUrlInfo base, String url) {
-		super(base.InfoType, base.BookFormat, url, base.Mime);
+		super(base.InfoType, url, base.Mime);
 		myCleanUrl = base.cleanUrl();
 	}
 

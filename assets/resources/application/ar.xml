@@ -26,6 +26,21 @@
 		<node name="found" value="نتائج">
 			<node name="summary" value="نتائج البحث: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="ملفات النظام">
 			<node name="summary" value="تصفح ملفات النظام"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="مجلد المكتبة">
 			<node name="summary" value="مجلد المكتبة"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="بحث"/>
-			<node name="rescan" value="إعادة الفحص"/>
-		</node>
+		<node name="localSearch" value="بحث"/>
+		<node name="rescan" value="إعادة الفحص"/>
 		<node name="openBook" value="فتح الكتاب"/>
 		<node name="showBookInfo" value="معلومات حول الكتاب"/>
 		<node name="shareBook" value="مشاركة الكتاب"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="حذف من لائحة أحدث الكتب"/>
 		<node name="markAsRead" value="تعليم كمقروء"/>
 		<node name="markAsUnread" value="تعليم كغير مقروء"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="مكتبة الشبكة">
 		<node name="byAuthor" value="حسب المؤلف">
@@ -302,6 +318,23 @@
 		<node name="series" value="السلسة"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="المجلدات">
 			<node name="summary" value="المجلدات التي يتم البحث فيها عن الملفات"/>
 			<node name="bookPath" value="أين يبحث البرنامج عن الكتب">
@@ -808,10 +841,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="سيتم حذف هذا الكتاب نهائيا، هل تريد المتابعة؟"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="الملف موجود مسبقا، هل تريد إعادة تحميله؟"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="تحميل كتاب %s"/>
 			<node name="search" value="جاري البحث..."/>
 			<node name="loadInfo" value="جاري جمع معلومات حول الكتاب..."/>
@@ -885,6 +923,22 @@
 			</node>
 			<node name="duplicate" value="“%s” موجود مسبقا في اللائحة"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit" toBeTranslated="true"/>
+			<node name="remove" value="Remove" toBeTranslated="true"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
+				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove author" toBeTranslated="true">
+				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="الجذر"/>
 			<node name="newFolder" value="مجلد جديد"/>
@@ -899,6 +953,9 @@
 				<node name="date" value="التاريخ"/>
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

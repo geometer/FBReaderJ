@@ -26,6 +26,21 @@
 		<node name="found" value="Funnet">
 			<node name="summary" value="Søkeresultat for: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Filtre">
 			<node name="summary" value="Utforsk filsystemet"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="FBReader bibliotek">
 			<node name="summary" value="FBReader bokkatalog"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Søk"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-		</node>
+		<node name="localSearch" value="Søk"/>
+		<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		<node name="openBook" value="Åpne book"/>
 		<node name="showBookInfo" value="Bokinformasjon"/>
 		<node name="shareBook" value="Del bok"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader nettverksbibliotek">
 		<node name="byAuthor" value="Etter forfatter">
@@ -304,6 +320,23 @@
 		<node name="series" value="Serie"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Kataloger">
 			<node name="summary" value="Kataloger å se etter filer i"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -810,10 +843,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="Filen med boken vil bli slettet uten mulighet for å angre. Er du sikker på at du vil slette boken?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Filen finnes allerede. Last ned på nytt?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Laster ned boken %s"/>
 			<node name="search" value="Søker. Vennligst vent…"/>
 			<node name="loadInfo" value="Laster informasjon. Vennligst vent…"/>
@@ -887,6 +925,22 @@
 			</node>
 			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit" toBeTranslated="true"/>
+			<node name="remove" value="Remove" toBeTranslated="true"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
+				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove author" toBeTranslated="true">
+				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>
 			<node name="newFolder" value="New folder" toBeTranslated="true"/>
@@ -901,6 +955,9 @@
 				<node name="date" value="Date" toBeTranslated="true"/>
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

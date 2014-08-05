@@ -26,17 +26,21 @@ import android.os.IBinder;
 import android.os.RemoteException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.Config;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
+
 import org.geometerplus.fbreader.book.*;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 public class BookCollectionShadow extends AbstractBookCollection implements ServiceConnection {
-	private Context myContext;
+	private volatile Context myContext;
 	private volatile LibraryInterface myInterface;
 	private final List<Runnable> myOnBindActions = new LinkedList<Runnable>();
 
@@ -70,7 +74,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 				myOnBindActions.add(onBindAction);
 			}
 			context.bindService(
-				new Intent(context, LibraryService.class),
+				FBReaderIntents.internalIntent(FBReaderIntents.Action.LIBRARY_SERVICE),
 				this,
 				LibraryService.BIND_AUTO_CREATE
 			);
@@ -204,6 +208,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
+	public synchronized Book getBookByHash(String hash) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return SerializerUtil.deserializeBook(myInterface.getBookByHash(hash));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
 	public synchronized List<Author> authors() {
 		if (myInterface == null) {
 			return Collections.emptyList();
@@ -318,6 +333,17 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		return Collections.emptyList();
 	}
 
+	public String getHash(Book book) {
+		if (myInterface == null) {
+			return null;
+		}
+		try {
+			return myInterface.getHash(SerializerUtil.serialize(book));
+		} catch (RemoteException e) {
+			return null;
+		}
+	}
+
 	public synchronized ZLTextPosition getStoredPosition(long bookId) {
 		if (myInterface == null) {
 			return null;
@@ -370,15 +396,14 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	}
 
 	@Override
-	public synchronized boolean saveCover(Book book, String url) {
+	public synchronized ZLImage getCover(Book book, int maxWidth, int maxHeight) {
 		if (myInterface == null) {
-			return false;
+			return null;
 		}
 		try {
-			return myInterface.saveCover(SerializerUtil.serialize(book), url);
+			return new ZLBitmapImage(myInterface.getCover(SerializerUtil.serialize(book), maxWidth, maxHeight));
 		} catch (RemoteException e) {
-			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 

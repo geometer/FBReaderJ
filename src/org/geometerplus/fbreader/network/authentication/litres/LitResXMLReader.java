@@ -115,7 +115,6 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 					myUrls.addInfo(new BookUrlInfo(
 						UrlInfo.Type.BookConditional,
-						BookUrlInfo.Format.FB2_ZIP,
 						"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
 						MimeType.APP_FB2_ZIP
 					));

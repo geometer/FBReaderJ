@@ -30,8 +30,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 final class SQLiteConfig extends ConfigInterface.Stub {
-	static final String OPTION_CHANGE_EVENT_ACTION = "fbreader.config_service.option_change_event";
-
 	private final Service myService;
 
 	private final SQLiteDatabase myDatabase;
@@ -163,7 +161,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 
 	private void sendChangeEvent(String group, String name, String value) {
 		myService.sendBroadcast(
-			new Intent(OPTION_CHANGE_EVENT_ACTION)
+			new Intent(ConfigShadow.OPTION_CHANGE_EVENT_ACTION)
 				.putExtra("group", group)
 				.putExtra("name", name)
 				.putExtra("value", value)

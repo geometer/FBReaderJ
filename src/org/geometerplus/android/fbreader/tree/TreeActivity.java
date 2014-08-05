@@ -31,6 +31,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
+import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	private static final String OPEN_TREE_ACTION = "android.fbreader.action.OPEN_TREE";
@@ -38,6 +39,8 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	public static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_TREE_KEY_KEY = "SelectedTreeKey";
 	public static final String HISTORY_KEY = "HistoryKey";
+
+	public final AndroidImageSynchronizer ImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private T myCurrentTree;
 	// we store the key separately because
@@ -57,6 +60,13 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	protected void onStart() {
 		super.onStart();
 		OrientationUtil.setOrientation(this, getIntent());
+	}
+
+	@Override
+	protected void onDestroy() {
+		ImageSynchronizer.clear();
+
+		super.onDestroy();
 	}
 
 	@Override

@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.book;
 
-import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -35,6 +34,10 @@ import org.geometerplus.fbreader.sort.TitledEntity;
 public class Book extends TitledEntity {
 	public static final String FAVORITE_LABEL = "favorite";
 	public static final String READ_LABEL = "read";
+	public static final String SYNCHRONIZED_LABEL = "sync-success";
+	public static final String SYNC_FAILURE_LABEL = "sync-failure";
+	public static final String SYNC_DELETED_LABEL = "sync-deleted";
+	public static final String SYNC_TOSYNC_LABEL = "sync-tosync";
 
 	public final ZLFile File;
 
@@ -52,9 +55,6 @@ public class Book extends TitledEntity {
 	public volatile boolean HasBookmark;
 
 	private volatile boolean myIsSaved;
-
-	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
-	private WeakReference<ZLImage> myCover;
 
 	Book(long id, ZLFile file, String title, String encoding, String language) {
 		super(title);
@@ -260,14 +260,15 @@ public class Book extends TitledEntity {
 	}
 
 	public void addAuthor(String name, String sortKey) {
-		String strippedName = name;
-		strippedName.trim();
+		if (name == null) {
+			return;
+		}
+		String strippedName = name.trim();
 		if (strippedName.length() == 0) {
 			return;
 		}
 
-		String strippedKey = sortKey;
-		strippedKey.trim();
+		String strippedKey = sortKey != null ? sortKey.trim() : "";
 		if (strippedKey.length() == 0) {
 			int index = strippedName.lastIndexOf(' ');
 			if (index == -1) {
@@ -290,6 +291,13 @@ public class Book extends TitledEntity {
 
 	@Override
 	public void setTitle(String title) {
+		if (title == null) {
+			return;
+		}
+		title = title.trim();
+		if (title.length() == 0) {
+			return;
+		}
 		if (!getTitle().equals(title)) {
 			super.setTitle(title);
 			myIsSaved = false;
@@ -575,25 +583,6 @@ public class Book extends TitledEntity {
 				database.addVisitedHyperlink(myId, linkId);
 			}
 		}
-	}
-
-	synchronized ZLImage getCover() {
-		if (myCover == NULL_IMAGE) {
-			return null;
-		} else if (myCover != null) {
-			final ZLImage image = myCover.get();
-			if (image != null) {
-				return image;
-			}
-		}
-		ZLImage image = null;
-		try {
-			image = getPlugin().readCover(File);
-		} catch (BookReadingException e) {
-			// ignore
-		}
-		myCover = image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE;
-		return image;
 	}
 
 	@Override

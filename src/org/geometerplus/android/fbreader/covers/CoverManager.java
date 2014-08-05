@@ -26,10 +26,10 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -48,11 +48,13 @@ public class CoverManager {
 	private final ExecutorService myPool = Executors.newFixedThreadPool(1, new MinPriorityThreadFactory());
 
 	private final Activity myActivity;
+	private final ZLImageProxy.Synchronizer myImageSynchronizer;
 	private final int myCoverWidth;
 	private final int myCoverHeight;
 
-	public CoverManager(Activity activity, int coverWidth, int coverHeight) {
+	public CoverManager(Activity activity, ZLImageProxy.Synchronizer synchronizer, int coverWidth, int coverHeight) {
 		myActivity = activity;
+		myImageSynchronizer = synchronizer;
 		myCoverWidth = coverWidth;
 		myCoverHeight = coverHeight;
 	}
@@ -77,7 +79,7 @@ public class CoverManager {
 		return data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight);
 	}
 
-	void setCoverForView(CoverHolder holder, ZLLoadableImage image) {
+	void setCoverForView(CoverHolder holder, ZLImageProxy image) {
 		synchronized (holder) {
 			try {
 				final Bitmap coverBitmap = Cache.getBitmap(holder.Key);
@@ -114,12 +116,15 @@ public class CoverManager {
 
 		if (coverBitmap == null) {
 			final ZLImage cover = tree.getCover();
-			if (cover instanceof ZLLoadableImage) {
-				final ZLLoadableImage img = (ZLLoadableImage)cover;
+			if (cover instanceof ZLImageProxy) {
+				final ZLImageProxy img = (ZLImageProxy)cover;
 				if (img.isSynchronized()) {
 					setCoverForView(holder, img);
 				} else {
-					img.startSynchronization(holder.new CoverSyncRunnable(img));
+					img.startSynchronization(
+						myImageSynchronizer,
+						holder.new CoverSyncRunnable(img)
+					);
 				}
 			} else if (cover != null) {
 				coverBitmap = getBitmap(cover);

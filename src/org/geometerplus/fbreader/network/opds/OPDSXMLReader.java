@@ -50,15 +50,16 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
 	private static final int FE_DC_LANGUAGE = ATOM_STATE_FIRST_UNUSED;
 	private static final int FE_DC_ISSUED = ATOM_STATE_FIRST_UNUSED + 1;
 	private static final int FE_DC_PUBLISHER = ATOM_STATE_FIRST_UNUSED + 2;
-	private static final int FE_CALIBRE_SERIES = ATOM_STATE_FIRST_UNUSED + 3;
-	private static final int FE_CALIBRE_SERIES_INDEX = ATOM_STATE_FIRST_UNUSED + 4;
-	private static final int FEL_PRICE = ATOM_STATE_FIRST_UNUSED + 5;
-	private static final int FEL_FORMAT = ATOM_STATE_FIRST_UNUSED + 6;
-	private static final int OPENSEARCH_TOTALRESULTS = ATOM_STATE_FIRST_UNUSED + 7;
-	private static final int OPENSEARCH_ITEMSPERPAGE = ATOM_STATE_FIRST_UNUSED + 8;
-	private static final int OPENSEARCH_STARTINDEX = ATOM_STATE_FIRST_UNUSED + 9;
-	private static final int FEC_HACK_SPAN = ATOM_STATE_FIRST_UNUSED + 10;
-	private static final int FBREADER_VIEW = ATOM_STATE_FIRST_UNUSED + 11;
+	private static final int FE_DC_IDENTIFIER = ATOM_STATE_FIRST_UNUSED + 3;
+	private static final int FE_CALIBRE_SERIES = ATOM_STATE_FIRST_UNUSED + 4;
+	private static final int FE_CALIBRE_SERIES_INDEX = ATOM_STATE_FIRST_UNUSED + 5;
+	private static final int FEL_PRICE = ATOM_STATE_FIRST_UNUSED + 6;
+	private static final int FEL_FORMAT = ATOM_STATE_FIRST_UNUSED + 7;
+	private static final int OPENSEARCH_TOTALRESULTS = ATOM_STATE_FIRST_UNUSED + 8;
+	private static final int OPENSEARCH_ITEMSPERPAGE = ATOM_STATE_FIRST_UNUSED + 9;
+	private static final int OPENSEARCH_STARTINDEX = ATOM_STATE_FIRST_UNUSED + 10;
+	private static final int FEC_HACK_SPAN = ATOM_STATE_FIRST_UNUSED + 11;
+	private static final int FBREADER_VIEW = ATOM_STATE_FIRST_UNUSED + 12;
 
 	private static final String TAG_PRICE = "price";
 	private static final String TAG_HACK_SPAN = "span";
@@ -67,6 +68,7 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
 	private static final String DC_TAG_ISSUED = "issued";
 	private static final String DC_TAG_PUBLISHER = "publisher";
 	private static final String DC_TAG_FORMAT = "format";
+	private static final String DC_TAG_IDENTIFIER = "identifier";
 
 	private static final String CALIBRE_TAG_SERIES = "series";
 	private static final String CALIBRE_TAG_SERIES_INDEX = "series_index";
@@ -106,6 +108,8 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
 						myState = FE_DC_ISSUED;
 					} else if (tag == DC_TAG_PUBLISHER) {
 						myState = FE_DC_PUBLISHER;
+					} else if (tag == DC_TAG_IDENTIFIER) {
+						myState = FE_DC_IDENTIFIER;
 					}
 					return false;
 				} else if (ns == XMLNamespaces.CalibreMetadata) {
@@ -194,6 +198,13 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata,OPDSEntry> {
 				if (ns == XMLNamespaces.DublinCoreTerms && tag == DC_TAG_PUBLISHER) {
 					// FIXME:publisher can be lost:buffer will be truncated, if there are extension tags inside the <dc:publisher> tag
 					getOPDSEntry().DCPublisher = bufferContent;
+					myState = F_ENTRY;
+				}
+				return false;
+			case FE_DC_IDENTIFIER:
+				if (ns == XMLNamespaces.DublinCoreTerms && tag == DC_TAG_IDENTIFIER) {
+					// FIXME:identifier can be lost:buffer will be truncated, if there are extension tags inside the <dc:publisher> tag
+					getOPDSEntry().DCIdentifiers.add(bufferContent);
 					myState = F_ENTRY;
 				}
 				return false;

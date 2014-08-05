@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 class ZLBooleanPreference extends ZLCheckBoxPreference {
 	private final ZLBooleanOption myOption;
 
-	ZLBooleanPreference(Context context, ZLBooleanOption option, ZLResource rootResource, String resourceKey) {
-		super(context, rootResource, resourceKey);
+	ZLBooleanPreference(Context context, ZLBooleanOption option, ZLResource resource) {
+		super(context, resource);
 		myOption = option;
 		setChecked(option.getValue());
 	}
@@ -37,5 +37,10 @@ class ZLBooleanPreference extends ZLCheckBoxPreference {
 	protected void onClick() {
 		super.onClick();
 		myOption.setValue(isChecked());
+	}
+
+	protected void forceValue(boolean value) {
+		setChecked(value);
+		myOption.setValue(value);
 	}
 }

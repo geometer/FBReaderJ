@@ -126,7 +126,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	@Override
 	public void readUids(Book book) throws BookReadingException {
 		if (book.uids().isEmpty()) {
-			book.addUid(BookUtil.createSHA256Uid(book.File));
+			book.addUid(BookUtil.createUid(book.File, "SHA-256"));
 		}
 	}
 
@@ -140,26 +140,16 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public ZLImage readCover(final ZLFile file) {
-		return new ZLImageProxy() {
+	public ZLImage readCover(ZLFile file) {
+		return new ZLImageFileProxy(file) {
 			@Override
-			public String getId() {
-				return file.getPath();
-			}
-
-			@Override
-			public int sourceType() {
-				return SourceType.DISK;
-			}
-
-			@Override
-			public ZLSingleImage getRealImage() {
-				return readCoverInternal(file);
+			protected ZLImage retrieveRealImage() {
+				return readCoverInternal(File);
 			}
 		};
 	}
 
-	private ZLSingleImage readCoverInternal(ZLFile file) {
+	private ZLImage readCoverInternal(ZLFile file) {
 		InputStream stream = null;
 		try {
 			stream = file.getInputStream();
@@ -233,7 +223,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			if (start >= 0) {
 				int len = myMobipocketStream.getImageLength(coverIndex);
 				if (len > 0) {
-					return new ZLFileImage(MimeType.IMAGE_AUTO, file, ZLFileImage.ENCODING_NONE, start, len);
+					return new ZLFileImage(file, ZLFileImage.ENCODING_NONE, start, len);
 				}
 			}
 			return null;

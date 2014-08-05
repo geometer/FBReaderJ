@@ -1,15 +1,18 @@
 package com.yotadevices.yotaphone2.fbreader;
 
+import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
+import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,10 +30,17 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
     private float mStartY;
     private float mStartX;
     private boolean mIsGestureStart = false;
+    private AndroidImageSynchronizer mImageSynchronizer;
 
-	YotaBackScreenWidget(Context context) {
+	YotaBackScreenWidget(Activity context) {
 		super(context);
+        mImageSynchronizer = new AndroidImageSynchronizer(context);
 	}
+
+    YotaBackScreenWidget(Service context) {
+        super(context);
+        mImageSynchronizer = new AndroidImageSynchronizer(context);
+    }
 
 	public YotaBackScreenWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -78,10 +88,16 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
 			final ZLImage image = BookUtil.getCover(currentBook);
 
 			if (image != null) {
-				if (image instanceof ZLLoadableImage) {
-					final ZLLoadableImage loadableImage = (ZLLoadableImage) image;
+				if (image instanceof ZLImageProxy) {
+					final ZLImageProxy loadableImage = (ZLImageProxy) image;
 					if (!loadableImage.isSynchronized()) {
-						loadableImage.synchronize();
+						loadableImage.startSynchronization(mImageSynchronizer, new Runnable() {
+                            @Override
+                            public void run() {
+                                myLastPaintWasActive = true;
+                                invalidate();
+                            }
+                        });
 					}
 				}
 				final ZLAndroidImageData data = ((ZLAndroidImageManager) ZLAndroidImageManager

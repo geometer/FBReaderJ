@@ -26,6 +26,21 @@
 		<node name="found" value="ค้นพบ">
 			<node name="summary" value="ผลการค้นหาสำหรับ: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="คลังไฟล์">
 			<node name="summary" value="เปิดหาจากระบบไฟล์"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="คลังหนังสือของ FBReader">
 			<node name="summary" value="ไดเรคทอรีหนังสือของ FBReader"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="ค้นหา"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-		</node>
+		<node name="localSearch" value="ค้นหา"/>
+		<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		<node name="openBook" value="อ่านหนังสือ"/>
 		<node name="showBookInfo" value="ข้อมูลหนังสือ"/>
 		<node name="shareBook" value="Share book" toBeTranslated="true"/>
@@ -51,6 +64,9 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="ชื่อผู้แต่ง ">
@@ -294,6 +310,23 @@
 		<node name="series" value="ชุดหนังสือ"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="ไดเรคทอรี">
 			<node name="summary" value="ไดเรคทอรีในการค้นหาไฟล์"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -800,10 +833,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="ไฟล์นี้จะถูกลบอย่างถาวร คุณแน่ใจหรือไม่?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="มีไฟล์นี้อยู่แล้วในระบบ ต้องการที่จะดาวน์โหลดใหม่หรือไม่?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="กำลังดาวน์โหลดหนังสือ %s"/>
 			<node name="search" value="กำลังค้นหา, กรุณารอสักครู่…"/>
 			<node name="loadInfo" value="Loading information. Please, wait…" toBeTranslated="true"/>
@@ -877,6 +915,22 @@
 			</node>
 			<node name="duplicate" value="“%s” is already in the list" toBeTranslated="true"/>
 		</node>
+		<node name="editList">
+			<node name="edit" value="Edit" toBeTranslated="true"/>
+			<node name="remove" value="Remove" toBeTranslated="true"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="Add tag" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
+				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
+			<node name="removeDialog" value="Remove author" toBeTranslated="true">
+				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root" toBeTranslated="true"/>
 			<node name="newFolder" value="New folder" toBeTranslated="true"/>
@@ -891,6 +945,9 @@
 				<node name="date" value="Date" toBeTranslated="true"/>
 			</node>
 			<node name="permissionDenied" value="Permission denied" toBeTranslated="true"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

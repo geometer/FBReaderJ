@@ -113,7 +113,7 @@ public abstract class UIUtil {
 		return new ZLApplication.SynchronousExecutor() {
 			private final ZLResource myResource =
 				ZLResource.resource("dialog").getResource("waitMessage");
-			private final String myMessage = myResource.getResource(key).getValue();	
+			private final String myMessage = myResource.getResource(key).getValue();
 			private volatile ProgressDialog myProgress;
 
 			public void execute(final Runnable action, final Runnable uiPostAction) {

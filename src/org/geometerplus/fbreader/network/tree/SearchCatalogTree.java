@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -83,7 +84,7 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 		return ((SearchItem)Item).getUrl(pattern);
 	}
 
-	public void startItemsLoader(String pattern) {
-		new Searcher(this, pattern).start();
+	public void startItemsLoader(ZLNetworkContext nc, String pattern) {
+		new Searcher(nc, this, pattern).start();
 	}
 }
