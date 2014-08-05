@@ -70,6 +70,9 @@
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Reteaua de biblioteci Online">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="Dupa autor">
 			<node name="summary" value="Carti sortate dupa autor"/>
 		</node>
