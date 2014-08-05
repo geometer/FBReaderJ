@@ -100,6 +100,7 @@ public final class MimeType {
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_ATOM_XML = get("application/atom+xml");
 	public static final MimeType APP_ATOM_XML_ENTRY = get("application/atom+xml;type=entry");
+	public static final MimeType OPDS = get("application/atom+xml;profile=opds");
 	// http://tools.ietf.org/id/draft-nottingham-rss-media-type-00.txt
 	public static final MimeType APP_RSS_XML = get("application/rss+xml");
 	// ???
