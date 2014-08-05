@@ -43,7 +43,8 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.*;
-import org.geometerplus.fbreader.tips.TipsManager;
+import org.geometerplus.fbreader.network.sync.SyncUtil;
+//import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
@@ -144,7 +145,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		) {
 			{
 				if (isChecked()) {
-					setOnSummary(myNetworkContext.getAccountName(SyncOptions.DOMAIN, SyncOptions.REALM));
+					setOnSummary(SyncUtil.getAccountName(myNetworkContext));
 				}
 			}
 
@@ -153,8 +154,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				super.onClick();
 				syncPreferences.run();
 
-				myNetworkContext.removeCookiesForDomain(SyncOptions.DOMAIN);
-				myNetworkContext.setAccountName(SyncOptions.DOMAIN, SyncOptions.REALM, null);
+				SyncUtil.logout(myNetworkContext);
 
 				if (!isChecked()) {
 					setOnSummary(null);
@@ -165,7 +165,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					public void run() {
 						try {
 							myNetworkContext.perform(
-								new JsonRequest(SyncOptions.URL + "login/test") {
+								new JsonRequest(SyncOptions.BASE_URL + "login/test") {
 									@Override
 									public void processResponse(Object response) {
 										setOnSummary((String)((Map)response).get("user"));
@@ -667,8 +667,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 
-		final Screen tipsScreen = createPreferenceScreen("tips");
-		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
+		//final Screen tipsScreen = createPreferenceScreen("tips");
+		//tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
 
 		final Screen aboutScreen = createPreferenceScreen("about");
 		aboutScreen.addPreference(new InfoPreference(
