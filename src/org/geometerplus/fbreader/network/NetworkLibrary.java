@@ -27,12 +27,14 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
+import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.opds.OPDSSyncNetworkLink;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
+import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class NetworkLibrary {
@@ -158,6 +160,11 @@ public class NetworkLibrary {
 		}
 
 		final List<INetworkLink> result = new LinkedList<INetworkLink>();
+		INetworkLink syncLink = linksById.get(SyncOptions.DOMAIN);
+		if (syncLink == null) {
+			syncLink = new OPDSSyncNetworkLink();
+		}
+		result.add(syncLink);
 		for (String id : activeIds()) {
 			final INetworkLink link = linksById.get(id);
 			if (link != null) {
