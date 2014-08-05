@@ -298,6 +298,18 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 
 		cursor = myDatabase.rawQuery(
+			"SELECT book_id,numerator,denominator FROM BookReadingProgress",
+			null
+		);
+		while (cursor.moveToNext()) {
+			final Book book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				book.setProgress(RationalNumber.create(cursor.getLong(1), cursor.getLong(2)));
+			}
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
 			"SELECT book_id FROM Bookmarks WHERE visible = 1 GROUP by book_id",
 			null
 		);
