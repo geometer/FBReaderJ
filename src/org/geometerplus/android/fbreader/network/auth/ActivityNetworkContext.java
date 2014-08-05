@@ -64,6 +64,8 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 				case NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER:
 					if (resultCode == Activity.RESULT_OK && data != null) {
 						myAccountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+					} else {
+						myAccountName = null;
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_AUTHORISATION:
