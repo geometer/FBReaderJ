@@ -60,21 +60,17 @@ public class OPDSSyncNetworkLink extends OPDSNetworkLink implements ISyncNetwork
 		return NetworkLibrary.resource().getResource("sync");
 	}
 
-	private static String accountName(ZLNetworkContext context) {
-		return SyncUtil.getAccountName(context);
-	}
-
-	private static String summary() {
-		final String account = accountName(new QuietNetworkContext());
-		return account != null ? account : resource().getResource("summary").getValue();
-	}
-
 	public OPDSSyncNetworkLink() {
-		this(-1, resource().getValue(), summary(), null, initialUrlInfos());
+		this(-1, resource().getValue(), initialUrlInfos());
 	}
 
-	private OPDSSyncNetworkLink(int id, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, SyncOptions.DOMAIN, title, summary, language, infos);
+	private OPDSSyncNetworkLink(int id, String title, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(id, SyncOptions.DOMAIN, title, null, null, infos);
+	}
+
+	public String getSummary() {
+		final String account = SyncUtil.getAccountName(new QuietNetworkContext());
+		return account != null ? account : resource().getResource("summary").getValue();
 	}
 
 	public Type getType() {
@@ -82,7 +78,7 @@ public class OPDSSyncNetworkLink extends OPDSNetworkLink implements ISyncNetwork
 	}
 
 	public boolean isLoggedIn(ZLNetworkContext context) {
-		return accountName(context) != null;
+		return SyncUtil.getAccountName(context) != null;
 	}
 
 	public void logout(ZLNetworkContext context) {

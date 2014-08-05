@@ -70,7 +70,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return myTitle;
 	}
 
-	public final String getSummary() {
+	public String getSummary() {
 		return mySummary;
 	}
 
