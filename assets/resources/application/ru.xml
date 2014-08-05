@@ -69,6 +69,9 @@
 		<node name="tryAgain" value="Попробовать снова"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
+		<node name="sync" value="Книжная сеть FBReader®">
+			<node name="summary" value="Моя книжная полка"/>
+		</node>
 		<node name="byAuthor" value="По авторам">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>

@@ -21,16 +21,20 @@ package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
+
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.util.UIUtil;
 
 public class SignOutAction extends Action {
-	public SignOutAction(Activity activity) {
+	private final ZLNetworkContext myNetworkContext;
+
+	public SignOutAction(Activity activity, ZLNetworkContext context) {
 		super(activity, ActionCode.SIGNOUT, "signOut", -1);
+		myNetworkContext = context;
 	}
 
 	@Override
@@ -39,13 +43,24 @@ public class SignOutAction extends Action {
 			return false;
 		}
 
-		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
+		final INetworkLink link = tree.getLink();
+		if (link instanceof ISyncNetworkLink) {
+			return ((ISyncNetworkLink)link).isLoggedIn(myNetworkContext);
+		}
+
+		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		return mgr != null && mgr.mayBeAuthorised(false);
 	}
 
 	@Override
 	public void run(NetworkTree tree) {
-		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
+		final INetworkLink link = tree.getLink();
+		if (link instanceof ISyncNetworkLink) {
+			((ISyncNetworkLink)link).logout(myNetworkContext);
+			return;
+		}
+
+		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
 				if (mgr.mayBeAuthorised(false)) {

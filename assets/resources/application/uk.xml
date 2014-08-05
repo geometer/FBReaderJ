@@ -69,6 +69,9 @@
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Мережева бібліотека FBReader">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="За автором">
 			<node name="summary" value="Книги відсортовані за автором"/>
 		</node>
