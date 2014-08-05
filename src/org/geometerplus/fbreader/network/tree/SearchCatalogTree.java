@@ -19,11 +19,12 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkContext;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.SearchItem;
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class SearchCatalogTree extends NetworkCatalogTree {
 	public SearchCatalogTree(RootTree parent, SearchItem item) {
@@ -86,5 +87,15 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 
 	public void startItemsLoader(ZLNetworkContext nc, String pattern) {
 		new Searcher(nc, this, pattern).start();
+	}
+
+	@Override
+	public ZLImage createCover() {
+		final INetworkLink link = getLink();
+		if (link == null) {
+			return null;
+		}
+		final UrlInfo info = link.getUrlInfo(UrlInfo.Type.SearchIcon);
+		return info != null ? createCover(info.Url, info.Mime) : null;
 	}
 }
