@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network.auth;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
 import android.accounts.AccountManager;
@@ -105,22 +104,6 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		}
 	}
 
-	private String url(URI base, Map<String,String> params, String key) {
-		return url(base, params.get(key));
-	}
-
-	private String url(URI base, String path) {
-		if (path == null) {
-			return null;
-		}
-		try {
-			final URI relative = new URI(path);
-			return relative.isAbsolute() ? null : base.resolve(relative).toString();
-		} catch (URISyntaxException e) {
-			return null;
-		}
-	}
-
 	@Override
 	protected Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params) {
 		System.err.println("+++ WEB AUTH +++");
@@ -167,30 +150,10 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		}
 	}
 
-	private Map<String,String> runTokenAuthorization(String authUrl, String authToken, String code) {
-		final Map<String,String> result = new HashMap<String,String>();
-		final JsonRequest request = new JsonRequest(authUrl) {
-			public void processResponse(Object response) {
-				result.putAll((Map)response);
-			}
-		};
-		request.addPostParameter("auth", authToken);
-		request.addPostParameter("code", code);
-		performQuietly(request);
-		System.err.println("AUTHORIZATION RESULT = " + result);
-		return result;
-	}
-
 	@Override
-	protected Map<String,String> authenticateToken(URI uri, String realm, Map<String,String> params) {
+	protected Map<String,String> authenticateToken(URI uri, String realm, String authUrl, String clientId) {
 		System.err.println("+++ TOKEN AUTH +++");
 		try {
-			final String authUrl = url(uri, params, "auth-url-token");
-			final String clientId = params.get("client-id");
-			if (authUrl == null || clientId == null) {
-				return errorMap("No data for token authentication");
-			}
-
 			String account = getAccountName(uri.getHost(), realm);
 			if (account == null) {
 				final Intent intent = AccountManager.newChooseAccountIntent(
