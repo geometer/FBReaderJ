@@ -844,6 +844,9 @@
 			<node name="updateTitle" value="Նոր տարբերակ"/>
 			<node name="dontAskAgain" value="Այլևս չհարցնել"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Տեղադրել բառարան"/>
 			<node name="message" value="Տեղադրե՞լ %s-ը"/>

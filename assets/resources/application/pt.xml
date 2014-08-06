@@ -841,6 +841,9 @@
 			<node name="updateTitle" value="Atualizar Plugin"/>
 			<node name="dontAskAgain" value="Não perguntar novamente"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary" value="Instalar Diconário">
 			<node name="title" value="Instalar dicionário"/>
 			<node name="message" value="Gostaria de instalar %s?"/>
