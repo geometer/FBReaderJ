@@ -56,8 +56,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	public static final int REQUEST_ACCOUNT_PICKER = 2;
 	public static final int REQUEST_AUTHORISATION = 3;
 	public static final int REQUEST_WEB_AUTHORISATION_SCREEN = 4;
-	public static final String COOKIES_KEY = "android.fbreader.data.cookies";
-	public static final String COMPLETE_URL_KEY = "android.fbreader.data.complete.url";
 
 	final BookCollectionShadow BookCollection = new BookCollectionShadow();
 	final BookDownloaderServiceConnection Connection = new BookDownloaderServiceConnection();

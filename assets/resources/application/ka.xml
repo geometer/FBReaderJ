@@ -844,6 +844,9 @@
 			<node name="updateTitle" value="ახალი ვერსია"/>
 			<node name="dontAskAgain" value="მეტჯერ აღარ მკითხო"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="ლექსიკონის დაყენება"/>
 			<node name="message" value="დაყენდეს %s?"/>
