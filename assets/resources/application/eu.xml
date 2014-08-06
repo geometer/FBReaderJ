@@ -845,6 +845,9 @@
 			<node name="updateTitle" value="Eguneratu gehigarria"/>
 			<node name="dontAskAgain" value="Ez berriro itaundu"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalatu hiztegia"/>
 			<node name="message" value="Nahi al duzu %s instalatu?"/>

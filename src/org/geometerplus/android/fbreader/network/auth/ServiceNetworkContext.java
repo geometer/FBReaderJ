@@ -33,6 +33,8 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableNotifiedException;
 import com.google.android.gms.common.Scopes;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 public class ServiceNetworkContext extends AndroidNetworkContext {
 	private final Service myService;
 
@@ -46,8 +48,6 @@ public class ServiceNetworkContext extends AndroidNetworkContext {
 
 	@Override
 	protected Map<String,String> authenticateWeb(URI uri, String realm, String authUrl, String completeUrl, String verificationUrl) {
-		System.err.println("+++ SERVICE WEB AUTH +++");
-
 		final NotificationManager notificationManager =
 			(NotificationManager)myService.getSystemService(Context.NOTIFICATION_SERVICE);
 		final Intent intent = new Intent(myService, WebAuthorisationScreen.class);
@@ -56,16 +56,20 @@ public class ServiceNetworkContext extends AndroidNetworkContext {
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
 		final PendingIntent pendingIntent = PendingIntent.getActivity(myService, 0, intent, 0);
+		final String text =
+			ZLResource.resource("dialog")
+				.getResource("backgroundAuthentication")
+				.getResource("title")
+				.getValue();
 		final Notification notification = new NotificationCompat.Builder(myService)
 			.setSmallIcon(android.R.drawable.ic_dialog_alert)
-			.setTicker("Authentication required")
-			.setContentTitle("FBReader® book network")
-			.setContentText("requires authentication")
+			.setTicker(text)
+			.setContentTitle(realm)
+			.setContentText(text)
 			.setContentIntent(pendingIntent)
 			.setAutoCancel(true)
 			.build();
 		notificationManager.notify(0, notification);
-		System.err.println("--- SERVICE WEB AUTH ---");
 		return errorMap("Notification sent");
 	}
 
