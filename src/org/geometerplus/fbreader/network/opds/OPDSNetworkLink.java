@@ -150,7 +150,12 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 			OPDSCatalogItem.Accessibility.ALWAYS,
 			OPDSCatalogItem.FLAGS_DEFAULT | OPDSCatalogItem.FLAG_ADD_SEARCH_ITEM,
 			myExtraData
-		);
+		) {
+			@Override
+			public String getSummary() {
+				return OPDSNetworkLink.this.getSummary();
+			}
+		};
 	}
 
 	public NetworkAuthenticationManager authenticationManager() {
