@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network.auth;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
 import android.accounts.AccountManager;
@@ -99,22 +98,6 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 				}
 			}
 			return processed;
-		}
-	}
-
-	private String url(URI base, Map<String,String> params, String key) {
-		return url(base, params.get(key));
-	}
-
-	private String url(URI base, String path) {
-		if (path == null) {
-			return null;
-		}
-		try {
-			final URI relative = new URI(path);
-			return relative.isAbsolute() ? null : base.resolve(relative).toString();
-		} catch (URISyntaxException e) {
-			return null;
 		}
 	}
 
