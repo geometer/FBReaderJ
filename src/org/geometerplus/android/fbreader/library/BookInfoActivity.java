@@ -40,14 +40,11 @@ import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.language.Language;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
-
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -343,5 +340,11 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 	}
 
 	public void onBuildEvent(IBookCollection.Status status) {
+	}
+
+	@Override
+	public void onCoverEvent(BookEvent event, Book book, Bitmap cover) {
+		// TODO Auto-generated method stub
+		
 	}
 }

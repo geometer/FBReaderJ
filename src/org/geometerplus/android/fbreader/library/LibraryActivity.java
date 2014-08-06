@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -31,13 +32,10 @@ import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
-
 import org.geometerplus.android.util.*;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -461,5 +459,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	public void onBuildEvent(IBookCollection.Status status) {
 		setProgressBarIndeterminateVisibility(!status.IsCompleted);
+	}
+
+	@Override
+	public void onCoverEvent(BookEvent event, Book book, Bitmap cover) {
+		// TODO Auto-generated method stub
+		
 	}
 }

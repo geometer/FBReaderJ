@@ -42,6 +42,7 @@ import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
+	static final String COVER_EVENT_ACTION = "fbreader.library_service.cover_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
@@ -131,6 +132,15 @@ public class LibraryService extends Service {
 					final Intent intent = new Intent(BOOK_EVENT_ACTION);
 					intent.putExtra("type", event.toString());
 					intent.putExtra("book", SerializerUtil.serialize(book));
+					sendBroadcast(intent);
+				}
+				
+				@Override
+				public void onCoverEvent(BookEvent event, Book book, Bitmap cover) {
+					final Intent intent = new Intent(COVER_EVENT_ACTION);
+					intent.putExtra("type", event.toString());
+					intent.putExtra("book", SerializerUtil.serialize(book));
+					intent.putExtra("cover", cover);
 					sendBroadcast(intent);
 				}
 
@@ -276,7 +286,7 @@ public class LibraryService extends Service {
 		@Override
 		public Bitmap getCover(String book, int maxWidth, int maxHeight, boolean[] delayed) {
 			final ZLImage image =
-				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight, delayed);
+				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
 				return null;
 			}
@@ -292,6 +302,29 @@ public class LibraryService extends Service {
 			delayed[0] = true;
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
+		}
+
+		@Override
+		public void prepareCover(final String book, int maxWidth, int maxHeight) {
+			final ZLImage image =
+				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
+			if (image == null) {
+				return;
+			}
+			if (image instanceof ZLImageProxy) {
+				myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
+
+					@Override
+					public void run() {
+						final ZLAndroidImageManager manager =
+								(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+						final ZLAndroidImageData data = manager.getImageData(image);
+						final Bitmap cover = data.getBitmap(410, 640);
+						myCollection.fireCoverEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book), cover);
+					}
+					
+				});
+			}
 		}
 
 		public List<String> bookmarks(String query) {

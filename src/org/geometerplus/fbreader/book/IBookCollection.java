@@ -25,6 +25,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
+import android.graphics.Bitmap;
+
 public interface IBookCollection {
 	public enum Status {
 		NotStarted(false),
@@ -42,6 +44,7 @@ public interface IBookCollection {
 	public interface Listener {
 		void onBookEvent(BookEvent event, Book book);
 		void onBuildEvent(Status status);
+		void onCoverEvent(BookEvent event, Book book, Bitmap cover);
 	}
 
 	public void addListener(Listener listener);
@@ -82,7 +85,7 @@ public interface IBookCollection {
 	boolean isHyperlinkVisited(Book book, String linkId);
 	void markHyperlinkAsVisited(Book book, String linkId);
 
-	ZLImage getCover(Book book, int maxWidth, int maxHeight, boolean[] delayed);
+	ZLImage getCover(Book book, int maxWidth, int maxHeight);
 
 	List<Bookmark> bookmarks(BookmarkQuery query);
 	void saveBookmark(Bookmark bookmark);

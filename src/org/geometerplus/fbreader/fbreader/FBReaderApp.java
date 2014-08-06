@@ -28,16 +28,16 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.*;
-
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
-
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+
+import android.graphics.Bitmap;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {
@@ -86,6 +86,12 @@ public final class FBReaderApp extends ZLApplication {
 			}
 
 			public void onBuildEvent(IBookCollection.Status status) {
+			}
+
+			@Override
+			public void onCoverEvent(BookEvent event, Book book, Bitmap cover) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 

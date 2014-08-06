@@ -25,11 +25,11 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.*;
+
+import android.graphics.Bitmap;
 
 public class BookCollection extends AbstractBookCollection {
 	private final BooksDatabase myDatabase;
@@ -646,7 +646,7 @@ public class BookCollection extends AbstractBookCollection {
 	}
 
 	@Override
-	public ZLImage getCover(Book book, int maxWidth, int maxHeight, boolean[] delayed) {
+	public ZLImage getCover(Book book, int maxWidth, int maxHeight) {
 		return BookUtil.getCover(book);
 	}
 
@@ -737,5 +737,9 @@ public class BookCollection extends AbstractBookCollection {
 			myDatabase.setHash(book.getId(), hash);
 		}
 		return hash;
+	}
+
+	public void fireCoverEvent(BookEvent coversynchronized, Book deserializeBook, Bitmap realImage) {
+		super.fireCoverEvent(coversynchronized, deserializeBook, realImage);
 	}
 }
