@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.network.auth;
 
-import java.util.HashMap;
+import java.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -30,10 +30,17 @@ import android.os.Bundle;
 import android.view.Window;
 import android.webkit.*;
 
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie2;
+
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
+
 import org.geometerplus.android.fbreader.OrientationUtil;
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class WebAuthorisationScreen extends Activity {
+	public static final String COMPLETE_URL_KEY = "android.fbreader.data.complete.url";
+
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -47,7 +54,7 @@ public class WebAuthorisationScreen extends Activity {
 			finish();
 			return;
 		}
-		final String completeUrl = intent.getStringExtra(NetworkLibraryActivity.COMPLETE_URL_KEY);
+		final String completeUrl = intent.getStringExtra(COMPLETE_URL_KEY);
 
 		OrientationUtil.setOrientation(this, intent);
 		final WebView view = new WebView(this);
@@ -76,9 +83,8 @@ public class WebAuthorisationScreen extends Activity {
 							cookies.put(parts[0].trim(), parts[1].trim());
 						}
 					}
-					WebAuthorisationScreen.this.setResult(RESULT_OK, intent.putExtra(
-						NetworkLibraryActivity.COOKIES_KEY, cookies
-					));
+					storeCookies(data.getHost(), cookies);
+					WebAuthorisationScreen.this.setResult(RESULT_OK);
 					finish();
 				}
 			}
@@ -94,5 +100,22 @@ public class WebAuthorisationScreen extends Activity {
 		});
 		setContentView(view);
 		view.loadUrl(intent.getDataString());
+	}
+
+	private void storeCookies(String host, Map<String,String> cookies) {
+		final ZLNetworkManager.CookieStore store = new QuietNetworkContext().cookieStore();
+
+		for (Map.Entry<String,String> entry : cookies.entrySet()) {
+			final BasicClientCookie2 c =
+				new BasicClientCookie2(entry.getKey(), entry.getValue());
+			c.setDomain(host);
+			c.setPath("/");
+			final Calendar expire = Calendar.getInstance();
+			expire.add(Calendar.YEAR, 1);
+			c.setExpiryDate(expire.getTime());
+			c.setSecure(true);
+			c.setDiscard(false);
+			store.addCookie(c);
+		}
 	}
 }
