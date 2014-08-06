@@ -22,6 +22,7 @@ import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.actions.ToggleBarsAction;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.fbreader.ActionCode;
@@ -83,7 +84,9 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
         getCollection().bindToService(this, new Runnable() {
             public void run() {
-                myCurrentBook = myFBReaderApp.Collection.getRecentBook(0);
+                if (myCurrentBook == null) {
+                    myCurrentBook = myFBReaderApp.Collection.getRecentBook(0);
+                }
                 myFBReaderApp.openBook(myCurrentBook, null, new Runnable() {
                     public void run() {
                         myFBReaderApp.initWindow();
@@ -116,6 +119,10 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Book intentBook = FBReaderIntents.getBookExtra(intent);
+        if (intentBook != null) {
+            myCurrentBook = intentBook;
+        }
         if (intent.hasExtra(KEY_BACK_SCREEN_IS_ACTIVE)) {
             boolean isActive = intent.getBooleanExtra(KEY_BACK_SCREEN_IS_ACTIVE, false);
             if (isActive) {

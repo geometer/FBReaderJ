@@ -1,6 +1,7 @@
 package com.yotadevices.yotaphone2.fbreader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,11 +31,14 @@ public class BSReadingActionBar {
 
     private final ImageView mFontIcon;
     private final ImageView mBookmarkIcon;
+    private final ImageView mBackButton;
+    private final ImageView mLogo;
+    private final View mTitle;
     private FontSettingsPopup mFontSettingsPopup;
     private final FBReaderApp mReader;
 
-    private TextView mAuthor;
-    private TextView mTitle;
+    private TextView mBookAuthor;
+    private TextView mBookTitle;
     private final FontSettingsPopup.OnFontChangeListener mFontListener;
 
     public BSReadingActionBar(Context ctx, View root, FBReaderApp readerApp, FontSettingsPopup.OnFontChangeListener listener) {
@@ -49,8 +53,16 @@ public class BSReadingActionBar {
         mBookmarkIcon = (ImageView)layout.findViewById(R.id.bookmark_action);
         mBookmarkIcon.setOnClickListener(mBookmarkClickListener);
 
-        mAuthor = (TextView)layout.findViewById(R.id.book_author);
-        mTitle =  (TextView)layout.findViewById(R.id.book_title);
+        mBookAuthor = (TextView)layout.findViewById(R.id.book_author);
+        mBookTitle =  (TextView)layout.findViewById(R.id.book_title);
+
+        mTitle = layout.findViewById(R.id.title);
+        mBackButton = (ImageView)layout.findViewById(R.id.back_action);
+        mLogo = (ImageView)layout.findViewById(R.id.logo_action);
+
+        mTitle.setOnClickListener(mOpenCollection);
+        mBackButton.setOnClickListener(mOpenCollection);
+        mLogo.setOnClickListener(mOpenCollection);
 
         Book currentBook = mReader.Collection.getRecentBook(0);
         StringBuilder authorString = new StringBuilder();
@@ -62,8 +74,8 @@ public class BSReadingActionBar {
             }
         }
         authorString.append(authors.get(authors.size()-1));
-        mAuthor.setText(authorString.toString());
-        mTitle.setText(currentBook.getTitle());
+        mBookAuthor.setText(authorString.toString());
+        mBookTitle.setText(currentBook.getTitle());
 
         mPopup = new PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));
@@ -143,6 +155,16 @@ public class BSReadingActionBar {
             else {
                 addBookmark();
             }
+        }
+    };
+
+    private View.OnClickListener mOpenCollection = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent();
+            i.setClassName("com.yotadevices.yotaphone2.yotareader.collection",
+                    "com.yotadevices.yotaphone2.yotareader.collection.CollectionBSActivity");
+            mContext.startService(i);
         }
     };
 }
