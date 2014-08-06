@@ -34,7 +34,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 	protected ZLNetworkContext() {
 	}
 
-	protected ZLNetworkManager.CookieStore cookieStore() {
+	public ZLNetworkManager.CookieStore cookieStore() {
 		return myManager.CookieStore;
 	}
 
