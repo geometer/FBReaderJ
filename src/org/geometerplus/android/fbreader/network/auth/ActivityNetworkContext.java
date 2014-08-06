@@ -148,7 +148,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		synchronized (this) {
 			OrientationUtil.startActivityForResult(myActivity, intent, requestCode);
 			try {
-				wait();
+				wait(30000);
 			} catch (InterruptedException e) {
 			}
 		}
