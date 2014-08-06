@@ -42,8 +42,9 @@ import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
-	static final String COVER_EVENT_ACTION = "fbreader.library_service.cover_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
+	
+	final Map<String, Bitmap> covers = new HashMap<String, Bitmap>();
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
@@ -132,15 +133,6 @@ public class LibraryService extends Service {
 					final Intent intent = new Intent(BOOK_EVENT_ACTION);
 					intent.putExtra("type", event.toString());
 					intent.putExtra("book", SerializerUtil.serialize(book));
-					sendBroadcast(intent);
-				}
-				
-				@Override
-				public void onCoverEvent(BookEvent event, Book book, Bitmap cover) {
-					final Intent intent = new Intent(COVER_EVENT_ACTION);
-					intent.putExtra("type", event.toString());
-					intent.putExtra("book", SerializerUtil.serialize(book));
-					intent.putExtra("cover", cover);
 					sendBroadcast(intent);
 				}
 
@@ -285,6 +277,9 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(String book, int maxWidth, int maxHeight, boolean[] delayed) {
+			if (covers.containsKey(book)) {
+				return covers.get(book);
+			}
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
@@ -305,7 +300,7 @@ public class LibraryService extends Service {
 		}
 
 		@Override
-		public void prepareCover(final String book, int maxWidth, int maxHeight) {
+		public void prepareCover(final String book, final int maxWidth, final int maxHeight) {
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
@@ -319,8 +314,9 @@ public class LibraryService extends Service {
 						final ZLAndroidImageManager manager =
 								(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 						final ZLAndroidImageData data = manager.getImageData(image);
-						final Bitmap cover = data.getBitmap(410, 640);
-						myCollection.fireCoverEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book), cover);
+						final Bitmap cover = data.getBitmap(maxWidth, maxHeight);
+						covers.put(book, cover);
+						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
 					
 				});

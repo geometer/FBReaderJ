@@ -24,13 +24,11 @@ import java.util.*;
 
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
 
 import org.json.simple.JSONValue;
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
@@ -377,11 +375,5 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 
 	@Override
 	public void onBuildEvent(IBookCollection.Status status) {
-	}
-
-	@Override
-	public void onCoverEvent(BookEvent event, Book book, Bitmap cover) {
-		// TODO Auto-generated method stub
-		
 	}
 }

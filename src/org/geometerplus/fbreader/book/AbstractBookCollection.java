@@ -21,8 +21,6 @@ package org.geometerplus.fbreader.book;
 
 import java.util.*;
 
-import android.graphics.Bitmap;
-
 public abstract class AbstractBookCollection implements IBookCollection {
 	private final List<Listener> myListeners = Collections.synchronizedList(new LinkedList<Listener>());
 
@@ -40,18 +38,10 @@ public abstract class AbstractBookCollection implements IBookCollection {
 		return !myListeners.isEmpty();
 	}
 
-	protected void fireBookEvent(BookEvent event, Book book) {
+	public void fireBookEvent(BookEvent event, Book book) {
 		synchronized (myListeners) {
 			for (Listener l : myListeners) {
 				l.onBookEvent(event, book);
-			}
-		}
-	}
-	
-	protected void fireCoverEvent(BookEvent event, Book book, Bitmap cover) {
-		synchronized (myListeners) {
-			for (Listener l : myListeners) {
-				l.onCoverEvent(event, book, cover);
 			}
 		}
 	}

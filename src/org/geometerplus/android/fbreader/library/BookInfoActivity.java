@@ -341,10 +341,4 @@ public class BookInfoActivity extends Activity implements IBookCollection.Listen
 
 	public void onBuildEvent(IBookCollection.Status status) {
 	}
-
-	@Override
-	public void onCoverEvent(BookEvent event, Book book, Bitmap cover) {
-		// TODO Auto-generated method stub
-		
-	}
 }

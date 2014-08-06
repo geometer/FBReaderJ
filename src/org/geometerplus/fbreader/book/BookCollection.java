@@ -738,8 +738,4 @@ public class BookCollection extends AbstractBookCollection {
 		}
 		return hash;
 	}
-
-	public void fireCoverEvent(BookEvent coversynchronized, Book deserializeBook, Bitmap realImage) {
-		super.fireCoverEvent(coversynchronized, deserializeBook, realImage);
-	}
 }

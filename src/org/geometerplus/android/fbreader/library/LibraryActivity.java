@@ -24,7 +24,6 @@ import java.util.*;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.*;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -461,11 +460,5 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	public void onBuildEvent(IBookCollection.Status status) {
 		setProgressBarIndeterminateVisibility(!status.IsCompleted);
-	}
-
-	@Override
-	public void onCoverEvent(BookEvent event, Book book, Bitmap cover) {
-		// TODO Auto-generated method stub
-		
 	}
 }
