@@ -33,11 +33,26 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 		if (!"https".equalsIgnoreCase(uri.getScheme())) {
 			return Collections.singletonMap("error", "Connection is not secure");
 		}
-		return authenticateWeb(uri, realm, params);
+		String authUrl = null;
+		final String account = getAccountName(uri.getHost(), realm);
+		if (account != null) {
+			final String urlWithAccount = params.get("auth-url-web-with-email");
+			if (urlWithAccount != null) {
+				authUrl = url(uri, urlWithAccount.replace("{email}", account));
+			}
+		} else {
+			authUrl = url(uri, params, "auth-url-web");
+		}
+		final String completeUrl = url(uri, params, "complete-url-web");
+		final String verificationUrl = url(uri, params, "verification-url");
+		if (authUrl == null || completeUrl == null || verificationUrl == null) {
+			return errorMap("No data for web authentication");
+		}
+		return authenticateWeb(uri, realm, authUrl, completeUrl, verificationUrl);
 	}
 
 	protected abstract Context getContext();
-	protected abstract Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params);
+	protected abstract Map<String,String> authenticateWeb(URI uri, String realm, String authUrl, String completeUrl, String verificationUrl);
 
 	protected Map<String,String> errorMap(String message) {
 		return Collections.singletonMap("error", message);

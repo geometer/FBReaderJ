@@ -29,9 +29,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.cookie.BasicClientCookie2;
-
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
@@ -70,25 +67,6 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
-					if (resultCode == Activity.RESULT_OK && data != null) {
-						final ZLNetworkManager.CookieStore store = cookieStore();
-						final Map<String,String> cookies =
-							(Map<String,String>)data.getSerializableExtra(NetworkLibraryActivity.COOKIES_KEY);
-						if (cookies != null) {
-							for (Map.Entry<String,String> entry : cookies.entrySet()) {
-								final BasicClientCookie2 c =
-									new BasicClientCookie2(entry.getKey(), entry.getValue());
-								c.setDomain(data.getData().getHost());
-								c.setPath("/");
-								final Calendar expire = Calendar.getInstance();
-								expire.add(Calendar.YEAR, 1);
-								c.setExpiryDate(expire.getTime());
-								c.setSecure(true);
-								c.setDiscard(false);
-								store.addCookie(c);
-							}
-						}
-					}
 					break;
 			}
 		} finally {
@@ -102,25 +80,11 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 	}
 
 	@Override
-	protected Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params) {
+	protected Map<String,String> authenticateWeb(URI uri, String realm, String authUrl, String completeUrl, String verificationUrl) {
 		System.err.println("+++ WEB AUTH +++");
-		final String account = getAccountName(uri.getHost(), realm);
-		String authUrl = url(uri, params, "auth-url-web");
-		if (account != null) {
-			final String urlWithAccount = params.get("auth-url-web-with-email");
-			if (urlWithAccount != null) {
-				authUrl = url(uri, urlWithAccount.replace("{email}", account));
-			}
-		}
-		final String completeUrl = url(uri, params, "complete-url-web");
-		final String verificationUrl = url(uri, params, "verification-url");
-		if (authUrl == null || completeUrl == null || verificationUrl == null) {
-			return errorMap("No data for web authentication");
-		}
-
 		final Intent intent = new Intent(myActivity, WebAuthorisationScreen.class);
 		intent.setData(Uri.parse(authUrl));
-		intent.putExtra(NetworkLibraryActivity.COMPLETE_URL_KEY, completeUrl);
+		intent.putExtra(WebAuthorisationScreen.COMPLETE_URL_KEY, completeUrl);
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
 		return verify(verificationUrl);

@@ -22,8 +22,11 @@ package org.geometerplus.android.fbreader.network.auth;
 import java.net.URI;
 import java.util.Map;
 
-import android.app.Service;
+import android.app.*;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 
 public class ServiceNetworkContext extends AndroidNetworkContext {
 	private final Service myService;
@@ -37,8 +40,27 @@ public class ServiceNetworkContext extends AndroidNetworkContext {
 	}
 
 	@Override
-	protected Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params) {
-		// TODO: implement
-		return errorMap("Not implemented yet");
+	protected Map<String,String> authenticateWeb(URI uri, String realm, String authUrl, String completeUrl, String verificationUrl) {
+		System.err.println("+++ SERVICE WEB AUTH +++");
+
+		final NotificationManager notificationManager =
+			(NotificationManager)myService.getSystemService(Context.NOTIFICATION_SERVICE);
+		final Intent intent = new Intent(myService, WebAuthorisationScreen.class);
+		intent.setData(Uri.parse(authUrl));
+		intent.putExtra(WebAuthorisationScreen.COMPLETE_URL_KEY, completeUrl);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
+		final PendingIntent pendingIntent = PendingIntent.getActivity(myService, 0, intent, 0);
+		final Notification notification = new NotificationCompat.Builder(myService)
+			.setSmallIcon(android.R.drawable.ic_dialog_alert)
+			.setTicker("Authentication required")
+			.setContentTitle("FBReader® book network")
+			.setContentText("requires authentication")
+			.setContentIntent(pendingIntent)
+			.setAutoCancel(true)
+			.build();
+		notificationManager.notify(0, notification);
+		System.err.println("--- SERVICE WEB AUTH ---");
+		return errorMap("Notification sent");
 	}
 }
