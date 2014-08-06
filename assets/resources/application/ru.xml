@@ -845,6 +845,9 @@
 			<node name="updateTitle" value="Новая версия"/>
 			<node name="dontAskAgain" value="Больше не спрашивать"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Требуется авторизация"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Установка словаря"/>
 			<node name="message" value="Установить %s?"/>
@@ -853,8 +856,12 @@
 			<node name="message" value="Файл книги будет удален необратимо. Продолжать?"/>
 		</node>
 		<node name="deleteMultipleBookBox">
-			<node name="title" value="Delete books" toBeTranslated="true"/>
-			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+			<node name="title" value="Удаление книг"/>
+			<node name="message" value="%s файлов будут необратимо удалены. Продолжать?"/>
+				<node condition="modrange 11 19 100" value="%s файлов будут необратимо удалены. Продолжать?"/>
+				<node condition="mod 1 10" value="%s файл будет необратимо удалён. Продолжать?"/>
+				<node condition="modrange 2 4 10" value="%s файла будут необратимо удалены. Продолжать?"/>
+			</node>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Файл уже есть на устройстве. Загрузить заново?"/>

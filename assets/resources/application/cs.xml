@@ -849,6 +849,9 @@
 			<node name="updateTitle" value="Aktualizovat doplněk"/>
 			<node name="dontAskAgain" value="Neptat se znovu"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalovat slovník"/>
 			<node name="message" value="Chcete nainstalovat %s?"/>

@@ -830,6 +830,9 @@
 			<node name="updateTitle" value="更新插件"/>
 			<node name="dontAskAgain" value="不要再問"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="安裝字典"/>
 			<node name="message" value="是否安裝 %s?"/>

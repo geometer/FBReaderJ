@@ -845,6 +845,9 @@
 			<node name="updateTitle" value="Plug-In aktualisieren"/>
 			<node name="dontAskAgain" value="Nicht erneut nachfragen"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Installationsverzeichnis"/>
 			<node name="message" value="Möchten Sie %s installieren?"/>

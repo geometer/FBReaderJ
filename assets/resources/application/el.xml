@@ -838,6 +838,9 @@
 			<node name="updateTitle" value="ενημέρωση Plug-In"/>
 			<node name="dontAskAgain" value="Μην ρωτήσεις ξανά"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Φάκελος εγκατάστασης"/>
 			<node name="message" value="Θέλεται να εγκαταστήσεται το %s ?"/>

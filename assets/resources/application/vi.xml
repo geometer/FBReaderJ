@@ -830,6 +830,9 @@
 			<node name="updateTitle" value="Cập nhật phần bổ trợ"/>
 			<node name="dontAskAgain" value="Đừng hỏi lại"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Cài từ điển"/>
 			<node name="message" value="Bạn có muốn cài %s?"/>

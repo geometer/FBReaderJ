@@ -831,6 +831,9 @@
 			<node name="updateTitle" value="Actualizare plugin"/>
 			<node name="dontAskAgain" value="Nu întrebati din nou"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalati dictionar"/>
 			<node name="message" value="Doriti sa instalati %s?"/>

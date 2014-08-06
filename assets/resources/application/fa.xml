@@ -840,6 +840,9 @@
 			<node name="updateTitle" value="برورساني پلاگين"/>
 			<node name="dontAskAgain" value="مجدد سوال نپرس"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="نصب ديكشنري"/>
 			<node name="message" value="مايل به نصب %s هستيد؟"/>

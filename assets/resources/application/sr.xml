@@ -840,6 +840,9 @@
 			<node name="updateTitle" value="Ажурирање додатка"/>
 			<node name="dontAskAgain" value="Не питај поново"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Инсталирање речника"/>
 			<node name="message" value="Желите ли да инсталирате „%s“?"/>
