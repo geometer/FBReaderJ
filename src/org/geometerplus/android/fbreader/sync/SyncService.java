@@ -100,6 +100,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	public IBinder onBind(Intent intent) {
 		SQLiteCookieDatabase.init(this);
 		myCollection.bindToService(this, this);
+		myNetworkContext.cookieStore().reset();
 		return null;
 	}
 
@@ -121,6 +122,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		}
 
 		try {
+			myNetworkContext.cookieStore().reset();
 			myNetworkContext.perform(new PostRequest("all.hashes", null) {
 				@Override
 				public void processResponse(Object response) {
