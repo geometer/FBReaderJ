@@ -310,7 +310,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			}
 		}
 
-		menu.findItem(OptionsItemId.Rescan).setEnabled(myRootTree.Collection.status().IsCompleted);
+		final MenuItem rescanItem = menu.findItem(OptionsItemId.Rescan);
+		rescanItem.setEnabled(myRootTree.Collection.status().IsCompleted);
+		rescanItem.setVisible(tree == myRootTree);
 		menu.findItem(OptionsItemId.UploadAgain).setVisible(enableUploadAgain);
 		menu.findItem(OptionsItemId.TryAgain).setVisible(enableTryAgain);
 		menu.findItem(OptionsItemId.DeleteAll).setVisible(enableDeleteAll);
