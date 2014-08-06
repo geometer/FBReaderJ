@@ -35,6 +35,7 @@ import org.apache.http.impl.cookie.BasicClientCookie2;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.QuietNetworkContext;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.android.fbreader.OrientationUtil;
 
@@ -46,6 +47,7 @@ public class WebAuthorisationScreen extends Activity {
 		super.onCreate(icicle);
 
 		requestWindowFeature(Window.FEATURE_PROGRESS);
+		SQLiteCookieDatabase.init(this);
 		CookieSyncManager.createInstance(getApplicationContext());
 		CookieManager.getInstance().removeAllCookie();
 		final Intent intent = getIntent();
