@@ -63,7 +63,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
 	final List<Action> myListClickActions = new ArrayList<Action>();
-	private Intent myDeferredIntent;
 	private boolean mySingleCatalog;
 
 	final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
@@ -71,35 +70,43 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		BookCollection.bindToService(this, null);
+		BookCollection.bindToService(this, new Runnable() {
+			public void run() {
+				NetworkLibrary.Instance().clearExpiredCache(25);
+			}
+		});
 
 		AuthenticationActivity.initCredentialsCreator(this);
-
 		SQLiteCookieDatabase.init(this);
 
 		setListAdapter(new NetworkLibraryAdapter(this));
 		final Intent intent = getIntent();
-		init(intent);
-		myDeferredIntent = null;
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		if (getCurrentTree() instanceof RootTree) {
-			mySingleCatalog = intent.getBooleanExtra("SingleCatalog", false);
-			if (!NetworkLibrary.Instance().isInitialized()) {
-				Util.initLibrary(this, myNetworkContext, new Runnable() {
-					public void run() {
-						NetworkLibrary.Instance().runBackgroundUpdate(false);
-						if (intent != null) {
-							openTreeByIntent(intent);
-						}
+		BookCollection.bindToService(this, new Runnable() {
+			public void run() {
+				init(intent);
+				NetworkLibrary.Instance().addChangeListener(NetworkLibraryActivity.this);
+
+				if (getCurrentTree() instanceof RootTree) {
+					mySingleCatalog = intent.getBooleanExtra("SingleCatalog", false);
+					if (!NetworkLibrary.Instance().isInitialized()) {
+						Util.initLibrary(NetworkLibraryActivity.this, myNetworkContext, new Runnable() {
+							public void run() {
+								NetworkLibrary.Instance().runBackgroundUpdate(false);
+								if (intent != null) {
+									openTreeByIntent(intent);
+								}
+							}
+						});
+					} else {
+						onLibraryChanged(NetworkLibrary.ChangeListener.Code.SomeCode, new Object[0]);
+						openTreeByIntent(intent);
 					}
-				});
-			} else {
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-				openTreeByIntent(intent);
+				}
 			}
-		}
+		});
 
 		getListView().setOnScrollListener(this);
 	}
@@ -116,8 +123,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		super.onStart();
 
 		Connection.bindToService(this, null);
-
-		NetworkLibrary.Instance().addChangeListener(this);
 	}
 
 	@Override
@@ -427,7 +432,11 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	protected void onCurrentTreeChanged() {
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		BookCollection.bindToService(this, new Runnable() {
+			public void run() {
+				onLibraryChanged(NetworkLibrary.ChangeListener.Code.SomeCode, new Object[0]);
+			}
+		});
 	}
 
 	private void showInitLibraryDialog(String error) {
