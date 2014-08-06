@@ -133,8 +133,17 @@ public final class NetworkImage extends ZLImageSelfSynchronizableProxy {
 		return path.append(ext).toString();
 	}
 
-	public String getFilePath() {
-		return makeImageFilePath(Url, myMimeType);
+	private volatile String myStoredFilePath;
+	private String getFilePath() {
+		if (myStoredFilePath == null) {
+			myStoredFilePath = makeImageFilePath(Url, myMimeType);
+		}
+		return myStoredFilePath;
+	}
+
+	@Override
+	protected boolean isOutdated() {
+		return !new File(getFilePath()).exists();
 	}
 
 	@Override
