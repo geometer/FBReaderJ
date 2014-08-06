@@ -58,6 +58,7 @@ public class SignOutAction extends Action {
 		final INetworkLink link = tree.getLink();
 		if (link instanceof ISyncNetworkLink) {
 			((ISyncNetworkLink)link).logout(myNetworkContext);
+			((NetworkCatalogRootTree)tree).clearCatalog();
 			return;
 		}
 
