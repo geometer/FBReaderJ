@@ -59,7 +59,7 @@ public class ServiceNetworkContext extends AndroidNetworkContext {
 		final String text =
 			ZLResource.resource("dialog")
 				.getResource("backgroundAuthentication")
-				.getResource("title")
+				.getResource("message")
 				.getValue();
 		final Notification notification = new NotificationCompat.Builder(myService)
 			.setSmallIcon(android.R.drawable.ic_dialog_alert)
