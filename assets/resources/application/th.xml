@@ -829,6 +829,9 @@
 			<node name="updateTitle" value="แก้ไขปลั๊กอิน"/>
 			<node name="dontAskAgain" value="ไม่ต้องถามอีก"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="ติดตั้งพจนานุกรม"/>
 			<node name="message" value="คุณต้องการที่จะติดตั้ง %s หรือไม่?"/>
