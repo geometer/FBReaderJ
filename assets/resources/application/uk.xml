@@ -829,6 +829,9 @@
 			<node name="updateTitle" value="Оновити plugin"/>
 			<node name="dontAskAgain" value="Не питати знову"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Встановити словник"/>
 			<node name="message" value="Ви хочете встановити %s?"/>
