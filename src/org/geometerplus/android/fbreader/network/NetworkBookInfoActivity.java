@@ -99,6 +99,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	@Override
 	protected void onResume() {
 		super.onResume();
+		myNetworkContext.onResume();
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 

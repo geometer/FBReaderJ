@@ -249,7 +249,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	}
 
 	private final class UploadRequest extends ZLNetworkRequest.FileUpload {
-		boolean Success = false;
+		Status Result = Status.Failure;
 
 		UploadRequest(File file) {
 			super(SyncOptions.BASE_URL + "app/book.upload", file, false);
@@ -261,6 +261,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 			String id = null;
 			List<String> hashes = null;
 			String error = null;
+			String code = null;
 			try {
 				final List<Map> responseList = (List<Map>)response;
 				if (responseList.size() == 1) {
@@ -268,16 +269,20 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					id = (String)resultMap.get("id");
 					hashes = (List<String>)resultMap.get("hashes");
 					error = (String)resultMap.get("error");
+					code = (String)resultMap.get("code");
 				}
 			} catch (Exception e) {
 				// ignore
 			}
 			if (error != null) {
 				System.err.println("UPLOAD FAILURE: " + error);
+				if ("ALREADY_UPLOADED".equals(code)) {
+					Result = Status.AlreadyUploaded;
+				}
 			} else if (id != null && hashes != null) {
 				System.err.println("UPLOADED SUCCESSFULLY: " + id);
 				myActualHashesFromServer.addAll(hashes);
-				Success = true;
+				Result = Status.Uploaded;
 			} else {
 				System.err.println("UNEXPECED RESPONSE: " + response);
 			}
@@ -334,7 +339,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					uploadRequest.addHeader("Referer", verificationRequest.getURL());
 					uploadRequest.addHeader("X-CSRFToken", csrfToken);
 					myNetworkContext.perform(uploadRequest);
-					return uploadRequest.Success ? Status.Uploaded : Status.Failure;
+					return uploadRequest.Result;
 				} catch (ZLNetworkException e) {
 					e.printStackTrace();
 					return Status.ServerError;
