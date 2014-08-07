@@ -89,7 +89,6 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	private static volatile Thread ourSynchronizationThread;
 
 	private final List<Book> myQueue = Collections.synchronizedList(new LinkedList<Book>());
-	private final Set<Book> myProcessed = new HashSet<Book>();
 
 	private final Set<String> myActualHashesFromServer = new HashSet<String>();
 	private final Set<String> myDeletedHashesFromServer = new HashSet<String>();
@@ -104,7 +103,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	}
 
 	private void addBook(Book book) {
-		if (!myProcessed.contains(book) && book.File.getPhysicalFile() != null) {
+		if (book.File.getPhysicalFile() != null) {
 			myQueue.add(book);
 		}
 	}
@@ -196,10 +195,6 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 						}
 						while (!myQueue.isEmpty()) {
 							final Book book = myQueue.remove(0);
-							if (myProcessed.contains(book)) {
-								continue;
-							}
-							myProcessed.add(book);
 							++count;
 							final Status status = uploadBookToServer(book);
 							if (status.Label != null) {
