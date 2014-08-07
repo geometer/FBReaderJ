@@ -276,7 +276,7 @@ public class LibraryService extends Service {
 		}
 
 		@Override
-		public Bitmap getCover(String book, int maxWidth, int maxHeight, boolean[] delayed) {
+		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
 			if (covers.containsKey(book)) {
 				return covers.get(book);
 			}
@@ -284,27 +284,6 @@ public class LibraryService extends Service {
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
 				return null;
-			}
-			if (image instanceof ZLImageProxy) {
-				myImageSynchronizer.synchronize((ZLImageProxy)image, null);
-			}
-			final ZLAndroidImageManager manager =
-				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (((ZLImageProxy)image).isSynchronized()) {
-				delayed[0] = false;
-				return null;
-			}
-			delayed[0] = true;
-			final ZLAndroidImageData data = manager.getImageData(image);
-			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
-		}
-
-		@Override
-		public void prepareCover(final String book, final int maxWidth, final int maxHeight) {
-			final ZLImage image =
-				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
-			if (image == null) {
-				return;
 			}
 			if (image instanceof ZLImageProxy) {
 				myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
@@ -321,6 +300,15 @@ public class LibraryService extends Service {
 					
 				});
 			}
+			final ZLAndroidImageManager manager =
+				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+			if (((ZLImageProxy)image).isSynchronized()) {
+				delayed[0] = false;
+				return null;
+			}
+			delayed[0] = true;
+			final ZLAndroidImageData data = manager.getImageData(image);
+			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
 		}
 
 		public List<String> bookmarks(String query) {
