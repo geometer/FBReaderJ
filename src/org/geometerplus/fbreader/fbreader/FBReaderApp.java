@@ -24,9 +24,6 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
