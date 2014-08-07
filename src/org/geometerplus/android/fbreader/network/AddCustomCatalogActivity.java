@@ -110,6 +110,12 @@ public class AddCustomCatalogActivity extends Activity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		myNetworkContext.onResume();
+	}
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		myNetworkContext.onActivityResult(requestCode, resultCode, data);
 	}
