@@ -30,7 +30,6 @@ import android.os.IBinder;
 
 import org.json.simple.JSONValue;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
