@@ -31,19 +31,23 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
+
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
+
 import org.geometerplus.android.fbreader.api.TextPosition;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
-	
+
 	final Map<String, Bitmap> covers = new HashMap<String, Bitmap>();
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
@@ -297,7 +301,6 @@ public class LibraryService extends Service {
 						covers.put(book, cover);
 						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
-					
 				});
 			}
 			final ZLAndroidImageManager manager =

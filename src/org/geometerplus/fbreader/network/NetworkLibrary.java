@@ -19,8 +19,9 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.*;
+import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -30,6 +31,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.opds.OPDSSyncNetworkLink;
@@ -237,6 +239,34 @@ public class NetworkLibrary {
 	private final SearchItem mySearchItem = new AllCatalogsSearchItem();
 
 	private NetworkLibrary() {
+	}
+
+	public void clearExpiredCache(int hours) {
+		final Queue<File> toVisit = new LinkedList<File>();
+		final Set<File> processedDirs = new HashSet<File>();
+		final File root = new File(Paths.networkCacheDirectory());
+		toVisit.add(root);
+		processedDirs.add(root);
+
+		while (!toVisit.isEmpty()) {
+			final File[] children = toVisit.remove().listFiles();
+			if (children == null) {
+				continue;
+			}
+			for (File child : children) {
+				if (child.isDirectory()) {
+					if (!processedDirs.contains(child)) {
+						toVisit.add(child);
+						processedDirs.add(child);
+					}
+				} else {
+					final long age = System.currentTimeMillis() - child.lastModified();
+					if (age / 1000 / 60 / 60 >= hours) {
+						child.delete();
+					}
+				}
+			}
+		}
 	}
 
 	public boolean isInitialized() {
