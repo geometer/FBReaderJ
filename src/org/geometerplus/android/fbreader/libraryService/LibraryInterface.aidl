@@ -5,6 +5,7 @@
 package org.geometerplus.android.fbreader.libraryService;
 
 import java.util.List;
+
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 interface LibraryInterface {
