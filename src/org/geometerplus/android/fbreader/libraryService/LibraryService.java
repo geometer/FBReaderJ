@@ -281,9 +281,11 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
-			if (covers.containsKey(book)) {
-				return covers.get(book);
+			final Bitmap bitmap = covers.get(book);
+			if (bitmap != null) {
+				return bitmap;
 			}
+
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
