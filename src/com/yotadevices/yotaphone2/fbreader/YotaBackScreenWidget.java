@@ -32,18 +32,14 @@ public class YotaBackScreenWidget extends ZLAndroidWidget {
     private boolean mIsGestureStart = false;
     private AndroidImageSynchronizer mImageSynchronizer;
 
-	YotaBackScreenWidget(Activity context) {
+	YotaBackScreenWidget(Context context) {
 		super(context);
         mImageSynchronizer = new AndroidImageSynchronizer(context);
 	}
 
-    YotaBackScreenWidget(Service context) {
-        super(context);
-        mImageSynchronizer = new AndroidImageSynchronizer(context);
-    }
-
 	public YotaBackScreenWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
+        mImageSynchronizer = new AndroidImageSynchronizer(context);
 	}
 
 	private Boolean myBackScreenIsActive;
