@@ -283,6 +283,7 @@ public class LibraryService extends Service {
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
 			final Bitmap bitmap = covers.get(book);
 			if (bitmap != null) {
+				delayed[0] = true;
 				return bitmap;
 			}
 
