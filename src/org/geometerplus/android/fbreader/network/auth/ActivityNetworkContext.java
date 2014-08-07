@@ -50,6 +50,10 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		return myActivity;
 	}
 
+	public synchronized void onResume() {
+		notifyAll();
+	}
+
 	public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
 		boolean processed = true;
 		try {
@@ -70,6 +74,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
+					cookieStore().reset();
 					break;
 			}
 		} finally {
@@ -148,7 +153,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		synchronized (this) {
 			OrientationUtil.startActivityForResult(myActivity, intent, requestCode);
 			try {
-				wait(30000);
+				wait();
 			} catch (InterruptedException e) {
 			}
 		}

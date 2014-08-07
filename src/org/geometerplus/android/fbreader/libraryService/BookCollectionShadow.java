@@ -86,6 +86,8 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		if (myContext != null && myInterface != null) {
 			try {
 				myContext.unregisterReceiver(myReceiver);
+			} catch (IllegalArgumentException e) {
+				// called before regisration, that's ok
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
