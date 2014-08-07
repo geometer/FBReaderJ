@@ -63,6 +63,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		myNetworkContext.onResume();
+	}
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (myNetworkContext.onActivityResult(requestCode, resultCode, data)) {
 			return;
@@ -139,12 +145,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				return syncOptions.Enabled.getValue();
 			}
 		};
-		syncScreen.addPreference(new ZLBooleanPreference(
-			this, syncOptions.Enabled, syncScreen.Resource.getResource("enable")
+		syncScreen.addPreference(new ZLCheckBoxPreference(
+			this, syncScreen.Resource.getResource("enable")
 		) {
 			{
-				if (isChecked()) {
+				if (syncOptions.Enabled.getValue()) {
+					setChecked(true);
 					setOnSummary(SyncUtil.getAccountName(myNetworkContext));
+				} else {
+					setChecked(false);
 				}
 			}
 
@@ -156,7 +165,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				SyncUtil.logout(myNetworkContext);
 
 				if (!isChecked()) {
+					syncOptions.Enabled.setValue(false);
 					setOnSummary(null);
+					syncPreferences.run();
 					return;
 				}
 
@@ -167,7 +178,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 								new JsonRequest(SyncOptions.BASE_URL + "login/test") {
 									@Override
 									public void processResponse(Object response) {
-										setOnSummary((String)((Map)response).get("user"));
+										final String account = (String)((Map)response).get("user");
+										syncOptions.Enabled.setValue(account != null);
+										runOnUiThread(new Runnable() {
+											public void run() {
+												setOnSummary(account);
+												syncPreferences.run();
+											}
+										});
 									}
 								}
 							);
@@ -175,8 +193,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 							e.printStackTrace();
 							runOnUiThread(new Runnable() {
 								public void run() {
-									forceValue(false);
-									syncPreferences.run();
+									setChecked(false);
 								}
 							});
 						}
