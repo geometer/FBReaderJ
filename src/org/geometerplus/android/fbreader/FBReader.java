@@ -105,6 +105,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	};
 
+	boolean IsPaused = false;
+	Runnable OnResumeAction = null;
+
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
 		new LinkedList<PluginApi.ActionInfo>();
@@ -492,6 +495,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		});
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+		IsPaused = false;
+		if (OnResumeAction != null) {
+			OnResumeAction.run();
+			OnResumeAction = null;
+		}
 
 		PopupPanel.restoreVisibilities(myFBReaderApp);
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
@@ -499,6 +507,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	protected void onPause() {
+		IsPaused = true;
 		try {
 			unregisterReceiver(myBatteryInfoReceiver);
 		} catch (IllegalArgumentException e) {
@@ -704,6 +713,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		setupMenu(menu);
 
 		return true;
+	}
+
+	protected void onPluginNotFound(final Book book) {
+		getCollection().bindToService(this, new Runnable() {
+			public void run() {
+				final Book recent = getCollection().getRecentBook(0);
+				if (recent != null && !recent.equals(book)) {
+					myFBReaderApp.openBook(recent, null, null);
+				} else {
+					myFBReaderApp.openHelpBook();
+				}
+			}
+		});
 	}
 
 	private void setStatusBarVisibility(boolean visible) {
