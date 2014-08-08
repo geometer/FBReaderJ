@@ -407,8 +407,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			public void run() {
 				new Thread() {
 					public void run() {
-						openBook(getIntent(), getPostponedInitAction(), false);
-						myFBReaderApp.getViewWidget().repaint();
+						getPostponedInitAction().run();
 					}
 				}.start();
 
@@ -538,6 +537,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			action.run();
 		}
 
+		SetScreenOrientationAction.setOrientation(this, ZLibrary.Instance().getOrientationOption().getValue());
 		if (myCancelIntent != null) {
 			final Intent intent = myCancelIntent;
 			myCancelIntent = null;
