@@ -29,6 +29,8 @@ import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
+import org.geometerplus.android.util.PackageUtil;
+
 class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 	private final FBReader myReader;
 
