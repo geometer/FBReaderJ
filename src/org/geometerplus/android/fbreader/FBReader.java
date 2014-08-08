@@ -560,6 +560,24 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			action.run();
 		}
 
+		if (myCancelIntent != null) {
+			final Intent intent = myCancelIntent;
+			myCancelIntent = null;
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					runCancelAction(intent);
+				}
+			});
+			return;
+		} else if (myOpenBookIntent == null
+					&& myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					myFBReaderApp.openBook(myFBReaderApp.ExternalBook, null, null);
+				}
+			});
+		}
+
 		if (myOpenBookIntent != null) {
 			final Intent intent = myOpenBookIntent;
 			myOpenBookIntent = null;
