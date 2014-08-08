@@ -41,12 +41,18 @@ import org.geometerplus.android.util.PackageUtil;
 class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 	private final String myPluginCode = new BigInteger(80, new Random()).toString();
 	private final FBReader myReader;
+	private volatile AlertDialog myDialog;
 
 	ExternalFileOpener(FBReader reader) {
 		myReader = reader;
 	}
 
 	public void openFile(final ExternalFormatPlugin plugin, final Book book, Bookmark bookmark) {
+		if (myDialog != null) {
+			myDialog.dismiss();
+			myDialog = null;
+		}
+
 		final Intent intent = PluginUtil.createIntent(plugin, PluginUtil.ACTION_VIEW);
 		FBReaderIntents.putBookExtra(intent, book);
 		FBReaderIntents.putBookmarkExtra(intent, bookmark);
@@ -80,24 +86,28 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					PackageUtil.installFromMarket(myReader, plugin.packageName());
+					myDialog = null;
 				}
 			})
 			.setNegativeButton(buttonResource.getResource("no").getValue(), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					myReader.onPluginNotFound(book);
+					myDialog = null;
 				}
 			})
 			.setOnCancelListener(new DialogInterface.OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface dialog) {
 					myReader.onPluginNotFound(book);
+					myDialog = null;
 				}
 			});
 
 		final Runnable showDialog = new Runnable() {
 			public void run() {
-				builder.create().show();
+				myDialog = builder.create();
+				myDialog.show();
 			}
 		};
 		if (!myReader.IsPaused) {
