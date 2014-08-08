@@ -24,7 +24,6 @@ import java.util.Date;
 
 import android.app.AlertDialog;
 import android.content.*;
-import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
