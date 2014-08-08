@@ -382,6 +382,22 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 			};
 			UIUtil.wait("search", runnable, this);
+		} else if (FBReaderIntents.Action.CLOSE.equals(intent.getAction())) {
+			myCancelIntent = intent;
+			myOpenBookIntent = null;
+		} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(intent.getAction())) {
+			final Book book = FBReaderIntents.getBookExtra(intent);
+			myFBReaderApp.ExternalBook = null;
+			myOpenBookIntent = null;
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					Book b = myFBReaderApp.Collection.getRecentBook(0);
+					if (b.equals(book)) {
+						b = myFBReaderApp.Collection.getRecentBook(1);
+					}
+					myFBReaderApp.openBook(b, null, null);
+				}
+			});
 		} else {
 			super.onNewIntent(intent);
 		}
