@@ -19,10 +19,17 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+
+import org.geometerplus.android.util.PackageUtil;
 
 class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 	private final FBReader myReader;
@@ -32,5 +39,45 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 	}
 
 	public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark) {
+	}
+
+	private void showErrorDialog(final ExternalFormatPlugin plugin, final Book book) {
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+		final String title =
+			dialogResource.getResource("missingPlugin").getResource("title").getValue()
+				.replace("%s", plugin.supportedFileType());
+		final AlertDialog.Builder builder = new AlertDialog.Builder(myReader)
+			.setTitle(title)
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					PackageUtil.installFromMarket(myReader, plugin.packageName());
+				}
+			})
+			.setNegativeButton(buttonResource.getResource("no").getValue(), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					myReader.onPluginNotFound(book);
+				}
+			})
+			.setOnCancelListener(new DialogInterface.OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					myReader.onPluginNotFound(book);
+				}
+			});
+
+		final Runnable showDialog = new Runnable() {
+			public void run() {
+				builder.create().show();
+			}
+		};
+		if (!myReader.IsPaused) {
+			myReader.runOnUiThread(showDialog);
+		} else {
+			myReader.OnResumeAction = showDialog;
+		}
 	}
 }
