@@ -26,21 +26,14 @@ updateVersion() {
 			;;
 	esac
 		
-	if [ "$branch" == "beta-ics" -o "$branch" == "beta" -o "$branch" == "betayota" -o "$branch" == "yotabeta" ]; then
-		version=`cat VERSION-BETA`
-		major=1
-		minor=9
-		micro=`echo $version | cut -d " " -f 3`
-	else
-		major=`echo $version | cut -d . -f 1`
-		minor=`echo $version | cut -d . -f 2`
-		micro=`echo $version | cut -d . -f 3`
-		local=`echo $version | cut -d . -f 4`
-		if [ "$branch" == "nook" ]; then
-			version=$version-nst
-		elif [ "$branch" == "kindle" ]; then
-			version=$version-kindlehd
-		fi
+	major=`echo $version | cut -d . -f 1`
+	minor=`echo $version | cut -d . -f 2`
+	micro=`echo $version | cut -d . -f 3`
+	local=`echo $version | cut -d . -f 4`
+	if [ "$branch" == "nook" ]; then
+		version=$version-nst
+	elif [ "$branch" == "kindle" ]; then
+		version=$version-kindlehd
 	fi
 	
 	if [ "$micro" == "" ]; then
