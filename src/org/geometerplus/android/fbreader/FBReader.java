@@ -229,7 +229,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				config.requestAllValuesForGroup("Fonts");
 				config.requestAllValuesForGroup("Colors");
 				config.requestAllValuesForGroup("Files");
-				config.requestAllValuesForGroup("Security");
 			}
 		});
 
