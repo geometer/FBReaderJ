@@ -156,22 +156,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (plugin instanceof ExternalFormatPlugin) {
 			executor.execute(new Runnable() {
 				public void run() {
-					BookTextView.setModel(null);
-					FootnoteView.setModel(null);
-					clearTextCaches();
-					Model = null;
-					ExternalBook = bookToOpen;
-					final Bookmark bm;
-					if (bookmark != null) {
-						bm = bookmark;
-					} else {
-						ZLTextPosition pos = Collection.getStoredPosition(bookToOpen.getId());
-						if (pos == null) {
-							pos = new ZLTextFixedPosition(0, 0, 0);
-						}
-						bm = new Bookmark(bookToOpen, "", pos, pos, "", false);
-					}
-					myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, bookToOpen, bm);
+					openBookInternal(bookToOpen, bookmark, false);
 				}
 			}, postAction);
 		} else {
@@ -287,16 +272,33 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		onViewChanged();
-
 		storePosition();
+
 		BookTextView.setModel(null);
 		FootnoteView.setModel(null);
 		clearTextCaches();
-
 		Model = null;
 		ExternalBook = null;
 		System.gc();
 		System.gc();
+
+		final FormatPlugin plugin = bookToOpen.getPluginOrNull();
+		if (plugin instanceof ExternalFormatPlugin) {
+			ExternalBook = bookToOpen;
+			final Bookmark bm;
+			if (bookmark != null) {
+				bm = bookmark;
+			} else {
+				ZLTextPosition pos = Collection.getStoredPosition(bookToOpen.getId());
+				if (pos == null) {
+					pos = new ZLTextFixedPosition(0, 0, 0);
+				}
+				bm = new Bookmark(bookToOpen, "", pos, pos, "", false);
+			}
+			myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, bookToOpen, bm);
+			return;
+		}
+
 		try {
 			Model = BookModel.createModel(book);
 			Collection.saveBook(book);
