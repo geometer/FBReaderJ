@@ -41,7 +41,7 @@ class ShowBookInfoAction extends FBAndroidAction {
 		final Intent intent =
 			new Intent(BaseActivity.getApplicationContext(), BookInfoActivity.class)
 				.putExtra(BookInfoActivity.FROM_READING_MODE_KEY, true);
-		FBReaderIntents.putBookExtra(intent, Reader.Model.Book);
+		FBReaderIntents.putBookExtra(intent, Reader.getCurrentBook());
 		OrientationUtil.startActivity(BaseActivity, intent);
 	}
 }

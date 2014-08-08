@@ -40,6 +40,12 @@ public final class FBReaderApp extends ZLApplication {
 		public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark);
 	}
 
+	private ExternalFileOpener myExternalFileOpener;
+
+	public void setExternalFileOpener(ExternalFileOpener o) {
+		myExternalFileOpener = o;
+	}
+
 	public final MiscOptions MiscOptions = new MiscOptions();
 	public final ImageOptions ImageOptions = new ImageOptions();
 	public final ViewOptions ViewOptions = new ViewOptions();
@@ -52,6 +58,7 @@ public final class FBReaderApp extends ZLApplication {
 	private String myFootnoteModelId;
 
 	public volatile BookModel Model;
+	public volatile Book ExternalBook;
 
 	private ZLTextPosition myJumpEndPosition;
 	private Date myJumpTimeStamp;
@@ -116,6 +123,14 @@ public final class FBReaderApp extends ZLApplication {
 		setView(BookTextView);
 	}
 
+	public Book getCurrentBook() {
+		return Model != null ? Model.Book : ExternalBook;
+	}
+
+	public void openHelpBook() {
+		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
+	}
+
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
 		if (book != null || Model == null) {
 			final SynchronousExecutor executor = createExecutor("loadingBook");
@@ -132,11 +147,12 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void reloadBook() {
-		if (Model != null && Model.Book != null) {
+		final Book book = getCurrentBook();
+		if (book != null) {
 			final SynchronousExecutor executor = createExecutor("loadingBook");
 			executor.execute(new Runnable() {
 				public void run() {
-					openBookInternal(Model.Book, null, true);
+					openBookInternal(book, null, true);
 				}
 			}, null);
 		}
@@ -253,6 +269,7 @@ public final class FBReaderApp extends ZLApplication {
 		clearTextCaches();
 
 		Model = null;
+		ExternalBook = null;
 		System.gc();
 		System.gc();
 		try {
