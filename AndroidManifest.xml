@@ -121,6 +121,14 @@
 				<action android:name="android.intent.action.SEARCH"/>
 			</intent-filter>
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+			<intent-filter>
+				<action android:name="android.fbreader.action.CLOSE"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.fbreader.action.PLUGIN_CRASH"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@style/FBReader.Dialog" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
