@@ -553,7 +553,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 
 		SetScreenOrientationAction.setOrientation(this, ZLibrary.Instance().getOrientationOption().getValue());
-		Log.d("fbreader", "onresume");
 		if (myCancelIntent != null) {
 			final Intent intent = myCancelIntent;
 			myCancelIntent = null;
@@ -565,7 +564,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			return;
 		} else if (myOpenBookIntent == null
 					&& myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
-			Log.d("fbj", "onresume: " + myFBReaderApp.ExternalBook.File);
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
 					myFBReaderApp.openBook(myFBReaderApp.ExternalBook, null, null);
