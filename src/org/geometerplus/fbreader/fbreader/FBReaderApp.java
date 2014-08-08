@@ -40,6 +40,12 @@ public final class FBReaderApp extends ZLApplication {
 		public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark);
 	}
 
+	private ExternalFileOpener myExternalFileOpener;
+
+	public void setExternalFileOpener(ExternalFileOpener o) {
+		myExternalFileOpener = o;
+	}
+
 	public final MiscOptions MiscOptions = new MiscOptions();
 	public final ImageOptions ImageOptions = new ImageOptions();
 	public final ViewOptions ViewOptions = new ViewOptions();

@@ -269,6 +269,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.setWindow(this);
 		myFBReaderApp.initWindow();
 
+		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
+
 		final ActionBar bar = getActionBar();
 		bar.setDisplayOptions(
 			ActionBar.DISPLAY_SHOW_CUSTOM,
