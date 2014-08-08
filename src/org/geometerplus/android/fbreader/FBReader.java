@@ -253,8 +253,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
 
-		myOpenBookIntent = getIntent();
-
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
 			myShowStatusBarFlag ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -304,6 +302,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		final Intent intent = getIntent();
 		final String action = intent.getAction();
+
+		myOpenBookIntent = intent;
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0) {
 			if (FBReaderIntents.Action.CLOSE.equals(action)) {
 				myCancelIntent = intent;
