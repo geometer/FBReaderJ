@@ -44,6 +44,8 @@ public abstract class FBReaderIntents {
 		String ERROR                    = "android.fbreader.action.ERROR";
 		String CRASH                    = "android.fbreader.action.CRASH";
 		String PLUGIN                   = "android.fbreader.action.PLUGIN";
+		String CLOSE                    = "android.fbreader.action.CLOSE";
+		String PLUGIN_CRASH             = "android.fbreader.action.PLUGIN_CRASH";
 	}
 
 	public interface Key {
