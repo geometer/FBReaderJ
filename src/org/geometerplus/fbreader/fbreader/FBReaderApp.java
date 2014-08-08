@@ -34,7 +34,6 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
@@ -135,7 +134,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
 		if (Model != null) {
-			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
+			if (book == null || bookmark == null && book.File.equals(Model.Book.File)) {
 				return;
 			}
 		}
@@ -152,39 +151,36 @@ public final class FBReaderApp extends ZLApplication {
 		final Book bookToOpen = tempBook;
 		bookToOpen.addLabel(Book.READ_LABEL);
 		Collection.saveBook(bookToOpen);
-		final FormatPlugin p = PluginCollection.Instance().getPlugin(bookToOpen.File);
-		if (p == null) return;
-		if (p.type() == FormatPlugin.Type.EXTERNAL) {
-			BookTextView.setModel(null);
-			FootnoteView.setModel(null);
-			clearTextCaches();
-			Model = null;
-			ExternalBook = bookToOpen;
-			final Bookmark bm;
-			if (bookmark != null) {
-				bm = bookmark;
-			} else {
-				ZLTextPosition pos = Collection.getStoredPosition(bookToOpen.getId());
-				if (pos == null) {
-					pos = new ZLTextFixedPosition(0, 0, 0);
-				}
-				bm = new Bookmark(bookToOpen, "", pos, pos, "", false);
-			}
-			final SynchronousExecutor executor = createExecutor("loadingBook");
+		final SynchronousExecutor executor = createExecutor("loadingBook");
+		final FormatPlugin plugin = bookToOpen.getPluginOrNull();
+		if (plugin instanceof ExternalFormatPlugin) {
 			executor.execute(new Runnable() {
 				public void run() {
-					final ExternalFormatPlugin pfp = (ExternalFormatPlugin)p;
-					myExternalFileOpener.openFile(pfp, bookToOpen, bm);
+					BookTextView.setModel(null);
+					FootnoteView.setModel(null);
+					clearTextCaches();
+					Model = null;
+					ExternalBook = bookToOpen;
+					final Bookmark bm;
+					if (bookmark != null) {
+						bm = bookmark;
+					} else {
+						ZLTextPosition pos = Collection.getStoredPosition(bookToOpen.getId());
+						if (pos == null) {
+							pos = new ZLTextFixedPosition(0, 0, 0);
+						}
+						bm = new Bookmark(bookToOpen, "", pos, pos, "", false);
+					}
+					myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, bookToOpen, bm);
 				}
 			}, postAction);
-			return;
+		} else {
+			executor.execute(new Runnable() {
+				public void run() {
+					openBookInternal(bookToOpen, bookmark, false);
+				}
+			}, postAction);
 		}
-		final SynchronousExecutor executor = createExecutor("loadingBook");
-		executor.execute(new Runnable() {
-			public void run() {
-				openBookInternal(bookToOpen, bookmark, false);
-			}
-		}, postAction);
 	}
 
 	public void reloadBook() {
