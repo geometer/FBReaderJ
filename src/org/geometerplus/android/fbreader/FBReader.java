@@ -54,7 +54,6 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.fbreader.tips.TipsManager;
 
@@ -421,9 +420,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myNeedToSkipPlugin = true;
 				if (intent.getBooleanExtra("KILL_PLUGIN", false)) {
 					Log.d("fbreader", "killing plugin");
-					if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
-						final FormatPlugin p = PluginCollection.Instance().getPlugin(myFBReaderApp.Model.Book.File);
-						if (p.type() == FormatPlugin.Type.EXTERNAL) {
+					if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
+						final FormatPlugin p = myFBReaderApp.ExternalBook.getPluginOrNull();
+						if (p instanceof ExternalFormatPlugin) {
 							final Intent i = PluginUtil.createIntent((ExternalFormatPlugin)p, PluginUtil.ACTION_KILL);
 							try {
 								startActivity(i);
@@ -590,20 +589,17 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 			return;
 		} else {
-			if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
-				final FormatPlugin p = PluginCollection.Instance().getPlugin(myFBReaderApp.Model.Book.File);
-				Log.d("fbj", "onresume: current book is: " + myFBReaderApp.Model.Book.File.getPath());
-				if (p.type() == FormatPlugin.Type.EXTERNAL) {
-					if (!myNeedToSkipPlugin) {
-						Log.d("fbj", "opening book from onresume");
-						getCollection().bindToService(this, new Runnable() {
-							public void run() {
-								myFBReaderApp.openBook(myFBReaderApp.Model.Book, null, null);
-							}
-						});
-					} else {
-						Log.d("fbj", "skipping");
-					}
+			if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
+				Log.d("fbj", "onresume: current book is: " + myFBReaderApp.ExternalBook.File.getPath());
+				if (!myNeedToSkipPlugin) {
+					Log.d("fbj", "opening book from onresume");
+					getCollection().bindToService(this, new Runnable() {
+						public void run() {
+							myFBReaderApp.openBook(myFBReaderApp.ExternalBook, null, null);
+						}
+					});
+				} else {
+					Log.d("fbj", "skipping");
 				}
 			}
 			myNeedToSkipPlugin = false;
