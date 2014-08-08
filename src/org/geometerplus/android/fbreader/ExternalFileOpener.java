@@ -19,8 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.math.BigInteger;
+import java.util.Random;
 
 import android.app.AlertDialog;
 import android.content.*;
@@ -36,7 +36,6 @@ import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
-
 import org.geometerplus.android.util.PackageUtil;
 
 class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
@@ -47,17 +46,19 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 	}
 
 	public void openFile(final ExternalFormatPlugin plugin, final Book book, Bookmark bookmark) {
-		final Intent launchIntent = PluginUtil.createIntent(plugin, PluginUtil.ACTION_VIEW);
-		FBReaderIntents.putBookExtra(launchIntent, book);
-		FBReaderIntents.putBookmarkExtra(launchIntent, bookmark);
-		launchIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		final Intent intent = PluginUtil.createIntent(plugin, PluginUtil.ACTION_VIEW);
+		FBReaderIntents.putBookExtra(intent, book);
+		FBReaderIntents.putBookmarkExtra(intent, bookmark);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+		final String callCode = new BigInteger(80, new Random()).toString();
+		new ZLStringOption("PluginCode", plugin.packageName(), "").setValue(callCode);
+		intent.putExtra("PLUGIN_CODE", callCode);
+
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				try {
-					String date = DateFormat.getDateTimeInstance().format(new Date());
-					new ZLStringOption("Security", "PluginCalled", "").setValue(plugin.packageName() + date);
-					launchIntent.putExtra("SECURITY_CODE", date);
-					myReader.startActivity(launchIntent);
+					myReader.startActivity(intent);
 					myReader.overridePendingTransition(0, 0);
 				} catch (ActivityNotFoundException e) {
 					showErrorDialog(plugin, book);
