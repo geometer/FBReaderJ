@@ -336,6 +336,23 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
 		myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
+
+		final Intent intent = getIntent();
+		final String action = intent.getAction();
+		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0) {
+			if (FBReaderIntents.Action.CLOSE.equals(action)) {
+				myCancelIntent = intent;
+				myOpenBookIntent = null;
+			} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(action)) {
+				myFBReaderApp.ExternalBook = null;
+				myOpenBookIntent = null;
+				getCollection().bindToService(this, new Runnable() {
+					public void run() {
+						myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+					}
+				});
+			}
+		}
 	}
 
 	@Override
