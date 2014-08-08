@@ -52,6 +52,7 @@ public final class FBReaderApp extends ZLApplication {
 	private String myFootnoteModelId;
 
 	public volatile BookModel Model;
+	public volatile Book ExternalBook;
 
 	private ZLTextPosition myJumpEndPosition;
 	private Date myJumpTimeStamp;
@@ -253,6 +254,7 @@ public final class FBReaderApp extends ZLApplication {
 		clearTextCaches();
 
 		Model = null;
+		ExternalBook = null;
 		System.gc();
 		System.gc();
 		try {
