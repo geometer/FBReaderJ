@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="1091410"
-		android:versionName="2.0 beta 14"
+		android:versionCode="2000010"
+		android:versionName="2.0"
 		android:installLocation="auto"
 >
 	<uses-sdk
