@@ -245,6 +245,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.setWindow(this);
 		myFBReaderApp.initWindow();
 
+		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
+
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
 			myShowStatusBarFlag ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
