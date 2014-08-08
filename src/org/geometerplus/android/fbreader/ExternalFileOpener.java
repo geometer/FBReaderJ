@@ -39,6 +39,7 @@ import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
+	private final String myPluginCode = new BigInteger(80, new Random()).toString();
 	private final FBReader myReader;
 
 	ExternalFileOpener(FBReader reader) {
@@ -51,9 +52,8 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 		FBReaderIntents.putBookmarkExtra(intent, bookmark);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-		final String callCode = new BigInteger(80, new Random()).toString();
-		new ZLStringOption("PluginCode", plugin.packageName(), "").setValue(callCode);
-		intent.putExtra("PLUGIN_CODE", callCode);
+		new ZLStringOption("PluginCode", plugin.packageName(), "").setValue(myPluginCode);
+		intent.putExtra("PLUGIN_CODE", myPluginCode);
 
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
