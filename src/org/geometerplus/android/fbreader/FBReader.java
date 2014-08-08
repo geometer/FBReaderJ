@@ -351,11 +351,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				   && data != null && "fbreader-action".equals(data.getScheme())) {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
-			getCollection().bindToService(this, new Runnable() {
-				public void run() {
-					openBook(intent, null, true);
-				}
-			});
+			myOpenBookIntent = intent;
 		} else if (FBReaderIntents.Action.PLUGIN.equals(action)) {
 			new RunPluginAction(this, myFBReaderApp, data).run();
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
@@ -540,6 +536,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			final Runnable action = OnResumeAction;
 			OnResumeAction = null;
 			action.run();
+		}
+
+		if (myOpenBookIntent != null) {
+			final Intent intent = myOpenBookIntent;
+			myOpenBookIntent = null;
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					openBook(intent, null, true);
+				}
+			});
 		}
 
 		PopupPanel.restoreVisibilities(myFBReaderApp);
