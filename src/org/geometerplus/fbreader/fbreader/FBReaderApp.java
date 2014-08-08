@@ -282,20 +282,20 @@ public final class FBReaderApp extends ZLApplication {
 		System.gc();
 		System.gc();
 
-		final FormatPlugin plugin = bookToOpen.getPluginOrNull();
+		final FormatPlugin plugin = book.getPluginOrNull();
 		if (plugin instanceof ExternalFormatPlugin) {
-			ExternalBook = bookToOpen;
+			ExternalBook = book;
 			final Bookmark bm;
 			if (bookmark != null) {
 				bm = bookmark;
 			} else {
-				ZLTextPosition pos = Collection.getStoredPosition(bookToOpen.getId());
+				ZLTextPosition pos = Collection.getStoredPosition(book.getId());
 				if (pos == null) {
 					pos = new ZLTextFixedPosition(0, 0, 0);
 				}
-				bm = new Bookmark(bookToOpen, "", pos, pos, "", false);
+				bm = new Bookmark(book, "", pos, pos, "", false);
 			}
-			myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, bookToOpen, bm);
+			myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, book, bm);
 			return;
 		}
 
