@@ -53,7 +53,7 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 		final String title =
 			dialogResource.getResource("missingPlugin").getResource("title").getValue()
 				.replace("%s", plugin.supportedFileType());
-		final AlertDialog dialog = new AlertDialog.Builder(myReader)
+		final AlertDialog.Builder builder = new AlertDialog.Builder(myReader)
 			.setTitle(title)
 			.setIcon(0)
 			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
@@ -73,12 +73,11 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 				public void onCancel(DialogInterface dialog) {
 					myReader.onPluginNotFound();
 				}
-			})
-			.create();
+			});
 
 		final Runnable showDialog = new Runnable() {
 			public void run() {
-				dialog.show();
+				builder.create().show();
 			}
 		};
 		if (!myReader.IsPaused) {
@@ -102,12 +101,7 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 					myReader.startActivity(launchIntent);
 					myReader.overridePendingTransition(0, 0);
 				} catch (ActivityNotFoundException e) {
-					myReader.runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							showErrorDialog(plugin);
-						}
-					});
+					showErrorDialog(plugin);
 				}
 			}
 		});

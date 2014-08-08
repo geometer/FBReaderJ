@@ -130,6 +130,10 @@ public final class FBReaderApp extends ZLApplication {
 		return Model != null ? Model.Book : ExternalBook;
 	}
 
+	public void openHelpBook() {
+		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
+	}
+
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
 		if (Model != null) {
 			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
