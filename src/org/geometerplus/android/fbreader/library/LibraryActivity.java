@@ -47,6 +47,7 @@ import org.geometerplus.android.fbreader.tree.TreeActivity;
 public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, IBookCollection.Listener {
 	static final String START_SEARCH_ACTION = "action.fbreader.library.start-search";
 
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile RootTree myRootTree;
 	private Book mySelectedBook;
 
@@ -63,12 +64,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 		deleteRootTree();
 
-		final BookCollectionShadow collection = new BookCollectionShadow();
-		collection.bindToService(this, new Runnable() {
+		myCollection.bindToService(this, new Runnable() {
 			public void run() {
-				setProgressBarIndeterminateVisibility(!collection.status().IsCompleted);
-				myRootTree = new RootTree(collection);
-				collection.addListener(LibraryActivity.this);
+				setProgressBarIndeterminateVisibility(!myCollection.status().IsCompleted);
+				myRootTree = new RootTree(myCollection);
+				myCollection.addListener(LibraryActivity.this);
 				init(getIntent());
 			}
 		});
@@ -94,8 +94,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 	private synchronized void deleteRootTree() {
 		if (myRootTree != null) {
-			myRootTree.Collection.removeListener(this);
-			((BookCollectionShadow)myRootTree.Collection).unbind();
+			myCollection.removeListener(this);
+			myCollection.unbind();
 			myRootTree = null;
 		}
 	}
@@ -228,7 +228,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		book.removeLabel(Book.SYNC_FAILURE_LABEL);
 		book.removeLabel(Book.SYNC_DELETED_LABEL);
 		book.addLabel(Book.SYNC_TOSYNC_LABEL);
-		myRootTree.Collection.saveBook(book);
+		myCollection.saveBook(book);
 	}
 
 	private boolean onContextItemSelected(int itemId, Book book) {
@@ -244,23 +244,23 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 				return true;
 			case ContextItemId.AddToFavorites:
 				book.addLabel(Book.FAVORITE_LABEL);
-				myRootTree.Collection.saveBook(book);
+				myCollection.saveBook(book);
 				return true;
 			case ContextItemId.RemoveFromFavorites:
 				book.removeLabel(Book.FAVORITE_LABEL);
-				myRootTree.Collection.saveBook(book);
+				myCollection.saveBook(book);
 				if (getCurrentTree().onBookEvent(BookEvent.Updated, book)) {
 					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
 				}
 				return true;
 			case ContextItemId.MarkAsRead:
 				book.addLabel(Book.READ_LABEL);
-				myRootTree.Collection.saveBook(book);
+				myCollection.saveBook(book);
 				getListView().invalidateViews();
 				return true;
 			case ContextItemId.MarkAsUnread:
 				book.removeLabel(Book.READ_LABEL);
-				myRootTree.Collection.saveBook(book);
+				myCollection.saveBook(book);
 				getListView().invalidateViews();
 				return true;
 			case ContextItemId.DeleteBook:
@@ -311,7 +311,11 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		}
 
 		final MenuItem rescanItem = menu.findItem(OptionsItemId.Rescan);
-		rescanItem.setEnabled(myRootTree.Collection.status().IsCompleted);
+		myCollection.bindToService(this, new Runnable() {
+			public void run() {
+				rescanItem.setEnabled(myCollection.status().IsCompleted);
+			}
+		});
 		rescanItem.setVisible(tree == myRootTree);
 		menu.findItem(OptionsItemId.UploadAgain).setVisible(enableUploadAgain);
 		menu.findItem(OptionsItemId.TryAgain).setVisible(enableTryAgain);
@@ -334,8 +338,8 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			case OptionsItemId.Search:
 				return onSearchRequested();
 			case OptionsItemId.Rescan:
-				if (myRootTree.Collection.status().IsCompleted) {
-					((BookCollectionShadow)myRootTree.Collection).reset(true);
+				if (myCollection.status().IsCompleted) {
+					myCollection.reset(true);
 					openTree(myRootTree);
 				}
 				return true;
@@ -377,14 +381,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 			if (getCurrentTree() instanceof FileTree) {
 				for (Book book : myBooks) {
 					getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), book.File));
-					myRootTree.Collection.removeBook(book, true);
+					myCollection.removeBook(book, true);
 				}
 				getListView().invalidateViews();
 			} else {
 				boolean doReplace = false;
 				for (Book book : myBooks) {
 					doReplace |= getCurrentTree().onBookEvent(BookEvent.Removed, book);
-					myRootTree.Collection.removeBook(book, true);
+					myCollection.removeBook(book, true);
 				}
 				if (doReplace) {
 					getListAdapter().replaceAll(getCurrentTree().subtrees(), true);
@@ -430,7 +434,7 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 
 				if (oldSearchResults != null && pattern.equals(oldSearchResults.Pattern)) {
 					onSearchEvent(true);
-				} else if (myRootTree.Collection.hasBooks(new Filter.ByPattern(pattern))) {
+				} else if (myCollection.hasBooks(new Filter.ByPattern(pattern))) {
 					if (oldSearchResults != null) {
 						oldSearchResults.removeSelf();
 					}
