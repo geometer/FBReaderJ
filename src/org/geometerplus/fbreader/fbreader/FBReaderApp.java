@@ -152,6 +152,13 @@ public final class FBReaderApp extends ZLApplication {
 		bookToOpen.addLabel(Book.READ_LABEL);
 		Collection.saveBook(bookToOpen);
 
+		final FormatPlugin plugin = bookToOpen.getPluginOrNull();
+		if (plugin instanceof ExternalFormatPlugin) {
+			if (!((ExternalFormatPlugin)plugin).isYotaSupported()) {
+				runAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN);
+			}
+		}
+
 		final SynchronousExecutor executor = createExecutor("loadingBook");
 		executor.execute(new Runnable() {
 			public void run() {

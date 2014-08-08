@@ -31,6 +31,10 @@ public abstract class ExternalFormatPlugin extends FormatPlugin {
 		super(fileType);
 	}
 
+	public boolean isYotaSupported() {
+		return false;
+	}
+
 	@Override
 	public Type type() {
 		return Type.EXTERNAL;
