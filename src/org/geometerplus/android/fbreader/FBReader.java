@@ -111,6 +111,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	volatile boolean IsPaused = false;
 	volatile Runnable OnResumeAction = null;
 
+	private Intent myCancelIntent = null;
+	private Intent myOpenBookIntent = null;
+
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
 		new LinkedList<PluginApi.ActionInfo>();
