@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
@@ -262,16 +263,33 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		onViewChanged();
-
 		storePosition();
+
 		BookTextView.setModel(null);
 		FootnoteView.setModel(null);
 		clearTextCaches();
-
 		Model = null;
 		ExternalBook = null;
 		System.gc();
 		System.gc();
+
+		final FormatPlugin plugin = book.getPluginOrNull();
+		if (plugin instanceof ExternalFormatPlugin) {
+			ExternalBook = book;
+			final Bookmark bm;
+			if (bookmark != null) {
+				bm = bookmark;
+			} else {
+				ZLTextPosition pos = Collection.getStoredPosition(book.getId());
+				if (pos == null) {
+					pos = new ZLTextFixedPosition(0, 0, 0);
+				}
+				bm = new Bookmark(book, "", pos, pos, "", false);
+			}
+			myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, book, bm);
+			return;
+		}
+
 		try {
 			Model = BookModel.createModel(book);
 			Collection.saveBook(book);
