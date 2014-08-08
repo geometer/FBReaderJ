@@ -152,9 +152,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myBook = createBookForFile(ZLFile.createFileByPath(data.getPath()));
 			}
 		}
-		Log.d("fbreader", "filePath");
 		if (myBook != null) {
-			Log.d("fbreader", myBook.File.getPath());
 			ZLFile file = myBook.File;
 			if (!file.exists()) {
 				if (file.getPhysicalFile() != null) {
@@ -395,13 +393,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myCancelIntent = intent;
 		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(intent.getAction())) {
 			Log.d("fbj", "crash");
-			final long bookid = intent.getLongExtra("BOOK", -1);
+			final Book book = FBReaderIntents.getBookExtra(intent);
 			myNeedToSkipPlugin = true;
 			myFBReaderApp.Model = null;
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
 					Book b = myFBReaderApp.Collection.getRecentBook(0);
-					if (b.getId() == bookid) {
+					if (b.equals(book)) {
 						b = myFBReaderApp.Collection.getRecentBook(1);
 					}
 					myFBReaderApp.openBook(b, null, null);
