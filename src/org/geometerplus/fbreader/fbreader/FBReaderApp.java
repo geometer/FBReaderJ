@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 
 public final class FBReaderApp extends ZLApplication {
@@ -131,19 +132,32 @@ public final class FBReaderApp extends ZLApplication {
 		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
 	}
 
-	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-		if (book != null || Model == null) {
-			final SynchronousExecutor executor = createExecutor("loadingBook");
-			executor.execute(new Runnable() {
-				public void run() {
-					openBookInternal(book, bookmark, false);
-					if (book != null) {
-						book.addLabel(Book.READ_LABEL);
-						Collection.saveBook(book);
-					}
-				}
-			}, postAction);
+	public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
+		if (Model != null) {
+			if (book == null || bookmark == null && book.File.equals(Model.Book.File)) {
+				return;
+			}
 		}
+
+		if (book == null) {
+			book = Collection.getRecentBook(0);
+			if (book == null || !book.File.exists()) {
+				book = Collection.getBookByFile(BookUtil.getHelpFile());
+			}
+			if (book == null) {
+				return;
+			}
+		}
+		final Book bookToOpen = book;
+		bookToOpen.addLabel(Book.READ_LABEL);
+		Collection.saveBook(bookToOpen);
+
+		final SynchronousExecutor executor = createExecutor("loadingBook");
+		executor.execute(new Runnable() {
+			public void run() {
+				openBookInternal(bookToOpen, bookmark, false);
+			}
+		}, postAction);
 	}
 
 	public void reloadBook() {
@@ -242,18 +256,6 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	private synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
-		if (book == null) {
-			book = Collection.getRecentBook(0);
-			if (book == null || !book.File.exists()) {
-				book = Collection.getBookByFile(BookUtil.getHelpFile());
-			}
-			if (book == null) {
-				return;
-			}
-			book.addLabel(Book.READ_LABEL);
-			Collection.saveBook(book);
-		}
-
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
 				gotoBookmark(bookmark, false);
@@ -262,16 +264,33 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		onViewChanged();
-
 		storePosition();
+
 		BookTextView.setModel(null);
 		FootnoteView.setModel(null);
 		clearTextCaches();
-
 		Model = null;
 		ExternalBook = null;
 		System.gc();
 		System.gc();
+
+		final FormatPlugin plugin = book.getPluginOrNull();
+		if (plugin instanceof ExternalFormatPlugin) {
+			ExternalBook = book;
+			final Bookmark bm;
+			if (bookmark != null) {
+				bm = bookmark;
+			} else {
+				ZLTextPosition pos = Collection.getStoredPosition(book.getId());
+				if (pos == null) {
+					pos = new ZLTextFixedPosition(0, 0, 0);
+				}
+				bm = new Bookmark(book, "", pos, pos, "", false);
+			}
+			myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, book, bm);
+			return;
+		}
+
 		try {
 			Model = BookModel.createModel(book);
 			Collection.saveBook(book);
