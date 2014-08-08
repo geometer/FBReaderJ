@@ -317,10 +317,10 @@ public class LibraryService extends Service {
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 			if (((ZLImageProxy)image).isSynchronized()) {
-				delayed[0] = false;
+				delayed[0] = true;
 				return null;
 			}
-			delayed[0] = true;
+			delayed[0] = false;
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
 		}
