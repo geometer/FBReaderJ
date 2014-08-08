@@ -403,7 +403,8 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 			return null;
 		}
 		try {
-			return new ZLBitmapImage(myInterface.getCover(SerializerUtil.serialize(book), maxWidth, maxHeight));
+			final boolean[] delayed = new boolean[1];
+			return new ZLBitmapImage(myInterface.getCover(SerializerUtil.serialize(book), maxWidth, maxHeight, delayed));
 		} catch (RemoteException e) {
 			return null;
 		}
