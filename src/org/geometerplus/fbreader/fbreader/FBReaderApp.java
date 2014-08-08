@@ -152,20 +152,11 @@ public final class FBReaderApp extends ZLApplication {
 		bookToOpen.addLabel(Book.READ_LABEL);
 		Collection.saveBook(bookToOpen);
 		final SynchronousExecutor executor = createExecutor("loadingBook");
-		final FormatPlugin plugin = bookToOpen.getPluginOrNull();
-		if (plugin instanceof ExternalFormatPlugin) {
-			executor.execute(new Runnable() {
-				public void run() {
-					openBookInternal(bookToOpen, bookmark, false);
-				}
-			}, postAction);
-		} else {
-			executor.execute(new Runnable() {
-				public void run() {
-					openBookInternal(bookToOpen, bookmark, false);
-				}
-			}, postAction);
-		}
+		executor.execute(new Runnable() {
+			public void run() {
+				openBookInternal(bookToOpen, bookmark, false);
+			}
+		}, postAction);
 	}
 
 	public void reloadBook() {
