@@ -133,8 +133,10 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-		if (book == null && Model != null) {
-			return;
+		if (Model != null) {
+			if (book == null || bookmark == null && book.File.equals(Model.Book.File)) {
+				return;
+			}
 		}
 
 		final SynchronousExecutor executor = createExecutor("loadingBook");
