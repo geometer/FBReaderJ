@@ -112,7 +112,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	volatile Runnable OnResumeAction = null;
 
 	private Intent myCancelIntent = null;
-	private Intent myIntentToOpen = null;
+	private Intent myOpenBookIntent = null;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -253,7 +253,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
 
-		myIntentToOpen = getIntent();
+		myOpenBookIntent = getIntent();
 
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -348,7 +348,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				   && data != null && "fbreader-action".equals(data.getScheme())) {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
-			myIntentToOpen = intent;
+			myOpenBookIntent = intent;
 		} else if (FBReaderIntents.Action.PLUGIN.equals(action)) {
 			new RunPluginAction(this, myFBReaderApp, data).run();
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
@@ -394,7 +394,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		} else {
 			super.onNewIntent(intent);
 			if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
-				myIntentToOpen = intent;
+				myOpenBookIntent = intent;
 				if (intent.getBooleanExtra("KILL_PLUGIN", false)) {
 					Log.d("fbreader", "killing plugin");
 					if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
@@ -559,7 +559,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 			});
 			return;
-		} else if (myIntentToOpen == null
+		} else if (myOpenBookIntent == null
 					&& myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
 			Log.d("fbj", "onresume: " + myFBReaderApp.ExternalBook.File);
 			getCollection().bindToService(this, new Runnable() {
@@ -569,9 +569,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 		}
 
-		if (myIntentToOpen != null) {
-			final Intent intent = myIntentToOpen;
-			myIntentToOpen = null;
+		if (myOpenBookIntent != null) {
+			final Intent intent = myOpenBookIntent;
+			myOpenBookIntent = null;
 			Log.d("fbj", "needtoopen");
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
