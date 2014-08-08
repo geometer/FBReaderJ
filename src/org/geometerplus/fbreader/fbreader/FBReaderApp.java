@@ -279,15 +279,6 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	private synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
-		if (Model != null && book.File.getPath().equals(Model.Book.File.getPath())) {
-			if (bookmark != null) {
-				gotoBookmark(bookmark, false);
-				return;
-			} else if (!force) {
-				return;
-			}
-		}
-
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
 				gotoBookmark(bookmark, false);
