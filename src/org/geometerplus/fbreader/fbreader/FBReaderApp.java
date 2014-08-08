@@ -132,26 +132,26 @@ public final class FBReaderApp extends ZLApplication {
 		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
 	}
 
-	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
+	public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
 		if (Model != null) {
 			if (book == null || bookmark == null && book.File.equals(Model.Book.File)) {
 				return;
 			}
 		}
 
-		Book tempBook = book;
-		if (tempBook == null) {
-			tempBook = Collection.getRecentBook(0);
-			if (tempBook == null || !tempBook.File.exists()) {
-				tempBook = Collection.getBookByFile(BookUtil.getHelpFile());
+		if (book == null) {
+			book = Collection.getRecentBook(0);
+			if (book == null || !book.File.exists()) {
+				book = Collection.getBookByFile(BookUtil.getHelpFile());
 			}
-			if (tempBook == null) {
+			if (book == null) {
 				return;
 			}
 		}
-		final Book bookToOpen = tempBook;
+		final Book bookToOpen = book;
 		bookToOpen.addLabel(Book.READ_LABEL);
 		Collection.saveBook(bookToOpen);
+
 		final SynchronousExecutor executor = createExecutor("loadingBook");
 		executor.execute(new Runnable() {
 			public void run() {
