@@ -302,12 +302,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.OPEN_WEB_HELP, new OpenWebHelpAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.INSTALL_PLUGINS, new InstallPluginsAction(this, myFBReaderApp));
 
-		if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0) {
-			if (FBReaderIntents.Action.CLOSE.equals(getIntent().getAction()) ) {
-				myCancelIntent = getIntent();
-			} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(getIntent().getAction())) {
-				Log.d("fbj", "crash in oncreate");
+		final Intent intent = getIntent();
+		final String action = intent.getAction();
+		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0) {
+			if (FBReaderIntents.Action.CLOSE.equals(action)) {
+				myCancelIntent = intent;
+				myOpenBookIntent = null;
+			} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(action)) {
 				myFBReaderApp.ExternalBook = null;
+				myOpenBookIntent = null;
 				getCollection().bindToService(this, new Runnable() {
 					public void run() {
 						myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
