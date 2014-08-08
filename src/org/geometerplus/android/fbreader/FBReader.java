@@ -105,8 +105,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	};
 
-	boolean IsPaused = false;
-	Runnable OnResumeAction = null;
+	volatile boolean IsPaused = false;
+	volatile Runnable OnResumeAction = null;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -499,8 +499,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 		IsPaused = false;
 		if (OnResumeAction != null) {
-			OnResumeAction.run();
+			final Runnable action = OnResumeAction;
 			OnResumeAction = null;
+			action.run();
 		}
 
 		PopupPanel.restoreVisibilities(myFBReaderApp);
