@@ -47,7 +47,7 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 		myReader = reader;
 	}
 
-	private void showErrorDialog(final ExternalFormatPlugin plugin) {
+	private void showErrorDialog(final ExternalFormatPlugin plugin, final Book book) {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 		final String title =
@@ -65,13 +65,13 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 			.setNegativeButton(buttonResource.getResource("no").getValue(), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					myReader.onPluginNotFound();
+					myReader.onPluginNotFound(book);
 				}
 			})
 			.setOnCancelListener(new DialogInterface.OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface dialog) {
-					myReader.onPluginNotFound();
+					myReader.onPluginNotFound(book);
 				}
 			});
 
@@ -87,7 +87,7 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 		}
 	}
 
-	public void openFile(final ExternalFormatPlugin plugin, Book book, Bookmark bookmark) {
+	public void openFile(final ExternalFormatPlugin plugin, final Book book, Bookmark bookmark) {
 		final Intent launchIntent = PluginUtil.createIntent(plugin, PluginUtil.ACTION_VIEW);
 		FBReaderIntents.putBookExtra(launchIntent, book);
 		FBReaderIntents.putBookmarkExtra(launchIntent, bookmark);
@@ -101,7 +101,7 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 					myReader.startActivity(launchIntent);
 					myReader.overridePendingTransition(0, 0);
 				} catch (ActivityNotFoundException e) {
-					showErrorDialog(plugin);
+					showErrorDialog(plugin, book);
 				}
 			}
 		});

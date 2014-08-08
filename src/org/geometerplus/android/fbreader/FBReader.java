@@ -849,10 +849,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		return true;
 	}
 
-	protected void onPluginNotFound() {
+	protected void onPluginNotFound(final Book book) {
 		getCollection().bindToService(this, new Runnable() {
 			public void run() {
-				myFBReaderApp.openHelpBook();
+				final Book recent = getCollection().getRecentBook(0);
+				if (recent != null && !recent.equals(book)) {
+					myFBReaderApp.openBook(recent, null, null);
+				} else {
+					myFBReaderApp.openHelpBook();
+				}
 			}
 		});
 	}
