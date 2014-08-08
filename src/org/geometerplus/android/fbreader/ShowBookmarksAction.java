@@ -55,7 +55,7 @@ class ShowBookmarksAction extends FBAndroidAction {
 	}
 
 	private void startBookmarksActivity(Intent intent) {
-		FBReaderIntents.putBookExtra(intent, Reader.Model.Book);
+		FBReaderIntents.putBookExtra(intent, Reader.getCurrentBook());
 		FBReaderIntents.putBookmarkExtra(intent, Reader.createBookmark(20, true));
 		OrientationUtil.startActivity(BaseActivity, intent);
 	}
