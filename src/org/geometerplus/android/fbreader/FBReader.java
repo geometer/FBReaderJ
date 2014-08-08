@@ -111,6 +111,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	boolean IsPaused = false;
 	Runnable OnResumeAction = null;
 
+	private boolean myNeedToSkipPlugin = false;
+	private Intent myCancelIntent = null;
 	private Intent myIntentToOpen = null;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
@@ -337,10 +339,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		setStatusBarVisibility(false);
 		return super.onOptionsItemSelected(item);
 	}
-
-	private boolean myNeedToSkipPlugin = false;
-
-	private Intent myCancelIntent = null;
 
 	@Override
 	protected void onNewIntent(final Intent intent) {
