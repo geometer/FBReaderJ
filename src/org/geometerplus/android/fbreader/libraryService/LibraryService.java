@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.lang.ref.WeakReference;
 import java.util.*;
 
 import android.app.Service;
@@ -48,7 +49,9 @@ public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
-	final Map<String, Bitmap> covers = new HashMap<String, Bitmap>();
+	private final Map<String,WeakReference<Object>> myCoversMap =
+		Collections.synchronizedMap(new HashMap<String,WeakReference<Object>>());
+	private static final Object NULL_COVER = new Object();
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
@@ -281,27 +284,32 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
-			final Bitmap bitmap = covers.get(book);
-			if (bitmap != null) {
-				delayed[0] = true;
-				return bitmap;
+			final WeakReference<Object> ref = myCoversMap.get(book);
+			if (ref != null) {
+				final Object bitmap = ref.get();
+				if (bitmap != null) {
+					delayed[0] = false;
+					return bitmap instanceof Bitmap ? (Bitmap)bitmap : null;
+				}
 			}
 
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
+				myCoversMap.put(book, new WeakReference<Object>(NULL_COVER));
+				delayed[0] = false;
 				return null;
 			}
+
 			if (image instanceof ZLImageProxy) {
 				myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
-
 					@Override
 					public void run() {
 						final ZLAndroidImageManager manager =
 								(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 						final ZLAndroidImageData data = manager.getImageData(image);
 						final Bitmap cover = data.getBitmap(maxWidth, maxHeight);
-						covers.put(book, cover);
+						myCoversMap.put(book, new WeakReference<Object>(cover));
 						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
 				});
