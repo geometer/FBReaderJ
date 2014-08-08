@@ -328,11 +328,13 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookLanguage() {
-		return getReader().Model.Book.getLanguage();
+		final Book book = getReader().getCurrentBook();
+		return book != null ? book.getLanguage() : null;
 	}
 
 	public String getBookTitle() {
-		return getReader().Model.Book.getTitle();
+		final Book book = getReader().getCurrentBook();
+		return book != null ? book.getTitle() : null;
 	}
 
 	public List<String> getBookTags() {
@@ -341,11 +343,16 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookFilePath() {
-		return getReader().Model.Book.File.getPath();
+		final Book book = getReader().getCurrentBook();
+		return book != null ? book.File.getPath() : null;
 	}
 
 	public String getBookHash() {
-		final UID uid = BookUtil.createUid(getReader().Model.Book.File, "SHA-256");
+		final Book book = getReader().getCurrentBook();
+		if (book == null) {
+			return null;
+		}
+		final UID uid = BookUtil.createUid(book.File, "SHA-256");
 		return uid != null ? uid.Id : null;
 	}
 
