@@ -303,9 +303,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.INSTALL_PLUGINS, new InstallPluginsAction(this, myFBReaderApp));
 
 		if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0) {
-			if ("android.fbreader.action.CLOSE".equals(getIntent().getAction()) ) {
+			if (FBReaderIntents.Action.CLOSE.equals(getIntent().getAction()) ) {
 				myCancelIntent = getIntent();
-			} else if ("android.fbreader.action.PLUGIN_CRASH".equals(getIntent().getAction())) {
+			} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(getIntent().getAction())) {
 				Log.d("fbj", "crash in oncreate");
 				myFBReaderApp.ExternalBook = null;
 				getCollection().bindToService(this, new Runnable() {
@@ -376,9 +376,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 			};
 			UIUtil.wait("search", runnable, this);
-		} else if ("android.fbreader.action.CLOSE".equals(intent.getAction())) {
+		} else if (FBReaderIntents.Action.CLOSE.equals(intent.getAction())) {
 			myCancelIntent = intent;
-		} else if ("android.fbreader.action.PLUGIN_CRASH".equals(intent.getAction())) {
+		} else if (FBReaderIntents.Action.PLUGIN_CRASH.equals(intent.getAction())) {
 			Log.d("fbj", "crash");
 			final Book book = FBReaderIntents.getBookExtra(intent);
 			myFBReaderApp.ExternalBook = null;
