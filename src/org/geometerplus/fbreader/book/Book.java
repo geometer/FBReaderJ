@@ -174,6 +174,10 @@ public class Book extends TitledEntity {
 		return getPlugin(File);
 	}
 
+	public FormatPlugin getPluginOrNull() {
+		return PluginCollection.Instance().getPlugin(File);
+	}
+
 	void readMetainfo() throws BookReadingException {
 		readMetainfo(getPlugin());
 	}
