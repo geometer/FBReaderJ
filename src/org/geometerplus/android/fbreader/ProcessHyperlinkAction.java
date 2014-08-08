@@ -61,7 +61,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					openInBrowser(hyperlink.Id);
 					break;
 				case FBHyperlinkType.INTERNAL:
-					Reader.Collection.markHyperlinkAsVisited(Reader.Model.Book, hyperlink.Id);
+					Reader.Collection.markHyperlinkAsVisited(Reader.getCurrentBook(), hyperlink.Id);
 					Reader.tryOpenFootnote(hyperlink.Id);
 					break;
 			}
