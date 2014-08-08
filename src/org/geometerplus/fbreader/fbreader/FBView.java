@@ -441,7 +441,7 @@ public final class FBView extends ZLTextView {
 			case FBHyperlinkType.NONE:
 				return profile.RegularTextOption.getValue();
 			case FBHyperlinkType.INTERNAL:
-				return myReader.Collection.isHyperlinkVisited(myReader.Model.Book, hyperlink.Id)
+				return myReader.Collection.isHyperlinkVisited(myReader.getCurrentBook(), hyperlink.Id)
 					? profile.VisitedHyperlinkTextOption.getValue()
 					: profile.HyperlinkTextOption.getValue();
 			case FBHyperlinkType.EXTERNAL:
