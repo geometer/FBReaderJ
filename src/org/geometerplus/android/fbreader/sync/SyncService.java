@@ -135,7 +135,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					alarmManager.setInexactRepeating(
 						AlarmManager.ELAPSED_REALTIME,
 						SystemClock.elapsedRealtime(),
-						10 * 1000,
+						AlarmManager.INTERVAL_FIFTEEN_MINUTES,
 						syncIntent()
 					);
 				}
