@@ -22,15 +22,18 @@ package org.geometerplus.android.fbreader.sync;
 import java.io.*;
 import java.util.*;
 
-import android.app.Service;
+import android.app.*;
+import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
+import android.os.SystemClock;
 
 import org.json.simple.JSONValue;
 
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
@@ -40,6 +43,17 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
 public class SyncService extends Service implements IBookCollection.Listener, Runnable {
+	public static void enableSync(Context context, boolean enable) {
+		final String action = enable ? Action.START : Action.STOP;
+		context.startService(new Intent(context, SyncService.class).setAction(action));
+	}
+
+	private interface Action {
+		String START = "android.fbreader.action.sync.START";
+		String STOP = "android.fbreader.action.sync.STOP";
+		String SYNC = "android.fbreader.action.sync.SYNC";
+	}
+
 	private enum Status {
 		AlreadyUploaded(Book.SYNCHRONIZED_LABEL),
 		Uploaded(Book.SYNCHRONIZED_LABEL),
@@ -94,11 +108,45 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	private final Set<String> myDeletedHashesFromServer = new HashSet<String>();
 	private volatile boolean myHashTablesAreInitialized = false;
 
+	private PendingIntent syncIntent() {
+		return PendingIntent.getService(
+			this, 0, new Intent(this, getClass()).setAction(Action.SYNC), 0
+		);
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		final String action = intent.getAction();
+		if (Action.START.equals(action)) {
+			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+			alarmManager.cancel(syncIntent());
+			Config.Instance().runOnConnect(new Runnable() {
+				public void run() {
+					if (!mySyncOptions.Enabled.getValue()) {
+						return;
+					}
+					alarmManager.setInexactRepeating(
+						AlarmManager.ELAPSED_REALTIME,
+						SystemClock.elapsedRealtime(),
+						10 * 1000,
+						syncIntent()
+					);
+				}
+			});
+		} else if (Action.STOP.equals(action)) {
+			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+			alarmManager.cancel(syncIntent());
+		} else if (Action.SYNC.equals(action)) {
+			System.err.println("SYNC-SYNC-SYNC " + new Date());
+			SQLiteCookieDatabase.init(this);
+			myCollection.bindToService(this, this);
+		}
+
+		return START_STICKY;
+	}
+
 	@Override
 	public IBinder onBind(Intent intent) {
-		SQLiteCookieDatabase.init(this);
-		myCollection.bindToService(this, this);
-		myNetworkContext.cookieStore().reset();
 		return null;
 	}
 
@@ -171,14 +219,15 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 
 	@Override
 	public synchronized void run() {
+		if (!mySyncOptions.Enabled.getValue()) {
+			return;
+		}
+		myNetworkContext.cookieStore().reset();
+
 		myCollection.addListener(this);
 		if (ourSynchronizationThread == null) {
 			ourSynchronizationThread = new Thread() {
 				public void run() {
-					try {
-						sleep(10000);
-					} catch (InterruptedException e) {
-					}
 					final long start = System.currentTimeMillis();
 					int count = 0;
 					final Map<Status,Integer> statusCounts = new HashMap<Status,Integer>();
