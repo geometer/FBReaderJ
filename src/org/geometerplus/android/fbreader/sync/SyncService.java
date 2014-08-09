@@ -29,6 +29,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 
 import org.json.simple.JSONValue;
 
@@ -43,6 +44,10 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
 public class SyncService extends Service implements IBookCollection.Listener, Runnable {
+	private static void log(String message) {
+		Log.d("FBReader.Sync", message);
+	}
+
 	public static void enableSync(Context context, boolean enable) {
 		final String action = enable ? Action.START : Action.STOP;
 		context.startService(new Intent(context, SyncService.class).setAction(action));
@@ -123,8 +128,10 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 			Config.Instance().runOnConnect(new Runnable() {
 				public void run() {
 					if (!mySyncOptions.Enabled.getValue()) {
+						log("disabled");
 						return;
 					}
+					log("enabled");
 					alarmManager.setInexactRepeating(
 						AlarmManager.ELAPSED_REALTIME,
 						SystemClock.elapsedRealtime(),
@@ -136,8 +143,8 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		} else if (Action.STOP.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
+			log("stopped");
 		} else if (Action.SYNC.equals(action)) {
-			System.err.println("SYNC-SYNC-SYNC " + new Date());
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, this);
 		}
@@ -178,7 +185,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					myHashTablesAreInitialized = true;
 				}
 			});
-			System.err.println(String.format("RECEIVED: %s/%s HASHES", myActualHashesFromServer.size(), myDeletedHashesFromServer.size()));
+			log(String.format("RECEIVED: %s/%s HASHES", myActualHashesFromServer.size(), myDeletedHashesFromServer.size()));
 		} catch (SyncronizationDisabledException e) {
 			throw e;
 		} catch (Exception e) {
@@ -260,10 +267,10 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 							statusCounts.put(status, sc != null ? sc + 1 : 1);
 						}
 					} finally {
-						System.err.println("SYNCHRONIZATION FINISHED IN " + (System.currentTimeMillis() - start) + "msecs");
-						System.err.println("TOTAL BOOKS PROCESSED: " + count);
+						log("SYNCHRONIZATION FINISHED IN " + (System.currentTimeMillis() - start) + "msecs");
+						log("TOTAL BOOKS PROCESSED: " + count);
 						for (Status value : Status.values()) {
-							System.err.println("STATUS " + value + ": " + statusCounts.get(value));
+							log("STATUS " + value + ": " + statusCounts.get(value));
 						}
 						ourSynchronizationThread = null;
 					}
@@ -319,16 +326,16 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 				// ignore
 			}
 			if (error != null) {
-				System.err.println("UPLOAD FAILURE: " + error);
+				log("UPLOAD FAILURE: " + error);
 				if ("ALREADY_UPLOADED".equals(code)) {
 					Result = Status.AlreadyUploaded;
 				}
 			} else if (id != null && hashes != null) {
-				System.err.println("UPLOADED SUCCESSFULLY: " + id);
+				log("UPLOADED SUCCESSFULLY: " + id);
 				myActualHashesFromServer.addAll(hashes);
 				Result = Status.Uploaded;
 			} else {
-				System.err.println("UNEXPECED RESPONSE: " + response);
+				log("UNEXPECED RESPONSE: " + response);
 			}
 		}
 	}
@@ -399,7 +406,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 				}
 			}
 		} catch (Exception e) {
-			System.err.println("UNEXPECTED RESPONSE: " + result);
+			log("UNEXPECTED RESPONSE: " + result);
 			return Status.ServerError;
 		}
 	}
@@ -408,7 +415,6 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	public void onDestroy() {
 		myCollection.removeListener(this);
 		myCollection.unbind();
-		System.err.println("SYNCHRONIZER UNBINDED FROM LIBRARY");
 		super.onDestroy();
 	}
 

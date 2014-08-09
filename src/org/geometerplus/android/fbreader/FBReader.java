@@ -95,17 +95,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	private String myMenuLanguage;
 
 	final DataService.Connection DataConnection = new DataService.Connection();
-	/*
-	private final ServiceConnection mySyncConnection = new ServiceConnection() {
-		@Override
-		public void onServiceConnected(ComponentName componentName, IBinder binder) {
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName componentName) {
-		}
-	};
-	*/
 
 	volatile boolean IsPaused = false;
 	volatile Runnable OnResumeAction = null;
@@ -500,13 +489,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		super.onResume();
 
 		SyncService.enableSync(this, true);
-		/*
-		bindService(
-			new Intent(this, SyncService.class),
-			mySyncConnection,
-			SyncService.BIND_AUTO_CREATE
-		);
-		*/
 
 		myStartTimer = true;
 		Config.Instance().runOnConnect(new Runnable() {
@@ -585,7 +567,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			setButtonLight(true);
 		}
 		myFBReaderApp.onWindowClosing();
-		//unbindService(mySyncConnection);
 		super.onPause();
 	}
 
