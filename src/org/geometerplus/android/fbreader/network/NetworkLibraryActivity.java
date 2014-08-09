@@ -135,8 +135,6 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	protected void onStop() {
-		NetworkLibrary.Instance().removeChangeListener(this);
-
 		Connection.unbind(this);
 
 		super.onStop();
@@ -144,6 +142,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 
 	@Override
 	public void onDestroy() {
+		NetworkLibrary.Instance().removeChangeListener(this);
 		BookCollection.unbind();
 		super.onDestroy();
 	}
