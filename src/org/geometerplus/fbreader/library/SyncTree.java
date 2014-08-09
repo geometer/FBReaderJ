@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.book.Filter;
 
 public class SyncTree extends FirstLevelTree {
 	private final List<String> myLabels = Arrays.asList(
-		Book.SYNCHRONIZED_LABEL,
+		Book.SYNCHRONISED_LABEL,
 		Book.SYNC_FAILURE_LABEL,
 		Book.SYNC_DELETED_LABEL
 	);
