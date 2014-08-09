@@ -80,8 +80,10 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	}
 
 	private final SyncOptions mySyncOptions = new SyncOptions();
-	private final SyncNetworkContext myNetworkContext =
+	private final SyncNetworkContext myBookUploadContext =
 		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.UploadAllBooks);
+	private final SyncNetworkContext mySyncPositionsContext =
+		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.Positions);
 
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private static volatile Thread ourSynchronizationThread;
@@ -154,8 +156,8 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		}
 
 		try {
-			myNetworkContext.reloadCookie();
-			myNetworkContext.perform(new PostRequest("all.hashes", null) {
+			myBookUploadContext.reloadCookie();
+			myBookUploadContext.perform(new PostRequest("all.hashes", null) {
 				@Override
 				public void processResponse(Object response) {
 					final Map<String,List<String>> map = (Map<String,List<String>>)response;
@@ -177,7 +179,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		if (!mySyncOptions.Enabled.getValue()) {
 			return;
 		}
-		myNetworkContext.reloadCookie();
+		myBookUploadContext.reloadCookie();
 
 		myCollection.addListener(this);
 		if (ourSynchronizationThread == null) {
@@ -324,12 +326,12 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 				}
 			};
 		try {
-			myNetworkContext.perform(verificationRequest);
+			myBookUploadContext.perform(verificationRequest);
 		} catch (ZLNetworkException e) {
 			e.printStackTrace();
 			return Status.ServerError;
 		}
-		final String csrfToken = myNetworkContext.getCookieValue(SyncOptions.DOMAIN, "csrftoken");
+		final String csrfToken = myBookUploadContext.getCookieValue(SyncOptions.DOMAIN, "csrftoken");
 		try {
 			final String status = (String)result.get("status");
 			if ((force && !"found".equals(status)) || "not found".equals(status)) {
@@ -337,7 +339,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					final UploadRequest uploadRequest = new UploadRequest(file);
 					uploadRequest.addHeader("Referer", verificationRequest.getURL());
 					uploadRequest.addHeader("X-CSRFToken", csrfToken);
-					myNetworkContext.perform(uploadRequest);
+					myBookUploadContext.perform(uploadRequest);
 					return uploadRequest.Result;
 				} catch (ZLNetworkException e) {
 					e.printStackTrace();
