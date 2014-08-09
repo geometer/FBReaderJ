@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.formats;
 
 import java.util.*;
 
+import android.os.Build;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
@@ -59,8 +61,10 @@ public class PluginCollection {
 
 	private PluginCollection() {
 		addPlugin(new MobipocketPlugin());
-		addPlugin(new DjVuPlugin());
-		addPlugin(new PDFPlugin());
+		if (Build.VERSION.SDK_INT >= 8) {
+			addPlugin(new DjVuPlugin());
+			addPlugin(new PDFPlugin());
+		}
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
