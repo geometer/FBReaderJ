@@ -56,8 +56,8 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	}
 
 	private enum Status {
-		AlreadyUploaded(Book.SYNCHRONIZED_LABEL),
-		Uploaded(Book.SYNCHRONIZED_LABEL),
+		AlreadyUploaded(Book.SYNCHRONISED_LABEL),
+		Uploaded(Book.SYNCHRONISED_LABEL),
 		ToBeDeleted(Book.SYNC_DELETED_LABEL),
 		Failure(Book.SYNC_FAILURE_LABEL),
 		ServerError(null),
@@ -66,7 +66,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		HashNotComputed(null);
 
 		private static final List<String> AllLabels = Arrays.asList(
-			Book.SYNCHRONIZED_LABEL,
+			Book.SYNCHRONISED_LABEL,
 			Book.SYNC_FAILURE_LABEL,
 			Book.SYNC_DELETED_LABEL,
 			Book.SYNC_TOSYNC_LABEL
