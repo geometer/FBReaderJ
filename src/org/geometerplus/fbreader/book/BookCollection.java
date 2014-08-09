@@ -429,6 +429,9 @@ public class BookCollection extends AbstractBookCollection {
 					synchronized (myFilesToRescan) {
 						processFilesQueue();
 					}
+					for (Book book : new ArrayList<Book>(myBooksByFile.values())) {
+						getHash(book);
+					}
 				}
 			}
 		};

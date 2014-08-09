@@ -51,6 +51,7 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
+import org.geometerplus.android.fbreader.sync.SyncService;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
@@ -158,6 +159,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 
+			private void enableSyncService() {
+				SyncService.enableSync(PreferenceActivity.this, syncOptions.Enabled.getValue());
+			}
+
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -167,7 +172,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 				if (!isChecked()) {
 					syncOptions.Enabled.setValue(false);
-					setOnSummary(null);
+					enableSyncService();
 					syncPreferences.run();
 					return;
 				}
@@ -181,6 +186,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 									public void processResponse(Object response) {
 										final String account = (String)((Map)response).get("user");
 										syncOptions.Enabled.setValue(account != null);
+										enableSyncService();
 										runOnUiThread(new Runnable() {
 											public void run() {
 												setOnSummary(account);
