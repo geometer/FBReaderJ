@@ -25,23 +25,19 @@ import java.util.*;
 import android.app.*;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 
 import org.json.simple.JSONValue;
 
-import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.options.Config;
-import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
-import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.network.auth.ServiceNetworkContext;
 
 public class SyncService extends Service implements IBookCollection.Listener, Runnable {
 	private static void log(String message) {
@@ -84,26 +80,9 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	}
 
 	private final SyncOptions mySyncOptions = new SyncOptions();
+	private final SyncNetworkContext myNetworkContext =
+		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.UploadAllBooks);
 
-	private static final class SyncronizationDisabledException extends RuntimeException {
-	}
-
-	private final ZLNetworkContext myNetworkContext = new ServiceNetworkContext(this) {
-		private String myAccountName;
-
-		@Override
-		protected void perform(ZLNetworkRequest request, int socketTimeout, int connectionTimeout) throws ZLNetworkException {
-			if (!canPerformRequest()) {
-				throw new SyncronizationDisabledException();
-			}
-			final String accountName = SyncUtil.getAccountName(this);
-			if (!MiscUtil.equals(myAccountName, accountName)) {
-				reloadCookie();
-				myAccountName = accountName;
-			}
-			super.perform(request, socketTimeout, connectionTimeout);
-		}
-	};
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private static volatile Thread ourSynchronizationThread;
 
@@ -190,37 +169,6 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private boolean canPerformRequest() {
-		if (!mySyncOptions.Enabled.getValue()) {
-			return false;
-		}
-
-		switch (mySyncOptions.UploadAllBooks.getValue()) {
-			default:
-			case never:
-				return false;
-			case always:
-			{
-				final ConnectivityManager cm =
-					(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
-				return cm != null && cm.getActiveNetworkInfo().isConnected();
-			}
-			case viaWifi:
-			{
-				final ConnectivityManager cm =
-					(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
-				if (cm == null) {
-					return false;
-				}
-				final NetworkInfo info = cm.getActiveNetworkInfo();
-				return
-					info != null &&
-					info.isConnected() &&
-					info.getType() == ConnectivityManager.TYPE_WIFI;
-			}
 		}
 	}
 
