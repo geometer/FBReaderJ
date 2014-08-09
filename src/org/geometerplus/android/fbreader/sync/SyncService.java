@@ -175,7 +175,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		}
 
 		try {
-			myNetworkContext.cookieStore().reset();
+			myNetworkContext.reloadCookie();
 			myNetworkContext.perform(new PostRequest("all.hashes", null) {
 				@Override
 				public void processResponse(Object response) {
@@ -229,7 +229,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		if (!mySyncOptions.Enabled.getValue()) {
 			return;
 		}
-		myNetworkContext.cookieStore().reset();
+		myNetworkContext.reloadCookie();
 
 		myCollection.addListener(this);
 		if (ourSynchronizationThread == null) {
