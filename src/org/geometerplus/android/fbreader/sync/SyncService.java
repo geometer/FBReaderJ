@@ -383,11 +383,9 @@ public class SyncService extends Service implements IBookCollection.Listener {
 	}
 
 	private void syncPositions() {
-		mySyncData.update(myCollection);
-
 		try {
 			mySyncPositionsContext.perform(new JsonRequest2(
-				SyncOptions.BASE_URL + "sync/position.exchange", mySyncData.data()
+				SyncOptions.BASE_URL + "sync/position.exchange", mySyncData.data(myCollection)
 			) {
 				@Override
 				public void processResponse(Object response) {
