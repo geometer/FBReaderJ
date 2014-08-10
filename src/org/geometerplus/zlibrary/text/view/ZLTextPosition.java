@@ -75,6 +75,6 @@ public abstract class ZLTextPosition implements Comparable<ZLTextPosition> {
 
 	@Override
 	public String toString() {
-		return getClass().getName() + " " + getParagraphIndex() + " " + getElementIndex() + " " + getCharIndex();
+		return getClass().getSimpleName() + " [" + getParagraphIndex() + "," + getElementIndex() + "," + getCharIndex() + "]";
 	}
 }

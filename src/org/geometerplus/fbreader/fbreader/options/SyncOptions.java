@@ -29,6 +29,8 @@ public class SyncOptions {
 
 	public final ZLBooleanOption Enabled =
 		new ZLBooleanOption("Sync", "Enabled", false);
+	public final ZLIntegerOption Generation =
+		new ZLIntegerOption("Sync", "Generation", -1);
 
 	public static enum Condition {
 		never, viaWifi, always
