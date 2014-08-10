@@ -23,7 +23,6 @@ import java.io.*;
 import java.util.*;
 
 import android.app.*;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
@@ -42,17 +41,6 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 public class SyncService extends Service implements IBookCollection.Listener, Runnable {
 	private static void log(String message) {
 		Log.d("FBReader.Sync", message);
-	}
-
-	public static void enableSync(Context context, boolean enable) {
-		final String action = enable ? Action.START : Action.STOP;
-		context.startService(new Intent(context, SyncService.class).setAction(action));
-	}
-
-	private interface Action {
-		String START = "android.fbreader.action.sync.START";
-		String STOP = "android.fbreader.action.sync.STOP";
-		String SYNC = "android.fbreader.action.sync.SYNC";
 	}
 
 	private enum Status {
@@ -96,14 +84,14 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 
 	private PendingIntent syncIntent() {
 		return PendingIntent.getService(
-			this, 0, new Intent(this, getClass()).setAction(Action.SYNC), 0
+			this, 0, new Intent(this, getClass()).setAction(SyncOperations.Action.SYNC), 0
 		);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		final String action = intent.getAction();
-		if (Action.START.equals(action)) {
+		if (SyncOperations.Action.START.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
 			Config.Instance().runOnConnect(new Runnable() {
@@ -121,11 +109,11 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					);
 				}
 			});
-		} else if (Action.STOP.equals(action)) {
+		} else if (SyncOperations.Action.STOP.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
 			log("stopped");
-		} else if (Action.SYNC.equals(action)) {
+		} else if (SyncOperations.Action.SYNC.equals(action)) {
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, this);
 		}
