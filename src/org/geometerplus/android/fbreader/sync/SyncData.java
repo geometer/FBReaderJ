@@ -19,12 +19,15 @@
 
 package org.geometerplus.android.fbreader.sync;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
+import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.IBookCollection;
 
 class SyncData {
@@ -37,31 +40,64 @@ class SyncData {
 	private final ZLStringOption myLastSyncTimestamp =
 		new ZLStringOption("SyncData", "LastSyncTimestamp", "");
 
-	void update(IBookCollection collection) {
-		final String oldHash = myCurrentBookHash.getValue();
-		final String newHash = collection.getHash(collection.getRecentBook(0));
-		if (newHash != null && !newHash.equals(oldHash)) {
-			myCurrentBookHash.setValue(newHash);
-			if (oldHash.length() != 0) {
-				myCurrentBookTimestamp.setValue(String.valueOf(System.currentTimeMillis()));
-			}
+	private Map<String,Object> positionMap(IBookCollection collection, Book book) {
+		if (book == null) {
+			return null;
 		}
+		final ZLTextPosition pos = collection.getStoredPosition(book.getId());
+		if (pos == null) {
+			return null;
+		}
+		final Map<String,Object> map = new HashMap<String,Object>();
+		map.put("para", pos.getParagraphIndex());
+		map.put("elmt", pos.getElementIndex());
+		map.put("char", pos.getCharIndex());
+		if (pos instanceof ZLTextFixedPosition.WithTimestamp) {
+			map.put("timestamp", ((ZLTextFixedPosition.WithTimestamp)pos).Timestamp);
+		}
+		return map;
 	}
 
-	Map<String,Object> data() {
+	Map<String,Object> data(IBookCollection collection) {
 		final Map<String,Object> map = new HashMap<String,Object>();
-
 		map.put("generation", myGeneration.getValue());
 
-		final String currentBookHash = myCurrentBookHash.getValue();
-		if (currentBookHash.length() != 0) {
-			final Map<String,Object> currentBook = new HashMap<String,Object>();
-			currentBook.put("hash", currentBookHash);
+		final Book currentBook = collection.getRecentBook(0);
+		if (currentBook != null) {
+			final String oldHash = myCurrentBookHash.getValue();
+			final String newHash = collection.getHash(currentBook);
+			if (newHash != null && !newHash.equals(oldHash)) {
+				myCurrentBookHash.setValue(newHash);
+				if (oldHash.length() != 0) {
+					myCurrentBookTimestamp.setValue(String.valueOf(System.currentTimeMillis()));
+				}
+			}
+			final String currentBookHash = newHash != null ? newHash : oldHash;
+
+			final Map<String,Object> currentBookMap = new HashMap<String,Object>();
+			currentBookMap.put("hash", currentBookHash);
 			try {
-				currentBook.put("timestamp", Long.parseLong(myCurrentBookTimestamp.getValue()));
+				currentBookMap.put("timestamp", Long.parseLong(myCurrentBookTimestamp.getValue()));
 			} catch (Exception e) {
 			}
-			map.put("currentbook", currentBook);
+			map.put("currentbook", currentBookMap);
+
+			final List<Map<String,Object>> lst = new ArrayList<Map<String,Object>>();
+			Map<String,Object> posMap = positionMap(collection, currentBook);
+			if (posMap != null) {
+				posMap.put("hash", currentBookHash);
+				lst.add(posMap);
+			}
+			if (!currentBookHash.equals(oldHash)) {
+				posMap = positionMap(collection, collection.getBookByHash(oldHash));
+				if (posMap != null) {
+					posMap.put("hash", oldHash);
+					lst.add(posMap);
+				}
+			}
+			if (lst.size() > 0) {
+				map.put("positions", lst);
+			}
 		}
 
 		System.err.println("DATA = " + map);
