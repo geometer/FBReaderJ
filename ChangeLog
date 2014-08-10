@@ -1,4 +1,5 @@
-===== 2.0 (Jul ??, 2014) =====
+===== 2.0 (Aug 10, 2014) =====
+* Synchronisation with FBReader book network
 * Uses ACCESS_NETWORK_STATE permission to detect if device is connected to the internet over WiFi
 * Download from OPDS for all supported file types
 * Tags and authors editing
