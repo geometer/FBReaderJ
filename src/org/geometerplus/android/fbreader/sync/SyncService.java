@@ -111,7 +111,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 					alarmManager.setInexactRepeating(
 						AlarmManager.ELAPSED_REALTIME,
 						SystemClock.elapsedRealtime(),
-						AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+						AlarmManager.INTERVAL_HALF_HOUR,
 						syncIntent()
 					);
 					SQLiteCookieDatabase.init(SyncService.this);
