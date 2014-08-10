@@ -66,16 +66,15 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		}
 	}
 
-	private String myCurrentBookHash;
-	private Long myCurrentBookTimestamp;
-
+	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private final SyncOptions mySyncOptions = new SyncOptions();
+	private final SyncData mySyncData = new SyncData();
+
 	private final SyncNetworkContext myBookUploadContext =
 		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.UploadAllBooks);
 	private final SyncNetworkContext mySyncPositionsContext =
 		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.Positions);
 
-	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private static volatile Thread ourSynchronizationThread;
 
 	private final List<Book> myQueue = Collections.synchronizedList(new LinkedList<Book>());
@@ -96,8 +95,13 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		if (SyncOperations.Action.START.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
-			Config.Instance().runOnConnect(new Runnable() {
+
+			final Config config = Config.Instance();
+			config.runOnConnect(new Runnable() {
 				public void run() {
+					config.requestAllValuesForGroup("Sync");
+					config.requestAllValuesForGroup("SyncData");
+
 					if (!mySyncOptions.Enabled.getValue()) {
 						log("disabled");
 						return;
@@ -106,7 +110,8 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					alarmManager.setInexactRepeating(
 						AlarmManager.ELAPSED_REALTIME,
 						SystemClock.elapsedRealtime(),
-						AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+						//AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+						10 * 1000,
 						syncIntent()
 					);
 				}
@@ -350,14 +355,16 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 
 	private void syncPositions() {
 		System.err.println("syncPositions");
+		mySyncData.update(myCollection);
+
 		final Map<String,Object> data = new HashMap<String,Object>();
-		data.put("generation", mySyncOptions.Generation.getValue());
+		data.put("generation", mySyncData.Generation.getValue());
 		try {
-			final String currentBookHash = myCurrentBookHash;
+			final String currentBookHash = mySyncData.CurrentBookHash.getValue();
 			if (currentBookHash != null) {
 				final Map<String,Object> currentBook = new HashMap<String,Object>();
 				currentBook.put("hash", currentBookHash);
-				currentBook.put("timestamp", myCurrentBookTimestamp);
+				currentBook.put("timestamp", mySyncData.currentBookTimestamp());
 				data.put("currentbook", currentBook);
 			}
 			System.err.println("DATA = " + data);
@@ -369,10 +376,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					final Map map = (Map)response;
 					System.err.println("RESPONSE = " + map);
 					final int generation = (int)(long)(Long)map.get("generation");
-					mySyncOptions.Generation.setValue(generation);
-					if (currentBookHash != null && currentBookHash.equals(myCurrentBookHash)) {
-						myCurrentBookHash = null;
-					}
+					mySyncData.Generation.setValue(generation);
 				}
 			});
 		} catch (Throwable t) {
@@ -394,11 +398,6 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 				break;
 			case Added:
 				addBook(book);
-				break;
-			case Opened:
-				myCurrentBookHash = myCollection.getHash(myCollection.getRecentBook(0));
-				myCurrentBookTimestamp = System.currentTimeMillis();
-				// TODO: sync immediately
 				break;
 		}
 	}
