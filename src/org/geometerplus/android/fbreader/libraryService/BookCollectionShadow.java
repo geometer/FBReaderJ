@@ -351,13 +351,13 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 
 		try {
-			final PositionWithTimestamp position = myInterface.getStoredPosition(bookId);
-			if (position == null) {
+			final PositionWithTimestamp pos = myInterface.getStoredPosition(bookId);
+			if (pos == null) {
 				return null;
 			}
 
-			return new ZLTextFixedPosition(
-				position.ParagraphIndex, position.ElementIndex, position.CharIndex
+			return new ZLTextFixedPosition.WithTimestamp(
+				pos.ParagraphIndex, pos.ElementIndex, pos.CharIndex, pos.Timestamp
 			);
 		} catch (RemoteException e) {
 			return null;
