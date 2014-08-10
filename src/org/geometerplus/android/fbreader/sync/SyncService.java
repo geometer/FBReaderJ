@@ -30,8 +30,7 @@ import android.util.Log;
 
 import org.json.simple.JSONValue;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
@@ -219,22 +218,15 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		}
 	}
 
-	private static abstract class PostRequest extends ZLNetworkRequest.PostWithMap {
+	private static abstract class PostRequest extends JsonRequest {
 		PostRequest(String app, Map<String,String> data) {
-			super(SyncOptions.BASE_URL + "app/" + app, false);
+			super(SyncOptions.BASE_URL + "app/" + app);
 			if (data != null) {
 				for (Map.Entry<String, String> entry : data.entrySet()) {
 					addPostParameter(entry.getKey(), entry.getValue());
 				}
 			}
 		}
-
-		@Override
-		public void handleStream(InputStream stream, int length) throws IOException, ZLNetworkException {
-			processResponse(JSONValue.parse(new InputStreamReader(stream)));
-		}
-
-		protected abstract void processResponse(Object response);
 	}
 
 	private final class UploadRequest extends ZLNetworkRequest.FileUpload {
@@ -347,6 +339,9 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 			log("UNEXPECTED RESPONSE: " + result);
 			return Status.ServerError;
 		}
+	}
+
+	private void syncPositions() {
 	}
 
 	@Override
