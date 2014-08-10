@@ -66,6 +66,9 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		}
 	}
 
+	private String myCurrentBookHash;
+	private Long myCurrentBookTimestamp;
+
 	private final SyncOptions mySyncOptions = new SyncOptions();
 	private final SyncNetworkContext myBookUploadContext =
 		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.UploadAllBooks);
@@ -113,6 +116,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 			alarmManager.cancel(syncIntent());
 			log("stopped");
 		} else if (SyncOperations.Action.SYNC.equals(action)) {
+			System.err.println("SYNC-SYNC-SYNC");
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, this);
 		}
@@ -174,6 +178,9 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 				public void run() {
 					final long start = System.currentTimeMillis();
 					int count = 0;
+
+					syncPositions();
+
 					final Map<Status,Integer> statusCounts = new HashMap<Status,Integer>();
 					try {
 						clearHashTables();
@@ -342,6 +349,35 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	}
 
 	private void syncPositions() {
+		System.err.println("syncPositions");
+		final Map<String,Object> data = new HashMap<String,Object>();
+		data.put("generation", mySyncOptions.Generation.getValue());
+		try {
+			final String currentBookHash = myCurrentBookHash;
+			if (currentBookHash != null) {
+				final Map<String,Object> currentBook = new HashMap<String,Object>();
+				currentBook.put("hash", currentBookHash);
+				currentBook.put("timestamp", myCurrentBookTimestamp);
+				data.put("currentbook", currentBook);
+			}
+			System.err.println("DATA = " + data);
+			mySyncPositionsContext.perform(new JsonRequest2(
+				SyncOptions.BASE_URL + "sync/position.exchange", data
+			) {
+				@Override
+				public void processResponse(Object response) {
+					final Map map = (Map)response;
+					System.err.println("RESPONSE = " + map);
+					final int generation = (int)(long)(Long)map.get("generation");
+					mySyncOptions.Generation.setValue(generation);
+					if (currentBookHash != null && currentBookHash.equals(myCurrentBookHash)) {
+						myCurrentBookHash = null;
+					}
+				}
+			});
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
 	}
 
 	@Override
@@ -358,6 +394,11 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 				break;
 			case Added:
 				addBook(book);
+				break;
+			case Opened:
+				myCurrentBookHash = myCollection.getHash(myCollection.getRecentBook(0));
+				myCurrentBookTimestamp = System.currentTimeMillis();
+				// TODO: sync immediately
 				break;
 		}
 	}
