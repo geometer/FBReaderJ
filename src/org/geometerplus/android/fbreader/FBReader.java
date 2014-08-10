@@ -58,7 +58,7 @@ import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.sync.SyncService;
+import org.geometerplus.android.fbreader.sync.SyncOperations;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.*;
@@ -488,7 +488,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	protected void onResume() {
 		super.onResume();
 
-		SyncService.enableSync(this, true);
+		SyncOperations.enableSync(this, true);
 
 		myStartTimer = true;
 		Config.Instance().runOnConnect(new Runnable() {
