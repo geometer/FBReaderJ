@@ -19,37 +19,57 @@
 
 package org.geometerplus.android.fbreader.sync;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.book.IBookCollection;
 
 class SyncData {
-	public final ZLIntegerOption Generation =
+	private final ZLIntegerOption myGeneration =
 		new ZLIntegerOption("SyncData", "Generation", -1);
-	public final ZLStringOption CurrentBookHash =
+	private final ZLStringOption myCurrentBookHash =
 		new ZLStringOption("SyncData", "CurrentBookHash", "");
 	private final ZLStringOption myCurrentBookTimestamp =
 		new ZLStringOption("SyncData", "CurrentBookTimestamp", "");
-	public final ZLStringOption LastSyncTimestamp =
+	private final ZLStringOption myLastSyncTimestamp =
 		new ZLStringOption("SyncData", "LastSyncTimestamp", "");
 
 	void update(IBookCollection collection) {
-		final String oldHash = CurrentBookHash.getValue();
+		final String oldHash = myCurrentBookHash.getValue();
 		final String newHash = collection.getHash(collection.getRecentBook(0));
 		if (newHash != null && !newHash.equals(oldHash)) {
-			CurrentBookHash.setValue(newHash);
+			myCurrentBookHash.setValue(newHash);
 			if (oldHash.length() != 0) {
 				myCurrentBookTimestamp.setValue(String.valueOf(System.currentTimeMillis()));
 			}
 		}
 	}
 
-	final long currentBookTimestamp() {
-		try {
-			return Long.parseLong(myCurrentBookTimestamp.getValue());
-		} catch (Exception e) {
-			return -1L;
+	Map<String,Object> data() {
+		final Map<String,Object> map = new HashMap<String,Object>();
+
+		map.put("generation", myGeneration.getValue());
+
+		final String currentBookHash = myCurrentBookHash.getValue();
+		if (currentBookHash.length() != 0) {
+			final Map<String,Object> currentBook = new HashMap<String,Object>();
+			currentBook.put("hash", currentBookHash);
+			try {
+				currentBook.put("timestamp", Long.parseLong(myCurrentBookTimestamp.getValue()));
+			} catch (Exception e) {
+			}
+			map.put("currentbook", currentBook);
 		}
+
+		System.err.println("DATA = " + map);
+		return map;
+	}
+
+	void updateFromServer(Map<String,Object> data) {
+		System.err.println("RESPONSE = " + data);
+		myGeneration.setValue((int)(long)(Long)data.get("generation"));
 	}
 }

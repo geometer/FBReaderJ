@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
-public class SyncService extends Service implements IBookCollection.Listener, Runnable {
+public class SyncService extends Service implements IBookCollection.Listener {
 	private static void log(String message) {
 		Log.d("FBReader.Sync", message);
 	}
@@ -76,6 +76,7 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		new SyncNetworkContext(this, mySyncOptions, mySyncOptions.Positions);
 
 	private static volatile Thread ourSynchronizationThread;
+	private static volatile Thread ourQuickSynchronizationThread;
 
 	private final List<Book> myQueue = Collections.synchronizedList(new LinkedList<Book>());
 
@@ -110,10 +111,11 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 					alarmManager.setInexactRepeating(
 						AlarmManager.ELAPSED_REALTIME,
 						SystemClock.elapsedRealtime(),
-						//AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-						10 * 1000,
+						AlarmManager.INTERVAL_FIFTEEN_MINUTES,
 						syncIntent()
 					);
+					SQLiteCookieDatabase.init(SyncService.this);
+					myCollection.bindToService(SyncService.this, myQuickSynchroniser);
 				}
 			});
 		} else if (SyncOperations.Action.STOP.equals(action)) {
@@ -121,9 +123,12 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 			alarmManager.cancel(syncIntent());
 			log("stopped");
 		} else if (SyncOperations.Action.SYNC.equals(action)) {
-			System.err.println("SYNC-SYNC-SYNC");
 			SQLiteCookieDatabase.init(this);
-			myCollection.bindToService(this, this);
+			myCollection.bindToService(this, myQuickSynchroniser);
+			myCollection.bindToService(this, myStandardSynchroniser);
+		} else if (SyncOperations.Action.QUICK_SYNC.equals(action)) {
+			SQLiteCookieDatabase.init(this);
+			myCollection.bindToService(this, myQuickSynchroniser);
 		}
 
 		return START_STICKY;
@@ -170,65 +175,89 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 		}
 	}
 
-	@Override
-	public synchronized void run() {
-		if (!mySyncOptions.Enabled.getValue()) {
-			return;
-		}
-		myBookUploadContext.reloadCookie();
+	private final Runnable myStandardSynchroniser = new Runnable() {
+		@Override
+		public synchronized void run() {
+			if (!mySyncOptions.Enabled.getValue()) {
+				return;
+			}
+			myBookUploadContext.reloadCookie();
 
-		myCollection.addListener(this);
-		if (ourSynchronizationThread == null) {
-			ourSynchronizationThread = new Thread() {
-				public void run() {
-					final long start = System.currentTimeMillis();
-					int count = 0;
+			myCollection.addListener(SyncService.this);
+			if (ourSynchronizationThread == null) {
+				ourSynchronizationThread = new Thread() {
+					public void run() {
+						final long start = System.currentTimeMillis();
+						int count = 0;
 
-					syncPositions();
-
-					final Map<Status,Integer> statusCounts = new HashMap<Status,Integer>();
-					try {
-						clearHashTables();
-						for (BookQuery q = new BookQuery(new Filter.Empty(), 20);; q = q.next()) {
-							final List<Book> books = myCollection.books(q);
-							if (books.isEmpty()) {
-								break;
-							}
-							for (Book b : books) {
-								addBook(b);
-							}
-						}
-						while (!myQueue.isEmpty()) {
-							final Book book = myQueue.remove(0);
-							++count;
-							final Status status = uploadBookToServer(book);
-							if (status.Label != null) {
-								for (String label : Status.AllLabels) {
-									if (status.Label.equals(label)) {
-										book.addLabel(label);
-									} else {
-										book.removeLabel(label);
-									}
+						final Map<Status,Integer> statusCounts = new HashMap<Status,Integer>();
+						try {
+							clearHashTables();
+							for (BookQuery q = new BookQuery(new Filter.Empty(), 20);; q = q.next()) {
+								final List<Book> books = myCollection.books(q);
+								if (books.isEmpty()) {
+									break;
 								}
-								myCollection.saveBook(book);
+								for (Book b : books) {
+									addBook(b);
+								}
 							}
-							final Integer sc = statusCounts.get(status);
-							statusCounts.put(status, sc != null ? sc + 1 : 1);
+							while (!myQueue.isEmpty()) {
+								final Book book = myQueue.remove(0);
+								++count;
+								final Status status = uploadBookToServer(book);
+								if (status.Label != null) {
+									for (String label : Status.AllLabels) {
+										if (status.Label.equals(label)) {
+											book.addLabel(label);
+										} else {
+											book.removeLabel(label);
+										}
+									}
+									myCollection.saveBook(book);
+								}
+								final Integer sc = statusCounts.get(status);
+								statusCounts.put(status, sc != null ? sc + 1 : 1);
+							}
+						} finally {
+							log("SYNCHRONIZATION FINISHED IN " + (System.currentTimeMillis() - start) + "msecs");
+							log("TOTAL BOOKS PROCESSED: " + count);
+							for (Status value : Status.values()) {
+								log("STATUS " + value + ": " + statusCounts.get(value));
+							}
+							ourSynchronizationThread = null;
 						}
-					} finally {
-						log("SYNCHRONIZATION FINISHED IN " + (System.currentTimeMillis() - start) + "msecs");
-						log("TOTAL BOOKS PROCESSED: " + count);
-						for (Status value : Status.values()) {
-							log("STATUS " + value + ": " + statusCounts.get(value));
-						}
-						ourSynchronizationThread = null;
 					}
-				}
-			};
-			ourSynchronizationThread.setPriority(Thread.MIN_PRIORITY);
-			ourSynchronizationThread.start();
+				};
+				ourSynchronizationThread.setPriority(Thread.MIN_PRIORITY);
+				ourSynchronizationThread.start();
+			}
 		}
-	}
+	};
+
+	private final Runnable myQuickSynchroniser = new Runnable() {
+		@Override
+		public synchronized void run() {
+			if (!mySyncOptions.Enabled.getValue()) {
+				return;
+			}
+			mySyncPositionsContext.reloadCookie();
+
+			if (ourQuickSynchronizationThread == null) {
+				ourQuickSynchronizationThread = new Thread() {
+					public void run() {
+						try {
+							syncPositions();
+						} finally {
+							ourQuickSynchronizationThread = null;
+						}
+					}
+				};
+				ourQuickSynchronizationThread.setPriority(Thread.MAX_PRIORITY);
+				ourQuickSynchronizationThread.start();
+			}
+		}
+	};
 
 	private static abstract class PostRequest extends JsonRequest {
 		PostRequest(String app, Map<String,String> data) {
@@ -354,29 +383,15 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 	}
 
 	private void syncPositions() {
-		System.err.println("syncPositions");
 		mySyncData.update(myCollection);
 
-		final Map<String,Object> data = new HashMap<String,Object>();
-		data.put("generation", mySyncData.Generation.getValue());
 		try {
-			final String currentBookHash = mySyncData.CurrentBookHash.getValue();
-			if (currentBookHash != null) {
-				final Map<String,Object> currentBook = new HashMap<String,Object>();
-				currentBook.put("hash", currentBookHash);
-				currentBook.put("timestamp", mySyncData.currentBookTimestamp());
-				data.put("currentbook", currentBook);
-			}
-			System.err.println("DATA = " + data);
 			mySyncPositionsContext.perform(new JsonRequest2(
-				SyncOptions.BASE_URL + "sync/position.exchange", data
+				SyncOptions.BASE_URL + "sync/position.exchange", mySyncData.data()
 			) {
 				@Override
 				public void processResponse(Object response) {
-					final Map map = (Map)response;
-					System.err.println("RESPONSE = " + map);
-					final int generation = (int)(long)(Long)map.get("generation");
-					mySyncData.Generation.setValue(generation);
+					mySyncData.updateFromServer((Map<String,Object>)response);
 				}
 			});
 		} catch (Throwable t) {
@@ -398,6 +413,9 @@ public class SyncService extends Service implements IBookCollection.Listener, Ru
 				break;
 			case Added:
 				addBook(book);
+				break;
+			case Opened:
+				SyncOperations.quickSync(this);
 				break;
 		}
 	}
