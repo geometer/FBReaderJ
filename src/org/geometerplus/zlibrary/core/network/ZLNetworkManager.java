@@ -230,7 +230,7 @@ public class ZLNetworkManager {
 	};
 
 	final CookieStore CookieStore = new CookieStore() {
-		private HashMap<Key,Cookie> myCookies;
+		private volatile Map<Key,Cookie> myCookies;
 
 		public synchronized void addCookie(Cookie cookie) {
 			if (myCookies == null) {
@@ -280,7 +280,7 @@ public class ZLNetworkManager {
 
 		public synchronized List<Cookie> getCookies() {
 			if (myCookies == null) {
-				myCookies = new HashMap<Key,Cookie>();
+				myCookies = Collections.synchronizedMap(new HashMap<Key,Cookie>());
 				final CookieDatabase db = CookieDatabase.getInstance();
 				if (db != null) {
 					for (Cookie c : db.loadCookies()) {
