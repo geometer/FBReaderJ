@@ -30,10 +30,15 @@ public abstract class SyncOperations {
 		String START = "android.fbreader.action.sync.START";
 		String STOP = "android.fbreader.action.sync.STOP";
 		String SYNC = "android.fbreader.action.sync.SYNC";
+		String QUICK_SYNC = "android.fbreader.action.sync.QUICK_SYNC";
 	}
 
 	public static void enableSync(Context context, boolean enable) {
 		final String action = enable ? Action.START : Action.STOP;
 		context.startService(new Intent(context, SyncService.class).setAction(action));
+	}
+
+	public static void quickSync(Context context) {
+		context.startService(new Intent(context, SyncService.class).setAction(Action.QUICK_SYNC));
 	}
 }
