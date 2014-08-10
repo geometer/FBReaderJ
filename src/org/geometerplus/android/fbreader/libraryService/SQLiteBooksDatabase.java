@@ -75,7 +75,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 27;
+		final int currentVersion = 28;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -137,6 +137,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables25();
 			case 26:
 				updateTables26();
+			case 27:
+				updateTables27();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -911,13 +913,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected ZLTextPosition getStoredPosition(long bookId) {
 		ZLTextPosition position = null;
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT paragraph,word,char FROM BookState WHERE book_id = " + bookId, null
+			"SELECT paragraph,word,char,timestamp FROM BookState WHERE book_id = " + bookId, null
 		);
 		if (cursor.moveToNext()) {
-			position = new ZLTextFixedPosition(
+			position = new ZLTextFixedPosition.WithTimestamp(
 				(int)cursor.getLong(0),
 				(int)cursor.getLong(1),
-				(int)cursor.getLong(2)
+				(int)cursor.getLong(2),
+				cursor.getLong(3)
 			);
 		}
 		cursor.close();
@@ -926,12 +929,13 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected void storePosition(long bookId, ZLTextPosition position) {
 		final SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char) VALUES (?,?,?,?)"
+			"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char,timestamp) VALUES (?,?,?,?,?)"
 		);
 		statement.bindLong(1, bookId);
 		statement.bindLong(2, position.getParagraphIndex());
 		statement.bindLong(3, position.getElementIndex());
 		statement.bindLong(4, position.getCharIndex());
+		statement.bindLong(5, System.currentTimeMillis());
 		statement.execute();
 	}
 
@@ -1456,6 +1460,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"book_id INTEGER PRIMARY KEY REFERENCES Books(book_id)," +
 				"timestamp INTEGER NOT NULL," +
 				"hash TEXT(40) NOT NULL)");
+	}
+
+	private void updateTables27() {
+		myDatabase.execSQL("ALTER TABLE BookState ADD COLUMN timestamp INTEGER");
 	}
 
 	private SQLiteStatement get(String sql) {
