@@ -44,17 +44,15 @@ class SyncData {
 		if (book == null) {
 			return null;
 		}
-		final ZLTextPosition pos = collection.getStoredPosition(book.getId());
+		final ZLTextFixedPosition.WithTimestamp pos = collection.getStoredPosition(book.getId());
 		if (pos == null) {
 			return null;
 		}
 		final Map<String,Object> map = new HashMap<String,Object>();
-		map.put("para", pos.getParagraphIndex());
-		map.put("elmt", pos.getElementIndex());
-		map.put("char", pos.getCharIndex());
-		if (pos instanceof ZLTextFixedPosition.WithTimestamp) {
-			map.put("timestamp", ((ZLTextFixedPosition.WithTimestamp)pos).Timestamp);
-		}
+		map.put("para", pos.ParagraphIndex);
+		map.put("elmt", pos.ElementIndex);
+		map.put("char", pos.CharIndex);
+		map.put("timestamp", pos.Timestamp);
 		return map;
 	}
 
