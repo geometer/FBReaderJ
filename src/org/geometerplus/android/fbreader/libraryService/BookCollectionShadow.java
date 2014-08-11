@@ -345,7 +345,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized ZLTextPosition getStoredPosition(long bookId) {
+	public synchronized ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
 		if (myInterface == null) {
 			return null;
 		}
