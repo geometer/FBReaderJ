@@ -43,6 +43,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.sync.SyncUtil;
 //import org.geometerplus.fbreader.tips.TipsManager;
 
@@ -174,6 +175,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					syncOptions.Enabled.setValue(false);
 					enableSynchronisation();
 					syncPreferences.run();
+					new SyncData().reset();
 					return;
 				}
 
