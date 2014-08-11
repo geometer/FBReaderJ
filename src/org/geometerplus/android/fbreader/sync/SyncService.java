@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.core.options.Config;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.fbreader.options.SyncOptions;
+import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 public class SyncService extends Service implements IBookCollection.Listener {
