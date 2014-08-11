@@ -70,6 +70,7 @@ public class SyncData {
 	public Map<String,Object> data(IBookCollection collection) {
 		final Map<String,Object> map = new HashMap<String,Object>();
 		map.put("generation", myGeneration.getValue());
+		map.put("timestamp", System.currentTimeMillis());
 
 		final Book currentBook = collection.getRecentBook(0);
 		if (currentBook != null) {
@@ -92,13 +93,17 @@ public class SyncData {
 			map.put("currentbook", currentBookMap);
 
 			final List<Map<String,Object>> lst = new ArrayList<Map<String,Object>>();
-			Map<String,Object> posMap = positionMap(collection, currentBook);
-			if (posMap != null) {
-				posMap.put("hash", currentBookHash);
-				lst.add(posMap);
+			if (positionOption(currentBookHash).getValue().length() == 0) {
+				final Map<String,Object> posMap = positionMap(collection, currentBook);
+				if (posMap != null) {
+					posMap.put("hash", currentBookHash);
+					lst.add(posMap);
+				}
 			}
-			if (!currentBookHash.equals(oldHash)) {
-				posMap = positionMap(collection, collection.getBookByHash(oldHash));
+			if (!currentBookHash.equals(oldHash) &&
+				positionOption(oldHash).getValue().length() == 0) {
+				final Map<String,Object> posMap =
+					positionMap(collection, collection.getBookByHash(oldHash));
 				if (posMap != null) {
 					posMap.put("hash", oldHash);
 					lst.add(posMap);
@@ -113,9 +118,13 @@ public class SyncData {
 		return map;
 	}
 
-	public void updateFromServer(Map<String,Object> data) {
+	public boolean updateFromServer(Map<String,Object> data) {
 		System.err.println("RESPONSE = " + data);
-		myGeneration.setValue((int)(long)(Long)data.get("generation"));
+		final int generation = (int)(long)(Long)data.get("generation");
+		if (myGeneration.getValue() == generation) {
+			return false;
+		}
+		myGeneration.setValue(generation);
 
 		final List<Map> positions = (List<Map>)data.get("positions");
 		if (positions != null) {
@@ -126,6 +135,7 @@ public class SyncData {
 				}
 			}
 		}
+		return true;
 	}
 
 	private ZLStringOption positionOption(String hash) {
@@ -136,11 +146,18 @@ public class SyncData {
 		positionOption(hash).setValue(pos != null ? JSONValue.toJSONString(position2Map(pos)) : "");
 	}
 
-	public ZLTextFixedPosition.WithTimestamp getPosition(String hash) {
+	public boolean hasPosition(String hash) {
+		return positionOption(hash).getValue().length() > 0;
+	}
+
+	public ZLTextFixedPosition.WithTimestamp getAndCleanPosition(String hash) {
+		final ZLStringOption option = positionOption(hash);
 		try {
-			return map2Position((Map)JSONValue.parse(positionOption(hash).getValue()));
+			return map2Position((Map)JSONValue.parse(option.getValue()));
 		} catch (Throwable t) {
 			return null;
+		} finally {
+			option.setValue("");
 		}
 	}
 }

@@ -524,6 +524,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			action.run();
 		}
 
+		registerReceiver(mySyncUpdateReceiver, new IntentFilter(SyncOperations.UPDATED));
+
 		SetScreenOrientationAction.setOrientation(this, ZLibrary.Instance().getOrientationOption().getValue());
 		if (myCancelIntent != null) {
 			final Intent intent = myCancelIntent;
@@ -549,7 +551,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 			});
 		} else {
-			myFBReaderApp.gotoStoredPosition();
+			myFBReaderApp.gotoSyncedPosition();
 		}
 
 		PopupPanel.restoreVisibilities(myFBReaderApp);
@@ -561,6 +563,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		SyncOperations.quickSync(this);
 
 		IsPaused = true;
+		try {
+			unregisterReceiver(mySyncUpdateReceiver);
+		} catch (IllegalArgumentException e) {
+		}
 		try {
 			unregisterReceiver(myBatteryInfoReceiver);
 		} catch (IllegalArgumentException e) {
@@ -999,4 +1005,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			}
 		});
 	}
+
+	private BroadcastReceiver mySyncUpdateReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			myFBReaderApp.gotoSyncedPosition();
+		}
+	};
 }

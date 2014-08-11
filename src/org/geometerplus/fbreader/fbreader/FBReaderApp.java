@@ -461,14 +461,21 @@ public final class FBReaderApp extends ZLApplication {
 	private volatile ZLTextPosition myStoredPosition;
 	private volatile Book myStoredPositionBook;
 
-	public void gotoStoredPosition() {
+	public void gotoSyncedPosition() {
+		if (myStoredPositionBook != null &&
+			mySyncData.hasPosition(Collection.getHash(myStoredPositionBook))) {
+			gotoStoredPosition();
+		}
+	}
+
+	private void gotoStoredPosition() {
 		myStoredPositionBook = Model != null ? Model.Book : null;
 		if (myStoredPositionBook == null) {
 			return;
 		}
 
 		final ZLTextFixedPosition.WithTimestamp fromServer =
-			mySyncData.getPosition(Collection.getHash(myStoredPositionBook));
+			mySyncData.getAndCleanPosition(Collection.getHash(myStoredPositionBook));
 		final ZLTextFixedPosition.WithTimestamp local =
 			Collection.getStoredPosition(myStoredPositionBook.getId());
 
