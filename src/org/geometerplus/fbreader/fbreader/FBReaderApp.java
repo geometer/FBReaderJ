@@ -135,7 +135,7 @@ public final class FBReaderApp extends ZLApplication {
 		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
 	}
 
-	private Book getCurrentServerBook() {
+	public Book getCurrentServerBook() {
 		for (String hash : mySyncData.getServerBookHashes()) {
 			final Book book = Collection.getBookByHash(hash);
 			if (book != null) {
