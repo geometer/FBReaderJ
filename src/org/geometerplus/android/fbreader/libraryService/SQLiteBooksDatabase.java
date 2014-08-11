@@ -910,8 +910,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.execute();
 	}
 
-	protected ZLTextPosition getStoredPosition(long bookId) {
-		ZLTextPosition position = null;
+	protected ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
+		ZLTextFixedPosition.WithTimestamp position = null;
 		Cursor cursor = myDatabase.rawQuery(
 			"SELECT paragraph,word,char,timestamp FROM BookState WHERE book_id = " + bookId, null
 		);
