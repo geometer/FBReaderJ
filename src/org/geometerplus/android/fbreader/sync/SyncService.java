@@ -390,7 +390,9 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			) {
 				@Override
 				public void processResponse(Object response) {
-					mySyncData.updateFromServer((Map<String,Object>)response);
+					if (mySyncData.updateFromServer((Map<String,Object>)response)) {
+						sendBroadcast(new Intent(SyncOperations.UPDATED));
+					}
 				}
 			});
 		} catch (Throwable t) {
