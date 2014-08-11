@@ -135,6 +135,16 @@ public final class FBReaderApp extends ZLApplication {
 		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
 	}
 
+	private Book getCurrentServerBook() {
+		for (String hash : mySyncData.getServerBookHashes()) {
+			final Book book = Collection.getBookByHash(hash);
+			if (book != null) {
+				return book;
+			}
+		}
+		return null;
+	}
+
 	public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
 		if (Model != null) {
 			if (book == null || bookmark == null && book.File.equals(Model.Book.File)) {
@@ -143,7 +153,10 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		if (book == null) {
-			book = Collection.getRecentBook(0);
+			book = getCurrentServerBook();
+			if (book == null) {
+				book = Collection.getRecentBook(0);
+			}
 			if (book == null || !book.File.exists()) {
 				book = Collection.getBookByFile(BookUtil.getHelpFile());
 			}
@@ -464,16 +477,25 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private volatile SaverThread mySaverThread;
-	private volatile ZLTextPosition myStoredPosition;
-	private volatile Book myStoredPositionBook;
+	public void useSyncInfo(boolean openOtherBook) {
+		if (openOtherBook) {
+			final Book fromServer = getCurrentServerBook();
+			if (fromServer != null && !fromServer.equals(Collection.getRecentBook(0))) {
+				openBook(fromServer, null, null);
+				return;
+			}
+		}
 
-	public void gotoSyncedPosition() {
 		if (myStoredPositionBook != null &&
 			mySyncData.hasPosition(Collection.getHash(myStoredPositionBook))) {
 			gotoStoredPosition();
+			storePosition();
 		}
 	}
+
+	private volatile SaverThread mySaverThread;
+	private volatile ZLTextPosition myStoredPosition;
+	private volatile Book myStoredPositionBook;
 
 	private void gotoStoredPosition() {
 		myStoredPositionBook = Model != null ? Model.Book : null;

@@ -100,6 +100,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	final DataService.Connection DataConnection = new DataService.Connection();
 
 	volatile boolean IsPaused = false;
+	private volatile long myResumeTimestamp;
 	volatile Runnable OnResumeAction = null;
 
 	private Intent myCancelIntent = null;
@@ -349,7 +350,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myOpenBookIntent = null;
 				getCollection().bindToService(this, new Runnable() {
 					public void run() {
-						myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+						myFBReaderApp.openBook(null, null, null);
 					}
 				});
 			}
@@ -548,6 +549,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 		IsPaused = false;
+		myResumeTimestamp = System.currentTimeMillis();
 		if (OnResumeAction != null) {
 			final Runnable action = OnResumeAction;
 			OnResumeAction = null;
@@ -581,7 +583,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 			});
 		} else {
-			myFBReaderApp.gotoSyncedPosition();
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					myFBReaderApp.useSyncInfo(true);
+				}
+			});
 		}
 
 		PopupPanel.restoreVisibilities(myFBReaderApp);
@@ -1149,7 +1155,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private BroadcastReceiver mySyncUpdateReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
-			myFBReaderApp.gotoSyncedPosition();
+			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis());
 		}
 	};
 }
