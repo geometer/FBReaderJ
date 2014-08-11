@@ -26,6 +26,8 @@ import android.content.Context;
 import android.content.Intent;
 
 public abstract class SyncOperations {
+	public static final String UPDATED = "android.fbreader.event.sync.UPDATED";
+
 	interface Action {
 		String START = "android.fbreader.action.sync.START";
 		String STOP = "android.fbreader.action.sync.STOP";

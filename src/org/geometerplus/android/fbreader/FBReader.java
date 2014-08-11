@@ -100,6 +100,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	final DataService.Connection DataConnection = new DataService.Connection();
 
 	volatile boolean IsPaused = false;
+	private volatile long myResumeTimestamp;
 	volatile Runnable OnResumeAction = null;
 
 	private Intent myCancelIntent = null;
@@ -349,7 +350,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myOpenBookIntent = null;
 				getCollection().bindToService(this, new Runnable() {
 					public void run() {
-						myFBReaderApp.openBook(myFBReaderApp.Collection.getRecentBook(0), null, null);
+						myFBReaderApp.openBook(null, null, null);
 					}
 				});
 			}
@@ -548,11 +549,14 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 		IsPaused = false;
+		myResumeTimestamp = System.currentTimeMillis();
 		if (OnResumeAction != null) {
 			final Runnable action = OnResumeAction;
 			OnResumeAction = null;
 			action.run();
 		}
+
+		registerReceiver(mySyncUpdateReceiver, new IntentFilter(SyncOperations.UPDATED));
 
 		SetScreenOrientationAction.setOrientation(this, ZLibrary.Instance().getOrientationOption().getValue());
 		if (myCancelIntent != null) {
@@ -579,7 +583,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				}
 			});
 		} else {
-			myFBReaderApp.gotoStoredPosition();
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					myFBReaderApp.useSyncInfo(true);
+				}
+			});
 		}
 
 		PopupPanel.restoreVisibilities(myFBReaderApp);
@@ -594,6 +602,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		SyncOperations.quickSync(this);
 
 		IsPaused = true;
+		try {
+			unregisterReceiver(mySyncUpdateReceiver);
+		} catch (IllegalArgumentException e) {
+		}
 		try {
 			unregisterReceiver(myBatteryInfoReceiver);
 		} catch (IllegalArgumentException e) {
@@ -1140,4 +1152,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			// ignore
 		}
 	}
+
+	private BroadcastReceiver mySyncUpdateReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis());
+		}
+	};
 }
