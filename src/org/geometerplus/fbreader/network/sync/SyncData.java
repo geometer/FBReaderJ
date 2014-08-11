@@ -17,20 +17,21 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.sync;
+package org.geometerplus.fbreader.network.sync;
 
 import java.util.*;
+
+import org.json.simple.JSONValue;
 
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.IBookCollection;
 
-class SyncData {
+public class SyncData {
 	private final ZLIntegerOption myGeneration =
 		new ZLIntegerOption("SyncData", "Generation", -1);
 	private final ZLStringOption myCurrentBookHash =
@@ -40,14 +41,7 @@ class SyncData {
 	private final ZLStringOption myLastSyncTimestamp =
 		new ZLStringOption("SyncData", "LastSyncTimestamp", "");
 
-	private Map<String,Object> positionMap(IBookCollection collection, Book book) {
-		if (book == null) {
-			return null;
-		}
-		final ZLTextFixedPosition.WithTimestamp pos = collection.getStoredPosition(book.getId());
-		if (pos == null) {
-			return null;
-		}
+	private Map<String,Object> positionMap(ZLTextFixedPosition.WithTimestamp pos) {
 		final Map<String,Object> map = new HashMap<String,Object>();
 		map.put("para", pos.ParagraphIndex);
 		map.put("elmt", pos.ElementIndex);
@@ -56,7 +50,15 @@ class SyncData {
 		return map;
 	}
 
-	Map<String,Object> data(IBookCollection collection) {
+	private Map<String,Object> positionMap(IBookCollection collection, Book book) {
+		if (book == null) {
+			return null;
+		}
+		final ZLTextFixedPosition.WithTimestamp pos = collection.getStoredPosition(book.getId());
+		return pos != null ? positionMap(pos) : null;
+	}
+
+	public Map<String,Object> data(IBookCollection collection) {
 		final Map<String,Object> map = new HashMap<String,Object>();
 		map.put("generation", myGeneration.getValue());
 
@@ -102,8 +104,30 @@ class SyncData {
 		return map;
 	}
 
-	void updateFromServer(Map<String,Object> data) {
+	public void updateFromServer(Map<String,Object> data) {
 		System.err.println("RESPONSE = " + data);
 		myGeneration.setValue((int)(long)(Long)data.get("generation"));
+	}
+
+	private ZLStringOption positionOption(String hash) {
+		return new ZLStringOption("SyncData", "Pos:" + hash, "");
+	}
+
+	private void savePosition(String hash, ZLTextFixedPosition.WithTimestamp pos) {
+		positionOption(hash).setValue(pos != null ? JSONValue.toJSONString(positionMap(pos)) : "");
+	}
+
+	public ZLTextFixedPosition.WithTimestamp getPosition(String hash) {
+		try {
+			final Map<String,Long> map = (Map)JSONValue.parse(positionOption(hash).getValue());
+			return new ZLTextFixedPosition.WithTimestamp(
+				(int)(long)map.get("para"),
+				(int)(long)map.get("elmt"),
+				(int)(long)map.get("char"),
+				map.get("timestamp")
+			);
+		} catch (Throwable t) {
+			return null;
+		}
 	}
 }
