@@ -59,7 +59,7 @@ public class PluginCollection {
 
 	private PluginCollection() {
 		addPlugin(new MobipocketPlugin());
-		addPlugin(new DjVuPlugin());
+		//addPlugin(new DjVuPlugin());
 		addPlugin(new PDFPlugin());
 	}
 
