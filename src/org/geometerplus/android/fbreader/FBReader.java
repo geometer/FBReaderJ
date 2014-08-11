@@ -573,6 +573,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					openBook(intent, null, true);
 				}
 			});
+		} else if (myFBReaderApp.getCurrentServerBook() != null) {
+			getCollection().bindToService(this, new Runnable() {
+				public void run() {
+					myFBReaderApp.useSyncInfo(true);
+				}
+			});
 		} else if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
