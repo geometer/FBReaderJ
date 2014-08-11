@@ -54,9 +54,11 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
+import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
+import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
@@ -361,6 +363,17 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myFBReaderApp.runAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
 			myOpenBookIntent = intent;
+			if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
+				final ExternalFormatPlugin plugin =
+					(ExternalFormatPlugin)myFBReaderApp.ExternalBook.getPluginOrNull();
+				try {
+					startActivity(PluginUtil.createIntent(
+						plugin, "android.fbreader.action.plugin.KILL"
+					));
+				} catch (ActivityNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
 		} else if (FBReaderIntents.Action.PLUGIN.equals(action)) {
 			new RunPluginAction(this, myFBReaderApp, data).run();
 		} else if (Intent.ACTION_SEARCH.equals(action)) {
