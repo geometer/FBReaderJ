@@ -997,6 +997,7 @@
 		<node name="emptyNetworkSearchResults" value="Es wurden leider keine Bücher gefunden."/>
 		<node name="videoServiceNotWorking" value="Der Videoservice ist nicht verfügbar."/>
 		<node name="videoPlayerNotFound" value="Kein installierter Videoplayer gefunden."/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
