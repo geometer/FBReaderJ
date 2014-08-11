@@ -7,4 +7,24 @@
   <style name="FBReader.Transparent" parent="android:Theme.Translucent.NoTitleBar">
     <item name="android:windowBackground">@color/transparent</item>
   </style>
+
+  <!-- the theme applied to the application or activity -->
+  <style name="ActivityWithWhiteActionBar"
+           parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/WhiteActionBar</item>
+  </style>
+
+  <!-- ActionBar styles -->
+  <style name="WhiteActionBar"
+           parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:titleTextStyle">@style/WhiteActionBarTitleStyle</item>
+    </style>
+
+  <style name="WhiteActionBarTitleStyle"
+           parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">"PT Sans Pro"</item>
+  </style>
+
 </resources>
