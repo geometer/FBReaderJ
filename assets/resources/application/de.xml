@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- German FBReaderJ resources, by Victor Massini -->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Ingolf Kübler 2011/07/03 -->
 <!-- Updated by Ingolf Kübler 2012/07/01 -->
 <!-- Updated by Matthias Dill 2014/06/10 -->
+<!-- Updated by Matthias Dill 2014/08/11 -->
 <resources>
 	<node name="library" value="FBReader Bibliothek">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -31,19 +32,19 @@
 		<node name="found" value="Gefunden">
 			<node name="summary" value="Suchergebnisse für: %s"/>
 		</node>
-		<node name="sync" value="Synchronisation" toBeTranslated="true">
-			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
-			<node name="sync-success" value="Synchronised" toBeTranslated="true">
-				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+		<node name="sync" value="Synchronisation">
+			<node name="summary" value="Bücher mit Synchronisationsstatus"/>
+			<node name="sync-success" value="Synchronisiert">
+				<node name="summary" value="Bücher auf den Server hochgeladen"/>
 			</node>
-			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
-				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			<node name="sync-failure" value="Synchronisation fehlgeschlagen">
+				<node name="summary" value="Bücher nicht auf den Server hochgeladen wegen Problemen"/>
 			</node>
-			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
-				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			<node name="sync-deleted" value="Vom Server gelöscht">
+				<node name="summary" value="Bücher nicht mehr auf dem Server verfügbar"/>
 			</node>
-			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
-				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			<node name="sync-tosync" value="Noch nicht synchronisiert">
+				<node name="summary" value="Bücher um auf den Server hochzuladen"/>
 			</node>
 		</node>
 		<node name="fileTree" value="Dateibaum">
@@ -69,13 +70,13 @@
 		<node name="removeFromRecents" value="Buch aus der Historie löschen"/>
 		<node name="markAsRead" value="Als gelesen markieren"/>
 		<node name="markAsUnread" value="Als ungelesen markieren"/>
-		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
-		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
-		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
+		<node name="deleteAll" value="Alle löschen"/>
+		<node name="uploadAgain" value="Wieder hochladen"/>
+		<node name="tryAgain" value="Wieder versuchen"/>
 	</node>
 	<node name="networkLibrary" value="FBReader Netzwerk-Bibliothek">
-		<node name="sync" value="FBReader® book network" toBeTranslated="true">
-			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		<node name="sync" value="FBReader® Bücher Netzwerk">
+			<node name="summary" value="Meine persönliche Bibliothek"/>
 		</node>
 		<node name="byAuthor" value="Nach Autoren gruppiert">
 			<node name="summary" value="Bücher nach Autoren auswählen"/>
@@ -328,22 +329,22 @@
 		<node name="series" value="Serie"/>
 	</node>
 	<node name="Preferences">
-		<node name="sync" value="Synchronisation" toBeTranslated="true">
-			<node name="summary" value="Book network settings" toBeTranslated="true"/>
-			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
-				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
-				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+		<node name="sync" value="Synchronisation">
+			<node name="summary" value="Bücher Netzwerk Einstellungen"/>
+			<node name="enable" value="Synchronisation aktivieren">
+				<node name="summaryOn" value="Synchronisiere meine Bibliothek mit dem FBReader Bücher Netzwerkserver"/>
+				<node name="summaryOnWithAccount" value="Synchronisiere meine Bibliothek als %s"/>
+				<node name="summaryOff" value="Keine Synchronisation meiner Bibliothek mit dem FBReader Bücher Netzwerkserver"/>
 			</node>
 			<node name="values">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="always" value="Immer"/>
+				<node name="viaWifi" value="Wenn das Gerät per Wi-Fi verbunden ist"/>
+				<node name="never" value="Niemals"/>
 			</node>
-			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
-			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
-			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
-			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+			<node name="uploadAllBooks" value="Alle Bücher auf den Server laden"/>
+			<node name="positions" value="Synchronisiere Leseposition"/>
+			<node name="bookmarks" value="Synchronisiere Lesezeichen"/>
+			<node name="metainfo" value="Synchronisiere Meta Informationen (Titel, Tags, usw.)"/>
 		</node>
 		<node name="directories" value="Verzeichnisse">
 			<node name="summary" value="Verzeichnisse in denen Dateien gesucht werden"/>
@@ -840,12 +841,12 @@
 			<node name="markAsUnread" value="Als ungelesen markieren"/>
 		</node>
 		<node name="plugin">
-			<node name="installTitle" value="Plug-In installieren"/>
-			<node name="updateTitle" value="Plug-In aktualisieren"/>
+			<node name="installTitle" value="Plugin installieren"/>
+			<node name="updateTitle" value="Plugin aktualisieren"/>
 			<node name="dontAskAgain" value="Nicht erneut nachfragen"/>
 		</node>
 		<node name="backgroundAuthentication">
-			<node name="message" value="Authentication required" toBeTranslated="true"/>
+			<node name="message" value="Anmeldedaten benötigt"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Installationsverzeichnis"/>
@@ -855,14 +856,14 @@
 			<node name="message" value="Die Buchdatei wird unwiderruflich gelöscht. Sind Sie sicher?"/>
 		</node>
 		<node name="deleteMultipleBookBox">
-			<node name="title" value="Delete books" toBeTranslated="true"/>
-			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+			<node name="title" value="Lösche Bücher"/>
+			<node name="message" value="%s Buch wird endgültig gelöscht. Sind sie sicher?"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Datei existiert bereits. Erneut herunterladen?"/>
 		</node>
 		<node name="waitMessage">
-			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
+			<node name="tryConnect" value="Verbindungsversuch. Bitte warten…"/>
 			<node name="downloadingFile" value="Buch wird geladen %s"/>
 			<node name="search" value="Suche läuft. Bitte warten…"/>
 			<node name="loadInfo" value="Information wird geladen. Bitte warten…"/>
@@ -937,19 +938,19 @@
 			<node name="duplicate" value="“%s” ist bereits in der Liste vorhanden"/>
 		</node>
 		<node name="editList">
-			<node name="edit" value="Edit" toBeTranslated="true"/>
-			<node name="remove" value="Remove" toBeTranslated="true"/>
+			<node name="edit" value="Bearbeiten"/>
+			<node name="remove" value="Entfernen"/>
 		</node>
 		<node name="editTags">
-			<node name="addTag" value="Add tag" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove tag" toBeTranslated="true">
-				<node name="message" value="Remove tag “%s” from the list?" toBeTranslated="true"/>
+			<node name="addTag" value="Schlagwort hinzufügen"/>
+			<node name="removeDialog" value="Schlagwort entfernen">
+				<node name="message" value="Schlagwort “%s” aus der Liste entfernen?"/>
 			</node>
 		</node>
 		<node name="editAuthors">
-			<node name="addAuthor" value="Add author" toBeTranslated="true"/>
-			<node name="removeDialog" value="Remove author" toBeTranslated="true">
-				<node name="message" value="Remove author “%s” from the list?" toBeTranslated="true"/>
+			<node name="addAuthor" value="Autor hinzufügen"/>
+			<node name="removeDialog" value="Autor entfernen">
+				<node name="message" value="Autor “%s” aus der Liste entfernen?"/>
 			</node>
 		</node>
 		<node name="fileChooser">
@@ -968,15 +969,15 @@
 			<node name="permissionDenied" value="Zugriff verweigert"/>
 		</node>
 		<node name="missingPlugin">
-			<node name="title" value="Plugin for %s files is not installed. Install right now?" toBeTranslated="true"/>
+			<node name="title" value="Plugin für %s Dateien ist nicht installiert. Jetzt installieren?"/>
 		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="nativeCodeFailure" value="Fehler %s während des Lesens von '%s'"/>
 		<node name="errorReadingFile" value="Fehler beim Lesen von '%s'"/>
 		<node name="errorReadingZip" value="Fehler beim Entpacken von '%s'"/>
-		<node name="pluginNotFound" value="Kein Plug-In für '%s'"/>
-		<node name="unknownPluginType" value="Unbekannter Plug-In-Typ: %s"/>
+		<node name="pluginNotFound" value="Kein Plugin für '%s'"/>
+		<node name="unknownPluginType" value="Unbekannter Plugin-Typ: %s"/>
 		<node name="fileNotFound" value="Datei nicht gefunden: %s"/>
 		<node name="unsupportedEncryptionMethod" value="Die Verschlüsselung der Datei %s wird von FBReader nicht unterstützt. Einige Seiten können nicht gelesen werden."/>
 		<node name="opfFileNotFound" value="OPF in %s nicht gefunden"/>
