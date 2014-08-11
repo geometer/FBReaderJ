@@ -9,7 +9,3 @@ git checkout nook
 git tag `cat VERSION`-nst
 git checkout kindle
 git tag `cat VERSION`-kindlefire
-#git checkout beta
-#git tag `cat VERSION-BETA | sed "s/ //g"`
-#git checkout beta-ics
-#git tag `cat VERSION-BETA | sed "s/ //g"`-ics
