@@ -21,8 +21,7 @@ package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 
 public class DisableCatalogAction extends Action {
@@ -32,7 +31,9 @@ public class DisableCatalogAction extends Action {
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		return tree instanceof NetworkCatalogRootTree;
+		return
+			tree instanceof NetworkCatalogRootTree &&
+			tree.getLink().getType() != INetworkLink.Type.Sync;
 	}
 
 	@Override

@@ -26,6 +26,21 @@
 		<node name="found" value="Gevonden">
 			<node name="summary" value="Zoekresultaten voor: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Bestanden">
 			<node name="summary" value="Bekijk bestandssysteem"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="FBReader bibliotheek">
 			<node name="summary" value="FBReader boekenmap"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Lokaal zoeken"/>
-			<node name="rescan" value="Vernieuwen"/>
-		</node>
+		<node name="localSearch" value="Lokaal zoeken"/>
+		<node name="rescan" value="Vernieuwen"/>
 		<node name="openBook" value="Boek openen"/>
 		<node name="showBookInfo" value="Boekinformatie"/>
 		<node name="shareBook" value="Boek delen"/>
@@ -51,8 +64,14 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Markeer als gelezen"/>
 		<node name="markAsUnread" value="Markeer als ongelezen"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader netwerkbibliotheek">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="Auteurs">
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>
@@ -304,6 +323,23 @@
 		<node name="series" value="Serie"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Mappen">
 			<node name="summary" value="Waar zijn de bestanden opgeslagen"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -803,6 +839,9 @@
 			<node name="updateTitle" value="Plug-in bijwerken"/>
 			<node name="dontAskAgain" value="Vraag niet opnieuw"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Installeer woordenboek"/>
 			<node name="message" value="Wil je %s installeren?"/>
@@ -810,10 +849,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="Het verwijderen van dit boek kan niet ongedaan worden gemaakt. Weet u het zeker?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Bestand bestaat al. Opnieuw downloaden?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Boek %s wordt gedownload"/>
 			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>
 			<node name="loadInfo" value="Informatie wordt geladen. Een ogenblik…"/>

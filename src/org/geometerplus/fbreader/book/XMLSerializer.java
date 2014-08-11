@@ -52,6 +52,10 @@ class XMLSerializer extends AbstractSerializer {
 			appendTag(buffer, "filter", true,
 				"type", "empty"
 			);
+		} else if (filter instanceof Filter.Not) {
+			appendTag(buffer, "not", false);
+			serialize(buffer, ((Filter.Not)filter).Base);
+			closeTag(buffer, "not");
 		} else if (filter instanceof Filter.And) {
 			appendTag(buffer, "and", false);
 			serialize(buffer, ((Filter.And)filter).First);
@@ -107,6 +111,10 @@ class XMLSerializer extends AbstractSerializer {
 		} else if (filter instanceof Filter.HasBookmark) {
 			appendTag(buffer, "filter", true,
 				"type", "has-bookmark"
+			);
+		} else if (filter instanceof Filter.HasPhysicalFile) {
+			appendTag(buffer, "filter", true,
+				"type", "has-physical-file"
 			);
 		} else {
 			throw new RuntimeException("Unsupported filter type: " + filter.getClass());
@@ -686,6 +694,7 @@ class XMLSerializer extends AbstractSerializer {
 	private static final class BookQueryDeserializer extends DefaultHandler {
 		private static enum State {
 			READ_QUERY,
+			READ_FILTER_NOT,
 			READ_FILTER_AND,
 			READ_FILTER_OR,
 			READ_FILTER_SIMPLE
@@ -711,6 +720,12 @@ class XMLSerializer extends AbstractSerializer {
 		public void endDocument() {
 			if (myFilter != null && myLimit > 0 && myPage >= 0) {
 				myQuery = new BookQuery(myFilter, myLimit, myPage);
+			}
+		}
+
+		private void setFilterToStack() {
+			if (!myFilterStack.isEmpty() && myFilterStack.getLast() == null) {
+				myFilterStack.set(myFilterStack.size() - 1, myFilter);
 			}
 		}
 
@@ -754,15 +769,17 @@ class XMLSerializer extends AbstractSerializer {
 						myFilter = new Filter.ByTitlePrefix(attributes.getValue("prefix"));
 					} else if ("has-bookmark".equals(type)) {
 						myFilter = new Filter.HasBookmark();
+					} else if ("has-physical-file".equals(type)) {
+						myFilter = new Filter.HasPhysicalFile();
 					} else {
 						// we create empty filter for all other types
 						// to keep a door to add new filters in a future
 						myFilter = new Filter.Empty();
 					}
-					if (!myFilterStack.isEmpty() && myFilterStack.getLast() == null) {
-						myFilterStack.set(myFilterStack.size() - 1, myFilter);
-					}
 					myStateStack.add(State.READ_FILTER_SIMPLE);
+				} else if ("not".equals(localName)) {
+					myFilterStack.add(null);
+					myStateStack.add(State.READ_FILTER_NOT);
 				} else if ("and".equals(localName)) {
 					myFilterStack.add(null);
 					myStateStack.add(State.READ_FILTER_AND);
@@ -784,6 +801,9 @@ class XMLSerializer extends AbstractSerializer {
 			switch (myStateStack.removeLast()) {
 				case READ_QUERY:
 					break;
+				case READ_FILTER_NOT:
+					myFilter = new Filter.Not(myFilterStack.removeLast());
+					break;
 				case READ_FILTER_AND:
 					myFilter = new Filter.And(myFilterStack.removeLast(), myFilter);
 					break;
@@ -793,6 +813,7 @@ class XMLSerializer extends AbstractSerializer {
 				case READ_FILTER_SIMPLE:
 					break;
 			}
+			setFilterToStack();
 		}
 	}
 

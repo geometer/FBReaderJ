@@ -44,6 +44,10 @@ public abstract class FBReaderIntents {
 		String ERROR                    = "android.fbreader.action.ERROR";
 		String CRASH                    = "android.fbreader.action.CRASH";
 		String PLUGIN                   = "android.fbreader.action.PLUGIN";
+		String CLOSE                    = "android.fbreader.action.CLOSE";
+		String PLUGIN_CRASH             = "android.fbreader.action.PLUGIN_CRASH";
+		String EDIT_STYLES              = "android.fbreader.action.EDIT_STYLES";
+		String SWITCH_YOTA_SCREEN       = "android.fbreader.action.SWITCH_YOTA_SCREEN";
 	}
 
 	public interface Key {
@@ -53,15 +57,12 @@ public abstract class FBReaderIntents {
 		String TYPE                     = "fbreader.type";
 	}
 
-	public static Intent defaultIntent(String action) {
-		return new Intent(action)
-			.addCategory(Intent.CATEGORY_DEFAULT)
-			.setPackage(DEFAULT_PACKAGE);
+	public static Intent defaultInternalIntent(String action) {
+		return internalIntent(action).addCategory(Intent.CATEGORY_DEFAULT);
 	}
 
-	public static Intent serviceIntent(String action) {
-		return new Intent(action)
-			.setPackage(DEFAULT_PACKAGE);
+	public static Intent internalIntent(String action) {
+		return new Intent(action).setPackage(DEFAULT_PACKAGE);
 	}
 
 	public static void putBookExtra(Intent intent, String key, Book book) {

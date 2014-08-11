@@ -28,7 +28,6 @@ import java.util.zip.GZIPInputStream;
 import org.apache.http.*;
 import org.apache.http.auth.*;
 import org.apache.http.client.AuthenticationHandler;
-import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
@@ -48,6 +47,11 @@ import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 public class ZLNetworkManager {
+	public static interface CookieStore extends org.apache.http.client.CookieStore {
+		void clearDomain(String domain);
+		void reset();
+	}
+
 	private static ZLNetworkManager ourManager;
 
 	public static ZLNetworkManager Instance() {
@@ -226,7 +230,7 @@ public class ZLNetworkManager {
 	};
 
 	final CookieStore CookieStore = new CookieStore() {
-		private HashMap<Key,Cookie> myCookies;
+		private volatile Map<Key,Cookie> myCookies;
 
 		public synchronized void addCookie(Cookie cookie) {
 			if (myCookies == null) {
@@ -261,9 +265,22 @@ public class ZLNetworkManager {
 			return false;
 		}
 
+		public synchronized void clearDomain(String domain) {
+			myCookies = null;
+
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.removeForDomain(domain);
+			}
+		}
+
+		public synchronized void reset() {
+			myCookies = null;
+		}
+
 		public synchronized List<Cookie> getCookies() {
 			if (myCookies == null) {
-				myCookies = new HashMap<Key,Cookie>();
+				myCookies = Collections.synchronizedMap(new HashMap<Key,Cookie>());
 				final CookieDatabase db = CookieDatabase.getInstance();
 				if (db != null) {
 					for (Cookie c : db.loadCookies()) {
@@ -371,7 +388,7 @@ public class ZLNetworkManager {
 				data.addPart("file", new FileBody(uploadRequest.File));
 				((HttpPost)httpRequest).setEntity(data);
 			} else {
-				throw new ZLNetworkException(true, "Unknown request type");
+				throw new ZLNetworkException("Unknown request type");
 			}
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
 			if (!request.isQuiet()) {
@@ -416,9 +433,9 @@ public class ZLNetworkManager {
 				success = true;
 			} else {
 				if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
-					throw new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED);
+					throw new ZLNetworkAuthenticationException();
 				} else {
-					throw new ZLNetworkException(true, response.getStatusLine().toString());
+					throw new ZLNetworkException(response.getStatusLine().toString());
 				}
 			}
 		} catch (ZLNetworkException e) {
@@ -431,10 +448,10 @@ public class ZLNetworkManager {
 			} else {
 				code = ZLNetworkException.ERROR_CONNECT_TO_HOST;
 			}
-			throw new ZLNetworkException(code, ZLNetworkUtil.hostFromUrl(request.URL), e);
+			throw ZLNetworkException.forCode(code, ZLNetworkUtil.hostFromUrl(request.URL), e);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ZLNetworkException(true, e.getMessage(), e);
+			throw new ZLNetworkException(e.getMessage(), e);
 		} finally {
 			request.doAfter(success);
 			if (httpClient != null) {
@@ -449,17 +466,18 @@ public class ZLNetworkManager {
 		}
 	}
 
-	private HttpResponse execute(DefaultHttpClient client, HttpRequestBase request, HttpContext context, BearerAuthenticator authenticator) throws IOException {
+	private HttpResponse execute(DefaultHttpClient client, HttpRequestBase request, HttpContext context, BearerAuthenticator authenticator) throws IOException, ZLNetworkException {
 		try {
 			return client.execute(request, context);
 		} catch (BearerAuthenticationException e) {
 			final Map<String,String> response =
 				authenticator.authenticate(request.getURI(), e.Realm, e.Params);
-			if (!response.containsKey("error")) {
-				authenticator.setAccountName(request.getURI().getHost(), e.Realm, response.get("user"));
-				return client.execute(request, context);
+			final String error = response.get("error");
+			if (error != null) {
+				throw new ZLNetworkAuthenticationException(error, e);
 			}
-			throw e;
+			authenticator.setAccountName(request.getURI().getHost(), e.Realm, response.get("user"));
+			return client.execute(request, context);
 		}
 	}
 }

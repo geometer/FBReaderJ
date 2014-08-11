@@ -24,7 +24,6 @@ import java.io.*;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
@@ -35,8 +34,16 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 	protected ZLNetworkContext() {
 	}
 
-	protected CookieStore cookieStore() {
+	public ZLNetworkManager.CookieStore cookieStore() {
 		return myManager.CookieStore;
+	}
+
+	public void removeCookiesForDomain(String domain) {
+		myManager.CookieStore.clearDomain(domain);
+	}
+
+	public void reloadCookie() {
+		myManager.CookieStore.reset();
 	}
 
 	public String getCookieValue(String domain, String name) {
@@ -59,7 +66,15 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 		getAccountOption(host, realm).setValue(accountName != null ? accountName : "");
 	}
 
-	public boolean performQuietly(ZLNetworkRequest request) {
+	protected void perform(ZLNetworkRequest request, int socketTimeout, int connectionTimeout) throws ZLNetworkException {
+		myManager.perform(request, this, socketTimeout, connectionTimeout);
+	}
+
+	public final void perform(ZLNetworkRequest request) throws ZLNetworkException {
+		perform(request, 30000, 15000);
+	}
+
+	public final boolean performQuietly(ZLNetworkRequest request) {
 		try {
 			perform(request);
 			return true;
@@ -68,11 +83,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 		}
 	}
 
-	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
-		myManager.perform(request, this, 30000, 15000);
-	}
-
-	public void perform(List<? extends ZLNetworkRequest> requests) throws ZLNetworkException {
+	public final void perform(List<? extends ZLNetworkRequest> requests) throws ZLNetworkException {
 		if (requests.size() == 0) {
 			return;
 		}
@@ -98,7 +109,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 				}
 				message.append(e);
 			}
-			throw new ZLNetworkException(true, message.toString());
+			throw new ZLNetworkException(message.toString());
 		}
 	}
 
@@ -107,7 +118,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 	}
 
 	private final void downloadToFile(String url, final File outFile, final int bufferSize) throws ZLNetworkException {
-		myManager.perform(new ZLNetworkRequest.Get(url) {
+		perform(new ZLNetworkRequest.Get(url) {
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				OutputStream outStream = new FileOutputStream(outFile);
 				try {
@@ -123,7 +134,7 @@ public abstract class ZLNetworkContext implements ZLNetworkManager.BearerAuthent
 					outStream.close();
 				}
 			}
-		}, this, 0, 0);
+		}, 0, 0);
 	}
 
 	private ZLStringOption getAccountOption(String host, String realm) {

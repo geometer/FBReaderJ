@@ -26,6 +26,21 @@
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
+		<node name="sync" value="Synchronizace">
+			<node name="summary" value="Knihy podle stavu synchronizace"/>
+			<node name="sync-success" value="Synchronizováno">
+				<node name="summary" value="Knihy byly nahrány na server"/>
+			</node>
+			<node name="sync-failure" value="Synchronizace selhala">
+				<node name="summary" value="Knihy nebyly nahrány na server kvůli některým problémům"/>
+			</node>
+			<node name="sync-deleted" value="Odstraněno ze serveru">
+				<node name="summary" value="Knihy již nejsou dostupné ze serveru"/>
+			</node>
+			<node name="sync-tosync" value="Ještě nesynchronizováno">
+				<node name="summary" value="Knihy k nahrání na server"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Strom souborů">
 			<node name="summary" value="Procházet systém souborů"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="Knihovna FBReaderu">
 			<node name="summary" value="Adresář s knihami pro FBReader"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Místní hledání"/>
-			<node name="rescan" value="Prohledat znovu"/>
-		</node>
+		<node name="localSearch" value="Místní hledání"/>
+		<node name="rescan" value="Prohledat znovu"/>
 		<node name="openBook" value="Otevřít knihu"/>
 		<node name="showBookInfo" value="Informace o knize"/>
 		<node name="shareBook" value="Sdílet knihu"/>
@@ -51,8 +64,14 @@
 		<node name="removeFromRecents" value="Odebrat ze seznamu posledních"/>
 		<node name="markAsRead" value="Označit jako přečtené"/>
 		<node name="markAsUnread" value="Označit jako nepřečtené"/>
+		<node name="deleteAll" value="Odstranit vše"/>
+		<node name="uploadAgain" value="Znovu nahrát"/>
+		<node name="tryAgain" value="Zkusit znovu"/>
 	</node>
 	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
+		<node name="sync" value="Síťová knihovna FBReaderu®">
+			<node name="summary" value="Můj osobní katalog"/>
+		</node>
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>
@@ -313,6 +332,23 @@
 		<node name="series" value="Série"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronizace">
+			<node name="summary" value="Nastavení síťové knihovny"/>
+			<node name="enable" value="Povolit synchronizaci">
+				<node name="summaryOn" value="Synchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
+				<node name="summaryOnWithAccount" value="Synchronizovat mou knihovnu jako %s"/>
+				<node name="summaryOff" value="Nesynchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Vždy"/>
+				<node name="viaWifi" value="Když je zařízení připojeno přes Wi-Fi"/>
+				<node name="never" value="Nikdy"/>
+			</node>
+			<node name="uploadAllBooks" value="Nahrát všechny knihy na server"/>
+			<node name="positions" value="Synchronizovat pozice čtení"/>
+			<node name="bookmarks" value="Synchronizovat záložky"/>
+			<node name="metainfo" value="Synchronizovat metainformace (název, štítky atd.)"/>
+		</node>
 		<node name="directories" value="Adresáře">
 			<node name="summary" value="Adresáře pro hledání souborů"/>
 			<node name="bookPath" value="Kde hledat knihy">
@@ -812,6 +848,9 @@
 			<node name="updateTitle" value="Aktualizovat doplněk"/>
 			<node name="dontAskAgain" value="Neptat se znovu"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Je požadováno ověření"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalovat slovník"/>
 			<node name="message" value="Chcete nainstalovat %s?"/>
@@ -819,10 +858,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="Soubor s knihou bude nevratně odebrán. Opravdu chcete pokračovat?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Odstranit knihy"/>
+			<node name="message" value="%s souborů knih bude nevratně odebráno. Opravdu to chcete udělat"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Soubor již existuje. Stáhnout ho znovu?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
 			<node name="downloadingFile" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>
 			<node name="loadInfo" value="Načítání informací. Čekejte…"/>

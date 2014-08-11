@@ -26,6 +26,21 @@
 		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Cây Tập tin">
 			<node name="summary" value="Duyệt tập tin hệ thống"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="Thư viện FBReader">
 			<node name="summary" value="Thư mục sách FBReader"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Tìm nội bộ"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-		</node>
+		<node name="localSearch" value="Tìm nội bộ"/>
+		<node name="rescan" value="Rescan" toBeTranslated="true"/>
 		<node name="openBook" value="Mở sách"/>
 		<node name="showBookInfo" value="Book info"/>
 		<node name="shareBook" value="Share book" toBeTranslated="true"/>
@@ -51,8 +64,14 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Mark as read" toBeTranslated="true"/>
 		<node name="markAsUnread" value="Mark as unread" toBeTranslated="true"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="Theo tác giả">
 			<node name="summary" value="Sách được xếp theo tác giả"/>
 		</node>
@@ -294,6 +313,23 @@
 		<node name="series" value="Bộ sách"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Thư mục">
 			<node name="summary" value="Các thư mục để tìm kiếm tập tin"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -793,6 +829,9 @@
 			<node name="updateTitle" value="Cập nhật phần bổ trợ"/>
 			<node name="dontAskAgain" value="Đừng hỏi lại"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Cài từ điển"/>
 			<node name="message" value="Bạn có muốn cài %s?"/>
@@ -800,10 +839,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="Sách sẽ bị xóa và không thể hoàn tác. Bạn chắc chứ?"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Tập tin đã tồn tại. Tải lại?"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Đang tải sách về %s"/>
 			<node name="search" value="Đang tìm. Xin chờ…"/>
 			<node name="loadInfo" value="Loading information. Please, wait…" toBeTranslated="true"/>

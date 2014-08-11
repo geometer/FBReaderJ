@@ -33,8 +33,8 @@ import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 class WallpaperPreference extends ZLStringListPreference implements ReloadablePreference {
 	private final ZLStringOption myOption;
 
-	WallpaperPreference(Context context, ColorProfile profile, ZLResource resource, String resourceKey) {
-		super(context, resource, resourceKey);
+	WallpaperPreference(Context context, ColorProfile profile, ZLResource resource) {
+		super(context, resource);
 		myOption = profile.WallpaperOption;
 
 		reload();
@@ -49,12 +49,12 @@ class WallpaperPreference extends ZLStringListPreference implements ReloadablePr
 		final String[] texts = new String[size];
 
 		values[0] = "";
-		texts[0] = myResource.getResource("solidColor").getValue();
+		texts[0] = myValuesResource.getResource("solidColor").getValue();
 		int index = 1;
 		for (ZLFile f : predefined) {
 			values[index] = f.getPath();
 			final String name = f.getShortName();
-			texts[index] = myResource.getResource(
+			texts[index] = myValuesResource.getResource(
 				name.substring(0, name.indexOf("."))
 			).getValue();
 			++index;

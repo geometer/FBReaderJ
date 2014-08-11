@@ -26,6 +26,21 @@
 		<node name="found" value="Գտնվել է">
 			<node name="summary" value="%s-ով որոնման արդյունքները"/>
 		</node>
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
+			<node name="sync-success" value="Synchronised" toBeTranslated="true">
+				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+			</node>
+			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
+				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			</node>
+			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
+				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			</node>
+			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
+				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			</node>
+		</node>
 		<node name="fileTree" value="Նիշքերի ծառ">
 			<node name="summary" value="Նիշքերը իմ սարքավորումում"/>
 		</node>
@@ -38,10 +53,8 @@
 		<node name="fileTreeLibrary" value="FBReader գրադարան">
 			<node name="summary" value="Ցուցադրել գրացուցակը"/>
 		</node>
-		<node name="menu">
-			<node name="localSearch" value="Որոնում"/>
-			<node name="rescan" value="Վերաշարել"/>
-		</node>
+		<node name="localSearch" value="Որոնում"/>
+		<node name="rescan" value="Վերաշարել"/>
 		<node name="openBook" value="Կարդալ գիրքը"/>
 		<node name="showBookInfo" value="Գրքի հանձնարարականը"/>
 		<node name="shareBook" value="Տարածել գիրքը"/>
@@ -51,8 +64,14 @@
 		<node name="removeFromRecents" value="Remove from recent list" toBeTranslated="true"/>
 		<node name="markAsRead" value="Նշել որպես ընթերցված"/>
 		<node name="markAsUnread" value="Նշել որպես չընթերցված"/>
+		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
+		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
+		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader. ցանցային գրադարան">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="Ըստ հեղինակի">
 			<node name="summary" value="Գրքեր՝ դասավորված ըստ հեղինակի"/>
 		</node>
@@ -309,6 +328,23 @@
 		<node name="series" value="Մատենաշար"/>
 	</node>
 	<node name="Preferences">
+		<node name="sync" value="Synchronisation" toBeTranslated="true">
+			<node name="summary" value="Book network settings" toBeTranslated="true"/>
+			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
+				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+			</node>
+			<node name="values">
+				<node name="always" value="Always" toBeTranslated="true"/>
+				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
+				<node name="never" value="Never" toBeTranslated="true"/>
+			</node>
+			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
+			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
+			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+		</node>
 		<node name="directories" value="Պանակներ">
 			<node name="summary" value="Նիշքերի պանակները"/>
 			<node name="bookPath" value="Where to seek for books" toBeTranslated="true">
@@ -808,6 +844,9 @@
 			<node name="updateTitle" value="Նոր տարբերակ"/>
 			<node name="dontAskAgain" value="Այլևս չհարցնել"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Տեղադրել բառարան"/>
 			<node name="message" value="Տեղադրե՞լ %s-ը"/>
@@ -815,10 +854,15 @@
 		<node name="deleteBookBox">
 			<node name="message" value="Նիշքն անվերադարձելիորեն ջնջվելու է, շարունակե՞լ։"/>
 		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books" toBeTranslated="true"/>
+			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Նիշքն արդեն իսկ սարքավորումում է, կրկի՞ն բեռնել։"/>
 		</node>
 		<node name="waitMessage">
+			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
 			<node name="downloadingFile" value="Բեռնվում է %s գիրքը"/>
 			<node name="search" value="Որոնվում է, սպասեք..."/>
 			<node name="loadInfo" value="Տվյալները բեռնվում են, սպասեք..."/>

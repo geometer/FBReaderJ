@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network.auth;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
 import android.accounts.AccountManager;
@@ -32,10 +31,6 @@ import android.text.TextUtils;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.*;
-
-import org.apache.http.client.CookieStore;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.cookie.BasicClientCookie2;
 
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
@@ -55,6 +50,10 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		return myActivity;
 	}
 
+	public synchronized void onResume() {
+		notifyAll();
+	}
+
 	public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
 		boolean processed = true;
 		try {
@@ -65,6 +64,8 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 				case NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER:
 					if (resultCode == Activity.RESULT_OK && data != null) {
 						myAccountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+					} else {
+						myAccountName = null;
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_AUTHORISATION:
@@ -73,25 +74,7 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 					}
 					break;
 				case NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN:
-					if (resultCode == Activity.RESULT_OK && data != null) {
-						final CookieStore store = cookieStore();
-						final Map<String,String> cookies =
-							(Map<String,String>)data.getSerializableExtra(NetworkLibraryActivity.COOKIES_KEY);
-						if (cookies != null) {
-							for (Map.Entry<String,String> entry : cookies.entrySet()) {
-								final BasicClientCookie2 c =
-									new BasicClientCookie2(entry.getKey(), entry.getValue());
-								c.setDomain(data.getData().getHost());
-								c.setPath("/");
-								final Calendar expire = Calendar.getInstance();
-								expire.add(Calendar.YEAR, 1);
-								c.setExpiryDate(expire.getTime());
-								c.setSecure(true);
-								c.setDiscard(false);
-								store.addCookie(c);
-							}
-						}
-					}
+					cookieStore().reset();
 					break;
 			}
 		} finally {
@@ -104,42 +87,12 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		}
 	}
 
-	private String url(URI base, Map<String,String> params, String key) {
-		return url(base, params.get(key));
-	}
-
-	private String url(URI base, String path) {
-		if (path == null) {
-			return null;
-		}
-		try {
-			final URI relative = new URI(path);
-			return relative.isAbsolute() ? null : base.resolve(relative).toString();
-		} catch (URISyntaxException e) {
-			return null;
-		}
-	}
-
 	@Override
-	protected Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params) {
+	protected Map<String,String> authenticateWeb(URI uri, String realm, String authUrl, String completeUrl, String verificationUrl) {
 		System.err.println("+++ WEB AUTH +++");
-		final String account = getAccountName(uri.getHost(), realm);
-		String authUrl = url(uri, params, "auth-url-web");
-		if (account != null) {
-			final String urlWithAccount = params.get("auth-url-web-with-email");
-			if (urlWithAccount != null) {
-				authUrl = url(uri, urlWithAccount.replace("{email}", account));
-			}
-		}
-		final String completeUrl = url(uri, params, "complete-url-web");
-		final String verificationUrl = url(uri, params, "verification-url");
-		if (authUrl == null || completeUrl == null || verificationUrl == null) {
-			return errorMap("No data for web authentication");
-		}
-
 		final Intent intent = new Intent(myActivity, WebAuthorisationScreen.class);
 		intent.setData(Uri.parse(authUrl));
-		intent.putExtra(NetworkLibraryActivity.COMPLETE_URL_KEY, completeUrl);
+		intent.putExtra(WebAuthorisationScreen.COMPLETE_URL_KEY, completeUrl);
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
 		return verify(verificationUrl);
@@ -166,30 +119,10 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		}
 	}
 
-	private Map<String,String> runTokenAuthorization(String authUrl, String authToken, String code) {
-		final Map<String,String> result = new HashMap<String,String>();
-		final JsonRequest request = new JsonRequest(authUrl) {
-			public void processResponse(Object response) {
-				result.putAll((Map)response);
-			}
-		};
-		request.addPostParameter("auth", authToken);
-		request.addPostParameter("code", code);
-		performQuietly(request);
-		System.err.println("AUTHORIZATION RESULT = " + result);
-		return result;
-	}
-
 	@Override
-	protected Map<String,String> authenticateToken(URI uri, String realm, Map<String,String> params) {
+	protected Map<String,String> authenticateToken(URI uri, String realm, String authUrl, String clientId) {
 		System.err.println("+++ TOKEN AUTH +++");
 		try {
-			final String authUrl = url(uri, params, "auth-url-token");
-			final String clientId = params.get("client-id");
-			if (authUrl == null || clientId == null) {
-				return errorMap("No data for token authentication");
-			}
-
 			String account = getAccountName(uri.getHost(), realm);
 			if (account == null) {
 				final Intent intent = AccountManager.newChooseAccountIntent(

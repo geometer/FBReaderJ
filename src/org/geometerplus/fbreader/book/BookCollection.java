@@ -429,6 +429,9 @@ public class BookCollection extends AbstractBookCollection {
 					synchronized (myFilesToRescan) {
 						processFilesQueue();
 					}
+					for (Book book : new ArrayList<Book>(myBooksByFile.values())) {
+						getHash(book);
+					}
 				}
 			}
 		};
@@ -729,7 +732,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 		String hash = myDatabase.getHash(book.getId(), file.javaFile().lastModified());
 		if (hash == null) {
-			final UID uid = BookUtil.createUid(file, "SHA-1");
+			final UID uid = BookUtil.createUid(book.File, "SHA-1");
 			if (uid == null) {
 				return null;
 			}

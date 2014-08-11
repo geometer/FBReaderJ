@@ -22,10 +22,20 @@ package org.geometerplus.android.fbreader.network.auth;
 import java.net.URI;
 import java.util.Map;
 
-import android.app.Service;
+import android.app.*;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
-public final class ServiceNetworkContext extends AndroidNetworkContext {
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableNotifiedException;
+import com.google.android.gms.common.Scopes;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+public class ServiceNetworkContext extends AndroidNetworkContext {
 	private final Service myService;
 
 	public ServiceNetworkContext(Service service) {
@@ -37,14 +47,61 @@ public final class ServiceNetworkContext extends AndroidNetworkContext {
 	}
 
 	@Override
-	protected Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params) {
-		// TODO: implement
-		return errorMap("Not implemented yet");
+	protected Map<String,String> authenticateWeb(URI uri, String realm, String authUrl, String completeUrl, String verificationUrl) {
+		final NotificationManager notificationManager =
+			(NotificationManager)myService.getSystemService(Context.NOTIFICATION_SERVICE);
+		final Intent intent = new Intent(myService, WebAuthorisationScreen.class);
+		intent.setData(Uri.parse(authUrl));
+		intent.putExtra(WebAuthorisationScreen.COMPLETE_URL_KEY, completeUrl);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
+		final PendingIntent pendingIntent = PendingIntent.getActivity(myService, 0, intent, 0);
+		final String text =
+			ZLResource.resource("dialog")
+				.getResource("backgroundAuthentication")
+				.getResource("message")
+				.getValue();
+		final Notification notification = new NotificationCompat.Builder(myService)
+			.setSmallIcon(android.R.drawable.ic_dialog_alert)
+			.setTicker(text)
+			.setContentTitle(realm)
+			.setContentText(text)
+			.setContentIntent(pendingIntent)
+			.setAutoCancel(true)
+			.build();
+		notificationManager.notify(0, notification);
+		return errorMap("Notification sent");
 	}
 
 	@Override
-	protected Map<String,String> authenticateToken(URI uri, String realm, Map<String,String> params) {
-		// TODO: implement
-		return errorMap("Not implemented yet");
+	protected Map<String,String> authenticateToken(URI uri, String realm, String authUrl, String clientId) {
+		final String account = getAccountName(uri.getHost(), realm);
+		if (account == null) {
+			return errorMap("Account name is not specified");
+		}
+
+		System.err.println("+++ SERVICE TOKEN AUTH +++");
+		try {
+			final String authToken = GoogleAuthUtil.getTokenWithNotification(
+				myService, account, String.format("audience:server:client_id:%s", clientId), null
+			);
+			final Map<String,String> result = runTokenAuthorization(authUrl, authToken, null);
+			if (result.containsKey("user")) {
+				return result;
+			}
+			final String code = GoogleAuthUtil.getTokenWithNotification(
+				myService, account, String.format(
+					"oauth2:server:client_id:%s:api_scope:%s", clientId,
+					TextUtils.join(" ", new Object[] { Scopes.DRIVE_FILE, Scopes.PROFILE })
+				), null
+			);
+			return runTokenAuthorization(authUrl, authToken, code);
+		} catch (UserRecoverableNotifiedException e) {
+			return errorMap(e);
+		} catch (Exception e) {
+			return errorMap(e);
+		} finally {
+			System.err.println("--- SERVICE TOKEN AUTH ---");
+		}
 	}
 }

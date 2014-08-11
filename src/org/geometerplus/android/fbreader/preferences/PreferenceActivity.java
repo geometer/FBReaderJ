@@ -28,6 +28,8 @@ import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.language.Language;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.JsonRequest;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -40,24 +42,39 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.*;
-import org.geometerplus.fbreader.tips.TipsManager;
+import org.geometerplus.fbreader.network.sync.SyncUtil;
+//import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
+import org.geometerplus.android.fbreader.sync.SyncOperations;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
-	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this);
+	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
 
 	public PreferenceActivity() {
 		super("Preferences");
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		myNetworkContext.onResume();
+	}
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (myNetworkContext.onActivityResult(requestCode, resultCode, data)) {
+			return;
+		}
+
 		if (resultCode == RESULT_OK) {
 			myChooserCollection.update(requestCode, data);
 		}
@@ -73,6 +90,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		config.requestAllValuesForGroup("Files");
 		config.requestAllValuesForGroup("Scrolling");
 		config.requestAllValuesForGroup("Colors");
+		config.requestAllValuesForGroup("Sync");
 		setResult(FBReader.RESULT_REPAINT);
 
 		final ViewOptions viewOptions = new ViewOptions();
@@ -80,6 +98,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final FooterOptions footerOptions = viewOptions.getFooterOptions();
 		final PageTurningOptions pageTurningOptions = new PageTurningOptions();
 		final ImageOptions imageOptions = new ImageOptions();
+		final SyncOptions syncOptions = new SyncOptions();
 		final ColorProfile profile = viewOptions.getColorProfile();
 		final ZLTextStyleCollection collection = viewOptions.getTextStyleCollection();
 		final ZLKeyBindings keyBindings = new ZLKeyBindings();
@@ -120,9 +139,94 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption, null
 		));
 
+		final Screen syncScreen = createPreferenceScreen("sync");
+		final PreferenceSet syncPreferences = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				return syncOptions.Enabled.getValue();
+			}
+		};
+		syncScreen.addPreference(new ZLCheckBoxPreference(
+			this, syncScreen.Resource.getResource("enable")
+		) {
+			{
+				if (syncOptions.Enabled.getValue()) {
+					setChecked(true);
+					setOnSummary(SyncUtil.getAccountName(myNetworkContext));
+				} else {
+					setChecked(false);
+				}
+			}
+
+			private void enableSynchronisation() {
+				SyncOperations.enableSync(PreferenceActivity.this, syncOptions.Enabled.getValue());
+			}
+
+			@Override
+			protected void onClick() {
+				super.onClick();
+				syncPreferences.run();
+
+				SyncUtil.logout(myNetworkContext);
+
+				if (!isChecked()) {
+					syncOptions.Enabled.setValue(false);
+					enableSynchronisation();
+					syncPreferences.run();
+					return;
+				}
+
+				UIUtil.createExecutor(PreferenceActivity.this, "tryConnect").execute(new Runnable() {
+					public void run() {
+						try {
+							myNetworkContext.perform(
+								new JsonRequest(SyncOptions.BASE_URL + "login/test") {
+									@Override
+									public void processResponse(Object response) {
+										final String account = (String)((Map)response).get("user");
+										syncOptions.Enabled.setValue(account != null);
+										enableSynchronisation();
+										runOnUiThread(new Runnable() {
+											public void run() {
+												setOnSummary(account);
+												syncPreferences.run();
+											}
+										});
+									}
+								}
+							);
+						} catch (ZLNetworkException e) {
+							e.printStackTrace();
+							runOnUiThread(new Runnable() {
+								public void run() {
+									setChecked(false);
+								}
+							});
+						}
+					}
+				}, null);
+			}
+
+			private void setOnSummary(String account) {
+				final String summary = account != null
+					? Resource.getResource("summaryOnWithAccount").getValue().replace("%s", account)
+					: Resource.getResource("summaryOn").getValue();
+				runOnUiThread(new Runnable() {
+					public void run() {
+						setSummaryOn(summary);
+					}
+				});
+			}
+		});
+		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks", "values"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions", "values"));
+		//syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo", "values"));
+		//syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks", "values"));
+		syncPreferences.run();
+
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new LanguagePreference(
-			this, appearanceScreen.Resource, "language", ZLResource.interfaceLanguages()
+			this, appearanceScreen.Resource.getResource("language"), ZLResource.interfaceLanguages()
 		) {
 			@Override
 			protected void init() {
@@ -142,20 +246,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
-			this, appearanceScreen.Resource, "screenOrientation",
+			this, appearanceScreen.Resource.getResource("screenOrientation"),
 			androidLibrary.getOrientationOption(), androidLibrary.allOrientations()
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			viewOptions.TwoColumnView,
-			appearanceScreen.Resource,
-			"twoColumnView"
+			appearanceScreen.Resource.getResource("twoColumnView")
 		));
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			miscOptions.AllowScreenBrightnessAdjustment,
-			appearanceScreen.Resource,
-			"allowScreenBrightnessAdjustment"
+			appearanceScreen.Resource.getResource("allowScreenBrightnessAdjustment")
 		) {
 			private final int myLevel = androidLibrary.ScreenBrightnessLevelOption.getValue();
 
@@ -168,15 +270,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		appearanceScreen.addPreference(new BatteryLevelToTurnScreenOffPreference(
 			this,
 			androidLibrary.BatteryLevelToTurnScreenOffOption,
-			appearanceScreen.Resource,
-			"dontTurnScreenOff"
+			appearanceScreen.Resource.getResource("dontTurnScreenOff")
 		));
 		/*
 		appearanceScreen.addPreference(new ZLBooleanPreference(
 			this,
 			androidLibrary.DontTurnScreenOffDuringChargingOption,
-			appearanceScreen.Resource,
-			"dontTurnScreenOffDuringCharging"
+			appearanceScreen.Resource.getResource("dontTurnScreenOffDuringCharging")
 		));
 		 */
 		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
@@ -193,7 +293,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			};
 
 			einkScreen.addPreference(new ZLBooleanPreference(
-				this, einkOptions.EnableFastRefresh, einkScreen.Resource, "enableFastRefresh"
+				this, einkOptions.EnableFastRefresh,
+				einkScreen.Resource.getResource("enableFastRefresh")
 			) {
 				@Override
 				protected void onClick() {
@@ -221,19 +322,16 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 
-		final FontPreference fontPreference = new FontPreference(
-			this, textScreen.Resource, "font",
+		fontReloader.add(textScreen.addPreference(new FontPreference(
+			this, textScreen.Resource.getResource("font"),
 			baseStyle.FontFamilyOption, false
-		);
-		textScreen.addPreference(fontPreference);
-		fontReloader.add(fontPreference);
-
+		)));
 		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
 			baseStyle.FontSizeOption
 		));
 		textScreen.addPreference(new FontStylePreference(
-			this, textScreen.Resource, "fontStyle",
+			this, textScreen.Resource.getResource("fontStyle"),
 			baseStyle.BoldOption, baseStyle.ItalicOption
 		));
 		final ZLIntegerRangeOption spaceOption = baseStyle.LineSpaceOption;
@@ -243,12 +341,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			spacings[i] = (char)(val / 10 + '0') + decimalSeparator + (char)(val % 10 + '0');
 		}
 		textScreen.addPreference(new ZLChoicePreference(
-			this, textScreen.Resource, "lineSpacing",
+			this, textScreen.Resource.getResource("lineSpacing"),
 			spaceOption, spacings
 		));
 		final String[] alignments = { "left", "right", "center", "justify" };
 		textScreen.addPreference(new ZLChoicePreference(
-			this, textScreen.Resource, "alignment",
+			this, textScreen.Resource.getResource("alignment"),
 			baseStyle.AlignmentOption, alignments
 		));
 		textScreen.addOption(baseStyle.AutoHyphenationOption, "autoHyphenations");
@@ -257,7 +355,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		for (ZLTextNGStyleDescription description : collection.getDescriptionList()) {
 			final Screen ngScreen = moreStylesScreen.createPreferenceScreen(description.Name);
 			ngScreen.addPreference(new FontPreference(
-				this, textScreen.Resource, "font",
+				this, textScreen.Resource.getResource("font"),
 				description.FontFamilyOption, true
 			));
 			ngScreen.addPreference(new StringPreference(
@@ -266,27 +364,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				textScreen.Resource, "fontSize"
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "bold",
+				this, textScreen.Resource.getResource("bold"),
 				description.FontWeightOption,
 				new String[] { "inherit", "normal", "bold" }
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "italic",
+				this, textScreen.Resource.getResource("italic"),
 				description.FontStyleOption,
 				new String[] { "inherit", "normal", "italic" }
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "textDecoration",
+				this, textScreen.Resource.getResource("textDecoration"),
 				description.TextDecorationOption,
 				new String[] { "inherit", "none", "underline", "line-through" }
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "allowHyphenations",
+				this, textScreen.Resource.getResource("allowHyphenations"),
 				description.HyphenationOption,
 				new String[] { "inherit", "none", "auto" }
 			));
 			ngScreen.addPreference(new ZLStringChoicePreference(
-				this, textScreen.Resource, "alignment",
+				this, textScreen.Resource.getResource("alignment"),
 				description.AlignmentOption,
 				new String[] { "inherit", "left", "right", "center", "justify" }
 			));
@@ -349,7 +447,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
 		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
-			this, profile, colorsScreen.Resource, "background"
+			this, profile, colorsScreen.Resource.getResource("background")
 		) {
 			@Override
 			protected void onDialogClosed(boolean result) {
@@ -398,7 +496,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final String[] scrollBarTypes = {"hide", "show", "showAsProgress", "showAsFooter"};
 		statusLineScreen.addPreference(new ZLChoicePreference(
-			this, statusLineScreen.Resource, "scrollbarType",
+			this, statusLineScreen.Resource.getResource("scrollbarType"),
 			viewOptions.ScrollbarType, scrollBarTypes
 		) {
 			@Override
@@ -419,7 +517,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowClock, "showClock"));
 		footerPreferences.add(statusLineScreen.addOption(footerOptions.ShowBattery, "showBattery"));
 		footerPreferences.add(statusLineScreen.addPreference(new FontPreference(
-			this, statusLineScreen.Resource, "font",
+			this, statusLineScreen.Resource.getResource("font"),
 			footerOptions.Font, false
 		)));
 		footerPreferences.run();
@@ -446,7 +544,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		};
 		scrollingScreen.addPreference(new ZLCheckBoxPreference(
-			this, scrollingScreen.Resource, "volumeKeys"
+			this, scrollingScreen.Resource.getResource("volumeKeys")
 		) {
 			{
 				setChecked(keyBindings.hasBinding(KeyEvent.KEYCODE_VOLUME_UP, false));
@@ -466,7 +564,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 		});
 		volumeKeysPreferences.add(scrollingScreen.addPreference(new ZLCheckBoxPreference(
-			this, scrollingScreen.Resource, "invertVolumeKeys"
+			this, scrollingScreen.Resource.getResource("invertVolumeKeys")
 		) {
 			{
 				setChecked(ActionCode.VOLUME_KEY_SCROLL_FORWARD.equals(
@@ -509,7 +607,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			Language.ANY_CODE, dictionaryScreen.Resource.getResource("targetLanguage")
 		));
 		final LanguagePreference targetLanguagePreference = new LanguagePreference(
-			this, dictionaryScreen.Resource, "targetLanguage", languages
+			this, dictionaryScreen.Resource.getResource("targetLanguage"), languages
 		) {
 			@Override
 			protected void init() {
@@ -526,8 +624,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			public void run() {
 				dictionaryScreen.addPreference(new DictionaryPreference(
 					PreferenceActivity.this,
-					dictionaryScreen.Resource,
-					"dictionary",
+					dictionaryScreen.Resource.getResource("dictionary"),
 					DictionaryUtil.singleWordTranslatorOption(),
 					DictionaryUtil.dictionaryInfos(PreferenceActivity.this, true)
 				) {
@@ -541,16 +638,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				});
 				dictionaryScreen.addPreference(new DictionaryPreference(
 					PreferenceActivity.this,
-					dictionaryScreen.Resource,
-					"translator",
+					dictionaryScreen.Resource.getResource("translator"),
 					DictionaryUtil.multiWordTranslatorOption(),
 					DictionaryUtil.dictionaryInfos(PreferenceActivity.this, false)
 				));
 				dictionaryScreen.addPreference(new ZLBooleanPreference(
 					PreferenceActivity.this,
 					miscOptions.NavigateAllWords,
-					dictionaryScreen.Resource,
-					"navigateOverAllWords"
+					dictionaryScreen.Resource.getResource("navigateOverAllWords")
 				));
 				dictionaryScreen.addOption(miscOptions.WordTappingAction, "tappingAction");
 				dictionaryScreen.addPreference(targetLanguagePreference);
@@ -575,18 +670,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final String[] backKeyActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
-			this, cancelMenuScreen.Resource, "backKeyAction",
+			this, cancelMenuScreen.Resource.getResource("backKeyAction"),
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, false), backKeyActions
 		));
 		final String[] backKeyLongPressActions =
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
-			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
+			this, cancelMenuScreen.Resource.getResource("backKeyLongPressAction"),
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 
-		final Screen tipsScreen = createPreferenceScreen("tips");
-		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
+		//final Screen tipsScreen = createPreferenceScreen("tips");
+		//tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
 
 		final Screen aboutScreen = createPreferenceScreen("about");
 		aboutScreen.addPreference(new InfoPreference(
