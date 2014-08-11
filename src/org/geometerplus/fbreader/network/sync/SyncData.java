@@ -39,6 +39,8 @@ public class SyncData {
 		new ZLStringOption("SyncData", "CurrentBookTimestamp", "");
 	private final ZLStringListOption myServerBookHashes =
 		new ZLStringListOption("SyncData", "ServerBookHashes", Collections.<String>emptyList(), ";");
+	private final ZLStringOption myServerBookTitle =
+		new ZLStringOption("SyncData", "ServerBookTitle", "");
 
 	private Map<String,Object> position2Map(ZLTextFixedPosition.WithTimestamp pos) {
 		final Map<String,Object> map = new HashMap<String,Object>();
@@ -85,6 +87,7 @@ public class SyncData {
 
 			final Map<String,Object> currentBookMap = new HashMap<String,Object>();
 			currentBookMap.put("hash", currentBookHash);
+			currentBookMap.put("title", currentBook.getTitle());
 			try {
 				currentBookMap.put("timestamp", Long.parseLong(myCurrentBookTimestamp.getValue()));
 			} catch (Exception e) {
@@ -120,9 +123,6 @@ public class SyncData {
 	public boolean updateFromServer(Map<String,Object> data) {
 		System.err.println("RESPONSE = " + data);
 		myGeneration.setValue((int)(long)(Long)data.get("generation"));
-		if (data.size() == 1) {
-			return false;
-		}
 
 		final List<Map> positions = (List<Map>)data.get("positions");
 		if (positions != null) {
@@ -135,10 +135,14 @@ public class SyncData {
 		}
 
 		final Map<String,Object> currentBook = (Map<String,Object>)data.get("currentbook");
-		myServerBookHashes.setValue(currentBook != null
-			? (List<String>)currentBook.get("all_hashes") : Collections.<String>emptyList());
+		if (currentBook != null) {
+			myServerBookHashes.setValue((List<String>)currentBook.get("all_hashes"));
+			myServerBookTitle.setValue((String)currentBook.get("title"));
+		} else {
+			myServerBookHashes.setValue(Collections.<String>emptyList());
+		}
 
-		return true;
+		return data.size() > 1;
 	}
 
 	private ZLStringOption positionOption(String hash) {
@@ -155,6 +159,10 @@ public class SyncData {
 
 	public List<String> getServerBookHashes() {
 		return myServerBookHashes.getValue();
+	}
+
+	public String getServerBookTitle() {
+		return myServerBookTitle.getValue();
 	}
 
 	public ZLTextFixedPosition.WithTimestamp getAndCleanPosition(String hash) {
