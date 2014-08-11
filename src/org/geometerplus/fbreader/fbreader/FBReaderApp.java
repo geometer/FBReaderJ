@@ -516,22 +516,27 @@ public final class FBReaderApp extends ZLApplication {
 			myStoredPosition = fromServer.Timestamp >= local.Timestamp ? fromServer : local;
 		}
 		BookTextView.gotoPosition(myStoredPosition);
+		savePosition();
 	}
 
 	public void storePosition() {
 		final Book bk = Model != null ? Model.Book : null;
 		if (bk != null && bk == myStoredPositionBook && myStoredPosition != null && BookTextView != null) {
-			if (mySaverThread == null) {
-				mySaverThread = new SaverThread();
-				mySaverThread.start();
-			}
 			final ZLTextPosition position = new ZLTextFixedPosition(BookTextView.getStartCursor());
 			if (!myStoredPosition.equals(position)) {
 				myStoredPosition = position;
-				final RationalNumber progress = BookTextView.getProgress();
-				mySaverThread.add(new PositionSaver(bk, position, progress));
+				savePosition();
 			}
 		}
+	}
+
+	private void savePosition() {
+		final RationalNumber progress = BookTextView.getProgress();
+		if (mySaverThread == null) {
+			mySaverThread = new SaverThread();
+			mySaverThread.start();
+		}
+		mySaverThread.add(new PositionSaver(myStoredPositionBook, myStoredPosition, progress));
 	}
 
 	public boolean hasCancelActions() {
