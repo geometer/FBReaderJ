@@ -35,6 +35,7 @@ import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.fbreader.network.sync.SyncData;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {
@@ -65,6 +66,8 @@ public final class FBReaderApp extends ZLApplication {
 	private Date myJumpTimeStamp;
 
 	public final IBookCollection Collection;
+
+	private SyncData mySyncData = new SyncData();
 
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
@@ -304,7 +307,7 @@ public final class FBReaderApp extends ZLApplication {
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
 			setBookmarkHighlightings(BookTextView, null);
-			BookTextView.gotoPosition(getStoredPosition());
+			gotoStoredPosition();
 			if (bookmark == null) {
 				setView(BookTextView);
 			} else {
@@ -462,29 +465,40 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	private volatile SaverThread mySaverThread;
-	private volatile ZLTextPosition myPosition;
-	private volatile Book myPositionBook;
+	private volatile ZLTextPosition myStoredPosition;
+	private volatile Book myStoredPositionBook;
 
-	public ZLTextPosition getStoredPosition() {
-		myPositionBook = Model != null ? Model.Book : null;
-		if (myPositionBook == null) {
-			return null;
+	public void gotoStoredPosition() {
+		myStoredPositionBook = Model != null ? Model.Book : null;
+		if (myStoredPositionBook == null) {
+			return;
 		}
 
-		final ZLTextPosition pos = Collection.getStoredPosition(myPositionBook.getId());
-		myPosition = new ZLTextFixedPosition(pos);
-		return pos;
+		final ZLTextFixedPosition.WithTimestamp fromServer =
+			mySyncData.getPosition(Collection.getHash(myStoredPositionBook));
+		final ZLTextFixedPosition.WithTimestamp local =
+			Collection.getStoredPosition(myStoredPositionBook.getId());
+
+		if (local == null) {
+			myStoredPosition = fromServer != null ? fromServer : new ZLTextFixedPosition(0, 0, 0);
+		} else if (fromServer == null) {
+			myStoredPosition = local;
+		} else {
+			myStoredPosition = fromServer.Timestamp >= local.Timestamp ? fromServer : local;
+		}
+		BookTextView.gotoPosition(myStoredPosition);
 	}
+
 	public void storePosition() {
 		final Book bk = Model != null ? Model.Book : null;
-		if (bk != null && bk == myPositionBook && myPosition != null && BookTextView != null) {
+		if (bk != null && bk == myStoredPositionBook && myStoredPosition != null && BookTextView != null) {
 			if (mySaverThread == null) {
 				mySaverThread = new SaverThread();
 				mySaverThread.start();
 			}
 			final ZLTextPosition position = new ZLTextFixedPosition(BookTextView.getStartCursor());
-			if (!myPosition.equals(position)) {
-				myPosition = position;
+			if (!myStoredPosition.equals(position)) {
+				myStoredPosition = position;
 				final RationalNumber progress = BookTextView.getProgress();
 				mySaverThread.add(new PositionSaver(bk, position, progress));
 			}
