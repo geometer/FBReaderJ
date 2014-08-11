@@ -327,7 +327,9 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements MenuIt
 		final String label = LibraryTree.resource().getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, id, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
-		item.setIcon(iconId);
+		if (iconId != -1) {
+			item.setIcon(iconId);
+		}
 		return item;
 	}
 
