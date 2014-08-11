@@ -322,7 +322,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 	private Status uploadBookToServerInternal(Book book) {
 		final File file = book.File.getPhysicalFile().javaFile();
-		if (file.length() > 20 * 1024 * 1024) {
+		if (file.length() > 30 * 1024 * 1024) {
 			return Status.Failure;
 		}
 		final String hash = myCollection.getHash(book);
