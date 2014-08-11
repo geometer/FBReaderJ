@@ -30,13 +30,3 @@ git checkout kindle
 ant clean
 fbuild
 mv bin/FBReaderJ.apk READY/FBReaderJ_kindlehd.apk
-
-git checkout beta
-ant distclean
-fbuild
-mv bin/FBReaderJ.apk READY/FBReaderJ-`cat VERSION-BETA | sed "s/ //g"`.apk
-
-git checkout beta-ics
-ant clean
-fbuild
-mv bin/FBReaderJ.apk READY/FBReaderJ_ice-cream-sandwich-`cat VERSION-BETA | sed "s/ //g"`.apk
