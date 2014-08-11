@@ -856,7 +856,7 @@
 		</node>
 		<node name="deleteMultipleBookBox">
 			<node name="title" value="Удаление книг"/>
-			<node name="message" value="%s файлов будут необратимо удалены. Продолжать?"/>
+			<node name="message" value="%s файлов будут необратимо удалены. Продолжать?">
 				<node condition="modrange 11 19 100" value="%s файлов будут необратимо удалены. Продолжать?"/>
 				<node condition="mod 1 10" value="%s файл будет необратимо удалён. Продолжать?"/>
 				<node condition="modrange 2 4 10" value="%s файла будут необратимо удалены. Продолжать?"/>
@@ -1000,6 +1000,7 @@
 		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги"/>
 		<node name="videoServiceNotWorking" value="Просмотр видео не работает"/>
 		<node name="videoPlayerNotFound" value="Не удалось отыскать видеопроигрыватель"/>
+		<node name="bookIsMissing" value="Не удалось найти на этом устройстве книгу «%s»"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>
