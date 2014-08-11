@@ -23,8 +23,7 @@ import java.util.*;
 
 import org.json.simple.JSONValue;
 
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 
@@ -38,8 +37,8 @@ public class SyncData {
 		new ZLStringOption("SyncData", "CurrentBookHash", "");
 	private final ZLStringOption myCurrentBookTimestamp =
 		new ZLStringOption("SyncData", "CurrentBookTimestamp", "");
-	private final ZLStringOption myLastSyncTimestamp =
-		new ZLStringOption("SyncData", "LastSyncTimestamp", "");
+	private final ZLStringListOption myServerBookHashes =
+		new ZLStringListOption("SyncData", "ServerBookHashes", Collections.<String>emptyList(), ";");
 
 	private Map<String,Object> position2Map(ZLTextFixedPosition.WithTimestamp pos) {
 		final Map<String,Object> map = new HashMap<String,Object>();
@@ -120,11 +119,10 @@ public class SyncData {
 
 	public boolean updateFromServer(Map<String,Object> data) {
 		System.err.println("RESPONSE = " + data);
-		final int generation = (int)(long)(Long)data.get("generation");
-		if (myGeneration.getValue() == generation) {
+		myGeneration.setValue((int)(long)(Long)data.get("generation"));
+		if (data.size() == 1) {
 			return false;
 		}
-		myGeneration.setValue(generation);
 
 		final List<Map> positions = (List<Map>)data.get("positions");
 		if (positions != null) {
@@ -135,6 +133,11 @@ public class SyncData {
 				}
 			}
 		}
+
+		final Map<String,Object> currentBook = (Map<String,Object>)data.get("currentbook");
+		myServerBookHashes.setValue(currentBook != null
+			? (List<String>)currentBook.get("all_hashes") : Collections.<String>emptyList());
+
 		return true;
 	}
 
@@ -150,6 +153,10 @@ public class SyncData {
 		return positionOption(hash).getValue().length() > 0;
 	}
 
+	public List<String> getServerBookHashes() {
+		return myServerBookHashes.getValue();
+	}
+
 	public ZLTextFixedPosition.WithTimestamp getAndCleanPosition(String hash) {
 		final ZLStringOption option = positionOption(hash);
 		try {
@@ -159,5 +166,9 @@ public class SyncData {
 		} finally {
 			option.setValue("");
 		}
+	}
+
+	public void reset() {
+		Config.Instance().removeGroup("SyncData");
 	}
 }
