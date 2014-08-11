@@ -135,6 +135,12 @@ public final class FBReaderApp extends ZLApplication {
 		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
 	}
 
+	private void showBookNotFoundMessage() {
+		if (mySyncData.getServerBookHashes().size() > 0) {
+			showErrorMessage("bookIsMissing", mySyncData.getServerBookTitle());
+		}
+	}
+
 	public Book getCurrentServerBook() {
 		for (String hash : mySyncData.getServerBookHashes()) {
 			final Book book = Collection.getBookByHash(hash);
@@ -155,6 +161,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (book == null) {
 			book = getCurrentServerBook();
 			if (book == null) {
+				showBookNotFoundMessage();
 				book = Collection.getRecentBook(0);
 			}
 			if (book == null || !book.File.exists()) {
@@ -480,6 +487,9 @@ public final class FBReaderApp extends ZLApplication {
 	public void useSyncInfo(boolean openOtherBook) {
 		if (openOtherBook) {
 			final Book fromServer = getCurrentServerBook();
+			if (fromServer == null) {
+				showBookNotFoundMessage();
+			}
 			if (fromServer != null && !fromServer.equals(Collection.getRecentBook(0))) {
 				openBook(fromServer, null, null);
 				return;
