@@ -41,7 +41,7 @@ public class SyncData {
 	private final ZLStringOption myLastSyncTimestamp =
 		new ZLStringOption("SyncData", "LastSyncTimestamp", "");
 
-	private Map<String,Object> positionMap(ZLTextFixedPosition.WithTimestamp pos) {
+	private Map<String,Object> position2Map(ZLTextFixedPosition.WithTimestamp pos) {
 		final Map<String,Object> map = new HashMap<String,Object>();
 		map.put("para", pos.ParagraphIndex);
 		map.put("elmt", pos.ElementIndex);
@@ -50,12 +50,21 @@ public class SyncData {
 		return map;
 	}
 
+	private ZLTextFixedPosition.WithTimestamp map2Position(Map<String,Object> map) {
+		return new ZLTextFixedPosition.WithTimestamp(
+			(int)(long)(Long)map.get("para"),
+			(int)(long)(Long)map.get("elmt"),
+			(int)(long)(Long)map.get("char"),
+			(Long)map.get("timestamp")
+		);
+	}
+
 	private Map<String,Object> positionMap(IBookCollection collection, Book book) {
 		if (book == null) {
 			return null;
 		}
 		final ZLTextFixedPosition.WithTimestamp pos = collection.getStoredPosition(book.getId());
-		return pos != null ? positionMap(pos) : null;
+		return pos != null ? position2Map(pos) : null;
 	}
 
 	public Map<String,Object> data(IBookCollection collection) {
@@ -107,6 +116,16 @@ public class SyncData {
 	public void updateFromServer(Map<String,Object> data) {
 		System.err.println("RESPONSE = " + data);
 		myGeneration.setValue((int)(long)(Long)data.get("generation"));
+
+		final List<Map> positions = (List<Map>)data.get("positions");
+		if (positions != null) {
+			for (Map<String,Object> map : positions) {
+				final ZLTextFixedPosition.WithTimestamp pos = map2Position(map);
+				for (String hash : (List<String>)map.get("all_hashes")) {
+					savePosition(hash, pos);
+				}
+			}
+		}
 	}
 
 	private ZLStringOption positionOption(String hash) {
@@ -114,18 +133,12 @@ public class SyncData {
 	}
 
 	private void savePosition(String hash, ZLTextFixedPosition.WithTimestamp pos) {
-		positionOption(hash).setValue(pos != null ? JSONValue.toJSONString(positionMap(pos)) : "");
+		positionOption(hash).setValue(pos != null ? JSONValue.toJSONString(position2Map(pos)) : "");
 	}
 
 	public ZLTextFixedPosition.WithTimestamp getPosition(String hash) {
 		try {
-			final Map<String,Long> map = (Map)JSONValue.parse(positionOption(hash).getValue());
-			return new ZLTextFixedPosition.WithTimestamp(
-				(int)(long)map.get("para"),
-				(int)(long)map.get("elmt"),
-				(int)(long)map.get("char"),
-				map.get("timestamp")
-			);
+			return map2Position((Map)JSONValue.parse(positionOption(hash).getValue()));
 		} catch (Throwable t) {
 			return null;
 		}
