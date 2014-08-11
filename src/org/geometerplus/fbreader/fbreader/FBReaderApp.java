@@ -297,7 +297,7 @@ public final class FBReaderApp extends ZLApplication {
 			if (bookmark != null) {
 				bm = bookmark;
 			} else {
-				ZLTextPosition pos = Collection.getStoredPosition(book.getId());
+				ZLTextPosition pos = getStoredPosition(book);
 				if (pos == null) {
 					pos = new ZLTextFixedPosition(0, 0, 0);
 				}
@@ -490,24 +490,27 @@ public final class FBReaderApp extends ZLApplication {
 	private volatile ZLTextPosition myStoredPosition;
 	private volatile Book myStoredPositionBook;
 
+	private ZLTextFixedPosition getStoredPosition(Book book) {
+		final ZLTextFixedPosition.WithTimestamp fromServer =
+			mySyncData.getAndCleanPosition(Collection.getHash(book));
+		final ZLTextFixedPosition.WithTimestamp local =
+			Collection.getStoredPosition(book.getId());
+
+		if (local == null) {
+			return fromServer != null ? fromServer : new ZLTextFixedPosition(0, 0, 0);
+		} else if (fromServer == null) {
+			return local;
+		} else {
+			return fromServer.Timestamp >= local.Timestamp ? fromServer : local;
+		}
+	}
+
 	private void gotoStoredPosition() {
 		myStoredPositionBook = Model != null ? Model.Book : null;
 		if (myStoredPositionBook == null) {
 			return;
 		}
-
-		final ZLTextFixedPosition.WithTimestamp fromServer =
-			mySyncData.getAndCleanPosition(Collection.getHash(myStoredPositionBook));
-		final ZLTextFixedPosition.WithTimestamp local =
-			Collection.getStoredPosition(myStoredPositionBook.getId());
-
-		if (local == null) {
-			myStoredPosition = fromServer != null ? fromServer : new ZLTextFixedPosition(0, 0, 0);
-		} else if (fromServer == null) {
-			myStoredPosition = local;
-		} else {
-			myStoredPosition = fromServer.Timestamp >= local.Timestamp ? fromServer : local;
-		}
+		myStoredPosition = getStoredPosition(myStoredPositionBook);
 		BookTextView.gotoPosition(myStoredPosition);
 		savePosition();
 	}
