@@ -19,11 +19,11 @@
            parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@android:color/white</item>
         <item name="android:titleTextStyle">@style/WhiteActionBarTitleStyle</item>
-    </style>
+  </style>
 
   <style name="WhiteActionBarTitleStyle"
            parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse">
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/gray_title_text</item>
         <item name="android:fontFamily">"PT Sans Pro"</item>
   </style>
 
