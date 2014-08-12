@@ -1,10 +1,12 @@
 package com.yotadevices.sdk.utils;
 
+import com.yotadevices.sdk.Drawer;
+import com.yotadevices.sdk.Drawer.Waveform;
+
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.view.View;
-
-import com.yotadevices.sdk.Drawer;
 
 /*
  *
@@ -74,13 +76,13 @@ public class EinkUtils {
     }
 
     public static void setViewWaveform(View view, Drawer.Waveform waveform) {
-        if (view!=null) {
+        if (view != null) {
             view.setEpdViewWaveFormMode(waveform.ordinal());
         }
     }
 
     public static Drawer.Waveform getViewWaveform(View view) {
-        if (view!=null) {
+        if (view != null) {
             return Drawer.Waveform.values()[view.getEpdViewWaveformMode()];
         } else {
             return Drawer.Waveform.WAVEFORM_DEFAULT;
@@ -88,19 +90,19 @@ public class EinkUtils {
     }
 
     public static void disableViewDithering(View view) {
-        if (view!=null) {
+        if (view != null) {
             view.setEpdViewDithering(Drawer.Dithering.DITHER_NONE.ordinal());
         }
     }
 
     public static void setViewDithering(View view, Drawer.Dithering dithering) {
-        if (view!=null) {
+        if (view != null) {
             view.setEpdViewDithering(dithering.ordinal());
         }
     }
 
     public static Drawer.Dithering getViewDithering(View view) {
-        if (view!=null) {
+        if (view != null) {
             return Drawer.Dithering.values()[view.getEpdViewDithering()];
         } else {
             return Drawer.Dithering.DITHER_DEFAULT;
@@ -112,20 +114,40 @@ public class EinkUtils {
     }
 
     public static void performSingleUpdate(final View view, final Drawer.Waveform waveform, final Drawer.Dithering dithering) {
-        final Drawer.Waveform previousWaveform = getViewWaveform(view);
-        final Drawer.Dithering previousDithring = getViewDithering(view);
-        if (view!=null) {
+        performSingleUpdate(view, waveform, dithering, 200);
+    }
+
+    // update with delay
+    public static void performSingleUpdate(final View view, final Drawer.Waveform waveform, final Drawer.Dithering dithering, final int delay) {
+        if (view != null) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    final Drawer.Waveform previousWaveform = getViewWaveform(view);
+                    final Drawer.Dithering previousDithering = getViewDithering(view);
                     setViewWaveform(view, waveform);
                     setViewDithering(view, dithering);
                     view.invalidate();
                     setViewWaveform(view, previousWaveform);
-                    setViewDithering(view, previousDithring);
+                    setViewDithering(view, previousDithering);
                 }
-            }, 200);
+            }, delay);
 
         }
     }
+
+    /**
+     * 
+     * @param context
+     *            - current context for binding to BackScreenManager
+     * @param waveform
+     *            - waveform for a single update EPD screen
+     */
+    public static void performSingleUpdate(Context context, Waveform waveform) {
+        if (waveform == null) {
+            throw new IllegalArgumentException("Waveform parameter can't be null");
+        }
+        FrameworkUtils.performSingleUpdate(context, waveform);
+    }
+
 }

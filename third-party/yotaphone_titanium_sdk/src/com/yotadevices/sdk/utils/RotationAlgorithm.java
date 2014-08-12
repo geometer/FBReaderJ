@@ -42,6 +42,10 @@ public class RotationAlgorithm implements SensorEventListener {
          * onPhoneRotatedToBS - Called when device is rotated on back screen
          */
         public void onPhoneRotatedToBS();
+        /**
+         * onRotataionCancelled - Called if user didin't do rotation
+         */
+        public void onRotataionCancelled();
     }
 
     /**
@@ -484,6 +488,9 @@ public class RotationAlgorithm implements SensorEventListener {
         if (mUserIsLookingAtFS) {
             if (System.currentTimeMillis() > (p2bClickedTime + (mExpectFirstRotationFor60Sec ? TIME_60SEC : TIME_4SEC))) {
                 mSensorManager.unregisterListener(this);
+                if (mListener != null) {
+                    mListener.onRotataionCancelled();
+                }
             }
             if (mUserIsLookingAtFSPrevious != mUserIsLookingAtFS) {
                 mSensorManager.unregisterListener(this);

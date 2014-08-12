@@ -2,7 +2,6 @@ package com.yotadevices.sdk;
 
 import com.yotadevices.platinum.R;
 import com.yotadevices.sdk.Constants.SystemBSFlags;
-import com.yotadevices.sdk.utils.EinkUtils;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -17,6 +16,7 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -41,7 +41,7 @@ public class BSDrawer extends Drawer {
     private static final int TYPE_DISPLAY_EPD = getDisplayTypeEPD();
     private static int TYPE_LAYOUT_EPD = getLayoutTypeEpd();
 
-    private BSActivity mActivity;
+    private WeakReference<BSActivity> mActivity;
 
     private Context mContext;
     private Context mEpdContext;
@@ -56,7 +56,7 @@ public class BSDrawer extends Drawer {
     private int mNavigationBarHeight;
 
     public BSDrawer(BSActivity activity) {
-        mActivity = activity;
+        mActivity = new WeakReference<BSActivity>(activity);
         mContext = activity.getContext();
         final Resources res = mContext.getResources();
 
@@ -128,7 +128,8 @@ public class BSDrawer extends Drawer {
     }
 
     private LayoutParams getDefaultLayoutParams() {
-        return new LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, TYPE_LAYOUT_EPD, 0, -1);
+        return new LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, TYPE_LAYOUT_EPD,
+                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, -1);
     }
 
     private LayoutParams applySystemIUVisibility(LayoutParams lp, int visibility) {
@@ -155,7 +156,7 @@ public class BSDrawer extends Drawer {
     /**
      * @hide
      */
-    private boolean isShowBSParentView() {
+    private synchronized boolean isShowBSParentView() {
         return isShowEpdView;
     }
 
@@ -163,19 +164,27 @@ public class BSDrawer extends Drawer {
      * @hide only for inner usage
      */
     @Override
-    public void addBSParentView() {
-        WindowManager wm = getWindowManager();
-        LayoutParams lp = getDefaultLayoutParams();
-        applySystemIUVisibility(lp, mActivity.getSsytemBSUiVisibility());
+    public synchronized void addBSParentView() {
+        if (!isShowBSParentView()) {
+            WindowManager wm = getWindowManager();
+            LayoutParams lp = getDefaultLayoutParams();
 
-        wm.addView(mParentView, lp);
-        //When BS layout is added we perform FULL update to remove all ghosting from previous BSActivity
-        //EinkUtils.performSingleUpdate(mParentView, Waveform.WAVEFORM_GC_FULL);
-        //EinkUtils.disableViewDithering(mParentView);
-        isShowEpdView = true;
+            if (mActivity.get() != null) {
+                applySystemIUVisibility(lp, mActivity.get().getSytemBSUiVisibility());
+            }
 
-        if (isShowBlankView) {
-            hideBlankView();
+            wm.addView(mParentView, lp);
+            // When BS layout is added we perform FULL update to remove all
+            // ghosting
+            // from previous BSActivity
+            // EinkUtils.performSingleUpdate(mParentView,
+            // Waveform.WAVEFORM_GC_FULL);
+            // EinkUtils.disableViewDithering(mParentView);
+            isShowEpdView = true;
+
+            if (isShowBlankView) {
+                hideBlankView();
+            }
         }
     }
 
@@ -183,7 +192,7 @@ public class BSDrawer extends Drawer {
      * @hide only for inner usage
      */
     @Override
-    public void removeBSParentView() {
+    public synchronized void removeBSParentView() {
         if (isShowBSParentView()) {
             WindowManager wm = (WindowManager) mEpdContext.getSystemService(Context.WINDOW_SERVICE);
             wm.removeView(mParentView);

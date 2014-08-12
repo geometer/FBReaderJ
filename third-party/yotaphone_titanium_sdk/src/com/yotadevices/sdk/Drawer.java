@@ -1,4 +1,3 @@
-
 package com.yotadevices.sdk;
 
 import android.content.Context;
@@ -32,6 +31,64 @@ public abstract class Drawer {
          * @hide
          */
         WAVEFORM_DEFAULT, WAVEFORM_A2, WAVEFORM_DU, WAVEFORM_GC_PARTIAL, WAVEFORM_GC_FULL, WAVEFORM_GL, WAVEFORM_GLR, WAVEFORM_GLD;
+
+        // define for driver
+        private final static int WF_MODE_INIT = 0;
+        private final static int WF_MODE_DU = 1;
+        private final static int WF_MODE_GC16 = 2; // 16 grays (flashing)
+        private final static int WF_MODE_GL16 = 3;
+        private final static int WF_MODE_GLR16 = 4;
+        private final static int WF_MODE_GLD16 = 5;
+        private final static int WF_MODE_A2 = 6;
+
+        // update type
+        private final static int UPD_FULL = 0x33;
+        private final static int UPD_PART = 0x35;
+
+        /**
+         * @hide
+         */
+        public int getInternalValue() {
+            switch (this) {
+            case WAVEFORM_DEFAULT:
+                return WF_MODE_INIT;
+            case WAVEFORM_DU:
+                return WF_MODE_DU;
+            case WAVEFORM_GC_PARTIAL:
+            case WAVEFORM_GC_FULL:
+                return WF_MODE_GC16;
+            case WAVEFORM_GL:
+                return WF_MODE_GL16;
+            case WAVEFORM_GLR:
+                return WF_MODE_GLR16;
+            case WAVEFORM_GLD:
+                return WF_MODE_GLD16;
+            case WAVEFORM_A2:
+                return WF_MODE_A2;
+            default:
+                return WF_MODE_GC16;
+            }
+        }
+
+        /**
+         * @hide
+         */
+        public int getUpdateType() {
+            switch (this) {
+            case WAVEFORM_A2:
+            case WAVEFORM_DU:
+                return UPD_PART;
+            case WAVEFORM_GC_PARTIAL:
+                return UPD_PART;
+            case WAVEFORM_GC_FULL:
+            case WAVEFORM_GL:
+            case WAVEFORM_GLD:
+            case WAVEFORM_GLR:
+                return UPD_FULL;
+            default:
+                return UPD_FULL;
+            }
+        }
     }
 
     public enum Dithering {

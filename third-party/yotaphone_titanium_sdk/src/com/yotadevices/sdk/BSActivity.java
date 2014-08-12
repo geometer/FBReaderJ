@@ -4,8 +4,8 @@ import com.yotadevices.sdk.Constants.SystemBSFlags;
 import com.yotadevices.sdk.Constants.VolumeButtonsEvent;
 import com.yotadevices.sdk.exception.SuperNotCalledException;
 import com.yotadevices.sdk.helper.HelperConstant;
-import com.yotadevices.sdk.utils.InfiniteIntentService;
 
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,24 +19,22 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-/**
- * The service which handles events to work with e-ink screen.
- */
-public abstract class BSActivity extends InfiniteIntentService {
+public class BSActivity extends Service {
 
-    /**
-     * @hide
-     */
-    public static String TAG = "BSActivity";
+    private String TAG;
     private static final boolean DEBUG_BS_LIFECIRCLE = true;
 
+    /** Standard activity result: operation canceled. */
+    public static final int RESULT_CANCELED = 0;
+    /** Standard activity result: operation succeeded. */
+    public static final int RESULT_OK = -1;
+    /** Start of user-defined activity results. */
+    public static final int RESULT_FIRST_USER = 1;
+
     private final Object mLockActive = new Object();
+
+    private Intent mIntent;
     private BSDrawer mDrawer;
-
-    private Intent mStartIntent = null;
-
-    /** Messenger for communicating with service. */
-    Messenger mService = null;
 
     /** Flag indicating whether we have called bind on the service. */
     boolean mIsBound;
@@ -45,92 +43,57 @@ public abstract class BSActivity extends InfiniteIntentService {
     boolean isFinishing;
     boolean isBSLock;
     boolean dispatchOnHandleIntent;
+    private int mSystemUiVisibility = SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE;
+
+    private int mResultCode;
+    private Intent mResultData;
+    private int mRequestCode;
 
     /** Record inner state BSActivity */
     private BSRecord mRecord;
 
-    private final Handler mIncomingHandler = new BSAcivityIncomingMessagesHandler(this);
+    private Handler mIncomingHandler;
     private final Handler h = new Handler(); // for UI thread actions
 
     /**
      * Target we publish for clients to send messages to IncomingHandler.
      */
-    final Messenger mMessenger = new Messenger(mIncomingHandler);
+    private Messenger mMessenger;
+    /** Messenger for communicating with service. */
+    Messenger mService = null;
 
-    private int mSystemUiVisibility = SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE;
-
-    public BSActivity() {
-        super(TAG);
-    }
-
-    /**
-     * @hide
-     */
     @Override
-    final public void onCreate() {
+    public void onCreate() {
         super.onCreate();
         TAG = getClass().getSimpleName();
+
+        mIncomingHandler = new BSAcivityIncomingMessagesHandler(this);
+        mMessenger = new Messenger(mIncomingHandler);
+
         mDrawer = new BSDrawer(this);
-        mRecord = new BSRecord(this);
+        mRecord = new BSRecord(getApplicationContext(), TAG);
         isResumed = false;
         isFinishing = false;
         dispatchOnHandleIntent = false;
         isBSLock = false;
-
-        performBSCreate();
-        doBindService();
-    };
-
-    /**
-     * @hide
-     */
-    @Override
-    final public void onDestroy() {
-        super.onDestroy();
-        if (!isFinishing) {
-            // user can stop bsActivity using stopService method
-            performFnish(false);
-        }
-
-        doUnbindService();
-        performBSDestroy();
-    };
-
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        super.onTaskRemoved(rootIntent);
-        performFnish(false);
     }
 
-    /**
-     * Class for interacting with the main interface of the service.
-     */
-    private final ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            mService = new Messenger(service);
-            Log.d(TAG, "Attached.");
-            sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVE);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName className) {
-            mService = null;
-            Log.d(TAG, "Disconnected.");
-        }
-    };
-
-    private Intent getFrameworkIntent() {
-        return new Intent(HelperConstant.FRAMEWORK_SDK_ACTION);
+    private void cleanResource() {
+        mIncomingHandler = null;
+        mMessenger = null;
+        mDrawer = null;
+        mConnection = null;
     }
 
-    void doBindService() {
-        Log.d(TAG, "Start Binding.");
-        mIsBound = bindService(getFrameworkIntent(), mConnection, Context.BIND_AUTO_CREATE);
-        Log.d(TAG, "Binding..." + mIsBound);
+    synchronized void doBindService() {
+        if (!mIsBound) {
+            Log.d(TAG, "Start Binding.");
+            mIsBound = bindService(getFrameworkIntent(), mConnection, Context.BIND_AUTO_CREATE);
+            Log.d(TAG, "Binding..." + mIsBound);
+        }
     }
 
-    void doUnbindService() {
+    synchronized void doUnbindService() {
         if (mIsBound) {
             unbindService(mConnection);
             mIsBound = false;
@@ -138,45 +101,170 @@ public abstract class BSActivity extends InfiniteIntentService {
         }
     }
 
-    /**
-     * @hide
-     */
+    private Intent getFrameworkIntent() {
+        return new Intent(HelperConstant.FRAMEWORK_SDK_ACTION);
+    }
+
     @Override
-    final public void onStart(Intent intent, int startId) {
-        mStartIntent = intent;
+    @Deprecated
+    public final void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
     }
 
-    /**
-     * @hide
-     */
     @Override
-    final protected boolean canHandleIntent() {
-        synchronized (mLockActive) {
-            if (!isResumed) {
-                if (isFinishing()) {
-                    stopSelf();
-                } else {
-                    dispatchOnHandleIntent = true;
-                }
-                return false;
-            } else {
-                return true;
-            }
+    public final int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
+        mIntent = intent;
+        if (isResumed) {
+            handleCommand();
+        } else {
+            doBindService();
         }
+        return Service.START_NOT_STICKY;
+    }
+
+    protected void onStartCommand(Intent intent) {
+
+    }
+
+    private void handleCommand() {
+        onStartCommand(mIntent);
+        onHandleIntent(mIntent);
+        sendRequest(InnerConstants.RequestFramework.REQUEST_SET_INTENT);
     }
 
     @Override
+    public final IBinder onBind(Intent arg0) {
+        return null;
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        performFnish(false);
+        doUnbindService();
+        performBSDestroy();
+        cleanResource();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (!isFinishing) {
+            // user can stop bsActivity using stopService method
+            performFnish(false);
+        }
+        doUnbindService();
+        performBSDestroy();
+        cleanResource();
+    }
+
+    /**
+     * Method is deprecated. Please to use {@link #onStartCommand}.
+     * 
+     * @param intent
+     */
+    @Deprecated
     protected void onHandleIntent(Intent intent) {
-        sendRequest(InnerConstants.RequestFramework.REQUEST_SET_INTENT);
         Log.d(TAG, "onHandleIntent");
+    }
+
+    private void checkBSActivityRunning() {
+        if (mDrawer == null) {
+            throw new IllegalStateException("Is your BSActivity running?");
+        }
+    }
+
+    /**
+     * save inner state.
+     */
+    private void saveInstanceState() {
+        performBSSaveInstanceState(mRecord);
+        mRecord.saveState();
+    }
+
+    private void restoreInstanceState() {
+        mRecord.restoreState();
+        performBSRestoreInstanceState(mRecord);
+    }
+
+    final void performBSSaveInstanceState(BSRecord record) {
+        onBSSaveInstanceState(record.getData());
+        if (DEBUG_BS_LIFECIRCLE) {
+            Log.v(TAG, "onBSSaveInstanceState " + TAG + " : " + record.getData());
+        }
+    }
+
+    final void performBSRestoreInstanceState(BSRecord record) {
+        onBSRestoreInstanceState(record.getData());
+        if (DEBUG_BS_LIFECIRCLE) {
+            Log.v(TAG, "onBSRestoreInstanceState " + TAG + " : " + record.getData());
+        }
     }
 
     private final void performBSCreate() {
         if (DEBUG_BS_LIFECIRCLE) {
             Log.v(TAG, "onBSCreate.");
         }
+        mCalled = false;
         onBSCreate();
+        if (!mCalled) {
+            throw new SuperNotCalledException("BSActivity " + TAG + " did not call through to super.onBSCreate()");
+        }
+    }
+
+    void performBSActivated(boolean isBsLock) {
+        performBSActivated(isBsLock, -1, RESULT_CANCELED, null);
+    }
+
+    void performBSActivated(boolean isBsLock, int requestCode, int resultCode, Intent data) {
+        if (!isFinishing) {
+            restoreInstanceState();
+            if (requestCode != -1) {
+                performOnBSActivityResult(requestCode, resultCode, data);
+            }
+            performBSResume(isBsLock);
+            handleCommand();
+        }
+    }
+
+    /** Disactivate current BSActivity : pause() -> stop() -> destroy() */
+    void performBSDisActivated() {
+        setFinishing(true);
+        performBSPause();
+        performBSStop(true);
+    }
+
+    void performOnBSActivityResult(int requestCode, int resultCode, Intent data) {
+        if (DEBUG_BS_LIFECIRCLE) {
+            Log.v(TAG, "onBSActivityResult");
+        }
+        onBSActivityResult(requestCode, resultCode, data);
+    }
+
+    void performBSResume(boolean isBSLocked) {
+        if (DEBUG_BS_LIFECIRCLE) {
+            Log.v(TAG, "onBSResume.");
+        }
+
+        isBSLock = isBSLocked;
+        mCalled = false;
+        onBSResume();
+        if (!mCalled) {
+            throw new SuperNotCalledException("BSActivity " + getClass().getSimpleName() + " did not call through to super.onBSResume()");
+        }
+    }
+
+    void performBSPause() {
+        if (DEBUG_BS_LIFECIRCLE) {
+            Log.v(TAG, "onBSPause.");
+        }
+
+        mCalled = false;
+        onBSPause();
+        if (!mCalled) {
+            throw new SuperNotCalledException("BSActivity " + getClass().getSimpleName() + " did not call through to super.onBSPause()");
+        }
     }
 
     void performBSStop(boolean stopped) {
@@ -198,52 +286,6 @@ public abstract class BSActivity extends InfiniteIntentService {
         }
     }
 
-    /**
-     * save inner state.
-     */
-    private void saveInstanceState() {
-        performBSSaveInstanceState(mRecord);
-        mRecord.saveState();
-    }
-
-    private void restoreInstanceState() {
-        mRecord.restoreState();
-        performBSRestoreInstanceState(mRecord);
-    }
-
-    void performBSActivated(boolean isBSLocked) {
-        restoreInstanceState();
-        performBSResume(isBSLocked);
-
-        // ready for onHandleIntent()
-        synchronized (mLockActive) {
-            if (dispatchOnHandleIntent) {
-                onHandleIntent(getIntent());
-                dispatchOnHandleIntent = false;
-            }
-        }
-    }
-
-    /** Disactivate current BSActivity : pause() -> stop() -> destroy() */
-    void performBSDisActivated() {
-        setFinishing(true);
-        performBSPause();
-        performBSStop(true);
-    }
-
-    void performBSResume(boolean isBSLocked) {
-        if (DEBUG_BS_LIFECIRCLE) {
-            Log.v(TAG, "onBSResume.");
-        }
-
-        isBSLock = isBSLocked;
-        mCalled = false;
-        onBSResume();
-        if (!mCalled) {
-            throw new SuperNotCalledException("BSActivity " + getClass().getSimpleName() + " did not call through to super.onBSResume()");
-        }
-    }
-
     private final void performBSDestroy() {
         if (DEBUG_BS_LIFECIRCLE) {
             Log.v(TAG, "onBSDestroy.");
@@ -253,32 +295,6 @@ public abstract class BSActivity extends InfiniteIntentService {
         onBSDestroy();
         if (!mCalled) {
             throw new SuperNotCalledException("BSActivity " + getClass().getSimpleName() + " did not call through to super.onBSDestroy()");
-        }
-    }
-
-    final void performBSSaveInstanceState(BSRecord record) {
-        onBSSaveInstanceState(record.getData());
-        if (DEBUG_BS_LIFECIRCLE) {
-            Log.v(TAG, "onBSSaveInstanceState " + this + " : " + record.getData());
-        }
-    }
-
-    final void performBSRestoreInstanceState(BSRecord record) {
-        onBSRestoreInstanceState(record.getData());
-        if (DEBUG_BS_LIFECIRCLE) {
-            Log.v(TAG, "onBSRestoreInstanceState " + this + " : " + record.getData());
-        }
-    }
-
-    void performBSPause() {
-        if (DEBUG_BS_LIFECIRCLE) {
-            Log.v(TAG, "onBSPause.");
-        }
-
-        mCalled = false;
-        onBSPause();
-        if (!mCalled) {
-            throw new SuperNotCalledException("BSActivity " + getClass().getSimpleName() + " did not call through to super.onBSPause()");
         }
     }
 
@@ -297,24 +313,56 @@ public abstract class BSActivity extends InfiniteIntentService {
     }
 
     final void performSystemUIChange() {
-        getBSDrawer().updateViewLayout(mSystemUiVisibility);
+        mDrawer.updateViewLayout(mSystemUiVisibility);
     }
 
     /**
-     * onBSCreate - Called when BsDrawer is registered in the Platinum Manager
-     * (PM). In this state BsDrawer gains privileges to draw on BS but drawing
-     * is not permitted yet
+     * onBSSaveInstanceState - Save state before the instance is killed
+     * 
+     * @param outState
+     *            instance state.
+     */
+    protected void onBSSaveInstanceState(Bundle outState) {
+
+    }
+
+    /**
+     * onBSRestoreInstanceState - Restores the state
+     * 
+     * @param savedInstanceState
+     *            saved instance state.
+     */
+    protected void onBSRestoreInstanceState(Bundle savedInstanceState) {
+
+    }
+
+    /**
+     * onBSCreate - Called when BsDrawer is registered in the YotaPhoneitanium
+     * Manager (PM). In this state BsDrawer gains privileges to draw on BS but
+     * drawing is not permitted yet
      */
     protected void onBSCreate() {
-
+        mCalled = true;
     }
 
     /**
      * onBSResume - Called when BsDrawer is ready to draw on BS.
      */
     protected void onBSResume() {
-        getBSDrawer().addBSParentView();// show user UI on back screen
+        checkBSActivityRunning();
+        mDrawer.addBSParentView();// show user UI on back screen
         isResumed = true;
+        mCalled = true;
+    }
+
+    /**
+     * onBSStop and onBSPause: Called when BsDrawer loses privileges to draw on
+     * BS.
+     */
+    protected void onBSPause() {
+        checkBSActivityRunning();
+        mDrawer.removeBSParentView();
+        isResumed = false;
         mCalled = true;
     }
 
@@ -325,24 +373,6 @@ public abstract class BSActivity extends InfiniteIntentService {
     protected void onBSStop() {
         isFinishing = true;
         mCalled = true;
-    }
-
-    /**
-     * onBSStop and onBSPause: Called when BsDrawer loses privileges to draw on
-     * BS.
-     */
-    protected void onBSPause() {
-        getBSDrawer().removeBSParentView();
-        isResumed = false;
-        mCalled = true;
-    }
-
-    /**
-     * @hide
-     */
-    @Override
-    public final IBinder onBind(Intent intent) {
-        return super.onBind(intent);
     }
 
     /**
@@ -387,32 +417,12 @@ public abstract class BSActivity extends InfiniteIntentService {
     }
 
     /**
-     * onBSSaveInstanceState - Save state before the instance is killed
-     * 
-     * @param outState
-     *            instance state.
-     */
-    protected void onBSSaveInstanceState(Bundle outState) {
-
-    }
-
-    /**
-     * onBSRestoreInstanceState - Restores the state
-     * 
-     * @param savedInstanceState
-     *            saved instance state.
-     */
-    protected void onBSRestoreInstanceState(Bundle savedInstanceState) {
-
-    }
-
-    /**
      * getIntent - Return the intent that started this BSActivity.
      * 
      * @return Intent
      */
     public Intent getIntent() {
-        return mStartIntent;
+        return mIntent;
     }
 
     /**
@@ -428,7 +438,9 @@ public abstract class BSActivity extends InfiniteIntentService {
      * .
      */
     public void setBSContentView(View view) {
-        getBSDrawer().addViewToBS(view);
+        checkBSActivityRunning();
+        mDrawer.getParentView().removeAllViews();
+        mDrawer.addViewToBS(view);
     }
 
     /**
@@ -436,7 +448,9 @@ public abstract class BSActivity extends InfiniteIntentService {
      * .
      */
     public void setBSContentView(View view, LayoutParams params) {
-        getBSDrawer().addViewToBS(view, params);
+        checkBSActivityRunning();
+        mDrawer.getParentView().removeAllViews();
+        mDrawer.addViewToBS(view, params);
     }
 
     /**
@@ -450,8 +464,10 @@ public abstract class BSActivity extends InfiniteIntentService {
      *      android.view.ViewGroup.LayoutParams)
      */
     public void setBSContentView(int layoutResID) {
-        if (getBSDrawer().getBSLayoutInflater() != null) {
-            getBSDrawer().addViewToBS(getBSDrawer().getBSLayoutInflater().inflate(layoutResID, null));
+        checkBSActivityRunning();
+        mDrawer.getParentView().removeAllViews();
+        if (mDrawer.getBSLayoutInflater() != null) {
+            mDrawer.addViewToBS(getBSDrawer().getBSLayoutInflater().inflate(layoutResID, null));
         }
     }
 
@@ -460,7 +476,8 @@ public abstract class BSActivity extends InfiniteIntentService {
      * .
      */
     public View findViewById(int id) {
-        return getBSDrawer().findViewById(id);
+        checkBSActivityRunning();
+        return mDrawer.findViewById(id);
     }
 
     /**
@@ -472,11 +489,6 @@ public abstract class BSActivity extends InfiniteIntentService {
         return getApplicationContext();
     }
 
-    @Override
-    public Context getBaseContext() {
-        return getBSDrawer().getBSContext();
-    }
-
     public void setSystemBSUiVisibility(int visibility) {
         if (visibility != mSystemUiVisibility) {
             mSystemUiVisibility = visibility;
@@ -486,7 +498,7 @@ public abstract class BSActivity extends InfiniteIntentService {
         }
     }
 
-    int getSsytemBSUiVisibility() {
+    int getSytemBSUiVisibility() {
         return mSystemUiVisibility;
     }
 
@@ -522,7 +534,95 @@ public abstract class BSActivity extends InfiniteIntentService {
      * Call this when your BSActivity is done and should be closed
      */
     public void finish() {
-        performFnish(true);
+        if (!isFinishing) {
+            performFnish(true);
+        }
+    }
+
+    /**
+     * Call this to set the result that your bsactivity will return to its
+     * caller.
+     * 
+     * @param resultCode
+     *            The result code to propagate back to the originating activity,
+     *            often RESULT_CANCELED or RESULT_OK
+     */
+    public void setResult(int resultCode) {
+        synchronized (this) {
+            mResultCode = resultCode;
+            mResultData = null;
+        }
+    }
+
+    public void setResult(int resultCode, Intent data) {
+        synchronized (this) {
+            mResultCode = resultCode;
+            mResultData = data;
+        }
+    }
+
+    /**
+     * Same as {@link #startBSActivityForResult(Intent, int)} with no options
+     * specified.
+     * 
+     * @param intent
+     *            The intent to start.
+     */
+
+    public void startBSActivity(Intent intent) {
+        startBSActivityForResult(intent, -1);
+    }
+
+    /**
+     * Launch an activity for which you would like a result when it finished.
+     * When this activity exits, your onBSActivityResult() method will be called
+     * with the given requestCode. Using a negative requestCode is the same as
+     * calling {@link #startBSActivity} (the activity is not launched as a
+     * sub-activity).
+     * 
+     * @param intent
+     *            The intent to start.
+     * 
+     * @param requestCode
+     *            If >= 0, this code will be returned in onBSActivityResult()
+     *            when the activity exits.
+     */
+    public void startBSActivityForResult(Intent intent, int requestCode) {
+        checkBSActivityRunning();
+        synchronized (this) {
+            mRequestCode = requestCode;
+        }
+        sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVITY_RESULT);
+        startService(intent);
+    }
+
+    /**
+     * Called when an bs-activity you launched exits, giving you the requestCode
+     * you started it with, the resultCode it returned, and any additional data
+     * from it. The <var>resultCode</var> will be {@link #RESULT_CANCELED} if
+     * the activity explicitly returned that, didn't return any result, or
+     * crashed during its operation.
+     * 
+     * <p>
+     * You will receive this call immediately before onResume() when your
+     * bs-activity is re-starting.
+     * 
+     * @param requestCode
+     *            The integer request code originally supplied to
+     *            startBSActivityForResult(), allowing you to identify who this
+     *            result came from.
+     * @param resultCode
+     *            The integer result code returned by the child activity through
+     *            its setResult().
+     * @param data
+     *            An Intent, which can return result data to the caller (various
+     *            data can be attached to Intent "extras").
+     * 
+     * @see #startBSActivityForResult
+     * @see #setResult(int)
+     */
+    protected void onBSActivityResult(int requestCode, int resultCode, Intent data) {
+
     }
 
     void performFnish(boolean stopped) {
@@ -536,29 +636,75 @@ public abstract class BSActivity extends InfiniteIntentService {
 
     void sendRequest(int what) {
         Bundle bundle = new Bundle();
-        bundle.putString(InnerConstants.EXTRA_SERVICE_NAME, BSActivity.this.getClass().getName());
+        bundle.putString(InnerConstants.EXTRA_SERVICE_NAME, getClass().getName());
         bundle.putInt(InnerConstants.EXTRA_SYSTEM_BS_UI_FLAG, mSystemUiVisibility);
-        bundle.putParcelable(InnerConstants.EXTRA_BS_ACTIVITY_INTENT, getIntent());
-        sendToPlatinum(what, bundle);
+        sendToFramework(what, bundle);
     }
 
-    private void sendToPlatinum(int what, Bundle bundle) {
+    private void sendToFramework(int what, Bundle bundle) {
         try {
             Message msg = Message.obtain(null, what);
 
             msg.arg1 = android.os.Process.myPid();
             msg.arg2 = android.os.Process.myUid();
 
+            switch (what) {
+            case InnerConstants.RequestFramework.REQUEST_SET_ACTIVE:
+                msg.replyTo = mMessenger;
+                break;
+            case InnerConstants.RequestFramework.REQUEST_SET_INTENT:
+                bundle.putParcelable(InnerConstants.EXTRA_BS_ACTIVITY_INTENT, getIntent());
+                break;
+            case InnerConstants.RequestFramework.REQUEST_SET_ACTIVITY_RESULT:
+                int requestCode;
+                synchronized (this) {
+                    requestCode = mRequestCode;
+                }
+                bundle.putInt(InnerConstants.EXTRA_REQUEST_CODE, requestCode);
+                break;
+            case InnerConstants.RequestFramework.REQUEST_SET_FINISH:
+                int resultCode;
+                Intent resultData;
+                synchronized (this) {
+                    resultCode = mResultCode;
+                    resultData = mResultData;
+                }
+                bundle.putInt(InnerConstants.EXTRA_RESULT_CODE, resultCode);
+                if (resultData != null) {
+                    bundle.putParcelable(InnerConstants.EXTRA_RESULT_DATA, resultData);
+                }
+                break;
+            default:
+                break;
+            }
+
             msg.setData(bundle);
-            msg.replyTo = mMessenger;
             mService.send(msg);
         } catch (Exception e) {
             Log.e(TAG, "Error while send msg", e);
-            if (what != InnerConstants.RequestFramework.REQUEST_SET_ACTIVE) {
-                performBSPause();
-            }
-            performBSStop(true);
+            finish();
         }
     }
+
+    /**
+     * Class for interacting with the main interface of the service.
+     */
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            if (mService == null) {
+                Log.d(TAG, "Attached.");
+                mService = new Messenger(service);
+                performBSCreate();
+                sendRequest(InnerConstants.RequestFramework.REQUEST_SET_ACTIVE);
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName className) {
+            mService = null;
+            Log.d(TAG, "Disconnected.");
+        }
+    };
 
 }

@@ -23,4 +23,9 @@ public class BackscreenLauncherConstants {
     public static final String ACTION_APPWIDGET_VISIBILITY_CHANGED = "com.yotadevices.yotaphone.action.APPWIDGET_VISIBILITY_CHANGED";
     public static final String ACTION_APPWIDGET_EXTRA_VISIBLE = "com.yotadevices.yotaphone.extras.VISIBLE";
     public static final String ACTION_APPWIDGET_EXTRA_INVISIBLE = "com.yotadevices.yotaphone.extras.INVISIBLE";
+
+    // widget update notification
+    public static final String ACTION_APPWIDGET_NOTIFICATION = "com.yotadevices.yotaphone.action.APPWIDGET_NOTIFICATION";
+    public static final String ACTION_APPWIDGET_EXTRA_WIDGET_ID = "com.yotadevices.yotaphone.extras.WIDGET_ID";
+    public static final String ACTION_APPWIDGET_EXTRA_DESCRIPTION = "com.yotadevices.yotaphone.extras.NOTIFICATION_DESCRIPTION";
 }

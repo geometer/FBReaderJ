@@ -12,15 +12,17 @@ import android.util.Base64;
  */
 class BSRecord {
     private final static String PREF_NAME = "instanceState";
-    private BSActivity mBSActivity;
+    private Context mContext;
+    private String mName;
 
     /**
      * Last retrieved freeze state.
      */
     private Bundle mInstanceState = new Bundle();
 
-    public BSRecord(BSActivity activity) {
-        mBSActivity = activity;
+    public BSRecord(Context context, String name) {
+        mContext = context;
+        mName = name;
     }
 
     public Bundle getData() {
@@ -28,8 +30,7 @@ class BSRecord {
     }
 
     private SharedPreferences getPreference() {
-        Context ctx = mBSActivity.getApplicationContext();
-        return ctx.getSharedPreferences("_" + mBSActivity.getClass().getName(), Context.MODE_PRIVATE);
+        return mContext.getSharedPreferences("_" + mName, Context.MODE_PRIVATE);
     }
 
     void saveState() {

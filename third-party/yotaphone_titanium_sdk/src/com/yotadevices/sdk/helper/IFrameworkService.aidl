@@ -1,6 +1,5 @@
 package com.yotadevices.sdk.helper;
 
-
 interface IFrameworkService {
 
 	void goToSleep();
@@ -16,4 +15,6 @@ interface IFrameworkService {
     void unlockBackScreen();
     
     boolean isLockScreenDisabled();
+    
+    void performSingleUpdate(in int waveform);
 }

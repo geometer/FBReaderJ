@@ -208,6 +208,8 @@ public final class Constants {
         public final static int SYSTEM_BS_UI_FLAG_HIDE_NAVIGATION = 0x00000002;
     }
 
+    public static final String YOTAPHONE_EXTRA_BACK = "com.yotadevices.yotaphone.EXTRA_BACK";
+
     private Constants() {
 
     }

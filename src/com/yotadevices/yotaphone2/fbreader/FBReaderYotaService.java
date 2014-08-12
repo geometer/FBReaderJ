@@ -44,6 +44,8 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     public static final String KEY_BACK_SCREEN_IS_ACTIVE =
             "com.yotadevices.yotaphone2.fbreader.backScreenIsActive";
 
+    public final static String TAG = FBReaderYotaService.class.getSimpleName();
+
     public static YotaBackScreenWidget mWidget;
     private Book myCurrentBook;
     private FBReaderApp myFBReaderApp;
