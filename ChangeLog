@@ -1,3 +1,7 @@
+===== 2.0.1 (Aug 12, 2014) =====
+* Several NPE fixes
+* Fixed issue with starting SyncService with no intent
+
 ===== 2.0 (Aug 11, 2014) =====
 * Synchronisation with FBReader book network
 * Uses ACCESS_NETWORK_STATE permission to detect if device is connected to the internet over WiFi
