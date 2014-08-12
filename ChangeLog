@@ -1,3 +1,9 @@
+===== 2.0.3 (Aug 13, 2014) =====
+* Used web-based authentication for devices with API < 14
+
+===== 2.0.2 (Aug 12, 2014) =====
+* Fixed synchronization site name for API < 11
+
 ===== 2.0.1 (Aug 12, 2014) =====
 * Several NPE fixes
 * Fixed issue with starting SyncService with no intent
