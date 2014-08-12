@@ -40,8 +40,8 @@ class ShowLibraryAction extends FBAndroidAction {
 		final Intent externalIntent =
 			new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY);
 		final Intent internalIntent =
-			//new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
-                new Intent(BaseActivity.getApplicationContext(), FileChooseActivity.class);
+			new Intent(BaseActivity.getApplicationContext(), LibraryActivity.class);
+            //new Intent(BaseActivity.getApplicationContext(), FileChooseActivity.class);
 		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
 			try {
 				startLibraryActivity(externalIntent);
