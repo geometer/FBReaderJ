@@ -4,4 +4,12 @@
     <string name="of">of</string>
     <string name="pages_left">pages left</string>
     <string name="back_to_page">Back to page</string>
+    <string name="yota_book_description">Description</string>
+    <string name="yota_add_to_collection">ADD</string>
+    <string name="yota_book_details">Details</string>
+    <string name="yota_book_language_tille">Language</string>
+    <string name="yota_book_cat_tille">Category</string>
+    <string name="yota_book_publisher_tille">Publisher</string>
+    <string name="yota_book_seller_tille">Seller</string>
+    <string name="yota_book_published_tille">Published</string>
 </resources>

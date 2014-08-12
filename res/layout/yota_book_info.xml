@@ -5,44 +5,200 @@
             android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ee462a"
+            android:background="@color/yota_red"
             android:gravity="center"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/yota_book_cover"
                 android:layout_marginTop="35dp"
                 android:layout_width="122dp"
                 android:layout_height="177dp"/>
             <TextView
+                android:id="@+id/yota_book_title"
                 android:layout_marginTop="31dp"
                 android:layout_marginLeft="42dp"
                 android:layout_marginRight="42dp"
-                android:textSize="21dp"
+                android:textSize="26dp"
                 android:textColor="@android:color/white"
                 android:fontFamily="PT Serif Pro"
                 android:textStyle="bold"
-                android:text="Don't Breathe a Word"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/yota_book_author"
                 android:layout_marginTop="12dp"
                 android:layout_marginLeft="42dp"
                 android:layout_marginRight="42dp"
-                android:textSize="12dp"
+                android:textSize="18dp"
                 android:textColor="@android:color/white"
                 android:fontFamily="PT Serif Pro"
-                android:text="by Jennifer McMahon"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/yota_book_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="45.6dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginBottom="31dp"
+                android:text="@string/yota_add_to_collection"
+                android:textSize="22.6dp"
+                android:fontFamily="PT Sans Pro"
+                android:textStyle="bold"
+                android:textColor="@drawable/book_add_to_collection_font_color"
+                android:background="@drawable/book_add_to_collection"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white">
+            <TextView
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/yota_red"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:fontFamily="PT Serif Pro"
+                android:text="@string/yota_book_description"/>
+            <TextView
+                android:id="@+id/yota_book_description"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:fontFamily="PT Serif Pro"
+                android:text=""/>
+            <TextView
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/yota_red"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:fontFamily="PT Serif Pro"
+                android:text="@string/yota_book_details"/>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:rowCount="5"
+                android:columnCount="2">
+                <TextView
+                    android:id="@+id/yota_book_language_title"
+                    android:textSize="17dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="@string/yota_book_language_tille"
+                    android:fontFamily="PT Serif Pro"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    android:gravity="right"/>
+                <TextView
+                    android:id="@+id/yota_book_language"
+                    android:textSize="17dp"
+                    android:layout_marginLeft="17dp"
+                    android:textColor="@android:color/black"
+                    android:text=""
+                    android:fontFamily="PT Serif Pro"
+                    android:visibility="gone"
+                    android:gravity="left"/>
+                <TextView
+                    android:id="@+id/yota_book_genre_title"
+                    android:textSize="17dp"
+                    android:layout_marginTop="17dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="@string/yota_book_cat_tille"
+                    android:fontFamily="PT Serif Pro"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    android:gravity="right"/>
+                <TextView
+                    android:id="@+id/yota_book_genre"
+                    android:textSize="17dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginTop="17dp"
+                    android:textColor="@android:color/black"
+                    android:text=""
+                    android:fontFamily="PT Serif Pro"
+                    android:visibility="gone"
+                    android:gravity="left"/>
+                <TextView
+                    android:id="@+id/yota_book_publisher_title"
+                    android:textSize="17dp"
+                    android:layout_marginTop="17dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="@string/yota_book_publisher_tille"
+                    android:fontFamily="PT Serif Pro"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    android:gravity="right"/>
+                <TextView
+                    android:id="@+id/yota_book_publisher"
+                    android:textSize="17dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginTop="17dp"
+                    android:textColor="@android:color/black"
+                    android:text=""
+                    android:fontFamily="PT Serif Pro"
+                    android:visibility="gone"
+                    android:gravity="left"/>
+                <TextView
+                    android:id="@+id/yota_book_seller_title"
+                    android:textSize="17dp"
+                    android:layout_marginTop="17dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="@string/yota_book_seller_tille"
+                    android:fontFamily="PT Serif Pro"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    android:gravity="right"/>
+                <TextView
+                    android:id="@+id/yota_book_seller"
+                    android:textSize="17dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginTop="17dp"
+                    android:textColor="@android:color/black"
+                    android:text=""
+                    android:fontFamily="PT Serif Pro"
+                    android:visibility="gone"
+                    android:gravity="left"/>
+                <TextView
+                    android:id="@+id/yota_book_published_title"
+                    android:textSize="17dp"
+                    android:layout_marginTop="17dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="@string/yota_book_published_tille"
+                    android:fontFamily="PT Serif Pro"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    android:gravity="right"/>
+                <TextView
+                    android:id="@+id/yota_book_published"
+                    android:textSize="17dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginTop="17dp"
+                    android:textColor="@android:color/black"
+                    android:text=""
+                    android:fontFamily="PT Serif Pro"
+                    android:visibility="gone"
+                    android:gravity="left"/>
+            </GridLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
