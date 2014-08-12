@@ -93,7 +93,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		final String action = intent.getAction();
+		final String action = intent != null ? intent.getAction() : Action.SYNC;
 		if (SyncOperations.Action.START.equals(action)) {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
