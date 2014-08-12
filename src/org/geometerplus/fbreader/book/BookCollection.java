@@ -174,7 +174,7 @@ public class BookCollection extends AbstractBookCollection {
 	public Book getBookByHash(String hash) {
 		for (long id : myDatabase.bookIdsByHash(hash)) {
 			final Book book = getBookById(id);
-			if (book.File.exists()) {
+			if (book != null && book.File.exists()) {
 				return book;
 			}
 		}
