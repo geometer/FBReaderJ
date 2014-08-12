@@ -18,6 +18,7 @@
   <style name="WhiteActionBar"
            parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@android:color/white</item>
+        <item name="android:icon">@drawable/r_color_logo</item>
         <item name="android:titleTextStyle">@style/WhiteActionBarTitleStyle</item>
   </style>
 

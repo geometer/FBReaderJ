@@ -1,6 +1,7 @@
 package com.yotadevices.yotaphone2.fbreader;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,8 @@ public class FileChooserAdapter extends TreeAdapter {
     private View createView(View convertView, ViewGroup parent, LibraryTree tree) {
         final View view = (convertView != null) ? convertView :
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
+        view.setPadding((int)UIUtils.convertDpToPixel(6, getActivity()), 0,
+                (int)UIUtils.convertDpToPixel(6, getActivity()), 0);
 
         final boolean unread =
                 tree.getBook() != null && !tree.getBook().labels().contains(Book.READ_LABEL);
@@ -38,6 +41,7 @@ public class FileChooserAdapter extends TreeAdapter {
         } else {
             nameView.setText(tree.getName());
         }
+        nameView.setTypeface(Typeface.create("PT Sans Pro", Typeface.BOLD));
 
         final TextView summaryView = ViewUtil.findTextView(view, R.id.library_tree_item_childrenlist);
         if (unread) {
@@ -45,7 +49,8 @@ public class FileChooserAdapter extends TreeAdapter {
         } else {
             summaryView.setText(tree.getSummary());
         }
-
+        summaryView.setTextColor(Color.GRAY);
+        nameView.setTypeface(Typeface.create("PT Sans Pro", Typeface.NORMAL));
         return view;
     }
 

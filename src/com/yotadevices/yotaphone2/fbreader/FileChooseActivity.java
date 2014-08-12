@@ -3,6 +3,8 @@ package com.yotadevices.yotaphone2.fbreader;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -16,7 +18,6 @@ import org.geometerplus.fbreader.book.BookEvent;
 import org.geometerplus.fbreader.book.IBookCollection;
 import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.zlibrary.ui.android.R;
 
 public class FileChooseActivity extends TreeActivity<LibraryTree> implements IBookCollection.Listener {
     private FileRootTree mRootTree;
@@ -28,9 +29,6 @@ public class FileChooseActivity extends TreeActivity<LibraryTree> implements IBo
         new FileChooserAdapter(this);
         deleteRootTree();
 
-        ActionBar ab = getActionBar();
-        ab.setIcon(R.drawable.r_color_logo);
-
         final BookCollectionShadow collection = new BookCollectionShadow();
         collection.bindToService(this, new Runnable() {
             public void run() {
@@ -40,6 +38,14 @@ public class FileChooseActivity extends TreeActivity<LibraryTree> implements IBo
                 init(getIntent());
             }
         });
+
+        ListView lv = getListView();
+        lv.setPadding((int)UIUtils.convertDpToPixel(13, this), 0,
+                (int)UIUtils.convertDpToPixel(13, this), 0);
+
+        ActionBar ab = getActionBar();
+        ab.setDisplayShowHomeEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     private synchronized void deleteRootTree() {
@@ -93,4 +99,15 @@ public class FileChooseActivity extends TreeActivity<LibraryTree> implements IBo
         OrientationUtil.startActivity(this, intent);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                if (!backInHistory())
+                    finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

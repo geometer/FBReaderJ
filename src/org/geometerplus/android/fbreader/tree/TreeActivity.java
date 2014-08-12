@@ -102,21 +102,28 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			FBTree parent = null;
-			while (parent == null && !myHistory.isEmpty()) {
-				parent = getTreeByKey(myHistory.remove(myHistory.size() - 1));
-			}
-			if (parent == null) {
-				parent = myCurrentTree.Parent;
-			}
-			if (parent != null && !isTreeInvisible(parent)) {
-				openTree(parent, myCurrentTree, false);
-				return true;
-			}
+            if (backInHistory()) {
+                return true;
+            }
 		}
 
 		return super.onKeyDown(keyCode, event);
 	}
+
+    protected boolean backInHistory() {
+        FBTree parent = null;
+        while (parent == null && !myHistory.isEmpty()) {
+            parent = getTreeByKey(myHistory.remove(myHistory.size() - 1));
+        }
+        if (parent == null) {
+            parent = myCurrentTree.Parent;
+        }
+        if (parent != null && !isTreeInvisible(parent)) {
+            openTree(parent, myCurrentTree, false);
+            return true;
+        }
+        return false;
+    }
 
 	// TODO: change to protected
 	public void openTree(final FBTree tree) {
