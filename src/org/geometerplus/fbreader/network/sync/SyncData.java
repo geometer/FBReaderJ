@@ -81,6 +81,7 @@ public class SyncData {
 				myCurrentBookHash.setValue(newHash);
 				if (oldHash.length() != 0) {
 					myCurrentBookTimestamp.setValue(String.valueOf(System.currentTimeMillis()));
+					myServerBookHashes.setValue(Collections.<String>emptyList());
 				}
 			}
 			final String currentBookHash = newHash != null ? newHash : oldHash;
