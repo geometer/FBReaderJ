@@ -2,7 +2,8 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,6 +29,7 @@
                 android:fontFamily="PT Serif Pro"
                 android:textStyle="bold"
                 android:text=""
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
@@ -39,6 +41,7 @@
                 android:textColor="@android:color/white"
                 android:fontFamily="PT Serif Pro"
                 android:text=""
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
@@ -61,6 +64,7 @@
             android:orientation="vertical"
             android:background="@android:color/white">
             <TextView
+                android:id="@+id/yota_book_description_title"
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"

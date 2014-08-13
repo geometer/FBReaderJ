@@ -324,6 +324,13 @@
 		<activity android:name="org.geometerplus.android.util.EditAuthorsDialogActivity" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/FBReader.Dialog" android:exported="false"/>
 		<activity android:name="com.yotadevices.yotaphone2.fbreader.FileChooseActivity" android:exported="true" android:configChanges="orientation|screenSize|keyboard|keyboardHidden" android:theme="@style/ActivityWithWhiteActionBar" android:logo="@drawable/r_color_logo"/>
         <service android:name="com.yotadevices.yotaphone2.fbreader.FBReaderYotaService" android:exported="true" android:launchMode="singleTask"/>
+        <activity android:name="com.yotadevices.yotaphone2.fbreader.YotaBookInfoActivity" android:theme="@style/ActivityWithWhiteActionBar" android:logo="@drawable/r_color_logo" android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.fbreader.action.BOOK_INFO"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
 		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
 		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
 		<meta-data android:name="com.yotadevices.BS_TITLE" android:value="FBReader"/>

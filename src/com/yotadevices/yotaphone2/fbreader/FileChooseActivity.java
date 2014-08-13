@@ -22,6 +22,8 @@ import org.geometerplus.fbreader.tree.FBTree;
 public class FileChooseActivity extends TreeActivity<LibraryTree> implements IBookCollection.Listener {
     private FileRootTree mRootTree;
 
+    private final static int BOOK_INFO_CODE = 1;
+
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -94,9 +96,9 @@ public class FileChooseActivity extends TreeActivity<LibraryTree> implements IBo
     }
 
     private void showBookInfo(Book book) {
-        final Intent intent = new Intent(getApplicationContext(), BookInfoActivity.class);
+        final Intent intent = new Intent(getApplicationContext(), YotaBookInfoActivity.class);
         FBReaderIntents.putBookExtra(intent, book);
-        OrientationUtil.startActivity(this, intent);
+        OrientationUtil.startActivityForResult(this, intent, BOOK_INFO_CODE);
     }
 
     @Override
@@ -109,5 +111,14 @@ public class FileChooseActivity extends TreeActivity<LibraryTree> implements IBo
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (BOOK_INFO_CODE == requestCode && resultCode == RESULT_OK) {
+            setResult(resultCode, data);
+            finish();
+        }
     }
 }
