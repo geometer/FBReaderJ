@@ -308,8 +308,12 @@ public class LibraryService extends Service {
 						final ZLAndroidImageManager manager =
 								(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 						final ZLAndroidImageData data = manager.getImageData(image);
-						final Bitmap cover = data.getBitmap(maxWidth, maxHeight);
-						myCoversMap.put(book, new WeakReference<Object>(cover));
+						if (data != null) {
+							final Bitmap cover = data.getBitmap(maxWidth, maxHeight);
+							myCoversMap.put(book, new WeakReference<Object>(cover));
+						} else {
+							myCoversMap.put(book, new WeakReference<Object>(NULL_COVER));
+						}
 						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
 				});
