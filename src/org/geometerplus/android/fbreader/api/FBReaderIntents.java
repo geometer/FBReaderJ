@@ -46,6 +46,8 @@ public abstract class FBReaderIntents {
 		String PLUGIN                   = "android.fbreader.action.PLUGIN";
 		String CLOSE                    = "android.fbreader.action.CLOSE";
 		String PLUGIN_CRASH             = "android.fbreader.action.PLUGIN_CRASH";
+		String EDIT_STYLES              = "android.fbreader.action.EDIT_STYLES";
+		String SWITCH_YOTA_SCREEN       = "android.fbreader.action.SWITCH_YOTA_SCREEN";
 	}
 
 	public interface Key {

@@ -42,7 +42,6 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
-import org.geometerplus.android.fbreader.api.TextPosition;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
@@ -254,23 +253,17 @@ public class LibraryService extends Service {
 			return myCollection.labels();
 		}
 
-		public TextPosition getStoredPosition(long bookId) {
+		public PositionWithTimestamp getStoredPosition(long bookId) {
 			final ZLTextPosition position = myCollection.getStoredPosition(bookId);
-			if (position == null) {
-				return null;
-			}
-
-			return new TextPosition(
-				position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex()
-			);
+			return position != null ? new PositionWithTimestamp(position) : null;
 		}
 
-		public void storePosition(long bookId, TextPosition position) {
-			if (position == null) {
+		public void storePosition(long bookId, PositionWithTimestamp pos) {
+			if (pos == null) {
 				return;
 			}
-			myCollection.storePosition(bookId, new ZLTextFixedPosition(
-				position.ParagraphIndex, position.ElementIndex, position.CharIndex
+			myCollection.storePosition(bookId, new ZLTextFixedPosition.WithTimestamp(
+				pos.ParagraphIndex, pos.ElementIndex, pos.CharIndex, pos.Timestamp
 			));
 		}
 

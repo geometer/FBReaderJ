@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.fbreader.options;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class SyncOptions {
-	public static final String DOMAIN = "demo.fbreader.org";
+	public static final String DOMAIN = "books.fbreader.org";
 	public static final String BASE_URL = "https://" + DOMAIN + "/";
 	public static final String OPDS_URL = "https://" + DOMAIN + "/opds";
 	public static final String REALM = "FBReader book network";
@@ -30,15 +30,15 @@ public class SyncOptions {
 	public final ZLBooleanOption Enabled =
 		new ZLBooleanOption("Sync", "Enabled", false);
 
-	public static enum SyncCondition {
+	public static enum Condition {
 		never, viaWifi, always
 	}
-	public final ZLEnumOption<SyncCondition> UploadAllBooks =
-		new ZLEnumOption<SyncCondition>("Sync", "UploadAllBooks", SyncCondition.viaWifi);
-	public final ZLEnumOption<SyncCondition> Positions =
-		new ZLEnumOption<SyncCondition>("Sync", "Positions", SyncCondition.always);
-	public final ZLEnumOption<SyncCondition> Bookmarks =
-		new ZLEnumOption<SyncCondition>("Sync", "Bookmarks", SyncCondition.always);
-	public final ZLEnumOption<SyncCondition> Metainfo =
-		new ZLEnumOption<SyncCondition>("Sync", "Metainfo", SyncCondition.always);
+	public final ZLEnumOption<Condition> UploadAllBooks =
+		new ZLEnumOption<Condition>("Sync", "UploadAllBooks", Condition.viaWifi);
+	public final ZLEnumOption<Condition> Positions =
+		new ZLEnumOption<Condition>("Sync", "Positions", Condition.always);
+	public final ZLEnumOption<Condition> Bookmarks =
+		new ZLEnumOption<Condition>("Sync", "Bookmarks", Condition.always);
+	public final ZLEnumOption<Condition> Metainfo =
+		new ZLEnumOption<Condition>("Sync", "Metainfo", Condition.always);
 }

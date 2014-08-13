@@ -24,6 +24,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -37,7 +38,8 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 			return Collections.singletonMap("error", "Connection is not secure");
 		}
 		// TODO: process other codes
-		if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext()) == ConnectionResult.SUCCESS) {
+		if (Build.VERSION.SDK_INT >= 14 &&
+			GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext()) == ConnectionResult.SUCCESS) {
 			final String authUrl = url(uri, params, "auth-url-token");
 			final String clientId = params.get("client-id");
 			if (authUrl == null || clientId == null) {

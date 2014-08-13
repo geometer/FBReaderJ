@@ -1,7 +1,19 @@
-===== 2.0 (Jul ??, 2014) =====
+===== 2.0.3 (Aug 13, 2014) =====
+* Used web-based authentication for devices with API < 14
+
+===== 2.0.2 (Aug 12, 2014) =====
+* Fixed synchronization site name for API < 11
+
+===== 2.0.1 (Aug 12, 2014) =====
+* Several NPE fixes
+* Fixed issue with starting SyncService with no intent
+
+===== 2.0 (Aug 11, 2014) =====
+* Synchronisation with FBReader book network
 * Uses ACCESS_NETWORK_STATE permission to detect if device is connected to the internet over WiFi
 * Download from OPDS for all supported file types
 * Tags and authors editing
+* PDF plugin is available
 * Updated Bulgarian localization (by Георги Георгиев)
 * Updated Czech localization (by Marek Pavelka)
 * Updated German localization (by Matthias Dill)

@@ -42,6 +42,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.sync.SyncUtil;
 //import org.geometerplus.fbreader.tips.TipsManager;
 
@@ -50,6 +51,7 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
+import org.geometerplus.android.fbreader.sync.SyncOperations;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
@@ -157,6 +159,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 			}
 
+			private void enableSynchronisation() {
+				SyncOperations.enableSync(PreferenceActivity.this, syncOptions.Enabled.getValue());
+			}
+
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -166,8 +172,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 				if (!isChecked()) {
 					syncOptions.Enabled.setValue(false);
-					setOnSummary(null);
+					enableSynchronisation();
 					syncPreferences.run();
+					new SyncData().reset();
 					return;
 				}
 
@@ -180,6 +187,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 									public void processResponse(Object response) {
 										final String account = (String)((Map)response).get("user");
 										syncOptions.Enabled.setValue(account != null);
+										enableSynchronisation();
 										runOnUiThread(new Runnable() {
 											public void run() {
 												setOnSummary(account);

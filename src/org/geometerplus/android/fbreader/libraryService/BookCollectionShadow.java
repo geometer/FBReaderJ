@@ -37,7 +37,6 @@ import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 import org.geometerplus.fbreader.book.*;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
-import org.geometerplus.android.fbreader.api.TextPosition;
 
 public class BookCollectionShadow extends AbstractBookCollection implements ServiceConnection {
 	private volatile Context myContext;
@@ -346,19 +345,19 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		}
 	}
 
-	public synchronized ZLTextPosition getStoredPosition(long bookId) {
+	public synchronized ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
 		if (myInterface == null) {
 			return null;
 		}
 
 		try {
-			final TextPosition position = myInterface.getStoredPosition(bookId);
-			if (position == null) {
+			final PositionWithTimestamp pos = myInterface.getStoredPosition(bookId);
+			if (pos == null) {
 				return null;
 			}
 
-			return new ZLTextFixedPosition(
-				position.ParagraphIndex, position.ElementIndex, position.CharIndex
+			return new ZLTextFixedPosition.WithTimestamp(
+				pos.ParagraphIndex, pos.ElementIndex, pos.CharIndex, pos.Timestamp
 			);
 		} catch (RemoteException e) {
 			return null;
@@ -368,9 +367,7 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 	public synchronized void storePosition(long bookId, ZLTextPosition position) {
 		if (position != null && myInterface != null) {
 			try {
-				myInterface.storePosition(bookId, new TextPosition(
-					position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex()
-				));
+				myInterface.storePosition(bookId, new PositionWithTimestamp(position));
 			} catch (RemoteException e) {
 			}
 		}

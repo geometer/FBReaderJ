@@ -26,19 +26,19 @@
 		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
-		<node name="sync" value="Synchronisation" toBeTranslated="true">
-			<node name="summary" value="Books by synchronisation status" toBeTranslated="true"/>
-			<node name="sync-success" value="Synchronised" toBeTranslated="true">
-				<node name="summary" value="Books uploaded to the server" toBeTranslated="true"/>
+		<node name="sync" value="Synchronizace">
+			<node name="summary" value="Knihy podle stavu synchronizace"/>
+			<node name="sync-success" value="Synchronizováno">
+				<node name="summary" value="Knihy byly nahrány na server"/>
 			</node>
-			<node name="sync-failure" value="Synchronisation failed" toBeTranslated="true">
-				<node name="summary" value="Books not uploaded to the server due some problems" toBeTranslated="true"/>
+			<node name="sync-failure" value="Synchronizace selhala">
+				<node name="summary" value="Knihy nebyly nahrány na server kvůli některým problémům"/>
 			</node>
-			<node name="sync-deleted" value="Deleted from server" toBeTranslated="true">
-				<node name="summary" value="Books not accessible from the server more" toBeTranslated="true"/>
+			<node name="sync-deleted" value="Odstraněno ze serveru">
+				<node name="summary" value="Knihy již nejsou dostupné ze serveru"/>
 			</node>
-			<node name="sync-tosync" value="Not synchronised yet" toBeTranslated="true">
-				<node name="summary" value="Books to be uploaded to the server" toBeTranslated="true"/>
+			<node name="sync-tosync" value="Ještě nesynchronizováno">
+				<node name="summary" value="Knihy k nahrání na server"/>
 			</node>
 		</node>
 		<node name="fileTree" value="Strom souborů">
@@ -64,13 +64,13 @@
 		<node name="removeFromRecents" value="Odebrat ze seznamu posledních"/>
 		<node name="markAsRead" value="Označit jako přečtené"/>
 		<node name="markAsUnread" value="Označit jako nepřečtené"/>
-		<node name="deleteAll" value="Delete all" toBeTranslated="true"/>
-		<node name="uploadAgain" value="Upload again" toBeTranslated="true"/>
-		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
+		<node name="deleteAll" value="Odstranit vše"/>
+		<node name="uploadAgain" value="Znovu nahrát"/>
+		<node name="tryAgain" value="Zkusit znovu"/>
 	</node>
 	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
-		<node name="sync" value="FBReader® book network" toBeTranslated="true">
-			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		<node name="sync" value="Síťová knihovna FBReaderu®">
+			<node name="summary" value="Můj osobní katalog"/>
 		</node>
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
@@ -332,22 +332,22 @@
 		<node name="series" value="Série"/>
 	</node>
 	<node name="Preferences">
-		<node name="sync" value="Synchronisation" toBeTranslated="true">
-			<node name="summary" value="Book network settings" toBeTranslated="true"/>
-			<node name="enable" value="Enable synchronisation" toBeTranslated="true">
-				<node name="summaryOn" value="Synchronise my library with FBReader book network server" toBeTranslated="true"/>
-				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
-				<node name="summaryOff" value="Do not synchronise my library with FBReader book network server" toBeTranslated="true"/>
+		<node name="sync" value="Synchronizace">
+			<node name="summary" value="Nastavení síťové knihovny"/>
+			<node name="enable" value="Povolit synchronizaci">
+				<node name="summaryOn" value="Synchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
+				<node name="summaryOnWithAccount" value="Synchronizovat mou knihovnu jako %s"/>
+				<node name="summaryOff" value="Nesynchronizovat mou knihovnu se serverem síťové knihovny FBReaderu"/>
 			</node>
 			<node name="values">
-				<node name="always" value="Always" toBeTranslated="true"/>
-				<node name="viaWifi" value="If device is connected via Wi-Fi" toBeTranslated="true"/>
-				<node name="never" value="Never" toBeTranslated="true"/>
+				<node name="always" value="Vždy"/>
+				<node name="viaWifi" value="Když je zařízení připojeno přes Wi-Fi"/>
+				<node name="never" value="Nikdy"/>
 			</node>
-			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
-			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
-			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
-			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+			<node name="uploadAllBooks" value="Nahrát všechny knihy na server"/>
+			<node name="positions" value="Synchronizovat pozice čtení"/>
+			<node name="bookmarks" value="Synchronizovat záložky"/>
+			<node name="metainfo" value="Synchronizovat metainformace (název, štítky atd.)"/>
 		</node>
 		<node name="directories" value="Adresáře">
 			<node name="summary" value="Adresáře pro hledání souborů"/>
@@ -849,7 +849,7 @@
 			<node name="dontAskAgain" value="Neptat se znovu"/>
 		</node>
 		<node name="backgroundAuthentication">
-			<node name="message" value="Authentication required" toBeTranslated="true"/>
+			<node name="message" value="Je požadováno ověření"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalovat slovník"/>
@@ -859,14 +859,14 @@
 			<node name="message" value="Soubor s knihou bude nevratně odebrán. Opravdu chcete pokračovat?"/>
 		</node>
 		<node name="deleteMultipleBookBox">
-			<node name="title" value="Delete books" toBeTranslated="true"/>
-			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+			<node name="title" value="Odstranit knihy"/>
+			<node name="message" value="%s souborů knih bude nevratně odebráno. Opravdu to chcete udělat"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Soubor již existuje. Stáhnout ho znovu?"/>
 		</node>
 		<node name="waitMessage">
-			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
+			<node name="tryConnect" value="Pokus o připojení. Čekejte…"/>
 			<node name="downloadingFile" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte…"/>
 			<node name="loadInfo" value="Načítání informací. Čekejte…"/>
@@ -1000,6 +1000,7 @@
 		<node name="emptyNetworkSearchResults" value="Nebyly nalezeny žádné knihy"/>
 		<node name="videoServiceNotWorking" value="Bohužel, videoslužba není dostupná"/>
 		<node name="videoPlayerNotFound" value="Bohužel, na tomto zařízení není nainstalovaný žádný přehrávač videa"/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>

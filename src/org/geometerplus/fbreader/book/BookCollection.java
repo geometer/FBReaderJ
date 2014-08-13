@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
@@ -173,7 +174,7 @@ public class BookCollection extends AbstractBookCollection {
 	public Book getBookByHash(String hash) {
 		for (long id : myDatabase.bookIdsByHash(hash)) {
 			final Book book = getBookById(id);
-			if (book.File.exists()) {
+			if (book != null && book.File.exists()) {
 				return book;
 			}
 		}
@@ -429,6 +430,9 @@ public class BookCollection extends AbstractBookCollection {
 					synchronized (myFilesToRescan) {
 						processFilesQueue();
 					}
+					for (Book book : new ArrayList<Book>(myBooksByFile.values())) {
+						getHash(book);
+					}
 				}
 			}
 		};
@@ -680,7 +684,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public ZLTextPosition getStoredPosition(long bookId) {
+	public ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
 		return myDatabase.getStoredPosition(bookId);
 	}
 
