@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="empty_string"></string>
+	<string name="permission_library_description">Это приложение может просматривать и изменять библиотеку FBReader</string>
+	<string name="permission_library_label">Доступ к библиотеке FBReader</string>
+	<string name="permission_config_description">Это приложение может просматривать и изменять настройки FBReader</string>
+	<string name="permission_config_label">Доступ к настройкам FBReader</string>
+	<string name="permission_sync_description">Это приложение может запускать процесс синхронизации FBReader</string>
+	<string name="permission_sync_label">Доступ к синхронизации FBReader</string>
+</resources>
