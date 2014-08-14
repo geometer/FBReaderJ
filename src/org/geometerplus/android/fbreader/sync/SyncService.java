@@ -128,6 +128,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			myCollection.bindToService(this, myQuickSynchroniser);
 			myCollection.bindToService(this, myStandardSynchroniser);
 		} else if (SyncOperations.Action.QUICK_SYNC.equals(action)) {
+			log("quick sync");
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, myQuickSynchroniser);
 		}
