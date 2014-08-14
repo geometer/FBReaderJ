@@ -17,6 +17,9 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<permission android:name="fbreader.permission.LIBRARY" android:description="@string/permission_library_description" android:label="@string/permission_library_label"/>
+	<permission android:name="fbreader.permission.CONFIG" android:description="@string/permission_config_description" android:label="@string/permission_config_label"/>
+	<permission android:name="fbreader.permission.SYNC" android:description="@string/permission_sync_description" android:label="@string/permission_sync_label"/>
 	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_bw" android:label="FBReader">
 		<activity android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity" android:theme="@style/FBReader.Dialog" android:process=":error" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
@@ -145,17 +148,24 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.image.ImageViewActivity" android:process=":imageView" android:theme="@style/FBReader.Activity" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<service android:name="org.geometerplus.android.fbreader.libraryService.LibraryService" android:launchMode="singleTask" android:process=":libraryService">
+		<service android:name="org.geometerplus.android.fbreader.libraryService.LibraryService" android:launchMode="singleTask" android:process=":libraryService" android:permission="fbreader.permission.LIBRARY">
 			<intent-filter>
 				<action android:name="android.fbreader.action.LIBRARY_SERVICE"/>
 			</intent-filter>
 		</service>
-		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService">
+		<service android:name="org.geometerplus.android.fbreader.config.ConfigService" android:launchMode="singleTask" android:process=":configService" android:permission="fbreader.permission.CONFIG">
 			<intent-filter>
 				<action android:name="android.fbreader.action.CONFIG_SERVICE"/>
 			</intent-filter>
 		</service>
-		<service android:name="org.geometerplus.android.fbreader.sync.SyncService" android:launchMode="singleTask" android:process=":synchroniser" android:exported="false"/>
+		<service android:name="org.geometerplus.android.fbreader.sync.SyncService" android:launchMode="singleTask" android:process=":synchroniser" android:permission="fbreader.permission.SYNC">
+			<intent-filter>
+				<action android:name="android.fbreader.action.sync.START"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.fbreader.action.sync.QUICK_SYNC"/>
+			</intent-filter>
+		</service>
 		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:theme="@style/FBReader.Activity" android:process=":library" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.fbreader.action.BOOK_INFO"/>
