@@ -1,3 +1,6 @@
+===== 2.0.4 (Aug 15, 2014) =====
+* Better integration with PDF plugin
+
 ===== 2.0.3 (Aug 13, 2014) =====
 * Used web-based authentication for devices with API < 14
 
