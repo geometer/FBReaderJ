@@ -787,13 +787,13 @@
 			<node name="summary" value="Versionsoplysninger, kontakter"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Besøg vores websted">
-				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
 			<node name="email" value="Send os en e-mail">
-				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
 			<node name="twitter" value="Følg os på Twitter">
-				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
