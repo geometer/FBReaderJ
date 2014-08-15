@@ -16,6 +16,9 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="fbreader.permission.LIBRARY"/>
+	<uses-permission android:name="fbreader.permission.CONFIG"/>
+	<uses-permission android:name="fbreader.permission.SYNC"/>
 	<uses-permission android:name="com.yotadevices.framework.permission.ACCESS_BACKSCREEN"/>
 	<permission android:name="fbreader.permission.LIBRARY" android:description="@string/permission_library_description" android:label="@string/permission_library_label"/>
 	<permission android:name="fbreader.permission.CONFIG" android:description="@string/permission_config_description" android:label="@string/permission_config_label"/>
