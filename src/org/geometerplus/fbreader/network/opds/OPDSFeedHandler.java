@@ -177,8 +177,9 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			final String rel = opdsLink.relation(link.getRel(), mime);
 			if (rel == null
 					? (BookUrlInfo.isMimeSupported(mime))
-					: (rel.startsWith(REL_ACQUISITION_PREFIX)
-							|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX))) {
+					: (rel.equals(REL_RELATED)
+						|| rel.startsWith(REL_ACQUISITION_PREFIX)
+						|| rel.startsWith(REL_FBREADER_ACQUISITION_PREFIX))) {
 				hasBookLink = true;
 				break;
 			}

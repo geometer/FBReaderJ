@@ -21,9 +21,10 @@ package org.geometerplus.android.fbreader.preferences;
 
 import java.util.HashMap;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.*;
-import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -133,13 +134,22 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		myScreen = getPreferenceManager().createPreferenceScreen(this);
 
 		final Intent intent = getIntent();
+		final Uri data = intent.getData();
+		final String screenId;
+		if (Intent.ACTION_VIEW.equals(intent.getAction())
+				&& data != null && "fbreader-preferences".equals(data.getScheme())) {
+			screenId = data.getEncodedSchemeSpecificPart();
+		} else {
+			screenId = intent.getStringExtra(SCREEN_KEY);
+		}
+
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
 				init(intent);
+				final Screen screen = myScreenMap.get(screenId);
+				setPreferenceScreen(screen != null ? screen.myScreen : myScreen);
 			}
 		});
-		final Screen screen = myScreenMap.get(intent.getStringExtra(SCREEN_KEY));
-		setPreferenceScreen(screen != null ? screen.myScreen : myScreen);
 	}
 
 	@Override
