@@ -216,6 +216,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+        setTheme(R.style.ActivityWithWhiteActionBar);
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		bindService(
@@ -245,9 +246,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
 			myShowStatusBarFlag ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
 		);
-		if (!myShowActionBarFlag) {
-			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-		}
+//		if (!myShowActionBarFlag) {
+//			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+//		}
 		setContentView(R.layout.main);
 		myRootView = (RelativeLayout)findViewById(R.id.root_view);
 		myMainView = (ZLAndroidWidget)findViewById(R.id.main_view);
@@ -270,6 +271,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			ActionBar.DISPLAY_SHOW_CUSTOM,
 			ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
 		);
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			bar.setDisplayUseLogoEnabled(false);
 		}
@@ -279,8 +281,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myFBReaderApp.runAction(ActionCode.SHOW_BOOK_INFO);
 			}
 		});
+
 		bar.setCustomView(titleView);
-		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
+		bar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
 		setTitle(myFBReaderApp.getTitle());
 
