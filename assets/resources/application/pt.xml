@@ -69,8 +69,8 @@
 		<node name="tryAgain" value="Tentar de novo"/>
 	</node>
 	<node name="networkLibrary" value="Rede de bibliotecas FBReader">
-		<node name="sync" value="FBReader® book network" toBeTranslated="true">
-			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		<node name="sync" value="Rede de livros FBReader®">
+			<node name="summary" value="Meu catálogo pessoal"/>
 		</node>
 		<node name="byAuthor" value="Pelo autor">
 			<node name="summary" value="Livros classificados por autor"/>
@@ -329,7 +329,7 @@
 			<node name="summary" value="Marcar opções de rede"/>
 			<node name="enable" value="Ativar sicronização">
 				<node name="summaryOn" value="Sincronizar a minha biblioteca com a rede de servidores de livros do FBReader"/>
-				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Sincronizar a minha biblioteca como %s"/>
 				<node name="summaryOff" value="Não Sincronizar a minha biblioteca com a rede de servidores de livros do FBReader"/>
 			</node>
 			<node name="values" value="Valores">
@@ -843,7 +843,7 @@
 			<node name="dontAskAgain" value="Não perguntar novamente"/>
 		</node>
 		<node name="backgroundAuthentication">
-			<node name="message" value="Authentication required" toBeTranslated="true"/>
+			<node name="message" value="Autenticação necessária"/>
 		</node>
 		<node name="installDictionary" value="Instalar Diconário">
 			<node name="title" value="Instalar dicionário"/>
@@ -860,7 +860,7 @@
 			<node name="message" value="O arquivo já existe. Você quer descarregá-lo novamente?"/>
 		</node>
 		<node name="waitMessage" value="Em espera">
-			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
+			<node name="tryConnect" value="A tentar ligar, por favor, espere…"/>
 			<node name="downloadingFile" value="Descarregar livro %s"/>
 			<node name="search" value="Pesquisando. Por favor, aguarde…"/>
 			<node name="loadInfo" value="Carregando informações. Por favor, aguarde…"/>
@@ -994,7 +994,7 @@
 		<node name="emptyNetworkSearchResults" value="Nenhum livro encontrado, desculpe"/>
 		<node name="videoServiceNotWorking" value="Serviço de vídeo não disponível, desculpe"/>
 		<node name="videoPlayerNotFound" value="Não há nenhum leitor de vídeo instalado neste dispositivo, desculpe"/>
-		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
+		<node name="bookIsMissing" value="O livro '%s' não foi encontrado no dispositivo, desculpe"/>
 	</node>
 	<node name="external" value="Externo">
 		<node name="browser" value="Navegador"/>
