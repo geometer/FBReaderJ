@@ -865,26 +865,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			invalidateOptionsMenu();
 		}
 
-		if (Build.VERSION.SDK_INT >= 19/*Build.VERSION_CODES.KITKAT*/) {
-			if (zlibrary.EnableFullscreenModeOption.getValue()) {
-				myRootView.setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_LOW_PROFILE |
-					2048 /*View.SYSTEM_UI_FLAG_IMMERSIVE*/ |
-					4096 /*View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY*/ |
-					4 /*View.SYSTEM_UI_FLAG_FULLSCREEN*/ |
-					View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-				);
-			} else if (zlibrary.DisableButtonLightsOption.getValue()) {
-				myRootView.setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_LOW_PROFILE
-				);
-			}
-		} else {
-			if (zlibrary.DisableButtonLightsOption.getValue()) {
-				myRootView.setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_LOW_PROFILE
-				);
-			}
+		if (Build.VERSION.SDK_INT >= 19/*Build.VERSION_CODES.KITKAT*/
+				&& zlibrary.EnableFullscreenModeOption.getValue()) {
+			myRootView.setSystemUiVisibility(
+				View.SYSTEM_UI_FLAG_LOW_PROFILE |
+				2048 /*View.SYSTEM_UI_FLAG_IMMERSIVE*/ |
+				4096 /*View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY*/ |
+				4 /*View.SYSTEM_UI_FLAG_FULLSCREEN*/ |
+				View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+			);
+		} else if (zlibrary.DisableButtonLightsOption.getValue()) {
+			myRootView.setSystemUiVisibility(
+				View.SYSTEM_UI_FLAG_LOW_PROFILE
+			);
 		}
 
 		setStatusBarVisibility(false);
