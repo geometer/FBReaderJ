@@ -473,6 +473,7 @@ public class BookCollection extends AbstractBookCollection {
 				final Book book = getBookByFile(file);
 				if (book != null) {
 					saveBook(book);
+					getHash(book);
 				}
 			}
 

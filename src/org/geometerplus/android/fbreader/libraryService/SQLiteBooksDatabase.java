@@ -935,7 +935,16 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.bindLong(2, position.getParagraphIndex());
 		statement.bindLong(3, position.getElementIndex());
 		statement.bindLong(4, position.getCharIndex());
-		statement.bindLong(5, System.currentTimeMillis());
+
+		long timestamp = -1;
+		if (position instanceof ZLTextFixedPosition.WithTimestamp) {
+			timestamp = ((ZLTextFixedPosition.WithTimestamp)position).Timestamp;
+		}
+		if (timestamp == -1) {
+			timestamp = System.currentTimeMillis();
+		}
+		statement.bindLong(5, timestamp);
+
 		statement.execute();
 	}
 
