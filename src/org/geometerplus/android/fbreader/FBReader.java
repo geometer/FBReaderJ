@@ -30,7 +30,6 @@ import android.content.*;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.*;
-import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
 
