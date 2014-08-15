@@ -184,7 +184,7 @@ public class ZLTTFInfoDetector {
 						stringOffset + offset + length <= buffer.length) {
 						fontInfo.FamilyName = new String(
 							buffer, stringOffset + offset, length,
-							platformId == 1 ? "windows-1252" : "UTF-16BE"
+							platformId == 1 ? "ISO-8859-1" : "UTF-16BE"
 						);
 					}
 					break;
@@ -193,7 +193,7 @@ public class ZLTTFInfoDetector {
 						stringOffset + offset + length <= buffer.length) {
 						fontInfo.SubFamilyName = new String(
 							buffer, stringOffset + offset, length,
-							platformId == 1 ? "windows-1252" : "UTF-16BE"
+							platformId == 1 ? "ISO-8859-1" : "UTF-16BE"
 						);
 					}
 					break;
