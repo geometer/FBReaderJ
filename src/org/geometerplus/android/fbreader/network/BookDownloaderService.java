@@ -196,7 +196,6 @@ public class BookDownloaderService extends Service {
 		if (file != null) {
 			intent.setAction(Intent.ACTION_VIEW).setData(Uri.fromFile(file));
 		}
-		intent.putExtra("KILL_PLUGIN", true);
 		return intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 	}
 

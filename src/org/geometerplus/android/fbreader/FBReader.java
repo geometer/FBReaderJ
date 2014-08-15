@@ -398,21 +398,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 		} else {
 			super.onNewIntent(intent);
-			if (Intent.ACTION_VIEW.equals(action) || FBReaderIntents.Action.VIEW.equals(action)) {
-				myOpenBookIntent = intent;
-				if (intent.getBooleanExtra("KILL_PLUGIN", false)) {
-					Log.d("fbreader", "killing plugin");
-					if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
-						final ExternalFormatPlugin plugin =
-							(ExternalFormatPlugin)myFBReaderApp.ExternalBook.getPluginOrNull();
-						try {
-							startActivity(PluginUtil.createIntent(plugin, PluginUtil.ACTION_KILL));
-						} catch (ActivityNotFoundException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
 		}
 	}
 
