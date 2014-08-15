@@ -796,7 +796,7 @@
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Пишете ни">
-				<node name="url" value="mailto:contact@geometerplus.com"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="twitter" value="Пoследвайте ни в Twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
