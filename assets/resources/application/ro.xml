@@ -128,7 +128,7 @@
 		<node name="basketSummary" value="%0 carti (%1)"/>
 		<node name="alreadyDownloading" value="Cartea este în curs de descarcare"/>
 		<node name="alreadyDownloadingDemo" value="Esantionul este în curs de descarcare"/>
-		<node name="stoppingCatalogLoading" value="Oprirea  încarcarii"/>
+		<node name="stoppingCatalogLoading" value="Oprirea încarcarii"/>
 		<node name="stoppingNetworkSearch" value="Oprirea cautarii"/>
 		<node name="editCustomCatalog" value="Editare catalog"/>
 		<node name="removeCustomCatalog" value="Eliminati catalog"/>
@@ -758,7 +758,7 @@
 			<node name="backKeyAction" value="Actiunea tastei inapoi">
 				<node name="exit" value="Inchide Aplicatia"/>
 				<node name="goBack" value="Navigati înapoi"/>
-				<node name="cancelMenu" value="Arata  meniul de anulare"/>
+				<node name="cancelMenu" value="Arata meniul de anulare"/>
 			</node>
 			<node name="backKeyLongPressAction" value="Actiune pentru apasarea lunga a tastei inapoi">
 				<node name="exit" value="Inchide Aplicatia"/>
@@ -774,19 +774,19 @@
 				<node name="summaryOff" value="Nu afisa"/>
 			</node>
 		</node>
-		<node name="about" value="About FBReader" toBeTranslated="true">
-			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-			<node name="version" value="Version" toBeTranslated="true"/>
-			<node name="site" value="Visit our website" toBeTranslated="true">
+		<node name="about" value="Despre FBReader">
+			<node name="summary" value="Informatii versiune, contacte"/>
+			<node name="version" value="Versiune"/>
+			<node name="site" value="Visitati website-ul nostru">
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
-			<node name="email" value="Send us an e-mail" toBeTranslated="true">
-				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+			<node name="email" value="Trimiteti-ne un e-mail">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
-			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+			<node name="twitter" value="Urmati-ne pe twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+			<node name="facebook" value="FBReader pe facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
@@ -997,7 +997,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Eroare in aplicatie"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
+			<node name="text" value="FBReader director cache nu este accesibil pentru scriere. Poate ati uitat sa introduceti sau demonta cartela de memorie. Va rugam sa rezolva aceasta problema sau selectati un alt director."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problema in aplicatie"/>
