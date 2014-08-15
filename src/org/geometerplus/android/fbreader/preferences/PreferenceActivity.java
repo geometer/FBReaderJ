@@ -168,9 +168,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				super.onClick();
 				syncPreferences.run();
 
-				SyncUtil.logout(myNetworkContext);
-
 				if (!isChecked()) {
+					SyncUtil.logout(myNetworkContext);
 					syncOptions.Enabled.setValue(false);
 					enableSynchronisation();
 					syncPreferences.run();
