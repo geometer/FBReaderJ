@@ -102,7 +102,7 @@ public class BookDownloaderService extends Service {
 		super.onStart(intent, startId);
 		doStart();
 
-		final Uri uri = intent.getData();
+		final Uri uri = intent != null ? intent.getData() : null;
 		if (uri == null) {
 			doStop();
 			return;
