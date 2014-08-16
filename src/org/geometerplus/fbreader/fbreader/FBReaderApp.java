@@ -128,7 +128,8 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public Book getCurrentBook() {
-		return Model != null ? Model.Book : ExternalBook;
+		final BookModel m = Model;
+		return m != null ? m.Book : ExternalBook;
 	}
 
 	public void openHelpBook() {
