@@ -37,10 +37,10 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.fbreader.Paths;
 
 public final class AndroidFontUtil {
-	private static Map<String,String[]> ourFontAssetMap;
-	private static Map<String,File[]> ourFontFileMap;
-	private static Set<File> ourFileSet;
-	private static long ourTimeStamp;
+	private static volatile Map<String,String[]> ourFontAssetMap;
+	private static volatile Map<String,File[]> ourFontFileMap;
+	private static volatile Set<File> ourFileSet;
+	private static volatile long ourTimeStamp;
 
 	private static Map<String,String[]> getFontAssetMap() {
 		if (ourFontAssetMap == null) {
@@ -63,7 +63,7 @@ public final class AndroidFontUtil {
 		return ourFontAssetMap;
 	}
 
-	private static Map<String,File[]> getFontFileMap(boolean forceReload) {
+	private static synchronized Map<String,File[]> getFontFileMap(boolean forceReload) {
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < ourTimeStamp + 1000) {
 			forceReload = false;
