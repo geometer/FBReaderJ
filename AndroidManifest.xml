@@ -331,7 +331,15 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
+        <receiver
+            android:name="com.yotadevices.yotaphone2.fbreader.P2BReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="yotaphone.intent.action.IS_BS_SUPPORTED" />
+                <action android:name="yotaphone.intent.action.P2B" />
+            </intent-filter>
+        </receiver>
 		<uses-library android:required="false" android:name="com.yotadevices.platinum"/>
 		<meta-data android:name="com.yotadevices.BS_ICON" android:resource="@drawable/fbreader_bs_icon"/>
 		<meta-data android:name="com.yotadevices.BS_TITLE" android:value="FBReader"/>
