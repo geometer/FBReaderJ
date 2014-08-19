@@ -1,6 +1,7 @@
 #!/bin/sh
 
 rm -f READY/*
+mkdir -p READY
 
 git checkout master
 ./scripts/packageTool.sh --updateVersion
