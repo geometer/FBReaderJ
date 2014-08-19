@@ -28,9 +28,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.*;
 
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.android.fbreader.OrientationUtil;
@@ -96,57 +93,6 @@ public final class ActivityNetworkContext extends AndroidNetworkContext {
 		startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_WEB_AUTHORISATION_SCREEN);
 		System.err.println("--- WEB AUTH ---");
 		return verify(verificationUrl);
-	}
-
-	private Map<String,String> registerAccessToken(String account, String clientId, String authUrl, String authToken) {
-		String code = null;
-		try {
-			code = GoogleAuthUtil.getToken(myActivity, account, String.format(
-				"oauth2:server:client_id:%s:api_scope:%s", clientId,
-				TextUtils.join(" ", new Object[] { Scopes.DRIVE_FILE, Scopes.PROFILE })
-			), null);
-			return runTokenAuthorization(authUrl, authToken, code);
-		} catch (UserRecoverableAuthException e) {
-			myAuthorizationConfirmed = false;
-			startActivityAndWait(e.getIntent(), NetworkLibraryActivity.REQUEST_AUTHORISATION);
-			if (myAuthorizationConfirmed) {
-				return registerAccessToken(account, clientId, authUrl, authToken);
-			} else {
-				return errorMap("Authorization failed");
-			}
-		} catch (Exception e) {
-			return errorMap(e);
-		}
-	}
-
-	@Override
-	protected Map<String,String> authenticateToken(URI uri, String realm, String authUrl, String clientId) {
-		System.err.println("+++ TOKEN AUTH +++");
-		try {
-			String account = getAccountName(uri.getHost(), realm);
-			if (account == null) {
-				final Intent intent = AccountManager.newChooseAccountIntent(
-					null, null, new String[] { "com.google" }, false, null, null, null, null
-				);
-				startActivityAndWait(intent, NetworkLibraryActivity.REQUEST_ACCOUNT_PICKER);
-				account = myAccountName;
-			}
-			if (account == null) {
-				return errorMap("No selected account");
-			}
-			final String authToken = GoogleAuthUtil.getToken(
-				myActivity, account, String.format("audience:server:client_id:%s", clientId)
-			);
-			final Map<String,String> result = runTokenAuthorization(authUrl, authToken, null);
-			if (result.containsKey("user")) {
-				return result;
-			}
-			return registerAccessToken(account, clientId, authUrl, authToken);
-		} catch (Exception e) {
-			return errorMap(e);
-		} finally {
-			System.err.println("--- TOKEN AUTH ---");
-		}
 	}
 
 	private void startActivityAndWait(Intent intent, int requestCode) {
