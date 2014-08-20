@@ -391,10 +391,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				new Thread() {
 					public void run() {
 						openBook(getIntent(), getPostponedInitAction(), false);
-						myFBReaderApp.getViewWidget().repaint();
+                        ZLViewWidget widget = myFBReaderApp.getViewWidget();
+                        if (widget != null) {
+                            widget.repaint();
+                        }
 					}
 				}.start();
-				myFBReaderApp.getViewWidget().repaint();
+                ZLViewWidget widget = myFBReaderApp.getViewWidget();
+                if (widget != null) {
+                    widget.repaint();
+                }
 			}
 		});
 
