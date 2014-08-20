@@ -44,21 +44,12 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 			}
 		} else {
 			authUrl = url(uri, params, "auth-url-web");
-<<<<<<< HEAD
 		}
 		final String completeUrl = url(uri, params, "complete-url-web");
 		final String verificationUrl = url(uri, params, "verification-url");
 		if (authUrl == null || completeUrl == null || verificationUrl == null) {
 			return errorMap("No data for web authentication");
 		}
-=======
-		}
-		final String completeUrl = url(uri, params, "complete-url-web");
-		final String verificationUrl = url(uri, params, "verification-url");
-		if (authUrl == null || completeUrl == null || verificationUrl == null) {
-			return errorMap("No data for web authentication");
-		}
->>>>>>> master
 		return authenticateWeb(uri, realm, authUrl, completeUrl, verificationUrl);
 	}
 
