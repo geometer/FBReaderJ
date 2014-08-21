@@ -83,4 +83,5 @@ public interface ActionCode {
 
 	String YOTA_SWITCH_TO_BACK_SCREEN = "yotaSwitchToBackScreen";
 	String YOTA_SWITCH_TO_FRONT_SCREEN = "yotaSwitchToFrontScreen";
+    String YOTA_UPDATE_WIDGET = "yotaUpdateWidget";
 }

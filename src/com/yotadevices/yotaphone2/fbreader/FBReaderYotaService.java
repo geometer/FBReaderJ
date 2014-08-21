@@ -22,12 +22,14 @@ import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.actions.ToggleBarsAction;
 
+import org.geometerplus.android.fbreader.YotaUpdateWidgetAction;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.TurnPageAction;
+import org.geometerplus.fbreader.fbreader.VolumeKeyTurnPageAction;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -73,6 +75,9 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         myFBReaderApp.addAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, myFBReaderApp));
         myFBReaderApp.addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(myFBReaderApp, true));
         myFBReaderApp.addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(myFBReaderApp, false));
+        myFBReaderApp.addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(myFBReaderApp, true));
+        myFBReaderApp.addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(myFBReaderApp, false));
+        myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(this, myFBReaderApp));
     }
 
     @Override
@@ -134,6 +139,9 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                 myFBReaderApp.addAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, myFBReaderApp));
                 myFBReaderApp.addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(myFBReaderApp, true));
                 myFBReaderApp.addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(myFBReaderApp, false));
+                myFBReaderApp.addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(myFBReaderApp, true));
+                myFBReaderApp.addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(myFBReaderApp, false));
+                myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(this, myFBReaderApp));
             }
             mWidget.setIsBsActive(isActive);
             mWidget.repaint();
@@ -278,4 +286,15 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
             EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
         }
     };
+
+    protected void onVolumeButtonsEvent(Constants.VolumeButtonsEvent event) {
+        switch (event) {
+            case VOLUME_MINUS_DOWN:
+                myFBReaderApp.runAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+                break;
+            case VOLUME_PLUS_DOWN:
+                myFBReaderApp.runAction(ActionCode.VOLUME_KEY_SCROLL_BACK);
+                break;
+        }
+    }
 }

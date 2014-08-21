@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import android.content.Intent;
+
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 
 public class TurnPageAction extends FBAction {
@@ -59,5 +61,6 @@ public class TurnPageAction extends FBAction {
 				preferences.AnimationSpeed.getValue()
 			);
 		}
+        Reader.runAction(ActionCode.YOTA_UPDATE_WIDGET);
 	}
 }
