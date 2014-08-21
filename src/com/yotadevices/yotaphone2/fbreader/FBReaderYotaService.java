@@ -96,13 +96,15 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
                 if (myCurrentBook == null) {
                     myCurrentBook = myFBReaderApp.Collection.getRecentBook(0);
                 }
-                myFBReaderApp.openBook(myCurrentBook, null, new Runnable() {
-                    public void run() {
-                        myFBReaderApp.initWindow();
-                        initBookView(true);
-                    }
-                });
-                AndroidFontUtil.clearFontCache();
+                if (mWidget != null) {
+                    myFBReaderApp.openBook(myCurrentBook, null, new Runnable() {
+                        public void run() {
+                            myFBReaderApp.initWindow();
+                            initBookView(true);
+                        }
+                    });
+                    AndroidFontUtil.clearFontCache();
+                }
             }
         });
     }
@@ -122,8 +124,9 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     private void initBookView(final boolean refresh) {
         Log.d(TAG, "--- init book view:" + refresh);
-
-        mWidget.setBook(myCurrentBook);
+        if (mWidget != null) {
+            mWidget.setBook(myCurrentBook);
+        }
     }
 
     @Override
