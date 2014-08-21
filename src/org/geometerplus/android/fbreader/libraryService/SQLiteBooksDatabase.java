@@ -1008,7 +1008,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			statement.bindLong(1, bookId);
 			statement.bindLong(2, lastModified);
 			return statement.simpleQueryForString();
-		} catch (SQLException e) {
+		} catch (Throwable e) {
 			return null;
 		}
 	}
