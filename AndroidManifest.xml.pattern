@@ -107,12 +107,12 @@
 				<data android:pathPattern=".*\\.rtf"/>
 				<data android:pathPattern=".*\\.pdf"/>
 			</intent-filter>
-			<intent-filter>
+			<!--intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 				<category android:name="android.intent.category.BROWSABLE"/>
 				<data android:scheme="content" android:pathPattern=".*\\.fb2"/>
-			</intent-filter>
+			</intent-filter-->
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
