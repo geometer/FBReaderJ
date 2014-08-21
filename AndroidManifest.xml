@@ -2,8 +2,8 @@
 <manifest
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		package="org.geometerplus.zlibrary.ui.android"
-		android:versionCode="2000521"
-		android:versionName="2.0.5.1"
+		android:versionCode="2000522"
+		android:versionName="2.0.5.2"
 		android:installLocation="auto"
 >
 	<uses-sdk
@@ -105,12 +105,12 @@
 				<data android:pathPattern=".*\\.txt"/>
 				<data android:pathPattern=".*\\.rtf"/>
 			</intent-filter>
-			<intent-filter>
+			<!--intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 				<category android:name="android.intent.category.BROWSABLE"/>
 				<data android:scheme="content" android:pathPattern=".*\\.fb2"/>
-			</intent-filter>
+			</intent-filter-->
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
