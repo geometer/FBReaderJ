@@ -26,6 +26,8 @@ import android.util.AttributeSet;
 import android.view.*;
 import android.widget.TextView;
 
+import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.Config;
@@ -279,6 +281,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			animator.scrollTo(x, y);
 			postInvalidate();
 		}
+        FBReaderApp app = (FBReaderApp)FBReaderApp.Instance();
+        if (app != null) {
+            app.runAction(ActionCode.YOTA_UPDATE_WIDGET);
+        }
 	}
 
 	@Override
