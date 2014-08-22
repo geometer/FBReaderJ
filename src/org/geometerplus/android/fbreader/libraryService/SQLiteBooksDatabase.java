@@ -1001,14 +1001,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	@Override
 	protected String getHash(long bookId, long lastModified) {
-		final SQLiteStatement statement = get(
-			"SELECT hash FROM BookHash WHERE book_id=? AND timestamp>?"
-		);
-		statement.bindLong(1, bookId);
-		statement.bindLong(2, lastModified);
 		try {
+			final SQLiteStatement statement = get(
+				"SELECT hash FROM BookHash WHERE book_id=? AND timestamp>?"
+			);
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, lastModified);
 			return statement.simpleQueryForString();
-		} catch (SQLiteDoneException e) {
+		} catch (Throwable e) {
 			return null;
 		}
 	}
