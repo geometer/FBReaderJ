@@ -49,6 +49,8 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLBooleanOption OldShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBarOld", true);
 	public final ZLBooleanOption ShowActionBarOption = new ZLBooleanOption("LookNFeel", "ShowActionBar", false);
 	public final ZLIntegerOption ScreenHintStageOption = new ZLIntegerOption("LookNFeel", "ScreenHintStage", 3);
+	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
 	{
 		ShowStatusBarOption.setSpecialName("statusBar");
 		OldShowActionBarOption.setSpecialName("actionBarOld");
@@ -57,8 +59,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
-	public final ZLBooleanOption EnableFullscreenModeOption = new ZLBooleanOption("LookNFeel", "FullscreenMode", true);
-	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !DeviceType.Instance().hasButtonLightsBug());
 
 	private FBReader myActivity;
 	private final Application myApplication;
