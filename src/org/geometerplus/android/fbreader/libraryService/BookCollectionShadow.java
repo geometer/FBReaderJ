@@ -334,12 +334,12 @@ public class BookCollectionShadow extends AbstractBookCollection implements Serv
 		return Collections.emptyList();
 	}
 
-	public String getHash(Book book) {
+	public String getHash(Book book, boolean force) {
 		if (myInterface == null) {
 			return null;
 		}
 		try {
-			return myInterface.getHash(SerializerUtil.serialize(book));
+			return myInterface.getHash(SerializerUtil.serialize(book), force);
 		} catch (RemoteException e) {
 			return null;
 		}

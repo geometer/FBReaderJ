@@ -37,7 +37,7 @@ interface LibraryInterface {
 	void removeBook(in String book, in boolean deleteFromDisk);
 	void addBookToRecentList(in String book);
 
-	String getHash(in String book);
+	String getHash(in String book, in boolean force);
 
 	PositionWithTimestamp getStoredPosition(in long bookId);
 	void storePosition(in long bookId, in PositionWithTimestamp position);
