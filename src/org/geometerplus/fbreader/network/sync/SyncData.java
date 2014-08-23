@@ -76,7 +76,7 @@ public class SyncData {
 		final Book currentBook = collection.getRecentBook(0);
 		if (currentBook != null) {
 			final String oldHash = myCurrentBookHash.getValue();
-			final String newHash = collection.getHash(currentBook);
+			final String newHash = collection.getHash(currentBook, true);
 			if (newHash != null && !newHash.equals(oldHash)) {
 				myCurrentBookHash.setValue(newHash);
 				if (oldHash.length() != 0) {
