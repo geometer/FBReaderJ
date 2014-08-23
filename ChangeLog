@@ -1,5 +1,8 @@
-===== 2.0.6 (Aug ??, 2014) =====
+===== 2.0.6 (Aug 23, 2014) =====
 * Version for old (2.*) devices does not use google services API
+* Fixed fullscreen mode behaviour
+* Fixed possible synchornisation crashes
+* Fixed look for empty sync catalog
 
 ===== 2.0.5 (Aug 18, 2014) =====
 * Fixed possible synchornisation crash
