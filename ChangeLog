@@ -3,6 +3,7 @@
 * Fixed fullscreen mode behaviour
 * Fixed possible synchornisation crashes
 * Fixed look for empty sync catalog
+* Fixed work with files with ':' in name
 
 ===== 2.0.5 (Aug 18, 2014) =====
 * Fixed possible synchornisation crash

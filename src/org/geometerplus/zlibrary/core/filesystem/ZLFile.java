@@ -136,9 +136,12 @@ public abstract class ZLFile implements InputStreamHolder {
 		}
 		int index = path.lastIndexOf(':');
 		if (index > 1) {
-			return ZLArchiveEntryFile.createArchiveEntryFile(
-				createFileByPath(path.substring(0, index)), path.substring(index + 1)
-			);
+			final ZLFile archive = createFileByPath(path.substring(0, index));
+			if (archive != null && archive.myArchiveType != 0) {
+				return ZLArchiveEntryFile.createArchiveEntryFile(
+					archive, path.substring(index + 1)
+				);
+			}
 		}
 		return new ZLPhysicalFile(path);
 	}
