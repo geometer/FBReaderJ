@@ -111,7 +111,6 @@ shared_ptr<ZLInputStream> ZLFile::inputStream(shared_ptr<EncryptionMap> encrypti
 			return 0;
 		}
 		stream = ZLFSManager::Instance().createPlainInputStream(myPath);
-		stream = envelopeCompressedStream(stream);
 	} else {
 		const std::string baseName = myPath.substr(0, index);
 		const ZLFile baseFile(baseName);
@@ -119,14 +118,17 @@ shared_ptr<ZLInputStream> ZLFile::inputStream(shared_ptr<EncryptionMap> encrypti
 		if (!base.isNull()) {
 			if (baseFile.myArchiveType & ZIP) {
 				stream = new ZLZipInputStream(base, baseName, myPath.substr(index + 1));
-			} /*else if (baseFile.myArchiveType & TAR) {
-				stream = new ZLTarInputStream(base, myPath.substr(index + 1));
-			}*/
+			/*} else if (baseFile.myArchiveType & TAR) {
+				stream = new ZLTarInputStream(base, myPath.substr(index + 1));*/
+			} else {
+				if (isDirectory()) {
+					return 0;
+				}
+				stream = ZLFSManager::Instance().createPlainInputStream(myPath);
+			}
 		}
-		stream = envelopeCompressedStream(stream);
 	}
-
-	return stream;
+	return envelopeCompressedStream(stream);
 }
 
 shared_ptr<ZLOutputStream> ZLFile::outputStream(bool writeThrough) const {
@@ -164,26 +166,30 @@ void ZLFile::fillInfo() const {
 	} else {
 		const std::string archivePath = myPath.substr(0, index);
 		ZLFile archive(archivePath);
-		if (archive.exists()) {
-			shared_ptr<ZLDir> dir = archive.directory();
-			if (!dir.isNull()) {
-				std::string itemName = myPath.substr(index + 1);
-				myInfo = archive.myInfo;
-				myInfo.IsDirectory = false;
-				myInfo.Exists = false;
-				std::vector<std::string> items;
-				dir->collectFiles(items, true);
-				for (std::vector<std::string>::const_iterator it = items.begin(); it != items.end(); ++it) {
-					if (*it == itemName) {
-						myInfo.Exists = true;
-						break;
+		if (!archive.isArchive()) {
+			myInfo = ZLFSManager::Instance().fileInfo(myPath);
+		} else {
+			if (archive.exists()) {
+				shared_ptr<ZLDir> dir = archive.directory();
+				if (!dir.isNull()) {
+					std::string itemName = myPath.substr(index + 1);
+					myInfo = archive.myInfo;
+					myInfo.IsDirectory = false;
+					myInfo.Exists = false;
+					std::vector<std::string> items;
+					dir->collectFiles(items, true);
+					for (std::vector<std::string>::const_iterator it = items.begin(); it != items.end(); ++it) {
+						if (*it == itemName) {
+							myInfo.Exists = true;
+							break;
+						}
 					}
+				} else {
+					myInfo.Exists = false;
 				}
 			} else {
 				myInfo.Exists = false;
 			}
-		} else {
-			myInfo.Exists = false;
 		}
 	}
 }
