@@ -1000,28 +1000,36 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected String getHash(long bookId, long lastModified) {
+	protected String getHash(long bookId, long lastModified) throws NotAvailable {
 		try {
 			final SQLiteStatement statement = get(
 				"SELECT hash FROM BookHash WHERE book_id=? AND timestamp>?"
 			);
 			statement.bindLong(1, bookId);
 			statement.bindLong(2, lastModified);
-			return statement.simpleQueryForString();
-		} catch (Throwable e) {
-			return null;
+			try {
+				return statement.simpleQueryForString();
+			} catch (SQLiteDoneException e) {
+				return null;
+			}
+		} catch (Throwable t) {
+			throw new NotAvailable();
 		}
 	}
 
 	@Override
-	protected void setHash(long bookId, String hash) {
-		final SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO BookHash (book_id,timestamp,hash) VALUES (?,?,?)"
-		);
-		statement.bindLong(1, bookId);
-		statement.bindLong(2, System.currentTimeMillis());
-		statement.bindString(3, hash);
-		statement.execute();
+	protected void setHash(long bookId, String hash) throws NotAvailable {
+		try {
+			final SQLiteStatement statement = get(
+				"INSERT OR REPLACE INTO BookHash (book_id,timestamp,hash) VALUES (?,?,?)"
+			);
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, System.currentTimeMillis());
+			statement.bindString(3, hash);
+			statement.execute();
+		} catch (Throwable t) {
+			throw new NotAvailable();
+		}
 	}
 
 	@Override
