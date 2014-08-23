@@ -431,7 +431,7 @@ public class BookCollection extends AbstractBookCollection {
 						processFilesQueue();
 					}
 					for (Book book : new ArrayList<Book>(myBooksByFile.values())) {
-						getHash(book);
+						getHash(book, false);
 					}
 				}
 			}
@@ -473,7 +473,7 @@ public class BookCollection extends AbstractBookCollection {
 				final Book book = getBookByFile(file);
 				if (book != null) {
 					saveBook(book);
-					getHash(book);
+					getHash(book, false);
 				}
 			}
 
@@ -727,19 +727,30 @@ public class BookCollection extends AbstractBookCollection {
 		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
 	}
 
-	public String getHash(Book book) {
+	public String getHash(Book book, boolean force) {
 		final ZLPhysicalFile file = book.File.getPhysicalFile();
 		if (file == null) {
 			return null;
 		}
-		String hash = myDatabase.getHash(book.getId(), file.javaFile().lastModified());
+		String hash = null;
+		try {
+			hash = myDatabase.getHash(book.getId(), file.javaFile().lastModified());
+		} catch (BooksDatabase.NotAvailable e) {
+			if (!force) {
+				return null;
+			}
+		}
 		if (hash == null) {
 			final UID uid = BookUtil.createUid(book.File, "SHA-1");
 			if (uid == null) {
 				return null;
 			}
 			hash = uid.Id.toLowerCase();
-			myDatabase.setHash(book.getId(), hash);
+			try {
+				myDatabase.setHash(book.getId(), hash);
+			} catch (BooksDatabase.NotAvailable e) {
+				// ignore
+			}
 		}
 		return hash;
 	}

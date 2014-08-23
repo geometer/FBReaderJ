@@ -326,7 +326,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 		if (file.length() > 30 * 1024 * 1024) {
 			return Status.Failure;
 		}
-		final String hash = myCollection.getHash(book);
+		final String hash = myCollection.getHash(book, false);
 		final boolean force = book.labels().contains(Book.SYNC_TOSYNC_LABEL);
 		if (hash == null) {
 			return Status.HashNotComputed;
