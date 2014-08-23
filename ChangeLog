@@ -4,6 +4,7 @@
 * Fixed possible synchornisation crashes
 * Fixed look for empty sync catalog
 * Fixed work with files with ':' in name
+* Fixed using of books DB after finish of service
 
 ===== 2.0.5 (Aug 18, 2014) =====
 * Fixed possible synchornisation crash
