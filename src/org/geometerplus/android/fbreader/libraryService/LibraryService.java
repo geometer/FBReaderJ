@@ -318,8 +318,8 @@ public class LibraryService extends Service {
 			myCollection.rescan(path);
 		}
 
-		public String getHash(String book) {
-			return myCollection.getHash(SerializerUtil.deserializeBook(book));
+		public String getHash(String book, boolean force) {
+			return myCollection.getHash(SerializerUtil.deserializeBook(book), force);
 		}
 	}
 
