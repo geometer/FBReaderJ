@@ -79,7 +79,11 @@ class SyncNetworkContext extends ServiceNetworkContext {
 			case always:
 			{
 				final ConnectivityManager cm = getConnectivityManager();
-				return cm != null && cm.getActiveNetworkInfo().isConnected();
+				if (cm == null) {
+					return false;
+				}
+				final NetworkInfo info = cm.getActiveNetworkInfo();
+				return info != null && info.isConnected();
 			}
 			case viaWifi:
 			{
