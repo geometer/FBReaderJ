@@ -50,7 +50,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		migrate();
 	}
 
-	public void close() {
+	@Override
+	public void finalize() {
 		myDatabase.close();
 	}
 
