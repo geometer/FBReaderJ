@@ -63,6 +63,10 @@ abstract public class ZLResource {
 	public static ZLStringOption getLanguageOption() {
 		return ourLanguageOption;
 	}
+	public static String getLanguage() {
+		final String lang = getLanguageOption().getValue();
+		return Language.SYSTEM_CODE.equals(lang) ? Locale.getDefault().getLanguage() : lang;
+	}
 
 	public static ZLResource resource(String key) {
 		ZLTreeResource.buildTree();
