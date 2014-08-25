@@ -91,8 +91,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			if (paragraphsNumber > 0) {
 				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
 			}
-		}
-		Application.getViewWidget().reset();
+        }
+        if (Application.getViewWidget() != null) {
+            Application.getViewWidget().reset();
+        }
 	}
 
 	public ZLTextModel getModel() {
