@@ -78,7 +78,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	synchronized void addItem(final NetworkItem item) {
-		if (!hasChildren()) {
+		if (!hasChildren() && !isSingleSyncItem(item)) {
 			addSpecialTrees();
 		}
 		if (item instanceof NetworkCatalogItem) {
@@ -245,5 +245,16 @@ public class NetworkCatalogTree extends NetworkTree {
 			myLastTotalChildren = currentTotal;
 			startItemsLoader(new QuietNetworkContext(), false, true);
 		}
+	}
+
+	private boolean isSingleSyncItem(NetworkItem item) {
+		if (!(item instanceof NetworkBookItem)) {
+			return false;
+		}
+		final INetworkLink link = getLink();
+		if (!(link instanceof ISyncNetworkLink)) {
+			return false;
+		}
+		return "fbreader:book:network:description".equals(((NetworkBookItem)item).Id);
 	}
 }

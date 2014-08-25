@@ -43,6 +43,7 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -395,7 +396,7 @@ public class ZLNetworkManager {
 				httpRequest.setHeader("X-Accept-Auto-Login", "True");
 			}
 			httpRequest.setHeader("Accept-Encoding", "gzip");
-			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
+			httpRequest.setHeader("Accept-Language", ZLResource.getLanguage());
 			for (Map.Entry<String,String> header : request.Headers.entrySet()) {
 				httpRequest.setHeader(header.getKey(), header.getValue());
 			}

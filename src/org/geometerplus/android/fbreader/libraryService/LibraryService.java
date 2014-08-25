@@ -45,6 +45,9 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
+	private static SQLiteBooksDatabase ourDatabase;
+	private static final Object ourDatabaseLock = new Object();
+
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
@@ -101,8 +104,8 @@ public class LibraryService extends Service {
 		private final List<FileObserver> myFileObservers = new LinkedList<FileObserver>();
 		private BookCollection myCollection;
 
-		LibraryImplementation() {
-			myDatabase = new SQLiteBooksDatabase(LibraryService.this);
+		LibraryImplementation(BooksDatabase db) {
+			myDatabase = db;
 			myCollection = new BookCollection(myDatabase, Paths.bookPath());
 			reset(true);
 		}
@@ -155,10 +158,6 @@ public class LibraryService extends Service {
 			for (FileObserver observer : myFileObservers) {
 				observer.stopWatching();
 			}
-		}
-
-		public void close() {
-			((SQLiteBooksDatabase)myDatabase).close();
 		}
 
 		public String status() {
@@ -379,7 +378,12 @@ public class LibraryService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		myLibrary = new LibraryImplementation();
+		synchronized (ourDatabaseLock) {
+			if (ourDatabase == null) {
+				ourDatabase = new SQLiteBooksDatabase(LibraryService.this);
+			}
+		}
+		myLibrary = new LibraryImplementation(ourDatabase);
 	}
 
 	@Override
@@ -388,7 +392,6 @@ public class LibraryService extends Service {
 			final LibraryImplementation l = myLibrary;
 			myLibrary = null;
 			l.deactivate();
-			l.close();
 		}
 		myImageSynchronizer.clear();
 		super.onDestroy();
