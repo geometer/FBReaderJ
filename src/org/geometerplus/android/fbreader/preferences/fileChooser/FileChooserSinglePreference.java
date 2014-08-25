@@ -19,24 +19,21 @@
 
 package org.geometerplus.android.fbreader.preferences.fileChooser;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.android.util.FileChooserUtil;
 
-class FileChooserStringListPreference extends FileChooserPreference {
-	private final ZLStringListOption myOption;
+class FileChooserSinglePreference extends FileChooserPreference {
+	private final ZLStringOption myOption;
 
-	FileChooserStringListPreference(Context context, ZLResource rootResource, String resourceKey, ZLStringListOption option, int requestCode, Runnable onValueSetAction) {
-		super(context, rootResource, resourceKey, false, requestCode, onValueSetAction);
-
+	FileChooserSinglePreference(Context context, ZLResource rootResource, String resourceKey, ZLStringOption option, int requestCode, Runnable onValueSetAction) {
+		super(context, rootResource, resourceKey, true, requestCode, onValueSetAction);
 		myOption = option;
 
 		setSummary(getStringValue());
@@ -44,30 +41,32 @@ class FileChooserStringListPreference extends FileChooserPreference {
 
 	@Override
 	protected void onClick() {
-		FileChooserUtil.runFolderListDialog(
+		FileChooserUtil.runDirectoryChooser(
 			(Activity)getContext(),
 			myRequestCode,
-			myResource.getValue(),
 			myResource.getResource("chooserTitle").getValue(),
-			myOption.getValue(),
+			getStringValue(),
 			myChooseWritableDirectoriesOnly
 		);
 	}
 
 	@Override
 	protected String getStringValue() {
-		return MiscUtil.join(myOption.getValue(), ", ");
+		return myOption.getValue();
 	}
 
 	@Override
 	protected void setValueFromIntent(Intent data) {
-		final List<String> value = FileChooserUtil.pathListFromData(data);
-		if (value.isEmpty()) {
+		final String value = FileChooserUtil.pathFromData(data);
+		if (MiscUtil.isEmptyString(value)) {
 			return;
 		}
 
-		myOption.setValue(value);
-		setSummary(getStringValue());
+		final String currentValue = myOption.getValue();
+		if (!currentValue.equals(value)) {
+			myOption.setValue(value);
+			setSummary(value);
+		}
 
 		if (myOnValueSetAction != null) {
 			myOnValueSetAction.run();
