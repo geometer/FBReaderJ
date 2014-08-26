@@ -40,14 +40,17 @@ class ZLColorPreference extends ColorPreference {
 		myTitle = resource.getResource(resourceKey).getValue();
 	}
 
+	@Override
 	public String getTitle() {
 		return myTitle;
 	}
 
+	@Override
 	protected ZLColor getSavedColor() {
 		return myOption.getValue();
 	}
 
+	@Override
 	protected void saveColor(ZLColor color) {
 		myOption.setValue(color);
 	}
