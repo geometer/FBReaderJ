@@ -30,6 +30,7 @@ import android.widget.TextView;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
@@ -37,6 +38,7 @@ import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 
 public class BackgroundPreference extends Preference {
 	static final String VALUE_KEY = "fbreader.background.value";
+	static final String COLOR_KEY = "fbreader.background.color";
 
 	private final ZLResource myResource;
 	private final ColorProfile myProfile;
@@ -91,13 +93,25 @@ public class BackgroundPreference extends Preference {
 
 	@Override
 	protected void onClick() {
-		((Activity)getContext()).startActivityForResult(new Intent(getContext(), Chooser.class), myRequestCode);
+		final Intent call = new Intent(getContext(), Chooser.class)
+			.putExtra(VALUE_KEY, myProfile.WallpaperOption.getValue());
+
+		final ZLColor color = myProfile.BackgroundOption.getValue();
+		if (color != null) {
+			call.putExtra(COLOR_KEY, color.intValue());
+		}
+
+		((Activity)getContext()).startActivityForResult(call, myRequestCode);
 	}
 
 	public void update(Intent data) {
 		final String value = data.getStringExtra(VALUE_KEY);
 		if (value != null) {
 			myProfile.WallpaperOption.setValue(value);
+		}
+		final int color = data.getIntExtra(COLOR_KEY, -1);
+		if (color != -1) {
+			myProfile.BackgroundOption.setValue(new ZLColor(color));
 		}
 		notifyChanged();
 	}

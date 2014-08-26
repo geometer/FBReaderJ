@@ -25,8 +25,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 import org.geometerplus.android.util.FileChooserUtil;
 
@@ -48,11 +51,30 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 		getListView().setOnItemClickListener(this);
 	}
 
+	private final AmbilWarnaDialog.OnAmbilWarnaListener myColorChooserListener =
+		new AmbilWarnaDialog.OnAmbilWarnaListener() {
+			@Override
+			public void onOk(AmbilWarnaDialog dialog, int color) {
+				final Intent result = new Intent()
+					.putExtra(BackgroundPreference.VALUE_KEY, "")
+					.putExtra(BackgroundPreference.COLOR_KEY, color);
+				setResult(RESULT_OK, result);
+				finish();
+			}
+
+			@Override
+			public void onCancel(AmbilWarnaDialog dialog) {
+			}
+		};
+
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		switch (position) {
 			case 0:
-				setResult(RESULT_OK, new Intent().putExtra(BackgroundPreference.VALUE_KEY, ""));
-				finish();
+				new AmbilWarnaDialog(
+					this,
+					getIntent().getIntExtra(BackgroundPreference.COLOR_KEY, 0),
+					myColorChooserListener
+				).show();
 				break;
 			case 1:
 				startActivityForResult(new Intent(this, PredefinedImages.class), 1);
