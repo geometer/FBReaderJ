@@ -49,9 +49,10 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 	}
 
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		System.err.println("CLICKED:" + position);
 		switch (position) {
 			case 0:
+				setResult(RESULT_OK, new Intent().putExtra(BackgroundPreference.VALUE_KEY, ""));
+				finish();
 				break;
 			case 1:
 				startActivityForResult(new Intent(this, PredefinedImages.class), 1);
@@ -59,6 +60,14 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 			case 2:
 				FileChooserUtil.runFileChooser(this, 2, myResource.getValue(), "");
 				break;
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			setResult(RESULT_OK, data);
+			finish();
 		}
 	}
 }
