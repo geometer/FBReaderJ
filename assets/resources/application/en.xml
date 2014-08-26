@@ -616,6 +616,11 @@
 		<node name="colors" value="Colors &amp; wallpapers">
 			<node name="summary" value="Color settings"/>
 			<node name="background" value="Background">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…"/>
+					<node name="predefined" value="Predefined image…"/>
+					<node name="selectFile" value="Select file…"/>
+				</node>
 				<node name="solidColor" value="Solid color"/>
 				<node name="leather" value="Leather"/>
 				<node name="sepia" value="Sepia"/>
