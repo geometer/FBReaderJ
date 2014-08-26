@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.*;
 
@@ -32,16 +34,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
-
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
-
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
@@ -54,6 +52,7 @@ public class LibraryService extends Service {
 	private final Map<String,WeakReference<Object>> myCoversMap =
 		Collections.synchronizedMap(new HashMap<String,WeakReference<Object>>());
 	private static final Object NULL_COVER = new Object();
+	private final ReferenceQueue<Object> myReferenceQueue = new ReferenceQueue<Object>();
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
@@ -278,10 +277,12 @@ public class LibraryService extends Service {
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
 			final WeakReference<Object> ref = myCoversMap.get(book);
 			if (ref != null) {
-				final Object bitmap = ref.get();
-				if (bitmap != null) {
-					delayed[0] = false;
-					return bitmap instanceof Bitmap ? (Bitmap)bitmap : null;
+				if (!clearCoversMap(ref)) {
+					final Object bitmap = ref.get();
+					if (bitmap != null) {
+						delayed[0] = false;
+						return bitmap instanceof Bitmap ? (Bitmap)bitmap : null;
+					}
 				}
 			}
 
@@ -302,9 +303,9 @@ public class LibraryService extends Service {
 						final ZLAndroidImageData data = manager.getImageData(image);
 						if (data != null) {
 							final Bitmap cover = data.getBitmap(maxWidth, maxHeight);
-							myCoversMap.put(book, new WeakReference<Object>(cover));
+							myCoversMap.put(book, new WeakReference<Object>(cover, myReferenceQueue));
 						} else {
-							myCoversMap.put(book, new WeakReference<Object>(NULL_COVER));
+							myCoversMap.put(book, new WeakReference<Object>(NULL_COVER, myReferenceQueue));
 						}
 						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
@@ -319,6 +320,18 @@ public class LibraryService extends Service {
 			delayed[0] = false;
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
+		}
+
+		private boolean clearCoversMap(Reference<? extends Object> ref) {
+			Reference<? extends Object> reference = myReferenceQueue.poll();
+			while(reference != null) {
+				if (reference == ref) {
+					myCoversMap.remove(reference);
+					return true;
+				}
+				reference = myReferenceQueue.poll();
+			}
+			return false;
 		}
 
 		public List<String> bookmarks(String query) {
