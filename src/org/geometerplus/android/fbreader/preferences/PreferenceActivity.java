@@ -44,13 +44,14 @@ import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.sync.SyncUtil;
-//import org.geometerplus.fbreader.tips.TipsManager;
+import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
+import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
 
 import org.geometerplus.android.util.UIUtil;
@@ -447,6 +448,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
+		colorsScreen.addPreference(new BackgroundPreference(
+			this, profile, colorsScreen.Resource.getResource("background")
+		));
 		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
 			this, profile, colorsScreen.Resource.getResource("background")
 		) {
@@ -681,8 +685,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 
-		//final Screen tipsScreen = createPreferenceScreen("tips");
-		//tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
+		final Screen tipsScreen = createPreferenceScreen("tips");
+		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
 
 		final Screen aboutScreen = createPreferenceScreen("about");
 		aboutScreen.addPreference(new InfoPreference(
