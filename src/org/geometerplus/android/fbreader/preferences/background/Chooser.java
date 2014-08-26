@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.preferences.background;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -53,6 +54,7 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 			case 0:
 				break;
 			case 1:
+				startActivityForResult(new Intent(this, PredefinedImages.class), 1);
 				break;
 			case 2:
 				FileChooserUtil.runFileChooser(this, 2, myResource.getValue(), "");
