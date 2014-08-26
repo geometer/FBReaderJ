@@ -36,15 +36,19 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 
 public class BackgroundPreference extends Preference {
+	static final String VALUE_KEY = "fbreader.background.value";
+
 	private final ZLResource myResource;
 	private final ColorProfile myProfile;
+	private final int myRequestCode;
 
-	public BackgroundPreference(Context context, ColorProfile profile, ZLResource resource) {
+	public BackgroundPreference(Context context, ColorProfile profile, ZLResource resource, int requestCode) {
 		super(context);
 		setWidgetLayoutResource(R.layout.background_preference);
 
 		myResource = resource;
 		myProfile = profile;
+		myRequestCode = requestCode;
 	}
 
 	@Override
@@ -87,6 +91,14 @@ public class BackgroundPreference extends Preference {
 
 	@Override
 	protected void onClick() {
-		((Activity)getContext()).startActivity(new Intent(getContext(), Chooser.class));
+		((Activity)getContext()).startActivityForResult(new Intent(getContext(), Chooser.class), myRequestCode);
+	}
+
+	public void update(Intent data) {
+		final String value = data.getStringExtra(VALUE_KEY);
+		if (value != null) {
+			myProfile.WallpaperOption.setValue(value);
+		}
+		notifyChanged();
 	}
 }
