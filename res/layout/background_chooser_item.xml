@@ -4,6 +4,7 @@
 	android:layout_height="wrap_content"
 	android:minHeight="?android:attr/listPreferredItemHeight"
 	android:orientation="horizontal"
+	android:paddingLeft="10dip"
 >
 	<TextView
 		android:id="@+id/background_chooser_item_title"
