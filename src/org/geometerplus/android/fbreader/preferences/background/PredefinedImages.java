@@ -20,17 +20,17 @@
 package org.geometerplus.android.fbreader.preferences.background;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.FileChooserUtil;
+import org.geometerplus.fbreader.fbreader.WallpapersUtil;
 
-public class Chooser extends ListActivity implements AdapterView.OnItemClickListener {
+public class PredefinedImages extends ListActivity implements AdapterView.OnItemClickListener {
 	private final ZLResource myResource = ZLResource.resource("Preferences").getResource("colors").getResource("background");
 
 	@Override
@@ -40,10 +40,10 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 			this, R.layout.background_chooser_item, R.id.background_chooser_item_title
 		);
-		final ZLResource chooserResource = myResource.getResource("chooser");
-		adapter.add(chooserResource.getResource("solidColor").getValue());
-		adapter.add(chooserResource.getResource("predefined").getValue());
-		adapter.add(chooserResource.getResource("selectFile").getValue());
+		for (ZLFile f : WallpapersUtil.predefinedWallpaperFiles()) {
+			final String name = f.getShortName();
+			adapter.add(myResource.getResource(name.substring(0, name.indexOf("."))).getValue());
+		}
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
 	}
@@ -54,10 +54,8 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 			case 0:
 				break;
 			case 1:
-				startActivityForResult(new Intent(this, PredefinedImages.class), 1);
 				break;
 			case 2:
-				FileChooserUtil.runFileChooser(this, 2, myResource.getValue(), "");
 				break;
 		}
 	}
