@@ -444,12 +444,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				return viewOptions.ScrollbarType.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER;
 			}
 		};
-		final PreferenceSet bgPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				return "".equals(profile.WallpaperOption.getValue());
-			}
-		};
 
 		final Screen cssScreen = createPreferenceScreen("css");
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
@@ -468,20 +462,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		colorsScreen.addPreference(myBackgroundPreference);
 		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
 			this, profile, colorsScreen.Resource.getResource("background")
-		) {
-			@Override
-			protected void onDialogClosed(boolean result) {
-				super.onDialogClosed(result);
-				bgPreferences.run();
-			}
-		};
+		);
 		colorsScreen.addPreference(wallpaperPreference);
 		wallpaperReloader.add(wallpaperPreference);
 
-		bgPreferences.add(
-			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
-		);
-		bgPreferences.run();
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
