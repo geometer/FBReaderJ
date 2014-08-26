@@ -277,7 +277,7 @@ public class LibraryService extends Service {
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
 			final WeakReference<Object> ref = myCoversMap.get(book);
 			if (ref != null) {
-				if (!clearCoversMap(ref)) {
+				if (!isCoverDeleted(ref)) {
 					final Object bitmap = ref.get();
 					if (bitmap != null) {
 						delayed[0] = false;
@@ -322,9 +322,9 @@ public class LibraryService extends Service {
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
 		}
 
-		private boolean clearCoversMap(Reference<? extends Object> ref) {
+		private boolean isCoverDeleted(Reference<? extends Object> ref) {
 			Reference<? extends Object> reference = myReferenceQueue.poll();
-			while(reference != null) {
+			while (reference != null) {
 				if (reference == ref) {
 					myCoversMap.remove(reference);
 					return true;
