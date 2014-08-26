@@ -20,9 +20,11 @@
 package org.geometerplus.android.fbreader.preferences.background;
 
 import android.app.ListActivity;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -37,26 +39,40 @@ public class PredefinedImages extends ListActivity implements AdapterView.OnItem
 	protected void onStart() {
 		super.onStart();
 		setTitle(myResource.getValue());
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-			this, R.layout.background_chooser_item, R.id.background_chooser_item_title
-		);
-		for (ZLFile f : WallpapersUtil.predefinedWallpaperFiles()) {
-			final String name = f.getShortName();
-			adapter.add(myResource.getResource(name.substring(0, name.indexOf("."))).getValue());
-		}
+		final ArrayAdapter<ZLFile> adapter = new ArrayAdapter<ZLFile>(
+			this, R.layout.background_predefined_item, R.id.background_predefined_item_title
+		) {
+			public View getView(int position, View convertView, final ViewGroup parent) {
+				final View view = super.getView(position, convertView, parent);
+
+				final TextView titleView =
+					(TextView)view.findViewById(R.id.background_predefined_item_title);
+				final String name = getItem(position).getShortName();
+				final String key = name.substring(0, name.indexOf("."));
+				titleView.setText(myResource.getResource(key).getValue());
+
+				final View previewWidget =
+					view.findViewById(R.id.background_predefined_item_preview);
+				try {
+					previewWidget.setBackgroundDrawable(
+						new BitmapDrawable(getResources(), getItem(position).getInputStream())
+					);
+				} catch (Throwable t) {
+				}
+
+				return view;
+			}
+		};
+		adapter.addAll(WallpapersUtil.predefinedWallpaperFiles());
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
 	}
 
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		System.err.println("CLICKED:" + position);
-		switch (position) {
-			case 0:
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-		}
+		setResult(RESULT_OK, new Intent().putExtra(
+			BackgroundPreference.VALUE_KEY,
+			((ZLFile)getListAdapter().getItem(position)).getPath()
+		));
+		finish();
 	}
 }

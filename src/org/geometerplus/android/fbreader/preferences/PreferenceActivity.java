@@ -61,6 +61,8 @@ import org.geometerplus.android.util.DeviceType;
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
+	private static final int BACKGROUND_REQUEST_CODE = 3000;
+	private BackgroundPreference myBackgroundPreference;
 
 	public PreferenceActivity() {
 		super("Preferences");
@@ -78,9 +80,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			return;
 		}
 
-		if (resultCode == RESULT_OK) {
-			myChooserCollection.update(requestCode, data);
+		if (resultCode != RESULT_OK) {
+			return;
 		}
+
+		if (BACKGROUND_REQUEST_CODE == requestCode) {
+			if (myBackgroundPreference != null) {
+				myBackgroundPreference.update(data);
+			}
+			return;
+		}
+
+		myChooserCollection.update(requestCode, data);
 	}
 
 	@Override
@@ -458,9 +469,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
-		colorsScreen.addPreference(new BackgroundPreference(
-			this, profile, colorsScreen.Resource.getResource("background")
-		));
+		myBackgroundPreference = new BackgroundPreference(
+			this,
+			profile,
+			colorsScreen.Resource.getResource("background"),
+			BACKGROUND_REQUEST_CODE
+		);
+		colorsScreen.addPreference(myBackgroundPreference);
 		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
 			this, profile, colorsScreen.Resource.getResource("background")
 		) {
