@@ -789,10 +789,10 @@ public class FileChooserActivity extends Activity {
         if(mIsActionBar){
             viewGroupFooterContainer.setVisibility(View.VISIBLE);
             viewGroupFooterBottom.setVisibility(View.VISIBLE);
-            if(mFileProvider.getFilterMode() != IFileProvider.FilterMode.FilesOnly){
+            if (mFileProvider.getFilterMode() != IFileProvider.FilterMode.FilesOnly) {
                 mBtnOk.setVisibility(View.VISIBLE);
                 mBtnOk.setOnClickListener(mBtnOk_ActionBar_OnClickListener);
-            }else{
+            } else {
                 mBtnOk.setVisibility(View.GONE);
             }
             mBtnCancel.setVisibility(View.VISIBLE);
@@ -1465,8 +1465,8 @@ public class FileChooserActivity extends Activity {
      * @param files
      *            list of {@link IFile}
      */
-    private void doFinish(IFile... files) {
-        List<IFile> list = new ArrayList<IFile>();
+    private void doFinish(IFile ... files) {
+        final List<IFile> list = new ArrayList<IFile>();
         for (IFile f : files)
             list.add(f);
         doFinish((ArrayList<IFile>) list);
@@ -1483,7 +1483,7 @@ public class FileChooserActivity extends Activity {
         // set results
         switch(mFileProvider.getFilterMode()){
             case FilesOnly:
-                if(files == null || files.isEmpty()){
+                if (files == null || files.isEmpty()) {
                     setResult(RESULT_CANCELED);
                     finish();
                     return;

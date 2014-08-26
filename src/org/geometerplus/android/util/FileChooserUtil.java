@@ -51,6 +51,25 @@ public abstract class FileChooserUtil {
 		activity.startActivityForResult(intent, requestCode);
 	}
 
+	public static void runFileChooser(
+		Activity activity,
+		int requestCode,
+		String title,
+		String initialValue
+	) {
+		final Intent intent = new Intent(activity, FileChooserActivity.class);
+		intent.putExtra(FileChooserActivity._TextResources, textResources(title));
+		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initialValue));
+		intent.putExtra(FileChooserActivity._ActionBar, true);
+		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
+		intent.putExtra(FileChooserActivity._DisplayHiddenFiles, false);
+		intent.putExtra(
+			FileChooserActivity._FilterMode,
+			IFileProvider.FilterMode.FilesOnly
+		);
+		activity.startActivityForResult(intent, requestCode);
+	}
+
 	public static void runDirectoryChooser(
 		Activity activity,
 		int requestCode,
