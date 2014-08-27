@@ -54,6 +54,7 @@
 		<node name="hy" value="Örmény"/>
 		<node name="id" value="Indonéz"/>
 		<node name="it" value="Olasz"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="Grúz"/>
 		<node name="lt" value="Litván"/>
 		<node name="nb" value="Norvég"/>
