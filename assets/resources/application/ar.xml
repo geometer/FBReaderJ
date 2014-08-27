@@ -614,12 +614,16 @@
 		<node name="colors" value="الألوان والخلفية">
 			<node name="summary" value="إعدادات الخلفية"/>
 			<node name="background" value="الخلفية">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="لون موحد"/>
 				<node name="leather" value="Leather" toBeTranslated="true"/>
 				<node name="sepia" value="Sepia" toBeTranslated="true"/>
 				<node name="wood" value="Wood" toBeTranslated="true"/>
 			</node>
-			<node name="backgroundColor" value="لون الخلفية"/>
 			<node name="selectionBackground" value="خلفية تحديد النص"/>
 			<node name="selectionForeground" value="النص المحدد"/>
 			<node name="text" value="النص العادي"/>
