@@ -611,7 +611,6 @@
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Drewno"/>
 			</node>
-			<node name="backgroundColor" value="Kolor tła"/>
 			<node name="selectionBackground" value="Tło zaznaczenia"/>
 			<node name="selectionForeground" value="Zaznaczony tekst"/>
 			<node name="text" value="Zwykły tekst"/>

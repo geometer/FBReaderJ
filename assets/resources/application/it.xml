@@ -612,7 +612,6 @@
 				<node name="sepia" value="Seppia"/>
 				<node name="wood" value="Legno"/>
 			</node>
-			<node name="backgroundColor" value="Colore di sfondo"/>
 			<node name="selectionBackground" value="Seleziona Sfondo"/>
 			<node name="selectionForeground" value="Testo selezionato"/>
 			<node name="text" value="Testo Regolare"/>

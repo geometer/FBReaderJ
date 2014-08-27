@@ -627,7 +627,6 @@
 				<node name="sepia" value="Сэпія"/>
 				<node name="wood" value="Драўніна"/>
 			</node>
-			<node name="backgroundColor" value="Колер фону"/>
 			<node name="selectionBackground" value="Фон вылучэньня"/>
 			<node name="selectionForeground" value="Вылучаны тэкст"/>
 			<node name="text" value="Звычайны тэкст"/>

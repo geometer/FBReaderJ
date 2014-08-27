@@ -626,7 +626,6 @@
 				<node name="sepia" value="Դարչնագույն"/>
 				<node name="wood" value="Փայտի գույնով"/>
 			</node>
-			<node name="backgroundColor" value="Ետնաշերտի գունավորում"/>
 			<node name="selectionBackground" value="Նշվածքի ենտաշերտը"/>
 			<node name="selectionForeground" value="Նշվածք"/>
 			<node name="text" value="Կանոնավոր գրվածք"/>

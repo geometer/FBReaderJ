@@ -627,7 +627,6 @@
 				<node name="sepia" value="Sepia (altes Papier)"/>
 				<node name="wood" value="Holz"/>
 			</node>
-			<node name="backgroundColor" value="Hintergrundfarbe"/>
 			<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
 			<node name="selectionForeground" value="Ausgewählter Text"/>
 			<node name="text" value="Normaler Text"/>

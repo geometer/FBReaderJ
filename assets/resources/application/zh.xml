@@ -611,7 +611,6 @@
 				<node name="sepia" value="棕褐"/>
 				<node name="wood" value="木质"/>
 			</node>
-			<node name="backgroundColor" value="背景色"/>
 			<node name="selectionBackground" value="选择背景色"/>
 			<node name="selectionForeground" value="选择的文本"/>
 			<node name="text" value="普通文字"/>

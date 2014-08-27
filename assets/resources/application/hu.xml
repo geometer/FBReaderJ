@@ -611,7 +611,6 @@
 				<node name="sepia" value="Szépia"/>
 				<node name="wood" value="Fa"/>
 			</node>
-			<node name="backgroundColor" value="Háttérszín"/>
 			<node name="selectionBackground" value="Kijelölés háttere"/>
 			<node name="selectionForeground" value="Kijelölt szöveg"/>
 			<node name="text" value="Szöveg"/>

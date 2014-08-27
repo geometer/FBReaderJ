@@ -611,7 +611,6 @@
 				<node name="sepia" value="Сепія"/>
 				<node name="wood" value="Деревина"/>
 			</node>
-			<node name="backgroundColor" value="Фоновий колір"/>
 			<node name="selectionBackground" value="Фон позначки"/>
 			<node name="selectionForeground" value="Вибраний текст"/>
 			<node name="text" value="Звичайний текст"/>

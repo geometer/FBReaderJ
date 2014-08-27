@@ -621,7 +621,6 @@
 				<node name="sepia" value="قرمز قهوه اي"/>
 				<node name="wood" value="درختي"/>
 			</node>
-			<node name="backgroundColor" value="رنگ زمينه "/>
 			<node name="selectionBackground" value="انتخاب زمينه"/>
 			<node name="selectionForeground" value="متن انتخاب شده"/>
 			<node name="text" value="متن عادي"/>

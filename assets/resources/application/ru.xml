@@ -626,7 +626,6 @@
 				<node name="sepia" value="Сепия"/>
 				<node name="wood" value="Дерево"/>
 			</node>
-			<node name="backgroundColor" value="Цвет фона"/>
 			<node name="selectionBackground" value="Фон пометки"/>
 			<node name="selectionForeground" value="Текст пометки"/>
 			<node name="text" value="Обычный текст"/>

@@ -611,7 +611,6 @@
 				<node name="sepia" value="Σέπια (παλιό χαρτή)"/>
 				<node name="wood" value="Ξύλο"/>
 			</node>
-			<node name="backgroundColor" value="Χρώματα φόντου"/>
 			<node name="selectionBackground" value="Φόντο επιλεγμένου κείμενου"/>
 			<node name="selectionForeground" value="Επιλεγμένο κείμενο"/>
 			<node name="text" value="Κανονικό κείμενο"/>
