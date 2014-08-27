@@ -53,6 +53,7 @@
 		<node name="hy" value="Armeniera"/>
 		<node name="id" value="Indonesiera"/>
 		<node name="it" value="Italiera"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="Georgiera"/>
 		<node name="lt" value="Lituaniera"/>
 		<node name="nb" value="Norvegiera"/>

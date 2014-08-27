@@ -54,6 +54,7 @@
 		<node name="hy" value="Armeens"/>
 		<node name="id" value="Indonesisch"/>
 		<node name="it" value="Italiaans"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="Georgisch"/>
 		<node name="lt" value="Litouws"/>
 		<node name="nb" value="Noors"/>
