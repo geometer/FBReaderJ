@@ -616,6 +616,11 @@
 		<node name="colors" value="Farver og tapeter">
 			<node name="summary" value="Farveindstillinger"/>
 			<node name="background" value="Baggrund">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Kraftig farve"/>
 				<node name="leather" value="Læder"/>
 				<node name="sepia" value="Sepia"/>

@@ -606,6 +606,11 @@
 		<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 			<node name="summary" value="Color settings"/>
 			<node name="background" value="Nền">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Solid color" toBeTranslated="true"/>
 				<node name="leather" value="Leather" toBeTranslated="true"/>
 				<node name="sepia" value="Sepia" toBeTranslated="true"/>

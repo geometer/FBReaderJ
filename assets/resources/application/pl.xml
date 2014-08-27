@@ -606,6 +606,11 @@
 		<node name="colors" value="Kolory i tapety">
 			<node name="summary" value="Ustawienia kolorów"/>
 			<node name="background" value="Tło">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Jednolity kolor"/>
 				<node name="leather" value="Skóra"/>
 				<node name="sepia" value="Sepia"/>

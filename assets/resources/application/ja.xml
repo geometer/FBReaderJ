@@ -616,6 +616,11 @@
 		<node name="colors" value="色と壁紙">
 			<node name="summary" value="色の設定"/>
 			<node name="background" value="背景">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="単色"/>
 				<node name="leather" value="革"/>
 				<node name="sepia" value="セピア"/>

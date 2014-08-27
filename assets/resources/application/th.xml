@@ -606,6 +606,11 @@
 		<node name="colors" value="สี &amp; วอลล์เปเปอร์">
 			<node name="summary" value="การตั้งค่าสี"/>
 			<node name="background" value="พื้นหลัง">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="สีทึบ"/>
 				<node name="leather" value="ลายหนัง"/>
 				<node name="sepia" value="ซีเปีย"/>

@@ -606,6 +606,11 @@
 		<node name="colors" value="Χρώματα &amp; Φόντα">
 			<node name="summary" value="Επιλογή χρωμάτων."/>
 			<node name="background" value="Φόντο">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Μονόχρωμα"/>
 				<node name="leather" value="Δέρμα"/>
 				<node name="sepia" value="Σέπια (παλιό χαρτή)"/>
