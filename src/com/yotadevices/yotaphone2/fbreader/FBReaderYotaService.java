@@ -37,8 +37,6 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
-import java.util.HashMap;
-
 /**
  * @author ASazonov
  */

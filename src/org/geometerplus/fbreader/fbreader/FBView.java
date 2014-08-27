@@ -226,8 +226,8 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerLongPress(int x, int y) {
-		if (super.onFingerLongPress(x, y) || myReader.ViewOptions.YotaDrawOnBackScreen.getValue()) {
-			return true;
+		if (super.onFingerLongPress(x, y)) {
+			return true; // myReader.ViewOptions.YotaDrawOnBackScreen.getValue()
 		}
 
 		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
