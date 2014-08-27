@@ -275,14 +275,13 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
+			clearCoversMap();
 			final WeakReference<Object> ref = myCoversMap.get(book);
 			if (ref != null) {
-				if (!isCoverDeleted(ref)) {
-					final Object bitmap = ref.get();
-					if (bitmap != null) {
-						delayed[0] = false;
-						return bitmap instanceof Bitmap ? (Bitmap)bitmap : null;
-					}
+				final Object bitmap = ref.get();
+				if (bitmap != null) {
+					delayed[0] = false;
+					return bitmap instanceof Bitmap ? (Bitmap)bitmap : null;
 				}
 			}
 
@@ -322,16 +321,14 @@ public class LibraryService extends Service {
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
 		}
 
-		private boolean isCoverDeleted(Reference<? extends Object> ref) {
+		private void clearCoversMap() {
 			Reference<? extends Object> reference = myReferenceQueue.poll();
 			while (reference != null) {
-				if (reference == ref) {
+				if (myCoversMap.containsKey(reference)) {
 					myCoversMap.remove(reference);
-					return true;
 				}
 				reference = myReferenceQueue.poll();
 			}
-			return false;
 		}
 
 		public List<String> bookmarks(String query) {
