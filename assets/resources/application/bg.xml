@@ -627,7 +627,6 @@
 				<node name="sepia" value="Сепия"/>
 				<node name="wood" value="Дърво"/>
 			</node>
-			<node name="backgroundColor" value="Цвят на фона"/>
 			<node name="selectionBackground" value="Фон на селектирания текст"/>
 			<node name="selectionForeground" value="Селектиран текст"/>
 			<node name="text" value="Нормален текст"/>

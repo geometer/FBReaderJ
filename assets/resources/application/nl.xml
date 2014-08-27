@@ -621,7 +621,6 @@
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Hout"/>
 			</node>
-			<node name="backgroundColor" value="Achtergrondkleur"/>
 			<node name="selectionBackground" value="Selectie achtergrond"/>
 			<node name="selectionForeground" value="Geselecteerde tekst"/>
 			<node name="text" value="Normale tekst"/>

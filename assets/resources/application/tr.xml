@@ -621,7 +621,6 @@
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Ahşap"/>
 			</node>
-			<node name="backgroundColor" value="Arkaplan rengi"/>
 			<node name="selectionBackground" value="Arkaplan seçimi"/>
 			<node name="selectionForeground" value="Seçilen metin"/>
 			<node name="text" value="Normal metin"/>

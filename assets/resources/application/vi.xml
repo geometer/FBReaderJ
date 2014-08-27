@@ -611,7 +611,6 @@
 				<node name="sepia" value="Sepia" toBeTranslated="true"/>
 				<node name="wood" value="Wood" toBeTranslated="true"/>
 			</node>
-			<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 			<node name="selectionBackground" value="Nền Phần chọn"/>
 			<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 			<node name="text" value="Văn bản Thường"/>

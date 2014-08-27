@@ -619,7 +619,6 @@
 				<node name="sepia" value="Sepia" toBeTranslated="true"/>
 				<node name="wood" value="Wood" toBeTranslated="true"/>
 			</node>
-			<node name="backgroundColor" value="لون الخلفية"/>
 			<node name="selectionBackground" value="خلفية تحديد النص"/>
 			<node name="selectionForeground" value="النص المحدد"/>
 			<node name="text" value="النص العادي"/>

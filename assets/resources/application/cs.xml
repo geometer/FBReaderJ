@@ -630,7 +630,6 @@
 				<node name="sepia" value="Sépie"/>
 				<node name="wood" value="Dřevo"/>
 			</node>
-			<node name="backgroundColor" value="Barva pozadí"/>
 			<node name="selectionBackground" value="Pozadí výběru"/>
 			<node name="selectionForeground" value="Vybraný text"/>
 			<node name="text" value="Běžný text"/>

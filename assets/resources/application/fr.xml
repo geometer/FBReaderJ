@@ -614,7 +614,6 @@
 				<node name="sepia" value="Sépia"/>
 				<node name="wood" value="Bois"/>
 			</node>
-			<node name="backgroundColor" value="Couleur de fond"/>
 			<node name="selectionBackground" value="Arrière-plan de sélection"/>
 			<node name="selectionForeground" value="Texte sélectionné"/>
 			<node name="text" value="Texte normal"/>

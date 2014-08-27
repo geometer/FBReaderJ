@@ -627,7 +627,6 @@
 				<node name="sepia" value="Sèpia"/>
 				<node name="wood" value="Fusta"/>
 			</node>
-			<node name="backgroundColor" value="Color de fons"/>
 			<node name="selectionBackground" value="Fons de selecció"/>
 			<node name="selectionForeground" value="Text de selecció"/>
 			<node name="text" value="Text"/>

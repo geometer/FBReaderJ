@@ -626,7 +626,6 @@
 				<node name="sepia" value="სეპია"/>
 				<node name="wood" value="ხე"/>
 			</node>
-			<node name="backgroundColor" value="ფონი ფერი"/>
 			<node name="selectionBackground" value="მონიშვნის ფერი"/>
 			<node name="selectionForeground" value="მონიშვნის ტექსტი"/>
 			<node name="text" value="ჩვეულებრივი ტექსტი"/>

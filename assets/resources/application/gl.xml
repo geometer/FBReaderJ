@@ -611,7 +611,6 @@
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Madeira"/>
 			</node>
-			<node name="backgroundColor" value="Cor de fondo"/>
 			<node name="selectionBackground" value="Selección de fondo"/>
 			<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 			<node name="text" value="Texto normal"/>
