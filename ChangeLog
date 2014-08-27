@@ -7,6 +7,7 @@
 * (planned) Do not start SyncService in synchronization is disabled
 * (planned) Tips are back but disabled by default
 * (planned) Tablet-oriented preferences dialog
+* Added Japanese localisation (by Takahashi Tamotsu)
 
 ===== 2.0.6 (Aug 23, 2014) =====
 * Version for old (2.*) devices does not use google services API

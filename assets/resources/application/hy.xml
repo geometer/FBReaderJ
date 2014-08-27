@@ -621,12 +621,16 @@
 		<node name="colors" value="Գունավորում և պաստառներ">
 			<node name="summary" value="Գույների կարգավորումներ"/>
 			<node name="background" value="Ետնաշերտ">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Միագույն"/>
 				<node name="leather" value="Կաշեգույն"/>
 				<node name="sepia" value="Դարչնագույն"/>
 				<node name="wood" value="Փայտի գույնով"/>
 			</node>
-			<node name="backgroundColor" value="Ետնաշերտի գունավորում"/>
 			<node name="selectionBackground" value="Նշվածքի ենտաշերտը"/>
 			<node name="selectionForeground" value="Նշվածք"/>
 			<node name="text" value="Կանոնավոր գրվածք"/>

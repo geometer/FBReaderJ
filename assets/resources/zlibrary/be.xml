@@ -54,6 +54,7 @@
 		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Інданэзійская мова"/>
 		<node name="it" value="Італійская мова"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Літоўская мова"/>
 		<node name="nb" value="Нарвэская мова"/>

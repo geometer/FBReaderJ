@@ -616,12 +616,16 @@
 		<node name="colors" value="Koloreak eta atzeko irudiak">
 			<node name="summary" value="Kolore ezarpenak"/>
 			<node name="background" value="Atzeko planoa">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Kolore betea"/>
 				<node name="leather" value="Larrua"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Zura"/>
 			</node>
-			<node name="backgroundColor" value="Atzeko planoko kolorea"/>
 			<node name="selectionBackground" value="Hautaketaren atzeko planoa"/>
 			<node name="selectionForeground" value="Hautatutako testua"/>
 			<node name="text" value="Testu normala"/>
