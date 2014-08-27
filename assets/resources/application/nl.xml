@@ -616,12 +616,16 @@
 		<node name="colors" value="Kleuren">
 			<node name="summary" value="Kleurinstellingen"/>
 			<node name="background" value="Achtergrond">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Effen kleur"/>
 				<node name="leather" value="Leer"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Hout"/>
 			</node>
-			<node name="backgroundColor" value="Achtergrondkleur"/>
 			<node name="selectionBackground" value="Selectie achtergrond"/>
 			<node name="selectionForeground" value="Geselecteerde tekst"/>
 			<node name="text" value="Normale tekst"/>

@@ -53,6 +53,7 @@
 		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="Indonesian" toBeTranslated="true"/>
 		<node name="it" value="Italian" toBeTranslated="true"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="Lithuanian" toBeTranslated="true"/>
 		<node name="nb" value="Norwegian" toBeTranslated="true"/>

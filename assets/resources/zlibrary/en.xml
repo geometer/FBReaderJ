@@ -53,6 +53,7 @@
 		<node name="hy" value="Armenian"/>
 		<node name="id" value="Indonesian"/>
 		<node name="it" value="Italian"/>
+		<node name="ja" value="Japanese"/>
 		<node name="ka" value="Georgian"/>
 		<node name="lt" value="Lithuanian"/>
 		<node name="nb" value="Norwegian"/>
