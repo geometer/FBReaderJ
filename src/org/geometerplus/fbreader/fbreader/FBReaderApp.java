@@ -123,7 +123,8 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-		if (book != null || Model == null) {
+        final Book recentBook = Collection.getRecentBook(0);
+		if (book != null || Model == null || Model != null && recentBook != null && !Model.Book.equals(recentBook)) {
 			final SynchronousExecutor executor = createExecutor("loadingBook");
 			executor.execute(new Runnable() {
 				public void run() {
