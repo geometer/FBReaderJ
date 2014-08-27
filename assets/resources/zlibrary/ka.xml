@@ -53,6 +53,7 @@
 		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="ინდონეზიური"/>
 		<node name="it" value="იტალიური"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="ქართული"/>
 		<node name="lt" value="ლიტვური"/>
 		<node name="nb" value="ნორვეგიული"/>

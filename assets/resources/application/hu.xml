@@ -606,6 +606,11 @@
 		<node name="colors" value="Színek és háttérképek">
 			<node name="summary" value="Színbeállítások"/>
 			<node name="background" value="Háttér">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Egyszínű"/>
 				<node name="leather" value="Bőr"/>
 				<node name="sepia" value="Szépia"/>
