@@ -621,12 +621,16 @@
 		<node name="colors" value="ფერები და ფონის ფერები">
 			<node name="summary" value="ფერების პარამეტრები"/>
 			<node name="background" value="ფონი">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="მყარი ფერი"/>
 				<node name="leather" value="ტყავი"/>
 				<node name="sepia" value="სეპია"/>
 				<node name="wood" value="ხე"/>
 			</node>
-			<node name="backgroundColor" value="ფონი ფერი"/>
 			<node name="selectionBackground" value="მონიშვნის ფერი"/>
 			<node name="selectionForeground" value="მონიშვნის ტექსტი"/>
 			<node name="text" value="ჩვეულებრივი ტექსტი"/>

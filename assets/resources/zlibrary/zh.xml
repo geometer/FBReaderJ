@@ -54,6 +54,7 @@
 		<node name="hy" value="亚美尼亚语"/>
 		<node name="id" value="印度语"/>
 		<node name="it" value="意大利语"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="格鲁吉亚语"/>
 		<node name="lt" value="立陶宛语"/>
 		<node name="nb" value="挪威语"/>

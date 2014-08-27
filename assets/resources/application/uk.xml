@@ -606,12 +606,16 @@
 		<node name="colors" value="Кольори &amp; шпалери">
 			<node name="summary" value="Налаштування кольору"/>
 			<node name="background" value="Фон">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Суцільний колір"/>
 				<node name="leather" value="Шкіра"/>
 				<node name="sepia" value="Сепія"/>
 				<node name="wood" value="Деревина"/>
 			</node>
-			<node name="backgroundColor" value="Фоновий колір"/>
 			<node name="selectionBackground" value="Фон позначки"/>
 			<node name="selectionForeground" value="Вибраний текст"/>
 			<node name="text" value="Звичайний текст"/>

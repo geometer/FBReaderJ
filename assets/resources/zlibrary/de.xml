@@ -58,6 +58,7 @@
 		<node name="hy" value="Հայերէն | Armenisch"/>
 		<node name="id" value="Bahasa Indonesia | Indonesisch"/>
 		<node name="it" value="Italiano | Italienisch"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="ქართული | Georgisch"/>
 		<node name="lt" value="Lietuvių | Litauisch"/>
 		<node name="nb" value="Norsk bokmål | Norwegisch"/>

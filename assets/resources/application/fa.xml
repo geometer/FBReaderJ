@@ -616,12 +616,16 @@
 		<node name="colors" value="رنگ ها &amp; والپيپر">
 			<node name="summary" value="تنظيمات رنگ"/>
 			<node name="background" value="زمينه ">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="رنگ يكپارچه"/>
 				<node name="leather" value="چرمي"/>
 				<node name="sepia" value="قرمز قهوه اي"/>
 				<node name="wood" value="درختي"/>
 			</node>
-			<node name="backgroundColor" value="رنگ زمينه "/>
 			<node name="selectionBackground" value="انتخاب زمينه"/>
 			<node name="selectionForeground" value="متن انتخاب شده"/>
 			<node name="text" value="متن عادي"/>

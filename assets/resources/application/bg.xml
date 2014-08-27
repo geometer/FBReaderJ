@@ -622,12 +622,16 @@
 		<node name="colors" value="Цветове и тапети">
 			<node name="summary" value="Настройки на цвета"/>
 			<node name="background" value="Фон">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Цвят за запълване"/>
 				<node name="leather" value="Кожа"/>
 				<node name="sepia" value="Сепия"/>
 				<node name="wood" value="Дърво"/>
 			</node>
-			<node name="backgroundColor" value="Цвят на фона"/>
 			<node name="selectionBackground" value="Фон на селектирания текст"/>
 			<node name="selectionForeground" value="Селектиран текст"/>
 			<node name="text" value="Нормален текст"/>

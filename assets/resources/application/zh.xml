@@ -606,12 +606,16 @@
 		<node name="colors" value="颜色 &amp; 墙纸">
 			<node name="summary" value="设置颜色"/>
 			<node name="background" value="背景色">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="单色"/>
 				<node name="leather" value="皮革"/>
 				<node name="sepia" value="棕褐"/>
 				<node name="wood" value="木质"/>
 			</node>
-			<node name="backgroundColor" value="背景色"/>
 			<node name="selectionBackground" value="选择背景色"/>
 			<node name="selectionForeground" value="选择的文本"/>
 			<node name="text" value="普通文字"/>
