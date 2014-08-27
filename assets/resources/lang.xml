@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<node name="language-self">
+		<node name="ar" value="العربية"/>
 		<node name="be" value="Беларуская"/>
 		<node name="bg" value="Български"/>
 		<node name="ca" value="Català"/>
@@ -9,8 +10,8 @@
 		<node name="de" value="Deutsch"/>
 		<node name="el" value="Ελληνικά"/>
 		<node name="en" value="English"/>
-		<node name="eu" value="Euskara"/>
 		<node name="es" value="Español"/>
+		<node name="eu" value="Euskara"/>
 		<node name="fa" value="فارسی"/>
 		<node name="fr" value="Français"/>
 		<node name="gl" value="Galego"/>
