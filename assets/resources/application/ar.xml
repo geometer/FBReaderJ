@@ -349,9 +349,6 @@
 			<node name="fontPath" value="أين يبحث البرنامج عن الخطوط">
 				<node name="chooserTitle" value="مجلد الخطوط"/>
 			</node>
-			<node name="wallpaperPath" value="أين يبحث البرنامج عن صور الخلفية">
-				<node name="chooserTitle" value="مجلد الصور"/>
-			</node>
 			<node name="tempDir" value="أين يحفظ البرنامج الملفات المؤقتة">
 				<node name="chooserTitle" value="مجلد الملفات المؤقتة"/>
 			</node>

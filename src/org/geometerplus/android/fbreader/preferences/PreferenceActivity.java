@@ -145,10 +145,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "fontPath", Paths.FontPathOption, fontReloader
 		));
-		final PreferenceSet wallpaperReloader = new PreferenceSet.Reloader();
-		directoriesScreen.addPreference(myChooserCollection.createPreference(
-			directoriesScreen.Resource, "wallpaperPath", Paths.WallpaperPathOption, wallpaperReloader
-		));
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption, null
 		));
@@ -470,11 +466,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			BACKGROUND_REQUEST_CODE
 		);
 		colorsScreen.addPreference(myBackgroundPreference);
-		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
-			this, profile, colorsScreen.Resource.getResource("background")
-		);
-		colorsScreen.addPreference(wallpaperPreference);
-		wallpaperReloader.add(wallpaperPreference);
 
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");

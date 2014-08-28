@@ -57,7 +57,7 @@ class FileChooserSinglePreference extends FileChooserPreference {
 
 	@Override
 	protected void setValueFromIntent(Intent data) {
-		final String value = FileChooserUtil.pathFromData(data);
+		final String value = FileChooserUtil.folderPathFromData(data);
 		if (MiscUtil.isEmptyString(value)) {
 			return;
 		}
