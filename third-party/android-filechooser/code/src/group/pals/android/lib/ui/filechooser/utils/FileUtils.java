@@ -61,7 +61,7 @@ public class FileUtils {
      */
     public static int getResIcon(IFile file, final IFileProvider.FilterMode filterMode) {
         if (file == null || !file.exists())
-            return 0;//android.R.drawable.ic_delete;
+            return R.drawable.afc_file;
 
         if (file.isFile()) {
             String filename = file.getName();
@@ -76,7 +76,7 @@ public class FileUtils {
                     if (file instanceof ParentFile) {
                         return R.drawable.afc_folder;
                     } else if (accessDenied(file)) {
-                        return R.drawable.afc_folder_no_access;
+                        return R.drawable.afc_folder;
                     } else {
                         return R.drawable.afc_folder_locked;
                     }
@@ -84,16 +84,34 @@ public class FileUtils {
                     return R.drawable.afc_folder;
                 }
             } else {
-                if (accessDenied(file)) {
-                    return R.drawable.afc_folder_no_access;
-                } else {
-                    return R.drawable.afc_folder;
-                }
+                return R.drawable.afc_folder;
             }
         }
 
-        return 0;//android.R.drawable.ic_delete;
+        return R.drawable.afc_file;
     }// getResIcon()
+
+    public static boolean isAccessible(IFile file, final IFileProvider.FilterMode filterMode) {
+        if (file == null || !file.exists()) {
+            return false;
+		}
+
+        if (file.isFile()) {
+			return true;
+        } else if (file.isDirectory()) {
+            if (filterMode != IFileProvider.FilterMode.AnyDirectories) {
+                if (file instanceof File && !((File)file).canWrite()) {
+                    return (file instanceof ParentFile || !accessDenied(file));
+                } else {
+					return true;
+                }
+            } else {
+                return !accessDenied(file);
+            }
+        }
+
+        return false;
+    }// isAccessible()
 
     /**
      * Checks whether the filename given is valid or not.<br>
