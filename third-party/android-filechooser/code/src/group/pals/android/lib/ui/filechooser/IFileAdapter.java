@@ -52,6 +52,7 @@ public class IFileAdapter extends BaseAdapter {
 
     private final Integer[] mAdvancedSelectionOptions;
     private final IFileProvider.FilterMode mFilterMode;
+    private final String mFilenameRegexp;
     private final Context mContext;
     private final FileTimeDisplay mFileTimeDisplay;
 
@@ -71,8 +72,7 @@ public class IFileAdapter extends BaseAdapter {
      * @param multiSelection
      *            see {@link FileChooserActivity#_MultiSelection}
      */
-    public IFileAdapter(Context context, List<IFileDataModel> objects, IFileProvider.FilterMode filterMode,
-            boolean multiSelection) {
+    public IFileAdapter(Context context, List<IFileDataModel> objects, IFileProvider.FilterMode filterMode, String filenameRegexp, boolean multiSelection) {
         // DO NOT use getApplicationContext(), due to this bug:
         // http://stackoverflow.com/questions/2634991/android-1-6-android-view-windowmanagerbadtokenexception-unable-to-add-window
         // http://code.google.com/p/android/issues/detail?id=11199
@@ -80,6 +80,7 @@ public class IFileAdapter extends BaseAdapter {
         mData = objects;
         mInflater = LayoutInflater.from(mContext);
         mFilterMode = filterMode;
+        mFilenameRegexp = filenameRegexp;
         mMultiSelection = multiSelection;
 
         switch (mFilterMode) {
@@ -235,7 +236,6 @@ public class IFileAdapter extends BaseAdapter {
      * 
      */
     private static final class Bag {
-
         ImageView mImageIcon;
         TextView mTxtFileName;
         TextView mTxtFileInfo;
@@ -305,6 +305,11 @@ public class IFileAdapter extends BaseAdapter {
             bag.mTxtFileInfo.setText(time);
         else
             bag.mTxtFileInfo.setText(String.format("%s, %s", Converter.sizeToStr(file.length()), time));
+
+        final boolean isAccessible = FileUtils.isAccessible(file, mFilenameRegexp);
+		bag.mImageIcon.setEnabled(isAccessible);
+		bag.mTxtFileName.setEnabled(isAccessible);
+		bag.mTxtFileInfo.setEnabled(isAccessible);
 
         // checkbox
         if (mMultiSelection) {

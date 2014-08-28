@@ -80,7 +80,7 @@ public class ViewFilesContextMenuUtils {
                 data.add(new IFileDataModel(f));
         }
 
-        final IFileAdapter _adapter = new IFileAdapter(context, data, FilterMode.DirectoriesOnly, false);
+        final IFileAdapter _adapter = new IFileAdapter(context, data, FilterMode.DirectoriesOnly, null, false);
 
         ListView listView = (ListView) LayoutInflater.from(context).inflate(R.layout.afc_listview_files, null);
         listView.setBackgroundResource(0);

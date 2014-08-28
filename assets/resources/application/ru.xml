@@ -356,9 +356,6 @@
 			<node name="fontPath" value="Где лежат шрифты">
 				<node name="chooserTitle" value="Каталог для шрифтов"/>
 			</node>
-			<node name="wallpaperPath" value="Где лежат рисунки для фона">
-				<node name="chooserTitle" value="Каталог для рисунков"/>
-			</node>
 			<node name="tempDir" value="Где создавать временные файлы">
 				<node name="chooserTitle" value="Для временных файлов"/>
 			</node>

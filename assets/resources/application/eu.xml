@@ -351,9 +351,6 @@
 			<node name="fontPath" value="Letra-tipoen direktorioak">
 				<node name="chooserTitle" value="Letra-tipoen direktorioa"/>
 			</node>
-			<node name="wallpaperPath" value="Atzeko irudien direktorioak">
-				<node name="chooserTitle" value="Atzeko irudien direktorioa"/>
-			</node>
 			<node name="tempDir" value="Behin-behineko fitxategien direktorioa">
 				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
 			</node>
