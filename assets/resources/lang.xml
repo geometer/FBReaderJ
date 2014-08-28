@@ -17,6 +17,7 @@
 		<node name="hu" value="Magyar"/>
 		<node name="hy" value="Հայերեն"/>
 		<node name="it" value="Italiano"/>
+		<node name="ja" value="日本語"/>
 		<node name="ka" value="ქართული"/>
 		<node name="nb" value="Norsk"/>
 		<node name="nl" value="Nederlands"/>

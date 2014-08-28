@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>FBReaderJ について</book-title> <lang>ja</lang></title-info></description>
+<body>
+<title><p>FBReader &FBReaderVersion; について</p></title>
+<p>FBReader は e-book リーダーです. FBReader は <code>ePub</code> および <code>fb2</code> ファイル形式をサポートします. DRM で保護された書籍はサポートされないことにご注意ください. サポートされた形式のファイルがあれば, メモリーカードの <code>Books</code> ディレクトリに入れてください. 書籍は <a l:href="fbreader-action:library">ライブラリー</a> で参照できます. <a l:href="fbreader-action:networkLibrary">ネットワーク･ライブラリー</a> には無償または有償でダウンロードできる多くの e-books があります.</p>
+<p>ページをめくるには画面を水平にスワイプするかハードウェアの音量キーを使用します.</p>
+<p><a l:href="fbreader-action:preferences">設定ダイアログ</a> FBReader をカスタマイズしてあなたの好みに合わせることができます: 色, フォント, 様々なディレクトリー, ページめくりオプション, など.</p>
+<p><a l:href="fbreader-action:menu">FBReader のメニュー</a> はライブラリー全般のナビゲートとアプリケーションのコントロールができます. あなたのデバイスにハードウェアの <code>メニュー</code> ボタンがない場合は, 画面のボタン中央部をタッチするとメニューに移動します.</p>
+<p>お楽しみください!</p>
+<empty-line/>
+<subtitle><p>関連リンク</p></subtitle>
+<p>FBReader についてさらに詳しい情報は <a l:href="http://www.fbreader.org/FBReaderJ">私たちのサイト</a> を参照してください.</p>
+<p>私たちの <a l:href="http://twitter.com/fbreader">twitter</a> をフォローして, 新しいリリースや関連のニュースを受け取ってください.</p>
+<p><a l:href="http://www.fbreader.org/donation/make.php">寄付</a> をして, FBReader の開発の支援をしてください.</p>
+<p>作者には <a l:href="mailto:contact@fbreader.org">メールで</a> ご連絡ください.</p>
+</body>
+</FictionBook>

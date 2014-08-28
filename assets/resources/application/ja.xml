@@ -1,0 +1,1059 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- English FBReaderJ resources, by Geometer Plus -->
+<resources>
+	<node name="library" value="FBReader ライブラリー">
+		<node name="unknownAuthor" value="作者不明"/>
+		<node name="booksWithNoTags" value="タグのない書籍"/>
+		<node name="demo" value="サンプル"/>
+		<node name="byAuthor" value="作者順">
+			<node name="summary" value="作者順の書籍"/>
+		</node>
+		<node name="byTitle" value="タイトル順">
+			<node name="summary" value="タイトル順の書籍"/>
+		</node>
+		<node name="bySeries" value="シリーズ順">
+			<node name="summary" value="シリーズ順の書籍"/>
+		</node>
+		<node name="byTag" value="タグ順">
+			<node name="summary" value="タグ順の書籍"/>
+		</node>
+		<node name="recent" value="最近">
+			<node name="summary" value="最近読んだ書籍"/>
+		</node>
+		<node name="favorites" value="お気に入り">
+			<node name="summary" value="私の選んだ書籍"/>
+		</node>
+		<node name="found" value="結果">
+			<node name="summary" value="検索結果: %s"/>
+		</node>
+		<node name="sync" value="同期">
+			<node name="summary" value="同期ステータス順の書籍"/>
+			<node name="sync-success" value="同期済">
+				<node name="summary" value="書籍はサーバーにアップロードされました"/>
+			</node>
+			<node name="sync-failure" value="同期に失敗">
+				<node name="summary" value="何らかの問題で書籍はサーバーにアップロードされていません"/>
+			</node>
+			<node name="sync-deleted" value="サーバーから削除">
+				<node name="summary" value="サーバーから書籍はアクセスできません"/>
+			</node>
+			<node name="sync-tosync" value="未同期">
+				<node name="summary" value="サーバーにアップロードしてください"/>
+			</node>
+		</node>
+		<node name="fileTree" value="ファイルツリー">
+			<node name="summary" value="ファイルシステムの参照"/>
+		</node>
+		<node name="fileTreeRoot" value="デバイス">
+			<node name="summary" value="ファイルシステム全体"/>
+		</node>
+		<node name="fileTreeCard" value="メモリーカード">
+			<node name="summary" value="メモリーカードのファイル, 外部または内蔵"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader ライブラリー">
+			<node name="summary" value="FBReader 書籍ディレクトリー"/>
+		</node>
+		<node name="localSearch" value="検索"/>
+		<node name="rescan" value="再スキャン"/>
+		<node name="openBook" value="書籍を開く"/>
+		<node name="showBookInfo" value="書籍の情報"/>
+		<node name="shareBook" value="書籍を共有"/>
+		<node name="deleteBook" value="書籍を削除"/>
+		<node name="addToFavorites" value="お気に入りに追加"/>
+		<node name="removeFromFavorites" value="お気に入りから削除"/>
+		<node name="removeFromRecents" value="最近のリストから削除"/>
+		<node name="markAsRead" value="既読としてマーク"/>
+		<node name="markAsUnread" value="未読としてマーク"/>
+		<node name="deleteAll" value="すべて削除"/>
+		<node name="uploadAgain" value="再アップロード"/>
+		<node name="tryAgain" value="再試行"/>
+	</node>
+	<node name="networkLibrary" value="FBReader ネットワーク ライブラリー">
+		<node name="sync" value="FBReader® ブック ネットワーク">
+			<node name="summary" value="私の個人カタログ"/>
+		</node>
+		<node name="byAuthor" value="作者順">
+			<node name="summary" value="作者順の書籍"/>
+		</node>
+		<node name="byTitle" value="タイトル順">
+			<node name="summary" value="タイトル順の書籍"/>
+		</node>
+		<node name="byDate" value="日付順">
+			<node name="summary" value="購入日順の書籍"/>
+		</node>
+		<node name="bySeries" value="シリーズ順">
+			<node name="summary" value="シリーズ順の書籍"/>
+		</node>
+		<node name="search" value="検索">
+			<node name="summary" value="書籍を検索 %s"/>
+			<node name="summaryAllCatalogs" value="すべてのカテゴリーで書籍を検索"/>
+			<node name="summaryInProgress" value="検索実行中"/>
+		</node>
+		<node name="found" value="結果">
+			<node name="summary" value="検索結果: %s"/>
+		</node>
+		<node name="recent" value="最近のカタログ">
+			<node name="summary" value="最近訪問したカタログ"/>
+		</node>
+		<node name="openCatalog" value="カタログを開く"/>
+		<node name="networkSearch" value="検索"/>
+		<node name="showResults" value="結果を表示"/>
+		<node name="showBooks" value="書籍を表示"/>
+		<node name="download" value="ダウンロード"/>
+		<node name="read" value="ローカルコピーを読む"/>
+		<node name="delete" value="ローカルコピーを削除"/>
+		<node name="readDemo" value="サンプルを読む"/>
+		<node name="deleteDemo" value="サンプルを削除"/>
+		<node name="downloadDemo" value="サンプルをダウンロード"/>
+		<node name="buy" value="購入 (%s)"/>
+		<node name="addToBasket" value="バスケットに追加"/>
+		<node name="removeFromBasket" value="バスケットから削除"/>
+		<node name="openBasket" value="バスケットを開く"/>
+		<node name="clearBasket" value="バスケットをクリア"/>
+		<node name="buyAllBooks" value="すべての書籍を購入"/>
+		<node name="openInBrowser" value="ブラウザーで開く"/>
+		<node name="stopLoading" value="ロードを中止"/>
+		<node name="stopSearching" value="検索を中止"/>
+		<node name="signIn" value="サインイン"/>
+		<node name="signOut" value="サインアウト (%s)"/>
+		<node name="topup" value="アカウントをチャージ (現在: %s)"/>
+		<node name="topupTitle" value="アカウントをチャージ"/>
+		<node name="topupViaBrowser" value="ページをブラウザーで開く"/>
+		<node name="authorisationMenuTitle" value="アクションを選択"/>
+		<node name="topupSummary" value="現在: %s"/>
+		<node name="basket" value="バスケット"/>
+		<node name="basketSummaryEmpty" value="書籍はありません"/>
+		<node name="basketSummaryCountOnly" value="%0 冊">
+			<node condition="value 1" value="%0 冊"/>
+		</node>
+		<node name="basketSummary" value="%0 冊 (%1)">
+			<node condition="value 1" value="%0 冊 (%1)"/>
+		</node>
+		<node name="alreadyDownloading" value="書籍をダウンロード中です"/>
+		<node name="alreadyDownloadingDemo" value="サンプルをダウンロード中です"/>
+		<node name="stoppingCatalogLoading" value="ダウンロードを中止しています"/>
+		<node name="stoppingNetworkSearch" value="検索を中止しています"/>
+		<node name="editCustomCatalog" value="カタログを編集"/>
+		<node name="removeCustomCatalog" value="カタログを削除"/>
+		<node name="addCustomCatalog" value="カタログを追加"/>
+		<node name="addCustomCatalogSummary" value="カスタム OPDS カタログを追加します"/>
+		<node name="disableCatalog" value="カタログを無効にする"/>
+		<node name="confirmQuestions">
+			<node name="read" value="ローカルコピーを読みますか?"/>
+			<node name="download" value="この書籍をダウンロードしますか?"/>
+			<node name="readDemo" value="サンプルを読みますか?"/>
+			<node name="downloadDemo" value="サンプルをダウンロードしますか?"/>
+			<node name="buy" value="この書籍を購入しますか? (%s)"/>
+			<node name="openInBrowser" value="このカタログをブラウザーで開きますか?"/>
+		</node>
+		<node name="downloadingCatalogs" value="カタログをダウンロード中"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="ネットワークで書籍を検索中"/>
+		<!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="カタログを追加"/>
+			<node name="editUrl" value="URL を入力してください"/>
+		</node>
+		<node name="manageCatalogs" value="カタログの管理">
+			<node name="summary" value="カタログの一覧を設定"/>
+			<node name="enabled" value="有効"/>
+			<node name="disabled" value="無効"/>
+		</node>
+		<node name="menu">
+			<node name="openRoot" value="ルートカタログ"/>
+			<node name="networkSearch" value="検索"/>
+			<node name="reload" value="再ロード"/>
+			<node name="signIn" value="サインイン"/>
+			<node name="signUp" value="サインアップ"/>
+			<node name="signOut" value="サインアウト (%s)"/>
+			<node name="topup" value="アカウントをチャージ"/>
+			<node name="addCustomCatalog" value="カタログを追加"/>
+			<node name="refreshCatalogsList" value="カタログを更新"/>
+			<node name="manageCatalogs" value="カタログの管理"/>
+			<node name="clearBasket" value="バスケットをクリア"/>
+			<node name="buyAllBooks" value="すべての書籍を購入"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="書籍の購入"/>
+		<node name="titleSeveralBooks" value="書籍の購入"/>
+		<node name="confirm" value="書籍を購入してもよろしいですか &#10;“%s”?"/>
+		<node name="confirmSeveralBooks" value="書籍を購入してもよろしいですか %s 冊?"/>
+		<node name="alreadyBought" value="書籍はすでに購入済です"/>
+		<node name="notAuthorised" value="認証が必要です"/>
+		<node name="noAccountInformation" value="アカウントの状態をロードできません"/>
+		<node name="unsufficientFunds" value="購入コストは %0 ですが %1 しかありません"/>
+		<node name="zeroFunds" value="購入コストは %0"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="書籍の情報"/>
+		<node name="fileInfo" value="ファイルの情報"/>
+		<node name="description" value="説明"/>
+		<node name="noDescription" value="説明はありません."/>
+		<node name="annotation" value="注釈"/>
+		<node name="title" value="タイトル:"/>
+		<node name="authors" value="作者:">
+			<node condition="value 1" value="作者:"/>
+		</node>
+		<node name="series" value="シリーズ:"/>
+		<node name="indexInSeries" value="シリーズの索引:"/>
+		<node name="tags" value="タグ:">
+			<node condition="value 1" value="タグ:"/>
+		</node>
+		<node name="language" value="言語:"/>
+		<node name="name" value="名前:"/>
+		<node name="type" value="種類:"/>
+		<node name="size" value="サイズ:"/>
+		<node name="time" value="最終更新:"/>
+		<node name="sizeInBytes" value="%s バイト">
+			<node condition="value 1" value="%s バイト"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="カタログ:"/>
+		<node name="extraLinks" value="関連リンク"/>
+		<node name="menu">
+			<node name="edit" value="編集"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="本はすでにダウンロードされています"/>
+		<node name="tickerError" value="本のダウンロードエラー"/>
+		<node name="contentSuccess" value="ダウンロードは完了しました"/>
+		<node name="contentError" value="ダウンロードできませんでした"/>
+		<node name="downloadingStarted" value="本のダウンロードは開始しています"/>
+		<node name="alreadyDownloading" value="本はすでにダウンロード中です"/>
+		<node name="cannotCreateDirectory" value="ディレクトリーを作成できません %s"/>
+		<node name="cannotCreateFile" value="ファイルを作成できません %s"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="ツリーを展開"/>
+		<node name="collapseTree" value="ツリーを折りたたむ"/>
+		<node name="readText" value="書籍の本文を読む"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="この書籍"/>
+		<node name="allBooks" value="すべての書籍"/>
+		<node name="found" value="結果"/>
+		<node name="new" value="新しいブックマーク"/>
+		<node name="open" value="開く"/>
+		<node name="edit" value="ブックマークを編集"/>
+		<node name="delete" value="ブックマークを削除"/>
+		<node name="menu">
+			<node name="search" value="検索"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="ライブラリーを開く"/>
+		<node name="networkLibrary" value="ネットワーク ライブラリーを開く"/>
+		<node name="previousBook" value="前の書籍を開く"/>
+		<node name="returnTo" value="… に戻る"/>
+		<node name="back" value="戻る"/>
+		<node name="forward" value="次へ"/>
+		<node name="close" value="FBReader を閉じる"/>
+	</node>
+	<node name="style" value="スタイル %s"/>
+	<node name="highlightingStyleMenu">
+		<node name="editStyle" value="スタイルを編集…"/>
+		<node name="deleteBookmark" value="ブックマークを削除"/>
+	</node>
+	<node name="editStyle">
+		<node name="name" value="スタイル名"/>
+		<node name="invisible" value="不可視">
+			<node name="summaryOn" value="ブックマークをハイライト表示しません"/>
+			<node name="summaryOff" value="ブックマークをハイライト表示します"/>
+		</node>
+		<node name="bgColor" value="背景色"/>
+	</node>
+	<node name="selection" value="選択">
+		<node name="copyToClipboard" value="クリップボードにコピー"/>
+		<node name="openInDictionary" value="辞書で開く"/>
+		<node name="quoteFrom" value="%s から引用"/>
+		<node name="textInBuffer" value="クリップボードにコピーしました:&#10;%s"/>
+		<node name="bookmarkCreated" value="ブックマークを作成しました:&#10;%s"/>
+		<node name="clearSelection" value="クリア"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="&lt;a href=&quot;http://fbreader.org/&quot;&gt;FBReader&lt;/a&gt; から共有しました"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="設定"/>
+		<node name="bookInfo" value="書籍の情報"/>
+		<node name="library" value="ライブラリー"/>
+		<node name="toc" value="目次"/>
+		<node name="day" value="日中"/>
+		<node name="night" value="夜間"/>
+		<node name="yotaSwitchToBackScreen" value="背面画面に切り替え"/>
+		<node name="yotaSwitchToFrontScreen" value="前面画面に切り替え"/>
+		<node name="networkLibrary" value="ネットワーク ライブラリー"/>
+		<node name="navigate" value="ナビゲート">
+			<node name="toc" value="目次"/>
+			<node name="gotoHome" value="文書の先頭に移動"/>
+			<node name="gotoPageNumber" value="…ページに移動"/>
+			<node name="gotoSectionStart" value="本文の先頭に移動"/>
+			<node name="gotoSectionEnd" value="本文の最後に移動"/>
+			<node name="nextTOCSection" value="次の目次の項目に移動"/>
+			<node name="previousTOCSection" value="前の目次の項目に移動"/>
+			<node name="undo" value="戻る"/>
+			<node name="redo" value="次へ"/>
+		</node>
+		<node name="shareBook" value="書籍を共有"/>
+		<node name="search" value="検索"/>
+		<node name="rotate" value="画面を回転"/>
+		<node name="screenOrientation" value="画面の向き"/>
+		<node name="screenOrientationSystem" value="システム"/>
+		<node name="screenOrientationSensor" value="デバイスの向きに反応"/>
+		<node name="screenOrientationPortrait" value="ポートレート(縦)"/>
+		<node name="screenOrientationLandscape" value="ランドスケープ(横)"/>
+		<node name="screenOrientationReversePortrait" value="逆向きポートレート(縦)"/>
+		<node name="screenOrientationReverseLandscape" value="逆向きランドスケープ(横)"/>
+		<node name="increaseFont" value="拡大"/>
+		<node name="decreaseFont" value="縮小"/>
+		<node name="toggleFullscreen" value="全画面"/>
+		<node name="bookmarks" value="ブックマーク"/>
+		<node name="help" value="ヘルプ"/>
+		<node name="plugins" value="プラグインをインストール"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="ファイル名"/>
+		<node name="title" value="タイトル"/>
+		<node name="language" value="言語"/>
+		<node name="encoding" value="エンコーディング"/>
+		<node name="authors" value="作者"/>
+		<node name="tags" value="タグ"/>
+		<node name="series" value="シリーズ"/>
+	</node>
+	<node name="Preferences">
+		<node name="sync" value="同期">
+			<node name="summary" value="書籍ネットワーク設定"/>
+			<node name="enable" value="同期を有効にする">
+				<node name="summaryOn" value="私のライブラリーを FBReader 書籍ネットワークサーバーと同期します"/>
+				<node name="summaryOnWithAccount" value="私のライブラリーを %s として同期します"/>
+				<node name="summaryOff" value="私のライブラリーを FBReader 書籍ネットワークサーバーと同期しません"/>
+			</node>
+			<node name="values">
+				<node name="always" value="常に"/>
+				<node name="viaWifi" value="デバイスが Wi-Fi 経由で接続されている場合"/>
+				<node name="never" value="なし"/>
+			</node>
+			<node name="uploadAllBooks" value="すべての書籍をサーバーにアップロード"/>
+			<node name="positions" value="読書位置を同期"/>
+			<node name="bookmarks" value="ブックマークを同期"/>
+			<node name="metainfo" value="メタ情報を同期 (タイトル, タグ, その他.)"/>
+		</node>
+		<node name="directories" value="ディレクトリー">
+			<node name="summary" value="ファイルを検索するディレクトリー"/>
+			<node name="bookPath" value="書籍を検索する場所">
+				<node name="chooserTitle" value="書籍フォルダー"/>
+			</node>
+			<node name="downloadDir" value="ダウンロードした書籍を保存する場所">
+				<node name="chooserTitle" value="書籍フォルダー"/>
+			</node>
+			<node name="fontPath" value="フォントを検索する場所">
+				<node name="chooserTitle" value="フォント フォルダー"/>
+			</node>
+			<node name="wallpaperPath" value="背景画像を検索する場所">
+				<node name="chooserTitle" value="画像フォルダー"/>
+			</node>
+			<node name="tempDir" value="一時ファイルを保存する場所">
+				<node name="chooserTitle" value="一時ファイル フォルダー"/>
+			</node>
+		</node>
+		<node name="appearance" value="外観">
+			<node name="summary" value="ディスプレー設定, ステータスバー, ボタン照明"/>
+			<node name="language" value="操作言語"/>
+			<node name="screenOrientation" value="画面の向き">
+				<node name="system" value="システム"/>
+				<node name="sensor" value="デバイスの向きに反応"/>
+				<node name="portrait" value="ポートレート(縦)"/>
+				<node name="landscape" value="ランドスケープ(横)"/>
+				<node name="reversePortrait" value="逆向きポートレート(縦)"/>
+				<node name="reverseLandscape" value="逆向きランドスケープ(横)"/>
+			</node>
+			<node name="autoOrientation" value="自動回転">
+				<node name="summaryOn" value="利用者がデバイスを動かすとディスプレーが回転します"/>
+				<node name="summaryOff" value="利用者がデバイスを動かしてもディスプレーは回転しません"/>
+			</node>
+			<node name="showStatusBar" value="ステータスバーを表示">
+				<node name="summaryOn" value="読書モードでステータスバーを表示します"/>
+				<node name="summaryOff" value="読書モードでステータスバーを表示しません"/>
+			</node>
+			<node name="showActionBar" value="アクションバーを表示">
+				<node name="summaryOn" value="読書モードでアクションバーを表示します"/>
+				<node name="summaryOff" value="読書モードでアクションバーを表示しません"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="メニューが有効な時にステータスバーを表示">
+				<node name="summaryOn" value="メニューが有効になった時にステータスバーを表示します"/>
+				<node name="summaryOff" value="メニューが有効になった時にステータスバーを表示しません"/>
+			</node>
+			<node name="fullscreenMode" value="全画面モード">
+				<node name="summaryOn" value="ナビゲーション コントロールを表示しない"/>
+				<node name="summaryOff" value="ナビゲーション コントロールを表示します"/>
+			</node>
+			<node name="disableButtonLights" value="読書中はボタン照明を無効にする">
+				<node name="summaryOn" value="ボタン照明を無効にする (動作しないデバイスもあります)"/>
+				<node name="summaryOff" value="ボタン照明を無効にしません"/>
+			</node>
+			<node name="twoColumnView" value="2 列表示">
+				<node name="summaryOn" value="横向きにデバイスを持った時に本文を 2 列表示します"/>
+				<node name="summaryOff" value="常に本文を 1 列で表示します"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="画面輝度調整">
+				<node name="summaryOn" value="画面の左側を指で上/下にドラッグして調整します"/>
+				<node name="summaryOff" value="無効"/>
+			</node>
+			<node name="dontTurnScreenOff" value="画面のスリープ防止">
+				<node name="0" value="常に"/>
+				<node name="25" value="バッテリーの残量が 25 パーセント以上の時"/>
+				<node name="50" value="バッテリーの残量が 50 パーセント以上の時"/>
+				<node name="100" value="なし"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="充電中の画面スリープ防止">
+				<node name="summaryOn" value="デバイスの充電中は画面のスリープを防止します"/>
+				<node name="summaryOff" value="デバイスの充電中でも画面をオフにします"/>
+			</node>
+		</node>
+		<node name="text" value="テキスト">
+			<node name="summary" value="フォント, ハイフネーション(行末のハイフン), その他."/>
+			<node name="fontProperties" value="フォント設定">
+				<node name="summary" value="フォント スムージング オプション"/>
+				<node name="antiAlias" value="アンチ エイリアス">
+					<node name="summaryOn" value="アンチ エイリアスを有効にします"/>
+					<node name="summaryOff" value="アンチ エイリアスを無効にします"/>
+				</node>
+				<node name="deviceKerning" value="デバイス カーニング">
+					<node name="summaryOn" value="デバイス カーニングを有効にします"/>
+					<node name="summaryOff" value="デバイス カーニングを無効にします"/>
+				</node>
+				<node name="dithering" value="ディザリング">
+					<node name="summaryOn" value="色のディザリングを有効にします"/>
+					<node name="summaryOff" value="色のディザリングを無効にします"/>
+				</node>
+				<node name="hinting" value="Hinting">
+					<node name="summaryOn" value="フォント ヒンティングを有効にします"/>
+					<node name="summaryOff" value="フォント ヒンティングを無効にします"/>
+				</node>
+				<node name="subpixel" value="サブピクセル スムージング">
+					<node name="summaryOn" value="サブピクセル スムージングを有効にします"/>
+					<node name="summaryOff" value="サブピクセル スムージングを無効にします"/>
+				</node>
+			</node>
+			<node name="font" value="フォントファミリー">
+				<node name="inherit" value="&lt;未変更&gt;"/>
+			</node>
+			<node name="fontSize" value="フォントサイズ"/>
+			<node name="fontStyle" value="フォントスタイル">
+				<node name="regular" value="標準"/>
+				<node name="bold" value="太字"/>
+				<node name="italic" value="斜体"/>
+				<node name="boldItalic" value="太字 斜体"/>
+			</node>
+			<node name="bold" value="太字">
+				<node name="bold" value="太字"/>
+				<node name="normal" value="通常"/>
+				<node name="inherit" value="&lt;未変更&gt;"/>
+			</node>
+			<node name="italic" value="斜体">
+				<node name="italic" value="斜体"/>
+				<node name="normal" value="通常"/>
+				<node name="inherit" value="&lt;未変更&gt;"/>
+			</node>
+			<node name="textDecoration" value="文字飾り">
+				<node name="inherit" value="&lt;未変更&gt;"/>
+				<node name="none" value="文字飾りなし"/>
+				<node name="underline" value="下線"/>
+				<node name="line-through" value="取り消し線"/>
+			</node>
+			<node name="lineSpacing" value="行間">
+				<node name="inherit" value="&lt;未変更&gt;"/>
+			</node>
+			<node name="alignment" value="配置">
+				<node name="left" value="左"/>
+				<node name="right" value="右"/>
+				<node name="center" value="中央"/>
+				<node name="justify" value="均等割付"/>
+				<node name="inherit" value="&lt;未変更&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="自動ハイフネーション">
+				<node name="summaryOn" value="自動的に単語をハイフネーションします"/>
+				<node name="summaryOff" value="自動的に単語をハイフネーションしません"/>
+			</node>
+			<node name="allowHyphenations" value="ハイフネーションを許可">
+				<node name="auto" value="単語をハイフネーションする"/>
+				<node name="none" value="単語をハイフネーションしない"/>
+				<node name="inherit" value="&lt;未変更&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="先頭行をインデント"/>
+			<node name="spaceBefore" value="段落の前にスペース"/>
+			<node name="spaceAfter" value="段落の後にスペース"/>
+			<node name="leftIndent" value="左インデント"/>
+			<node name="rightIndent" value="右インデント"/>
+			<node name="verticalAlignment" value="縦配置"/>
+			<node name="more" value="追加のスタイル">
+				<node name="summary" value="タイトル, 章見出し, その他 で個別の設定."/>
+				<node name="Regular Paragraph" value="標準の段落">
+					<node name="summary" value=""/>
+				</node>
+				<node name="xhtml-tag-p" value="EPub 段落">
+					<node name="summary" value="&lt;p&gt; XHTML タグの内容"/>
+				</node>
+				<node name="Title" value="タイトル">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="節見出し">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="詩のタイトル">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="サブタイトル">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="注釈">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="章見出し">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="一節">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="韻文">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="整形済テキスト">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="画像">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Cite">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="作者">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="日付">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="内部ハイパーリンク">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="脚注">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="強調">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="より強調">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="下付き">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="上付き">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="コード">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="取り消し">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="斜体">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="太字">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="定義">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="定義記述">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="ヘッダー 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="ヘッダー 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="ヘッダー 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="ヘッダー 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="ヘッダー 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="ヘッダー 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="外部ハイパーリンク">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="css" value="CSS">
+			<node name="summary" value="CSS で定義された値を適用/無視"/>
+			<node name="fontFamily" value="フォント ファミリー">
+				<node name="summaryOn" value="CSS で定義されたフォント ファミリーを使用します"/>
+				<node name="summaryOff" value="CSS で定義されたフォント ファミリーを無視します"/>
+			</node>
+			<node name="fontSize" value="フォント サイズ">
+				<node name="summaryOn" value="CSS で定義されたフォント サイズを適用します"/>
+				<node name="summaryOff" value="CSS で定義されたフォント サイズを無視します"/>
+			</node>
+			<node name="textAlignment" value="文字配置">
+				<node name="summaryOn" value="CSS で定義された文字配置を適用します"/>
+				<node name="summaryOff" value="CSS で定義された文字配置を無視します"/>
+			</node>
+			<node name="margins" value="マージン">
+				<node name="summaryOn" value="CSS で定義されたマージンを適用します"/>
+				<node name="summaryOff" value="CSS で定義されたマージンを無視します"/>
+			</node>
+		</node>
+		<node name="colors" value="色 &amp; 壁紙">
+			<node name="summary" value="色の設定"/>
+			<node name="background" value="背景">
+				<node name="solidColor" value="淡色"/>
+				<node name="leather" value="レザー"/>
+				<node name="sepia" value="セピア"/>
+				<node name="wood" value="木目"/>
+			</node>
+			<node name="backgroundColor" value="背景色"/>
+			<node name="selectionBackground" value="選択された背景"/>
+			<node name="selectionForeground" value="選択された文字"/>
+			<node name="text" value="標準文字"/>
+			<node name="hyperlink" value="ハイパーリンクの文字"/>
+			<node name="hyperlinkVisited" value="訪問済のハイパーリンクの文字"/>
+			<node name="highlighting" value="検索結果の背景"/>
+			<node name="footer" value="フッター"/>
+		</node>
+		<node name="margins" value="マージン">
+			<node name="summary" value="文字マージン"/>
+			<node name="left" value="左マージン"/>
+			<node name="right" value="右マージン"/>
+			<node name="top" value="上マージン"/>
+			<node name="bottom" value="下マージン"/>
+			<node name="spaceBetweenColumns" value="列間のスペース"/>
+		</node>
+		<node name="scrollBar" value="プログレス インジケーター">
+			<node name="summary" value="スクロールバー &amp; フッター設定"/>
+			<node name="scrollbarType" value="スクロールバーの種類">
+				<node name="hide" value="表示しない"/>
+				<node name="show" value="垂直スライダー"/>
+				<node name="showAsProgress" value="垂直プログレスバー"/>
+				<node name="showAsFooter" value="水平フッター"/>
+			</node>
+			<node name="footerHeight" value="フッター高さ"/>
+			<node name="footerColor" value="フッター色"/>
+			<node name="tocMarks" value="目次マークを表示">
+				<node name="summaryOn" value="フッターバーに目次マークを表示します"/>
+				<node name="summaryOff" value="フッターバーに目次マークを表示しません"/>
+			</node>
+			<node name="showProgress" value="ページ番号を表示">
+				<node name="summaryOn" value="フッターにページ番号を表示します"/>
+				<node name="summaryOff" value="フッターにページ番号を表示しません"/>
+			</node>
+			<node name="showBattery" value="バッテリー残量を表示">
+				<node name="summaryOn" value="フッターにバッテリー残量を表示します"/>
+				<node name="summaryOff" value="フッターにバッテリー残量を表示しません"/>
+			</node>
+			<node name="showClock" value="時計を表示">
+				<node name="summaryOn" value="フッターに時計を表示します"/>
+				<node name="summaryOff" value="フッターに時計を表示しません"/>
+			</node>
+			<node name="font" value="フォント ファミリー"/>
+		</node>
+		<node name="scrolling" value="ページめくり">
+			<node name="summary" value="ページめくりの方法"/>
+			<node name="fingerScrolling" value="ページめくりの画面タッチ">
+				<node name="byTap" value="指でタップしてページめくり"/>
+				<node name="byFlick" value="指でフリックしてページめくり"/>
+				<node name="byTapAndFlick" value="指でタップまたはフリックしてページめくり"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="ダブルタップの検出">
+				<node name="summaryOn" value="ダブルタップでナビゲーション ダイアログ/メニューを実行します"/>
+				<node name="summaryOff" value="ダブルタップを無視します"/>
+			</node>
+			<node name="volumeKeys" value="音量キーでページめくり">
+				<node name="summaryOn" value="ページめくりに音量キーを使用します"/>
+				<node name="summaryOff" value="音量キーは音量に使用します"/>
+			</node>
+			<node name="invertVolumeKeys" value="音量キーの向きを逆にする">
+				<node name="summaryOn" value="音量大 (小) キーは前 (次) のページにめくります"/>
+				<node name="summaryOff" value="音量小 (大) キーは次 (前) のページにめくります"/>
+			</node>
+			<node name="animation" value="アニメーション">
+				<node name="none" value="アニメーションを使用しない"/>
+				<node name="curl" value="カール アニメーション"/>
+				<node name="slide" value="スライド アニメーション"/>
+				<node name="shift" value="シフト アニメーション"/>
+			</node>
+			<node name="animationSpeed" value="アニメーション速度">
+				<node name="fast" value="速い"/>
+				<node name="slow" value="遅い"/>
+			</node>
+			<node name="horizontal" value="水平スクロール">
+				<node name="summaryOn" value="水平にページをスクロールします"/>
+				<node name="summaryOff" value="垂直にページをスクロールします"/>
+			</node>
+		</node>
+		<node name="tapZones" value="タップ ゾーン">
+			<node name="summary" value="指のタップ時のアクション"/>
+			<node name="tapZonesScheme" value="タップ ゾーンの概要">
+				<node name="left_to_right" value="左から右へのページスクロール"/>
+				<node name="right_to_left" value="右から左へのページスクロール"/>
+				<node name="up" value="下から上へのページスクロール"/>
+				<node name="down" value="上から下へのページスクロール"/>
+				<node name="custom" value="カスタム…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="辞書">
+			<node name="summary" value="辞書設定"/>
+			<node name="dictionary" value="辞書"/>
+			<node name="translator" value="翻訳者"/>
+			<node name="targetLanguage" value="翻訳先">
+				<node name="any" value="すべての言語"/>
+			</node>
+			<node name="tappingAction" value="長押しアクション">
+				<node name="doNothing" value="長押し時に何もしない"/>
+				<node name="selectSingleWord" value="長押し時に単語を選択する"/>
+				<node name="startSelecting" value="長押し時に選択を開始する"/>
+				<node name="openDictionary" value="長押し時に単語を選択して, 辞書を開く"/>
+			</node>
+			<node name="navigateOverAllWords" value="すべての語に渡ってナビゲート">
+				<node name="summaryOn" value="すべての語を対象にキーナビゲーションします"/>
+				<node name="summaryOff" value="ハイパーリンクのみキーナビゲーションの対象にします"/>
+			</node>
+		</node>
+		<node name="images" value="画像">
+			<node name="summary" value="画像表示オプション"/>
+			<node name="backgroundColor" value="画像表示の背景色"/>
+			<node name="tappingAction" value="長押しアクション">
+				<node name="doNothing" value="長押し時に何もしない"/>
+				<node name="selectImage" value="長押し時に画像を選択する"/>
+				<node name="openImageView" value="長押し時に画像表示を開く"/>
+			</node>
+			<node name="fitImagesToScreen" value="画像を画面に合わせる">
+				<node name="none" value="なし"/>
+				<node name="covers" value="表紙のみ"/>
+				<node name="all" value="すべて"/>
+			</node>
+			<node name="matchBackground" value="背景の輝度調整">
+				<node name="summaryOn" value="背景を考慮して画像色を調整します"/>
+				<node name="summaryOff" value="画像色を調整しません"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="キャンセルメニュー">
+			<node name="summary" value="戻るボタンのアクション一覧"/>
+			<node name="library" value="ライブラリー">
+				<node name="summaryOn" value="'ライブラリーを開く' アイテムを表示します"/>
+				<node name="summaryOff" value="'ライブラリーを開く' アイテムを表示しません"/>
+			</node>
+			<node name="networkLibrary" value="ネットワーク ライブラリー">
+				<node name="summaryOn" value="'ネットワーク ライブラリーを開く' アイテムを表示します"/>
+				<node name="summaryOff" value="'ネットワーク ライブラリーを開く' アイテムを表示しません"/>
+			</node>
+			<node name="previousBook" value="前の書籍">
+				<node name="summaryOn" value="'前の書籍に戻る' アイテムを表示します"/>
+				<node name="summaryOff" value="'前の書籍に戻る' アイテムを表示しません"/>
+			</node>
+			<node name="positions" value="過去 3 箇所の位置">
+				<node name="summaryOn" value="書籍中で過去 3 箇所の位置のアイテムを表示します"/>
+				<node name="summaryOff" value="書籍中で過去 3 箇所の位置のアイテムを表示しません"/>
+			</node>
+			<node name="backKeyAction" value="戻るキーアクション">
+				<node name="exit" value="FBReader を閉じる"/>
+				<node name="goBack" value="ナビゲートを戻る"/>
+				<node name="cancelMenu" value="キャンセルメニューを表示"/>
+			</node>
+			<node name="backKeyLongPressAction" value="戻るキー長押しアクション">
+				<node name="exit" value="FBReader を閉じる"/>
+				<node name="goBack" value="ナビゲートを戻る"/>
+				<node name="cancelMenu" value="キャンセルメニューを表示"/>
+				<node name="none" value="何もしない"/>
+			</node>
+		</node>
+		<node name="tips" value="Tips">
+			<node name="summary" value="今日の Tips 設定"/>
+			<node name="showTips" value="Tips を表示">
+				<node name="summaryOn" value="今日の Tips を表示します"/>
+				<node name="summaryOff" value="表示しません"/>
+			</node>
+		</node>
+		<node name="about" value="FBReader について">
+			<node name="summary" value="バージョン情報, 連絡先"/>
+			<node name="version" value="バージョン"/>
+			<node name="site" value="私たちの web サイトを参照">
+				<node name="url" value="http://fbreader.org/"/>
+			</node>
+			<node name="email" value="私たちにメールを送信">
+				<node name="url" value="mailto:contact@fbreader.org"/>
+			</node>
+			<node name="twitter" value="私たちの Twitter をフォロー">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+			<node name="facebook" value="FBReader の Facebook">
+				<node name="url" value="https://facebook.com/fbreader"/>
+			</node>
+			<node name="thirdParty" value="サードパーティのライブラリー"/>
+		</node>
+		<node name="eink" value="E-ink 画面">
+			<node name="summary" value="E-ink 画面のオプションを指定"/>
+			<node name="enableFastRefresh" value="高速更新モード">
+				<node name="summaryOn" value="高速画面更新を使用します (あまりきれいではありません)"/>
+				<node name="summaryOff" value="完全画面更新を使用します (きれいですが遅い)"/>
+			</node>
+			<node name="interval" value="完全更新の間に高速更新を行う回数"/>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="インストール"/>
+			<node name="update" value="更新"/>
+			<node name="skip" value="スキップ"/>
+			<node name="buy" value="購入"/>
+			<node name="buyAndDownload" value="購入とダウンロード"/>
+			<node name="continue" value="続ける"/>
+			<node name="editUrl" value="URL を編集"/>
+			<node name="tryAgain" value="再試行"/>
+			<node name="openBook" value="読む"/>
+			<node name="editInfo" value="編集"/>
+			<node name="reloadInfo" value="再ﾛｰﾄﾞ"/>
+			<node name="shareBook" value="共有"/>
+			<node name="topup" value="チャージ"/>
+			<node name="pay" value="支払"/>
+			<node name="refresh" value="更新"/>
+			<node name="authorise" value="認証"/>
+			<node name="resetPosition" value="位置をリセット"/>
+			<node name="sendReport" value="レポートを送信"/>
+			<node name="addToFavorites" value="お気に入りに追加"/>
+			<node name="removeFromFavorites" value="お気に入りから削除"/>
+			<node name="markAsRead" value="既読としてマーク"/>
+			<node name="markAsUnread" value="未読としてマーク"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="プラグインをインストール"/>
+			<node name="updateTitle" value="プラグインを更新"/>
+			<node name="dontAskAgain" value="次回から表示しない"/>
+		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="認証が必要です"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="辞書をインストール"/>
+			<node name="message" value="インストールしますか %s?"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="書籍を削除すると元に戻せません. よろしいですか?"/>
+		</node>
+		<node name="deleteMultipleBookBox">
+			<node name="title" value="Delete books"/>
+			<node name="message" value="%s 冊の書籍を削除すると元に戻せません. よろしいですか?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="ファイルはすでに存在します. 再度ダウンロードしますか?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="tryConnect" value="接続中です. しばらくお待ちください…"/>
+			<node name="downloadingFile" value="書籍をダウンロード中 %s"/>
+			<node name="search" value="検索中です. しばらくお待ちください…"/>
+			<node name="loadInfo" value="情報をロード中です. しばらくお待ちください…"/>
+			<node name="loadingBook" value="書籍を開きます. しばらくお待ちください…"/>
+			<node name="loadingBookList" value="ライブラリーを開きます. しばらくお待ちください…"/>
+			<node name="creatingBooksDatabase" value="書籍データベースを作成中です. しばらくお待ちください…"/>
+			<node name="updatingBooksDatabase" value="書籍データベースを更新中です. しばらくお待ちください…"/>
+			<node name="loadingNetworkLibrary" value="ライブラリーを開きます. しばらくお待ちください…"/>
+			<node name="authentication" value="認証中です. しばらくお待ちください…"/>
+			<node name="signOut" value="サインアウト中です. しばらくお待ちください…"/>
+			<node name="purchaseBook" value="書籍の購入中です. しばらくお待ちください…"/>
+			<node name="loadingCatalogInfo" value="カタログ情報をロード中です. しばらくお待ちください…"/>
+			<node name="loadingNetworkBookInfo" value="書籍情報をロード中です. しばらくお待ちください…"/>
+			<node name="updatingCatalogsList" value="カタログ一覧を更新中です. しばらくお待ちください…"/>
+			<node name="updatingAccountInformation" value="アカウント情報を更新中です. しばらくお待ちください…"/>
+			<node name="initDRMEngine" value="DRM エンジンの初期化中です. しばらくお待ちください…"/>
+			<node name="acquireLicense" value="ライセンスの取得中です. しばらくお待ちください…"/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="内部サーバーエラー"/>
+			<node name="purchaseNotEnoughMoney" value="メモリが不足しています"/>
+			<node name="purchaseMissingBook" value="書籍に誤りがあります"/>
+			<node name="purchaseAlreadyPurchased" value="すでに購入済です"/>
+			<node name="bookNotPurchased" value="書籍は未購入です"/>
+			<node name="downloadLimitExceeded" value="ダウンロードの上限を超えました"/>
+			<node name="noUserEmail" value="指定されたメールアドレスのユーザーが登録されていません&#10;"/>
+			<node name="unsupportedOperation" value="サポートされていない操作です"/>
+			<node name="notAnOPDS" value="これは OPDS カタログではありません"/>
+			<node name="noRequiredInformation" value="必要な情報がカタログに指定されていません"/>
+			<node name="cacheDirectoryError" value="キャッシュディレクトリーが作成できません"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="認証"/>
+			<node name="unencryptedWarning" value="パスワードは暗号化されずに送信されます"/>
+			<node name="login" value="ユーザー名"/>
+			<node name="password" value="パスワード"/>
+			<node name="loginIsEmpty" value="ユーザー名は空にできません"/>
+			<node name="register" value="サインアップ"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FBReader: カスタムカタログを追加"/>
+			<node name="catalogTitle" value="タイトル"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="サマリー"/>
+			<node name="catalogTitleExample" value="例: Project Gutenberg catalog"/>
+			<node name="catalogUrlExample" value="例: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="例: Public domain books"/>
+			<node name="titleIsEmpty" value="タイトルは空にできません"/>
+			<node name="urlIsEmpty" value="URL は空にできません"/>
+			<node name="invalidUrl" value="URL が正しくありません"/>
+			<node name="titleAlreadyExists" value="指定したタイトルはすでに使用中です"/>
+			<node name="siteAlreadyExists" value="指定したサイトはすでに使用中です"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="言語フィルター"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="今日の Tips"/>
+			<node name="initializationText" value="FBReader の今日の Tips を表示しますか? 新しい Tips が FBReader サイトからダウンロードされます. ネットワークの通信量は一週間当たり 1～2 キロバイトです.&#10;&#10;Tips を有効にしますか?"/>
+			<node name="dontShowAgain" value="次回から表示しない"/>
+			<node name="more" value="次の Tips"/>
+		</node>
+		<node name="screenHint">
+			<node name="message1" value="FBReader はデフォルトで全画面モードで動作します. 画面中央の三分の一をタップするとコントロールが表示されます. この動作は設定ダイアログの “外観” セクションで変更することができます."/>
+			<node name="message2" value="よくできました! 再度画面中央の三分の一をタップするとコントロールとこのヒントが表示されなくなります. 読書中に画面にコントロールを残しておきたい場合は, 設定ダイアログの “外観” セクションにある “アクションバーを表示” を選択してください."/>
+		</node>
+		<node name="folderList">
+			<node name="addFolder" value="フォルダーを追加"/>
+			<node name="removeDialog" value="フォルダーを削除">
+				<node name="message" value="一覧から “%s” を削除しますか?"/>
+			</node>
+			<node name="duplicate" value="“%s” はすでに一覧に存在します"/>
+		</node>
+		<node name="editList">
+			<node name="edit" value="編集"/>
+			<node name="remove" value="削除"/>
+		</node>
+		<node name="editTags">
+			<node name="addTag" value="タグを追加"/>
+			<node name="removeDialog" value="タグを削除">
+				<node name="message" value="一覧からタグ “%s” を削除しますか?"/>
+			</node>
+		</node>
+		<node name="editAuthors">
+			<node name="addAuthor" value="作者を追加"/>
+			<node name="removeDialog" value="作者を削除">
+				<node name="message" value="一覧から作者 “%s” を削除しますか?"/>
+			</node>
+		</node>
+		<node name="fileChooser">
+			<node name="root" value="ルート"/>
+			<node name="newFolder" value="新しいフォルダー"/>
+			<node name="folderNameHint" value="フォルダー名"/>
+			<node name="menu">
+				<node name="origin" value="元"/>
+				<node name="reload" value="再ロード"/>
+			</node>
+			<node name="sortBy" value="ソート順">
+				<node name="name" value="名前"/>
+				<node name="size" value="サイズ"/>
+				<node name="date" value="日付"/>
+			</node>
+			<node name="permissionDenied" value="権限が拒否されました"/>
+		</node>
+		<node name="missingPlugin">
+			<node name="title" value="%s ファイル用のプラグインがインストールされていません. 今すぐインストールしますか?"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="nativeCodeFailure" value="ネイティブコードでエラー %s , '%s' の読み込み中"/>
+		<node name="errorReadingFile" value="'%s' の読み込み中にエラーが発生しました"/>
+		<node name="errorReadingZip" value="'%s' の展開にエラーが発生しました"/>
+		<node name="pluginNotFound" value="'%s' 用のプラグインがありません"/>
+		<node name="unknownPluginType" value="不明なプラグインの種類: %s"/>
+		<node name="fileNotFound" value="ファイルが見つかりません: %s"/>
+		<node name="unsupportedEncryptionMethod" value="ファイル %s は FBReader でサポートされていない方法で暗号化されています. いくつかのページは読むことができません"/>
+		<node name="opfFileNotFound" value="OPF が見つかりません %s"/>
+		<node name="unsupportedFileFormat" value="ファイル形式がサポートされていません '%s'"/>
+		<node name="errorParsingRtf" value="Rtf 解析エラー: %s"/>
+		<node name="cannotRunAndroidMarket" value="Google Play にアクセスできません. 手動で %s をインストールしてください"/>
+		<node name="textNotFound" value="書籍に対象のテキストがありません"/>
+		<node name="bookNotFound" value="ライブラリーに対象の書籍がありません"/>
+		<node name="bookmarkNotFound" value="対象のブックマークがありません"/>
+		<node name="cannotOpenBook" value="現在この書籍を開くことができません"/>
+		<node name="dictionaryIsNotInstalled" value="辞書がいんすとーるされていません"/>
+		<node name="permissionDenied" value="権限が拒否されました"/>
+		<node name="noFavorites" value="お気に入り一覧は空です"/>
+		<node name="noSeries" value="シリーズに書籍がありません"/>
+		<node name="emptyCatalog" value="カタログは空です"/>
+		<node name="emptyBasket" value="バスケットは空です"/>
+		<node name="emptyNetworkSearchResults" value="書籍が見つかりません"/>
+		<node name="videoServiceNotWorking" value="動画サービスは利用可能ではありません"/>
+		<node name="videoPlayerNotFound" value="このデバイスにビデオプレーヤーがインストールされていません"/>
+		<node name="bookIsMissing" value="デバイスに書籍 '%s' が見つかりません"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="ブラウザー"/>
+		<node name="defaultBrowser" value="デフォルトブラウザー"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="不明なエラー"/>
+		<node name="unsupportedCompressionMethod" value="サポートされない圧縮方法"/>
+		<node name="encryptedFile" value="DRM-保護されたファイル"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader 問題"/>
+			<node name="text" value="FBReader キャッシュディレクトリは書き込みアクセスできません. メモリーカードを挿入していないかアンマウントされている可能性があります. この問題を解決するか別のディレクトリーを選択してください."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader 問題"/>
+			<node name="text" value="FBReader はネイティブライブラリーをロードできません. 正しくインストールされていない可能性があります. この問題が解決しない場合は FBReader を再インストールしてみてください."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader 問題"/>
+		</node>
+	</node>
+	<node name="links">
+		<node name="faqPage" value="http://fbreader.org/faq-page"/>
+	</node>
+	<node name="plugins" value="プラグインをインストール">
+		<node name="noMorePlugins" value="現在新しいプラグインはありません"/>
+		<node name="litres" value="LitRes">
+			<node name="summary" value="ロシアの書店"/>
+		</node>
+		<node name="tts-plus" value="TTS+">
+			<node name="summary" value="読み上げます"/>
+		</node>
+		<node name="local-opds-scanner" value="ローカル OPDS スキャナー">
+			<node name="summary" value="ローカルネットワークの書籍を検索します"/>
+		</node>
+		<node name="bookshelf" value="ブックシェルフ">
+			<node name="summary" value="サムネイルライブラリー表示"/>
+		</node>
+		<node name="opds-server" value="OPDS サーバー">
+			<node name="summary" value="あなたのデバイスから本を提供します"/>
+		</node>
+		<node name="widgets" value="ウィジット">
+			<node name="summary" value="ホーム画面に書籍を追加します"/>
+		</node>
+		<node name="pdf" value="PDF">
+			<node name="summary" value="PDF 形式で本を読みます"/>
+		</node>
+	</node>
+	<node name="drm">
+		<node name="encryptedSection" value="暗号化セクション"/>
+	</node>
+	<node name="yota">
+		<node name="frontScreenMessage" value="本を読むためにデバイスを回転します. この画面に本文を戻すために, 下のボタンを押してください."/>
+		<node name="frontScreenButton" value="この画面に切り替え"/>
+	</node>
+	<node name="hint">
+		<node name="positiveLength" value="例: 20px, 10pt, 0.8em, 1ex, 120%%"/>
+		<node name="length" value="例: -2px, 10pt, -0.8em, 1.1ex, -40%%"/>
+		<node name="percent" value="例: 125%%"/>
+	</node>
+</resources>
