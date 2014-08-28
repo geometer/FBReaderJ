@@ -351,9 +351,6 @@
 			<node name="fontPath" value="Lattertypes zoeken in">
 				<node name="chooserTitle" value="Map met lettertypes"/>
 			</node>
-			<node name="wallpaperPath" value="Achtergrondplaatjes zoeken in">
-				<node name="chooserTitle" value="Map met achtergronden"/>
-			</node>
 			<node name="tempDir" value="Tijdelijke bestanden opslaan in">
 				<node name="chooserTitle" value="Map voor tijdelijke bestanden"/>
 			</node>

@@ -33,6 +33,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
+import org.geometerplus.fbreader.Paths;
+
 import org.geometerplus.android.util.FileChooserUtil;
 
 public class Chooser extends ListActivity implements AdapterView.OnItemClickListener {
@@ -82,10 +84,25 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 				startActivityForResult(new Intent(this, PredefinedImages.class), 1);
 				break;
 			case 2:
+			{
+				final String initialDir;
+				final String currentValue =
+					getIntent().getStringExtra(BackgroundPreference.VALUE_KEY);
+				if (currentValue != null && currentValue.startsWith("/")) {
+					initialDir = currentValue.substring(0, currentValue.lastIndexOf("/"));
+				} else {
+					final List<String> path = Paths.WallpaperPathOption.getValue();
+					if (path.size() > 0) {
+						initialDir = path.get(0);
+					} else {
+						initialDir = "";
+					}
+				}
 				FileChooserUtil.runFileChooser(
-					this, 2, myResource.getValue(), "", ".+\\.(jpe?g|png)"
+					this, 2, myResource.getValue(), initialDir, ".+\\.(jpe?g|png)"
 				);
 				break;
+			}
 		}
 	}
 

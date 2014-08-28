@@ -351,9 +351,6 @@
 			<node name="fontPath" value="フォントを検索する場所">
 				<node name="chooserTitle" value="フォント フォルダー"/>
 			</node>
-			<node name="wallpaperPath" value="背景画像を検索する場所">
-				<node name="chooserTitle" value="画像フォルダー"/>
-			</node>
 			<node name="tempDir" value="一時ファイルを保存する場所">
 				<node name="chooserTitle" value="一時ファイル フォルダー"/>
 			</node>
