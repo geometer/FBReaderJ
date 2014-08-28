@@ -74,9 +74,9 @@ public class FileUtils {
             if (filterMode == IFileProvider.FilterMode.DirectoriesOnly) {
                 if (file instanceof File && !((File)file).canWrite()) {
                     if (file instanceof ParentFile) {
-                        return R.drawable.afc_folder;
+                        return R.drawable.afc_item_folder;
                     } else if (accessDenied(file)) {
-                        return R.drawable.afc_folder;
+                        return R.drawable.afc_item_folder;
                     } else {
                         return R.drawable.afc_folder_locked;
                     }
@@ -84,7 +84,7 @@ public class FileUtils {
                     return R.drawable.afc_folder;
                 }
             } else {
-                return R.drawable.afc_folder;
+                return R.drawable.afc_item_folder;
             }
         }
 

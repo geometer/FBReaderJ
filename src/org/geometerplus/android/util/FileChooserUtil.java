@@ -26,8 +26,9 @@ import android.content.Intent;
 import android.os.Parcelable;
 
 import group.pals.android.lib.ui.filechooser.FileChooserActivity;
-import group.pals.android.lib.ui.filechooser.services.IFileProvider;
+import group.pals.android.lib.ui.filechooser.io.IFile;
 import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
+import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -95,8 +96,17 @@ public abstract class FileChooserUtil {
 		activity.startActivityForResult(intent, requestCode);
 	}
 
-	public static String pathFromData(Intent data) {
+	public static String folderPathFromData(Intent data) {
 		return data.getStringExtra(FileChooserActivity._FolderPath);
+	}
+
+	public static List<String> filePathsFromData(Intent data) {
+		final List<IFile> files = data.getParcelableArrayListExtra(FileChooserActivity._Results);
+		final List<String> paths = new ArrayList<String>(files.size());
+		for (IFile f : files) {
+			paths.add(f.getAbsolutePath());
+		}
+		return paths;
 	}
 
 	public static List<String> pathListFromData(Intent data) {

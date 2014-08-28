@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences.background;
 
+import java.util.List;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.View;
@@ -96,7 +98,13 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 					finish();
 					break;
 				case 2:
-					System.err.println("FILE DATA: " + data);
+					final List<String> paths = FileChooserUtil.filePathsFromData(data);
+					if (paths.size() == 1) {
+						setResult(RESULT_OK, new Intent().putExtra(
+							BackgroundPreference.VALUE_KEY, paths.get(0)
+						));
+						finish();
+					}
 					break;
 			}
 		}
