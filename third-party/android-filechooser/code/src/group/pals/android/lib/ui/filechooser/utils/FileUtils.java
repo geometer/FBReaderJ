@@ -71,7 +71,7 @@ public class FileUtils {
 
             return R.drawable.afc_file;
         } else if (file.isDirectory()) {
-            if (filterMode != IFileProvider.FilterMode.AnyDirectories) {
+            if (filterMode == IFileProvider.FilterMode.DirectoriesOnly) {
                 if (file instanceof File && !((File)file).canWrite()) {
                     if (file instanceof ParentFile) {
                         return R.drawable.afc_folder;
@@ -91,23 +91,18 @@ public class FileUtils {
         return R.drawable.afc_file;
     }// getResIcon()
 
-    public static boolean isAccessible(IFile file, final IFileProvider.FilterMode filterMode) {
+    public static boolean isAccessible(IFile file, final String regexp) {
         if (file == null || !file.exists()) {
             return false;
 		}
 
+		if (accessDenied(file)) {
+			return false;
+		}
         if (file.isFile()) {
-			return true;
+			return regexp == null || file.getName().matches(regexp);
         } else if (file.isDirectory()) {
-            if (filterMode != IFileProvider.FilterMode.AnyDirectories) {
-                if (file instanceof File && !((File)file).canWrite()) {
-                    return (file instanceof ParentFile || !accessDenied(file));
-                } else {
-					return true;
-                }
-            } else {
-                return !accessDenied(file);
-            }
+			return true;
         }
 
         return false;

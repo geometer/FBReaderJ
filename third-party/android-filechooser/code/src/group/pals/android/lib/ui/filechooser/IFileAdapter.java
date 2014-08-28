@@ -52,6 +52,7 @@ public class IFileAdapter extends BaseAdapter {
 
     private final Integer[] mAdvancedSelectionOptions;
     private final IFileProvider.FilterMode mFilterMode;
+    private final String mFilenameRegexp;
     private final Context mContext;
     private final FileTimeDisplay mFileTimeDisplay;
 
@@ -71,8 +72,7 @@ public class IFileAdapter extends BaseAdapter {
      * @param multiSelection
      *            see {@link FileChooserActivity#_MultiSelection}
      */
-    public IFileAdapter(Context context, List<IFileDataModel> objects, IFileProvider.FilterMode filterMode,
-            boolean multiSelection) {
+    public IFileAdapter(Context context, List<IFileDataModel> objects, IFileProvider.FilterMode filterMode, String filenameRegexp, boolean multiSelection) {
         // DO NOT use getApplicationContext(), due to this bug:
         // http://stackoverflow.com/questions/2634991/android-1-6-android-view-windowmanagerbadtokenexception-unable-to-add-window
         // http://code.google.com/p/android/issues/detail?id=11199
@@ -80,6 +80,7 @@ public class IFileAdapter extends BaseAdapter {
         mData = objects;
         mInflater = LayoutInflater.from(mContext);
         mFilterMode = filterMode;
+        mFilenameRegexp = filenameRegexp;
         mMultiSelection = multiSelection;
 
         switch (mFilterMode) {
@@ -287,17 +288,16 @@ public class IFileAdapter extends BaseAdapter {
          */
         bag.mTxtFileName.setSingleLine(parent instanceof GridView);
 
+        final boolean isAccessible = FileUtils.isAccessible(file, mFilenameRegexp);
         // file icon
         bag.mImageIcon.setImageResource(FileUtils.getResIcon(file, mFilterMode));
         final ColorMatrix matrix = new ColorMatrix();
-        if (!FileUtils.isAccessible(file, mFilterMode)) {
+        if (!isAccessible) {
             final ColorMatrix scaleMatrix = new ColorMatrix();
             scaleMatrix.setScale(.7f, .7f, .7f, 1f);
             final ColorMatrix saturationMatrix = new ColorMatrix();
             saturationMatrix.setSaturation(0f);
             matrix.setConcat(saturationMatrix, scaleMatrix);
-			bag.mTxtFileName.setEnabled(false);
-			bag.mTxtFileInfo.setEnabled(false);
         }
         bag.mImageIcon.setColorFilter(new ColorMatrixColorFilter(matrix));
 
@@ -315,6 +315,9 @@ public class IFileAdapter extends BaseAdapter {
             bag.mTxtFileInfo.setText(time);
         else
             bag.mTxtFileInfo.setText(String.format("%s, %s", Converter.sizeToStr(file.length()), time));
+
+		bag.mTxtFileName.setEnabled(isAccessible);
+		bag.mTxtFileInfo.setEnabled(isAccessible);
 
         // checkbox
         if (mMultiSelection) {

@@ -80,7 +80,9 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 				startActivityForResult(new Intent(this, PredefinedImages.class), 1);
 				break;
 			case 2:
-				FileChooserUtil.runFileChooser(this, 2, myResource.getValue(), "");
+				FileChooserUtil.runFileChooser(
+					this, 2, myResource.getValue(), "", ".+\\.(jpe?g|png)"
+				);
 				break;
 		}
 	}
@@ -88,8 +90,15 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			setResult(RESULT_OK, data);
-			finish();
+			switch (requestCode) {
+				case 1:
+					setResult(RESULT_OK, data);
+					finish();
+					break;
+				case 2:
+					System.err.println("FILE DATA: " + data);
+					break;
+			}
 		}
 	}
 }

@@ -55,14 +55,17 @@ public abstract class FileChooserUtil {
 		Activity activity,
 		int requestCode,
 		String title,
-		String initialValue
+		String initialDir,
+		String regexp
 	) {
 		final Intent intent = new Intent(activity, FileChooserActivity.class);
 		intent.putExtra(FileChooserActivity._TextResources, textResources(title));
-		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initialValue));
+		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initialDir));
 		intent.putExtra(FileChooserActivity._ActionBar, true);
 		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
 		intent.putExtra(FileChooserActivity._DisplayHiddenFiles, false);
+		intent.putExtra(FileChooserActivity._ShowNewFolderButton, false);
+		intent.putExtra(FileChooserActivity._FilenameRegExp, regexp);
 		intent.putExtra(
 			FileChooserActivity._FilterMode,
 			IFileProvider.FilterMode.FilesOnly
