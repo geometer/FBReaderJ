@@ -63,7 +63,9 @@ public class PredefinedImages extends ListActivity implements AdapterView.OnItem
 				return view;
 			}
 		};
-		adapter.addAll(WallpapersUtil.predefinedWallpaperFiles());
+		for (ZLFile file : WallpapersUtil.predefinedWallpaperFiles()) {
+			adapter.add(file);
+		}
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
 	}
