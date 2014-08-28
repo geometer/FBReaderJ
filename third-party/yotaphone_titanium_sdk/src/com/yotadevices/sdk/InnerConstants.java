@@ -37,6 +37,7 @@ public final class InnerConstants {
      * extra service name.
      */
     public static final String EXTRA_SERVICE_NAME = "service_class_name";
+    public static final String EXTRA_PACKAGE_NAME = "service_package_name";
     public static final String EXTRA_SYSTEM_BS_UI_FLAG = "service_system_ui_flag";
     public static final String EXTRA_BS_ACTIVITY_INTENT = "bs_activity_intent";
     public static final String EXTRA_REQUEST_CODE = "request_code";

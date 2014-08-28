@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/bottom_line"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/more_layout"
+        android:layout_width="match_parent"
+        android:background="@android:color/white"
+        android:layout_height="1px"
+        />
+    <RelativeLayout
+        android:id="@+id/more_layout"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/more_text"
+            android:layout_above="@+id/dot_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="PT Sans Pro"
+            android:text="more"
+            android:textColor="#ffffff"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/dot_line"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_alignLeft="@+id/more_text"
+            android:layout_alignRight="@+id/more_text"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/widget_dot_line"
+            android:layerType="software" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_above="@id/bottom_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"/>
+    <TextView
+        android:id="@+id/left_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/icon"
+        android:layout_above="@id/bottom_line"
+        android:text="info"
+        android:textSize="12dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="6.6dp"
+        android:fontFamily="PT Sans Pro"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"/>
+    <TextView
+        android:id="@+id/right_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/bottom_line"
+        android:gravity="right"
+        android:text="info"
+        android:textSize="12dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="6.6dp"
+        android:fontFamily="PT Sans Pro"
+        android:textColor="@android:color/white"/>
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_above="@id/left_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+</RelativeLayout>

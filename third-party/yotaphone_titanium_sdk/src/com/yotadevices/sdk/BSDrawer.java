@@ -67,16 +67,24 @@ public class BSDrawer extends Drawer {
     }
 
     private void initDisplay() {
-        DisplayManager dm = (DisplayManager) getContext().getSystemService(Context.DISPLAY_SERVICE);
+        Display display = getEpdDisplay(mContext);
+        if (display != null)
+            initEpdDisplay(display);
+    }
+
+    private static Display getEpdDisplay(Context context) {
+        DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
 
         for (Display d : dm.getDisplays()) {
             if (getTypeDisplay(d) == TYPE_DISPLAY_EPD) {
-                initEpdDisplay(d);
+                return d;
             }
         }
+
+        return null;
     }
 
-    private int getTypeDisplay(Display d) {
+    private static int getTypeDisplay(Display d) {
         try {
             Method m = android.view.Display.class.getDeclaredMethod("getType");
             return (Integer) m.invoke(d, new Object[] {});
@@ -103,6 +111,10 @@ public class BSDrawer extends Drawer {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static Context createEpdContext(Context context) {
+        return context.createDisplayContext(getEpdDisplay(context));
     }
 
     private void initEpdDisplay(Display d) {

@@ -7,6 +7,7 @@ public class BackscreenLauncherConstants {
     // Options name for bundle
     public static final String OPTION_WIDGET_SIZE = "bslauncher.widget.size";
     public static final String OPTION_WIDGET_DISPLAY = "bslauncher.widget.display";
+    public static final String OPTION_WIDGET_DEMO_MODE = "bslauncher.widget.demomode";
 
     // Options values for widget size
     public static final int WIDGET_SIZE_LARGE = 0;

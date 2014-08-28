@@ -28,6 +28,7 @@ public class HeaderIconWidgetBuilder extends WidgetBuilder {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.template_widget_icon_header);
         remoteViews.setTextViewText(R.id.template_widget_title, mTitle);
         remoteViews.setImageViewResource(R.id.template_widget_icon, mIconResource);
+        remoteViews.removeAllViews(R.id.template_widget_content);
         remoteViews.addView(R.id.template_widget_content, mContentView);
         if (mDate == null) {
             remoteViews.setViewVisibility(R.id.template_widget_title_date, View.GONE);

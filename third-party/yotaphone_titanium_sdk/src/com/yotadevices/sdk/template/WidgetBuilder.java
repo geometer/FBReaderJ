@@ -16,11 +16,11 @@ abstract class WidgetBuilder {
     abstract RemoteViews apply(Context context);
 
     protected RemoteViews apply(Context context, RemoteViews remoteViews) {
-        remoteViews.setOnClickPendingIntent(R.id.template_widget_root, mMaxViewPendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.widget_root, mMaxViewPendingIntent);
         return remoteViews;
     }
 
-    public void setMaxViewActivity(Context context, Intent intent) {
-        mMaxViewPendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    public void setMaxViewActivity(PendingIntent intent) {
+        mMaxViewPendingIntent = intent;
     }
 }

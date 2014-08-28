@@ -82,7 +82,6 @@ public class BSActivity extends Service {
         mIncomingHandler = null;
         mMessenger = null;
         mDrawer = null;
-        mConnection = null;
     }
 
     synchronized void doBindService() {
@@ -141,7 +140,7 @@ public class BSActivity extends Service {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-        performFnish(false);
+        performFnishWithRequest(false);
         doUnbindService();
         performBSDestroy();
         cleanResource();
@@ -152,7 +151,7 @@ public class BSActivity extends Service {
         super.onDestroy();
         if (!isFinishing) {
             // user can stop bsActivity using stopService method
-            performFnish(false);
+            performFnishWithRequest(false);
         }
         doUnbindService();
         performBSDestroy();
@@ -535,7 +534,7 @@ public class BSActivity extends Service {
      */
     public void finish() {
         if (!isFinishing) {
-            performFnish(true);
+            performFnishWithRequest(true);
         }
     }
 
@@ -625,8 +624,12 @@ public class BSActivity extends Service {
 
     }
 
-    void performFnish(boolean stopped) {
+    void performFnishWithRequest(boolean stopped) {
         sendRequest(InnerConstants.RequestFramework.REQUEST_SET_FINISH);
+        performFnish(stopped);
+    }
+
+    void performFnish(boolean stopped) {
         isFinishing = true;
         if (isResumed) {
             performBSPause();
@@ -637,6 +640,7 @@ public class BSActivity extends Service {
     void sendRequest(int what) {
         Bundle bundle = new Bundle();
         bundle.putString(InnerConstants.EXTRA_SERVICE_NAME, getClass().getName());
+        bundle.putString(InnerConstants.EXTRA_PACKAGE_NAME, getPackageName());
         bundle.putInt(InnerConstants.EXTRA_SYSTEM_BS_UI_FLAG, mSystemUiVisibility);
         sendToFramework(what, bundle);
     }
@@ -682,7 +686,9 @@ public class BSActivity extends Service {
             mService.send(msg);
         } catch (Exception e) {
             Log.e(TAG, "Error while send msg", e);
-            finish();
+            if (!isFinishing) {
+                performFnish(true);
+            }
         }
     }
 

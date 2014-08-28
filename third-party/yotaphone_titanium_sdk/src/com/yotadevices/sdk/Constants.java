@@ -91,7 +91,7 @@ public final class Constants {
     }
 
     public enum Gestures {
-        GESTURES_P2B, GESTURES_FS_LOCK, GESTURES_BS_LOCK, GESTURES_BS_UNLOCK, GESTURES_UNKNOW;
+        GESTURES_P2B, GESTURES_FS_LOCK, GESTURES_BS_LOCK, GESTURES_BS_UNLOCK, GESTURES_FS_UNLOCK, GESTURES_UNKNOW;
 
         private MotionEvent motionEvent;
 
@@ -114,6 +114,8 @@ public final class Constants {
                 return GESTURES_BS_LOCK;
             case 3:
                 return GESTURES_BS_UNLOCK;
+            case 4:
+                return GESTURES_FS_UNLOCK;
             default:
                 return GESTURES_UNKNOW;
             }

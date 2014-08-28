@@ -512,19 +512,20 @@ public class RotationAlgorithm implements SensorEventListener {
             if (mUserIsLookingAtFSPrevious != mUserIsLookingAtFS) {
                 rotationTime = System.currentTimeMillis();
                 if (mStartWithFS) {
-                    mUtils.lockOn();
-
-                    if (mDeviceLockSettingIsNone) {
+                    mUtils.goToSleep();
+                    /*if (mDeviceLockSettingIsNone) {
                         mUtils.goToSleep();
                         mScreenJustLocked = true;
-                    }
+                    }*/
                 }
                 mScreenJustLocked = true;
-                if (!mNoUnlock)
+                if (!mNoUnlock) {
                     mUtils.unlockBackScreen();
+                }
+                mSensorManager.unregisterListener(this);
             }
 
-            if (System.currentTimeMillis() > rotationTime + TIME_4SEC || (mDontMonitorBackRotation && mStartWithFS)) {
+            /*if (System.currentTimeMillis() > rotationTime + TIME_4SEC || ((mDontMonitorBackRotation) && mStartWithFS)) {
                 mSensorManager.unregisterListener(this);
                 if (!mDeviceLockSettingIsNone) {
                     if (mKeyguardManager.inKeyguardRestrictedInputMode()) { // check for the case when user unlocked the screen while we waited
@@ -534,7 +535,7 @@ public class RotationAlgorithm implements SensorEventListener {
                         mUtils.lockBackScreen();
                     }
                 }
-            }
+            }*/
             if (mListener != null) {
                 if (!mPhoneRotatedToBS) {
                     mListener.onPhoneRotatedToBS();
@@ -558,7 +559,9 @@ public class RotationAlgorithm implements SensorEventListener {
     private class UnlockScreen extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-            mUtils.lockOff();
+            mUtils.wakeUp();
+           mUtils.lockOff();
+
             int limit = 2000;
             while (!mKeyguardManager.inKeyguardRestrictedInputMode() && (mScreenJustLocked || mPowerOn)) {
                 try {
