@@ -19,23 +19,12 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.Paths;
-
 public abstract class WallpapersUtil {
 	public static List<ZLFile> predefinedWallpaperFiles() {
 		return ZLFile.createFileByPath("wallpapers").children();
-	}
-
-	public static List<ZLFile> externalWallpaperFiles() {
-		final List<ZLFile> files = new ArrayList<ZLFile>();
-		for (String dir : Paths.WallpaperPathOption.getValue()) {
-			files.addAll(ZLFile.createFileByPath(dir).children());
-		}
-		return files;
 	}
 }

@@ -357,9 +357,6 @@
 			<node name="fontPath" value="Directoris de fonts">
 				<node name="chooserTitle" value="Fonts folder" toBeTranslated="true"/>
 			</node>
-			<node name="wallpaperPath" value="Directori de fons de pantalla">
-				<node name="chooserTitle" value="Images folder" toBeTranslated="true"/>
-			</node>
 			<node name="tempDir" value="Directori de fitxers temporals">
 				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
 			</node>
