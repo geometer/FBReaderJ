@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingLeft="18dp"
+          android:paddingRight="18dp"
+          android:text="Test"
+          android:fontFamily="PT Sans Pro Extra Bold"
+          android:textSize="20dp"
+          android:textColor="@drawable/yota_selection_popup_item_text"
+          android:background="@drawable/yota_selection_popup_item_background">
+</TextView>

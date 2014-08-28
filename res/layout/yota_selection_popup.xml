@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/yota_light_red">
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/highlight"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="15dp"
+              android:paddingBottom="15dp"
+              android:layout_weight="1"
+              android:fontFamily="PT Sans Pro Extra Bold"
+              android:textSize="20dp"
+              android:gravity="center"
+              android:text="@string/highlight"
+              android:textColor="@drawable/yota_selection_popup_item_text"
+              android:background="@drawable/yota_selection_popup_item_background">
+    </TextView>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/copy"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="15dp"
+              android:paddingBottom="15dp"
+              android:layout_weight="1"
+              android:layout_marginLeft="1dp"
+              android:layout_marginRight="1dp"
+              android:fontFamily="PT Sans Pro Extra Bold"
+              android:textSize="20dp"
+              android:gravity="center"
+              android:text="@string/copy"
+              android:textColor="@drawable/yota_selection_popup_item_text"
+              android:background="@drawable/yota_selection_popup_item_background">
+    </TextView>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/share"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="15dp"
+              android:paddingBottom="15dp"
+              android:layout_weight="1"
+              android:fontFamily="PT Sans Pro Extra Bold"
+              android:textSize="20dp"
+              android:gravity="center"
+              android:text="@string/share"
+              android:textColor="@drawable/yota_selection_popup_item_text"
+              android:background="@drawable/yota_selection_popup_item_background">
+    </TextView>
+</LinearLayout>
