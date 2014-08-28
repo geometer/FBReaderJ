@@ -54,6 +54,7 @@
 		<node name="hy" value="Armenian" toBeTranslated="true"/>
 		<node name="id" value="індонезійська"/>
 		<node name="it" value="італійська"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="Georgian" toBeTranslated="true"/>
 		<node name="lt" value="литовська"/>
 		<node name="nb" value="норвезька"/>

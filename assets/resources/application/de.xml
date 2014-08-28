@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- German FBReaderJ resources, by Victor Massini -->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
@@ -622,12 +622,16 @@
 		<node name="colors" value="Farben &amp; Hintergründe">
 			<node name="summary" value="Farben festlegen"/>
 			<node name="background" value="Hintergrund">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Einfarbig"/>
 				<node name="leather" value="Leder"/>
 				<node name="sepia" value="Sepia (altes Papier)"/>
 				<node name="wood" value="Holz"/>
 			</node>
-			<node name="backgroundColor" value="Hintergrundfarbe"/>
 			<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
 			<node name="selectionForeground" value="Ausgewählter Text"/>
 			<node name="text" value="Normaler Text"/>

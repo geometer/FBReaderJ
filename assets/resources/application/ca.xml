@@ -622,12 +622,16 @@
 		<node name="colors" value="Colors i fons de pantalla">
 			<node name="summary" value="Configuració de color"/>
 			<node name="background" value="Fons">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Color sòlid"/>
 				<node name="leather" value="Cuir"/>
 				<node name="sepia" value="Sèpia"/>
 				<node name="wood" value="Fusta"/>
 			</node>
-			<node name="backgroundColor" value="Color de fons"/>
 			<node name="selectionBackground" value="Fons de selecció"/>
 			<node name="selectionForeground" value="Text de selecció"/>
 			<node name="text" value="Text"/>

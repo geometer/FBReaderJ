@@ -609,12 +609,16 @@
 		<node name="colors" value="Couleurs &amp; fonds d'écran">
 			<node name="summary" value="Paramètres des couleurs"/>
 			<node name="background" value="Arrière-plan">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Couleur pleine"/>
 				<node name="leather" value="Cuir"/>
 				<node name="sepia" value="Sépia"/>
 				<node name="wood" value="Bois"/>
 			</node>
-			<node name="backgroundColor" value="Couleur de fond"/>
 			<node name="selectionBackground" value="Arrière-plan de sélection"/>
 			<node name="selectionForeground" value="Texte sélectionné"/>
 			<node name="text" value="Texte normal"/>

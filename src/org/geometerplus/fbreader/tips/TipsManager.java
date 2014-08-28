@@ -139,7 +139,8 @@ public class TipsManager {
 					? Action.None : Action.Download;
 			}
 		} else if (!TipsAreInitializedOption.getValue()) {
-			return Action.Initialize;
+			//return Action.Initialize;
+			return Action.None;
 		}
 		return Action.None;
 	}

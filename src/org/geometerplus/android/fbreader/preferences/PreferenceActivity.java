@@ -44,13 +44,14 @@ import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.sync.SyncUtil;
-//import org.geometerplus.fbreader.tips.TipsManager;
+import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
+import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
 
 import org.geometerplus.android.util.UIUtil;
@@ -59,6 +60,8 @@ import org.geometerplus.android.util.DeviceType;
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
+	private static final int BACKGROUND_REQUEST_CODE = 3000;
+	private BackgroundPreference myBackgroundPreference;
 
 	public PreferenceActivity() {
 		super("Preferences");
@@ -76,9 +79,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			return;
 		}
 
-		if (resultCode == RESULT_OK) {
-			myChooserCollection.update(requestCode, data);
+		if (resultCode != RESULT_OK) {
+			return;
 		}
+
+		if (BACKGROUND_REQUEST_CODE == requestCode) {
+			if (myBackgroundPreference != null) {
+				myBackgroundPreference.update(data);
+			}
+			return;
+		}
+
+		myChooserCollection.update(requestCode, data);
 	}
 
 	@Override
@@ -432,12 +444,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				return viewOptions.ScrollbarType.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER;
 			}
 		};
-		final PreferenceSet bgPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				return "".equals(profile.WallpaperOption.getValue());
-			}
-		};
 
 		final Screen cssScreen = createPreferenceScreen("css");
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
@@ -447,22 +453,19 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
+		myBackgroundPreference = new BackgroundPreference(
+			this,
+			profile,
+			colorsScreen.Resource.getResource("background"),
+			BACKGROUND_REQUEST_CODE
+		);
+		colorsScreen.addPreference(myBackgroundPreference);
 		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
 			this, profile, colorsScreen.Resource.getResource("background")
-		) {
-			@Override
-			protected void onDialogClosed(boolean result) {
-				super.onDialogClosed(result);
-				bgPreferences.run();
-			}
-		};
+		);
 		colorsScreen.addPreference(wallpaperPreference);
 		wallpaperReloader.add(wallpaperPreference);
 
-		bgPreferences.add(
-			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
-		);
-		bgPreferences.run();
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
@@ -681,8 +684,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 
-		//final Screen tipsScreen = createPreferenceScreen("tips");
-		//tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
+		final Screen tipsScreen = createPreferenceScreen("tips");
+		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
 
 		final Screen aboutScreen = createPreferenceScreen("about");
 		aboutScreen.addPreference(new InfoPreference(
