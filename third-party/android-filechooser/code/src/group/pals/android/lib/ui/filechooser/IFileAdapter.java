@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Paint;
+import android.graphics.*;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
@@ -235,7 +235,6 @@ public class IFileAdapter extends BaseAdapter {
      * 
      */
     private static final class Bag {
-
         ImageView mImageIcon;
         TextView mTxtFileName;
         TextView mTxtFileInfo;
@@ -290,6 +289,17 @@ public class IFileAdapter extends BaseAdapter {
 
         // file icon
         bag.mImageIcon.setImageResource(FileUtils.getResIcon(file, mFilterMode));
+        final ColorMatrix matrix = new ColorMatrix();
+        if (!FileUtils.isAccessible(file, mFilterMode)) {
+            final ColorMatrix scaleMatrix = new ColorMatrix();
+            scaleMatrix.setScale(.7f, .7f, .7f, 1f);
+            final ColorMatrix saturationMatrix = new ColorMatrix();
+            saturationMatrix.setSaturation(0f);
+            matrix.setConcat(saturationMatrix, scaleMatrix);
+			bag.mTxtFileName.setEnabled(false);
+			bag.mTxtFileInfo.setEnabled(false);
+        }
+        bag.mImageIcon.setColorFilter(new ColorMatrixColorFilter(matrix));
 
         // filename
         bag.mTxtFileName.setText(file.getSecondName());
