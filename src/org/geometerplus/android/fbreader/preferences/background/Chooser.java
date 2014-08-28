@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences.background;
 
+import java.util.List;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.View;
@@ -30,6 +32,8 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
+
+import org.geometerplus.fbreader.Paths;
 
 import org.geometerplus.android.util.FileChooserUtil;
 
@@ -80,16 +84,46 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 				startActivityForResult(new Intent(this, PredefinedImages.class), 1);
 				break;
 			case 2:
-				FileChooserUtil.runFileChooser(this, 2, myResource.getValue(), "");
+			{
+				final String initialDir;
+				final String currentValue =
+					getIntent().getStringExtra(BackgroundPreference.VALUE_KEY);
+				if (currentValue != null && currentValue.startsWith("/")) {
+					initialDir = currentValue.substring(0, currentValue.lastIndexOf("/"));
+				} else {
+					final List<String> path = Paths.WallpaperPathOption.getValue();
+					if (path.size() > 0) {
+						initialDir = path.get(0);
+					} else {
+						initialDir = "";
+					}
+				}
+				FileChooserUtil.runFileChooser(
+					this, 2, myResource.getValue(), initialDir, ".+\\.(jpe?g|png)"
+				);
 				break;
+			}
 		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			setResult(RESULT_OK, data);
-			finish();
+			switch (requestCode) {
+				case 1:
+					setResult(RESULT_OK, data);
+					finish();
+					break;
+				case 2:
+					final List<String> paths = FileChooserUtil.filePathsFromData(data);
+					if (paths.size() == 1) {
+						setResult(RESULT_OK, new Intent().putExtra(
+							BackgroundPreference.VALUE_KEY, paths.get(0)
+						));
+						finish();
+					}
+					break;
+			}
 		}
 	}
 }
