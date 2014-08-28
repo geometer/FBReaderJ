@@ -341,9 +341,6 @@
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
 				<node name="chooserTitle" value="Katalog z czcionkami"/>
 			</node>
-			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
-				<node name="chooserTitle" value="Katalog z tapetami"/>
-			</node>
 			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
 				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
 			</node>

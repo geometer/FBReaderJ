@@ -26,8 +26,9 @@ import android.content.Intent;
 import android.os.Parcelable;
 
 import group.pals.android.lib.ui.filechooser.FileChooserActivity;
-import group.pals.android.lib.ui.filechooser.services.IFileProvider;
+import group.pals.android.lib.ui.filechooser.io.IFile;
 import group.pals.android.lib.ui.filechooser.io.localfile.LocalFile;
+import group.pals.android.lib.ui.filechooser.services.IFileProvider;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -55,14 +56,17 @@ public abstract class FileChooserUtil {
 		Activity activity,
 		int requestCode,
 		String title,
-		String initialValue
+		String initialDir,
+		String regexp
 	) {
 		final Intent intent = new Intent(activity, FileChooserActivity.class);
 		intent.putExtra(FileChooserActivity._TextResources, textResources(title));
-		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initialValue));
+		intent.putExtra(FileChooserActivity._Rootpath, (Parcelable)new LocalFile(initialDir));
 		intent.putExtra(FileChooserActivity._ActionBar, true);
 		intent.putExtra(FileChooserActivity._SaveLastLocation, false);
 		intent.putExtra(FileChooserActivity._DisplayHiddenFiles, false);
+		intent.putExtra(FileChooserActivity._ShowNewFolderButton, false);
+		intent.putExtra(FileChooserActivity._FilenameRegExp, regexp);
 		intent.putExtra(
 			FileChooserActivity._FilterMode,
 			IFileProvider.FilterMode.FilesOnly
@@ -92,8 +96,17 @@ public abstract class FileChooserUtil {
 		activity.startActivityForResult(intent, requestCode);
 	}
 
-	public static String pathFromData(Intent data) {
+	public static String folderPathFromData(Intent data) {
 		return data.getStringExtra(FileChooserActivity._FolderPath);
+	}
+
+	public static List<String> filePathsFromData(Intent data) {
+		final List<IFile> files = data.getParcelableArrayListExtra(FileChooserActivity._Results);
+		final List<String> paths = new ArrayList<String>(files.size());
+		for (IFile f : files) {
+			paths.add(f.getAbsolutePath());
+		}
+		return paths;
 	}
 
 	public static List<String> pathListFromData(Intent data) {

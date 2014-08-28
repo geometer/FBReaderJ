@@ -353,9 +353,6 @@
 			<node name="fontPath" value="Onde procurar fontes de letra">
 				<node name="chooserTitle" value="Diretórios de tipos de letras"/>
 			</node>
-			<node name="wallpaperPath" value="Onde procurar por imagens de fundo">
-				<node name="chooserTitle" value="Diretórios de papéis de parede"/>
-			</node>
 			<node name="tempDir" value="Onde colocar arquivos temporários">
 				<node name="chooserTitle" value="Diretório de arquivos temporários"/>
 			</node>

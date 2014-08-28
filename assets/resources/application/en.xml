@@ -351,9 +351,6 @@
 			<node name="fontPath" value="Where to seek for fonts">
 				<node name="chooserTitle" value="Fonts folder"/>
 			</node>
-			<node name="wallpaperPath" value="Where to seek for background images">
-				<node name="chooserTitle" value="Images folder"/>
-			</node>
 			<node name="tempDir" value="Where to store temporary files">
 				<node name="chooserTitle" value="Temp files folder"/>
 			</node>

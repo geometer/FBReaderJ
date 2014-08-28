@@ -351,9 +351,6 @@
 			<node name="fontPath" value="Skrifttype-biblioteker">
 				<node name="chooserTitle" value="Skrifttype-bibliotek"/>
 			</node>
-			<node name="wallpaperPath" value="Tapet-biblioteker">
-				<node name="chooserTitle" value="Tapet-bibliotek"/>
-			</node>
 			<node name="tempDir" value="Katalog for midlertidige filer">
 				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
 			</node>

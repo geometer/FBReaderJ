@@ -360,9 +360,6 @@
 			<node name="fontPath" value="Kde hledat písma">
 				<node name="chooserTitle" value="Adresář s písmy"/>
 			</node>
-			<node name="wallpaperPath" value="Kde hledat obrázky pozadí">
-				<node name="chooserTitle" value="Adresář s tapetami"/>
-			</node>
 			<node name="tempDir" value="Kam ukládat dočasné soubory">
 				<node name="chooserTitle" value="Složka dočasných souborů"/>
 			</node>
