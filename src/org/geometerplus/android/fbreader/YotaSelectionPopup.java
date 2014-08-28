@@ -20,6 +20,7 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel {
         super(application);
         mReaderApp = application;
         mContext = ctx;
+        mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mPopup = new android.widget.PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));
