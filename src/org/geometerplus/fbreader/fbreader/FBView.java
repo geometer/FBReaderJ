@@ -103,7 +103,7 @@ public final class FBView extends ZLTextView {
 			);
 			return true;
 		}
-
+        //here we can reset selection
 		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, getContextWidth(), getContextHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap

@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 public enum ZLTextSelectionCursor {
@@ -31,13 +32,27 @@ public enum ZLTextSelectionCursor {
 	private static int ourAccent;
 
 	private static void init() {
-		if (ourHeight == 0) {
-			final int dpi = ZLibrary.Instance().getDisplayDPI();
-			ourAccent = dpi / 12;
-			ourWidth = dpi / 6;
-			ourHeight = dpi / 4;
-		}
+        if (DeviceType.Instance() == DeviceType.YOTA_PHONE || DeviceType.Instance() == DeviceType.YOTA_PHONE2) {
+            yotaInit();
+        }
+        else {
+            if (ourHeight == 0) {
+                final int dpi = ZLibrary.Instance().getDisplayDPI();
+                ourAccent = dpi / 12;
+                ourWidth = dpi / 6;
+                ourHeight = dpi / 4;
+            }
+        }
 	}
+
+    private static void yotaInit() {
+        if (ourHeight == 0) {
+            final int dpi = ZLibrary.Instance().getDisplayDPI();
+            ourAccent = (dpi / 160) * 7;
+            ourWidth = (dpi / 160) * 12;
+            ourHeight = (dpi / 160) * 14;
+        }
+    }
 
 	static int getHeight() {
 		init();
