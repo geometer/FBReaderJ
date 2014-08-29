@@ -614,9 +614,9 @@
 			<node name="summary" value="色の設定"/>
 			<node name="background" value="背景">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="solidColor" value="単色…"/>
+					<node name="predefined" value="付属の画像…"/>
+					<node name="selectFile" value="ファイルを選択…"/>
 				</node>
 				<node name="solidColor" value="単色"/>
 				<node name="leather" value="革"/>
@@ -791,7 +791,7 @@
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="メール (英語かロシア語で)">
-				<node name="url" value="mailto:contact@geometerplus.com"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="twitter" value="twitter でフォロー">
 				<node name="url" value="http://twitter.com/fbreader"/>
