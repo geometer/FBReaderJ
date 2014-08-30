@@ -606,13 +606,23 @@
 			<node name="background" value="Sfondo">
 				<node name="chooser">
 					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
 					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
 				</node>
 				<node name="solidColor" value="Tinta unita"/>
 				<node name="leather" value="Pelle"/>
 				<node name="sepia" value="Seppia"/>
 				<node name="wood" value="Legno"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+			</node>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
 			</node>
 			<node name="selectionBackground" value="Seleziona Sfondo"/>
 			<node name="selectionForeground" value="Testo selezionato"/>

@@ -622,6 +622,16 @@
 				<node name="leather" value="革"/>
 				<node name="sepia" value="セピア"/>
 				<node name="wood" value="木目"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+			</node>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
 			</node>
 			<node name="selectionBackground" value="選択範囲の背景"/>
 			<node name="selectionForeground" value="選択文字"/>

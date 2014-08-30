@@ -615,15 +615,15 @@
 			<node name="background" value="Background">
 				<node name="chooser">
 					<node name="solidColor" value="Solid color…"/>
-					<node name="predefined" value="Predefined image…"/>
+					<node name="predefined" value="Predefined texture…"/>
 					<node name="selectFile" value="Select file…"/>
 				</node>
 				<node name="solidColor" value="Solid color"/>
 				<node name="leather" value="Leather"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Wood"/>
-				<node name="paper" value="Paper"/>
-				<node name="papirus" value="Papirus"/>
+				<node name="sand" value="Sand"/>
+				<node name="hardpaper" value="Hard paper"/>
 			</node>
 			<node name="fillMode" value="Fill mode">
 				<node name="tile" value="Tile"/>

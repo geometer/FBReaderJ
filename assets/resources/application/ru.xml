@@ -619,14 +619,24 @@
 			<node name="summary" value="Настройки цвета"/>
 			<node name="background" value="Фон">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="solidColor" value="Сплошной цвет…"/>
+					<node name="predefined" value="Готовые фоны…"/>
+					<node name="selectFile" value="Выбрать файл…"/>
 				</node>
 				<node name="solidColor" value="Сплошной цвет"/>
 				<node name="leather" value="Кожа"/>
 				<node name="sepia" value="Сепия"/>
 				<node name="wood" value="Дерево"/>
+				<node name="sand" value="Песок"/>
+				<node name="hardpaper" value="Грубая бумага"/>
+			</node>
+			<node name="fillMode" value="Способ заполнения">
+				<node name="tile" value="Плитка"/>
+				<node name="tileMirror" value="Плитка с отражением"/>
+				<node name="fullscreen" value="Полный экран"/>
+				<node name="stretch" value="Растянуть в обоих направлениях"/>
+				<node name="tileVertically" value="Растянуть по горизонтали"/>
+				<node name="tileHorizontally" value="Растянуть по вертикали"/>
 			</node>
 			<node name="selectionBackground" value="Фон пометки"/>
 			<node name="selectionForeground" value="Текст пометки"/>
