@@ -35,6 +35,10 @@ abstract class ZLStringListPreference extends ListPreference {
 		super(context);
 		setTitle(resource.getValue());
 		myValuesResource = valuesResource;
+
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		setPositiveButtonText(buttonResource.getResource("ok").getValue());
+		setNegativeButtonText(buttonResource.getResource("cancel").getValue());
 	}
 
 	protected final void setList(String[] values) {
