@@ -345,9 +345,15 @@
 				<node name="never" value="Nikdy"/>
 			</node>
 			<node name="uploadAllBooks" value="Nahrát všechny knihy na server"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchronizovat pozice čtení"/>
 			<node name="bookmarks" value="Synchronizovat záložky"/>
 			<node name="metainfo" value="Synchronizovat metainformace (název, štítky atd.)"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Adresáře">
 			<node name="summary" value="Adresáře pro hledání souborů"/>
