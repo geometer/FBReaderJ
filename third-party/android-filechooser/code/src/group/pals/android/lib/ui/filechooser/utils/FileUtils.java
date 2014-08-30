@@ -41,6 +41,10 @@ public class FileUtils {
     }
 
     private static boolean accessDenied(IFile f) {
+		if (f.isFile()) {
+			return !f.canRead();
+		}
+
         if (!(f instanceof File)) {
             return false;
         }
@@ -61,15 +65,14 @@ public class FileUtils {
      */
     public static int getResIcon(IFile file, final IFileProvider.FilterMode filterMode) {
         if (file == null || !file.exists())
-            return R.drawable.afc_file;
+            return R.drawable.afc_item_file;
 
         if (file.isFile()) {
-            String filename = file.getName();
-            for (String r : _MapFileIcons.keySet())
-                if (filename.matches(r))
-                    return _MapFileIcons.get(r);
-
-            return R.drawable.afc_file;
+            //String filename = file.getName();
+            //for (String r : _MapFileIcons.keySet())
+            //    if (filename.matches(r))
+            //        return _MapFileIcons.get(r);
+            return R.drawable.afc_item_file;
         } else if (file.isDirectory()) {
             if (filterMode == IFileProvider.FilterMode.DirectoriesOnly) {
                 if (file instanceof File && !((File)file).canWrite()) {
@@ -88,7 +91,7 @@ public class FileUtils {
             }
         }
 
-        return R.drawable.afc_file;
+        return R.drawable.afc_item_file;
     }// getResIcon()
 
     public static boolean isAccessible(IFile file, final String regexp) {
