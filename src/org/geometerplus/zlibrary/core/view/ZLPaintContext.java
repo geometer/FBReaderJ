@@ -32,11 +32,16 @@ abstract public class ZLPaintContext {
 	protected ZLPaintContext() {
 	}
 
-	public static enum WallpaperMode {
-		TILE,
-		TILE_MIRROR
+	public enum FillMode {
+		tile,
+		tileMirror,
+		fullscreen,
+		stretch,
+		tileVertically,
+		tileHorizontally
 	}
-	abstract public void clear(ZLFile wallpaperFile, WallpaperMode mode);
+
+	abstract public void clear(ZLFile wallpaperFile, FillMode mode);
 	abstract public void clear(ZLColor color);
 	abstract public ZLColor getBackgroundColor();
 
