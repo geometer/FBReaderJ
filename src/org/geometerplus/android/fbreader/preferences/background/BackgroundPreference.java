@@ -98,7 +98,7 @@ public class BackgroundPreference extends Preference {
 
 		final ZLColor color = myProfile.BackgroundOption.getValue();
 		if (color != null) {
-			call.putExtra(COLOR_KEY, color.intValue());
+			call.putExtra(COLOR_KEY, ZLAndroidColorUtil.rgb(color));
 		}
 
 		((Activity)getContext()).startActivityForResult(call, myRequestCode);
