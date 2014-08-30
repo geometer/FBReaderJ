@@ -341,9 +341,15 @@
 				<node name="never" value="Never" toBeTranslated="true"/>
 			</node>
 			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
 			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Directorios">
 			<node name="summary" value="Directorios para buscar archivos"/>
