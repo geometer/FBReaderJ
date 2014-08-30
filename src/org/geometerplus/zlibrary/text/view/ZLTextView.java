@@ -451,7 +451,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		setContext(context);
 		final ZLFile wallpaper = getWallpaperFile();
 		if (wallpaper != null) {
-			context.clear(wallpaper, getWallpaperMode());
+			context.clear(wallpaper, getFillMode());
 		} else {
 			context.clear(getBackgroundColor());
 		}
