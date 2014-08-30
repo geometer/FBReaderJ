@@ -605,13 +605,23 @@
 			<node name="background" value="背景">
 				<node name="chooser">
 					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
 					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
 				</node>
 				<node name="solidColor" value="淨色"/>
 				<node name="leather" value="皮革"/>
 				<node name="sepia" value="褐色"/>
 				<node name="wood" value="木材"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+			</node>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
 			</node>
 			<node name="selectionBackground" value="選字背景色"/>
 			<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
