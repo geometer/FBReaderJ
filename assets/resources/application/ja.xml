@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Japanese FBReaderJ resources, by Tamo -->
 <resources>
-	<node name="library" value="FBReader library">
+	<node name="library" value="FBReader ライブラリー" toBeTranslated="true">
 		<node name="unknownAuthor" value="著者不明"/>
 		<node name="booksWithNoTags" value="タグのない本"/>
 		<node name="demo" value="サンプル"/>
