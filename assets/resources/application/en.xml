@@ -622,6 +622,16 @@
 				<node name="leather" value="Leather"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Wood"/>
+				<node name="paper" value="Paper"/>
+				<node name="papirus" value="Papirus"/>
+			</node>
+			<node name="fillMode" value="Fill mode">
+				<node name="tile" value="Tile"/>
+				<node name="tileMirror" value="Mirrored tile"/>
+				<node name="fullscreen" value="Full screen"/>
+				<node name="stretch" value="Stretch to fill screen"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally"/>
 			</node>
 			<node name="selectionBackground" value="Selection background"/>
 			<node name="selectionForeground" value="Selected text"/>
