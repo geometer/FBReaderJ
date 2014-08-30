@@ -459,13 +459,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
+		final PreferenceSet backgroundSet = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				return profile.WallpaperOption.getValue().startsWith("/");
+			}
+		};
 		myBackgroundPreference = new BackgroundPreference(
 			this,
 			profile,
 			colorsScreen.Resource.getResource("background"),
 			BACKGROUND_REQUEST_CODE
-		);
+		) {
+			@Override
+			public void update(Intent data) {
+				super.update(data);
+				backgroundSet.run();
+			}
+		};
 		colorsScreen.addPreference(myBackgroundPreference);
+		backgroundSet.add(colorsScreen.addOption(profile.FillModeOption, "fillMode"));
+		backgroundSet.run();
 
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
