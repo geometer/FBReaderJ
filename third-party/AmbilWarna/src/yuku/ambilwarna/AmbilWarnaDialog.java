@@ -24,6 +24,9 @@ public class AmbilWarnaDialog {
 	final ViewGroup viewContainer;
 	final float[] currentColorHsv = new float[3];
 
+	private final CharSequence positiveButtonText;
+	private final CharSequence negativeButtonText;
+
 	/**
 	 * create an AmbilWarnaDialog. call this only from OnCreateDialog() or from a background thread.
 	 * 
@@ -34,9 +37,12 @@ public class AmbilWarnaDialog {
 	 * @param listener
 	 *            an OnAmbilWarnaListener, allowing you to get back error or
 	 */
-	public AmbilWarnaDialog(final Context context, int color, OnAmbilWarnaListener listener) {
+	public AmbilWarnaDialog(final Context context, int color, OnAmbilWarnaListener listener, String positiveButtonText, String negativeButtonText) {
 		this.listener = listener;
 		Color.colorToHSV(color, currentColorHsv);
+
+		this.positiveButtonText = positiveButtonText;
+		this.negativeButtonText = negativeButtonText;
 
 		final View view = LayoutInflater.from(context).inflate(R.layout.ambilwarna_dialog, null);
 		viewHue = view.findViewById(R.id.ambilwarna_viewHue);
@@ -102,14 +108,14 @@ public class AmbilWarnaDialog {
 		});
 
 		dialog = new AlertDialog.Builder(context)
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			.setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
 				@Override public void onClick(DialogInterface dialog, int which) {
 					if (AmbilWarnaDialog.this.listener != null) {
 						AmbilWarnaDialog.this.listener.onOk(AmbilWarnaDialog.this, getColor());
 					}
 				}
 			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			.setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
 				@Override public void onClick(DialogInterface dialog, int which) {
 					if (AmbilWarnaDialog.this.listener != null) {
 						AmbilWarnaDialog.this.listener.onCancel(AmbilWarnaDialog.this);
