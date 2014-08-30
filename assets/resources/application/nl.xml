@@ -336,9 +336,15 @@
 				<node name="never" value="Nooit"/>
 			</node>
 			<node name="uploadAllBooks" value="Verstuur alle boeken naar de server"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchroniseer leesposities"/>
 			<node name="bookmarks" value="Synchroniseer bladwijzers"/>
 			<node name="metainfo" value="Synchroniseer metainfo (titel, trefwoorden, etc.)"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Mappen">
 			<node name="summary" value="Waar zijn de bestanden opgeslagen"/>
