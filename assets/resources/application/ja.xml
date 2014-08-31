@@ -29,16 +29,16 @@
 		<node name="sync" value="シンクロ">
 			<node name="summary" value="本をシンクロ状態で整列"/>
 			<node name="sync-success" value="シンクロ済み">
-				<node name="summary" value="サーバにアップ済みの本"/>
+				<node name="summary" value="サーバにアップロード済みの本"/>
 			</node>
 			<node name="sync-failure" value="シンクロ失敗">
-				<node name="summary" value="問題があってサーバにアップできなかった本"/>
+				<node name="summary" value="問題があってサーバにアップロードできなかった本"/>
 			</node>
 			<node name="sync-deleted" value="削除済み">
 				<node name="summary" value="もうサーバからアクセスできない本"/>
 			</node>
 			<node name="sync-tosync" value="シンクロ予定">
-				<node name="summary" value="まだサーバにアップしていない本"/>
+				<node name="summary" value="まだサーバにアップロードしていない本"/>
 			</node>
 		</node>
 		<node name="fileTree" value="ファイルツリー">
@@ -65,7 +65,7 @@
 		<node name="markAsRead" value="既読にする"/>
 		<node name="markAsUnread" value="未読にする"/>
 		<node name="deleteAll" value="すべて削除"/>
-		<node name="uploadAgain" value="再アップ"/>
+		<node name="uploadAgain" value="再アップロード"/>
 		<node name="tryAgain" value="もう一度"/>
 	</node>
 	<node name="networkLibrary" value="FBReader ネットワークライブラリ">
@@ -257,10 +257,10 @@
 		<node name="deleteBookmark" value="しおりを削除"/>
 	</node>
 	<node name="editStyle">
-		<node name="name" value="書式の名前"/>
+		<node name="name" value="書式の名前を変更"/>
 		<node name="invisible" value="透明">
 			<node name="summaryOn" value="しおり位置を目立たせない"/>
-			<node name="summaryOff" value="しおり位置にマーカー"/>
+			<node name="summaryOff" value="しおり位置に色を塗る"/>
 		</node>
 		<node name="bgColor" value="マーカーの色"/>
 	</node>
@@ -302,10 +302,10 @@
 		<node name="screenOrientation" value="画面の向き"/>
 		<node name="screenOrientationSystem" value="システム"/>
 		<node name="screenOrientationSensor" value="本体の向きに合わせる"/>
-		<node name="screenOrientationPortrait" value="タテ"/>
-		<node name="screenOrientationLandscape" value="ヨコ"/>
-		<node name="screenOrientationReversePortrait" value="逆タテ"/>
-		<node name="screenOrientationReverseLandscape" value="逆ヨコ"/>
+		<node name="screenOrientationPortrait" value="タテ向き"/>
+		<node name="screenOrientationLandscape" value="ヨコ向き"/>
+		<node name="screenOrientationReversePortrait" value="逆タテ向き"/>
+		<node name="screenOrientationReverseLandscape" value="逆ヨコ向き"/>
 		<node name="increaseFont" value="拡大"/>
 		<node name="decreaseFont" value="縮小"/>
 		<node name="toggleFullscreen" value="全画面"/>
@@ -335,15 +335,15 @@
 				<node name="viaWifi" value="Wi-Fi 接続時"/>
 				<node name="never" value="無効"/>
 			</node>
-			<node name="uploadAllBooks" value="すべての本をサーバにアップ"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
+			<node name="uploadAllBooks" value="すべての本をサーバにアップロード"/>
+			<node name="downloadAllBooks" value="すべての本をサーバからダウンロード"/>
+			<node name="downloadCurrentBook" value="現在の本をサーバからダウンロード"/>
 			<node name="positions" value="読んでいる位置をシンクロ"/>
 			<node name="bookmarks" value="しおりをシンクロ"/>
 			<node name="metainfo" value="メタ情報 (タイトル、タグなど) をシンクロ"/>
-			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
-				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="読む本を変更">
+				<node name="summaryOn" value="すべてのデバイスで同じ本を読む"/>
+				<node name="summaryOff" value="位置だけシンクロして、読む対象は勝手に変えない"/>
 			</node>
 		</node>
 		<node name="directories" value="ディレクトリ">
@@ -405,10 +405,10 @@
 				<node name="summaryOff" value="無効"/>
 			</node>
 			<node name="dontTurnScreenOff" value="画面のスリープ抑制">
-				<node name="0" value="常時"/>
-				<node name="25" value="電池が 25%% 以上あるとき"/>
-				<node name="50" value="電池が 50%% 以上あるとき"/>
-				<node name="100" value="無効"/>
+				<node name="0" value="常時スリープを抑制"/>
+				<node name="25" value="電池が 25％ 以上あるとき抑制"/>
+				<node name="50" value="電池が 50％ 以上あるとき抑制"/>
+				<node name="100" value="無効 (抑制しない)"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="充電中の画面スリープ抑制">
 				<node name="summaryOn" value="本体が充電モードなら画面がスリープにならないようにする"/>
@@ -598,7 +598,7 @@
 			</node>
 		</node>
 		<node name="css" value="CSS">
-			<node name="summary" value="CSS で定義された値を適用/無視"/>
+			<node name="summary" value="本の CSS で定義された値を適用あるいは無視"/>
 			<node name="fontFamily" value="フォント名">
 				<node name="summaryOn" value="CSS で定義されたフォント名を使う"/>
 				<node name="summaryOff" value="CSS で定義されたフォント名を無視"/>
@@ -617,7 +617,7 @@
 			</node>
 		</node>
 		<node name="colors" value="色と壁紙">
-			<node name="summary" value="色の設定"/>
+			<node name="summary" value="各種の色の設定"/>
 			<node name="background" value="背景">
 				<node name="chooser">
 					<node name="solidColor" value="単色…"/>
@@ -628,16 +628,16 @@
 				<node name="leather" value="革"/>
 				<node name="sepia" value="セピア"/>
 				<node name="wood" value="木目"/>
-				<node name="sand" value="Sand" toBeTranslated="true"/>
-				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+				<node name="sand" value="砂"/>
+				<node name="hardpaper" value="ざらざら紙"/>
 			</node>
-			<node name="fillMode" value="Fill mode" toBeTranslated="true">
-				<node name="tile" value="Tile" toBeTranslated="true"/>
-				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
-				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
-				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
-				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
-				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			<node name="fillMode" value="画像の並べ方">
+				<node name="tile" value="単純に敷きつめる"/>
+				<node name="tileMirror" value="上下左右に反転して並べる"/>
+				<node name="fullscreen" value="画面全体"/>
+				<node name="stretch" value="画面に合わせる"/>
+				<node name="tileVertically" value="画面幅に合わせてからタテに敷きつめる"/>
+				<node name="tileHorizontally" value="画面高さに合わせてからヨコに敷きつめる"/>
 			</node>
 			<node name="selectionBackground" value="選択範囲の背景"/>
 			<node name="selectionForeground" value="選択文字"/>
@@ -659,9 +659,9 @@
 			<node name="summary" value="スクロールバーとフッタの設定"/>
 			<node name="scrollbarType" value="スクロールバーの種類">
 				<node name="hide" value="なし"/>
-				<node name="show" value="タテのスライダー"/>
-				<node name="showAsProgress" value="タテの進度メータ"/>
-				<node name="showAsFooter" value="ヨコのフッタ"/>
+				<node name="show" value="タテ向きのスライダー"/>
+				<node name="showAsProgress" value="タテ向きの進度メータ"/>
+				<node name="showAsFooter" value="ヨコ向きのフッタ"/>
 			</node>
 			<node name="footerHeight" value="フッタ幅"/>
 			<node name="footerColor" value="フッタ色"/>
@@ -705,8 +705,8 @@
 			<node name="animation" value="アニメーション">
 				<node name="none" value="ページめくりのアニメーションなし"/>
 				<node name="curl" value="巻き上げ"/>
-				<node name="slide" value="スライド"/>
-				<node name="shift" value="並べスライド"/>
+				<node name="slide" value="重ねてスライド"/>
+				<node name="shift" value="並べてスライド"/>
 			</node>
 			<node name="animationSpeed" value="アニメーション速度">
 				<node name="fast" value="速い"/>
@@ -965,7 +965,7 @@
 			</node>
 		</node>
 		<node name="fileChooser">
-			<node name="root" value="最上位"/>
+			<node name="root" value="(最上位)"/>
 			<node name="newFolder" value="新規フォルダ"/>
 			<node name="folderNameHint" value="フォルダ名"/>
 			<node name="menu">
