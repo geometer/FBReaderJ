@@ -22,6 +22,9 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
     private LayoutInflater mLayoutInflater;
     private View mRootView;
 
+    private int mSelectionStart;
+    private int mSelectionEnd;
+
     protected YotaSelectionPopup(FBReaderApp application, Context ctx) {
         super(application);
         mReaderApp = application;
@@ -29,12 +32,15 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
         mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View root = mLayoutInflater.inflate(R.layout.yota_selection_popup, null);
-        TextView highlight = (TextView)root.findViewById(R.id.highlight);
-        highlight.setTag(ActionCode.SELECTION_BOOKMARK);
-        TextView copy = (TextView)root.findViewById(R.id.copy);
-        copy.setTag(ActionCode.SELECTION_COPY_TO_CLIPBOARD);
-        TextView share = (TextView)root.findViewById(R.id.share);
-        share.setTag(ActionCode.SELECTION_SHARE);
+
+        final int[] views = {R.id.highlight, R.id.copy, R.id.share, R.id.translate, R.id.define};
+        final String[] codes = {ActionCode.SELECTION_BOOKMARK, ActionCode.SELECTION_COPY_TO_CLIPBOARD,
+                ActionCode.SELECTION_SHARE, ActionCode.SELECTION_TRANSLATE, ActionCode.SELECTION_DEFINE};
+        for (int i = 0; i < views.length; ++i) {
+            TextView view = (TextView)root.findViewById(views[i]);
+            view.setTag(codes[i]);
+            view.setOnClickListener(this);
+        }
 
         mPopup = new android.widget.PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));
@@ -60,7 +66,12 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
 
     @Override
     protected void show_() {
-        mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
+        mPopup.showAtLocation(mRootView, Gravity.HORIZONTAL_GRAVITY_MASK, 0, mSelectionEnd);
+    }
+
+    public void move(int selectionStart, int selectionEnd) {
+        mSelectionStart = selectionStart;
+        mSelectionEnd = selectionEnd;
     }
 
     @Override

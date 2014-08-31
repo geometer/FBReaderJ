@@ -89,4 +89,6 @@ public enum DeviceType {
 	public boolean hasStandardSearchDialog() {
 		return this != NOOK && this != NOOK12;
 	}
+
+    public boolean isYotaPhone() { return this == YOTA_PHONE || this == YOTA_PHONE2; }
 }

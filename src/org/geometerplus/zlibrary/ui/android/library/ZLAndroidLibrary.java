@@ -62,6 +62,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	private FBReader myActivity;
 	private final Application myApplication;
+    private Context myContext;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
@@ -126,10 +127,11 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	private DisplayMetrics myMetrics;
 	private DisplayMetrics getMetrics() {
-		if (myMetrics == null) {
+		/*if (myMetrics == null) {
 			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
 		}
-		return myMetrics;
+		return myMetrics;*/
+        return getCurrentContext().getResources().getDisplayMetrics(); // may be different on front and backscreen
 	}
 
 	@Override
@@ -188,6 +190,14 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		int OK = 1;
 		int EXCEPTION = 2;
 	}
+
+    public Context getCurrentContext() {
+        return myContext != null ? myContext : myApplication.getApplicationContext();
+    }
+
+    public void setCurrentContext(Context ctx) {
+        myContext = ctx;
+    }
 
 	private final class AndroidAssetsFile extends ZLResourceFile {
 		private final AndroidAssetsFile myParent;

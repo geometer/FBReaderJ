@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
@@ -77,6 +78,11 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+        if (!isSelectionEmpty() && DeviceType.Instance().isYotaPhone()) {
+            clearSelection();
+            return true;
+        }
+
 		final ZLTextRegion hyperlinkRegion = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
 		if (hyperlinkRegion != null) {
 			selectRegion(hyperlinkRegion);
@@ -103,7 +109,7 @@ public final class FBView extends ZLTextView {
 			);
 			return true;
 		}
-        //here we can reset selection
+
 		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, getContextWidth(), getContextHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap

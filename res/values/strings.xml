@@ -15,4 +15,6 @@
     <string name="highlight">Highlight</string>
     <string name="copy">Copy</string>
     <string name="share">Share</string>
+    <string name="define">Define</string>
+    <string name="translate">Translate</string>
 </resources>
