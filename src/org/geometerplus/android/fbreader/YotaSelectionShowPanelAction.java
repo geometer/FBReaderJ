@@ -5,8 +5,8 @@ import android.content.Context;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-public class SelectionShowBSPanelAction extends FBAndroidContextAction {
-    public SelectionShowBSPanelAction(Context ctx, FBReaderApp fbreader) {
+public class YotaSelectionShowPanelAction extends FBAndroidContextAction {
+    public YotaSelectionShowPanelAction(Context ctx, FBReaderApp fbreader) {
         super(ctx, fbreader);
     }
 
