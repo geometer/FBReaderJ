@@ -640,7 +640,7 @@
 				<node name="tile" value="Плитка"/>
 				<node name="tileMirror" value="Плитка с отражением"/>
 				<node name="fullscreen" value="Полный экран"/>
-				<node name="stretch" value="Растянуть в обоих направлениях"/>
+				<node name="stretch" value="Растянуть"/>
 				<node name="tileVertically" value="Растянуть по горизонтали"/>
 				<node name="tileHorizontally" value="Растянуть по вертикали"/>
 			</node>
