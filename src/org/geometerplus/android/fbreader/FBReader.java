@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.yotadevices.yotaphone2.fbreader.FBReaderYotaService;
 
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -308,8 +309,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.SEARCH, new SearchAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHARE_BOOK, new ShareBookAction(this, myFBReaderApp));
         if (DeviceType.Instance() == DeviceType.YOTA_PHONE || DeviceType.Instance() == DeviceType.YOTA_PHONE2) {
-            myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new YotaSelectionShowPanelAction(this, myFBReaderApp));
-            myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new YotaSelectionHidePanelAction(this, myFBReaderApp));
+            myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new YotaSelectionShowPanelAction(this, myFBReaderApp, YotaSelectionPopup.ID));
+            myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new YotaSelectionHidePanelAction(this, myFBReaderApp, YotaSelectionPopup.ID));
             myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
             myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
             myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(this, myFBReaderApp));
@@ -338,6 +339,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 		myFBReaderApp.addAction(ActionCode.OPEN_WEB_HELP, new OpenWebHelpAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.INSTALL_PLUGINS, new InstallPluginsAction(this, myFBReaderApp));
+
+        if (DeviceType.Instance().isYotaPhone()) {
+            myFBReaderApp.ViewOptions.ColorProfileName.setValue(ColorProfile.YOTA_FS_WHITE);
+        }
 	}
 
 	@Override

@@ -8,13 +8,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.yotadevices.yotaphone2.fbreader.UIUtils;
+
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View.OnClickListener {
-    final static String ID = "YotaSelectionPopup";
+    public final static String ID = "YotaFSSelectionPopup";
 
     private FBReaderApp mReaderApp;
     private android.widget.PopupWindow mPopup;
@@ -24,15 +26,25 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
 
     private int mPopupYOffset;
     private int mPopupHeight;
+    private int mConstYOffset;
 
-    protected YotaSelectionPopup(FBReaderApp application, Context ctx) {
+    public YotaSelectionPopup(FBReaderApp application, Context ctx) {
         super(application);
         mReaderApp = application;
         mContext = ctx;
+        mConstYOffset = (int)UIUtils.convertDpToPixel(10, ctx);
         mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View root = mLayoutInflater.inflate(R.layout.yota_selection_popup, null);
+        View root = mLayoutInflater.inflate(getLayoutId(), null);
+        fillLayout(root);
+        mPopup = new android.widget.PopupWindow(ctx);
+        mPopup.setBackgroundDrawable(new ColorDrawable(0));
+        mPopup.setContentView(root);
+        mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        mPopup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+    }
 
+    protected void fillLayout(View root) {
         final int[] views = {R.id.highlight, R.id.copy, R.id.share, R.id.translate, R.id.define};
         final String[] codes = {ActionCode.SELECTION_BOOKMARK, ActionCode.SELECTION_COPY_TO_CLIPBOARD,
                 ActionCode.SELECTION_SHARE, ActionCode.SELECTION_TRANSLATE, ActionCode.SELECTION_DEFINE};
@@ -41,12 +53,10 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
             view.setTag(codes[i]);
             view.setOnClickListener(this);
         }
+    }
 
-        mPopup = new android.widget.PopupWindow(ctx);
-        mPopup.setBackgroundDrawable(new ColorDrawable(0));
-        mPopup.setContentView(root);
-        mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        mPopup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+    protected int getLayoutId() {
+        return R.layout.yota_selection_popup;
     }
 
     @Override
@@ -77,11 +87,11 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
         mPopup.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         mPopupHeight = mPopup.getContentView().getMeasuredHeight();
 
-        if (selectionStart - mPopupHeight >= 0) {
-            mPopupYOffset = selectionStart - mPopupHeight;
+        if (selectionStart - mPopupHeight - mConstYOffset >= 0) {
+            mPopupYOffset = selectionStart - mPopupHeight - mConstYOffset;
         }
-        else if (mRootView.getHeight() - selectionEnd >= mPopupHeight) {
-            mPopupYOffset = selectionEnd;
+        else if (mRootView.getHeight() - selectionEnd >= (mPopupHeight + mConstYOffset)) {
+            mPopupYOffset = selectionEnd + mConstYOffset;
         }
         else {
             mPopupYOffset = 0;

@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader.options;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -66,8 +67,13 @@ public class ViewOptions {
 			new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
 		FooterHeight =
 			new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 20);
-		ColorProfileName =
-			new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
+        if (DeviceType.Instance().isYotaPhone()) {
+            ColorProfileName =
+                    new ZLStringOption("Options", "ColorProfile", ColorProfile.YOTA_FS_WHITE);
+        } else {
+            ColorProfileName =
+                    new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
+        }
 		ColorProfileName.setSpecialName("colorProfile");
 
 		YotaDrawOnBackScreen =

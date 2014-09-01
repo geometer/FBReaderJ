@@ -274,7 +274,6 @@ public abstract class ZLApplication {
 	public final PopupPanel getPopupById(String id) {
 		return myPopups.get(id);
 	}
-
 	public int getBatteryLevel() {
 		return (myWindow != null) ? myWindow.getBatteryLevel() : 0;
 	}

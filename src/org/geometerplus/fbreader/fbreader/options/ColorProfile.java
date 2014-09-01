@@ -28,6 +28,13 @@ public class ColorProfile {
 	public static final String DAY = "defaultLight";
 	public static final String NIGHT = "defaultDark";
 
+    public static final String YOTA_BS_WHITE = "yota_backscreen_white";
+    public static final String YOTA_BS_BLACK = "yota_backscreen_black";
+
+    public static final String YOTA_FS_WHITE = "yota_frontscreen_white";
+    public static final String YOTA_FS_BLACK = "yota_frontscreen_black";
+    public static final String YOTA_FS_SEPIA = "yota_frontscreen_sepia";
+
 	private static final ArrayList<String> ourNames = new ArrayList<String>();
 	private static final HashMap<String,ColorProfile> ourProfiles = new HashMap<String,ColorProfile>();
 
@@ -37,6 +44,11 @@ public class ColorProfile {
 			if (size == 0) {
 				ourNames.add(DAY);
 				ourNames.add(NIGHT);
+                ourNames.add(YOTA_BS_BLACK);
+                ourNames.add(YOTA_BS_WHITE);
+                ourNames.add(YOTA_FS_BLACK);
+                ourNames.add(YOTA_FS_WHITE);
+                ourNames.add(YOTA_FS_SEPIA);
 			} else for (int i = 0; i < size; ++i) {
 				ourNames.add(new ZLStringOption("Colors", "Scheme" + i, "").getValue());
 			}
@@ -102,25 +114,106 @@ public class ColorProfile {
 				createOption(name, "VisitedHyperlink", 200, 139, 255);
 			FooterFillOption =
 				createOption(name, "FooterFillOption", 85, 85, 85);
-		} else {
-			WallpaperOption =
-				new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
-			BackgroundOption =
-				createOption(name, "Background", 255, 255, 255);
-			SelectionBackgroundOption =
-				createOption(name, "SelectionBackground", 82, 131, 194);
-			SelectionForegroundOption =
-				createOption(name, "SelectionForeground", 255, 255, 220);
-			HighlightingOption =
-				createOption(name, "Highlighting", 255, 192, 128);
-			RegularTextOption =
-				createOption(name, "Text", 0, 0, 0);
-			HyperlinkTextOption =
-				createOption(name, "Hyperlink", 60, 139, 255);
-			VisitedHyperlinkTextOption =
-				createOption(name, "VisitedHyperlink", 200, 139, 255);
-			FooterFillOption =
-				createOption(name, "FooterFillOption", 170, 170, 170);
 		}
+        else if (YOTA_FS_BLACK.equals(name)) {
+            WallpaperOption =
+                    new ZLStringOption("Colors", name + ":Wallpaper", "");
+            BackgroundOption =
+                    createOption(name, "Background", 0, 0, 0);
+            SelectionBackgroundOption =
+                    createOption(name, "SelectionBackground", 192, 204, 212);
+            SelectionForegroundOption =
+                    createOption(name, "SelectionForeground", 255, 255, 220);
+            HighlightingOption =
+                    createOption(name, "Highlighting", 96, 96, 128);
+            RegularTextOption =
+                    createOption(name, "Text", 192, 192, 192);
+            HyperlinkTextOption =
+                    createOption(name, "Hyperlink", 60, 142, 224);
+            VisitedHyperlinkTextOption =
+                    createOption(name, "VisitedHyperlink", 200, 139, 255);
+            FooterFillOption =
+                    createOption(name, "FooterFillOption", 85, 85, 85);
+        }
+        else if (YOTA_FS_WHITE.equals(name)) {
+            WallpaperOption =
+                    new ZLStringOption("Colors", name + ":Wallpaper", "");
+            BackgroundOption =
+                    createOption(name, "Background", 255, 255, 255);
+            SelectionBackgroundOption =
+                    createOption(name, "SelectionBackground", 192, 204, 212);
+            SelectionForegroundOption =
+                    createOption(name, "SelectionForeground", 0, 0, 0);
+            HighlightingOption =
+                    createOption(name, "Highlighting", 255, 192, 128);
+            RegularTextOption =
+                    createOption(name, "Text", 0, 0, 0);
+            HyperlinkTextOption =
+                    createOption(name, "Hyperlink", 60, 139, 255);
+            VisitedHyperlinkTextOption =
+                    createOption(name, "VisitedHyperlink", 200, 139, 255);
+            FooterFillOption =
+                    createOption(name, "FooterFillOption", 170, 170, 170);
+        }
+        else if (YOTA_FS_SEPIA.equals(name)) {
+            WallpaperOption =
+                    new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
+            BackgroundOption =
+                    createOption(name, "Background", 255, 255, 255);
+            SelectionBackgroundOption =
+                    createOption(name, "SelectionBackground", 82, 131, 194);
+            SelectionForegroundOption =
+                    createOption(name, "SelectionForeground", 255, 255, 220);
+            HighlightingOption =
+                    createOption(name, "Highlighting", 255, 192, 128);
+            RegularTextOption =
+                    createOption(name, "Text", 0, 0, 0);
+            HyperlinkTextOption =
+                    createOption(name, "Hyperlink", 60, 139, 255);
+            VisitedHyperlinkTextOption =
+                    createOption(name, "VisitedHyperlink", 200, 139, 255);
+            FooterFillOption =
+                    createOption(name, "FooterFillOption", 170, 170, 170);
+        }
+        else if (YOTA_BS_WHITE.equals(name)) {
+            WallpaperOption =
+                    new ZLStringOption("Colors", name + ":Wallpaper", "");
+            BackgroundOption =
+                    createOption(name, "Background", 255, 255, 255);
+            SelectionBackgroundOption =
+                    createOption(name, "SelectionBackground", 0, 0, 0);
+            SelectionForegroundOption =
+                    createOption(name, "SelectionForeground", 255, 255, 255);
+            HighlightingOption =
+                    createOption(name, "Highlighting", 0, 0, 0);
+            RegularTextOption =
+                    createOption(name, "Text", 0, 0, 0);
+            HyperlinkTextOption =
+                    createOption(name, "Hyperlink", 0, 0, 0);
+            VisitedHyperlinkTextOption =
+                    createOption(name, "VisitedHyperlink", 0, 0, 0);
+            FooterFillOption =
+                    createOption(name, "FooterFillOption", 0, 0, 0);
+        }
+        else {
+            WallpaperOption =
+                    new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
+            BackgroundOption =
+                    createOption(name, "Background", 255, 255, 255);
+            SelectionBackgroundOption =
+                    createOption(name, "SelectionBackground", 82, 131, 194);
+            SelectionForegroundOption =
+                    createOption(name, "SelectionForeground", 255, 255, 220);
+            HighlightingOption =
+                    createOption(name, "Highlighting", 255, 192, 128);
+            RegularTextOption =
+                    createOption(name, "Text", 0, 0, 0);
+            HyperlinkTextOption =
+                    createOption(name, "Hyperlink", 60, 139, 255);
+            VisitedHyperlinkTextOption =
+                    createOption(name, "VisitedHyperlink", 200, 139, 255);
+            FooterFillOption =
+                    createOption(name, "FooterFillOption", 170, 170, 170);
+        }
 	}
 }
