@@ -62,7 +62,7 @@ public class PluginCollection {
 	private PluginCollection() {
 		addPlugin(new MobipocketPlugin());
 		if (Build.VERSION.SDK_INT >= 8) {
-			//addPlugin(new DjVuPlugin());
+			addPlugin(new DjVuPlugin());
 			addPlugin(new PDFPlugin());
 		}
 	}
