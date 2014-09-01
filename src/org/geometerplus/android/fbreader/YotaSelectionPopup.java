@@ -22,8 +22,8 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
     private LayoutInflater mLayoutInflater;
     private View mRootView;
 
-    private int mSelectionStart;
-    private int mSelectionEnd;
+    private int mPopupYOffset;
+    private int mPopupHeight;
 
     protected YotaSelectionPopup(FBReaderApp application, Context ctx) {
         super(application);
@@ -66,18 +66,33 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
 
     @Override
     protected void show_() {
-        mPopup.showAtLocation(mRootView, Gravity.HORIZONTAL_GRAVITY_MASK, 0, mSelectionEnd);
+        if (mPopupYOffset != 0) {
+            mPopup.showAtLocation(mRootView, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, mPopupYOffset);
+        } else {
+            mPopup.showAtLocation(mRootView, Gravity.CENTER, 0, 0);
+        }
     }
 
     public void move(int selectionStart, int selectionEnd) {
-        mSelectionStart = selectionStart;
-        mSelectionEnd = selectionEnd;
+        mPopup.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        mPopupHeight = mPopup.getContentView().getMeasuredHeight();
+
+        if (selectionStart - mPopupHeight >= 0) {
+            mPopupYOffset = selectionStart - mPopupHeight;
+        }
+        else if (mRootView.getHeight() - selectionEnd >= mPopupHeight) {
+            mPopupYOffset = selectionEnd;
+        }
+        else {
+            mPopupYOffset = 0;
+        }
     }
 
     @Override
     public void onClick(View v) {
         String action = (String)v.getTag();
         mReaderApp.runAction(action);
+        hide_();
     }
 
     public void setRootView(View root) {

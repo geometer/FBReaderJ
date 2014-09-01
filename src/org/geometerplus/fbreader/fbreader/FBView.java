@@ -80,6 +80,7 @@ public final class FBView extends ZLTextView {
 
         if (!isSelectionEmpty() && DeviceType.Instance().isYotaPhone()) {
             clearSelection();
+            myReader.hideActivePopup();
             return true;
         }
 

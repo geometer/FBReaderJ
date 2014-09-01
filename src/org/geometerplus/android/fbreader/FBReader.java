@@ -293,6 +293,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (myFBReaderApp.getPopupById(SelectionPopup.ID) == null) {
 			new SelectionPopup(myFBReaderApp);
 		}
+        if (myFBReaderApp.getPopupById(YotaSelectionPopup.ID) == null) {
+            new YotaSelectionPopup(myFBReaderApp, this);
+        }
         myFBReaderApp.setFrontScreenActionMap();
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
@@ -430,6 +433,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
+        ((YotaSelectionPopup)myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
 	}
 
 	@Override
