@@ -74,8 +74,6 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		} else {
 			Reader.setFrontScreenActionMap();
 			FBReaderApp.Instance().setWindow(BaseActivity);
-            final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-            zlibrary.setCurrentContext(null);
 			//FBReaderApp.Instance().initWindow();
 			mainView.setVisibility(View.VISIBLE);
 			mainHiddenView.setVisibility(View.GONE);

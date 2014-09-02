@@ -34,6 +34,7 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.TurnPageAction;
 import org.geometerplus.fbreader.fbreader.VolumeKeyTurnPageAction;
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -89,13 +90,10 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         setBSContentView(mRootView);
         hideActionBar();
         hideStatusBar();
+
         EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
         EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_A2);
         EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
-        final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-        if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
-            zlibrary.setCurrentContext(getBSDrawer().getBSContext());
-        }
         getCollection().bindToService(this, new Runnable() {
             public void run() {
                 if (myCurrentBook == null) {
@@ -117,8 +115,6 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     @Override
     protected void onBSPause() {
         super.onBSPause();
-        final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-        zlibrary.setCurrentContext(null);
     }
 
     @Override

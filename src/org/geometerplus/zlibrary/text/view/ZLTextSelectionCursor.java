@@ -46,10 +46,12 @@ public enum ZLTextSelectionCursor {
 	}
 
     private static void yotaInit() {
-        final float dpi = ZLibrary.Instance().getDisplayDPI();
-        ourAccent = (int)((dpi / 160.f) * 7);
-        ourWidth = (int)((dpi / 160.f) * 12);
-        ourHeight = (int)((dpi / 160.f) * 14);
+        if (ourHeight == 0 ) {
+            final float dpi = ZLibrary.Instance().getDisplayDPI();
+            ourAccent = (int) ((dpi / 160.f) * 7);
+            ourWidth = (int) ((dpi / 160.f) * 12);
+            ourHeight = (int) ((dpi / 160.f) * 14);
+        }
     }
 
 	static int getHeight() {

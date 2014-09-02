@@ -62,7 +62,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	private FBReader myActivity;
 	private final Application myApplication;
-    private Context myContext;
 
 	ZLAndroidLibrary(Application application) {
 		myApplication = application;
@@ -191,12 +190,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
     public Context getCurrentContext() {
-        return myContext != null ? myContext : myApplication.getApplicationContext();
-    }
-
-    public void setCurrentContext(Context ctx) {
-        myContext = ctx;
-        myMetrics = getCurrentContext().getResources().getDisplayMetrics(); // may be different on front and backscreen;
+        return myApplication.getApplicationContext();
     }
 
 	private final class AndroidAssetsFile extends ZLResourceFile {

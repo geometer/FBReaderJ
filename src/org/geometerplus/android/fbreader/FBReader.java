@@ -339,10 +339,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 		myFBReaderApp.addAction(ActionCode.OPEN_WEB_HELP, new OpenWebHelpAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.INSTALL_PLUGINS, new InstallPluginsAction(this, myFBReaderApp));
-
-        if (DeviceType.Instance().isYotaPhone()) {
-            myFBReaderApp.ViewOptions.ColorProfileName.setValue(ColorProfile.YOTA_FS_WHITE);
-        }
 	}
 
 	@Override
@@ -432,6 +428,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				zlibrary.ShowStatusBarOption.saveSpecialValue();
 				zlibrary.ShowActionBarOption.saveSpecialValue();
 				myFBReaderApp.ViewOptions.ColorProfileName.saveSpecialValue();
+                myFBReaderApp.ViewOptions.YotaFSColorProfileName.saveSpecialValue();
+                myFBReaderApp.ViewOptions.YotaBSColorProfileName.saveSpecialValue();
 				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
 			}
 		});

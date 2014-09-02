@@ -76,6 +76,8 @@ public class ColorProfile {
 	public final ZLColorOption HyperlinkTextOption;
 	public final ZLColorOption VisitedHyperlinkTextOption;
 	public final ZLColorOption FooterFillOption;
+    public final ZLColorOption SelectionCursorOption;
+    public final ZLColorOption SelectionCursorFillOption;
 
 	private ColorProfile(String name, ColorProfile base) {
 		this(name);
@@ -114,6 +116,11 @@ public class ColorProfile {
 				createOption(name, "VisitedHyperlink", 200, 139, 255);
 			FooterFillOption =
 				createOption(name, "FooterFillOption", 85, 85, 85);
+            SelectionCursorOption =
+                createOption(name, "SelectionCursorOption", 19, 157, 235);
+            SelectionCursorFillOption =
+                    createOption(name, "SelectionCursorFillOption", 19, 157, 235);
+
 		}
         else if (YOTA_FS_BLACK.equals(name)) {
             WallpaperOption =
@@ -134,6 +141,10 @@ public class ColorProfile {
                     createOption(name, "VisitedHyperlink", 200, 139, 255);
             FooterFillOption =
                     createOption(name, "FooterFillOption", 85, 85, 85);
+            SelectionCursorOption =
+                    createOption(name, "SelectionCursorOption", 19, 157, 235);
+            SelectionCursorFillOption =
+                    createOption(name, "SelectionCursorFillOption", 19, 157, 235);
         }
         else if (YOTA_FS_WHITE.equals(name)) {
             WallpaperOption =
@@ -154,6 +165,10 @@ public class ColorProfile {
                     createOption(name, "VisitedHyperlink", 200, 139, 255);
             FooterFillOption =
                     createOption(name, "FooterFillOption", 170, 170, 170);
+            SelectionCursorOption =
+                    createOption(name, "SelectionCursorOption", 19, 157, 235);
+            SelectionCursorFillOption =
+                    createOption(name, "SelectionCursorFillOption", 19, 157, 235);
         }
         else if (YOTA_FS_SEPIA.equals(name)) {
             WallpaperOption =
@@ -174,6 +189,10 @@ public class ColorProfile {
                     createOption(name, "VisitedHyperlink", 200, 139, 255);
             FooterFillOption =
                     createOption(name, "FooterFillOption", 170, 170, 170);
+            SelectionCursorOption =
+                    createOption(name, "SelectionCursorOption", 19, 157, 235);
+            SelectionCursorFillOption =
+                    createOption(name, "SelectionCursorFillOption", 19, 157, 235);
         }
         else if (YOTA_BS_WHITE.equals(name)) {
             WallpaperOption =
@@ -194,6 +213,34 @@ public class ColorProfile {
                     createOption(name, "VisitedHyperlink", 0, 0, 0);
             FooterFillOption =
                     createOption(name, "FooterFillOption", 0, 0, 0);
+            SelectionCursorOption =
+                    createOption(name, "SelectionCursorOption", 0, 0, 0);
+            SelectionCursorFillOption =
+                    createOption(name, "SelectionCursorFillOption", 0, 0, 0);
+        }
+        else if (YOTA_BS_BLACK.equals(name)) {
+            WallpaperOption =
+                    new ZLStringOption("Colors", name + ":Wallpaper", "");
+            BackgroundOption =
+                    createOption(name, "Background", 0, 0, 0);
+            SelectionBackgroundOption =
+                    createOption(name, "SelectionBackground", 255, 255, 255);
+            SelectionForegroundOption =
+                    createOption(name, "SelectionForeground", 0, 0, 0);
+            HighlightingOption =
+                    createOption(name, "Highlighting", 255, 255, 255);
+            RegularTextOption =
+                    createOption(name, "Text", 255, 255, 255);
+            HyperlinkTextOption =
+                    createOption(name, "Hyperlink", 0, 0, 0);
+            VisitedHyperlinkTextOption =
+                    createOption(name, "VisitedHyperlink", 0, 0, 0);
+            FooterFillOption =
+                    createOption(name, "FooterFillOption", 0, 0, 0);
+            SelectionCursorOption =
+                    createOption(name, "SelectionCursorOption", 255, 255, 255);
+            SelectionCursorFillOption =
+                    createOption(name, "SelectionCursorFillOption", 255, 255, 255);
         }
         else {
             WallpaperOption =
@@ -214,6 +261,10 @@ public class ColorProfile {
                     createOption(name, "VisitedHyperlink", 200, 139, 255);
             FooterFillOption =
                     createOption(name, "FooterFillOption", 170, 170, 170);
+            SelectionCursorOption =
+                    createOption(name, "SelectionCursorOption", 19, 157, 235);
+            SelectionCursorFillOption =
+                    createOption(name, "SelectionCursorFillOption", 19, 157, 235);
         }
 	}
 }
