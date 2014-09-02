@@ -23,6 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public class ColorProfile {
 	public static final String DAY = "defaultLight";
@@ -56,6 +57,7 @@ public class ColorProfile {
 	public final String Name;
 
 	public final ZLStringOption WallpaperOption;
+	public final ZLEnumOption<ZLPaintContext.FillMode> FillModeOption;
 	public final ZLColorOption BackgroundOption;
 	public final ZLColorOption SelectionBackgroundOption;
 	public final ZLColorOption SelectionForegroundOption;
@@ -67,6 +69,8 @@ public class ColorProfile {
 
 	private ColorProfile(String name, ColorProfile base) {
 		this(name);
+		WallpaperOption.setValue(base.WallpaperOption.getValue());
+		FillModeOption.setValue(base.FillModeOption.getValue());
 		BackgroundOption.setValue(base.BackgroundOption.getValue());
 		SelectionBackgroundOption.setValue(base.SelectionBackgroundOption.getValue());
 		SelectionForegroundOption.setValue(base.SelectionForegroundOption.getValue());
@@ -86,6 +90,8 @@ public class ColorProfile {
 		if (NIGHT.equals(name)) {
 			WallpaperOption =
 				new ZLStringOption("Colors", name + ":Wallpaper", "");
+			FillModeOption =
+				new ZLEnumOption<ZLPaintContext.FillMode>(name, "FillMode", ZLPaintContext.FillMode.tile);
 			BackgroundOption =
 				createOption(name, "Background", 0, 0, 0);
 			SelectionBackgroundOption =
@@ -105,6 +111,8 @@ public class ColorProfile {
 		} else {
 			WallpaperOption =
 				new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
+			FillModeOption =
+				new ZLEnumOption<ZLPaintContext.FillMode>(name, "FillMode", ZLPaintContext.FillMode.tile);
 			BackgroundOption =
 				createOption(name, "Background", 255, 255, 255);
 			SelectionBackgroundOption =

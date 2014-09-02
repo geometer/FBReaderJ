@@ -45,16 +45,28 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private final Paint myFillPaint = new Paint();
 	private final Paint myOutlinePaint = new Paint();
 
-	private final int myWidth;
-	private final int myHeight;
+	static class Geometry {
+		final Size ScreenSize;
+		final Size AreaSize;
+		final int LeftMargin;
+		final int TopMargin;
+
+		Geometry(int screenWidth, int screenHeight, int width, int height, int leftMargin, int topMargin) {
+			ScreenSize = new Size(screenWidth, screenHeight);
+			AreaSize = new Size(width, height);
+			LeftMargin = leftMargin;
+			TopMargin = topMargin;
+		}
+	}
+
+	private final Geometry myGeometry;
 	private final int myScrollbarWidth;
 
 	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
 
-	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
+	ZLAndroidPaintContext(Canvas canvas, Geometry geometry, int scrollbarWidth) {
 		myCanvas = canvas;
-		myWidth = width - scrollbarWidth;
-		myHeight = height;
+		myGeometry = geometry;
 		myScrollbarWidth = scrollbarWidth;
 
 		myTextPaint.setLinearText(false);
@@ -80,16 +92,21 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	private static ZLFile ourWallpaperFile;
 	private static Bitmap ourWallpaper;
+	private static FillMode ourFillMode;
 	@Override
-	public void clear(ZLFile wallpaperFile, WallpaperMode mode) {
-		if (!wallpaperFile.equals(ourWallpaperFile)) {
+	public void clear(ZLFile wallpaperFile, FillMode mode) {
+		if (!wallpaperFile.equals(ourWallpaperFile) || mode != ourFillMode) {
 			ourWallpaperFile = wallpaperFile;
+			ourFillMode = mode;
 			ourWallpaper = null;
 			try {
 				final Bitmap fileBitmap =
 					BitmapFactory.decodeStream(wallpaperFile.getInputStream());
 				switch (mode) {
-					case TILE_MIRROR:
+					default:
+						ourWallpaper = fileBitmap;
+						break;
+					case tileMirror:
 					{
 						final int w = fileBitmap.getWidth();
 						final int h = fileBitmap.getHeight();
@@ -111,9 +128,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 						ourWallpaper = wallpaper;
 						break;
 					}
-					case TILE:
-						ourWallpaper = fileBitmap;
-						break;
 				}
 			} catch (Throwable t) {
 				t.printStackTrace();
@@ -123,9 +137,75 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			myBackgroundColor = ZLAndroidColorUtil.getAverageColor(ourWallpaper);
 			final int w = ourWallpaper.getWidth();
 			final int h = ourWallpaper.getHeight();
-			for (int cw = 0, iw = 1; cw < myWidth; cw += w, ++iw) {
-				for (int ch = 0, ih = 1; ch < myHeight; ch += h, ++ih) {
-					myCanvas.drawBitmap(ourWallpaper, cw, ch, myFillPaint);
+			final Geometry g = myGeometry;
+			switch (mode) {
+				case fullscreen:
+				{
+					final Matrix m = new Matrix();
+					m.preScale(1f * g.ScreenSize.Width / w, 1f * g.ScreenSize.Height / h);
+					m.postTranslate(-g.LeftMargin, -g.TopMargin);
+					myCanvas.drawBitmap(ourWallpaper, m, myFillPaint);
+					break;
+				}
+				case stretch:
+				{
+					final Matrix m = new Matrix();
+					final float sw = 1f * g.ScreenSize.Width / w;
+					final float sh = 1f * g.ScreenSize.Height / h;
+					final float scale;
+					float dx = g.LeftMargin;
+					float dy = g.TopMargin;
+					if (sw < sh) {
+						scale = sh;
+						dx += (scale * w - g.ScreenSize.Width) / 2;
+					} else {
+						scale = sw;
+						dy += (scale * h - g.ScreenSize.Height) / 2;
+					}
+					m.preScale(scale, scale);
+					m.postTranslate(-dx, -dy);
+					myCanvas.drawBitmap(ourWallpaper, m, myFillPaint);
+					break;
+				}
+				case tileVertically:
+				{
+					final Matrix m = new Matrix();
+					final int dx = g.LeftMargin;
+					final int dy = g.TopMargin - g.TopMargin / h * h;
+					m.preScale(1f * g.ScreenSize.Width / w, 1);
+					m.postTranslate(-dx, -dy);
+					for (int ch = g.AreaSize.Height + dy; ch > 0; ch -= h) {
+						myCanvas.drawBitmap(ourWallpaper, m, myFillPaint);
+						m.postTranslate(0, h);
+					}
+					break;
+				}
+				case tileHorizontally:
+				{
+					final Matrix m = new Matrix();
+					final int dx = g.LeftMargin - g.LeftMargin / w * w;
+					final int dy = g.TopMargin;
+					m.preScale(1, 1f * g.ScreenSize.Height / h);
+					m.postTranslate(-dx, -dy);
+					for (int cw = g.AreaSize.Width + dx; cw > 0; cw -= w) {
+						myCanvas.drawBitmap(ourWallpaper, m, myFillPaint);
+						m.postTranslate(w, 0);
+					}
+					break;
+				}
+				case tile:
+				case tileMirror:
+				{
+					final int dx = g.LeftMargin - g.LeftMargin / w * w;
+					final int dy = g.TopMargin - g.TopMargin / h * h;
+					final int fullw = g.AreaSize.Width + dx;
+					final int fullh = g.AreaSize.Height + dy;
+					for (int cw = 0; cw < fullw; cw += w) {
+						for (int ch = 0; ch < fullh; ch += h) {
+							myCanvas.drawBitmap(ourWallpaper, cw - dx, ch - dy, myFillPaint);
+						}
+					}
+					break;
 				}
 			}
 		} else {
@@ -137,7 +217,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void clear(ZLColor color) {
 		myBackgroundColor = color;
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
-		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
+		myCanvas.drawRect(0, 0, myGeometry.AreaSize.Width, myGeometry.AreaSize.Height, myFillPaint);
 	}
 
 	@Override
@@ -233,10 +313,10 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	public int getWidth() {
-		return myWidth;
+		return myGeometry.AreaSize.Width - myScrollbarWidth;
 	}
 	public int getHeight() {
-		return myHeight;
+		return myGeometry.AreaSize.Height;
 	}
 
 	@Override

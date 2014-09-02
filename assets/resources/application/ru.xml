@@ -341,9 +341,15 @@
 				<node name="never" value="Никогда"/>
 			</node>
 			<node name="uploadAllBooks" value="Загружать все книги на сервер"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Синхронизировать позиции"/>
 			<node name="bookmarks" value="Синхронизировать закладки"/>
 			<node name="metainfo" value="Синхронизировать информацию о книге (название, категории, и т.п.)"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Каталоги">
 			<node name="summary" value="Где искать файлы"/>
@@ -355,9 +361,6 @@
 			</node>
 			<node name="fontPath" value="Где лежат шрифты">
 				<node name="chooserTitle" value="Каталог для шрифтов"/>
-			</node>
-			<node name="wallpaperPath" value="Где лежат рисунки для фона">
-				<node name="chooserTitle" value="Каталог для рисунков"/>
 			</node>
 			<node name="tempDir" value="Где создавать временные файлы">
 				<node name="chooserTitle" value="Для временных файлов"/>
@@ -622,14 +625,24 @@
 			<node name="summary" value="Настройки цвета"/>
 			<node name="background" value="Фон">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="solidColor" value="Сплошной цвет…"/>
+					<node name="predefined" value="Готовые фоны…"/>
+					<node name="selectFile" value="Выбрать файл…"/>
 				</node>
 				<node name="solidColor" value="Сплошной цвет"/>
 				<node name="leather" value="Кожа"/>
 				<node name="sepia" value="Сепия"/>
 				<node name="wood" value="Дерево"/>
+				<node name="sand" value="Песок"/>
+				<node name="hardpaper" value="Грубая бумага"/>
+			</node>
+			<node name="fillMode" value="Способ заполнения">
+				<node name="tile" value="Плитка"/>
+				<node name="tileMirror" value="Плитка с отражением"/>
+				<node name="fullscreen" value="Полный экран"/>
+				<node name="stretch" value="Растянуть"/>
+				<node name="tileVertically" value="Растянуть по горизонтали"/>
+				<node name="tileHorizontally" value="Растянуть по вертикали"/>
 			</node>
 			<node name="selectionBackground" value="Фон пометки"/>
 			<node name="selectionForeground" value="Текст пометки"/>

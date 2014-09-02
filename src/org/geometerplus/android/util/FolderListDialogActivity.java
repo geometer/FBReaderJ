@@ -84,7 +84,7 @@ public class FolderListDialogActivity extends ListActivity {
 	@Override
 	protected void onActivityResult(int index, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			final String path = FileChooserUtil.pathFromData(data);
+			final String path = FileChooserUtil.folderPathFromData(data);
 			final int existing = myFolderList.indexOf(path);
 			if (existing == -1) {
 				if (index == 0) {

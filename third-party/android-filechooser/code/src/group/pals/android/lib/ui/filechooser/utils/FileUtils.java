@@ -41,6 +41,10 @@ public class FileUtils {
     }
 
     private static boolean accessDenied(IFile f) {
+		if (f.isFile()) {
+			return !f.canRead();
+		}
+
         if (!(f instanceof File)) {
             return false;
         }
@@ -61,22 +65,21 @@ public class FileUtils {
      */
     public static int getResIcon(IFile file, final IFileProvider.FilterMode filterMode) {
         if (file == null || !file.exists())
-            return 0;//android.R.drawable.ic_delete;
+            return R.drawable.afc_item_file;
 
         if (file.isFile()) {
-            String filename = file.getName();
-            for (String r : _MapFileIcons.keySet())
-                if (filename.matches(r))
-                    return _MapFileIcons.get(r);
-
-            return R.drawable.afc_file;
+            //String filename = file.getName();
+            //for (String r : _MapFileIcons.keySet())
+            //    if (filename.matches(r))
+            //        return _MapFileIcons.get(r);
+            return R.drawable.afc_item_file;
         } else if (file.isDirectory()) {
-            if (filterMode != IFileProvider.FilterMode.AnyDirectories) {
+            if (filterMode == IFileProvider.FilterMode.DirectoriesOnly) {
                 if (file instanceof File && !((File)file).canWrite()) {
                     if (file instanceof ParentFile) {
-                        return R.drawable.afc_folder;
+                        return R.drawable.afc_item_folder;
                     } else if (accessDenied(file)) {
-                        return R.drawable.afc_folder_no_access;
+                        return R.drawable.afc_item_folder;
                     } else {
                         return R.drawable.afc_folder_locked;
                     }
@@ -84,16 +87,29 @@ public class FileUtils {
                     return R.drawable.afc_folder;
                 }
             } else {
-                if (accessDenied(file)) {
-                    return R.drawable.afc_folder_no_access;
-                } else {
-                    return R.drawable.afc_folder;
-                }
+                return R.drawable.afc_item_folder;
             }
         }
 
-        return 0;//android.R.drawable.ic_delete;
+        return R.drawable.afc_item_file;
     }// getResIcon()
+
+    public static boolean isAccessible(IFile file, final String regexp) {
+        if (file == null || !file.exists()) {
+            return false;
+		}
+
+		if (accessDenied(file)) {
+			return false;
+		}
+        if (file.isFile()) {
+			return regexp == null || file.getName().matches(regexp);
+        } else if (file.isDirectory()) {
+			return true;
+        }
+
+        return false;
+    }// isAccessible()
 
     /**
      * Checks whether the filename given is valid or not.<br>

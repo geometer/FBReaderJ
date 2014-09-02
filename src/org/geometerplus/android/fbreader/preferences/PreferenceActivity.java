@@ -144,10 +144,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "fontPath", Paths.FontPathOption, fontReloader
 		));
-		final PreferenceSet wallpaperReloader = new PreferenceSet.Reloader();
-		directoriesScreen.addPreference(myChooserCollection.createPreference(
-			directoriesScreen.Resource, "wallpaperPath", Paths.WallpaperPathOption, wallpaperReloader
-		));
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption, null
 		));
@@ -453,18 +449,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
+		final PreferenceSet backgroundSet = new PreferenceSet.Enabler() {
+			@Override
+			protected Boolean detectState() {
+				return profile.WallpaperOption.getValue().startsWith("/");
+			}
+		};
 		myBackgroundPreference = new BackgroundPreference(
 			this,
 			profile,
 			colorsScreen.Resource.getResource("background"),
 			BACKGROUND_REQUEST_CODE
-		);
+		) {
+			@Override
+			public void update(Intent data) {
+				super.update(data);
+				backgroundSet.run();
+			}
+		};
 		colorsScreen.addPreference(myBackgroundPreference);
-		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
-			this, profile, colorsScreen.Resource.getResource("background")
-		);
-		colorsScreen.addPreference(wallpaperPreference);
-		wallpaperReloader.add(wallpaperPreference);
+		backgroundSet.add(colorsScreen.addOption(profile.FillModeOption, "fillMode"));
+		backgroundSet.run();
 
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");

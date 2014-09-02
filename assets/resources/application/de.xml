@@ -342,9 +342,15 @@
 				<node name="never" value="Niemals"/>
 			</node>
 			<node name="uploadAllBooks" value="Alle Bücher auf den Server laden"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchronisiere Leseposition"/>
 			<node name="bookmarks" value="Synchronisiere Lesezeichen"/>
 			<node name="metainfo" value="Synchronisiere Meta Informationen (Titel, Tags, usw.)"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Verzeichnisse">
 			<node name="summary" value="Verzeichnisse in denen Dateien gesucht werden"/>
@@ -356,9 +362,6 @@
 			</node>
 			<node name="fontPath" value="Schriftarten suchen in">
 				<node name="chooserTitle" value="Schriftarten"/>
-			</node>
-			<node name="wallpaperPath" value="Hintergrundbildern suchen in">
-				<node name="chooserTitle" value="Hintergrundbilder"/>
 			</node>
 			<node name="tempDir" value="Temporäre Dateien speichern in">
 				<node name="chooserTitle" value="Temporäre Dateien"/>
@@ -624,13 +627,23 @@
 			<node name="background" value="Hintergrund">
 				<node name="chooser">
 					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
 					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
 				</node>
 				<node name="solidColor" value="Einfarbig"/>
 				<node name="leather" value="Leder"/>
 				<node name="sepia" value="Sepia (altes Papier)"/>
 				<node name="wood" value="Holz"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+			</node>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
 			</node>
 			<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
 			<node name="selectionForeground" value="Ausgewählter Text"/>

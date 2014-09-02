@@ -342,9 +342,15 @@
 				<node name="never" value="Never" toBeTranslated="true"/>
 			</node>
 			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
 			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Каталози">
 			<node name="summary" value="Търси в каталозите"/>
@@ -356,9 +362,6 @@
 			</node>
 			<node name="fontPath" value="Къде да търся шрифтове">
 				<node name="chooserTitle" value="Каталог с шрифтове"/>
-			</node>
-			<node name="wallpaperPath" value="Къде да търся фонови изображения">
-				<node name="chooserTitle" value="Каталог с тапети"/>
 			</node>
 			<node name="tempDir" value="Къде да съхранявам временни файлове">
 				<node name="chooserTitle" value="Директория за временни файлове"/>
@@ -624,13 +627,23 @@
 			<node name="background" value="Фон">
 				<node name="chooser">
 					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined image…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
 					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
 				</node>
 				<node name="solidColor" value="Цвят за запълване"/>
 				<node name="leather" value="Кожа"/>
 				<node name="sepia" value="Сепия"/>
 				<node name="wood" value="Дърво"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+			</node>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
 			</node>
 			<node name="selectionBackground" value="Фон на селектирания текст"/>
 			<node name="selectionForeground" value="Селектиран текст"/>
