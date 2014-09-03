@@ -8,6 +8,6 @@
           android:text="Test"
           android:fontFamily="PT Sans Pro Extra Bold"
           android:textSize="20dp"
-          android:textColor="@drawable/yota_selection_popup_item_text"
+          android:textColor="@color/yota_selection_popup_item_text"
           android:background="@drawable/yota_selection_popup_item_background">
 </TextView>

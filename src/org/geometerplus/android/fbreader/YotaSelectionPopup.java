@@ -18,12 +18,12 @@ import org.geometerplus.zlibrary.ui.android.R;
 public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View.OnClickListener {
     public final static String ID = "YotaFSSelectionPopup";
 
-    private FBReaderApp mReaderApp;
-    private android.widget.PopupWindow mPopup;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private View mRootView;
-
+    protected FBReaderApp mReaderApp;
+    protected android.widget.PopupWindow mPopup;
+    protected Context mContext;
+    protected LayoutInflater mLayoutInflater;
+    protected View mRootView;
+    protected View mContentView;
     private int mPopupYOffset;
     private int mPopupHeight;
     private int mConstYOffset;
@@ -35,11 +35,11 @@ public class YotaSelectionPopup extends ZLApplication.PopupPanel implements View
         mConstYOffset = (int)UIUtils.convertDpToPixel(10, ctx);
         mLayoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View root = mLayoutInflater.inflate(getLayoutId(), null);
-        fillLayout(root);
+        mContentView = mLayoutInflater.inflate(getLayoutId(), null);
+        fillLayout(mContentView);
         mPopup = new android.widget.PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));
-        mPopup.setContentView(root);
+        mPopup.setContentView(mContentView);
         mPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         mPopup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
     }

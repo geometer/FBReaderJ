@@ -22,6 +22,10 @@ import com.yotadevices.sdk.Drawer;
 import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.actions.ToggleBarsAction;
 
+import org.geometerplus.android.fbreader.SelectionBookmarkAction;
+import org.geometerplus.android.fbreader.SelectionCopyAction;
+import org.geometerplus.android.fbreader.YotaBSSelectionBookmarkAction;
+import org.geometerplus.android.fbreader.YotaBSSelectionCopyAction;
 import org.geometerplus.android.fbreader.YotaSelectionBSPopup;
 import org.geometerplus.android.fbreader.YotaSelectionHidePanelAction;
 import org.geometerplus.android.fbreader.YotaSelectionPopup;
@@ -76,7 +80,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         mWidget.setIsBsActive(true);
 
         if (myFBReaderApp.getPopupById(YotaSelectionBSPopup.ID) == null) {
-            new YotaSelectionBSPopup(myFBReaderApp, getBSDrawer().getBSContext());
+            new YotaSelectionBSPopup(myFBReaderApp, getBsContext());
         }
         ((YotaSelectionBSPopup)myFBReaderApp.getPopupById(YotaSelectionBSPopup.ID)).setRootView(mRootView);
 
@@ -144,9 +148,15 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         myFBReaderApp.addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(myFBReaderApp, false));
         myFBReaderApp.addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(myFBReaderApp, true));
         myFBReaderApp.addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(myFBReaderApp, false));
-        myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(this, myFBReaderApp));
-        myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new YotaSelectionShowPanelAction(this, myFBReaderApp, YotaSelectionBSPopup.ID));
-        myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new YotaSelectionHidePanelAction(this, myFBReaderApp, YotaSelectionBSPopup.ID));
+        myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(getBsContext(), myFBReaderApp));
+        myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new YotaSelectionShowPanelAction(getBsContext(), myFBReaderApp, YotaSelectionBSPopup.ID));
+        myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new YotaSelectionHidePanelAction(getBsContext(), myFBReaderApp, YotaSelectionBSPopup.ID));
+        myFBReaderApp.addAction(ActionCode.SELECTION_BOOKMARK, new YotaBSSelectionBookmarkAction(getBsContext(), myFBReaderApp));
+        myFBReaderApp.addAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD, new YotaBSSelectionCopyAction(getBsContext(), myFBReaderApp));
+    }
+
+    private Context getBsContext() {
+        return getBSDrawer().getBSContext();
     }
 
     @Override
@@ -261,7 +271,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     public void showActionBar() {
         if (mActionBar == null) {
-            mActionBar = new BSReadingActionBar(getBSDrawer().getBSContext(), mRootView, myFBReaderApp, mOnFontChangedListener);
+            mActionBar = new BSReadingActionBar(getBsContext(), mRootView, myFBReaderApp, mOnFontChangedListener);
         }
         mActionBar.show();
     }
@@ -269,7 +279,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
     public void showStatusBar() {
         //setSystemBSUiVisibility(Constants.SystemBSFlags.SYSTEM_BS_UI_FLAG_VISIBLE);
         if (mStatusBar == null) {
-            mStatusBar = new BSReadingStatusBar(getBSDrawer().getBSContext(), mRootView, myFBReaderApp);
+            mStatusBar = new BSReadingStatusBar(getBsContext(), mRootView, myFBReaderApp);
         }
         mStatusBar.show();
     }

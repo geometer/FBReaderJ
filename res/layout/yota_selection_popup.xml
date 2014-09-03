@@ -18,7 +18,7 @@
                   android:textSize="20dp"
                   android:gravity="center"
                   android:text="@string/highlight"
-                  android:textColor="@drawable/yota_selection_popup_item_text"
+                  android:textColor="@color/yota_selection_popup_item_text"
                   android:background="@drawable/yota_selection_popup_item_background">
         </TextView>
         <TextView
@@ -33,7 +33,7 @@
                   android:textSize="20dp"
                   android:gravity="center"
                   android:text="@string/copy"
-                  android:textColor="@drawable/yota_selection_popup_item_text"
+                  android:textColor="@color/yota_selection_popup_item_text"
                   android:background="@drawable/yota_selection_popup_item_background">
         </TextView>
         <TextView
@@ -46,7 +46,7 @@
                   android:textSize="20dp"
                   android:gravity="center"
                   android:text="@string/share"
-                  android:textColor="@drawable/yota_selection_popup_item_text"
+                  android:textColor="@color/yota_selection_popup_item_text"
                   android:background="@drawable/yota_selection_popup_item_background">
         </TextView>
     </LinearLayout>
@@ -65,7 +65,7 @@
             android:textSize="20dp"
             android:gravity="center"
             android:text="@string/translate"
-            android:textColor="@drawable/yota_selection_popup_item_text"
+            android:textColor="@color/yota_selection_popup_item_text"
             android:background="@drawable/yota_selection_popup_item_background">
         </TextView>
         <TextView
@@ -80,7 +80,7 @@
             android:textSize="20dp"
             android:gravity="center"
             android:text="@string/define"
-            android:textColor="@drawable/yota_selection_popup_item_text"
+            android:textColor="@color/yota_selection_popup_item_text"
             android:background="@drawable/yota_selection_popup_item_background">
         </TextView>
     </LinearLayout>
