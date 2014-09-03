@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
@@ -76,6 +77,12 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerSingleTap(x, y)) {
 			return true;
 		}
+
+        if (!isSelectionEmpty() && DeviceType.Instance().isYotaPhone()) {
+            clearSelection();
+            myReader.hideActivePopup();
+            return true;
+        }
 
 		final ZLTextRegion hyperlinkRegion = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
 		if (hyperlinkRegion != null) {
@@ -226,8 +233,8 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerLongPress(int x, int y) {
-		if (super.onFingerLongPress(x, y) || myReader.ViewOptions.YotaDrawOnBackScreen.getValue()) {
-			return true;
+		if (super.onFingerLongPress(x, y)) {
+			return true; // myReader.ViewOptions.YotaDrawOnBackScreen.getValue()
 		}
 
 		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);

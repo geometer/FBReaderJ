@@ -72,15 +72,19 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 
 	public static void removeAllWindows(ZLApplication application, Activity activity) {
 		for (ZLApplication.PopupPanel popup : application.popupPanels()) {
-			((PopupPanel)popup).removeWindow(activity);
+            if (popup instanceof PopupPanel) {
+                ((PopupPanel) popup).removeWindow(activity);
+            }
 		}
 	}
 
 	public static void restoreVisibilities(ZLApplication application) {
-		final PopupPanel popup = (PopupPanel)application.getActivePopup();
-		if (popup != null) {
-			popup.show_();
-		}
+        if (application.getActivePopup() instanceof PopupPanel) {
+            final PopupPanel popup = (PopupPanel) application.getActivePopup();
+            if (popup != null) {
+                popup.show_();
+            }
+        }
 	}
 
 	public final void initPosition() {

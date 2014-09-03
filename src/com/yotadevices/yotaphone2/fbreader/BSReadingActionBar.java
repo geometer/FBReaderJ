@@ -65,18 +65,19 @@ public class BSReadingActionBar {
         mLogo.setOnClickListener(mOpenCollection);
 
         Book currentBook = mReader.Collection.getRecentBook(0);
-        StringBuilder authorString = new StringBuilder();
-        List<Author> authors = currentBook.authors();
-        if (authors.size() > 0) {
-            for (int i = 0; i < authors.size() - 1; ++i) {
-                authorString.append(authors.get(i).DisplayName);
-                authorString.append(", ");
+        if (currentBook != null) {
+            StringBuilder authorString = new StringBuilder();
+            List<Author> authors = currentBook.authors();
+            if (authors.size() > 0) {
+                for (int i = 0; i < authors.size() - 1; ++i) {
+                    authorString.append(authors.get(i).DisplayName);
+                    authorString.append(", ");
+                }
             }
+            authorString.append(authors.get(authors.size() - 1));
+            mBookAuthor.setText(authorString.toString());
+            mBookTitle.setText(currentBook.getTitle());
         }
-        authorString.append(authors.get(authors.size()-1));
-        mBookAuthor.setText(authorString.toString());
-        mBookTitle.setText(currentBook.getTitle());
-
         mPopup = new PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));
         mPopup.setContentView(layout);

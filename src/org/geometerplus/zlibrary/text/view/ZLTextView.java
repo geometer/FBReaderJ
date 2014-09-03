@@ -22,6 +22,8 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 import org.geometerplus.fbreader.fbreader.BookmarkHighlighting;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.options.ViewOptions;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
@@ -67,8 +69,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private final Set<ZLTextHighlighting> myHighlightings =
 		Collections.synchronizedSet(new TreeSet<ZLTextHighlighting>());
 
+    private final ViewOptions myViewOptions;
+
 	public ZLTextView(ZLApplication application) {
 		super(application);
+        myViewOptions = ((FBReaderApp)application).ViewOptions;
 	}
 
     @Override
@@ -449,6 +454,43 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		context.drawPolygonalLine(xs, ys);
 	}
 
+    private void drawLeftSelectionCursor(ZLPaintContext context, ZLTextSelection.Point pt) {
+        if (pt == null || myViewOptions.YotaDrawOnBackScreen.getValue()) {
+            return;
+        }
+
+        final int w = ZLTextSelectionCursor.getWidth() / 2;
+        final int h = ZLTextSelectionCursor.getHeight();
+        final int a = ZLTextSelectionCursor.getAccent();
+        final int[] xs = { pt.X, pt.X, pt.X - w, pt.X - w};
+        final int[] ys = { pt.Y - a, pt.Y + h, pt.Y + h, pt.Y };
+        final ZLColor fillColor = myViewOptions.getColorProfile().SelectionCursorFillOption.getValue();
+        final ZLColor lineColor = myViewOptions.getColorProfile().SelectionCursorOption.getValue();
+        context.setFillColor(fillColor, 255);
+        context.fillPolygon(xs, ys);
+        context.setLineColor(lineColor);
+        context.drawPolygonalLine(xs, ys);
+    }
+
+    private void drawRightSelectionCursor(ZLPaintContext context, ZLTextSelection.Point pt) {
+        if (pt == null || myViewOptions.YotaDrawOnBackScreen.getValue()) {
+            return;
+        }
+
+        final int w = ZLTextSelectionCursor.getWidth() / 2;
+        final int h = ZLTextSelectionCursor.getHeight();
+        final int a = ZLTextSelectionCursor.getAccent();
+        final int[] xs = { pt.X, pt.X + w, pt.X + w, pt.X};
+        final int[] ys = { pt.Y - a, pt.Y, pt.Y + h, pt.Y + h};
+        final ZLColor fillColor = myViewOptions.getColorProfile().SelectionCursorFillOption.getValue();
+        final ZLColor lineColor = myViewOptions.getColorProfile().SelectionCursorOption.getValue();
+        context.setFillColor(fillColor, 255);
+        context.fillPolygon(xs, ys);
+        context.setLineColor(lineColor);
+        context.drawPolygonalLine(xs, ys);
+    }
+
+
 	@Override
 	public synchronized void preparePage(ZLPaintContext context, PageIndex pageIndex) {
 		setContext(context);
@@ -548,9 +590,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (selectedElementRegion != null && myHighlightSelectedRegion) {
 			selectedElementRegion.draw(context);
 		}
-
-		drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
-		drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Right));
+        //add checking for yotaphone
+		drawLeftSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
+		drawRightSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Right));
 	}
 
 	private ZLTextPage getPage(PageIndex pageIndex) {

@@ -154,10 +154,10 @@ public class FontSettingsPopup {
 
     private void setupTheme() {
         mBlackTheme.second.setVisibility(
-                mReader.ViewOptions.ColorProfileName.getValue().equals(ColorProfile.NIGHT) ?
+                mReader.ViewOptions.YotaBSColorProfileName.getValue().equals(ColorProfile.YOTA_BS_BLACK) ?
                         View.VISIBLE : View.INVISIBLE);
         mWhiteTheme.second.setVisibility(
-                mReader.ViewOptions.ColorProfileName.getValue().equals(ColorProfile.DAY) ?
+                mReader.ViewOptions.YotaBSColorProfileName.getValue().equals(ColorProfile.YOTA_BS_WHITE) ?
                         View.VISIBLE : View.INVISIBLE);
 
     }
@@ -241,13 +241,13 @@ public class FontSettingsPopup {
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.theme_black) {
-                mReader.ViewOptions.ColorProfileName.setValue(ColorProfile.NIGHT);
+                mReader.ViewOptions.YotaBSColorProfileName.setValue(ColorProfile.YOTA_BS_BLACK);
                 mReader.getViewWidget().reset();
                 mReader.getViewWidget().repaint();
                 mListener.fontChanged();
             }
             else if (v.getId() == R.id.theme_white) {
-                mReader.ViewOptions.ColorProfileName.setValue(ColorProfile.DAY);
+                mReader.ViewOptions.YotaBSColorProfileName.setValue(ColorProfile.YOTA_BS_WHITE);
                 mReader.getViewWidget().reset();
                 mReader.getViewWidget().repaint();
                 mListener.fontChanged();

@@ -2,4 +2,5 @@
 <resources>
     <color name="gray_title_text">#4e4e4e</color>
     <color name="yota_red">#ee462a</color>
+    <color name="yota_light_red">#f68667</color>
 </resources>

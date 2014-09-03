@@ -127,7 +127,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	private DisplayMetrics myMetrics;
 	private DisplayMetrics getMetrics() {
 		if (myMetrics == null) {
-			myMetrics = myApplication.getApplicationContext().getResources().getDisplayMetrics();
+			myMetrics = getCurrentContext().getResources().getDisplayMetrics(); // may be different on front and backscreen;
 		}
 		return myMetrics;
 	}
@@ -188,6 +188,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		int OK = 1;
 		int EXCEPTION = 2;
 	}
+
+    public Context getCurrentContext() {
+        return myApplication.getApplicationContext();
+    }
 
 	private final class AndroidAssetsFile extends ZLResourceFile {
 		private final AndroidAssetsFile myParent;

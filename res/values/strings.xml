@@ -12,4 +12,9 @@
     <string name="yota_book_publisher_tille">Publisher</string>
     <string name="yota_book_seller_tille">Seller</string>
     <string name="yota_book_published_tille">Published</string>
+    <string name="highlight">Highlight</string>
+    <string name="copy">Copy</string>
+    <string name="share">Share</string>
+    <string name="define">Define</string>
+    <string name="translate">Translate</string>
 </resources>
