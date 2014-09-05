@@ -217,7 +217,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-        setTheme(R.style.ActivityWithWhiteActionBar);
+		if (DeviceType.Instance().isYotaPhone()) {
+			setTheme(R.style.ActivityWithWhiteActionBar);
+		}
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		bindService(
@@ -247,9 +249,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
 			myShowStatusBarFlag ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
 		);
-//		if (!myShowActionBarFlag) {
-//			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-//		}
+		if (!myShowActionBarFlag && !DeviceType.Instance().isYotaPhone()) {
+			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+		}
 		setContentView(R.layout.main);
 		myRootView = (RelativeLayout)findViewById(R.id.root_view);
 		myMainView = (ZLAndroidWidget)findViewById(R.id.main_view);
@@ -294,13 +296,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (myFBReaderApp.getPopupById(SelectionPopup.ID) == null) {
 			new SelectionPopup(myFBReaderApp);
 		}
-        if (myFBReaderApp.getPopupById(YotaSelectionPopup.ID) == null) {
-            new YotaSelectionPopup(myFBReaderApp, this);
-        }
-        if (myFBReaderApp.getPopupById(YotaTranslatePopup.ID) == null) {
-            new YotaTranslatePopup(myFBReaderApp, this, getContentResolver());
-        }
-        myFBReaderApp.setFrontScreenActionMap();
+		if (myFBReaderApp.getPopupById(YotaSelectionPopup.ID) == null) {
+			new YotaSelectionPopup(myFBReaderApp, this);
+		}
+		if (myFBReaderApp.getPopupById(YotaTranslatePopup.ID) == null) {
+			new YotaTranslatePopup(myFBReaderApp, this, getContentResolver());
+		}
+		myFBReaderApp.setFrontScreenActionMap();
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoAction(this, myFBReaderApp));
@@ -311,19 +313,19 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SEARCH, new SearchAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHARE_BOOK, new ShareBookAction(this, myFBReaderApp));
-        if (DeviceType.Instance() == DeviceType.YOTA_PHONE || DeviceType.Instance() == DeviceType.YOTA_PHONE2) {
-            myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new YotaSelectionShowPanelAction(this, myFBReaderApp, YotaSelectionPopup.ID));
-            myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new YotaSelectionHidePanelAction(this, myFBReaderApp, YotaSelectionPopup.ID));
-            myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
-            myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
-            myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(this, myFBReaderApp));
-            myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(this, myFBReaderApp));
-        }
-        else {
-            myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, myFBReaderApp));
-            myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new SelectionHidePanelAction(this, myFBReaderApp));
-            myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new SelectionTranslateAction(this, myFBReaderApp));
-        }
+		if (DeviceType.Instance() == DeviceType.YOTA_PHONE || DeviceType.Instance() == DeviceType.YOTA_PHONE2) {
+			myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new YotaSelectionShowPanelAction(this, myFBReaderApp, YotaSelectionPopup.ID));
+			myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new YotaSelectionHidePanelAction(this, myFBReaderApp, YotaSelectionPopup.ID));
+			myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
+			myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
+			myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(this, myFBReaderApp));
+		}
+		else {
+			myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new SelectionHidePanelAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new SelectionTranslateAction(this, myFBReaderApp));
+		}
 		myFBReaderApp.addAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD, new SelectionCopyAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SELECTION_SHARE, new SelectionShareAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SELECTION_BOOKMARK, new SelectionBookmarkAction(this, myFBReaderApp));
@@ -404,16 +406,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				new Thread() {
 					public void run() {
 						openBook(getIntent(), getPostponedInitAction(), false);
-                        ZLViewWidget widget = myFBReaderApp.getViewWidget();
-                        if (widget != null) {
-                            widget.repaint();
-                        }
+						ZLViewWidget widget = myFBReaderApp.getViewWidget();
+						if (widget != null) {
+							widget.repaint();
+						}
 					}
 				}.start();
-                ZLViewWidget widget = myFBReaderApp.getViewWidget();
-                if (widget != null) {
-                    widget.repaint();
-                }
+				ZLViewWidget widget = myFBReaderApp.getViewWidget();
+				if (widget != null) {
+					widget.repaint();
+				}
 			}
 		});
 
@@ -432,16 +434,16 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				zlibrary.ShowStatusBarOption.saveSpecialValue();
 				zlibrary.ShowActionBarOption.saveSpecialValue();
 				myFBReaderApp.ViewOptions.ColorProfileName.saveSpecialValue();
-                myFBReaderApp.ViewOptions.YotaFSColorProfileName.saveSpecialValue();
-                myFBReaderApp.ViewOptions.YotaBSColorProfileName.saveSpecialValue();
+				myFBReaderApp.ViewOptions.YotaFSColorProfileName.saveSpecialValue();
+				myFBReaderApp.ViewOptions.YotaBSColorProfileName.saveSpecialValue();
 				SetScreenOrientationAction.setOrientation(FBReader.this, zlibrary.getOrientationOption().getValue());
 			}
 		});
 
 		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
-        ((YotaSelectionPopup)myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
-        ((YotaTranslatePopup)myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(myRootView);
+		((YotaSelectionPopup)myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
+		((YotaTranslatePopup)myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(myRootView);
 	}
 
 	@Override
