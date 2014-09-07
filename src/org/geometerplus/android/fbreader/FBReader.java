@@ -302,6 +302,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		if (myFBReaderApp.getPopupById(YotaTranslatePopup.ID) == null) {
 			new YotaTranslatePopup(myFBReaderApp, this, getContentResolver());
 		}
+		if (myFBReaderApp.getPopupById(YotaDefinePopup.ID) == null) {
+			new YotaDefinePopup(myFBReaderApp, this, getContentResolver());
+		}
 		myFBReaderApp.setFrontScreenActionMap();
 		myFBReaderApp.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, myFBReaderApp));
@@ -319,7 +322,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_BACK_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, true));
 			myFBReaderApp.addAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN, new YotaSwitchScreenAction(this, myFBReaderApp, false));
 			myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(this, myFBReaderApp));
-			myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(this, myFBReaderApp, false));
+			myFBReaderApp.addAction(ActionCode.SELECTION_DEFINE, new YotaSelectionDefineAction(this, myFBReaderApp, false));
 		}
 		else {
 			myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, myFBReaderApp));
@@ -444,6 +448,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
 		((YotaSelectionPopup)myFBReaderApp.getPopupById(YotaSelectionPopup.ID)).setRootView(myRootView);
 		((YotaTranslatePopup)myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(myRootView);
+		((YotaDefinePopup)myFBReaderApp.getPopupById(YotaDefinePopup.ID)).setRootView(myRootView);
 	}
 
 	@Override

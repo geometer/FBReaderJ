@@ -29,7 +29,8 @@ public class AbbyyTranslator extends AsyncTask<String, Integer, Boolean> {
         public enum Error {
             NOTHING_TO_TRANSLATE,
             TRANSLATION_NOT_FOUND,
-            UNKNOWN_ERROR
+            UNKNOWN_ERROR,
+	        LINGVO_INTERNAL_ERROR
         }
         public void onTranslationComplete(List<Translate> results);
         public void onTranslationError(Error error);
@@ -64,7 +65,15 @@ public class AbbyyTranslator extends AsyncTask<String, Integer, Boolean> {
 
         final Uri toTranslate = createTranslationUri(params[0]);
         String[] args = {""};
-        Cursor data = mResolver.query(toTranslate, projection, null, null, null);
+	    Cursor data = null;
+	    try {
+		    data = mResolver.query(toTranslate, projection, null, null, null);
+	    }
+	    catch (NullPointerException e) {
+		    //a strange error in Abby Lingvo
+		    mError = TranslateCompletitionResult.Error.LINGVO_INTERNAL_ERROR;
+		    return Boolean.FALSE;
+	    }
         if (data == null) {
             mError = TranslateCompletitionResult.Error.UNKNOWN_ERROR;
             return Boolean.FALSE;

@@ -7,9 +7,10 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.FBView;
 
 public class YotaSelectionTranslateAction extends FBAndroidContextAction {
-
-    public YotaSelectionTranslateAction(Context ctx, FBReaderApp fbreader) {
+	private final boolean mOnBackScreen;
+    public YotaSelectionTranslateAction(Context ctx, FBReaderApp fbreader, boolean bs) {
         super(ctx, fbreader);
+	    mOnBackScreen = bs;
     }
 
     @Override
@@ -17,10 +18,11 @@ public class YotaSelectionTranslateAction extends FBAndroidContextAction {
         final FBView fbview = Reader.getTextView();
         final String text = fbview.getSelectedText();
         boolean oneWordSelected = fbview.getCountOfSelectedWords() == 1;
-        YotaTranslatePopup translatePopup = (YotaTranslatePopup)Reader.getPopupById(YotaTranslatePopup.ID);
+	    final String ID = mOnBackScreen ? YotaTranslateBSPopup.ID : YotaTranslatePopup.ID;
+        YotaTranslatePopup translatePopup = (YotaTranslatePopup)Reader.getPopupById(ID);
         translatePopup.setTextToTranlate(text);
         fbview.clearSelection();
 
-        Reader.showPopup(YotaTranslatePopup.ID);
+        Reader.showPopup(ID);
     }
 }

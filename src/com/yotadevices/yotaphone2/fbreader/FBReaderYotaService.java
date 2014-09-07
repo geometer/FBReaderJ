@@ -31,6 +31,7 @@ import org.geometerplus.android.fbreader.YotaSelectionHidePanelAction;
 import org.geometerplus.android.fbreader.YotaSelectionPopup;
 import org.geometerplus.android.fbreader.YotaSelectionShowPanelAction;
 import org.geometerplus.android.fbreader.YotaSelectionTranslateAction;
+import org.geometerplus.android.fbreader.YotaTranslateBSPopup;
 import org.geometerplus.android.fbreader.YotaTranslatePopup;
 import org.geometerplus.android.fbreader.YotaUpdateWidgetAction;
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -84,11 +85,11 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (myFBReaderApp.getPopupById(YotaSelectionBSPopup.ID) == null) {
             new YotaSelectionBSPopup(myFBReaderApp, getBsContext());
         }
-        if (myFBReaderApp.getPopupById(YotaTranslatePopup.ID) == null) {
-            new YotaTranslatePopup(myFBReaderApp, getBsContext(), getApplicationContext().getContentResolver());
+        if (myFBReaderApp.getPopupById(YotaTranslateBSPopup.ID) == null) {
+            new YotaTranslateBSPopup(myFBReaderApp, getBsContext(), getApplicationContext().getContentResolver());
         }
         ((YotaSelectionBSPopup)myFBReaderApp.getPopupById(YotaSelectionBSPopup.ID)).setRootView(mRootView);
-        ((YotaTranslatePopup)myFBReaderApp.getPopupById(YotaTranslatePopup.ID)).setRootView(mRootView);
+        ((YotaTranslateBSPopup)myFBReaderApp.getPopupById(YotaTranslateBSPopup.ID)).setRootView(mRootView);
 
         registerActions();
     }
@@ -159,7 +160,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         myFBReaderApp.addAction(ActionCode.SELECTION_HIDE_PANEL, new YotaSelectionHidePanelAction(getBsContext(), myFBReaderApp, YotaSelectionBSPopup.ID));
         myFBReaderApp.addAction(ActionCode.SELECTION_BOOKMARK, new YotaBSSelectionBookmarkAction(getBsContext(), myFBReaderApp));
         myFBReaderApp.addAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD, new YotaBSSelectionCopyAction(getBsContext(), myFBReaderApp));
-        myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(getBsContext(), myFBReaderApp));
+        myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(getBsContext(), myFBReaderApp, true));
     }
 
     private Context getBsContext() {

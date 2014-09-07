@@ -2,11 +2,16 @@ package org.geometerplus.android.fbreader;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.yotadevices.yotaphone2.fbreader.AbbyyTranslator;
 
@@ -14,6 +19,7 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 
@@ -27,8 +33,16 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 	protected View mRootView;
 	protected View mContentView;
 	protected View mCloseButton;
+	protected WebView mWebView;
 	protected String mTextToTranslate;
 
+	private final String mHTMLOpen = "<html><body>";
+	private final String mHTMLClose = "</body></html>";
+	private final String mHTMLHeader = "<h3>%s</h3>";
+	private final String mHTMLText = "<p>%s</p>";
+
+	private final String mLink = "<p><a href=%s>%s</a></p>";
+	private final String mSuggest = "<p>%s <a href=%s>%s</a>?</p>";
 	public YotaTranslatePopup(FBReaderApp application, Context ctx, ContentResolver resolver) {
 		super(application);
 		mReaderApp = application;
@@ -44,7 +58,9 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 				hide_();
 			}
 		});
-
+		mWebView = (WebView)mContentView.findViewById(R.id.webview);
+		WebSettings settings = mWebView.getSettings();
+		settings.setDefaultTextEncodingName("utf-8");
 		mPopup = new android.widget.PopupWindow(ctx);
 		mPopup.setBackgroundDrawable(new ColorDrawable(0));
 		mPopup.setContentView(mContentView);
@@ -63,6 +79,7 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 
 	@Override
 	protected void hide_() {
+		mWebView.loadData("", "text/html", "");
 		mPopup.dismiss();
 	}
 
@@ -71,7 +88,6 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 		mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
 		AbbyyTranslator translator = new AbbyyTranslator(mResolver, this);
 		translator.execute(mTextToTranslate);
-
 	}
 
 	public void setTextToTranlate(String text) {
@@ -80,12 +96,43 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 
 	@Override
 	public void onTranslationComplete(List<AbbyyTranslator.Translate> results) {
-
+		if (results.size() > 0) {
+			String source = String.format(mHTMLHeader, results.get(0).Heading);
+			String data = "";
+			for (AbbyyTranslator.Translate t : results) {
+				if (t.Translation != null) {
+					data += String.format(mHTMLText, t.Translation);
+					data += String.format(mLink, t.ArticleURI, mContext.getString(R.string.open_in_lingvo));
+				} else if (t.Heading != null && t.ArticleURI != null) {
+					data += String.format(mSuggest, mContext.getString(R.string.did_you_mean), t.ArticleURI, t.Heading);
+				}
+			}
+			String html = mHTMLOpen + source + data + mHTMLClose;
+			String base64 = Base64.encodeToString(html.getBytes(), Base64.DEFAULT);
+			mWebView.loadData(base64, "text/html; charset=utf-8", "base64");
+		}
 	}
 
 	@Override
 	public void onTranslationError(Error error) {
-
+		String errorText = "";
+		switch (error) {
+			case NOTHING_TO_TRANSLATE:
+				errorText = String.format(mHTMLHeader, mContext.getString(R.string.nothing_to_translate));
+				break;
+			case TRANSLATION_NOT_FOUND:
+				errorText = String.format(mHTMLHeader, mContext.getString(R.string.nothing_was_found));
+				break;
+			case UNKNOWN_ERROR:
+				errorText = String.format(mHTMLHeader, mContext.getString(R.string.unknown_error));
+				break;
+			case LINGVO_INTERNAL_ERROR:
+				errorText = String.format(mHTMLHeader, mContext.getString(R.string.lingvo_error));
+				break;
+		}
+		String html = mHTMLOpen + errorText + mHTMLClose;
+		String base64 = Base64.encodeToString(html.getBytes(), Base64.DEFAULT);
+		mWebView.loadData(base64, "text/html; charset=utf-8", "base64");
 	}
 
 	public void setRootView(View root) {

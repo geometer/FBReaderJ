@@ -17,4 +17,10 @@
     <string name="share">Share</string>
     <string name="define">Define</string>
     <string name="translate">Translate</string>
+    <string name="open_in_lingvo">Open article in Lingvo</string>
+    <string name="did_you_mean">Did you mean</string>
+    <string name="lingvo_error">Error inside Lingvo, try once again</string>
+    <string name="nothing_to_translate">Select a word to translate</string>
+    <string name="nothing_was_found">Nothing found</string>
+    <string name="unknown_error">Unknown error occurred</string>
 </resources>
