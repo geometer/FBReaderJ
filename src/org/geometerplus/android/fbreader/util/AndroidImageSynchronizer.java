@@ -31,8 +31,8 @@ import org.geometerplus.zlibrary.core.image.ZLImageSelfSynchronizableProxy;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLBitmapImage;
 
-import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
-import org.geometerplus.fbreader.formats.external.PluginImage;
+import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
+import org.geometerplus.fbreader.formats.PluginImage;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 import org.geometerplus.android.fbreader.formatPlugin.CoverReader;
 
