@@ -82,7 +82,7 @@ bool PalmDocStream::processZeroRecord() {
 	myMaxRecordIndex = std::min(myTextRecordNumber, (unsigned short)(endSectionIndex - 1));
 	//TODO Insert in this point error message about uncompatible records and numRecords from Header
 	
-	myMaxRecordSize = PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 12
+	myMaxRecordSize = 2 * PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 12
 	if (myMaxRecordSize == 0) {
 		myErrorCode = ERROR_UNKNOWN;
 		return false;
@@ -171,4 +171,8 @@ std::pair<int,int> PalmDocStream::imageLocation(const PdbHeader &header, int ind
 			header.Offsets[index + 1] : myBase->offset();
 		return std::make_pair(start, end - start);
 	}
+}
+
+size_t PalmDocStream::sizeOfOpened() {
+	return myTextLength;
 }
