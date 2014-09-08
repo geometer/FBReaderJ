@@ -30,7 +30,7 @@ public:
 
 public:
 	~OEBPlugin();
-	bool providesMetaInfo() const;
+	bool providesMetainfo() const;
 	const std::string supportedFileType() const;
 	bool readMetainfo(Book &book) const;
 	virtual std::vector<shared_ptr<FileEncryptionInfo> > readEncryptionInfos(Book &book) const;

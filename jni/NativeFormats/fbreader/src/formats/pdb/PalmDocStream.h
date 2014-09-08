@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,34 @@
  * 02110-1301, USA.
  */
 
-#ifndef __TXTPLUGIN_H__
-#define __TXTPLUGIN_H__
+#ifndef __PALMDOCSTREAM_H__
+#define __PALMDOCSTREAM_H__
 
-#include "../FormatPlugin.h"
+#include "PalmDocLikeStream.h"
 
-class TxtPlugin : public FormatPlugin {
+class ZLFile;
+class HuffDecompressor;
+
+class PalmDocStream : public PalmDocLikeStream {
 
 public:
-	~TxtPlugin();
-	bool providesMetainfo() const;
-	const std::string supportedFileType() const;
-	bool readMetainfo(Book &book) const;
-	bool readUids(Book &book) const;
-	bool readLanguageAndEncoding(Book &book) const;
-	bool readModel(BookModel &model) const;
-//	FormatInfoPage *createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file);
+	PalmDocStream(const ZLFile &file);
+	~PalmDocStream();
+	
+	std::pair<int,int> imageLocation(const PdbHeader &header, int index) const;
+	bool hasExtraSections() const;
+
+private:
+	bool processRecord();
+	bool processZeroRecord();
+
+private:
+	unsigned short myCompressionVersion;
+	unsigned long  myTextLength; //TODO: Warning: isn't used
+	unsigned short myTextRecordNumber;
+	unsigned short myImageStartIndex;
+
+	shared_ptr<HuffDecompressor> myHuffDecompressorPtr;
 };
 
-#endif /* __TXTPLUGIN_H__ */
+#endif /* __PALMDOCSTREAM_H__ */

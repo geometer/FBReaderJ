@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,20 @@
  * 02110-1301, USA.
  */
 
-#ifndef __TXTPLUGIN_H__
-#define __TXTPLUGIN_H__
+#ifndef __DOCDECOMPRESSOR_H__
+#define __DOCDECOMPRESSOR_H__
 
-#include "../FormatPlugin.h"
+#include <string>
 
-class TxtPlugin : public FormatPlugin {
+class ZLInputStream;
+
+class DocDecompressor {
 
 public:
-	~TxtPlugin();
-	bool providesMetainfo() const;
-	const std::string supportedFileType() const;
-	bool readMetainfo(Book &book) const;
-	bool readUids(Book &book) const;
-	bool readLanguageAndEncoding(Book &book) const;
-	bool readModel(BookModel &model) const;
-//	FormatInfoPage *createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file);
+	DocDecompressor() {}
+	~DocDecompressor() {}
+
+	size_t decompress(ZLInputStream &stream, char *buffer, size_t compressedSize, size_t maxUncompressedSize);
 };
 
-#endif /* __TXTPLUGIN_H__ */
+#endif /* __DOCDECOMPRESSOR_H__ */
