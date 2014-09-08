@@ -54,6 +54,10 @@ static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntr
 		unit = ZLTextStyleEntry::SIZE_UNIT_PERCENT;
 		size = std::atoi(toParse.c_str());
 		return true;
+	} else if (ZLStringUtil::stringEndsWith(toParse, "rem")) {
+		unit = ZLTextStyleEntry::SIZE_UNIT_REM_100;
+		size = (short)(100 * ZLStringUtil::stringToDouble(toParse, 0));
+		return true;
 	} else if (ZLStringUtil::stringEndsWith(toParse, "em")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_EM_100;
 		size = (short)(100 * ZLStringUtil::stringToDouble(toParse, 0));
