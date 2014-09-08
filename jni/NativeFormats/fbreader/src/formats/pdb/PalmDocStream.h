@@ -27,8 +27,10 @@ class HuffDecompressor;
 
 class PalmDocStream : public PalmDocLikeStream {
 
-public:
+protected:
 	PalmDocStream(const ZLFile &file);
+
+public:
 	~PalmDocStream();
 	
 	std::pair<int,int> imageLocation(const PdbHeader &header, int index) const;
@@ -37,15 +39,36 @@ public:
 private:
 	bool processRecord();
 	bool processZeroRecord();
-	size_t sizeOfOpened();
+
+protected:
+	unsigned long  myTextLength;
 
 private:
 	unsigned short myCompressionVersion;
-	unsigned long  myTextLength; //TODO: Warning: isn't used
 	unsigned short myTextRecordNumber;
 	unsigned short myImageStartIndex;
 
 	shared_ptr<HuffDecompressor> myHuffDecompressorPtr;
+};
+
+class PalmDocContentStream : public PalmDocStream {
+
+public:
+	PalmDocContentStream(const ZLFile &file);
+
+private:
+	size_t sizeOfOpened();
+};
+
+class PalmDocCssStream : public PalmDocStream {
+
+public:
+	PalmDocCssStream(const ZLFile &file);
+
+private:
+	bool open();
+	size_t sizeOfOpened();
+	size_t offset() const;
 };
 
 #endif /* __PALMDOCSTREAM_H__ */
