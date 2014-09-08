@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.fb2;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 
@@ -35,11 +37,34 @@ public class FB2NativePlugin extends NativeFormatPlugin {
 
 	@Override
 	public ZLFile realBookFile(ZLFile file) throws BookReadingException {
-		final ZLFile realFile = FB2Util.getRealFB2File(file);
+		final ZLFile realFile = getRealFB2File(file);
 		if (realFile == null) {
 			throw new BookReadingException("incorrectFb2ZipFile", file);
 		}
 		return realFile;
+	}
+
+	private static ZLFile getRealFB2File(ZLFile file) {
+		final String name = file.getShortName().toLowerCase();
+		if (name.endsWith(".fb2.zip") && file.isArchive()) {
+			final List<ZLFile> children = file.children();
+			if (children == null) {
+				return null;
+			}
+			ZLFile candidate = null;
+			for (ZLFile item : children) {
+				if ("fb2".equals(item.getExtension())) {
+					if (candidate == null) {
+						candidate = item;
+					} else {
+						return null;
+					}
+				}
+			}
+			return candidate;
+		} else {
+			return file;
+		}
 	}
 
 	@Override
