@@ -135,7 +135,7 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 
 	@Override
 	public Type type() {
-		return Type.NATIVE;
+		return Type.BUILTIN;
 	}
 
 	@Override

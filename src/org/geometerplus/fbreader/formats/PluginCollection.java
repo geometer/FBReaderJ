@@ -93,7 +93,7 @@ public class PluginCollection {
 		switch (formatType) {
 			case ANY:
 			{
-				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.BUILTIN);
 				if (p == null) {
 					p = getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
 				}
