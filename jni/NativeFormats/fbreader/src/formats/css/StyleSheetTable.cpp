@@ -175,7 +175,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 		} else if (bold == "lighter") {
 			// TODO: implement
 		} else {
-			num = ZLStringUtil::stringToInteger(bold, -1);
+			num = ZLStringUtil::parseDecimal(bold, -1);
 		}
 		if (num != -1) {
 			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_BOLD, num >= 600);
