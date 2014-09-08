@@ -40,9 +40,6 @@ public abstract class BookModel {
 			case NATIVE:
 				model = new NativeBookModel(book);
 				break;
-			case JAVA:
-				model = new JavaBookModel(book);
-				break;
 			default:
 				throw new BookReadingException(
 					"unknownPluginType", null, new String[] { plugin.type().toString() }
