@@ -53,21 +53,21 @@ bool SimplePdbPlugin::readMetainfo(Book &book) const {
 	return true;
 }
 
+/*
 bool SimplePdbPlugin::readModel(BookModel &model) const {
 	const Book &book = *model.book();
 	const ZLFile &file = book.file();
 	shared_ptr<ZLInputStream> stream = createStream(file);
 
 	PlainTextFormat format(file);
-	/*
 	if (!format.initialized()) {
 		PlainTextFormatDetector detector;
 		detector.detect(*stream, format);
 	}
-	*/
 	readDocumentInternal(file, model, format, book.encoding(), *stream);
 	return true;
 }
+*/
 
 void SimplePdbPlugin::readDocumentInternal(const ZLFile&, BookModel &model, const PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const {
 	//if (TextFormatDetector().isHtml(stream)) {
