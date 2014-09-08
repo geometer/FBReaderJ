@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.html;
+#ifndef __BITREADER_H__
+#define __BITREADER_H__
 
-public interface ZLHtmlReader {
-	public void startDocumentHandler();
-	public void endDocumentHandler();
+class BitReader {
 
-	public void startElementHandler(String tag, int offset, ZLHtmlAttributeMap attributes);
-	public void endElementHandler(String tag);
-	public void byteDataHandler(byte[] ch, int start, int length);
-	public void entityDataHandler(String entity);
-}
+public:
+	BitReader(const unsigned char* data, size_t size);
+	~BitReader();
+
+	unsigned long long peek(size_t n);
+	bool eat(size_t n);
+	size_t left() const;
+
+private:
+	unsigned char* myData;
+	size_t myOffset;
+	size_t myLength;
+};
+
+#endif //__BITREADER_H__

@@ -146,7 +146,7 @@ double ZLStringUtil::stringToDouble(const std::string &str, double defaultValue)
 	}
 }
 
-int ZLStringUtil::stringToInteger(const std::string &str, int defaultValue) {
+int ZLStringUtil::parseDecimal(const std::string &str, int defaultValue) {
 	if (str.empty()) {
 		return defaultValue;
 	}
@@ -161,4 +161,19 @@ int ZLStringUtil::stringToInteger(const std::string &str, int defaultValue) {
 	}
 
 	return std::atoi(str.c_str());
+}
+
+unsigned long ZLStringUtil::parseHex(const std::string &str, int defaultValue) {
+	if (str.empty()) {
+		return defaultValue;
+	}
+
+	for (std::size_t i = 0; i < str.length(); ++i) {
+		if (!std::isxdigit(str[i])) {
+			return defaultValue;
+		}
+	}
+
+	char *ptr;
+	return std::strtol(str.c_str(), &ptr, 16);
 }
