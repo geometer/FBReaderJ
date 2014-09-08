@@ -57,7 +57,8 @@ abstract class ZLTextViewBase extends ZLView {
 				// TODO: screen area width
 				100,
 				// TODO: screen area height
-				100
+				100,
+				getTextStyleCollection().getBaseStyle().getFontSize()
 			);
 			myMetrics = m;
 		}
