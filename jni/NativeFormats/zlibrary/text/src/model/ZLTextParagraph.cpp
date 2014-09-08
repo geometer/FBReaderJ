@@ -37,6 +37,9 @@ short ZLTextStyleEntry::length(Feature featureId, const Metrics &metrics) const 
 		case SIZE_UNIT_PIXEL:
 			return myLengths[featureId].Size;
 		case SIZE_UNIT_EM_100:
+			// TODO: implement
+			return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
+		case SIZE_UNIT_REM_100:
 			return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
 		case SIZE_UNIT_EX_100:
 			return (myLengths[featureId].Size * metrics.FontXHeight + 50) / 100;
