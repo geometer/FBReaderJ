@@ -44,7 +44,7 @@ public class PluginCollection {
 
 			// This code can not be moved to constructor because nativePlugins() is a native method
 			for (NativeFormatPlugin p : ourInstance.nativePlugins()) {
-				myBuiltinPlugins.add(p);
+				ourInstance.myBuiltinPlugins.add(p);
 				System.err.println("native plugin: " + p);
 			}
 		}
