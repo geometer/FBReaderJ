@@ -21,6 +21,7 @@ public class YotaSelectionTranslateAction extends FBAndroidContextAction {
 	    final String ID = mOnBackScreen ? YotaTranslateBSPopup.ID : YotaTranslatePopup.ID;
         YotaTranslatePopup translatePopup = (YotaTranslatePopup)Reader.getPopupById(ID);
         translatePopup.setTextToTranlate(text);
+        translatePopup.setOnBackScreen(mOnBackScreen);
         fbview.clearSelection();
 
         Reader.showPopup(ID);

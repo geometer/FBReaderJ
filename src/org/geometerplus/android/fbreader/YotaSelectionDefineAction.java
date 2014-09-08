@@ -17,10 +17,10 @@ public class YotaSelectionDefineAction extends FBAndroidContextAction {
 		final FBView fbview = Reader.getTextView();
 		final String text = fbview.getSelectedText();
 		boolean oneWordSelected = fbview.getCountOfSelectedWords() == 1;
-//		final String ID = mOnBackScreen ? YotaDefineBSPopup.ID : YotaDefinePopup.ID;
-		final String ID = YotaDefinePopup.ID;
-		YotaDefinePopup translatePopup = (YotaDefinePopup)Reader.getPopupById(ID);
-		translatePopup.setTextToTranlate(text);
+		final String ID = mOnBackScreen ? YotaDefineBSPopup.ID : YotaDefinePopup.ID;
+		YotaDefinePopup definePopup = (YotaDefinePopup)Reader.getPopupById(ID);
+        definePopup.setTextToTranlate(text);
+        definePopup.setOnBackScreen(mOnBackScreen);
 		fbview.clearSelection();
 
 		Reader.showPopup(ID);

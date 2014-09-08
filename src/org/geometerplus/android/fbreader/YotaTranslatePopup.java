@@ -43,6 +43,8 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 
 	private final String mLink = "<p><a href=%s>%s</a></p>";
 	private final String mSuggest = "<p>%s <a href=%s>%s</a>?</p>";
+    protected boolean mOnBackScreen = false;
+
 	public YotaTranslatePopup(FBReaderApp application, Context ctx, ContentResolver resolver) {
 		super(application);
 		mReaderApp = application;
@@ -61,6 +63,8 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 		mWebView = (WebView)mContentView.findViewById(R.id.webview);
 		WebSettings settings = mWebView.getSettings();
 		settings.setDefaultTextEncodingName("utf-8");
+        mWebView.setVerticalScrollBarEnabled(false);
+
 		mPopup = new android.widget.PopupWindow(ctx);
 		mPopup.setBackgroundDrawable(new ColorDrawable(0));
 		mPopup.setContentView(mContentView);
@@ -77,6 +81,10 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 
 	}
 
+    public void setOnBackScreen(boolean val) {
+        mOnBackScreen = val;
+    }
+
 	@Override
 	protected void hide_() {
 		mWebView.loadData("", "text/html", "");
@@ -85,6 +93,9 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 
 	@Override
 	protected void show_() {
+        if (mOnBackScreen) {
+            mWebView.setInitialScale(150);
+        }
 		mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
 		AbbyyTranslator translator = new AbbyyTranslator(mResolver, this);
 		translator.execute(mTextToTranslate);
@@ -102,8 +113,10 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 			for (AbbyyTranslator.Translate t : results) {
 				if (t.Translation != null) {
 					data += String.format(mHTMLText, t.Translation);
-					data += String.format(mLink, t.ArticleURI, mContext.getString(R.string.open_in_lingvo));
-				} else if (t.Heading != null && t.ArticleURI != null) {
+                    if (!mOnBackScreen) {
+                        data += String.format(mLink, t.ArticleURI, mContext.getString(R.string.open_in_lingvo));
+                    }
+				} else if (t.Heading != null && t.ArticleURI != null && !mOnBackScreen) {
 					data += String.format(mSuggest, mContext.getString(R.string.did_you_mean), t.ArticleURI, t.Heading);
 				}
 			}

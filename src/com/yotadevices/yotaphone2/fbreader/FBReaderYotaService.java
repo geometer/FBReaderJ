@@ -26,7 +26,9 @@ import org.geometerplus.android.fbreader.SelectionBookmarkAction;
 import org.geometerplus.android.fbreader.SelectionCopyAction;
 import org.geometerplus.android.fbreader.YotaBSSelectionBookmarkAction;
 import org.geometerplus.android.fbreader.YotaBSSelectionCopyAction;
+import org.geometerplus.android.fbreader.YotaDefineBSPopup;
 import org.geometerplus.android.fbreader.YotaSelectionBSPopup;
+import org.geometerplus.android.fbreader.YotaSelectionDefineAction;
 import org.geometerplus.android.fbreader.YotaSelectionHidePanelAction;
 import org.geometerplus.android.fbreader.YotaSelectionPopup;
 import org.geometerplus.android.fbreader.YotaSelectionShowPanelAction;
@@ -88,8 +90,12 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (myFBReaderApp.getPopupById(YotaTranslateBSPopup.ID) == null) {
             new YotaTranslateBSPopup(myFBReaderApp, getBsContext(), getApplicationContext().getContentResolver());
         }
+        if (myFBReaderApp.getPopupById(YotaDefineBSPopup.ID) == null) {
+            new YotaDefineBSPopup(myFBReaderApp, getBsContext(), getApplicationContext().getContentResolver());
+        }
         ((YotaSelectionBSPopup)myFBReaderApp.getPopupById(YotaSelectionBSPopup.ID)).setRootView(mRootView);
         ((YotaTranslateBSPopup)myFBReaderApp.getPopupById(YotaTranslateBSPopup.ID)).setRootView(mRootView);
+        ((YotaDefineBSPopup)myFBReaderApp.getPopupById(YotaDefineBSPopup.ID)).setRootView(mRootView);
 
         registerActions();
     }
@@ -102,9 +108,9 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         hideActionBar();
         hideStatusBar();
 
-        EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
-        EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_A2);
-        EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
+        //EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
+        EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_GLR);
+        EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GLR);
         getCollection().bindToService(this, new Runnable() {
             public void run() {
                 if (myCurrentBook == null) {
@@ -161,6 +167,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         myFBReaderApp.addAction(ActionCode.SELECTION_BOOKMARK, new YotaBSSelectionBookmarkAction(getBsContext(), myFBReaderApp));
         myFBReaderApp.addAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD, new YotaBSSelectionCopyAction(getBsContext(), myFBReaderApp));
         myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(getBsContext(), myFBReaderApp, true));
+        myFBReaderApp.addAction(ActionCode.SELECTION_DEFINE, new YotaSelectionDefineAction(getBsContext(), myFBReaderApp, true));
     }
 
     private Context getBsContext() {
