@@ -26,9 +26,6 @@ import android.os.Build;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
-import org.geometerplus.fbreader.formats.external.DjVuPlugin;
-import org.geometerplus.fbreader.formats.external.PDFPlugin;
-
 public class PluginCollection {
 	static {
 		System.loadLibrary("NativeFormats-v4");

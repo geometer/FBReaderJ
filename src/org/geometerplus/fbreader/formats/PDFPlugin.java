@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.external;
+package org.geometerplus.fbreader.formats;
 
 import org.pdfparse.model.PDFDocInfo;
 import org.pdfparse.model.PDFDocument;
