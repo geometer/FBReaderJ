@@ -51,7 +51,7 @@ class SimplePdbPlugin : public PdbPlugin {
 
 public:
 	bool readMetainfo(Book &book) const;
-	bool readModel(BookModel &model) const;
+	//bool readModel(BookModel &model) const;
 
 protected:
 	virtual shared_ptr<ZLInputStream> createStream(const ZLFile &file) const = 0;
@@ -90,6 +90,7 @@ private:
 	bool readUids(Book &book) const;
 	bool readLanguageAndEncoding(Book &book) const;
 	bool readMetainfo(Book &book) const;
+	bool readModel(BookModel &model) const;
 
 	void readDocumentInternal(const ZLFile &file, BookModel &model, const class PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const;
 	shared_ptr<const ZLImage> coverImage(const ZLFile &file) const;

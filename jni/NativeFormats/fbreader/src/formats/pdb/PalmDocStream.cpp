@@ -173,6 +173,33 @@ std::pair<int,int> PalmDocStream::imageLocation(const PdbHeader &header, int ind
 	}
 }
 
-size_t PalmDocStream::sizeOfOpened() {
+PalmDocContentStream::PalmDocContentStream(const ZLFile &file) : PalmDocStream(file) {
+}
+
+size_t PalmDocContentStream::sizeOfOpened() {
 	return myTextLength;
+}
+
+PalmDocCssStream::PalmDocCssStream(const ZLFile &file) : PalmDocStream(file) {
+}
+
+bool PalmDocCssStream::open() {
+	if (!PalmDocStream::open()) {
+		return false;
+	}
+	seek(myTextLength, false);
+	if (PalmDocStream::offset() < myTextLength) {
+		close();
+		return false;
+	}
+	return true;
+}
+
+size_t PalmDocCssStream::offset() const {
+	const size_t o = PalmDocStream::offset();
+	return o <= myTextLength ? 0 : o - myTextLength;
+}
+
+size_t PalmDocCssStream::sizeOfOpened() {
+	return (size_t)((1 << 31) - 1);
 }
