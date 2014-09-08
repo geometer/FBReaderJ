@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.xhtml;
+#include <ZLFile.h>
 
-import java.util.ArrayList;
-import java.util.List;
+#include "PdbPlugin.h"
+#include "PalmDocStream.h"
+#include "PalmDocLikeStream.h"
 
-public class XHTMLReader {
-	private static ArrayList<String> ourExternalDTDs = new ArrayList<String>();
+#include "../../library/Book.h"
 
-	public static List<String> xhtmlDTDs() {
-		if (ourExternalDTDs.isEmpty()) {
-			ourExternalDTDs.add("formats/xhtml/xhtml-merged.ent");
-		}
-		return ourExternalDTDs;
-	}
+bool PalmDocLikePlugin::providesMetainfo() const {
+	return true;
 }
+
+shared_ptr<ZLInputStream> PalmDocLikePlugin::createStream(const ZLFile &file) const {
+	return new PalmDocStream(file);
+}
+
+/*
+const std::string &PalmDocLikePlugin::tryOpen(const ZLFile &file) const {
+	PalmDocStream stream(file);
+	stream.open();
+	return stream.error();
+}
+*/
