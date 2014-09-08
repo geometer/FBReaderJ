@@ -37,6 +37,7 @@ public:
 private:
 	bool processRecord();
 	bool processZeroRecord();
+	size_t sizeOfOpened();
 
 private:
 	unsigned short myCompressionVersion;
