@@ -125,7 +125,7 @@ void HuffDecompressor::bitsDecompress(BitReader bits, size_t depth) {
 		//}
 		unsigned long code = dw >> (32 - codelen);
 		unsigned long r = (v >> 8);
-		if (!(v & 0x80)) {
+		if ((v & 0x80) == 0) {
 			while (code < myBaseTable[(codelen - 1) * 2]) {
 				codelen += 1;
 				code = dw >> (32 - codelen);
