@@ -98,9 +98,6 @@ public class PluginCollection {
 			{
 				FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 				if (p == null) {
-					p = getPlugin(fileType, FormatPlugin.Type.JAVA);
-				}
-				if (p == null) {
 					p = getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
 				}
 				return p;
