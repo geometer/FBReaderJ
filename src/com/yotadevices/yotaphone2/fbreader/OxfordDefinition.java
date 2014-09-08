@@ -1,5 +1,6 @@
 package com.yotadevices.yotaphone2.fbreader;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.yotadevices.yotaphone2.fbreader.util.ConnectionManager;
@@ -69,7 +70,7 @@ public class OxfordDefinition {
 				}
 			});
 
-			HttpGet request = new HttpGet(REQUEST_URL + "?q=" + params[0] );
+			HttpGet request = new HttpGet(REQUEST_URL + "?q=" +  Uri.encode(params[0]) );
 			request.addHeader("accessKey", TEST_API_KEY);
 			try {
 				HttpResponse response = client.execute(request);

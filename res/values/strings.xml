@@ -23,4 +23,7 @@
     <string name="nothing_to_translate">Select a word to translate</string>
     <string name="nothing_was_found">Nothing found</string>
     <string name="unknown_error">Unknown error occurred</string>
+    <string name="incorrect_request">Incorrect request</string>
+    <string name="nothing_to_define">Select a word to translate</string>
+    <string name="no_connection">No internet connection</string>
 </resources>

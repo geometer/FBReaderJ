@@ -36,10 +36,10 @@ public class YotaTranslatePopup extends ZLApplication.PopupPanel implements Abby
 	protected WebView mWebView;
 	protected String mTextToTranslate;
 
-	private final String mHTMLOpen = "<html><body>";
-	private final String mHTMLClose = "</body></html>";
-	private final String mHTMLHeader = "<h3>%s</h3>";
-	private final String mHTMLText = "<p>%s</p>";
+	protected final String mHTMLOpen = "<html><body>";
+	protected final String mHTMLClose = "</body></html>";
+	protected final String mHTMLHeader = "<h3>%s</h3>";
+	protected final String mHTMLText = "<p>%s</p>";
 
 	private final String mLink = "<p><a href=%s>%s</a></p>";
 	private final String mSuggest = "<p>%s <a href=%s>%s</a>?</p>";
