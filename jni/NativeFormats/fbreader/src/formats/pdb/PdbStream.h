@@ -35,12 +35,11 @@ public:
 protected:
 	virtual bool open();
 	virtual void close();
+	void seek(int offset, bool absoluteOffset);
+	size_t offset() const;
 
 private:
 	size_t read(char *buffer, size_t maxSize);
-
-	void seek(int offset, bool absoluteOffset);
-	size_t offset() const;
 
 protected:
 	virtual bool fillBuffer() = 0;
