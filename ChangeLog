@@ -1,4 +1,5 @@
 ===== 2.1 (Sep ??, 2014) =====
+* New engine for mobipocket (a.k.a. Kindle) files
 * Better background settings
 * DjVu plugin support
 * (planned) Fixed authors list/tags list editing
