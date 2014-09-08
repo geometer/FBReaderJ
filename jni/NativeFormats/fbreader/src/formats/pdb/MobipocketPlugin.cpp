@@ -24,12 +24,15 @@
 #include <ZLLanguageUtil.h>
 #include <ZLImage.h>
 #include <ZLFileImage.h>
+#include <ZLLogger.h>
 
 #include "PdbPlugin.h"
 #include "PalmDocStream.h"
 #include "MobipocketHtmlBookReader.h"
 
+#include "../txt/PlainTextFormat.h"
 #include "../../library/Book.h"
+#include "../../bookmodel/BookModel.h"
 
 const std::string MobipocketPlugin::supportedFileType() const {
 	return "Mobipocket";
@@ -40,6 +43,32 @@ const std::string MobipocketPlugin::supportedFileType() const {
 
 void MobipocketPlugin::readDocumentInternal(const ZLFile &file, BookModel &model, const PlainTextFormat &format, const std::string &encoding, ZLInputStream &stream) const {
 	MobipocketHtmlBookReader(file, model, format, encoding).readDocument(stream);
+}
+
+bool MobipocketPlugin::readModel(BookModel &model) const {
+	const Book &book = *model.book();
+	const ZLFile &file = book.file();
+
+	ZLLogger::Instance().registerClass("MobiCSS");
+	shared_ptr<ZLInputStream> cssStream = new PalmDocCssStream(file);
+	if (cssStream->open()) {
+		char *buffer = new char[1024];
+		while (true) {
+			const int len = cssStream->read(buffer, 1024);
+			if (len <= 0) {
+				break;
+			}
+			ZLLogger::Instance().println("MobiCSS", std::string(buffer, len));
+		}
+		delete[] buffer;
+		cssStream->close();
+	}
+
+	shared_ptr<ZLInputStream> stream = createStream(file);
+
+	PlainTextFormat format(file);
+	readDocumentInternal(file, model, format, book.encoding(), *stream);
+	return true;
 }
 
 bool MobipocketPlugin::readMetainfo(Book &book) const {
@@ -204,7 +233,7 @@ shared_ptr<const ZLImage> MobipocketPlugin::coverImage(const ZLFile &file) const
 		coverIndex = thumbIndex;
 	}
 
-	PalmDocStream pbStream(file);
+	PalmDocContentStream pbStream(file);
 	if (!pbStream.open()) {
 		return 0;
 	}

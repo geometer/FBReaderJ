@@ -30,7 +30,7 @@ bool PalmDocLikePlugin::providesMetainfo() const {
 }
 
 shared_ptr<ZLInputStream> PalmDocLikePlugin::createStream(const ZLFile &file) const {
-	return new PalmDocStream(file);
+	return new PalmDocContentStream(file);
 }
 
 /*
