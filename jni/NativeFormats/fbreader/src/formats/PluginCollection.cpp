@@ -30,7 +30,7 @@
 #include "fb2/FB2Plugin.h"
 #include "html/HtmlPlugin.h"
 #include "txt/TxtPlugin.h"
-//#include "pdb/PdbPlugin.h"
+#include "pdb/PdbPlugin.h"
 //#include "tcr/TcrPlugin.h"
 #include "oeb/OEBPlugin.h"
 //#include "chm/CHMPlugin.h"
@@ -48,7 +48,7 @@ PluginCollection &PluginCollection::Instance() {
 		ourInstance->myPlugins.push_back(new TxtPlugin());
 //		ourInstance->myPlugins.push_back(new PluckerPlugin());
 //		ourInstance->myPlugins.push_back(new PalmDocPlugin());
-//		ourInstance->myPlugins.push_back(new MobipocketPlugin());
+		ourInstance->myPlugins.push_back(new MobipocketPlugin());
 //		ourInstance->myPlugins.push_back(new EReaderPlugin());
 //		ourInstance->myPlugins.push_back(new ZTXTPlugin());
 //		ourInstance->myPlugins.push_back(new TcrPlugin());
