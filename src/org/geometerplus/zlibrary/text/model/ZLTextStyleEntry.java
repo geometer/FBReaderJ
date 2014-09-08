@@ -55,8 +55,9 @@ public abstract class ZLTextStyleEntry {
 		byte PIXEL                            = 0;
 		byte POINT                            = 1;
 		byte EM_100                           = 2;
-		byte EX_100                           = 3;
-		byte PERCENT                          = 4;
+		byte REM_100                          = 3;
+		byte EX_100                           = 4;
+		byte PERCENT                          = 5;
 		// TODO: add IN, CM, MM, PICA ("pc", = 12 POINT)
 	}
 
@@ -127,6 +128,8 @@ public abstract class ZLTextStyleEntry {
 				return length.Size * metrics.DPI / 72;
 			case SizeUnit.EM_100:
 				return (length.Size * fontSize + 50) / 100;
+			case SizeUnit.REM_100:
+				return (length.Size * metrics.FontSize + 50) / 100;
 			case SizeUnit.EX_100:
 				// TODO 0.5 font size => height of x
 				return (length.Size * fontSize / 2 + 50) / 100;

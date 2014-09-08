@@ -226,6 +226,11 @@ public class ZLTextNGStyleDescription {
 					Short.valueOf(value.substring(0, value.length() - 1)),
 					ZLTextStyleEntry.SizeUnit.PERCENT
 				);
+			} else if (value.endsWith("rem")) {
+				length = new ZLTextStyleEntry.Length(
+					(short)(100 * Double.valueOf(value.substring(0, value.length() - 2))),
+					ZLTextStyleEntry.SizeUnit.REM_100
+				);
 			} else if (value.endsWith("em")) {
 				length = new ZLTextStyleEntry.Length(
 					(short)(100 * Double.valueOf(value.substring(0, value.length() - 2))),
