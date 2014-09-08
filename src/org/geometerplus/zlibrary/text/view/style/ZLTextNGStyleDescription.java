@@ -67,13 +67,13 @@ public class ZLTextNGStyleDescription {
 		LineHeightOption = createOption(selector, "line-height", valueMap);
 	}
 
-	int getFontSize(ZLTextMetrics metrics, int baseFontSize) {
+	int getFontSize(ZLTextMetrics metrics, int parentFontSize) {
 		final ZLTextStyleEntry.Length length = parseLength(FontSizeOption.getValue());
 		if (length == null) {
-			return baseFontSize;
+			return parentFontSize;
 		}
 		return ZLTextStyleEntry.compute(
-			length, metrics, baseFontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+			length, metrics, parentFontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
 		);
 	}
 
