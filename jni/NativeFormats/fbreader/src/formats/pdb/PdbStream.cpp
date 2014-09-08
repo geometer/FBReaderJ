@@ -49,6 +49,7 @@ bool PdbStream::open() {
 }
 
 size_t PdbStream::read(char *buffer, size_t maxSize) {
+	maxSize = std::min(maxSize, (size_t)std::max((int)sizeOfOpened() - (int)offset(), 0));
 	size_t realSize = 0;
 	while (realSize < maxSize) {
 		if (!fillBuffer()) {
@@ -96,11 +97,6 @@ void PdbStream::seek(int offset, bool absoluteOffset) {
 
 size_t PdbStream::offset() const {
 	return myOffset;
-}
-
-size_t PdbStream::sizeOfOpened() {
-	// TODO: implement
-	return 0;
 }
 
 size_t PdbStream::recordOffset(size_t index) const {

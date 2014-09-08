@@ -41,7 +41,6 @@ private:
 
 	void seek(int offset, bool absoluteOffset);
 	size_t offset() const;
-	size_t sizeOfOpened();
 
 protected:
 	virtual bool fillBuffer() = 0;
