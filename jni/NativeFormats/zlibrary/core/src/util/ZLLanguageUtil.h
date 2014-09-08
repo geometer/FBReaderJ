@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2014 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,19 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.html;
+#ifndef __ZLLANGUAGEUTIL_H__
+#define __ZLLANGUAGEUTIL_H__
 
-import java.io.InputStream;
-import java.io.IOException;
+#include <string>
 
-public abstract class ZLHtmlProcessor {
-	public static boolean read(ZLHtmlReader reader, InputStream stream) {
-		try {
-			ZLHtmlParser parser = new ZLHtmlParser(reader, stream);
-			reader.startDocumentHandler();
-			parser.doIt();
-			reader.endDocumentHandler();
-		} catch (IOException e) {
-			return false;
-		}
-		return true;
-	}
-}
+class ZLLanguageUtil {
+
+public:
+	static std::string languageByIntCode(unsigned char languageCode, unsigned char subLanguageCode);
+	static bool isRTLLanguage(const std::string &languageCode);
+
+private:
+	ZLLanguageUtil();
+};
+
+#endif /* __ZLLANGUAGEUTIL_H__ */
