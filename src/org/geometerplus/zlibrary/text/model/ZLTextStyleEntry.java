@@ -55,8 +55,9 @@ public abstract class ZLTextStyleEntry {
 		byte PIXEL                            = 0;
 		byte POINT                            = 1;
 		byte EM_100                           = 2;
-		byte EX_100                           = 3;
-		byte PERCENT                          = 4;
+		byte REM_100                          = 3;
+		byte EX_100                           = 4;
+		byte PERCENT                          = 5;
 		// TODO: add IN, CM, MM, PICA ("pc", = 12 POINT)
 	}
 
@@ -114,11 +115,11 @@ public abstract class ZLTextStyleEntry {
 		}
 	}
 
-	public final int getLength(int featureId, ZLTextMetrics metrics, int baseFontSize) {
-		return compute(myLengths[featureId], metrics, baseFontSize, featureId);
+	public final int getLength(int featureId, ZLTextMetrics metrics, int fontSize) {
+		return compute(myLengths[featureId], metrics, fontSize, featureId);
 	}
 
-	public static int compute(Length length, ZLTextMetrics metrics, int baseFontSize, int featureId) {
+	public static int compute(Length length, ZLTextMetrics metrics, int fontSize, int featureId) {
 		switch (length.Unit) {
 			default:
 			case SizeUnit.PIXEL:
@@ -126,12 +127,14 @@ public abstract class ZLTextStyleEntry {
 			case SizeUnit.POINT:
 				return length.Size * metrics.DPI / 72;
 			case SizeUnit.EM_100:
-				return (length.Size * baseFontSize + 50) / 100;
+				return (length.Size * fontSize + 50) / 100;
+			case SizeUnit.REM_100:
+				return (length.Size * metrics.FontSize + 50) / 100;
 			case SizeUnit.EX_100:
 				// TODO 0.5 font size => height of x
-				return (length.Size * baseFontSize / 2 + 50) / 100;
+				return (length.Size * fontSize / 2 + 50) / 100;
 			case SizeUnit.PERCENT:
-				return (length.Size * fullSize(metrics, baseFontSize, featureId) + 50) / 100;
+				return (length.Size * fullSize(metrics, fontSize, featureId) + 50) / 100;
 		}
 	}
 
