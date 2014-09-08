@@ -24,7 +24,6 @@
 #include <ZLLanguageUtil.h>
 #include <ZLImage.h>
 #include <ZLFileImage.h>
-#include <ZLLogger.h>
 
 #include "PdbPlugin.h"
 #include "PalmDocStream.h"
