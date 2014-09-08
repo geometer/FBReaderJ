@@ -35,19 +35,15 @@ public abstract class BookModel {
 
 		System.err.println("using plugin: " + plugin.supportedFileType() + "/" + plugin.type());
 
-		final BookModel model;
-		switch (plugin.type()) {
-			case NATIVE:
-				model = new NativeBookModel(book);
-				break;
-			default:
-				throw new BookReadingException(
-					"unknownPluginType", null, new String[] { plugin.type().toString() }
-				);
+		if (plugin instanceof BuiltinFormatPlugin) {
+			final BookModel model = new NativeBookModel(book);
+			((BuiltinFormatPlugin)plugin).readModel(model);
+			return model;
 		}
 
-		((BuiltinFormatPlugin)plugin).readModel(model);
-		return model;
+		throw new BookReadingException(
+			"unknownPluginType", null, new String[] { plugin.type().toString() }
+		);
 	}
 
 	public final Book Book;
