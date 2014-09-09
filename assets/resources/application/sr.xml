@@ -1015,11 +1015,6 @@
 		<node name="browser" value="Прегледач"/>
 		<node name="defaultBrowser" value="Подразумевани прегледач"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Непозната грешка"/>
-		<node name="unsupportedCompressionMethod" value="Неподржана метода сажимања."/>
-		<node name="encryptedFile" value="Датотека заштићена DRM-ом."/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Проблем с FBReader-ом"/>

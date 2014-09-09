@@ -1013,11 +1013,6 @@
 		<node name="browser" value="Browser"/>
 		<node name="defaultBrowser" value="Default-Browser"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Αγνωστό σφάλμα"/>
-		<node name="unsupportedCompressionMethod" value="Η μέθοδος συμπίεσης δεν υποστιρίζεται"/>
-		<node name="encryptedFile" value="Αρχείο με προστασία DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Πρόβλημα FBReader"/>

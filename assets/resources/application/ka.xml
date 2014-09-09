@@ -1020,11 +1020,6 @@
 		<node name="browser" value="ბრაუზერი"/>
 		<node name="defaultBrowser" value="ბრაუზერი"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="უცნობი შეცდომა"/>
-		<node name="unsupportedCompressionMethod" value="შეკუმშვის არამხარდაჭერილი მეთოდი"/>
-		<node name="encryptedFile" value="ფაილი დაცულია DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader-ის პრობლემა"/>

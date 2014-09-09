@@ -1006,11 +1006,6 @@
 		<node name="browser" value="Browser"/>
 		<node name="defaultBrowser" value="Browser prestabilit"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Eroare necunoscuta"/>
-		<node name="unsupportedCompressionMethod" value="Metoda de compresie neacceptata"/>
-		<node name="encryptedFile" value="Fisier protejat prin DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Eroare in aplicatie"/>

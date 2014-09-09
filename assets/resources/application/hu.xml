@@ -1005,11 +1005,6 @@
 		<node name="browser" value="Böngésző"/>
 		<node name="defaultBrowser" value="Alapértelmezett böngésző"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Ismeretlen hiba"/>
-		<node name="unsupportedCompressionMethod" value="Nem támogatott tömörítés"/>
-		<node name="encryptedFile" value="Másolásvédett fájl"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader probléma"/>

@@ -1021,11 +1021,6 @@
 		<node name="browser" value="Аглядальнік"/>
 		<node name="defaultBrowser" value="Стандартны аглядальнік"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Невядомая памылка"/>
-		<node name="unsupportedCompressionMethod" value="Непадтрыманы спосаб сьціску"/>
-		<node name="encryptedFile" value="Файл абаронены DRM (кіраваньнем лічбавымі правамі)"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Праблема FBReader"/>

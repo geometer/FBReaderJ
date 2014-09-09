@@ -1005,11 +1005,6 @@
 		<node name="browser" value="Navegador"/>
 		<node name="defaultBrowser" value="Navegador predeterminado"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Produciuse un erro descoñecido"/>
-		<node name="unsupportedCompressionMethod" value="Método de compresión non admitido"/>
-		<node name="encryptedFile" value="Ficheiro protexido con DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>

@@ -1020,11 +1020,6 @@
 		<node name="browser" value="Nabigatzailea"/>
 		<node name="defaultBrowser" value="Lehenetsitako nabigatzailea"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Errore ezezaguna"/>
-		<node name="unsupportedCompressionMethod" value="Onartu gabeko konpresio metodoa"/>
-		<node name="encryptedFile" value="DRM-arekin giltzatutako fitxategia"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader arazoa"/>

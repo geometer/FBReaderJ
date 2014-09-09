@@ -1005,11 +1005,6 @@
 		<node name="browser" value="瀏覽"/>
 		<node name="defaultBrowser" value="預設瀏覽器"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="未知錯誤"/>
-		<node name="unsupportedCompressionMethod" value="未支援的壓縮方式"/>
-		<node name="encryptedFile" value="受DRM保護的文件"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>

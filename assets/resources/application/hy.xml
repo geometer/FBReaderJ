@@ -1020,11 +1020,6 @@
 		<node name="browser" value="դիտարկիչ"/>
 		<node name="defaultBrowser" value="հիմնական դիտարկիչ"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="անհայտ սխալ"/>
-		<node name="unsupportedCompressionMethod" value="պահարկման այս եղանակը չի աջակցվում"/>
-		<node name="encryptedFile" value="նիշքը պաշտպանված է DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Խնդիր FBReader-ում"/>
