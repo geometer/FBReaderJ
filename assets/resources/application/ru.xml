@@ -346,9 +346,9 @@
 			<node name="positions" value="Синхронизировать позиции"/>
 			<node name="bookmarks" value="Синхронизировать закладки"/>
 			<node name="metainfo" value="Синхронизировать информацию о книге (название, категории, и т.п.)"/>
-			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
-				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Менять книгу">
+				<node name="summaryOn" value="Держать открытой одну и ту же книгу на всех устройствах"/>
+				<node name="summaryOff" value="Синхронизировать только позиции, не менять книгу автоматически"/>
 			</node>
 		</node>
 		<node name="directories" value="Каталоги">
