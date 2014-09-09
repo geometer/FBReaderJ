@@ -345,14 +345,14 @@
 				<node name="never" value="Nikdy"/>
 			</node>
 			<node name="uploadAllBooks" value="Nahrát všechny knihy na server"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Stáhnout všechny knihy ze serveru"/>
+			<node name="downloadCurrentBook" value="Stáhnout aktuální knihu ze serveru"/>
 			<node name="positions" value="Synchronizovat pozice čtení"/>
 			<node name="bookmarks" value="Synchronizovat záložky"/>
 			<node name="metainfo" value="Synchronizovat metainformace (název, štítky atd.)"/>
-			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
-				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Změnit aktuální knihu">
+				<node name="summaryOn" value="Otevřít stejnou knihu ve všech zařízeních"/>
+				<node name="summaryOff" value="Pouze synchronizovat pozice, neměnit automaticky knihu"/>
 			</node>
 		</node>
 		<node name="directories" value="Adresáře">
@@ -629,24 +629,24 @@
 			<node name="summary" value="Nastavení barev"/>
 			<node name="background" value="Pozadí">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="solidColor" value="Plná barva…"/>
+					<node name="predefined" value="Předdefinovaná textura…"/>
+					<node name="selectFile" value="Vyberte soubor…"/>
 				</node>
 				<node name="solidColor" value="Plná barva"/>
 				<node name="leather" value="Kůže"/>
 				<node name="sepia" value="Sépie"/>
 				<node name="wood" value="Dřevo"/>
-				<node name="sand" value="Sand" toBeTranslated="true"/>
-				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+				<node name="sand" value="Písek"/>
+				<node name="hardpaper" value="Karton"/>
 			</node>
-			<node name="fillMode" value="Fill mode" toBeTranslated="true">
-				<node name="tile" value="Tile" toBeTranslated="true"/>
-				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
-				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
-				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
-				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
-				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			<node name="fillMode" value="Režim vyplnění">
+				<node name="tile" value="Vedle sebe"/>
+				<node name="tileMirror" value="Zrcadlově vedle sebe"/>
+				<node name="fullscreen" value="Celá obrazovka"/>
+				<node name="stretch" value="Roztáhnout pro vyplnění obrazovky"/>
+				<node name="tileVertically" value="Roztáhnout vodorovně, vedle sebe svisle"/>
+				<node name="tileHorizontally" value="Roztáhnout svisle, vedle sebe vodorovně"/>
 			</node>
 			<node name="selectionBackground" value="Pozadí výběru"/>
 			<node name="selectionForeground" value="Vybraný text"/>
