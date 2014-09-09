@@ -62,13 +62,14 @@ protected:
 	static void endParagraph(XHTMLReader &reader);
 };
 
-struct TagData {
-	std::vector<FBTextKind> TextKinds;
-	std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
-	bool PageBreakAfter;
-};
-
 class XHTMLReader : public ZLXMLReader {
+
+public:
+	struct TagData {
+		std::vector<FBTextKind> TextKinds;
+		std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
+		bool PageBreakAfter;
+	};
 
 public:
 	static XHTMLTagAction *addAction(const std::string &tag, XHTMLTagAction *action);

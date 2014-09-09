@@ -28,30 +28,24 @@ HtmlMetainfoReader::HtmlMetainfoReader(Book &book, ReadType readType) :
 }
 
 bool HtmlMetainfoReader::tagHandler(const HtmlReader::HtmlTag &tag) {
-	if (tag.Name == "BODY") {
+	if (tag.Name == "body") {
 		return false;
-	} else if (((myReadType & TAGS) == TAGS) && (tag.Name == "DC:SUBJECT")) {
+	} else if ((myReadType & TAGS) == TAGS && tag.Name == "dc:subject") {
 		myReadTags = tag.Start;
 		if (!tag.Start && !myBuffer.empty()) {
 			myBook.addTag(myBuffer);
 			myBuffer.erase();
 		}
-	} else if (((myReadType & TITLE) == TITLE) && (tag.Name == "DC:TITLE")) {
+	} else if ((myReadType & TITLE) == TITLE && tag.Name == "dc:title") {
 		myReadTitle = tag.Start;
 		if (!tag.Start && !myBuffer.empty()) {
 			myBook.setTitle(myBuffer);
 			myBuffer.erase();
 		}
-	} else if (((myReadType & AUTHOR) == AUTHOR) && (tag.Name == "DC:CREATOR")) {
+	} else if ((myReadType & AUTHOR) == AUTHOR && tag.Name == "dc:creator") {
 		if (tag.Start) {
-			bool flag = false;
-			for (size_t i = 0; i < tag.Attributes.size(); ++i) {
-				if (tag.Attributes[i].Name == "ROLE") {
-					flag = ZLUnicodeUtil::toUpper(tag.Attributes[i].Value) == "AUT";
-					break;
-				}
-			}
-			if (flag) {
+			const std::string *role = tag.find("role");
+			if (role != 0 && ZLUnicodeUtil::toLower(*role) == "aut") {
 				if (!myBuffer.empty()) {
 					myBuffer += ", ";
 				}
