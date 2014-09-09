@@ -37,6 +37,8 @@ public class SyncOptions {
 		new ZLEnumOption<Condition>("Sync", "UploadAllBooks", Condition.viaWifi);
 	public final ZLEnumOption<Condition> Positions =
 		new ZLEnumOption<Condition>("Sync", "Positions", Condition.always);
+	public final ZLBooleanOption ChangeCurrentBook =
+		new ZLBooleanOption("Sync", "ChangeCurrentBook", true);
 	public final ZLEnumOption<Condition> Bookmarks =
 		new ZLEnumOption<Condition>("Sync", "Bookmarks", Condition.always);
 	public final ZLEnumOption<Condition> Metainfo =
