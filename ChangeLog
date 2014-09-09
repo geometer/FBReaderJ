@@ -7,6 +7,7 @@
 * (planned) Recently accessed books list (on the book network)
 * (planned) Do not start SyncService in synchronization is disabled
 * (planned) Sync: single book upload
+* (planned) Sync: 'synchronize positions only' option
 * Tips are back but disabled by default
 * (planned) Tablet-oriented preferences dialog
 * Added Japanese localisation (by Tamotsu Takahashi and Naofumi Fukue)
