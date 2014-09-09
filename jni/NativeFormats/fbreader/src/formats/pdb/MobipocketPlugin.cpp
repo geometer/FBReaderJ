@@ -327,3 +327,17 @@ std::string MobipocketPlugin::readAnnotation(const ZLFile &file) const {
 bool MobipocketPlugin::readUids(Book &/*book*/) const {
 	return true;
 }
+
+std::vector<shared_ptr<FileEncryptionInfo> > MobipocketPlugin::readEncryptionInfos(Book &book) const {
+	std::vector<shared_ptr<FileEncryptionInfo> > infos;
+
+	PalmDocContentStream pbStream(book.file());
+	if (pbStream.open()) {
+		pbStream.close();
+	} else if (pbStream.errorCode() == PalmDocContentStream::ERROR_ENCRYPTION) {
+		infos.push_back(new FileEncryptionInfo("", EncryptionMethod::KINDLE, "", ""));
+	} else {
+		infos.push_back(new FileEncryptionInfo("", EncryptionMethod::UNSUPPORTED, "", ""));
+	}
+	return infos;
+}
