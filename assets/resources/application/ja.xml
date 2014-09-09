@@ -1014,11 +1014,6 @@
 		<node name="browser" value="ブラウザ"/>
 		<node name="defaultBrowser" value="既定のブラウザ"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="不明なエラー"/>
-		<node name="unsupportedCompressionMethod" value="未対応の圧縮方式"/>
-		<node name="encryptedFile" value="DRM で保護されたファイル"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader の問題"/>

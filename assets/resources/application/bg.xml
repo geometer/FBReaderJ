@@ -1020,11 +1020,6 @@
 		<node name="browser" value="Браузер"/>
 		<node name="defaultBrowser" value="Браузер по подразбиране"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="неизвестна грешка"/>
-		<node name="unsupportedCompressionMethod" value="методът на архивиране не се поддържа"/>
-		<node name="encryptedFile" value="DRM защитен файл"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Проблем с FBReader"/>
