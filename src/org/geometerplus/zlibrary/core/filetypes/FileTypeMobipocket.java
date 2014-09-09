@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.core.filetypes;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -34,10 +35,9 @@ class FileTypeMobipocket extends FileTypePalm {
 		if (super.acceptsFile(file)) {
 			return true;
 		}
-		final String extension = file.getExtension();
 		return
-			("mobi".equalsIgnoreCase(extension) || "azw3".equalsIgnoreCase(extension)) &&
-			"BOOKMOBI".equals(palmFileType(file));
+			Arrays.asList("mobi", "azw", "azw3").contains(file.getExtension().toLowerCase())
+			&& "BOOKMOBI".equals(palmFileType(file));
 	}
 
 	@Override

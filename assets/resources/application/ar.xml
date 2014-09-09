@@ -1012,11 +1012,6 @@
 		<node name="browser" value="Browser" toBeTranslated="true"/>
 		<node name="defaultBrowser" value="Default Browser" toBeTranslated="true"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Unknown Error" toBeTranslated="true"/>
-		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method" toBeTranslated="true"/>
-		<node name="encryptedFile" value="DRM-protected File" toBeTranslated="true"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>

@@ -30,7 +30,7 @@
 TxtPlugin::~TxtPlugin() {
 }
 
-bool TxtPlugin::providesMetaInfo() const {
+bool TxtPlugin::providesMetainfo() const {
 	return false;
 }
 

@@ -36,7 +36,7 @@ DocPlugin::DocPlugin() {
 DocPlugin::~DocPlugin() {
 }
 
-bool DocPlugin::providesMetaInfo() const {
+bool DocPlugin::providesMetainfo() const {
 	return true;
 }
 

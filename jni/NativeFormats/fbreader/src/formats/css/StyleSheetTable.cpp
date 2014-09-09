@@ -54,6 +54,10 @@ static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntr
 		unit = ZLTextStyleEntry::SIZE_UNIT_PERCENT;
 		size = std::atoi(toParse.c_str());
 		return true;
+	} else if (ZLStringUtil::stringEndsWith(toParse, "rem")) {
+		unit = ZLTextStyleEntry::SIZE_UNIT_REM_100;
+		size = (short)(100 * ZLStringUtil::stringToDouble(toParse, 0));
+		return true;
 	} else if (ZLStringUtil::stringEndsWith(toParse, "em")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_EM_100;
 		size = (short)(100 * ZLStringUtil::stringToDouble(toParse, 0));
@@ -175,7 +179,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 		} else if (bold == "lighter") {
 			// TODO: implement
 		} else {
-			num = ZLStringUtil::stringToInteger(bold, -1);
+			num = ZLStringUtil::parseDecimal(bold, -1);
 		}
 		if (num != -1) {
 			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_BOLD, num >= 600);

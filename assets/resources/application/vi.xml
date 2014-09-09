@@ -1004,11 +1004,6 @@
 		<node name="browser" value="Trình duyệt"/>
 		<node name="defaultBrowser" value="Trình duyệt mặc định"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Lỗi chưa biết"/>
-		<node name="unsupportedCompressionMethod" value="Không thể mở cách thức nén này"/>
-		<node name="encryptedFile" value="Tập tin được bảo vệ DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>

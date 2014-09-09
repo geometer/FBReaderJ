@@ -1892,13 +1892,18 @@ public class FileChooserActivity extends Activity {
                 return;
             }// double tap to choose files
             else {
-                if (mIsMultiSelection)
+                if (mIsMultiSelection) {
                     return;
+				}
 
-                if (mIsSaveDialog)
+                if (mIsSaveDialog) {
                     doCheckSaveasFilenameAndFinish(data.getFile().getName());
-                else
-                    doFinish(data.getFile());
+                } else {
+            		final IFileAdapter.Bag bag = (IFileAdapter.Bag)view.getTag();
+					if (bag != null && bag.mIsAccessible) {
+                    	doFinish(data.getFile());
+					}
+				}
             }// single tap to choose files
         }// onItemClick()
     };// mViewFilesOnItemClickListener

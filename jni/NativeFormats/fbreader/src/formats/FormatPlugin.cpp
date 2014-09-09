@@ -94,10 +94,12 @@ bool FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream, const std::
 	return detected;
 }
 
+/*
 const std::string &FormatPlugin::tryOpen(const ZLFile&) const {
 	static const std::string EMPTY = "";
 	return EMPTY;
 }
+*/
 
 std::vector<shared_ptr<FileEncryptionInfo> > FormatPlugin::readEncryptionInfos(Book &book) const {
 	return std::vector<shared_ptr<FileEncryptionInfo> >();
@@ -105,4 +107,8 @@ std::vector<shared_ptr<FileEncryptionInfo> > FormatPlugin::readEncryptionInfos(B
 
 shared_ptr<const ZLImage> FormatPlugin::coverImage(const ZLFile &file) const {
 	return 0;
+}
+
+std::string FormatPlugin::readAnnotation(const ZLFile &file) const {
+	return "";
 }

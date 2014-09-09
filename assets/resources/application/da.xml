@@ -1014,11 +1014,6 @@
 		<node name="browser" value="Browser"/>
 		<node name="defaultBrowser" value="Standardbrowser"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Ukendt fejl"/>
-		<node name="unsupportedCompressionMethod" value="Ikke-understøttet kompressionsmetode"/>
-		<node name="encryptedFile" value="DRM-beskyttet fil"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FB-Læser problem"/>
