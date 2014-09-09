@@ -1014,11 +1014,6 @@
 		<node name="browser" value="Tarayıcı"/>
 		<node name="defaultBrowser" value="Varsayılan tarayıcı"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Bilinmeyen Hata"/>
-		<node name="unsupportedCompressionMethod" value="Desteklenmeyen Sıkıştırma Yöntemi"/>
-		<node name="encryptedFile" value="DRM-korunmuş dosya"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader sorunu"/>
