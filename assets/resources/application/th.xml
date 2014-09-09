@@ -1004,11 +1004,6 @@
 		<node name="browser" value="เว็บเบราว์เซอร์"/>
 		<node name="defaultBrowser" value="เว็บเบราว์เซอร์เริ่มต้น"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="ข้อผิดพลาดได้ที่ไม่สามารถระบุได้"/>
-		<node name="unsupportedCompressionMethod" value="ไม่รองรับการบีบอัดข้อมูลชนิดนี้"/>
-		<node name="encryptedFile" value="ไฟล์ถูกป้องกันด้วย DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
