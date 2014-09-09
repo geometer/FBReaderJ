@@ -80,9 +80,9 @@ void MobipocketHtmlImageTagAction::run(const HtmlReader::HtmlTag &tag) {
 		int index = -1;
 		for (unsigned int i = 0; i < tag.Attributes.size() && index < 0; ++i) {
 			const std::string aName = tag.Attributes[i].Name;
-			if (aName == "RECINDEX") {
+			if (aName == "recindex") {
 				index = ZLStringUtil::parseDecimal(tag.Attributes[i].Value, -1);
-			} else if (aName == "SRC") {
+			} else if (aName == "src") {
 				static const std::string KINDLE_EMBED_PREFIX = "kindle:embed:";
 				std::string aValue = tag.Attributes[i].Value;
 				if (ZLStringUtil::stringStartsWith(aValue, KINDLE_EMBED_PREFIX)) {
@@ -206,26 +206,22 @@ const std::map<size_t,std::string> &MobipocketHtmlBookReader::TOCReader::entries
 void MobipocketHtmlHrefTagAction::run(const HtmlReader::HtmlTag &tag) {
 	MobipocketHtmlBookReader &reader = (MobipocketHtmlBookReader&)myReader;
 	if (tag.Start) {
-		for (unsigned int i = 0; i < tag.Attributes.size(); ++i) {
-			if (tag.Attributes[i].Name == "FILEPOS") {
-				const std::string &value = tag.Attributes[i].Value;
-				if (!value.empty()) {
-					std::string label = "&";
-					int intValue = atoi(value.c_str());
-					if (intValue > 0) {
-						if (reader.myTocReader.rangeContainsPosition(tag.Offset)) {
-							reader.myTocReader.startReadEntry(intValue);
-							if (reader.myTocReader.rangeContainsPosition(intValue)) {
-								reader.myTocReader.setEndOffset(intValue);
-							}
-						}
-						reader.myFileposReferences.insert(intValue);
-						ZLStringUtil::appendNumber(label, intValue);
-						setHyperlinkType(INTERNAL_HYPERLINK);
-						bookReader().addHyperlinkControl(INTERNAL_HYPERLINK, label);
-						return;
+		const std::string *filepos = tag.find("filepos");
+		if (filepos != 0 && !filepos->empty()) {
+			std::string label = "&";
+			int intValue = atoi(filepos->c_str());
+			if (intValue > 0) {
+				if (reader.myTocReader.rangeContainsPosition(tag.Offset)) {
+					reader.myTocReader.startReadEntry(intValue);
+					if (reader.myTocReader.rangeContainsPosition(intValue)) {
+						reader.myTocReader.setEndOffset(intValue);
 					}
 				}
+				reader.myFileposReferences.insert(intValue);
+				ZLStringUtil::appendNumber(label, intValue);
+				setHyperlinkType(INTERNAL_HYPERLINK);
+				bookReader().addHyperlinkControl(INTERNAL_HYPERLINK, label);
+				return;
 			}
 		}
 	} else {
@@ -254,11 +250,11 @@ void MobipocketHtmlReferenceTagAction::run(const HtmlReader::HtmlTag &tag) {
 		for (size_t i = 0; i < tag.Attributes.size(); ++i) {
 			const std::string &name = tag.Attributes[i].Name;
 			const std::string &value = tag.Attributes[i].Value;
-			if (name == "TITLE") {
+			if (name == "title") {
 				title = value;
-			} else if (name == "FILEPOS") {
+			} else if (name == "filepos") {
 				filepos = value;
-			} else if ((name == "TYPE") && (ZLUnicodeUtil::toUpper(value) == "TOC")) {
+			} else if ((name == "type") && (ZLUnicodeUtil::toLower(value) == "toc")) {
 				isTocReference = true;
 			}
 		}
@@ -275,17 +271,17 @@ void MobipocketHtmlReferenceTagAction::run(const HtmlReader::HtmlTag &tag) {
 }
 
 shared_ptr<HtmlTagAction> MobipocketHtmlBookReader::createAction(const std::string &tag) {
-	if (tag == "IMG") {
+	if (tag == "img") {
 		return new MobipocketHtmlImageTagAction(*this);
-	} else if (tag == "HR") {
+	} else if (tag == "hr") {
 		return new MobipocketHtmlHrTagAction(*this);
-	} else if (tag == "A") {
+	} else if (tag == "a") {
 		return new MobipocketHtmlHrefTagAction(*this);
-	} else if (tag == "GUIDE") {
+	} else if (tag == "guide") {
 		return new MobipocketHtmlGuideTagAction(*this);
-	} else if (tag == "REFERENCE") {
+	} else if (tag == "reference") {
 		return new MobipocketHtmlReferenceTagAction(*this);
-	} else if (tag == "MBP:PAGEBREAK") {
+	} else if (tag == "mbp:pagebreak") {
 		return new MobipocketHtmlPagebreakTagAction(*this);
 	}
 	return HtmlBookReader::createAction(tag);
