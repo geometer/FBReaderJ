@@ -1014,11 +1014,6 @@
 		<node name="browser" value="مرورگر"/>
 		<node name="defaultBrowser" value="مرورگر پيش فرض"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="خطاي نامشخص"/>
-		<node name="unsupportedCompressionMethod" value="روش فشرده سازي پشتيباني نشده"/>
-		<node name="encryptedFile" value="فايل محافظت شده DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="مشکل اف بی ریدر"/>
