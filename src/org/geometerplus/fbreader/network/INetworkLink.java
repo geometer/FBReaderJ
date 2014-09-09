@@ -32,7 +32,8 @@ public interface INetworkLink extends Comparable<INetworkLink> {
 	public enum Type {
 		Predefined(0),
 		Custom(1),
-		Local(2);
+		Local(2),
+		Sync(3);
 
 		public final int Index;
 

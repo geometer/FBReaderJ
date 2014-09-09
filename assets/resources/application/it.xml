@@ -70,6 +70,9 @@
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Libreria di rete FBReader">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="Per autore">
 			<node name="summary" value="Libri ordinati per autore"/>
 		</node>
@@ -324,9 +327,15 @@
 				<node name="never" value="Never" toBeTranslated="true"/>
 			</node>
 			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
 			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Cartelle">
 			<node name="summary" value="Cartella in cui cercare i File"/>
@@ -338,9 +347,6 @@
 			</node>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
 				<node name="chooserTitle" value="Cartella dei Fonts"/>
-			</node>
-			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
-				<node name="chooserTitle" value="Cartella degli Sfondi"/>
 			</node>
 			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
 				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
@@ -604,12 +610,26 @@
 		<node name="colors" value="Colori &amp; sfondi">
 			<node name="summary" value="Impostazioni dei colori"/>
 			<node name="background" value="Sfondo">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Tinta unita"/>
 				<node name="leather" value="Pelle"/>
 				<node name="sepia" value="Seppia"/>
 				<node name="wood" value="Legno"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
 			</node>
-			<node name="backgroundColor" value="Colore di sfondo"/>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			</node>
 			<node name="selectionBackground" value="Seleziona Sfondo"/>
 			<node name="selectionForeground" value="Testo selezionato"/>
 			<node name="text" value="Testo Regolare"/>
@@ -778,7 +798,7 @@
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail" toBeTranslated="true">
-				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+				<node name="url" value="mailto:contact@fbreader.org" toBeTranslated="true"/>
 			</node>
 			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
 				<node name="url" value="http://twitter.com/fbreader"/>
@@ -826,6 +846,9 @@
 			<node name="installTitle" value="Installa plugin"/>
 			<node name="updateTitle" value="Aggiorna plugin"/>
 			<node name="dontAskAgain" value="Non chiedere di nuovo"/>
+		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Installa dizionario"/>
@@ -976,6 +999,7 @@
 		<node name="emptyNetworkSearchResults" value="Non sono stati trovati libri adatti"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

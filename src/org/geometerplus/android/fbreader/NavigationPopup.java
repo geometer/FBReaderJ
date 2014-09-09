@@ -32,13 +32,13 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-final class NavigationPopup {
-	private PopupWindow myWindow;
-	private ZLTextWordCursor myStartPosition;
-	private final FBReaderApp myFBReader;
-	private Button myResetButton;
+public class NavigationPopup {
+	protected PopupWindow myWindow;
+	protected ZLTextWordCursor myStartPosition;
+	protected final FBReaderApp myFBReader;
+	protected Button myResetButton;
 
-	NavigationPopup(FBReaderApp fbReader) {
+	public NavigationPopup(FBReaderApp fbReader) {
 		myFBReader = fbReader;
 	}
 
@@ -126,7 +126,7 @@ final class NavigationPopup {
 		myWindow.addView(layout);
 	}
 
-	private void setupNavigation() {
+	protected void setupNavigation() {
 		final SeekBar slider = (SeekBar)myWindow.findViewById(R.id.navigation_slider);
 		final TextView text = (TextView)myWindow.findViewById(R.id.navigation_text);
 
@@ -145,7 +145,7 @@ final class NavigationPopup {
 		);
 	}
 
-	private String makeProgressText(int page, int pagesNumber) {
+	protected String makeProgressText(int page, int pagesNumber) {
 		final StringBuilder builder = new StringBuilder();
 		builder.append(page);
 		builder.append("/");

@@ -9,7 +9,7 @@
 	android:paddingBottom="10dip"
 	android:orientation="horizontal"
 >
-	<yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView 
+	<yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView
 		android:id="@+id/style_item_color"
 		android:layout_width="24dp"
 		android:layout_height="24dp"

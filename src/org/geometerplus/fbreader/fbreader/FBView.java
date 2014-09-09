@@ -416,10 +416,10 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLPaintContext.WallpaperMode getWallpaperMode() {
+	public ZLPaintContext.FillMode getFillMode() {
 		return getWallpaperFile() instanceof ZLResourceFile
-			? ZLPaintContext.WallpaperMode.TILE_MIRROR
-			: ZLPaintContext.WallpaperMode.TILE;
+			? ZLPaintContext.FillMode.tileMirror
+			: myViewOptions.getColorProfile().FillModeOption.getValue();
 	}
 
 	@Override
@@ -448,7 +448,7 @@ public final class FBView extends ZLTextView {
 			case FBHyperlinkType.NONE:
 				return profile.RegularTextOption.getValue();
 			case FBHyperlinkType.INTERNAL:
-				return myReader.Collection.isHyperlinkVisited(myReader.Model.Book, hyperlink.Id)
+				return myReader.Collection.isHyperlinkVisited(myReader.getCurrentBook(), hyperlink.Id)
 					? profile.VisitedHyperlinkTextOption.getValue()
 					: profile.HyperlinkTextOption.getValue();
 			case FBHyperlinkType.EXTERNAL:
@@ -513,7 +513,7 @@ public final class FBView extends ZLTextView {
 		public synchronized void paint(ZLPaintContext context) {
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {
-				context.clear(wallpaper, getWallpaperMode());
+				context.clear(wallpaper, getFillMode());
 			} else {
 				context.clear(getBackgroundColor());
 			}

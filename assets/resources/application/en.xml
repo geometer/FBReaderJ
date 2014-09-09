@@ -69,6 +69,9 @@
 		<node name="tryAgain" value="Try again"/>
 	</node>
 	<node name="networkLibrary" value="FBReader network library">
+		<node name="sync" value="FBReader® book network">
+			<node name="summary" value="My personal catalog"/>
+		</node>
 		<node name="byAuthor" value="By author">
 			<node name="summary" value="Books sorted by author"/>
 		</node>
@@ -333,9 +336,15 @@
 				<node name="never" value="Never"/>
 			</node>
 			<node name="uploadAllBooks" value="Upload all books to server"/>
+			<node name="downloadAllBooks" value="Download all books from server"/>
+			<node name="downloadCurrentBook" value="Download current book from server"/>
 			<node name="positions" value="Synchronise reading positions"/>
 			<node name="bookmarks" value="Synchronise bookmarks"/>
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)"/>
+			<node name="changeCurrentBook" value="Change current book">
+				<node name="summaryOn" value="Open same book on all devices"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically"/>
+			</node>
 		</node>
 		<node name="directories" value="Directories">
 			<node name="summary" value="Directories to seek for files"/>
@@ -347,9 +356,6 @@
 			</node>
 			<node name="fontPath" value="Where to seek for fonts">
 				<node name="chooserTitle" value="Fonts folder"/>
-			</node>
-			<node name="wallpaperPath" value="Where to seek for background images">
-				<node name="chooserTitle" value="Images folder"/>
 			</node>
 			<node name="tempDir" value="Where to store temporary files">
 				<node name="chooserTitle" value="Temp files folder"/>
@@ -613,12 +619,26 @@
 		<node name="colors" value="Colors &amp; wallpapers">
 			<node name="summary" value="Color settings"/>
 			<node name="background" value="Background">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…"/>
+					<node name="predefined" value="Predefined texture…"/>
+					<node name="selectFile" value="Select file…"/>
+				</node>
 				<node name="solidColor" value="Solid color"/>
 				<node name="leather" value="Leather"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Wood"/>
+				<node name="sand" value="Sand"/>
+				<node name="hardpaper" value="Hard paper"/>
 			</node>
-			<node name="backgroundColor" value="Background color"/>
+			<node name="fillMode" value="Fill mode">
+				<node name="tile" value="Tile"/>
+				<node name="tileMirror" value="Mirrored tile"/>
+				<node name="fullscreen" value="Full screen"/>
+				<node name="stretch" value="Stretch to fill screen"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally"/>
+			</node>
 			<node name="selectionBackground" value="Selection background"/>
 			<node name="selectionForeground" value="Selected text"/>
 			<node name="text" value="Regular text"/>
@@ -787,7 +807,7 @@
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="Send us an e-mail">
-				<node name="url" value="mailto:contact@geometerplus.com"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="twitter" value="Follow us at twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
@@ -835,6 +855,9 @@
 			<node name="installTitle" value="Install plugin"/>
 			<node name="updateTitle" value="Update plugin"/>
 			<node name="dontAskAgain" value="Don't ask again"/>
+		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Install dictionary"/>
@@ -985,6 +1008,7 @@
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry"/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

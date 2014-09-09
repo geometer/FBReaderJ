@@ -69,6 +69,9 @@
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FB-Læser netværksbibliotek">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="Efter forfatter">
 			<node name="summary" value="Bøger sorteret efter forfatter"/>
 		</node>
@@ -333,9 +336,15 @@
 				<node name="never" value="Never" toBeTranslated="true"/>
 			</node>
 			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
 			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Biblioteker">
 			<node name="summary" value="Biblioteker for filsøgning"/>
@@ -347,9 +356,6 @@
 			</node>
 			<node name="fontPath" value="Skrifttype-biblioteker">
 				<node name="chooserTitle" value="Skrifttype-bibliotek"/>
-			</node>
-			<node name="wallpaperPath" value="Tapet-biblioteker">
-				<node name="chooserTitle" value="Tapet-bibliotek"/>
 			</node>
 			<node name="tempDir" value="Katalog for midlertidige filer">
 				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
@@ -613,12 +619,26 @@
 		<node name="colors" value="Farver og tapeter">
 			<node name="summary" value="Farveindstillinger"/>
 			<node name="background" value="Baggrund">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Kraftig farve"/>
 				<node name="leather" value="Læder"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Træ"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
 			</node>
-			<node name="backgroundColor" value="Baggrundsfarve"/>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			</node>
 			<node name="selectionBackground" value="Baggrund for valgt"/>
 			<node name="selectionForeground" value="Valgt tekst"/>
 			<node name="text" value="Almindelig tekst"/>
@@ -784,13 +804,13 @@
 			<node name="summary" value="Versionsoplysninger, kontakter"/>
 			<node name="version" value="Version"/>
 			<node name="site" value="Besøg vores websted">
-				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
 			<node name="email" value="Send os en e-mail">
-				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
 			<node name="twitter" value="Følg os på Twitter">
-				<node name="url" value="e-mail til:contact@geometerplus.com"/>
+				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -835,6 +855,9 @@
 			<node name="installTitle" value="Installer plug-in"/>
 			<node name="updateTitle" value="Opdater plug-in"/>
 			<node name="dontAskAgain" value="Spørg ikke igen"/>
+		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Installer ordbog"/>
@@ -985,6 +1008,7 @@
 		<node name="emptyNetworkSearchResults" value="Fandt desværre ingen bøger"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

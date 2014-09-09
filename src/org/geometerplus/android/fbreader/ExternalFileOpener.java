@@ -19,18 +19,101 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.math.BigInteger;
+import java.util.Random;
+
+import android.app.AlertDialog;
+import android.content.*;
+
+import org.geometerplus.zlibrary.core.options.Config;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
+
+import org.geometerplus.android.fbreader.api.FBReaderIntents;
+import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
+import org.geometerplus.android.util.PackageUtil;
 
 class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
+	private final String myPluginCode = new BigInteger(80, new Random()).toString();
 	private final FBReader myReader;
+	private volatile AlertDialog myDialog;
 
 	ExternalFileOpener(FBReader reader) {
 		myReader = reader;
 	}
 
-	public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark) {
+	public void openFile(final ExternalFormatPlugin plugin, final Book book, Bookmark bookmark) {
+		if (myDialog != null) {
+			myDialog.dismiss();
+			myDialog = null;
+		}
+
+		final Intent intent = PluginUtil.createIntent(plugin, PluginUtil.ACTION_VIEW);
+		FBReaderIntents.putBookExtra(intent, book);
+		FBReaderIntents.putBookmarkExtra(intent, bookmark);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+		new ZLStringOption("PluginCode", plugin.packageName(), "").setValue(myPluginCode);
+		intent.putExtra("PLUGIN_CODE", myPluginCode);
+
+		Config.Instance().runOnConnect(new Runnable() {
+			public void run() {
+				try {
+					myReader.startActivity(intent);
+					myReader.overridePendingTransition(0, 0);
+				} catch (ActivityNotFoundException e) {
+					showErrorDialog(plugin, book);
+				}
+			}
+		});
+	}
+
+	private void showErrorDialog(final ExternalFormatPlugin plugin, final Book book) {
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+		final String title =
+			dialogResource.getResource("missingPlugin").getResource("title").getValue()
+				.replace("%s", plugin.supportedFileType());
+		final AlertDialog.Builder builder = new AlertDialog.Builder(myReader)
+			.setTitle(title)
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					PackageUtil.installFromMarket(myReader, plugin.packageName());
+					myDialog = null;
+				}
+			})
+			.setNegativeButton(buttonResource.getResource("no").getValue(), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					myReader.onPluginNotFound(book);
+					myDialog = null;
+				}
+			})
+			.setOnCancelListener(new DialogInterface.OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					myReader.onPluginNotFound(book);
+					myDialog = null;
+				}
+			});
+
+		final Runnable showDialog = new Runnable() {
+			public void run() {
+				myDialog = builder.create();
+				myDialog.show();
+			}
+		};
+		if (!myReader.IsPaused) {
+			myReader.runOnUiThread(showDialog);
+		} else {
+			myReader.OnResumeAction = showDialog;
+		}
 	}
 }

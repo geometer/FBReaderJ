@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 public interface IBookCollection {
@@ -74,9 +75,9 @@ public interface IBookCollection {
 	boolean saveBook(Book book);
 	void removeBook(Book book, boolean deleteFromDisk);
 
-	String getHash(Book book);
+	String getHash(Book book, boolean force);
 
-	ZLTextPosition getStoredPosition(long bookId);
+	ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId);
 	void storePosition(long bookId, ZLTextPosition position);
 
 	boolean isHyperlinkVisited(Book book, String linkId);

@@ -43,6 +43,8 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.network.sync.SyncData;
+import org.geometerplus.fbreader.network.sync.SyncUtil;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
@@ -50,6 +52,8 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
+import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
+import org.geometerplus.android.fbreader.sync.SyncOperations;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
@@ -57,9 +61,17 @@ import org.geometerplus.android.util.DeviceType;
 public class PreferenceActivity extends ZLPreferenceActivity {
 	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
+	private static final int BACKGROUND_REQUEST_CODE = 3000;
+	private BackgroundPreference myBackgroundPreference;
 
 	public PreferenceActivity() {
 		super("Preferences");
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		myNetworkContext.onResume();
 	}
 
 	@Override
@@ -68,9 +80,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			return;
 		}
 
-		if (resultCode == RESULT_OK) {
-			myChooserCollection.update(requestCode, data);
+		if (resultCode != RESULT_OK) {
+			return;
 		}
+
+		if (BACKGROUND_REQUEST_CODE == requestCode) {
+			if (myBackgroundPreference != null) {
+				myBackgroundPreference.update(data);
+			}
+			return;
+		}
+
+		myChooserCollection.update(requestCode, data);
 	}
 
 	@Override
@@ -124,10 +145,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "fontPath", Paths.FontPathOption, fontReloader
 		));
-		final PreferenceSet wallpaperReloader = new PreferenceSet.Reloader();
-		directoriesScreen.addPreference(myChooserCollection.createPreference(
-			directoriesScreen.Resource, "wallpaperPath", Paths.WallpaperPathOption, wallpaperReloader
-		));
 		directoriesScreen.addPreference(myChooserCollection.createPreference(
 			directoriesScreen.Resource, "tempDir", Paths.TempDirectoryOption, null
 		));
@@ -139,13 +156,20 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				return syncOptions.Enabled.getValue();
 			}
 		};
-		syncScreen.addPreference(new ZLBooleanPreference(
-			this, syncOptions.Enabled, syncScreen.Resource.getResource("enable")
+		syncScreen.addPreference(new ZLCheckBoxPreference(
+			this, syncScreen.Resource.getResource("enable")
 		) {
 			{
-				if (isChecked()) {
-					setOnSummary(myNetworkContext.getAccountName(SyncOptions.DOMAIN, SyncOptions.REALM));
+				if (syncOptions.Enabled.getValue()) {
+					setChecked(true);
+					setOnSummary(SyncUtil.getAccountName(myNetworkContext));
+				} else {
+					setChecked(false);
 				}
+			}
+
+			private void enableSynchronisation() {
+				SyncOperations.enableSync(PreferenceActivity.this, syncOptions.Enabled.getValue());
 			}
 
 			@Override
@@ -153,11 +177,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				super.onClick();
 				syncPreferences.run();
 
-				myNetworkContext.removeCookiesForDomain(SyncOptions.DOMAIN);
-				myNetworkContext.setAccountName(SyncOptions.DOMAIN, SyncOptions.REALM, null);
-
 				if (!isChecked()) {
-					setOnSummary(null);
+					SyncUtil.logout(myNetworkContext);
+					syncOptions.Enabled.setValue(false);
+					enableSynchronisation();
+					syncPreferences.run();
+					new SyncData().reset();
 					return;
 				}
 
@@ -165,10 +190,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					public void run() {
 						try {
 							myNetworkContext.perform(
-								new JsonRequest(SyncOptions.URL + "login/test") {
+								new JsonRequest(SyncOptions.BASE_URL + "login/test") {
 									@Override
 									public void processResponse(Object response) {
-										setOnSummary((String)((Map)response).get("user"));
+										final String account = (String)((Map)response).get("user");
+										syncOptions.Enabled.setValue(account != null);
+										enableSynchronisation();
+										runOnUiThread(new Runnable() {
+											public void run() {
+												setOnSummary(account);
+												syncPreferences.run();
+											}
+										});
 									}
 								}
 							);
@@ -176,8 +209,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 							e.printStackTrace();
 							runOnUiThread(new Runnable() {
 								public void run() {
-									forceValue(false);
-									syncPreferences.run();
+									setChecked(false);
 								}
 							});
 						}
@@ -418,12 +450,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				return viewOptions.ScrollbarType.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER;
 			}
 		};
-		final PreferenceSet bgPreferences = new PreferenceSet.Enabler() {
-			@Override
-			protected Boolean detectState() {
-				return "".equals(profile.WallpaperOption.getValue());
-			}
-		};
 
 		final Screen cssScreen = createPreferenceScreen("css");
 		cssScreen.addOption(baseStyle.UseCSSFontFamilyOption, "fontFamily");
@@ -433,22 +459,28 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
 
-		final WallpaperPreference wallpaperPreference = new WallpaperPreference(
-			this, profile, colorsScreen.Resource.getResource("background")
-		) {
+		final PreferenceSet backgroundSet = new PreferenceSet.Enabler() {
 			@Override
-			protected void onDialogClosed(boolean result) {
-				super.onDialogClosed(result);
-				bgPreferences.run();
+			protected Boolean detectState() {
+				return profile.WallpaperOption.getValue().startsWith("/");
 			}
 		};
-		colorsScreen.addPreference(wallpaperPreference);
-		wallpaperReloader.add(wallpaperPreference);
+		myBackgroundPreference = new BackgroundPreference(
+			this,
+			profile,
+			colorsScreen.Resource.getResource("background"),
+			BACKGROUND_REQUEST_CODE
+		) {
+			@Override
+			public void update(Intent data) {
+				super.update(data);
+				backgroundSet.run();
+			}
+		};
+		colorsScreen.addPreference(myBackgroundPreference);
+		backgroundSet.add(colorsScreen.addOption(profile.FillModeOption, "fillMode"));
+		backgroundSet.run();
 
-		bgPreferences.add(
-			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
-		);
-		bgPreferences.run();
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");

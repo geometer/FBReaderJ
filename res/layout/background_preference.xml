@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:minHeight="?android:attr/listPreferredItemHeight"
+	android:paddingRight="10dip"
+	android:paddingTop="10dip"
+	android:paddingBottom="10dip"
+	android:orientation="horizontal"
+>
+	<yuku.ambilwarna.widget.AmbilWarnaPrefWidgetView
+		android:id="@+id/background_preference_widget"
+		android:layout_width="24dp"
+		android:layout_height="24dp"
+		android:layout_gravity="center_vertical|left"
+		android:focusable="false"
+		android:clickable="false"
+	/>
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:layout_marginLeft="13dip"
+		android:gravity="center_vertical|left"
+		android:orientation="vertical"
+	>
+		<TextView
+			android:id="@+id/background_preference_title"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+		/>
+		<TextView
+			android:id="@+id/background_preference_summary"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+		/>
+	</LinearLayout>
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="3"
+	/>
+</LinearLayout>

@@ -334,9 +334,15 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-			createCanvas(bitmap),
-			getWidth(),
-			getMainAreaHeight(),
+			new Canvas(bitmap),
+			new ZLAndroidPaintContext.Geometry(
+				getWidth(),
+				getHeight(),
+				getWidth(),
+				getMainAreaHeight(),
+				0,
+				0
+			),
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		view.paint(context, index);
@@ -365,9 +371,15 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			//myFooterBitmap.setDensity(240);
 		}
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-			createCanvas(myFooterBitmap),
-			getWidth(),
-			footer.getHeight(),
+			new Canvas(myFooterBitmap),
+			new ZLAndroidPaintContext.Geometry(
+				getWidth(),
+				getHeight(),
+				getWidth(),
+				footer.getHeight(),
+				0,
+				getMainAreaHeight()
+			),
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
 		footer.paint(context);
@@ -384,8 +396,14 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 				final ZLView view = ZLApplication.Instance().getCurrentView();
 				final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
 					canvas,
-					getWidth(),
-					getMainAreaHeight(),
+					new ZLAndroidPaintContext.Geometry(
+						getWidth(),
+						getHeight(),
+						getWidth(),
+						getMainAreaHeight(),
+						0,
+						0
+					),
 					view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 				);
 				view.preparePage(context, ZLView.PageIndex.next);

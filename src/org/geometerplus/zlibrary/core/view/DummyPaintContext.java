@@ -31,7 +31,7 @@ final class DummyPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void clear(ZLFile wallpaperFile, WallpaperMode mode) {
+	public void clear(ZLFile wallpaperFile, FillMode mode) {
 	}
 
 	@Override

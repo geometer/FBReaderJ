@@ -21,10 +21,11 @@ package org.geometerplus.android.fbreader.formatPlugin;
 
 import android.content.Intent;
 
-import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 
 public abstract class PluginUtil {
 	public static final String ACTION_VIEW = "android.fbreader.action.plugin.VIEW";
+	public static final String ACTION_KILL = "android.fbreader.action.plugin.KILL";
 	public static final String ACTION_CONNECT_COVER_SERVICE = "android.fbreader.action.plugin.CONNECT_COVER_SERVICE";
 
 	public static Intent createIntent(ExternalFormatPlugin plugin, String action) {

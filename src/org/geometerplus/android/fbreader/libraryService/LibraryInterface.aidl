@@ -5,7 +5,8 @@
 package org.geometerplus.android.fbreader.libraryService;
 
 import java.util.List;
-import org.geometerplus.android.fbreader.api.TextPosition;
+
+import org.geometerplus.android.fbreader.libraryService.PositionWithTimestamp;
 
 interface LibraryInterface {
 	void reset(in boolean force);
@@ -36,15 +37,15 @@ interface LibraryInterface {
 	void removeBook(in String book, in boolean deleteFromDisk);
 	void addBookToRecentList(in String book);
 
-	String getHash(in String book);
+	String getHash(in String book, in boolean force);
 
-	TextPosition getStoredPosition(in long bookId);
-	void storePosition(in long bookId, in TextPosition position);
+	PositionWithTimestamp getStoredPosition(in long bookId);
+	void storePosition(in long bookId, in PositionWithTimestamp position);
 
 	boolean isHyperlinkVisited(in String book, in String linkId);
 	void markHyperlinkAsVisited(in String book, in String linkId);
 
-	Bitmap getCover(in String book, in int maxWidth, in int maxHeight);
+	Bitmap getCover(in String book, in int maxWidth, in int maxHeight, out boolean[] delayed);
 
 	List<String> bookmarks(in String query);
 	String saveBookmark(in String bookmark);

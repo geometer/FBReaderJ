@@ -122,7 +122,7 @@ public class JellyBeanSpanFixTextView extends TextView {
 
 		for (Object span : spans) {
 			int spanStart = builder.getSpanStart(span);
-			if (isNotSpace(builder, spanStart - 1)) {
+			if (spanStart > 0 && isNotSpace(builder, spanStart - 1)) {
 				builder.insert(spanStart, " ");
 				spansWithSpacesBefore.add(span);
 			}

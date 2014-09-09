@@ -28,11 +28,18 @@ public abstract class ZLImageProxy implements ZLImage {
 	private volatile boolean myIsSynchronized;
 
 	public final boolean isSynchronized() {
+		if (myIsSynchronized && isOutdated()) {
+			myIsSynchronized = false;
+		}
 		return myIsSynchronized;
 	}
 
 	protected final void setSynchronized() {
 		myIsSynchronized = true;
+	}
+
+	protected boolean isOutdated() {
+		return false;
 	}
 
 	public void startSynchronization(Synchronizer synchronizer, Runnable postAction) {

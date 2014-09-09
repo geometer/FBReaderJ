@@ -57,7 +57,8 @@ abstract class ZLTextViewBase extends ZLView {
 				// TODO: screen area width
 				100,
 				// TODO: screen area height
-				100
+				100,
+				getTextStyleCollection().getBaseStyle().getFontSize()
 			);
 			myMetrics = m;
 		}
@@ -85,7 +86,7 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract boolean twoColumnView();
 
 	public abstract ZLFile getWallpaperFile();
-	public abstract ZLPaintContext.WallpaperMode getWallpaperMode();
+	public abstract ZLPaintContext.FillMode getFillMode();
 	public abstract ZLColor getBackgroundColor();
 	public abstract ZLColor getSelectionBackgroundColor();
 	public abstract ZLColor getSelectionForegroundColor();

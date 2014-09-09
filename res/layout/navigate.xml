@@ -16,12 +16,12 @@
 		android:ellipsize="end"
 		android:paddingTop="4px"
 	/>
-	<SeekBar
-		android:id="@+id/navigation_slider"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:paddingTop="4px"
-	/>
+    <SeekBar
+        android:id="@+id/navigation_slider"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4px"
+        />
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"

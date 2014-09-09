@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
@@ -173,7 +174,7 @@ public class BookCollection extends AbstractBookCollection {
 	public Book getBookByHash(String hash) {
 		for (long id : myDatabase.bookIdsByHash(hash)) {
 			final Book book = getBookById(id);
-			if (book.File.exists()) {
+			if (book != null && book.File.exists()) {
 				return book;
 			}
 		}
@@ -429,6 +430,9 @@ public class BookCollection extends AbstractBookCollection {
 					synchronized (myFilesToRescan) {
 						processFilesQueue();
 					}
+					for (Book book : new ArrayList<Book>(myBooksByFile.values())) {
+						getHash(book, false);
+					}
 				}
 			}
 		};
@@ -469,6 +473,7 @@ public class BookCollection extends AbstractBookCollection {
 				final Book book = getBookByFile(file);
 				if (book != null) {
 					saveBook(book);
+					getHash(book, false);
 				}
 			}
 
@@ -680,7 +685,7 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
-	public ZLTextPosition getStoredPosition(long bookId) {
+	public ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
 		return myDatabase.getStoredPosition(bookId);
 	}
 
@@ -722,19 +727,30 @@ public class BookCollection extends AbstractBookCollection {
 		fireBookEvent(BookEvent.BookmarkStyleChanged, null);
 	}
 
-	public String getHash(Book book) {
+	public String getHash(Book book, boolean force) {
 		final ZLPhysicalFile file = book.File.getPhysicalFile();
 		if (file == null) {
 			return null;
 		}
-		String hash = myDatabase.getHash(book.getId(), file.javaFile().lastModified());
+		String hash = null;
+		try {
+			hash = myDatabase.getHash(book.getId(), file.javaFile().lastModified());
+		} catch (BooksDatabase.NotAvailable e) {
+			if (!force) {
+				return null;
+			}
+		}
 		if (hash == null) {
-			final UID uid = BookUtil.createUid(file, "SHA-1");
+			final UID uid = BookUtil.createUid(book.File, "SHA-1");
 			if (uid == null) {
 				return null;
 			}
 			hash = uid.Id.toLowerCase();
-			myDatabase.setHash(book.getId(), hash);
+			try {
+				myDatabase.setHash(book.getId(), hash);
+			} catch (BooksDatabase.NotAvailable e) {
+				// ignore
+			}
 		}
 		return hash;
 	}

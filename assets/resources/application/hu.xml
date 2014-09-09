@@ -69,6 +69,9 @@
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="FBReader internetes könyvtár">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="Szerző">
 			<node name="summary" value="Könyvek szerző szerint"/>
 		</node>
@@ -323,9 +326,15 @@
 				<node name="never" value="Never" toBeTranslated="true"/>
 			</node>
 			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
 			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Mappák">
 			<node name="summary" value="Mely mappákban keressen fájlokat"/>
@@ -337,9 +346,6 @@
 			</node>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
 				<node name="chooserTitle" value="Betűtípusok mappája"/>
-			</node>
-			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
-				<node name="chooserTitle" value="Háttérképek mappája"/>
 			</node>
 			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
 				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
@@ -603,12 +609,26 @@
 		<node name="colors" value="Színek és háttérképek">
 			<node name="summary" value="Színbeállítások"/>
 			<node name="background" value="Háttér">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Egyszínű"/>
 				<node name="leather" value="Bőr"/>
 				<node name="sepia" value="Szépia"/>
 				<node name="wood" value="Fa"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
 			</node>
-			<node name="backgroundColor" value="Háttérszín"/>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			</node>
 			<node name="selectionBackground" value="Kijelölés háttere"/>
 			<node name="selectionForeground" value="Kijelölt szöveg"/>
 			<node name="text" value="Szöveg"/>
@@ -777,7 +797,7 @@
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
 			<node name="email" value="E-mail küldése">
-				<node name="url" value="mailto:contact@geometerplus.com"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="twitter" value="Kövessen Twitteren">
 				<node name="url" value="http://twitter.com/fbreader"/>
@@ -825,6 +845,9 @@
 			<node name="installTitle" value="Bővítmény telepítése"/>
 			<node name="updateTitle" value="Bővítmény frissítése"/>
 			<node name="dontAskAgain" value="Ne kérdezze megint"/>
+		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Telepítés helye"/>
@@ -975,6 +998,7 @@
 		<node name="emptyNetworkSearchResults" value="Nem található megfelelő könyv"/>
 		<node name="videoServiceNotWorking" value="Video service is not available, sorry" toBeTranslated="true"/>
 		<node name="videoPlayerNotFound" value="There is no installed video player on this device, sorry" toBeTranslated="true"/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Böngésző"/>

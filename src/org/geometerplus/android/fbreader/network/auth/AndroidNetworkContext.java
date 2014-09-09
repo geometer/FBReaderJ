@@ -20,9 +20,11 @@
 package org.geometerplus.android.fbreader.network.auth;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -36,15 +38,37 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 			return Collections.singletonMap("error", "Connection is not secure");
 		}
 		// TODO: process other codes
-		return GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext())
-			== ConnectionResult.SUCCESS
-			? authenticateToken(uri, realm, params)
-			: authenticateWeb(uri, realm, params);
+		if (Build.VERSION.SDK_INT >= 14 &&
+			GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext()) == ConnectionResult.SUCCESS) {
+			final String authUrl = url(uri, params, "auth-url-token");
+			final String clientId = params.get("client-id");
+			if (authUrl == null || clientId == null) {
+				return errorMap("No data for token authentication");
+			}
+			return authenticateToken(uri, realm, authUrl, clientId);
+		} else {
+			String authUrl = null;
+			final String account = getAccountName(uri.getHost(), realm);
+			if (account != null) {
+				final String urlWithAccount = params.get("auth-url-web-with-email");
+				if (urlWithAccount != null) {
+					authUrl = url(uri, urlWithAccount.replace("{email}", account));
+				}
+			} else {
+				authUrl = url(uri, params, "auth-url-web");
+			}
+			final String completeUrl = url(uri, params, "complete-url-web");
+			final String verificationUrl = url(uri, params, "verification-url");
+			if (authUrl == null || completeUrl == null || verificationUrl == null) {
+				return errorMap("No data for web authentication");
+			}
+			return authenticateWeb(uri, realm, authUrl, completeUrl, verificationUrl);
+		}
 	}
 
 	protected abstract Context getContext();
-	protected abstract Map<String,String> authenticateWeb(URI uri, String realm, Map<String,String> params);
-	protected abstract Map<String,String> authenticateToken(URI uri, String realm, Map<String,String> params);
+	protected abstract Map<String,String> authenticateWeb(URI uri, String realm, String authUrl, String completeUrl, String verificationUrl);
+	protected abstract Map<String,String> authenticateToken(URI uri, String realm, String authUrl, String clientId);
 
 	protected Map<String,String> errorMap(String message) {
 		return Collections.singletonMap("error", message);
@@ -63,5 +87,35 @@ public abstract class AndroidNetworkContext extends ZLNetworkContext {
 			}
 		});
 		return result;
+	}
+
+	protected Map<String,String> runTokenAuthorization(String authUrl, String authToken, String code) {
+		final Map<String,String> result = new HashMap<String,String>();
+		final JsonRequest request = new JsonRequest(authUrl) {
+			public void processResponse(Object response) {
+				result.putAll((Map)response);
+			}
+		};
+		request.addPostParameter("auth", authToken);
+		request.addPostParameter("code", code);
+		performQuietly(request);
+		System.err.println("AUTHORIZATION RESULT = " + result);
+		return result;
+	}
+
+	protected String url(URI base, Map<String,String> params, String key) {
+		return url(base, params.get(key));
+	}
+
+	protected String url(URI base, String path) {
+		if (path == null) {
+			return null;
+		}
+		try {
+			final URI relative = new URI(path);
+			return relative.isAbsolute() ? null : base.resolve(relative).toString();
+		} catch (URISyntaxException e) {
+			return null;
+		}
 	}
 }

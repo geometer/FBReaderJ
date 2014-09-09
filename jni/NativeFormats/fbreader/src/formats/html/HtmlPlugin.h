@@ -27,7 +27,7 @@ class HtmlPlugin : public FormatPlugin {
 public:
 	HtmlPlugin();
 	~HtmlPlugin();
-	bool providesMetaInfo() const;
+	bool providesMetainfo() const;
 	const std::string supportedFileType() const;
 	bool readMetainfo(Book &book) const;
 	bool readUids(Book &book) const;
@@ -38,6 +38,6 @@ public:
 
 inline HtmlPlugin::HtmlPlugin() {}
 inline HtmlPlugin::~HtmlPlugin() {}
-inline bool HtmlPlugin::providesMetaInfo() const { return false; }
+inline bool HtmlPlugin::providesMetainfo() const { return false; }
 
 #endif /* __HTMLPLUGIN_H__ */

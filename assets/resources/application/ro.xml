@@ -70,6 +70,9 @@
 		<node name="tryAgain" value="Try again" toBeTranslated="true"/>
 	</node>
 	<node name="networkLibrary" value="Reteaua de biblioteci Online">
+		<node name="sync" value="FBReader® book network" toBeTranslated="true">
+			<node name="summary" value="My personal catalog" toBeTranslated="true"/>
+		</node>
 		<node name="byAuthor" value="Dupa autor">
 			<node name="summary" value="Carti sortate dupa autor"/>
 		</node>
@@ -125,7 +128,7 @@
 		<node name="basketSummary" value="%0 carti (%1)"/>
 		<node name="alreadyDownloading" value="Cartea este în curs de descarcare"/>
 		<node name="alreadyDownloadingDemo" value="Esantionul este în curs de descarcare"/>
-		<node name="stoppingCatalogLoading" value="Oprirea  încarcarii"/>
+		<node name="stoppingCatalogLoading" value="Oprirea încarcarii"/>
 		<node name="stoppingNetworkSearch" value="Oprirea cautarii"/>
 		<node name="editCustomCatalog" value="Editare catalog"/>
 		<node name="removeCustomCatalog" value="Eliminati catalog"/>
@@ -324,9 +327,15 @@
 				<node name="never" value="Never" toBeTranslated="true"/>
 			</node>
 			<node name="uploadAllBooks" value="Upload all books to server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Synchronise reading positions" toBeTranslated="true"/>
 			<node name="bookmarks" value="Synchronise bookmarks" toBeTranslated="true"/>
 			<node name="metainfo" value="Synchronise metainfo (title, tags, etc.)" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Directoare">
 			<node name="summary" value="Directoare sa caute fisiere"/>
@@ -338,9 +347,6 @@
 			</node>
 			<node name="fontPath" value="Where to seek for fonts" toBeTranslated="true">
 				<node name="chooserTitle" value="Directorul cu fonturi"/>
-			</node>
-			<node name="wallpaperPath" value="Where to seek for background images" toBeTranslated="true">
-				<node name="chooserTitle" value="Imagini de Fundal director"/>
 			</node>
 			<node name="tempDir" value="Where to store temporary files" toBeTranslated="true">
 				<node name="chooserTitle" value="Temp files folder" toBeTranslated="true"/>
@@ -604,12 +610,26 @@
 		<node name="colors" value="Culori si imagini de fundal">
 			<node name="summary" value="Setarile de culoare"/>
 			<node name="background" value="Fundal">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Culoare uniforma"/>
 				<node name="leather" value="Piele"/>
 				<node name="sepia" value="Sepia"/>
 				<node name="wood" value="Lemn"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
 			</node>
-			<node name="backgroundColor" value="Culoare de fundal"/>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			</node>
 			<node name="selectionBackground" value="Selectie de fundal"/>
 			<node name="selectionForeground" value="Text selectat"/>
 			<node name="text" value="Text obisnuit"/>
@@ -755,7 +775,7 @@
 			<node name="backKeyAction" value="Actiunea tastei inapoi">
 				<node name="exit" value="Inchide Aplicatia"/>
 				<node name="goBack" value="Navigati înapoi"/>
-				<node name="cancelMenu" value="Arata  meniul de anulare"/>
+				<node name="cancelMenu" value="Arata meniul de anulare"/>
 			</node>
 			<node name="backKeyLongPressAction" value="Actiune pentru apasarea lunga a tastei inapoi">
 				<node name="exit" value="Inchide Aplicatia"/>
@@ -771,19 +791,19 @@
 				<node name="summaryOff" value="Nu afisa"/>
 			</node>
 		</node>
-		<node name="about" value="About FBReader" toBeTranslated="true">
-			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-			<node name="version" value="Version" toBeTranslated="true"/>
-			<node name="site" value="Visit our website" toBeTranslated="true">
+		<node name="about" value="Despre FBReader">
+			<node name="summary" value="Informatii versiune, contacte"/>
+			<node name="version" value="Versiune"/>
+			<node name="site" value="Visitati website-ul nostru">
 				<node name="url" value="http://fbreader.org/"/>
 			</node>
-			<node name="email" value="Send us an e-mail" toBeTranslated="true">
-				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+			<node name="email" value="Trimiteti-ne un e-mail">
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+			<node name="twitter" value="Urmati-ne pe twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
-			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
+			<node name="facebook" value="FBReader pe facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
 			</node>
 			<node name="thirdParty" value="Third-party libraries" toBeTranslated="true"/>
@@ -826,6 +846,9 @@
 			<node name="installTitle" value="Instalati plugin"/>
 			<node name="updateTitle" value="Actualizare plugin"/>
 			<node name="dontAskAgain" value="Nu întrebati din nou"/>
+		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Authentication required" toBeTranslated="true"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Instalati dictionar"/>
@@ -976,6 +999,7 @@
 		<node name="emptyNetworkSearchResults" value="Nu s-a gasit nici o carte"/>
 		<node name="videoServiceNotWorking" value="Servicii video nedisponibile, ne pare rau"/>
 		<node name="videoPlayerNotFound" value="Nu exista nici un player video instalat pe acest aparat, ne pare rau"/>
+		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -989,7 +1013,7 @@
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Eroare in aplicatie"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or select another directory." toBeTranslated="true"/>
+			<node name="text" value="FBReader director cache nu este accesibil pentru scriere. Poate ati uitat sa introduceti sau demonta cartela de memorie. Va rugam sa rezolva aceasta problema sau selectati un alt director."/>
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problema in aplicatie"/>

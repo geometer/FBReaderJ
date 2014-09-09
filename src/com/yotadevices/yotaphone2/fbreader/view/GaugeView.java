@@ -197,10 +197,16 @@ public class GaugeView extends View {
             mGaugeBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
         }
         final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-                createCanvas(mGaugeBitmap),
-                getWidth(),
-                getHeight(),
-                0
+                new Canvas(mGaugeBitmap),
+                new ZLAndroidPaintContext.Geometry(
+					getWidth(),
+					getHeight(),
+					getWidth(),
+					mFooter.getHeight(),
+					0,
+		            0
+                ),
+		        0
         );
 
         mFooter.paint(context);

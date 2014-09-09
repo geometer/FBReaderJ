@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.RationalNumber;
 
@@ -34,7 +33,7 @@ import org.geometerplus.fbreader.sort.TitledEntity;
 public class Book extends TitledEntity {
 	public static final String FAVORITE_LABEL = "favorite";
 	public static final String READ_LABEL = "read";
-	public static final String SYNCHRONIZED_LABEL = "sync-success";
+	public static final String SYNCHRONISED_LABEL = "sync-success";
 	public static final String SYNC_FAILURE_LABEL = "sync-failure";
 	public static final String SYNC_DELETED_LABEL = "sync-deleted";
 	public static final String SYNC_TOSYNC_LABEL = "sync-tosync";
@@ -173,6 +172,10 @@ public class Book extends TitledEntity {
 
 	public FormatPlugin getPlugin() throws BookReadingException {
 		return getPlugin(File);
+	}
+
+	public FormatPlugin getPluginOrNull() {
+		return PluginCollection.Instance().getPlugin(File);
 	}
 
 	void readMetainfo() throws BookReadingException {

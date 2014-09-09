@@ -50,7 +50,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		migrate();
 	}
 
-	public void close() {
+	@Override
+	public void finalize() {
 		myDatabase.close();
 	}
 
@@ -75,7 +76,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 27;
+		final int currentVersion = 28;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -137,6 +138,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables25();
 			case 26:
 				updateTables26();
+			case 27:
+				updateTables27();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -908,16 +911,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		statement.execute();
 	}
 
-	protected ZLTextPosition getStoredPosition(long bookId) {
-		ZLTextPosition position = null;
+	protected ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
+		ZLTextFixedPosition.WithTimestamp position = null;
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT paragraph,word,char FROM BookState WHERE book_id = " + bookId, null
+			"SELECT paragraph,word,char,timestamp FROM BookState WHERE book_id = " + bookId, null
 		);
 		if (cursor.moveToNext()) {
-			position = new ZLTextFixedPosition(
+			position = new ZLTextFixedPosition.WithTimestamp(
 				(int)cursor.getLong(0),
 				(int)cursor.getLong(1),
-				(int)cursor.getLong(2)
+				(int)cursor.getLong(2),
+				cursor.getLong(3)
 			);
 		}
 		cursor.close();
@@ -926,12 +930,22 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected void storePosition(long bookId, ZLTextPosition position) {
 		final SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char) VALUES (?,?,?,?)"
+			"INSERT OR REPLACE INTO BookState (book_id,paragraph,word,char,timestamp) VALUES (?,?,?,?,?)"
 		);
 		statement.bindLong(1, bookId);
 		statement.bindLong(2, position.getParagraphIndex());
 		statement.bindLong(3, position.getElementIndex());
 		statement.bindLong(4, position.getCharIndex());
+
+		long timestamp = -1;
+		if (position instanceof ZLTextFixedPosition.WithTimestamp) {
+			timestamp = ((ZLTextFixedPosition.WithTimestamp)position).Timestamp;
+		}
+		if (timestamp == -1) {
+			timestamp = System.currentTimeMillis();
+		}
+		statement.bindLong(5, timestamp);
+
 		statement.execute();
 	}
 
@@ -987,28 +1001,36 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected String getHash(long bookId, long lastModified) {
-		final SQLiteStatement statement = get(
-			"SELECT hash FROM BookHash WHERE book_id=? AND timestamp>?"
-		);
-		statement.bindLong(1, bookId);
-		statement.bindLong(2, lastModified);
+	protected String getHash(long bookId, long lastModified) throws NotAvailable {
 		try {
-			return statement.simpleQueryForString();
-		} catch (SQLiteDoneException e) {
-			return null;
+			final SQLiteStatement statement = get(
+				"SELECT hash FROM BookHash WHERE book_id=? AND timestamp>?"
+			);
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, lastModified);
+			try {
+				return statement.simpleQueryForString();
+			} catch (SQLiteDoneException e) {
+				return null;
+			}
+		} catch (Throwable t) {
+			throw new NotAvailable();
 		}
 	}
 
 	@Override
-	protected void setHash(long bookId, String hash) {
-		final SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO BookHash (book_id,timestamp,hash) VALUES (?,?,?)"
-		);
-		statement.bindLong(1, bookId);
-		statement.bindLong(2, System.currentTimeMillis());
-		statement.bindString(3, hash);
-		statement.execute();
+	protected void setHash(long bookId, String hash) throws NotAvailable {
+		try {
+			final SQLiteStatement statement = get(
+				"INSERT OR REPLACE INTO BookHash (book_id,timestamp,hash) VALUES (?,?,?)"
+			);
+			statement.bindLong(1, bookId);
+			statement.bindLong(2, System.currentTimeMillis());
+			statement.bindString(3, hash);
+			statement.execute();
+		} catch (Throwable t) {
+			throw new NotAvailable();
+		}
 	}
 
 	@Override
@@ -1456,6 +1478,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				"book_id INTEGER PRIMARY KEY REFERENCES Books(book_id)," +
 				"timestamp INTEGER NOT NULL," +
 				"hash TEXT(40) NOT NULL)");
+	}
+
+	private void updateTables27() {
+		myDatabase.execSQL("ALTER TABLE BookState ADD COLUMN timestamp INTEGER");
 	}
 
 	private SQLiteStatement get(String sql) {

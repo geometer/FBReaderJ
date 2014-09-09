@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/white"
+    >
+    <SeekBar
+        android:id="@+id/navigation_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:progressDrawable="@drawable/yota_seek_background"
+        android:thumb="@drawable/yota_seek_thumb"
+    />
+    <TextView
+        android:id="@+id/page"
+        android:layout_below="@id/navigation_slider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#4e4e4e"
+        android:textSize="15dp"
+        android:fontFamily="PT Sans Pro"
+        android:text="100 of 100"/>
+    <TextView
+        android:id="@+id/back_to_page"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/page"
+        android:layout_below="@id/navigation_slider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/yota_red"
+        android:textSize="13dp"
+        android:fontFamily="PT Sans Pro Extra Bold"
+        android:textStyle="italic"
+        android:text="Back to page 27"
+        android:singleLine="true"/>
+    <TextView
+        android:id="@+id/pages_left"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/page"
+        android:gravity="right"
+        android:layout_below="@id/navigation_slider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#4e4e4e"
+        android:textSize="13dp"
+        android:fontFamily="PT Sans Pro"
+        android:textStyle="italic"
+        android:text="100 pages left"
+        android:singleLine="true"/>
+</RelativeLayout>

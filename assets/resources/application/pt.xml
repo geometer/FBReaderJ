@@ -69,6 +69,9 @@
 		<node name="tryAgain" value="Tentar de novo"/>
 	</node>
 	<node name="networkLibrary" value="Rede de bibliotecas FBReader">
+		<node name="sync" value="Rede de livros FBReader®">
+			<node name="summary" value="Meu catálogo pessoal"/>
+		</node>
 		<node name="byAuthor" value="Pelo autor">
 			<node name="summary" value="Livros classificados por autor"/>
 		</node>
@@ -326,7 +329,7 @@
 			<node name="summary" value="Marcar opções de rede"/>
 			<node name="enable" value="Ativar sicronização">
 				<node name="summaryOn" value="Sincronizar a minha biblioteca com a rede de servidores de livros do FBReader"/>
-				<node name="summaryOnWithAccount" value="Synchronise my library as %s" toBeTranslated="true"/>
+				<node name="summaryOnWithAccount" value="Sincronizar a minha biblioteca como %s"/>
 				<node name="summaryOff" value="Não Sincronizar a minha biblioteca com a rede de servidores de livros do FBReader"/>
 			</node>
 			<node name="values" value="Valores">
@@ -335,9 +338,15 @@
 				<node name="never" value="Nunca"/>
 			</node>
 			<node name="uploadAllBooks" value="Enviar todos os livros para o servidor"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Sincronizar posições de leitura"/>
 			<node name="bookmarks" value="Sincronizar marcadores"/>
 			<node name="metainfo" value="Sincronizar metainfo (títulos, etiquetas, etc.)"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Diretórios">
 			<node name="summary" value="Diretórios para procurar por arquivos"/>
@@ -349,9 +358,6 @@
 			</node>
 			<node name="fontPath" value="Onde procurar fontes de letra">
 				<node name="chooserTitle" value="Diretórios de tipos de letras"/>
-			</node>
-			<node name="wallpaperPath" value="Onde procurar por imagens de fundo">
-				<node name="chooserTitle" value="Diretórios de papéis de parede"/>
 			</node>
 			<node name="tempDir" value="Onde colocar arquivos temporários">
 				<node name="chooserTitle" value="Diretório de arquivos temporários"/>
@@ -615,12 +621,26 @@
 		<node name="colors" value="Cores &amp; papéis de parede">
 			<node name="summary" value="Configurações de cor"/>
 			<node name="background" value="Fundo">
+				<node name="chooser">
+					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
+					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
+					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+				</node>
 				<node name="solidColor" value="Cor sólida"/>
 				<node name="leather" value="Couro"/>
 				<node name="sepia" value="Sépia"/>
 				<node name="wood" value="Madeira"/>
+				<node name="sand" value="Sand" toBeTranslated="true"/>
+				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
 			</node>
-			<node name="backgroundColor" value="Cor de fundo"/>
+			<node name="fillMode" value="Fill mode" toBeTranslated="true">
+				<node name="tile" value="Tile" toBeTranslated="true"/>
+				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
+				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
+				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
+				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
+				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			</node>
 			<node name="selectionBackground" value="Seleção de fundo"/>
 			<node name="selectionForeground" value="Texto selecionado"/>
 			<node name="text" value="Texto normal"/>
@@ -838,6 +858,9 @@
 			<node name="updateTitle" value="Atualizar Plugin"/>
 			<node name="dontAskAgain" value="Não perguntar novamente"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Autenticação necessária"/>
+		</node>
 		<node name="installDictionary" value="Instalar Diconário">
 			<node name="title" value="Instalar dicionário"/>
 			<node name="message" value="Gostaria de instalar %s?"/>
@@ -853,7 +876,7 @@
 			<node name="message" value="O arquivo já existe. Você quer descarregá-lo novamente?"/>
 		</node>
 		<node name="waitMessage" value="Em espera">
-			<node name="tryConnect" value="Trying to connect. Please, wait…" toBeTranslated="true"/>
+			<node name="tryConnect" value="A tentar ligar, por favor, espere…"/>
 			<node name="downloadingFile" value="Descarregar livro %s"/>
 			<node name="search" value="Pesquisando. Por favor, aguarde…"/>
 			<node name="loadInfo" value="Carregando informações. Por favor, aguarde…"/>
@@ -987,6 +1010,7 @@
 		<node name="emptyNetworkSearchResults" value="Nenhum livro encontrado, desculpe"/>
 		<node name="videoServiceNotWorking" value="Serviço de vídeo não disponível, desculpe"/>
 		<node name="videoPlayerNotFound" value="Não há nenhum leitor de vídeo instalado neste dispositivo, desculpe"/>
+		<node name="bookIsMissing" value="O livro '%s' não foi encontrado no dispositivo, desculpe"/>
 	</node>
 	<node name="external" value="Externo">
 		<node name="browser" value="Navegador"/>

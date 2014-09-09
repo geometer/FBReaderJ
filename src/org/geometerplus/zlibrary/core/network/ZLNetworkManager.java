@@ -43,6 +43,7 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -230,7 +231,7 @@ public class ZLNetworkManager {
 	};
 
 	final CookieStore CookieStore = new CookieStore() {
-		private HashMap<Key,Cookie> myCookies;
+		private volatile Map<Key,Cookie> myCookies;
 
 		public synchronized void addCookie(Cookie cookie) {
 			if (myCookies == null) {
@@ -280,7 +281,7 @@ public class ZLNetworkManager {
 
 		public synchronized List<Cookie> getCookies() {
 			if (myCookies == null) {
-				myCookies = new HashMap<Key,Cookie>();
+				myCookies = Collections.synchronizedMap(new HashMap<Key,Cookie>());
 				final CookieDatabase db = CookieDatabase.getInstance();
 				if (db != null) {
 					for (Cookie c : db.loadCookies()) {
@@ -395,7 +396,7 @@ public class ZLNetworkManager {
 				httpRequest.setHeader("X-Accept-Auto-Login", "True");
 			}
 			httpRequest.setHeader("Accept-Encoding", "gzip");
-			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
+			httpRequest.setHeader("Accept-Language", ZLResource.getLanguage());
 			for (Map.Entry<String,String> header : request.Headers.entrySet()) {
 				httpRequest.setHeader(header.getKey(), header.getValue());
 			}

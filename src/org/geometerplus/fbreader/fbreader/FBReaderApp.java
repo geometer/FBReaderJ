@@ -24,9 +24,6 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
-import org.geometerplus.zlibrary.core.library.ZLibrary;
-import org.geometerplus.zlibrary.core.options.*;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
@@ -36,12 +33,19 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
+import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.fbreader.network.sync.SyncData;
 
 public final class FBReaderApp extends ZLApplication {
 	public interface ExternalFileOpener {
 		public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark);
+	}
+
+	private ExternalFileOpener myExternalFileOpener;
+
+	public void setExternalFileOpener(ExternalFileOpener o) {
+		myExternalFileOpener = o;
 	}
 
 	public final MiscOptions MiscOptions = new MiscOptions();
@@ -56,11 +60,14 @@ public final class FBReaderApp extends ZLApplication {
 	private String myFootnoteModelId;
 
 	public volatile BookModel Model;
+	public volatile Book ExternalBook;
 
 	private ZLTextPosition myJumpEndPosition;
 	private Date myJumpTimeStamp;
 
 	public final IBookCollection Collection;
+
+	private SyncData mySyncData = new SyncData();
 
 	public FBReaderApp(IBookCollection collection) {
 		Collection = collection;
@@ -122,28 +129,78 @@ public final class FBReaderApp extends ZLApplication {
 		setView(BookTextView);
 	}
 
-	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-        final Book recentBook = Collection.getRecentBook(0);
-		if (book != null || Model == null || Model != null && recentBook != null && !Model.Book.equals(recentBook)) {
-			final SynchronousExecutor executor = createExecutor("loadingBook");
-			executor.execute(new Runnable() {
-				public void run() {
-					openBookInternal(book, bookmark, false);
-					if (book != null) {
-						book.addLabel(Book.READ_LABEL);
-						Collection.saveBook(book);
-					}
-				}
-			}, postAction);
+	public Book getCurrentBook() {
+		final BookModel m = Model;
+		return m != null ? m.Book : ExternalBook;
+	}
+
+	public void openHelpBook() {
+		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
+	}
+
+	private void showBookNotFoundMessage() {
+		if (mySyncData.getServerBookHashes().size() > 0) {
+			showErrorMessage("bookIsMissing", mySyncData.getServerBookTitle());
 		}
 	}
 
+	public Book getCurrentServerBook() {
+		for (String hash : mySyncData.getServerBookHashes()) {
+			final Book book = Collection.getBookByHash(hash);
+			if (book != null) {
+				return book;
+			}
+		}
+		return null;
+	}
+
+	public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
+        final Book recentBook = Collection.getRecentBook(0);
+		if (Model != null) {
+			if (book == null || bookmark == null && book.File.equals(Model.Book.File) && Model.Book.equals(recentBook)) {
+				return;
+			}
+		}
+
+		if (book == null) {
+			book = getCurrentServerBook();
+			if (book == null) {
+				showBookNotFoundMessage();
+				book = Collection.getRecentBook(0);
+			}
+			if (book == null || !book.File.exists()) {
+				book = Collection.getBookByFile(BookUtil.getHelpFile());
+			}
+			if (book == null) {
+				return;
+			}
+		}
+		final Book bookToOpen = book;
+		bookToOpen.addLabel(Book.READ_LABEL);
+		Collection.saveBook(bookToOpen);
+
+		final FormatPlugin plugin = bookToOpen.getPluginOrNull();
+		if (plugin instanceof ExternalFormatPlugin) {
+			if (!((ExternalFormatPlugin)plugin).isYotaSupported()) {
+				runAction(ActionCode.YOTA_SWITCH_TO_FRONT_SCREEN);
+			}
+		}
+
+		final SynchronousExecutor executor = createExecutor("loadingBook");
+		executor.execute(new Runnable() {
+			public void run() {
+				openBookInternal(bookToOpen, bookmark, false);
+			}
+		}, postAction);
+	}
+
 	public void reloadBook() {
-		if (Model != null && Model.Book != null) {
+		final Book book = getCurrentBook();
+		if (book != null) {
 			final SynchronousExecutor executor = createExecutor("loadingBook");
 			executor.execute(new Runnable() {
 				public void run() {
-					openBookInternal(Model.Book, null, true);
+					openBookInternal(book, null, true);
 				}
 			}, null);
 		}
@@ -233,18 +290,6 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	private synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
-		if (book == null) {
-			book = Collection.getRecentBook(0);
-			if (book == null || !book.File.exists()) {
-				book = Collection.getBookByFile(BookUtil.getHelpFile());
-			}
-			if (book == null) {
-				return;
-			}
-			book.addLabel(Book.READ_LABEL);
-			Collection.saveBook(book);
-		}
-
 		if (!force && Model != null && book.equals(Model.Book)) {
 			if (bookmark != null) {
 				gotoBookmark(bookmark, false);
@@ -253,22 +298,40 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		onViewChanged();
-
 		storePosition();
+
 		BookTextView.setModel(null);
 		FootnoteView.setModel(null);
 		clearTextCaches();
-
 		Model = null;
+		ExternalBook = null;
 		System.gc();
 		System.gc();
+
+		final FormatPlugin plugin = book.getPluginOrNull();
+		if (plugin instanceof ExternalFormatPlugin) {
+			ExternalBook = book;
+			final Bookmark bm;
+			if (bookmark != null) {
+				bm = bookmark;
+			} else {
+				ZLTextPosition pos = getStoredPosition(book);
+				if (pos == null) {
+					pos = new ZLTextFixedPosition(0, 0, 0);
+				}
+				bm = new Bookmark(book, "", pos, pos, "", false);
+			}
+			myExternalFileOpener.openFile((ExternalFormatPlugin)plugin, book, bm);
+			return;
+		}
+
 		try {
 			Model = BookModel.createModel(book);
 			Collection.saveBook(book);
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
 			setBookmarkHighlightings(BookTextView, null);
-			BookTextView.gotoPosition(Collection.getStoredPosition(book.getId()));
+			gotoStoredPosition();
 			if (bookmark == null) {
 				setView(BookTextView);
 			} else {
@@ -385,10 +448,10 @@ public final class FBReaderApp extends ZLApplication {
 		private final ZLTextPosition myPosition;
 		private final RationalNumber myProgress;
 
-		PositionSaver(Book book, ZLTextView view) {
+		PositionSaver(Book book, ZLTextPosition position, RationalNumber progress) {
 			myBook = book;
-			myPosition = new ZLTextFixedPosition(view.getStartCursor());
-			myProgress = view.getProgress();
+			myPosition = position;
+			myProgress = progress;
 		}
 
 		public void run() {
@@ -425,16 +488,72 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
+	public void useSyncInfo(boolean openOtherBook) {
+		if (openOtherBook) {
+			final Book fromServer = getCurrentServerBook();
+			if (fromServer == null) {
+				showBookNotFoundMessage();
+			}
+			if (fromServer != null && !fromServer.equals(Collection.getRecentBook(0))) {
+				openBook(fromServer, null, null);
+				return;
+			}
+		}
+
+		if (myStoredPositionBook != null &&
+			mySyncData.hasPosition(Collection.getHash(myStoredPositionBook, true))) {
+			gotoStoredPosition();
+			storePosition();
+		}
+	}
+
 	private volatile SaverThread mySaverThread;
+	private volatile ZLTextPosition myStoredPosition;
+	private volatile Book myStoredPositionBook;
+
+	private ZLTextFixedPosition getStoredPosition(Book book) {
+		final ZLTextFixedPosition.WithTimestamp fromServer =
+			mySyncData.getAndCleanPosition(Collection.getHash(book, true));
+		final ZLTextFixedPosition.WithTimestamp local =
+			Collection.getStoredPosition(book.getId());
+
+		if (local == null) {
+			return fromServer != null ? fromServer : new ZLTextFixedPosition(0, 0, 0);
+		} else if (fromServer == null) {
+			return local;
+		} else {
+			return fromServer.Timestamp >= local.Timestamp ? fromServer : local;
+		}
+	}
+
+	private void gotoStoredPosition() {
+		myStoredPositionBook = Model != null ? Model.Book : null;
+		if (myStoredPositionBook == null) {
+			return;
+		}
+		myStoredPosition = getStoredPosition(myStoredPositionBook);
+		BookTextView.gotoPosition(myStoredPosition);
+		savePosition();
+	}
 
 	public void storePosition() {
-		if (Model != null && Model.Book != null && BookTextView != null) {
-			if (mySaverThread == null) {
-				mySaverThread = new SaverThread();
-				mySaverThread.start();
+		final Book bk = Model != null ? Model.Book : null;
+		if (bk != null && bk == myStoredPositionBook && myStoredPosition != null && BookTextView != null) {
+			final ZLTextPosition position = new ZLTextFixedPosition(BookTextView.getStartCursor());
+			if (!myStoredPosition.equals(position)) {
+				myStoredPosition = position;
+				savePosition();
 			}
-			mySaverThread.add(new PositionSaver(Model.Book, BookTextView));
 		}
+	}
+
+	private void savePosition() {
+		final RationalNumber progress = BookTextView.getProgress();
+		if (mySaverThread == null) {
+			mySaverThread = new SaverThread();
+			mySaverThread.start();
+		}
+		mySaverThread.add(new PositionSaver(myStoredPositionBook, myStoredPosition, progress));
 	}
 
 	public boolean hasCancelActions() {
@@ -479,6 +598,11 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void addInvisibleBookmark(ZLTextWordCursor cursor) {
 		if (cursor != null && Model != null && Model.Book != null && getTextView() == BookTextView) {
+			cursor = new ZLTextWordCursor(cursor);
+			if (cursor.isNull()) {
+				return;
+			}
+
 			updateInvisibleBookmarksList(Bookmark.createBookmark(
 				Model.Book,
 				getTextView().getModel().getId(),

@@ -205,6 +205,8 @@ public class FileChooserActivity extends Activity {
     public static final String _SelectFile = _ClassName + ".select_file";
 
     public static final String _TextResources = _ClassName + ".text_resources";
+    public static final String _ShowNewFolderButton = _ClassName + ".show_new_folder_button";
+    public static final String _FilenameRegExp = _ClassName + ".file_regexp";
     // ---------------------------------------------------------
 
     /**
@@ -298,7 +300,8 @@ public class FileChooserActivity extends Activity {
     private ImageView mViewSort;
 
     private HashMap<String, String> mTextResources; 
-       
+    private String mFilenameRegexp; 
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -346,6 +349,10 @@ public class FileChooserActivity extends Activity {
         mViewSort = (ImageView) findViewById(R.id.afc_filechooser_activity_button_sort);
         mViewFoldersView = (ImageView) findViewById(R.id.afc_filechooser_activity_button_folders_view);
         mViewCreateFolder = (ImageView) findViewById(R.id.afc_filechooser_activity_button_create_folder);
+    	if (!getIntent().getBooleanExtra(_ShowNewFolderButton, true)) {
+			mViewCreateFolder.setVisibility(View.GONE);
+		}
+		mFilenameRegexp = getIntent().getStringExtra(_FilenameRegExp);
         mViewGoBack = (ImageView) findViewById(R.id.afc_filechooser_activity_button_go_back);
         mViewGoForward = (ImageView) findViewById(R.id.afc_filechooser_activity_button_go_forward);
         mViewLocations = (ViewGroup) findViewById(R.id.afc_filechooser_activity_view_locations);
@@ -744,7 +751,7 @@ public class FileChooserActivity extends Activity {
             mFileAdapter.clear();
 
         mFileAdapter = new IFileAdapter(FileChooserActivity.this, new ArrayList<IFileDataModel>(),
-                mFileProvider.getFilterMode(), mIsMultiSelection);
+                mFileProvider.getFilterMode(), mFilenameRegexp, mIsMultiSelection);
         /*
          * API 13+ does not recognize AbsListView.setAdapter(), so we cast it to
          * explicit class
@@ -789,10 +796,10 @@ public class FileChooserActivity extends Activity {
         if(mIsActionBar){
             viewGroupFooterContainer.setVisibility(View.VISIBLE);
             viewGroupFooterBottom.setVisibility(View.VISIBLE);
-            if(mFileProvider.getFilterMode() != IFileProvider.FilterMode.FilesOnly){
+            if (mFileProvider.getFilterMode() != IFileProvider.FilterMode.FilesOnly) {
                 mBtnOk.setVisibility(View.VISIBLE);
                 mBtnOk.setOnClickListener(mBtnOk_ActionBar_OnClickListener);
-            }else{
+            } else {
                 mBtnOk.setVisibility(View.GONE);
             }
             mBtnCancel.setVisibility(View.VISIBLE);
@@ -1465,8 +1472,8 @@ public class FileChooserActivity extends Activity {
      * @param files
      *            list of {@link IFile}
      */
-    private void doFinish(IFile... files) {
-        List<IFile> list = new ArrayList<IFile>();
+    private void doFinish(IFile ... files) {
+        final List<IFile> list = new ArrayList<IFile>();
         for (IFile f : files)
             list.add(f);
         doFinish((ArrayList<IFile>) list);
@@ -1483,7 +1490,7 @@ public class FileChooserActivity extends Activity {
         // set results
         switch(mFileProvider.getFilterMode()){
             case FilesOnly:
-                if(files == null || files.isEmpty()){
+                if (files == null || files.isEmpty()) {
                     setResult(RESULT_CANCELED);
                     finish();
                     return;
@@ -1885,13 +1892,18 @@ public class FileChooserActivity extends Activity {
                 return;
             }// double tap to choose files
             else {
-                if (mIsMultiSelection)
+                if (mIsMultiSelection) {
                     return;
+				}
 
-                if (mIsSaveDialog)
+                if (mIsSaveDialog) {
                     doCheckSaveasFilenameAndFinish(data.getFile().getName());
-                else
-                    doFinish(data.getFile());
+                } else {
+            		final IFileAdapter.Bag bag = (IFileAdapter.Bag)view.getTag();
+					if (bag != null && bag.mIsAccessible) {
+                    	doFinish(data.getFile());
+					}
+				}
             }// single tap to choose files
         }// onItemClick()
     };// mViewFilesOnItemClickListener

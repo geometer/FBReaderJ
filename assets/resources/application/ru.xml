@@ -69,6 +69,9 @@
 		<node name="tryAgain" value="Попробовать снова"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
+		<node name="sync" value="Книжная сеть FBReader®">
+			<node name="summary" value="Моя книжная полка"/>
+		</node>
 		<node name="byAuthor" value="По авторам">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>
@@ -338,9 +341,15 @@
 				<node name="never" value="Никогда"/>
 			</node>
 			<node name="uploadAllBooks" value="Загружать все книги на сервер"/>
+			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
+			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
 			<node name="positions" value="Синхронизировать позиции"/>
 			<node name="bookmarks" value="Синхронизировать закладки"/>
 			<node name="metainfo" value="Синхронизировать информацию о книге (название, категории, и т.п.)"/>
+			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
+				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
+				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="directories" value="Каталоги">
 			<node name="summary" value="Где искать файлы"/>
@@ -352,9 +361,6 @@
 			</node>
 			<node name="fontPath" value="Где лежат шрифты">
 				<node name="chooserTitle" value="Каталог для шрифтов"/>
-			</node>
-			<node name="wallpaperPath" value="Где лежат рисунки для фона">
-				<node name="chooserTitle" value="Каталог для рисунков"/>
 			</node>
 			<node name="tempDir" value="Где создавать временные файлы">
 				<node name="chooserTitle" value="Для временных файлов"/>
@@ -618,12 +624,26 @@
 		<node name="colors" value="Цвета и обои">
 			<node name="summary" value="Настройки цвета"/>
 			<node name="background" value="Фон">
+				<node name="chooser">
+					<node name="solidColor" value="Сплошной цвет…"/>
+					<node name="predefined" value="Готовые фоны…"/>
+					<node name="selectFile" value="Выбрать файл…"/>
+				</node>
 				<node name="solidColor" value="Сплошной цвет"/>
 				<node name="leather" value="Кожа"/>
 				<node name="sepia" value="Сепия"/>
 				<node name="wood" value="Дерево"/>
+				<node name="sand" value="Песок"/>
+				<node name="hardpaper" value="Грубая бумага"/>
 			</node>
-			<node name="backgroundColor" value="Цвет фона"/>
+			<node name="fillMode" value="Способ заполнения">
+				<node name="tile" value="Плитка"/>
+				<node name="tileMirror" value="Плитка с отражением"/>
+				<node name="fullscreen" value="Полный экран"/>
+				<node name="stretch" value="Растянуть"/>
+				<node name="tileVertically" value="Растянуть по горизонтали"/>
+				<node name="tileHorizontally" value="Растянуть по вертикали"/>
+			</node>
 			<node name="selectionBackground" value="Фон пометки"/>
 			<node name="selectionForeground" value="Текст пометки"/>
 			<node name="text" value="Обычный текст"/>
@@ -792,7 +812,7 @@
 				<node name="url" value="http://ru.fbreader.org/"/>
 			</node>
 			<node name="email" value="Отправьте нам письмо">
-				<node name="url" value="mailto:contact@geometerplus.com"/>
+				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
 			<node name="twitter" value="Читайте нас в твиттере">
 				<node name="url" value="http://twitter.com/fbreader_ru"/>
@@ -841,6 +861,9 @@
 			<node name="updateTitle" value="Новая версия"/>
 			<node name="dontAskAgain" value="Больше не спрашивать"/>
 		</node>
+		<node name="backgroundAuthentication">
+			<node name="message" value="Требуется авторизация"/>
+		</node>
 		<node name="installDictionary">
 			<node name="title" value="Установка словаря"/>
 			<node name="message" value="Установить %s?"/>
@@ -849,8 +872,12 @@
 			<node name="message" value="Файл книги будет удален необратимо. Продолжать?"/>
 		</node>
 		<node name="deleteMultipleBookBox">
-			<node name="title" value="Delete books" toBeTranslated="true"/>
-			<node name="message" value="%s book files will be removed irreversibly. Are you sure?" toBeTranslated="true"/>
+			<node name="title" value="Удаление книг"/>
+			<node name="message" value="%s файлов будут необратимо удалены. Продолжать?">
+				<node condition="modrange 11 19 100" value="%s файлов будут необратимо удалены. Продолжать?"/>
+				<node condition="mod 1 10" value="%s файл будет необратимо удалён. Продолжать?"/>
+				<node condition="modrange 2 4 10" value="%s файла будут необратимо удалены. Продолжать?"/>
+			</node>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Файл уже есть на устройстве. Загрузить заново?"/>
@@ -990,6 +1017,7 @@
 		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги"/>
 		<node name="videoServiceNotWorking" value="Просмотр видео не работает"/>
 		<node name="videoPlayerNotFound" value="Не удалось отыскать видеопроигрыватель"/>
+		<node name="bookIsMissing" value="Не удалось найти на этом устройстве книгу «%s»"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>

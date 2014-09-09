@@ -27,7 +27,7 @@ class FB2Plugin : public FormatPlugin {
 public:
 	FB2Plugin();
 	~FB2Plugin();
-	bool providesMetaInfo() const;
+	bool providesMetainfo() const;
 	const std::string supportedFileType() const;
 	bool readMetainfo(Book &book) const;
 	bool readUids(Book &book) const;
@@ -38,6 +38,6 @@ public:
 
 inline FB2Plugin::FB2Plugin() {}
 inline FB2Plugin::~FB2Plugin() {}
-inline bool FB2Plugin::providesMetaInfo() const { return true; }
+inline bool FB2Plugin::providesMetainfo() const { return true; }
 
 #endif /* __FB2PLUGIN_H__ */

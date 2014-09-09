@@ -54,6 +54,7 @@
 		<node name="hy" value="հայերեն"/>
 		<node name="id" value="ինդոնեզերեն (կավի)"/>
 		<node name="it" value="իտալերեն"/>
+		<node name="ja" value="Japanese" toBeTranslated="true"/>
 		<node name="ka" value="վրացերեն"/>
 		<node name="lt" value="լիտվաներեն"/>
 		<node name="nb" value="նորվեգերեն"/>

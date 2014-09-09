@@ -47,7 +47,6 @@ public class NetworkCatalogTree extends NetworkTree {
 			throw new IllegalArgumentException("item cannot be null");
 		}
 		Item = item;
-		addSpecialTrees();
 	}
 
 	@Override
@@ -79,6 +78,9 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	synchronized void addItem(final NetworkItem item) {
+		if (!hasChildren() && !isSingleSyncItem(item)) {
+			addSpecialTrees();
+		}
 		if (item instanceof NetworkCatalogItem) {
 			myChildrenItems.add((NetworkCatalogItem)item);
 		}
@@ -219,7 +221,6 @@ public class NetworkCatalogTree extends NetworkTree {
 		myChildrenItems.clear();
 		myLastTotalChildren = -1;
 		clear();
-		addSpecialTrees();
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
@@ -244,5 +245,16 @@ public class NetworkCatalogTree extends NetworkTree {
 			myLastTotalChildren = currentTotal;
 			startItemsLoader(new QuietNetworkContext(), false, true);
 		}
+	}
+
+	private boolean isSingleSyncItem(NetworkItem item) {
+		if (!(item instanceof NetworkBookItem)) {
+			return false;
+		}
+		final INetworkLink link = getLink();
+		if (!(link instanceof ISyncNetworkLink)) {
+			return false;
+		}
+		return "fbreader:book:network:description".equals(((NetworkBookItem)item).Id);
 	}
 }

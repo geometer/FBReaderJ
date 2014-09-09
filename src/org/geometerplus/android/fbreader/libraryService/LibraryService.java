@@ -42,10 +42,12 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 
-import org.geometerplus.android.fbreader.api.TextPosition;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
+	private static SQLiteBooksDatabase ourDatabase;
+	private static final Object ourDatabaseLock = new Object();
+
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
@@ -98,8 +100,8 @@ public class LibraryService extends Service {
 		private final List<FileObserver> myFileObservers = new LinkedList<FileObserver>();
 		private BookCollection myCollection;
 
-		LibraryImplementation() {
-			myDatabase = new SQLiteBooksDatabase(LibraryService.this);
+		LibraryImplementation(BooksDatabase db) {
+			myDatabase = db;
 			myCollection = new BookCollection(myDatabase, Paths.bookPath());
 			reset(true);
 		}
@@ -152,10 +154,6 @@ public class LibraryService extends Service {
 			for (FileObserver observer : myFileObservers) {
 				observer.stopWatching();
 			}
-		}
-
-		public void close() {
-			((SQLiteBooksDatabase)myDatabase).close();
 		}
 
 		public String status() {
@@ -250,23 +248,17 @@ public class LibraryService extends Service {
 			return myCollection.labels();
 		}
 
-		public TextPosition getStoredPosition(long bookId) {
+		public PositionWithTimestamp getStoredPosition(long bookId) {
 			final ZLTextPosition position = myCollection.getStoredPosition(bookId);
-			if (position == null) {
-				return null;
-			}
-
-			return new TextPosition(
-				position.getParagraphIndex(), position.getElementIndex(), position.getCharIndex()
-			);
+			return position != null ? new PositionWithTimestamp(position) : null;
 		}
 
-		public void storePosition(long bookId, TextPosition position) {
-			if (position == null) {
+		public void storePosition(long bookId, PositionWithTimestamp pos) {
+			if (pos == null) {
 				return;
 			}
-			myCollection.storePosition(bookId, new ZLTextFixedPosition(
-				position.ParagraphIndex, position.ElementIndex, position.CharIndex
+			myCollection.storePosition(bookId, new ZLTextFixedPosition.WithTimestamp(
+				pos.ParagraphIndex, pos.ElementIndex, pos.CharIndex, pos.Timestamp
 			));
 		}
 
@@ -278,8 +270,8 @@ public class LibraryService extends Service {
 			myCollection.markHyperlinkAsVisited(SerializerUtil.deserializeBook(book), linkId);
 		}
 
-        @Override
-		public Bitmap getCover(String book, int maxWidth, int maxHeight) {
+		@Override
+		public Bitmap getCover(String book, int maxWidth, int maxHeight, boolean[] delayed) {
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
@@ -326,8 +318,8 @@ public class LibraryService extends Service {
 			myCollection.rescan(path);
 		}
 
-		public String getHash(String book) {
-			return myCollection.getHash(SerializerUtil.deserializeBook(book));
+		public String getHash(String book, boolean force) {
+			return myCollection.getHash(SerializerUtil.deserializeBook(book), force);
 		}
 	}
 
@@ -351,7 +343,12 @@ public class LibraryService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		myLibrary = new LibraryImplementation();
+		synchronized (ourDatabaseLock) {
+			if (ourDatabase == null) {
+				ourDatabase = new SQLiteBooksDatabase(LibraryService.this);
+			}
+		}
+		myLibrary = new LibraryImplementation(ourDatabase);
 	}
 
 	@Override
@@ -360,7 +357,6 @@ public class LibraryService extends Service {
 			final LibraryImplementation l = myLibrary;
 			myLibrary = null;
 			l.deactivate();
-			l.close();
 		}
 		myImageSynchronizer.clear();
 		super.onDestroy();

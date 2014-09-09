@@ -354,6 +354,17 @@ JNIEXPORT jint JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 }
 
 extern "C"
+JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readAnnotationInternal(JNIEnv* env, jobject thiz, jobject file) {
+	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
+	if (plugin.isNull()) {
+		return 0;
+	}
+
+	const std::string path = AndroidUtil::Method_ZLFile_getPath->callForCppString(file);
+	return AndroidUtil::createJavaString(env, plugin->readAnnotation(ZLFile(path)));
+}
+
+extern "C"
 JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readCoverInternal(JNIEnv* env, jobject thiz, jobject file, jobjectArray box) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(thiz);
 	if (plugin.isNull()) {
