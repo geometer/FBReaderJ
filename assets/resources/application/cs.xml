@@ -1023,11 +1023,6 @@
 		<node name="browser" value="Prohlížeč"/>
 		<node name="defaultBrowser" value="Výchozí prohlížeč"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Neznámá chyba"/>
-		<node name="unsupportedCompressionMethod" value="Nepodporovaná metoda komprese"/>
-		<node name="encryptedFile" value="Soubor chráněný DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="Problém FBReaderu"/>
