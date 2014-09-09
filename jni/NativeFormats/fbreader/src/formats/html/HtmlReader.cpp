@@ -52,7 +52,7 @@ void HtmlReader::setTag(HtmlTag &tag, const std::string &name) {
 
 	const std::size_t len = tag.Name.length();
 	for (std::size_t i = 0; i < len; ++i) {
-		tag.Name[i] = std::toupper(tag.Name[i]);
+		tag.Name[i] = std::tolower(tag.Name[i]);
 	}
 }
 
@@ -264,7 +264,7 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 						if (ptr != start || !currentString.empty()) {
 							currentString.append(start, ptr - start);
 							for (unsigned int i = 0; i < currentString.length(); ++i) {
-								currentString[i] = std::toupper(currentString[i]);
+								currentString[i] = std::tolower(currentString[i]);
 							}
 							currentTag.addAttribute(currentString);
 							currentString.erase();
@@ -370,4 +370,13 @@ endOfProcessing:
 	endDocumentHandler();
 
 	stream.close();
+}
+
+const std::string *HtmlReader::HtmlTag::find(const std::string &name) const {
+	for (unsigned int i = 0; i < Attributes.size(); ++i) {
+		if (Attributes[i].Name == name) {
+			return &Attributes[i].Value;
+		}
+	}
+	return 0;
 }
