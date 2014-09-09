@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="empty_string"></string>
+    <string name="of">of</string>
+    <string name="pages_left">pages left</string>
+    <string name="back_to_page">Back to page</string>
+    <string name="yota_book_description">Description</string>
+    <string name="yota_add_to_collection">ADD</string>
+    <string name="yota_book_details">Details</string>
+    <string name="yota_book_language_tille">Language</string>
+    <string name="yota_book_cat_tille">Category</string>
+    <string name="yota_book_publisher_tille">Publisher</string>
+    <string name="yota_book_seller_tille">Seller</string>
+    <string name="yota_book_published_tille">Published</string>
+    <string name="highlight">Highlight</string>
+    <string name="copy">Copy</string>
+    <string name="share">Share</string>
+    <string name="define">Define</string>
+    <string name="translate">Translate</string>
+    <string name="open_in_lingvo">Open article in Lingvo</string>
+    <string name="did_you_mean">Did you mean</string>
+    <string name="lingvo_error">Error inside Lingvo, try once again</string>
+    <string name="nothing_to_translate">Select a word to translate</string>
+    <string name="nothing_was_found">Nothing found</string>
+    <string name="unknown_error">Unknown error occurred</string>
+    <string name="incorrect_request">Incorrect request</string>
+    <string name="nothing_to_define">Select a word to translate</string>
+    <string name="no_connection">No internet connection</string>
 	<string name="permission_library_description">Это приложение может просматривать и изменять библиотеку FBReader</string>
 	<string name="permission_library_label">Доступ к библиотеке FBReader</string>
 	<string name="permission_config_description">Это приложение может просматривать и изменять настройки FBReader</string>
