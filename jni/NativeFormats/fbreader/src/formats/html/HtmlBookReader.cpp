@@ -447,22 +447,11 @@ bool HtmlBookReader::tagHandler(const HtmlTag &tag) {
 			tagData->addEntry(myStyleSheetTable.control(tag.Name, *cls));
 		}
 		myTagDataStack.push_back(tagData);
-
-		for (std::vector<shared_ptr<TagData> >::const_iterator it = myTagDataStack.begin(); it != myTagDataStack.end(); ++it) {
-			const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = (*it)->StyleEntries;
-			const bool inheritedOnly = it + 1 != myTagDataStack.end();
-			for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
-				shared_ptr<ZLTextStyleEntry> entry = inheritedOnly ? (*jt)->inherited() : *jt;
-				myBookReader.addStyleEntry(*entry);
-			}
+	} else if (!myTagDataStack.empty()) {
+		for (int i = myTagDataStack.back()->StyleEntries.size(); i > 0; --i) {
+			myBookReader.addStyleCloseEntry();
 		}
-	} else {
-		if (!myTagDataStack.empty()) {
-			for (int i = myTagDataStack.back()->StyleEntries.size(); i > 0; --i) {
-				myBookReader.addStyleCloseEntry();
-			}
-			myTagDataStack.pop_back();
-		}
+		myTagDataStack.pop_back();
 	}
 	const std::string *id = tag.find("id");
 	if (id != 0) {
@@ -474,6 +463,17 @@ bool HtmlBookReader::tagHandler(const HtmlTag &tag) {
 		myActionMap[tag.Name] = action;
 	}
 	action->run(tag);
+
+	if (tag.Start) {
+		for (std::vector<shared_ptr<TagData> >::const_iterator it = myTagDataStack.begin(); it != myTagDataStack.end(); ++it) {
+			const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = (*it)->StyleEntries;
+			const bool inheritedOnly = it + 1 != myTagDataStack.end();
+			for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
+				shared_ptr<ZLTextStyleEntry> entry = inheritedOnly ? (*jt)->inherited() : *jt;
+				myBookReader.addStyleEntry(*entry);
+			}
+		}
+	}
 
 	return true;
 }
