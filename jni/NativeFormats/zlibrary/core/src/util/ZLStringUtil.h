@@ -46,6 +46,8 @@ public:
 	static double stringToDouble(const std::string &value, double defaultValue);
 	static int parseDecimal(const std::string &str, int defaultValue);
 	static unsigned long parseHex(const std::string &str, int defaultValue);
+
+	static void asciiToLowerInline(std::string &asciiString);
 };
 
 #endif /* __ZLSTRINGUTIL_H__ */
