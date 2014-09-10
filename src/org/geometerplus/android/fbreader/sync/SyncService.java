@@ -123,6 +123,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 			final AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 			alarmManager.cancel(syncIntent());
 			log("stopped");
+			stopSelf();
 		} else if (SyncOperations.Action.SYNC.equals(action)) {
 			SQLiteCookieDatabase.init(this);
 			myCollection.bindToService(this, myQuickSynchroniser);
@@ -417,7 +418,7 @@ public class SyncService extends Service implements IBookCollection.Listener {
 				addBook(book);
 				break;
 			case Opened:
-				SyncOperations.quickSync(this);
+				SyncOperations.quickSync(this, mySyncOptions);
 				break;
 		}
 	}
