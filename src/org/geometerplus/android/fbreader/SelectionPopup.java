@@ -50,6 +50,7 @@ class SelectionPopup extends ButtonsPopupPanel {
 		addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
 		addButton(ActionCode.SELECTION_TRANSLATE, true, R.drawable.selection_translate);
 		addButton(ActionCode.SELECTION_BOOKMARK, true, R.drawable.selection_bookmark);
+		addButton(ActionCode.SELECTION_NOTE, true, R.drawable.selection_note);
 		addButton(ActionCode.SELECTION_CLEAR, true, R.drawable.selection_close);
 	}
 
