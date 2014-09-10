@@ -484,6 +484,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 						getPostponedInitAction().run();
 					}
 				}.start();
+				setTitleFromCurrentBook();
 				ZLViewWidget widget = myFBReaderApp.getViewWidget();
 				if (widget != null) {
 					widget.repaint();
@@ -526,6 +527,38 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			getZLibrary().BatteryLevelToTurnScreenOffOption.getValue() <
 			myFBReaderApp.getBatteryLevel()
 		);
+	}
+
+	private void setTitleFromCurrentBook() {
+		if (myFBReaderApp.Model != null && myFBReaderApp.Model.Book != null) {
+			Book book = myFBReaderApp.Model.Book;
+			final StringBuilder title = new StringBuilder(book.getTitle());
+			if (!DeviceType.Instance().isYotaPhone()) {
+				if (!book.authors().isEmpty()) {
+					boolean first = true;
+					for (Author a : book.authors()) {
+						title.append(first ? " (" : ", ");
+						title.append(a.DisplayName);
+						first = false;
+					}
+					title.append(")");
+				}
+				setTitle(title.toString());
+			} else {
+				final StringBuilder authors = new StringBuilder("");
+				if (!book.authors().isEmpty()) {
+					boolean next = false;
+					for (Author a : book.authors()) {
+						if (next) {
+							authors.append(", ");
+						}
+						authors.append(a.DisplayName);
+						next = true;
+					}
+				}
+				setTitle(title.toString(), authors.toString());
+			}
+		}
 	}
 
 	private void initPluginActions() {

@@ -15,7 +15,6 @@
               android:textSize="15dp"
               android:textColor="@color/gray_title_text"
               android:singleLine="true"
-              android:text="Test"
     />
     <TextView android:id="@+id/author"
               android:layout_marginLeft="30dp"
@@ -27,6 +26,5 @@
               android:textSize="10dp"
               android:textColor="@color/gray_title_text"
               android:singleLine="true"
-              android:text="Test"
         />
 </LinearLayout>
