@@ -220,7 +220,7 @@ void XHTMLTagStyleAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 	static const std::string TYPE = "text/css";
 
 	const char *type = reader.attributeValue(xmlattributes, "type");
-	if ((type == 0) || (TYPE != type)) {
+	if (type == 0 || TYPE != type) {
 		return;
 	}
 
@@ -241,13 +241,13 @@ void XHTMLTagStyleAction::doAtEnd(XHTMLReader &reader) {
 void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
 	static const std::string REL = "stylesheet";
 	const char *rel = reader.attributeValue(xmlattributes, "rel");
-	if (rel == 0 || REL != rel) {
+	if (rel == 0 || REL != ZLUnicodeUtil::toLower(rel)) {
 		return;
 	}
 	static const std::string TYPE = "text/css";
 
 	const char *type = reader.attributeValue(xmlattributes, "type");
-	if (type == 0 || TYPE != type) {
+	if (type == 0 || TYPE != ZLUnicodeUtil::toLower(type)) {
 		return;
 	}
 
