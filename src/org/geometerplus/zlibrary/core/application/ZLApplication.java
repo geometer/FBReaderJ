@@ -37,6 +37,7 @@ public abstract class ZLApplication {
 	private volatile ZLApplicationWindow myWindow;
 	private volatile ZLView myView;
 	private volatile String myTitle;
+	private volatile String myAuthor;
 
     private HashMap<String,ZLAction> myIdToActionMap;
     private final HashMap<String,ZLAction> myFrontScreenActionMap = new HashMap<String,ZLAction>();
@@ -76,6 +77,14 @@ public abstract class ZLApplication {
 		myTitle = title;
 		if (myWindow != null) {
 			myWindow.setWindowTitle(title);
+		}
+	}
+
+	protected void setTitle(String title, String author) {
+		myTitle = title;
+		myAuthor = author;
+		if (myWindow != null) {
+			myWindow.setWindowTitle(title, author);
 		}
 	}
 

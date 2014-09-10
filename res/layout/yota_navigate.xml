@@ -24,15 +24,24 @@
         android:textSize="15dp"
         android:fontFamily="PT Sans Pro"
         android:text="100 of 100"/>
+    <ImageView
+        android:id="@+id/back_to_page_icon"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/navigation_slider"
+        android:src="@drawable/yota_fs_back_to_page"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/back_to_page"
-        android:layout_alignParentLeft="true"
+
         android:layout_toLeftOf="@+id/page"
+        android:layout_toRightOf="@+id/back_to_page_icon"
         android:layout_below="@id/navigation_slider"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="14dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/yota_red"

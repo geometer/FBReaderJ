@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import android.util.Log;
+
 import java.util.*;
 
 import org.geometerplus.android.util.DeviceType;

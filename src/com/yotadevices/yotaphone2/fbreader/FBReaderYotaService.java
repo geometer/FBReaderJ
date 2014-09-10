@@ -201,6 +201,11 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
     }
 
+	@Override
+	public void setWindowTitle(String title, String author) {
+
+	}
+
     @Override
     public void showErrorMessage(String resourceKey) {
 

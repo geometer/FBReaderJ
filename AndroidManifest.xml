@@ -150,7 +150,7 @@
             android:name="com.yotadevices.yotaphone2.fbreader.YotaReader"
             android:label="Yota Reader"
             android:icon="@drawable/r_color_logo"
-            android:logo="@drawable/yota_collection_icon"
+            android:logo="@null"
             android:targetActivity="org.geometerplus.android.fbreader.FBReader"
             android:enabled="false"
             android:exported="true">

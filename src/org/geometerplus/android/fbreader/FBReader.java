@@ -29,6 +29,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.*;
+import android.text.TextUtils;
 import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -292,6 +293,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 			bar.setCustomView(titleContainer);
 			bar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+			bar.setLogo(new ColorDrawable(Color.WHITE));
+			bar.setDisplayHomeAsUpEnabled(true);
+
+			//Book currentBook = myFBReaderApp.Model.Book;
 		}
 		else {
 			final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
@@ -302,9 +307,8 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			});
 
 			bar.setCustomView(titleView);
+			setTitle(myFBReaderApp.getTitle());
 		}
-
-		setTitle(myFBReaderApp.getTitle());
 
 		if (myFBReaderApp.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(myFBReaderApp);
@@ -340,6 +344,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myFBReaderApp.addAction(ActionCode.YOTA_UPDATE_WIDGET, new YotaUpdateWidgetAction(this, myFBReaderApp));
 			myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(this, myFBReaderApp, false));
 			myFBReaderApp.addAction(ActionCode.SELECTION_DEFINE, new YotaSelectionDefineAction(this, myFBReaderApp, false));
+
+			myFBReaderApp.addAction(ActionCode.YOTA_FONT_SETTINGS, new ShowPreferencesAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.YOTA_SEARCH_ACTION, new ShowTOCAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.YOTA_ADD_BOOKMARK, new ShowBookmarksAction(this, myFBReaderApp));
 		}
 		else {
 			myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, myFBReaderApp));
@@ -867,10 +875,25 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-
-		setupMenu(menu);
-
+		if (DeviceType.Instance().isYotaPhone()) {
+			addMenuItem(menu, ActionCode.YOTA_FONT_SETTINGS, R.drawable.yota_font_settings_icon, "Font settings", true);
+			addMenuItem(menu, ActionCode.YOTA_SEARCH_ACTION, R.drawable.yota_search_icon, "Font settings", true);
+			addMenuItem(menu, ActionCode.YOTA_ADD_BOOKMARK, R.drawable.yota_bookmark_icon, "Font settings", true);
+			refresh();
+		}
+		else {
+			setupMenu(menu);
+		}
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (DeviceType.Instance().isYotaPhone() && item.getItemId() == android.R.id.home) {
+			myFBReaderApp.runAction(ActionCode.SHOW_LIBRARY);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	protected void onPluginNotFound(final Book book) {
@@ -958,22 +981,26 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 	}
 
+	public void setTitle(String titleText, String authorText) {
+		final TextView title = (TextView) getActionBar().getCustomView().findViewById(R.id.title);
+		final TextView author = (TextView) getActionBar().getCustomView().findViewById(R.id.author);
+		if (title != null) {
+			title.setText(titleText);
+			title.postInvalidate();
+		}
+		if (author != null) {
+			author.setText(authorText.toUpperCase());
+			author.postInvalidate();
+		}
+	}
+
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(title);
-		if (DeviceType.Instance().isYotaPhone()) {
-			final TextView view = (TextView) getActionBar().getCustomView().findViewById(R.id.title);
-			if (view != null) {
-				view.setText(title);
-				view.postInvalidate();
-			}
-		}
-		else {
-			final TextView view = (TextView) getActionBar().getCustomView();
-			if (view != null) {
-				view.setText(title);
-				view.postInvalidate();
-			}
+		final TextView view = (TextView) getActionBar().getCustomView();
+		if (view != null) {
+			view.setText(title);
+			view.postInvalidate();
 		}
 	}
 
@@ -1185,6 +1212,15 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		runOnUiThread(new Runnable() {
 			public void run() {
 				setTitle(title);
+			}
+		});
+	}
+
+	@Override
+	public void setWindowTitle(final String title, final String author) {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				setTitle(title, author);
 			}
 		});
 	}

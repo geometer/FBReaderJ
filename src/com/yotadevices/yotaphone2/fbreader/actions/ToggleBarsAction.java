@@ -1,5 +1,7 @@
 package com.yotadevices.yotaphone2.fbreader.actions;
 
+import android.util.Log;
+
 import com.yotadevices.sdk.BSActivity;
 import com.yotadevices.yotaphone2.fbreader.BSReadingActionBar;
 import com.yotadevices.yotaphone2.fbreader.BSReadingStatusBar;

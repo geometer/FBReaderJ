@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
@@ -339,16 +340,32 @@ public final class FBReaderApp extends ZLApplication {
 			}
 			Collection.addBookToRecentList(book);
 			final StringBuilder title = new StringBuilder(book.getTitle());
-			if (!book.authors().isEmpty()) {
-				boolean first = true;
-				for (Author a : book.authors()) {
-					title.append(first ? " (" : ", ");
-					title.append(a.DisplayName);
-					first = false;
+			if (!DeviceType.Instance().isYotaPhone()) {
+				if (!book.authors().isEmpty()) {
+					boolean first = true;
+					for (Author a : book.authors()) {
+						title.append(first ? " (" : ", ");
+						title.append(a.DisplayName);
+						first = false;
+					}
+					title.append(")");
 				}
-				title.append(")");
+				setTitle(title.toString());
 			}
-			setTitle(title.toString());
+			else {
+				final StringBuilder authors = new StringBuilder("");
+				if (!book.authors().isEmpty()) {
+					boolean next = false;
+					for (Author a : book.authors()) {
+						if (next) {
+							authors.append(", ");
+						}
+						authors.append(a.DisplayName);
+						next = true;
+					}
+				}
+				setTitle(title.toString(), authors.toString());
+			}
 		} catch (BookReadingException e) {
 			processException(e);
 		}

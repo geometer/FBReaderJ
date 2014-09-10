@@ -11,7 +11,9 @@
   <!-- the theme applied to the application or activity -->
   <style name="ActivityWithWhiteActionBar"
            parent="@android:style/Theme.Holo.Light">
-        <item name="android:actionBarStyle">@style/WhiteActionBar</item>
+      <item name="android:actionBarStyle">@style/WhiteActionBar</item>
+      <item name="android:homeAsUpIndicator">@drawable/yota_actionbar_back_indicator</item>
+      <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
   </style>
 
   <!-- ActionBar styles -->
@@ -26,6 +28,11 @@
            parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse">
         <item name="android:textColor">@color/gray_title_text</item>
         <item name="android:fontFamily">"PT Sans Pro"</item>
+  </style>
+
+  <style name="ActionButtonStyle" parent="@android:style/Widget.Holo.Light.ActionButton">
+        <item name="android:minWidth">48dp</item>
+        <item name="android:maxWidth">48dp</item>
   </style>
 
 </resources>

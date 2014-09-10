@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
+              android:orientation="vertical"
+              android:gravity="center_vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <TextView android:id="@+id/title"
-              android:layout_marginLeft="40dp"
+              android:layout_marginLeft="30dp"
+              android:layout_marginRight="15dp"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="left"
+              android:fontFamily="PT Sans Pro"
+              android:textSize="15dp"
+              android:textColor="@color/gray_title_text"
+              android:singleLine="true"
+              android:text="Test"
+    />
+    <TextView android:id="@+id/author"
+              android:layout_marginLeft="30dp"
+              android:layout_marginRight="15dp"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
               android:gravity="center_vertical|left"
               android:fontFamily="PT Sans Pro"
+              android:textSize="10dp"
               android:textColor="@color/gray_title_text"
-              android:ellipsize="end"
-              android:maxLines="2"
-    />
+              android:singleLine="true"
+              android:text="Test"
+        />
 </LinearLayout>

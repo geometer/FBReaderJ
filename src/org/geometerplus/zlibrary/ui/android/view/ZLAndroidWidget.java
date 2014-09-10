@@ -23,9 +23,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.*;
 import android.widget.TextView;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -517,7 +519,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 				break;
 			case MotionEvent.ACTION_MOVE:
 			{
-				final int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+				int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+				if (DeviceType.Instance().isYotaPhone()) {
+					slop = slop * 2;
+				}
 				final boolean isAMove =
 					Math.abs(myPressedX - x) > slop || Math.abs(myPressedY - y) > slop;
 				if (isAMove) {
