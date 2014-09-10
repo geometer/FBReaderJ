@@ -168,7 +168,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 
 			private void enableSynchronisation() {
-				SyncOperations.enableSync(PreferenceActivity.this, syncOptions.Enabled.getValue());
+				SyncOperations.enableSync(PreferenceActivity.this, syncOptions);
 			}
 
 			@Override

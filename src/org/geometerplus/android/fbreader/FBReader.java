@@ -497,11 +497,11 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 	protected void onResume() {
 		super.onResume();
 
-		SyncOperations.enableSync(this, true);
-
 		myStartTimer = true;
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
+				SyncOperations.enableSync(FBReader.this, myFBReaderApp.SyncOptions);
+
 				final int brightnessLevel =
 					getZLibrary().ScreenBrightnessLevelOption.getValue();
 				if (brightnessLevel != 0) {
@@ -580,7 +580,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	@Override
 	protected void onPause() {
-		SyncOperations.quickSync(this);
+		SyncOperations.quickSync(this, myFBReaderApp.SyncOptions);
 
 		IsPaused = true;
 		try {
