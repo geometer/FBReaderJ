@@ -50,10 +50,7 @@ void HtmlReader::setTag(HtmlTag &tag, const std::string &name) {
 		tag.Name = name.substr(1);
 	}
 
-	const std::size_t len = tag.Name.length();
-	for (std::size_t i = 0; i < len; ++i) {
-		tag.Name[i] = std::tolower(tag.Name[i]);
-	}
+	ZLStringUtil::asciiToLowerInline(tag.Name);
 }
 
 enum ParseState {
@@ -263,9 +260,7 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 					if (*ptr == '>' || *ptr == '/' || *ptr == '=' || std::isspace((unsigned char)*ptr)) {
 						if (ptr != start || !currentString.empty()) {
 							currentString.append(start, ptr - start);
-							for (unsigned int i = 0; i < currentString.length(); ++i) {
-								currentString[i] = std::tolower(currentString[i]);
-							}
+							ZLStringUtil::asciiToLowerInline(currentString);
 							currentTag.addAttribute(currentString);
 							currentString.erase();
 						}
