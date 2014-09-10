@@ -51,6 +51,10 @@ interface LibraryInterface {
 	String saveBookmark(in String bookmark);
 	void deleteBookmark(in String bookmark);
 
+	List<String> notes(in String query);
+	String saveNote(in String note);
+	void deleteNote(in String note);
+
 	String getHighlightingStyle(in int styleId);
 	List<String> highlightingStyles();
 	void saveHighlightingStyle(in String style);

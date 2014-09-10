@@ -86,6 +86,16 @@ public final class FBReaderApp extends ZLApplication {
 								setBookmarkHighlightings(FootnoteView, myFootnoteModelId);
 							}
 						}
+						//break;
+					case NotesUpdated:
+						if (Model != null && (book == null || book.equals(Model.Book))) {
+							if (BookTextView.getModel() != null) {
+								setNoteHighlightings(BookTextView, null);
+							}
+							if (FootnoteView.getModel() != null && myFootnoteModelId != null) {
+								setNoteHighlightings(FootnoteView, myFootnoteModelId);
+							}
+						}
 						break;
 					case Updated:
 						onBookUpdated(book);
@@ -253,6 +263,22 @@ public final class FBReaderApp extends ZLApplication {
 		return bookmark;
 	}
 
+	public Note addSelectionNote() {
+		final FBView fbView = getTextView();
+
+		final Note note = new Note(
+			Model.Book,
+			fbView.getModel().getId(),
+			fbView.getSelectionStartPosition(),
+			fbView.getSelectionEndPosition(),
+			""
+		);
+		Collection.saveNote(note);
+		fbView.clearSelection();
+
+		return note;
+	}
+
 	private void setBookmarkHighlightings(ZLTextView view, String modelId) {
 		view.removeHighlightings(BookmarkHighlighting.class);
 		for (BookmarkQuery query = new BookmarkQuery(Model.Book, 20); ; query = query.next()) {
@@ -271,12 +297,30 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
+	private void setNoteHighlightings(ZLTextView view, String modelId) {
+		view.removeHighlightings(NoteHighlighting.class);
+		for (NoteQuery query = new NoteQuery(Model.Book, 20); ; query = query.next()) {
+			final List<Note> notes = Collection.notes(query);
+			if (notes.isEmpty()) {
+				break;
+			}
+			for (Note n : notes) {
+				if (n.getEnd() == null) {
+					n.findEnd(view);
+				}
+				if (MiscUtil.equals(modelId, n.ModelId)) {
+					view.addHighlighting(new NoteHighlighting(view, Collection, n));
+				}
+			}
+		}
+	}
 	private void setFootnoteModel(String modelId) {
 		final ZLTextModel model = Model.getFootnoteModel(modelId);
 		FootnoteView.setModel(model);
 		if (model != null) {
 			myFootnoteModelId = modelId;
 			setBookmarkHighlightings(FootnoteView, modelId);
+			setNoteHighlightings(FootnoteView, modelId);
 		}
 	}
 
@@ -322,6 +366,7 @@ public final class FBReaderApp extends ZLApplication {
 			ZLTextHyphenator.Instance().load(book.getLanguage());
 			BookTextView.setModel(Model.getTextModel());
 			setBookmarkHighlightings(BookTextView, null);
+			setNoteHighlightings(BookTextView, null);
 			gotoStoredPosition();
 			if (bookmark == null) {
 				setView(BookTextView);

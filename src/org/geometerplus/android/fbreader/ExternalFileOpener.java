@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.Note;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 

@@ -301,6 +301,22 @@ public class LibraryService extends Service {
 			myCollection.deleteBookmark(SerializerUtil.deserializeBookmark(serialized));
 		}
 
+		public List<String> notes(String query) {
+			return SerializerUtil.serializeNoteList(myCollection.notes(
+				SerializerUtil.deserializeNoteQuery(query)
+			));
+		}
+
+		public String saveNote(String serialized) {
+			final Note note = SerializerUtil.deserializeNote(serialized);
+			myCollection.saveNote(note);
+			return SerializerUtil.serialize(note);
+		}
+
+		public void deleteNote(String serialized) {
+			myCollection.deleteNote(SerializerUtil.deserializeNote(serialized));
+		}
+
 		public String getHighlightingStyle(int styleId) {
 			return SerializerUtil.serialize(myCollection.getHighlightingStyle(styleId));
 		}
