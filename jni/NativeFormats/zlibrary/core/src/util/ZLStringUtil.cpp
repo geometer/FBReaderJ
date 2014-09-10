@@ -177,3 +177,9 @@ unsigned long ZLStringUtil::parseHex(const std::string &str, int defaultValue) {
 	char *ptr;
 	return std::strtol(str.c_str(), &ptr, 16);
 }
+
+void ZLStringUtil::asciiToLowerInline(std::string &asciiString) {
+	for (int i = asciiString.size() - 1; i >= 0; --i) {
+		asciiString[i] = std::tolower(asciiString[i]);
+	}
+}
