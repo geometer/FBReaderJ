@@ -168,6 +168,17 @@ private:
 	XHTMLSvgImageNamePredicate &myPredicate;
 };
 
+class XHTMLTagListAction : public XHTMLTextModeTagAction {
+
+private:
+	const int myStartIndex;
+
+public:
+	XHTMLTagListAction(int startIndex = -1);
+	void doAtStart(XHTMLReader &reader, const char **xmlattributes);
+	void doAtEnd(XHTMLReader &reader);
+};
+
 class XHTMLTagItemAction : public XHTMLTextModeTagAction {
 
 public:
@@ -313,13 +324,36 @@ void XHTMLTagBodyAction::doAtEnd(XHTMLReader &reader) {
 	}
 }
 
+XHTMLTagListAction::XHTMLTagListAction(int startIndex) : myStartIndex(startIndex) {
+}
+
+void XHTMLTagListAction::doAtStart(XHTMLReader &reader, const char**) {
+	reader.myListNumStack.push(myStartIndex);
+}
+
+void XHTMLTagListAction::doAtEnd(XHTMLReader &reader) {
+	if (!reader.myListNumStack.empty()) {
+		reader.myListNumStack.pop();
+	}
+}
+
 void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
 	endParagraph(reader);
-	// TODO: increase left indent
 	beginParagraph(reader);
-	// TODO: replace bullet sign by number inside OL tag
-	const std::string bullet = "\xE2\x80\xA2\xC0\xA0";
-	bookReader(reader).addData(bullet);
+	if (!reader.myListNumStack.empty()) {
+		bookReader(reader).addFixedHSpace(3 * reader.myListNumStack.size());
+		int &index = reader.myListNumStack.top();
+		if (index == 0) {
+			const std::string bullet = "\xE2\x80\xA2\xC0\xA0";
+			bookReader(reader).addData(bullet);
+		} else {
+			std::string number;
+			ZLStringUtil::appendNumber(number, index++);
+			number += ". ";
+			bookReader(reader).addData(number.data());
+		}
+	}
+	reader.myNewParagraphInProgress = true;
 }
 
 void XHTMLTagItemAction::doAtEnd(XHTMLReader &reader) {
@@ -539,8 +573,8 @@ void XHTMLReader::fillTagTable() {
 		addAction("h5", new XHTMLTagParagraphWithControlAction(H5));
 		addAction("h6", new XHTMLTagParagraphWithControlAction(H6));
 
-		//addAction("ol", new XHTMLTagAction());
-		//addAction("ul", new XHTMLTagAction());
+		addAction("ol", new XHTMLTagListAction(1));
+		addAction("ul", new XHTMLTagListAction(0));
 		//addAction("dl", new XHTMLTagAction());
 		addAction("li", new XHTMLTagItemAction());
 
