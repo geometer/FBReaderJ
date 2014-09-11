@@ -276,11 +276,16 @@ public class LibraryService extends Service {
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
 			if (myCoversCache.snapshot().containsKey(book)) {
-				final Bitmap bitmap = myCoversCache.get(book);
+				Bitmap bitmap = myCoversCache.get(book);
 				if (bitmap.getWidth() == 1) {
 					return null;
 				}
-				return bitmap;
+				bitmap = getResizedBitmap(bitmap, maxWidth, maxHeight);
+				if (bitmap != null) {
+					return bitmap;
+				} else {
+					myCoversCache.remove(book);
+				}
 			}
 
 			final ZLImage image =
@@ -318,6 +323,26 @@ public class LibraryService extends Service {
 			delayed[0] = false;
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
+		}
+
+		private Bitmap getResizedBitmap(Bitmap bitmap, int newWidth, int newHeight) {
+			final int bWidth = bitmap.getWidth();
+			final int bHeight = bitmap.getHeight();
+			if (bWidth <= 0 || bWidth < newWidth || bHeight <= 0 || bHeight < newHeight) {
+				return null;
+			}
+			if (bWidth == newWidth && bHeight == newHeight) {
+				return bitmap;
+			}
+			final int w, h;
+			if (bWidth * newHeight > bHeight * newWidth) {
+				w = newWidth;
+				h = Math.max(1, bHeight * w / bWidth);
+			} else {
+				h = newHeight;
+				w = Math.max(1, bWidth * h / bHeight);
+			}
+			return Bitmap.createScaledBitmap(bitmap, w, h, false);
 		}
 
 		public List<String> bookmarks(String query) {
