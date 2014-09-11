@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/yota_red"
         android:textSize="13dp"
-        android:fontFamily="PT Sans Yota"
+        android:fontFamily="PT Sans Yota Demi"
         android:textStyle="italic"
         android:text="Back to page 27"
         android:singleLine="true"/>
