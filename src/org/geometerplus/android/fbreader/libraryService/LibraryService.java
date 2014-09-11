@@ -276,13 +276,18 @@ public class LibraryService extends Service {
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
 			if (myCoversCache.snapshot().containsKey(book)) {
-				return myCoversCache.get(book);
+				final Bitmap bitmap = myCoversCache.get(book);
+				if (bitmap.getWidth() == 1) {
+					return null;
+				}
+				return bitmap;
 			}
 
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
-				myCoversCache.put(book, null);
+				// null is not an appropriate value for LruCache
+				myCoversCache.put(book, Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8));
 				delayed[0] = false;
 				return null;
 			}
@@ -297,7 +302,8 @@ public class LibraryService extends Service {
 						if (data != null) {
 							myCoversCache.put(book, data.getBitmap(maxWidth, maxHeight));
 						} else {
-							myCoversCache.put(book, null);
+							// null is not an appropriate value for LruCache
+							myCoversCache.put(book, Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8));
 						}
 						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
