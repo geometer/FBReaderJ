@@ -1058,6 +1058,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Ler livros no formato PDF"/>
 		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="drm" value="DRM">
 		<node name="encryptedSection" value="Seção Encriptada"/>

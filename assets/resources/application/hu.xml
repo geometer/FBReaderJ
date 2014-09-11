@@ -1046,6 +1046,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="PDF formátumú könyvek olvasása"/>
 		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="drm">
 		<node name="encryptedSection" value="Encrypted section" toBeTranslated="true"/>
