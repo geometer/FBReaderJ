@@ -25,6 +25,7 @@ public class ZLSearchPattern {
 	final char[] UpperCasePattern;
 
 	public ZLSearchPattern(String pattern, boolean ignoreCase) {
+		pattern = pattern.replace("\u200b", "");
 		IgnoreCase = ignoreCase;
 		if (IgnoreCase) {
 			LowerCasePattern = pattern.toLowerCase().toCharArray();
