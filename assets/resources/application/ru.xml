@@ -1064,6 +1064,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Чтение файлов PDF"/>
 		</node>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="Чтение файлов DjVu"/>
+		</node>
 	</node>
 	<node name="drm">
 		<node name="encryptedSection" value="Этот раздел зашифрован"/>
