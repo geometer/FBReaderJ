@@ -41,7 +41,7 @@ public class FileChooserAdapter extends TreeAdapter {
         } else {
             nameView.setText(tree.getName());
         }
-        nameView.setTypeface(Typeface.create("PT Sans Pro", Typeface.BOLD));
+        nameView.setTypeface(Typeface.create("PT Sans Yota", Typeface.BOLD));
 
         final TextView summaryView = ViewUtil.findTextView(view, R.id.library_tree_item_childrenlist);
         if (unread) {
@@ -50,7 +50,7 @@ public class FileChooserAdapter extends TreeAdapter {
             summaryView.setText(tree.getSummary());
         }
         summaryView.setTextColor(Color.GRAY);
-        nameView.setTypeface(Typeface.create("PT Sans Pro", Typeface.NORMAL));
+        nameView.setTypeface(Typeface.create("PT Sans Yota", Typeface.NORMAL));
         return view;
     }
 

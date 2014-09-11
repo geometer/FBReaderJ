@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/fake_bottom"
-        android:fontFamily="PT Sans Pro"
+        android:fontFamily="PT Sans Yota"
         android:singleLine="true"
         android:text="0 books"
         android:textColor="@android:color/white"

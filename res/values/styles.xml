@@ -27,7 +27,8 @@
   <style name="WhiteActionBarTitleStyle"
            parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse">
         <item name="android:textColor">@color/gray_title_text</item>
-        <item name="android:fontFamily">"PT Sans Pro"</item>
+        <item name="android:fontFamily">"PT Sans Yota"</item>
+      <item name="android:textStyle">bold</item>
   </style>
 
   <style name="ActionButtonStyle" parent="@android:style/Widget.Holo.Light.ActionButton">

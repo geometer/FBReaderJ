@@ -80,7 +80,7 @@
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/font_sans"
-                    android:fontFamily="PT Sans Pro"
+                    android:fontFamily="PT Sans Yota"
                     android:textStyle="bold"
                     android:text="PT Sans"
                     android:textSize="16dp"

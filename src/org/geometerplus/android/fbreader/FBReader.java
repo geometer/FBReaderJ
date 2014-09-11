@@ -374,13 +374,13 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		myFBReaderApp.addAction(ActionCode.OPEN_WEB_HELP, new OpenWebHelpAction(this, myFBReaderApp));
 		myFBReaderApp.addAction(ActionCode.INSTALL_PLUGINS, new InstallPluginsAction(this, myFBReaderApp));
 
-		Config.Instance().runOnConnect(new Runnable() {
-			public void run() {
-				if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
-					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
-				}
-			}
-		});
+//		Config.Instance().runOnConnect(new Runnable() {
+//			public void run() {
+//				if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
+//					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
+//				}
+//			}
+//		});
 
 		final Intent intent = getIntent();
 		final String action = intent.getAction();
@@ -640,9 +640,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					}
 				});
 
-				boolean startedFromBs = getIntent() != null && FBReaderIntents.Action.SWITCH_YOTA_SCREEN.equals(getIntent().getAction());
-				if (startedFromBs || myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
-					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, true).run();
+				//boolean startedFromBs = getIntent() != null && FBReaderIntents.Action.SWITCH_YOTA_SCREEN.equals(getIntent().getAction());
+				if (myFBReaderApp.ViewOptions.YotaDrawOnBackScreen.getValue()) {
+					new YotaSwitchScreenAction(FBReader.this, myFBReaderApp, false).run();
 				}
 			}
 		});

@@ -228,7 +228,7 @@ public class FontSettingsPopup {
 
             }
             else if (v.getId() == R.id.font_sans) {
-                option.setValue("Yota Sans");
+                option.setValue("yota-sans");
                 mReader.clearTextCaches();
                 mReader.getViewWidget().repaint();
                 //vibrate();

@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
-            android:fontFamily="PT Sans Pro"
+            android:fontFamily="PT Sans Yota"
             android:text="more"
             android:textColor="#ffffff"
             android:textSize="14dp" />
@@ -59,7 +59,7 @@
         android:textSize="12dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="6.6dp"
-        android:fontFamily="PT Sans Pro"
+        android:fontFamily="PT Sans Yota"
         android:textStyle="bold"
         android:textColor="@android:color/white"/>
     <TextView
@@ -73,7 +73,7 @@
         android:textSize="12dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="6.6dp"
-        android:fontFamily="PT Sans Pro"
+        android:fontFamily="PT Sans Yota"
         android:textColor="@android:color/white"/>
     <FrameLayout
         android:id="@+id/content"

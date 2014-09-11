@@ -52,7 +52,7 @@
                 android:layout_marginBottom="31dp"
                 android:text="@string/yota_add_to_collection"
                 android:textSize="22.6dp"
-                android:fontFamily="PT Sans Pro"
+                android:fontFamily="PT Sans Yota"
                 android:textStyle="bold"
                 android:textColor="@drawable/book_add_to_collection_font_color"
                 android:background="@drawable/book_add_to_collection"/>

@@ -6,11 +6,4 @@
 		italic="PTSansItalic.ttf"
 		boldItalic="PTSansBoldItalic.ttf"
 	/>
-    <font
-        family="Yota Sans"
-        regular="PTS55Y.ttf"
-        bold="PTSansBold.ttf"
-        italic="PTS56Y.ttf"
-        boldItalic="PTSansBoldItalic.ttf"
-        />
 </fonts>

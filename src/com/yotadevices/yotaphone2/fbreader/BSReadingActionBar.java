@@ -76,7 +76,7 @@ public class BSReadingActionBar {
             }
             authorString.append(authors.get(authors.size() - 1));
             mBookAuthor.setText(authorString.toString());
-            mBookTitle.setText(currentBook.getTitle());
+            mBookTitle.setText(currentBook.getTitle().toUpperCase());
         }
         mPopup = new PopupWindow(ctx);
         mPopup.setBackgroundDrawable(new ColorDrawable(0));

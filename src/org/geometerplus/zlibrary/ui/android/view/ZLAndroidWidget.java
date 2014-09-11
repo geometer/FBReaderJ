@@ -129,7 +129,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				showHint(canvas);
+				if (!DeviceType.Instance().isYotaPhone()) {
+					showHint(canvas);
+				}
 			}
 		});
 	}
