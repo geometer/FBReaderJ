@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
-import java.lang.ref.*;
 import java.util.*;
 
 import android.app.Service;
@@ -27,21 +26,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.FileObserver;
+import android.util.LruCache;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
-
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
-
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
@@ -51,11 +47,13 @@ public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
-	private final Map<String,WeakReference<Object>> myCoversMap =
-		Collections.synchronizedMap(new HashMap<String,WeakReference<Object>>());
-	private static final Object NULL_COVER = new Object();
-	private final ReferenceQueue<Object> myReferenceQueue = new ReferenceQueue<Object>();
-
+	private final LruCache<String, Bitmap> myCoversCache  = new LruCache<String, Bitmap>(getCacheSize()) {
+		@Override
+		protected int sizeOf(String key, Bitmap bitmap) {
+			return bitmap.getByteCount() / 1024;
+		}
+	};
+	
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private static final class Observer extends FileObserver {
@@ -277,20 +275,14 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
-			clearCoversMap();
-			final WeakReference<Object> ref = myCoversMap.get(book);
-			if (ref != null) {
-				final Object bitmap = ref.get();
-				if (bitmap != null) {
-					delayed[0] = false;
-					return bitmap instanceof Bitmap ? (Bitmap)bitmap : null;
-				}
+			if (myCoversCache.snapshot().containsKey(book)) {
+				return myCoversCache.get(book);
 			}
 
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
-				myCoversMap.put(book, new WeakReference<Object>(NULL_COVER));
+				myCoversCache.put(book, null);
 				delayed[0] = false;
 				return null;
 			}
@@ -303,10 +295,9 @@ public class LibraryService extends Service {
 								(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 						final ZLAndroidImageData data = manager.getImageData(image);
 						if (data != null) {
-							final Bitmap cover = data.getBitmap(maxWidth, maxHeight);
-							myCoversMap.put(book, new WeakReference<Object>(cover, myReferenceQueue));
+							myCoversCache.put(book, data.getBitmap(maxWidth, maxHeight));
 						} else {
-							myCoversMap.put(book, new WeakReference<Object>(NULL_COVER, myReferenceQueue));
+							myCoversCache.put(book, null);
 						}
 						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
@@ -321,16 +312,6 @@ public class LibraryService extends Service {
 			delayed[0] = false;
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
-		}
-
-		private void clearCoversMap() {
-			Reference<? extends Object> reference = myReferenceQueue.poll();
-			while (reference != null) {
-				if (myCoversMap.containsKey(reference)) {
-					myCoversMap.remove(reference);
-				}
-				reference = myReferenceQueue.poll();
-			}
 		}
 
 		public List<String> bookmarks(String query) {
@@ -375,6 +356,11 @@ public class LibraryService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		onStartCommand(intent, 0, startId);
+	}
+
+	private int getCacheSize() {
+		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+		return maxMemory / 8;
 	}
 
 	@Override
