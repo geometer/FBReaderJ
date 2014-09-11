@@ -110,7 +110,6 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
 
         EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
         EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_A2);
-        EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
         getCollection().bindToService(this, new Runnable() {
             public void run() {
                 if (myCurrentBook == null) {
