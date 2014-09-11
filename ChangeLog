@@ -13,6 +13,8 @@
 * Do not start SyncService if synchronization is disabled
 * Sync: 'synchronize positions only' option
 * Tips are back but disabled by default
+* Fixed numbered lists displaying in ePubs (by Tamotsu Takahashi)
+* Fixed text search for texts with zero-width spaces (e.g. Japanese texts)
 * Added Japanese localisation (by Tamotsu Takahashi and Naofumi Fukue)
 * Updated Dutch localisation (by Frank Fesevur)
 * Updated Czech localisation (by Marek Pavelka)
