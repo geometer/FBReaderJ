@@ -344,14 +344,12 @@ void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
 		bookReader(reader).addFixedHSpace(3 * reader.myListNumStack.size());
 		int &index = reader.myListNumStack.top();
 		if (index == 0) {
-			const std::string bullet = "\xE2\x80\xA2\xC0\xA0";
+			static const std::string bullet = "\xE2\x80\xA2\xC0\xA0";
 			bookReader(reader).addData(bullet);
 		} else {
-			std::string number;
-			ZLStringUtil::appendNumber(number, index++);
-			number += ". ";
-			bookReader(reader).addData(number.data());
+			bookReader(reader).addData(ZLStringUtil::numberToString(index++) + ".");
 		}
+		bookReader(reader).addFixedHSpace(1);
 	}
 	reader.myNewParagraphInProgress = true;
 }
