@@ -26,7 +26,7 @@
             <SeekBar
                 android:id="@+id/navigation_slider"
                 android:layout_toRightOf="@id/brightness_dec"
-                android:layout_toLeftOf="@id/brightness_inc"
+                android:layout_toLeftOf="@+id/brightness_inc"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
