@@ -2,6 +2,7 @@
 * (planned) Tablet-oriented preferences dialog
 * (planned) Android L support
 * (planned) Automatic files download (from the book network)
+* (planned) Sync: single book upload
 
 ===== 2.1 (Sep ??, 2014) =====
 * New engine for mobipocket (a.k.a. Kindle) files: added support for huffdic compression and CSS
@@ -9,13 +10,14 @@
 * DjVu plugin support
 * (planned) Fixed authors list/tags list editing
 * (planned) Recently accessed books list (on the book network)
-* (planned) Do not start SyncService in synchronization is disabled
-* (planned) Sync: single book upload
+* Do not start SyncService if synchronization is disabled
 * Sync: 'synchronize positions only' option
 * Tips are back but disabled by default
+* Fixed numbered lists displaying in ePubs (by Tamotsu Takahashi)
+* Fixed text search for texts with zero-width spaces (e.g. Japanese texts)
 * Added Japanese localisation (by Tamotsu Takahashi and Naofumi Fukue)
-* Updated Dutch localization (by Frank Fesevur)
-* Updated Czech localization (by Marek Pavelka)
+* Updated Dutch localisation (by Frank Fesevur)
+* Updated Czech localisation (by Marek Pavelka)
 
 ===== 2.0.6 (Aug 23, 2014) =====
 * Version for old (2.*) devices does not use google services API

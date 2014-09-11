@@ -25,6 +25,8 @@ import java.util.*;
 import android.content.Context;
 import android.content.Intent;
 
+import org.geometerplus.fbreader.fbreader.options.SyncOptions;
+
 public abstract class SyncOperations {
 	public static final String UPDATED = "android.fbreader.event.sync.UPDATED";
 
@@ -35,12 +37,14 @@ public abstract class SyncOperations {
 		String QUICK_SYNC = "android.fbreader.action.sync.QUICK_SYNC";
 	}
 
-	public static void enableSync(Context context, boolean enable) {
-		final String action = enable ? Action.START : Action.STOP;
+	public static void enableSync(Context context, SyncOptions options) {
+		final String action = options.Enabled.getValue() ? Action.START : Action.STOP;
 		context.startService(new Intent(context, SyncService.class).setAction(action));
 	}
 
-	public static void quickSync(Context context) {
-		context.startService(new Intent(context, SyncService.class).setAction(Action.QUICK_SYNC));
+	public static void quickSync(Context context, SyncOptions options) {
+		if (options.Enabled.getValue()) {
+			context.startService(new Intent(context, SyncService.class).setAction(Action.QUICK_SYNC));
+		}
 	}
 }

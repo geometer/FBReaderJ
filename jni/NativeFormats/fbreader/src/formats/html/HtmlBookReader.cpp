@@ -243,13 +243,12 @@ void HtmlListItemTagAction::run(const HtmlReader::HtmlTag &tag) {
 			bookReader().addFixedHSpace(3 * myReader.myListNumStack.size());
 			int &index = myReader.myListNumStack.top();
 			if (index == 0) {
-				myReader.addConvertedDataToBuffer("\342\200\242 ", 4, false);
+				myReader.addConvertedDataToBuffer("\342\200\242", 3, false);
 			} else {
-				std::string number;
-				ZLStringUtil::appendNumber(number, index++);
-				number += ". ";
+				const std::string number = ZLStringUtil::numberToString(index++) + ".";
 				myReader.addConvertedDataToBuffer(number.data(), number.length(), false);
 			}
+			bookReader().addFixedHSpace(1);
 			myReader.myDontBreakParagraph = true;
 		}
 	} else {
