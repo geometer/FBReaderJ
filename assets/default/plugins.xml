@@ -2,5 +2,6 @@
 	<plugin id="tts-plus" package="com.hyperionics.fbreader.plugin.tts_plus"/>
 	<plugin id="local-opds-scanner" package="org.geometerplus.fbreader.plugin.local_opds_scanner"/>
 	<plugin id="pdf" package="org.geometerplus.fbreader.plugin.pdf"/>
+	<plugin id="djvu" package="org.geometerplus.fbreader.plugin.djvu"/>
 	<!--plugin id="bookshelf" package="org.geometerplus.fbreader.plugin.bookshelf"/-->
 </fbreader-plugins>

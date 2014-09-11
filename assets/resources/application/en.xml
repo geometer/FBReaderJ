@@ -1055,6 +1055,9 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Read books in PDF format"/>
 		</node>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="Read books in DjVu format"/>
+		</node>
 	</node>
 	<node name="drm">
 		<node name="encryptedSection" value="Encrypted section"/>
