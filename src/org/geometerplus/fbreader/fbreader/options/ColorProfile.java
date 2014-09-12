@@ -114,7 +114,7 @@ public class ColorProfile {
 			WallpaperOption =
 				new ZLStringOption("Colors", name + ":Wallpaper", lib.isEInk() ? "" : "wallpapers/sepia.jpg");
 			FillModeOption =
-				new ZLEnumOption<ZLPaintContext.FillMode>(name, "FillMode", ZLPaintContext.FillMode.tile);
+				new ZLEnumOption<ZLPaintContext.FillMode>("Colors", name + ":FillMode", ZLPaintContext.FillMode.tile);
 			BackgroundOption =
 				createOption(name, "Background", 255, 255, 255);
 			SelectionBackgroundOption =
