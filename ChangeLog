@@ -5,9 +5,12 @@
 * (planned) Sync: single book upload
 * (planned) Editable notes (by Tamotsu Takahashi)
 
-===== 2.1.1 (Sep ??, 2014) =====
+===== 2.1.2 (Sep ??, 2014) =====
 * (planned) Fixed authors list/tags list editing
+
+===== 2.1.1 (Sep 12, 2014) =====
 * Fixed links behaviour in third-party libraries dialog
+* Internal changes: option name for bg fill mode changed
 
 ===== 2.1 (Sep 11, 2014) =====
 * New engine for mobipocket (a.k.a. Kindle) files: added support for huffdic compression and CSS
