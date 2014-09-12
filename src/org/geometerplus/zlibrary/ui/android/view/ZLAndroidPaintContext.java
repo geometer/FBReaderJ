@@ -187,7 +187,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 				{
 					final Matrix m = new Matrix();
 					final int dx = g.LeftMargin;
-					final int dy = g.TopMargin - g.TopMargin / h * h;
+					final int dy = g.TopMargin % h;
 					m.preScale(1f * g.ScreenSize.Width / w, 1);
 					m.postTranslate(-dx, -dy);
 					for (int ch = g.AreaSize.Height + dy; ch > 0; ch -= h) {
@@ -199,7 +199,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 				case tileHorizontally:
 				{
 					final Matrix m = new Matrix();
-					final int dx = g.LeftMargin - g.LeftMargin / w * w;
+					final int dx = g.LeftMargin % w;
 					final int dy = g.TopMargin;
 					m.preScale(1, 1f * g.ScreenSize.Height / h);
 					m.postTranslate(-dx, -dy);
@@ -212,8 +212,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 				case tile:
 				case tileMirror:
 				{
-					final int dx = g.LeftMargin - g.LeftMargin / w * w;
-					final int dy = g.TopMargin - g.TopMargin / h * h;
+					final int dx = g.LeftMargin % w;
+					final int dy = g.TopMargin % h;
 					final int fullw = g.AreaSize.Width + dx;
 					final int fullh = g.AreaSize.Height + dy;
 					for (int cw = 0; cw < fullw; cw += w) {
