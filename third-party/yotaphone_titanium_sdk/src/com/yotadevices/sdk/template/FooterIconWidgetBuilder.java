@@ -1,11 +1,11 @@
 package com.yotadevices.sdk.template;
 
+import com.yotadevices.platinum.R;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
-
-import com.yotadevices.platinum.R;
 
 public class FooterIconWidgetBuilder extends WidgetBuilder {
     protected PendingIntent mMoreViewPendingIntent;
@@ -14,7 +14,8 @@ public class FooterIconWidgetBuilder extends WidgetBuilder {
     private CharSequence mRightText;
     private CharSequence mMoreViewText;
 
-    private int mIconResource;
+    private int mIconResource = 0;
+    private int mMoreIconResource = 0;
     private RemoteViews mContentView;
     private boolean mLoadingData = false;
 
@@ -48,9 +49,18 @@ public class FooterIconWidgetBuilder extends WidgetBuilder {
     public FooterIconWidgetBuilder setMoreViewAction(PendingIntent intent, CharSequence text) {
         mMoreViewPendingIntent = intent;
         mMoreViewText = text;
+        mMoreIconResource = 0;
         return this;
     }
 
+    public FooterIconWidgetBuilder setMoreViewAction(PendingIntent intent, int imageResource) {
+        mMoreViewPendingIntent = intent;
+        mMoreIconResource = imageResource;
+        mMoreViewText = null;
+        return this;
+    }
+
+    @Override
     public RemoteViews apply(Context context) {
         if (!mLoadingData) {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.template_widget_icon_footer);
@@ -63,15 +73,29 @@ public class FooterIconWidgetBuilder extends WidgetBuilder {
             } else {
                 remoteViews.setTextViewText(R.id.right_text, mRightText);
                 remoteViews.setViewVisibility(R.id.right_text, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.more_layout, View.GONE);
             }
             if (mMoreViewText != null) {
-                remoteViews.setViewVisibility(R.id.right_text, View.GONE);
+                remoteViews.setViewVisibility(R.id.more_image, View.GONE);
                 remoteViews.setViewVisibility(R.id.more_layout, View.VISIBLE);
+                remoteViews.setViewVisibility(R.id.more_text, View.VISIBLE);
                 remoteViews.setTextViewText(R.id.more_text, mMoreViewText);
                 if (mMoreViewPendingIntent != null) {
                     remoteViews.setOnClickPendingIntent(R.id.more_layout, mMoreViewPendingIntent);
                 }
+            }
+            if (mMoreIconResource != 0) {
+                remoteViews.setViewVisibility(R.id.more_text, View.GONE);
+                remoteViews.setViewVisibility(R.id.more_image, View.VISIBLE);
+                remoteViews.setViewVisibility(R.id.more_layout, View.VISIBLE);
+                remoteViews.setImageViewResource(R.id.more_image, mMoreIconResource);
+                if (mMoreViewPendingIntent != null) {
+                    remoteViews.setOnClickPendingIntent(R.id.more_layout, mMoreViewPendingIntent);
+                }
+            }
+            if (mMoreIconResource == 0 && mMoreViewText == null) {
+                remoteViews.setViewVisibility(R.id.more_text, View.GONE);
+                remoteViews.setViewVisibility(R.id.more_image, View.GONE);
+                remoteViews.setViewVisibility(R.id.more_layout, View.GONE);
             }
             return super.apply(context, remoteViews);
         }

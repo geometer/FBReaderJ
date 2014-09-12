@@ -2,6 +2,7 @@ package com.yotadevices.sdk;
 
 import com.yotadevices.platinum.R;
 import com.yotadevices.sdk.Constants.SystemBSFlags;
+import com.yotadevices.sdk.utils.EinkUtils;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -174,9 +175,11 @@ public class BSDrawer extends Drawer {
 
     /**
      * @hide only for inner usage
+     * @param initialWaveform
+     * @param initialDithering
      */
     @Override
-    public synchronized void addBSParentView() {
+    public synchronized void addBSParentView(Waveform initialWaveform, Dithering initialDithering) {
         if (!isShowBSParentView()) {
             WindowManager wm = getWindowManager();
             LayoutParams lp = getDefaultLayoutParams();
@@ -184,14 +187,11 @@ public class BSDrawer extends Drawer {
             if (mActivity.get() != null) {
                 applySystemIUVisibility(lp, mActivity.get().getSytemBSUiVisibility());
             }
-
             wm.addView(mParentView, lp);
             // When BS layout is added we perform FULL update to remove all
             // ghosting
             // from previous BSActivity
-            // EinkUtils.performSingleUpdate(mParentView,
-            // Waveform.WAVEFORM_GC_FULL);
-            // EinkUtils.disableViewDithering(mParentView);
+             EinkUtils.performSingleUpdate(mParentView, initialWaveform, initialDithering, 800);
             isShowEpdView = true;
 
             if (isShowBlankView) {

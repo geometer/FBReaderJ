@@ -51,6 +51,7 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
 /**
  * @author ASazonov
@@ -97,6 +98,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         ((YotaTranslateBSPopup)myFBReaderApp.getPopupById(YotaTranslateBSPopup.ID)).setRootView(mRootView);
         ((YotaDefineBSPopup)myFBReaderApp.getPopupById(YotaDefineBSPopup.ID)).setRootView(mRootView);
 
+	    ZLAndroidPaintContext.AntiAliasOption.setValue(false);
         registerActions();
     }
 
@@ -108,7 +110,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         hideActionBar();
         hideStatusBar();
 
-        EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_ATKINSON_BINARY);
+        EinkUtils.setViewDithering(mRootView, Drawer.Dithering.DITHER_NONE);
         EinkUtils.setViewWaveform(mRootView, Drawer.Waveform.WAVEFORM_A2);
         getCollection().bindToService(this, new Runnable() {
             public void run() {
@@ -182,7 +184,8 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         if (intent.hasExtra(KEY_BACK_SCREEN_IS_ACTIVE)) {
             boolean isActive = intent.getBooleanExtra(KEY_BACK_SCREEN_IS_ACTIVE, false);
             if (isActive) {
-                registerActions();
+	            ZLAndroidPaintContext.AntiAliasOption.setValue(false);
+	            registerActions();
             }
             mWidget.setIsBsActive(isActive);
             mWidget.repaint();

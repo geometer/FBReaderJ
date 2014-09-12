@@ -12,6 +12,8 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicConvolve3x3;
 
+import com.yotadevices.sdk.Drawer;
+
 /**
  * @hide
  * 
@@ -20,7 +22,8 @@ import android.renderscript.ScriptIntrinsicConvolve3x3;
  * 
  */
 public class BitmapUtils {
-
+    public static final int DITHER_ATKINSON = 1;
+    public static final int DITHER_FLOYD_STEINBERG= 2;
     /**
      * Makes standard preprocessing for the image that should be drawn on BS: <BR>
      * - Bitmap sharpening <BR>
@@ -34,8 +37,18 @@ public class BitmapUtils {
      *            input bitmap
      * @return new bitmap
      */
-    public static Bitmap prepareImageForBS(Context context, Bitmap bitmap) {
-        return BitmapUtils.changeBitmapContrastBrightness(BitmapUtils.sharpenBitmap(context, bitmap, 0.15f), 1.2f, -30);
+    public static Bitmap prepareImageForBS(Bitmap bitmap) {
+        return BitmapUtils.changeBitmapContrastBrightness(BitmapUtils.sharpenBitmap(bitmap, 0.15f), 1.2f, -30);
+    }
+
+    public static Bitmap sharpenBitmap(Bitmap bitmap, float weight) {
+        com.yotadevices.yotaphone2.sdk.EpdUtils.sharpenBitmap(bitmap, weight);
+        return bitmap;
+    }
+
+    public static Bitmap ditherBitmap(Bitmap bitmap, int ditheringAlgorithm, boolean binary) {
+        com.yotadevices.yotaphone2.sdk.EpdUtils.ditherBitmap(bitmap, ditheringAlgorithm, binary);
+        return bitmap;
     }
 
     /**

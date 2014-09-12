@@ -1,10 +1,7 @@
 package com.yotadevices.sdk.utils;
 
-import com.yotadevices.platinum.R;
-
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,6 +12,8 @@ import android.os.Vibrator;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.yotadevices.platinum.R;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -42,6 +41,7 @@ public class RotationAlgorithm implements SensorEventListener {
          * onPhoneRotatedToBS - Called when device is rotated on back screen
          */
         public void onPhoneRotatedToBS();
+
         /**
          * onRotataionCancelled - Called if user didin't do rotation
          */
@@ -65,21 +65,19 @@ public class RotationAlgorithm implements SensorEventListener {
      */
     public static final int OPTION_DONT_MONITOR_BACK_ROTATION = 16;
     /**
-     * OPTION_EXPECT_FIRST_ROTATION_FOR_60SEC = 32: Set this rotation if application needs to wait for 60 seconds for rotation instead of 4.
+     * OPTION_EXPECT_FIRST_ROTATION_FOR_60SEC = 32: Set this rotation if application needs to wait for 60 seconds for rotation instead of 6.
      */
     public static final int OPTION_EXPECT_FIRST_ROTATION_FOR_60SEC = 32;
 
     private static final int TIME_60SEC = 60 * 1000;
-    private static final int TIME_4SEC = 4 * 1000;
+    private static final int TIME_6SEC = 6 * 1000;
 
     private Context mContext;
     private static RotationAlgorithm mInstance;
     private OnPhoneRotatedListener mListener = null;
 
     /**
-     * 
-     * @param context
-     *            input context
+     * @param context input context
      * @return Instance of RotationAlgorithm
      */
     public static RotationAlgorithm getInstance(Context context) {
@@ -98,15 +96,9 @@ public class RotationAlgorithm implements SensorEventListener {
         public float x;
         public float y;
         public float z;
-
-        void swapXY() {
-            float temp = x;
-            x = y;
-            y = temp;
-        }
     }
 
-    private class Gyroscope {
+    private class AvgGyroscope {
         float xAvg = 0f;
         float yAvg = 0f;
         float zAvg = 0f;
@@ -163,36 +155,22 @@ public class RotationAlgorithm implements SensorEventListener {
         }
     }
 
-    private boolean firstStep = false;
-    private boolean rotationPassedShortSide = false;
-    private boolean rotationPassedLongSide = false;
+    private boolean mRotationHappened = false;
+    private boolean mFirstStep = true;
+    private boolean mUserIsLying = false;
+
     private long p2bClickedTime;
-    private long rotationTime;
 
-    private final SensorAttributes accelerometer = new SensorAttributes();
-    private final SensorAttributes gyroscope = new SensorAttributes();
-
-    private LinkedList<SensorAttributes> gyroscopeArray = new LinkedList<SensorAttributes>();
+    private LinkedList<SensorAttributes> mGyroscopeArray = new LinkedList<SensorAttributes>();
 
     private final static int TIME_DELAY = 50; // time is in milliseconds
     private final int MAX_SIZE = 1000 / TIME_DELAY;
 
-    private boolean mUserIsLookingAtFS = true;
-    private boolean mUserIsLookingAtFSPrevious = true;
-
-    private boolean mFSIsUp = true;
-    private boolean mUserIsLying = false;
     private boolean mStartWithFS = true;
     private boolean mPowerOn = false;
     private boolean mDeviceLockSettingIsNone = false;
     private boolean mNoUnlock = false;
-    private boolean mScreenJustLocked = false;
-    private boolean mDontMonitorBackRotation = false;
     private boolean mExpectFirstRotationFor60Sec = false;
-
-    private boolean mPhoneRotatedToBS = false;
-    private boolean mPhoneRotatedToFS = false;
-
 
     private SensorManager mSensorManager;
     private KeyguardManager mKeyguardManager;
@@ -223,16 +201,14 @@ public class RotationAlgorithm implements SensorEventListener {
 
     /**
      * turnScreenOffIfRotated: Main function to call - starts the rotation algorithm
-     * 
-     * @param options
-     *            - bitmask of RotationAlgorithm options that can contain
-     *            {@link RotationAlgorithm#OPTION_START_WITH_BS},
-     *            {@link RotationAlgorithm#OPTION_POWER_ON},
-     *            {@link RotationAlgorithm#OPTION_NO_UNLOCK},
-     *            {@link RotationAlgorithm#OPTION_DONT_MONITOR_BACK_ROTATION},
-     *            {@link RotationAlgorithm#OPTION_EXPECT_FIRST_ROTATION_FOR_60SEC}
-     * @param listener
-     *            - callback when phone rotation happened
+     *
+     * @param options  - bitmask of RotationAlgorithm options that can contain
+     *                 {@link RotationAlgorithm#OPTION_START_WITH_BS},
+     *                 {@link RotationAlgorithm#OPTION_POWER_ON},
+     *                 {@link RotationAlgorithm#OPTION_NO_UNLOCK},
+     *                 {@link RotationAlgorithm#OPTION_DONT_MONITOR_BACK_ROTATION},
+     *                 {@link RotationAlgorithm#OPTION_EXPECT_FIRST_ROTATION_FOR_60SEC}
+     * @param listener - callback when phone rotation happened
      */
     public void turnScreenOffIfRotated(int options, OnPhoneRotatedListener listener) {
         mListener = listener;
@@ -241,15 +217,13 @@ public class RotationAlgorithm implements SensorEventListener {
 
     /**
      * turnScreenOffIfRotated - Main function to call: starts the rotation algorithm
-     * 
-     * @param options
-     *            - bitmask of RotationAlgorithm options
+     *
+     * @param options - bitmask of RotationAlgorithm options
      */
     public void turnScreenOffIfRotated(int options) {
         mStartWithFS = !isOptionSet(options, OPTION_START_WITH_BS);
         mPowerOn = isOptionSet(options, OPTION_POWER_ON);
         mNoUnlock = isOptionSet(options, OPTION_NO_UNLOCK);
-        mDontMonitorBackRotation = isOptionSet(options, OPTION_DONT_MONITOR_BACK_ROTATION);
         mExpectFirstRotationFor60Sec = isOptionSet(options, OPTION_EXPECT_FIRST_ROTATION_FOR_60SEC);
 
         turnScreenOffIfRotated();
@@ -263,17 +237,10 @@ public class RotationAlgorithm implements SensorEventListener {
      * Main function to call - starts the rotation algorithm
      */
     public void turnScreenOffIfRotated() {
-        rotationTime = 0;
-        firstStep = true;
-        mUserIsLookingAtFS = true;
-        mUserIsLookingAtFSPrevious = true;
-        rotationPassedShortSide = false;
-        rotationPassedLongSide = false;
-        mFSIsUp = true;
+        mRotationHappened = false;
+        mFirstStep = true;
         mUserIsLying = false;
-        mPhoneRotatedToFS=false;
-        mPhoneRotatedToBS=false;
-        gyroscopeArray = new LinkedList<SensorAttributes>();
+        mGyroscopeArray = new LinkedList<SensorAttributes>();
         p2bClickedTime = System.currentTimeMillis();
 
         FrameworkUtils.isLockScreenDisabled(mContext, new IPlatinumCallback() {
@@ -339,6 +306,7 @@ public class RotationAlgorithm implements SensorEventListener {
     //    }
 
     private final static Map<String, String> RESOURCE = new HashMap<String, String>();
+
     {
         RESOURCE.put("en", "Application is updated on Back Screen");
         RESOURCE.put("ar", "تم تحديث التطبيق على الشاشة الخلفية");
@@ -354,16 +322,15 @@ public class RotationAlgorithm implements SensorEventListener {
      * @hide
      */
     public void onSensorChanged(SensorEvent event) {
-        setInitialValue(event);
-        swapSensorValueIfOrientationLandscape();
-        calculateStatistic();
+        SensorAttributes accelerometer = new SensorAttributes();
+        SensorAttributes gyroscope = new SensorAttributes();
 
-        Gyroscope avgGyroscope = getAverageGyroscope(gyroscopeArray);
-        calculateFlags(avgGyroscope);
+        setInitialValue(event, accelerometer, gyroscope);
+        calculateFlags(accelerometer, getAverageGyroscope(gyroscope));
         handleAction();
     }
 
-    private void setInitialValue(SensorEvent event) {
+    private void setInitialValue(SensorEvent event, SensorAttributes accelerometer, SensorAttributes gyroscope) {
         Sensor sensor = event.sensor;
         if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             accelerometer.x = event.values[0];
@@ -376,30 +343,19 @@ public class RotationAlgorithm implements SensorEventListener {
         }
     }
 
-    private void swapSensorValueIfOrientationLandscape() {
-        int display_mode = mContext.getResources().getConfiguration().orientation;
-        if (display_mode == Configuration.ORIENTATION_LANDSCAPE) {
-            accelerometer.swapXY();
-            gyroscope.swapXY();
+    private AvgGyroscope getAverageGyroscope(SensorAttributes gyroscope) {
+        mGyroscopeArray.add(gyroscope);
+        if (mGyroscopeArray.size() > MAX_SIZE) {
+            mGyroscopeArray.poll();
         }
-    }
-
-    private void calculateStatistic() {
-        gyroscopeArray.add(gyroscope);
-        if (gyroscopeArray.size() > MAX_SIZE) {
-            gyroscopeArray.poll();
-        }
-    }
-
-    private Gyroscope getAverageGyroscope(LinkedList<SensorAttributes> list) {
-        Gyroscope avgGyroscope = new Gyroscope();
-        for (SensorAttributes atr : list) {
+        AvgGyroscope avgGyroscope = new AvgGyroscope();
+        for (SensorAttributes atr : mGyroscopeArray) {
             avgGyroscope.xAvg += atr.x;
             avgGyroscope.yAvg += atr.y;
             avgGyroscope.zAvg += atr.z;
         }
 
-        int size = list.size();
+        int size = mGyroscopeArray.size();
         avgGyroscope.xAvg = avgGyroscope.xAvg / size;
         avgGyroscope.yAvg = avgGyroscope.yAvg / size;
         avgGyroscope.zAvg = avgGyroscope.zAvg / size;
@@ -407,144 +363,53 @@ public class RotationAlgorithm implements SensorEventListener {
         return avgGyroscope;
     }
 
-    private void calculateFlags(Gyroscope avgGyroscope) {
-        if (firstStep) { // first step is needed to determine if user is already holding he device upside-down
-            if (accelerometer.z < -3 && mStartWithFS) {
-                mUserIsLying = true;
-                mFSIsUp = true;
-                mUserIsLookingAtFS = true;
-                rotationPassedShortSide = true;
-                avgGyroscope.xAvg = 2;
-                avgGyroscope.yAvg = 1;
+    private void calculateFlags(SensorAttributes accelerometer, AvgGyroscope avgGyroscope) {
+        if (mFirstStep) {
+            if (mStartWithFS && accelerometer.z < -3 || !mStartWithFS && accelerometer.z > 3) {
+                mUserIsLying = true; //Meaning that user is holding device upside down
             }
-            if (accelerometer.z > 3 && !mStartWithFS) {
-                mUserIsLying = true;
-                mFSIsUp = true;
-                mUserIsLookingAtFS = false;
-                rotationPassedShortSide = true;
-                avgGyroscope.xAvg = 2;
-                avgGyroscope.yAvg = 1;
-            }
-            firstStep = false;
+            mFirstStep = false;
         }
-
-        if ((accelerometer.z < -3 && mUserIsLookingAtFS || accelerometer.z > 3 && !mUserIsLookingAtFS) && Math.abs(avgGyroscope.yAvg) > 3) {
-            // if rotation happened and it happened via certain side
-            rotationPassedLongSide = true;
-            rotationPassedShortSide = false;
-        } else if ((accelerometer.z < -3 && mUserIsLookingAtFS || accelerometer.z > 3 && !mUserIsLookingAtFS) && Math.abs(avgGyroscope.xAvg) > 1) {
-            rotationPassedLongSide = false;
-            rotationPassedShortSide = true;
-        }
-
-        if (accelerometer.z > 3 && rotationPassedShortSide) {
-            mFSIsUp = true;
-            if (mFSIsUp != mUserIsLookingAtFS) {
-                mUserIsLying = true;
-            } else {
-                mUserIsLying = false;
-            }
-        }
-        if (accelerometer.z < -3 && rotationPassedShortSide) {
-            mFSIsUp = false;
-            if (mFSIsUp != mUserIsLookingAtFS) {
-                mUserIsLying = true;
-            } else {
-                mUserIsLying = false;
-            }
-        }
-
-        if (accelerometer.z > 3 && (rotationPassedLongSide || (!rotationPassedShortSide && !rotationPassedLongSide))) {
-            if (mUserIsLying) {
-                mUserIsLookingAtFS = false;
-                mFSIsUp = false;
-            } else {
-                mUserIsLookingAtFS = true;
-                mFSIsUp = true;
-            }
-            rotationPassedShortSide = false;
-            rotationPassedLongSide = false;
-        }
-        if (accelerometer.z < -3 && (rotationPassedLongSide || (!rotationPassedShortSide && !rotationPassedLongSide))) {
-            if (mUserIsLying) {
-                mUserIsLookingAtFS = true;
-                mFSIsUp = true;
-            } else {
-                mUserIsLookingAtFS = false;
-                mFSIsUp = false;
-            }
-            rotationPassedShortSide = false;
-            rotationPassedLongSide = false;
-        }
-
-        if (Math.abs(avgGyroscope.zAvg) > 3 && mUserIsLying) {
-            mUserIsLookingAtFS = mFSIsUp;
-            rotationPassedShortSide = false;
-            rotationPassedLongSide = false;
+        if (accelerometer.z < -3 && mStartWithFS && !mUserIsLying
+                || accelerometer.z > 3 && !mStartWithFS && !mUserIsLying
+                || accelerometer.z > 3 && mStartWithFS && mUserIsLying
+                || accelerometer.z < -3 && !mStartWithFS && mUserIsLying
+                || Math.abs(avgGyroscope.yAvg) > 2
+                || Math.abs(avgGyroscope.xAvg) > 2) {
+            mRotationHappened = true;
         }
     }
 
     private void handleAction() {
-        if (mUserIsLookingAtFS) {
-            if (System.currentTimeMillis() > (p2bClickedTime + (mExpectFirstRotationFor60Sec ? TIME_60SEC : TIME_4SEC))) {
-                mSensorManager.unregisterListener(this);
-                if (mListener != null) {
-                    mListener.onRotataionCancelled();
-                }
+        if (System.currentTimeMillis() > (p2bClickedTime + (mExpectFirstRotationFor60Sec ? TIME_60SEC : TIME_6SEC))) {
+            mSensorManager.unregisterListener(this);
+            if (mListener != null) {
+                mListener.onRotataionCancelled();
             }
-            if (mUserIsLookingAtFSPrevious != mUserIsLookingAtFS) {
-                mSensorManager.unregisterListener(this);
-                if (mPowerOn || mDeviceLockSettingIsNone)
+        }
+        if (mRotationHappened) {
+            mSensorManager.unregisterListener(this);
+            if (mStartWithFS) {
+                mUtils.goToSleep();
+                if (!mNoUnlock) {
+                    mUtils.unlockBackScreen();
+                }
+                if (mListener != null) {
+                    mListener.onPhoneRotatedToBS();
+                }
+            } else {
+                if (mPowerOn || mDeviceLockSettingIsNone) {
                     mUtils.wakeUp();
+                }
                 mUtils.lockBackScreen();
 
                 new UnlockScreen().execute();
 
                 if (mListener != null) {
-                    if (!mPhoneRotatedToFS) {
-                        mListener.onPhoneRotatedToFS();
-                        mPhoneRotatedToFS=true;
-                        mPhoneRotatedToBS=false;
-                    }
-                }
-            }
-        } else {
-            if (mUserIsLookingAtFSPrevious != mUserIsLookingAtFS) {
-                rotationTime = System.currentTimeMillis();
-                if (mStartWithFS) {
-                    mUtils.goToSleep();
-                    /*if (mDeviceLockSettingIsNone) {
-                        mUtils.goToSleep();
-                        mScreenJustLocked = true;
-                    }*/
-                }
-                mScreenJustLocked = true;
-                if (!mNoUnlock) {
-                    mUtils.unlockBackScreen();
-                }
-                mSensorManager.unregisterListener(this);
-            }
-
-            /*if (System.currentTimeMillis() > rotationTime + TIME_4SEC || ((mDontMonitorBackRotation) && mStartWithFS)) {
-                mSensorManager.unregisterListener(this);
-                if (!mDeviceLockSettingIsNone) {
-                    if (mKeyguardManager.inKeyguardRestrictedInputMode()) { // check for the case when user unlocked the screen while we waited
-                        mUtils.goToSleep();
-                        mScreenJustLocked = false;
-                    } else {
-                        mUtils.lockBackScreen();
-                    }
-                }
-            }*/
-            if (mListener != null) {
-                if (!mPhoneRotatedToBS) {
-                    mListener.onPhoneRotatedToBS();
-                    mPhoneRotatedToBS=true;
-                    mPhoneRotatedToFS=false;
+                    mListener.onPhoneRotatedToFS();
                 }
             }
         }
-        mUserIsLookingAtFSPrevious = mUserIsLookingAtFS;
     }
 
     @Override
@@ -560,10 +425,10 @@ public class RotationAlgorithm implements SensorEventListener {
         @Override
         protected Void doInBackground(Void... params) {
             mUtils.wakeUp();
-           mUtils.lockOff();
+            mUtils.lockOff();
 
             int limit = 2000;
-            while (!mKeyguardManager.inKeyguardRestrictedInputMode() && (mScreenJustLocked || mPowerOn)) {
+            while (!mKeyguardManager.inKeyguardRestrictedInputMode() && mPowerOn) {
                 try {
                     mUtils.lockOff();
                     Thread.sleep(50);
@@ -575,7 +440,6 @@ public class RotationAlgorithm implements SensorEventListener {
                 }
             }
             mUtils.lockOff();
-            mScreenJustLocked = false;
             return null;
         }
 

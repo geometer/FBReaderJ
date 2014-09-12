@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
 import java.util.HashMap;
 
@@ -61,6 +62,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 		BaseActivity.refreshYotaScreen();
 
 		if (toBack) {
+			ZLAndroidPaintContext.AntiAliasOption.setValue(false);
 			Reader.getTextView().clearSelection();
 			BaseActivity.hideSelectionPanel();
 			if (BaseActivity.barsAreShown()) {
@@ -74,6 +76,7 @@ class YotaSwitchScreenAction extends FBAndroidAction {
 			RotationAlgorithm.getInstance(BaseActivity.getApplicationContext()).issueStandardToastAndVibration();
 
 		} else {
+			ZLAndroidPaintContext.AntiAliasOption.setValue(true);
 			Reader.setFrontScreenActionMap();
 			FBReaderApp.Instance().setWindow(BaseActivity);
 			FBReaderApp.Instance().initWindow();

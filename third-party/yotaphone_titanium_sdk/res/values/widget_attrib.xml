@@ -7,7 +7,27 @@
             <flag name="medium_half" value="4" />
             <flag name="small" value="8" />
             <flag name="tiny" value="16" />
+            <flag name="extra_large" value="32" />
         </attr>
         <attr name="icon_frontscreen" format="reference" />
+        <attr name="category">
+            <flag name="Communication" value="1" />
+            <flag name="Social" value="2" />
+            <flag name="Productivity" value="4" />
+            <flag name="Entertainment" value="8" />
+            <flag name="Tools" value="16" />
+            <flag name="Children" value="32" />
+            <flag name="Lifestyle" value="64" />
+            <flag name="HealthAndFitness" value="128" />
+            <flag name="Business" value="256" />
+            <flag name="BooksAndMagazines" value="512" />
+            <flag name="News" value="1024" />
+            <flag name="Weather" value="2048" />
+            <flag name="Travel" value="4096" />
+            <flag name="Education" value="8192" />
+            <flag name="Personalisation" value="16384" />
+            <flag name="Games" value="32768" />
+        </attr>
+
     </declare-styleable>
 </resources>

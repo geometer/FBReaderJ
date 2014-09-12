@@ -44,6 +44,7 @@ public class YotaSelectionBSPopup extends YotaSelectionPopup {
             }
             view.setTag(codes[i]);
             view.setOnClickListener(this);
+	        view.getPaint().setAntiAlias(false);
         }
     }
 

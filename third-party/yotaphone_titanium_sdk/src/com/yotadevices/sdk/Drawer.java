@@ -95,14 +95,14 @@ public abstract class Drawer {
         /**
          * @hide
          */
-        DITHER_DEFAULT, DITHER_NONE, DITHER_ATKINSON, DITHER_ATKINSON_BINARY, DITHER_FLOYD_STEINBERG, DITHER_FLOYD_STEINBERG_BINARY;
+        DITHER_DEFAULT, DITHER_NONE, DITHER_ATKINSON, DITHER_ATKINSON_BINARY, DITHER_FLOYD_STEINBERG, DITHER_FLOYD_STEINBERG_BINARY, BLACK_AND_WHITE_ONLY;
     }
 
     public abstract void addViewToBS(View v, ViewGroup.LayoutParams lp);
 
     public abstract void removeViewFromBS(View v);
 
-    public abstract void addBSParentView();
+    public abstract void addBSParentView(Waveform mInitialWaveform, Dithering mInitialDithering);
 
     public abstract void removeBSParentView();
 

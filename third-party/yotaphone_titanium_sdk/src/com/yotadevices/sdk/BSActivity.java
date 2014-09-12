@@ -4,6 +4,7 @@ import com.yotadevices.sdk.Constants.SystemBSFlags;
 import com.yotadevices.sdk.Constants.VolumeButtonsEvent;
 import com.yotadevices.sdk.exception.SuperNotCalledException;
 import com.yotadevices.sdk.helper.HelperConstant;
+import com.yotadevices.sdk.utils.EinkUtils;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -54,6 +55,8 @@ public class BSActivity extends Service {
 
     private Handler mIncomingHandler;
     private final Handler h = new Handler(); // for UI thread actions
+    private Drawer.Waveform mInitialWaveform = Drawer.Waveform.WAVEFORM_GC_FULL;
+    private Drawer.Dithering mInitialDithering = Drawer.Dithering.BLACK_AND_WHITE_ONLY;
 
     /**
      * Target we publish for clients to send messages to IncomingHandler.
@@ -349,7 +352,7 @@ public class BSActivity extends Service {
      */
     protected void onBSResume() {
         checkBSActivityRunning();
-        mDrawer.addBSParentView();// show user UI on back screen
+        mDrawer.addBSParentView(mInitialWaveform, mInitialDithering);// show user UI on back screen
         isResumed = true;
         mCalled = true;
     }
@@ -430,6 +433,14 @@ public class BSActivity extends Service {
      */
     public BSDrawer getBSDrawer() {
         return mDrawer;
+    }
+
+    public void setInitialWaveform(Drawer.Waveform initialWaveform) {
+        mInitialWaveform = initialWaveform;
+    }
+
+    public void setInitialDithering(Drawer.Dithering initialDithering) {
+        mInitialDithering = initialDithering;
     }
 
     /**
@@ -646,6 +657,10 @@ public class BSActivity extends Service {
     }
 
     private void sendToFramework(int what, Bundle bundle) {
+        if (mService == null) {
+            return;
+        }
+
         try {
             Message msg = Message.obtain(null, what);
 
@@ -685,7 +700,7 @@ public class BSActivity extends Service {
             msg.setData(bundle);
             mService.send(msg);
         } catch (Exception e) {
-            Log.e(TAG, "Error while send msg", e);
+            Log.d(TAG, "Error while send msg", e);
             if (!isFinishing) {
                 performFnish(true);
             }

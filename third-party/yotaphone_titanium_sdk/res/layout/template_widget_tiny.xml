@@ -36,7 +36,6 @@
         android:singleLine="true"
         android:text="0 books"
         android:textColor="@android:color/white"
-        android:textSize="12dp"
-        android:textStyle="normal" />
+        android:textSize="12dp" />
 
 </RelativeLayout>
