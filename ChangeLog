@@ -3,12 +3,15 @@
 * (planned) Android L support
 * (planned) Automatic files download (from the book network)
 * (planned) Sync: single book upload
+* (planned) Editable notes (by Tamotsu Takahashi)
 
-===== 2.1 (Sep ??, 2014) =====
+===== 2.1.1 (Sep ??, 2014) =====
+* (planned) Fixed authors list/tags list editing
+
+===== 2.1 (Sep 11, 2014) =====
 * New engine for mobipocket (a.k.a. Kindle) files: added support for huffdic compression and CSS
 * Better background settings
 * DjVu plugin support
-* (planned) Fixed authors list/tags list editing
 * Do not start SyncService if synchronization is disabled
 * Sync: 'synchronize positions only' option
 * Tips are back but disabled by default
