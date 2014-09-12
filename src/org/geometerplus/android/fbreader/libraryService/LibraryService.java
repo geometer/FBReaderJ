@@ -32,12 +32,16 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
+
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
+
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 
 public class LibraryService extends Service {
@@ -47,13 +51,13 @@ public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
-	private final LruCache<String, Bitmap> myCoversCache  = new LruCache<String, Bitmap>(getCacheSize()) {
+	private final LruCache<String,Bitmap> myCoversCache  = new LruCache<String,Bitmap>(getCacheSize()) {
 		@Override
 		protected int sizeOf(String key, Bitmap bitmap) {
 			return bitmap.getByteCount() / 1024;
 		}
 	};
-	
+
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private static final class Observer extends FileObserver {
@@ -390,7 +394,7 @@ public class LibraryService extends Service {
 	}
 
 	private int getCacheSize() {
-		final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+		final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
 		return maxMemory / 8;
 	}
 
