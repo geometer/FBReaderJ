@@ -26,23 +26,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.FileObserver;
-import android.util.LruCache;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
-
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
-
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
+import org.geometerplus.android.fbreader.util.FBLryCache;
 
 public class LibraryService extends Service {
 	private static SQLiteBooksDatabase ourDatabase;
@@ -50,13 +46,8 @@ public class LibraryService extends Service {
 
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
-
-	private final LruCache<String,Bitmap> myCoversCache  = new LruCache<String,Bitmap>(getCacheSize()) {
-		@Override
-		protected int sizeOf(String key, Bitmap bitmap) {
-			return bitmap.getByteCount() / 1024;
-		}
-	};
+	
+	private final FBLryCache myCoversCache = new FBLryCache();
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
@@ -295,8 +286,7 @@ public class LibraryService extends Service {
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
-				// null is not an appropriate value for LruCache
-				myCoversCache.put(book, Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8));
+				myCoversCache.put(book, null);
 				delayed[0] = false;
 				return null;
 			}
@@ -311,8 +301,7 @@ public class LibraryService extends Service {
 						if (data != null) {
 							myCoversCache.put(book, data.getBitmap(maxWidth, maxHeight));
 						} else {
-							// null is not an appropriate value for LruCache
-							myCoversCache.put(book, Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8));
+							myCoversCache.put(book, null);
 						}
 						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
@@ -391,11 +380,6 @@ public class LibraryService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		onStartCommand(intent, 0, startId);
-	}
-
-	private int getCacheSize() {
-		final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
-		return maxMemory / 8;
 	}
 
 	@Override
