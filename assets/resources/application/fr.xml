@@ -29,7 +29,7 @@
 		<node name="found" value="Trouvé(s)">
 			<node name="summary" value="Résultats de la recherche : %s"/>
 		</node>
-        <node name="sync" value="Synchronisation">
+		<node name="sync" value="Synchronisation">
 			<node name="summary" value="Livres par état de synchronisation"/>
 			<node name="sync-success" value="Synchronisé">
 				<node name="summary" value="Livres envoyés au serveur"/>
@@ -64,7 +64,7 @@
 		<node name="deleteBook" value="Supprimer ce livre"/>
 		<node name="addToFavorites" value="Ajouter aux favoris"/>
 		<node name="removeFromFavorites" value="Supprimer des favoris"/>
-        <node name="removeFromRecents" value="Supprimer de la liste des livres récents"/>
+		<node name="removeFromRecents" value="Supprimer de la liste des livres récents"/>
 		<node name="markAsRead" value="Marquer comme lu"/>
 		<node name="markAsUnread" value="Marquer comme non lu"/>
 		<node name="deleteAll" value="Delete all"/>
@@ -591,12 +591,12 @@
 			</node>
 		</node>
 		<node name="css" value="CSS">
-            <node name="summary" value="Appliquer/ignorer les styles définis dans le CSS"/>
-            <node name="fontFamily" value="Famille de police">
+			<node name="summary" value="Appliquer/ignorer les styles définis dans le CSS"/>
+			<node name="fontFamily" value="Famille de police">
 				<node name="summaryOn" value="Utiliser famille de police définie dans le CSS"/>
 				<node name="summaryOff" value="Ignorer famille de police définie dans le CSS"/>
 			</node>
-            <node name="fontSize" value="Taille de la police">
+			<node name="fontSize" value="Taille de la police">
 				<node name="summaryOn" value="Appliquer la taille de police définie dans le CSS"/>
 				<node name="summaryOff" value="Ignorer la taille de police définie dans le CSS"/>
 			</node>
