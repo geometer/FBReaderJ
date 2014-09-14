@@ -1055,8 +1055,8 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="PDF 形式の本を読む"/>
 		</node>
-		<node name="djvu" value="DjVu" toBeTranslated="true">
-			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="DjVu 形式の本を読む"/>
 		</node>
 	</node>
 	<node name="drm">
