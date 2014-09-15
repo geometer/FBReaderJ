@@ -46,7 +46,7 @@ public class LibraryService extends Service {
 
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
-	
+
 	private final FBLryCache myCoversCache = new FBLryCache();
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
