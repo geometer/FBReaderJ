@@ -35,6 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yotadevices.yotaphone2.fbreader.FBReaderYotaService;
+import com.yotadevices.yotaphone2.fbreader.YotaSettingsPopup;
 
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
@@ -345,7 +346,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myFBReaderApp.addAction(ActionCode.SELECTION_TRANSLATE, new YotaSelectionTranslateAction(this, myFBReaderApp, false));
 			myFBReaderApp.addAction(ActionCode.SELECTION_DEFINE, new YotaSelectionDefineAction(this, myFBReaderApp, false));
 
-			myFBReaderApp.addAction(ActionCode.YOTA_FONT_SETTINGS, new ShowPreferencesAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.YOTA_FONT_SETTINGS, new ShowYotaSettingsAction(this, myFBReaderApp));
 			myFBReaderApp.addAction(ActionCode.YOTA_SEARCH_ACTION, new ShowTOCAction(this, myFBReaderApp));
 			myFBReaderApp.addAction(ActionCode.YOTA_ADD_BOOKMARK, new ShowBookmarksAction(this, myFBReaderApp));
 		}
@@ -854,7 +855,12 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 			}
 		}
-		menuItem.setOnMenuItemClickListener(myMenuListener);
+		if (DeviceType.Instance().isYotaPhone()) {
+			menuItem.setOnMenuItemClickListener(myYotaMenuListener);
+		}
+		else {
+			menuItem.setOnMenuItemClickListener(myMenuListener);
+		}
 		myMenuItemMap.put(menuItem, actionId);
 	}
 
@@ -962,7 +968,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		return myNavigationPopup != null;
 	}
 
-	void hideBars() {
+	public void hideBars() {
 		if (myNavigationPopup != null) {
 			myNavigationPopup.stopNavigation();
 			myNavigationPopup = null;
@@ -1180,6 +1186,14 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				return true;
 			}
 		};
+
+	private final MenuItem.OnMenuItemClickListener myYotaMenuListener =
+			new MenuItem.OnMenuItemClickListener() {
+				public boolean onMenuItemClick(MenuItem item) {
+					myFBReaderApp.runAction(myMenuItemMap.get(item), item.getItemId());
+					return true;
+				}
+			};
 
 	@Override
 	public void refresh() {

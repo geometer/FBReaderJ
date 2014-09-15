@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.fbreader.fbreader.BookmarkHighlighting;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
@@ -590,9 +591,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (selectedElementRegion != null && myHighlightSelectedRegion) {
 			selectedElementRegion.draw(context);
 		}
-        //add checking for yotaphone
-		drawLeftSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
-		drawRightSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Right));
+        if (DeviceType.Instance().isYotaPhone()) {
+	        drawLeftSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
+	        drawRightSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Right));
+        } else {
+	        drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Left));
+	        drawSelectionCursor(context, getSelectionCursorPoint(page, ZLTextSelectionCursor.Right));
+        }
 	}
 
 	private ZLTextPage getPage(PageIndex pageIndex) {

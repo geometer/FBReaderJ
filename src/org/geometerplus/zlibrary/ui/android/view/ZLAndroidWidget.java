@@ -372,7 +372,6 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		if (myFooterBitmap == null) {
 			myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
-			//myFooterBitmap.setDensity(240);
 		}
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
 			new Canvas(myFooterBitmap),

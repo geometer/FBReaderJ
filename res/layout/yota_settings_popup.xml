@@ -190,7 +190,7 @@
                 android:fontFamily="serif"
                 android:button="@android:color/transparent"/>
             <Space
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"/>
             <RadioButton
                 android:id="@+id/theme_sepia"
@@ -205,7 +205,7 @@
                 android:fontFamily="serif"
                 android:button="@android:color/transparent"/>
             <Space
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"/>
             <RadioButton
                 android:id="@+id/theme_black"

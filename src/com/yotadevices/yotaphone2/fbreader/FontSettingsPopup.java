@@ -144,7 +144,7 @@ public class FontSettingsPopup {
 
         final ZLStringOption option =
                 mReader.ViewOptions.getTextStyleCollection().getBaseStyle().FontFamilyOption;
-        if (option.getValue().contains("Serif")) {
+        if (option.getValue().toLowerCase().contains("serif")) {
             mSerifFont.second.setVisibility(View.VISIBLE);
         } else {
             mSansFont.second.setVisibility(View.VISIBLE);
@@ -221,19 +221,14 @@ public class FontSettingsPopup {
                     mReader.ViewOptions.getTextStyleCollection().getBaseStyle().FontFamilyOption;
             if (v.getId() == R.id.font_serif) {
                 option.setValue("Droid Serif");
-                mReader.clearTextCaches();
-                mReader.getViewWidget().repaint();
-                //vibrate();
-                mListener.fontChanged();
-
             }
             else if (v.getId() == R.id.font_sans) {
                 option.setValue("yota-sans");
-                mReader.clearTextCaches();
-                mReader.getViewWidget().repaint();
-                //vibrate();
-                mListener.fontChanged();
             }
+	        mReader.clearTextCaches();
+	        mReader.getViewWidget().repaint();
+	        mListener.fontChanged();
+
         }
     };
 
