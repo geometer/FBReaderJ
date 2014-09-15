@@ -20,6 +20,8 @@
         android:id="@+id/chapter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
         android:gravity="center"
         android:textSize="21dp"
         android:textColor="@android:color/white"
