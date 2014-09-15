@@ -22,56 +22,60 @@ package org.geometerplus.android.fbreader.util;
 import java.util.Map;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.util.LruCache;
 
-public class FBLryCache {
-	private boolean myIsOldVersion = Integer.valueOf(android.os.Build.VERSION.SDK_INT) < 12;
-	private android.support.v4.util.LruCache<String,Bitmap> myOldLryCache;
-	private LruCache<String,Bitmap> myNewLryCache;
-	
-	public FBLryCache() {
+public class BitmapCache {
+	private final boolean myIsOldVersion = Build.VERSION.SDK_INT < 12;
+	private android.support.v4.util.LruCache<String,Bitmap> myOldLruCache;
+	private LruCache<String,Bitmap> myNewLruCache;
+
+	public BitmapCache() {
 		if (myIsOldVersion) {
-			myOldLryCache = new android.support.v4.util.LruCache<String,Bitmap>(getCacheSize()) {
+			myOldLruCache = new android.support.v4.util.LruCache<String,Bitmap>(getCacheSize()) {
 				@Override
 				protected int sizeOf(String key, Bitmap bitmap) {
-					return (bitmap.getRowBytes() * bitmap.getHeight());
+					return bitmap.getRowBytes() * bitmap.getHeight();
 				}
 			};
 		} else {
-			myNewLryCache = new LruCache<String,Bitmap>(getCacheSize()) {
+			myNewLruCache = new LruCache<String,Bitmap>(getCacheSize()) {
 				@Override
 				protected int sizeOf(String key, Bitmap bitmap) {
-					return bitmap.getByteCount();
+					if (Build.VERSION.SDK_INT >= 19) {
+						return bitmap.getAllocationByteCount();
+					} else {
+						return bitmap.getByteCount();
+					}
 				}
 			};
 		}
 	}
 
 	private int getCacheSize() {
-		final int maxMemory = (int)(Runtime.getRuntime().maxMemory());
-		return maxMemory / 8;
+		return (int)(Runtime.getRuntime().maxMemory() / 8);
 	}
 
-	public Map<String, Bitmap> snapshot() {
+	public Map<String,Bitmap> snapshot() {
 		if (myIsOldVersion) {
-			return myOldLryCache.snapshot();
+			return myOldLruCache.snapshot();
 		}
-		return myNewLryCache.snapshot();
+		return myNewLruCache.snapshot();
 	}
 
 	public Bitmap get(String book) {
 		if (myIsOldVersion) {
-			return myOldLryCache.get(book);
+			return myOldLruCache.get(book);
 		}
-		return myNewLryCache.get(book);
+		return myNewLruCache.get(book);
 	}
 
 	public void remove(String book) {
 		if (myIsOldVersion) {
-			myOldLryCache.remove(book);
+			myOldLruCache.remove(book);
 			return;
 		}
-		myNewLryCache.remove(book);
+		myNewLruCache.remove(book);
 	}
 
 	public void put(String book, Bitmap bitmap) {
@@ -80,9 +84,9 @@ public class FBLryCache {
 			bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8);
 		}
 		if (myIsOldVersion) {
-			myOldLryCache.put(book, bitmap);
+			myOldLruCache.put(book, bitmap);
 			return;
 		}
-		myNewLryCache.put(book, bitmap);
+		myNewLruCache.put(book, bitmap);
 	}
 }
