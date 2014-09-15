@@ -18,8 +18,11 @@ public class YotaNavigationPopup extends NavigationPopup {
 	private TextView mPage;
 	private TextView mPagesLeft;
 	private TextView mBackToPage;
-
+	private TOCPopup mTOCPopup;
+	private RelativeLayout mRootView;
 	private int mStartPage;
+
+	private SeekBar mSlider;
 
 	YotaNavigationPopup(FBReaderApp fbReader) {
 		super(fbReader);
@@ -54,9 +57,10 @@ public class YotaNavigationPopup extends NavigationPopup {
 
 		myWindow = new PopupWindow(activity, root, PopupWindow.Location.BottomFlat);
 		myWindow.setBackgroundColor(Color.WHITE);
-
+		mTOCPopup = new TOCPopup(activity);
+		mRootView = root;
 		final View layout = activity.getLayoutInflater().inflate(R.layout.yota_navigate, myWindow, false);
-		final SeekBar slider = (SeekBar)layout.findViewById(R.id.navigation_slider);
+		mSlider = (SeekBar)layout.findViewById(R.id.navigation_slider);
 
 		final TextView page = (TextView)layout.findViewById(R.id.page);
 		final TextView pages_left = (TextView)layout.findViewById(R.id.pages_left);
@@ -77,7 +81,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 		final String pages_left_resource = myWindow.getActivity().getString(R.string.pages_left);
 		final String of = myWindow.getActivity().getString(R.string.of);
 
-		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+		mSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
 				final ZLTextView view = myFBReader.getTextView();
 				if (page == 1) {
@@ -93,6 +97,7 @@ public class YotaNavigationPopup extends NavigationPopup {
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
+				hideChpaterPopup();
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -102,6 +107,13 @@ public class YotaNavigationPopup extends NavigationPopup {
 					gotoPage(curpage);
 					page.setText(makeProgressText(curpage, pagesNumber, of));
 					pages_left.setText(pagesNumber - curpage + " " + pages_left_resource);
+
+					final TOCTree tocElement = myFBReader.getCurrentTOCElement();
+					if (tocElement != null) {
+						final String chapter = tocElement.getText();
+						final String page = String.format("%d", curpage);
+						showChapterPopup(chapter, page);
+					}
 				}
 			}
 		});
@@ -126,6 +138,14 @@ public class YotaNavigationPopup extends NavigationPopup {
 			page.setText(makeProgressText(pagePosition.Current, pagePosition.Total, myWindow.getActivity().getString(R.string.of)));
 			pagesLeft.setText(pagePosition.Total - pagePosition.Current + " " + myWindow.getActivity().getString(R.string.pages_left));
 		}
+	}
+
+	private void showChapterPopup(String chapter, String page) {
+		mTOCPopup.show(mRootView, chapter, page);
+	}
+
+	private void hideChpaterPopup() {
+		mTOCPopup.hide();
 	}
 
 	protected String makeProgressText(int page, int pagesNumber, String of) {

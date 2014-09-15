@@ -1,6 +1,5 @@
 package com.yotadevices.yotaphone2.fbreader;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.WindowManager;
@@ -107,11 +106,11 @@ public class YotaSettingsPopup {
 		}
 	};
 
-	public YotaSettingsPopup(int layoutId, FBReader ctx, View root) {
+	public YotaSettingsPopup(FBReader ctx, View root) {
 		mFBReader = ctx;
 		mRootView = root;
 
-		mPopupView = View.inflate(ctx, layoutId, null);
+		mPopupView = View.inflate(ctx, R.layout.yota_settings_popup, null);
 
 		initRadioButtons(mPopupView, FONT_RADIO_BUTTONS_IDS, mOnFontSizeSelectListener, mFontSizeGroup);
 		initRadioButtons(mPopupView, FONT_TYPE_RADIO_BUTTONS_IDS, mOnFontTypeSelectListener, mFontTypeGroup);

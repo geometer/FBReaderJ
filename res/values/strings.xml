@@ -32,4 +32,5 @@
 	<string name="permission_config_label">FBReader config interface</string>
 	<string name="permission_sync_description">The appication can start FBReader synchronisation process</string>
 	<string name="permission_sync_label">FBReader sync interface</string>
+    <string name="page">page</string>
 </resources>

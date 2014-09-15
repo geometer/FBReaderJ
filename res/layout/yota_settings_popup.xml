@@ -188,6 +188,7 @@
                 android:textColor="@drawable/red_text_radiobutton"
                 android:textSize="22dp"
                 android:fontFamily="serif"
+                android:textStyle="bold"
                 android:button="@android:color/transparent"/>
             <Space
                 android:layout_width="40dp"
@@ -203,6 +204,7 @@
                 android:textColor="@drawable/red_text_radiobutton"
                 android:textSize="22dp"
                 android:fontFamily="serif"
+                android:textStyle="bold"
                 android:button="@android:color/transparent"/>
             <Space
                 android:layout_width="40dp"
@@ -218,6 +220,7 @@
                 android:textColor="@drawable/red_text_radiobutton"
                 android:textSize="22dp"
                 android:fontFamily="serif"
+                android:textStyle="bold"
                 android:button="@android:color/transparent"/>
         </LinearLayout>
     </LinearLayout>

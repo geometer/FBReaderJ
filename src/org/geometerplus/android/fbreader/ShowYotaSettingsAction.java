@@ -5,7 +5,6 @@ import android.view.View;
 import com.yotadevices.yotaphone2.fbreader.YotaSettingsPopup;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.zlibrary.ui.android.R;
 
 public class ShowYotaSettingsAction extends FBAndroidAction {
 	private YotaSettingsPopup myYotaSettings = null;
@@ -20,7 +19,7 @@ public class ShowYotaSettingsAction extends FBAndroidAction {
 		View button = BaseActivity.findViewById(viewId);
 
 		if (myYotaSettings == null) {
-			myYotaSettings = new YotaSettingsPopup(R.layout.yota_settings_popup, BaseActivity, button);
+			myYotaSettings = new YotaSettingsPopup(BaseActivity, button);
 		}
 		if (!myYotaSettings.isShowing()) {
 			myYotaSettings.show(Reader);
