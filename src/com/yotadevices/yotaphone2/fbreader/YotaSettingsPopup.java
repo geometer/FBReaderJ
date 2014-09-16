@@ -135,8 +135,8 @@ public class YotaSettingsPopup {
 		}
 		else {
 			//this helps closing popup on the backscreen if user clicked outside popup
-			mPopup.setFocusable(true);
 		}
+		mPopup.setFocusable(true);
 
 	}
 
