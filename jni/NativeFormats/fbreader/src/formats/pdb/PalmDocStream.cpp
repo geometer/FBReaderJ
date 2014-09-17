@@ -82,7 +82,10 @@ bool PalmDocStream::processZeroRecord() {
 	myMaxRecordIndex = std::min(myTextRecordNumber, (unsigned short)(endSectionIndex - 1));
 	//TODO Insert in this point error message about uncompatible records and numRecords from Header
 
-	myMaxRecordSize = 2 * PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 12
+	myMaxRecordSize = PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 12
+	if (myCompressionVersion == 17480) {
+		myMaxRecordSize *= 2;
+	}
 	if (myMaxRecordSize == 0) {
 		myErrorCode = ERROR_UNKNOWN;
 		return false;
