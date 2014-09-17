@@ -17,7 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <cstdlib>
 #include <algorithm>
 
 #include <ZLFile.h>
@@ -152,7 +151,7 @@ void MobipocketHtmlBookReader::TOCReader::reset() {
 }
 
 bool MobipocketHtmlBookReader::TOCReader::rangeContainsPosition(size_t position) {
-	return (myStartOffset <= position) && (myEndOffset > position);
+	return myStartOffset <= position && myEndOffset > position;
 }
 
 void MobipocketHtmlBookReader::TOCReader::startReadEntry(size_t position) {
@@ -209,7 +208,7 @@ void MobipocketHtmlHrefTagAction::run(const HtmlReader::HtmlTag &tag) {
 		const std::string *filepos = tag.find("filepos");
 		if (filepos != 0 && !filepos->empty()) {
 			std::string label = "&";
-			int intValue = atoi(filepos->c_str());
+			const int intValue = ZLStringUtil::parseDecimal(*filepos, -1);
 			if (intValue > 0) {
 				if (reader.myTocReader.rangeContainsPosition(tag.Offset)) {
 					reader.myTocReader.startReadEntry(intValue);
@@ -242,6 +241,10 @@ MobipocketHtmlReferenceTagAction::MobipocketHtmlReferenceTagAction(HtmlBookReade
 }
 
 void MobipocketHtmlReferenceTagAction::run(const HtmlReader::HtmlTag &tag) {
+	if (!tag.Start) {
+		return;
+	}
+
 	MobipocketHtmlBookReader &reader = (MobipocketHtmlBookReader&)myReader;
 	if (reader.myInsideGuide) {
 		std::string title;
@@ -254,12 +257,12 @@ void MobipocketHtmlReferenceTagAction::run(const HtmlReader::HtmlTag &tag) {
 				title = value;
 			} else if (name == "filepos") {
 				filepos = value;
-			} else if ((name == "type") && (ZLUnicodeUtil::toLower(value) == "toc")) {
+			} else if (name == "type" && ZLUnicodeUtil::toLower(value) == "toc") {
 				isTocReference = true;
 			}
 		}
 		if (!title.empty() && !filepos.empty()) {
-			int position = atoi(filepos.c_str());
+			const int position = ZLStringUtil::parseDecimal(filepos, -1);
 			if (position > 0) {
 				reader.myTocReader.addReference(position, title);
 				if (isTocReference) {
@@ -296,11 +299,13 @@ void MobipocketHtmlBookReader::startDocumentHandler() {
 }
 
 bool MobipocketHtmlBookReader::tagHandler(const HtmlTag &tag) {
-	size_t paragraphNumber = myBookReader.model().bookTextModel()->paragraphsNumber();
-	if (myBookReader.paragraphIsOpen()) {
-		--paragraphNumber;
+	if (tag.Start) {
+		size_t paragraphNumber = myBookReader.model().bookTextModel()->paragraphsNumber();
+		if (myBookReader.paragraphIsOpen()) {
+			--paragraphNumber;
+		}
+		myPositionToParagraphMap.push_back(std::make_pair(tag.Offset, paragraphNumber));
 	}
-	myPositionToParagraphMap.push_back(std::make_pair(tag.Offset, paragraphNumber));
 	return HtmlBookReader::tagHandler(tag);
 }
 
