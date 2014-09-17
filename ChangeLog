@@ -10,6 +10,7 @@
 
 ===== 2.1.2 (Sep 17, 2014) =====
 * Fixed ToC in mobi files
+* Minor fixes in mobi decompression
 * Updated French localisation (by Mathias Monnerville)
 
 ===== 2.1.1 (Sep 12, 2014) =====
