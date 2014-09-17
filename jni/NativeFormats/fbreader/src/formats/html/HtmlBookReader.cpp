@@ -338,6 +338,8 @@ shared_ptr<HtmlTagAction> HtmlBookReader::createAction(const std::string &tag) {
 		return new HtmlBreakTagAction(*this, HtmlBreakTagAction::BREAK_AT_START_AND_AT_END);
 	} else if (tag == "br") {
 		return new HtmlBreakTagAction(*this, HtmlBreakTagAction::BREAK_AT_START_AND_AT_END);
+	} else if (tag == "blockquote") {
+		return new HtmlBreakTagAction(*this, HtmlBreakTagAction::BREAK_AT_START_AND_AT_END);
 	} else if (tag == "img") {
 		return new HtmlImageTagAction(*this);
 	} else if (tag == "ul") {
@@ -373,8 +375,6 @@ shared_ptr<HtmlTagAction> HtmlBookReader::createAction(const std::string &tag) {
 	} else if (tag == "abbr") {
 		return 0;
 	} else if (tag == "acronym") {
-		return 0;
-	} else if (tag == "blockquote") {
 		return 0;
 	} else if (tag == "q") {
 		return 0;
