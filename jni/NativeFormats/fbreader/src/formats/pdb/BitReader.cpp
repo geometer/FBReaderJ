@@ -40,7 +40,7 @@ unsigned long long BitReader::peek(size_t n) {
 	size_t g = 0;
 	while (g < n) {
 		r = (r << 8) | myData[(myOffset + g) >> 3]; 
-		g = g + 8 - ((myOffset+g) & 7);
+		g = g + 8 - ((myOffset + g) & 7);
 	}
 	unsigned long long mask = 1;
 	mask = (mask << n) - 1;
