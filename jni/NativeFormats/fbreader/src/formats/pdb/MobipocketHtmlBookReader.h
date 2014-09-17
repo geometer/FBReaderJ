@@ -38,12 +38,21 @@ private:
 
 public:
 	class TOCReader {
+
+	public:
+		struct Entry {
+			std::string Text;
+			size_t Level;
+
+			Entry();
+			Entry(const std::string &text, size_t level);
+		};
 	
 	public:
 		TOCReader(MobipocketHtmlBookReader &reader);
 		void reset();
 
-		void addReference(size_t position, const std::string &text);
+		void addReference(size_t position, const std::string &text, size_t level);
 
 		void setStartOffset(size_t position);
 		void setEndOffset(size_t position);
@@ -51,15 +60,15 @@ public:
 		bool rangeContainsPosition(size_t position);
 
 		void startReadEntry(size_t position);
-		void endReadEntry();
+		void endReadEntry(size_t level);
 		void appendText(const char *text, size_t len);
 
-		const std::map<size_t,std::string> &entries() const;
+		const std::map<size_t,Entry> &entries() const;
 
 	private:	
 		MobipocketHtmlBookReader &myReader;
 
-		std::map<size_t,std::string> myEntries;
+		std::map<size_t,Entry> myEntries;
 
 		bool myIsActive;
 		size_t myStartOffset;
