@@ -52,6 +52,7 @@ public:
 	~HtmlBookReader();
 	void setFileName(const std::string fileName);
 	shared_ptr<StyleSheetParser> createCSSParser();
+	size_t listStackDepth() const;
 
 protected:
 	virtual shared_ptr<HtmlTagAction> createAction(const std::string &tag);

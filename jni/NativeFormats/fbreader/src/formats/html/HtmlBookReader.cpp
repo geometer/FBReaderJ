@@ -614,3 +614,7 @@ void HtmlBookReader::endDocumentHandler() {
 void HtmlBookReader::setFileName(const std::string fileName) {
 	myFileName = fileName;
 }
+
+size_t HtmlBookReader::listStackDepth() const  {
+	return myListNumStack.size();
+}
