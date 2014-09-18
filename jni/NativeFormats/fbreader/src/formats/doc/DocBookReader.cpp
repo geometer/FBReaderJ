@@ -153,14 +153,7 @@ void DocBookReader::handleSeparatorField() {
 	if (utf8String.empty()) {
 		return;
 	}
-	std::vector<std::string> result = ZLStringUtil::split(utf8String, SPACE_DELIMETER);
-	//TODO split function can returns empty string, maybe fix it
-	std::vector<std::string> split;
-	for (std::size_t i = 0; i < result.size(); ++i) {
-		if (!result.at(i).empty()) {
-			split.push_back(result.at(i));
-		}
-	}
+	std::vector<std::string> split = ZLStringUtil::split(utf8String, SPACE_DELIMETER, true);
 
 	if (!split.empty() && split.at(0) == SEQUENCE) {
 		myReadFieldState = READ_FIELD_TEXT;
