@@ -82,7 +82,10 @@ bool PalmDocStream::processZeroRecord() {
 	myMaxRecordIndex = std::min(myTextRecordNumber, (unsigned short)(endSectionIndex - 1));
 	//TODO Insert in this point error message about uncompatible records and numRecords from Header
 
-	myMaxRecordSize = 2 * PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 12
+	myMaxRecordSize = PdbUtil::readUnsignedShort(*myBase); 	// myBase offset: ^ + 12
+	if (myCompressionVersion == 17480) {
+		myMaxRecordSize *= 2;
+	}
 	if (myMaxRecordSize == 0) {
 		myErrorCode = ERROR_UNKNOWN;
 		return false;
@@ -116,21 +119,19 @@ bool PalmDocStream::processZeroRecord() {
 		unsigned long mobiHeaderLength;
 		unsigned long huffSectionIndex;
 		unsigned long huffSectionNumber;
-		unsigned short extraFlags;
+		unsigned long extraFlags = 0;
 		unsigned long initialOffset = header().Offsets[0];
 
 		myBase->seek(initialOffset + 20, true); 										// myBase offset: ^ + 20
 		mobiHeaderLength = PdbUtil::readUnsignedLongBE(*myBase); 		// myBase offset: ^ + 24
 
-		myBase->seek(0x70 - 24, false); 								// myBase offset: ^ + 102 (0x70)
-		huffSectionIndex = PdbUtil::readUnsignedLongBE(*myBase); 		// myBase offset: ^ + 106 (0x74)
-		huffSectionNumber = PdbUtil::readUnsignedLongBE(*myBase);		// myBase offset: ^ + 110 (0x78)
+		myBase->seek(initialOffset + 112, true); 								// myBase offset: ^ + 112
+		huffSectionIndex = PdbUtil::readUnsignedLongBE(*myBase); 		// myBase offset: ^ + 116
+		huffSectionNumber = PdbUtil::readUnsignedLongBE(*myBase);		// myBase offset: ^ + 120
 
-		if (mobiHeaderLength >= 244) {
-			myBase->seek(0xF2 - 0x78, false); 							// myBase offset: ^ + 242 (0xF2)
-			extraFlags = PdbUtil::readUnsignedShort(*myBase);			// myBase offset: ^ + 244 (0xF4)
-		} else {
-			extraFlags = 0;
+		if (16 + mobiHeaderLength >= 244) {
+			myBase->seek(initialOffset + 240, true); 							// myBase offset: ^ + 240
+			extraFlags = PdbUtil::readUnsignedLongBE(*myBase);			// myBase offset: ^ + 244
 		}
 		/*
 		std::cerr << "mobi header length: " <<  mobiHeaderLength << "\n";
