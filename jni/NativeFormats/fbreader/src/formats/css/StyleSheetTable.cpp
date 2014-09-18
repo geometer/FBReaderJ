@@ -50,7 +50,11 @@ void StyleSheetTable::addMap(const std::string &tag, const std::string &aClass, 
 }
 
 static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntry::SizeUnit &unit) {
-	if (ZLStringUtil::stringEndsWith(toParse, "%")) {
+	if (toParse == "0") {
+		unit = ZLTextStyleEntry::SIZE_UNIT_PIXEL;
+		size = 0;
+		return true;
+	} else if (ZLStringUtil::stringEndsWith(toParse, "%")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_PERCENT;
 		size = std::atoi(toParse.c_str());
 		return true;
