@@ -329,17 +329,25 @@ XHTMLTagListAction::XHTMLTagListAction(int startIndex) : myStartIndex(startIndex
 
 void XHTMLTagListAction::doAtStart(XHTMLReader &reader, const char**) {
 	reader.myListNumStack.push(myStartIndex);
+	beginParagraph(reader);
 }
 
 void XHTMLTagListAction::doAtEnd(XHTMLReader &reader) {
+	endParagraph(reader);
 	if (!reader.myListNumStack.empty()) {
 		reader.myListNumStack.pop();
 	}
 }
 
 void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
-	endParagraph(reader);
-	beginParagraph(reader);
+	bool restart = true;
+	if (reader.myTagDataStack.size() >= 2) {
+		restart = reader.myTagDataStack[reader.myTagDataStack.size() - 2]->ChildCount > 1;
+	}
+	if (restart) {
+		endParagraph(reader);
+		beginParagraph(reader);
+	}
 	if (!reader.myListNumStack.empty()) {
 		bookReader(reader).addFixedHSpace(3 * reader.myListNumStack.size());
 		int &index = reader.myListNumStack.top();
@@ -355,7 +363,6 @@ void XHTMLTagItemAction::doAtStart(XHTMLReader &reader, const char**) {
 }
 
 void XHTMLTagItemAction::doAtEnd(XHTMLReader &reader) {
-	endParagraph(reader);
 }
 
 bool XHTMLTagVideoAction::isEnabled(XHTMLReadingState state) {
@@ -673,7 +680,7 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 bool XHTMLReader::addTextStyleEntry(const std::string tag, const std::string aClass) {
 	shared_ptr<ZLTextStyleEntry> entry = myStyleSheetTable.control(tag, aClass);
 	if (!entry.isNull()) {
-		addTextStyleEntry(*entry);
+		addTextStyleEntry(*(entry->start()));
 		myTagDataStack.back()->StyleEntries.push_back(entry);
 		return true;
 	}
@@ -725,6 +732,9 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		return;
 	}
 
+	if (!myTagDataStack.empty()) {
+		myTagDataStack.back()->ChildCount += 1;
+	}
 	myTagDataStack.push_back(new TagData());
 
 	static const std::string HASH = "#";
@@ -783,17 +793,28 @@ void XHTMLReader::endElementHandler(const char *tag) {
 		return;
 	}
 
+	const TagData &tagData = *myTagDataStack.back();
+	const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = tagData.StyleEntries;
+	size_t entryCount = entries.size();
+	for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
+		shared_ptr<ZLTextStyleEntry> endEntry = (*jt)->end();
+		if (!endEntry.isNull()) {
+			addTextStyleEntry(*endEntry);
+			++entryCount;
+		}
+	}
+
 	XHTMLTagAction *action = getAction(sTag);
 	if (action != 0 && action->isEnabled(myReadState)) {
 		action->doAtEnd(*this);
 		myNewParagraphInProgress = false;
 	}
 
-	for (int i = myTagDataStack.back()->StyleEntries.size(); i > 0; --i) {
+	for (; entryCount > 0; --entryCount) {
 		myModelReader.addStyleCloseEntry();
 	}
 
-	if (myTagDataStack.back()->PageBreakAfter) {
+	if (tagData.PageBreakAfter) {
 		myModelReader.insertEndOfSectionParagraph();
 	}
 
@@ -811,7 +832,7 @@ void XHTMLReader::beginParagraph(bool restarted) {
 		const std::vector<shared_ptr<ZLTextStyleEntry> > &entries = (*it)->StyleEntries;
 		bool inheritedOnly = !restarted || it + 1 != myTagDataStack.end();
 		for (std::vector<shared_ptr<ZLTextStyleEntry> >::const_iterator jt = entries.begin(); jt != entries.end(); ++jt) {
-			shared_ptr<ZLTextStyleEntry> entry = inheritedOnly ? (*jt)->inherited() : *jt;
+			shared_ptr<ZLTextStyleEntry> entry = inheritedOnly ? (*jt)->inherited() : (*jt)->start();
 			addTextStyleEntry(*entry);
 		}
 	}
@@ -928,4 +949,7 @@ const std::string &XHTMLReader::fileAlias(const std::string &fileName) const {
 	myFileNumbers.insert(std::make_pair(correctedFileName, num));
 	it = myFileNumbers.find(correctedFileName);
 	return it->second;
+}
+
+XHTMLReader::TagData::TagData() : PageBreakAfter(false), ChildCount(0) {
 }
