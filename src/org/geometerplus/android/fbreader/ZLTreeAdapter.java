@@ -24,11 +24,12 @@ import java.util.HashSet;
 import android.view.*;
 import android.widget.*;
 
+import org.geometerplus.android.util.DeviceType;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
+public abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 	private final ListView myParent;
 	private ZLTree<?> myTree;
 	private ZLTree<?>[] myItems;
@@ -70,6 +71,9 @@ abstract class ZLTreeAdapter extends BaseAdapter implements AdapterView.OnItemCl
 	}
 
 	public final boolean isOpen(ZLTree<?> tree) {
+		if (DeviceType.Instance().isYotaPhone()) {
+			return true;
+		}
 		return myOpenItems.contains(tree);
 	}
 

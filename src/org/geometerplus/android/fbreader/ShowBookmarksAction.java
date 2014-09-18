@@ -22,6 +22,8 @@ package org.geometerplus.android.fbreader;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
+import com.yotadevices.yotaphone2.fbreader.YotaBookContentPopup;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
@@ -42,7 +44,8 @@ class ShowBookmarksAction extends FBAndroidAction {
 		final Intent externalIntent =
 			new Intent(FBReaderIntents.Action.EXTERNAL_BOOKMARKS);
 		final Intent internalIntent =
-			new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
+			//new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
+				new Intent(BaseActivity.getApplicationContext(), YotaBookContentPopup.class);
 		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
 			try {
 				startBookmarksActivity(externalIntent);

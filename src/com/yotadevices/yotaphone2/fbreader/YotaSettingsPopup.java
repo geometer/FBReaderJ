@@ -3,6 +3,7 @@ package com.yotadevices.yotaphone2.fbreader;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 
@@ -137,6 +138,12 @@ public class YotaSettingsPopup {
 			//this helps closing popup on the backscreen if user clicked outside popup
 		}
 		mPopup.setFocusable(true);
+		mPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+			@Override
+			public void onDismiss() {
+				mFBReader.hideBars();
+			}
+		});
 
 	}
 
@@ -237,7 +244,6 @@ public class YotaSettingsPopup {
 
 	public void hide() {
 		mPopup.dismiss();
-		mFBReader.hideBars();
 	}
 
 	public boolean isShowing() {

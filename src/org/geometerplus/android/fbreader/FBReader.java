@@ -347,7 +347,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			myFBReaderApp.addAction(ActionCode.SELECTION_DEFINE, new YotaSelectionDefineAction(this, myFBReaderApp, false));
 
 			myFBReaderApp.addAction(ActionCode.YOTA_FONT_SETTINGS, new ShowYotaSettingsAction(this, myFBReaderApp));
-			myFBReaderApp.addAction(ActionCode.YOTA_SEARCH_ACTION, new ShowTOCAction(this, myFBReaderApp));
+			myFBReaderApp.addAction(ActionCode.YOTA_SEARCH_ACTION, new ShowYotaBookContentsAction(this, myFBReaderApp));
 			myFBReaderApp.addAction(ActionCode.YOTA_ADD_BOOKMARK, new ShowBookmarksAction(this, myFBReaderApp));
 		}
 		else {
