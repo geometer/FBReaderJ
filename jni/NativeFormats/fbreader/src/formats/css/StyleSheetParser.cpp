@@ -235,7 +235,7 @@ StyleSheetSingleStyleParser::StyleSheetSingleStyleParser(const std::string &path
 shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseSingleEntry(const char *text) {
 	myReadState = WAITING_FOR_ATTRIBUTE;
 	parse(text, std::strlen(text), true);
-	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createControl(myMap);
+	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createOrUpdateControl(myMap);
 	reset();
 	return control;
 }
