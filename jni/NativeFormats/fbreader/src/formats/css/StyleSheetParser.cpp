@@ -223,7 +223,12 @@ void StyleSheetParser::processWord(const std::string &word) {
 		{
 			std::string stripped = word;
 			ZLStringUtil::stripWhiteSpaces(stripped);
-			myMap[myAttributeName] = stripped;
+			std::string &current = myMap[myAttributeName];
+			if (current.size() == 0) {
+				current = stripped;
+			} else {
+				current += ' ' + stripped;
+			}
 			break;
 		}
 	}
@@ -235,7 +240,7 @@ StyleSheetSingleStyleParser::StyleSheetSingleStyleParser(const std::string &path
 shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseSingleEntry(const char *text) {
 	myReadState = WAITING_FOR_ATTRIBUTE;
 	parse(text, std::strlen(text), true);
-	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createControl(myMap);
+	shared_ptr<ZLTextStyleEntry> control = StyleSheetTable::createOrUpdateControl(myMap);
 	reset();
 	return control;
 }
@@ -256,7 +261,7 @@ void StyleSheetMultiStyleParser::storeData(const std::string &selector, const St
 		return;
 	}
 
-	const std::vector<std::string> ids = ZLStringUtil::split(s, ",");
+	const std::vector<std::string> ids = ZLStringUtil::split(s, ",", true);
 	for (std::vector<std::string>::const_iterator it = ids.begin(); it != ids.end(); ++it) {
 		std::string id = *it;
 		ZLStringUtil::stripWhiteSpaces(id);
@@ -293,7 +298,7 @@ void StyleSheetMultiStyleParser::processAtRule(const std::string &name, const St
 		std::string path;
 		if (it != attributes.end()) {
 			// TODO: better split
-			const std::vector<std::string> ids = ZLStringUtil::split(it->second, " ");
+			const std::vector<std::string> ids = ZLStringUtil::split(it->second, " ", true);
 			for (std::vector<std::string>::const_iterator jt = ids.begin(); jt != ids.end(); ++jt) {
 				if (ZLStringUtil::stringStartsWith(*jt, "url(") &&
 						ZLStringUtil::stringEndsWith(*jt, ")")) {
