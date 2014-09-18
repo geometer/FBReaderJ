@@ -736,11 +736,9 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 	std::vector<std::string> classesList;
 	const char *aClasses = attributeValue(attributes, "class");
 	if (aClasses != 0) {
-		const std::vector<std::string> split = ZLStringUtil::split(aClasses, " ");
+		const std::vector<std::string> split = ZLStringUtil::split(aClasses, " ", true);
 		for (std::vector<std::string>::const_iterator it = split.begin(); it != split.end(); ++it) {
-			if (!it->empty()) {
-				classesList.push_back(*it);
-			}
+			classesList.push_back(*it);
 		}
 	}
 
