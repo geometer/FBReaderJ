@@ -31,7 +31,7 @@ bool StyleSheetTable::isEmpty() const {
 void StyleSheetTable::addMap(const std::string &tag, const std::string &aClass, const AttributeMap &map) {
 	if ((!tag.empty() || !aClass.empty()) && !map.empty()) {
 		const Key key(tag, aClass);
-		myControlMap[key] = createControl(map);
+		myControlMap[key] = createOrUpdateControl(map, myControlMap[key]);
 
 		const std::string &pbb = value(map, "page-break-before");
 		if (pbb == "always" || pbb == "left" || pbb == "right") {
@@ -50,7 +50,11 @@ void StyleSheetTable::addMap(const std::string &tag, const std::string &aClass, 
 }
 
 static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntry::SizeUnit &unit) {
-	if (ZLStringUtil::stringEndsWith(toParse, "%")) {
+	if (toParse == "0") {
+		unit = ZLTextStyleEntry::SIZE_UNIT_PIXEL;
+		size = 0;
+		return true;
+	} else if (ZLStringUtil::stringEndsWith(toParse, "%")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_PERCENT;
 		size = std::atoi(toParse.c_str());
 		return true;
@@ -143,8 +147,10 @@ const std::string &StyleSheetTable::value(const AttributeMap &map, const std::st
 	return emptyString;
 }
 
-shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &styles) {
-	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry(ZLTextStyleEntry::STYLE_CSS_ENTRY);
+shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const AttributeMap &styles, shared_ptr<ZLTextStyleEntry> entry) {
+	if (entry.isNull()) {
+		entry = new ZLTextStyleEntry(ZLTextStyleEntry::STYLE_CSS_ENTRY);
+	}
 
 	const std::string &alignment = value(styles, "text-align");
 	if (alignment == "justify") {
@@ -237,6 +243,37 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 		}
 	}
 
+	StyleSheetTable::AttributeMap::const_iterator it = styles.find("margin");
+	if (it != styles.end()) {
+		std::vector<std::string> split = ZLStringUtil::split(it->second, " ", true);
+		if (split.size() > 0) {
+			switch (split.size()) {
+				case 1:
+					split.push_back(split[0]);
+					// go through
+				case 2:
+					split.push_back(split[0]);
+					// go through
+				case 3:
+					split.push_back(split[1]);
+					break;
+			}
+		}
+		short size;
+		ZLTextStyleEntry::SizeUnit unit;
+		if (parseLength(split[0], size, unit)) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_SPACE_BEFORE, size, unit);
+		}
+		if (parseLength(split[1], size, unit)) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_RIGHT_INDENT, size, unit);
+		}
+		if (parseLength(split[2], size, unit)) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_SPACE_AFTER, size, unit);
+		}
+		if (parseLength(split[3], size, unit)) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_LEFT_INDENT, size, unit);
+		}
+	}
 	setLength(*entry, ZLTextStyleEntry::LENGTH_LEFT_INDENT, styles, "margin-left");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_RIGHT_INDENT, styles, "margin-right");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_FIRST_LINE_INDENT, styles, "text-indent");
