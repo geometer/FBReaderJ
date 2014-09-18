@@ -243,6 +243,37 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const Attrib
 		}
 	}
 
+	StyleSheetTable::AttributeMap::const_iterator it = styles.find("margin");
+	if (it != styles.end()) {
+		std::vector<std::string> split = ZLStringUtil::split(it->second, " ", true);
+		if (split.size() > 0) {
+			switch (split.size()) {
+				case 1:
+					split.push_back(split[0]);
+					// go through
+				case 2:
+					split.push_back(split[0]);
+					// go through
+				case 3:
+					split.push_back(split[1]);
+					break;
+			}
+		}
+		short size;
+		ZLTextStyleEntry::SizeUnit unit;
+		if (parseLength(split[0], size, unit)) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_SPACE_BEFORE, size, unit);
+		}
+		if (parseLength(split[1], size, unit)) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_RIGHT_INDENT, size, unit);
+		}
+		if (parseLength(split[2], size, unit)) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_SPACE_AFTER, size, unit);
+		}
+		if (parseLength(split[3], size, unit)) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_LEFT_INDENT, size, unit);
+		}
+	}
 	setLength(*entry, ZLTextStyleEntry::LENGTH_LEFT_INDENT, styles, "margin-left");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_RIGHT_INDENT, styles, "margin-right");
 	setLength(*entry, ZLTextStyleEntry::LENGTH_FIRST_LINE_INDENT, styles, "text-indent");
