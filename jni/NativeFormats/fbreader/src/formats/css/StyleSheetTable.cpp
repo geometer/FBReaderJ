@@ -31,7 +31,7 @@ bool StyleSheetTable::isEmpty() const {
 void StyleSheetTable::addMap(const std::string &tag, const std::string &aClass, const AttributeMap &map) {
 	if ((!tag.empty() || !aClass.empty()) && !map.empty()) {
 		const Key key(tag, aClass);
-		myControlMap[key] = createControl(map);
+		myControlMap[key] = createOrUpdateControl(map, myControlMap[key]);
 
 		const std::string &pbb = value(map, "page-break-before");
 		if (pbb == "always" || pbb == "left" || pbb == "right") {
@@ -143,8 +143,10 @@ const std::string &StyleSheetTable::value(const AttributeMap &map, const std::st
 	return emptyString;
 }
 
-shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &styles) {
-	shared_ptr<ZLTextStyleEntry> entry = new ZLTextStyleEntry(ZLTextStyleEntry::STYLE_CSS_ENTRY);
+shared_ptr<ZLTextStyleEntry> StyleSheetTable::createOrUpdateControl(const AttributeMap &styles, shared_ptr<ZLTextStyleEntry> entry) {
+	if (entry.isNull()) {
+		entry = new ZLTextStyleEntry(ZLTextStyleEntry::STYLE_CSS_ENTRY);
+	}
 
 	const std::string &alignment = value(styles, "text-align");
 	if (alignment == "justify") {
