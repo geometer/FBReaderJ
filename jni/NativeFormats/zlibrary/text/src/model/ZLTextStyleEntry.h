@@ -102,6 +102,8 @@ public:
 	const std::vector<std::string> &fontFamilies() const;
 	void setFontFamilies(const std::vector<std::string> &fontFamilies);
 
+	shared_ptr<ZLTextStyleEntry> start() const;
+	shared_ptr<ZLTextStyleEntry> end() const;
 	shared_ptr<ZLTextStyleEntry> inherited() const;
 
 private:
