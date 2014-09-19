@@ -172,8 +172,8 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 					} else {
 						if (*ptr == ';') {
 							specialString.append(start, ptr - start);
-							int number = specialSymbolNumber(state_special, specialString);
-							if ((128 <= number) && (number <= 159)) {
+							const int number = specialSymbolNumber(state_special, specialString);
+							if (128 <= number && number <= 159) {
 								char ch = number;
 								if (state == PS_SPECIAL) {
 									characterDataHandler(&ch, 1, true);
@@ -206,12 +206,12 @@ void HtmlReader::readDocument(ZLInputStream &stream) {
 					}
 					break;
 				case PS_TAGSTART:
-					state = (*ptr == '!') ? PS_COMMENT : PS_TAGNAME;
+					state = *ptr == '!' ? PS_COMMENT : PS_TAGNAME;
 					break;
 				case PS_COMMENT:
-					if ((endOfComment[0] == '\0') && (*ptr != '-')) {
+					if (endOfComment[0] == '\0' && *ptr != '-') {
 						state = PS_TAGNAME;
-					} else if ((endOfComment[0] == '-') && (endOfComment[1] == '-') && (*ptr == '>')) {
+					} else if (endOfComment[0] == '-' && endOfComment[1] == '-' && *ptr == '>') {
 						start = ptr + 1;
 						state = PS_TEXT;
 						endOfComment[0] = '\0';
