@@ -802,8 +802,11 @@
 			<node name="email" value="Contact">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Suivez nous sur twitter !">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader sur facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>

@@ -814,8 +814,11 @@
 			<node name="email" value="Отправьте нам письмо">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Присоединяйтесь к сообществу FBReader на Google+">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Читайте нас в твиттере">
-				<node name="url" value="http://twitter.com/fbreader_ru"/>
+				<node name="url" value="https://twitter.com/fbreader_ru"/>
 			</node>
 			<node name="facebook" value="Страница FBReader на facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>

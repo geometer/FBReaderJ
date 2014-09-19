@@ -811,8 +811,11 @@
 			<node name="email" value="Envie-nos um e-mail">
 				<node name="url" value="mailto:tech@panaceasupplies.com"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Siga-nos no twitter">
-				<node name="url" value="http://twitter.com/dennissheil"/>
+				<node name="url" value="https://twitter.com/dennissheil"/>
 			</node>
 			<node name="facebook" value="FBReader no facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
