@@ -809,6 +809,9 @@
 			<node name="email" value="Send os en e-mail">
 				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Følg os på Twitter">
 				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
