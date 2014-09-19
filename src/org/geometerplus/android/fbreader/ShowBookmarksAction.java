@@ -44,8 +44,7 @@ class ShowBookmarksAction extends FBAndroidAction {
 		final Intent externalIntent =
 			new Intent(FBReaderIntents.Action.EXTERNAL_BOOKMARKS);
 		final Intent internalIntent =
-			//new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
-				new Intent(BaseActivity.getApplicationContext(), YotaBookContentPopup.class);
+			new Intent(BaseActivity.getApplicationContext(), BookmarksActivity.class);
 		if (PackageUtil.canBeStarted(BaseActivity, externalIntent, true)) {
 			try {
 				startBookmarksActivity(externalIntent);

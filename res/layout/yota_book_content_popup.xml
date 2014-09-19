@@ -12,7 +12,7 @@
         android:layout_marginRight="20dp"
         android:orientation="horizontal">
         <RadioButton
-            android:id="@+id/content"
+            android:id="@+id/contents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,8 +44,8 @@
     </LinearLayout>
 
     <ListView
-        android:layout_below="@id/tab_bar"
         android:id="@+id/contents_list"
+        android:layout_below="@id/tab_bar"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
@@ -55,12 +55,13 @@
         android:layout_height="match_parent" />
     <ListView
         android:id="@+id/bookmarks_list"
+        android:layout_below="@id/tab_bar"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:divider="@null"
         android:dividerHeight="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"/>
 </RelativeLayout>

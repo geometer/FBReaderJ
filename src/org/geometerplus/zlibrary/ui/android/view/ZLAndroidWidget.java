@@ -521,9 +521,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			case MotionEvent.ACTION_MOVE:
 			{
 				int slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
-				if (DeviceType.Instance().isYotaPhone()) {
-					slop = slop * 2;
-				}
+//				if (DeviceType.Instance().isYotaPhone()) {
+//					slop = slop * 2;
+//				}
 				final boolean isAMove =
 					Math.abs(myPressedX - x) > slop || Math.abs(myPressedY - y) > slop;
 				if (isAMove) {

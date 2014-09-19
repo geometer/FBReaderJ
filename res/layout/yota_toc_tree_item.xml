@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:minHeight="?android:attr/listPreferredItemHeight"
+    >
+    <TextView
+        android:id="@+id/toc_tree_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|left"
+        android:layout_toLeftOf="@+id/page_number"
+        android:textColor="@android:color/black"
+        android:textSize="22dp"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:singleLine="true"
+    />
+    <TextView
+        android:id="@+id/page_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@id/toc_tree_item_text"
+        android:paddingLeft="40dp"
+        android:textSize="14dp"
+        android:textColor="@android:color/darker_gray"
+        android:fontFamily="PT Sans Yota"
+        android:textStyle="italic"
+        android:text="1"/>
+
+</RelativeLayout>

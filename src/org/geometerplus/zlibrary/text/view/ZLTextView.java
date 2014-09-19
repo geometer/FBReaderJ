@@ -714,7 +714,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return charsPerLine * linesPerPage;
 	}
 
-	private synchronized int computeTextPageNumber(int textSize) {
+	public synchronized int computeTextPageNumber(int textSize) {
 		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 1;
 		}
