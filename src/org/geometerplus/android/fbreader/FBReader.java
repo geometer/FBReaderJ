@@ -24,12 +24,12 @@ import java.io.StringWriter;
 import java.util.*;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.SearchManager;
+import android.app.*;
 import android.content.*;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.*;
+import android.support.v4.app.NotificationCompat;
 import android.view.*;
 import android.widget.RelativeLayout;
 
@@ -53,6 +53,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
+import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.api.*;
@@ -65,7 +66,7 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.*;
 
-public final class FBReader extends Activity implements ZLApplicationWindow {
+public final class FBReader extends Activity implements ZLApplicationWindow, FBReaderApp.Notifier {
 	static final int ACTION_BAR_COLOR = Color.DKGRAY;
 
 	public static final int REQUEST_PREFERENCES = 1;
@@ -156,7 +157,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 		}
 		Config.Instance().runOnConnect(new Runnable() {
 			public void run() {
-				myFBReaderApp.openBook(myBook, bookmark, action);
+				myFBReaderApp.openBook(myBook, bookmark, action, FBReader.this);
 				AndroidFontUtil.clearFontCache();
 			}
 		});
@@ -304,7 +305,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 				myOpenBookIntent = null;
 				getCollection().bindToService(this, new Runnable() {
 					public void run() {
-						myFBReaderApp.openBook(null, null, null);
+						myFBReaderApp.openBook(null, null, null, FBReader.this);
 					}
 				});
 			}
@@ -392,7 +393,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					if (b.equals(book)) {
 						b = myFBReaderApp.Collection.getRecentBook(1);
 					}
-					myFBReaderApp.openBook(b, null, null);
+					myFBReaderApp.openBook(b, null, null, FBReader.this);
 				}
 			});
 		} else {
@@ -554,22 +555,22 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 					openBook(intent, null, true);
 				}
 			});
-		} else if (myFBReaderApp.getCurrentServerBook() != null) {
+		} else if (myFBReaderApp.getCurrentServerBook(null) != null) {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					myFBReaderApp.useSyncInfo(true);
+					myFBReaderApp.useSyncInfo(true, FBReader.this);
 				}
 			});
 		} else if (myFBReaderApp.Model == null && myFBReaderApp.ExternalBook != null) {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					myFBReaderApp.openBook(myFBReaderApp.ExternalBook, null, null);
+					myFBReaderApp.openBook(myFBReaderApp.ExternalBook, null, null, FBReader.this);
 				}
 			});
 		} else {
 			getCollection().bindToService(this, new Runnable() {
 				public void run() {
-					myFBReaderApp.useSyncInfo(true);
+					myFBReaderApp.useSyncInfo(true, FBReader.this);
 				}
 			});
 		}
@@ -818,7 +819,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 			public void run() {
 				final Book recent = getCollection().getRecentBook(0);
 				if (recent != null && !recent.equals(book)) {
-					myFBReaderApp.openBook(recent, null, null);
+					myFBReaderApp.openBook(recent, null, null, null);
 				} else {
 					myFBReaderApp.openHelpBook();
 				}
@@ -1053,7 +1054,27 @@ public final class FBReader extends Activity implements ZLApplicationWindow {
 
 	private BroadcastReceiver mySyncUpdateReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
-			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis());
+			myFBReaderApp.useSyncInfo(myResumeTimestamp + 10 * 1000 > System.currentTimeMillis(), FBReader.this);
 		}
 	};
+
+	@Override
+	public void showMissingBookNotification(SyncData.ServerBookInfo info) {
+		final String errorMessage =
+			ZLResource.resource("errorMessage").getResource("bookIsMissing").getValue()
+				.replace("%s", info.Title);
+
+		final NotificationManager notificationManager =
+			(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, null, 0);
+		final Notification notification = new NotificationCompat.Builder(this)
+			.setSmallIcon(android.R.drawable.ic_dialog_alert)
+			.setTicker(info.Title)
+			.setContentTitle(info.Title)
+			.setContentText(errorMessage)
+			.setContentIntent(pendingIntent)
+			.setAutoCancel(true)
+			.build();
+		notificationManager.notify(0, notification);
+	}
 }
