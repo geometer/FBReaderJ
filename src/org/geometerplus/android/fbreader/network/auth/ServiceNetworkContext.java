@@ -30,6 +30,8 @@ import android.support.v4.app.NotificationCompat;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.zlibrary.ui.android.R;
+
 public class ServiceNetworkContext extends AndroidNetworkContext {
 	private final Service myService;
 
@@ -57,7 +59,7 @@ public class ServiceNetworkContext extends AndroidNetworkContext {
 				.getResource("message")
 				.getValue();
 		final Notification notification = new NotificationCompat.Builder(myService)
-			.setSmallIcon(android.R.drawable.ic_dialog_alert)
+			.setSmallIcon(R.drawable.fbreader)
 			.setTicker(text)
 			.setContentTitle(realm)
 			.setContentText(text)
