@@ -37,10 +37,12 @@ public class ZLTTFInfoDetector {
 				if (info != null && info.FamilyName != null) {
 					File[] table = fonts.get(info.FamilyName);
 					if (table == null) {
-						table = new File[4];
+						table = new File[5];
 						fonts.put(info.FamilyName, table);
 					}
-					if ("bold".equalsIgnoreCase(info.SubFamilyName)) {
+					if ("regular".equalsIgnoreCase(info.SubFamilyName)) {
+						table[0] = f;
+					} else if ("bold".equalsIgnoreCase(info.SubFamilyName)) {
 						table[1] = f;
 					} else if ("italic".equalsIgnoreCase(info.SubFamilyName) ||
 							   "oblique".equalsIgnoreCase(info.SubFamilyName)) {
@@ -49,10 +51,11 @@ public class ZLTTFInfoDetector {
 							   "bold oblique".equalsIgnoreCase(info.SubFamilyName)) {
 						table[3] = f;
 					} else {
-						table[0] = f;
+						table[4] = f;
 					}
 				}
 			} catch (IOException e) {
+				e.printStackTrace();
 			} finally {
 				if (stream != null) {
 					try {

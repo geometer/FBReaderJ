@@ -159,6 +159,9 @@ public final class AndroidFontUtil {
 					return typefaces[i];
 				}
 			}
+			if (files[4] != null) {
+				return Typeface.createFromFile(files[4]);
+			}
 		} catch (Throwable e) {
 		}
 		return null;
