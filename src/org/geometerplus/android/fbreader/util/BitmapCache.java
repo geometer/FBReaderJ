@@ -22,60 +22,25 @@ package org.geometerplus.android.fbreader.util;
 import java.util.Map;
 
 import android.graphics.Bitmap;
-import android.os.Build;
-import android.util.LruCache;
 
 public class BitmapCache {
-	private final boolean myIsOldVersion = Build.VERSION.SDK_INT < 12;
-	private android.support.v4.util.LruCache<String,Bitmap> myOldLruCache;
-	private LruCache<String,Bitmap> myNewLruCache;
+	private android.support.v4.util.LruCache<String,Bitmap> myLruCache;
 
 	public BitmapCache() {
-		if (myIsOldVersion) {
-			myOldLruCache = new android.support.v4.util.LruCache<String,Bitmap>(getCacheSize()) {
-				@Override
-				protected int sizeOf(String key, Bitmap bitmap) {
-					return bitmap.getRowBytes() * bitmap.getHeight();
-				}
-			};
-		} else {
-			myNewLruCache = new LruCache<String,Bitmap>(getCacheSize()) {
-				@Override
-				protected int sizeOf(String key, Bitmap bitmap) {
-					if (Build.VERSION.SDK_INT >= 19) {
-						return bitmap.getAllocationByteCount();
-					} else {
-						return bitmap.getByteCount();
-					}
-				}
-			};
-		}
+		myLruCache = new android.support.v4.util.LruCache<String,Bitmap>(getCacheSize()) {
+			@Override
+			protected int sizeOf(String key, Bitmap bitmap) {
+				return bitmap.getRowBytes() * bitmap.getHeight();
+			}
+		};
 	}
 
 	private int getCacheSize() {
 		return (int)(Runtime.getRuntime().maxMemory() / 8);
 	}
 
-	public Map<String,Bitmap> snapshot() {
-		if (myIsOldVersion) {
-			return myOldLruCache.snapshot();
-		}
-		return myNewLruCache.snapshot();
-	}
-
 	public Bitmap get(String book) {
-		if (myIsOldVersion) {
-			return myOldLruCache.get(book);
-		}
-		return myNewLruCache.get(book);
-	}
-
-	public void remove(String book) {
-		if (myIsOldVersion) {
-			myOldLruCache.remove(book);
-			return;
-		}
-		myNewLruCache.remove(book);
+		return myLruCache.get(book);
 	}
 
 	public void put(String book, Bitmap bitmap) {
@@ -83,10 +48,14 @@ public class BitmapCache {
 		if (bitmap == null) {
 			bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8);
 		}
-		if (myIsOldVersion) {
-			myOldLruCache.put(book, bitmap);
-			return;
-		}
-		myNewLruCache.put(book, bitmap);
+		myLruCache.put(book, bitmap);
+	}
+	
+	public Map<String, Bitmap> snapshot() {
+		return myLruCache.snapshot();
+	}
+
+	public void remove(String book) {
+		myLruCache.remove(book);
 	}
 }

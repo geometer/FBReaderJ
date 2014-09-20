@@ -31,16 +31,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.options.Config;
-
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
-
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
-
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 import org.geometerplus.android.fbreader.util.BitmapCache;
 
@@ -277,6 +273,7 @@ public class LibraryService extends Service {
 			if (myCoversCache.snapshot().containsKey(book)) {
 				Bitmap bitmap = myCoversCache.get(book);
 				if (bitmap.getWidth() == 1) {
+					delayed[0] = false;
 					return null;
 				}
 				bitmap = getResizedBitmap(bitmap, maxWidth, maxHeight);
@@ -313,7 +310,7 @@ public class LibraryService extends Service {
 			}
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (((ZLImageProxy)image).isSynchronized()) {
+			if (!((ZLImageProxy)image).isSynchronized()) {
 				delayed[0] = true;
 				return null;
 			}
@@ -341,7 +338,7 @@ public class LibraryService extends Service {
 			}
 			return Bitmap.createScaledBitmap(bitmap, w, h, false);
 		}
-
+		
 		public List<String> bookmarks(String query) {
 			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(
 				SerializerUtil.deserializeBookmarkQuery(query)
