@@ -42,6 +42,10 @@ public final class FBReaderApp extends ZLApplication {
 		public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark);
 	}
 
+	public static interface Notifier {
+		void showMissingBookNotification(SyncData.ServerBookInfo info);
+	}
+
 	private ExternalFileOpener myExternalFileOpener;
 
 	public void setExternalFileOpener(ExternalFileOpener o) {
@@ -134,26 +138,28 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openHelpBook() {
-		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null);
+		openBook(Collection.getBookByFile(BookUtil.getHelpFile()), null, null, null);
 	}
 
-	private void showBookNotFoundMessage() {
-		if (mySyncData.getServerBookHashes().size() > 0) {
-			showErrorMessage("bookIsMissing", mySyncData.getServerBookTitle());
+	public Book getCurrentServerBook(Notifier notifier) {
+		final SyncData.ServerBookInfo info = mySyncData.getServerBookInfo();
+		if (info == null) {
+			return null;
 		}
-	}
 
-	public Book getCurrentServerBook() {
-		for (String hash : mySyncData.getServerBookHashes()) {
+		for (String hash : info.Hashes) {
 			final Book book = Collection.getBookByHash(hash);
 			if (book != null) {
 				return book;
 			}
 		}
+		if (notifier != null) {
+			notifier.showMissingBookNotification(info);
+		}
 		return null;
 	}
 
-	public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
+	public void openBook(Book book, final Bookmark bookmark, Runnable postAction, Notifier notifier) {
 		if (Model != null) {
 			if (book == null || bookmark == null && book.File.equals(Model.Book.File)) {
 				return;
@@ -161,9 +167,8 @@ public final class FBReaderApp extends ZLApplication {
 		}
 
 		if (book == null) {
-			book = getCurrentServerBook();
+			book = getCurrentServerBook(notifier);
 			if (book == null) {
-				showBookNotFoundMessage();
 				book = Collection.getRecentBook(0);
 			}
 			if (book == null || !book.File.exists()) {
@@ -486,14 +491,11 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	public void useSyncInfo(boolean openOtherBook) {
+	public void useSyncInfo(boolean openOtherBook, Notifier notifier) {
 		if (openOtherBook && SyncOptions.ChangeCurrentBook.getValue()) {
-			final Book fromServer = getCurrentServerBook();
-			if (fromServer == null) {
-				showBookNotFoundMessage();
-			}
+			final Book fromServer = getCurrentServerBook(notifier);
 			if (fromServer != null && !fromServer.equals(Collection.getRecentBook(0))) {
-				openBook(fromServer, null, null);
+				openBook(fromServer, null, null, notifier);
 				return;
 			}
 		}
@@ -567,7 +569,7 @@ public final class FBReaderApp extends ZLApplication {
 				runAction(ActionCode.SHOW_NETWORK_LIBRARY);
 				break;
 			case previousBook:
-				openBook(Collection.getRecentBook(1), null, null);
+				openBook(Collection.getRecentBook(1), null, null, null);
 				break;
 			case returnTo:
 				Collection.deleteBookmark(bookmark);
