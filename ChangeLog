@@ -8,6 +8,7 @@
 ===== 2.1.4 (Sep ??, 2014) =====
 * (planned) Fixed authors list/tags list editing
 * CSS: fixed <ul>/<ol> top/bottom margin behaviour
+* Fixed loading of Google Roboto files (if added as external TTFs)
 
 ===== 2.1.3 (Sep 18, 2014) =====
 * CSS: fixed multiple entries for same selector
