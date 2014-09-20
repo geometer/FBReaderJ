@@ -31,6 +31,18 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.IBookCollection;
 
 public class SyncData {
+	public final static class ServerBookInfo {
+		public final List<String> Hashes;
+		public final String Title;
+		public final boolean Downloadable;
+
+		private ServerBookInfo(List<String> hashes, String title, boolean downloadable) {
+			Hashes = Collections.unmodifiableList(hashes);
+			Title = title;
+			Downloadable = downloadable;
+		}
+	}
+
 	private final ZLIntegerOption myGeneration =
 		new ZLIntegerOption("SyncData", "Generation", -1);
 	private final ZLStringOption myCurrentBookHash =
@@ -158,12 +170,15 @@ public class SyncData {
 		return positionOption(hash).getValue().length() > 0;
 	}
 
-	public List<String> getServerBookHashes() {
-		return myServerBookHashes.getValue();
-	}
-
-	public String getServerBookTitle() {
-		return myServerBookTitle.getValue();
+	public ServerBookInfo getServerBookInfo() {
+		final List<String> hashes = myServerBookHashes.getValue();
+		if (hashes.size() == 0) {
+			return null;
+		}
+		return new ServerBookInfo(
+			// TODO: get downloadable info from server
+			hashes, myServerBookTitle.getValue(), true
+		);
 	}
 
 	public ZLTextFixedPosition.WithTimestamp getAndCleanPosition(String hash) {
