@@ -1179,9 +1179,9 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 
 		final NotificationManager notificationManager =
 			(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, null, 0);
+		final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
 		final Notification notification = new NotificationCompat.Builder(this)
-			.setSmallIcon(android.R.drawable.ic_dialog_alert)
+			.setSmallIcon(R.drawable.fbreader)
 			.setTicker(info.Title)
 			.setContentTitle(info.Title)
 			.setContentText(errorMessage)
