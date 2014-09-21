@@ -224,13 +224,20 @@ public final class FBReaderApp extends ZLApplication {
 					}
 					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
 					setView(BookTextView);
+					getViewWidget().repaint();
+					storePosition();
 				} else {
-					setFootnoteModel(label.ModelId);
-					setView(FootnoteView);
-					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
+					ZLTextModel footnoteModel = setFootnoteModel(label.ModelId);
+					final SynchronousExecutor executor = createExecutor("footnoteText", footnoteModel.getText());
+					executor.textThenPost("footnoteButton", new Runnable() {
+						public void run() {
+							setView(FootnoteView);
+							FootnoteView.gotoPosition(0/*label.ParagraphIndex*/, 0, 0);
+							getViewWidget().repaint();
+							storePosition();
+						}
+					});
 				}
-				getViewWidget().repaint();
-				storePosition();
 			}
 		}
 	}
@@ -276,13 +283,14 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private void setFootnoteModel(String modelId) {
+	private ZLTextModel setFootnoteModel(String modelId) {
 		final ZLTextModel model = Model.getFootnoteModel(modelId);
 		FootnoteView.setModel(model);
 		if (model != null) {
 			myFootnoteModelId = modelId;
 			setBookmarkHighlightings(FootnoteView, modelId);
 		}
+		return model;
 	}
 
 	private synchronized void openBookInternal(Book book, Bookmark bookmark, boolean force) {
