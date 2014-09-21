@@ -1,12 +1,14 @@
-===== 2.2 (Sep ??, 2014) =====
+===== 2.2 (Oct ??, 2014) =====
 * (planned) Tablet-oriented preferences dialog
 * (planned) Android L support
 * (planned) Automatic files download (from the book network)
 * (planned) Sync: single book upload
 * (planned) Editable notes (by Tamotsu Takahashi)
 
-===== 2.1.4 (Sep ??, 2014) =====
+===== 2.1.5 (Sep ??, 2014) =====
 * (planned) Fixed authors list/tags list editing
+
+===== 2.1.4 (Sep 21, 2014) =====
 * CSS: fixed <ul>/<ol> top/bottom margin behaviour
 * Fixed loading of Google Roboto files (if added as external TTFs)
 
