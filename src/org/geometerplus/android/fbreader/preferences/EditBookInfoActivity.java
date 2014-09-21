@@ -287,12 +287,68 @@ class EditAuthorsPreference extends Preference {
 	}
 }
 
+class EditSeriesPreference extends Preference {
+	private static final int SUMMARY_LEN = 2;
+	protected final ZLResource myResource;
+	private final Book myBook;
+	private ArrayList<String> mySeriesList;
+
+	EditSeriesPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context);
+		myBook = book;
+		myResource = rootResource.getResource(resourceKey);
+
+		setTitle(myResource.getValue());
+		setSummary(getSeriesSummary());
+	}
+	
+	private String getSeriesSummary(){
+		String seriesStr = new String();
+        if(myBook.getSeriesInfo() != null){
+            if(!myBook.getSeriesInfo().Series.getTitle().isEmpty()){
+                seriesStr = myBook.getSeriesInfo().Series.getTitle();
+                if(myBook.getSeriesInfo().Index.intValue() > 0){
+                    seriesStr += ", "+String.valueOf(myBook.getSeriesInfo().Index.intValue());
+                }
+            }
+		}
+		return seriesStr;
+	}
+
+	void saveSeries(String seriesName, int seriesIndex) {
+		if (seriesIndex < 0) {
+			return;
+		}
+        myBook.setSeriesInfo(seriesName, Integer.toString(seriesIndex));
+
+		((EditBookInfoActivity)getContext()).saveBook();
+		setSummary(getSeriesSummary());
+	}
+
+	@Override
+	protected void onClick() {
+		final Intent intent = new Intent(getContext(), EditSeriesDialogActivity.class);
+		intent.putExtra(EditSeriesDialogActivity.Key.ACTIVITY_TITLE, myResource.getValue());
+
+		//TODO: Get a series from a book
+		SeriesInfo info = myBook.getSeriesInfo();
+		String seriesName = (info != null) ? info.Series.getTitle() : "";
+		int seriesIndex = (info != null) ? info.Index.intValue() : 0;
+
+		intent.putExtra(EditSeriesDialogActivity.Key.SERIES_NAME, seriesName);
+		intent.putExtra(EditSeriesDialogActivity.Key.SERIES_INDEX, seriesIndex);
+		intent.putExtra(EditSeriesDialogActivity.Key.ALL_SERIES, new ArrayList(((EditBookInfoActivity)getContext()).series()));
+		((EditBookInfoActivity)getContext()).startActivityForResult(intent, EditSeriesDialogActivity.REQ_CODE);
+	}
+}
+
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private final BookCollectionShadow myCollection = new BookCollectionShadow();
 	private volatile boolean myInitialized;
 
 	private EditTagsPreference myEditTagsPreference;
 	private EditAuthorsPreference myEditAuthorsPreference;
+	private EditSeriesPreference myEditSeriesPreference;
 	private Book myBook;
 
 	public EditBookInfoActivity() {
@@ -313,6 +369,10 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 	List<Tag> tags() {
 		return myCollection.tags();
+	}
+	
+	List<String> series() {
+		return myCollection.series();
 	}
 
 	@Override
@@ -340,6 +400,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 				addPreference(new BookTitlePreference(EditBookInfoActivity.this, Resource, "title", myBook));
 				myEditAuthorsPreference = (EditAuthorsPreference)addPreference(new EditAuthorsPreference(EditBookInfoActivity.this, Resource, "authors", myBook));
 				myEditTagsPreference = (EditTagsPreference)addPreference(new EditTagsPreference(EditBookInfoActivity.this, Resource, "tags", myBook));
+				myEditSeriesPreference = (EditSeriesPreference)addPreference(new EditSeriesPreference(EditBookInfoActivity.this, Resource, "series", myBook));
 				addPreference(new BookLanguagePreference(EditBookInfoActivity.this, Resource.getResource("language"), myBook));
 				addPreference(new EncodingPreference(EditBookInfoActivity.this, Resource.getResource("encoding"), myBook));
 			}
@@ -361,6 +422,11 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 					break;
 				case EditAuthorsDialogActivity.REQ_CODE:
 					myEditAuthorsPreference.saveAuthors(data.getStringArrayListExtra(EditListDialogActivity.Key.LIST));
+					break;
+				case EditSeriesDialogActivity.REQ_CODE:
+					myEditSeriesPreference.saveSeries(
+                        data.getStringExtra(EditSeriesDialogActivity.Key.SERIES_NAME),
+                        data.getIntExtra(EditSeriesDialogActivity.Key.SERIES_INDEX, 0));
 					break;
 			}
 		}
