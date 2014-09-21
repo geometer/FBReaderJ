@@ -11,6 +11,7 @@
 ===== 2.1.4 (Sep 21, 2014) =====
 * CSS: fixed <ul>/<ol> top/bottom margin behaviour
 * Fixed loading of Google Roboto files (if added as external TTFs)
+* sync: 'missing book' toast replaced with notification
 
 ===== 2.1.3 (Sep 18, 2014) =====
 * CSS: fixed multiple entries for same selector
