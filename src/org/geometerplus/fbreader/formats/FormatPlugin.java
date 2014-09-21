@@ -55,8 +55,7 @@ public abstract class FormatPlugin {
 
 	public enum Type {
 		ANY,
-		JAVA,
-		NATIVE,
+		BUILTIN,
 		EXTERNAL;
 	};
 	public abstract Type type();

@@ -29,7 +29,7 @@
 #include "../../bookmodel/BookModel.h"
 #include "../../library/Book.h"
 
-bool RtfPlugin::providesMetaInfo() const {
+bool RtfPlugin::providesMetainfo() const {
 	return false;
 }
 

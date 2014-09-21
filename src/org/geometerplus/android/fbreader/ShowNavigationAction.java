@@ -38,6 +38,10 @@ class ShowNavigationAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		BaseActivity.navigate();
+		if (BaseActivity.barsAreShown()) {
+			BaseActivity.hideBars();
+		} else {
+			BaseActivity.showBars();
+		}
 	}
 }

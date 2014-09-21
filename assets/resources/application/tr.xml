@@ -809,8 +809,11 @@
 			<node name="email" value="Send us an e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Follow us at twitter">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -845,6 +848,7 @@
 			<node name="refresh" value="Yenile"/>
 			<node name="authorise" value="Onay"/>
 			<node name="resetPosition" value="POzisyonu sıfırla"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Rapor gönder"/>
 			<node name="addToFavorites" value="Favorilere ekle"/>
 			<node name="removeFromFavorites" value="Favorilerden çıkar"/>
@@ -1014,11 +1018,6 @@
 		<node name="browser" value="Tarayıcı"/>
 		<node name="defaultBrowser" value="Varsayılan tarayıcı"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Bilinmeyen Hata"/>
-		<node name="unsupportedCompressionMethod" value="Desteklenmeyen Sıkıştırma Yöntemi"/>
-		<node name="encryptedFile" value="DRM-korunmuş dosya"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader sorunu"/>
@@ -1059,6 +1058,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

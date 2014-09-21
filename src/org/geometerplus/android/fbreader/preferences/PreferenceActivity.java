@@ -168,7 +168,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 
 			private void enableSynchronisation() {
-				SyncOperations.enableSync(PreferenceActivity.this, syncOptions.Enabled.getValue());
+				SyncOperations.enableSync(PreferenceActivity.this, syncOptions);
 			}
 
 			@Override
@@ -229,6 +229,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		});
 		syncPreferences.add(syncScreen.addOption(syncOptions.UploadAllBooks, "uploadAllBooks", "values"));
 		syncPreferences.add(syncScreen.addOption(syncOptions.Positions, "positions", "values"));
+		syncPreferences.add(syncScreen.addOption(syncOptions.ChangeCurrentBook, "changeCurrentBook"));
 		//syncPreferences.add(syncScreen.addOption(syncOptions.Metainfo, "metainfo", "values"));
 		//syncPreferences.add(syncScreen.addOption(syncOptions.Bookmarks, "bookmarks", "values"));
 		syncPreferences.run();
@@ -700,6 +701,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "site"));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "email"));
+		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "googleplus"));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "twitter"));
 		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "facebook"));
 		aboutScreen.addPreference(new ThirdPartyLibrariesPreference(this, aboutScreen.Resource, "thirdParty"));

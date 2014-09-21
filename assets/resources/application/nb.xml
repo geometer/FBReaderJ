@@ -809,8 +809,11 @@
 			<node name="email" value="Send oss en e-post">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Følg oss på Twitter">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -845,6 +848,7 @@
 			<node name="refresh" value="Oppfrisk"/>
 			<node name="authorise" value="Autoriser"/>
 			<node name="resetPosition" value="Tilbakestill posisjon"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Send rapport"/>
 			<node name="addToFavorites" value="Legg til i favoritter"/>
 			<node name="removeFromFavorites" value="Fjern fra favoritter"/>
@@ -1014,11 +1018,6 @@
 		<node name="browser" value="Nettleser"/>
 		<node name="defaultBrowser" value="Standard nettleser"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Ukjent feil"/>
-		<node name="unsupportedCompressionMethod" value="Kompresjonsmetoden er ikke støttet"/>
-		<node name="encryptedFile" value="Filen inneholder Digitale RestriksjonsMekanismer (DRM)"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader problem"/>
@@ -1059,6 +1058,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

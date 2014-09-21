@@ -67,13 +67,13 @@ public class ZLTextNGStyleDescription {
 		LineHeightOption = createOption(selector, "line-height", valueMap);
 	}
 
-	int getFontSize(ZLTextMetrics metrics, int baseFontSize) {
+	int getFontSize(ZLTextMetrics metrics, int parentFontSize) {
 		final ZLTextStyleEntry.Length length = parseLength(FontSizeOption.getValue());
 		if (length == null) {
-			return baseFontSize;
+			return parentFontSize;
 		}
 		return ZLTextStyleEntry.compute(
-			length, metrics, baseFontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
+			length, metrics, parentFontSize, ZLTextStyleEntry.Feature.LENGTH_FONT_SIZE
 		);
 	}
 
@@ -225,6 +225,11 @@ public class ZLTextNGStyleDescription {
 				length = new ZLTextStyleEntry.Length(
 					Short.valueOf(value.substring(0, value.length() - 1)),
 					ZLTextStyleEntry.SizeUnit.PERCENT
+				);
+			} else if (value.endsWith("rem")) {
+				length = new ZLTextStyleEntry.Length(
+					(short)(100 * Double.valueOf(value.substring(0, value.length() - 2))),
+					ZLTextStyleEntry.SizeUnit.REM_100
 				);
 			} else if (value.endsWith("em")) {
 				length = new ZLTextStyleEntry.Length(

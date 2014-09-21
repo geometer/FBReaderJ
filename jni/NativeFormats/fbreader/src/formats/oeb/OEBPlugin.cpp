@@ -70,7 +70,7 @@ void ContainerFileReader::startElementHandler(const char *tag, const char **attr
 OEBPlugin::~OEBPlugin() {
 }
 
-bool OEBPlugin::providesMetaInfo() const {
+bool OEBPlugin::providesMetainfo() const {
 	return true;
 }
 

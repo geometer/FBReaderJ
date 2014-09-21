@@ -809,8 +809,11 @@
 			<node name="email" value="Stuur ons een (Engelstalige) e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Volg ons op twitter">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader op facebook">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -845,6 +848,7 @@
 			<node name="refresh" value="Vernieuwen"/>
 			<node name="authorise" value="Autoriseren"/>
 			<node name="resetPosition" value="Reset positie"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Verstuur rapport"/>
 			<node name="addToFavorites" value="Toevoegen aan favorieten"/>
 			<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
@@ -1014,11 +1018,6 @@
 		<node name="browser" value="Browser"/>
 		<node name="defaultBrowser" value="Standaardbrowser"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Onbekende fout"/>
-		<node name="unsupportedCompressionMethod" value="Compressiemethode niet ondersteund"/>
-		<node name="encryptedFile" value="DRM-beschermd bestand"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader probleem"/>
@@ -1059,6 +1058,9 @@
 		</node>
 		<node name="pdf" value="PDF">
 			<node name="summary" value="Lees boeken in PDF-formaat"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

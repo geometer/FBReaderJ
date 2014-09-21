@@ -53,17 +53,18 @@ protected:
 public:
 	virtual ~FormatPlugin();
 
-	virtual bool providesMetaInfo() const = 0;
+	virtual bool providesMetainfo() const = 0;
 	virtual const std::string supportedFileType() const = 0;
 	//virtual FormatInfoPage *createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file);
 
-	virtual const std::string &tryOpen(const ZLFile &file) const;
+	//virtual const std::string &tryOpen(const ZLFile &file) const;
 	virtual bool readMetainfo(Book &book) const = 0;
 	virtual std::vector<shared_ptr<FileEncryptionInfo> > readEncryptionInfos(Book &book) const;
 	virtual bool readUids(Book &book) const = 0;
 	virtual bool readLanguageAndEncoding(Book &book) const = 0;
 	virtual bool readModel(BookModel &model) const = 0;
 	virtual shared_ptr<const ZLImage> coverImage(const ZLFile &file) const;
+	virtual std::string readAnnotation(const ZLFile &file) const;
 
 protected:
 	static bool detectEncodingAndLanguage(Book &book, ZLInputStream &stream, bool force = false);

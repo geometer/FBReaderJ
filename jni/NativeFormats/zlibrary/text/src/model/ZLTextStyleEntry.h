@@ -36,6 +36,7 @@ public:
 		SIZE_UNIT_PIXEL,
 		SIZE_UNIT_POINT,
 		SIZE_UNIT_EM_100,
+		SIZE_UNIT_REM_100,
 		SIZE_UNIT_EX_100,
 		SIZE_UNIT_PERCENT
 	};
@@ -101,6 +102,8 @@ public:
 	const std::vector<std::string> &fontFamilies() const;
 	void setFontFamilies(const std::vector<std::string> &fontFamilies);
 
+	shared_ptr<ZLTextStyleEntry> start() const;
+	shared_ptr<ZLTextStyleEntry> end() const;
 	shared_ptr<ZLTextStyleEntry> inherited() const;
 
 private:

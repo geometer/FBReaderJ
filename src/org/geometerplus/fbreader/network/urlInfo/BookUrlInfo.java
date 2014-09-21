@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.MiscUtil;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
@@ -52,7 +51,7 @@ public class BookUrlInfo extends UrlInfo {
 		if (type == null) {
 			return false;
 		}
-		return PluginCollection.Instance().getPlugin(type, FormatPlugin.Type.ANY) != null;
+		return PluginCollection.Instance().getPlugin(type) != null;
 	}
 
 	private static int mimePriority(MimeType mime) {

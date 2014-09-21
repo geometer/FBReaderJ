@@ -809,8 +809,11 @@
 			<node name="email" value="ايميلي به ما بفرستيد">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="در توييتر مارا دنبال كنيد">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -845,6 +848,7 @@
 			<node name="refresh" value="بازآوري"/>
 			<node name="authorise" value="اجازه"/>
 			<node name="resetPosition" value="وضعيت تنظيم مجدد"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="ارسال گزارش"/>
 			<node name="addToFavorites" value="افزودن به علاقندي"/>
 			<node name="removeFromFavorites" value="پاك كردن از علاقمندي"/>
@@ -1014,11 +1018,6 @@
 		<node name="browser" value="مرورگر"/>
 		<node name="defaultBrowser" value="مرورگر پيش فرض"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="خطاي نامشخص"/>
-		<node name="unsupportedCompressionMethod" value="روش فشرده سازي پشتيباني نشده"/>
-		<node name="encryptedFile" value="فايل محافظت شده DRM"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="مشکل اف بی ریدر"/>
@@ -1059,6 +1058,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

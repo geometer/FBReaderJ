@@ -21,7 +21,7 @@ package org.geometerplus.android.fbreader.formatPlugin;
 
 import android.content.Intent;
 
-import org.geometerplus.fbreader.formats.external.ExternalFormatPlugin;
+import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
 
 public abstract class PluginUtil {
 	public static final String ACTION_VIEW = "android.fbreader.action.plugin.VIEW";

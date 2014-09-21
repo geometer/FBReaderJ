@@ -809,6 +809,9 @@
 			<node name="email" value="Send os en e-mail">
 				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Følg os på Twitter">
 				<node name="url" value="e-mail til:contact@fbreader.org"/>
 			</node>
@@ -845,6 +848,7 @@
 			<node name="refresh" value="Opdater"/>
 			<node name="authorise" value="Godkend"/>
 			<node name="resetPosition" value="Nulstil stilling"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Send rapport"/>
 			<node name="addToFavorites" value="Føj til Foretrukne"/>
 			<node name="removeFromFavorites" value="Fjern fra foretrukne"/>
@@ -1014,11 +1018,6 @@
 		<node name="browser" value="Browser"/>
 		<node name="defaultBrowser" value="Standardbrowser"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Ukendt fejl"/>
-		<node name="unsupportedCompressionMethod" value="Ikke-understøttet kompressionsmetode"/>
-		<node name="encryptedFile" value="DRM-beskyttet fil"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FB-Læser problem"/>
@@ -1059,6 +1058,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

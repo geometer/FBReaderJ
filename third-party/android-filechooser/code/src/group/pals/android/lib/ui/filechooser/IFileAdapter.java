@@ -235,7 +235,8 @@ public class IFileAdapter extends BaseAdapter {
      * @author Hai Bison
      * 
      */
-    private static final class Bag {
+    static final class Bag {
+		boolean mIsAccessible;
         ImageView mImageIcon;
         TextView mTxtFileName;
         TextView mTxtFileInfo;
@@ -306,10 +307,10 @@ public class IFileAdapter extends BaseAdapter {
         else
             bag.mTxtFileInfo.setText(String.format("%s, %s", Converter.sizeToStr(file.length()), time));
 
-        final boolean isAccessible = FileUtils.isAccessible(file, mFilenameRegexp);
-		bag.mImageIcon.setEnabled(isAccessible);
-		bag.mTxtFileName.setEnabled(isAccessible);
-		bag.mTxtFileInfo.setEnabled(isAccessible);
+        bag.mIsAccessible = FileUtils.isAccessible(file, mFilenameRegexp);
+		bag.mImageIcon.setEnabled(bag.mIsAccessible);
+		bag.mTxtFileName.setEnabled(bag.mIsAccessible);
+		bag.mTxtFileInfo.setEnabled(bag.mIsAccessible);
 
         // checkbox
         if (mMultiSelection) {

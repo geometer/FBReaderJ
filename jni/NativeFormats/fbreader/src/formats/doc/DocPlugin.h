@@ -27,7 +27,7 @@ class DocPlugin : public FormatPlugin {
 public:
 	DocPlugin();
 	~DocPlugin();
-	bool providesMetaInfo() const;
+	bool providesMetainfo() const;
 
 	const std::string supportedFileType() const;
 	bool acceptsFile(const ZLFile &file) const;

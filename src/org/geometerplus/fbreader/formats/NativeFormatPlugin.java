@@ -128,13 +128,14 @@ public class NativeFormatPlugin extends BuiltinFormatPlugin {
 
 	@Override
 	public String readAnnotation(ZLFile file) {
-		// TODO: implement in native code (?)
-		return null;
+		return readAnnotationInternal(file);
 	}
+
+	protected native String readAnnotationInternal(ZLFile file);
 
 	@Override
 	public Type type() {
-		return Type.NATIVE;
+		return Type.BUILTIN;
 	}
 
 	@Override

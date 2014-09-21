@@ -25,7 +25,7 @@
 class RtfPlugin : public FormatPlugin {
 
 public:
-	bool providesMetaInfo() const;
+	bool providesMetainfo() const;
 	const std::string supportedFileType() const;
 	bool readMetainfo(Book &book) const;
 	bool readUids(Book &book) const;

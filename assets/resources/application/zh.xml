@@ -799,8 +799,11 @@
 			<node name="email" value="给我们发送邮件">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="关注我们的twitter">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -835,6 +838,7 @@
 			<node name="refresh" value="刷新"/>
 			<node name="authorise" value="授权"/>
 			<node name="resetPosition" value="重置位置"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="发送报告"/>
 			<node name="addToFavorites" value="收藏到我的超爱"/>
 			<node name="removeFromFavorites" value="从收藏列表中移除"/>
@@ -1004,11 +1008,6 @@
 		<node name="browser" value="浏览器"/>
 		<node name="defaultBrowser" value="默认浏览器"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="未知的错误"/>
-		<node name="unsupportedCompressionMethod" value="不支持的压缩方法"/>
-		<node name="encryptedFile" value="受版权保护文件"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader 问题"/>
@@ -1049,6 +1048,9 @@
 		</node>
 		<node name="pdf" value="PDF" toBeTranslated="true">
 			<node name="summary" value="Read books in PDF format" toBeTranslated="true"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

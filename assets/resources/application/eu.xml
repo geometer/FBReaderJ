@@ -809,8 +809,11 @@
 			<node name="email" value="Bidali posta elektronikoa">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
+			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
+			</node>
 			<node name="twitter" value="Twitter-en jarraitu">
-				<node name="url" value="http://twitter.com/fbreader"/>
+				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader on facebook" toBeTranslated="true">
 				<node name="url" value="https://facebook.com/fbreader"/>
@@ -1020,11 +1023,6 @@
 		<node name="browser" value="Nabigatzailea"/>
 		<node name="defaultBrowser" value="Lehenetsitako nabigatzailea"/>
 	</node>
-	<node name="mobipocketPlugin">
-		<node name="unknown" value="Errore ezezaguna"/>
-		<node name="unsupportedCompressionMethod" value="Onartu gabeko konpresio metodoa"/>
-		<node name="encryptedFile" value="DRM-arekin giltzatutako fitxategia"/>
-	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
 			<node name="title" value="FBReader arazoa"/>
@@ -1065,6 +1063,9 @@
 		</node>
 		<node name="pdf" value="PDF">
 			<node name="summary" value="PDF formatuan dauden liburuak irakurri"/>
+		</node>
+		<node name="djvu" value="DjVu" toBeTranslated="true">
+			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="drm">

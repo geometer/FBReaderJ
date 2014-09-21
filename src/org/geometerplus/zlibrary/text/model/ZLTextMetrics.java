@@ -23,11 +23,13 @@ public final class ZLTextMetrics {
 	public final int DPI;
 	public final int FullWidth;
 	public final int FullHeight;
+	public final int FontSize;
 
-	public ZLTextMetrics(int dpi, int fullWidth, int fullHeight) {
+	public ZLTextMetrics(int dpi, int fullWidth, int fullHeight, int fontSize) {
 		DPI = dpi;
 		FullWidth = fullWidth;
 		FullHeight = fullHeight;
+		FontSize = fontSize;
 	}
 
 	@Override

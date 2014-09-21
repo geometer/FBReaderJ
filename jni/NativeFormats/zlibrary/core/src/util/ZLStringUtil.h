@@ -37,14 +37,17 @@ public:
 	static void append(std::string &str, const std::vector<std::string> &buffer);
 	static void stripWhiteSpaces(std::string &str);
 
-	static std::vector<std::string> split(const std::string &str, const std::string &delimiter);
+	static std::vector<std::string> split(const std::string &str, const std::string &delimiter, bool skipEmpty);
 	static std::string join(const std::vector<std::string> &data, const std::string &delimiter);
 
 	static std::string printf(const std::string &format, const std::string &arg0);
 
 	static std::string doubleToString(double value);
 	static double stringToDouble(const std::string &value, double defaultValue);
-	static int stringToInteger(const std::string &str, int defaultValue);
+	static int parseDecimal(const std::string &str, int defaultValue);
+	static unsigned long parseHex(const std::string &str, int defaultValue);
+
+	static void asciiToLowerInline(std::string &asciiString);
 };
 
 #endif /* __ZLSTRINGUTIL_H__ */
