@@ -70,6 +70,7 @@ public:
 		std::vector<FBTextKind> TextKinds;
 		std::vector<shared_ptr<ZLTextStyleEntry> > StyleEntries;
 		bool PageBreakAfter;
+		bool InFootnote;
 		size_t ChildCount;
 
 		TagData();

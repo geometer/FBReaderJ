@@ -476,10 +476,17 @@ void XHTMLTagControlAction::doAtEnd(XHTMLReader &reader) {
 void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlattributes) {
 	const char *href = reader.attributeValue(xmlattributes, "href");
 	if (href != 0 && href[0] != '\0') {
-		const FBTextKind hyperlinkType = MiscUtil::referenceType(href);
+		FBTextKind hyperlinkType = MiscUtil::referenceType(href);
 		std::string link = MiscUtil::decodeHtmlURL(href);
 		if (hyperlinkType == INTERNAL_HYPERLINK) {
 			if (link[0] == '#') {
+				const char *epubType = reader.attributeValue(xmlattributes, "epub:type");
+				if (epubType != 0 && epubType[0] != '\0') {
+					const std::string sEpubType = ZLUnicodeUtil::toLower(epubType);
+					if (sEpubType == "noteref") {
+						hyperlinkType = FOOTNOTE;
+					}
+				}
 				link = reader.myReferenceAlias + link;
 			} else {
 				link = reader.normalizedReference(reader.myReferenceDirName + link);
@@ -732,14 +739,23 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		return;
 	}
 
+	bool inFootnote = false;
 	if (!myTagDataStack.empty()) {
 		myTagDataStack.back()->ChildCount += 1;
+		inFootnote = myTagDataStack.back()->InFootnote;
 	}
 	myTagDataStack.push_back(new TagData());
+	myTagDataStack.back()->InFootnote = inFootnote;
 
 	static const std::string HASH = "#";
 	const char *id = attributeValue(attributes, "id");
 	if (id != 0) {
+		const char *pEpubType = attributeValue(attributes, "epub:type");
+		if (pEpubType != 0 && pEpubType[0] != '\0' && id[0] !='\0' &&
+			ZLUnicodeUtil::toLower(pEpubType) == "footnote") {
+				myModelReader.setFootnoteTextModel(myReferenceAlias + HASH + id);
+				myTagDataStack.back()->InFootnote = true;
+		}
 		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
 	}
 
@@ -819,6 +835,9 @@ void XHTMLReader::endElementHandler(const char *tag) {
 	}
 
 	myTagDataStack.pop_back();
+	if (myTagDataStack.empty() || !myTagDataStack.back()->InFootnote) {
+		myModelReader.setMainTextModel();
+	}
 }
 
 void XHTMLReader::beginParagraph(bool restarted) {

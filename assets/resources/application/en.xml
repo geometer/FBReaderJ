@@ -895,6 +895,8 @@
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
 			<node name="initDRMEngine" value="Initialising DRM engine. Please, wait…"/>
 			<node name="acquireLicense" value="Acquiring license. Please, wait…"/>
+			<node name="footnoteText" value="Footnote:&#10;%s"/>
+			<node name="footnoteButton" value="Open"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
