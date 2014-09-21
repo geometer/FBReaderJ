@@ -838,6 +838,7 @@
 			<node name="refresh" value="Оновити"/>
 			<node name="authorise" value="Авторизуватись"/>
 			<node name="resetPosition" value="Скинути позицію"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Відправити звіт"/>
 			<node name="addToFavorites" value="Додати в улюблені"/>
 			<node name="removeFromFavorites" value="Прибрати з улюблених"/>

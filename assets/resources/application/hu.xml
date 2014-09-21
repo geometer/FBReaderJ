@@ -838,6 +838,7 @@
 			<node name="refresh" value="Frissítés"/>
 			<node name="authorise" value="Hitelesítés"/>
 			<node name="resetPosition" value="Pozíció nullázása"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Jelentés küldése"/>
 			<node name="addToFavorites" value="Hozzáadás a kedvencekhez"/>
 			<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>

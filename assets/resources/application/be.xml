@@ -854,6 +854,7 @@
 			<node name="refresh" value="Абнавіць"/>
 			<node name="authorise" value="Упаўнаважыцца"/>
 			<node name="resetPosition" value="Скінуць пазыцыю"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Даслаць справаздачу"/>
 			<node name="addToFavorites" value="Дадаць да ўпадабанага"/>
 			<node name="removeFromFavorites" value="Прыбраць з упадабанага"/>

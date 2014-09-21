@@ -19,29 +19,26 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.view.ZLTextView;
+import android.text.InputFilter;
+import android.text.Spanned;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+public class InputFilterMinMax implements InputFilter {
+	private final int myMin, myMax;
 
-class ShowNavigationAction extends FBAndroidAction {
-	ShowNavigationAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(baseActivity, fbreader);
+	public InputFilterMinMax(int min, int max) {
+		myMin = Math.min(min, max);
+		myMax = Math.max(min, max);
 	}
 
 	@Override
-	public boolean isVisible() {
-		final ZLTextView view = (ZLTextView)Reader.getCurrentView();
-		final ZLTextModel textModel = view.getModel();
-		return textModel != null && textModel.getParagraphsNumber() != 0;
-	}
-
-	@Override
-	protected void run(Object ... params) {
-		if (BaseActivity.barsAreShown()) {
-			BaseActivity.hideBars();
-		} else {
-			BaseActivity.showBars();
+	public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+		try {
+			final int input = Integer.parseInt(dest.toString() + source.toString());
+			if (myMin <= input && input <= myMax) {
+				return null;
+			}
+		} catch (NumberFormatException nfe) {
 		}
+		return "";
 	}
 }

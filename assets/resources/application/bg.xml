@@ -854,6 +854,7 @@
 			<node name="refresh" value="Обнови"/>
 			<node name="authorise" value="Оторизация"/>
 			<node name="resetPosition" value="Назад"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Изпрати съобщение"/>
 			<node name="addToFavorites" value="Добави в избрани"/>
 			<node name="removeFromFavorites" value="Премахни от избрани"/>

@@ -848,6 +848,7 @@
 			<node name="refresh" value="Oppfrisk"/>
 			<node name="authorise" value="Autoriser"/>
 			<node name="resetPosition" value="Tilbakestill posisjon"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Send rapport"/>
 			<node name="addToFavorites" value="Legg til i favoritter"/>
 			<node name="removeFromFavorites" value="Fjern fra favoritter"/>

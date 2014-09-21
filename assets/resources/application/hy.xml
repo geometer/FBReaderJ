@@ -853,6 +853,7 @@
 			<node name="refresh" value="Թարմացնել"/>
 			<node name="authorise" value="Հեղինակացում"/>
 			<node name="resetPosition" value="Ետ"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Ուղարկել հաղորդագրություն"/>
 			<node name="addToFavorites" value="Ավելացնել ընտրյալքում"/>
 			<node name="removeFromFavorites" value="Ջնջել ընտրյալքից"/>
