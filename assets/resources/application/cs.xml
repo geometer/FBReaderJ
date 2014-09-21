@@ -857,6 +857,7 @@
 			<node name="refresh" value="Aktualizovat"/>
 			<node name="authorise" value="Authorisovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Odeslat zprávu"/>
 			<node name="addToFavorites" value="Přidat do oblíbených"/>
 			<node name="removeFromFavorites" value="Odebrat z oblíbených"/>

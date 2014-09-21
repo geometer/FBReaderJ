@@ -839,6 +839,7 @@
 			<node name="refresh" value="Actualizare"/>
 			<node name="authorise" value="Autorizeaza"/>
 			<node name="resetPosition" value="Reseteaza pozitia"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="Adauga la favorite"/>
 			<node name="removeFromFavorites" value="Sterge din favorite"/>

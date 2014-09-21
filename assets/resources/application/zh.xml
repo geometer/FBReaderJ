@@ -838,6 +838,7 @@
 			<node name="refresh" value="刷新"/>
 			<node name="authorise" value="授权"/>
 			<node name="resetPosition" value="重置位置"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="发送报告"/>
 			<node name="addToFavorites" value="收藏到我的超爱"/>
 			<node name="removeFromFavorites" value="从收藏列表中移除"/>

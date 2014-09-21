@@ -848,6 +848,7 @@
 			<node name="refresh" value="Освежи"/>
 			<node name="authorise" value="Одобри"/>
 			<node name="resetPosition" value="Поништи положај"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Пошаљи извештај"/>
 			<node name="addToFavorites" value="Додај у омиљене"/>
 			<node name="removeFromFavorites" value="Уклони из омиљених"/>

@@ -253,9 +253,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		if (myFBReaderApp.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(myFBReaderApp);
 		}
-		if (myFBReaderApp.getPopupById(NavigationPopup.ID) == null) {
-			new NavigationPopup(myFBReaderApp);
-		}
 		if (myFBReaderApp.getPopupById(SelectionPopup.ID) == null) {
 			new SelectionPopup(myFBReaderApp);
 		}
@@ -368,6 +365,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 					if (myFBReaderApp.getTextView().search(pattern, true, false, false, false) != 0) {
 						runOnUiThread(new Runnable() {
 							public void run() {
+								hideBars();
 								myFBReaderApp.showPopup(popup.getId());
 							}
 						});
@@ -437,7 +435,6 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		});
 
 		((PopupPanel)myFBReaderApp.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, myRootView);
-		((PopupPanel)myFBReaderApp.getPopupById(NavigationPopup.ID)).setPanelInfo(this, myRootView);
 		((PopupPanel)myFBReaderApp.getPopupById(SelectionPopup.ID)).setPanelInfo(this, myRootView);
 	}
 
@@ -628,6 +625,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 	public boolean onSearchRequested() {
 		final FBReaderApp.PopupPanel popup = myFBReaderApp.getActivePopup();
 		myFBReaderApp.hideActivePopup();
+		hideBars();
 		if (DeviceType.Instance().hasStandardSearchDialog()) {
 			final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 			manager.setOnCancelListener(new SearchManager.OnCancelListener() {
@@ -658,6 +656,7 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		final ZLTextView view = myFBReaderApp.getTextView();
 		((SelectionPopup)myFBReaderApp.getPopupById(SelectionPopup.ID))
 			.move(view.getSelectionStartY(), view.getSelectionEndY());
+		hideBars();
 		myFBReaderApp.showPopup(SelectionPopup.ID);
 	}
 
@@ -714,8 +713,27 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 		myFBReaderApp.runCancelAction(type, bookmark);
 	}
 
-	public void navigate() {
-		((NavigationPopup)myFBReaderApp.getPopupById(NavigationPopup.ID)).runNavigation();
+	private NavigationPopup myNavigationPopup;
+
+	boolean barsAreShown() {
+		return myNavigationPopup != null;
+	}
+
+	void hideBars() {
+		if (myNavigationPopup != null) {
+			myNavigationPopup.stopNavigation();
+			myNavigationPopup = null;
+		}
+	}
+
+	void showBars() {
+		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
+
+		if (myNavigationPopup == null) {
+			myFBReaderApp.hideActivePopup();
+			myNavigationPopup = new NavigationPopup(myFBReaderApp);
+			myNavigationPopup.runNavigation(this, root);
+		}
 	}
 
 	private Menu addSubmenu(Menu menu, String id) {
@@ -987,6 +1005,10 @@ public final class FBReader extends Activity implements ZLApplicationWindow, FBR
 							menuItem.setCheckable(false);
 							break;
 					}
+				}
+
+				if (myNavigationPopup != null) {
+					myNavigationPopup.update();
 				}
 			}
 		});

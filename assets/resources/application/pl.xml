@@ -838,6 +838,7 @@
 			<node name="refresh" value="Odśwież"/>
 			<node name="authorise" value="Autoryzuj"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 			<node name="addToFavorites" value="Dodaj do ulubionych"/>
 			<node name="removeFromFavorites" value="Usuń z ulubionych"/>

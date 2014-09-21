@@ -853,6 +853,7 @@
 			<node name="refresh" value="Обновить"/>
 			<node name="authorise" value="Авторизоваться"/>
 			<node name="resetPosition" value="Назад"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="Отправить сообщение"/>
 			<node name="addToFavorites" value="Добавить в избранное"/>
 			<node name="removeFromFavorites" value="Убрать из избранного"/>

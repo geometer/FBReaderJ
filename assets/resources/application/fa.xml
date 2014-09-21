@@ -848,6 +848,7 @@
 			<node name="refresh" value="بازآوري"/>
 			<node name="authorise" value="اجازه"/>
 			<node name="resetPosition" value="وضعيت تنظيم مجدد"/>
+			<node name="enterPosition" value="Enter page number" toBeTranslated="true"/>
 			<node name="sendReport" value="ارسال گزارش"/>
 			<node name="addToFavorites" value="افزودن به علاقندي"/>
 			<node name="removeFromFavorites" value="پاك كردن از علاقمندي"/>
