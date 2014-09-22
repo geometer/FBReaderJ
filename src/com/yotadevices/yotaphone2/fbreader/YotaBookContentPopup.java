@@ -1,21 +1,37 @@
 package com.yotadevices.yotaphone2.fbreader;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.BackgroundColorSpan;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.yotadevices.yotaphone2.fbreader.util.TimeUtils;
+
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.ZLTreeAdapter;
+import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.ViewUtil;
+import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.book.Bookmark;
+import org.geometerplus.fbreader.book.BookmarkQuery;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -24,6 +40,10 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.zlibrary.ui.android.R;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class YotaBookContentPopup {
@@ -34,16 +54,23 @@ public class YotaBookContentPopup {
 	private ListView mBookmarksListView;
 	private final FBReader mFBReader;
 	private TOCAdapter myAdapter;
-	private ZLTree<?> mySelectedItem;
+
+	private volatile Book mBook;
+	private final BookCollectionShadow mCollection = new BookCollectionShadow();
+	private final Comparator<Bookmark> mComparator = new Bookmark.ByTimeComparator();
+	private BookmarksAdapter mBookmarksAdapter;
 
 	RadioButton mContents;
 	RadioButton mBookmarks;
 
 	private ZLTextView mBookTextView;
 
+	private Handler mHandler;
+
 	public YotaBookContentPopup(FBReader fbreader, View root) {
 		mRootView = root;
 		mFBReader = fbreader;
+		mHandler = new Handler(Looper.getMainLooper());
 
 		mPopupView = View.inflate(fbreader, R.layout.yota_book_content_popup, null);
 
@@ -72,22 +99,31 @@ public class YotaBookContentPopup {
 		});
 	}
 
+	private void runOnUiThread(Runnable action) {
+		mHandler.post(action);
+	}
+
 	public void show(FBReaderApp readerApp) {
 		final TOCTree root = readerApp.Model.TOCTree;
+		mBook = readerApp.Model.Book;
 		myAdapter = new TOCAdapter(root);
-		final ZLTextWordCursor cursor = readerApp.BookTextView.getStartCursor();
-		int index = cursor.getParagraphIndex();
-		if (cursor.isEndOfParagraph()) {
-			++index;
-		}
 		TOCTree treeToSelect = readerApp.getCurrentTOCElement();
 		myAdapter.selectItem(treeToSelect);
-		mySelectedItem = treeToSelect;
 		mBookTextView = readerApp.getTextView();
 		mPopup.showAsDropDown(mRootView, 0, 0);
+
+		mCollection.bindToService(mFBReader, new Runnable() {
+			public void run() {
+				if (mBook != null) {
+					mBookmarksAdapter = new BookmarksAdapter(mBookmarksListView);
+				}
+				new Thread(new Initializer()).start();
+			}
+		});
 	}
 
 	public void hide() {
+		mCollection.unbind();
 		mPopup.dismiss();
 	}
 
@@ -114,6 +150,14 @@ public class YotaBookContentPopup {
 		return -1;
 	}
 
+	private int getPageNumber(Bookmark mark) {
+		if (mark != null) {
+			int textLength = mBookTextView.getModel().getTextLength(mark.getParagraphIndex());
+			return mBookTextView.computeTextPageNumber(textLength);
+		}
+		return -1;
+	}
+
 	private View.OnClickListener mOnTabSwitch = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -131,6 +175,19 @@ public class YotaBookContentPopup {
 			}
 		}
 	};
+
+	private void gotoBookmark(Bookmark bookmark) {
+		bookmark.markAsAccessed();
+		mCollection.saveBookmark(bookmark);
+		final Book book = mCollection.getBookById(bookmark.getBookId());
+		if (book != null) {
+			FBReader.openBookActivity(mFBReader, book, bookmark);
+		} else {
+			UIUtil.showErrorMessage(mFBReader, "cannotOpenBook");
+		}
+		hide();
+	}
+
 
 	private final class TOCAdapter extends ZLTreeAdapter {
 		TOCAdapter(TOCTree root) {
@@ -158,10 +215,10 @@ public class YotaBookContentPopup {
 				chapter.setTypeface(Typeface.create("serif", Typeface.BOLD));
 			}
 			if (tree.Level >= 3) {
-				chapter.setTextSize(TypedValue.COMPLEX_UNIT_PX, 54);
+				chapter.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
 			}
 			else {
-				chapter.setTextSize(TypedValue.COMPLEX_UNIT_PX, 68);
+				chapter.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
 			}
 			int page = getPageNumber(tree);
 			String pageText = page >= 0 ? ""+page : "";
@@ -188,6 +245,106 @@ public class YotaBookContentPopup {
 			}
 			openBookText((TOCTree)tree);
 			return true;
+		}
+	}
+
+	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+		private final List<Bookmark> mBookmarks =
+				Collections.synchronizedList(new LinkedList<Bookmark>());
+
+		BookmarksAdapter(ListView listView) {
+			listView.setAdapter(this);
+			listView.setOnItemClickListener(this);
+		}
+
+		public void addAll(final List<Bookmark> bookmarks) {
+			for (Bookmark b : bookmarks) {
+				final int position = Collections.binarySearch(mBookmarks, b, mComparator);
+				if (position < 0) {
+					mBookmarks.add(- position - 1, b);
+				}
+			}
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					notifyDataSetChanged();
+				}
+			});
+		}
+
+		public void add(final Bookmark b) {
+			final int position = Collections.binarySearch(mBookmarks, b, mComparator);
+			if (position < 0) {
+				mBookmarks.add(- position - 1, b);
+			}
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					notifyDataSetChanged();
+				}
+			});
+		}
+
+		@Override
+		public int getCount() {
+			return mBookmarks.size();
+		}
+
+		@Override
+		public Bookmark getItem(int position) {
+			return mBookmarks.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			final View view = (convertView != null) ? convertView :
+					LayoutInflater.from(parent.getContext()).inflate(R.layout.yota_bookmarks_item, parent, false);
+
+			final TextView textView = ViewUtil.findTextView(view, R.id.bookmark);
+			final TextView date = ViewUtil.findTextView(view, R.id.date);
+			final TextView page = ViewUtil.findTextView(view, R.id.page);
+
+			final Bookmark bookmark = getItem(position);
+			final Date created = bookmark.getDate(Bookmark.DateType.Creation);
+			final int pageNumber = getPageNumber(bookmark);
+			if (pageNumber > 0) {
+				page.setText(mFBReader.getString(R.string.page)+" "+pageNumber);
+			}
+
+			final String bookmarkText = bookmark.getText();
+			final int length = bookmarkText.length();
+			SpannableStringBuilder style = new SpannableStringBuilder(bookmarkText);
+			style.setSpan(new BackgroundColorSpan(mFBReader.getResources().getColor(R.color.yota_higlighted_bookmark)), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			textView.setText(style);
+			date.setText(TimeUtils.getFormattedTimeAgoString(mFBReader, created.getTime()));
+
+			return view;
+		}
+
+		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			final Bookmark bookmark = getItem(position);
+			if (bookmark != null) {
+				gotoBookmark(bookmark);
+			}
+		}
+	}
+
+	private class Initializer implements Runnable {
+		public void run() {
+			if (mBook != null) {
+				for (BookmarkQuery query = new BookmarkQuery(mBook, 20); ; query = query.next()) {
+					final List<Bookmark> thisBookBookmarks = mCollection.bookmarks(query);
+					if (thisBookBookmarks.isEmpty()) {
+						break;
+					}
+					mBookmarksAdapter.addAll(thisBookBookmarks);
+				}
+			}
 		}
 	}
 }

@@ -33,4 +33,5 @@
 	<string name="permission_sync_description">The appication can start FBReader synchronisation process</string>
 	<string name="permission_sync_label">FBReader sync interface</string>
     <string name="page">page</string>
+    <string name="d_ago">%dd ago</string>
 </resources>
