@@ -968,6 +968,18 @@
 				<node name="message" value="Remove author “%s” from the list?"/>
 			</node>
 		</node>
+        <node name="editSeries">
+			<node name="addSeries" value="Add series"/>
+			<node name="editSeries" value="Edit series"/>
+			<node name="deleteSeriesButton" value="Delete"/>
+			<node name="addSeriesNameHint" value="Add series name"/>
+			<node name="addSeriesIndexHint" value="Add series index"/>
+			<node name="seriesNameLabel" value="Name:"/>
+			<node name="seriesIndexLabel" value="Series index:"/>
+			<node name="removeDialog" value="Remove series">
+				<node name="message" value="Remove series “%s”?"/>
+			</node>
+		</node>
 		<node name="fileChooser">
 			<node name="root" value="Root"/>
 			<node name="newFolder" value="New folder"/>
