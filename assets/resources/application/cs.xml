@@ -818,10 +818,10 @@
 			<node name="email" value="Pošlete nám e-mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+			<node name="googleplus" value="Připojte se ke komunitě FBReader na Google+">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
-			<node name="twitter" value="Sledujte nás na twitteru">
+			<node name="twitter" value="Sledujte nás na Twitteru">
 				<node name="url" value="https://twitter.com/fbreader"/>
 			</node>
 			<node name="facebook" value="FBReader na Facebooku">
