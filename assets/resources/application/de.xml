@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- German FBReaderJ resources, by Victor Massini -->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
@@ -342,14 +342,14 @@
 				<node name="never" value="Niemals"/>
 			</node>
 			<node name="uploadAllBooks" value="Alle Bücher auf den Server laden"/>
-			<node name="downloadAllBooks" value="Download all books from server" toBeTranslated="true"/>
-			<node name="downloadCurrentBook" value="Download current book from server" toBeTranslated="true"/>
+			<node name="downloadAllBooks" value="Alle Bücher vom Server laden"/>
+			<node name="downloadCurrentBook" value="Aktuelles Buch vom Server laden"/>
 			<node name="positions" value="Synchronisiere Leseposition"/>
 			<node name="bookmarks" value="Synchronisiere Lesezeichen"/>
 			<node name="metainfo" value="Synchronisiere Meta Informationen (Titel, Tags, usw.)"/>
-			<node name="changeCurrentBook" value="Change current book" toBeTranslated="true">
-				<node name="summaryOn" value="Open same book on all devices" toBeTranslated="true"/>
-				<node name="summaryOff" value="Just synchronise positions, do not change book automatically" toBeTranslated="true"/>
+			<node name="changeCurrentBook" value="Aktuelles Buch wechseln">
+				<node name="summaryOn" value="Dieses Buch auf allen Geräten öffnen"/>
+				<node name="summaryOff" value="Nur Lesepositionen synchronisieren, aber Bücher nicht automatisch wechseln"/>
 			</node>
 		</node>
 		<node name="directories" value="Verzeichnisse">
@@ -626,24 +626,24 @@
 			<node name="summary" value="Farben festlegen"/>
 			<node name="background" value="Hintergrund">
 				<node name="chooser">
-					<node name="solidColor" value="Solid color…" toBeTranslated="true"/>
-					<node name="predefined" value="Predefined texture…" toBeTranslated="true"/>
-					<node name="selectFile" value="Select file…" toBeTranslated="true"/>
+					<node name="solidColor" value="Einfarbig…"/>
+					<node name="predefined" value="Vordefinierte Textur…"/>
+					<node name="selectFile" value="Datei auswählen…"/>
 				</node>
 				<node name="solidColor" value="Einfarbig"/>
 				<node name="leather" value="Leder"/>
 				<node name="sepia" value="Sepia (altes Papier)"/>
 				<node name="wood" value="Holz"/>
-				<node name="sand" value="Sand" toBeTranslated="true"/>
-				<node name="hardpaper" value="Hard paper" toBeTranslated="true"/>
+				<node name="sand" value="Sand"/>
+				<node name="hardpaper" value="Hartpapier"/>
 			</node>
-			<node name="fillMode" value="Fill mode" toBeTranslated="true">
-				<node name="tile" value="Tile" toBeTranslated="true"/>
-				<node name="tileMirror" value="Mirrored tile" toBeTranslated="true"/>
-				<node name="fullscreen" value="Full screen" toBeTranslated="true"/>
-				<node name="stretch" value="Stretch to fill screen" toBeTranslated="true"/>
-				<node name="tileVertically" value="Stretch horizontally, tile vertically" toBeTranslated="true"/>
-				<node name="tileHorizontally" value="Stretch vertically, tile horizontally" toBeTranslated="true"/>
+			<node name="fillMode" value="Füllmodus">
+				<node name="tile" value="Kachel"/>
+				<node name="tileMirror" value="Gespiegelte Kachel"/>
+				<node name="fullscreen" value="Vollbild"/>
+				<node name="stretch" value="Auf Bildschirmgröße strecken"/>
+				<node name="tileVertically" value="Auf Bildschirmbreite anpassen, Höhe kacheln"/>
+				<node name="tileHorizontally" value="Auf Bildschirmhöhe anpassen, Breite kacheln"/>
 			</node>
 			<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
 			<node name="selectionForeground" value="Ausgewählter Text"/>
@@ -815,7 +815,7 @@
 			<node name="email" value="E-Mail">
 				<node name="url" value="mailto:contact@fbreader.org"/>
 			</node>
-			<node name="googleplus" value="Join FBReader Google+ community" toBeTranslated="true">
+			<node name="googleplus" value="FBReader Google+ Gruppe beitreten">
 				<node name="url" value="https://plus.google.com/communities/115894899404862312312"/>
 			</node>
 			<node name="twitter" value="Twitter">
@@ -1018,7 +1018,7 @@
 		<node name="emptyNetworkSearchResults" value="Es wurden leider keine Bücher gefunden."/>
 		<node name="videoServiceNotWorking" value="Der Videoservice ist nicht verfügbar."/>
 		<node name="videoPlayerNotFound" value="Kein installierter Videoplayer gefunden."/>
-		<node name="bookIsMissing" value="Book '%s' is not found on the device, sorry" toBeTranslated="true"/>
+		<node name="bookIsMissing" value="Buch '%s' konnte nicht auf dem Gerät gefunden werden."/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -1065,8 +1065,8 @@
 		<node name="pdf" value="PDF">
 			<node name="summary" value="PDF Bücher lesen"/>
 		</node>
-		<node name="djvu" value="DjVu" toBeTranslated="true">
-			<node name="summary" value="Read books in DjVu format" toBeTranslated="true"/>
+		<node name="djvu" value="DjVu">
+			<node name="summary" value="Bücher im  DjVu Format lesen"/>
 		</node>
 	</node>
 	<node name="drm">
