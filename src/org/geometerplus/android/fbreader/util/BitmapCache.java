@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
 public class BitmapCache {
+	public static final Bitmap NULL = Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8);
 	private final LruCache<String,Bitmap> myLruCache;
 
 	public BitmapCache() {
@@ -45,11 +46,7 @@ public class BitmapCache {
 	}
 
 	public void put(String book, Bitmap bitmap) {
-		// null is not an appropriate value for LruCache
-		if (bitmap == null) {
-			bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8);
-		}
-		myLruCache.put(book, bitmap);
+		myLruCache.put(book, bitmap != null ? bitmap : NULL);
 	}
 
 	public Map<String,Bitmap> snapshot() {
