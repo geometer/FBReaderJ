@@ -47,7 +47,10 @@ public:
 
 	void setMainTextModel();
 	void setFootnoteTextModel(const std::string &id);
+	void setPopupTextModel(const std::string &id);
+	int asideCount();
 	void unsetTextModel();
+	void unsetPopupTextModel();
 
 	void insertEndOfSectionParagraph();
 	void insertEndOfTextParagraph();
@@ -94,10 +97,13 @@ public:
 private:
 	void insertEndParagraph(ZLTextParagraph::Kind kind);
 	void flushTextBufferToParagraph();
+	shared_ptr<ZLTextModel> makeFootnoteTextModel(const std::string &id);
 
 private:
 	BookModel &myModel;
 	shared_ptr<ZLTextModel> myCurrentTextModel;
+	shared_ptr<ZLTextModel> myPopupTextModel;
+	int myAsideCount;
 	std::list<shared_ptr<ZLTextModel> > myModelsWithOpenParagraphs;
 
 	std::vector<FBTextKind> myKindStack;

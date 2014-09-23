@@ -210,10 +210,10 @@ public final class FBReaderApp extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	public void tryOpenFootnote(String id) {
-		if (Model != null) {
+	public void openInternalLink(final String id) {
+		/*if (Model != null) {
 			myJumpEndPosition = null;
-			myJumpTimeStamp = null;
+			myJumpTimeStamp = null;*/
 			BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
 				if (label.ModelId == null) {
@@ -224,20 +224,37 @@ public final class FBReaderApp extends ZLApplication {
 					}
 					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
 					setView(BookTextView);
-					getViewWidget().repaint();
-					storePosition();
 				} else {
-					ZLTextModel footnoteModel = setFootnoteModel(label.ModelId);
-					final SynchronousExecutor executor = createExecutor("footnoteText", footnoteModel.getText());
-					executor.textThenPost("footnoteButton", new Runnable() {
-						public void run() {
-							setView(FootnoteView);
-							FootnoteView.gotoPosition(0/*label.ParagraphIndex*/, 0, 0);
-							getViewWidget().repaint();
-							storePosition();
-						}
-					});
+					setFootnoteModel(label.ModelId);
+					setView(FootnoteView);
+					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
 				}
+				getViewWidget().repaint();
+				storePosition();
+			}
+		//}
+	}
+
+	public void tryOpenFootnote(final String id) {
+		if (Model != null) {
+			myJumpEndPosition = null;
+			myJumpTimeStamp = null;
+			BookModel.Label label = Model.getLabel(id);
+			if (label != null) {
+				BookModel.Label popupLabel = Model.getLabel(id + "?popup");
+				if (popupLabel != null) {
+					ZLTextModel popupModel = setFootnoteModel(popupLabel.ModelId);
+					if (popupModel != null) {
+						final SynchronousExecutor executor = createExecutor("footnoteText", popupModel.getText());
+						executor.textThenPost("footnoteButton", new Runnable() {
+							public void run() {
+								openInternalLink(id);
+							}
+						});
+						return;
+					}
+				}
+				openInternalLink(id);
 			}
 		}
 	}

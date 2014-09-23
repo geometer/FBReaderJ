@@ -144,6 +144,7 @@ private:
 	friend class XHTMLTagParagraphWithControlAction;
 	friend class XHTMLTagControlAction;
 	friend class XHTMLTagBodyAction;
+	friend class XHTMLTagAsideAction;
 	friend class XHTMLTagListAction;
 	friend class XHTMLTagItemAction;
 	friend class XHTMLTagImageAction;
