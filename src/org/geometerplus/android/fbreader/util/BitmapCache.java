@@ -25,7 +25,22 @@ import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
 public class BitmapCache {
-	public static final Bitmap NULL = Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8);
+	public static class Pair {
+		public final Bitmap Bitmap;
+		public final boolean Presented;
+
+		Pair(Bitmap bitmap) {
+			if (bitmap != NULL) {
+				Bitmap = bitmap;
+				Presented = bitmap != null;
+			} else {
+				Bitmap = null;
+				Presented = true;
+			}
+		}
+	}
+
+	private static final Bitmap NULL = Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8);
 	private final LruCache<String,Bitmap> myLruCache;
 
 	public BitmapCache() {
@@ -41,8 +56,8 @@ public class BitmapCache {
 		return (int)(Runtime.getRuntime().maxMemory() / 8);
 	}
 
-	public Bitmap get(String book) {
-		return myLruCache.get(book);
+	public Pair get(String book) {
+		return new Pair(myLruCache.get(book));
 	}
 
 	public void put(String book, Bitmap bitmap) {

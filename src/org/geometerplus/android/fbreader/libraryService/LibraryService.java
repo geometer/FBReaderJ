@@ -274,13 +274,13 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
-			if (myCoversCache.snapshot().containsKey(book)) {
-				Bitmap bitmap = myCoversCache.get(book);
-				if (bitmap.getWidth() == 1) {
-					delayed[0] = false;
+			final BitmapCache.Pair pair = myCoversCache.get(book);
+			if (pair.Presented) {
+				delayed[0] = false;
+				if (pair.Bitmap == null) {
 					return null;
 				}
-				bitmap = getResizedBitmap(bitmap, maxWidth, maxHeight);
+				final Bitmap bitmap = getResizedBitmap(pair.Bitmap, maxWidth, maxHeight);
 				if (bitmap != null) {
 					return bitmap;
 				} else {
