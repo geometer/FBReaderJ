@@ -22,12 +22,13 @@ package org.geometerplus.android.fbreader.util;
 import java.util.Map;
 
 import android.graphics.Bitmap;
+import android.support.v4.util.LruCache;
 
 public class BitmapCache {
-	private android.support.v4.util.LruCache<String,Bitmap> myLruCache;
+	private final LruCache<String,Bitmap> myLruCache;
 
 	public BitmapCache() {
-		myLruCache = new android.support.v4.util.LruCache<String,Bitmap>(getCacheSize()) {
+		myLruCache = new LruCache<String,Bitmap>(getCacheSize()) {
 			@Override
 			protected int sizeOf(String key, Bitmap bitmap) {
 				return bitmap.getRowBytes() * bitmap.getHeight();
@@ -50,8 +51,8 @@ public class BitmapCache {
 		}
 		myLruCache.put(book, bitmap);
 	}
-	
-	public Map<String, Bitmap> snapshot() {
+
+	public Map<String,Bitmap> snapshot() {
 		return myLruCache.snapshot();
 	}
 
