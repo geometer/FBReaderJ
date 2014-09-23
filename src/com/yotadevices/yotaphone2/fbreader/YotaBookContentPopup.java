@@ -1,5 +1,6 @@
 package com.yotadevices.yotaphone2.fbreader;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -10,34 +11,35 @@ import android.text.SpannableStringBuilder;
 import android.text.style.BackgroundColorSpan;
 import android.util.TypedValue;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.yotadevices.sdk.Drawer;
+import com.yotadevices.sdk.utils.EinkUtils;
 import com.yotadevices.yotaphone2.fbreader.util.TimeUtils;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.ZLTreeAdapter;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.ViewUtil;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.book.BookmarkQuery;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import java.util.Collections;
@@ -47,12 +49,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class YotaBookContentPopup {
+	private final static int ACTION_BAR_HEIGHT = 72;
+
 	private final android.widget.PopupWindow mPopup;
 	private final View mRootView;
 	private final View mPopupView;
 	private ListView mContentsListView;
 	private ListView mBookmarksListView;
-	private final FBReader mFBReader;
+	private final Context mFBReader;
 	private TOCAdapter myAdapter;
 
 	private volatile Book mBook;
@@ -66,19 +70,25 @@ public class YotaBookContentPopup {
 	private ZLTextView mBookTextView;
 
 	private Handler mHandler;
+	private final boolean mOnBackScreen;
 
-	public YotaBookContentPopup(FBReader fbreader, View root) {
+	public YotaBookContentPopup(Context fbreader, View root, boolean onBackScreen) {
 		mRootView = root;
 		mFBReader = fbreader;
 		mHandler = new Handler(Looper.getMainLooper());
+		mOnBackScreen = onBackScreen;
 
-		mPopupView = View.inflate(fbreader, R.layout.yota_book_content_popup, null);
+		mPopupView = View.inflate(fbreader, onBackScreen ? R.layout.yota_bs_book_content_popup :
+				R.layout.yota_book_content_popup, null);
 
 		mContentsListView = (ListView)mPopupView.findViewById(R.id.contents_list);
 		mContentsListView.setVerticalScrollBarEnabled(false);
 		mBookmarksListView = (ListView)mPopupView.findViewById(R.id.bookmarks_list);
 		mBookmarksListView.setVerticalScrollBarEnabled(false);
-
+		if (mOnBackScreen) {
+			mBookmarksListView.setDivider(new ColorDrawable(Color.BLACK));
+			mBookmarksListView.setDividerHeight(3);
+		}
 		mContents = (RadioButton)mPopupView.findViewById(R.id.contents);
 		mContents.setOnClickListener(mOnTabSwitch);
 
@@ -94,9 +104,17 @@ public class YotaBookContentPopup {
 		mPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override
 			public void onDismiss() {
-				mFBReader.hideBars();
+				hideBars();
 			}
 		});
+	}
+
+	private void hideBars() {
+		if (mFBReader instanceof FBReader) {
+			((FBReader)mFBReader).hideBars();
+		} else {
+			FBReaderApp.Instance().runAction(ActionCode.TOGGLE_BARS);
+		}
 	}
 
 	private void runOnUiThread(Runnable action) {
@@ -110,8 +128,12 @@ public class YotaBookContentPopup {
 		TOCTree treeToSelect = readerApp.getCurrentTOCElement();
 		myAdapter.selectItem(treeToSelect);
 		mBookTextView = readerApp.getTextView();
-		mPopup.showAsDropDown(mRootView, 0, 0);
-
+		if (mOnBackScreen) {
+			mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, ACTION_BAR_HEIGHT);
+		}
+		else {
+			mPopup.showAsDropDown(mRootView, 0, 0);
+		}
 		mCollection.bindToService(mFBReader, new Runnable() {
 			public void run() {
 				if (mBook != null) {
@@ -180,10 +202,15 @@ public class YotaBookContentPopup {
 		bookmark.markAsAccessed();
 		mCollection.saveBookmark(bookmark);
 		final Book book = mCollection.getBookById(bookmark.getBookId());
-		if (book != null) {
-			FBReader.openBookActivity(mFBReader, book, bookmark);
-		} else {
-			UIUtil.showErrorMessage(mFBReader, "cannotOpenBook");
+		if (!mOnBackScreen) {
+			if (book != null) {
+				FBReader.openBookActivity(mFBReader, book, bookmark);
+			} else {
+				//UIUtil.showErrorMessage(mFBReader, "cannotOpenBook");
+			}
+		}
+		else {
+			((FBReaderApp)FBReaderApp.Instance()).openBook(book, bookmark, null);
 		}
 		hide();
 	}
@@ -206,6 +233,9 @@ public class YotaBookContentPopup {
 			//view.setBackgroundColor(tree == mySelectedItem ? 0xff808080 : 0);
 			TextView chapter = ViewUtil.findTextView(view, R.id.toc_tree_item_text);
 			TextView pageNumber = ViewUtil.findTextView(view, R.id.page_number);
+			if (mOnBackScreen) {
+				pageNumber.setTextColor(Color.BLACK);
+			}
 			chapter.setText(tree.getText());
 			chapter.setPadding(70 * (tree.Level - 1), chapter.getPaddingTop(), 0, chapter.getPaddingBottom());
 			if (tree.Level > 1) {
@@ -308,7 +338,10 @@ public class YotaBookContentPopup {
 			final TextView textView = ViewUtil.findTextView(view, R.id.bookmark);
 			final TextView date = ViewUtil.findTextView(view, R.id.date);
 			final TextView page = ViewUtil.findTextView(view, R.id.page);
-
+			if (mOnBackScreen) {
+				date.setTextColor(Color.BLACK);
+				page.setTextColor(Color.BLACK);
+			}
 			final Bookmark bookmark = getItem(position);
 			final Date created = bookmark.getDate(Bookmark.DateType.Creation);
 			final int pageNumber = getPageNumber(bookmark);
@@ -319,7 +352,13 @@ public class YotaBookContentPopup {
 			final String bookmarkText = bookmark.getText();
 			final int length = bookmarkText.length();
 			SpannableStringBuilder style = new SpannableStringBuilder(bookmarkText);
-			style.setSpan(new BackgroundColorSpan(mFBReader.getResources().getColor(R.color.yota_higlighted_bookmark)), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			if (!mOnBackScreen) {
+				style.setSpan(new BackgroundColorSpan(mFBReader.getResources().getColor(R.color.yota_higlighted_bookmark)), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			else {
+				textView.setTextColor(Color.WHITE);
+				style.setSpan(new BackgroundColorSpan(Color.BLACK), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
 			textView.setText(style);
 			date.setText(TimeUtils.getFormattedTimeAgoString(mFBReader, created.getTime()));
 

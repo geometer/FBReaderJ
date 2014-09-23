@@ -40,7 +40,7 @@ public class FontSettingsPopup {
     private final FBReaderApp mReader;
     private final OnFontChangeListener mListener;
 
-    private final static int ACTION_BAR_HEIGHT = 59;
+    private final static int ACTION_BAR_HEIGHT = 72;
     private final static float[] FONT_SIZES = {14, 16, 20, 21.3f, 24};
 
     private ArrayList<Pair<TextView, ImageView>> mFontViews = new ArrayList<Pair<TextView, ImageView>>(5);
@@ -135,7 +135,7 @@ public class FontSettingsPopup {
         setupFontStyle();
         setupTheme();
         mPopup.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, ACTION_BAR_HEIGHT);
-        EinkUtils.performSingleUpdate(mPopupView, Drawer.Waveform.WAVEFORM_GC_FULL);
+        //EinkUtils.performSingleUpdate(mPopupView, Drawer.Waveform.WAVEFORM_GC_FULL);
     }
 
     private void setupFontStyle() {

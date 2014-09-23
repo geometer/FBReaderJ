@@ -32,9 +32,10 @@ public class BSReadingActionBar {
     private final ImageView mFontIcon;
     private final ImageView mBookmarkIcon;
     private final ImageView mBackButton;
-    private final ImageView mLogo;
+	private final ImageView mContentsButton;
     private final View mTitle;
     private FontSettingsPopup mFontSettingsPopup;
+	private YotaBookContentPopup mContentsPopup;
     private final FBReaderApp mReader;
 
     private TextView mBookAuthor;
@@ -52,17 +53,17 @@ public class BSReadingActionBar {
         mFontIcon.setOnClickListener(fontClickListener);
         mBookmarkIcon = (ImageView)layout.findViewById(R.id.bookmark_action);
         mBookmarkIcon.setOnClickListener(mBookmarkClickListener);
+	    mContentsButton = (ImageView)layout.findViewById(R.id.search_action);
+		mContentsButton.setOnClickListener(mContentsClickListener);
 
         mBookAuthor = (TextView)layout.findViewById(R.id.book_author);
         mBookTitle =  (TextView)layout.findViewById(R.id.book_title);
 
         mTitle = layout.findViewById(R.id.title);
         mBackButton = (ImageView)layout.findViewById(R.id.back_action);
-        mLogo = (ImageView)layout.findViewById(R.id.logo_action);
 
         mTitle.setOnClickListener(mOpenCollection);
         mBackButton.setOnClickListener(mOpenCollection);
-        mLogo.setOnClickListener(mOpenCollection);
 
         Book currentBook = mReader.Collection.getRecentBook(0);
         if (currentBook != null) {
@@ -158,6 +159,21 @@ public class BSReadingActionBar {
             }
         }
     };
+
+	private View.OnClickListener mContentsClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (mContentsPopup == null) {
+				mContentsPopup = new YotaBookContentPopup(mContext, mRootView, true);
+			}
+			if (mContentsPopup.isShowing()) {
+				mContentsPopup.hide();
+			}
+			else {
+				mContentsPopup.show(mReader);
+			}
+		}
+	};
 
     private View.OnClickListener mOpenCollection = new View.OnClickListener() {
         @Override

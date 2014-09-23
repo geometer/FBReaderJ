@@ -907,7 +907,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 		final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
 		for (ZLTextHighlighting h : hilites) {
-			final ZLColor bgColor = h.getBackgroundColor();
+			final ZLColor bgColor = DeviceType.Instance().isYotaPhone() ? getHighlightingBackgroundColor() : h.getBackgroundColor();
 			if (bgColor == null) {
 				continue;
 			}
@@ -958,11 +958,32 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final int areaX = area.XStart;
 				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalAlign(metrics());
 				if (element instanceof ZLTextWord) {
-					drawWord(
-						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
-						mySelection.isAreaSelected(area)
-							? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
-					);
+					boolean highlightedWord = false;
+					for (ZLTextHighlighting highlighting : myHighlightings) {
+						if (highlighting.intersects(page)) {
+							ZLTextElementArea startArea = highlighting.getStartArea(page);
+							ZLTextElementArea endArea = highlighting.getEndArea(page);
+							if (startArea != null && endArea != null) {
+								if (areaX >= startArea.XStart && areaY >=startArea.YStart &&
+										areaY <= endArea.YEnd)
+								{
+									highlightedWord = true;
+									break;
+								}
+							}
+						}
+					}
+					if (highlightedWord) {
+						drawWord(
+								areaX, areaY, (ZLTextWord) element, charIndex, -1, false, getHighlightingForegroundColor());
+					}
+					else {
+						drawWord(
+								areaX, areaY, (ZLTextWord) element, charIndex, -1, false,
+								mySelection.isAreaSelected(area)
+										? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+						);
+					}
 				} else if (element instanceof ZLTextImageElement) {
 					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
 					context.drawImage(

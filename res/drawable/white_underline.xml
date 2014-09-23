@@ -10,7 +10,7 @@
             <solid android:color="@android:color/black"/>
             <stroke
                 android:width="4dp"
-                android:color="@android:color/black"/>
+                android:color="@android:color/white"/>
         </shape>
     </item>
 </layer-list>

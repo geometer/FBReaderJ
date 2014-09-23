@@ -74,6 +74,7 @@ public class ColorProfile {
 	public final ZLColorOption SelectionBackgroundOption;
 	public final ZLColorOption SelectionForegroundOption;
 	public final ZLColorOption HighlightingOption;
+	public final ZLColorOption HighlightingForegroundOption;
 	public final ZLColorOption RegularTextOption;
 	public final ZLColorOption HyperlinkTextOption;
 	public final ZLColorOption VisitedHyperlinkTextOption;
@@ -89,6 +90,7 @@ public class ColorProfile {
 		SelectionBackgroundOption.setValue(base.SelectionBackgroundOption.getValue());
 		SelectionForegroundOption.setValue(base.SelectionForegroundOption.getValue());
 		HighlightingOption.setValue(base.HighlightingOption.getValue());
+		HighlightingForegroundOption.setValue(base.HighlightingForegroundOption.getValue());
 		RegularTextOption.setValue(base.RegularTextOption.getValue());
 		HyperlinkTextOption.setValue(base.HyperlinkTextOption.getValue());
 		VisitedHyperlinkTextOption.setValue(base.VisitedHyperlinkTextOption.getValue());
@@ -114,6 +116,8 @@ public class ColorProfile {
 				createOption(name, "SelectionForeground", 255, 255, 220);
 			HighlightingOption =
 				createOption(name, "Highlighting", 96, 96, 128);
+			HighlightingForegroundOption =
+				createOption(name, "HighlightingForeground", 96, 96, 128);
 			RegularTextOption =
 				createOption(name, "Text", 192, 192, 192);
 			HyperlinkTextOption =
@@ -140,6 +144,8 @@ public class ColorProfile {
                     createOption(name, "SelectionForeground", 255, 255, 220);
             HighlightingOption =
                     createOption(name, "Highlighting", 96, 96, 128);
+			HighlightingForegroundOption =
+					createOption(name, "HighlightingForeground", 96, 96, 128);
             RegularTextOption =
                     createOption(name, "Text", 192, 192, 192);
             HyperlinkTextOption =
@@ -166,6 +172,8 @@ public class ColorProfile {
                     createOption(name, "SelectionForeground", 0, 0, 0);
             HighlightingOption =
                     createOption(name, "Highlighting", 255, 192, 128);
+			HighlightingForegroundOption =
+					createOption(name, "HighlightingForeground", 96, 96, 128);
             RegularTextOption =
                     createOption(name, "Text", 0, 0, 0);
             HyperlinkTextOption =
@@ -192,6 +200,8 @@ public class ColorProfile {
                     createOption(name, "SelectionForeground", 255, 255, 220);
             HighlightingOption =
                     createOption(name, "Highlighting", 255, 192, 128);
+			HighlightingForegroundOption =
+					createOption(name, "HighlightingForeground", 96, 96, 128);
             RegularTextOption =
                     createOption(name, "Text", 0, 0, 0);
             HyperlinkTextOption =
@@ -218,6 +228,8 @@ public class ColorProfile {
                     createOption(name, "SelectionForeground", 255, 255, 255);
             HighlightingOption =
                     createOption(name, "Highlighting", 0, 0, 0);
+			HighlightingForegroundOption =
+					createOption(name, "HighlightingForeground", 255, 255, 255);
             RegularTextOption =
                     createOption(name, "Text", 0, 0, 0);
             HyperlinkTextOption =
@@ -244,6 +256,8 @@ public class ColorProfile {
                     createOption(name, "SelectionForeground", 0, 0, 0);
             HighlightingOption =
                     createOption(name, "Highlighting", 255, 255, 255);
+			HighlightingForegroundOption =
+					createOption(name, "HighlightingForeground", 0, 0, 0);
             RegularTextOption =
                     createOption(name, "Text", 255, 255, 255);
             HyperlinkTextOption =
@@ -270,6 +284,8 @@ public class ColorProfile {
                     createOption(name, "SelectionForeground", 255, 255, 220);
             HighlightingOption =
                     createOption(name, "Highlighting", 255, 192, 128);
+			HighlightingForegroundOption =
+					createOption(name, "HighlightingForeground", 96, 96, 128);
             RegularTextOption =
                     createOption(name, "Text", 0, 0, 0);
             HyperlinkTextOption =

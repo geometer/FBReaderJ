@@ -27,11 +27,20 @@ public class HighlightingStyle {
 
 	private String myName;
 	private ZLColor myBackgroundColor;
+	private ZLColor myForegroundColor;
 
 	HighlightingStyle(int id, String name, ZLColor bgColor) {
 		Id = id;
 		myName = name;
 		myBackgroundColor = bgColor;
+		myForegroundColor = new ZLColor(0,0,0);
+	}
+
+	HighlightingStyle(int id, String name, ZLColor bgColor, ZLColor fgColor) {
+		Id = id;
+		myName = name;
+		myBackgroundColor = bgColor;
+		myForegroundColor = fgColor;
 	}
 
 	private String defaultName() {
@@ -52,8 +61,10 @@ public class HighlightingStyle {
 	public ZLColor getBackgroundColor() {
 		return myBackgroundColor;
 	}
+	public ZLColor getForegroundColor() { return myForegroundColor; }
 
 	public void setBackgroundColor(ZLColor bgColor) {
 		myBackgroundColor = bgColor;
 	}
+	public void setForegroundColor(ZLColor fgColor) { myForegroundColor = fgColor; }
 }

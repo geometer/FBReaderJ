@@ -7,28 +7,23 @@
     android:background="@android:color/white">
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
             android:layout_height="47dp"
             android:orientation="horizontal">
             <ImageView
                 android:id="@+id/back_action"
-                android:layout_marginLeft="3dp"
-                android:src="@drawable/action_back"
-                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/yota_bs_action_back"
+                android:layout_gravity="top"
                 android:layout_width="wrap_content"
-                android:layout_height="47dp" />
-            <ImageView
-                android:id="@+id/logo_action"
-                android:layout_marginLeft="2dp"
-                android:src="@drawable/r_logo"
-                android:layout_gravity="center_vertical"
-                android:layout_width="19.3dp"
-                android:layout_height="47dp" />
+                android:paddingRight="42dp"
+                android:layout_height="36dp" />
             <LinearLayout
                 android:id="@+id/title"
-                android:layout_marginLeft="6dp"
-                android:layout_width="198dp"
-                android:layout_height="47dp"
-                android:gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:layout_width="142dp"
+                android:layout_height="36dp"
+                android:gravity="top"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/book_author"
@@ -36,7 +31,7 @@
                     android:singleLine="true"
                     android:fontFamily="PT Sans Yota"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     android:textColor="@android:color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -46,7 +41,7 @@
                     android:singleLine="true"
                     android:fontFamily="PT Sans Yota"
                     android:textStyle="bold"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     android:textColor="@android:color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -54,19 +49,24 @@
             <ImageView
                 android:id="@+id/font_action"
                 android:src="@drawable/font_action"
-                android:layout_marginLeft="46dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="top"
                 android:scaleType="center"
-                android:layout_width="35dp"
-                android:layout_height="47dp" />
+                android:layout_width="42dp"
+                android:layout_height="36dp" />
+            <ImageView
+                android:id="@+id/search_action"
+                android:src="@drawable/yota_bs_action_search"
+                android:layout_gravity="top"
+                android:scaleType="center"
+                android:layout_width="42dp"
+                android:layout_height="36dp" />
             <ImageView
                 android:id="@+id/bookmark_action"
                 android:src="@drawable/bookmark_action"
-                android:layout_marginLeft="3dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="top"
                 android:scaleType="center"
-                android:layout_width="40dp"
-                android:layout_height="47dp" />
+                android:layout_width="42dp"
+                android:layout_height="36dp" />
         </LinearLayout>
     <ImageView
         android:layout_width="match_parent"

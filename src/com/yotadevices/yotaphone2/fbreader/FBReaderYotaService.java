@@ -49,7 +49,6 @@ import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
@@ -152,6 +151,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         Log.d(TAG, "--- init book view:" + refresh);
         if (mWidget != null) {
             mWidget.setBook(myCurrentBook);
+	        mWidget.postInvalidate();
         }
     }
 
@@ -193,6 +193,10 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
             //myBackScreenIsActive = new ViewOptions().YotaDrawOnBackScreen.getValue();
         }
     }
+
+	public void performSingleFullUpdate() {
+		EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
+	}
 
     private BookCollectionShadow getCollection() {
         return (BookCollectionShadow) myFBReaderApp.Collection;
@@ -332,7 +336,7 @@ public class FBReaderYotaService extends BSActivity implements ZLApplicationWind
         public void fontChanged() {
             hideActionBar();
             hideStatusBar();
-            EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
+            //EinkUtils.performSingleUpdate(mRootView, Drawer.Waveform.WAVEFORM_GC_FULL);
         }
     };
 
