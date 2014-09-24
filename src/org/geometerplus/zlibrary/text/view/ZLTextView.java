@@ -965,6 +965,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private void buildInfos(ZLTextPage page, ZLTextWordCursor start, ZLTextWordCursor result) {
+		final long startTime = System.currentTimeMillis();
 		result.setCursor(start);
 		int textAreaHeight = page.getTextHeight();
 		page.LineInfos.clear();
@@ -1022,6 +1023,16 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			&& getTextStyle().allowHyphenations();
 	}
 
+	private volatile ZLTextWord myCachedWord;
+	private volatile ZLTextHyphenationInfo myCachedInfo;
+	private final synchronized ZLTextHyphenationInfo getHyphenationInfo(ZLTextWord word) {
+		if (myCachedWord != word) {
+			myCachedWord = word;
+			myCachedInfo = ZLTextHyphenator.Instance().getInfo(word);
+		}
+		return myCachedInfo;
+	}
+
 	private ZLTextLineInfo processTextLine(
 		ZLTextPage page,
 		ZLTextParagraphCursor paragraphCursor,
@@ -1030,6 +1041,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int endIndex,
 		ZLTextLineInfo previousInfo
 	) {
+		final long startTime = System.currentTimeMillis();
 		final ZLPaintContext context = getContext();
 		final ZLTextLineInfo info = new ZLTextLineInfo(paragraphCursor, startIndex, startCharIndex, getTextStyle());
 		final ZLTextLineInfo cachedInfo = myLineInfoCache.get(info);
@@ -1149,36 +1161,53 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				int spaceLeft = maxWidth - newWidth;
 				if ((word.Length > 3 && spaceLeft > 2 * context.getSpaceWidth())
 					|| info.EndElementIndex == startIndex) {
-					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
-					int hyphenationPosition = word.Length - 1;
+					ZLTextHyphenationInfo hyphenationInfo = getHyphenationInfo(word);
+					int hyphenationPosition = currentCharIndex;
 					int subwordWidth = 0;
-					for (; hyphenationPosition > currentCharIndex; hyphenationPosition--) {
-						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
-							subwordWidth = getWordWidth(
+					for (int right = word.Length - 1, left = currentCharIndex; right > left; ) {
+						final int mid = (right + left + 1) / 2;
+						int m1 = mid;
+						while (m1 > left && !hyphenationInfo.isHyphenationPossible(m1)) {
+							--m1;
+						}
+						if (m1 > left) {
+							final int w = getWordWidth(
 								word,
 								currentCharIndex,
-								hyphenationPosition - currentCharIndex,
-								word.Data[word.Offset + hyphenationPosition - 1] != '-'
+								m1 - currentCharIndex,
+								word.Data[word.Offset + m1 - 1] != '-'
 							);
-							if (subwordWidth <= spaceLeft) {
-								break;
+							if (w < spaceLeft) {
+								left = mid;
+								hyphenationPosition = m1;
+								subwordWidth = w;
+							} else {
+								right = mid - 1;
 							}
+						} else {
+							left = mid;
 						}
 					}
 					if (hyphenationPosition == currentCharIndex && info.EndElementIndex == startIndex) {
-						hyphenationPosition = word.Length == currentCharIndex + 1 ? word.Length : word.Length - 1;
-						subwordWidth = getWordWidth(word, currentCharIndex, word.Length - currentCharIndex, false);
-						for (; hyphenationPosition > currentCharIndex + 1; hyphenationPosition--) {
-							subwordWidth = getWordWidth(
+						subwordWidth = getWordWidth(word, currentCharIndex, 1, false);
+						int right = word.Length == currentCharIndex + 1 ? word.Length : word.Length - 1;
+						int left = currentCharIndex + 1;
+						while (right > left) {
+							final int mid = (right + left + 1) / 2;
+							final int w = getWordWidth(
 								word,
 								currentCharIndex,
-								hyphenationPosition - currentCharIndex,
-								word.Data[word.Offset + hyphenationPosition - 1] != '-'
+								mid - currentCharIndex,
+								word.Data[word.Offset + mid - 1] != '-'
 							);
-							if (subwordWidth <= spaceLeft) {
-								break;
+							if (w <= spaceLeft) {
+								left = mid;
+								subwordWidth = w;
+							} else {
+								right = mid - 1;
 							}
 						}
+						hyphenationPosition = right;
 					}
 					if (hyphenationPosition > currentCharIndex) {
 						info.IsVisible = true;
