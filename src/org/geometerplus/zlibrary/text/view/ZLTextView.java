@@ -889,6 +889,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		for (int wordIndex = info.RealStartElementIndex; wordIndex != endElementIndex && index < to; ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			final ZLTextElementArea area = page.TextElementMap.get(index);
+			final ZLTextElementArea toarea = page.TextElementMap.get(to - 1);
 			if (element == area.Element) {
 				++index;
 				if (area.ChangeStyle) {
@@ -897,10 +898,23 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final int areaX = area.XStart;
 				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalAlign(metrics());
 				if (element instanceof ZLTextWord) {
-					drawWord(
-						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
-						mySelection.isAreaSelected(area)
-							? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+					boolean hlword = false;
+					for (ZLTextHighlighting hilite : myHighlightings) {
+						if (hilite.intersects(page)) {
+							final ZLTextElementArea hiliteStartArea = hilite.getStartArea(page);
+							final ZLTextElementArea hiliteEndArea = hilite.getEndArea(page);
+							if (hiliteStartArea != null && hiliteEndArea != null &&
+									(hiliteStartArea.compareTo(toarea) <= 0) && 
+									(hiliteEndArea.compareTo(area) >= 0)) {
+								hlword = true;
+								break;
+							}
+						}
+					}
+					hlword = hlword || mySelection.isAreaSelected(area); 
+					drawWord(							
+						areaX, areaY, (ZLTextWord)element, charIndex, -1, false, hlword ?
+								getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
 					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
