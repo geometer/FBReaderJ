@@ -210,36 +210,29 @@ public final class FBReaderApp extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	public void openInternalLink(final String id) {
-		/*if (Model != null) {
-			myJumpEndPosition = null;
-			myJumpTimeStamp = null;*/
-			BookModel.Label label = Model.getLabel(id);
-			if (label != null) {
-				if (label.ModelId == null) {
-					if (getTextView() == BookTextView) {
-						addInvisibleBookmark();
-						myJumpEndPosition = new ZLTextFixedPosition(label.ParagraphIndex, 0, 0);
-						myJumpTimeStamp = new Date();
-					}
-					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
-					setView(BookTextView);
-				} else {
-					setFootnoteModel(label.ModelId);
-					setView(FootnoteView);
-					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
-				}
-				getViewWidget().repaint();
-				storePosition();
+	public void openInternalLink(BookModel.Label label) {
+		if (label.ModelId == null) {
+			if (getTextView() == BookTextView) {
+				addInvisibleBookmark();
+				myJumpEndPosition = new ZLTextFixedPosition(label.ParagraphIndex, 0, 0);
+				myJumpTimeStamp = new Date();
 			}
-		//}
+			BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
+			setView(BookTextView);
+		} else {
+			setFootnoteModel(label.ModelId);
+			setView(FootnoteView);
+			FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
+		}
+		getViewWidget().repaint();
+		storePosition();
 	}
 
 	public void tryOpenFootnote(final String id) {
 		if (Model != null) {
 			myJumpEndPosition = null;
 			myJumpTimeStamp = null;
-			BookModel.Label label = Model.getLabel(id);
+			final BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
 				BookModel.Label popupLabel = Model.getLabel(id + "?popup");
 				if (popupLabel != null) {
@@ -248,13 +241,13 @@ public final class FBReaderApp extends ZLApplication {
 						final SynchronousExecutor executor = createExecutor("footnoteText", popupModel.getText());
 						executor.textThenPost("footnoteButton", new Runnable() {
 							public void run() {
-								openInternalLink(id);
+								openInternalLink(label);
 							}
 						});
 						return;
 					}
 				}
-				openInternalLink(id);
+				openInternalLink(label);
 			}
 		}
 	}

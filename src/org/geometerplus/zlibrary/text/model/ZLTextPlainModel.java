@@ -372,10 +372,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 
 	public final String getText() {
 		String text = new String();
-		int endIndex = myParagraphsNumber;
-		int index = 0;
-		final EntryIteratorImpl it = new EntryIteratorImpl(index);
-		for (index = 0; index < endIndex; index++) {
+		final EntryIteratorImpl it = new EntryIteratorImpl(0);
+		for (int index = 0; index < myParagraphsNumber; index++) {
 			it.reset(index);
 			while (it.next()) {
 				if (it.getType() == ZLTextParagraph.Entry.TEXT) {
