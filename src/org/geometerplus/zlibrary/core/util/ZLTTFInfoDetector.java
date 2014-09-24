@@ -26,6 +26,7 @@ public class ZLTTFInfoDetector {
 	private static final List<String> STYLES = Arrays.asList(
 		"bold italic",
 		"bold oblique",
+		"roman",
 		"regular",
 		"bold",
 		"italic",
