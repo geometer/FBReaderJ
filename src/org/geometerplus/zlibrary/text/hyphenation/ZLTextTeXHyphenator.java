@@ -81,7 +81,6 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 	}
 
 	public void hyphenate(char[] stringToHyphenate, boolean[] mask, int length) {
-		System.err.println("++ hyphenate " + length);
 		if (myPatternTable.isEmpty()) {
 			for (int i = 0; i < length - 1; i++) {
 				mask[i] = false;
@@ -110,6 +109,5 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		for (int i = 0; i < length - 1; i++) {
 			mask[i] = (values[i + 1] % 2) == 1;
 		}
-		System.err.println("-- hyphenate " + length);
 	}
 }
