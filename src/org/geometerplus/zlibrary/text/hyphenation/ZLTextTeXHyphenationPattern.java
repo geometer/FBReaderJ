@@ -20,10 +20,10 @@
 package org.geometerplus.zlibrary.text.hyphenation;
 
 public final class ZLTextTeXHyphenationPattern {
-	int myLength;
-	final char[] mySymbols;
+	private int myLength;
+	private final char[] mySymbols;
 	private final byte[] myValues;
-	int myHashCode;
+	private int myHashCode;
 
 	void update(char[] pattern, int offset, int length) {
 		// We assert
@@ -79,6 +79,15 @@ public final class ZLTextTeXHyphenationPattern {
 		}
 	}
 
+	void reset(int length) {
+		myLength = length;
+		myHashCode = 0;
+	}
+
+	int length() {
+		return myLength;
+	}
+
 	public boolean equals(Object o) {
 		ZLTextTeXHyphenationPattern pattern = (ZLTextTeXHyphenationPattern)o;
 		int len = myLength;
@@ -108,18 +117,6 @@ public final class ZLTextTeXHyphenationPattern {
 			myHashCode = hash;
 		}
 		return hash;
-	}
-
-	public int getLength() {
-		return myLength;
-	}
-
-	public char[] getSymbols() {
-		return mySymbols;
-	}
-
-	public byte[] getValues() {
-		return myValues;
 	}
 
 	@Override
