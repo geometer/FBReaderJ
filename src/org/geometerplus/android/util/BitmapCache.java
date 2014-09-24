@@ -22,7 +22,6 @@ package org.geometerplus.android.util;
 import java.util.Map;
 
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.support.v4.util.LruCache;
 
 public class BitmapCache {
@@ -34,13 +33,7 @@ public class BitmapCache {
 		}
 
 		int size() {
-			if (Build.VERSION.SDK_INT >= 19) {
-				return Bitmap.getAllocationByteCount();
-			} else if (Build.VERSION.SDK_INT >= 12) {
-				return Bitmap.getByteCount();
-			} else {
-				return Bitmap.getRowBytes() * Bitmap.getHeight();
-			}
+			return Bitmap.getRowBytes() * Bitmap.getHeight();
 		}
 	}
 
