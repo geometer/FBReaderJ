@@ -50,7 +50,8 @@ public class FileChooserAdapter extends TreeAdapter {
             summaryView.setText(tree.getSummary());
         }
         summaryView.setTextColor(Color.GRAY);
-        nameView.setTypeface(Typeface.create("PT Sans Yota", Typeface.NORMAL));
+	    summaryView.setTypeface(Typeface.create("PT Sans Yota", Typeface.NORMAL));
+        nameView.setTypeface(Typeface.create("PT Sans Yota", Typeface.BOLD));
         return view;
     }
 

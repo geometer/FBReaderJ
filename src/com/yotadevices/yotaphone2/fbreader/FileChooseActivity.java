@@ -2,6 +2,8 @@ package com.yotadevices.yotaphone2.fbreader;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
@@ -48,6 +50,8 @@ public class FileChooseActivity extends TreeActivity<LibraryTree> implements IBo
         ActionBar ab = getActionBar();
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
+	    ab.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+	    ab.setLogo(new ColorDrawable(Color.WHITE));
     }
 
     private synchronized void deleteRootTree() {
