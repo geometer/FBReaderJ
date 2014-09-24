@@ -29,10 +29,14 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 	private final HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern> myPatternTable =
 		new HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern>();
+	private int myMaxPatternLength;
 	private String myLanguage;
 
 	void addPattern(ZLTextTeXHyphenationPattern pattern) {
 		myPatternTable.put(pattern, pattern);
+		if (myMaxPatternLength < pattern.length()) {
+			myMaxPatternLength = pattern.length();
+		}
 	}
 
 	private List<String> myLanguageCodes;
@@ -73,9 +77,11 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 
 	public void unload() {
 		myPatternTable.clear();
+		myMaxPatternLength = 0;
 	}
 
 	public void hyphenate(char[] stringToHyphenate, boolean[] mask, int length) {
+		System.err.println("++ hyphenate " + length);
 		if (myPatternTable.isEmpty()) {
 			for (int i = 0; i < length - 1; i++) {
 				mask[i] = false;
@@ -89,11 +95,10 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		ZLTextTeXHyphenationPattern pattern =
 			new ZLTextTeXHyphenationPattern(stringToHyphenate, 0, length, false);
 		for (int offset = 0; offset < length - 1; offset++) {
-			int len = length - offset + 1;
+			int len = Math.min(length - offset, myMaxPatternLength) + 1;
 			pattern.update(stringToHyphenate, offset, len - 1);
 			while (--len > 0) {
-				pattern.myLength = len;
-				pattern.myHashCode = 0;
+				pattern.reset(len);
 				ZLTextTeXHyphenationPattern toApply =
 					(ZLTextTeXHyphenationPattern)table.get(pattern);
 				if (toApply != null) {
@@ -105,5 +110,6 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		for (int i = 0; i < length - 1; i++) {
 			mask[i] = (values[i + 1] % 2) == 1;
 		}
+		System.err.println("-- hyphenate " + length);
 	}
 }
