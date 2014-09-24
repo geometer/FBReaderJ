@@ -51,7 +51,7 @@ public class LibraryService extends Service {
 	static final String BOOK_EVENT_ACTION = "fbreader.library_service.book_event";
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
-	private final BitmapCache myCoversCache = new BitmapCache();
+	private final BitmapCache myCoversCache = new BitmapCache(0.2f);
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
@@ -274,13 +274,13 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
-			final BitmapCache.Pair pair = myCoversCache.get(book);
-			if (pair.Presented) {
+			final BitmapCache.Container container = myCoversCache.get(book);
+			if (container != null) {
 				delayed[0] = false;
-				if (pair.Bitmap == null) {
+				if (container.Bitmap == null) {
 					return null;
 				}
-				final Bitmap bitmap = getResizedBitmap(pair.Bitmap, maxWidth, maxHeight);
+				final Bitmap bitmap = getResizedBitmap(container.Bitmap, maxWidth, maxHeight);
 				if (bitmap != null) {
 					return bitmap;
 				} else {

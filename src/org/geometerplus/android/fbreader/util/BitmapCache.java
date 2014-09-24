@@ -22,53 +22,55 @@ package org.geometerplus.android.fbreader.util;
 import java.util.Map;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.v4.util.LruCache;
 
 public class BitmapCache {
-	public static class Pair {
+	public static class Container {
 		public final Bitmap Bitmap;
-		public final boolean Presented;
 
-		Pair(Bitmap bitmap) {
-			if (bitmap != NULL) {
-				Bitmap = bitmap;
-				Presented = bitmap != null;
+		private Container(Bitmap bitmap) {
+			Bitmap = bitmap;
+		}
+
+		int size() {
+			if (Build.VERSION.SDK_INT >= 19) {
+				return Bitmap.getAllocationByteCount();
+			} else if (Build.VERSION.SDK_INT >= 12) {
+				return Bitmap.getByteCount();
 			} else {
-				Bitmap = null;
-				Presented = true;
+				return Bitmap.getRowBytes() * Bitmap.getHeight();
 			}
 		}
 	}
 
-	private static final Bitmap NULL = Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8);
-	private final LruCache<String,Bitmap> myLruCache;
+	private static final Container NULL = new Container(null) {
+		@Override
+		int size() {
+			return 1;
+		}
+	};
 
-	public BitmapCache() {
-		myLruCache = new LruCache<String,Bitmap>(getCacheSize()) {
+	private final LruCache<String,Container> myLruCache;
+
+	public BitmapCache(float factor) {
+		myLruCache = new LruCache<String,Container>((int)(factor * Runtime.getRuntime().maxMemory())) {
 			@Override
-			protected int sizeOf(String key, Bitmap bitmap) {
-				return bitmap.getRowBytes() * bitmap.getHeight();
+			protected int sizeOf(String key, Container container) {
+				return container.size();
 			}
 		};
 	}
 
-	private int getCacheSize() {
-		return (int)(Runtime.getRuntime().maxMemory() / 8);
+	public Container get(String key) {
+		return myLruCache.get(key);
 	}
 
-	public Pair get(String book) {
-		return new Pair(myLruCache.get(book));
+	public void put(String key, Bitmap bitmap) {
+		myLruCache.put(key, bitmap != null ? new Container(bitmap) : NULL);
 	}
 
-	public void put(String book, Bitmap bitmap) {
-		myLruCache.put(book, bitmap != null ? bitmap : NULL);
-	}
-
-	public Map<String,Bitmap> snapshot() {
-		return myLruCache.snapshot();
-	}
-
-	public void remove(String book) {
-		myLruCache.remove(book);
+	public void remove(String key) {
+		myLruCache.remove(key);
 	}
 }
