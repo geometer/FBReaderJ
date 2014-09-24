@@ -311,13 +311,13 @@ public class LibraryService extends Service {
 						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 					}
 				});
+				if (!((ZLImageProxy)image).isSynchronized()) {
+					delayed[0] = true;
+					return null;
+				}
 			}
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (!((ZLImageProxy)image).isSynchronized()) {
-				delayed[0] = true;
-				return null;
-			}
 			delayed[0] = false;
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
