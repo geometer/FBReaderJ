@@ -274,9 +274,9 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
+			delayed[0] = false;
 			final BitmapCache.Container container = myCoversCache.get(book);
 			if (container != null) {
-				delayed[0] = false;
 				if (container.Bitmap == null) {
 					return null;
 				}
@@ -292,7 +292,6 @@ public class LibraryService extends Service {
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
 			if (image == null) {
 				myCoversCache.put(book, null);
-				delayed[0] = false;
 				return null;
 			}
 
@@ -315,10 +314,10 @@ public class LibraryService extends Service {
 					delayed[0] = true;
 					return null;
 				}
+				return myCoversCache.get(book).Bitmap;
 			}
 			final ZLAndroidImageManager manager =
 				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			delayed[0] = false;
 			final ZLAndroidImageData data = manager.getImageData(image);
 			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
 		}
