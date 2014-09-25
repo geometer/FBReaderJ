@@ -275,7 +275,6 @@ public class LibraryService extends Service {
 
 		@Override
 		public Bitmap getCover(final String book, final int maxWidth, final int maxHeight, boolean[] delayed) {
-			System.err.println(SerializerUtil.deserializeBook(book).getTitle() + i++);
 			delayed[0] = false;
 			final BitmapCache.Container container = myCoversCache.get(book);
 			if (container != null) {
