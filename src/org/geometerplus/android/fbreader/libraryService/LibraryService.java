@@ -291,16 +291,13 @@ public class LibraryService extends Service {
 
 			final ZLImage image =
 				myCollection.getCover(SerializerUtil.deserializeBook(book), maxWidth, maxHeight);
-			if (image == null) {
+			if (image == null || !(image instanceof ZLImageProxy)) {
 				myCoversCache.put(book, null);
 				return null;
 			}
 
-			if (!(image instanceof ZLImageProxy)) {
-				return null;
-			}
-
-			myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
+			final ZLImageProxy imageProxy = (ZLImageProxy)image;
+			myImageSynchronizer.synchronize(imageProxy, new Runnable() {
 				@Override
 				public void run() {
 					final ZLAndroidImageManager manager =
@@ -310,7 +307,7 @@ public class LibraryService extends Service {
 					myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
 				}
 			});
-			if (!((ZLImageProxy)image).isSynchronized()) {
+			if (!imageProxy.isSynchronized()) {
 				delayed[0] = true;
 				return null;
 			}
