@@ -112,6 +112,10 @@ class XMLSerializer extends AbstractSerializer {
 			appendTag(buffer, "filter", true,
 				"type", "has-bookmark"
 			);
+		} else if (filter instanceof Filter.HasNote) {
+			appendTag(buffer, "filter", true,
+				"type", "has-note"
+			);
 		} else if (filter instanceof Filter.HasPhysicalFile) {
 			appendTag(buffer, "filter", true,
 				"type", "has-physical-file"
@@ -153,6 +157,34 @@ class XMLSerializer extends AbstractSerializer {
 	public BookmarkQuery deserializeBookmarkQuery(String xml) {
 		try {
 			final BookmarkQueryDeserializer deserializer = new BookmarkQueryDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getQuery();
+		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String serialize(NoteQuery query) {
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(buffer, "query", false,
+			//"visible", String.valueOf(query.Visible),
+			"limit", String.valueOf(query.Limit),
+			"page", String.valueOf(query.Page)
+		);
+		if (query.Book != null) {
+			serialize(buffer, query.Book);
+		}
+		closeTag(buffer, "query");
+		return buffer.toString();
+	}
+
+	@Override
+	public NoteQuery deserializeNoteQuery(String xml) {
+		try {
+			final NoteQueryDeserializer deserializer = new NoteQueryDeserializer();
 			Xml.parse(xml, deserializer);
 			return deserializer.getQuery();
 		} catch (SAXException e) {
@@ -222,6 +254,10 @@ class XMLSerializer extends AbstractSerializer {
 
 		if (book.HasBookmark) {
 			appendTag(buffer, "has-bookmark", true);
+		}
+
+		if (book.HasNote) {
+			appendTag(buffer, "has-note", true);
 		}
 
 		// TODO: serialize description (?)
@@ -316,6 +352,69 @@ class XMLSerializer extends AbstractSerializer {
 			final BookmarkDeserializer deserializer = new BookmarkDeserializer();
 			Xml.parse(xml, deserializer);
 			return deserializer.getBookmark();
+		} catch (SAXException e) {
+			System.err.println(xml);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String serialize(Note note) {
+		final StringBuilder buffer = new StringBuilder();
+		appendTag(
+			buffer, "note", false,
+			"id", String.valueOf(note.getId())
+			//,"visible", String.valueOf(note.IsVisible)
+		);
+		appendTag(
+			buffer, "book", true,
+			"id", String.valueOf(note.getBookId()),
+			"title", note.getBookTitle()
+		);
+		appendTagWithContent(buffer, "text", note.getText());
+		appendTag(
+			buffer, "history", true, //DateType???
+			"date-creation", formatDate(note.getDate(Bookmark.DateType.Creation)),
+			"date-modification", formatDate(note.getDate(Bookmark.DateType.Modification)),
+			"date-access", formatDate(note.getDate(Bookmark.DateType.Access)),
+			"access-count", String.valueOf(note.getAccessCount())
+		);
+		appendTag(
+			buffer, "start", true,
+			"model", note.ModelId,
+			"paragraph", String.valueOf(note.getParagraphIndex()),
+			"element", String.valueOf(note.getElementIndex()),
+			"char", String.valueOf(note.getCharIndex())
+		);
+		final ZLTextPosition end = note.getEnd();
+		if (end != null) {
+			appendTag(
+				buffer, "end", true,
+				"paragraph", String.valueOf(end.getParagraphIndex()),
+				"element", String.valueOf(end.getElementIndex()),
+				"char", String.valueOf(end.getCharIndex())
+			);
+		} else {
+			appendTag(
+				buffer, "end", true,
+				"length", String.valueOf(note.getLength())
+			);
+		}
+		/*appendTag(
+			buffer, "style", true,
+			"id", String.valueOf(note.getStyleId())
+		);*/
+		closeTag(buffer, "note");
+		return buffer.toString();
+	}
+
+	@Override
+	public Note deserializeNote(String xml) {
+		try {
+			final NoteDeserializer deserializer = new NoteDeserializer();
+			Xml.parse(xml, deserializer);
+			return deserializer.getNote();
 		} catch (SAXException e) {
 			System.err.println(xml);
 			e.printStackTrace();
@@ -500,6 +599,7 @@ class XMLSerializer extends AbstractSerializer {
 		private final StringBuilder mySeriesTitle = new StringBuilder();
 		private final StringBuilder mySeriesIndex = new StringBuilder();
 		private boolean myHasBookmark;
+		private boolean myHasNote;
 		private RationalNumber myProgress;
 
 		private Book myBook;
@@ -525,6 +625,7 @@ class XMLSerializer extends AbstractSerializer {
 			myTags.clear();
 			myLabels.clear();
 			myHasBookmark = false;
+			myHasNote = false;
 			myProgress = null;
 
 			myState = State.READ_NOTHING;
@@ -557,6 +658,7 @@ class XMLSerializer extends AbstractSerializer {
 			myBook.setSeriesInfoWithNoCheck(string(mySeriesTitle), string(mySeriesIndex));
 			myBook.setProgressWithNoCheck(myProgress);
 			myBook.HasBookmark = myHasBookmark;
+			myBook.HasNote = myHasNote;
 		}
 
 		@Override
@@ -600,6 +702,8 @@ class XMLSerializer extends AbstractSerializer {
 						myState = State.READ_SERIES_INDEX;
 					} else if ("has-bookmark".equals(localName)) {
 						myHasBookmark = true;
+					} else if ("has-note".equals(localName)) {
+						myHasNote = true;
 					} else if ("link".equals(localName)) {
 						// TODO: use "rel" attribute
 						myUrl = attributes.getValue("href");
@@ -769,6 +873,8 @@ class XMLSerializer extends AbstractSerializer {
 						myFilter = new Filter.ByTitlePrefix(attributes.getValue("prefix"));
 					} else if ("has-bookmark".equals(type)) {
 						myFilter = new Filter.HasBookmark();
+					} else if ("has-note".equals(type)) {
+						myFilter = new Filter.HasNote();
 					} else if ("has-physical-file".equals(type)) {
 						myFilter = new Filter.HasPhysicalFile();
 					} else {
@@ -844,6 +950,53 @@ class XMLSerializer extends AbstractSerializer {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			if ("query".equals(localName)) {
 				myVisible = parseBoolean(attributes.getValue("visible"));
+				myLimit = parseInt(attributes.getValue("limit"));
+				myPage = parseInt(attributes.getValue("page"));
+			} else {
+				myBookDeserializer.startElement(uri, localName, qName, attributes);
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			if (!"query".equals(localName)) {
+				myBookDeserializer.endElement(uri, localName, qName);
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length) {
+			myBookDeserializer.characters(ch, start, length);
+		}
+	}
+
+	private static final class NoteQueryDeserializer extends DefaultHandler {
+		//private boolean myVisible;
+		private int myLimit;
+		private int myPage;
+		private final BookDeserializer myBookDeserializer = new BookDeserializer();
+		private NoteQuery myQuery;
+
+		NoteQuery getQuery() {
+			return myQuery;
+		}
+
+		@Override
+		public void startDocument() {
+			myQuery = null;
+			myBookDeserializer.startDocument();
+		}
+
+		@Override
+		public void endDocument() {
+			myBookDeserializer.endDocument();
+			myQuery = new NoteQuery(myBookDeserializer.getBook(), /*myVisible,*/ myLimit, myPage);
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			if ("query".equals(localName)) {
+				//myVisible = parseBoolean(attributes.getValue("visible"));
 				myLimit = parseInt(attributes.getValue("limit"));
 				myPage = parseInt(attributes.getValue("page"));
 			} else {
@@ -998,6 +1151,151 @@ class XMLSerializer extends AbstractSerializer {
 					break;
 				case READ_TEXT:
 					myState = State.READ_BOOKMARK;
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length) {
+			if (myState == State.READ_TEXT) {
+				myText.append(ch, start, length);
+			}
+		}
+	}
+
+	private static final class NoteDeserializer extends DefaultHandler {
+		private static enum State {
+			READ_NOTHING,
+			READ_NOTE,
+			READ_TEXT
+		}
+
+		private State myState = State.READ_NOTHING;
+		private Note myNote;
+
+		private long myId = -1;
+		private long myBookId;
+		private String myBookTitle;
+		private final StringBuilder myText = new StringBuilder();
+		private Date myCreationDate;
+		private Date myModificationDate;
+		private Date myAccessDate;
+		private int myAccessCount;
+		private String myModelId;
+		private int myStartParagraphIndex;
+		private int myStartElementIndex;
+		private int myStartCharIndex;
+		private int myEndParagraphIndex;
+		private int myEndElementIndex;
+		private int myEndCharIndex;
+		//private boolean myIsVisible;
+		//private int myStyle;
+
+		public Note getNote() {
+			return myState == State.READ_NOTHING ? myNote : null;
+		}
+
+		@Override
+		public void startDocument() {
+			myNote = null;
+
+			myId = -1;
+			myBookId = -1;
+			myBookTitle = null;
+			clear(myText);
+			myCreationDate = null;
+			myModificationDate = null;
+			myAccessDate = null;
+			myAccessCount = 0;
+			myModelId = null;
+			myStartParagraphIndex = 0;
+			myStartElementIndex = 0;
+			myStartCharIndex = 0;
+			myEndParagraphIndex = -1;
+			myEndElementIndex = -1;
+			myEndCharIndex = -1;
+			//myIsVisible = false;
+			//myStyle = 1;
+
+			myState = State.READ_NOTHING;
+		}
+
+		@Override
+		public void endDocument() {
+			if (myBookId == -1) {
+				return;
+			}
+			myNote = new Note(
+				myId, myBookId, myBookTitle, myText.toString(),
+				myCreationDate, myModificationDate, myAccessDate, myAccessCount,
+				myModelId,
+				myStartParagraphIndex, myStartElementIndex, myStartCharIndex,
+				myEndParagraphIndex, myEndElementIndex, myEndCharIndex
+				//,myIsVisible,
+				//myStyle
+			);
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			switch (myState) {
+				case READ_NOTHING:
+					if (!"note".equals(localName)) {
+						throw new SAXException("Unexpected tag " + localName);
+					}
+					myId = parseLong(attributes.getValue("id"));
+					//myIsVisible = parseBoolean(attributes.getValue("visible"));
+					myState = State.READ_NOTE;
+					break;
+				case READ_NOTE:
+					if ("book".equals(localName)) {
+						myBookId = parseLong(attributes.getValue("id"));
+						myBookTitle = attributes.getValue("title");
+					} else if ("text".equals(localName)) {
+						myState = State.READ_TEXT;
+					} else if ("history".equals(localName)) {
+						myCreationDate = parseDate(attributes.getValue("date-creation"));
+						myModificationDate = parseDateSafe(attributes.getValue("date-modification"));
+						myAccessDate = parseDateSafe(attributes.getValue("date-access"));
+						myAccessCount = parseIntSafe(attributes.getValue("access-count"), 0);
+					} else if ("start".equals(localName)) {
+						myModelId = attributes.getValue("model");
+						myStartParagraphIndex = parseInt(attributes.getValue("paragraph"));
+						myStartElementIndex = parseInt(attributes.getValue("element"));
+						myStartCharIndex = parseInt(attributes.getValue("char"));
+					} else if ("end".equals(localName)) {
+						final String para = attributes.getValue("paragraph");
+						if (para != null) {
+							myEndParagraphIndex = parseInt(para);
+							myEndElementIndex = parseInt(attributes.getValue("element"));
+							myEndCharIndex = parseInt(attributes.getValue("char"));
+						} else {
+							myEndParagraphIndex = parseInt(attributes.getValue("length"));
+							myEndElementIndex = -1;
+							myEndCharIndex = -1;
+						}
+					/*} else if ("style".equals(localName)) {
+						myStyle = parseInt(attributes.getValue("id")); */
+					} else {
+						throw new SAXException("Unexpected tag " + localName);
+					}
+					break;
+				case READ_TEXT:
+					throw new SAXException("Unexpected tag " + localName);
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			switch (myState) {
+				case READ_NOTHING:
+					throw new SAXException("Unexpected closing tag " + localName);
+				case READ_NOTE:
+					if ("note".equals(localName)) {
+						myState = State.READ_NOTHING;
+					}
+					break;
+				case READ_TEXT:
+					myState = State.READ_NOTE;
 			}
 		}
 

@@ -685,6 +685,36 @@ public class BookCollection extends AbstractBookCollection {
 		}
 	}
 
+	public List<Note> notes(NoteQuery query) {
+		return myDatabase.loadNotes(query);
+	}
+
+	public void saveNote(Note note) {
+		if (note != null) {
+			note.setId(myDatabase.saveNote(note));
+			//if (note.IsVisible) {
+				final Book book = getBookById(note.getBookId());
+				if (book != null) {
+					book.HasNote = true;
+					fireBookEvent(BookEvent.NotesUpdated, book);
+				}
+			//}
+		}
+	}
+
+	public void deleteNote(Note note) {
+		if (note != null && note.getId() != -1) {
+			myDatabase.deleteNote(note);
+			//if (note.IsVisible) {
+				final Book book = getBookById(note.getBookId());
+				if (book != null) {
+					book.HasNote = myDatabase.hasVisibleNote(note.getBookId());
+					fireBookEvent(BookEvent.NotesUpdated, book);
+				}
+			//}
+		}
+	}
+
 	public ZLTextFixedPosition.WithTimestamp getStoredPosition(long bookId) {
 		return myDatabase.getStoredPosition(bookId);
 	}

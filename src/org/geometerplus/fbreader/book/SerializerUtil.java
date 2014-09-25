@@ -43,6 +43,14 @@ public abstract class SerializerUtil {
 		return xml != null ? defaultSerializer.deserializeBookmarkQuery(xml) : null;
 	}
 
+	public static String serialize(NoteQuery query) {
+		return query != null ? defaultSerializer.serialize(query) : null;
+	}
+
+	public static NoteQuery deserializeNoteQuery(String xml) {
+		return xml != null ? defaultSerializer.deserializeNoteQuery(xml) : null;
+	}
+
 	public static String serialize(Book book) {
 		return book != null ? defaultSerializer.serialize(book) : null;
 	}
@@ -95,6 +103,33 @@ public abstract class SerializerUtil {
 			}
 		}
 		return bookmarks;
+	}
+
+	public static String serialize(Note note) {
+		return note != null ? defaultSerializer.serialize(note) : null;
+	}
+
+	public static Note deserializeNote(String xml) {
+		return xml != null ? defaultSerializer.deserializeNote(xml) : null;
+	}
+
+	public static List<String> serializeNoteList(List<Note> notes) {
+		final List<String> serialized = new ArrayList<String>(notes.size());
+		for (Note n : notes) {
+			serialized.add(defaultSerializer.serialize(n));
+		}
+		return serialized;
+	}
+
+	public static List<Note> deserializeNoteList(List<String> xmlList) {
+		final List<Note> notes = new ArrayList<Note>(xmlList.size());
+		for (String xml : xmlList) {
+			final Note n = defaultSerializer.deserializeNote(xml);
+			if (n != null) {
+				notes.add(n);
+			}
+		}
+		return notes;
 	}
 
 	public static String serialize(HighlightingStyle style) {

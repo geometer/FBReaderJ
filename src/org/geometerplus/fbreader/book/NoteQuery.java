@@ -19,25 +19,32 @@
 
 package org.geometerplus.fbreader.book;
 
-abstract class AbstractSerializer {
-	public abstract String serialize(BookQuery query);
-	public abstract BookQuery deserializeBookQuery(String data);
+public final class NoteQuery {
+	public final Book Book;
+	//public final boolean Visible;
+	public final int Limit;
+	public final int Page;
 
-	public abstract String serialize(BookmarkQuery query);
-	public abstract BookmarkQuery deserializeBookmarkQuery(String data);
+	public NoteQuery(int limit) {
+		this(null, limit);
+	}
 
-	public abstract String serialize(NoteQuery query);
-	public abstract NoteQuery deserializeNoteQuery(String data);
+	public NoteQuery(Book book, int limit) {
+		this(book, limit, 0);
+	}
 
-	public abstract String serialize(Book book);
-	public abstract Book deserializeBook(String data);
+	/*public NoteQuery(Book book, boolean visible, int limit) {
+		this(book, visible, limit, 0);
+	}*/
 
-	public abstract String serialize(Bookmark bookmark);
-	public abstract Bookmark deserializeBookmark(String data);
+	NoteQuery(Book book, /*boolean visible,*/ int limit, int page) {
+		Book = book;
+		//Visible = visible;
+		Limit = limit;
+		Page = page;
+	}
 
-	public abstract String serialize(Note note);
-	public abstract Note deserializeNote(String data);
-
-	public abstract String serialize(HighlightingStyle style);
-	public abstract HighlightingStyle deserializeStyle(String data);
+	public NoteQuery next() {
+		return new NoteQuery(Book, /*Visible,*/ Limit, Page + 1);
+	}
 }

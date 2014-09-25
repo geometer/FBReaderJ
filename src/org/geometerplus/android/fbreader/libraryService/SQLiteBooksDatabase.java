@@ -76,7 +76,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 28;
+		final int currentVersion = 29;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -140,6 +140,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables26();
 			case 27:
 				updateTables27();
+			case 28:
+				updateTables28();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -320,6 +322,18 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 			final Book book = booksById.get(cursor.getLong(0));
 			if (book != null) {
 				book.HasBookmark = true;
+			}
+		}
+		cursor.close();
+
+		cursor = myDatabase.rawQuery(
+			"SELECT book_id FROM Notes GROUP by book_id",
+			null
+		);
+		while (cursor.moveToNext()) {
+			final Book book = booksById.get(cursor.getLong(0));
+			if (book != null) {
+				book.HasNote = true;
 			}
 		}
 		cursor.close();
@@ -786,6 +800,17 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
+	protected boolean hasVisibleNote(long bookId) {
+		final Cursor cursor = myDatabase.rawQuery(
+			"SELECT note_id FROM Notes WHERE book_id = " + bookId +
+			/*" AND visible = 1"*/ " LIMIT 1", null
+		);
+		final boolean result = cursor.moveToNext();
+		cursor.close();
+		return result;
+	}
+
+	@Override
 	protected List<Bookmark> loadBookmarks(BookmarkQuery query) {
 		final LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		final StringBuilder sql = new StringBuilder("SELECT")
@@ -824,6 +849,51 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				cursor.isNull(14) ? -1 : (int)cursor.getLong(14),
 				query.Visible,
 				(int)cursor.getLong(15)
+			));
+		}
+		cursor.close();
+		return list;
+	}
+
+	@Override
+	protected List<Note> loadNotes(NoteQuery query) {
+		final LinkedList<Note> list = new LinkedList<Note>();
+		final StringBuilder sql = new StringBuilder("SELECT")
+			.append(" bm.note_id,bm.book_id,b.title,bm.note_text,")
+			.append("bm.creation_time,bm.modification_time,bm.access_time,bm.access_counter,")
+			.append("bm.model_id,bm.paragraph,bm.word,bm.char,")
+			.append("bm.end_paragraph,bm.end_word,bm.end_character")
+			//.append(",bm.style_id")
+			.append(" FROM Notes AS bm")
+			.append(" INNER JOIN Books AS b ON b.book_id = bm.book_id");
+			//.append(" WHERE");
+		if (query.Book != null) {
+			sql.append(" WHERE b.book_id = " + query.Book.getId() /*+" AND"*/);
+		}
+		sql
+			//.append(" bm.visible = " + (query.Visible ? 1 : 0))
+			.append(" ORDER BY bm.note_id")
+			.append(" LIMIT " + query.Limit * query.Page + "," + query.Limit);
+		Cursor cursor = myDatabase.rawQuery(sql.toString(), null);
+		while (cursor.moveToNext()) {
+			list.add(createNote(
+				cursor.getLong(0),
+				cursor.getLong(1),
+				cursor.getString(2),
+				cursor.getString(3),
+				SQLiteUtil.getDate(cursor, 4),
+				SQLiteUtil.getDate(cursor, 5),
+				SQLiteUtil.getDate(cursor, 6),
+				(int)cursor.getLong(7),
+				cursor.getString(8),
+				(int)cursor.getLong(9),
+				(int)cursor.getLong(10),
+				(int)cursor.getLong(11),
+				(int)cursor.getLong(12),
+				cursor.isNull(13) ? -1 : (int)cursor.getLong(13),
+				cursor.isNull(14) ? -1 : (int)cursor.getLong(14)//,
+				//query.Visible,
+				//(int)cursor.getLong(15)
 			));
 		}
 		cursor.close();
@@ -908,6 +978,59 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	protected void deleteBookmark(Bookmark bookmark) {
 		final SQLiteStatement statement = get("DELETE FROM Bookmarks WHERE bookmark_id=?");
 		statement.bindLong(1, bookmark.getId());
+		statement.execute();
+	}
+
+	@Override
+	protected long saveNote(Note note) {
+		SQLiteStatement statement;
+		if (note.getId() == -1) {
+			statement = get(
+				"INSERT OR IGNORE INTO Notes (book_id,note_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,end_paragraph,end_word,end_character) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+			);
+		} else {
+			statement = get(
+				"UPDATE Notes SET book_id = ?, note_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, end_paragraph = ?, end_word = ?, end_character = ?  WHERE note_id = ?"
+			);
+		}
+
+		statement.bindLong(1, note.getBookId());
+		statement.bindString(2, note.getText());
+		SQLiteUtil.bindDate(statement, 3, note.getDate(Bookmark.DateType.Creation));
+		SQLiteUtil.bindDate(statement, 4, note.getDate(Bookmark.DateType.Modification));
+		SQLiteUtil.bindDate(statement, 5, note.getDate(Bookmark.DateType.Access));
+		statement.bindLong(6, note.getAccessCount());
+		SQLiteUtil.bindString(statement, 7, note.ModelId);
+		statement.bindLong(8, note.ParagraphIndex);
+		statement.bindLong(9, note.ElementIndex);
+		statement.bindLong(10, note.CharIndex);
+		final ZLTextPosition end = note.getEnd();
+		if (end != null) {
+			statement.bindLong(11, end.getParagraphIndex());
+			statement.bindLong(12, end.getElementIndex());
+			statement.bindLong(13, end.getCharIndex());
+		} else {
+			statement.bindLong(11, note.getLength());
+			statement.bindNull(12);
+			statement.bindNull(13);
+		}
+		//statement.bindLong(14, note.IsVisible ? 1 : 0);
+		//statement.bindLong(15, note.getStyleId());
+
+		if (note.getId() == -1) {
+			return statement.executeInsert();
+		} else {
+			final long id = note.getId();
+			statement.bindLong(14, id);
+			statement.execute();
+			return id;
+		}
+	}
+
+	@Override
+	protected void deleteNote(Note note) {
+		final SQLiteStatement statement = get("DELETE FROM Notes WHERE note_id=?");
+		statement.bindLong(1, note.getId());
 		statement.execute();
 	}
 
@@ -1058,6 +1181,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL("DELETE FROM BookTag WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM BookUid WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id=" + bookId);
+		myDatabase.execSQL("DELETE FROM Notes WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM RecentBooks WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM VisitedHyperlinks WHERE book_id=" + bookId);
 		myDatabase.execSQL("DELETE FROM Books WHERE book_id=" + bookId);
@@ -1482,6 +1606,25 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables27() {
 		myDatabase.execSQL("ALTER TABLE BookState ADD COLUMN timestamp INTEGER");
+	}
+
+	private void updateTables28() {
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Notes(" +
+				"note_id INTEGER PRIMARY KEY," +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
+				"note_text TEXT NOT NULL," +
+				"creation_time INTEGER NOT NULL," +
+				"modification_time INTEGER," +
+				"access_time INTEGER," +
+				"access_counter INTEGER NOT NULL," +
+				"paragraph INTEGER NOT NULL," +
+				"word INTEGER NOT NULL," +
+				"char INTEGER NOT NULL," +
+				"model_id TEXT," +
+				"end_paragraph INTEGER," +
+				"end_word INTEGER," +
+				"end_character INTEGER)");
 	}
 
 	private SQLiteStatement get(String sql) {

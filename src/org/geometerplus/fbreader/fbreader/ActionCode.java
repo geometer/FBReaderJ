@@ -76,6 +76,9 @@ public interface ActionCode {
 	String SELECTION_SHARE = "selectionShare";
 	String SELECTION_TRANSLATE = "selectionTranslate";
 	String SELECTION_BOOKMARK = "selectionBookmark";
+	String SELECTION_NOTE = "selectionNote";
+
+	String SHOW_NOTE = "showNote";
 
 	String OPEN_VIDEO = "video";
 
