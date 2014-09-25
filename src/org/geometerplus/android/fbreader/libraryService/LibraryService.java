@@ -318,17 +318,14 @@ public class LibraryService extends Service {
 				}
 				return myCoversCache.get(book).Bitmap;
 			}
-			final ZLAndroidImageManager manager =
-				(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			final ZLAndroidImageData data = manager.getImageData(image);
-			return data != null ? data.getBitmap(maxWidth, maxHeight) : null;
+
+			return null;
 		}
 
 		private Bitmap getResizedBitmap(Bitmap bitmap, int newWidth, int newHeight) {
 			final int bWidth = bitmap.getWidth();
 			final int bHeight = bitmap.getHeight();
-			if (bWidth <= 0 || bWidth < newWidth || bHeight <= 0 || bHeight < newHeight) {
-				System.err.println("3333333333333333333333");
+			if (bHeight < newHeight && bWidth < newWidth || bWidth <= 0 || bHeight <= 0) {
 				return null;
 			}
 			if (bWidth == newWidth && bHeight == newHeight) {
