@@ -90,8 +90,13 @@ public abstract class NetworkLibraryActivity extends TreeActivity<NetworkTree> i
 		}
 		AuthenticationActivity.initCredentialsCreator(this);
 		SQLiteCookieDatabase.init(this);
-
-		setListAdapter(new NetworkLibraryAdapter(this));
+		if (DeviceType.Instance().isYotaPhone()) {
+			setListAdapter(new YotaNetworkLibraryAdapter(this));
+			getListView().setDividerHeight(0);
+		}
+		else {
+			setListAdapter(new NetworkLibraryAdapter(this));
+		}
 		final Intent intent = getIntent();
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
