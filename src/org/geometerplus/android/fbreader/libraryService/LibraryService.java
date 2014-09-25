@@ -296,29 +296,25 @@ public class LibraryService extends Service {
 				return null;
 			}
 
-			if (image instanceof ZLImageProxy) {
-				myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
-					@Override
-					public void run() {
-						final ZLAndroidImageManager manager =
-								(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-						final ZLAndroidImageData data = manager.getImageData(image);
-						if (data != null) {
-							myCoversCache.put(book, data.getBitmap(maxWidth, maxHeight));
-						} else {
-							myCoversCache.put(book, null);
-						}
-						myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
-					}
-				});
-				if (!((ZLImageProxy)image).isSynchronized()) {
-					delayed[0] = true;
-					return null;
-				}
-				return myCoversCache.get(book).Bitmap;
+			if (!(image instanceof ZLImageProxy)) {
+				return null;
 			}
 
-			return null;
+			myImageSynchronizer.synchronize((ZLImageProxy)image, new Runnable() {
+				@Override
+				public void run() {
+					final ZLAndroidImageManager manager =
+						(ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+					final ZLAndroidImageData data = manager.getImageData(image);
+					myCoversCache.put(book, data !=  null ? data.getBitmap(maxWidth, maxHeight) : null);
+					myCollection.fireBookEvent(BookEvent.CoverSynchronized, SerializerUtil.deserializeBook(book));
+				}
+			});
+			if (!((ZLImageProxy)image).isSynchronized()) {
+				delayed[0] = true;
+				return null;
+			}
+			return myCoversCache.get(book).Bitmap;
 		}
 
 		private Bitmap getResizedBitmap(Bitmap bitmap, int newWidth, int newHeight) {
