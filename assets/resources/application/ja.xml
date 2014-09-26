@@ -644,7 +644,8 @@
 			<node name="text" value="標準の文字"/>
 			<node name="hyperlink" value="リンク文字"/>
 			<node name="hyperlinkVisited" value="リンク文字 (訪問済み)"/>
-			<node name="highlighting" value="検索結果の背景"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="検索結果の背景"/>
 			<node name="footer" value="フッタ"/>
 		</node>
 		<node name="margins" value="マージン">

@@ -650,7 +650,8 @@
 			<node name="text" value="Звычайны тэкст"/>
 			<node name="hyperlink" value="Тэкст спасылкі"/>
 			<node name="hyperlinkVisited" value="Тэкст наведанай спасылкі"/>
-			<node name="highlighting" value="Фон вынікаў пошуку"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Фон вынікаў пошуку"/>
 			<node name="footer" value="Прыпятак"/>
 		</node>
 		<node name="margins" value="Палі">
