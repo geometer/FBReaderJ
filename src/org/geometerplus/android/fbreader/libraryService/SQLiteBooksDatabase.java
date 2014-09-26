@@ -76,7 +76,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 28;
+		final int currentVersion = 29;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -140,6 +140,8 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 				updateTables26();
 			case 27:
 				updateTables27();
+			case 28:
+				updateTables28();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.setVersion(currentVersion);
@@ -833,13 +835,14 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 	@Override
 	protected List<HighlightingStyle> loadStyles() {
 		final LinkedList<HighlightingStyle> list = new LinkedList<HighlightingStyle>();
-		final String sql = "SELECT style_id,name,bg_color FROM HighlightingStyle";
+		final String sql = "SELECT style_id,name,bg_color,fg_color FROM HighlightingStyle";
 		final Cursor cursor = myDatabase.rawQuery(sql, null);
 		while (cursor.moveToNext()) {
 			list.add(createStyle(
 				(int)cursor.getLong(0),
 				cursor.getString(1),
-				(int)cursor.getLong(2)
+				(int)cursor.getLong(2),
+				(int)cursor.getLong(3)
 			));
 		}
 		cursor.close();
@@ -848,13 +851,15 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	protected void saveStyle(HighlightingStyle style) {
 		final SQLiteStatement statement = get(
-			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color) VALUES (?,?,?)"
+			"INSERT OR REPLACE INTO HighlightingStyle (style_id,name,bg_color,fg_color) VALUES (?,?,?,?)"
 		);
 		statement.bindLong(1, style.Id);
 		final String name = style.getName();
 		statement.bindString(2, name != null ? name : "");
 		final ZLColor bgColor = style.getBackgroundColor();
 		statement.bindLong(3, bgColor != null ? bgColor.intValue() : -1);
+		final ZLColor fgColor = style.getForegroundColor();
+		statement.bindLong(4, fgColor != null ? fgColor.intValue() : -1);
 		statement.execute();
 	}
 
@@ -1482,6 +1487,10 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables27() {
 		myDatabase.execSQL("ALTER TABLE BookState ADD COLUMN timestamp INTEGER");
+	}
+
+	private void updateTables28() {
+		myDatabase.execSQL("ALTER TABLE HighlightingStyle ADD COLUMN fg_color INTEGER NOT NULL DEFAULT -1");
 	}
 
 	private SQLiteStatement get(String sql) {

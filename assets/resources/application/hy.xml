@@ -649,7 +649,8 @@
 			<node name="text" value="Կանոնավոր գրվածք"/>
 			<node name="hyperlink" value="Գերհղում"/>
 			<node name="hyperlinkVisited" value="Այցելված հղում"/>
-			<node name="highlighting" value="Որոնման արդյունքների ետնաշերտը"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Որոնման արդյունքների ետնաշերտը"/>
 			<node name="footer" value="Էջատակ"/>
 		</node>
 		<node name="margins" value="Լուսանցքներ">
