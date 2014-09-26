@@ -903,7 +903,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					final ZLTextPosition pos =
 						new ZLTextFixedPosition(info.ParagraphCursor.Index, wordIndex, 0);
 					final ZLTextHighlighting hl = getWordHilite(pos, hilites);
-					final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
+					final ZLColor hlColor = hl != null ? getSelectionForegroundColor() : null;
 					drawWord(
 						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
 						hlColor != null ? hlColor : getTextColor(getTextStyle().Hyperlink)
@@ -964,7 +964,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			final ZLTextPosition pos =
 				new ZLTextFixedPosition(info.ParagraphCursor.Index, info.EndElementIndex, 0);
 			final ZLTextHighlighting hl = getWordHilite(pos, hilites);
-			final ZLColor hlColor = hl != null ? hl.getForegroundColor() : null;
+			final ZLColor hlColor = hl != null ? getSelectionForegroundColor() : null;
 			drawWord(
 				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalAlign(metrics()),
 				word, start, len, area.AddHyphenationSign,
