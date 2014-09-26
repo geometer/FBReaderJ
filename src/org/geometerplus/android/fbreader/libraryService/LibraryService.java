@@ -334,6 +334,9 @@ public class LibraryService extends Service {
 				h = newHeight;
 				w = Math.max(1, bWidth * h / bHeight);
 			}
+			if (w == bWidth && h == bHeight) {
+				return bitmap;
+			}
 			return Bitmap.createScaledBitmap(bitmap, w, h, false);
 		}
 
