@@ -5,12 +5,15 @@
 * (planned) Sync: single book upload
 * (planned) Editable notes (by Tamotsu Takahashi)
 
-===== 2.1.5 (Sep ??, 2014) =====
+===== 2.1.6 (Sep ??, 2014) =====
+* (planned) Fixed authors list/tags list editing
+
+===== 2.1.5 (Sep 28, 2014) =====
 * Updated Czech localisation (by Marek Pavelka)
 * Updated German localisation (by Matthias Dill)
 * Fixed TTF loader (for Roman fonts)
 * Fast hyphenation for very long words (200+ characters)
-* (planned) Fixed authors list/tags list editing
+* Search results color option
 
 ===== 2.1.4 (Sep 21, 2014) =====
 * CSS: fixed <ul>/<ol> top/bottom margin behaviour
