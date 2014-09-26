@@ -280,15 +280,14 @@ abstract class ZLTextViewBase extends ZLView {
 
 	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign, ZLColor color) {
 		final ZLPaintContext context = getContext();
-		context.setTextColor(color);
 		if (start == 0 && length == -1) {
-			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
+			drawString(context, x, y, word.Data, word.Offset, word.Length, word.getMark(), color, 0);
 		} else {
 			if (length == -1) {
 				length = word.Length - start;
 			}
 			if (!addHyphenationSign) {
-				drawString(x, y, word.Data, word.Offset + start, length, word.getMark(), start);
+				drawString(context, x, y, word.Data, word.Offset + start, length, word.getMark(), color, start);
 			} else {
 				char[] part = myWordPartArray;
 				if (length + 1 > part.length) {
@@ -297,14 +296,14 @@ abstract class ZLTextViewBase extends ZLView {
 				}
 				System.arraycopy(word.Data, word.Offset + start, part, 0, length);
 				part[length] = '-';
-				drawString(x, y, part, 0, length + 1, word.getMark(), start);
+				drawString(context, x, y, part, 0, length + 1, word.getMark(), color, start);
 			}
 		}
 	}
 
-	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
-		final ZLPaintContext context = getContext();
+	private final void drawString(ZLPaintContext context, int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, ZLColor color, int shift) {
 		if (mark == null) {
+			context.setTextColor(color);
 			context.drawString(x, y, str, offset, length);
 		} else {
 			int pos = 0;
@@ -323,6 +322,7 @@ abstract class ZLTextViewBase extends ZLView {
 
 				if (markStart > pos) {
 					int endPos = Math.min(markStart, length);
+					context.setTextColor(color);
 					context.drawString(x, y, str, offset + pos, endPos - pos);
 					x += context.getStringWidth(str, offset + pos, endPos - pos);
 				}
@@ -340,6 +340,7 @@ abstract class ZLTextViewBase extends ZLView {
 			}
 
 			if (pos < length) {
+				context.setTextColor(color);
 				context.drawString(x, y, str, offset + pos, length - pos);
 			}
 		}

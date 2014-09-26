@@ -295,12 +295,16 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	@Override
 	public void setTextColor(ZLColor color) {
-		myTextPaint.setColor(ZLAndroidColorUtil.rgb(color));
+		if (color != null) {
+			myTextPaint.setColor(ZLAndroidColorUtil.rgb(color));
+		}
 	}
 
 	@Override
 	public void setLineColor(ZLColor color) {
-		myLinePaint.setColor(ZLAndroidColorUtil.rgb(color));
+		if (color != null) {
+			myLinePaint.setColor(ZLAndroidColorUtil.rgb(color));
+		}
 	}
 	@Override
 	public void setLineWidth(int width) {
@@ -309,7 +313,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	@Override
 	public void setFillColor(ZLColor color, int alpha) {
-		myFillPaint.setColor(ZLAndroidColorUtil.rgba(color, alpha));
+		if (color != null) {
+			myFillPaint.setColor(ZLAndroidColorUtil.rgba(color, alpha));
+		}
 	}
 
 	public int getWidth() {
