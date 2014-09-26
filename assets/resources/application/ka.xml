@@ -649,7 +649,8 @@
 			<node name="text" value="ჩვეულებრივი ტექსტი"/>
 			<node name="hyperlink" value="ჰიპერლინკი"/>
 			<node name="hyperlinkVisited" value="მონახულებული ლინკი"/>
-			<node name="highlighting" value="ძიების რეზულტატების ფონი"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="ძიების რეზულტატების ფონი"/>
 			<node name="footer" value="სარდაფი"/>
 		</node>
 		<node name="margins" value="დაშორებები">

@@ -635,7 +635,8 @@
 			<node name="text" value="Testo Regolare"/>
 			<node name="hyperlink" value="Testo Hyperlink"/>
 			<node name="hyperlinkVisited" value="Testo collegamento visitato"/>
-			<node name="highlighting" value="Risultati Ricerca Sfondo"/>
+			<node name="highlightingForeground" value="Search results" toBeTranslated="true"/>
+			<node name="highlightingBackground" value="Risultati Ricerca Sfondo"/>
 			<node name="footer" value="Piè di pagina"/>
 		</node>
 		<node name="margins" value="Margini">

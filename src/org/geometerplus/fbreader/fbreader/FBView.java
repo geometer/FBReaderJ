@@ -451,7 +451,12 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public ZLColor getHighlightingBackgroundColor() {
-		return myViewOptions.getColorProfile().HighlightingOption.getValue();
+		return myViewOptions.getColorProfile().HighlightingBackgroundOption.getValue();
+	}
+
+	@Override
+	public ZLColor getHighlightingForegroundColor() {
+		return myViewOptions.getColorProfile().HighlightingForegroundOption.getValue();
 	}
 
 	private class Footer implements FooterArea {
