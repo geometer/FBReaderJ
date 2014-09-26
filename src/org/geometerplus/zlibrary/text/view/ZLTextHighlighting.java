@@ -29,6 +29,7 @@ public abstract class ZLTextHighlighting implements Comparable<ZLTextHighlightin
 	public abstract ZLTextElementArea getStartArea(ZLTextPage page);
 	public abstract ZLTextElementArea getEndArea(ZLTextPage page);
 
+	public abstract ZLColor getForegroundColor();
 	public abstract ZLColor getBackgroundColor();
 
 	boolean intersects(ZLTextPage page) {
