@@ -32,6 +32,7 @@ public class HighlightingStyle {
 	HighlightingStyle(int id, String name, ZLColor bgColor, ZLColor fgColor) {
 		Id = id;
 		myName = name;
+		myBackgroundColor = bgColor;
 		myForegroundColor = fgColor;
 	}
 

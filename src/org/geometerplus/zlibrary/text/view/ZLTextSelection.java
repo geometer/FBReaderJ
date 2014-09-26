@@ -179,13 +179,6 @@ class ZLTextSelection extends ZLTextHighlighting {
 		}
 	}
 
-	boolean isAreaSelected(ZLTextElementArea area) {
-		return
-			!isEmpty()
-			&& myLeftMostRegionSoul.compareTo(area) <= 0
-			&& myRightMostRegionSoul.compareTo(area) >= 0;
-	}
-
 	@Override
 	public ZLTextPosition getStartPosition() {
 		if (isEmpty()) {
