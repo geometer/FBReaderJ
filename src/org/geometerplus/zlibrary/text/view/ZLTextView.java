@@ -904,17 +904,17 @@ public abstract class ZLTextView extends ZLTextViewBase {
 							final ZLTextElementArea hiliteStartArea = hilite.getStartArea(page);
 							final ZLTextElementArea hiliteEndArea = hilite.getEndArea(page);
 							if (hiliteStartArea != null && hiliteEndArea != null &&
-									(hiliteStartArea.compareTo(toarea) <= 0) && 
+									(hiliteStartArea.compareTo(toarea) <= 0) &&
 									(hiliteEndArea.compareTo(area) >= 0)) {
 								hlword = true;
 								break;
 							}
 						}
 					}
-					hlword = hlword || mySelection.isAreaSelected(area); 
-					drawWord(							
-						areaX, areaY, (ZLTextWord)element, charIndex, -1, false, hlword ?
-								getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
+					hlword = hlword || mySelection.isAreaSelected(area);
+					drawWord(
+						areaX, areaY, (ZLTextWord)element, charIndex, -1, false, hlword
+							? getSelectionForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
 					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
