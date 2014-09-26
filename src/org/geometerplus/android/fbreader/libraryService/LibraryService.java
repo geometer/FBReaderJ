@@ -52,7 +52,6 @@ public class LibraryService extends Service {
 	static final String BUILD_EVENT_ACTION = "fbreader.library_service.build_event";
 
 	private final BitmapCache myCoversCache = new BitmapCache(0.2f);
-	int i = 0;
 
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
 
@@ -315,13 +314,17 @@ public class LibraryService extends Service {
 		}
 
 		private Bitmap getResizedBitmap(Bitmap bitmap, int newWidth, int newHeight) {
-			final int bWidth = bitmap.getWidth();
-			final int bHeight = bitmap.getHeight();
-			if (bHeight < newHeight && bWidth < newWidth || bWidth <= 0 || bHeight <= 0) {
+			if (newWidth <= 0 || newHeight <= 0) {
 				return null;
 			}
-			if (bWidth == newWidth && bHeight == newHeight) {
+			final int bWidth = bitmap.getWidth();
+			final int bHeight = bitmap.getHeight();
+			if (newWidth == bWidth && newHeight == bHeight) {
 				return bitmap;
+			}
+
+			if (newWidth > bWidth && newHeight > bHeight) {
+				return null;
 			}
 			final int w, h;
 			if (bWidth * newHeight > bHeight * newWidth) {
