@@ -482,14 +482,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		backgroundSet.add(colorsScreen.addOption(profile.FillModeOption, "fillMode"));
 		backgroundSet.run();
 
-		//colorsScreen.addOption(profile.HighlightingForegroundOption, "highlightingForeground");
-		colorsScreen.addOption(profile.HighlightingBackgroundOption, "highlightingBackground");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
 		colorsScreen.addOption(profile.VisitedHyperlinkTextOption, "hyperlinkVisited");
 		colorsScreen.addOption(profile.FooterFillOption, "footer");
 		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
 		colorsScreen.addOption(profile.SelectionForegroundOption, "selectionForeground");
+		colorsScreen.addOption(profile.HighlightingForegroundOption, "highlightingForeground");
+		colorsScreen.addOption(profile.HighlightingBackgroundOption, "highlightingBackground");
 
 		final Screen marginsScreen = createPreferenceScreen("margins");
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
