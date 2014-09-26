@@ -47,9 +47,8 @@ public abstract class ColorPreference extends Preference {
 		super.onBindView(view);
 
 		((TextView)view.findViewById(R.id.color_preference_title)).setText(getTitle());
-		final ZLColor color = getSavedColor();
 		view.findViewById(R.id.color_preference_widget).setBackgroundColor(
-			color != null ? ZLAndroidColorUtil.rgb(color) : 0
+			ZLAndroidColorUtil.rgb(getSavedColor())
 		);
 	}
 
